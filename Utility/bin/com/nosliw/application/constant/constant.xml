@@ -1,0 +1,540 @@
+<root jsPath="{{projectsPath}}/Application/WebContent/js/generated"
+	jsAttributeFile="NOSLIWATCOMMONTRIBUTECONSTANT"
+	jsConstantFile="NOSLIWCOMMONCONSTANT"
+>
+
+	<attributes filepath="{{projectsPath}}/Application/src/com/nosliw/app/utils" 
+				packagename="com.nosliw.app.utils" 
+				classname="HAPAttributeConstant" >
+		<definition name="ATTR_SERVLETPARMS_COMMAND" value="command"/>
+		<definition name="ATTR_SERVLETPARMS_SERVICE" value="service"/>
+		<definition name="ATTR_SERVLETPARMS_CLIENTID" value="clientId"/>
+		<definition name="ATTR_SERVLETPARMS_PARMS" value="parms"/>
+		<definition type="space"/>
+		<definition name="ATTR_REQUEST_TYPE" value="type"/>
+		<definition name="ATTR_REQUEST_SERVICE" value="service"/>
+		<definition name="ATTR_REQUEST_MODE" value="mode"/>
+		<definition name="ATTR_REQUEST_CHILDREN" value="children"/>
+		<definition type="space"/>
+		<definition name="ATTR_SERVICE_COMMAND" value="command"/>
+		<definition name="ATTR_SERVICE_PARMS" value="parms"/>
+		<definition type="space"/>
+		<definition name="ATTR_REQUEST_GETUIRESOURCE_NAME" value="name"/>
+		<definition type="space"/>
+		<definition name="ATTR_REQUEST_GETENTITYDEFINITIONBYNAMES_NAMES" value="names"/>
+		<definition type="space"/>
+		<definition name="ATTR_REQUEST_GETDATATYPES_EXISTINGARRAY" value="existingArray"/>
+		<definition name="ATTR_REQUEST_GETDATATYPES_REQUESTARRAY" value="requestArray"/>
+		<definition type="space"/>
+		<definition name="ATTR_ENTITYNAME_ATTRIBUTENAME" value="ATTR_ENTITYNAME_ATTRIBUTENAME"/>
+	</attributes>
+
+	<attributes filepath="{{projectsPath}}/Common/src/com/nosliw/common/utils" 
+				packagename="com.nosliw.common.utils" 
+				classname="HAPAttributeConstant" >
+		<definition name="ATTR_SERVICEDATA_CODE" value="code"/>
+		<definition name="ATTR_SERVICEDATA_MESSAGE" value="message"/>
+		<definition name="ATTR_SERVICEDATA_DATA" value="data"/>
+		<definition name="ATTR_SERVICEDATA_METADATA" value="metaData"/>
+		<definition type="space"/>
+		<definition name="ATTR_ENTITYNAME_ATTRIBUTENAME" value="ATTR_ENTITYNAME_ATTRIBUTENAME"/>
+	</attributes>
+
+	<attributes filepath="{{projectsPath}}/UIResource/src/com/nosliw/uiresource" 
+				packagename="com.nosliw.uiresource" 
+				classname="HAPAttributeConstant" >
+		<definition name="ATTR_UIRESOURCECONTEXTINFO_NAME" value="name"/>
+		<definition name="ATTR_UIRESOURCECONTEXTINFO_TYPE" value="type"/>
+		<definition name="ATTR_UIRESOURCECONTEXTINFO_CONFIGURE" value="configure"/>
+		<definition type="space"/>
+		<definition name="ATTR_CONTEXTVARIABLE_NAME" value="name"/>
+		<definition name="ATTR_CONTEXTVARIABLE_PATH" value="path"/>
+		<definition type="space"/>
+		<definition name="ATTR_DATABINDING_NAME" value="name"/>
+		<definition name="ATTR_DATABINDING_VARIABLE" value="variable"/>
+		<definition type="space"/>
+		<definition name="ATTR_UIRESOURCE_ID" value="id"/>
+		<definition name="ATTR_UIRESOURCE_TYPE" value="type"/>
+		<definition name="ATTR_UIRESOURCE_CONTEXTINFOS" value="contextInfos"/>
+		<definition name="ATTR_UIRESOURCE_EXPRESSIONCONTENTS" value="expressionContents"/>
+		<definition name="ATTR_UIRESOURCE_EXPRESSIONATTRIBUTES" value="expressionAttributes"/>
+		<definition name="ATTR_UIRESOURCE_EXPRESSIONTAGATTRIBUTES" value="expressionTagAttributes"/>
+		<definition name="ATTR_UIRESOURCE_ELEMENTEVENTS" value="elementEvents"/>
+		<definition name="ATTR_UIRESOURCE_TAGEVENTS" value="tagEvents"/>
+		<definition name="ATTR_UIRESOURCE_UITAGS" value="uiTags"/>
+		<definition name="ATTR_UIRESOURCE_ATTRIBUTES" value="attributes"/>
+		<definition name="ATTR_UIRESOURCE_HTML" value="html"/>
+		<definition name="ATTR_UIRESOURCE_SCRIPTFACTORYNAME" value="scriptFactoryName"/>
+		<definition name="ATTR_UIRESOURCE_TAGNAME" value="tagName"/>
+		<definition name="ATTR_UIRESOURCE_DATABINDINGS" value="dataBindings"/>
+		<definition name="ATTR_UIRESOURCE_UITAGLIBS" value="uiTagLibs"/>
+		<definition name="ATTR_UIRESOURCE_CONSTANT" value="constant"/>
+		<definition type="space"/>
+		<definition name="ATTR_ELEMENTEVENT_UIID" value="uiId"/>
+		<definition name="ATTR_ELEMENTEVENT_EVENT" value="event"/>
+		<definition name="ATTR_ELEMENTEVENT_FUNCTION" value="function"/>
+		<definition name="ATTR_ELEMENTEVENT_SELECTION" value="selection"/>
+		<definition type="space"/>
+		<definition name="ATTR_UIEXPRESSIONCONTENT_UIID" value="uiId"/>
+		<definition name="ATTR_UIEXPRESSIONCONTENT_UIEXPRESSIONELEMENTS" value="uiExpressionElements"/>
+		<definition name="ATTR_UIEXPRESSIONCONTENT_ATTRIBUTE" value="attribute"/>
+		<definition type="space"/>
+		<definition name="ATTR_UIRESOURCEEXPRESSION_EXPRESSIONID" value="expressionId"/>
+		<definition name="ATTR_UIRESOURCEEXPRESSION_FUNCTIONSCRIPT" value="functionScript"/>
+		<definition name="ATTR_UIRESOURCEEXPRESSION_EXPRESSIONUNITS" value="expressionUnits"/>
+		<definition name="ATTR_UIRESOURCEEXPRESSION_CONTEXTVARIABLES" value="contextVariables"/>
+		<definition name="ATTR_UIRESOURCEEXPRESSION_EXPRESSIONOBJECT" value="expressionObject"/>
+		<definition type="space"/>
+		<definition name="ATTR_ENTITYNAME_ATTRIBUTENAME" value="ATTR_ENTITYNAME_ATTRIBUTENAME"/>
+	</attributes>
+
+
+	<attributes filepath="{{projectsPath}}/ExpressionParser/src/com/nosliw/expression/utils" 
+				packagename="com.nosliw.expression.utils" 
+				classname="HAPAttributeConstant" >
+		<definition name="ATTR_OPERAND_TYPE" value="type"/>
+ 		<definition name="ATTR_OPERAND_SCRIPTRUNNALBE" value="scriptRunnable"/>
+		<definition name="ATTR_OPERAND_OUTDATATYPEINFO" value="outDataTypeInfo"/>
+		<definition name="ATTR_OPERAND_VARIABLE_VARNAME" value="varName"/>
+		<definition name="ATTR_OPERAND_CONSTANT_DATA" value="data"/>
+		<definition name="ATTR_OPERAND_DATAOPERATION_BASEDATA" value="baseData"/>
+		<definition name="ATTR_OPERAND_OPERATION_PARAMETERS" value="parameters"/>
+		<definition name="ATTR_OPERAND_OPERATION_OPERATION" value="operation"/>
+		<definition name="ATTR_OPERAND_OPERATION_BASEDATATYPEINFO" value="baseDataTypeInfo"/>
+		<definition name="ATTR_OPERAND_OPERATION_ATTRIBUTE" value="attribute"/>
+		<definition name="ATTR_OPERAND_PATH_PATH" value="path"/>
+		<definition name="ATTR_OPERAND_PATH_BASEDATA" value="baseData"/>
+ 		<definition name="ATTR_EXPRESSION_EXPRESSION" value="expression"/>
+		<definition name="ATTR_EXPRESSION_OPERAND" value="operand"/>
+		<definition name="ATTR_EXPRESSION_VARIABLESINFO" value="variablesInfo"/>
+		<definition name="ATTR_EXPRESSION_CONSTANTS" value="constant"/>
+ 		<definition name="ATTR_EXPRESSION_SCRIPTRUNNALBE" value="scriptRunnable"/>
+		<definition name="ATTR_EXPRESSION_ALLDATATYPEINFOS" value="allDataTypeInfos"/>
+ 		<definition name="ATTR_EXPRESSIONINFO_EXPRESSION" value="expression"/>
+ 		<definition name="ATTR_EXPRESSIONINFO_CONSTANTS" value="constants"/>
+ 		<definition name="ATTR_EXPRESSIONINFO_VARIABLESINFO" value="variablesInfo"/>
+		<definition type="space"/>
+		<definition name="ATTR_ENTITYNAME_ATTRIBUTENAME" value="ATTR_ENTITYNAME_ATTRIBUTENAME"/>
+	</attributes>
+
+
+	<attributes filepath="{{projectsPath}}/DataDefinition/src/com/nosliw/data/utils" 
+				packagename="com.nosliw.data.utils" 
+				classname="HAPAttributeConstant" >
+		<definition name="ATTR_DATATYPEINFO_CATEGARY" value="categary"/>
+		<definition name="ATTR_DATATYPEINFO_TYPE" value="type"/>
+		<definition name="ATTR_DATATYPEINFO_KEY" value="key"/>
+		<definition name="ATTR_DATATYPEINFO_ENTITYGROUPS" value="entityGroups"/>
+		<definition name="ATTR_DATATYPEINFO_VERSION" value="version"/>
+		<definition name="ATTR_DATATYPEINFO_CHILD_CATEGARY" value="childCategary"/>
+		<definition name="ATTR_DATATYPEINFO_CHILD_TYPE" value="childTYPE"/>
+		<definition name="ATTR_DATATYPEINFO_CHILD_ENTITYGROUPS" value="childEntityGroups"/>
+		<definition type="space"/>
+		<definition name="ATTR_DATATYPE_DATATYPEINFO" value="dataTypeInfo"/>
+		<definition name="ATTR_DATATYPE_PARENT" value="parent"/>
+		<definition name="ATTR_DATATYPE_OPERATIONINFOS" value="operationInfos"/>
+		<definition name="ATTR_DATATYPE_NEWOPERATIONINFOS" value="newOperationInfos"/>
+		<definition name="ATTR_DATATYPE_OPERATIONSCRIPTS" value="operationScripts"/>
+		<definition type="space"/>
+		<definition name="ATTR_DATAOPERATIONINFO_NAME" value="name"/>
+		<definition name="ATTR_DATAOPERATIONINFO_DESCRIPTION" value="description"/>
+		<definition name="ATTR_DATAOPERATIONINFO_CONVERTPATH" value="convertPath"/>
+		<definition name="ATTR_DATAOPERATIONINFO_OUT" value="out"/>
+		<definition name="ATTR_DATAOPERATIONINFO_INS" value="ins"/>
+		<definition name="ATTR_DATAOPERATIONINFO_DEPENDENTDATATYPES" value="dependentDataTypes"/>
+		<definition type="space"/>
+		<definition name="ATTR_DATA_DATATYPEINFO" value="dataTypeInfo"/>
+		<definition name="ATTR_DATA_VALUE" value="value"/>
+		<definition type="space"/>
+		<definition name="ATTR_WRAPER_DATA" value="data"/>
+		<definition name="ATTR_WRAPER_DATATYPE" value="dataType"/>
+		<definition name="ATTR_WRAPER_INFO" value="info"/>
+		<definition type="space"/>
+		<definition name="ATTR_ENTITYNAME_ATTRIBUTENAME" value="ATTR_ENTITYNAME_ATTRIBUTENAME"/>
+	</attributes>
+
+	<attributes filepath="{{projectsPath}}/Entity/src/com/nosliw/entity/utils" 
+				packagename="com.nosliw.entity.utils" 
+				classname="HAPAttributeConstant" >
+		<definition type="space"/>
+		<definition name="ATTR_ENTITYDEFINITION_ENTITYNAME" value="entityName"/>
+		<definition name="ATTR_ENTITYDEFINITION_GROUPS" value="entityGroups"/>
+		<definition name="ATTR_ENTITYDEFINITION_BASECLASS" value="baseClass"/>
+		<definition name="ATTR_ENTITYDEFINITION_ATTRIBUTES" value="attributes"/>
+		<definition name="ATTR_ENTITYDEFINITION_CRITICALENTITYS" value="criticalEntitys"/>
+		<definition name="ATTR_ENTITYDEFINITION_CRITICALATTRVALUE" value="criticalAttrValue"/>
+		
+		<definition type="space"/>
+		
+		<definition name="ATTR_OPERATIONINFO_OPERATIONID" value="operationId"/>
+		<definition name="ATTR_OPERATIONINFO_OPERATION" value="operation"/>
+		<definition name="ATTR_OPERATIONINFO_AUTOCOMMIT" value="isAutoCommit"/>
+		<definition name="ATTR_OPERATIONINFO_VALIDATION" value="isValidation"/>
+		<definition name="ATTR_OPERATIONINFO_SCOPE" value="scope"/>
+		<definition name="ATTR_OPERATIONINFO_ROOTOPERATION" value="rootOperation"/>
+		<definition name="ATTR_OPERATIONINFO_SUBMITABLE" value="submitable"/>
+		<definition name="ATTR_OPERATIONINFO_EXTRA" value="extra"/>
+		<definition name="ATTR_OPERATIONINFO_ENTITYID" value="entityId"/>
+		<definition name="ATTR_OPERATIONINFO_ATTRIBUTEPATH" value="attributePath"/>
+		<definition name="ATTR_OPERATIONINFO_DATA" value="data"/>
+		<definition name="ATTR_OPERATIONINFO_TRANSACTIONID" value="transactionId"/>
+		<definition name="ATTR_OPERATIONINFO_REFERENCEPATH" value="referencePath"/>
+		<definition name="ATTR_OPERATIONINFO_WRAPER" value="wraper"/>
+		<definition name="ATTR_OPERATIONINFO_ENTITYDEFINITION" value="entityDefinition"/>
+		<definition name="ATTR_OPERATIONINFO_ATTRIBUTEDEFINITION" value="attributeDefinition"/>
+		<definition name="ATTR_OPERATIONINFO_ENTITYTYPE" value="entityType"/>
+		<definition name="ATTR_OPERATIONINFO_ELEMENTID" value="elementId"/>
+		<definition name="ATTR_OPERATIONINFO_QUERYNAME" value="queryName"/>
+		<definition name="ATTR_OPERATIONINFO_QUERYENTITYWRAPER" value="queryEntityWraper"/>
+		<definition name="ATTR_OPERATIONINFO_VALUE" value="value"/>
+		<definition name="ATTR_OPERATIONINFO_REFENTITYID" value="refEntityID"/>
+		<definition name="ATTR_OPERATIONINFO_PARMS" value="parms"/>
+		<definition name="ATTR_OPERATIONINFO_ENTITYOPERATIONS" value="entityOperations"/>
+		
+		<definition type="space"/>
+		<definition name="ATTR_ENTITYATTRDEF_NAME" value="name"/>
+		<definition name="ATTR_ENTITYATTRDEF_FULLNAME" value="fullName"/>
+		<definition name="ATTR_ENTITYATTRDEF_CRITICALVALUE" value="criticalValue"/>
+		<definition name="ATTR_ENTITYATTRDEF_DESCRIPTION" value="description"/>
+		<definition name="ATTR_ENTITYATTRDEF_ISEMPTYONINIT" value="isEmptyOnInit"/>
+		<definition name="ATTR_ENTITYATTRDEF_DATATYPEDEFINFO" value="dataTypeDefInfo"/>
+		<definition name="ATTR_ENTITYATTRDEF_VALIDATION" value="validation"/>
+		<definition name="ATTR_ENTITYATTRDEF_RULES" value="rules"/>
+		<definition name="ATTR_ENTITYATTRDEF_OPTIONS" value="options"/>
+		<definition name="ATTR_ENTITYATTRDEF_EVENTS" value="events"/>
+		<definition name="ATTR_ENTITYATTRDEF_ISCRITICAL" value="isCritical"/>
+		<definition name="ATTR_ENTITYATTRDEF_DEFAULTVALUE" value="defaultValue"/>
+		<definition name="ATTR_ENTITYATTRDEF_ELEMENT" value="element"/>
+
+		<definition type="space"/>
+		<definition name="ATTR_ENTITYID_ID" value="id"/>
+		<definition name="ATTR_ENTITYID_ENTITYTYPE" value="entityType"/>
+		<definition name="ATTR_ENTITYID_KEY" value="key"/>
+
+		<definition type="space"/>
+		<definition name="ATTR_DATAWRAPER_CHILDDATATYPE" value="childDataType"/>
+		<definition name="ATTR_DATAWRAPER_ID" value="id"/>
+		<definition name="ATTR_DATAWRAPER_ENTITYID" value="entityID"/>
+		<definition name="ATTR_DATAWRAPER_ATTRPATH" value="attrPath"/>
+		<definition name="ATTR_DATAWRAPER_PARENTENTITYID" value="parentEntityID"/>
+		<definition name="ATTR_DATAWRAPER_ATTRCONFIGURE" value="attrConfigure"/>
+
+		<definition type="space"/>
+		<definition name="ATTR_ENTITYPATH_PATH" value="path"/>
+		<definition name="ATTR_ENTITYPATH_ENTITYID" value="entityID"/>
+		<definition name="ATTR_ENTITYPATH_EXPECTPATH" value="expectPath"/>
+
+		<definition type="space"/>
+		<definition name="ATTR_ENTITYPATHINFO_ENTITYPATH" value="entityPath"/>
+		<definition name="ATTR_ENTITYPATHINFO_PATHSEGMENTS" value="pathSegments"/>
+		<definition name="ATTR_ENTITYPATHINFO_DATA" value="data"/>
+
+		<definition type="space"/>
+		<definition name="ATTR_QUERYENTITYATTRIBUTEWRAPER_ENTITYPATH" value="entityPath"/>
+
+		<definition type="space"/>
+		<definition name="ATTR_QUERYDEFINITION_NAME" value="name"/>
+		<definition name="ATTR_QUERYDEFINITION_EXPRESSIONINFO" value="expressionInfo"/>
+		<definition name="ATTR_QUERYDEFINITION_PROJECTATTRIBUTES" value="projectAttributes"/>
+
+		<definition type="space"/>
+		<definition name="ATTR_QUERYPROJECTATTRIBUTE_ENTITYNAME" value="entityName"/>
+		<definition name="ATTR_QUERYPROJECTATTRIBUTE_ATTRIBUTE" value="attribute"/>
+
+
+		<definition type="space"/>
+		<definition name="ATTR_ENTITYMANAGER_PERSISTANT" value="persistent"/>
+		<definition name="ATTR_ENTITYMANAGER_TRANSACTIONS" value="transactions"/>
+
+		<definition type="space"/>
+		<definition name="ATTR_ENTITYNAME_ATTRIBUTENAME" value="ATTR_ENTITYNAME_ATTRIBUTENAME"/>
+	</attributes>
+
+	<constants filepath="{{projectsPath}}/Common/src/com/nosliw/common/utils" 
+				packagename="com.nosliw.common.utils" 
+				classname="HAPConstant" >
+		<definition name="CONS_SERIALIZATION_JSON" value="json"/>
+		<definition name="CONS_SERIALIZATION_JSON_DATATYPE" value="json_data"/>
+		<definition name="CONS_SERIALIZATION_XML" value="xml"/>
+		<definition name="CONS_SERIALIZATION_TEXT" value="text"/>
+		<definition type="space"/>
+		<definition name="CONS_SERVICECODE_SUCCESS" value="200" type="int"/>
+		<definition name="CONS_SERVICECODE_FAILURE" value="400" type="int"/>
+		<definition name="CONS_SERVICECODE_EXCEPTION" value="5000" type="int"/>
+		
+		<definition name="CONS_ERRORCODE_NEWDATAOPERATION_NOTDEFINED" value="1000" type="int"/>
+		<definition name="CONS_ERRORCODE_DATAOPERATION_NOTDEFINED" value="1005" type="int"/>
+		<definition name="CONS_ERRORCODE_DATAOPERATION_NOTEXIST" value="1010" type="int"/>
+		<definition name="CONS_ERRORCODE_DATATYPE_WRONGTYPE" value="1100" type="int"/>
+		<definition name="CONS_ERRORCODE_DATATYPE_WRONGVERSION" value="1101" type="int"/>
+		<definition name="CONS_ERRORCODE_APPLICATION_INVALIDCLIENTID" value="5201" type="int"/>
+		<definition name="CONS_ERRORCODE_DATA_INVALID" value="1102" type="int"/>
+		<definition name="CONS_SERVICECODE_ENTITYOPERATION_FORWARD" value="100" type="int"/>
+		<definition name="CONS_ERRORCODE_ENTITYOPERATION_AUTOCOMMIT" value="2001" type="int"/>
+		<definition name="CONS_ERRORCODE_ENTITYOPERATION_INVALIDTRANSACTION" value="2002" type="int"/>
+		<definition name="CONS_ERRORCODE_ENTITYOPERATION_INVALIDSCOPE" value="2003" type="int"/>
+		<definition name="CONS_ERRORCODE_REMOTESERVICE_SUSPEND" value="9000" type="int"/>
+		<definition name="CONS_ERRORCODE_REMOTESERVICE_EXCEPTION" value="5000" type="int"/>
+		<definition type="space"/>
+		<definition name="CONS_OPERATIONDEF_SCRIPT_JAVASCRIPT" value="javascript"/>
+		<definition name="CONS_OPERATIONDEF_PATH_VERSION" value="version"/>
+		<definition name="CONS_OPERATIONDEF_PATH_PARENT" value="parent"/>
+		<definition type="space"/>
+		<definition name="CONS_ENTITYOPERATION_SCOPE_UNDEFINED" value="-1" type="int"/>
+		<definition name="CONS_ENTITYOPERATION_SCOPE_GLOBAL" value="1" type="int"/>
+		<definition name="CONS_ENTITYOPERATION_SCOPE_ENTITY" value="2" type="int"/>
+		<definition name="CONS_ENTITYOPERATION_SCOPE_OPERATION" value="3" type="int"/>
+		<definition type="space"/>
+		<definition name="CONS_SYMBOL_KEYWORD" value="#"/>
+		<definition name="CONS_SYMBOL_GROUP" value="@"/>
+		<definition name="CONS_SYMBOL_ENTITYNAME_COMMON" value=".."/>
+		<definition name="CONS_SYMBOL_ENTITYNAME_CURRENT" value="."/>
+		<definition name="CONS_SEPERATOR_ELEMENT" value=";"/>
+		<definition name="CONS_SEPERATOR_PART" value=":"/>
+		<definition name="CONS_SEPERATOR_PATH" value="."/>
+		<definition name="CONS_SEPERATOR_FULLNAME" value="."/>
+		<definition name="CONS_SEPERATOR_DETAIL" value="|"/>
+		<definition name="CONS_SEPERATOR_SURFIX" value="_"/>
+		<definition name="CONS_SEPERATOR_PREFIX" value="_"/>
+		<definition name="CONS_SEPERATOR_ARRAYSTART" value="[" type="string"/>
+		<definition name="CONS_SEPERATOR_ARRAYEND" value="]"/>
+		<definition name="CONS_SEPERATOR_VARSTART" value="{{" type="string"/>
+		<definition name="CONS_SEPERATOR_VAREND" value="}}" type="string"/>
+		<definition name="CONS_SEPERATOR_EXPRESSIONSTART" value="${" type="string"/>
+		<definition name="CONS_SEPERATOR_EXPRESSIONEND" value="}" type="string"/>
+		<definition type="space"/>
+		<definition name="CONS_DATAOPERATION_NEWDATA" value="new"/>
+		<definition name="CONS_DATAOPERATION_TOPARENTTYPE" value="toParentType"/>
+		<definition name="CONS_DATAOPERATION_FROMPARENTTYPE" value="fromParentType"/>
+		<definition name="CONS_DATAOPERATION_TOVERSION" value="toVersion"/>
+		<definition name="CONS_DATAOPERATION_FROMVERSION" value="fromVersion"/>
+		<definition name="CONS_DATAOPERATION_GETCHILD" value="getChild"/>
+		<definition name="CONS_DATAOPERATION_GETCHILDDATATYPE" value="getChildDatatype"/>
+		<definition name="CONS_DATAOPERATION_COMPARE" value="compare"/>
+		<definition name="CONS_DATAOPERATION_PARSELITERAL" value="parseLiteral"/>
+		<definition type="space"/>
+		<definition name="CONS_EXPRESSION_OPERAND_CONSTANT" value="1" type="int"/>
+		<definition name="CONS_EXPRESSION_OPERAND_VARIABLE" value="2" type="int"/>
+		<definition name="CONS_EXPRESSION_OPERAND_DATAOPERATION" value="3" type="int"/>
+		<definition name="CONS_EXPRESSION_OPERAND_DATATYPEOPERATION" value="4" type="int"/>
+		<definition name="CONS_EXPRESSION_OPERAND_ATTRIBUTEOPERATION" value="5" type="int"/>
+		<definition name="CONS_EXPRESSION_OPERAND_PATHOPERATION" value="6" type="int"/>
+		<definition name="CONS_EXPRESSION_OPERAND_NEWOPERATION" value="7" type="int"/>
+		<definition type="space"/>
+		<definition name="CONS_EXPRESSION_VARIABLE_THIS" value="this"/>
+		<definition name="CONS_EXPRESSION_VARIABLE_PARENT" value="parent"/>
+		<definition name="CONS_EXPRESSION_VARIABLE_ENTITY" value="entity"/>
+		<definition name="CONS_EXPRESSION_VARIABLE_DATA1" value="data1"/>
+		<definition name="CONS_EXPRESSION_VARIABLE_DATA2" value="data2"/>
+		<definition type="space"/>
+		<definition name="CONS_DATATYPE_CATEGARY_SIMPLE" value="simple"/>
+		<definition name="CONS_DATATYPE_CATEGARY_BLOCK" value="block"/>
+		<definition name="CONS_DATATYPE_CATEGARY_CONTAINER" value="container"/>
+		<definition name="CONS_DATATYPE_CATEGARY_ENTITY" value="entity"/>
+		<definition name="CONS_DATATYPE_CATEGARY_QUERYENTITY" value="queryentity"/>
+		<definition name="CONS_DATATYPE_CATEGARY_REFERENCE" value="reference"/>
+		<definition name="CONS_DATATYPE_CATEGARY_OBJECT" value="object"/>
+		<definition name="CONS_DATATYPE_CATEGARY_DATA" value="data"/>
+		<definition name="CONS_DATATYPE_CATEGARY_SERVICE" value="service"/>
+		<definition type="space"/>
+		<definition name="CONS_DATATYPE_TYPE_INTEGER" value="integer"/>
+		<definition name="CONS_DATATYPE_TYPE_FLOAT" value="float"/>
+		<definition name="CONS_DATATYPE_TYPE_BOOLEAN" value="boolean"/>
+		<definition name="CONS_DATATYPE_TYPE_STRING" value="string"/>
+		<definition name="CONS_DATATYPE_TYPE_CONTAINER_ENTITYATTRIBUTE" value="normal"/>
+		<definition name="CONS_DATATYPE_TYPE_CONTAINER_OPTIONS" value="options"/>
+		<definition name="CONS_DATATYPE_TYPE_CONTAINER_QUERY" value="query"/>
+		<definition name="CONS_DATATYPE_TYPE_CONTAINER_WRAPPER" value="wrapper"/>
+		<definition name="CONS_DATATYPE_TYPE_REFERENCE_NORMAL" value="normal"/>
+		<definition name="CONS_DATATYPE_TYPE_QUERYENTITY_NORMAL" value="normal"/>
+		<definition type="space"/>
+		<definition name="CONS_UIRESOURCE_TYPE_RESOURCE" value="resource"/>
+		<definition name="CONS_UIRESOURCE_TYPE_TAG" value="tag"/>
+		<definition type="space"/>
+		<definition name="CONS_ENTITY_CRITICALVALUE_OTHER" value="other"/>
+		<definition type="space"/>
+		<definition name="CONS_ATTRIBUTE_PATH_CRITICAL" value="critical"/>
+		<definition name="CONS_ATTRIBUTE_PATH_ELEMENT" value="element"/>
+		<definition name="CONS_ATTRIBUTE_PATH_ENTITY" value="entity"/>
+		<definition name="CONS_ATTRIBUTE_PATH_EACH" value="each"/>
+		<definition type="space"/>
+		<definition name="CONS_OPTIONS_TYPE_STATIC" value="static"/>
+		<definition name="CONS_OPTIONS_TYPE_DYNAMIC" value="dynamic"/>
+		<definition name="CONS_OPTIONS_TYPE_DYNAMIC_EXPRESSION" value="expression"/>
+		<definition name="CONS_OPTIONS_TYPE_DYNAMIC_EXPRESSION_ATTRIBUTE" value="attribute"/>
+		<definition name="CONS_OPTIONS_TYPE_QUERY" value="query"/>
+		<definition name="CONS_OPTIONS_TYPE_COMPLEX" value="complex"/>
+		<definition type="space"/>
+		<definition name="CONS_CONFIGUREITEM_ENTITY_ISEMPTYONINIT" value="emptyOnInit"/>
+		<definition type="space"/>
+		<definition name="CONS_EVENTTYPE_ENTITY_OPERATION" value="1" type="int" description="event when do normal operation on wraper"/>
+		<definition name="CONS_EVENTTYPE_ENTITY_MODIFY" value="2" type="int" description="event when some attribute value of entity is change"/>
+		<definition name="CONS_EVENTTYPE_ENTITY_NEW " value="3" type="int" description="new entity"/>
+		<definition name="CONS_EVENTTYPE_ENTITY_CLEARUP " value="4" type="int" description="when entity is clearup, remove from system"/>
+		<definition name="CONS_EVENT_ENTITY_CHANGE " value="entityChange"/>
+		<definition type="space"/>
+		<definition name="CONS_WRAPECLEARUP_PARM_SCOPE" value="scope"/>
+		<definition type="space"/>
+		<definition name="CONS_SORTING_ORDER_ASCEND" value="0" type="int"/>
+		<definition name="CONS_SORTING_ORDER_DESCEND" value="1" type="int"/>
+		<definition type="space"/>
+		<definition name="CONS_SORTING_TYPE_EXPRESSION" value="expression"/>
+		<definition name="CONS_SORTING_TYPE_ATTRIBUTE" value="attribute"/>
+		<definition name="CONS_SORTING_TYPE_PROGRAMMING" value="programming"/>
+		<definition type="space"/>
+		<definition name="CONS_COMPARE_LESS" value="-1" type="int"/>
+		<definition name="CONS_COMPARE_LARGER" value="1" type="int"/>
+		<definition name="CONS_COMPARE_EQUAL" value="0" type="int"/>
+		<definition type="space"/>
+		<definition name="CONS_SERVICEDATA_METADATA_TRANSACTIONID" value="transactionId"/>
+		<definition type="space"/>
+		
+		<!-- entity operation on attribute -->
+		<definition name="CONS_ENTITYOPERATION_ATTR_ATOM_SET" value="ENTITYOPERATION_ATTR_ATOM_SET"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_ATTR_ATOM_SET" value="101" type="int"/>
+		<definition name="CONS_ENTITYOPERATION_ATTR_CRITICAL_SET" value="ENTITYOPERATION_ATTR_CRITICAL_SET"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_ATTR_CRITICAL_SET" value="112" type="int"/>
+		<definition name="CONS_ENTITYOPERATION_ATTR_ELEMENT_NEW" value="ENTITYOPERATION_ATTR_ELEMENT_NEW"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_ATTR_ELEMENT_NEW" value="113" type="int"/>
+		<definition name="CONS_ENTITYOPERATION_ATTR_ELEMENT_DELETE" value="ENTITYOPERATION_ATTR_ELEMENT_DELETE"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_ATTR_ELEMENT_DELETE" value="153" type="int"/>
+
+		<!-- a group of operation on same entity -->
+		<definition name="CONS_ENTITYOPERATION_ENTITY_OPERATIONS" value="ENTITYOPERATION_ENTITY_OPERATIONS"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_ENTITY_OPERATIONS" value="114" type="int"/>
+
+		<definition name="CONS_ENTITYOPERATION_ENTITY_NEW" value="ENTITYOPERATION_ENTITY_NEW"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_ENTITY_NEW" value="102" type="int"/>
+		<definition name="CONS_ENTITYOPERATION_ENTITY_DELETE" value="ENTITYOPERATION_ENTITY_DELETE"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_ENTITY_DELETE" value="103" type="int"/>
+
+		<definition name="CONS_ENTITYOPERATION_TRANSACTION_START" value="ENTITYOPERATION_TRANSACTION_START"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_TRANSACTION_START" value="104" type="int"/>
+		<definition name="CONS_ENTITYOPERATION_TRANSACTION_COMMIT" value="ENTITYOPERATION_TRANSACTION_COMMIT"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_TRANSACTION_COMMIT" value="105" type="int"/>
+		<definition name="CONS_ENTITYOPERATION_TRANSACTION_ROLLBACK" value="ENTITYOPERATION_TRANSACTION_ROLLBACK"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_TRANSACTION_ROLLBACK" value="106" type="int"/>
+
+		<definition name="CONS_ENTITYOPERATION_QUERY_ENTITY_ADD" value="ENTITYOPERATION_QUERY_ENTITY_ADD"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_QUERY_ENTITY_ADD" value="107" type="int"/>
+		<definition name="CONS_ENTITYOPERATION_QUERY_ENTITY_REMOVE" value="ENTITYOPERATION_QUERY_ENTITY_REMOVE"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_QUERY_ENTITY_REMOVE" value="108" type="int"/>
+		<definition name="CONS_ENTITYOPERATION_QUERY_ENTITY_MODIFY" value="ENTITYOPERATION_QUERY_ENTITY_MODIFY"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_QUERY_ENTITY_MODIFY" value="109" type="int"/>
+
+		<definition name="CONS_ENTITYOPERATION_ATTR_REFERENCE_SET" value="ENTITYOPERATION_ATTR_REFERENCE_SET"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_ATTR_REFERENCE_SET" value="110" type="int"/>
+		<definition name="CONS_ENTITYOPERATION_ENTITYATTR_ADD" value="ENTITYOPERATION_ENTITYATTR_ADD"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_ENTITYATTR_ADD" value="111" type="int"/>
+		<definition name="CONS_ENTITYOPERATION_ENTITYATTR_REMOVE" value="ENTITYOPERATION_ENTITYATTR_REMOVE"/>
+		<definition name="CONS_ENTITYOPERATIONCODE_ENTITYATTR_REMOVE" value="113" type="int"/>
+		<definition type="space"/>
+		<definition name="CONS_UIRESOURCE_ATTRIBUTE_CONTEXT" value="context"/>
+		<definition name="CONS_UIRESOURCE_ATTRIBUTE_UIID" value="nosliwid"/>
+		<definition name="CONS_UIRESOURCE_ATTRIBUTE_EVENT" value="event"/>
+		<definition name="CONS_UIRESOURCE_ATTRIBUTE_DATABINDING" value="data"/>
+		<definition name="CONS_UIRESOURCE_TAG_PLACEHOLDER" value="nosliw"/>
+		<definition name="CONS_UIRESOURCE_TAG_SCRIPT" value="script"/>
+		<definition name="CONS_UIRESOURCE_TAG_CONSTANT" value="constants"/>
+		<definition name="CONS_UIRESOURCE_CUSTOMTAG_TAG_PREFIX" value="nosliw-"/>
+		<definition name="CONS_UIRESOURCE_CUSTOMTAG_KEYATTRIBUTE_PREFIX" value="nosliw-"/>
+		<definition name="CONS_UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX" value="-tag-start"/>
+		<definition name="CONS_UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX" value="-tag-end"/>
+		<definition name="CONS_UIRESOURCE_SCRIPTBLOCK_TOKEN_OPEN" value="{" skip="js"/>
+		<definition name="CONS_UIRESOURCE_SCRIPTBLOCK_TOKEN_CLOSE" value="}" skip="js"/>
+		<definition name="CONS_UIRESOURCE_UIEXPRESSION_TOKEN_OPEN" value="&lt;%="/>
+		<definition name="CONS_UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE" value="%&gt;"/>
+		<definition name="CONS_UIRESOURCE_EXPRESSION_TOKEN_OPEN" value="#|"/>
+		<definition name="CONS_UIRESOURCE_EXPRESSION_TOKEN_CLOSE" value="|#"/>
+		<definition name="CONS_UIRESOURCE_FUNCTION_EXCECUTEEXPRESSION" value="excecuteExpression"/>
+		<definition name="CONS_UIRESOURCE_UIEXPRESSIONFUNCTION_PREFIX" value="expression"/>
+		<definition type="space"/>
+		<definition name="CONS_UIRESOURCEMAN_SETTINGNAME_SCRIPTLOCATION" value="temp.scriptLocation"/>
+		<definition type="space"/>
+		<definition name="CONS_DATATYPEMAN_SETTINGNAME_SCRIPTLOCATION" value="temp.scriptLocation"/>
+		<definition type="space"/>
+		<definition name="CONS_REMOTESERVICE_LOGIN" value="login"/>
+		<definition name="CONS_REMOTESERVICE_GETUIRESOURCE" value="getUIResource"/>
+		<definition name="CONS_REMOTESERVICE_GETDATATYPES" value="getDataTypes"/>
+		<definition name="CONS_REMOTESERVICE_EXECUTEEXPRESSION" value="executeExpression"/>
+		<definition name="CONS_REMOTESERVICE_GETALLENTITYDEFINITIONS" value="getAllEntityDefinitions"/>
+		<definition name="CONS_REMOTESERVICE_GETENTITYDEFINITIONBYNAMES" value="getEntityDefinitionByNames"/>
+		<definition type="space"/>
+		<definition name="CONS_DATAACCESS_ENTITYSTATUS_NORMAL" value="0" type="int"/>
+		<definition name="CONS_DATAACCESS_ENTITYSTATUS_CHANGED" value="1" type="int"/>
+		<definition name="CONS_DATAACCESS_ENTITYSTATUS_NEW" value="2" type="int"/>
+		<definition name="CONS_DATAACCESS_ENTITYSTATUS_DEAD" value="3" type="int"/>
+		<definition type="space"/>
+		<definition name="CONS_APPLICATION_CONFIGURE_DATATYPE" value="dataType"/>
+		<definition name="CONS_APPLICATION_CONFIGURE_ENTITYDEFINITION" value="entityDefinition"/>
+		<definition name="CONS_APPLICATION_CONFIGURE_UIRESOURCE" value="uiResource"/>
+		<definition name="CONS_APPLICATION_CONFIGURE_UITAG" value="uiTag"/>
+		<definition name="CONS_APPLICATION_CONFIGURE_QUERYDEFINITION" value="queryDefinition"/>
+		<definition name="CONS_APPLICATION_CONFIGURE_USERENV" value="userEnv"/>
+		<definition name="CONS_APPLICATION_CONFIGURE_LOGGER" value="logger"/>
+
+		<definition type="space"/>
+		<!-- remote service type -->
+		<definition name="CONS_REMOTESERVICE_TASKTYPE_NORMAL" value="normal"/>
+		<definition name="CONS_REMOTESERVICE_TASKTYPE_GROUP" value="group"/>
+		<definition name="CONS_REMOTESERVICE_TASKTYPE_GROUPCHILD" value="groupchild"/>
+
+		<definition type="space"/>
+		<!-- group task mode -->
+		<definition name="CONS_REMOTESERVICE_GROUPTASK_MODE_ALL" value="all"/>
+		<definition name="CONS_REMOTESERVICE_GROUPTASK_MODE_ALWAYS" value="always"/>
+
+		<definition type="space"/>
+		<definition name="CONS_SERVICENAME_LOGIN" value="login"/>
+		<definition name="CONS_SERVICENAME_SERVICE" value="service"/>
+
+		<definition type="space"/>
+		<definition name="CONS_SERVICECOMMAND_GROUPREQUEST" value="groupRequest"/>
+
+		<definition type="space"/>
+		<definition name="CONS_SCRIPTTYPE_UIRESOURCE" value="uiResource"/>
+		<definition name="CONS_SCRIPTTYPE_DATAOPERATIONS" value="dataOperations"/>
+		<definition name="CONS_SCRIPTTYPE_UITAGS" value="uiTags"/>
+
+		<definition type="space"/>
+		<definition name="CONS_REFERENCE_TYPE_ABSOLUTE" value="0" type="int"/>
+		<definition name="CONS_REFERENCE_TYPE_RELATIVE" value="1" type="int"/>
+
+		<definition type="space"/>
+		<definition name="CONS_TESTRESULT_TYPE_SUITE" value="SUITE"/>
+		<definition name="CONS_TESTRESULT_TYPE_CASE" value="CASE"/>
+		<definition name="CONS_TESTRESULT_TYPE_ITEM" value="ITEM"/>
+
+		<definition type="space"/>
+		<definition name="CONS_TEST_TYPE_SUITE" value="SUITE"/>
+		<definition name="CONS_TEST_TYPE_CASE" value="CASE"/>
+		<definition name="CONS_TEST_TYPE_ITEM" value="ITEM"/>
+
+		<definition type="space"/>
+		<definition name="CONS_CONFIGURATION_DEFAULTBASE" value="default"/>
+
+		<definition type="space"/>
+		<definition name="CONS_STRINGABLE_BASICVALUETYPE_STRING" value="string"/>
+		<definition name="CONS_STRINGABLE_BASICVALUETYPE_BOOLEAN" value="boolean"/>
+		<definition name="CONS_STRINGABLE_BASICVALUETYPE_INTEGER" value="integer"/>
+		<definition name="CONS_STRINGABLE_BASICVALUETYPE_FLOAT" value="float"/>
+		<definition name="CONS_STRINGABLE_BASICVALUETYPE_LIST" value="list"/>
+		<definition name="CONS_STRINGABLE_BASICVALUETYPE_MAP" value="map"/>
+
+		<definition type="space"/>
+		<definition name="CONS_STRINGALBE_VALUEINFO_BASIC" value="basic"/>
+		<definition name="CONS_STRINGALBE_VALUEINFO_ENTITY" value="entity"/>
+		<definition name="CONS_STRINGALBE_VALUEINFO_ENTITYOPTIONS" value="entityOptions"/>
+		<definition name="CONS_STRINGALBE_VALUEINFO_LIST" value="list"/>
+		<definition name="CONS_STRINGALBE_VALUEINFO_MAP" value="map"/>
+
+		<definition type="space"/>
+		<definition name="CONS_STRINGABLE_VALUECATEGARY_BASIC" value="basic"/>
+		<definition name="CONS_STRINGABLE_VALUECATEGARY_MAP" value="map"/>
+		<definition name="CONS_STRINGABLE_VALUECATEGARY_LIST" value="list"/>
+		<definition name="CONS_STRINGABLE_VALUECATEGARY_ENTITY" value="entity"/>
+
+		<definition type="space"/>
+		<definition name="CONS_CATEGARY_NAME" value="CONS_CATEGARY_NAME"/>
+	</constants>
+</root>

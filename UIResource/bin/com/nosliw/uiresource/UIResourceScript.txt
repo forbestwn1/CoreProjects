@@ -1,0 +1,18 @@
+
+if(nosliwScriptFactory==undefined){
+   var nosliwScriptFactory = {};
+}
+
+nosliwScriptFactory.||scriptObjectName|| = function(view){
+	var resourceView = view;
+	return {
+		"script" : {
+			resourceView : resourceView,
+			||script||
+		},
+		"uiexpression" : {
+			||uiexpression||
+		},
+	}
+};
+

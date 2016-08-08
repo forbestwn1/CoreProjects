@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datatypes>
+
+	<datatype categary="simple" type="color" description="this is color data type">
+		<version number="100" factory="com.nosliw.data.library.color.v100.HAPColor" >
+			<parms>
+			</parms>
+		</version>
+	</datatype>
+
+	<datatype categary="simple" type="image" description="this is image data type">
+		<version number="100" factory="com.nosliw.data.library.image.v100.HAPImage" >
+			<parms>
+			</parms>
+		</version>
+	</datatype>
+
+	<datatype categary="simple" type="url" parent="string:simple" description="this is url data type">
+		<version number="100" factory="com.nosliw.data.library.url.v100.HAPUrl" >
+			<parms>
+			</parms>
+		</version>
+	</datatype>
+
+</datatypes>

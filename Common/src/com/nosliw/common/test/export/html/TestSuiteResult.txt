@@ -1,0 +1,16 @@
+<li>||testName||
+	<ul> 
+		<li>Result: ||testResult||</li>
+		<li>Description: ||testDescription||</li>
+		<li>ChildSuites
+			<ul>
+				||childSuites||
+			</ul>
+		</li>
+		<li>ChildCases
+			<ul>
+				||childCases||
+			</ul>
+		</li>
+	</ul>
+</li>

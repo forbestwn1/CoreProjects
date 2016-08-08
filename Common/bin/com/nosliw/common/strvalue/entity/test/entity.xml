@@ -1,0 +1,17 @@
+<entity boolean_property="false" type="type2">
+	<list_basic_property>
+		<element>111</element>
+		<element>222</element>
+		<element>333</element>
+	</list_basic_property>
+
+	<entity_property name="hello" childPro15="777" childPro2="true"/>
+
+	<map_property>
+		<element name="mapelename1" childPro1="1111" childPro2="true"/>
+		<element name="mapelename2" childPro1="2222" childPro2="false"/>
+	</map_property>
+	
+	<entityoptions_property name="optionname1" childPro1="1111" childPro2="true"/>
+	
+</entity>

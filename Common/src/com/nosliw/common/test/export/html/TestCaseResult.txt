@@ -1,0 +1,16 @@
+<li>||testName||
+	<ul> 
+		<li>Result: ||testResult||</li>
+		<li>Description: ||testDescription||</li>
+		<li>Exceptions: 
+			<ul>
+				||testExceptions||
+			</ul>
+		</li>
+		<li>Items: 
+			<ul>
+				||testItems||
+			</ul>
+		</li>
+	</ul>
+</li>

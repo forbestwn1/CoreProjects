@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8" />
+        <title>Test Result</title>
+</head>
+
+<body>
+
+<br>Test Result<br>
+<ul>
+
+||result||
+
+</ul>
+
+</body>
+
+<script>
+</script>
+</html>
