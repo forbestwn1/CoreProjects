@@ -1,4 +1,4 @@
-package com.nosliw.common.strvalue.propertyinfo;
+package com.nosliw.common.strvalue.valueinfo;
 
 import com.nosliw.common.utils.HAPConstant;
 

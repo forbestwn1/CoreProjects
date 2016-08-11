@@ -17,11 +17,8 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 
 	public HAPStringableValueEntity(){
 		this.m_childrens = new LinkedHashMap<String, HAPStringableValue>();
-		this.init();
 	}
 
-	protected void init(){}
-	
 	@Override
 	public Iterator<HAPStringableValue> iterate(){		return this.m_childrens.values().iterator();	}
 	

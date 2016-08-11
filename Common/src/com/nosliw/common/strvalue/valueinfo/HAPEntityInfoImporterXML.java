@@ -1,4 +1,4 @@
-package com.nosliw.common.strvalue.propertyinfo;
+package com.nosliw.common.strvalue.valueinfo;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -15,15 +15,15 @@ import com.nosliw.common.utils.HAPXMLUtility;
 
 public class HAPEntityInfoImporterXML {
 
-	public static HAPValueInfoEntity importFromXML(InputStream xmlStream){
-		HAPValueInfoEntity out = null;
+	public static HAPValueInfo importFromXML(InputStream xmlStream){
+		HAPValueInfo out = null;
 		try{
 			DocumentBuilderFactory DOMfactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder DOMbuilder = DOMfactory.newDocumentBuilder();
 			Document doc = DOMbuilder.parse(xmlStream);
 
 			Element rootEle = doc.getDocumentElement();
-			out = (HAPValueInfoEntity)readValueInfoFromElement(rootEle, HAPConstant.CONS_STRINGALBE_VALUEINFO_ENTITY);
+			out = readValueInfoFromElement(rootEle, null);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -36,7 +36,8 @@ public class HAPEntityInfoImporterXML {
 		HAPValueInfo valueInfo = null;
 		
 		String propertyType = valueInfoType;
-		if(propertyType==null)		propertyType = HAPXMLUtility.getAttributeValue(valueInfoEle, HAPValueInfo.ATTR_TYPE); 
+		if(propertyType==null)		propertyType = HAPXMLUtility.getAttributeValue(valueInfoEle, HAPValueInfo.ATTR_TYPE);
+		if(propertyType==null)      propertyType = HAPConstant.CONS_STRINGALBE_VALUEINFO_ENTITY;
 		
 		if(HAPConstant.CONS_STRINGALBE_VALUEINFO_LIST.equals(propertyType)){
 			valueInfo = new HAPValueInfoList(); 

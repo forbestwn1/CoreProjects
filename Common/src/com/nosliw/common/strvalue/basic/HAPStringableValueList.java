@@ -16,7 +16,7 @@ public class HAPStringableValueList extends HAPStringableValueComplex{
 		this.m_elements = new ArrayList<HAPStringableValue>();
 	}
 	
-	public HAPStringableValue addElement(HAPStringableValue element){
+	public HAPStringableValue addChild(HAPStringableValue element){
 		this.m_elements.add(element);
 		return element;
 	}

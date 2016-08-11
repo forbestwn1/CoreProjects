@@ -1,0 +1,49 @@
+<entity name="entity" description="entity definition" class="com.nosliw.entity.definition.HAPEntityDefinitionCritical">
+
+	<property name="name" type="string" description="entity name"/>
+	<property name="baseClassName" type="string" description="base class name"/>
+	<property name="groups" type="list" description="groups this entity belong to"/>
+
+	<property name="attributes" type="map" key="name" description="all the attributes directly belong to this entity">
+		<child type="entityOptions" key="categary" description="different attributes according to type attribute">
+			<options value="basic" reference="basicAttribute"/>
+			<options value="entity" reference="entityAttribute"/>
+			<options value="container" reference="containerAttribute"/>
+			<options value="reference" reference="referenceAttribute"/>
+		</child>
+	</property>
+
+	<property name="criticalSegments" type="map" key="value">
+		<child reference="entity"/>
+	</property>
+
+	
+
+<property name="list_basic_property" type="list" description="this is list property">
+	<child type="int" description="this is list child property"/>
+</property> 
+
+<property name="entity_property" type="entity" description="this is entity property" class="com.nosliw.common.strvalue.entity.test.HAPStringableEntity" mandatory="true">
+	<property name="name" type="int"/>
+	<property name="childPro1" type="int" default="888"/>
+	<property name="childPro2" type="boolean" default="false"/>
+</property> 
+ 
+<property name="map_property" type="map" description="this is map property" key="name">
+	<child type="entity" class="com.nosliw.common.strvalue.entity.test.HAPStringableEntity" description="this is map child property">
+		<property name="name" type="string"/>
+		<property name="childPro1" type="int" default="888"/>
+		<property name="childPro2" type="boolean" default="false"/>
+	</child>
+</property> 
+
+ <property name="entityoptions_property" type="entityOptions" description="this is entity options property" key="type">
+	<options value="type1" type="entity" description="this is entity property" class="com.nosliw.common.strvalue.entity.test.HAPStringableEntity" mandatory="true">
+		<property name="name" type="int"/>
+		<property name="childPro1" type="int" default="888"/>
+		<property name="childPro2" type="boolean" default="false"/>
+	</options> 
+	<options value="type2" type="string" description="this is entity property" default="defaulttype2"/>
+ </property>
+
+</entity>

@@ -1,4 +1,4 @@
-package com.nosliw.common.strvalue.propertyinfo;
+package com.nosliw.common.strvalue.valueinfo;
 
 import java.io.InputStream;
 
@@ -14,11 +14,14 @@ import com.nosliw.common.strvalue.basic.HAPStringableValueComplex;
 import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.basic.HAPStringableValueList;
 import com.nosliw.common.strvalue.basic.HAPStringableValueMap;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPXMLUtility;
 
 public class HAPStringableEntityImporter {
 
+	private static String TAG_CONTAINERCHILD = "element";
+	
 	public static HAPStringableValueEntity importStringableEntity(InputStream xmlStream, HAPValueInfoEntity entityInfo){
 		HAPStringableValueEntity out = null;
 		try{
@@ -68,10 +71,20 @@ public class HAPStringableEntityImporter {
 		return out;
 	}
 	
+	private static HAPValueInfo getSolidValueInfo(HAPValueInfo valueInfo){
+		HAPValueInfo out = valueInfo;
+		String reference = valueInfo.getBasicAncestorValueString(HAPValueInfo.ATTR_REFERENCE);
+		if(reference!=null){
+			out = HAPValueInfoManager.getInstance().getValueInfo(reference);
+		}
+		return out;
+	}
+	
 	private static HAPStringableValueBasic processBasicValue(String strValue, HAPValueInfoBasic valueInfo){
 		HAPStringableValueBasic out = null;
-		String type = valueInfo.getBasicAncestorValueString(HAPValueInfo.ATTR_TYPE);
-		String defaultValue = valueInfo.getBasicAncestorValueString(HAPValueInfoBasic.ATTR_DEFAULTVALUE);
+		HAPValueInfo basicValueInfo = getSolidValueInfo(valueInfo);
+		String type = basicValueInfo.getBasicAncestorValueString(HAPValueInfo.ATTR_TYPE);
+		String defaultValue = basicValueInfo.getBasicAncestorValueString(HAPValueInfoBasic.ATTR_DEFAULTVALUE);
 		out = new HAPStringableValueBasic(strValue, type, defaultValue);
 		if(out.isEmpty())  out = null;
 		return out;
@@ -93,11 +106,13 @@ public class HAPStringableEntityImporter {
 	}
 
 	private static HAPStringableValue processEntityOptionsValue(Element containerEle, HAPValueInfoEntityOptions valueInfo){
-		String propertyName = valueInfo.getName();
+		HAPValueInfo entityOptionsValueInfo = getSolidValueInfo(valueInfo);
 
-		String optionsKey = valueInfo.getBasicAncestorValueString(HAPValueInfoEntityOptions.ATTR_KEY);
+		String propertyName = entityOptionsValueInfo.getName();
+
+		String optionsKey = entityOptionsValueInfo.getBasicAncestorValueString(HAPValueInfoEntityOptions.ATTR_KEY);
 		String keyValue = HAPXMLUtility.getAttributeValue(containerEle, optionsKey);
-		HAPStringableValueEntity optionsValueInfo = (HAPStringableValueEntity)valueInfo.getChild(HAPValueInfoEntityOptions.ATTR_OPTIONS);
+		HAPStringableValueEntity optionsValueInfo = (HAPStringableValueEntity)entityOptionsValueInfo.getChild(HAPValueInfoEntityOptions.ATTR_OPTIONS);
 		HAPValueInfo optionValueInfo = (HAPValueInfo)optionsValueInfo.getChild(keyValue);
 		String categary = optionValueInfo.getCategary();
 		HAPStringableValue out = null;
@@ -113,12 +128,18 @@ public class HAPStringableEntityImporter {
 	}
 	
 	private static HAPStringableValueMap processMapValue(Element mapEle, HAPValueInfoMap valueInfo){
+		HAPValueInfo mapValueInfo = getSolidValueInfo(valueInfo);
+
 		HAPStringableValueMap map = new HAPStringableValueMap();
-		HAPValueInfo childInfo = (HAPValueInfo)valueInfo.getAncestorByPath(HAPValueInfoMap.ATTR_CHILD);
+		HAPValueInfo childInfo = (HAPValueInfo)mapValueInfo.getAncestorByPath(HAPValueInfoMap.ATTR_CHILD);
 		String childCategary = childInfo.getCategary();
 
-		String mapKey = valueInfo.getBasicAncestorValueString(HAPValueInfoMap.ATTR_KEY);
-		Element[] eleEles = HAPXMLUtility.getMultiChildElementByName(mapEle, "element");
+		String mapKey = mapValueInfo.getBasicAncestorValueString(HAPValueInfoMap.ATTR_KEY);
+
+		String childElementTag = mapValueInfo.getBasicAncestorValueString(HAPValueInfoContainer.ATTR_ELEMENTTAG);
+		if(HAPBasicUtility.isStringEmpty(childElementTag))  childElementTag = TAG_CONTAINERCHILD; 
+		
+		Element[] eleEles = HAPXMLUtility.getMultiChildElementByName(mapEle, childElementTag);
 		for(Element eleEle : eleEles){
 			HAPStringableValue mapElementValue = null;
 			String keyValue = HAPXMLUtility.getAttributeValue(eleEle, mapKey);
@@ -135,12 +156,16 @@ public class HAPStringableEntityImporter {
 	}
 	
 	private static HAPStringableValueList processListValue(Element listEle, HAPValueInfoList valueInfo){
+		HAPValueInfo listValueInfo = getSolidValueInfo(valueInfo);
+
 		HAPStringableValueList list = new HAPStringableValueList();
 		
-		HAPValueInfo childInfo = (HAPValueInfo)valueInfo.getAncestorByPath(HAPValueInfoList.ATTR_CHILD);
+		HAPValueInfo childInfo = (HAPValueInfo)listValueInfo.getAncestorByPath(HAPValueInfoList.ATTR_CHILD);
 		String childCategary = childInfo.getCategary();
-		
-		Element[] eleEles = HAPXMLUtility.getMultiChildElementByName(listEle, "element");
+
+		String childElementTag = listValueInfo.getBasicAncestorValueString(HAPValueInfoContainer.ATTR_ELEMENTTAG);
+		if(HAPBasicUtility.isStringEmpty(childElementTag))  childElementTag = TAG_CONTAINERCHILD; 
+		Element[] eleEles = HAPXMLUtility.getMultiChildElementByName(listEle, childElementTag);
 		for(Element eleEle : eleEles){
 			HAPStringableValue listElementValue = null;
 			if(HAPConstant.CONS_STRINGALBE_VALUEINFO_BASIC.equals(childCategary)){
@@ -150,22 +175,37 @@ public class HAPStringableEntityImporter {
 			else{
 				listElementValue = processComplexValue(eleEle, childInfo);
 			}
-			if(listElementValue!=null)  list.addElement(listElementValue); 
+			if(listElementValue!=null)  list.addChild(listElementValue); 
 		}
 		return list;
 	}
-	
+
 	private static HAPStringableValueEntity processEntityValue(Element entityEle, HAPValueInfoEntity valueInfo){
+		return processEntityValue(entityEle, valueInfo, null);
+	}
+	
+	private static HAPStringableValueEntity processEntityValue(Element entityEle, HAPValueInfoEntity valueInfo, String entityClassName){
 		HAPStringableValueEntity out = null;
 		try{
-			String className = valueInfo.getBasicAncestorValueString(HAPValueInfoEntity.ATTR_CLASSNAME);
-			HAPStringableValueEntity entityPropertiesInfo = (HAPStringableValueEntity)valueInfo.getAncestorByPath(HAPValueInfoEntity.ATTR_PROPERTIES);
-			boolean isMandatory = valueInfo.getBasicAncestorValueBoolean(HAPValueInfoEntity.ATTR_MANDATORY);
+			HAPValueInfo entityValueInfo = (HAPValueInfoEntity)getSolidValueInfo(valueInfo);
 			
-			HAPStringableValueEntity entity = (HAPStringableValueEntity)Class.forName(className).newInstance();
+			String className = entityClassName;
+			if(className==null)		className = entityValueInfo.getBasicAncestorValueString(HAPValueInfoEntity.ATTR_CLASSNAME);
 			
-			for(String property : entityPropertiesInfo.getProperties()){
-				HAPStringableValue entityProperty = readPropertyValueOfEntity(entityEle, (HAPValueInfo)entityPropertiesInfo.getAncestorByPath(property));
+			boolean isMandatory = entityValueInfo.getBasicAncestorValueBoolean(HAPValueInfoEntity.ATTR_MANDATORY);
+			String parentName = entityValueInfo.getBasicAncestorValueString(HAPValueInfoEntity.ATTR_PARENT);
+			
+			HAPStringableValueEntity entity = null;
+			if(parentName!=null){
+				entity = processEntityValue(entityEle, (HAPValueInfoEntity)HAPValueInfoManager.getInstance().getValueInfo(parentName), className);
+			}
+			else{
+				if(className==null)    	className = HAPStringableValueEntity.class.getName();
+				entity = (HAPStringableValueEntity)Class.forName(className).newInstance();
+			}
+			
+			for(String property : entityValueInfo.getProperties()){
+				HAPStringableValue entityProperty = readPropertyValueOfEntity(entityEle, entityValueInfo.getElement(property));
 				entity.addChild(property, entityProperty);
 			}
 			if(!isMandatory && entity.isEmpty())   out = null;
