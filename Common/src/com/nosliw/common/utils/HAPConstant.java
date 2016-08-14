@@ -321,12 +321,13 @@ public class HAPConstant {
 		public static final String CONS_STRINGABLE_BASICVALUETYPE_BOOLEAN = "boolean";
 		public static final String CONS_STRINGABLE_BASICVALUETYPE_INTEGER = "integer";
 		public static final String CONS_STRINGABLE_BASICVALUETYPE_FLOAT = "float";
-		public static final String CONS_STRINGABLE_BASICVALUETYPE_LIST = "list";
+		public static final String CONS_STRINGABLE_BASICVALUETYPE_ARRAY = "array";
 		public static final String CONS_STRINGABLE_BASICVALUETYPE_MAP = "map";
 
 
 
 		public static final String CONS_STRINGALBE_VALUEINFO_BASIC = "basic";
+		public static final String CONS_STRINGALBE_VALUEINFO_REFERENCE = "reference";
 		public static final String CONS_STRINGALBE_VALUEINFO_ENTITY = "entity";
 		public static final String CONS_STRINGALBE_VALUEINFO_ENTITYOPTIONS = "entityOptions";
 		public static final String CONS_STRINGALBE_VALUEINFO_LIST = "list";

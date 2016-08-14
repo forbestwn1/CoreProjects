@@ -11,6 +11,7 @@ import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPDataType;
@@ -44,26 +45,31 @@ public class HAPEntityDefinitionManager extends HAPConfigurableImp implements HA
 	//the same information is stored in DataTypeManager
 	private Map<String, HAPDataType> m_entityDataTypes;  
 	
-	//we can configure the behavior of manager
-	private HAPConfigureImp m_configures;
-	
 	private HAPDataTypeManager m_dataTypeMan;
 	private HAPOptionsDefinitionManager m_optionsMan;
+	private HAPValueInfoManager m_valueInfoMan;
+	
 	
 	public HAPEntityDefinitionManager(HAPConfigureImp configuration, HAPDataTypeManager dataTypeMan, HAPOptionsDefinitionManager optionsMan){
-		super(configuration);
+		super("entitydefintion.properties", configuration);
 		this.m_dataTypeMan = dataTypeMan;
-		this.m_configures = configuration;
 		this.init();
 	}
 
 	public void init(){
+		this.m_valueInfoMan = new HAPValueInfoManager();
+		this.loadValueInfos();
+		
 		this.m_entityDefinitions = new LinkedHashMap<String, HAPEntityDefinitionCritical>();
 		this.m_entityLoaders = new LinkedHashMap<String, HAPEntityDefinitionLoader>();
 		this.m_attributeDefinitions = new LinkedHashMap<String, HAPAttributeDefinition>();
 		this.m_attributeLoaders = new LinkedHashMap<String, HAPAttributeDefinitionLoader>();
 		this.m_groupTypes = new LinkedHashMap<String, Set<HAPEntityDefinitionCritical>>();
 		this.m_entityDataTypes = new LinkedHashMap<String, HAPDataType>();
+	}
+	
+	private void loadValueInfos(){
+		
 	}
 	
 	public void load(){

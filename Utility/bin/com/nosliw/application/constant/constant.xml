@@ -518,11 +518,12 @@
 		<definition name="CONS_STRINGABLE_BASICVALUETYPE_BOOLEAN" value="boolean"/>
 		<definition name="CONS_STRINGABLE_BASICVALUETYPE_INTEGER" value="integer"/>
 		<definition name="CONS_STRINGABLE_BASICVALUETYPE_FLOAT" value="float"/>
-		<definition name="CONS_STRINGABLE_BASICVALUETYPE_LIST" value="list"/>
+		<definition name="CONS_STRINGABLE_BASICVALUETYPE_ARRAY" value="array"/>
 		<definition name="CONS_STRINGABLE_BASICVALUETYPE_MAP" value="map"/>
 
 		<definition type="space"/>
 		<definition name="CONS_STRINGALBE_VALUEINFO_BASIC" value="basic"/>
+		<definition name="CONS_STRINGALBE_VALUEINFO_REFERENCE" value="reference"/>
 		<definition name="CONS_STRINGALBE_VALUEINFO_ENTITY" value="entity"/>
 		<definition name="CONS_STRINGALBE_VALUEINFO_ENTITYOPTIONS" value="entityOptions"/>
 		<definition name="CONS_STRINGALBE_VALUEINFO_LIST" value="list"/>

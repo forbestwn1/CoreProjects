@@ -84,9 +84,9 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 		return out;
 	}
 	
-	public void cloneFrom(HAPStringableValueEntity docEntity){
-		for(String name : docEntity.m_childrens.keySet()){
-			this.m_childrens.put(name, docEntity.m_childrens.get(name).clone());
+	protected void cloneFrom(HAPStringableValueEntity entity){
+		for(String name : entity.m_childrens.keySet()){
+			this.m_childrens.put(name, entity.m_childrens.get(name).clone());
 		}
 	}
 	

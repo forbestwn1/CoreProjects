@@ -44,7 +44,7 @@ public class HAPStringableValueMap extends HAPStringableValueComplex{
 		return out;
 	}
 
-	public void cloneFrom(HAPStringableValueMap map){
+	protected void cloneFrom(HAPStringableValueMap map){
 		for(String name : map.m_elements.keySet()){
 			this.m_elements.put(name, map.m_elements.get(name));
 		}

@@ -119,7 +119,7 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 	public Boolean getBooleanValue() {		return (Boolean)this.getValue(HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_BOOLEAN);	}
 	public Integer getIntegerValue() {		return (Integer)this.getValue(HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_INTEGER);	}
 	public Float getFloatValue() {		return (Float)this.getValue(HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_FLOAT);	}
-	public List<String> getListValue(){		return (List<String>)this.getValue(HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_LIST);	}
+	public List<String> getListValue(){		return (List<String>)this.getValue(HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_ARRAY);	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap) {

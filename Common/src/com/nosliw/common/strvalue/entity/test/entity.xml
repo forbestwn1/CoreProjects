@@ -5,6 +5,12 @@
 		<element>333</element>
 	</list_basic_property>
 
+	<list_reference_property>
+		<element>ref111</element>
+		<element>ref222</element>
+		<element>ref333</element>
+	</list_reference_property>
+
 	<entity_property name="hello" childPro15="777" childPro2="true"/>
 
 	<map_property>

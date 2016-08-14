@@ -4,14 +4,14 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 
 public class HAPPath {
 
-	private String[] m_pathSegs;
+	private String[] m_pathSegs = new String[0];
 	private String m_name;
-	private String m_path;
+	private String m_path = null;
 	
 	public HAPPath(String name, String path, String[] pathSegs){
 		this.m_name = name;
-		this.m_path = path;
-		this.m_pathSegs = pathSegs;
+		if(path!=null)		this.m_path = path;
+		if(pathSegs!=null)  this.m_pathSegs = pathSegs;
 	}
 	
 	public HAPPath(String path){

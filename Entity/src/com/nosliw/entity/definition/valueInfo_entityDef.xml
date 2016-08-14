@@ -1,0 +1,18 @@
+<entity name="entity" description="entity definition" class="com.nosliw.entity.definition.HAPEntityDefinitionCritical">
+	<property name="name" type="string" description="entity name"/>
+	<property name="baseClassName" type="string" description="base class name"/>
+	<property name="groups" type="array" description="groups this entity belong to"/>
+
+	<property name="attributes" type="map" key="name" description="all the attributes directly belong to this entity">
+		<child type="entityOptions" key="categary" description="different attributes according to type attribute">
+			<options value="basic" reference="basicAttribute"/>
+			<options value="entity" reference="entityAttribute"/>
+			<options value="container" reference="containerAttribute"/>
+			<options value="reference" reference="referenceAttribute"/>
+		</child>
+	</property>
+
+	<property name="criticalSegments" type="map" key="value">
+		<child reference="entity"/>
+	</property>
+</entity>

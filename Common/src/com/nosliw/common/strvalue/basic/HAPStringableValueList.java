@@ -45,7 +45,7 @@ public class HAPStringableValueList extends HAPStringableValueComplex{
 		return out;
 	}
 
-	public void cloneFrom(HAPStringableValueList list){
+	protected void cloneFrom(HAPStringableValueList list){
 		for(HAPStringableValue element : list.m_elements){
 			this.m_elements.add(element);
 		}

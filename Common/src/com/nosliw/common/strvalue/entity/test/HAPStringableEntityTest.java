@@ -3,25 +3,35 @@ package com.nosliw.common.strvalue.entity.test;
 import java.io.InputStream;
 
 import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
-import com.nosliw.common.strvalue.valueinfo.HAPEntityInfoImporterXML;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoImporterXML;
 import com.nosliw.common.strvalue.valueinfo.HAPStringableEntityImporter;
-import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfo;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPStringableEntityTest {
 	
 	public static void main(String[] args){
-		InputStream infoInputStream = HAPFileUtility.getInputStreamOnClassPath(HAPStringableEntityTest.class, "entitydef.xml");
+		HAPValueInfoManager valueInfoMan = new HAPValueInfoManager();
 		
-		HAPValueInfoEntity entityInfo = (HAPValueInfoEntity)HAPEntityInfoImporterXML.importFromXML(infoInputStream);
-		entityInfo.resolveByPattern(null);
-		System.out.println(entityInfo.toString());
+		importValueInfoFromFile("entitydef.xml", valueInfoMan);
+		importValueInfoFromFile("reference.xml", valueInfoMan);
+		importValueInfoFromFile("parent.xml", valueInfoMan);
 		
 		InputStream entityInputStream = HAPFileUtility.getInputStreamOnClassPath(HAPStringableEntityTest.class, "entity.xml");
-		HAPStringableValueEntity entity = HAPStringableEntityImporter.importStringableEntity(entityInputStream, entityInfo);
+		HAPStringableValueEntity entity = HAPStringableEntityImporter.importStringableEntity(entityInputStream, "entity", valueInfoMan);
 		entity.resolveByPattern(null);
 		System.out.println(entity.toString());
 	}
 	
+	private static HAPValueInfo importValueInfoFromFile(String xmlFile, HAPValueInfoManager valueInfoMan){
+		InputStream infoInputStream = HAPFileUtility.getInputStreamOnClassPath(HAPStringableEntityTest.class, xmlFile);
+		HAPValueInfo valueInfo = HAPValueInfoImporterXML.importFromXML(infoInputStream, valueInfoMan);
+		valueInfo.resolveByPattern(null);
+		valueInfoMan.registerValueInfo(valueInfo);
+		System.out.println("********************************"+ valueInfo.getName() +"*******************************");
+		System.out.println(valueInfo.toString());
+		return valueInfo;
+	}
 	
 }

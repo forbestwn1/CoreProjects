@@ -76,7 +76,7 @@ public class HAPStringResolveUtility {
 			else if(type.equals(HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_BOOLEAN))		out = Boolean.valueOf(strValue);
 			else if(type.equals(HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_INTEGER))  out = Integer.valueOf(strValue);
 			else if(type.equals(HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_FLOAT))   out = Float.valueOf(strValue);
-			else if(type.equals(HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_LIST)){
+			else if(type.equals(HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_ARRAY)){
 				//if the string value represent array, build array instead
 				if(strValue.startsWith(HAPConstant.CONS_SEPERATOR_ARRAYSTART) && strValue.endsWith(HAPConstant.CONS_SEPERATOR_ARRAYEND)){
 					//value is array
@@ -114,7 +114,7 @@ public class HAPStringResolveUtility {
 				if(i<listValue.size()-1)   listStr.append(HAPConstant.CONS_SEPERATOR_ELEMENT);  
 			}
 			listStr.append(HAPConstant.CONS_SEPERATOR_ARRAYEND);
-			out = new HAPStringableValueBasic(new HAPResolvableString(listStr.toString(), true), HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_LIST);
+			out = new HAPStringableValueBasic(new HAPResolvableString(listStr.toString(), true), HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_ARRAY);
 		}
 		return out;
 	}

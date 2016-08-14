@@ -1,9 +1,15 @@
-<entity description="this is entity property" class="com.nosliw.common.strvalue.entity.test.HAPStringableEntity">
+<entity parent="parent" description="this is entity property" class="com.nosliw.common.strvalue.entity.test.HAPStringableEntity">
 
 <property name="boolean_property" type="boolean" description="this is boolean property" default="true"/>
 
+<property name="reference_property" reference="intreference"/>
+
 <property name="list_basic_property" type="list" description="this is list property">
 	<child type="int" description="this is list child property"/>
+</property> 
+
+<property name="list_reference_property" type="list" description="this is list property">
+	<child reference="intreference" description="this is list child property"/>
 </property> 
 
 <property name="entity_property" type="entity" description="this is entity property" class="com.nosliw.common.strvalue.entity.test.HAPStringableEntity" mandatory="true">

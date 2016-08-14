@@ -72,10 +72,6 @@ public class HAPXMLUtility {
 	}
 	
 	public static String getAttributeValue(Element element, String attr){
-		if(element==null || attr==null){
-			int kkkk = 5555;
-			kkkk++;
-		}
 		if(element.hasAttribute(attr)){
 			return element.getAttribute(attr);
 		}

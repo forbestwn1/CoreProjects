@@ -12,7 +12,6 @@ import com.nosliw.common.utils.HAPBasicUtility;
 public abstract class HAPStringableValueComplex extends HAPStringableValue{
 
 	public HAPStringableValueComplex(){
-		this.init();
 	}
 	
 	public abstract Iterator<HAPStringableValue> iterate();

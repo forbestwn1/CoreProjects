@@ -1,0 +1,5 @@
+<parent description="this is parent entity" class="com.nosliw.common.strvalue.entity.test.HAPStringableEntity">
+
+	<property name="parent_reference_property" reference="intreference"/>
+
+</parent>
