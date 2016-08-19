@@ -1,8 +1,12 @@
 package com.nosliw.common.strvalue.basic;
 
 import java.util.List;
+import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.interpolate.HAPInterpolateExpressionProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
@@ -10,8 +14,36 @@ import com.nosliw.common.pattern.HAPPatternManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
 
-public class HAPStringResolveUtility {
+public class HAPStringableValueUtility {
 
+	private static final String PREFIX_ENTITYPROPERTY = "ENTITY_PROPERTY_";
+	
+	public static Set<String> getExpectedAttributesInEntity(Class entityClass){
+		Set<String> out = new HashSet<String>();
+		getExpectedAttributesInEntity(entityClass, out);
+		return out;
+	}
+	
+	private static void getExpectedAttributesInEntity(Class entityClass, Set<String> attrs){
+		if(HAPStringableValueEntity.class.isAssignableFrom(entityClass)){
+			Class superClass = entityClass.getSuperclass();
+			getExpectedAttributesInEntity(superClass, attrs);
+			
+			Field[] fields = entityClass.getDeclaredFields();
+			for(Field field : fields){
+				String fieldName = field.getName();
+				if(fieldName.startsWith(PREFIX_ENTITYPROPERTY)){
+					attrs.add(fieldName.substring(PREFIX_ENTITYPROPERTY.length()));
+				}
+			}
+		}
+	}
+	
+	public static boolean isStringableValueEmpty(HAPStringableValue value){
+		if(value==null)  return true;
+		return value.isEmpty();
+	}
+	
 	public static HAPStringableValueComplex newStringableValueComplex(String type){
 		HAPStringableValueComplex out = null;
 		if(HAPConstant.CONS_STRINGABLE_VALUECATEGARY_ENTITY.equals(type)){

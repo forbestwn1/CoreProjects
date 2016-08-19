@@ -321,7 +321,7 @@ public class HAPConstant {
 		public static final String CONS_STRINGABLE_BASICVALUETYPE_BOOLEAN = "boolean";
 		public static final String CONS_STRINGABLE_BASICVALUETYPE_INTEGER = "integer";
 		public static final String CONS_STRINGABLE_BASICVALUETYPE_FLOAT = "float";
-		public static final String CONS_STRINGABLE_BASICVALUETYPE_ARRAY = "array";
+		public static final String CONS_STRINGABLE_BASICVALUETYPE_ARRAY = "array1";
 		public static final String CONS_STRINGABLE_BASICVALUETYPE_MAP = "map";
 
 

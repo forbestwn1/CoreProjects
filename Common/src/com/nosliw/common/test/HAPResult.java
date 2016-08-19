@@ -20,7 +20,7 @@ public abstract class HAPResult extends HAPStringableJson{
 		return this.m_testDescription;
 	}
 	
-	public String getName(){  return this.getTestDescription().getBasicAncestorValueString(HAPTestDescription.ATTR_NAME); }
+	public String getName(){  return this.getTestDescription().getBasicAncestorValueString(HAPTestDescription.ENTITY_PROPERTY_NAME); }
 
 	public Boolean isSuccess(){	return this.m_result;	}
 	protected void setFail(){  this.m_result = false; }

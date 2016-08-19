@@ -8,10 +8,10 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoEntity extends HAPValueInfoComplex{
 
-	public static final String ATTR_CLASSNAME = "class";
-	public static final String ATTR_MANDATORY = "mandatory";
-	public static final String ATTR_PROPERTIES = "property";
-	public static final String ATTR_PARENT = "parent";
+	public static final String ENTITY_PROPERTY_CLASSNAME = "class";
+	public static final String ENTITY_PROPERTY_MANDATORY = "mandatory";
+	public static final String ENTITY_PROPERTY_PROPERTIES = "property";
+	public static final String ENTITY_PROPERTY_PARENT = "parent";
 	
 	private HAPValueInfoEntity m_solidValueInfo;
 	
@@ -34,16 +34,16 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 				this.m_solidValueInfo = parentValueInfo.clone();
 				
 				for(String property : this.getProperties()){
-					if(HAPValueInfoEntity.ATTR_PROPERTIES.equals(property)){
+					if(HAPValueInfoEntity.ENTITY_PROPERTY_PROPERTIES.equals(property)){
 						for(String entityPro : this.getEntityProperties()){
 							this.m_solidValueInfo.updateEntityProperty(entityPro, this.getPropertyInfo(entityPro).clone());
 						}
 					}
-					else if(HAPValueInfoEntity.ATTR_PARENT.equals(property)){
+					else if(HAPValueInfoEntity.ENTITY_PROPERTY_PARENT.equals(property)){
 						
 					}
 					else{
-						this.m_solidValueInfo.addChild(property, this.getChild(property).clone());
+						this.m_solidValueInfo.updateChild(property, this.getChild(property).clone());
 					}
 				}
 			}
@@ -57,7 +57,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	@Override
 	public void init(){
 		super.init();
-		this.updateBasicChildValue(ATTR_MANDATORY, true);
+		this.updateBasicChildValue(ENTITY_PROPERTY_MANDATORY, true);
 	}
 	
 	public HAPValueInfo getPropertyInfo(String name){
@@ -70,14 +70,14 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 		return properties.getProperties();
 	}
 	
-	private HAPStringableValueEntity getPropertiesEntity(){		return (HAPStringableValueEntity)this.getChild(ATTR_PROPERTIES);	}
+	private HAPStringableValueEntity getPropertiesEntity(){		return (HAPStringableValueEntity)this.getChild(ENTITY_PROPERTY_PROPERTIES);	}
 	
 	private void updateEntityProperty(String name, HAPValueInfo valueInfo){
-		this.getPropertiesEntity().addChild(name, valueInfo);
+		this.getPropertiesEntity().updateChild(name, valueInfo);
 	}
 	
 	private String getParent(){
-		return this.getBasicAncestorValueString(ATTR_PARENT);
+		return this.getBasicAncestorValueString(ENTITY_PROPERTY_PARENT);
 	}
 	
 	private HAPValueInfoEntity getParentEntityValueInfo(){

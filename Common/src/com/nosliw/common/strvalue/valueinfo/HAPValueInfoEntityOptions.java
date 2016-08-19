@@ -5,9 +5,9 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoEntityOptions extends HAPValueInfo{
 
-	public static final String ATTR_KEY = "key";
-	public static final String ATTR_VALUE = "value";
-	public static final String ATTR_OPTIONS = "options";
+	public static final String ENTITY_PROPERTY_KEY = "key";
+	public static final String ENTITY_PROPERTY_VALUE = "value";
+	public static final String ENTITY_PROPERTY_OPTIONS = "options";
 	
 	private HAPValueInfoEntityOptions(){}
 
@@ -18,7 +18,7 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 	}
 
 	public HAPValueInfo getOptionsValueInfo(String value){
-		HAPStringableValueEntity optionsValueInfo = (HAPStringableValueEntity)this.getChild(HAPValueInfoEntityOptions.ATTR_OPTIONS);
+		HAPStringableValueEntity optionsValueInfo = (HAPStringableValueEntity)this.getChild(HAPValueInfoEntityOptions.ENTITY_PROPERTY_OPTIONS);
 		return (HAPValueInfo)optionsValueInfo.getChild(value);
 	}
 	

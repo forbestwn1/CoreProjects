@@ -47,7 +47,7 @@ public class HAPResolvableString implements HAPResolvable{
 	public HAPInterpolateOutput resolveByPattern(Map<String, Object> patternDatas){
 		HAPInterpolateOutput out = null;
 		if(patternDatas!=null){
-			out = HAPStringResolveUtility.resolveByPatterns(this.m_value, patternDatas);
+			out = HAPStringableValueUtility.resolveByPatterns(this.m_value, patternDatas);
 			this.m_resolvedValue = out.getOutput();
 			this.m_resolved = out.isResolved();
 		}
@@ -64,7 +64,7 @@ public class HAPResolvableString implements HAPResolvable{
 	public HAPInterpolateOutput resolveByInterpolateProcessor(Map<HAPInterpolateExpressionProcessor, Object> interpolateDatas){
 		HAPInterpolateOutput out = null;
 		if(interpolateDatas!=null){
-			out = HAPStringResolveUtility.resolveByInterpolateProcessors(this.m_value, interpolateDatas);
+			out = HAPStringableValueUtility.resolveByInterpolateProcessors(this.m_value, interpolateDatas);
 			this.m_resolvedValue = out.getOutput();
 			this.m_resolved = out.isResolved();
 		}

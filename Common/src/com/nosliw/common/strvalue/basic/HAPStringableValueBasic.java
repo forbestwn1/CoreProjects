@@ -63,7 +63,7 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 	}
 	
 	public void setValue(Object value){
-		HAPStringableValueBasic stringValue = HAPStringResolveUtility.valueToString(value);
+		HAPStringableValueBasic stringValue = HAPStringableValueUtility.valueToString(value);
 		if(value!=null){
 			this.m_strValue = stringValue.m_strValue;
 			this.m_type = stringValue.m_type;
@@ -98,7 +98,7 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 		//if m_value is not solved, return null
 		if(!this.m_strValue.isStringResolved())  return null;
 		
-		Object out = HAPStringResolveUtility.stringToValue(m_strValue.getValue(), type);
+		Object out = HAPStringableValueUtility.stringToValue(m_strValue.getValue(), type);
 		if(out!=null)  this.resolved(out, type);
 		return out;
 	}

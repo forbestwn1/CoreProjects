@@ -3,6 +3,7 @@ package com.nosliw.common.strvalue.basic;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -15,9 +16,10 @@ public class HAPStringableValueMap extends HAPStringableValueComplex{
 		this.m_elements = new LinkedHashMap<String, HAPStringableValue>();
 	}
 	
-	public HAPStringableValue addElement(String name, HAPStringableValue element){
-		this.m_elements.put(name, element);
-		return element;
+	public HAPStringableValue updateChild(String name, HAPStringableValue child){
+		if(child==null)  this.m_elements.remove(name);
+		else  this.m_elements.put(name, child);
+		return child;
 	}
 	
 	@Override
@@ -37,6 +39,8 @@ public class HAPStringableValueMap extends HAPStringableValueComplex{
 		return m_elements.get(Integer.valueOf(name));
 	}
 
+	public Set<String> getKeys(){  return this.m_elements.keySet(); }
+	
 	@Override
 	public HAPStringableValue clone() {
 		HAPStringableValueMap out = new HAPStringableValueMap();

@@ -19,7 +19,7 @@ public class HAPStringableEntityTest {
 		importValueInfoFromFile("parent.xml", valueInfoMan);
 		
 		InputStream entityInputStream = HAPFileUtility.getInputStreamOnClassPath(HAPStringableEntityTest.class, "entity.xml");
-		HAPStringableValueEntity entity = HAPStringableEntityImporter.importStringableEntity(entityInputStream, "entity", valueInfoMan);
+		HAPStringableValueEntity entity = HAPStringableEntityImporter.readRootEntity(entityInputStream, valueInfoMan);
 		entity.resolveByPattern(null);
 		System.out.println(entity.toString());
 	}

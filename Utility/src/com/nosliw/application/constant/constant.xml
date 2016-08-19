@@ -522,18 +522,18 @@
 		<definition name="CONS_STRINGABLE_BASICVALUETYPE_MAP" value="map"/>
 
 		<definition type="space"/>
+		<definition name="CONS_STRINGABLE_VALUECATEGARY_BASIC" value="basic"/>
+		<definition name="CONS_STRINGABLE_VALUECATEGARY_MAP" value="map"/>
+		<definition name="CONS_STRINGABLE_VALUECATEGARY_LIST" value="list"/>
+		<definition name="CONS_STRINGABLE_VALUECATEGARY_ENTITY" value="entity"/>
+
+		<definition type="space"/>
 		<definition name="CONS_STRINGALBE_VALUEINFO_BASIC" value="basic"/>
 		<definition name="CONS_STRINGALBE_VALUEINFO_REFERENCE" value="reference"/>
 		<definition name="CONS_STRINGALBE_VALUEINFO_ENTITY" value="entity"/>
 		<definition name="CONS_STRINGALBE_VALUEINFO_ENTITYOPTIONS" value="entityOptions"/>
 		<definition name="CONS_STRINGALBE_VALUEINFO_LIST" value="list"/>
 		<definition name="CONS_STRINGALBE_VALUEINFO_MAP" value="map"/>
-
-		<definition type="space"/>
-		<definition name="CONS_STRINGABLE_VALUECATEGARY_BASIC" value="basic"/>
-		<definition name="CONS_STRINGABLE_VALUECATEGARY_MAP" value="map"/>
-		<definition name="CONS_STRINGABLE_VALUECATEGARY_LIST" value="list"/>
-		<definition name="CONS_STRINGABLE_VALUECATEGARY_ENTITY" value="entity"/>
 
 		<definition type="space"/>
 		<definition name="CONS_CATEGARY_NAME" value="CONS_CATEGARY_NAME"/>

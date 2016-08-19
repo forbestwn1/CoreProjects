@@ -1,17 +1,14 @@
 package com.nosliw.entity.definition;
 
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPStringableJson;
+import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.basic.HAPStringableValueEntityBasic;
+import com.nosliw.common.strvalue.basic.HAPStringableValueMap;
+import com.nosliw.common.strvalue.basic.HAPStringableValueUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
-import com.nosliw.entity.utils.HAPAttributeConstant;
 
 /*
  * this class is the definition of an entity segment
@@ -40,29 +37,19 @@ import com.nosliw.entity.utils.HAPAttributeConstant;
  *      null : invalid or unknown
  *  provide method to create another entity definition based on critical attribute value
  */
-public class HAPEntityDefinitionSegment extends HAPStringableJson{
-	//store all the document related information, for instance, name, description
-	private HAPStringableValueEntityBasic m_entityDescription;
-	
-	//groups this entity belong to
-	protected Set<String> m_groups;
-	//java class name for entity object
-	protected String m_baseClassName;
-
-	//entity attribute information
-	protected Map<String, HAPAttributeDefinition> m_attributeDefs; 
+public class HAPEntityDefinitionSegment extends HAPStringableValueEntityBasic{
+	public static String ENTITY_PROPERTY_GROUPS = "groups";
+	public static String ENTITY_PROPERTY_BASECLASS = "baseClass";
+	public static String ENTITY_PROPERTY_ATTRIBUTES = "attributes";
 	
 	private HAPEntityDefinitionManager m_entityDefinitionMan;
+
+	public HAPEntityDefinitionSegment(){
+	}
+
+	
 	
 	public HAPEntityDefinitionSegment(String name, String baseClassName, Set<String> groups, HAPEntityDefinitionManager entityDefinitionMan){
-		this.m_attributeDefs = new LinkedHashMap<String, HAPAttributeDefinition>();
-		this.m_entityDescription = new HAPStringableValueEntityBasic("", name);
-		this.m_groups = new HashSet<String>();
-		if(groups!=null)		this.m_groups.addAll(groups);
-
-		if(!HAPBasicUtility.isStringEmpty(baseClassName))	this.m_baseClassName = baseClassName;
-		else  this.m_baseClassName=this.getEntityDefinitionManager().getDefaultClassName(); 
-
 		this.m_entityDefinitionMan = entityDefinitionMan;
 	}	
 	
@@ -76,46 +63,34 @@ public class HAPEntityDefinitionSegment extends HAPStringableJson{
 	}
 	
 	
-	/******************************************   Serialization  *********************************************/
-	
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap){
-		Map<String, String> attrJsonMap = new LinkedHashMap<String, String>();
-		for(String attrName : this.getAttributeNames()){
-			HAPAttributeDefinition attrDef = this.getAttributeDefinitionByPath(attrName);
-			attrJsonMap.put(attrName, attrDef.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
-		}
-		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYDEFINITION_ATTRIBUTES, HAPJsonUtility.getMapJson(attrJsonMap));
-		
-		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYDEFINITION_ENTITYNAME, this.getEntityName());
-		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYDEFINITION_GROUPS, HAPJsonUtility.getSetObjectJson(m_groups));
-		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYDEFINITION_BASECLASS, this.getBaseClassName());
-	}
-	
 	/******************************************   Attribute  *********************************************/
 	/*
 	 * get entity's base attributes names, not including those come with the subclass attribute
 	 */
-	public Set<String> getAttributeNames() {return this.m_attributeDefs.keySet();}
+	public Set<String> getAttributeNames() {
+		HAPStringableValueMap attributes = this.getAttributeDefinitions();
+		return attributes.getKeys();
+	}
 
 	/*
 	 * get entity's base attribute definitions info, not including those come with the subclass attribute
 	 */
-	public Map<String, HAPAttributeDefinition> getAttributeDefinitions() {	return this.m_attributeDefs;}
+	public HAPStringableValueMap getAttributeDefinitions() {	return (HAPStringableValueMap)this.getChild(ENTITY_PROPERTY_ATTRIBUTES);}
 	
 	protected void copyAttributeDefinition(HAPAttributeDefinition defin){
 		HAPAttributeDefinition def1 = defin.cloneDefinition(this);
-		this.m_attributeDefs.put(def1.getName(), def1);
+		this.addAttributeDefinition(def1);
 	}
 
 	protected void copyAttributeDefinitions(Set<HAPAttributeDefinition> defins) {
 		for(HAPAttributeDefinition def: defins)		this.copyAttributeDefinition(def);
 	}
 
-	public void addAttributeDefinition(HAPAttributeDefinition defin){	this.m_attributeDefs.put(defin.getName(), defin);	}
+	public void addAttributeDefinition(HAPAttributeDefinition defin){	this.getAttributeDefinitions().updateChild(defin.getName(), defin);	}
 	
-	public void removeAttributeDefinition(String attrName) {this.m_attributeDefs.remove(attrName);	}
+	public void removeAttributeDefinition(String attrName) {	this.getAttributeDefinitions().updateChild(attrName, null);	}
 	
-	public HAPAttributeDefinition getAttributeDefinitionByName(String attrName){return this.m_attributeDefs.get(attrName);}
+	public HAPAttributeDefinition getAttributeDefinitionByName(String attrName){	return (HAPAttributeDefinition)this.getAttributeDefinitions().getChild(attrName);	}
 	
 	/*
 	 * get attribute definitions by attribute path
@@ -138,39 +113,42 @@ public class HAPEntityDefinitionSegment extends HAPStringableJson{
 	}
 
 	/******************************************   Basic Information  *********************************************/
-	public HAPStringableValueEntityBasic getEntityDescription(){ return this.m_entityDescription; }
+	public String getEntityName(){return this.getName();}
 	
-	public String getEntityName(){return this.getEntityDescription().getName();}
-	
-	public Set<String> getGroups() {	return this.m_groups;	}
+	public List<String> getGroups() {	return this.getBasicAncestorValueArray(ENTITY_PROPERTY_GROUPS);	}
 
 	/* get defined class name for this entity
 	 * if not defined, then use method getDefaultClassName in EntityDefinitionManager instead 
 	 */
-	public String getBaseClassName() {	return this.m_baseClassName;	}
+	public String getBaseClassName() {	return this.getBasicAncestorValueString(ENTITY_PROPERTY_BASECLASS);	}
 
 	protected HAPEntityDefinitionManager getEntityDefinitionManager(){return this.m_entityDefinitionMan;}
 	
 	/******************************************   Clone  *********************************************/
-	public HAPEntityDefinitionSegment cloneDefinition(){
+	public HAPEntityDefinitionSegment cloneEntityDefinitionSegment(){
 		HAPEntityDefinitionSegment out = new HAPEntityDefinitionSegment(this.getEntityDefinitionManager());
 		out.cloneFrom(this);
 		return out;
 	}
 
 	protected void cloneFrom(HAPEntityDefinitionSegment entityDef){
+		super.cloneFrom(entityDef);
 		this.m_entityDefinitionMan = entityDef.m_entityDefinitionMan;
-		this.m_entityDescription.cloneFrom(entityDef.getEntityDescription());
-		this.getEntityDescription().setName(entityDef.getEntityDescription().getName());
-		this.m_groups.addAll(entityDef.m_groups);
-		this.m_baseClassName = entityDef.getBaseClassName();
-		this.m_attributeDefs.putAll(entityDef.m_attributeDefs);
 	}
 
 	public HAPEntityDefinitionSegment hardMerge(HAPEntityDefinitionSegment entityDefSegment){
-		HAPEntityDefinitionSegment entityDef = this.cloneDefinition(); 
-		entityDef.m_attributeDefs.putAll(entityDefSegment.getAttributeDefinitions());
-		return entityDef;
+		HAPEntityDefinitionSegment out = this.cloneEntityDefinitionSegment();
+		Set<String> attrs = HAPStringableValueUtility.getExpectedAttributesInEntity(HAPEntityDefinitionSegment.class);
+		
+		
+		
+		out.hardMergeExcept(entityDefSegment, attrs)
+		
+		Set<String> attrNames = entityDefSegment.getAttributeNames();
+		for(String attrName : attrNames){
+			entityDef.addAttributeDefinition(entityDefSegment.getAttributeDefinitionByName(attrName).cloneDefinition(entityDef));
+		}
+		return out;
 	}
 	
 	/******************************************   Loader  *********************************************/

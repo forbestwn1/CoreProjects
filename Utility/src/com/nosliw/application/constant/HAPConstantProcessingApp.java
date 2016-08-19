@@ -19,7 +19,7 @@ import com.nosliw.common.interpolate.HAPInterpolateUtility;
 import com.nosliw.common.interpolate.HAPPatternProcessorDocVariable;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.pattern.HAPPatternManager;
-import com.nosliw.common.strvalue.basic.HAPStringResolveUtility;
+import com.nosliw.common.strvalue.basic.HAPStringableValueUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;

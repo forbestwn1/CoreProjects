@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoMap extends HAPValueInfoContainer{
 
-	public static final String ATTR_KEY = "key";
+	public static final String ENTITY_PROPERTY_KEY = "key";
 	
 	private HAPValueInfoMap(){}
 	
@@ -27,7 +27,7 @@ public class HAPValueInfoMap extends HAPValueInfoContainer{
 	@Override
 	public void init(){
 		super.init();
-		this.updateBasicChild(ATTR_KEY, "name");
+		this.updateBasicChild(ENTITY_PROPERTY_KEY, "name");
 	}
 
 }

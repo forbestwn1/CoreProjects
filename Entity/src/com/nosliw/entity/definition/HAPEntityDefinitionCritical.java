@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.strvalue.basic.HAPStringableValueMap;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -28,13 +29,14 @@ import com.nosliw.entity.utils.HAPEntityUtility;
 
 public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 
+	public static final String ATTR_CRITICALSEGMENTS = "criticalSegments";
+	public static final String ATTR_OTHERCRITICALSEGMENTS = "otherCriticalSegment";
+	
 	//critical attribute name/definition
 	protected String m_criticalAttribute;
 	private HAPAttributeDefinitionAtom m_criticalAttrDefinition;
-	//entity attributes parts determined by critical value
-	protected Map<String, HAPEntityDefinitionSegment> m_criticalEntitySegmentsValue = null;
-	//other critical value: when have no value match within m_criticalEntitys with critical attribute value, then use other part  
-	protected HAPEntityDefinitionSegment m_criticalEntitySegmentOther = null;
+
+	public HAPEntityDefinitionCritical(){}
 	
 	public HAPEntityDefinitionCritical(String name, String baseClassName, Set<String> groups, HAPEntityDefinitionManager entityDefinitionMan){
 		super(name, baseClassName, groups, entityDefinitionMan);
@@ -65,17 +67,19 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 	 */
 	public HAPAttributeDefinitionAtom getCriticalAttributeDefinition(){ 	return m_criticalAttrDefinition;	}
 
-	public HAPEntityDefinitionSegment getCriticalEntitySegmentOther(){return this.m_criticalEntitySegmentOther;}
+	public HAPEntityDefinitionSegment getCriticalEntitySegmentOther(){return (HAPEntityDefinitionSegment)this.getChild(ATTR_OTHERCRITICALSEGMENTS);}
 	public void setCriticalEntitySegmentOther(HAPEntityDefinitionSegment other){
 		this.setupCriticalEntitySegment(other);
-		this.m_criticalEntitySegmentOther=other;
+		this.updateChild(ATTR_OTHERCRITICALSEGMENTS, other);
 	}
 
 	public void addCriticalEntitySegmentValue(String value, HAPEntityDefinitionSegment criticalEntity){
 		this.setupCriticalEntitySegment(criticalEntity);
-		this.m_criticalEntitySegmentsValue.put(value, criticalEntity);
+		this.getCriticalEntitySegments().updateChild(value, criticalEntity);
 	}
-	public HAPEntityDefinitionSegment getCriticalEntity(String value){return this.m_criticalEntitySegmentsValue.get(value);}
+	public HAPEntityDefinitionSegment getCriticalEntitySegment(String value){return (HAPEntityDefinitionSegment)this.getCriticalEntitySegments().getChild(value);}
+	
+	private HAPStringableValueMap getCriticalEntitySegments(){	return (HAPStringableValueMap)this.getChild(ATTR_CRITICALSEGMENTS);	}
 	
 	/*
 	 * set up child entity segment according to parent entity segment
@@ -103,13 +107,13 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 	public Set<String> getAllCriticalValues(){
 		Set<String> out = new HashSet<String>();
 		if(this.hasCriticalAttribute()){
-			out.addAll(this.m_criticalEntitySegmentsValue.keySet());
-			if(this.m_criticalEntitySegmentOther!=null)  out.add(HAPConstant.CONS_ENTITY_CRITICALVALUE_OTHER);
+			out.addAll(this.getCriticalEntitySegments().getKeys());
+			if(this.getCriticalEntitySegmentOther()!=null)  out.add(HAPConstant.CONS_ENTITY_CRITICALVALUE_OTHER);
 		}
 		return out;
 	}
 	
-	public Map<String, HAPAttributeDefinition> getCriticalValueAttributeDefinitions(String criticalValue){
+	public HAPStringableValueMap getCriticalValueAttributeDefinitions(String criticalValue){
 		return this.getEntityDefinitionByCriticalValue(criticalValue).getAttributeDefinitions();
 	}
 	
@@ -125,7 +129,7 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 		HAPEntityDefinitionSegment criticalEntityDefSegment = this.getCriticalEntitySegmentByCriticalValue(criticalValue);
 		
 		HAPEntityDefinitionSegment entityDef = null;
-		if(criticalEntityDefSegment!=null)			entityDef = criticalEntityDefSegment.hardMerge(this);
+		if(criticalEntityDefSegment!=null)			entityDef = (HAPEntityDefinitionSegment)this.hardMergeWith(criticalEntityDefSegment);
 		else	entityDef = this;
 
 		return new HAPEntityDefinition(entityDef, criticalValue, this.getEntityDefinitionManager());
@@ -142,8 +146,8 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 	protected HAPEntityDefinitionSegment getCriticalEntitySegmentByCriticalValue(String value){
 		//if value is invalid, return null
 		if(!this.isValidCriticalValue(value))  return null;
-		HAPEntityDefinitionSegment entityDef = this.m_criticalEntitySegmentsValue.get(value);
-		if(entityDef==null)			entityDef = this.m_criticalEntitySegmentOther;
+		HAPEntityDefinitionSegment entityDef = this.getCriticalEntitySegment(value);
+		if(entityDef==null)			entityDef = this.getCriticalEntitySegmentOther();
 		return entityDef;
 	}
 	
@@ -151,7 +155,7 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 	 * search in all attribute to find critical attribute 
 	 */
 	private void findCriticalAttribute(){
-		for(String name : this.getAttributeDefinitions().keySet()){
+		for(String name : this.getAttributeDefinitions().getKeys()){
 			HAPAttributeDefinition attr = this.getAttributeDefinitionByName(name); 
 			if(HAPEntityDataTypeUtility.isAtomType(attr.getDataTypeDefinitionInfo())){
 				if(((HAPAttributeDefinitionAtom)attr).getIsCritical()){
@@ -176,8 +180,7 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 				String optionValue = segments.next();
 				String name = segments.next();
 				
-				HAPEntityDefinitionSegment optionEntity = this.m_criticalEntitySegmentsValue.get(optionValue);
-				if(optionEntity==null)  optionEntity = this.m_criticalEntitySegmentOther;
+				HAPEntityDefinitionSegment optionEntity = getCriticalEntitySegmentByCriticalValue(optionValue); 
 				if(optionEntity==null)	return null;
 				
 				attrDef = optionEntity.getAttributeDefinitionByPath(name);
@@ -185,7 +188,7 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 		}
 		else{
 			//attribute name not contains keyword, then it is normal attribute
-			attrDef = this.m_attributeDefs.get(attrName);
+			attrDef = this.getAttributeDefinitionByName(attrName);
 		}
 		return attrDef;
 	}
@@ -198,37 +201,8 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 	@Override
 	public HAPEntityDefinitionCritical cloneDefinition()
 	{
-		HAPEntityDefinitionCritical entityDef = new HAPEntityDefinitionCritical(this.getEntityName(), this.getBaseClassName(), this.getGroups(), this.getEntityDefinitionManager());
+		HAPEntityDefinitionCritical entityDef = new HAPEntityDefinitionCritical();
 		entityDef.cloneFrom(this);
 		return entityDef;
 	}
-	
-	protected void cloneFrom(HAPEntityDefinitionCritical entityDef){
-		super.cloneFrom(entityDef);
-		if(entityDef.m_criticalEntitySegmentsValue!=null){
-			this.m_criticalEntitySegmentsValue = new LinkedHashMap<String, HAPEntityDefinitionSegment>(); 
-			for(String vv :entityDef.m_criticalEntitySegmentsValue.keySet()){
-				this.m_criticalEntitySegmentsValue.put(vv, entityDef.m_criticalEntitySegmentsValue.get(vv).cloneDefinition());
-			}
-		}
-		if(entityDef.m_criticalEntitySegmentOther!=null)	this.m_criticalEntitySegmentOther = entityDef.m_criticalEntitySegmentOther.cloneDefinition();
-	}
-	
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap){
-		//critical attribute
-		Map<String, String> criAttrJsonMap = new LinkedHashMap<String, String>();
-		for(String criVal : this.m_criticalEntitySegmentsValue.keySet()){
-			HAPEntityDefinitionSegment criEntityDef = this.m_criticalEntitySegmentsValue.get(criVal);
-			criAttrJsonMap.put(criVal, criEntityDef.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
-		}
-		
-		//other critical attribute
-		if(this.m_criticalEntitySegmentOther!=null){
-			criAttrJsonMap.put(HAPConstant.CONS_ENTITY_CRITICALVALUE_OTHER, m_criticalEntitySegmentOther.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
-		}
-		String criAttrJson = HAPJsonUtility.getMapJson(criAttrJsonMap);
-		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYDEFINITION_CRITICALENTITYS, criAttrJson);
-		
-	}	
 }

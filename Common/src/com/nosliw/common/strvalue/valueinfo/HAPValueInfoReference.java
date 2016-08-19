@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoReference extends HAPValueInfo{
 
-	public static final String ATTR_REFERENCE = "reference";
+	public static final String ENTITY_PROPERTY_REFERENCE = "reference";
 	
 	private HAPValueInfo m_solidValueInfo;
 
@@ -18,7 +18,7 @@ public class HAPValueInfoReference extends HAPValueInfo{
 	@Override
 	public void init(){
 		super.init();
-		this.updateBasicChild(ATTR_TYPE, HAPConstant.CONS_STRINGALBE_VALUEINFO_REFERENCE);
+		this.updateBasicChild(ENTITY_PROPERTY_TYPE, HAPConstant.CONS_STRINGALBE_VALUEINFO_REFERENCE);
 	}
 	
 	@Override
@@ -40,7 +40,7 @@ public class HAPValueInfoReference extends HAPValueInfo{
 	}
 	
 	private String getReferencedName(){
-		return this.getBasicAncestorValueString(ATTR_REFERENCE);
+		return this.getBasicAncestorValueString(ENTITY_PROPERTY_REFERENCE);
 	}
 
 	@Override

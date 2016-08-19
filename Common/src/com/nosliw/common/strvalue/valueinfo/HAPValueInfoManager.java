@@ -3,8 +3,11 @@ package com.nosliw.common.strvalue.valueinfo;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.w3c.dom.Element;
+
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
 
 public class HAPValueInfoManager {
 
@@ -26,6 +29,11 @@ public class HAPValueInfoManager {
 
 	public void registerValueInfo(HAPValueInfo valueInfo){
 		this.m_valueInfos.put(valueInfo.getName(), valueInfo);
+	}
+
+	public HAPStringableValueEntity readEntityFromXML(Element rootEle){
+		HAPStringableValueEntity out = HAPStringableEntityImporter.readRootEntity(rootEle, this);
+		return out;
 	}
 	
 }

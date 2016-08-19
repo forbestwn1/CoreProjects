@@ -18,6 +18,7 @@ import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.info.HAPDataTypeDefInfo;
 import com.nosliw.entity.data.HAPEntity;
+import com.nosliw.entity.definition.xmlimp.HAPEntityDefinitionImporter;
 import com.nosliw.entity.options.HAPOptionsDefinitionManager;
 import com.nosliw.entity.utils.HAPEntityNamingConversion;
 
@@ -47,17 +48,17 @@ public class HAPEntityDefinitionManager extends HAPConfigurableImp implements HA
 	
 	private HAPDataTypeManager m_dataTypeMan;
 	private HAPOptionsDefinitionManager m_optionsMan;
-	private HAPValueInfoManager m_valueInfoMan;
+	private HAPEntityDefinitionImporter m_entityDefImporter;
 	
 	
 	public HAPEntityDefinitionManager(HAPConfigureImp configuration, HAPDataTypeManager dataTypeMan, HAPOptionsDefinitionManager optionsMan){
 		super("entitydefintion.properties", configuration);
 		this.m_dataTypeMan = dataTypeMan;
+		this.m_entityDefImporter = new HAPEntityDefinitionImporter();
 		this.init();
 	}
 
 	public void init(){
-		this.m_valueInfoMan = new HAPValueInfoManager();
 		this.loadValueInfos();
 		
 		this.m_entityDefinitions = new LinkedHashMap<String, HAPEntityDefinitionCritical>();

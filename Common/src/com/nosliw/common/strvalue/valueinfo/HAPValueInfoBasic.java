@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoBasic extends HAPValueInfo{
 
-	public static final String ATTR_DEFAULTVALUE = "default";
+	public static final String ENTITY_PROPERTY_DEFAULTVALUE = "default";
 
 	private HAPValueInfoBasic(){}
 	

@@ -28,7 +28,7 @@ import com.nosliw.entity.validation.HAPValidationInfoExpression;
  * this abstract class define all the methods to provide information for an complex entity's attribute definition
  * however, child element of container is also defined as attribute, but it has name attirbute with null value
  */
-public abstract class HAPAttributeDefinition extends HAPStringableJson{
+public abstract class HAPAttributeDefinition extends HAPStringableValueEntityBasic{
 	//store all the document related information, for instance, name, description
 	private HAPStringableValueEntityBasic m_properties;
 

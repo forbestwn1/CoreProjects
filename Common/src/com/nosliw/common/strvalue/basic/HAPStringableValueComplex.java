@@ -96,7 +96,7 @@ public abstract class HAPStringableValueComplex extends HAPStringableValue{
 		else	return value.getFloatValue();
 	}
 	
-	public List<String> getBasicAncestorValueList(String path){
+	public List<String> getBasicAncestorValueArray(String path){
 		HAPStringableValueBasic value = this.getBasicAncestorByPath(path);
 		if(value==null)  return null;
 		else	return value.getListValue();

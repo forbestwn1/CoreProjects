@@ -1,0 +1,9 @@
+<entity name="entity" parent="entitySegment" description="entity definition" class="com.nosliw.entity.definition.HAPEntityDefinitionCritical">
+	<property name="baseClassName" type="string" description="base class name" default="{{defaultEntityClass}}"/>
+
+	<property name="criticalSegments" type="map" key="value">
+		<child reference="entitySegment"/>
+	</property>
+	
+	<property name="otherCriticalSegment" reference="entitySegment"/>
+</entity>
