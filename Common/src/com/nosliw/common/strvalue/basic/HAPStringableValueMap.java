@@ -29,10 +29,19 @@ public class HAPStringableValueMap extends HAPStringableValueComplex{
 	public String getStringableCategary(){		return HAPConstant.CONS_STRINGABLE_VALUECATEGARY_MAP;	}
 
 	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap) {
-		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put("elements", HAPJsonUtility.getMapObjectJson(this.m_elements));
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format) {
+		super.buildFullJsonMap(jsonMap, typeJsonMap, format);
+		jsonMap.put(HAPAttributeConstant.ATTR_STRINGABLEVALUE_ELEMENTS, HAPJsonUtility.getMapObjectJson(this.m_elements, format));
 	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format) {
+		super.buildJsonMap(jsonMap, typeJsonMap, format);
+		for(String child : this.m_elements.keySet()){
+			jsonMap.put(child, this.m_elements.get(child).toStringValue(format));
+		}
+	}
+
 
 	@Override
 	public HAPStringableValue getChild(String name) {

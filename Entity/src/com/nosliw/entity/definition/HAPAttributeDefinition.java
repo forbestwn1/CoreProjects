@@ -29,20 +29,16 @@ import com.nosliw.entity.validation.HAPValidationInfoExpression;
  * however, child element of container is also defined as attribute, but it has name attirbute with null value
  */
 public abstract class HAPAttributeDefinition extends HAPStringableValueEntityBasic{
+
+	public static String ENTITY_PROPERTY_ISEMPTYONINIT = "isEmptyOnInit";
+	public static String ENTITY_PROPERTY_EVENTS = "events";
+	public static String ENTITY_PROPERTY_OPTIONS = "options";
+	public static String ENTITY_PROPERTY_VALIDATIONS = "validations";
+	
+	
 	//store all the document related information, for instance, name, description
 	private HAPStringableValueEntityBasic m_properties;
 
-	
-	//configure item that control whether this attribute should be leave empty or set with default value during initialization 
-//	private boolean m_isEmptyOnInit = false;
-	
-	//any changes on attribute will have some events related with this change
-	//here list all the triguable events
-//	private List<String> m_events;
-	
-
-	
-	
 	//entity definition this attribute belong to
 	private HAPEntityDefinitionSegment m_entityDefinition;
 
@@ -53,11 +49,6 @@ public abstract class HAPAttributeDefinition extends HAPStringableValueEntityBas
 	//note: it is not HAPDataTypeInfo which is more strict than HAPDataTypeDefInfo
 	private HAPDataTypeDefInfo m_dataTypeDefInfo;
 	
-	//options information for this attribute
-	private HAPOptionsDefinition m_options = null;
-	
-	//a list of validation rules defined for this attribute
-	private List<HAPValidationInfoExpression> m_validationInfos = null;
 	//calculated attribute which show whether the value validation is able to be done on client side
 	private boolean m_serverValidationOnly = true;
 	
@@ -232,7 +223,7 @@ public abstract class HAPAttributeDefinition extends HAPStringableValueEntityBas
 	
 	/******************************************   Serialization  *********************************************/
 	@Override
-	protected void buildJsonMap(Map<String, String> map, Map<String, Class> dataTypeMap){
+	protected void buildFullJsonMap(Map<String, String> map, Map<String, Class> dataTypeMap){
 		map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_DESCRIPTION, this.getProperties().toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
 		map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_FULLNAME, this.getFullName());
 		map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_CRITICALVALUE, this.m_criticalValue);

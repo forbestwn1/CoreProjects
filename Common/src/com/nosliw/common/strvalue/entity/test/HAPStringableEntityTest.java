@@ -4,7 +4,7 @@ import java.io.InputStream;
 
 import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoImporterXML;
-import com.nosliw.common.strvalue.valueinfo.HAPStringableEntityImporter;
+import com.nosliw.common.strvalue.valueinfo.HAPStringableEntityImporterXML;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfo;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -19,7 +19,7 @@ public class HAPStringableEntityTest {
 		importValueInfoFromFile("parent.xml", valueInfoMan);
 		
 		InputStream entityInputStream = HAPFileUtility.getInputStreamOnClassPath(HAPStringableEntityTest.class, "entity.xml");
-		HAPStringableValueEntity entity = HAPStringableEntityImporter.readRootEntity(entityInputStream, valueInfoMan);
+		HAPStringableValueEntity entity = HAPStringableEntityImporterXML.readRootEntity(entityInputStream, valueInfoMan);
 		entity.resolveByPattern(null);
 		System.out.println(entity.toString());
 	}

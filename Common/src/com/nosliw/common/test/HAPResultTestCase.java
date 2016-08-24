@@ -48,8 +48,9 @@ public class HAPResultTestCase extends HAPResult{
 	@Override
 	public String getType() {		return HAPConstant.CONS_TESTRESULT_TYPE_CASE;	}
 
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap){
-		jsonMap.put("childTestItems", HAPJsonUtility.getListObjectJson(this.m_testItems));
-		jsonMap.put("exceptions", HAPJsonUtility.getListObjectJson(this.m_e));
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap, String format){
+		super.buildFullJsonMap(jsonMap, jsonTypeMap, format);
+		jsonMap.put("childTestItems", HAPJsonUtility.getListObjectJson(this.m_testItems, format));
+		jsonMap.put("exceptions", HAPJsonUtility.getListObjectJson(this.m_e, format));
 	}
 }

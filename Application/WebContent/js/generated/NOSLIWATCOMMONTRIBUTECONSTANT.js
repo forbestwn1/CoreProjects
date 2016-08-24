@@ -164,5 +164,12 @@ var NOSLIWATCOMMONTRIBUTECONSTANT=
   "ATTR_QUERYPROJECTATTRIBUTE_ENTITYNAME": "entityName",
   "ATTR_QUERYPROJECTATTRIBUTE_ATTRIBUTE": "attribute",
   "ATTR_ENTITYMANAGER_PERSISTANT": "persistent",
-  "ATTR_ENTITYMANAGER_TRANSACTIONS": "transactions"
+  "ATTR_ENTITYMANAGER_TRANSACTIONS": "transactions",
+  "ATTR_STRINGABLEVALUE_CATEGARY": "stringablevalue_categary",
+  "ATTR_STRINGABLEVALUE_TYPE": "stringablevalue_type",
+  "ATTR_STRINGABLEVALUE_STRINGVALUE": "stringablevalue_stringvalue",
+  "ATTR_STRINGABLEVALUE_RESOLVED": "stringablevalue_resolved",
+  "ATTR_STRINGABLEVALUE_VALUE": "stringablevalue_value",
+  "ATTR_STRINGABLEVALUE_PROPERTIES": "stringablevalue_properties",
+  "ATTR_STRINGABLEVALUE_ELEMENTS": "stringablevalue_elements"
 };

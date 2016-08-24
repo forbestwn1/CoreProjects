@@ -18,7 +18,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPXMLUtility;
 
-public class HAPStringableEntityImporter {
+public class HAPStringableEntityImporterXML {
 
 	private static String TAG_CONTAINERCHILD = "element";
 	
@@ -179,20 +179,15 @@ public class HAPStringableEntityImporter {
 	private static HAPStringableValueEntity processEntityValue(Element entityEle, HAPValueInfoEntity entityValueInfo, HAPValueInfoManager valueInfoMan){
 		HAPStringableValueEntity out = null;
 		try{
-			String className = entityValueInfo.getBasicAncestorValueString(HAPValueInfoEntity.ENTITY_PROPERTY_CLASSNAME);
-			if(className==null)    	className = HAPStringableValueEntity.class.getName();
-			HAPStringableValueEntity entity = (HAPStringableValueEntity)Class.forName(className).newInstance();
-			
+			HAPStringableValueEntity entity = entityValueInfo.newEntity();
+
 			if(entityEle!=null){
 				for(String property : entityValueInfo.getEntityProperties()){
 					HAPStringableValue entityProperty = readPropertyValueOfEntity(entityEle, entityValueInfo.getPropertyInfo(property), valueInfoMan);
 					if(entityProperty!=null)			entity.updateChild(property, entityProperty);
 				}
 			}
-			
-			boolean isMandatory = entityValueInfo.getBasicAncestorValueBoolean(HAPValueInfoEntity.ENTITY_PROPERTY_MANDATORY);
-			if(!isMandatory && entity.isEmpty())   out = null;
-			else out = entity;
+			out = HAPValueInfoUtility.validateStringableValueEntity(entityValueInfo, entity);
 		}
 		catch(Exception e){
 			e.printStackTrace();

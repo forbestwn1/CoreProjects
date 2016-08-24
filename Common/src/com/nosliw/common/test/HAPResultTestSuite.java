@@ -54,8 +54,9 @@ public class HAPResultTestSuite extends HAPResult{
 		return HAPConstant.CONS_TESTRESULT_TYPE_SUITE;
 	}
 
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap){
-		jsonMap.put("childTestSuiteResults", HAPJsonUtility.getListObjectJson(this.m_testSuiteResults));
-		jsonMap.put("childTestCaseResults", HAPJsonUtility.getListObjectJson(this.m_testCaseResults));
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap, String format){
+		super.buildFullJsonMap(jsonMap, jsonTypeMap, format);
+		jsonMap.put("childTestSuiteResults", HAPJsonUtility.getListObjectJson(this.m_testSuiteResults, format));
+		jsonMap.put("childTestCaseResults", HAPJsonUtility.getListObjectJson(this.m_testCaseResults, format));
 	}
 }

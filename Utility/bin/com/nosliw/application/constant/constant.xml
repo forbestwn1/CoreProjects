@@ -250,11 +250,27 @@
 		<definition name="ATTR_ENTITYNAME_ATTRIBUTENAME" value="ATTR_ENTITYNAME_ATTRIBUTENAME"/>
 	</attributes>
 
+	<attributes filepath="{{projectsPath}}/Common/src/com/nosliw/common/strvalue/basic" 
+				packagename="com.nosliw.common.strvalue.basic" 
+				classname="HAPAttributeConstant" >
+		<definition type="space"/>
+		<definition name="ATTR_STRINGABLEVALUE_CATEGARY" value="stringablevalue_categary"/>
+		<definition name="ATTR_STRINGABLEVALUE_TYPE" value="stringablevalue_type"/>
+		<definition name="ATTR_STRINGABLEVALUE_STRINGVALUE" value="stringablevalue_stringvalue"/>
+		<definition name="ATTR_STRINGABLEVALUE_RESOLVED" value="stringablevalue_resolved"/>
+		<definition name="ATTR_STRINGABLEVALUE_VALUE" value="stringablevalue_value"/>
+		<definition name="ATTR_STRINGABLEVALUE_PROPERTIES" value="stringablevalue_properties"/>
+		<definition name="ATTR_STRINGABLEVALUE_ELEMENTS" value="stringablevalue_elements"/>
+		
+		<definition type="space"/>
+	</attributes>
+
+
 	<constants filepath="{{projectsPath}}/Common/src/com/nosliw/common/utils" 
 				packagename="com.nosliw.common.utils" 
 				classname="HAPConstant" >
 		<definition name="CONS_SERIALIZATION_JSON" value="json"/>
-		<definition name="CONS_SERIALIZATION_JSON_DATATYPE" value="json_data"/>
+		<definition name="CONS_SERIALIZATION_JSON_FULL" value="json_full"/>
 		<definition name="CONS_SERIALIZATION_XML" value="xml"/>
 		<definition name="CONS_SERIALIZATION_TEXT" value="text"/>
 		<definition type="space"/>

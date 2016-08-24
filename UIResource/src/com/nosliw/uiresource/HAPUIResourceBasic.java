@@ -128,7 +128,7 @@ public abstract class HAPUIResourceBasic  implements HAPStringable{
 
 		Map<String, String> constantsJsons = new LinkedHashMap<String, String>();
 		for(String name : this.m_constants.keySet()){
-			constantsJsons.put(name, this.m_constants.get(name).toStringValue(HAPConstant.CONS_SERIALIZATION_JSON_DATATYPE));
+			constantsJsons.put(name, this.m_constants.get(name).toStringValue(HAPConstant.CONS_SERIALIZATION_JSON_FULL));
 		}
 		jsonMap.put(HAPAttributeConstant.ATTR_UIRESOURCE_CONSTANT, HAPJsonUtility.getMapJson(constantsJsons));
 	

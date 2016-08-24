@@ -91,7 +91,7 @@ public class HAPTestCaseRuntime extends HAPStringableJson{
 	}
 
 	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap){
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format){
 		jsonMap.put("className", this.m_testCaseClass.getName());
 		if(this.m_testCaseMethod!=null) jsonMap.put("testMethod", this.m_testCaseMethod.getName());
 		if(this.m_testCaseItemFactoryMethod!=null)  jsonMap.put("testItemFactoryMethod", this.m_testCaseItemFactoryMethod.getName());

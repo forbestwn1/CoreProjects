@@ -14,42 +14,42 @@ import com.nosliw.common.serialization.HAPStringable;
 
 
 public class HAPJsonUtility {
-	public static String getListObjectJson(List list){
+	public static String getListObjectJson(List list, String format){
 		List<String> arrayJson = new ArrayList<String>();
 		for(Object data : list){
-			arrayJson.add(getObjectJsonValue(data));
+			arrayJson.add(getObjectJsonValue(data, format));
 		}
 		return getArrayJson(arrayJson.toArray(new String[0]));
 	}
 
-	public static String getArrayObjectJson(Object[] list){
+	public static String getArrayObjectJson(Object[] list, String format){
 		List<String> arrayJson = new ArrayList<String>();
 		for(Object data : list){
-			arrayJson.add(getObjectJsonValue(data));
+			arrayJson.add(getObjectJsonValue(data, format));
 		}
 		return getArrayJson(arrayJson.toArray(new String[0]));
 	}
 	
-	public static String getSetObjectJson(Set list){
+	public static String getSetObjectJson(Set list, String format){
 		List<String> arrayJson = new ArrayList<String>();
 		for(Object data : list){
-			arrayJson.add(getObjectJsonValue(data));
+			arrayJson.add(getObjectJsonValue(data, format));
 		}
 		return getArrayJson(arrayJson.toArray(new String[0]));
 	}
 
-	public static String getMapObjectJson(Map map){
+	public static String getMapObjectJson(Map map, String format){
 		Map mapJson = new LinkedHashMap();
 		for(Object key : map.keySet()){
-			mapJson.put(key, getObjectJsonValue(map.get(key)));
+			mapJson.put(key, getObjectJsonValue(map.get(key), format));
 		}
 		return getMapJson(mapJson);
 	}
 
-	private static String getObjectJsonValue(Object o){
+	private static String getObjectJsonValue(Object o, String format){
 		String out = null;
 		if(o instanceof HAPStringable){
-			out = ((HAPStringable) o).toStringValue(HAPConstant.CONS_SERIALIZATION_JSON);
+			out = ((HAPStringable) o).toStringValue(format);
 		}
 		else if(o instanceof String[]){
 			out = getArrayJson((String[])o);

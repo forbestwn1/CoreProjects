@@ -199,7 +199,7 @@ public class HAPExpression implements HAPStringable{
 		
 		Map<String, String> constantsJsons = new LinkedHashMap<String, String>();
 		for(String name : m_constantDatas.keySet()){
-			constantsJsons.put(name, m_constantDatas.get(name).toStringValue(HAPConstant.CONS_SERIALIZATION_JSON_DATATYPE));
+			constantsJsons.put(name, m_constantDatas.get(name).toStringValue(HAPConstant.CONS_SERIALIZATION_JSON_FULL));
 		}
 		jsonMap.put(HAPAttributeConstant.ATTR_EXPRESSION_CONSTANTS, HAPJsonUtility.getMapJson(constantsJsons));
 

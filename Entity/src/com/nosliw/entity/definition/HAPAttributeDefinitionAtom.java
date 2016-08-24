@@ -56,7 +56,7 @@ public class HAPAttributeDefinitionAtom extends HAPAttributeDefinition{
 	}
 
 	@Override
-	protected void buildJsonMap(Map<String, String> map, Map<String, Class> dataTypeMap){
+	protected void buildFullJsonMap(Map<String, String> map, Map<String, Class> dataTypeMap){
 		dataTypeMap.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_ISCRITICAL, Boolean.class);
 		map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_ISCRITICAL, String.valueOf(m_isCritical));
 		if(this.getDefaultValue()!=null){

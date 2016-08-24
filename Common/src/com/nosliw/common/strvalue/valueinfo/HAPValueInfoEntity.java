@@ -51,6 +51,19 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 		return this.m_solidValueInfo;
 	}
 	
+	public HAPStringableValueEntity newEntity(){
+		HAPStringableValueEntity out = null;
+		try{
+			String className = this.getBasicAncestorValueString(HAPValueInfoEntity.ENTITY_PROPERTY_CLASSNAME);
+			if(className==null)    	className = HAPStringableValueEntity.class.getName();
+			out = (HAPStringableValueEntity)Class.forName(className).newInstance();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return out;
+	}
+
 	@Override
 	public String getCategary() {		return HAPConstant.CONS_STRINGALBE_VALUEINFO_ENTITY;	}
 

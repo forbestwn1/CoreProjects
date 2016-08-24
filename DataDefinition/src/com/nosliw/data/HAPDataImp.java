@@ -61,7 +61,7 @@ public abstract class HAPDataImp implements HAPData{
 		String out = this.toDataStringValue(format);
 		if(out!=null)  return out;
 		
-		if(format.equals(HAPConstant.CONS_SERIALIZATION_JSON_DATATYPE)){
+		if(format.equals(HAPConstant.CONS_SERIALIZATION_JSON_FULL)){
 			Map<String, String> jsonMap = new HashMap<String, String>();
 			Map<String, Class> jsonType = null;
 			

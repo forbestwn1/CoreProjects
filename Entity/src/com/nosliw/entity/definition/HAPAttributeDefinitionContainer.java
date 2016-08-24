@@ -63,7 +63,7 @@ public class HAPAttributeDefinitionContainer extends HAPAttributeDefinition{
 	
 	
 	@Override
-	protected void buildJsonMap(Map<String, String> map, Map<String, Class> dataTypeMap){
+	protected void buildFullJsonMap(Map<String, String> map, Map<String, Class> dataTypeMap){
 		if(this.getChildAttributeDefinition()!=null){
 			map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_ELEMENT, this.getChildAttributeDefinition().toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
 		}

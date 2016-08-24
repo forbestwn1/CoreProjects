@@ -373,9 +373,9 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		
-		jsonMap.put("variables", HAPJsonUtility.getMapObjectJson(this.m_variables));
-		jsonMap.put("childValues", HAPJsonUtility.getMapObjectJson(this.getChildConfigureValues()));
-		jsonMap.put("childConfigurables", HAPJsonUtility.getMapObjectJson(this.getChildConfigurables()));
+		jsonMap.put("variables", HAPJsonUtility.getMapObjectJson(this.m_variables, format));
+		jsonMap.put("childValues", HAPJsonUtility.getMapObjectJson(this.getChildConfigureValues(), format));
+		jsonMap.put("childConfigurables", HAPJsonUtility.getMapObjectJson(this.getChildConfigurables(), format));
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}
 

@@ -122,11 +122,17 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 	public List<String> getListValue(){		return (List<String>)this.getValue(HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_ARRAY);	}
 
 	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap) {
-		jsonMap.put("type", this.m_type);
-		jsonMap.put("stringValue", this.m_strValue.toString());
-		jsonMap.put("resolved", String.valueOf(this.m_sovled));
-		jsonMap.put("value", this.m_value==null?null : this.m_value.toString());
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format) {
+		super.buildFullJsonMap(jsonMap, typeJsonMap, format);
+		jsonMap.put(HAPAttributeConstant.ATTR_STRINGABLEVALUE_TYPE, this.m_type);
+		jsonMap.put(HAPAttributeConstant.ATTR_STRINGABLEVALUE_STRINGVALUE, this.m_strValue.toString());
+		jsonMap.put(HAPAttributeConstant.ATTR_STRINGABLEVALUE_RESOLVED, String.valueOf(this.m_sovled));
+		jsonMap.put(HAPAttributeConstant.ATTR_STRINGABLEVALUE_VALUE, this.m_value==null?null : this.m_value.toString());
+	}
+	
+	@Override
+	protected String buildJson(String format){
+		return this.m_strValue.toString();
 	}
 	
 	protected void cloneFrom(HAPStringableValueBasic stringableValue){

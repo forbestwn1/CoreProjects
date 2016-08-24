@@ -90,16 +90,16 @@ public class HAPServiceData implements HAPStringable{
 				dataString = (String)data;
 			}
 			else if(data instanceof List){
-				dataString = HAPJsonUtility.getListObjectJson((List)data);
+				dataString = HAPJsonUtility.getListObjectJson((List)data, format);
 			}
 			else if(data instanceof Set){
-				dataString = HAPJsonUtility.getSetObjectJson((Set)data);
+				dataString = HAPJsonUtility.getSetObjectJson((Set)data, format);
 			}
 			else if(data instanceof Map){
-				dataString = HAPJsonUtility.getMapObjectJson((Map)data);
+				dataString = HAPJsonUtility.getMapObjectJson((Map)data, format);
 			}
 			else if(data.getClass().isArray()){
-				dataString = HAPJsonUtility.getArrayObjectJson((Object[])data);
+				dataString = HAPJsonUtility.getArrayObjectJson((Object[])data, format);
 			}
 		}
 		jsonMap.put(HAPAttributeConstant.ATTR_SERVICEDATA_DATA, dataString);

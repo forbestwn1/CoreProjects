@@ -4,7 +4,7 @@ public class HAPConstant {
 
 
 		public static final String CONS_SERIALIZATION_JSON = "json";
-		public static final String CONS_SERIALIZATION_JSON_DATATYPE = "json_data";
+		public static final String CONS_SERIALIZATION_JSON_FULL = "json_full";
 		public static final String CONS_SERIALIZATION_XML = "xml";
 		public static final String CONS_SERIALIZATION_TEXT = "text";
 
@@ -321,8 +321,15 @@ public class HAPConstant {
 		public static final String CONS_STRINGABLE_BASICVALUETYPE_BOOLEAN = "boolean";
 		public static final String CONS_STRINGABLE_BASICVALUETYPE_INTEGER = "integer";
 		public static final String CONS_STRINGABLE_BASICVALUETYPE_FLOAT = "float";
-		public static final String CONS_STRINGABLE_BASICVALUETYPE_ARRAY = "array1";
+		public static final String CONS_STRINGABLE_BASICVALUETYPE_ARRAY = "array";
 		public static final String CONS_STRINGABLE_BASICVALUETYPE_MAP = "map";
+
+
+
+		public static final String CONS_STRINGABLE_VALUECATEGARY_BASIC = "basic";
+		public static final String CONS_STRINGABLE_VALUECATEGARY_MAP = "map";
+		public static final String CONS_STRINGABLE_VALUECATEGARY_LIST = "list";
+		public static final String CONS_STRINGABLE_VALUECATEGARY_ENTITY = "entity";
 
 
 
@@ -332,13 +339,6 @@ public class HAPConstant {
 		public static final String CONS_STRINGALBE_VALUEINFO_ENTITYOPTIONS = "entityOptions";
 		public static final String CONS_STRINGALBE_VALUEINFO_LIST = "list";
 		public static final String CONS_STRINGALBE_VALUEINFO_MAP = "map";
-
-
-
-		public static final String CONS_STRINGABLE_VALUECATEGARY_BASIC = "basic";
-		public static final String CONS_STRINGABLE_VALUECATEGARY_MAP = "map";
-		public static final String CONS_STRINGABLE_VALUECATEGARY_LIST = "list";
-		public static final String CONS_STRINGABLE_VALUECATEGARY_ENTITY = "entity";
 
 
 

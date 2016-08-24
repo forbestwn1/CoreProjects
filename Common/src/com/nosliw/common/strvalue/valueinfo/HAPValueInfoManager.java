@@ -32,7 +32,7 @@ public class HAPValueInfoManager {
 	}
 
 	public HAPStringableValueEntity readEntityFromXML(Element rootEle){
-		HAPStringableValueEntity out = HAPStringableEntityImporter.readRootEntity(rootEle, this);
+		HAPStringableValueEntity out = HAPStringableEntityImporterXML.readRootEntity(rootEle, this);
 		return out;
 	}
 	

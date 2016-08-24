@@ -15,8 +15,10 @@ public abstract class HAPStringableValue extends HAPStringableJson implements HA
 	public abstract boolean isEmpty();
 	
 	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap) {
-		jsonMap.put("categary", this.getStringableCategary());
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format) {
+		jsonMap.put(HAPAttributeConstant.ATTR_STRINGABLEVALUE_CATEGARY, this.getStringableCategary());
 	}
 
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format) {}
 }

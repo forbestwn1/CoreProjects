@@ -3,15 +3,17 @@ package com.nosliw.common.serialization;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 
-public abstract class HAPStringableJson extends HAPStringImp{
+public abstract class HAPStringableJson implements HAPStringable{
 
 	@Override
-	final public String toString(){
+	public String toString(){
 		String out = "";
 		try{
-			out = this.toStringValue(null);
+			out = this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON_FULL);
 			out = HAPJsonUtility.formatJson(out);
 		}
 		catch(Exception e){
@@ -21,22 +23,32 @@ public abstract class HAPStringableJson extends HAPStringImp{
 	}
 	
 	@Override
-	public final String toStringValue(String format) {
-		Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
-		Map<String, Class> typeJsonMap = new LinkedHashMap<String, Class>();
-		this.buildJsonMap1(outJsonMap, typeJsonMap);
-		return HAPJsonUtility.getMapJson(outJsonMap, typeJsonMap);
+	public String toStringValue(String format) {
+		if(HAPBasicUtility.isStringEmpty(format))  format = HAPConstant.CONS_SERIALIZATION_JSON_FULL;
+
+		String out = null;
+		if(format.equals(HAPConstant.CONS_SERIALIZATION_JSON_FULL)){
+			Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
+			Map<String, Class> typeJsonMap = new LinkedHashMap<String, Class>();
+			this.buildFullJsonMap(outJsonMap, typeJsonMap, format);
+			out = HAPJsonUtility.getMapJson(outJsonMap, typeJsonMap);
+		}
+		else if(format.equals(HAPConstant.CONS_SERIALIZATION_JSON)){
+			out = this.buildJson(format);
+			if(out==null){
+				Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
+				Map<String, Class> typeJsonMap = new LinkedHashMap<String, Class>();
+				this.buildJsonMap(outJsonMap, typeJsonMap, format);
+				out = HAPJsonUtility.getMapJson(outJsonMap, typeJsonMap);
+			}
+		}
+		return out;
 	}
 
-	final void buildJsonMap1(Map<String, String> jsonMap, Map<String, Class> typeJsonMap){
-		super.buildJsonMap1(jsonMap, typeJsonMap);
-		this.buildJsonMap(jsonMap, typeJsonMap);
-	}
+	abstract protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format);
 
-	abstract protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap);
-}
-
-abstract class HAPStringImp implements HAPStringable{
-	void buildJsonMap1(Map<String, String> jsonMap, Map<String, Class> typeJsonMap){
-	}
+	protected String buildJson(String format){ return null; }
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format){
+		this.buildFullJsonMap(jsonMap, typeJsonMap, format);
+	}	
 }

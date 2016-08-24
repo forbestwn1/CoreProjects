@@ -48,6 +48,6 @@ public class HAPOperandConstant extends HAPOperandAtom{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonDataTypeMap){
 		super.buildJsonMap(jsonMap, jsonDataTypeMap);
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERAND_CONSTANT_DATA, this.m_data.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON_DATATYPE));
+		jsonMap.put(HAPAttributeConstant.ATTR_OPERAND_CONSTANT_DATA, this.m_data.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON_FULL));
 	}
 }

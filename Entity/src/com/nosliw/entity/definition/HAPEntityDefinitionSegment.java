@@ -136,17 +136,17 @@ public class HAPEntityDefinitionSegment extends HAPStringableValueEntityBasic{
 		this.m_entityDefinitionMan = entityDef.m_entityDefinitionMan;
 	}
 
-	public HAPEntityDefinitionSegment hardMerge(HAPEntityDefinitionSegment entityDefSegment){
+	public HAPEntityDefinitionSegment hardMergeSegment(HAPEntityDefinitionSegment entityDefSegment){
 		HAPEntityDefinitionSegment out = this.cloneEntityDefinitionSegment();
+		
 		Set<String> attrs = HAPStringableValueUtility.getExpectedAttributesInEntity(HAPEntityDefinitionSegment.class);
+		attrs.remove(HAPEntityDefinitionSegment.ENTITY_PROPERTY_ATTRIBUTES);
 		
-		
-		
-		out.hardMergeExcept(entityDefSegment, attrs)
+		out.hardMergeWith(this, attrs);
 		
 		Set<String> attrNames = entityDefSegment.getAttributeNames();
 		for(String attrName : attrNames){
-			entityDef.addAttributeDefinition(entityDefSegment.getAttributeDefinitionByName(attrName).cloneDefinition(entityDef));
+			out.addAttributeDefinition(entityDefSegment.getAttributeDefinitionByName(attrName).clone());
 		}
 		return out;
 	}

@@ -7,7 +7,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.utils.HAPAttributeConstant;
@@ -15,46 +17,33 @@ import com.nosliw.data.utils.HAPAttributeConstant;
 /*
  * entity store information about a data type information
  */
-public class HAPDataTypeInfo implements HAPStringable{
+public class HAPDataTypeInfo extends HAPStringableValueEntity{
 
-	private String m_categary;
-	private String m_type;
+	public static String ENTITY_PROPERTY_CATEGARY = "categary";
+	public static String ENTITY_PROPERTY_TYPE = "type";
+	public static String ENTITY_PROPERTY_KEY = "key";
 
 	public HAPDataTypeInfo(){}
 	
 	public HAPDataTypeInfo(String categary, String type){
-		this.m_categary = categary;
-		this.m_type = type;
+		this.setCategary(categary);
+		this.setType(type);
 	}
 
-	public String getCategary(){return this.m_categary;}
-	public String getType(){return this.m_type;	}
-	public void setCategary(String categary){ this.m_categary = categary;}
-	public void setType(String type){ this.m_type = type;}
+	public String getCategary(){return this.getBasicAncestorValueString(ENTITY_PROPERTY_CATEGARY);}
+	public String getType(){return this.getBasicAncestorValueString(ENTITY_PROPERTY_TYPE);	}
+	public void setCategary(String categary){ this.updateBasicChild(ENTITY_PROPERTY_CATEGARY, categary, HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_STRING);}
+	public void setType(String type){ this.updateBasicChild(ENTITY_PROPERTY_TYPE, type, HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_STRING);}
 	
 	public HAPDataTypeInfo cloneDataTypeInfo(){
 		return new HAPDataTypeInfo(this.getCategary(), this.getType());
 	}
 	
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap){
-		jsonMap.put(HAPAttributeConstant.ATTR_DATATYPEINFO_CATEGARY, this.getCategary());
-		jsonMap.put(HAPAttributeConstant.ATTR_DATATYPEINFO_TYPE, this.getType());
-		jsonMap.put(HAPAttributeConstant.ATTR_DATATYPEINFO_KEY, this.getKey());
-	}
-	
-	@Override
-	public String toStringValue(String format){
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		Map<String, Class> jsonTypeMap = new LinkedHashMap<String, Class>();
-		this.buildJsonMap(jsonMap, jsonTypeMap);
-		return HAPJsonUtility.getMapJson(jsonMap, jsonTypeMap);
-	}
-
 	//get unique key
 	public String getKey(){return this.toString();}
 	
 	@Override
-	public String toString(){	return HAPNamingConversionUtility.cascadePart(this.m_type, this.m_categary);	}
+	public String toString(){	return HAPNamingConversionUtility.cascadePart(this.getType(), this.getCategary());	}
 	
 	public static HAPDataTypeInfo parse(JSONObject jsonObj){
 		String type = jsonObj.optString(HAPAttributeConstant.ATTR_DATATYPEINFO_TYPE);

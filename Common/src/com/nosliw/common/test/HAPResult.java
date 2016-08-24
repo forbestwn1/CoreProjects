@@ -27,7 +27,7 @@ public abstract class HAPResult extends HAPStringableJson{
 	protected void setResult(Boolean result){  this.m_result = result;}
 	
 	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap){
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap, String format){
 		jsonMap.put("type", this.getType());
 		jsonMap.put("result", String.valueOf(m_result));
 		jsonMap.put("testDescription", this.m_testDescription.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));

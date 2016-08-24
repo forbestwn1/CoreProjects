@@ -97,7 +97,7 @@ public abstract class HAPTestInfo extends HAPStringableJson{
 	}
 
 	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap){
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap, String format){
 		jsonMap.put("type", this.getType());
 		jsonMap.put("id", String.valueOf(this.m_id));
 		jsonMap.put("sequence", String.valueOf(this.m_sequence));
