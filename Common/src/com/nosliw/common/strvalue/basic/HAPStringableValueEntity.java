@@ -5,6 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 
@@ -132,5 +135,23 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 		for(String child : this.m_childrens.keySet()){
 			jsonMap.put(child, this.m_childrens.get(child).toStringValue(format));
 		}
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		boolean out = false;
+		if(obj instanceof HAPStringableValueEntity){
+			HAPStringableValueEntity value = (HAPStringableValueEntity)obj;
+			out = HAPBasicUtility.isEqualMaps(value.m_childrens, value.m_childrens);
+		}
+		return out;
+	}
+
+	public static <T> T buildDefault(Class<T> c) {
+		
+		
+		HAPValueInfoEntity valueInfoEntity = HAPValueInfoManager.getEntityValueInfo(c);
+		T out = (T)valueInfoEntity.buildDefault();
+		return out;
 	}
 }

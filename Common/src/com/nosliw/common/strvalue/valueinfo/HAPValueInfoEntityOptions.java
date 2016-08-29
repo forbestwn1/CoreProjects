@@ -1,5 +1,6 @@
 package com.nosliw.common.strvalue.valueinfo;
 
+import com.nosliw.common.strvalue.basic.HAPStringableValue;
 import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPConstant;
 
@@ -36,4 +37,10 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 	@Override
 	public String getCategary() {		return HAPConstant.CONS_STRINGALBE_VALUEINFO_ENTITYOPTIONS;	}
 
+	@Override
+	public HAPStringableValue buildDefault() {		return null;	}
+	
+	public HAPStringableValue buildDefault(String optionsValue){
+		return this.getOptionsValueInfo(optionsValue).buildDefault();
+	}
 }

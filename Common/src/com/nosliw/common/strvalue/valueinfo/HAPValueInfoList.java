@@ -1,5 +1,7 @@
 package com.nosliw.common.strvalue.valueinfo;
 
+import com.nosliw.common.strvalue.basic.HAPStringableValue;
+import com.nosliw.common.strvalue.basic.HAPStringableValueList;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoList extends HAPValueInfoContainer{
@@ -21,5 +23,10 @@ public class HAPValueInfoList extends HAPValueInfoContainer{
 	
 	@Override
 	public String getCategary() {		return HAPConstant.CONS_STRINGALBE_VALUEINFO_LIST;	}
+
+	@Override
+	public HAPStringableValue buildDefault() {
+		return new HAPStringableValueList();
+	}
 
 }

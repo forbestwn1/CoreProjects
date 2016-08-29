@@ -1,5 +1,6 @@
 package com.nosliw.common.strvalue.valueinfo;
 
+import com.nosliw.common.strvalue.basic.HAPStringableValue;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoReference extends HAPValueInfo{
@@ -49,4 +50,7 @@ public class HAPValueInfoReference extends HAPValueInfo{
 		out.cloneFrom(this);
 		return out;
 	}
+
+	@Override
+	public HAPStringableValue buildDefault() {		return null;	}
 }

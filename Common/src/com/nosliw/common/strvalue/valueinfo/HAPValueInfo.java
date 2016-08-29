@@ -1,5 +1,6 @@
 package com.nosliw.common.strvalue.valueinfo;
 
+import com.nosliw.common.strvalue.basic.HAPStringableValue;
 import com.nosliw.common.strvalue.basic.HAPStringableValueEntityBasic;
 import com.nosliw.common.utils.HAPConstant;
 
@@ -12,6 +13,8 @@ public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 	abstract public String getCategary();
 	
 	abstract public HAPValueInfo clone();
+	
+	abstract public HAPStringableValue buildDefault();
 	
 	public HAPValueInfo getElement(String name){
 		return null;

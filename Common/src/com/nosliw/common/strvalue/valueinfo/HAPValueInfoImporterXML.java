@@ -12,10 +12,23 @@ import org.w3c.dom.Element;
 import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPXMLUtility;
 
 public class HAPValueInfoImporterXML {
 
+	public static HAPValueInfo importFromXml(String fileName, Class resourceClass, HAPValueInfoManager valueInfoMan){
+		HAPValueInfo out = null;
+		try{
+			InputStream xmlStream = HAPFileUtility.getInputStreamOnClassPath(resourceClass, fileName);
+			out = importFromXML(xmlStream, valueInfoMan);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return out;
+	}
+	
 	public static HAPValueInfo importFromXML(InputStream xmlStream, HAPValueInfoManager valueInfoMan){
 		HAPValueInfo out = null;
 		try{
@@ -25,11 +38,11 @@ public class HAPValueInfoImporterXML {
 
 			Element rootEle = doc.getDocumentElement();
 			out = readRootValueInfoFromElement(rootEle, valueInfoMan);
+			valueInfoMan.registerValueInfo(out);
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		
 		return out;
 	}
 	 

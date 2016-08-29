@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPInterpolateExpressionProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
 /*
@@ -149,6 +150,19 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 		return out;
 	}
 
+	@Override
+	public boolean equals(Object obj){
+		boolean out = false;
+		if(obj instanceof HAPStringableValueBasic){
+			HAPStringableValueBasic value = (HAPStringableValueBasic)obj;
+			if(HAPBasicUtility.isEquals(value.m_strValue, this.m_strValue)){
+				if(value.m_type==null || this.m_type==null)  out = true;
+				else  out = HAPBasicUtility.isEquals(value.m_type, this.m_type);
+			}
+		}
+		return out;
+	}
+	
 	@Override
 	public HAPStringableValue getChild(String name) {
 		return null;

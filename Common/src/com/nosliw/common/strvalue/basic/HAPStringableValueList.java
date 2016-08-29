@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 
@@ -55,5 +56,15 @@ public class HAPStringableValueList extends HAPStringableValueComplex{
 		for(HAPStringableValue element : list.m_elements){
 			this.m_elements.add(element);
 		}
+	}
+
+	@Override
+	public boolean equals(Object obj){
+		boolean out = false;
+		if(obj instanceof HAPStringableValueList){
+			HAPStringableValueList value = (HAPStringableValueList)obj;
+			out = HAPBasicUtility.isEqualLists(value.m_elements, value.m_elements);
+		}
+		return out;
 	}
 }

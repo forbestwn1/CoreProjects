@@ -16,6 +16,7 @@ import com.nosliw.common.strvalue.basic.HAPStringableValueList;
 import com.nosliw.common.strvalue.basic.HAPStringableValueMap;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPXMLUtility;
 
 public class HAPStringableEntityImporterXML {
@@ -41,6 +42,11 @@ public class HAPStringableEntityImporterXML {
  
 	public static HAPStringableValueEntity readRootEntity(Element entityEle, HAPValueInfoManager valueInfoMan){
 		String valueInfoName = entityEle.getTagName();
+		HAPStringableValueEntity out = processEntityValue(entityEle, (HAPValueInfoEntity)valueInfoMan.getValueInfo(valueInfoName).getSolidValueInfo(), valueInfoMan);
+		return out;
+	}
+
+	public static HAPStringableValueEntity readRootEntity(Element entityEle, String valueInfoName, HAPValueInfoManager valueInfoMan){
 		HAPStringableValueEntity out = processEntityValue(entityEle, (HAPValueInfoEntity)valueInfoMan.getValueInfo(valueInfoName).getSolidValueInfo(), valueInfoMan);
 		return out;
 	}
@@ -80,9 +86,8 @@ public class HAPStringableEntityImporterXML {
 	
 	private static HAPStringableValueBasic processBasicValue(String strValue, HAPValueInfoBasic basicValueInfo, HAPValueInfoManager valueInfoMan){
 		HAPStringableValueBasic out = null;
-		String type = basicValueInfo.getValueDataType();
-		String defaultValue = basicValueInfo.getBasicAncestorValueString(HAPValueInfoBasic.ENTITY_PROPERTY_DEFAULTVALUE);
-		out = new HAPStringableValueBasic(strValue, type, defaultValue);
+		if(strValue!=null)		out = new HAPStringableValueBasic(strValue, basicValueInfo.getValueDataType());		
+		else		out = (HAPStringableValueBasic)basicValueInfo.buildDefault();		
 		if(out.isEmpty())  out = null;
 		return out;
 	}
@@ -122,7 +127,7 @@ public class HAPStringableEntityImporterXML {
 	}
 	
 	private static HAPStringableValueMap processMapValue(Element mapEle, HAPValueInfoMap mapValueInfo, HAPValueInfoManager valueInfoMan){
-		HAPStringableValueMap map = new HAPStringableValueMap();
+		HAPStringableValueMap map = (HAPStringableValueMap)mapValueInfo.buildDefault();
 		
 		if(mapEle!=null){
 			HAPValueInfo childInfo = mapValueInfo.getChildValueInfo().getSolidValueInfo();
@@ -152,7 +157,7 @@ public class HAPStringableEntityImporterXML {
 	}
 	
 	private static HAPStringableValueList processListValue(Element listEle, HAPValueInfoList listValueInfo, HAPValueInfoManager valueInfoMan){
-		HAPStringableValueList list = new HAPStringableValueList();
+		HAPStringableValueList list = (HAPStringableValueList)listValueInfo.buildDefault();
 		
 		if(listEle!=null){
 			HAPValueInfo childInfo = listValueInfo.getChildValueInfo().getSolidValueInfo();

@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 
@@ -61,5 +62,15 @@ public class HAPStringableValueMap extends HAPStringableValueComplex{
 		for(String name : map.m_elements.keySet()){
 			this.m_elements.put(name, map.m_elements.get(name));
 		}
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		boolean out = false;
+		if(obj instanceof HAPStringableValueMap){
+			HAPStringableValueMap value = (HAPStringableValueMap)obj;
+			out = HAPBasicUtility.isEqualMaps(value.m_elements, value.m_elements);
+		}
+		return out;
 	}
 }

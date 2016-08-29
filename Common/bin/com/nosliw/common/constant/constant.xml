@@ -1,0 +1,6 @@
+<constant description="constant definition" class="com.nosliw.common.constant.HAPConstantInfo">
+	<property name="name" type="string" description="constant name"/>
+	<property name="value" type="string" description="constant value"/>
+	<property name="type" type="string" description="constant data type" default="string"/>
+	<property name="skip" type="string" description="constant skip"/>
+</constant>

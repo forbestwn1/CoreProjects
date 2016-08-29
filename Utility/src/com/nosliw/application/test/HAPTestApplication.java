@@ -25,6 +25,9 @@ public class HAPTestApplication extends HAPConfigurableImp{
 				HAPTestSuiteInfo testSuiteInfo = HAPTestUtility.processTestSuiteClass(cls);
 				if(testSuiteInfo!=null)		rootSuite.addTest(testSuiteInfo);
 			}
+
+			@Override
+			protected boolean isValid(Class cls) {	return true;}
 			
 		}.process(rootSuite);
 	}

@@ -1,4 +1,4 @@
-package com.nosliw.data;
+package com.nosliw.data.info;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,6 @@ import com.nosliw.common.test.HAPTestSuite;
 import com.nosliw.common.test.HAPAssert;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.info.HAPDataTypeInfo;
 
 @HAPTestSuite(name="${this.getTestSuiteName()}", description="${this.getTestSuiteDescription()}")
 public class HAPPatternProcessorDataTypeInfo extends HAPPatternProcessorImp{

@@ -1,7 +1,9 @@
 package com.nosliw.common.strvalue.valueinfo;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import com.nosliw.common.strvalue.basic.HAPStringableValue;
 import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -89,9 +91,8 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 		this.getPropertiesEntity().updateChild(name, valueInfo);
 	}
 	
-	private String getParent(){
-		return this.getBasicAncestorValueString(ENTITY_PROPERTY_PARENT);
-	}
+	public String getParent(){		return this.getBasicAncestorValueString(ENTITY_PROPERTY_PARENT);	}
+	public String getClassName(){  return this.getBasicAncestorValueString(ENTITY_PROPERTY_CLASSNAME); }
 	
 	private HAPValueInfoEntity getParentEntityValueInfo(){
 		HAPValueInfoEntity out = null;
@@ -106,6 +107,31 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	public HAPValueInfoEntity clone(){
 		HAPValueInfoEntity out = new HAPValueInfoEntity();
 		out.cloneFrom(this);
+		return out;
+	}
+
+	@Override
+	public HAPStringableValue buildDefault() {
+		HAPStringableValueEntity out = this.newEntity();
+		if(out!=null){
+			Set<String> optionsAttr = new HashSet<String>();
+			
+			for(String property : this.getEntityProperties()){
+				HAPValueInfo propertyValueInfo = this.getPropertyInfo(property);
+				if(HAPConstant.CONS_STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyValueInfo.getCategary()))  optionsAttr.add(property);
+				else{
+					HAPStringableValue entityProperty = propertyValueInfo.buildDefault();
+					if(entityProperty!=null)			out.updateChild(property, entityProperty);
+				}
+			}
+			
+			for(String property : optionsAttr){
+				HAPValueInfoEntityOptions propertyValueInfo = (HAPValueInfoEntityOptions)this.getPropertyInfo(property);
+				String optionsValue = out.getChild(propertyValueInfo.getKeyName()).toString();
+				HAPStringableValue entityProperty = propertyValueInfo.buildDefault(optionsValue);
+				if(entityProperty!=null)			out.updateChild(property, entityProperty);
+			}
+		}
 		return out;
 	}
 }

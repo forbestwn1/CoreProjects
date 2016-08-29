@@ -55,6 +55,12 @@ public class HAPPatternManager extends HAPConfigurableImp{
 			this.registerPatternProcessor(processor);
 		}
 	}
+
+	public String compose(String processorName, Object data, Object obj){
+		HAPPatternProcessor processor = this.getPatternProcessor(processorName);
+		if(processor==null)  return data.toString();
+		return processor.compose(data, obj);
+	}
 	
 	public Object process(String text, String processorName, Object obj){
 		HAPPatternProcessor processor = this.getPatternProcessor(processorName);
@@ -110,14 +116,13 @@ public class HAPPatternManager extends HAPConfigurableImp{
 				@Override
 				protected void process(Class checkClass, Object data) {
 					Set<HAPPatternProcessorInfo> processorInfos = (Set<HAPPatternProcessorInfo>)data;
-					Class rootClass = HAPPatternProcessor.class;
-					if(rootClass.isAssignableFrom(checkClass)){
-						//for Class that inherented from HAPProcessor
-						HAPPatternProcessorInfo processInfo = new HAPPatternProcessorInfo();
-						processInfo.setClassName(checkClass.getName());
-						processorInfos.add(processInfo);
-					}
+					HAPPatternProcessorInfo processInfo = new HAPPatternProcessorInfo();
+					processInfo.setClassName(checkClass.getName());
+					processorInfos.add(processInfo);
 				}
+
+				@Override
+				protected boolean isValid(Class cls) {		return HAPPatternProcessor.class.isAssignableFrom(cls);	}
 			}.process(processorInfos);
 			try {
 				HAPPatternXmlResourceUtility.exportProcessorInfos(processorInfos, new FileOutputStream(new File(this.getExportFileByConfigure())));

@@ -1,0 +1,3 @@
+<group_attribute parent="group" class="com.nosliw.common.constant.HAPConstantGroup">
+	<property name="type" type="string" description="" default="ATTRIBUTE"/>
+</group_attribute>

@@ -19,6 +19,7 @@ import com.nosliw.data.utils.HAPAttributeConstant;
  */
 public class HAPDataTypeDefInfo extends HAPDataTypeInfo{
 
+	
 	//child categary and type are for defining container
 	//they define the container element type
 	private String m_childDataCategary;

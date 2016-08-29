@@ -16,7 +16,7 @@ import com.nosliw.common.utils.HAPSegmentParser;
 
 public class HAPStringableValueUtility {
 
-	private static final String PREFIX_ENTITYPROPERTY = "ENTITY_PROPERTY_";
+	public static final String PREFIX_ENTITYPROPERTY = "ENTITY_PROPERTY_";
 	
 	public static Set<String> getExpectedAttributesInEntity(Class entityClass){
 		Set<String> out = new HashSet<String>();

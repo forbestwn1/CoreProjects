@@ -18,7 +18,13 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPStringableEntityImporterJSON {
 
-	public static HAPStringableValueEntity readEntityFromJson(JSONObject jsonObjEntity, String entityType, HAPValueInfoManager valueInfoMan){
+	public static <T> T parseJson(JSONObject jsonObjEntity, Class<T> entityClass, HAPValueInfoManager valueInfoMan){
+		String entityType = entityClass.getSimpleName();
+		T out = (T)readJson(jsonObjEntity, entityType, valueInfoMan);
+		return out;
+	}
+	
+	public static HAPStringableValueEntity readJson(JSONObject jsonObjEntity, String entityType, HAPValueInfoManager valueInfoMan){
 		HAPStringableValueEntity out = processEntityValue(jsonObjEntity, (HAPValueInfoEntity)valueInfoMan.getValueInfo(entityType), valueInfoMan);
 		return out;
 	}
@@ -85,7 +91,7 @@ public class HAPStringableEntityImporterJSON {
 	}
 
 	private static HAPStringableValueMap processMapValue(Object mapObj, HAPValueInfoMap mapValueInfo, HAPValueInfoManager valueInfoMan){
-		HAPStringableValueMap map = new HAPStringableValueMap();
+		HAPStringableValueMap map = (HAPStringableValueMap)mapValueInfo.buildDefault();
 		
 		if(mapObj!=null){
 			JSONObject mapPropertiesJsonObj = null;
@@ -114,7 +120,7 @@ public class HAPStringableEntityImporterJSON {
 	}
 
 	private static HAPStringableValueList processListValue(Object listObj, HAPValueInfoList listValueInfo, HAPValueInfoManager valueInfoMan){
-		HAPStringableValueList list = new HAPStringableValueList();
+		HAPStringableValueList list = (HAPStringableValueList)listValueInfo.buildDefault();
 		
 		if(listObj!=null){
 			JSONArray listJsonObj = null;
@@ -145,9 +151,9 @@ public class HAPStringableEntityImporterJSON {
 		else  strValue = basicValue.toString();
 		
 		HAPStringableValueBasic out = null;
-		String type = basicValueInfo.getValueDataType();
-		String defaultValue = basicValueInfo.getBasicAncestorValueString(HAPValueInfoBasic.ENTITY_PROPERTY_DEFAULTVALUE);
-		out = new HAPStringableValueBasic(strValue, type, defaultValue);
+		if(strValue!=null)  out = new HAPStringableValueBasic(strValue, basicValueInfo.getValueDataType());
+		else   out = (HAPStringableValueBasic)basicValueInfo.buildDefault();
+
 		if(out.isEmpty())  out = null;
 		return out;
 	}

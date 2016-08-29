@@ -7,7 +7,7 @@ import java.util.Set;
 import com.google.common.reflect.ClassPath;
 
 public abstract class HAPClassFilter {
-
+	
 	public void process(Object data){
 		try {
 			ClassLoader cl = HAPClassFilter.class.getClassLoader();
@@ -20,7 +20,9 @@ public abstract class HAPClassFilter {
 					//only check nosliw package
 					Class checkClass = classInfo.load();
 					if(!checkClass.isInterface() && !Modifier.isAbstract(checkClass.getModifiers())){
-						this.process(checkClass, data);
+						if(this.isValid(checkClass)){
+							this.process(checkClass, data);
+						}
 					}
 				}
 			}
@@ -30,4 +32,6 @@ public abstract class HAPClassFilter {
 	}
 
 	abstract protected void process(Class cls, Object data);
+	
+	abstract protected boolean isValid(Class cls);
 }
