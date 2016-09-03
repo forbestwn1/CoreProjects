@@ -57,7 +57,7 @@ public class HAPExpressionParser {
 		  else if(expressionEles.dataTypeNode!=null){
 			  String dataTypeInfo = (String)expressionEles.dataTypeNode.jjtGetValue();
 			  String operation = (String)expressionEles.nameNode.jjtGetValue();
-			  if(HAPConstant.CONS_DATAOPERATION_NEWDATA.equals(operation)){
+			  if(HAPConstant.DATAOPERATION_NEWDATA.equals(operation)){
 				  //new operation
 				  operand = new HAPOperandNewOperation(HAPDataTypeInfo.parseDataTypeInfo(dataTypeInfo), getOperationParms(expressionEles.expressionNodes, dataTypeMan), dataTypeMan);
 			  }

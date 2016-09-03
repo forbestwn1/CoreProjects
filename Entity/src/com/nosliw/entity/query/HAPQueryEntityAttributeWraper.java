@@ -31,9 +31,9 @@ public class HAPQueryEntityAttributeWraper extends HAPWraper{
 	
 	@Override
 	protected void buildOjbectJsonMap(Map<String, String> map, Map<String, Class> dataTypeMap){
-//		map.put(HAPAttributeConstant.ATTR_QUERYENTITYATTRIBUTEWRAPER_ENTITYPATH, m_entityPathInfo.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+//		map.put(HAPAttributeConstant.QUERYENTITYATTRIBUTEWRAPER_ENTITYPATH, m_entityPathInfo.toStringValue(HAPConstant.SERIALIZATION_JSON));
 	}
 	
-	public String toString(){return this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON);}
+	public String toString(){return this.toStringValue(HAPConstant.SERIALIZATION_JSON);}
 
 }

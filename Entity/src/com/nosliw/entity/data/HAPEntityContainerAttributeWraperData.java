@@ -67,7 +67,7 @@ public class HAPEntityContainerAttributeWraperData extends HAPBaseData{
 	public void removeAllElementDatas(){
 		for(String id :this.m_elements.keySet()){
 			HAPDataWraper wraper = this.getElementWraper(id);
-			wraper.clearUp(HAPConstant.CONS_ENTITYOPERATION_SCOPE_OPERATION);
+			wraper.clearUp(HAPConstant.ENTITYOPERATION_SCOPE_OPERATION);
 			this.m_elements.remove(id);
 		}
 	}
@@ -121,14 +121,14 @@ public class HAPEntityContainerAttributeWraperData extends HAPBaseData{
 	/**************************  Parse  ***************************/
 	@Override
 	public String toDataStringValue(String format) {
-		if(format.equals(HAPConstant.CONS_SERIALIZATION_JSON)) 
+		if(format.equals(HAPConstant.SERIALIZATION_JSON)) 
 		{
 			Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 			Iterator<HAPDataWraper> it = this.iterate();
 			while(it.hasNext()){
 				HAPDataWraper eleWraper = it.next();
 				if(eleWraper!=null){
-					jsonMap.put(eleWraper.getId(), eleWraper.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+					jsonMap.put(eleWraper.getId(), eleWraper.toStringValue(HAPConstant.SERIALIZATION_JSON));
 				}
 			}
 			return HAPJsonUtility.getMapJson(jsonMap);

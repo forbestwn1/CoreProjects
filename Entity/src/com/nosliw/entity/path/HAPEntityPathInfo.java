@@ -85,7 +85,7 @@ public class HAPEntityPathInfo implements HAPStringable{
 		while(pathSegs.hasNext()){
 			String attribute = pathSegs.next();
 			wraper = wraper.getChildWraperByPath(attribute);
-			if(HAPConstant.CONS_DATATYPE_CATEGARY_REFERENCE.equals(wraper.getDataTypeDefInfo().getCategary())){
+			if(HAPConstant.DATATYPE_CATEGARY_REFERENCE.equals(wraper.getDataTypeDefInfo().getCategary())){
 				//entity reference attribute, create another entity attribute segment for it whether reference have data
 				part.setPath(pathSegs.getPreviousPath());
 				String restPath = pathSegs.getRestPath();
@@ -108,9 +108,9 @@ public class HAPEntityPathInfo implements HAPStringable{
 	@Override
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYPATHINFO_ENTITYPATH, this.m_entityPath.toStringValue(format));
-		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYPATHINFO_PATHSEGMENTS, HAPJsonUtility.getListObjectJson(this.m_pathSegments));
-		if(this.m_data!=null)		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYPATHINFO_DATA, this.m_data.toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.ENTITYPATHINFO_ENTITYPATH, this.m_entityPath.toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.ENTITYPATHINFO_PATHSEGMENTS, HAPJsonUtility.getListObjectJson(this.m_pathSegments));
+		if(this.m_data!=null)		jsonMap.put(HAPAttributeConstant.ENTITYPATHINFO_DATA, this.m_data.toStringValue(format));
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}
 	

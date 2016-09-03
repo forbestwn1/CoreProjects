@@ -165,7 +165,7 @@ public class HAPQueryDefinition implements HAPStringable{
 	 */
 	public void addSortingInfo(HAPSortingInfo sortingInfo){
 		this.m_sortingInfos.add(sortingInfo);
-		if(HAPConstant.CONS_SORTING_TYPE_ATTRIBUTE==sortingInfo.getType()){
+		if(HAPConstant.SORTING_TYPE_ATTRIBUTE==sortingInfo.getType()){
 			HAPSortingQueryAttribute qSortingInfo = (HAPSortingQueryAttribute)sortingInfo;
 			this.m_entityAttributes.add(new HAPQueryProjectAttribute(qSortingInfo.getEntityName(), qSortingInfo.getAttribute()));
 		}
@@ -210,16 +210,16 @@ public class HAPQueryDefinition implements HAPStringable{
 	@Override
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		jsonMap.put(HAPAttributeConstant.ATTR_QUERYDEFINITION_NAME, this.m_name);
-		jsonMap.put(HAPAttributeConstant.ATTR_QUERYDEFINITION_EXPRESSIONINFO, this.getExpression().toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.QUERYDEFINITION_NAME, this.m_name);
+		jsonMap.put(HAPAttributeConstant.QUERYDEFINITION_EXPRESSIONINFO, this.getExpression().toStringValue(format));
 
-		jsonMap.put(HAPAttributeConstant.ATTR_QUERYDEFINITION_PROJECTATTRIBUTES, HAPJsonUtility.getSetObjectJson(this.m_queryAttributes));
+		jsonMap.put(HAPAttributeConstant.QUERYDEFINITION_PROJECTATTRIBUTES, HAPJsonUtility.getSetObjectJson(this.m_queryAttributes));
 
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}
 	
 	static public HAPQueryDefinition parse(JSONObject jsonObject, HAPDataTypeManager dataTypeMan, HAPEntityDefinitionManager entityDefMan){
-		String name = jsonObject.optString(HAPAttributeConstant.ATTR_QUERYDEFINITION_NAME);
+		String name = jsonObject.optString(HAPAttributeConstant.QUERYDEFINITION_NAME);
 
 		return null;
 	}

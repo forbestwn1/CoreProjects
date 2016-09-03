@@ -105,10 +105,10 @@ public abstract class HAPOperandOperation extends HAPOperandImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonDataTypeMap){
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERAND_OPERATION_OPERATION, this.m_operation);
+		jsonMap.put(HAPAttributeConstant.OPERAND_OPERATION_OPERATION, this.m_operation);
 		if(this.m_baseDataTypeInfo!=null){
-			jsonMap.put(HAPAttributeConstant.ATTR_OPERAND_OPERATION_BASEDATATYPEINFO, this.m_baseDataTypeInfo.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+			jsonMap.put(HAPAttributeConstant.OPERAND_OPERATION_BASEDATATYPEINFO, this.m_baseDataTypeInfo.toStringValue(HAPConstant.SERIALIZATION_JSON));
 		}
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERAND_OPERATION_PARAMETERS, HAPJsonUtility.getArrayObjectJson(this.m_parms));
+		jsonMap.put(HAPAttributeConstant.OPERAND_OPERATION_PARAMETERS, HAPJsonUtility.getArrayObjectJson(this.m_parms));
 	}
 }

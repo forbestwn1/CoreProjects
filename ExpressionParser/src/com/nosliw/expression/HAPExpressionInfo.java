@@ -52,11 +52,11 @@ public class HAPExpressionInfo implements HAPStringable{
 
 	
 	public static HAPExpressionInfo parse(JSONObject jsonObj, HAPDataTypeManager dataTypeMan){
-		String expression = jsonObj.optString(HAPAttributeConstant.ATTR_EXPRESSIONINFO_EXPRESSION);
+		String expression = jsonObj.optString(HAPAttributeConstant.EXPRESSIONINFO_EXPRESSION);
 
 		//read variable infos
 		Map<String, HAPDataTypeInfo> varDataTypeInfos = new LinkedHashMap<String, HAPDataTypeInfo>();
-		JSONObject varInfosJson = jsonObj.optJSONObject(HAPAttributeConstant.ATTR_EXPRESSIONINFO_VARIABLESINFO);
+		JSONObject varInfosJson = jsonObj.optJSONObject(HAPAttributeConstant.EXPRESSIONINFO_VARIABLESINFO);
 		Iterator<String> varNames = varInfosJson.keys();
 		while(varNames.hasNext()){
 			String varName = varNames.next();
@@ -65,7 +65,7 @@ public class HAPExpressionInfo implements HAPStringable{
 		}
 		
 		Map<String, HAPData> constantInfos = new LinkedHashMap<String, HAPData>();
-		JSONObject constantsJson = jsonObj.optJSONObject(HAPAttributeConstant.ATTR_EXPRESSIONINFO_CONSTANTS);
+		JSONObject constantsJson = jsonObj.optJSONObject(HAPAttributeConstant.EXPRESSIONINFO_CONSTANTS);
 		Iterator<String> constantNames = constantsJson.keys();
 		while(constantNames.hasNext()){
 			String constantName = constantNames.next();
@@ -79,11 +79,11 @@ public class HAPExpressionInfo implements HAPStringable{
 	@Override
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		jsonMap.put(HAPAttributeConstant.ATTR_EXPRESSIONINFO_EXPRESSION, this.m_expression);
-		jsonMap.put(HAPAttributeConstant.ATTR_EXPRESSIONINFO_VARIABLESINFO, HAPJsonUtility.getMapObjectJson(this.m_variableInfos));
-		jsonMap.put(HAPAttributeConstant.ATTR_EXPRESSIONINFO_CONSTANTS, HAPJsonUtility.getMapObjectJson(this.m_constantDatas));
+		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_EXPRESSION, this.m_expression);
+		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_VARIABLESINFO, HAPJsonUtility.getMapObjectJson(this.m_variableInfos));
+		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_CONSTANTS, HAPJsonUtility.getMapObjectJson(this.m_constantDatas));
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}
 	
-	public String toString(){return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));}
+	public String toString(){return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));}
 }

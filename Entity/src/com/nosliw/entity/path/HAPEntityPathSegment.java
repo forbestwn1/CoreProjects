@@ -24,6 +24,6 @@ public class HAPEntityPathSegment extends HAPEntityPath{
 	
 	protected void setJsonMap(Map<String, String> jsonMap){
 		super.setJsonMap(jsonMap);
-		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYPATH_EXPECTPATH, this.m_expectPath);
+		jsonMap.put(HAPAttributeConstant.ENTITYPATH_EXPECTPATH, this.m_expectPath);
 	}
 }

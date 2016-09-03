@@ -21,7 +21,7 @@ public class HAPReferenceInfoAbsolute extends HAPReferenceInfo{
 	}
 	
 	@Override
-	public int getType() {	return HAPConstant.CONS_REFERENCE_TYPE_ABSOLUTE;	}
+	public int getType() {	return HAPConstant.REFERENCE_TYPE_ABSOLUTE;	}
 
 	public HAPEntityID getEntityID(){	return this.m_entityID;	}
 	

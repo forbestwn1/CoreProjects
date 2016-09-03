@@ -9,7 +9,7 @@ import com.nosliw.common.test.HAPTestCase;
 import com.nosliw.common.test.HAPTestEnv;
 import com.nosliw.common.test.HAPTestItemInfo;
 
-public class HAPPatternProcessorInterpolationStaticTest extends HAPPatternProcessorInterpolationStatic{
+public class HAPPatternProcessorInterpolationStaticTest extends HAPPatternProcessorInterpolationByConfigure{
 
 	static final String TOKEN_START = "{{";
 	static final String TOKEN_END = "}}";

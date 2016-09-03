@@ -87,7 +87,7 @@ public class HAPEntityContainerAttributeWraper extends HAPDataWraper{
 		if(keyword==null){
 			out = this.getElement(attribute);	
 		}
-		else if(HAPConstant.CONS_ATTRIBUTE_PATH_EACH.equals(keyword)){
+		else if(HAPConstant.ATTRIBUTE_PATH_EACH.equals(keyword)){
 			HAPWraperContainerWraper wraper = new HAPWraperContainerWraper(this.getChildDataTypeDefInfo(), this.getDataTypeManager(), this.getEntityDefinitionManager());
 			HAPWraperContainerData wraperContainerData = wraper.getWraperContainerData();
 			Iterator<HAPDataWraper> its = this.iterate();
@@ -130,7 +130,7 @@ public class HAPEntityContainerAttributeWraper extends HAPDataWraper{
 		{
 			String id = operation.getElementId();
 			String eleId = HAPEntityDataTypeUtility.getContainerAttributeDataType(this.getDataTypeManager()).newContainerElement(this, id);
-			operation.setExtra(this.getChildWraper(eleId).toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+			operation.setExtra(this.getChildWraper(eleId).toStringValue(HAPConstant.SERIALIZATION_JSON));
 			
 			HAPDataTypeInfo childDataType = this.getChildDataTypeDefInfo();
 			if(HAPEntityDataTypeUtility.isEntityType(childDataType)){

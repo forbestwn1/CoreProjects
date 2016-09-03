@@ -20,7 +20,7 @@ public class HAPEntityContainerAttribute extends HAPDataTypeImp{
 	private HAPEntityDefinitionManager m_entityDefMan;
 	
 	public HAPEntityContainerAttribute(HAPDataTypeManager dataTypeMan, HAPEntityDefinitionManager entityDefMan) {
-		super(new HAPDataTypeInfoWithVersion(HAPConstant.CONS_DATATYPE_CATEGARY_CONTAINER, HAPConstant.CONS_DATATYPE_TYPE_CONTAINER_ENTITYATTRIBUTE), null, null, null, "", dataTypeMan);
+		super(new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_CONTAINER, HAPConstant.DATATYPE_TYPE_CONTAINER_ENTITYATTRIBUTE), null, null, null, "", dataTypeMan);
 		this.m_entityDefMan = entityDefMan;
 	}
 

@@ -48,8 +48,8 @@ public class HAPUIExpressionContent implements HAPStringable{
 	protected HAPDataTypeManager getDataTypeManager(){ return this.m_dataTypeMan; }
 
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap){
-		jsonMap.put(HAPAttributeConstant.ATTR_UIEXPRESSIONCONTENT_UIID, this.m_uiId);
-		jsonMap.put(HAPAttributeConstant.ATTR_UIEXPRESSIONCONTENT_UIEXPRESSIONELEMENTS, HAPJsonUtility.getListObjectJson(this.m_contentElements));
+		jsonMap.put(HAPAttributeConstant.UIEXPRESSIONCONTENT_UIID, this.m_uiId);
+		jsonMap.put(HAPAttributeConstant.UIEXPRESSIONCONTENT_UIEXPRESSIONELEMENTS, HAPJsonUtility.getListObjectJson(this.m_contentElements));
 	}
 	
 	@Override

@@ -50,18 +50,18 @@ public class HAPApplicationInstance{
     		else			this.m_configure = new HAPConfigureImp();
 		}
 
-		this.m_logger = new HAPFileLogger(this.m_configure.getConfigurableValue(HAPConstant.CONS_APPLICATION_CONFIGURE_LOGGER));
+		this.m_logger = new HAPFileLogger(this.m_configure.getConfigurableValue(HAPConstant.APPLICATION_CONFIGURE_LOGGER));
 		
-		this.m_dataTypeMan = new HAPApplicationDataTypeManager(this.m_configure.getConfigurableValue(HAPConstant.CONS_APPLICATION_CONFIGURE_DATATYPE));
+		this.m_dataTypeMan = new HAPApplicationDataTypeManager(this.m_configure.getConfigurableValue(HAPConstant.APPLICATION_CONFIGURE_DATATYPE));
 		this.m_dataTypeMan.init();
 		this.m_optionsDefMan = new HAPApplicationOptionsDefinitionManager(this.getDataTypeManager());
-		this.m_entityDefMan = new HAPApplicationEntityDefinitionManager(this.m_configure.getConfigurableValue(HAPConstant.CONS_APPLICATION_CONFIGURE_ENTITYDEFINITION), this.m_dataTypeMan, this.m_optionsDefMan);
-		this.m_queryDefMan = new HAPApplicationQueryDefinitionManager(this.m_configure.getConfigurableValue(HAPConstant.CONS_APPLICATION_CONFIGURE_QUERYDEFINITION), this.getDataTypeManager(), this.getEntityDefinitionManager());
+		this.m_entityDefMan = new HAPApplicationEntityDefinitionManager(this.m_configure.getConfigurableValue(HAPConstant.APPLICATION_CONFIGURE_ENTITYDEFINITION), this.m_dataTypeMan, this.m_optionsDefMan);
+		this.m_queryDefMan = new HAPApplicationQueryDefinitionManager(this.m_configure.getConfigurableValue(HAPConstant.APPLICATION_CONFIGURE_QUERYDEFINITION), this.getDataTypeManager(), this.getEntityDefinitionManager());
 		
-		this.m_uiResourceMan = new HAPApplicationUIResourceManager(this.m_configure.getConfigurableValue(HAPConstant.CONS_APPLICATION_CONFIGURE_UIRESOURCE), this.getDataTypeManager());
-		this.m_uiTagMan = new HAPApplicationUITagManager(this.m_configure.getConfigurableValue(HAPConstant.CONS_APPLICATION_CONFIGURE_UITAG));
+		this.m_uiResourceMan = new HAPApplicationUIResourceManager(this.m_configure.getConfigurableValue(HAPConstant.APPLICATION_CONFIGURE_UIRESOURCE), this.getDataTypeManager());
+		this.m_uiTagMan = new HAPApplicationUITagManager(this.m_configure.getConfigurableValue(HAPConstant.APPLICATION_CONFIGURE_UITAG));
 		
-		this.m_clientContextMan = new HAPApplicationClientContextManager(this.m_configure.getConfigurableValue(HAPConstant.CONS_APPLICATION_CONFIGURE_USERENV),
+		this.m_clientContextMan = new HAPApplicationClientContextManager(this.m_configure.getConfigurableValue(HAPConstant.APPLICATION_CONFIGURE_USERENV),
 															this.getDataTypeManager(),
 															this.getEntityDefinitionManager(),
 															this.getQueryDefinitionManager(),

@@ -3,8 +3,10 @@ package com.nosliw.common.strvalue.basic;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.interpolate.HAPInterpolateExpressionProcessor;
+import com.nosliw.common.configure.HAPConfigureImp;
+import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
+import com.nosliw.common.interpolate.HAPInterpolateUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
@@ -41,7 +43,7 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 	public HAPStringableValueBasic(){}
 	
 	@Override
-	public String getStringableCategary(){		return HAPConstant.CONS_STRINGABLE_VALUECATEGARY_BASIC;	}
+	public String getStringableCategary(){		return HAPConstant.STRINGABLE_VALUECATEGARY_BASIC;	}
 	
 	@Override
 	public boolean isEmpty(){
@@ -76,13 +78,12 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 	@Override
 	public HAPInterpolateOutput resolveByPattern(Map<String, Object> patternDatas){	return this.m_strValue.resolveByPattern(patternDatas);	}
 	@Override
-	public HAPInterpolateOutput resolveByInterpolateProcessor(Map<HAPInterpolateExpressionProcessor, Object> patternDatas){ return this.m_strValue.resolveByInterpolateProcessor(patternDatas);}
+	public HAPInterpolateOutput resolveByInterpolateProcessor(Map<HAPInterpolateProcessor, Object> patternDatas){ return this.m_strValue.resolveByInterpolateProcessor(patternDatas);}
 
-	
 	public boolean isValueResolved(){		return this.m_sovled;	}
 	
 	@Override
-	public boolean isStringResolved(){  return this.m_strValue.isStringResolved();  }
+	public boolean isResolved(){  return this.m_strValue.isResolved();  }
 	
 	public Object getValue(){
 		if(this.m_sovled)  return this.m_value;
@@ -97,7 +98,7 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 		if(this.m_sovled && type.equals(this.m_type))  return this.m_value;
 		
 		//if m_value is not solved, return null
-		if(!this.m_strValue.isStringResolved())  return null;
+		if(!this.m_strValue.isResolved())  return null;
 		
 		Object out = HAPStringableValueUtility.stringToValue(m_strValue.getValue(), type);
 		if(out!=null)  this.resolved(out, type);
@@ -117,18 +118,18 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 	}
 	
 	public String getStringValue() {	return this.m_strValue.getValue();	}
-	public Boolean getBooleanValue() {		return (Boolean)this.getValue(HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_BOOLEAN);	}
-	public Integer getIntegerValue() {		return (Integer)this.getValue(HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_INTEGER);	}
-	public Float getFloatValue() {		return (Float)this.getValue(HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_FLOAT);	}
-	public List<String> getListValue(){		return (List<String>)this.getValue(HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_ARRAY);	}
+	public Boolean getBooleanValue() {		return (Boolean)this.getValue(HAPConstant.STRINGABLE_BASICVALUETYPE_BOOLEAN);	}
+	public Integer getIntegerValue() {		return (Integer)this.getValue(HAPConstant.STRINGABLE_BASICVALUETYPE_INTEGER);	}
+	public Float getFloatValue() {		return (Float)this.getValue(HAPConstant.STRINGABLE_BASICVALUETYPE_FLOAT);	}
+	public List<String> getListValue(){		return (List<String>)this.getValue(HAPConstant.STRINGABLE_BASICVALUETYPE_ARRAY);	}
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format) {
 		super.buildFullJsonMap(jsonMap, typeJsonMap, format);
-		jsonMap.put(HAPAttributeConstant.ATTR_STRINGABLEVALUE_TYPE, this.m_type);
-		jsonMap.put(HAPAttributeConstant.ATTR_STRINGABLEVALUE_STRINGVALUE, this.m_strValue.toString());
-		jsonMap.put(HAPAttributeConstant.ATTR_STRINGABLEVALUE_RESOLVED, String.valueOf(this.m_sovled));
-		jsonMap.put(HAPAttributeConstant.ATTR_STRINGABLEVALUE_VALUE, this.m_value==null?null : this.m_value.toString());
+		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_TYPE, this.m_type);
+		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_STRINGVALUE, this.m_strValue.toString());
+		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_RESOLVED, String.valueOf(this.m_sovled));
+		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_VALUE, this.m_value==null?null : this.m_value.toString());
 	}
 	
 	@Override

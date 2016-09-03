@@ -105,7 +105,7 @@ public class HAPEntityExportUtil {
 
 		if(!referenceAttrWraper.isEmpty()){
 			doc.append("type", referenceAttrWraper.getReferenceType());
-			doc.append("refid", referenceAttrWraper.getReferenceData().toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+			doc.append("refid", referenceAttrWraper.getReferenceData().toStringValue(HAPConstant.SERIALIZATION_JSON));
 		}
 		
 		return doc;
@@ -120,7 +120,7 @@ public class HAPEntityExportUtil {
 		attrDataTypeDoc.append("type", dataTypeInfo.getType());
 		doc.append("dataType", attrDataTypeDoc);
 		
-		doc.append("data", atomData.getData().toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+		doc.append("data", atomData.getData().toStringValue(HAPConstant.SERIALIZATION_JSON));
 		return doc;
 	}
 }

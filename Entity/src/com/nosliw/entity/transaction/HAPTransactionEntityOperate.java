@@ -9,7 +9,7 @@ public class HAPTransactionEntityOperate extends HAPTransaction{
 
 	public HAPTransactionEntityOperate(HAPConfigure configure, HAPEntityDataAccess access, HAPDataContext dataContext) {
 		super(configure, access, dataContext);
-		this.setOperationScope(HAPConstant.CONS_ENTITYOPERATION_SCOPE_ENTITY);
+		this.setOperationScope(HAPConstant.ENTITYOPERATION_SCOPE_ENTITY);
 	}
 
 }

@@ -19,13 +19,13 @@ public class HAPValidationInfoExpression implements HAPStringable{
 	public HAPValidationInfoExpression(String name, HAPExpression expression){
 		this.m_name = name;
 		this.m_expression = expression;
-		this.m_serverOnly = !this.m_expression.isScriptRunnable(HAPConstant.CONS_OPERATIONDEF_SCRIPT_JAVASCRIPT);
+		this.m_serverOnly = !this.m_expression.isScriptRunnable(HAPConstant.OPERATIONDEF_SCRIPT_JAVASCRIPT);
 	}
 
 	public HAPValidationInfoExpression(HAPExpression expression){
 		this.m_name = "default";
 		this.m_expression = expression;
-		this.m_serverOnly = !this.m_expression.isScriptRunnable(HAPConstant.CONS_OPERATIONDEF_SCRIPT_JAVASCRIPT);
+		this.m_serverOnly = !this.m_expression.isScriptRunnable(HAPConstant.OPERATIONDEF_SCRIPT_JAVASCRIPT);
 	}
 
 	public String getName(){return this.m_name;}

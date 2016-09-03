@@ -1,11 +1,11 @@
 package com.nosliw.common.interpolate;
 
-public abstract class HAPInterpolateExpressionProcessor {
+public abstract class HAPInterpolateProcessor {
 
 	private String m_startToken;
 	private String m_endToken;
 	
-	public HAPInterpolateExpressionProcessor(String startToken, String endToken){
+	public HAPInterpolateProcessor(String startToken, String endToken){
 		this.m_startToken = startToken;
 		this.m_endToken = endToken;
 	}

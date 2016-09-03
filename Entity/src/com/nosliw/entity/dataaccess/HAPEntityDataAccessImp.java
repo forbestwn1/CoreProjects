@@ -143,9 +143,9 @@ public abstract class HAPEntityDataAccessImp implements HAPEntityDataAccess{
 			//do operation on attribute wrapper
 			out = attrWraper.operate(operation);
 			//add root entity as changed entity
-			this.addTransitEntity(entityWraper.getRootEntityWraper(), HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_CHANGED);
+			this.addTransitEntity(entityWraper.getRootEntityWraper(), HAPConstant.DATAACCESS_ENTITYSTATUS_CHANGED);
 			//for global scope operation, add root entity as changed entity to operation result for future query update
-			if(operation.getScope()==HAPConstant.CONS_ENTITYOPERATION_SCOPE_GLOBAL)		this.getOperationResult().addEntity(entityWraper.getRootEntityWraper(), HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_CHANGED);
+			if(operation.getScope()==HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL)		this.getOperationResult().addEntity(entityWraper.getRootEntityWraper(), HAPConstant.DATAACCESS_ENTITYSTATUS_CHANGED);
 			break;
 		}
 		case ENTITYOPERATION_ENTITY_OPERATIONS:
@@ -174,13 +174,13 @@ public abstract class HAPEntityDataAccessImp implements HAPEntityDataAccess{
 				operation.setEntityID(entityWraper.getID());
 			}
 			
-			this.addTransitEntity(entityWraper, HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NEW);
+			this.addTransitEntity(entityWraper, HAPConstant.DATAACCESS_ENTITYSTATUS_NEW);
 			//store entity wrapper to extra in operation, so that client side can use extra value to create wrapper
-			operation.setExtra(entityWraper.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+			operation.setExtra(entityWraper.toStringValue(HAPConstant.SERIALIZATION_JSON));
 			out = HAPServiceData.createSuccessData(entityWraper);
-			if(operation.getScope()==HAPConstant.CONS_ENTITYOPERATION_SCOPE_GLOBAL){
+			if(operation.getScope()==HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL){
 				this.onEvent(HAPEvent.createEntityNewEvent(entityWraper));
-				this.getOperationResult().addEntity(entityWraper, HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NEW);
+				this.getOperationResult().addEntity(entityWraper, HAPConstant.DATAACCESS_ENTITYSTATUS_NEW);
 			}
 
 			//run extra operations
@@ -195,10 +195,10 @@ public abstract class HAPEntityDataAccessImp implements HAPEntityDataAccess{
 			if(out.isSuccess()){
 				//back up entity wrapper to extra attribute in operation
 				operation.setExtra(entityWraper.cloneWraper());
-				entityWraper.setStatus(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_DEAD);
+				entityWraper.setStatus(HAPConstant.DATAACCESS_ENTITYSTATUS_DEAD);
 				entityWraper.clearUp(operation.getScope());
-				this.addTransitEntity(entityWraper, HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_DEAD);
-				if(operation.getScope()==HAPConstant.CONS_ENTITYOPERATION_SCOPE_GLOBAL)		this.getOperationResult().addEntity(entityWraper, HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_DEAD);
+				this.addTransitEntity(entityWraper, HAPConstant.DATAACCESS_ENTITYSTATUS_DEAD);
+				if(operation.getScope()==HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL)		this.getOperationResult().addEntity(entityWraper, HAPConstant.DATAACCESS_ENTITYSTATUS_DEAD);
 				out = HAPServiceData.createSuccessData(entityWraper);
 			}
 			break;
@@ -227,7 +227,7 @@ public abstract class HAPEntityDataAccessImp implements HAPEntityDataAccess{
 
 			HAPEntity entityDataType = (HAPEntity)HAPEntityDataUtility.getEntityDataType(entityWraper.getEntityType(), this.getDataTypeManager());
 			HAPDataWraper attrWraper = entityDataType.newAttributeWraper(attrDef, entityWraper.getEntityData());
-			operation.setExtra(attrWraper.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+			operation.setExtra(attrWraper.toStringValue(HAPConstant.SERIALIZATION_JSON));
 			out = HAPServiceData.createSuccessData(attrWraper);
 			break;
 		}
@@ -289,7 +289,7 @@ public abstract class HAPEntityDataAccessImp implements HAPEntityDataAccess{
 		String entityId = HAPBasicUtility.isStringEmpty(id)?this.getNextEntityId():id; 
 		out.setId(entityId);
 		out.setID(new HAPEntityID("", type, entityId));
-		out.setStatus(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NEW);
+		out.setStatus(HAPConstant.DATAACCESS_ENTITYSTATUS_NEW);
 		out.setDataAccess(this);
 		
 		//init entity data, get extra operation
@@ -372,18 +372,18 @@ public abstract class HAPEntityDataAccessImp implements HAPEntityDataAccess{
 	@Override
 	public Set<HAPEntityWraper> getAllTransitEntitys(){
 		Set<HAPEntityWraper> out = new HashSet<HAPEntityWraper>();
-		out.addAll(this.m_results.getAllEntitys(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NORMAL));
-		out.addAll(this.m_results.getAllEntitys(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_CHANGED));
-		out.addAll(this.m_results.getAllEntitys(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NEW));
+		out.addAll(this.m_results.getAllEntitys(HAPConstant.DATAACCESS_ENTITYSTATUS_NORMAL));
+		out.addAll(this.m_results.getAllEntitys(HAPConstant.DATAACCESS_ENTITYSTATUS_CHANGED));
+		out.addAll(this.m_results.getAllEntitys(HAPConstant.DATAACCESS_ENTITYSTATUS_NEW));
 		return out;
 	}
 	
 	@Override
 	public Set<HAPEntityWraper> getTransitEntitysByType(String type){
 		Set<HAPEntityWraper> out = new HashSet<HAPEntityWraper>();
-		out.addAll(this.m_results.getEntityContainer(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NORMAL).getAllEntityByType(type));
-		out.addAll(this.m_results.getEntityContainer(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_CHANGED).getAllEntityByType(type));
-		out.addAll(this.m_results.getEntityContainer(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NEW).getAllEntityByType(type));
+		out.addAll(this.m_results.getEntityContainer(HAPConstant.DATAACCESS_ENTITYSTATUS_NORMAL).getAllEntityByType(type));
+		out.addAll(this.m_results.getEntityContainer(HAPConstant.DATAACCESS_ENTITYSTATUS_CHANGED).getAllEntityByType(type));
+		out.addAll(this.m_results.getEntityContainer(HAPConstant.DATAACCESS_ENTITYSTATUS_NEW).getAllEntityByType(type));
 		return out;
 	}
 	
@@ -407,13 +407,13 @@ public abstract class HAPEntityDataAccessImp implements HAPEntityDataAccess{
 	
 	@Override
 	public void updateQueryByResult(){
-		for(HAPEntityWraper wraper : this.m_results.getAllEntitys(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_CHANGED)){
+		for(HAPEntityWraper wraper : this.m_results.getAllEntitys(HAPConstant.DATAACCESS_ENTITYSTATUS_CHANGED)){
 			this.m_queryManager.changeEntity(wraper);
 		}
-		for(HAPEntityWraper wraper : this.m_results.getAllEntitys(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NEW)){
+		for(HAPEntityWraper wraper : this.m_results.getAllEntitys(HAPConstant.DATAACCESS_ENTITYSTATUS_NEW)){
 			this.m_queryManager.changeEntity(wraper);
 		}
-		for(HAPEntityWraper wraper : this.m_results.getAllEntitys(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_DEAD)){
+		for(HAPEntityWraper wraper : this.m_results.getAllEntitys(HAPConstant.DATAACCESS_ENTITYSTATUS_DEAD)){
 			this.m_queryManager.changeEntity(wraper);
 		}
 		this.m_results.clearUpdatedEntitys();
@@ -510,7 +510,7 @@ public abstract class HAPEntityDataAccessImp implements HAPEntityDataAccess{
 //		this.informQuery(event);
 		
 		switch(event.getType()){
-		case HAPConstant.CONS_EVENTTYPE_ENTITY_CLEARUP:
+		case HAPConstant.EVENTTYPE_ENTITY_CLEARUP:
 			this.clearReferenceToEntity(((HAPEntityClearupEvent)event).getEntityWraper().getID());
 			break;
 		}

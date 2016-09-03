@@ -32,7 +32,7 @@ public class HAPDataTypeOperationsAnnotation extends HAPDataTypeOperations{
 		
 		for(Method method : methods){
 			String name = method.getName();
-			int i = name.lastIndexOf(HAPConstant.CONS_SEPERATOR_SURFIX);
+			int i = name.lastIndexOf(HAPConstant.SEPERATOR_SURFIX);
 			boolean isScriptDefMethod = i!=-1 && this.getDataTypeManager().getSupportedScripts().contains(name.substring(i+1));
 			if(!isScriptDefMethod){
 				//this method is for defining java operation
@@ -57,7 +57,7 @@ public class HAPDataTypeOperationsAnnotation extends HAPDataTypeOperations{
 		
 		for(Method method : methods){
 			String name = method.getName();
-			int i = name.lastIndexOf(HAPConstant.CONS_SEPERATOR_SURFIX);
+			int i = name.lastIndexOf(HAPConstant.SEPERATOR_SURFIX);
 			boolean isScriptDefMethod = i!=-1 && this.getDataTypeManager().getSupportedScripts().contains(name.substring(i+1));
 			if(isScriptDefMethod){
 				//this method is for defining script

@@ -21,8 +21,8 @@ public class HAPEntityUtility {
 	 * figure out the scope value based on the parms input for clear up
 	 */
 	public static int getScopeFromClearupParms(Map<String, Object> parms){
-		Integer out = (Integer)parms.get(HAPConstant.CONS_WRAPECLEARUP_PARM_SCOPE);
-		if(out==null)   return HAPConstant.CONS_ENTITYOPERATION_SCOPE_GLOBAL;
+		Integer out = (Integer)parms.get(HAPConstant.WRAPECLEARUP_PARM_SCOPE);
+		if(out==null)   return HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL;
 		else return out.intValue();
 	}
 	

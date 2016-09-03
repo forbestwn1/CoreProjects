@@ -35,7 +35,7 @@ public class HAPOperandConstant extends HAPOperandAtom{
 	}
 	
 	@Override
-	public int getOperandType(){	return HAPConstant.CONS_EXPRESSION_OPERAND_CONSTANT;}
+	public int getOperandType(){	return HAPConstant.EXPRESSION_OPERAND_CONSTANT;}
 
 	@Override
 	public HAPData execute(Map<String, HAPData> vars, Map<String, HAPWraper> wraperVars) {	return this.m_data;	}
@@ -48,6 +48,6 @@ public class HAPOperandConstant extends HAPOperandAtom{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonDataTypeMap){
 		super.buildJsonMap(jsonMap, jsonDataTypeMap);
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERAND_CONSTANT_DATA, this.m_data.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON_FULL));
+		jsonMap.put(HAPAttributeConstant.OPERAND_CONSTANT_DATA, this.m_data.toStringValue(HAPConstant.SERIALIZATION_JSON_FULL));
 	}
 }

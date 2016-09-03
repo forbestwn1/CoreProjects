@@ -20,7 +20,7 @@ public class HAPQueryEntityWraper extends HAPWraper{
 	private String m_id;
 	
 	public HAPQueryEntityWraper(Set<HAPQueryProjectAttribute> attributes, HAPDataTypeManager dataTypeMan){
-		super(new HAPDataTypeDefInfo(HAPConstant.CONS_DATATYPE_CATEGARY_QUERYENTITY, HAPConstant.CONS_DATATYPE_TYPE_QUERYENTITY_NORMAL), dataTypeMan);
+		super(new HAPDataTypeDefInfo(HAPConstant.DATATYPE_CATEGARY_QUERYENTITY, HAPConstant.DATATYPE_TYPE_QUERYENTITY_NORMAL), dataTypeMan);
 		this.m_attributes = attributes;
 		HAPQueryEntityData queryEntityData = new HAPQueryEntityData(attributes); 
 		this.setData(queryEntityData);

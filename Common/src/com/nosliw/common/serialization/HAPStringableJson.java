@@ -13,7 +13,7 @@ public abstract class HAPStringableJson implements HAPStringable{
 	public String toString(){
 		String out = "";
 		try{
-			out = this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON_FULL);
+			out = this.toStringValue(HAPConstant.SERIALIZATION_JSON_FULL);
 			out = HAPJsonUtility.formatJson(out);
 		}
 		catch(Exception e){
@@ -24,16 +24,16 @@ public abstract class HAPStringableJson implements HAPStringable{
 	
 	@Override
 	public String toStringValue(String format) {
-		if(HAPBasicUtility.isStringEmpty(format))  format = HAPConstant.CONS_SERIALIZATION_JSON_FULL;
+		if(HAPBasicUtility.isStringEmpty(format))  format = HAPConstant.SERIALIZATION_JSON_FULL;
 
 		String out = null;
-		if(format.equals(HAPConstant.CONS_SERIALIZATION_JSON_FULL)){
+		if(format.equals(HAPConstant.SERIALIZATION_JSON_FULL)){
 			Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
 			Map<String, Class> typeJsonMap = new LinkedHashMap<String, Class>();
 			this.buildFullJsonMap(outJsonMap, typeJsonMap, format);
 			out = HAPJsonUtility.getMapJson(outJsonMap, typeJsonMap);
 		}
-		else if(format.equals(HAPConstant.CONS_SERIALIZATION_JSON)){
+		else if(format.equals(HAPConstant.SERIALIZATION_JSON)){
 			out = this.buildJson(format);
 			if(out==null){
 				Map<String, String> outJsonMap = new LinkedHashMap<String, String>();

@@ -402,13 +402,13 @@ public class HAPDataContext implements HAPStringable{
 	public String toStringValue(String format){
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		
-		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYMANAGER_PERSISTANT, this.m_persistant.toStringValue(format));
-		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYMANAGER_TRANSACTIONS, HAPJsonUtility.getListObjectJson(this.m_transactions));
+		jsonMap.put(HAPAttributeConstant.ENTITYMANAGER_PERSISTANT, this.m_persistant.toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.ENTITYMANAGER_TRANSACTIONS, HAPJsonUtility.getListObjectJson(this.m_transactions));
 		
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}
 	
 	public String toString(){
-		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));
 	}
 }

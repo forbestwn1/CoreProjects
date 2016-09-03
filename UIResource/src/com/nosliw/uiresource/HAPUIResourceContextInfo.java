@@ -34,14 +34,14 @@ public class HAPUIResourceContextInfo implements HAPStringable{
 	@Override
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		jsonMap.put(HAPAttributeConstant.ATTR_UIRESOURCECONTEXTINFO_NAME, this.m_name);
-		jsonMap.put(HAPAttributeConstant.ATTR_UIRESOURCECONTEXTINFO_TYPE, this.m_type);
-		jsonMap.put(HAPAttributeConstant.ATTR_UIRESOURCECONTEXTINFO_CONFIGURE, HAPJsonUtility.getMapJson(new LinkedHashMap<String, String>()));
+		jsonMap.put(HAPAttributeConstant.UIRESOURCECONTEXTINFO_NAME, this.m_name);
+		jsonMap.put(HAPAttributeConstant.UIRESOURCECONTEXTINFO_TYPE, this.m_type);
+		jsonMap.put(HAPAttributeConstant.UIRESOURCECONTEXTINFO_CONFIGURE, HAPJsonUtility.getMapJson(new LinkedHashMap<String, String>()));
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}
 	
 	@Override
 	public String toString(){
-		return this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON);
+		return this.toStringValue(HAPConstant.SERIALIZATION_JSON);
 	}
 }

@@ -36,7 +36,7 @@ public abstract class HAPTransaction extends HAPEntityDataAccessImp{
 		this.m_queryManager = new HAPQueryManagerTransaction(this);
 		this.m_referenceMan = new HAPReferenceManager(this);
 		
-		if(this.getOperationScope()==HAPConstant.CONS_ENTITYOPERATION_SCOPE_GLOBAL){
+		if(this.getOperationScope()==HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL){
 			HAPEntityDataAccess under = this.getUnderDataAccess();
 			if(under!=null){
 				for(String name : under.getAllQuerys()){
@@ -52,7 +52,7 @@ public abstract class HAPTransaction extends HAPEntityDataAccessImp{
 		HAPEntityWraper entity = this.getTransitEntity(rootID);
 		
 		//if entity is dead, then return null
-		if(entity!=null && entity.getStatus()==HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_DEAD)  return null;
+		if(entity!=null && entity.getStatus()==HAPConstant.DATAACCESS_ENTITYSTATUS_DEAD)  return null;
 		
 		if(entity==null){
 			//if entity is not in transit, then try to get from under me data access
@@ -61,7 +61,7 @@ public abstract class HAPTransaction extends HAPEntityDataAccessImp{
 				//clone wrapper for this data access
 				entity = (HAPEntityWraper)((HAPEntityWraper)serviceData.getData()).cloneEntityWraper(this);
 				//if keep, then put it into transit
-				if(ifKeep)  this.addTransitEntity(entity, HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NORMAL);			
+				if(ifKeep)  this.addTransitEntity(entity, HAPConstant.DATAACCESS_ENTITYSTATUS_NORMAL);			
 			}
 		}
 		return entity;
@@ -115,7 +115,7 @@ public abstract class HAPTransaction extends HAPEntityDataAccessImp{
 		}
 		
 		//call client to update querys
-		if(this.getOperationScope()==HAPConstant.CONS_ENTITYOPERATION_SCOPE_GLOBAL){
+		if(this.getOperationScope()==HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL){
 			for(String query : underQuerys){
 				result.addResult(HAPEntityOperationFactory.createQueryUpdateOperation(this.getQueryComponent(query)));
 			}			
@@ -138,13 +138,13 @@ public abstract class HAPTransaction extends HAPEntityDataAccessImp{
 		if(operation.isSubmitable()){
 			int comScope = HAPTransactionUtility.getCurrentOperationScope(this.getUnderDataAccess().getOperationScope(), operation.getScope());
 			switch(comScope){
-			case HAPConstant.CONS_ENTITYOPERATION_SCOPE_ENTITY:
+			case HAPConstant.ENTITYOPERATION_SCOPE_ENTITY:
 				if(operation.isRootOperation())  this.addRootOperation(operation);
 				break;
-			case HAPConstant.CONS_ENTITYOPERATION_SCOPE_GLOBAL:
+			case HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL:
 				if(operation.isRootOperation())  this.addRootOperation(operation);
 				break;
-			case HAPConstant.CONS_ENTITYOPERATION_SCOPE_OPERATION:
+			case HAPConstant.ENTITYOPERATION_SCOPE_OPERATION:
 				this.addRootOperation(operation);
 				break;
 			}

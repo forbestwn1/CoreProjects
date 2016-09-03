@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.configure.HAPConfigureImp;
+import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -26,12 +28,12 @@ public class HAPStringableValueList extends HAPStringableValueComplex{
 	public Iterator<HAPStringableValue> iterate(){		return this.m_elements.iterator();	}
 	
 	@Override
-	public String getStringableCategary(){		return HAPConstant.CONS_STRINGABLE_VALUECATEGARY_LIST;	}
+	public String getStringableCategary(){		return HAPConstant.STRINGABLE_VALUECATEGARY_LIST;	}
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format) {
 		super.buildFullJsonMap(jsonMap, typeJsonMap, format);
-		jsonMap.put(HAPAttributeConstant.ATTR_STRINGABLEVALUE_ELEMENTS, HAPJsonUtility.getListObjectJson(this.m_elements, format));
+		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_ELEMENTS, HAPJsonUtility.getListObjectJson(this.m_elements, format));
 	}
 	
 	@Override

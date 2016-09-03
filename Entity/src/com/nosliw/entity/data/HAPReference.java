@@ -18,7 +18,7 @@ public class HAPReference  extends HAPBaseDataType{
 	
 	public static HAPDataType dataType;
 	public HAPReference(HAPDataTypeManager dataTypeMan, HAPEntityDefinitionManager entityDefMan) {
-		super(new HAPDataTypeInfoWithVersion(HAPConstant.CONS_DATATYPE_CATEGARY_REFERENCE, HAPConstant.CONS_DATATYPE_TYPE_REFERENCE_NORMAL), null, null, null, "", dataTypeMan, entityDefMan);
+		super(new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_REFERENCE, HAPConstant.DATATYPE_TYPE_REFERENCE_NORMAL), null, null, null, "", dataTypeMan, entityDefMan);
 	}
 
 	@Override

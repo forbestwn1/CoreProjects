@@ -11,8 +11,8 @@ public class HAPServiceInfo {
 	private JSONObject m_parms;
 	
 	public HAPServiceInfo(JSONObject serviceJson) throws JSONException {
-		m_command = serviceJson.getString(HAPAttributeConstant.ATTR_SERVICE_COMMAND);
-		m_parms = serviceJson.getJSONObject(HAPAttributeConstant.ATTR_SERVICE_PARMS);
+		m_command = serviceJson.getString(HAPAttributeConstant.SERVICE_COMMAND);
+		m_parms = serviceJson.getJSONObject(HAPAttributeConstant.SERVICE_PARMS);
 	}
 	
 	public String getCommand(){	return this.m_command;	}

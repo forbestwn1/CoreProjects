@@ -23,7 +23,7 @@ public class HAPEntityModifyEvent extends HAPEvent{
 	
 	@Override
 	public int getType() {
-		return HAPConstant.CONS_EVENTTYPE_ENTITY_MODIFY;
+		return HAPConstant.EVENTTYPE_ENTITY_MODIFY;
 	}
 
 }

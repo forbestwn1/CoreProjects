@@ -78,7 +78,7 @@ public class HAPEntityDefinitionLoaderXmlUtility {
 		//event
 		String events = ele.getAttribute(TAG_ATTRIBUTE_ATTR_EVENTS);
 		if(HAPBasicUtility.isStringNotEmpty(events)){
-			HAPSegmentParser eventSegs = new HAPSegmentParser(events, HAPConstant.CONS_SEPERATOR_ELEMENT);
+			HAPSegmentParser eventSegs = new HAPSegmentParser(events, HAPConstant.SEPERATOR_ELEMENT);
 			while(eventSegs.hasNext()){
 				attrDef.addEvent(eventSegs.next());
 			}
@@ -127,7 +127,7 @@ public class HAPEntityDefinitionLoaderXmlUtility {
 		//check if this rule is runnable on client side
 		attrDef.setServerValidationOnly(false);
 		for(HAPValidationInfoExpression info : attrDef.getValidationInfos()){
-			if(!info.getExpression().isScriptRunnable(HAPConstant.CONS_OPERATIONDEF_SCRIPT_JAVASCRIPT)){
+			if(!info.getExpression().isScriptRunnable(HAPConstant.OPERATIONDEF_SCRIPT_JAVASCRIPT)){
 				attrDef.setServerValidationOnly(true);
 				break;
 			}
@@ -158,10 +158,10 @@ public class HAPEntityDefinitionLoaderXmlUtility {
 		String group = HAPEntityNamingConversion.getGroupName(entityType);
 		if(group!=null){
 			info.addEntityGroup(group);
-			info.setChildDataCategary(HAPConstant.CONS_DATATYPE_CATEGARY_ENTITY);
+			info.setChildDataCategary(HAPConstant.DATATYPE_CATEGARY_ENTITY);
 		}
 		else{
-			HAPDataTypeDefInfo type = getDataType(HAPConstant.CONS_DATATYPE_CATEGARY_ENTITY, entityType, metadata, dataTypeMan);
+			HAPDataTypeDefInfo type = getDataType(HAPConstant.DATATYPE_CATEGARY_ENTITY, entityType, metadata, dataTypeMan);
 			info.setChildDataCategary(type.getCategary());
 			info.setChildDataType(type.getType());
 		}
@@ -173,15 +173,15 @@ public class HAPEntityDefinitionLoaderXmlUtility {
 	public static HAPDataTypeDefInfo getDataType(String categary, String type, HAPEntityDefinitionMeta metadata, HAPDataTypeManager dataTypeMan){
 		HAPDataTypeDefInfo out = null;
 		if(HAPBasicUtility.isStringNotEmpty(categary)){
-			if(categary.equals(HAPConstant.CONS_DATATYPE_CATEGARY_ENTITY)){
+			if(categary.equals(HAPConstant.DATATYPE_CATEGARY_ENTITY)){
 				String fType = getEntityFullName(type, metadata);
 				out = new HAPDataTypeDefInfo(categary, fType);
 			}
-			else if(categary.equals(HAPConstant.CONS_DATATYPE_CATEGARY_CONTAINER) && HAPBasicUtility.isStringEmpty(type)){
-				out = new HAPDataTypeDefInfo(categary, HAPConstant.CONS_DATATYPE_TYPE_CONTAINER_ENTITYATTRIBUTE);
+			else if(categary.equals(HAPConstant.DATATYPE_CATEGARY_CONTAINER) && HAPBasicUtility.isStringEmpty(type)){
+				out = new HAPDataTypeDefInfo(categary, HAPConstant.DATATYPE_TYPE_CONTAINER_ENTITYATTRIBUTE);
 			}
-			else if(categary.equals(HAPConstant.CONS_DATATYPE_CATEGARY_REFERENCE) && HAPBasicUtility.isStringEmpty(type)){
-				out = new HAPDataTypeDefInfo(categary, HAPConstant.CONS_DATATYPE_TYPE_REFERENCE_NORMAL);
+			else if(categary.equals(HAPConstant.DATATYPE_CATEGARY_REFERENCE) && HAPBasicUtility.isStringEmpty(type)){
+				out = new HAPDataTypeDefInfo(categary, HAPConstant.DATATYPE_TYPE_REFERENCE_NORMAL);
 			}
 			else{
 				out = new HAPDataTypeDefInfo(categary, type);
@@ -192,7 +192,7 @@ public class HAPEntityDefinitionLoaderXmlUtility {
 			if(HAPBasicUtility.isStringEmpty(type))  return new HAPDataTypeDefInfo(dataTypeMan.getDefaultDataTypeInfo());
 
 			String entityName = isEntityName(type, metadata);
-			if(entityName!=null)	out = new HAPDataTypeDefInfo(HAPConstant.CONS_DATATYPE_CATEGARY_ENTITY, entityName);
+			if(entityName!=null)	out = new HAPDataTypeDefInfo(HAPConstant.DATATYPE_CATEGARY_ENTITY, entityName);
 			else	out = new HAPDataTypeDefInfo(dataTypeMan.getDataTypeInfoByTypeName(type));
 		}
 		return out;
@@ -207,9 +207,9 @@ public class HAPEntityDefinitionLoaderXmlUtility {
 	 * if not, return null
 	 */
 	static private String isEntityName(String name, HAPEntityDefinitionMeta metadata){
-		if(name.startsWith(HAPConstant.CONS_SYMBOL_ENTITYNAME_COMMON))   return getEntityFullName(name, metadata); 
-		if(name.startsWith(HAPConstant.CONS_SYMBOL_ENTITYNAME_CURRENT)) return  getEntityFullName(name, metadata);
-		HAPSegmentParser segs = new HAPSegmentParser(name, HAPConstant.CONS_SEPERATOR_FULLNAME);
+		if(name.startsWith(HAPConstant.SYMBOL_ENTITYNAME_COMMON))   return getEntityFullName(name, metadata); 
+		if(name.startsWith(HAPConstant.SYMBOL_ENTITYNAME_CURRENT)) return  getEntityFullName(name, metadata);
+		HAPSegmentParser segs = new HAPSegmentParser(name, HAPConstant.SEPERATOR_FULLNAME);
 		if(segs.getSegmentSize()>1)  return  getEntityFullName(name, metadata);
 		return null;
 	}
@@ -221,18 +221,18 @@ public class HAPEntityDefinitionLoaderXmlUtility {
 		if(metadata==null)  return name;
 			
 		String out = "";
-		if(name.startsWith(HAPConstant.CONS_SYMBOL_ENTITYNAME_COMMON)){
+		if(name.startsWith(HAPConstant.SYMBOL_ENTITYNAME_COMMON)){
 			//".."   common prefix
 			out = HAPNamingConversionUtility.cascadeTexts(HAPEntityDefinitionLoaderXML.PACKAGE_COMMON, 
-							name.substring(HAPConstant.CONS_SYMBOL_ENTITYNAME_COMMON.length()), 
-							HAPConstant.CONS_SEPERATOR_FULLNAME);
+							name.substring(HAPConstant.SYMBOL_ENTITYNAME_COMMON.length()), 
+							HAPConstant.SEPERATOR_FULLNAME);
 		}
 		else{
-			if(name.startsWith(HAPConstant.CONS_SYMBOL_ENTITYNAME_CURRENT)){
+			if(name.startsWith(HAPConstant.SYMBOL_ENTITYNAME_CURRENT)){
 				//"."   current metadata prefix
 				out = HAPNamingConversionUtility.cascadeTexts(metadata.getNamePrefix(), 
-						name.substring(HAPConstant.CONS_SYMBOL_ENTITYNAME_CURRENT.length()), 
-						HAPConstant.CONS_SEPERATOR_FULLNAME);
+						name.substring(HAPConstant.SYMBOL_ENTITYNAME_CURRENT.length()), 
+						HAPConstant.SEPERATOR_FULLNAME);
 			}
 			else{
 				//full name
@@ -250,9 +250,9 @@ public class HAPEntityDefinitionLoaderXmlUtility {
 		String name = backupClass;
 		if(HAPBasicUtility.isStringNotEmpty(className)){
 			name = className;
-			HAPSegmentParser segs = new HAPSegmentParser(className, HAPConstant.CONS_SEPERATOR_FULLNAME);
+			HAPSegmentParser segs = new HAPSegmentParser(className, HAPConstant.SEPERATOR_FULLNAME);
 			if(segs.getSegmentSize()<=1){
-				name = HAPNamingConversionUtility.cascadeTexts(metadata.getClassPrefix(), name, HAPConstant.CONS_SEPERATOR_FULLNAME);
+				name = HAPNamingConversionUtility.cascadeTexts(metadata.getClassPrefix(), name, HAPConstant.SEPERATOR_FULLNAME);
 			}
 		}
 		return name;
@@ -269,6 +269,6 @@ public class HAPEntityDefinitionLoaderXmlUtility {
 	 * create name for attribute options
 	 */
 	public static String createOptionsName(String entityName, String attrPath){
-		return HAPNamingConversionUtility.cascadeTexts(attrPath, entityName, HAPConstant.CONS_SEPERATOR_SURFIX);
+		return HAPNamingConversionUtility.cascadeTexts(attrPath, entityName, HAPConstant.SEPERATOR_SURFIX);
 	}
 }

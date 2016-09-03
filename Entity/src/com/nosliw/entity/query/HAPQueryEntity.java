@@ -15,7 +15,7 @@ public class HAPQueryEntity  extends HAPDataTypeImp{
 	public static HAPDataType dataType;
 	
 	public HAPQueryEntity(HAPDataTypeManager dataTypeMan) {
-		super(new HAPDataTypeInfoWithVersion(HAPConstant.CONS_DATATYPE_CATEGARY_QUERYENTITY, HAPConstant.CONS_DATATYPE_TYPE_QUERYENTITY_NORMAL), null, null, null, "", dataTypeMan);
+		super(new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_QUERYENTITY, HAPConstant.DATATYPE_TYPE_QUERYENTITY_NORMAL), null, null, null, "", dataTypeMan);
 	}
 
 

@@ -102,6 +102,6 @@ public abstract class HAPTestInfo extends HAPStringableJson{
 		jsonMap.put("id", String.valueOf(this.m_id));
 		jsonMap.put("sequence", String.valueOf(this.m_sequence));
 		jsonMap.put("inited", String.valueOf(this.m_inited));
-		jsonMap.put("testDescription", this.m_description.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+		jsonMap.put("testDescription", this.m_description.toStringValue(HAPConstant.SERIALIZATION_JSON));
 	}
 }

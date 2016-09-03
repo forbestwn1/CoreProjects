@@ -83,15 +83,15 @@ public class HAPExpression implements HAPStringable{
 				HAPIterateOperandTaskOut taskOut = new HAPIterateOperandTaskOut();
 				
 				switch(operand.getOperandType()){
-				case HAPConstant.CONS_EXPRESSION_OPERAND_CONSTANT:
-				case HAPConstant.CONS_EXPRESSION_OPERAND_VARIABLE:
-				case HAPConstant.CONS_EXPRESSION_OPERAND_DATAOPERATION:
-				case HAPConstant.CONS_EXPRESSION_OPERAND_DATATYPEOPERATION:
-				case HAPConstant.CONS_EXPRESSION_OPERAND_PATHOPERATION:
+				case HAPConstant.EXPRESSION_OPERAND_CONSTANT:
+				case HAPConstant.EXPRESSION_OPERAND_VARIABLE:
+				case HAPConstant.EXPRESSION_OPERAND_DATAOPERATION:
+				case HAPConstant.EXPRESSION_OPERAND_DATATYPEOPERATION:
+				case HAPConstant.EXPRESSION_OPERAND_PATHOPERATION:
 				{
 					break;
 				}
-				case HAPConstant.CONS_EXPRESSION_OPERAND_ATTRIBUTEOPERATION:
+				case HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION:
 				{
 					HAPOperandAttribute attributeOperand = (HAPOperandAttribute)operand;
 					taskOut.outOperand = new HAPOperandPath(attributeOperand, m_dataTypeMan);
@@ -125,24 +125,24 @@ public class HAPExpression implements HAPStringable{
 				Set<String> paths = (Set<String>)data;
 				
 				switch(operand.getOperandType()){
-				case HAPConstant.CONS_EXPRESSION_OPERAND_CONSTANT:
-				case HAPConstant.CONS_EXPRESSION_OPERAND_DATAOPERATION:
-				case HAPConstant.CONS_EXPRESSION_OPERAND_DATATYPEOPERATION:
-				case HAPConstant.CONS_EXPRESSION_OPERAND_ATTRIBUTEOPERATION:
+				case HAPConstant.EXPRESSION_OPERAND_CONSTANT:
+				case HAPConstant.EXPRESSION_OPERAND_DATAOPERATION:
+				case HAPConstant.EXPRESSION_OPERAND_DATATYPEOPERATION:
+				case HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION:
 				{
 					break;
 				}
-				case HAPConstant.CONS_EXPRESSION_OPERAND_VARIABLE:
+				case HAPConstant.EXPRESSION_OPERAND_VARIABLE:
 				{
 					HAPOperandVariable varOperand = (HAPOperandVariable)operand;
 					paths.add(varOperand.getVarName());
 					break;
 				}
-				case HAPConstant.CONS_EXPRESSION_OPERAND_PATHOPERATION:
+				case HAPConstant.EXPRESSION_OPERAND_PATHOPERATION:
 				{
 					HAPOperandPath pathOperand = (HAPOperandPath)operand;
 					HAPOperand baseOperand = pathOperand.getBaseData();
-					if(baseOperand.getOperandType()==HAPConstant.CONS_EXPRESSION_OPERAND_VARIABLE){
+					if(baseOperand.getOperandType()==HAPConstant.EXPRESSION_OPERAND_VARIABLE){
 						HAPOperandVariable varOperand = (HAPOperandVariable)baseOperand;
 						paths.add(HAPNamingConversionUtility.cascadePath(varOperand.getVarName(), pathOperand.getPath()));
 						taskOut.toChild = false;
@@ -190,27 +190,27 @@ public class HAPExpression implements HAPStringable{
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		
-		jsonMap.put(HAPAttributeConstant.ATTR_EXPRESSION_EXPRESSION, this.m_expression);
-		jsonMap.put(HAPAttributeConstant.ATTR_EXPRESSION_OPERAND, this.m_operand.toStringValue(format));
-		jsonMap.put(HAPAttributeConstant.ATTR_EXPRESSION_SCRIPTRUNNALBE, this.isScriptRunnable(HAPConstant.CONS_OPERATIONDEF_SCRIPT_JAVASCRIPT)+"");
+		jsonMap.put(HAPAttributeConstant.EXPRESSION_EXPRESSION, this.m_expression);
+		jsonMap.put(HAPAttributeConstant.EXPRESSION_OPERAND, this.m_operand.toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.EXPRESSION_SCRIPTRUNNALBE, this.isScriptRunnable(HAPConstant.OPERATIONDEF_SCRIPT_JAVASCRIPT)+"");
 
-		jsonMap.put(HAPAttributeConstant.ATTR_EXPRESSION_VARIABLESINFO, HAPJsonUtility.getMapObjectJson(this.m_varsInfo));
+		jsonMap.put(HAPAttributeConstant.EXPRESSION_VARIABLESINFO, HAPJsonUtility.getMapObjectJson(this.m_varsInfo));
 		
 		
 		Map<String, String> constantsJsons = new LinkedHashMap<String, String>();
 		for(String name : m_constantDatas.keySet()){
-			constantsJsons.put(name, m_constantDatas.get(name).toStringValue(HAPConstant.CONS_SERIALIZATION_JSON_FULL));
+			constantsJsons.put(name, m_constantDatas.get(name).toStringValue(HAPConstant.SERIALIZATION_JSON_FULL));
 		}
-		jsonMap.put(HAPAttributeConstant.ATTR_EXPRESSION_CONSTANTS, HAPJsonUtility.getMapJson(constantsJsons));
+		jsonMap.put(HAPAttributeConstant.EXPRESSION_CONSTANTS, HAPJsonUtility.getMapJson(constantsJsons));
 
-		jsonMap.put(HAPAttributeConstant.ATTR_EXPRESSION_ALLDATATYPEINFOS, HAPJsonUtility.getSetObjectJson(this.m_allDataTypeInfo));
+		jsonMap.put(HAPAttributeConstant.EXPRESSION_ALLDATATYPEINFOS, HAPJsonUtility.getSetObjectJson(this.m_allDataTypeInfo));
 		
 		Map<String, Class> jsonTypeMap = new LinkedHashMap<String, Class>();
-		jsonTypeMap.put(HAPAttributeConstant.ATTR_EXPRESSION_SCRIPTRUNNALBE, Boolean.class);
+		jsonTypeMap.put(HAPAttributeConstant.EXPRESSION_SCRIPTRUNNALBE, Boolean.class);
 		
 		return HAPJsonUtility.getMapJson(jsonMap, jsonTypeMap);
 	}	
 	
 	@Override
-	public String toString(){return this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON);}
+	public String toString(){return this.toStringValue(HAPConstant.SERIALIZATION_JSON);}
 }

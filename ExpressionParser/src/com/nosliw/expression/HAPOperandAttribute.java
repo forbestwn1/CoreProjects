@@ -20,14 +20,14 @@ public class HAPOperandAttribute extends HAPOperandDataOperaion{
 	private String m_attribute;
 	
 	public HAPOperandAttribute(HAPOperand baseData, String attribute, HAPDataTypeManager dataTypeMan){
-		super(baseData, HAPConstant.CONS_DATAOPERATION_GETCHILD, new HAPOperand[]{new HAPOperandConstant(attribute, dataTypeMan)}, dataTypeMan);
+		super(baseData, HAPConstant.DATAOPERATION_GETCHILD, new HAPOperand[]{new HAPOperandConstant(attribute, dataTypeMan)}, dataTypeMan);
 		this.m_attribute = attribute;
 	}
 
 	public String getAttribute(){return this.m_attribute;}
 	
 	@Override
-	public int getOperandType() {	return HAPConstant.CONS_EXPRESSION_OPERAND_ATTRIBUTEOPERATION;	}
+	public int getOperandType() {	return HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION;	}
 	
 	@Override
 	public boolean isScriptRunnable(String script)
@@ -41,7 +41,7 @@ public class HAPOperandAttribute extends HAPOperandDataOperaion{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonDataTypeMap){
 		super.buildJsonMap(jsonMap, jsonDataTypeMap);
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERAND_OPERATION_ATTRIBUTE, this.m_attribute);
+		jsonMap.put(HAPAttributeConstant.OPERAND_OPERATION_ATTRIBUTE, this.m_attribute);
 	}
 	
 	@Override
@@ -49,7 +49,7 @@ public class HAPOperandAttribute extends HAPOperandDataOperaion{
 		//try to get out data type info based on base data type and path info
 		//it is through the operation defined in base data : getChildDatatype
 		if(this.getBaseDataType()!=null){
-			HAPServiceData serviceData = this.getBaseDataType().operate(HAPConstant.CONS_DATAOPERATION_GETCHILDDATATYPE, new HAPData[]{HAPDataTypeManager.STRING.createDataByValue(m_attribute)});
+			HAPServiceData serviceData = this.getBaseDataType().operate(HAPConstant.DATAOPERATION_GETCHILDDATATYPE, new HAPData[]{HAPDataTypeManager.STRING.createDataByValue(m_attribute)});
 			this.setOutDataTypeInfo(HAPDataTypeInfo.parseDataTypeInfo(serviceData.getData().toString()));
 		}
 		else{

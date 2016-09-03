@@ -94,24 +94,24 @@ public class HAPDataOperationInfo implements HAPStringable{
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		
-		jsonMap.put(HAPAttributeConstant.ATTR_DATAOPERATIONINFO_NAME, this.m_name);
-		jsonMap.put(HAPAttributeConstant.ATTR_DATAOPERATIONINFO_DESCRIPTION, this.m_description);
-		jsonMap.put(HAPAttributeConstant.ATTR_DATAOPERATIONINFO_CONVERTPATH, this.m_convertPath);
-		jsonMap.put(HAPAttributeConstant.ATTR_DATAOPERATIONINFO_OUT, this.m_outDataTypeInfo.toStringValue(format));
-		jsonMap.put(HAPAttributeConstant.ATTR_DATAOPERATIONINFO_DEPENDENTDATATYPES, HAPJsonUtility.getSetObjectJson(this.getDependentDataTypeInfos(HAPConstant.CONS_OPERATIONDEF_SCRIPT_JAVASCRIPT)));
+		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_NAME, this.m_name);
+		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_DESCRIPTION, this.m_description);
+		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_CONVERTPATH, this.m_convertPath);
+		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_OUT, this.m_outDataTypeInfo.toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_DEPENDENTDATATYPES, HAPJsonUtility.getSetObjectJson(this.getDependentDataTypeInfos(HAPConstant.OPERATIONDEF_SCRIPT_JAVASCRIPT)));
 		
 		List<String> inJsons = new ArrayList<String>();
 		for(HAPDataTypeInfo info : this.m_inDataTypeInfos){
 			inJsons.add(info.toStringValue(format));
 		}
-		jsonMap.put(HAPAttributeConstant.ATTR_DATAOPERATIONINFO_INS, HAPJsonUtility.getArrayJson(inJsons.toArray(new String[0])));
+		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_INS, HAPJsonUtility.getArrayJson(inJsons.toArray(new String[0])));
 		
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}
 	
 	@Override
 	public String toString(){
-		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));
 	}
 	
 	@Override

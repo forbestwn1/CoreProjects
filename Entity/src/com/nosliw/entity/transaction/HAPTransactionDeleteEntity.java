@@ -15,7 +15,7 @@ public class HAPTransactionDeleteEntity extends HAPTransaction{
 
 	public HAPTransactionDeleteEntity(HAPConfigure configure, HAPEntityDataAccess access, HAPDataContext dataContext) {
 		super(configure, access, dataContext);
-		this.setOperationScope(HAPConstant.CONS_ENTITYOPERATION_SCOPE_ENTITY);
+		this.setOperationScope(HAPConstant.ENTITYOPERATION_SCOPE_ENTITY);
 	}
 
 	@Override
@@ -23,11 +23,11 @@ public class HAPTransactionDeleteEntity extends HAPTransaction{
 		HAPEntityWraper out = null;
 		HAPEntityID myID = this.getOperation().getEntityID();
 		if(ID.equals(myID)){
-			Set<HAPEntityWraper> entitys = this.getTransitEntitysByStatus(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_DEAD); 
+			Set<HAPEntityWraper> entitys = this.getTransitEntitysByStatus(HAPConstant.DATAACCESS_ENTITYSTATUS_DEAD); 
 			if(entitys.size()==0){
 				HAPEntityWraper wraper = (HAPEntityWraper)this.getUnderDataAccess().useEntityByID(ID).getData();
 				out = wraper.cloneEntityWraper(this);
-				this.addTransitEntity(out, HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NORMAL);
+				this.addTransitEntity(out, HAPConstant.DATAACCESS_ENTITYSTATUS_NORMAL);
 			}
 			else{
 				out = entitys.toArray(new HAPEntityWraper[0])[0];

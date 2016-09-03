@@ -57,7 +57,7 @@ public class HAPOptionsDefinitionManager{
 	protected HAPDataTypeManager getDataTypeManager(){return this.m_dataTypeMan;}
 
 //	public HAPContainerOptions getOptionsContainerDataType(){
-//		return (HAPContainerOptions)this.getDataTypeManager().getDataType(new HAPDataTypeInfo(HAPConstant.CONS_DATATYPE_CATEGARY_CONTAINER, HAPConstant.CONS_DATATYPE_TYPE_CONTAINER_OPTIONS));
+//		return (HAPContainerOptions)this.getDataTypeManager().getDataType(new HAPDataTypeInfo(HAPConstant.DATATYPE_CATEGARY_CONTAINER, HAPConstant.DATATYPE_TYPE_CONTAINER_OPTIONS));
 //	}
 //	
 //	public HAPContainerOptionsData createOptionsContainerData(){

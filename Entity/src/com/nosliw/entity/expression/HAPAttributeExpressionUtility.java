@@ -21,9 +21,9 @@ public class HAPAttributeExpressionUtility {
 	public static Map<String, HAPDataTypeInfo> prepareAttributeExpressionVarInfos1(HAPAttributeDefinition attrDef, Map<String, HAPDataTypeInfo> varInfos){
 		Map<String, HAPDataTypeInfo> out = varInfos;
 		if(varInfos==null)		out = new LinkedHashMap<String, HAPDataTypeInfo>();
-		out.put(HAPConstant.CONS_EXPRESSION_VARIABLE_THIS, attrDef.getDataTypeDefinitionInfo());
+		out.put(HAPConstant.EXPRESSION_VARIABLE_THIS, attrDef.getDataTypeDefinitionInfo());
 		String entityName = attrDef.getEntityDefinition().getEntityName();
-		out.put(HAPConstant.CONS_EXPRESSION_VARIABLE_PARENT, new HAPDataTypeInfo(HAPConstant.CONS_DATATYPE_CATEGARY_ENTITY, entityName));
+		out.put(HAPConstant.EXPRESSION_VARIABLE_PARENT, new HAPDataTypeInfo(HAPConstant.DATATYPE_CATEGARY_ENTITY, entityName));
 		return out;
 	}
 
@@ -32,9 +32,9 @@ public class HAPAttributeExpressionUtility {
 	 */
 	public static HAPExpressionInfo appendAttributeVarInfoToExpressionInfo(HAPExpressionInfo expressionInfo, HAPAttributeDefinition attrDef){
 		Map<String, HAPDataTypeInfo> varInfos = new LinkedHashMap<String, HAPDataTypeInfo>();
-		varInfos.put(HAPConstant.CONS_EXPRESSION_VARIABLE_THIS, attrDef.getDataTypeDefinitionInfo());
+		varInfos.put(HAPConstant.EXPRESSION_VARIABLE_THIS, attrDef.getDataTypeDefinitionInfo());
 		String entityName = attrDef.getEntityDefinition().getEntityName();
-		varInfos.put(HAPConstant.CONS_EXPRESSION_VARIABLE_PARENT, new HAPDataTypeInfo(HAPConstant.CONS_DATATYPE_CATEGARY_ENTITY, entityName));
+		varInfos.put(HAPConstant.EXPRESSION_VARIABLE_PARENT, new HAPDataTypeInfo(HAPConstant.DATATYPE_CATEGARY_ENTITY, entityName));
 		return expressionInfo.addVariableInfo(varInfos);
 	}
 	
@@ -43,8 +43,8 @@ public class HAPAttributeExpressionUtility {
 	 */
 	public static Map<String, HAPWraper> prepareAttributeExpressionWraperParms(HAPDataWraper attrWraper, Map<String, HAPWraper> wraperParms){
 		if(wraperParms==null)  wraperParms = new LinkedHashMap<String, HAPWraper>();
-		wraperParms.put(HAPConstant.CONS_EXPRESSION_VARIABLE_THIS, attrWraper);
-		wraperParms.put(HAPConstant.CONS_EXPRESSION_VARIABLE_PARENT, attrWraper.getParentEntity().getWraper());
+		wraperParms.put(HAPConstant.EXPRESSION_VARIABLE_THIS, attrWraper);
+		wraperParms.put(HAPConstant.EXPRESSION_VARIABLE_PARENT, attrWraper.getParentEntity().getWraper());
 		return wraperParms;
 	}
 	

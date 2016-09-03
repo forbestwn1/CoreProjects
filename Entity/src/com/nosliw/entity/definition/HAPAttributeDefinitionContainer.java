@@ -28,12 +28,12 @@ public class HAPAttributeDefinitionContainer extends HAPAttributeDefinition{
 		if(this.getChildAttributeDefinition()==null)  return this;
 		if(HAPBasicUtility.isStringEmpty(path))  return this;
 		
-		HAPSegmentParser pathParser = new HAPSegmentParser(path, HAPConstant.CONS_SEPERATOR_PATH);
+		HAPSegmentParser pathParser = new HAPSegmentParser(path, HAPConstant.SEPERATOR_PATH);
 		String attrName = pathParser.next();
 		HAPSegmentParser segments = HAPNamingConversionUtility.isKeywordPhrase(attrName);
 		if(segments!=null){
 			String keyWord = segments.next();
-			if(keyWord.equals(HAPConstant.CONS_ATTRIBUTE_PATH_ELEMENT)){
+			if(keyWord.equals(HAPConstant.ATTRIBUTE_PATH_ELEMENT)){
 				String attrRest = pathParser.getRestPath();
 				return this.getChildAttributeDefinition().getChildAttrByName(attrRest);
 			}
@@ -65,7 +65,7 @@ public class HAPAttributeDefinitionContainer extends HAPAttributeDefinition{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> map, Map<String, Class> dataTypeMap){
 		if(this.getChildAttributeDefinition()!=null){
-			map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_ELEMENT, this.getChildAttributeDefinition().toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+			map.put(HAPAttributeConstant.ENTITYATTRDEF_ELEMENT, this.getChildAttributeDefinition().toStringValue(HAPConstant.SERIALIZATION_JSON));
 		}
 	}
 	

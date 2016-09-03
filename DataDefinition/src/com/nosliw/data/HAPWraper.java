@@ -97,20 +97,20 @@ public class HAPWraper implements HAPStringable{
 	@Override
 	public final String toStringValue(String format) {
 		StringBuffer out = new StringBuffer();
-		if(format.equals(HAPConstant.CONS_SERIALIZATION_JSON)){
+		if(format.equals(HAPConstant.SERIALIZATION_JSON)){
 			Map<String, String> dataMap = new LinkedHashMap<String, String>();
 			Map<String, Class> dataTypeMap = new LinkedHashMap<String, Class>();
-			dataMap.put(HAPAttributeConstant.ATTR_WRAPER_DATATYPE, this.getDataTypeDefInfo().toStringValue(null));
+			dataMap.put(HAPAttributeConstant.WRAPER_DATATYPE, this.getDataTypeDefInfo().toStringValue(null));
 			HAPData data = this.getData();
 			if(data!=null){
-				dataMap.put(HAPAttributeConstant.ATTR_WRAPER_DATA, data.toStringValue(format));
+				dataMap.put(HAPAttributeConstant.WRAPER_DATA, data.toStringValue(format));
 			}
 
 			//other info related with special are within "info" attribute
 			Map<String, Class> infoDataTypeMap = new LinkedHashMap<String, Class>();
 			Map<String, String> infoDataMap = new LinkedHashMap<String, String>();
 			this.buildOjbectJsonMap(infoDataMap, infoDataTypeMap);
-			dataMap.put(HAPAttributeConstant.ATTR_WRAPER_INFO, HAPJsonUtility.getMapJson(infoDataMap, infoDataTypeMap));
+			dataMap.put(HAPAttributeConstant.WRAPER_INFO, HAPJsonUtility.getMapJson(infoDataMap, infoDataTypeMap));
 			
 			out.append(HAPJsonUtility.getMapJson(dataMap, dataTypeMap));
 		}
@@ -118,7 +118,7 @@ public class HAPWraper implements HAPStringable{
 	}
 	
 	@Override
-	public String toString(){return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));	}
+	public String toString(){return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));	}
 	
 	protected HAPDataTypeManager getDataTypeManager(){return this.m_dataTypeMan;}
 }

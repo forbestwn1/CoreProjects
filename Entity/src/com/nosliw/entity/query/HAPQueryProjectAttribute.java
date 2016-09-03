@@ -39,15 +39,15 @@ public class HAPQueryProjectAttribute implements HAPStringable{
 	public String toStringValue(String format) {
 		
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		jsonMap.put(HAPAttributeConstant.ATTR_QUERYPROJECTATTRIBUTE_ENTITYNAME, this.entityName);
-		jsonMap.put(HAPAttributeConstant.ATTR_QUERYPROJECTATTRIBUTE_ATTRIBUTE, this.attribute);
+		jsonMap.put(HAPAttributeConstant.QUERYPROJECTATTRIBUTE_ENTITYNAME, this.entityName);
+		jsonMap.put(HAPAttributeConstant.QUERYPROJECTATTRIBUTE_ATTRIBUTE, this.attribute);
 		
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}
 	
 	static public HAPQueryProjectAttribute parse(JSONObject jsonObject){
-		String entityName = jsonObject.optString(HAPAttributeConstant.ATTR_QUERYPROJECTATTRIBUTE_ENTITYNAME);
-		String attribute = jsonObject.optString(HAPAttributeConstant.ATTR_QUERYPROJECTATTRIBUTE_ATTRIBUTE);
+		String entityName = jsonObject.optString(HAPAttributeConstant.QUERYPROJECTATTRIBUTE_ENTITYNAME);
+		String attribute = jsonObject.optString(HAPAttributeConstant.QUERYPROJECTATTRIBUTE_ATTRIBUTE);
 		return new HAPQueryProjectAttribute(entityName, attribute);
 	}
 }

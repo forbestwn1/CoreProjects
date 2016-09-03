@@ -13,7 +13,7 @@ public class HAPWraperContainer  extends HAPDataTypeImp{
 	public static HAPDataType dataType;
 	
 	public HAPWraperContainer(HAPDataTypeManager dataTypeMan) {
-		super(new HAPDataTypeInfoWithVersion(HAPConstant.CONS_DATATYPE_CATEGARY_CONTAINER, HAPConstant.CONS_DATATYPE_TYPE_CONTAINER_WRAPPER), null, null, null, "", dataTypeMan);
+		super(new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_CONTAINER, HAPConstant.DATATYPE_TYPE_CONTAINER_WRAPPER), null, null, null, "", dataTypeMan);
 	}
 
 	@Override

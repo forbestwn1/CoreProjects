@@ -9,7 +9,7 @@ public class HAPTransactionNormal extends HAPTransaction{
 
 	public HAPTransactionNormal(HAPConfigure configure, HAPEntityDataAccess access, HAPDataContext dataContext){
 		super(configure, access, dataContext);
-		this.setOperationScope(HAPConstant.CONS_ENTITYOPERATION_SCOPE_GLOBAL);
+		this.setOperationScope(HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL);
 	}
 	
 }

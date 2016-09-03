@@ -166,7 +166,7 @@ public class HAPEntityData extends HAPDataImp
 	}
 	
 	public HAPDataWraper getChildPathWraper(String attributeList){
-		int index = attributeList.indexOf(HAPConstant.CONS_SEPERATOR_PATH);
+		int index = attributeList.indexOf(HAPConstant.SEPERATOR_PATH);
 		if(index == -1){
 			return this.getAttributeValueWraper(attributeList);
 		}
@@ -265,11 +265,11 @@ public class HAPEntityData extends HAPDataImp
 	//***************************   Parse
 	@Override
 	public String toDataStringValue(String format) {
-		if(format.equals(HAPConstant.CONS_SERIALIZATION_JSON)){
+		if(format.equals(HAPConstant.SERIALIZATION_JSON)){
 			Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 			for(String attr : this.getAttributes()){
 				HAPDataWraper attrValue = this.getAttributeValueWraper(attr);
-				jsonMap.put(attr, attrValue.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+				jsonMap.put(attr, attrValue.toStringValue(HAPConstant.SERIALIZATION_JSON));
 			}
 
 			for(String attr : this.m_internalAttributes.keySet()){

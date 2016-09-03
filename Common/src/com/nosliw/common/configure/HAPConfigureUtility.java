@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.interpolate.HAPInterpolateExpressionProcessor;
+import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.basic.HAPStringableValueBasic;
@@ -16,7 +16,7 @@ public class HAPConfigureUtility {
 	private static String KEY_VARIABLE_GLOBAL = "global";
 
 	//the interpolate processor
-	private static HAPInterpolateExpressionProcessor m_interpolateProcessor = new HAPInterpolateExpressionProcessor(HAPConstant.CONS_SEPERATOR_VARSTART, HAPConstant.CONS_SEPERATOR_VAREND){
+	private static HAPInterpolateProcessor m_interpolateProcessor = new HAPInterpolateProcessor(HAPConstant.SEPERATOR_VARSTART, HAPConstant.SEPERATOR_VAREND){
 		@Override
 		public String processIterpolate(String expression, Object object) {
 			Object[] arrayObj = (Object[]) object;
@@ -57,7 +57,7 @@ public class HAPConfigureUtility {
 	 * resolve resolvable item (configure value or variable value)
 	 */
 	public static HAPInterpolateOutput resolveConfigureItem(HAPResolvableConfigureItem resolvableItem, final boolean resursive){
-		Map<HAPInterpolateExpressionProcessor, Object> interpolateDatas = new LinkedHashMap<HAPInterpolateExpressionProcessor, Object>();
+		Map<HAPInterpolateProcessor, Object> interpolateDatas = new LinkedHashMap<HAPInterpolateProcessor, Object>();
 		
 		List<HAPConfigureImp> configures = new ArrayList<HAPConfigureImp>();
 		configures.add(resolvableItem.getParent());
@@ -75,7 +75,7 @@ public class HAPConfigureUtility {
 	 */
 	public static HAPStringableValueBasic getStringableValue(String strValue){
 		String[] parts = HAPNamingConversionUtility.parsePartlInfos(strValue);
-		String type = HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_STRING;
+		String type = HAPConstant.STRINGABLE_BASICVALUETYPE_STRING;
 		String value = null; 
 		if(parts.length>=2){
 			value = parts[1];

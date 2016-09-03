@@ -40,9 +40,9 @@ public class HAPEntityID implements HAPStringable{
 			if(HAPBasicUtility.isStringEmpty(this.getId()))  return null;
 			
 			StringBuffer out = new StringBuffer();
-			out.append(HAPConstant.CONS_SEPERATOR_PART);
+			out.append(HAPConstant.SEPERATOR_PART);
 			out.append(this.getEntityType());
-			out.append(HAPConstant.CONS_SEPERATOR_PART);
+			out.append(HAPConstant.SEPERATOR_PART);
 			out.append(this.getId());
 			this.m_key = out.toString();
 		}
@@ -50,7 +50,7 @@ public class HAPEntityID implements HAPStringable{
 	}
 
 	public static HAPEntityID parseKey(String key){
-		HAPSegmentParser idSegs = new HAPSegmentParser(key, HAPConstant.CONS_SEPERATOR_PART);
+		HAPSegmentParser idSegs = new HAPSegmentParser(key, HAPConstant.SEPERATOR_PART);
 		String entityType = idSegs.next();
 		String id = idSegs.next();
 		return new HAPEntityID(entityType, id);
@@ -59,15 +59,15 @@ public class HAPEntityID implements HAPStringable{
 	@Override
 	public String toStringValue(String format){
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYID_ID, this.m_id);
-		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYID_ENTITYTYPE, this.m_entityType);
-		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYID_KEY, this.getKey());
+		jsonMap.put(HAPAttributeConstant.ENTITYID_ID, this.m_id);
+		jsonMap.put(HAPAttributeConstant.ENTITYID_ENTITYTYPE, this.m_entityType);
+		jsonMap.put(HAPAttributeConstant.ENTITYID_KEY, this.getKey());
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}
 	
 	public static HAPEntityID parseJson(JSONObject jsonEntityID){
-		String type = jsonEntityID.optString(HAPAttributeConstant.ATTR_ENTITYID_ENTITYTYPE);
-		String id = jsonEntityID.optString(HAPAttributeConstant.ATTR_ENTITYID_ID);
+		String type = jsonEntityID.optString(HAPAttributeConstant.ENTITYID_ENTITYTYPE);
+		String id = jsonEntityID.optString(HAPAttributeConstant.ENTITYID_ID);
 		return new HAPEntityID(type, id);
 	}
 	

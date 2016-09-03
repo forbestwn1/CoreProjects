@@ -61,20 +61,20 @@ public abstract class HAPDataImp implements HAPData{
 		String out = this.toDataStringValue(format);
 		if(out!=null)  return out;
 		
-		if(format.equals(HAPConstant.CONS_SERIALIZATION_JSON_FULL)){
+		if(format.equals(HAPConstant.SERIALIZATION_JSON_FULL)){
 			Map<String, String> jsonMap = new HashMap<String, String>();
 			Map<String, Class> jsonType = null;
 			
-			jsonMap.put(HAPAttributeConstant.ATTR_DATA_DATATYPEINFO, HAPDataUtility.getDataTypeInfo(this).toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));			
-			jsonMap.put(HAPAttributeConstant.ATTR_DATA_VALUE, this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+			jsonMap.put(HAPAttributeConstant.DATA_DATATYPEINFO, HAPDataUtility.getDataTypeInfo(this).toStringValue(HAPConstant.SERIALIZATION_JSON));			
+			jsonMap.put(HAPAttributeConstant.DATA_VALUE, this.toStringValue(HAPConstant.SERIALIZATION_JSON));
 			
 			if(HAPDataUtility.isBooleanType(this)){
 				if(jsonType==null)  jsonType = new LinkedHashMap<String, Class>();
-				jsonType.put(HAPAttributeConstant.ATTR_DATA_VALUE, Boolean.class);
+				jsonType.put(HAPAttributeConstant.DATA_VALUE, Boolean.class);
 			}
 			else if(HAPDataUtility.isIntegerType(this)){
 				if(jsonType==null)  jsonType = new LinkedHashMap<String, Class>();
-				jsonType.put(HAPAttributeConstant.ATTR_DATA_VALUE, Integer.class);
+				jsonType.put(HAPAttributeConstant.DATA_VALUE, Integer.class);
 			}
 			
 			return HAPJsonUtility.getMapJson(jsonMap, jsonType);
@@ -84,7 +84,7 @@ public abstract class HAPDataImp implements HAPData{
 	
 	@Override
 	public String toString(){
-		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));
 	}
 	
 	//*********************  Clone

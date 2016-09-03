@@ -49,7 +49,7 @@ public class HAPTestCaseInfo extends HAPTestInfo{
 	}
 
 	@Override
-	public String getType(){ return HAPConstant.CONS_TEST_TYPE_CASE; }
+	public String getType(){ return HAPConstant.TEST_TYPE_CASE; }
 
 	public HAPTestCaseRuntime getTestCaseRuntime(){
 		return this.m_testCaseRuntime;

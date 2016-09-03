@@ -25,7 +25,7 @@ public class HAPSortingQueryAttribute extends HAPSortingInfo{
 	private int m_order;
 	
 	public HAPSortingQueryAttribute(String entityName, String attribute, int order, HAPDataTypeManager dataTypeMan){
-		super(HAPConstant.CONS_SORTING_TYPE_ATTRIBUTE, dataTypeMan);
+		super(HAPConstant.SORTING_TYPE_ATTRIBUTE, dataTypeMan);
 		this.m_entityName = entityName;
 		this.m_attribute = attribute;
 		this.m_order = order;
@@ -49,13 +49,13 @@ public class HAPSortingQueryAttribute extends HAPSortingInfo{
 			this.m_dataType = attrWraper1.getData().getDataType(); 
 		}
 		
-		HAPIntegerData compareOut = (HAPIntegerData)this.m_dataType.operate(HAPConstant.CONS_DATAOPERATION_COMPARE, new HAPData[]{attrWraper1.getData(), attrWraper2.getData()}).getData();
+		HAPIntegerData compareOut = (HAPIntegerData)this.m_dataType.operate(HAPConstant.DATAOPERATION_COMPARE, new HAPData[]{attrWraper1.getData(), attrWraper2.getData()}).getData();
 		int out = compareOut.getValue();
 		
 		switch(this.m_order){
-		case HAPConstant.CONS_SORTING_ORDER_ASCEND:
+		case HAPConstant.SORTING_ORDER_ASCEND:
 			break;
-		case HAPConstant.CONS_SORTING_ORDER_DESCEND:
+		case HAPConstant.SORTING_ORDER_DESCEND:
 			out = out * -1;
 			break;
 		}

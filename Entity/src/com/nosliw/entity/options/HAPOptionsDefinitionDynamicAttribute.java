@@ -43,7 +43,7 @@ public class HAPOptionsDefinitionDynamicAttribute extends HAPOptionsDefinitionCo
 	}
 
 	@Override
-	public String getType() {	return HAPConstant.CONS_OPTIONS_TYPE_DYNAMIC_EXPRESSION_ATTRIBUTE;	}
+	public String getType() {	return HAPConstant.OPTIONS_TYPE_DYNAMIC_EXPRESSION_ATTRIBUTE;	}
 	
 	@Override
 	public String toStringValue(String format) {

@@ -30,7 +30,7 @@ public class HAPOperandVariable extends HAPOperandAtom{
 	}
 	
 	@Override
-	public int getOperandType() {	return HAPConstant.CONS_EXPRESSION_OPERAND_VARIABLE;	}
+	public int getOperandType() {	return HAPConstant.EXPRESSION_OPERAND_VARIABLE;	}
 
 	public String getVarName(){	return this.m_varName;}
 	
@@ -61,6 +61,6 @@ public class HAPOperandVariable extends HAPOperandAtom{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonDataTypeMap){
 		super.buildJsonMap(jsonMap, jsonDataTypeMap);
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERAND_VARIABLE_VARNAME, this.m_varName);
+		jsonMap.put(HAPAttributeConstant.OPERAND_VARIABLE_VARNAME, this.m_varName);
 	}
 }

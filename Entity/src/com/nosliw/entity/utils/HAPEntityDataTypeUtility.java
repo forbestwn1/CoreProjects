@@ -17,16 +17,16 @@ import com.nosliw.entity.data.HAPReferenceWraper;
 
 public class HAPEntityDataTypeUtility {
 
-	public static boolean isAtomType(HAPDataTypeInfo type){	return HAPConstant.CONS_DATATYPE_CATEGARY_BLOCK.equals(type.getCategary()) || HAPConstant.CONS_DATATYPE_CATEGARY_SIMPLE.equals(type.getCategary());	}
+	public static boolean isAtomType(HAPDataTypeInfo type){	return HAPConstant.DATATYPE_CATEGARY_BLOCK.equals(type.getCategary()) || HAPConstant.DATATYPE_CATEGARY_SIMPLE.equals(type.getCategary());	}
 	public static boolean isAtomType(HAPDataWraper value){	return value instanceof HAPAtomWraper; }
 
-	public static boolean isContainerType(HAPDataTypeInfo type){return HAPConstant.CONS_DATATYPE_CATEGARY_CONTAINER.equals(type.getCategary());	}
+	public static boolean isContainerType(HAPDataTypeInfo type){return HAPConstant.DATATYPE_CATEGARY_CONTAINER.equals(type.getCategary());	}
 	public static boolean isContainerType(HAPDataWraper value){	return (value instanceof HAPEntityContainerAttributeWraper);}
 
-	public static boolean isEntityType(HAPDataTypeInfo type){return HAPConstant.CONS_DATATYPE_CATEGARY_ENTITY.equals(type.getCategary());}
+	public static boolean isEntityType(HAPDataTypeInfo type){return HAPConstant.DATATYPE_CATEGARY_ENTITY.equals(type.getCategary());}
 	public static boolean isEntityType(HAPDataWraper value){return value instanceof HAPEntityWraper;}
 	
-	public static boolean isReferenceType(HAPDataTypeInfo type){return HAPConstant.CONS_DATATYPE_CATEGARY_REFERENCE.equals(type.getCategary());}
+	public static boolean isReferenceType(HAPDataTypeInfo type){return HAPConstant.DATATYPE_CATEGARY_REFERENCE.equals(type.getCategary());}
 	public static boolean isReferenceType(HAPDataWraper value){	return value instanceof HAPReferenceWraper;	}
 	
 
@@ -37,11 +37,11 @@ public class HAPEntityDataTypeUtility {
 
 
 	public static HAPEntityContainerAttribute getContainerAttributeDataType(HAPDataTypeManager dataTypeMan){
-		return (HAPEntityContainerAttribute)dataTypeMan.getDataType(new HAPDataTypeInfo(HAPConstant.CONS_DATATYPE_CATEGARY_CONTAINER, HAPConstant.CONS_DATATYPE_TYPE_CONTAINER_ENTITYATTRIBUTE));
+		return (HAPEntityContainerAttribute)dataTypeMan.getDataType(new HAPDataTypeInfo(HAPConstant.DATATYPE_CATEGARY_CONTAINER, HAPConstant.DATATYPE_TYPE_CONTAINER_ENTITYATTRIBUTE));
 	}
 
 	public static HAPReference getReferenceAttributeDataType(HAPDataTypeManager dataTypeMan){
-		return (HAPReference)dataTypeMan.getDataType(new HAPDataTypeInfo(HAPConstant.CONS_DATATYPE_CATEGARY_REFERENCE, HAPConstant.CONS_DATATYPE_TYPE_REFERENCE_NORMAL));
+		return (HAPReference)dataTypeMan.getDataType(new HAPDataTypeInfo(HAPConstant.DATATYPE_CATEGARY_REFERENCE, HAPConstant.DATATYPE_TYPE_REFERENCE_NORMAL));
 	}
 	
 	/*
@@ -66,7 +66,7 @@ public class HAPEntityDataTypeUtility {
 			else if(HAPEntityDataTypeUtility.isContainerType(attrWraper)){
 				//for container attribute, check element type
 				HAPEntityContainerAttributeWraper containerAttr = (HAPEntityContainerAttributeWraper)attrWraper;
-				if(HAPConstant.CONS_DATATYPE_CATEGARY_REFERENCE.equals(containerAttr.getChildDataTypeDefInfo().getDataTypeInfo().getCategary())){
+				if(HAPConstant.DATATYPE_CATEGARY_REFERENCE.equals(containerAttr.getChildDataTypeDefInfo().getDataTypeInfo().getCategary())){
 					//for entity reference element 
 					HAPDataWraper[] eleWrapers = containerAttr.getContainerData().getElementWrapers();
 					for(HAPDataWraper eleWraper : eleWrapers){
@@ -79,7 +79,7 @@ public class HAPEntityDataTypeUtility {
 						}
 					}
 				}
-				else if(HAPConstant.CONS_DATATYPE_CATEGARY_ENTITY.equals(containerAttr.getChildDataTypeDefInfo().getDataTypeInfo().getCategary())){
+				else if(HAPConstant.DATATYPE_CATEGARY_ENTITY.equals(containerAttr.getChildDataTypeDefInfo().getDataTypeInfo().getCategary())){
 					//for entity element, get all child reference for entity element
 					HAPDataWraper[] eleWrapers = containerAttr.getContainerData().getElementWrapers();
 					for(HAPDataWraper eleWraper : eleWrapers){

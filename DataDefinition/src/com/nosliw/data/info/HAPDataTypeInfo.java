@@ -35,8 +35,8 @@ public class HAPDataTypeInfo extends HAPStringableValueEntity{
 	public String getType(){return this.getBasicAncestorValueString(ENTITY_PROPERTY_TYPE);	}
 	//get unique key
 	public String getKey(){return this.getBasicAncestorValueString(ENTITY_PROPERTY_KEY);}
-	public void setCategary(String categary){ this.updateBasicChild(ENTITY_PROPERTY_CATEGARY, categary, HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_STRING);}
-	public void setType(String type){ this.updateBasicChild(ENTITY_PROPERTY_TYPE, type, HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_STRING);}
+	public void setCategary(String categary){ this.updateBasicChild(ENTITY_PROPERTY_CATEGARY, categary, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);}
+	public void setType(String type){ this.updateBasicChild(ENTITY_PROPERTY_TYPE, type, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);}
 	
 	public HAPDataTypeInfo cloneDataTypeInfo(){
 		HAPDataTypeInfo out = new HAPDataTypeInfo();

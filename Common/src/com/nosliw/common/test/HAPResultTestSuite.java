@@ -30,10 +30,10 @@ public class HAPResultTestSuite extends HAPResult{
 	
 	public void addTestResult(HAPResult result){
 		switch(result.getType()){
-		case HAPConstant.CONS_TESTRESULT_TYPE_CASE:
+		case HAPConstant.TESTRESULT_TYPE_CASE:
 			this.m_testCaseResults.add(result);
 			break;
-		case HAPConstant.CONS_TESTRESULT_TYPE_SUITE:
+		case HAPConstant.TESTRESULT_TYPE_SUITE:
 			this.m_testSuiteResults.add(result);
 			break;
 		}
@@ -51,7 +51,7 @@ public class HAPResultTestSuite extends HAPResult{
 	
 	@Override
 	public String getType() {
-		return HAPConstant.CONS_TESTRESULT_TYPE_SUITE;
+		return HAPConstant.TESTRESULT_TYPE_SUITE;
 	}
 
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap, String format){

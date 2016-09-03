@@ -130,7 +130,7 @@ public class HAPDataTypeOperationInfos {
 		for(String name : olderOpInfos.keySet()){
 			if(!this.m_availableOperations.containsKey(name)){
 				String oldPath = HAPNamingConversionUtility.cascadePath(
-						HAPNamingConversionUtility.cascadeDetail(HAPConstant.CONS_OPERATIONDEF_PATH_VERSION, olderDataType.getDataTypeInfo().getVersionNumber()+""),
+						HAPNamingConversionUtility.cascadeDetail(HAPConstant.OPERATIONDEF_PATH_VERSION, olderDataType.getDataTypeInfo().getVersionNumber()+""),
 						olderOpInfos.get(name).getConvertPath());
 				this.m_availableOperations.put(name, new HAPDataOperationInfo(this.m_dataType, olderOpInfos.get(name), oldPath));
 			}
@@ -148,7 +148,7 @@ public class HAPDataTypeOperationInfos {
 		Map<String, HAPDataOperationInfo> parentOps = parentDataType.getOperationInfos();
 		for(String name : parentOps.keySet()){
 			if(!this.m_availableOperations.containsKey(name)){
-				String parentPath = HAPNamingConversionUtility.cascadePath(HAPConstant.CONS_OPERATIONDEF_PATH_PARENT,
+				String parentPath = HAPNamingConversionUtility.cascadePath(HAPConstant.OPERATIONDEF_PATH_PARENT,
 						parentOps.get(name).getConvertPath());
 				this.m_availableOperations.put(name, new HAPDataOperationInfo(this.m_dataType, parentOps.get(name), parentPath));
 			}

@@ -22,47 +22,47 @@ public class HAPNamingConversionUtility {
 	 * cascade two part element together
 	 */
 	public static String cascadePart(String part1, String part2){
-		return cascadeTexts(part1, part2, HAPConstant.CONS_SEPERATOR_PART);
+		return cascadeTexts(part1, part2, HAPConstant.SEPERATOR_PART);
 	}
 
 	/*
 	 * get all sub parts from full
 	 */
 	public static String[] parsePartlInfos(String parts){
-		return parts.split(HAPConstant.CONS_SEPERATOR_PART);
+		return parts.split(HAPConstant.SEPERATOR_PART);
 	}
 	
 	/*
 	 * cascade two detail element together
 	 */
 	public static String cascadeDetail(String detail1, String detail2){
-		return cascadeTexts(detail1, detail2, HAPConstant.CONS_SEPERATOR_DETAIL);
+		return cascadeTexts(detail1, detail2, HAPConstant.SEPERATOR_DETAIL);
 	}
 
 	/*
 	 * get all sub path from full path
 	 */
 	public static String[] parseDetailInfos(String details){
-		return details.split(HAPConstant.CONS_SEPERATOR_DETAIL);
+		return details.split(HAPConstant.SEPERATOR_DETAIL);
 	}
 	
 	/*
 	 * cascade two Path element together
 	 */
 	public static String cascadePath(String path1, String path2){
-		return cascadeTexts(path1, path2, HAPConstant.CONS_SEPERATOR_PATH);
+		return cascadeTexts(path1, path2, HAPConstant.SEPERATOR_PATH);
 	}
 
 	/*
 	 * get all sub path from full path
 	 */
 	public static String[] parsePathSegs(String fullPath){
-		return fullPath.split("\\"+HAPConstant.CONS_SEPERATOR_PATH);
+		return fullPath.split("\\"+HAPConstant.SEPERATOR_PATH);
 	}
 	 
 	public static HAPPath parsePath(String path){
 		HAPPath out = null;
-		int index = path.lastIndexOf(HAPConstant.CONS_SEPERATOR_PATH);
+		int index = path.lastIndexOf(HAPConstant.SEPERATOR_PATH);
 		if(index==-1){
 			//name only
 			out = new HAPPath(path, null, null);
@@ -82,22 +82,22 @@ public class HAPNamingConversionUtility {
 	 * if not, then reutnr null;
 	 */
 	static public HAPSegmentParser isKeywordPhrase(String name, String seperator){
-		if(name.subSequence(0, 1).equals(HAPConstant.CONS_SYMBOL_KEYWORD)){
+		if(name.subSequence(0, 1).equals(HAPConstant.SYMBOL_KEYWORD)){
 			return new HAPSegmentParser(name.substring(1), seperator);
 		}
 		else  return null;
 	}
 
 	static public HAPSegmentParser isKeywordPhrase(String name){
-		return isKeywordPhrase(name, HAPConstant.CONS_SEPERATOR_DETAIL);
+		return isKeywordPhrase(name, HAPConstant.SEPERATOR_DETAIL);
 	}
 
 	static public String getKeyword(String keyword){
-		return getKeyword(keyword, HAPConstant.CONS_SYMBOL_KEYWORD);
+		return getKeyword(keyword, HAPConstant.SYMBOL_KEYWORD);
 	}
 	
 	static public String createKeyword(String key){
-		return createKeyword(key, HAPConstant.CONS_SYMBOL_KEYWORD);
+		return createKeyword(key, HAPConstant.SYMBOL_KEYWORD);
 	}
 
 	/*
@@ -124,7 +124,7 @@ public class HAPNamingConversionUtility {
 			return path2;
 		}
 		else{
-			return path1 + HAPConstant.CONS_SEPERATOR_PATH + path2;
+			return path1 + HAPConstant.SEPERATOR_PATH + path2;
 		}
 	}
 	

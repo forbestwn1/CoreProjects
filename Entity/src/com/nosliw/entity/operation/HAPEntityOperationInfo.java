@@ -129,50 +129,50 @@ public class HAPEntityOperationInfo {
 
 	@Override
 	public String toString(){
-		return this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON);
+		return this.toStringValue(HAPConstant.SERIALIZATION_JSON);
 	}
 	
 	public String toStringValue(String format){
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_OPERATIONID, String.valueOf(this.getOperationId()));
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_OPERATION, String.valueOf(this.getOperation().getName()));
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_AUTOCOMMIT, String.valueOf(this.isAutoCommit()));
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_VALIDATION, String.valueOf(this.isValidation()));
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_SCOPE, String.valueOf(this.getScope()));
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_ROOTOPERATION, String.valueOf(this.isRootOperation()));
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_SUBMITABLE, String.valueOf(this.isSubmitable()));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_OPERATIONID, String.valueOf(this.getOperationId()));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_OPERATION, String.valueOf(this.getOperation().getName()));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_AUTOCOMMIT, String.valueOf(this.isAutoCommit()));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_VALIDATION, String.valueOf(this.isValidation()));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_SCOPE, String.valueOf(this.getScope()));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_ROOTOPERATION, String.valueOf(this.isRootOperation()));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_SUBMITABLE, String.valueOf(this.isSubmitable()));
 		
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_ATTRIBUTEPATH, this.getAttributePath());
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_ENTITYTYPE, this.getEntityType());
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_ELEMENTID, this.getElementId());
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_QUERYNAME, this.getQueryName());
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_TRANSACTIONID, this.getTransactionId());
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_VALUE, this.getValue());
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_ATTRIBUTEPATH, this.getAttributePath());
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_ENTITYTYPE, this.getEntityType());
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_ELEMENTID, this.getElementId());
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_QUERYNAME, this.getQueryName());
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_TRANSACTIONID, this.getTransactionId());
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_VALUE, this.getValue());
 		
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_ENTITYID, this.getEntityID()==null?null:this.getEntityID().toStringValue(format));
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_REFERENCEPATH, this.getReferencePath()==null?null:this.getReferencePath().toStringValue(format));
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_DATA, this.getData()==null?null:this.getData().toStringValue(format));
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_WRAPER, this.getWraper()==null?null:this.getWraper().toStringValue(format));
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_ENTITYDEFINITION, this.getEntityDefinition()==null?null:this.getEntityDefinition().toStringValue(format));
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_ATTRIBUTEDEFINITION, this.getAttributeDefinition()==null?null:this.getAttributeDefinition().toStringValue(format));
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_REFENTITYID, this.getRefEntityID()==null?null:this.getRefEntityID().toStringValue(format));
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_QUERYENTITYWRAPER, this.getQueryEntityWraper()==null?null:this.getQueryEntityWraper().toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_ENTITYID, this.getEntityID()==null?null:this.getEntityID().toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_REFERENCEPATH, this.getReferencePath()==null?null:this.getReferencePath().toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_DATA, this.getData()==null?null:this.getData().toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_WRAPER, this.getWraper()==null?null:this.getWraper().toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_ENTITYDEFINITION, this.getEntityDefinition()==null?null:this.getEntityDefinition().toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_ATTRIBUTEDEFINITION, this.getAttributeDefinition()==null?null:this.getAttributeDefinition().toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_REFENTITYID, this.getRefEntityID()==null?null:this.getRefEntityID().toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_QUERYENTITYWRAPER, this.getQueryEntityWraper()==null?null:this.getQueryEntityWraper().toStringValue(format));
 
 		if(this.m_entityOperations!=null){
-			jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_ENTITYOPERATIONS, HAPJsonUtility.getListObjectJson(m_entityOperations));
+			jsonMap.put(HAPAttributeConstant.OPERATIONINFO_ENTITYOPERATIONS, HAPJsonUtility.getListObjectJson(m_entityOperations));
 		}
 		
 		if(this.getExtra()!=null){
 			if(this.getExtra() instanceof HAPStringable){
-				jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_EXTRA, ((HAPStringable)this.getExtra()).toStringValue(format));
+				jsonMap.put(HAPAttributeConstant.OPERATIONINFO_EXTRA, ((HAPStringable)this.getExtra()).toStringValue(format));
 			}
 			else if(this.getExtra() instanceof String){
-				jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_EXTRA, (String)this.getExtra());
+				jsonMap.put(HAPAttributeConstant.OPERATIONINFO_EXTRA, (String)this.getExtra());
 			}
 		}
 
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERATIONINFO_PARMS, HAPJsonUtility.getMapJson(this.m_parms));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_PARMS, HAPJsonUtility.getMapJson(this.m_parms));
 		
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}
@@ -180,53 +180,53 @@ public class HAPEntityOperationInfo {
 	public static HAPEntityOperationInfo parseJson(JSONObject jsonOperation, HAPEntityEnvironment entityEvr){
 		HAPEntityOperationInfo out = new HAPEntityOperationInfo();
 
-		String operationId = jsonOperation.optString(HAPAttributeConstant.ATTR_OPERATIONINFO_OPERATIONID);
+		String operationId = jsonOperation.optString(HAPAttributeConstant.OPERATIONINFO_OPERATIONID);
 		if(HAPBasicUtility.isStringNotEmpty(operationId))  out.setOperationId(new HAPEntityOperationId(Long.parseLong(operationId)));
 		
 		try{
-			out.m_operation = HAPEntityOperation.getOperationByName(jsonOperation.getString(HAPAttributeConstant.ATTR_OPERATIONINFO_OPERATION));
-			out.m_isRootOperation = jsonOperation.optBoolean(HAPAttributeConstant.ATTR_OPERATIONINFO_ROOTOPERATION, out.isRootOperation());
-			out.m_isSubmitable = jsonOperation.optBoolean(HAPAttributeConstant.ATTR_OPERATIONINFO_SUBMITABLE, out.isSubmitable());
-			out.m_scope = jsonOperation.optInt(HAPAttributeConstant.ATTR_OPERATIONINFO_SCOPE, out.getScope()); 
-			out.m_isAutoCommit = jsonOperation.optBoolean(HAPAttributeConstant.ATTR_OPERATIONINFO_AUTOCOMMIT, out.m_isAutoCommit);
-			out.m_isValidation = jsonOperation.optBoolean(HAPAttributeConstant.ATTR_OPERATIONINFO_VALIDATION, out.m_isValidation);
+			out.m_operation = HAPEntityOperation.getOperationByName(jsonOperation.getString(HAPAttributeConstant.OPERATIONINFO_OPERATION));
+			out.m_isRootOperation = jsonOperation.optBoolean(HAPAttributeConstant.OPERATIONINFO_ROOTOPERATION, out.isRootOperation());
+			out.m_isSubmitable = jsonOperation.optBoolean(HAPAttributeConstant.OPERATIONINFO_SUBMITABLE, out.isSubmitable());
+			out.m_scope = jsonOperation.optInt(HAPAttributeConstant.OPERATIONINFO_SCOPE, out.getScope()); 
+			out.m_isAutoCommit = jsonOperation.optBoolean(HAPAttributeConstant.OPERATIONINFO_AUTOCOMMIT, out.m_isAutoCommit);
+			out.m_isValidation = jsonOperation.optBoolean(HAPAttributeConstant.OPERATIONINFO_VALIDATION, out.m_isValidation);
 			
-			out.m_attributePath = jsonOperation.optString(HAPAttributeConstant.ATTR_OPERATIONINFO_ATTRIBUTEPATH, out.m_attributePath);
-			out.m_entityType = jsonOperation.optString(HAPAttributeConstant.ATTR_OPERATIONINFO_ENTITYTYPE, out.m_entityType);
-			out.m_elementId = jsonOperation.optString(HAPAttributeConstant.ATTR_OPERATIONINFO_ELEMENTID, out.m_elementId); 
-			out.m_queryName = jsonOperation.optString(HAPAttributeConstant.ATTR_OPERATIONINFO_QUERYNAME, out.m_queryName);
-			out.m_transactionId = jsonOperation.optString(HAPAttributeConstant.ATTR_OPERATIONINFO_TRANSACTIONID, out.m_transactionId); 
-			out.m_value = jsonOperation.optString(HAPAttributeConstant.ATTR_OPERATIONINFO_VALUE, out.m_value); 
+			out.m_attributePath = jsonOperation.optString(HAPAttributeConstant.OPERATIONINFO_ATTRIBUTEPATH, out.m_attributePath);
+			out.m_entityType = jsonOperation.optString(HAPAttributeConstant.OPERATIONINFO_ENTITYTYPE, out.m_entityType);
+			out.m_elementId = jsonOperation.optString(HAPAttributeConstant.OPERATIONINFO_ELEMENTID, out.m_elementId); 
+			out.m_queryName = jsonOperation.optString(HAPAttributeConstant.OPERATIONINFO_QUERYNAME, out.m_queryName);
+			out.m_transactionId = jsonOperation.optString(HAPAttributeConstant.OPERATIONINFO_TRANSACTIONID, out.m_transactionId); 
+			out.m_value = jsonOperation.optString(HAPAttributeConstant.OPERATIONINFO_VALUE, out.m_value); 
 
-			JSONObject entityIDJson = jsonOperation.optJSONObject(HAPAttributeConstant.ATTR_OPERATIONINFO_ENTITYID);
+			JSONObject entityIDJson = jsonOperation.optJSONObject(HAPAttributeConstant.OPERATIONINFO_ENTITYID);
 			if(entityIDJson!=null)		out.m_entityID = HAPEntityID.parseJson(entityIDJson);
 
-			JSONObject refPathJson = jsonOperation.optJSONObject(HAPAttributeConstant.ATTR_OPERATIONINFO_REFERENCEPATH);
+			JSONObject refPathJson = jsonOperation.optJSONObject(HAPAttributeConstant.OPERATIONINFO_REFERENCEPATH);
 			if(refPathJson!=null) out.m_referencePath = HAPReferenceInfoAbsolute.parseJson(refPathJson);
 
-			JSONObject dataJson = jsonOperation.optJSONObject(HAPAttributeConstant.ATTR_OPERATIONINFO_DATA);
+			JSONObject dataJson = jsonOperation.optJSONObject(HAPAttributeConstant.OPERATIONINFO_DATA);
 			if(dataJson!=null)  out.m_data = entityEvr.getDataTypeManager().parseJson(dataJson, null, null);
 			else{
-				String dataString = jsonOperation.optString(HAPAttributeConstant.ATTR_OPERATIONINFO_DATA);
+				String dataString = jsonOperation.optString(HAPAttributeConstant.OPERATIONINFO_DATA);
 				out.m_data = entityEvr.getDataTypeManager().parseString(dataString, null, null);
 			}
 
-			JSONObject wraperJson = jsonOperation.optJSONObject(HAPAttributeConstant.ATTR_OPERATIONINFO_WRAPER);
+			JSONObject wraperJson = jsonOperation.optJSONObject(HAPAttributeConstant.OPERATIONINFO_WRAPER);
 			if(wraperJson!=null)  out.m_wraper = entityEvr.getDataTypeManager().parseWraper(wraperJson);
 			
-			JSONObject entityDefJson = jsonOperation.optJSONObject(HAPAttributeConstant.ATTR_OPERATIONINFO_ENTITYDEFINITION);
+			JSONObject entityDefJson = jsonOperation.optJSONObject(HAPAttributeConstant.OPERATIONINFO_ENTITYDEFINITION);
 			if(entityDefJson!=null)		out.m_entityDefinition = entityEvr.getEntityDefinitionManager().parseEntityDefinitionJson(entityDefJson);
 
-			JSONObject attrDefJson = jsonOperation.optJSONObject(HAPAttributeConstant.ATTR_OPERATIONINFO_ATTRIBUTEDEFINITION); 
+			JSONObject attrDefJson = jsonOperation.optJSONObject(HAPAttributeConstant.OPERATIONINFO_ATTRIBUTEDEFINITION); 
 			if(attrDefJson!=null)   out.m_attributeDefinition = entityEvr.getEntityDefinitionManager().parseAttributeDefinitionJson(attrDefJson);
 			
-			JSONObject refEntityIDJson = jsonOperation.optJSONObject(HAPAttributeConstant.ATTR_OPERATIONINFO_REFENTITYID);
+			JSONObject refEntityIDJson = jsonOperation.optJSONObject(HAPAttributeConstant.OPERATIONINFO_REFENTITYID);
 			if(refEntityIDJson!=null)  out.m_refEntityID = HAPEntityID.parseJson(refEntityIDJson);
 			
-			String entityId = jsonOperation.optString(HAPAttributeConstant.ATTR_OPERATIONINFO_ENTITYID);
+			String entityId = jsonOperation.optString(HAPAttributeConstant.OPERATIONINFO_ENTITYID);
 			if(HAPBasicUtility.isStringNotEmpty(entityId))		out.m_entityID = new HAPEntityID(entityId);
 
-			JSONArray entityOperationJsons = jsonOperation.optJSONArray(HAPAttributeConstant.ATTR_OPERATIONINFO_ENTITYOPERATIONS);
+			JSONArray entityOperationJsons = jsonOperation.optJSONArray(HAPAttributeConstant.OPERATIONINFO_ENTITYOPERATIONS);
 			if(entityOperationJsons!=null){
 				for(int j=0; j<entityOperationJsons.length(); j++){
 					JSONObject entityOperationJson = entityOperationJsons.getJSONObject(j);

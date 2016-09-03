@@ -36,13 +36,13 @@ public class HAPJsonService {
 			String title = command;
 			
 			if(command!=null){
-				if(HAPConstant.CONS_REMOTESERVICE_GETUIRESOURCE.equals(command)){
-					String name = jsonParms.optString(HAPAttributeConstant.ATTR_REQUEST_GETUIRESOURCE_NAME);
+				if(HAPConstant.REMOTESERVICE_GETUIRESOURCE.equals(command)){
+					String name = jsonParms.optString(HAPAttributeConstant.REQUEST_GETUIRESOURCE_NAME);
 					serviceData = clientContext.getUIResource(name);
 				}
-				else if(HAPConstant.CONS_REMOTESERVICE_GETDATATYPES.equals(command)){
-					JSONArray existingArray = jsonParms.optJSONArray(HAPAttributeConstant.ATTR_REQUEST_GETDATATYPES_EXISTINGARRAY);
-					JSONArray requestArray = jsonParms.optJSONArray(HAPAttributeConstant.ATTR_REQUEST_GETDATATYPES_REQUESTARRAY);
+				else if(HAPConstant.REMOTESERVICE_GETDATATYPES.equals(command)){
+					JSONArray existingArray = jsonParms.optJSONArray(HAPAttributeConstant.REQUEST_GETDATATYPES_EXISTINGARRAY);
+					JSONArray requestArray = jsonParms.optJSONArray(HAPAttributeConstant.REQUEST_GETDATATYPES_REQUESTARRAY);
 
 					Set<String> existingDataTypes = new HashSet<String>(); 
 					if(existingArray!=null){
@@ -69,20 +69,20 @@ public class HAPJsonService {
 					}
 					serviceData = HAPServiceData.createSuccessData(outDataTypes);
 				}
-				else if(HAPConstant.CONS_REMOTESERVICE_EXECUTEEXPRESSION.equals(command)){
+				else if(HAPConstant.REMOTESERVICE_EXECUTEEXPRESSION.equals(command)){
 					
 				}
 				else if("getEntityDefinitionsByGroup".equals(command)){
 					String group = jsonParms.optString("group");
 					serviceData = clientContext.getEntityDefinitionsByGroup(group);
 				}
-				else if(HAPConstant.CONS_REMOTESERVICE_GETALLENTITYDEFINITIONS.equals(command)){
+				else if(HAPConstant.REMOTESERVICE_GETALLENTITYDEFINITIONS.equals(command)){
 					logAppending = false;
 					serviceData = clientContext.getAllEntityDefinitions();
 				}
-				else if(HAPConstant.CONS_REMOTESERVICE_GETENTITYDEFINITIONBYNAMES.equals(command)){
+				else if(HAPConstant.REMOTESERVICE_GETENTITYDEFINITIONBYNAMES.equals(command)){
 					Map<String, Object> outData = new LinkedHashMap<String, Object>();
-					JSONArray names = jsonParms.optJSONArray(HAPAttributeConstant.ATTR_REQUEST_GETENTITYDEFINITIONBYNAMES_NAMES);
+					JSONArray names = jsonParms.optJSONArray(HAPAttributeConstant.REQUEST_GETENTITYDEFINITIONBYNAMES_NAMES);
 					for(int i=0; i<names.length(); i++){
 						String name = names.optString(i);
 						HAPServiceData s = clientContext.getEntityDefinitionByName(name);
@@ -169,7 +169,7 @@ public class HAPJsonService {
 				serviceData = HAPServiceData.createFailureData(null, "No command exist : " + command + "  !!!!!");
 			}
 			
-			out.append(serviceData.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+			out.append(serviceData.toStringValue(HAPConstant.SERIALIZATION_JSON));
 			
 			jsonOut = HAPJsonUtility.formatJson(out.toString());
 
@@ -178,7 +178,7 @@ public class HAPJsonService {
 			logJsonMap.put("parms", jsonParms.toString());
 			logJsonMap.put("output", out.toString());
 			logJsonMap.put("clientId", clientContext.getClientContextInfo().clientId);
-			if(logData)			logJsonMap.put("data", clientContext.getDataContext().toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+			if(logData)			logJsonMap.put("data", clientContext.getDataContext().toStringValue(HAPConstant.SERIALIZATION_JSON));
 			String logContent = HAPJsonUtility.getMapJson(logJsonMap);
 			logger.log(title, categary, logContent, logAppending);
 		}

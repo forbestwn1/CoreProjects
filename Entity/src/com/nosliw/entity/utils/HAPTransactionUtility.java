@@ -11,16 +11,16 @@ public class HAPTransactionUtility {
 	 * set transaction id data to service data
 	 */
 //	public static void setServiceDataTransactionId(HAPServiceData serviceData, long transactionId){
-//		serviceData.setMetaData(HAPConstant.CONS_SERVICEDATA_METADATA_TRANSACTIONID, String.valueOf(transactionId));
+//		serviceData.setMetaData(HAPConstant.SERVICEDATA_METADATA_TRANSACTIONID, String.valueOf(transactionId));
 //	}
 //	public static void setServiceDataTransactionId(HAPServiceData serviceData, String transactionId){
-//		serviceData.setMetaData(HAPConstant.CONS_SERVICEDATA_METADATA_TRANSACTIONID, transactionId);
+//		serviceData.setMetaData(HAPConstant.SERVICEDATA_METADATA_TRANSACTIONID, transactionId);
 //	}
 	
 	
 	private static int[][] m_scopes = {
-		{HAPConstant.CONS_ENTITYOPERATION_SCOPE_OPERATION, HAPConstant.CONS_ENTITYOPERATION_SCOPE_GLOBAL, HAPConstant.CONS_ENTITYOPERATION_SCOPE_OPERATION},
-		{-1, HAPConstant.CONS_ENTITYOPERATION_SCOPE_ENTITY, HAPConstant.CONS_ENTITYOPERATION_SCOPE_ENTITY},
+		{HAPConstant.ENTITYOPERATION_SCOPE_OPERATION, HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL, HAPConstant.ENTITYOPERATION_SCOPE_OPERATION},
+		{-1, HAPConstant.ENTITYOPERATION_SCOPE_ENTITY, HAPConstant.ENTITYOPERATION_SCOPE_ENTITY},
 		{-1, -1, -1}
 	};
 
@@ -32,7 +32,7 @@ public class HAPTransactionUtility {
 	 * get transaction id data from service data
 	 */
 	public static long getServiceDataTransactionId(HAPServiceData serviceData){
-		String trasIdStr = serviceData.getMetaData(HAPConstant.CONS_SERVICEDATA_METADATA_TRANSACTIONID);
+		String trasIdStr = serviceData.getMetaData(HAPConstant.SERVICEDATA_METADATA_TRANSACTIONID);
 		return Long.parseLong(trasIdStr);
 	}
 

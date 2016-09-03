@@ -61,16 +61,16 @@ public class HAPTransitionEntityManager {
 	public HAPEntityContainer getEntityContainer(int status){
 		HAPEntityContainer out = this.m_entitys;
 		switch(status){
-		case HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NORMAL:
+		case HAPConstant.DATAACCESS_ENTITYSTATUS_NORMAL:
 			out = this.m_entitys;
 			break;
-		case HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_CHANGED:
+		case HAPConstant.DATAACCESS_ENTITYSTATUS_CHANGED:
 			out = this.m_changedEntitys;
 			break;
-		case HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NEW:
+		case HAPConstant.DATAACCESS_ENTITYSTATUS_NEW:
 			out = this.m_newEntitys;
 			break;
-		case HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_DEAD:
+		case HAPConstant.DATAACCESS_ENTITYSTATUS_DEAD:
 			out = this.m_deadEntitys;
 			break;
 		}
@@ -82,10 +82,10 @@ public class HAPTransitionEntityManager {
 	 */
 	public void addEntity(HAPEntityWraper entityWraper, int status){
 		switch(status){
-		case HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NORMAL:
+		case HAPConstant.DATAACCESS_ENTITYSTATUS_NORMAL:
 			this.m_entitys.addEntity(entityWraper);
 			break;
-		case HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_CHANGED:
+		case HAPConstant.DATAACCESS_ENTITYSTATUS_CHANGED:
 			this.m_entitys.remove(entityWraper.getID());
 			if(this.m_newEntitys.getEntity(entityWraper.getID())!=null){
 				//if this entity is currently a new entity, then keep it as new entity
@@ -96,10 +96,10 @@ public class HAPTransitionEntityManager {
 				this.m_changedEntitys.addEntity(entityWraper);
 			}
 			break;
-		case HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NEW:
+		case HAPConstant.DATAACCESS_ENTITYSTATUS_NEW:
 			this.m_newEntitys.addEntity(entityWraper);
 			break;
-		case HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_DEAD:
+		case HAPConstant.DATAACCESS_ENTITYSTATUS_DEAD:
 			this.m_entitys.remove(entityWraper.getID());
 			this.m_changedEntitys.remove(entityWraper.getID());
 			this.m_newEntitys.remove(entityWraper.getID());

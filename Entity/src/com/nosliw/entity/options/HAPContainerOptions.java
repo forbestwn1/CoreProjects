@@ -12,7 +12,7 @@ import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
 public class HAPContainerOptions extends HAPDataTypeImp{
 
 	public static HAPContainerOptions dataType;
-	public static HAPDataTypeInfoWithVersion dataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.CONS_DATATYPE_CATEGARY_CONTAINER, HAPConstant.CONS_DATATYPE_TYPE_CONTAINER_OPTIONS); 
+	public static HAPDataTypeInfoWithVersion dataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_CONTAINER, HAPConstant.DATATYPE_TYPE_CONTAINER_OPTIONS); 
 	
 	public HAPContainerOptions(HAPDataTypeInfoWithVersion dataTypeInfoWithVersion, HAPDataTypeManager dataTypeMan) {
 		super(dataTypeInfoWithVersion, null, null, null, "", dataTypeMan);

@@ -6,7 +6,7 @@ import com.nosliw.common.strvalue.basic.HAPStringableValueUtility;
 
 public class HAPInterpolateUtility {
 	public static String interpolateByConfigure(String text, HAPConfigureImp configure){
-		HAPInterpolateOutput out = HAPStringableValueUtility.resolveByPattern(text, HAPPatternProcessorDocVariable.class.getName(), configure);
+		HAPInterpolateOutput out = new HAPInterpolateProcessorByConfigureForDoc().processExpression(text, configure);
 		return out.getOutput();
 	}
 	

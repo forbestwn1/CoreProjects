@@ -23,7 +23,7 @@ public class HAPContextVariable  implements HAPStringable{
 	public HAPContextVariable(String expression){
 		this.m_name = expression;
 		this.m_path = "";
-		int index = expression.indexOf(HAPConstant.CONS_SEPERATOR_PATH);
+		int index = expression.indexOf(HAPConstant.SEPERATOR_PATH);
 		if(index!=-1){
 			this.m_name = expression.substring(0, index);
 			this.m_path = expression.substring(index+1);
@@ -52,8 +52,8 @@ public class HAPContextVariable  implements HAPStringable{
 	@Override
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		jsonMap.put(HAPAttributeConstant.ATTR_CONTEXTVARIABLE_NAME, this.m_name);
-		jsonMap.put(HAPAttributeConstant.ATTR_CONTEXTVARIABLE_PATH, this.m_path);
+		jsonMap.put(HAPAttributeConstant.CONTEXTVARIABLE_NAME, this.m_name);
+		jsonMap.put(HAPAttributeConstant.CONTEXTVARIABLE_PATH, this.m_path);
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}
 }

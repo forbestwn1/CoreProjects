@@ -1,20 +1,16 @@
 package com.nosliw.common.interpolate;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.configure.HAPConfigureManager;
 import com.nosliw.common.test.HAPAssert;
 import com.nosliw.common.test.HAPResultTestCase;
 import com.nosliw.common.test.HAPTestCase;
 import com.nosliw.common.test.HAPTestEnv;
-import com.nosliw.common.utils.HAPConstant;
 
-public class HAPPatternProcessorDocVariable extends HAPPatternProcessorInterpolationStatic{
+public class HAPPatternProcessorDocVariable extends HAPPatternProcessorInterpolation{
 
 	public HAPPatternProcessorDocVariable(){
-		super(HAPConstant.CONS_SEPERATOR_VARSTART, HAPConstant.CONS_SEPERATOR_VAREND);
+		super(new HAPInterpolateProcessorByConfigureForDoc());
 	}
 	
 	@HAPTestCase(description="PorcessVariable:  {{CONS_SEPERATOR_VARSTART}}part1{{CONS_SEPERATOR_VAREND}}part2{{CONS_SEPERATOR_VARSTART}}var2{{CONS_SEPERATOR_VAREND}}part3, the variables within the text are replaced with variables values ")

@@ -62,5 +62,5 @@ public abstract class HAPOptionsDefinitionQuery extends HAPOptionsDefinition{
 	protected HAPQueryDefinitionManager getQueryDefinitionManager(){	return this.m_queryDefMan;	}
 	
 	@Override
-	public String getType() {	return HAPConstant.CONS_OPTIONS_TYPE_QUERY;	}
+	public String getType() {	return HAPConstant.OPTIONS_TYPE_QUERY;	}
 }

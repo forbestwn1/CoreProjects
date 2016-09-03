@@ -4,9 +4,9 @@ import com.nosliw.common.pattern.HAPPatternProcessorImp;
 
 public abstract class HAPPatternProcessorInterpolation extends HAPPatternProcessorImp{
 
-	HAPInterpolateExpressionProcessor m_interpolateExpressionProcessor; 
+	HAPInterpolateProcessor m_interpolateExpressionProcessor; 
 	
-	public HAPPatternProcessorInterpolation(HAPInterpolateExpressionProcessor processor){
+	public HAPPatternProcessorInterpolation(HAPInterpolateProcessor processor){
 		this.m_interpolateExpressionProcessor = processor;
 	}
 

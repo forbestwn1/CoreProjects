@@ -17,7 +17,7 @@ public class HAPEntityOperationEvent extends HAPEvent{
 	
 	@Override
 	public int getType() {
-		return HAPConstant.CONS_EVENTTYPE_ENTITY_OPERATION;
+		return HAPConstant.EVENTTYPE_ENTITY_OPERATION;
 	}
 	
 }

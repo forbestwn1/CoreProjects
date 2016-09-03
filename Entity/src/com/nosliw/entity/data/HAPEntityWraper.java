@@ -37,7 +37,7 @@ public class HAPEntityWraper extends HAPDataWraper{
 	}
 
 	public HAPEntityWraper(String type, HAPDataTypeManager dataTypeMan, HAPEntityDefinitionManager entityDefMan){
-		this(new HAPDataTypeDefInfo(HAPConstant.CONS_DATATYPE_CATEGARY_ENTITY, type), dataTypeMan, entityDefMan);
+		this(new HAPDataTypeDefInfo(HAPConstant.DATATYPE_CATEGARY_ENTITY, type), dataTypeMan, entityDefMan);
 	}
 	
 	public HAPEntityWraper(HAPEntityData entity, HAPDataTypeManager dataTypeMan, HAPEntityDefinitionManager entityDefMan){
@@ -102,12 +102,12 @@ public class HAPEntityWraper extends HAPDataWraper{
 	public HAPServiceData onEvent(HAPEvent event) {
 		HAPServiceData out = HAPServiceData.createSuccessData();
 		
-		int scope = HAPConstant.CONS_ENTITYOPERATION_SCOPE_GLOBAL;
+		int scope = HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL;
 
 		out = this.getEntityData().handleEvent(event);
 		if(out.isFail())  return out;
 
-		if(event.getType()==HAPConstant.CONS_EVENTTYPE_ENTITY_OPERATION)
+		if(event.getType()==HAPConstant.EVENTTYPE_ENTITY_OPERATION)
 		{
 			HAPEntityOperationEvent attrOpEvent = (HAPEntityOperationEvent)event;
 			HAPEntityOperationInfo operation = attrOpEvent.getOperation();
@@ -141,7 +141,7 @@ public class HAPEntityWraper extends HAPDataWraper{
 		else{
 			if(this.ifTrigureOperationEvent(event))  ifEvent = true;
 			else{
-				if(out.getCode()==HAPConstant.CONS_SERVICECODE_ENTITYOPERATION_FORWARD)  ifEvent = true;
+				if(out.getCode()==HAPConstant.SERVICECODE_ENTITYOPERATION_FORWARD)  ifEvent = true;
 			}
 		}
 
@@ -153,7 +153,7 @@ public class HAPEntityWraper extends HAPDataWraper{
 			if(parentEntity!=null){
 				out = parentEntity.onEvent(modifyEvent);
 			}
-			if(scope==HAPConstant.CONS_ENTITYOPERATION_SCOPE_GLOBAL){
+			if(scope==HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL){
 				//entity manager handle rest : inform reference, options, ...
 				this.getCurrentTransaction().onEvent(modifyEvent);
 			}
@@ -211,7 +211,7 @@ public class HAPEntityWraper extends HAPDataWraper{
 	//*************************  Parse 
 	@Override
 	protected void setWraperJsonValue(Map<String, String> jsonMap) {
-		jsonMap.put(HAPAttributeConstant.ATTR_DATAWRAPER_ENTITYID, this.getID().toString());
+		jsonMap.put(HAPAttributeConstant.DATAWRAPER_ENTITYID, this.getID().toString());
 	}
 
 	//*************************  Basic method 

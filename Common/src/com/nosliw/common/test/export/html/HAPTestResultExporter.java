@@ -30,10 +30,10 @@ public class HAPTestResultExporter {
 	private static String export(HAPResult result){
 		String out = null;
 		switch(result.getType()){
-		case HAPConstant.CONS_TESTRESULT_TYPE_CASE:
+		case HAPConstant.TESTRESULT_TYPE_CASE:
 			out = exportTestCaseResult((HAPResultTestCase)result);
 			break;
-		case HAPConstant.CONS_TESTRESULT_TYPE_SUITE:
+		case HAPConstant.TESTRESULT_TYPE_SUITE:
 			out = exportTestSuiteResult((HAPResultTestSuite)result);
 			break;
 		}

@@ -16,5 +16,5 @@ public class HAPReferenceInfoRelative extends HAPReferenceInfo{
 	}
 
 	@Override
-	public int getType() {	return HAPConstant.CONS_REFERENCE_TYPE_RELATIVE;	}
+	public int getType() {	return HAPConstant.REFERENCE_TYPE_RELATIVE;	}
 }

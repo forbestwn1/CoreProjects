@@ -14,7 +14,7 @@ import com.nosliw.entity.operation.HAPEntityOperationInfo;
 public class HAPWraperContainerWraper extends HAPDataWraper{
 
 	HAPWraperContainerWraper(HAPDataTypeDefInfo dataTypeInfo, HAPDataTypeManager dataTypeMan, HAPEntityDefinitionManager entityDefMan) {
-		super(new HAPDataTypeDefInfo(HAPConstant.CONS_DATATYPE_CATEGARY_CONTAINER, HAPConstant.CONS_DATATYPE_TYPE_CONTAINER_WRAPPER), dataTypeMan, entityDefMan);
+		super(new HAPDataTypeDefInfo(HAPConstant.DATATYPE_CATEGARY_CONTAINER, HAPConstant.DATATYPE_TYPE_CONTAINER_WRAPPER), dataTypeMan, entityDefMan);
 		this.setData(new HAPWraperContainerData(dataTypeMan.getDataType(dataTypeInfo.getDataTypeInfo())));
 	}
 

@@ -32,7 +32,7 @@ public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 	@Override
 	public void init(){
 		super.init();
-		this.updateBasicChild(ENTITY_PROPERTY_TYPE, HAPConstant.CONS_STRINGABLE_BASICVALUETYPE_STRING);
+		this.updateBasicChild(ENTITY_PROPERTY_TYPE, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);
 	}
 
 	protected HAPValueInfoManager getValueInfoManager(){ return this.m_valueInfoMan; }

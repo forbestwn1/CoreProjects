@@ -206,7 +206,7 @@ public class HAPEntityDefinitionManager extends HAPConfigurableImp implements HA
 	
 	@Override
 	public String toStringValue(String format){
-		if(format.equals(HAPConstant.CONS_SERIALIZATION_JSON)){
+		if(format.equals(HAPConstant.SERIALIZATION_JSON)){
 			Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
 			for(String name : this.getAllEntityDefinitionName()){
 				outJsonMap.put(name, this.getEntityDefinition(name).toStringValue(format));
@@ -221,7 +221,7 @@ public class HAPEntityDefinitionManager extends HAPConfigurableImp implements HA
 		StringBuffer out = new StringBuffer();
 		
 		out.append("\n\n\n**************************     EntityDefinitionManager  Start   *****************************\n");
-		out.append(HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON)));
+		out.append(HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON)));
 		out.append("\n**************************     EntityDefinitionManager  End   *****************************\n\n\n");
 		
 		return out.toString();

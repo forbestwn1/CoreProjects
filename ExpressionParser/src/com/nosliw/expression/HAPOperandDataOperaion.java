@@ -25,7 +25,7 @@ public class HAPOperandDataOperaion extends HAPOperandOperation{
 	}
 	
 	@Override
-	public int getOperandType() {	return HAPConstant.CONS_EXPRESSION_OPERAND_DATAOPERATION;	}
+	public int getOperandType() {	return HAPConstant.EXPRESSION_OPERAND_DATAOPERATION;	}
 
 	@Override
 	public HAPData execute(Map<String, HAPData> vars, Map<String, HAPWraper> wraperVars){
@@ -58,7 +58,7 @@ public class HAPOperandDataOperaion extends HAPOperandOperation{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonDataTypeMap){
 		super.buildJsonMap(jsonMap, jsonDataTypeMap);
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERAND_DATAOPERATION_BASEDATA, this.m_baseData.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+		jsonMap.put(HAPAttributeConstant.OPERAND_DATAOPERATION_BASEDATA, this.m_baseData.toStringValue(HAPConstant.SERIALIZATION_JSON));
 	}
 	
 	@Override

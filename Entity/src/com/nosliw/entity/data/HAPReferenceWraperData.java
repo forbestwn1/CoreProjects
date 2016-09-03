@@ -53,7 +53,7 @@ public class HAPReferenceWraperData extends HAPDataImp {
 	@Override
 	public String toDataStringValue(String format) {
 		String out = null;
-		if(format.equals(HAPConstant.CONS_SERIALIZATION_JSON)){
+		if(format.equals(HAPConstant.SERIALIZATION_JSON)){
 			if(this.m_ID!=null){
 				out = this.m_ID.toStringValue(format);
 			}

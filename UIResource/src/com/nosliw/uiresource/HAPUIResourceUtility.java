@@ -29,14 +29,14 @@ public class HAPUIResourceUtility {
 	 * build expression function name based on id
 	 */
 	public static String buildExpressionFunctionName(String id){
-		return HAPConstant.CONS_UIRESOURCE_UIEXPRESSIONFUNCTION_PREFIX+id;
+		return HAPConstant.UIRESOURCE_UIEXPRESSIONFUNCTION_PREFIX+id;
 	}
 
 	/*
 	 * build custom tag name based on tag basic name
 	 */
 	public static String makeCustomTagName(String tag){
-		return HAPNamingConversionUtility.createKeyword(tag, HAPConstant.CONS_UIRESOURCE_CUSTOMTAG_TAG_PREFIX);
+		return HAPNamingConversionUtility.createKeyword(tag, HAPConstant.UIRESOURCE_CUSTOMTAG_TAG_PREFIX);
 	}
 	
 	/*
@@ -46,7 +46,7 @@ public class HAPUIResourceUtility {
 	 */
 	public static String isCustomTag(Element ele){
 		String tagName = ele.tagName();
-		return HAPNamingConversionUtility.getKeyword(tagName, HAPConstant.CONS_UIRESOURCE_CUSTOMTAG_TAG_PREFIX);
+		return HAPNamingConversionUtility.getKeyword(tagName, HAPConstant.UIRESOURCE_CUSTOMTAG_TAG_PREFIX);
 	}
 	
 	/*
@@ -56,12 +56,12 @@ public class HAPUIResourceUtility {
 	 */
 	public static String isExpressionAttribute(Attribute attr){
 		String value = attr.getValue();
-		int start = value.indexOf(HAPConstant.CONS_UIRESOURCE_UIEXPRESSION_TOKEN_OPEN);
+		int start = value.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_OPEN);
 		if(start!=-1) {
 			return value;
-//			int expEnd = value.indexOf(HAPConstant.CONS_UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE, start);
+//			int expEnd = value.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE, start);
 //			if(expEnd!=-1){
-//				int expStart = start + HAPConstant.CONS_UIRESOURCE_UIEXPRESSION_TOKEN_OPEN.length();
+//				int expStart = start + HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_OPEN.length();
 //				out = value.substring(expStart, expEnd);
 //			}
 		}
@@ -69,11 +69,11 @@ public class HAPUIResourceUtility {
 	}
 	
 	public static boolean isDataKeyAttribute(String attribute){
-		return attribute.startsWith(HAPConstant.CONS_UIRESOURCE_CUSTOMTAG_TAG_PREFIX+HAPConstant.CONS_UIRESOURCE_ATTRIBUTE_DATABINDING);
+		return attribute.startsWith(HAPConstant.UIRESOURCE_CUSTOMTAG_TAG_PREFIX+HAPConstant.UIRESOURCE_ATTRIBUTE_DATABINDING);
 	}
 	
 	public static String makeKeyAttribute(String attribute){
-		return HAPConstant.CONS_UIRESOURCE_CUSTOMTAG_KEYATTRIBUTE_PREFIX+attribute;
+		return HAPConstant.UIRESOURCE_CUSTOMTAG_KEYATTRIBUTE_PREFIX+attribute;
 	}
 	
 	/*
@@ -82,13 +82,13 @@ public class HAPUIResourceUtility {
 	 * if no, return null
 	 */
 	public static String isKeyAttribute(String attribute){
-		return HAPNamingConversionUtility.getKeyword(attribute, HAPConstant.CONS_UIRESOURCE_CUSTOMTAG_KEYATTRIBUTE_PREFIX);
+		return HAPNamingConversionUtility.getKeyword(attribute, HAPConstant.UIRESOURCE_CUSTOMTAG_KEYATTRIBUTE_PREFIX);
 	}
 	
 	/*
 	 * try to get UI id of this element
 	 */
-	public static String getUIId(Element ele){	return ele.attr(HAPConstant.CONS_UIRESOURCE_ATTRIBUTE_UIID);	}
+	public static String getUIId(Element ele){	return ele.attr(HAPConstant.UIRESOURCE_ATTRIBUTE_UIID);	}
 	
 	public static String spanText(String text){
 		return "<span>"+text+"</span>";

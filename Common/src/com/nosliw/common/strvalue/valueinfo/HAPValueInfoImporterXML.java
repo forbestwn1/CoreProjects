@@ -10,6 +10,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
+import com.nosliw.common.strvalue.basic.HAPStringableValueMap;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -49,7 +50,7 @@ public class HAPValueInfoImporterXML {
 	private static HAPValueInfo readRootValueInfoFromElement(Element valueInfoEle, HAPValueInfoManager valueInfoMan){
 		//by default, root value info type is entity
 		String propertyType = HAPXMLUtility.getAttributeValue(valueInfoEle, HAPValueInfo.ENTITY_PROPERTY_TYPE);
-		if(propertyType==null)      propertyType = HAPConstant.CONS_STRINGALBE_VALUEINFO_ENTITY;
+		if(propertyType==null)      propertyType = HAPConstant.STRINGALBE_VALUEINFO_ENTITY;
 
 		HAPValueInfo out = readValueInfoFromElement(valueInfoEle, propertyType, valueInfoMan);
 		String name = out.getName();
@@ -73,27 +74,27 @@ public class HAPValueInfoImporterXML {
 			String propertyType = valueInfoType;
 			if(propertyType==null)  propertyType = HAPXMLUtility.getAttributeValue(valueInfoEle, HAPValueInfo.ENTITY_PROPERTY_TYPE);
 			
-			if(HAPConstant.CONS_STRINGALBE_VALUEINFO_LIST.equals(propertyType)){
+			if(HAPConstant.STRINGALBE_VALUEINFO_LIST.equals(propertyType)){
 				valueInfo = HAPValueInfoList.build(); 
 				updateBasicProperty(valueInfoEle, valueInfo, valueInfoMan);
 				readContainerChildValueInfo(valueInfoEle, valueInfo, valueInfoMan);
 			}
-			else if(HAPConstant.CONS_STRINGALBE_VALUEINFO_MAP.equals(propertyType)){
+			else if(HAPConstant.STRINGALBE_VALUEINFO_MAP.equals(propertyType)){
 				valueInfo = HAPValueInfoMap.build();
 				updateBasicProperty(valueInfoEle, valueInfo, valueInfoMan);
 				readContainerChildValueInfo(valueInfoEle, valueInfo, valueInfoMan);
 			}
-			else if(HAPConstant.CONS_STRINGALBE_VALUEINFO_ENTITY.equals(propertyType)){
+			else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(propertyType)){
 				valueInfo = readEntityValueInfo(valueInfoEle, valueInfoMan);
 			}
-			else if(HAPConstant.CONS_STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyType)){
+			else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyType)){
 				valueInfo = HAPValueInfoEntityOptions.build();
 				updateBasicProperty(valueInfoEle, valueInfo, valueInfoMan);
-				HAPStringableValueEntity optionsInfoEntity = (HAPStringableValueEntity)valueInfo.updateComplexChild(HAPValueInfoEntityOptions.ENTITY_PROPERTY_OPTIONS, HAPConstant.CONS_STRINGABLE_VALUECATEGARY_ENTITY);
+				HAPStringableValueMap optionsInfoMap = (HAPStringableValueMap)valueInfo.updateComplexChild(HAPValueInfoEntityOptions.ENTITY_PROPERTY_OPTIONS, HAPConstant.STRINGABLE_VALUECATEGARY_MAP);
 				Element[] optionEles = HAPXMLUtility.getMultiChildElementByName(valueInfoEle, HAPValueInfoEntityOptions.ENTITY_PROPERTY_OPTIONS);
 				for(Element optionEle : optionEles){
 					HAPValueInfo optionPropertyInfo = readValueInfoFromElement(optionEle, null, valueInfoMan);
-					optionsInfoEntity.updateChild(optionPropertyInfo.getBasicAncestorValueString(HAPValueInfoEntityOptions.ENTITY_PROPERTY_VALUE), optionPropertyInfo);
+					optionsInfoMap.updateChild(optionPropertyInfo.getBasicAncestorValueString(HAPValueInfoEntityOptions.ENTITY_PROPERTY_VALUE), optionPropertyInfo);
 				}
 			}
 			else{
@@ -108,7 +109,7 @@ public class HAPValueInfoImporterXML {
 	private static HAPValueInfoEntity readEntityValueInfo(Element entityEle, HAPValueInfoManager valueInfoMan){
 		HAPValueInfoEntity valueInfo = HAPValueInfoEntity.build(valueInfoMan);
 		updateBasicProperty(entityEle, valueInfo, valueInfoMan);
-		HAPStringableValueEntity propertyInfoEntity = (HAPStringableValueEntity)valueInfo.updateComplexChild(HAPValueInfoEntity.ENTITY_PROPERTY_PROPERTIES, HAPConstant.CONS_STRINGABLE_VALUECATEGARY_ENTITY);
+		HAPStringableValueEntity propertyInfoEntity = (HAPStringableValueEntity)valueInfo.updateComplexChild(HAPValueInfoEntity.ENTITY_PROPERTY_PROPERTIES, HAPConstant.STRINGABLE_VALUECATEGARY_ENTITY);
 		Element[] childPropertyEles = HAPXMLUtility.getMultiChildElementByName(entityEle, HAPValueInfoEntity.ENTITY_PROPERTY_PROPERTIES);
 		for(Element childPropertyEle : childPropertyEles){
 			HAPValueInfo childPropertyInfo = readValueInfoFromElement(childPropertyEle, null, valueInfoMan);

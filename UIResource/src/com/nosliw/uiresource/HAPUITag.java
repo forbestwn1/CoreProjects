@@ -26,7 +26,7 @@ public class HAPUITag extends HAPUIResourceBasic{
 	
 	@Override
 	public String getType() {
-		return HAPConstant.CONS_UIRESOURCE_TYPE_TAG;
+		return HAPConstant.UIRESOURCE_TYPE_TAG;
 	}
 
 	@Override
@@ -38,13 +38,13 @@ public class HAPUITag extends HAPUIResourceBasic{
 	protected void buildBasicJsonMap(Map<String, String> jsonMap, String format){
 		super.buildBasicJsonMap(jsonMap, format);
 		
-		jsonMap.put(HAPAttributeConstant.ATTR_UIRESOURCE_TAGNAME, this.m_tagName);
+		jsonMap.put(HAPAttributeConstant.UIRESOURCE_TAGNAME, this.m_tagName);
 		
 		Map<String, String> dataBindingJsons = new LinkedHashMap<String, String>();
 		for(String name : this.m_dataBindings.keySet()){
 			HAPDataBinding dataBinding = this.m_dataBindings.get(name);
 			dataBindingJsons.put(name, dataBinding.toStringValue(format));
 		}
-		jsonMap.put(HAPAttributeConstant.ATTR_UIRESOURCE_DATABINDINGS, HAPJsonUtility.getMapJson(dataBindingJsons));
+		jsonMap.put(HAPAttributeConstant.UIRESOURCE_DATABINDINGS, HAPJsonUtility.getMapJson(dataBindingJsons));
 	}
 }

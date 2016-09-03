@@ -39,7 +39,7 @@ public class HAPContainerOptionsData extends HAPDataImp{
 
 	@Override
 	public String toDataStringValue(String format) {
-		if(format.equals(HAPConstant.CONS_SERIALIZATION_JSON)){
+		if(format.equals(HAPConstant.SERIALIZATION_JSON)){
 			List<String> jsonArray = new ArrayList<String>();
 			for(HAPWraper wraper : this.m_eleWrapers){
 				jsonArray.add(wraper.toStringValue(format));

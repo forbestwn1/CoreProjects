@@ -1,7 +1,9 @@
 package com.nosliw.common.strvalue.valueinfo;
 
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
@@ -12,9 +14,65 @@ public class HAPValueInfoManager {
 	public static Map<String, HAPEntityValueInfo> m_entityValueInfos = new LinkedHashMap<String, HAPEntityValueInfo>();
 	
 	private Map<String, HAPValueInfo> m_valueInfos;
+
+	public HAPValueInfoManager(Set<InputStream> xmlInputStreams){
+		this();
+		for(InputStream xmlInputStream : xmlInputStreams){
+			HAPValueInfo valueInfo = HAPValueInfoImporterXML.importFromXML(xmlInputStream, this);
+			this.registerValueInfo(valueInfo);
+		}
+		
+		this.afterInitProcess();
+	}
 	
 	public HAPValueInfoManager(){	
 		this.m_valueInfos = new LinkedHashMap<String, HAPValueInfo>();
+	}
+	
+	public void afterInitProcess(){
+		for(String name : this.m_valueInfos.keySet()){
+			HAPValueInfo valueInfo = this.m_valueInfos.get(name);
+			this.registerValueInfo1(valueInfo);
+		}
+	}
+
+	private void registerValueInfo1(HAPValueInfo vf){
+		HAPValueInfo valueInfo = vf.getSolidValueInfo();
+		String categary = valueInfo.getCategary();
+		if(HAPConstant.STRINGALBE_VALUEINFO_MAP.equals(categary)){
+			HAPValueInfo childValueInfo = ((HAPValueInfoMap)valueInfo).getChildValueInfo();
+			this.registerValueInfo1(childValueInfo);
+		}
+		else if(HAPConstant.STRINGALBE_VALUEINFO_LIST.equals(categary)){
+			HAPValueInfo childValueInfo = ((HAPValueInfoList)valueInfo).getChildValueInfo();
+			this.registerValueInfo1(childValueInfo);
+		}
+		else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(categary)){
+			registerEntityValueInfo((HAPValueInfoEntity)valueInfo);
+		}
+		else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(categary)){
+			HAPValueInfoEntityOptions entityOptionsValueInfo = (HAPValueInfoEntityOptions)valueInfo;
+			Set<String> keys = entityOptionsValueInfo.getOptionsKey();
+			for(String key : keys){
+				registerValueInfo1(entityOptionsValueInfo.getOptionsValueInfo(key));
+			}
+		}
+	}
+	
+	private void registerEntityValueInfo(HAPValueInfoEntity valueInfo){
+		HAPEntityValueInfo entityValueInfo = new HAPEntityValueInfo(valueInfo, this);
+		String className = entityValueInfo.getEntityClassName(); 
+		if(className!=null){
+			if(HAPValueInfoManager.m_entityValueInfos.get(className)==null){
+				HAPValueInfoManager.m_entityValueInfos.put(className, entityValueInfo);
+			}
+		}
+		
+		Set<String> properties = valueInfo.getProperties();
+		for(String property : properties){
+			HAPValueInfo propertyValueInfo = valueInfo.getPropertyInfo(property);
+			
+		}
 	}
 	
 	public HAPValueInfo getValueInfo(String name){
@@ -34,20 +92,5 @@ public class HAPValueInfoManager {
 	
 	public void registerValueInfo(HAPValueInfo valueInfo){
 		this.m_valueInfos.put(valueInfo.getName(), valueInfo);
-		
-		if(HAPConstant.CONS_STRINGALBE_VALUEINFO_ENTITY.equals(valueInfo.getCategary())){
-			HAPValueInfoEntity valueInfoEntity = (HAPValueInfoEntity)valueInfo;
-			
-			HAPEntityValueInfo entityValueInfo = new HAPEntityValueInfo(valueInfoEntity, this);
-			String className = entityValueInfo.getEntityClassName(); 
-			if(className!=null){
-				if(HAPValueInfoManager.m_entityValueInfos.get(className)==null){
-					HAPValueInfoManager.m_entityValueInfos.put(className, entityValueInfo);
-				}
-				else{
-					throw new NullPointerException();
-				}
-			}
-		}
 	}
 }

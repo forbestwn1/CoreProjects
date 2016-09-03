@@ -26,7 +26,25 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	public Iterator<HAPStringableValue> iterate(){		return this.m_childrens.values().iterator();	}
 	
 	@Override
-	public String getStringableCategary(){		return HAPConstant.CONS_STRINGABLE_VALUECATEGARY_ENTITY;	}
+	public String getStringableCategary(){		return HAPConstant.STRINGABLE_VALUECATEGARY_ENTITY;	}
+	
+	public HAPStringableValueList getListChild(String name){
+		HAPStringableValueList out = (HAPStringableValueList)this.getChild(name);
+		if(out==null){
+			out = new HAPStringableValueList();
+			out = (HAPStringableValueList)this.updateChild(name, out);
+		}
+		return out;
+	}
+	
+	public HAPStringableValueMap getMapChild(String name){
+		HAPStringableValueMap out = (HAPStringableValueMap)this.getChild(name);
+		if(out==null){
+			out = new HAPStringableValueMap();
+			out = (HAPStringableValueMap)this.updateChild(name, out);
+		}
+		return out;
+	}
 	
 	@Override
 	public HAPStringableValue getChild(String name){  return this.m_childrens.get(name);  }
@@ -51,7 +69,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	public HAPStringableValueBasic updateBasicChild(String name, String strValue, String type){
 		HAPStringableValueBasic out = null; 
 		HAPStringableValue child = this.getChild(name);
-		if(child==null || child.getStringableCategary().equals(HAPConstant.CONS_STRINGABLE_VALUECATEGARY_BASIC)){
+		if(child==null || child.getStringableCategary().equals(HAPConstant.STRINGABLE_VALUECATEGARY_BASIC)){
 			out = new HAPStringableValueBasic(strValue, type);
 			this.m_childrens.put(name, out);
 		}
@@ -65,7 +83,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	public HAPStringableValueBasic updateBasicChildValue(String name, Object value){
 		HAPStringableValueBasic out = null; 
 		HAPStringableValue child = this.getChild(name);
-		if(child==null || child.getStringableCategary().equals(HAPConstant.CONS_STRINGABLE_VALUECATEGARY_BASIC)){
+		if(child==null || child.getStringableCategary().equals(HAPConstant.STRINGABLE_VALUECATEGARY_BASIC)){
 			out = new HAPStringableValueBasic();
 			out.setValue(value);
 			this.m_childrens.put(name, out);
@@ -126,7 +144,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format) {
 		super.buildFullJsonMap(jsonMap, typeJsonMap, format);
-		jsonMap.put(HAPAttributeConstant.ATTR_STRINGABLEVALUE_PROPERTIES, HAPJsonUtility.getMapObjectJson(this.m_childrens, format));
+		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_PROPERTIES, HAPJsonUtility.getMapObjectJson(this.m_childrens, format));
 	}
 
 	@Override
@@ -148,8 +166,6 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	}
 
 	public static <T> T buildDefault(Class<T> c) {
-		
-		
 		HAPValueInfoEntity valueInfoEntity = HAPValueInfoManager.getEntityValueInfo(c);
 		T out = (T)valueInfoEntity.buildDefault();
 		return out;

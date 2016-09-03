@@ -108,7 +108,7 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 		Set<String> out = new HashSet<String>();
 		if(this.hasCriticalAttribute()){
 			out.addAll(this.getCriticalEntitySegments().getKeys());
-			if(this.getCriticalEntitySegmentOther()!=null)  out.add(HAPConstant.CONS_ENTITY_CRITICALVALUE_OTHER);
+			if(this.getCriticalEntitySegmentOther()!=null)  out.add(HAPConstant.ENTITY_CRITICALVALUE_OTHER);
 		}
 		return out;
 	}
@@ -175,7 +175,7 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 		if(segments!=null){
 			//contain keyword
 			String keyword = segments.next();
-			if(keyword.equals(HAPConstant.CONS_ATTRIBUTE_PATH_CRITICAL)){
+			if(keyword.equals(HAPConstant.ATTRIBUTE_PATH_CRITICAL)){
 				//critical 
 				String optionValue = segments.next();
 				String name = segments.next();

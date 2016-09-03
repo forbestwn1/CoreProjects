@@ -22,7 +22,7 @@ public class HAPOperandDataTypeOperation extends HAPOperandOperation{
 	}
 
 	@Override
-	public int getOperandType() {return HAPConstant.CONS_EXPRESSION_OPERAND_DATATYPEOPERATION;}
+	public int getOperandType() {return HAPConstant.EXPRESSION_OPERAND_DATATYPEOPERATION;}
 
 	@Override
 	public HAPData execute(Map<String, HAPData> vars, Map<String, HAPWraper> wraperVars) {

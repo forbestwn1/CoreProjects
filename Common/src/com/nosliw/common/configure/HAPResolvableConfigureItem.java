@@ -2,7 +2,7 @@ package com.nosliw.common.configure;
 
 import java.util.Map;
 
-import com.nosliw.common.interpolate.HAPInterpolateExpressionProcessor;
+import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.strvalue.basic.HAPStringableValueBasic;
 
@@ -28,9 +28,9 @@ abstract class HAPResolvableConfigureItem extends HAPConfigureItem{
 	
 	public HAPStringableValueBasic getStringableValue(){ return this.m_value; }
 	
-	public boolean isResolved(){  return this.m_value.isStringResolved(); }
+	public boolean isResolved(){  return this.m_value.isResolved(); }
 	
-	public HAPInterpolateOutput resolve(Map<HAPInterpolateExpressionProcessor, Object> patternDatas){	return this.m_value.resolveByInterpolateProcessor(patternDatas);	}
+	public HAPInterpolateOutput resolve(Map<HAPInterpolateProcessor, Object> patternDatas){	return this.m_value.resolveByInterpolateProcessor(patternDatas);	}
 	
 	protected void cloneFrom(HAPResolvableConfigureItem configureItem){
 		super.cloneFrom(configureItem);

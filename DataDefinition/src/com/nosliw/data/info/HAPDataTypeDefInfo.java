@@ -62,24 +62,24 @@ public class HAPDataTypeDefInfo extends HAPDataTypeInfo{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap){
 		super.buildJsonMap(jsonMap, jsonTypeMap);
-		jsonMap.put(HAPAttributeConstant.ATTR_DATATYPEINFO_ENTITYGROUPS, HAPJsonUtility.getArrayJson(this.getEntityGroups().toArray(new String[0])));
-		jsonMap.put(HAPAttributeConstant.ATTR_DATATYPEINFO_CHILD_CATEGARY, this.getChildDataCategary());
-		jsonMap.put(HAPAttributeConstant.ATTR_DATATYPEINFO_CHILD_TYPE, this.getChildDataType());
-		jsonMap.put(HAPAttributeConstant.ATTR_DATATYPEINFO_CHILD_ENTITYGROUPS, HAPJsonUtility.getArrayJson(this.getChildEntityGroups().toArray(new String[0])));
+		jsonMap.put(HAPAttributeConstant.DATATYPEINFO_ENTITYGROUPS, HAPJsonUtility.getArrayJson(this.getEntityGroups().toArray(new String[0])));
+		jsonMap.put(HAPAttributeConstant.DATATYPEINFO_CHILD_CATEGARY, this.getChildDataCategary());
+		jsonMap.put(HAPAttributeConstant.DATATYPEINFO_CHILD_TYPE, this.getChildDataType());
+		jsonMap.put(HAPAttributeConstant.DATATYPEINFO_CHILD_ENTITYGROUPS, HAPJsonUtility.getArrayJson(this.getChildEntityGroups().toArray(new String[0])));
 	}
 
 	public static HAPDataTypeDefInfo parse(JSONObject jsonObj){
-		String type = jsonObj.optString(HAPAttributeConstant.ATTR_DATATYPEINFO_TYPE);
-		String categary = jsonObj.optString(HAPAttributeConstant.ATTR_DATATYPEINFO_CATEGARY);
+		String type = jsonObj.optString(HAPAttributeConstant.DATATYPEINFO_TYPE);
+		String categary = jsonObj.optString(HAPAttributeConstant.DATATYPEINFO_CATEGARY);
 		HAPDataTypeDefInfo out = new HAPDataTypeDefInfo(categary, type);
 
-		String childDataCategary = jsonObj.optString(HAPAttributeConstant.ATTR_DATATYPEINFO_CHILD_CATEGARY);
+		String childDataCategary = jsonObj.optString(HAPAttributeConstant.DATATYPEINFO_CHILD_CATEGARY);
 		if(HAPBasicUtility.isStringNotEmpty(childDataCategary))	out.setChildDataCategary(childDataCategary);
 		
-		String childDataType = jsonObj.optString(HAPAttributeConstant.ATTR_DATATYPEINFO_CHILD_TYPE);
+		String childDataType = jsonObj.optString(HAPAttributeConstant.DATATYPEINFO_CHILD_TYPE);
 		if(HAPBasicUtility.isStringNotEmpty(childDataType))  out.setChildDataType(childDataType);
 		
-		JSONArray entityGroups = jsonObj.optJSONArray(HAPAttributeConstant.ATTR_DATATYPEINFO_ENTITYGROUPS);
+		JSONArray entityGroups = jsonObj.optJSONArray(HAPAttributeConstant.DATATYPEINFO_ENTITYGROUPS);
 		for(int i=0; i<entityGroups.length(); i++){
 			try {
 				out.addEntityGroup(entityGroups.get(i).toString());
@@ -88,7 +88,7 @@ public class HAPDataTypeDefInfo extends HAPDataTypeInfo{
 			}
 		}
 
-		JSONArray childEntityGroups = jsonObj.optJSONArray(HAPAttributeConstant.ATTR_DATATYPEINFO_CHILD_ENTITYGROUPS);
+		JSONArray childEntityGroups = jsonObj.optJSONArray(HAPAttributeConstant.DATATYPEINFO_CHILD_ENTITYGROUPS);
 		for(int i=0; i<childEntityGroups.length(); i++){
 			try {
 				out.addChildEntityGroup(childEntityGroups.get(i).toString());

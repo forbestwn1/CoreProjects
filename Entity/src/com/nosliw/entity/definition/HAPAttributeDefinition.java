@@ -73,11 +73,11 @@ public abstract class HAPAttributeDefinition extends HAPStringableValueEntityBas
 	}
 
 	private void init(){
-		this.initProperty(HAPAttributeConstant.ATTR_ENTITYATTRDEF_ISEMPTYONINIT);
+		this.initProperty(HAPAttributeConstant.ENTITYATTRDEF_ISEMPTYONINIT);
 		
-		Boolean isEmptyOnInit = this.getProperties().getBasicAncestorValueBoolean(HAPAttributeConstant.ATTR_ENTITYATTRDEF_ISEMPTYONINIT);
+		Boolean isEmptyOnInit = this.getProperties().getBasicAncestorValueBoolean(HAPAttributeConstant.ENTITYATTRDEF_ISEMPTYONINIT);
 		if(isEmptyOnInit==null){
-			isEmptyOnInit = this.getEntityDefinitionManager().getConfiguration().getConfigureValue(HAPConstant.CONS_CONFIGUREITEM_ENTITY_ISEMPTYONINIT).getBooleanValue();
+			isEmptyOnInit = this.getEntityDefinitionManager().getConfiguration().getConfigureValue(HAPConstant.CONFIGUREITEM_ENTITY_ISEMPTYONINIT).getBooleanValue();
 			if(isEmptyOnInit!=null)		this.m_isEmptyOnInit = isEmptyOnInit; 
 		}
 	}
@@ -163,7 +163,7 @@ public abstract class HAPAttributeDefinition extends HAPStringableValueEntityBas
 		
 		String name = patSegs.next();
 		String keyword = HAPNamingConversionUtility.getKeyword(name);
-		if(HAPConstant.CONS_ATTRIBUTE_PATH_ENTITY.equals(keyword)){
+		if(HAPConstant.ATTRIBUTE_PATH_ENTITY.equals(keyword)){
 			//"entity" key word
 			HAPEntityDefinitionSegment entityDef = this.getEntityDefinition();
 			return entityDef.getAttributeDefinitionByPath(patSegs.getRestPath());
@@ -224,36 +224,36 @@ public abstract class HAPAttributeDefinition extends HAPStringableValueEntityBas
 	/******************************************   Serialization  *********************************************/
 	@Override
 	protected void buildFullJsonMap(Map<String, String> map, Map<String, Class> dataTypeMap){
-		map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_DESCRIPTION, this.getProperties().toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
-		map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_FULLNAME, this.getFullName());
-		map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_CRITICALVALUE, this.m_criticalValue);
-		map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_ISEMPTYONINIT, String.valueOf(this.m_isEmptyOnInit));
+		map.put(HAPAttributeConstant.ENTITYATTRDEF_DESCRIPTION, this.getProperties().toStringValue(HAPConstant.SERIALIZATION_JSON));
+		map.put(HAPAttributeConstant.ENTITYATTRDEF_FULLNAME, this.getFullName());
+		map.put(HAPAttributeConstant.ENTITYATTRDEF_CRITICALVALUE, this.m_criticalValue);
+		map.put(HAPAttributeConstant.ENTITYATTRDEF_ISEMPTYONINIT, String.valueOf(this.m_isEmptyOnInit));
 
-		map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_DATATYPEDEFINFO, this.m_dataTypeDefInfo.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+		map.put(HAPAttributeConstant.ENTITYATTRDEF_DATATYPEDEFINFO, this.m_dataTypeDefInfo.toStringValue(HAPConstant.SERIALIZATION_JSON));
 
-		dataTypeMap.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_VALIDATION, Boolean.class);
+		dataTypeMap.put(HAPAttributeConstant.ENTITYATTRDEF_VALIDATION, Boolean.class);
 		if(this.m_validationInfos.size()==0){
 			//dont't need validation
-			map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_VALIDATION, "false");
+			map.put(HAPAttributeConstant.ENTITYATTRDEF_VALIDATION, "false");
 		}
 		else{
 			//need validation
-			map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_VALIDATION, "true");
+			map.put(HAPAttributeConstant.ENTITYATTRDEF_VALIDATION, "true");
 			//if need server side validata, then do not add any rules
 			if(!this.getServerValidationOnly()){
 				List<String> validationJsons = new ArrayList<String>();
 				for(HAPValidationInfoExpression validationInfo : this.m_validationInfos){
-					validationJsons.add(validationInfo.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+					validationJsons.add(validationInfo.toStringValue(HAPConstant.SERIALIZATION_JSON));
 				}
-				map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_RULES, HAPJsonUtility.getArrayJson(validationJsons.toArray(new String[0])));
+				map.put(HAPAttributeConstant.ENTITYATTRDEF_RULES, HAPJsonUtility.getArrayJson(validationJsons.toArray(new String[0])));
 			}
 		}
 
 		if(this.m_options!=null){
-			map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_OPTIONS, this.m_options.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+			map.put(HAPAttributeConstant.ENTITYATTRDEF_OPTIONS, this.m_options.toStringValue(HAPConstant.SERIALIZATION_JSON));
 		}
 		
-		map.put(HAPAttributeConstant.ATTR_ENTITYATTRDEF_EVENTS, HAPJsonUtility.getArrayJson(this.m_events.toArray(new String[0])));
+		map.put(HAPAttributeConstant.ENTITYATTRDEF_EVENTS, HAPJsonUtility.getArrayJson(this.m_events.toArray(new String[0])));
 	}
 	
 	@Override

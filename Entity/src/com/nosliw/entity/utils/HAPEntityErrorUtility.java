@@ -12,13 +12,13 @@ public class HAPEntityErrorUtility {
 	 * utility method to create error service data when auto commit return error
 	 */
 	public static HAPServiceData createEntityOperationAutoCommitError(HAPOperationAllResult results, String message, Exception ex){
-		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.CONS_ERRORCODE_ENTITYOPERATION_AUTOCOMMIT, results, message);
+		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.ERRORCODE_ENTITYOPERATION_AUTOCOMMIT, results, message);
 		out.setException(ex);
 		return out;
 	}
 
 	public static HAPServiceData createEntityOperationInvalidTransaction(HAPEntityOperation op, String message, Exception ex){
-		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.CONS_ERRORCODE_ENTITYOPERATION_INVALIDTRANSACTION, op, message);
+		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.ERRORCODE_ENTITYOPERATION_INVALIDTRANSACTION, op, message);
 		out.setException(ex);
 		return out;
 	}
@@ -27,7 +27,7 @@ public class HAPEntityErrorUtility {
 	 * utility method to create error service data when auto commit return error
 	 */
 	public static HAPServiceData createEntityOperationInvalidScopeError(HAPEntityOperationInfo operationInfo, String message, Exception ex){
-		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.CONS_ERRORCODE_ENTITYOPERATION_INVALIDSCOPE, operationInfo, message);
+		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.ERRORCODE_ENTITYOPERATION_INVALIDSCOPE, operationInfo, message);
 		out.setException(ex);
 		return out;
 	}

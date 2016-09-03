@@ -9,7 +9,7 @@ import com.nosliw.common.utils.HAPConstant;
 public class HAPApplicationErrorUtility {
 
 	public static HAPServiceData createClientIdInvalidError(String clientId){
-		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.CONS_ERRORCODE_APPLICATION_INVALIDCLIENTID, clientId, "client id " + clientId + "does not exist.");
+		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.ERRORCODE_APPLICATION_INVALIDCLIENTID, clientId, "client id " + clientId + "does not exist.");
 		return out;
 	}
 	

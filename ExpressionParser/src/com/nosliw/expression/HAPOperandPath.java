@@ -44,10 +44,10 @@ public class HAPOperandPath extends HAPOperandImp{
 				String path = (String)data;
 				
 				switch(operand.getOperandType()){
-				case HAPConstant.CONS_EXPRESSION_OPERAND_CONSTANT:
-				case HAPConstant.CONS_EXPRESSION_OPERAND_VARIABLE:
-				case HAPConstant.CONS_EXPRESSION_OPERAND_DATAOPERATION:
-				case HAPConstant.CONS_EXPRESSION_OPERAND_DATATYPEOPERATION:
+				case HAPConstant.EXPRESSION_OPERAND_CONSTANT:
+				case HAPConstant.EXPRESSION_OPERAND_VARIABLE:
+				case HAPConstant.EXPRESSION_OPERAND_DATAOPERATION:
+				case HAPConstant.EXPRESSION_OPERAND_DATATYPEOPERATION:
 				{
 					if(HAPBasicUtility.isStringNotEmpty(path)){
 						//find the base operand for this path operand
@@ -56,7 +56,7 @@ public class HAPOperandPath extends HAPOperandImp{
 					}
 					break;
 				}
-				case HAPConstant.CONS_EXPRESSION_OPERAND_PATHOPERATION:
+				case HAPConstant.EXPRESSION_OPERAND_PATHOPERATION:
 				{
 					if(HAPBasicUtility.isStringNotEmpty(path)){
 						//find the base operand for this path operand
@@ -66,7 +66,7 @@ public class HAPOperandPath extends HAPOperandImp{
 					}
 					break;
 				}
-				case HAPConstant.CONS_EXPRESSION_OPERAND_ATTRIBUTEOPERATION:
+				case HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION:
 				{
 					HAPOperandAttribute attributeOperand = (HAPOperandAttribute)operand;
 					String fullPath = HAPNamingConversionUtility.cascadePath(attributeOperand.getAttribute(), path);
@@ -87,7 +87,7 @@ public class HAPOperandPath extends HAPOperandImp{
 	}
 
 	@Override
-	public int getOperandType() {	return HAPConstant.CONS_EXPRESSION_OPERAND_PATHOPERATION;	}
+	public int getOperandType() {	return HAPConstant.EXPRESSION_OPERAND_PATHOPERATION;	}
 
 	@Override
 	public HAPData execute(Map<String, HAPData> vars, Map<String, HAPWraper> wraperVars) {
@@ -109,7 +109,7 @@ public class HAPOperandPath extends HAPOperandImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonDataTypeMap) {
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERAND_PATH_BASEDATA, this.m_baseData.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
-		jsonMap.put(HAPAttributeConstant.ATTR_OPERAND_PATH_PATH, this.m_path);
+		jsonMap.put(HAPAttributeConstant.OPERAND_PATH_BASEDATA, this.m_baseData.toStringValue(HAPConstant.SERIALIZATION_JSON));
+		jsonMap.put(HAPAttributeConstant.OPERAND_PATH_PATH, this.m_path);
 	}
 }

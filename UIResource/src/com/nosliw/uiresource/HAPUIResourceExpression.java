@@ -45,20 +45,20 @@ public class HAPUIResourceExpression implements HAPStringable{
 
 		m_expressionUnits = new ArrayList<HAPUIResourceExpressionUnit>();
 		int i = 0;
-		int start = expression.indexOf(HAPConstant.CONS_UIRESOURCE_EXPRESSION_TOKEN_OPEN);
+		int start = expression.indexOf(HAPConstant.UIRESOURCE_EXPRESSION_TOKEN_OPEN);
 		while(start!=-1){
-			int end = expression.indexOf(HAPConstant.CONS_UIRESOURCE_EXPRESSION_TOKEN_CLOSE, start);
-			String expStr = expression.substring(start+HAPConstant.CONS_UIRESOURCE_EXPRESSION_TOKEN_OPEN.length(), end);
+			int end = expression.indexOf(HAPConstant.UIRESOURCE_EXPRESSION_TOKEN_CLOSE, start);
+			String expStr = expression.substring(start+HAPConstant.UIRESOURCE_EXPRESSION_TOKEN_OPEN.length(), end);
 
 			//create expression object
 			HAPExpression expObj = new HAPExpression(new HAPExpressionInfo(expStr, constants, null), this.getDataTypeManager());
 			m_expressionUnits.add(new HAPUIResourceExpressionUnit(expObj));
 			
 			//build script
-			expression = expression.substring(0, start) + "expressionResultsArray[" + i + "]" + expression.substring(end+HAPConstant.CONS_UIRESOURCE_EXPRESSION_TOKEN_CLOSE.length());
+			expression = expression.substring(0, start) + "expressionResultsArray[" + i + "]" + expression.substring(end+HAPConstant.UIRESOURCE_EXPRESSION_TOKEN_CLOSE.length());
 			
 			i++;
-			start = expression.indexOf(HAPConstant.CONS_UIRESOURCE_EXPRESSION_TOKEN_OPEN);
+			start = expression.indexOf(HAPConstant.UIRESOURCE_EXPRESSION_TOKEN_OPEN);
 		}
 		
 		//build function script for expression
@@ -86,14 +86,14 @@ public class HAPUIResourceExpression implements HAPStringable{
 	@Override
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		jsonMap.put(HAPAttributeConstant.ATTR_UIRESOURCEEXPRESSION_EXPRESSIONID, this.m_expressionId);
-		jsonMap.put(HAPAttributeConstant.ATTR_UIRESOURCEEXPRESSION_EXPRESSIONUNITS, HAPJsonUtility.getListObjectJson(m_expressionUnits));
+		jsonMap.put(HAPAttributeConstant.UIRESOURCEEXPRESSION_EXPRESSIONID, this.m_expressionId);
+		jsonMap.put(HAPAttributeConstant.UIRESOURCEEXPRESSION_EXPRESSIONUNITS, HAPJsonUtility.getListObjectJson(m_expressionUnits));
 
 		
 //don't need create functin script here,   		
-//		jsonMap.put(HAPAttributeConstant.ATTR_UIRESOURCEEXPRESSION_FUNCTIONSCRIPT, this.m_functionScript);
+//		jsonMap.put(HAPAttributeConstant.UIRESOURCEEXPRESSION_FUNCTIONSCRIPT, this.m_functionScript);
 		
-//		jsonMap.put(HAPAttributeConstant.ATTR_UIRESOURCEEXPRESSION_VARIABLES, HAPJsonUtility.getSetObjectJson(m_variables));
+//		jsonMap.put(HAPAttributeConstant.UIRESOURCEEXPRESSION_VARIABLES, HAPJsonUtility.getSetObjectJson(m_variables));
 		
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}
@@ -128,8 +128,8 @@ class HAPUIResourceExpressionUnit implements HAPStringable{
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 
-		jsonMap.put(HAPAttributeConstant.ATTR_UIRESOURCEEXPRESSION_EXPRESSIONOBJECT, this.m_expression.toStringValue(format));
-		jsonMap.put(HAPAttributeConstant.ATTR_UIRESOURCEEXPRESSION_CONTEXTVARIABLES, HAPJsonUtility.getSetObjectJson(m_contextVariables));
+		jsonMap.put(HAPAttributeConstant.UIRESOURCEEXPRESSION_EXPRESSIONOBJECT, this.m_expression.toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.UIRESOURCEEXPRESSION_CONTEXTVARIABLES, HAPJsonUtility.getSetObjectJson(m_contextVariables));
 		
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}

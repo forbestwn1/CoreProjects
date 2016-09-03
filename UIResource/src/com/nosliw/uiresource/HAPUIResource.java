@@ -25,23 +25,23 @@ public class HAPUIResource extends HAPUIResourceBasic{
 	@Override
 	protected void buildBasicJsonMap(Map<String, String> jsonMap, String format){
 		super.buildBasicJsonMap(jsonMap, format);
-		jsonMap.put(HAPAttributeConstant.ATTR_UIRESOURCE_UITAGLIBS, HAPJsonUtility.getSetObjectJson(this.m_uiTagLibs));
+		jsonMap.put(HAPAttributeConstant.UIRESOURCE_UITAGLIBS, HAPJsonUtility.getSetObjectJson(this.m_uiTagLibs));
 	}
 		
 	@Override
 	public String getType() {
-		return HAPConstant.CONS_UIRESOURCE_TYPE_RESOURCE;
+		return HAPConstant.UIRESOURCE_TYPE_RESOURCE;
 	}
 
 	@Override
 	public void addAttribute(String name, String value){
 		super.addAttribute(name, value);
-		if(HAPConstant.CONS_UIRESOURCE_ATTRIBUTE_CONTEXT.equals(name)){
+		if(HAPConstant.UIRESOURCE_ATTRIBUTE_CONTEXT.equals(name)){
 			//process "context" attribute, value are multiple data input seperated by ";"
-			HAPSegmentParser contextSegs = new HAPSegmentParser(value, HAPConstant.CONS_SEPERATOR_ELEMENT);
+			HAPSegmentParser contextSegs = new HAPSegmentParser(value, HAPConstant.SEPERATOR_ELEMENT);
 			while(contextSegs.hasNext()){
 				String varInfo = contextSegs.next();
-				HAPSegmentParser varSegs = new HAPSegmentParser(varInfo, HAPConstant.CONS_SEPERATOR_DETAIL);
+				HAPSegmentParser varSegs = new HAPSegmentParser(varInfo, HAPConstant.SEPERATOR_DETAIL);
 				String varName = varSegs.next();
 				String varType = varSegs.next();
 				HAPUIResourceContextInfo contextEleInfo = new HAPUIResourceContextInfo(varName, varType);

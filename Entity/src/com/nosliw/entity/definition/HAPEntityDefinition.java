@@ -29,7 +29,7 @@ public class HAPEntityDefinition extends HAPEntityDefinitionSegment{
 	}
 
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap){
-		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYDEFINITION_CRITICALATTRVALUE, this.m_criticalAttrValue);
+		jsonMap.put(HAPAttributeConstant.ENTITYDEFINITION_CRITICALATTRVALUE, this.m_criticalAttrValue);
 	}
 	
 }

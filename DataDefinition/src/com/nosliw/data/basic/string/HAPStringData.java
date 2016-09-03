@@ -22,7 +22,7 @@ public class HAPStringData extends HAPDataImp{
 	@Override
 	public String toDataStringValue(String format) {
 		String out = null;
-		if(HAPConstant.CONS_SERIALIZATION_JSON.equals(format)){
+		if(HAPConstant.SERIALIZATION_JSON.equals(format)){
 			out = this.m_value;
 		}
 		return out;

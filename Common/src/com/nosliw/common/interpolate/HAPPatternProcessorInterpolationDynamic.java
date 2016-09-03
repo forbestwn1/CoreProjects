@@ -10,7 +10,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 public abstract class HAPPatternProcessorInterpolationDynamic extends HAPPatternProcessorInterpolation{
 
 	public HAPPatternProcessorInterpolationDynamic(String startToken, String endToken){
-		super(new HAPInterpolateExpressionProcessor(startToken, endToken){
+		super(new HAPInterpolateProcessor(startToken, endToken){
 			@Override
 			public String processIterpolate(String expression, Object object) {
 				if(HAPBasicUtility.isStringEmpty(expression) || object==null)  return null;

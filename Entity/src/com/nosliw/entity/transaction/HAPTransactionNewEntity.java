@@ -15,11 +15,11 @@ public class HAPTransactionNewEntity extends HAPTransaction{
 
 	public HAPTransactionNewEntity(HAPConfigure configure, HAPEntityDataAccess access, HAPDataContext dataContext) {
 		super(configure, access, dataContext);
-		this.setOperationScope(HAPConstant.CONS_ENTITYOPERATION_SCOPE_ENTITY);
+		this.setOperationScope(HAPConstant.ENTITYOPERATION_SCOPE_ENTITY);
 	}
 
 	private HAPEntityWraper getNewEntityWraper(){
-		Set<HAPEntityWraper> entitys = this.getTransitEntitysByStatus(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NEW); 
+		Set<HAPEntityWraper> entitys = this.getTransitEntitysByStatus(HAPConstant.DATAACCESS_ENTITYSTATUS_NEW); 
 		if(entitys.size()==0)  return null;
 		else return entitys.toArray(new HAPEntityWraper[0])[0];
 	}

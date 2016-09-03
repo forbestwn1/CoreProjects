@@ -18,5 +18,5 @@ public class HAPResultTestItem extends HAPResult{
 	}
 		
 	@Override
-	public String getType() {		return HAPConstant.CONS_TESTRESULT_TYPE_ITEM;	}
+	public String getType() {		return HAPConstant.TESTRESULT_TYPE_ITEM;	}
 }

@@ -77,7 +77,7 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 	HAPConfigureItem getConfigureItemByPath(String path, String type){
 		HAPConfigureItem out = this;
 		if(HAPBasicUtility.isStringNotEmpty(path)){
-			int index = path.indexOf(HAPConstant.CONS_SEPERATOR_PATH);
+			int index = path.indexOf(HAPConstant.SEPERATOR_PATH);
 			if(index==-1){
 				//single
 				switch(type){
@@ -367,7 +367,7 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 	}
 	
 	@Override
-	public String toString(){ return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));}
+	public String toString(){ return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));}
 
 	@Override
 	public String toStringValue(String format) {

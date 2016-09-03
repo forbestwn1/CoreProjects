@@ -35,10 +35,10 @@ class HAPSortingComparator implements Comparator<HAPWraper>{
 	
 	@Override
 	public int compare(HAPWraper o1, HAPWraper o2) {
-		int out = HAPConstant.CONS_COMPARE_EQUAL;
+		int out = HAPConstant.COMPARE_EQUAL;
 		for(HAPSortingInfo sortingInfo : this.m_sortingInfos){
 			out = sortingInfo.compare(o1, o2);
-			if(out!=HAPConstant.CONS_COMPARE_EQUAL)		break;
+			if(out!=HAPConstant.COMPARE_EQUAL)		break;
 		}
 		return out;
 	}

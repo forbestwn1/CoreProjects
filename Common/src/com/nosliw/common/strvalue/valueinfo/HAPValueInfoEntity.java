@@ -67,7 +67,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	}
 
 	@Override
-	public String getCategary() {		return HAPConstant.CONS_STRINGALBE_VALUEINFO_ENTITY;	}
+	public String getCategary() {		return HAPConstant.STRINGALBE_VALUEINFO_ENTITY;	}
 
 	@Override
 	public void init(){
@@ -118,7 +118,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 			
 			for(String property : this.getEntityProperties()){
 				HAPValueInfo propertyValueInfo = this.getPropertyInfo(property);
-				if(HAPConstant.CONS_STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyValueInfo.getCategary()))  optionsAttr.add(property);
+				if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyValueInfo.getCategary()))  optionsAttr.add(property);
 				else{
 					HAPStringableValue entityProperty = propertyValueInfo.buildDefault();
 					if(entityProperty!=null)			out.updateChild(property, entityProperty);

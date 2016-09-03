@@ -31,8 +31,8 @@ import com.nosliw.data.utils.HAPAttributeConstant;
 
 public class HAPDataTypeManager implements HAPStringable, HAPResource{
 
-	public final static String DEFAULT_CATEGARY = HAPConstant.CONS_DATATYPE_CATEGARY_SIMPLE;
-	public final static String DEFAULT_TYPE = HAPConstant.CONS_DATATYPE_TYPE_STRING;
+	public final static String DEFAULT_CATEGARY = HAPConstant.DATATYPE_CATEGARY_SIMPLE;
+	public final static String DEFAULT_TYPE = HAPConstant.DATATYPE_TYPE_STRING;
 	
 	//static object for default data type: Bool, Integer, String, Float
 	public static HAPBoolean BOOLEAN;
@@ -132,17 +132,17 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 	
 	private void loadBasicDataType(){
 		
-		HAPDataTypeInfoWithVersion booleanDataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.CONS_DATATYPE_CATEGARY_SIMPLE, HAPConstant.CONS_DATATYPE_TYPE_BOOLEAN);
+		HAPDataTypeInfoWithVersion booleanDataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_SIMPLE, HAPConstant.DATATYPE_TYPE_BOOLEAN);
 		HAPDataTypeManager.BOOLEAN = (HAPBoolean)this.registerDataType(HAPBoolean.createDataType(booleanDataTypeInfo, null, null, null, "", this));
 
-		HAPDataTypeInfoWithVersion integerDataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.CONS_DATATYPE_CATEGARY_SIMPLE, HAPConstant.CONS_DATATYPE_TYPE_INTEGER);
+		HAPDataTypeInfoWithVersion integerDataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_SIMPLE, HAPConstant.DATATYPE_TYPE_INTEGER);
 		HAPDataTypeManager.INTEGER = (HAPInteger)this.registerDataType(HAPInteger.createDataType(integerDataTypeInfo, null, null, null, "", this));
 
-		HAPDataTypeInfoWithVersion stringDataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.CONS_DATATYPE_CATEGARY_SIMPLE, HAPConstant.CONS_DATATYPE_TYPE_STRING);
+		HAPDataTypeInfoWithVersion stringDataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_SIMPLE, HAPConstant.DATATYPE_TYPE_STRING);
 		HAPDataTypeManager.STRING = (HAPString)this.registerDataType(HAPString.createDataType(stringDataTypeInfo, null, null, null, "", this));
 		
 		
-		HAPDataTypeInfoWithVersion floatDataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.CONS_DATATYPE_CATEGARY_SIMPLE, HAPConstant.CONS_DATATYPE_TYPE_FLOAT);
+		HAPDataTypeInfoWithVersion floatDataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_SIMPLE, HAPConstant.DATATYPE_TYPE_FLOAT);
 		HAPDataTypeManager.FLOAT = (HAPFloat)this.registerDataType(HAPFloat.createDataType(floatDataTypeInfo, null, null, null, "", this));
 	}
 
@@ -157,7 +157,7 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 	/****************************** operation script ********************************/
 	public Set<String> getSupportedScripts(){
 		Set<String> out = new HashSet<String>();
-		out.add(HAPConstant.CONS_OPERATIONDEF_SCRIPT_JAVASCRIPT);
+		out.add(HAPConstant.OPERATIONDEF_SCRIPT_JAVASCRIPT);
 		return out;
 	}
 	
@@ -168,7 +168,7 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 		StringBuffer out = new StringBuffer();
 		List<HAPDataType> dataTypes = this.getAllVersionsDataType(dataType);
 		for(HAPDataType dataTypeWithVersion : dataTypes){
-			String script = dataTypeWithVersion.buildLocalOperationScript(HAPConstant.CONS_OPERATIONDEF_SCRIPT_JAVASCRIPT);
+			String script = dataTypeWithVersion.buildLocalOperationScript(HAPConstant.OPERATIONDEF_SCRIPT_JAVASCRIPT);
 			out.append(script);
 		}
 		return out.toString();
@@ -268,7 +268,7 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 	 * get temporate file location
 	 */
 	public String getTempFileLocation(){
-		String scriptLocation = this.getConfiguration().getConfigureValue(HAPConstant.CONS_DATATYPEMAN_SETTINGNAME_SCRIPTLOCATION).getStringValue();
+		String scriptLocation = this.getConfiguration().getConfigureValue(HAPConstant.DATATYPEMAN_SETTINGNAME_SCRIPTLOCATION).getStringValue();
 		return scriptLocation;
 	}
 
@@ -298,18 +298,18 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 		}
 		else if(token.equals("#")){
 			//literate
-			int p1 = text.indexOf(HAPConstant.CONS_SEPERATOR_PART);
-			int p2 = text.indexOf(HAPConstant.CONS_SEPERATOR_PART, p1+1);
+			int p1 = text.indexOf(HAPConstant.SEPERATOR_PART);
+			int p2 = text.indexOf(HAPConstant.SEPERATOR_PART, p1+1);
 			type = text.substring(1, p1);
 			categary = text.substring(p1+1, p2);
 			String value = text.substring(p2+1);
 			HAPDataType dataType = this.getDataType(new HAPDataTypeInfo(categary, type));
-			return dataType.toData(value, HAPConstant.CONS_SERIALIZATION_TEXT);
+			return dataType.toData(value, HAPConstant.SERIALIZATION_TEXT);
 		}
 		else{
 			if(categary!=null && type!=null){
 				HAPDataType dataType = this.getDataType(new HAPDataTypeInfo(categary, type));
-				return dataType.toData(text, HAPConstant.CONS_SERIALIZATION_TEXT);
+				return dataType.toData(text, HAPConstant.SERIALIZATION_TEXT);
 			}
 			else{
 				//simple / text
@@ -320,14 +320,14 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 
 	public HAPData parseJson(JSONObject jsonObj, String categary, String type){
 		if(HAPBasicUtility.isStringEmpty(categary)){
-			categary = jsonObj.optJSONObject(HAPAttributeConstant.ATTR_DATA_DATATYPEINFO).optString(HAPAttributeConstant.ATTR_DATATYPEINFO_CATEGARY);
+			categary = jsonObj.optJSONObject(HAPAttributeConstant.DATA_DATATYPEINFO).optString(HAPAttributeConstant.DATATYPEINFO_CATEGARY);
 		}
 		if(HAPBasicUtility.isStringEmpty(type)){
-			type = jsonObj.optJSONObject(HAPAttributeConstant.ATTR_DATA_DATATYPEINFO).optString(HAPAttributeConstant.ATTR_DATATYPEINFO_TYPE);
+			type = jsonObj.optJSONObject(HAPAttributeConstant.DATA_DATATYPEINFO).optString(HAPAttributeConstant.DATATYPEINFO_TYPE);
 		}
-		Object valueObj = jsonObj.opt(HAPAttributeConstant.ATTR_DATA_VALUE);
+		Object valueObj = jsonObj.opt(HAPAttributeConstant.DATA_VALUE);
 		if(valueObj==null)  valueObj = jsonObj;
-		return this.getDataType(new HAPDataTypeInfo(categary, type)).toData(valueObj, HAPConstant.CONS_SERIALIZATION_JSON);
+		return this.getDataType(new HAPDataTypeInfo(categary, type)).toData(valueObj, HAPConstant.SERIALIZATION_JSON);
 	}
 
 	public HAPWraper parseWraper(JSONObject jsonObj){
@@ -354,7 +354,7 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 		StringBuffer out = new StringBuffer();
 		
 		out.append("\n\n\n**************************     DataTypeManager  Start   *****************************\n");
-		out.append(HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON)));
+		out.append(HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON)));
 		out.append("\n**************************     DataTypeManager  End   *****************************\n\n\n");
 		
 		return out.toString();

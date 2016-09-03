@@ -29,8 +29,8 @@ public class HAPDataBinding implements HAPStringable{
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		
-		jsonMap.put(HAPAttributeConstant.ATTR_DATABINDING_VARIABLE, this.m_variable.toStringValue(format));
-		jsonMap.put(HAPAttributeConstant.ATTR_CONTEXTVARIABLE_NAME, this.m_name);
+		jsonMap.put(HAPAttributeConstant.DATABINDING_VARIABLE, this.m_variable.toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.CONTEXTVARIABLE_NAME, this.m_name);
 		
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}

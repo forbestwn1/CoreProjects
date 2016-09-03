@@ -31,13 +31,13 @@ public class HAPLoginServlet  extends HttpServlet{
 			throws ServletException, IOException {
 		try{
 			String content = "";
-			String command = request.getParameter(HAPAttributeConstant.ATTR_SERVLETPARMS_COMMAND);
-			String clientId = request.getParameter(HAPAttributeConstant.ATTR_SERVLETPARMS_CLIENTID);
-			if(HAPConstant.CONS_SERVICENAME_LOGIN.equals(command)){
+			String command = request.getParameter(HAPAttributeConstant.SERVLETPARMS_COMMAND);
+			String clientId = request.getParameter(HAPAttributeConstant.SERVLETPARMS_CLIENTID);
+			if(HAPConstant.SERVICENAME_LOGIN.equals(command)){
 				HAPApplicationClientInfo clientContextInfo = new HAPApplicationClientInfo();
 				HAPClientContext clientContext = HAPApplicationInstance.getApplicationInstantce().getClientContextManager().newClientContext(clientContextInfo);
 				HAPServiceData out = HAPServiceData.createSuccessData(new HAPServiceData[]{HAPServiceData.createSuccessData(clientContext.getClientContextInfo().clientId)});
-				content = out.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON);
+				content = out.toStringValue(HAPConstant.SERIALIZATION_JSON);
 				
 				System.out.println("*********************** Start Login ************************");
 				System.out.println("login " + content);

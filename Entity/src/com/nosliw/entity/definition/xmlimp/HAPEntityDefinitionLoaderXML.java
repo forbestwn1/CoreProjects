@@ -154,7 +154,7 @@ public class HAPEntityDefinitionLoaderXML extends HAPEntityDefinitionLoader{
 			groups.add(entityName);
 		}
 		else{
-			HAPSegmentParser groupSegs = new HAPSegmentParser(group, HAPConstant.CONS_SEPERATOR_ELEMENT);
+			HAPSegmentParser groupSegs = new HAPSegmentParser(group, HAPConstant.SEPERATOR_ELEMENT);
 			while(groupSegs.hasNext()){
 				groups.add(groupSegs.next());
 			}
@@ -235,11 +235,11 @@ public class HAPEntityDefinitionLoaderXML extends HAPEntityDefinitionLoader{
 				if(HAPBasicUtility.isStringNotEmpty(baseOptionName)){
 					HAPOptionsDefinition baseOptions = this.getOptionsManager().getOptionsDefinition(baseOptionName);
 					switch(baseOptions.getType()){
-					case HAPConstant.CONS_OPTIONS_TYPE_STATIC:
+					case HAPConstant.OPTIONS_TYPE_STATIC:
 						//static options
 						sourceOptions = baseOptions;
 						break;
-					case HAPConstant.CONS_OPTIONS_TYPE_DYNAMIC:
+					case HAPConstant.OPTIONS_TYPE_DYNAMIC:
 						//dynamic options
 						Element[] optionParmEles = HAPXMLUtility.getMultiChildElementByName(optionsEle, HAPEntityDefinitionLoaderXmlUtility.TAG_OPTIONS_PARM);
 						Map<String, HAPExpressionInfo> optionsParms = new LinkedHashMap<String, HAPExpressionInfo>();
@@ -266,7 +266,7 @@ public class HAPEntityDefinitionLoaderXML extends HAPEntityDefinitionLoader{
 						String value = optionEle.getAttribute(HAPEntityDefinitionLoaderXmlUtility.TAG_ATTRIBUTE_OPTION_VALUE);
 						if(((HAPAttributeDefinitionAtomXml)attributeDef).getIsCritical()){
 							if(HAPBasicUtility.isStringNotEmpty(value)){
-								HAPSegmentParser valueSegs = new HAPSegmentParser(value, HAPConstant.CONS_SEPERATOR_ELEMENT);
+								HAPSegmentParser valueSegs = new HAPSegmentParser(value, HAPConstant.SEPERATOR_ELEMENT);
 								while(valueSegs.hasNext()){
 									String v = valueSegs.next();
 									HAPEntityDefinitionSegment entityDef = this.readCriticalEntityDefinition(entityDefinition.getEntityName(), optionEle, metadata, entityDefinition.getBaseClassName());
@@ -281,17 +281,17 @@ public class HAPEntityDefinitionLoaderXML extends HAPEntityDefinitionLoader{
 								HAPEntityDefinitionSegment entityDef = this.readCriticalEntityDefinition(entityDefinition.getEntityName(), optionEle, metadata, entityDefinition.getBaseClassName()); 
 								for(String attrName : entityDef.getAttributeNames()){
 									HAPAttributeDefinition attrDef = entityDef.getAttributeDefinitionByName(attrName);
-									((HAPAttributeDefinition)attrDef).setCriticalValue(HAPConstant.CONS_ENTITY_CRITICALVALUE_OTHER);
+									((HAPAttributeDefinition)attrDef).setCriticalValue(HAPConstant.ENTITY_CRITICALVALUE_OTHER);
 								}
 								((HAPEntityDefinitionCritical)entityDefinition).setCriticalEntitySegmentOther(entityDef);
-//								optionsData.add(HAPConstant.CONS_ENTITY_CRITICALVALUE_OTHER);
+//								optionsData.add(HAPConstant.ENTITY_CRITICALVALUE_OTHER);
 								isOption = false;
 							}
 						}
 						else{
 							//not critical attribute
 							if(HAPBasicUtility.isStringNotEmpty(value)){
-								HAPSegmentParser valueSegs = new HAPSegmentParser(value, HAPConstant.CONS_SEPERATOR_ELEMENT);
+								HAPSegmentParser valueSegs = new HAPSegmentParser(value, HAPConstant.SEPERATOR_ELEMENT);
 								while(valueSegs.hasNext()){
 									String v = valueSegs.next();
 									optionsData.add(this.getDataTypeManager().parseString(v, categary, type));

@@ -95,7 +95,7 @@ public abstract class HAPDataWraper extends HAPWraper{
 	 */
 	public void clearUp(int scope){
 		this.preClearUp(scope);
-		if(scope==HAPConstant.CONS_ENTITYOPERATION_SCOPE_GLOBAL){
+		if(scope==HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL){
 			this.breakExternalLink();
 		}
 		this.clearUPData(createClearupParmsByScope(scope));
@@ -141,7 +141,7 @@ public abstract class HAPDataWraper extends HAPWraper{
 	 */
 	protected Map<String, Object> createClearupParmsByScope(int scope){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
-		out.put(HAPConstant.CONS_WRAPECLEARUP_PARM_SCOPE, scope+"");
+		out.put(HAPConstant.WRAPECLEARUP_PARM_SCOPE, scope+"");
 		return out;
 	}
 	
@@ -193,7 +193,7 @@ public abstract class HAPDataWraper extends HAPWraper{
 		}
 		
 		// let parent be aware of the operation
-		if (operation.getScope()==HAPConstant.CONS_ENTITYOPERATION_SCOPE_ENTITY ||	operation.getScope()==HAPConstant.CONS_ENTITYOPERATION_SCOPE_GLOBAL) {
+		if (operation.getScope()==HAPConstant.ENTITYOPERATION_SCOPE_ENTITY ||	operation.getScope()==HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL) {
 			//if this attribute configured for this operation, then create event, and send event
 			//to parent Entity
 			HAPEvent event = HAPEvent.createEntityOperationEvent(operation);
@@ -206,7 +206,7 @@ public abstract class HAPDataWraper extends HAPWraper{
 		}
 		
 		//let external be aware of the operation
-		if(operation.getScope()==HAPConstant.CONS_ENTITYOPERATION_SCOPE_GLOBAL){
+		if(operation.getScope()==HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL){
 			this.externalOperation(operation, sdata);
 		}
 		
@@ -276,7 +276,7 @@ public abstract class HAPDataWraper extends HAPWraper{
 			HAPSegmentParser pathParser = new HAPSegmentParser(attributePath);
 			String firstSeg = pathParser.next();
 			String keyword = HAPNamingConversionUtility.getKeyword(firstSeg);
-			if(HAPConstant.CONS_ATTRIBUTE_PATH_ENTITY.equals(keyword)){
+			if(HAPConstant.ATTRIBUTE_PATH_ENTITY.equals(keyword)){
 				//entity keyword
 				wraper = this.getParentEntity().getWraper();
 			}
@@ -332,13 +332,13 @@ public abstract class HAPDataWraper extends HAPWraper{
 		 * helper class, set common value when create wraper json
 		 */
 		protected void setBasicJsonWraperValue(Map<String, String> values){
-			values.put(HAPAttributeConstant.ATTR_DATAWRAPER_ID, this.getId());
-			values.put(HAPAttributeConstant.ATTR_DATAWRAPER_ATTRPATH, this.getParentEntityAttributePath());
-			if(this.getParentEntity()==null) values.put(HAPAttributeConstant.ATTR_DATAWRAPER_PARENTENTITYID, null);
-			else values.put(HAPAttributeConstant.ATTR_DATAWRAPER_PARENTENTITYID, this.getParentEntity().getWraper().getID().toStringValue(null));
+			values.put(HAPAttributeConstant.DATAWRAPER_ID, this.getId());
+			values.put(HAPAttributeConstant.DATAWRAPER_ATTRPATH, this.getParentEntityAttributePath());
+			if(this.getParentEntity()==null) values.put(HAPAttributeConstant.DATAWRAPER_PARENTENTITYID, null);
+			else values.put(HAPAttributeConstant.DATAWRAPER_PARENTENTITYID, this.getParentEntity().getWraper().getID().toStringValue(null));
 			
-			if(this.getAttributeDefinition()!=null)	values.put(HAPAttributeConstant.ATTR_DATAWRAPER_ATTRCONFIGURE, this.getAttributeDefinition().toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
-			else values.put(HAPAttributeConstant.ATTR_DATAWRAPER_ATTRCONFIGURE, "{}");
+			if(this.getAttributeDefinition()!=null)	values.put(HAPAttributeConstant.DATAWRAPER_ATTRCONFIGURE, this.getAttributeDefinition().toStringValue(HAPConstant.SERIALIZATION_JSON));
+			else values.put(HAPAttributeConstant.DATAWRAPER_ATTRCONFIGURE, "{}");
 		}
 
 		public String toString(){return this.getData().toString();	}
@@ -373,7 +373,7 @@ public abstract class HAPDataWraper extends HAPWraper{
 		boolean ifTrigureOperationEvent(HAPEvent event){
 			int type = event.getType();
 			switch(type){
-			case HAPConstant.CONS_EVENTTYPE_ENTITY_OPERATION:
+			case HAPConstant.EVENTTYPE_ENTITY_OPERATION:
 				HAPEntityOperationEvent opEvent = (HAPEntityOperationEvent)event;
 				HAPAttributeDefinition attrDef = this.getAttributeDefinition();
 				if(opEvent.getOperation().getOperation()==HAPEntityOperation.ENTITYOPERATION_ATTR_CRITICAL_SET)   return true;
@@ -384,9 +384,9 @@ public abstract class HAPDataWraper extends HAPWraper{
 					}
 				}
 				break;
-			case HAPConstant.CONS_EVENTTYPE_ENTITY_MODIFY:
+			case HAPConstant.EVENTTYPE_ENTITY_MODIFY:
 				for(String e : this.getAttributeDefinition().getEvents()){
-					if(e.equals(HAPConstant.CONS_EVENT_ENTITY_CHANGE)){
+					if(e.equals(HAPConstant.EVENT_ENTITY_CHANGE)){
 						return true;
 					}
 				}

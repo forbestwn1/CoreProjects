@@ -20,7 +20,7 @@ import com.nosliw.common.utils.HAPJsonUtility;
 public class HAPServiceData implements HAPStringable{
 
 	//result code
-	private int m_code = HAPConstant.CONS_SERVICECODE_SUCCESS;
+	private int m_code = HAPConstant.SERVICECODE_SUCCESS;
 	//result message
 	private String m_message = null;
 	//result data
@@ -44,20 +44,20 @@ public class HAPServiceData implements HAPStringable{
 	public void setMetaData(String name, String value){this.m_metaDatas.put(name, value);}
 	public String getMetaData(String name){return this.m_metaDatas.get(name);}
 	
-	public boolean isSuccess(){return this.m_code<=HAPConstant.CONS_SERVICECODE_SUCCESS;}
-	public boolean isFail(){return this.m_code>=HAPConstant.CONS_SERVICECODE_FAILURE;}
+	public boolean isSuccess(){return this.m_code<=HAPConstant.SERVICECODE_SUCCESS;}
+	public boolean isFail(){return this.m_code>=HAPConstant.SERVICECODE_FAILURE;}
 	
 	public static HAPServiceData createSuccessData(){return HAPServiceData.createSuccessData(null);}
 	
 	public static HAPServiceData createSuccessData(Object data){
 		HAPServiceData out = new HAPServiceData();
-		out.m_code = HAPConstant.CONS_SERVICECODE_SUCCESS;
+		out.m_code = HAPConstant.SERVICECODE_SUCCESS;
 		out.m_data = data;
 		return out;
 	}
 
-	public static HAPServiceData createFailureData(){return HAPServiceData.createServiceData(HAPConstant.CONS_SERVICECODE_FAILURE, null, "");}
-	public static HAPServiceData createFailureData(Object data, String message){return HAPServiceData.createServiceData(HAPConstant.CONS_SERVICECODE_FAILURE, data, message);}
+	public static HAPServiceData createFailureData(){return HAPServiceData.createServiceData(HAPConstant.SERVICECODE_FAILURE, null, "");}
+	public static HAPServiceData createFailureData(Object data, String message){return HAPServiceData.createServiceData(HAPConstant.SERVICECODE_FAILURE, data, message);}
 	
 	public static HAPServiceData createServiceData(int code, Object data, String message){
 		HAPServiceData out = new HAPServiceData();
@@ -73,11 +73,11 @@ public class HAPServiceData implements HAPStringable{
 		Map<String, Class> jsonTypeMap = new LinkedHashMap<String, Class>();
 		
 		//code
-		jsonMap.put(HAPAttributeConstant.ATTR_SERVICEDATA_CODE, String.valueOf(this.getCode()));
-		jsonTypeMap.put(HAPAttributeConstant.ATTR_SERVICEDATA_CODE, Integer.class);
+		jsonMap.put(HAPAttributeConstant.SERVICEDATA_CODE, String.valueOf(this.getCode()));
+		jsonTypeMap.put(HAPAttributeConstant.SERVICEDATA_CODE, Integer.class);
 		
 		//message
-		jsonMap.put(HAPAttributeConstant.ATTR_SERVICEDATA_MESSAGE, this.getMessage());
+		jsonMap.put(HAPAttributeConstant.SERVICEDATA_MESSAGE, this.getMessage());
 
 		//data
 		Object data = this.getData();
@@ -102,15 +102,15 @@ public class HAPServiceData implements HAPStringable{
 				dataString = HAPJsonUtility.getArrayObjectJson((Object[])data, format);
 			}
 		}
-		jsonMap.put(HAPAttributeConstant.ATTR_SERVICEDATA_DATA, dataString);
+		jsonMap.put(HAPAttributeConstant.SERVICEDATA_DATA, dataString);
 		
 		//parms
-		jsonMap.put(HAPAttributeConstant.ATTR_SERVICEDATA_METADATA, HAPJsonUtility.getMapJson(this.m_metaDatas));
+		jsonMap.put(HAPAttributeConstant.SERVICEDATA_METADATA, HAPJsonUtility.getMapJson(this.m_metaDatas));
 		
 		return HAPJsonUtility.getMapJson(jsonMap, jsonTypeMap);
 	}
 	
 	public String toString(){
-		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));
 	}
 }

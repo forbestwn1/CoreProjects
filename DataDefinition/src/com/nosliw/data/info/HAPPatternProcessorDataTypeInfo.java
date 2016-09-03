@@ -22,7 +22,7 @@ public class HAPPatternProcessorDataTypeInfo extends HAPPatternProcessorImp{
 		String categary = null;
 		String type = null;
 		if(!HAPBasicUtility.isStringEmpty(text)){
-	    	String[] parts = HAPNamingConversionUtility.splitText(text, HAPConstant.CONS_SEPERATOR_PART);
+	    	String[] parts = HAPNamingConversionUtility.splitText(text, HAPConstant.SEPERATOR_PART);
 			type = parts[0];
 			if(HAPBasicUtility.isStringEmpty(type))  type = null;
 			if(parts.length>=2)   categary = parts[1];
@@ -35,18 +35,18 @@ public class HAPPatternProcessorDataTypeInfo extends HAPPatternProcessorImp{
 	@Override
 	public String compose(Object obj, Object data) {
 		HAPDataTypeInfo dataTypeInfo = (HAPDataTypeInfo)obj;
-		return HAPNamingConversionUtility.cascadeTexts(dataTypeInfo.getType(), dataTypeInfo.getCategary(), HAPConstant.CONS_SEPERATOR_PART);
+		return HAPNamingConversionUtility.cascadeTexts(dataTypeInfo.getType(), dataTypeInfo.getCategary(), HAPConstant.SEPERATOR_PART);
 	}
 
 	@HAPTestCaseItem(name="${this.getName()}", description="type{{CONS_SEPERATOR_PART}}categary, ")
 	public List<HAPTestItemInfo> test(HAPTestEnv testEnv) {
 		List<HAPTestItemInfo> out = new ArrayList<HAPTestItemInfo>();
-		out.add(new HAPTestItemDescriptionImp(this, "type"+HAPConstant.CONS_SEPERATOR_PART+"categary", "type", "categary","type"+ HAPConstant.CONS_SEPERATOR_PART+"categary", testEnv));
-		out.add(new HAPTestItemDescriptionImp(this, HAPConstant.CONS_SEPERATOR_PART+"categary", null, "categary", HAPConstant.CONS_SEPERATOR_PART+"categary", testEnv));
-		out.add(new HAPTestItemDescriptionImp(this, "type"+HAPConstant.CONS_SEPERATOR_PART, "type", null, "type"+HAPConstant.CONS_SEPERATOR_PART, testEnv));
-		out.add(new HAPTestItemDescriptionImp(this, "type", "type", null, "type"+HAPConstant.CONS_SEPERATOR_PART, testEnv));
-		out.add(new HAPTestItemDescriptionImp(this, null, null, null, ""+HAPConstant.CONS_SEPERATOR_PART+"", testEnv));
-		out.add(new HAPTestItemDescriptionImp(this, "", null, null, ""+HAPConstant.CONS_SEPERATOR_PART+"", testEnv));
+		out.add(new HAPTestItemDescriptionImp(this, "type"+HAPConstant.SEPERATOR_PART+"categary", "type", "categary","type"+ HAPConstant.SEPERATOR_PART+"categary", testEnv));
+		out.add(new HAPTestItemDescriptionImp(this, HAPConstant.SEPERATOR_PART+"categary", null, "categary", HAPConstant.SEPERATOR_PART+"categary", testEnv));
+		out.add(new HAPTestItemDescriptionImp(this, "type"+HAPConstant.SEPERATOR_PART, "type", null, "type"+HAPConstant.SEPERATOR_PART, testEnv));
+		out.add(new HAPTestItemDescriptionImp(this, "type", "type", null, "type"+HAPConstant.SEPERATOR_PART, testEnv));
+		out.add(new HAPTestItemDescriptionImp(this, null, null, null, ""+HAPConstant.SEPERATOR_PART+"", testEnv));
+		out.add(new HAPTestItemDescriptionImp(this, "", null, null, ""+HAPConstant.SEPERATOR_PART+"", testEnv));
 		return out;
 	}
 	

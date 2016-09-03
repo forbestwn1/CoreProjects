@@ -21,7 +21,7 @@ public class HAPIntegerData extends HAPDataImp{
 
 	@Override
 	public String toDataStringValue(String format) {
-		if(format.equals(HAPConstant.CONS_SERIALIZATION_JSON)){
+		if(format.equals(HAPConstant.SERIALIZATION_JSON)){
 			return String.valueOf(this.m_value);
 		}
 		return null;

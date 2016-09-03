@@ -138,9 +138,9 @@ public class HAPUIResourceProcessor {
 		for(int i=0; i<jsBlocks.size(); i++){
 			HAPJSBlock jsBlock = jsBlocks.get(i);
 			String block = jsBlock.getBlock();
-			int start = block.indexOf(HAPConstant.CONS_UIRESOURCE_SCRIPTBLOCK_TOKEN_OPEN);
-			int end = block.lastIndexOf(HAPConstant.CONS_UIRESOURCE_SCRIPTBLOCK_TOKEN_CLOSE);
-			String blockScript = block.substring(start+HAPConstant.CONS_UIRESOURCE_SCRIPTBLOCK_TOKEN_OPEN.length(), end).trim();
+			int start = block.indexOf(HAPConstant.UIRESOURCE_SCRIPTBLOCK_TOKEN_OPEN);
+			int end = block.lastIndexOf(HAPConstant.UIRESOURCE_SCRIPTBLOCK_TOKEN_CLOSE);
+			String blockScript = block.substring(start+HAPConstant.UIRESOURCE_SCRIPTBLOCK_TOKEN_OPEN.length(), end).trim();
 			blocksScript.append(blockScript);
 			if(!blockScript.endsWith(",") && i<jsBlocks.size()-1){
 				blocksScript.append(",");
@@ -182,12 +182,12 @@ public class HAPUIResourceProcessor {
 		String out = null;
 		switch(resource.getType())
 		{
-		case HAPConstant.CONS_UIRESOURCE_TYPE_RESOURCE:{
+		case HAPConstant.UIRESOURCE_TYPE_RESOURCE:{
 			out = resource.getId();
 			break;
 		}
-		case HAPConstant.CONS_UIRESOURCE_TYPE_TAG:{
-			out = this.m_resource.getId() + HAPConstant.CONS_SEPERATOR_PREFIX + resource.getId();
+		case HAPConstant.UIRESOURCE_TYPE_TAG:{
+			out = this.m_resource.getId() + HAPConstant.SEPERATOR_PREFIX + resource.getId();
 			break;
 		}
 		}
@@ -230,18 +230,18 @@ public class HAPUIResourceProcessor {
 		List<TextNode> textNodes = ele.textNodes();
 		for(TextNode textNode : textNodes){
 			String text = textNode.text();
-			int start = text.indexOf(HAPConstant.CONS_UIRESOURCE_UIEXPRESSION_TOKEN_OPEN);
+			int start = text.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_OPEN);
 			while(start != -1){
-				int expEnd = text.indexOf(HAPConstant.CONS_UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE, start);
-				int end = expEnd + HAPConstant.CONS_UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE.length();
-				int expStart = start + HAPConstant.CONS_UIRESOURCE_UIEXPRESSION_TOKEN_OPEN.length();
+				int expEnd = text.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE, start);
+				int end = expEnd + HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE.length();
+				int expStart = start + HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_OPEN.length();
 				String expression = text.substring(start, end);
 				String textId = this.createId();
-				text=text.substring(0, start) + "<span "+HAPConstant.CONS_UIRESOURCE_ATTRIBUTE_UIID+"="+textId+"></span>" + text.substring(end);
+				text=text.substring(0, start) + "<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+textId+"></span>" + text.substring(end);
 				List<Object> expEles = this.getExpressionContentElements(expression, resource.getConstants(), getDataTypeManager());
 				HAPUIExpressionContent expressionContent = new HAPUIExpressionContent(textId, expEles, this.getDataTypeManager());
 				resource.addExpressionContent(expressionContent);
-				start = text.indexOf(HAPConstant.CONS_UIRESOURCE_UIEXPRESSION_TOKEN_OPEN);
+				start = text.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_OPEN);
 			}
 			
 			textNode.after(text);
@@ -280,13 +280,13 @@ public class HAPUIResourceProcessor {
 		for(int i=0; i<childEles.size(); i++){
 			Element childEle = childEles.get(i);
 			String childTagName = childEle.tag().getName();
-			if(HAPConstant.CONS_UIRESOURCE_TAG_SCRIPT.equals(childTagName)){
+			if(HAPConstant.UIRESOURCE_TAG_SCRIPT.equals(childTagName)){
 				processJSBlock(childEle, resource);
 				removes.add(childEle);
 			}
 		}
 /*		
-		Elements scriptEles = ele.getElementsByTag(HAPConstant.CONS_UIRESOURCE_TAG_SCRIPT);
+		Elements scriptEles = ele.getElementsByTag(HAPConstant.UIRESOURCE_TAG_SCRIPT);
 		for(int i=0; i<scriptEles.size(); i++){
 			processJSBlock(scriptEles.get(i), resource);
 			removes.add(scriptEles.get(i));
@@ -305,7 +305,7 @@ public class HAPUIResourceProcessor {
 		Map<String, HAPExpression> expressions = new LinkedHashMap<String, HAPExpression>();
 		Map<String, HAPData> datas = new LinkedHashMap<String, HAPData>();
 		
-		Elements constantEles = ele.getElementsByTag(HAPConstant.CONS_UIRESOURCE_TAG_CONSTANT);
+		Elements constantEles = ele.getElementsByTag(HAPConstant.UIRESOURCE_TAG_CONSTANT);
 		for(int i=0; i<constantEles.size(); i++){
 			try {
 				String content = constantEles.get(i).html();
@@ -423,8 +423,8 @@ public class HAPUIResourceProcessor {
 		processAttribute(ele, uiTag);
 		
 		//add placeholder element to the customer tag's postion and then remove the original tag from html structure 
-		ele.after("<"+HAPConstant.CONS_UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstant.CONS_UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstant.CONS_UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX+"></"+HAPConstant.CONS_UIRESOURCE_TAG_PLACEHOLDER+">");
-		ele.after("<"+HAPConstant.CONS_UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstant.CONS_UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstant.CONS_UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX+"></"+HAPConstant.CONS_UIRESOURCE_TAG_PLACEHOLDER+">");
+		ele.after("<"+HAPConstant.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstant.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX+"></"+HAPConstant.UIRESOURCE_TAG_PLACEHOLDER+">");
+		ele.after("<"+HAPConstant.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstant.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX+"></"+HAPConstant.UIRESOURCE_TAG_PLACEHOLDER+">");
 		ele.remove();
 		
 		//process contents within customer ele
@@ -461,7 +461,7 @@ public class HAPUIResourceProcessor {
 			String keyAttrName = HAPUIResourceUtility.isKeyAttribute(eleAttrName);
 			
 			if(keyAttrName!=null){
-				if(keyAttrName.startsWith(HAPConstant.CONS_UIRESOURCE_ATTRIBUTE_DATABINDING)){
+				if(keyAttrName.startsWith(HAPConstant.UIRESOURCE_ATTRIBUTE_DATABINDING)){
 					//create DataSourceEle
 					HAPDataBinding dataBinding = new HAPDataBinding(keyAttrName, eleAttrValue);
 					resource.addDataBinding(dataBinding);
@@ -508,9 +508,9 @@ public class HAPUIResourceProcessor {
 			String keyAttrName = HAPUIResourceUtility.isKeyAttribute(eleAttrName);
 			
 			if(keyAttrName!=null){
-				if(keyAttrName.contains(HAPConstant.CONS_UIRESOURCE_ATTRIBUTE_EVENT)){
+				if(keyAttrName.contains(HAPConstant.UIRESOURCE_ATTRIBUTE_EVENT)){
 					//process event key attribute
-					HAPSegmentParser events = new HAPSegmentParser(eleAttrValue, HAPConstant.CONS_SEPERATOR_ELEMENT);
+					HAPSegmentParser events = new HAPSegmentParser(eleAttrValue, HAPConstant.SEPERATOR_ELEMENT);
 					while(events.hasNext()){
 						String event = events.next();
 						if(isCustomerTag){
@@ -536,7 +536,7 @@ public class HAPUIResourceProcessor {
 	 */
 	private String createUIId(Element ele, HAPUIResourceBasic resource){
 		String id = this.createId();
-		ele.attr(HAPConstant.CONS_UIRESOURCE_ATTRIBUTE_UIID, id);
+		ele.attr(HAPConstant.UIRESOURCE_ATTRIBUTE_UIID, id);
 		return id;
 	}
 	
@@ -555,7 +555,7 @@ public class HAPUIResourceProcessor {
 	private List<Object> getExpressionContentElements(String content, Map<String, HAPData> constants, HAPDataTypeManager dataTypeMan){
 		List<Object> out = new ArrayList<Object>();
 		while(HAPBasicUtility.isStringNotEmpty(content)){
-			int index = content.indexOf(HAPConstant.CONS_UIRESOURCE_UIEXPRESSION_TOKEN_OPEN);
+			int index = content.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_OPEN);
 			if(index==-1){
 				//no expression
 				out.add(content);
@@ -568,10 +568,10 @@ public class HAPUIResourceProcessor {
 			}
 			else{
 				//start with expression
-				int expEnd = content.indexOf(HAPConstant.CONS_UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE);
-				int expStart = index + HAPConstant.CONS_UIRESOURCE_UIEXPRESSION_TOKEN_OPEN.length();
+				int expEnd = content.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE);
+				int expStart = index + HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_OPEN.length();
 				out.add(new HAPUIResourceExpression(content.substring(expStart, expEnd), HAPUIResourceUtility.buildExpressionFunctionName(this.createId()), constants, dataTypeMan));
-				content = content.substring(expEnd + HAPConstant.CONS_UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE.length());
+				content = content.substring(expEnd + HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE.length());
 			}
 		}
 				

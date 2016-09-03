@@ -4,7 +4,7 @@
 	<property name="packagename" type="string" description="java package name"/>
 	<property name="classname" type="string" description="java class name"/>
 
-	<property name="definitions" type="list" description="this is map property" key="name">
+	<property name="definitions" type="list" description="this is map property" elementTag="definition">
 		<child reference="constant"/>
 	</property> 
 </group>

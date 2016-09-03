@@ -69,7 +69,7 @@ public class HAPUIResourceManager implements HAPStringable{
 	 * get temporate file location
 	 */
 	public String getTempFileLocation(){
-		String scriptLocation = this.m_setting.getStringValue(HAPConstant.CONS_UIRESOURCEMAN_SETTINGNAME_SCRIPTLOCATION);
+		String scriptLocation = this.m_setting.getStringValue(HAPConstant.UIRESOURCEMAN_SETTINGNAME_SCRIPTLOCATION);
 		return scriptLocation;
 	}
 	
@@ -83,7 +83,7 @@ public class HAPUIResourceManager implements HAPStringable{
 	}
 	
 	@Override
-	public String toString(){ return this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON); }
+	public String toString(){ return this.toStringValue(HAPConstant.SERIALIZATION_JSON); }
 
 	protected HAPDataTypeManager getDataTypeManager(){	return this.m_dataTypeMan;	}
 	protected HAPConfigure getConfiguration(){ return this.m_setting; }

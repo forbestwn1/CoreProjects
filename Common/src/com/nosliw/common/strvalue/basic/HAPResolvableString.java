@@ -1,8 +1,11 @@
 package com.nosliw.common.strvalue.basic;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.interpolate.HAPInterpolateExpressionProcessor;
+import com.nosliw.common.interpolate.HAPInterpolateProcessor;
+import com.nosliw.common.interpolate.HAPInterpolateProcessorByConfigureForDoc;
+import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 
 /*
@@ -37,7 +40,13 @@ public class HAPResolvableString implements HAPResolvable{
 	}
 	
 	@Override
-	public boolean isStringResolved(){  return this.m_resolved; }
+	public boolean isResolved(){  return this.m_resolved; }
+	
+	public HAPInterpolateOutput resolveByConfigure(HAPConfigureImp configure) {
+		Map<HAPInterpolateProcessor, Object> interpolateDatas = new LinkedHashMap<HAPInterpolateProcessor, Object>();
+		interpolateDatas.put(new HAPInterpolateProcessorByConfigureForDoc(), configure);
+		return this.resolveByInterpolateProcessor(interpolateDatas);
+	}
 	
 	/*
 	 * update interpolate for all string values
@@ -61,7 +70,7 @@ public class HAPResolvableString implements HAPResolvable{
 	}
 	
 	@Override
-	public HAPInterpolateOutput resolveByInterpolateProcessor(Map<HAPInterpolateExpressionProcessor, Object> interpolateDatas){
+	public HAPInterpolateOutput resolveByInterpolateProcessor(Map<HAPInterpolateProcessor, Object> interpolateDatas){
 		HAPInterpolateOutput out = null;
 		if(interpolateDatas!=null){
 			out = HAPStringableValueUtility.resolveByInterpolateProcessors(this.m_value, interpolateDatas);

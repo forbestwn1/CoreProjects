@@ -24,7 +24,7 @@ public class HAPValueInfoMap extends HAPValueInfoContainer{
 	}
 	
 	@Override
-	public String getCategary() {		return HAPConstant.CONS_STRINGALBE_VALUEINFO_MAP;	}
+	public String getCategary() {		return HAPConstant.STRINGALBE_VALUEINFO_MAP;	}
 
 	@Override
 	public void init(){

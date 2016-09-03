@@ -48,7 +48,7 @@ public class HAPEntityPath implements HAPStringable{
 	}
 	
 	protected void setJsonMap(Map<String, String> jsonMap){
-		if(this.m_entityID!=null)		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYPATH_ENTITYID, this.m_entityID.toString());
-		jsonMap.put(HAPAttributeConstant.ATTR_ENTITYPATH_PATH, this.m_path);
+		if(this.m_entityID!=null)		jsonMap.put(HAPAttributeConstant.ENTITYPATH_ENTITYID, this.m_entityID.toString());
+		jsonMap.put(HAPAttributeConstant.ENTITYPATH_PATH, this.m_path);
 	}
 }

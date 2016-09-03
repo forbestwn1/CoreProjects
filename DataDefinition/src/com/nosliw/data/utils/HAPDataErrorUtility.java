@@ -11,7 +11,7 @@ public class HAPDataErrorUtility {
 	 * utility method to create error service data when one data operation is not defined for particular data type
 	 */
 	public static HAPServiceData createDataOperationNotDefinedError(HAPDataTypeInfo dataType, String operation, Exception ex){
-		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.CONS_ERRORCODE_DATAOPERATION_NOTDEFINED, 
+		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.ERRORCODE_DATAOPERATION_NOTDEFINED, 
 				operation, 
 				"The data type "+ dataType.toString() +"'s operation " + operation + "does not defined");
 		out.setException(ex);
@@ -30,7 +30,7 @@ public class HAPDataErrorUtility {
 			parmTypes.append(HAPDataUtility.getDataTypeInfo(parm).toString());
 		}
 		parmTypes.append("]");
-		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.CONS_ERRORCODE_NEWDATAOPERATION_NOTDEFINED, 
+		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.ERRORCODE_NEWDATAOPERATION_NOTDEFINED, 
 				dataType, 
 				"The data type "+ dataType.toString() +"'s newData operation with parms " + parmTypes.toString() + "does not defined");
 		out.setException(ex);
@@ -41,7 +41,7 @@ public class HAPDataErrorUtility {
 	 * utility method to create error service data when one data operation is not implemented for particular data type
 	 */
 	public static HAPServiceData createDataOperationNotExistError(HAPDataTypeInfo dataType, String operation, Exception ex){
-		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.CONS_ERRORCODE_DATAOPERATION_NOTEXIST, 
+		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.ERRORCODE_DATAOPERATION_NOTEXIST, 
 				operation, 
 				"The data type "+ dataType.toString() +"'s operation " + operation + "does not exists");
 		out.setException(ex);
@@ -52,7 +52,7 @@ public class HAPDataErrorUtility {
 	 * utility method to create error service data when encounter wrong data type during expression, ...
 	 */
 	public static HAPServiceData createDataTypeError(HAPDataTypeInfo dataType, HAPDataTypeInfo expect, Exception ex){
-		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.CONS_ERRORCODE_DATATYPE_WRONGTYPE, 
+		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.ERRORCODE_DATATYPE_WRONGTYPE, 
 				dataType, 
 				"Except data type : "+ expect.toString() +", however we have " + dataType.toString() + "!!!!!");
 		out.setException(ex);

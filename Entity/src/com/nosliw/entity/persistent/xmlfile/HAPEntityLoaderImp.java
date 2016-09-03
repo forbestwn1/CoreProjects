@@ -13,7 +13,7 @@ public abstract class HAPEntityLoaderImp extends HAPEntityDataAccessImp implemen
 	public HAPEntityLoaderImp(){
 		super(null, null, null);
 		clear();
-		this.setOperationScope(HAPConstant.CONS_ENTITYOPERATION_SCOPE_GLOBAL);
+		this.setOperationScope(HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL);
 	}
 	
 	@Override
@@ -44,17 +44,17 @@ public abstract class HAPEntityLoaderImp extends HAPEntityDataAccessImp implemen
 	
 	@Override
 	public HAPOperationAllResult commit() {
-//		for(HAPEntityWraper entityWraper : this.getTransitEntitysByStatus(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_DEAD)){
+//		for(HAPEntityWraper entityWraper : this.getTransitEntitysByStatus(HAPConstant.DATAACCESS_ENTITYSTATUS_DEAD)){
 //			this.removeEntityFromPersist(entityWraper);
 //		}
 //		
-//		for(HAPEntityWraper entityWraper : this.getTransitEntitysByStatus(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NEW){
+//		for(HAPEntityWraper entityWraper : this.getTransitEntitysByStatus(HAPConstant.DATAACCESS_ENTITYSTATUS_NEW){
 //			this.persistEntity(entityWraper);
 //			this.getEntityNormalContainer().addEntity(entityWraper);
 //		}
 //		this.getEntityNewContainer().clearup();
 //
-//		for(HAPEntityWraper entityWraper : this.getTransitEntitysByStatus(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_CHANGED){
+//		for(HAPEntityWraper entityWraper : this.getTransitEntitysByStatus(HAPConstant.DATAACCESS_ENTITYSTATUS_CHANGED){
 //			this.persistEntity(entityWraper);
 //			this.getEntityNormalContainer().addEntity(entityWraper);
 //		}

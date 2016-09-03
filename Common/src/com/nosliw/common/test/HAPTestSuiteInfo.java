@@ -46,7 +46,7 @@ public class HAPTestSuiteInfo extends HAPTestInfo{
 	}
 
 	@Override
-	public String getType(){ return HAPConstant.CONS_TEST_TYPE_SUITE; }
+	public String getType(){ return HAPConstant.TEST_TYPE_SUITE; }
 
 	public void setParentName(String name){ 
 		if(HAPBasicUtility.isStringNotEmpty(name)) this.getTestDescription().updateBasicChild(DESCRIPTION_PARENTNAME, name); 
@@ -94,10 +94,10 @@ public class HAPTestSuiteInfo extends HAPTestInfo{
 		this.updateChildTestCase(test);
 		String testType = test.getType();
 		switch(testType){
-		case HAPConstant.CONS_TEST_TYPE_CASE:
+		case HAPConstant.TEST_TYPE_CASE:
 			this.m_testCasesInfos.add(test);
 			break;
-		case HAPConstant.CONS_TEST_TYPE_SUITE:
+		case HAPConstant.TEST_TYPE_SUITE:
 			HAPTestSuiteInfo testSuite = (HAPTestSuiteInfo)test;
 			if(testSuite.isSolid()){
 				//solid test suite
@@ -106,7 +106,7 @@ public class HAPTestSuiteInfo extends HAPTestInfo{
 				
 				HAPTestSuiteInfo currentSuiteInfo = this;
 				if(HAPBasicUtility.isStringNotEmpty(testSuiteParentName)){
-					HAPSegmentParser segments = new HAPSegmentParser(testSuiteParentName, HAPConstant.CONS_SEPERATOR_PATH);
+					HAPSegmentParser segments = new HAPSegmentParser(testSuiteParentName, HAPConstant.SEPERATOR_PATH);
 					while(segments.hasNext()){
 						String name = segments.next();
 						HAPTestSuiteInfo subSuiteInfo = currentSuiteInfo.getChildTestSuiteInfo(name);

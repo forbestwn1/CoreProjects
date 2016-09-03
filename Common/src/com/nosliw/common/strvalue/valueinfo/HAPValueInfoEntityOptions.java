@@ -1,7 +1,10 @@
 package com.nosliw.common.strvalue.valueinfo;
 
+import java.util.Set;
+
 import com.nosliw.common.strvalue.basic.HAPStringableValue;
 import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
+import com.nosliw.common.strvalue.basic.HAPStringableValueMap;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoEntityOptions extends HAPValueInfo{
@@ -18,9 +21,13 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 		return out;
 	}
 
+	public Set<String> getOptionsKey(){
+		HAPStringableValueMap optionsValueInfo = this.getOptionsMap();
+		return optionsValueInfo.getKeys();
+	}
+	
 	public HAPValueInfo getOptionsValueInfo(String value){
-		HAPStringableValueEntity optionsValueInfo = (HAPStringableValueEntity)this.getChild(HAPValueInfoEntityOptions.ENTITY_PROPERTY_OPTIONS);
-		return (HAPValueInfo)optionsValueInfo.getChild(value);
+		return (HAPValueInfo)getOptionsMap().getChild(value);
 	}
 	
 	public String getKeyName(){
@@ -35,12 +42,17 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 	}
 	
 	@Override
-	public String getCategary() {		return HAPConstant.CONS_STRINGALBE_VALUEINFO_ENTITYOPTIONS;	}
+	public String getCategary() {		return HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS;	}
 
 	@Override
 	public HAPStringableValue buildDefault() {		return null;	}
 	
 	public HAPStringableValue buildDefault(String optionsValue){
 		return this.getOptionsValueInfo(optionsValue).buildDefault();
+	}
+	
+	private HAPStringableValueMap getOptionsMap(){
+		HAPStringableValueMap optionsValueInfo = (HAPStringableValueMap)this.getChild(HAPValueInfoEntityOptions.ENTITY_PROPERTY_OPTIONS);
+		return optionsValueInfo;
 	}
 }

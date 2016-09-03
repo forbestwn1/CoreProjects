@@ -43,7 +43,7 @@ public class HAPConfigureManager {
 	}
 
 	private HAPConfigureImp getDefaultBaseConfigure(){
-		return this.getBaseConfigure(HAPConstant.CONS_CONFIGURATION_DEFAULTBASE);
+		return this.getBaseConfigure(HAPConstant.CONFIGURATION_DEFAULTBASE);
 	}
 	
 	private HAPConfigureImp getBaseConfigure(String name){
@@ -67,6 +67,6 @@ public class HAPConfigureManager {
 		    }
 		}
 
-		this.registerConfigureBase(HAPConstant.CONS_CONFIGURATION_DEFAULTBASE, baseConfigure);
+		this.registerConfigureBase(HAPConstant.CONFIGURATION_DEFAULTBASE, baseConfigure);
 	}
 }

@@ -27,7 +27,7 @@ public class HAPOptionsDefinitionStatic extends HAPOptionsDefinition{
 	}
 	
 	@Override
-	public String getType(){return HAPConstant.CONS_OPTIONS_TYPE_STATIC;}
+	public String getType(){return HAPConstant.OPTIONS_TYPE_STATIC;}
 	
 	public List<HAPWraper> getOptions() {
 		return m_optionsDatas;

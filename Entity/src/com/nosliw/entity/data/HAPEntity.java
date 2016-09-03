@@ -26,7 +26,7 @@ public class HAPEntity extends HAPDataTypeImp{
 	private HAPEntityDefinitionManager m_entityDefinitionMan;
 	
 	public HAPEntity(String name, HAPDataTypeManager dataTypeMan, HAPEntityDefinitionManager entityDefMan, HAPOptionsDefinitionManager optionsMan) {
-		super(new HAPDataTypeInfoWithVersion(HAPConstant.CONS_DATATYPE_CATEGARY_ENTITY, name),  null, null, null, "", dataTypeMan);
+		super(new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_ENTITY, name),  null, null, null, "", dataTypeMan);
 		this.m_dataTypeMan = dataTypeMan;
 		this.m_entityDefinitionMan = entityDefMan;
 		this.m_optionsMan = optionsMan;
@@ -119,23 +119,23 @@ public class HAPEntity extends HAPDataTypeImp{
 		HAPDataTypeDefInfo dataTypeDefInfo = attrDef.getDataTypeDefinitionInfo();
 		String categary = dataTypeDefInfo.getCategary();
 		switch(categary){
-		case HAPConstant.CONS_DATATYPE_CATEGARY_BLOCK:
-		case HAPConstant.CONS_DATATYPE_CATEGARY_SIMPLE:
+		case HAPConstant.DATATYPE_CATEGARY_BLOCK:
+		case HAPConstant.DATATYPE_CATEGARY_SIMPLE:
 		{
 			out = new HAPAtomWraper(dataTypeDefInfo, this.getDataTypeManager(), this.getEntityDefinitionManager());
 			break;
 		}
-		case HAPConstant.CONS_DATATYPE_CATEGARY_CONTAINER:
+		case HAPConstant.DATATYPE_CATEGARY_CONTAINER:
 		{
 			
 			break;
 		}
-		case HAPConstant.CONS_DATATYPE_CATEGARY_REFERENCE:
+		case HAPConstant.DATATYPE_CATEGARY_REFERENCE:
 		{
 			
 			break;
 		}
-		case HAPConstant.CONS_DATATYPE_CATEGARY_ENTITY:
+		case HAPConstant.DATATYPE_CATEGARY_ENTITY:
 		{
 			
 			break;

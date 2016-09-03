@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.interpolate.HAPInterpolateExpressionProcessor;
+import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -40,7 +40,7 @@ public abstract class HAPStringableValueComplex extends HAPStringableValue{
 
 	@Override
 	public HAPInterpolateOutput resolveByInterpolateProcessor(
-			Map<HAPInterpolateExpressionProcessor, Object> patternDatas) {
+			Map<HAPInterpolateProcessor, Object> patternDatas) {
 		Iterator<HAPStringableValue> iterator = this.iterate();
 		while(iterator.hasNext()){
 			HAPStringableValue value = iterator.next();
@@ -50,11 +50,11 @@ public abstract class HAPStringableValueComplex extends HAPStringableValue{
 	}
 
 	@Override
-	public boolean isStringResolved() {
+	public boolean isResolved() {
 		Iterator<HAPStringableValue> iterator = this.iterate();
 		while(iterator.hasNext()){
 			HAPStringableValue value = iterator.next();
-			if(!value.isStringResolved())  return false;
+			if(!value.isResolved())  return false;
 		}
 		return true;
 	}

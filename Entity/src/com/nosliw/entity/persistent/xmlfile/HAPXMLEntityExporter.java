@@ -61,7 +61,7 @@ public class HAPXMLEntityExporter {
 			if(HAPEntityDataTypeUtility.isAtomType(attrType))
 			{
 				HAPData atomData = entityData.getAttributeValue(attrName);
-				String value = atomData.toStringValue(HAPConstant.CONS_SERIALIZATION_XML);
+				String value = atomData.toStringValue(HAPConstant.SERIALIZATION_XML);
 				if(value != null){
 					node.setAttribute(attrName, value);
 				}

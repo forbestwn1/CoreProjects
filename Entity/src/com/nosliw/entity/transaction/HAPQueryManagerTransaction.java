@@ -37,15 +37,15 @@ public class HAPQueryManagerTransaction extends HAPQueryManager{
 		queryComponent.setQueryManager(this);
 
 		//update query component based on transit entity within current data access
-		for(HAPEntityWraper wraper : this.m_dataAccess.getTransitEntitysByStatus(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_CHANGED)){
+		for(HAPEntityWraper wraper : this.m_dataAccess.getTransitEntitysByStatus(HAPConstant.DATAACCESS_ENTITYSTATUS_CHANGED)){
 			queryComponent.changeEntity(wraper);
 		}
 
-		for(HAPEntityWraper wraper : this.m_dataAccess.getTransitEntitysByStatus(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NEW)){
+		for(HAPEntityWraper wraper : this.m_dataAccess.getTransitEntitysByStatus(HAPConstant.DATAACCESS_ENTITYSTATUS_NEW)){
 			queryComponent.newEntity(wraper);
 		}
 		
-		for(HAPEntityWraper wraper : this.m_dataAccess.getTransitEntitysByStatus(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_DEAD)){
+		for(HAPEntityWraper wraper : this.m_dataAccess.getTransitEntitysByStatus(HAPConstant.DATAACCESS_ENTITYSTATUS_DEAD)){
 			queryComponent.deleteEntity(wraper.getID());
 		}
 		

@@ -19,12 +19,12 @@ public class HAPValueInfoReference extends HAPValueInfo{
 	@Override
 	public void init(){
 		super.init();
-		this.updateBasicChild(ENTITY_PROPERTY_TYPE, HAPConstant.CONS_STRINGALBE_VALUEINFO_REFERENCE);
+		this.updateBasicChild(ENTITY_PROPERTY_TYPE, HAPConstant.STRINGALBE_VALUEINFO_REFERENCE);
 	}
 	
 	@Override
 	public String getCategary() {
-		return HAPConstant.CONS_STRINGALBE_VALUEINFO_REFERENCE;
+		return HAPConstant.STRINGALBE_VALUEINFO_REFERENCE;
 	}
 	
 	@Override

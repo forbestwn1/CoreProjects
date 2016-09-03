@@ -24,7 +24,7 @@ public class HAPValueInfoBasic extends HAPValueInfo{
 	}
 	
 	@Override
-	public String getCategary() {		return HAPConstant.CONS_STRINGALBE_VALUEINFO_BASIC;	}
+	public String getCategary() {		return HAPConstant.STRINGALBE_VALUEINFO_BASIC;	}
 
 	@Override
 	public HAPStringableValue buildDefault() {

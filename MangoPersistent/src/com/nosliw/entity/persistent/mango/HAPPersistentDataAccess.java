@@ -31,15 +31,15 @@ public class HAPPersistentDataAccess extends HAPEntityPersistent{
 
 	@Override
 	public HAPOperationAllResult commit() {
-		for(HAPEntityWraper deadEntity : this.getTransitEntitys(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_DEAD)){
+		for(HAPEntityWraper deadEntity : this.getTransitEntitys(HAPConstant.DATAACCESS_ENTITYSTATUS_DEAD)){
 			this.deadEntity(deadEntity);
 		}
 
-		for(HAPEntityWraper newEntity : this.getTransitEntitys(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_NEW)){
+		for(HAPEntityWraper newEntity : this.getTransitEntitys(HAPConstant.DATAACCESS_ENTITYSTATUS_NEW)){
 			this.newEntity(newEntity);
 		}
 		
-		for(HAPEntityWraper changedEntity : this.getTransitEntitys(HAPConstant.CONS_DATAACCESS_ENTITYSTATUS_CHANGED)){
+		for(HAPEntityWraper changedEntity : this.getTransitEntitys(HAPConstant.DATAACCESS_ENTITYSTATUS_CHANGED)){
 			this.changedEntity(changedEntity);
 		}
 		

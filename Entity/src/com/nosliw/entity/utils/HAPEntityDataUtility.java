@@ -26,7 +26,7 @@ public class HAPEntityDataUtility {
 	}
 	
 	static public HAPEntity getEntityDataType(String type, HAPDataTypeManager dataTypeMan){
-		return (HAPEntity)dataTypeMan.getDataType(new HAPDataTypeInfo(HAPConstant.CONS_DATATYPE_CATEGARY_ENTITY, type));
+		return (HAPEntity)dataTypeMan.getDataType(new HAPDataTypeInfo(HAPConstant.DATATYPE_CATEGARY_ENTITY, type));
 	}
 
 	static public HAPEntityWraper getRootEntityParentWraper(HAPDataWraper wraper){

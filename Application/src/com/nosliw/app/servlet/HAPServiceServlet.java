@@ -40,14 +40,14 @@ public class HAPServiceServlet extends HttpServlet{
 			throws ServletException, IOException {
 		try{
 			String content = "";
-			String command = request.getParameter(HAPAttributeConstant.ATTR_SERVLETPARMS_COMMAND);
-			String clientId = request.getParameter(HAPAttributeConstant.ATTR_SERVLETPARMS_CLIENTID);
-			if(HAPConstant.CONS_SERVICECOMMAND_GROUPREQUEST.equals(command)){
+			String command = request.getParameter(HAPAttributeConstant.SERVLETPARMS_COMMAND);
+			String clientId = request.getParameter(HAPAttributeConstant.SERVLETPARMS_CLIENTID);
+			if(HAPConstant.SERVICECOMMAND_GROUPREQUEST.equals(command)){
 				HAPServiceData out = null;
 				HAPServiceData clientIdServiceData = this.getClientContext(clientId);
 				if(clientIdServiceData.isSuccess()){
 					HAPApplicationClientContext appClientContext = (HAPApplicationClientContext)clientIdServiceData.getData();
-					String groupRequest = request.getParameter(HAPAttributeConstant.ATTR_SERVLETPARMS_PARMS);
+					String groupRequest = request.getParameter(HAPAttributeConstant.SERVLETPARMS_PARMS);
 					JSONArray jsonGroupReqs = new JSONArray(groupRequest);
 
 					List<String> requestsResult = new ArrayList<String>();
@@ -58,7 +58,7 @@ public class HAPServiceServlet extends HttpServlet{
 						if(result==null){
 							//not in history, then it is new quest
 							HAPServiceData serviceData = processRequest(req, appClientContext);
-							String requestResult = serviceData.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON);
+							String requestResult = serviceData.toStringValue(HAPConstant.SERIALIZATION_JSON);
 							//save result to client context history
 							appClientContext.addReqeustResultHistory(requestInfo, requestResult);
 							requestsResult.add(requestResult);
@@ -73,7 +73,7 @@ public class HAPServiceServlet extends HttpServlet{
 				else{
 					out = clientIdServiceData;
 				}
-				content = out.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON);
+				content = out.toStringValue(HAPConstant.SERIALIZATION_JSON);
 			}
 			
 			response.setContentType("application/json");
@@ -105,19 +105,19 @@ public class HAPServiceServlet extends HttpServlet{
 	 */
 	private HAPServiceData processRequest(JSONObject req, HAPApplicationClientContext clientContext) throws Exception{
 		HAPServiceData out = null;
-		String reqType = req.getString(HAPAttributeConstant.ATTR_REQUEST_TYPE);
-		if(HAPConstant.CONS_REMOTESERVICE_TASKTYPE_NORMAL.equals(reqType)){
+		String reqType = req.getString(HAPAttributeConstant.REQUEST_TYPE);
+		if(HAPConstant.REMOTESERVICE_TASKTYPE_NORMAL.equals(reqType)){
 			//for normal request
-			JSONObject serviceJson = req.getJSONObject(HAPAttributeConstant.ATTR_REQUEST_SERVICE);
+			JSONObject serviceJson = req.getJSONObject(HAPAttributeConstant.REQUEST_SERVICE);
 			HAPServiceInfo serviceInfo = new HAPServiceInfo(serviceJson);
 			out = this.processRequest(serviceInfo, clientContext); 
 		}
-		else if(HAPConstant.CONS_REMOTESERVICE_TASKTYPE_GROUP.equals(reqType)){
+		else if(HAPConstant.REMOTESERVICE_TASKTYPE_GROUP.equals(reqType)){
 			//for group task, 
 			boolean success = true;
-			String mode = req.getString(HAPAttributeConstant.ATTR_REQUEST_MODE);
+			String mode = req.getString(HAPAttributeConstant.REQUEST_MODE);
 			List<HAPServiceData> serviceDatas = new ArrayList<HAPServiceData>();
-			JSONArray jsonChildren = req.getJSONArray(HAPAttributeConstant.ATTR_REQUEST_CHILDREN);
+			JSONArray jsonChildren = req.getJSONArray(HAPAttributeConstant.REQUEST_CHILDREN);
 			for(int j=0; j<jsonChildren.length(); j++){
 				HAPServiceData serviceData = this.processRequest(jsonChildren.getJSONObject(j), clientContext);
 				serviceDatas.add(serviceData);
@@ -129,7 +129,7 @@ public class HAPServiceServlet extends HttpServlet{
 			}
 			
 			if(success==false){
-				if(HAPConstant.CONS_REMOTESERVICE_GROUPTASK_MODE_ALWAYS.equals(mode)){
+				if(HAPConstant.REMOTESERVICE_GROUPTASK_MODE_ALWAYS.equals(mode)){
 					//if group task mode is always, group task end with success 
 					success = true;
 				}
@@ -143,12 +143,12 @@ public class HAPServiceServlet extends HttpServlet{
 	
 	private HAPServiceData processRequest(HAPServiceInfo serviceInfo, HAPApplicationClientContext clientContext){
 		System.out.println("*********************** Start Service ************************");
-		System.out.println(HAPAttributeConstant.ATTR_SERVICE_COMMAND + "  " + serviceInfo.getCommand());
-		System.out.println(HAPAttributeConstant.ATTR_SERVICE_PARMS + "   " + serviceInfo.getParmsJson().toString());
+		System.out.println(HAPAttributeConstant.SERVICE_COMMAND + "  " + serviceInfo.getCommand());
+		System.out.println(HAPAttributeConstant.SERVICE_PARMS + "   " + serviceInfo.getParmsJson().toString());
 		
 		HAPServiceData serviceData = HAPJsonService.service(serviceInfo.getCommand(), serviceInfo.getParmsJson(), clientContext);
 		
-		String content = serviceData.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON);
+		String content = serviceData.toStringValue(HAPConstant.SERIALIZATION_JSON);
 		content = HAPJsonUtility.formatJson(content);
 		
 		System.out.println("return: \n" + content);

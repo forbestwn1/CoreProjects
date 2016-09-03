@@ -46,13 +46,13 @@ public class HAPOptionsComplex extends HAPOptionsDefinition{
 		List<HAPWraper> optionsResult = null;
 		String optionsType = this.m_sourceOptions.getType();
 		switch(optionsType){
-		case HAPConstant.CONS_OPTIONS_TYPE_STATIC:
+		case HAPConstant.OPTIONS_TYPE_STATIC:
 			optionsResult = ((HAPOptionsDefinitionStatic)this.m_sourceOptions).getOptions();
 			break;
-		case HAPConstant.CONS_OPTIONS_TYPE_DYNAMIC:
+		case HAPConstant.OPTIONS_TYPE_DYNAMIC:
 //			optionsResult = ((HAPOptionsDefinitionDynamicAttribute)this.m_sourceOptions).getOptions(attrDataWraper);
 			break;
-		case HAPConstant.CONS_OPTIONS_TYPE_QUERY:
+		case HAPConstant.OPTIONS_TYPE_QUERY:
 //			optionsResult = ((HAPOptionsDefinitionQuery)this.m_sourceOptions).getOptions(attrDataWraper);
 			break;
 		}
@@ -85,7 +85,7 @@ public class HAPOptionsComplex extends HAPOptionsDefinition{
 	}
 
 	@Override
-	public String getType() {	return HAPConstant.CONS_OPTIONS_TYPE_COMPLEX;	}
+	public String getType() {	return HAPConstant.OPTIONS_TYPE_COMPLEX;	}
 
 	public String getSourceType() {return this.m_sourceOptions.getType();	}
 	public HAPOptionsDefinition getSourceOptions(){return this.m_sourceOptions;}

@@ -52,14 +52,14 @@ public class HAPDataTypeInfoWithVersion extends HAPDataTypeInfo{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap){
 		super.buildJsonMap(jsonMap, jsonTypeMap);
-		jsonMap.put(HAPAttributeConstant.ATTR_DATATYPEINFO_VERSION, this.getVersionNumber()+"");
-		jsonTypeMap.put(HAPAttributeConstant.ATTR_DATATYPEINFO_VERSION, Integer.class);
+		jsonMap.put(HAPAttributeConstant.DATATYPEINFO_VERSION, this.getVersionNumber()+"");
+		jsonTypeMap.put(HAPAttributeConstant.DATATYPEINFO_VERSION, Integer.class);
 	}
 
 	public static HAPDataTypeInfoWithVersion parse(JSONObject jsonObj){
-		String type = jsonObj.optString(HAPAttributeConstant.ATTR_DATATYPEINFO_TYPE);
-		String categary = jsonObj.optString(HAPAttributeConstant.ATTR_DATATYPEINFO_CATEGARY);
-		int version = jsonObj.optInt(HAPAttributeConstant.ATTR_DATATYPEINFO_VERSION);
+		String type = jsonObj.optString(HAPAttributeConstant.DATATYPEINFO_TYPE);
+		String categary = jsonObj.optString(HAPAttributeConstant.DATATYPEINFO_CATEGARY);
+		int version = jsonObj.optInt(HAPAttributeConstant.DATATYPEINFO_VERSION);
 		return new HAPDataTypeInfoWithVersion(categary, type, version);
 	}
 	

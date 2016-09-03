@@ -39,12 +39,12 @@ public class HAPLoadScriptServlet extends HttpServlet{
 			System.out.println("info " + infoStr);
 			System.out.println("*********************** End Script Load ************************");
 			
-			if(HAPConstant.CONS_SCRIPTTYPE_UIRESOURCE.equals(type)){
+			if(HAPConstant.SCRIPTTYPE_UIRESOURCE.equals(type)){
 				//for script block in uiresource
 				String name = infoJson.getString("name");
 				content = HAPApplicationInstance.getApplicationInstantce().getUIResourceManager().getUIResourceScript(name);
 			}
-			else if(HAPConstant.CONS_SCRIPTTYPE_DATAOPERATIONS.equals(type)){
+			else if(HAPConstant.SCRIPTTYPE_DATAOPERATIONS.equals(type)){
 				//for data opration script
 				JSONArray requestArray = infoJson.optJSONArray("requestArray");
 				StringBuffer out = new StringBuffer();
@@ -55,7 +55,7 @@ public class HAPLoadScriptServlet extends HttpServlet{
 				}
 				content = out.toString();
 			}
-			else if(HAPConstant.CONS_SCRIPTTYPE_UITAGS.equals(type)){
+			else if(HAPConstant.SCRIPTTYPE_UITAGS.equals(type)){
 				//for ui tag
 				JSONArray requestArray = infoJson.optJSONArray("requestArray");
 				StringBuffer out = new StringBuffer();

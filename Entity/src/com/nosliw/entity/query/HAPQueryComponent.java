@@ -134,7 +134,7 @@ public class HAPQueryComponent implements HAPStringable{
 		if(this.m_entityIdList.contains(queryEntityId)){
 			this.removeQueryEntityById(queryEntityId);
 			operation = HAPEntityOperationFactory.createQueryRemoveEntityOperation(this.getQueryId(), queryEntityId);
-			if(scope!=HAPConstant.CONS_ENTITYOPERATION_SCOPE_UNDEFINED)  operation.setScope(scope);   
+			if(scope!=HAPConstant.ENTITYOPERATION_SCOPE_UNDEFINED)  operation.setScope(scope);   
 		}
 		return operation;
 	}
@@ -151,7 +151,7 @@ public class HAPQueryComponent implements HAPStringable{
 		int position = this.addQueryEntityWraper(queryEntityWraper);
 		if(this.m_segmentInfo.ifWithinSegment(position)){
 			operation = HAPEntityOperationFactory.createQueryAddEntityOperation(this.getQueryId(), position, queryEntityWraper);
-			if(scope!=HAPConstant.CONS_ENTITYOPERATION_SCOPE_UNDEFINED)  operation.setScope(scope);   
+			if(scope!=HAPConstant.ENTITYOPERATION_SCOPE_UNDEFINED)  operation.setScope(scope);   
 		}
 		
 		return operation;
@@ -182,7 +182,7 @@ public class HAPQueryComponent implements HAPStringable{
 			}
 			else{
 				operation = HAPEntityOperationFactory.createQueryRemoveEntityOperation(this.getQueryId(), id);
-				if(scope!=HAPConstant.CONS_ENTITYOPERATION_SCOPE_UNDEFINED)  operation.setScope(scope);   
+				if(scope!=HAPConstant.ENTITYOPERATION_SCOPE_UNDEFINED)  operation.setScope(scope);   
 			}
 			
 		}

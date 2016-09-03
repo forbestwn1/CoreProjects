@@ -21,7 +21,7 @@ public abstract class HAPOptionsDefinitionDynamic extends HAPOptionsDefinition{
 	}
 
 	@Override
-	public String getType(){return HAPConstant.CONS_OPTIONS_TYPE_DYNAMIC;}
+	public String getType(){return HAPConstant.OPTIONS_TYPE_DYNAMIC;}
 
 	public abstract List<HAPWraper> getOptions(Map<String, HAPData> parms);
 	

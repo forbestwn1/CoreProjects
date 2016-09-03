@@ -91,26 +91,26 @@ public class HAPExpressionUtility {
 	private static HAPIterateOperandTaskOut iterateOperand(HAPOperand operand, HAPIterateOperandTask task, Object data, boolean isRoot){
 		HAPIterateOperandTaskOut out = task.process(operand, data, isRoot);
 		switch(operand.getOperandType()){
-		case HAPConstant.CONS_EXPRESSION_OPERAND_VARIABLE:
-		case HAPConstant.CONS_EXPRESSION_OPERAND_CONSTANT:
+		case HAPConstant.EXPRESSION_OPERAND_VARIABLE:
+		case HAPConstant.EXPRESSION_OPERAND_CONSTANT:
 		{
 			break;
 		}
-		case HAPConstant.CONS_EXPRESSION_OPERAND_DATAOPERATION:
-		case HAPConstant.CONS_EXPRESSION_OPERAND_DATATYPEOPERATION:
-		case HAPConstant.CONS_EXPRESSION_OPERAND_ATTRIBUTEOPERATION:
+		case HAPConstant.EXPRESSION_OPERAND_DATAOPERATION:
+		case HAPConstant.EXPRESSION_OPERAND_DATATYPEOPERATION:
+		case HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION:
 		{
 			if(out.toChild){
 				//continue to child operand
 				HAPOperandDataOperaion operationOperand = (HAPOperandDataOperaion)operand;
-				if(operand.getOperandType()!=HAPConstant.CONS_EXPRESSION_OPERAND_DATATYPEOPERATION){
+				if(operand.getOperandType()!=HAPConstant.EXPRESSION_OPERAND_DATATYPEOPERATION){
 					//for data and attribute operation, process base data
 					HAPOperandDataOperaion dataOperationOperand = (HAPOperandDataOperaion)operand;
 					HAPIterateOperandTaskOut baseOut = iterateOperand(dataOperationOperand.getBaseData(), task, out.childData, false);
 					if(baseOut.outOperand!=null)   dataOperationOperand.setBaseData(baseOut.outOperand);
 				}
 				
-				if(operand.getOperandType()!=HAPConstant.CONS_EXPRESSION_OPERAND_ATTRIBUTEOPERATION){
+				if(operand.getOperandType()!=HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION){
 					//parms
 					HAPOperand[] parms = operationOperand.getParameters();
 					for(int i=0; i<parms.length; i++){
@@ -121,7 +121,7 @@ public class HAPExpressionUtility {
 			}
 			break;
 		}
-		case HAPConstant.CONS_EXPRESSION_OPERAND_PATHOPERATION:
+		case HAPConstant.EXPRESSION_OPERAND_PATHOPERATION:
 		{
 			if(out.toChild){
 				HAPOperandPath pathOperand = (HAPOperandPath)operand;

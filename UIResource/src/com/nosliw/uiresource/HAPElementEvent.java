@@ -26,7 +26,7 @@ public class HAPElementEvent implements HAPStringable{
 	public HAPElementEvent(String uiId, String eventInfos){
 		this.m_uiId = uiId;
 		
-		HAPSegmentParser events = new HAPSegmentParser(eventInfos, HAPConstant.CONS_SEPERATOR_PART);
+		HAPSegmentParser events = new HAPSegmentParser(eventInfos, HAPConstant.SEPERATOR_PART);
 		this.m_event = events.next();
 		this.m_function = events.next();
 		this.m_selection = events.next();
@@ -35,10 +35,10 @@ public class HAPElementEvent implements HAPStringable{
 	@Override
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		jsonMap.put(HAPAttributeConstant.ATTR_ELEMENTEVENT_UIID, this.m_uiId);
-		jsonMap.put(HAPAttributeConstant.ATTR_ELEMENTEVENT_EVENT, this.m_event);
-		jsonMap.put(HAPAttributeConstant.ATTR_ELEMENTEVENT_FUNCTION, this.m_function);
-		jsonMap.put(HAPAttributeConstant.ATTR_ELEMENTEVENT_SELECTION, this.m_selection);
+		jsonMap.put(HAPAttributeConstant.ELEMENTEVENT_UIID, this.m_uiId);
+		jsonMap.put(HAPAttributeConstant.ELEMENTEVENT_EVENT, this.m_event);
+		jsonMap.put(HAPAttributeConstant.ELEMENTEVENT_FUNCTION, this.m_function);
+		jsonMap.put(HAPAttributeConstant.ELEMENTEVENT_SELECTION, this.m_selection);
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}
 }

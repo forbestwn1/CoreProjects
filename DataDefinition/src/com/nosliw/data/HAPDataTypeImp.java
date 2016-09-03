@@ -283,17 +283,17 @@ public abstract class HAPDataTypeImp implements HAPDataType{
 	@Override
 	public HAPData toData(Object value, String format){
 		HAPData out = null;
-		if(HAPConstant.CONS_SERIALIZATION_TEXT.equals(format)){
+		if(HAPConstant.SERIALIZATION_TEXT.equals(format)){
 			//literal
 			//if operation CONS_DATAOPERATION_PARSELITERAL is defined
 			HAPData[] parms = {HAPDataTypeManager.createStringData((String)value)};
-			HAPServiceData serviceData = this.localOperate(HAPConstant.CONS_DATAOPERATION_PARSELITERAL, parms);
+			HAPServiceData serviceData = this.localOperate(HAPConstant.DATAOPERATION_PARSELITERAL, parms);
 			if(serviceData.isSuccess())  return (HAPData)serviceData.getData();
 			else{
 				return this.parseLiteral((String)value);
 			}
 		}
-		else if(HAPConstant.CONS_SERIALIZATION_JSON.equals(format)){
+		else if(HAPConstant.SERIALIZATION_JSON.equals(format)){
 			return this.parseJson(value);
 		}
 		return out;
@@ -309,9 +309,9 @@ public abstract class HAPDataTypeImp implements HAPDataType{
 	public String toStringValue(String format){
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		
-		jsonMap.put(HAPAttributeConstant.ATTR_DATATYPE_DATATYPEINFO, this.getDataTypeInfo().toStringValue(format));
+		jsonMap.put(HAPAttributeConstant.DATATYPE_DATATYPEINFO, this.getDataTypeInfo().toStringValue(format));
 		if(this.getParentDataType()!=null){
-			jsonMap.put(HAPAttributeConstant.ATTR_DATATYPE_PARENT, this.getParentDataTypeInfo().toStringValue(format));
+			jsonMap.put(HAPAttributeConstant.DATATYPE_PARENT, this.getParentDataTypeInfo().toStringValue(format));
 		}
 
 		if(this.getDataTypeOperationsObject()!=null){
@@ -320,19 +320,19 @@ public abstract class HAPDataTypeImp implements HAPDataType{
 			for(String name : this.getOperationInfos().keySet()){
 				jsonOpInfoMap.put(name, this.getOperationInfos().get(name).toStringValue(format));
 			}
-			jsonMap.put(HAPAttributeConstant.ATTR_DATATYPE_OPERATIONINFOS, HAPJsonUtility.getMapJson(jsonOpInfoMap));
+			jsonMap.put(HAPAttributeConstant.DATATYPE_OPERATIONINFOS, HAPJsonUtility.getMapJson(jsonOpInfoMap));
 			
 			List<String> jsonNewOpInfoList = new ArrayList<String>();
 			for(HAPDataOperationInfo opInfo : this.getNewDataOperations()){
 				jsonNewOpInfoList.add(opInfo.toStringValue(format));
 			}
-			jsonMap.put(HAPAttributeConstant.ATTR_DATATYPE_NEWOPERATIONINFOS, HAPJsonUtility.getListObjectJson(jsonNewOpInfoList));
+			jsonMap.put(HAPAttributeConstant.DATATYPE_NEWOPERATIONINFOS, HAPJsonUtility.getListObjectJson(jsonNewOpInfoList));
 		}
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}
 	
 	@Override
 	public String toString(){
-		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.CONS_SERIALIZATION_JSON));
+		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));
 	}	
 }

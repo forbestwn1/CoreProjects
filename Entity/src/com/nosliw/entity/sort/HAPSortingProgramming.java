@@ -9,7 +9,7 @@ public class HAPSortingProgramming extends HAPSortingInfo{
 	private HAPComparable m_comparable;
 	
 	public HAPSortingProgramming(HAPComparable comparable, HAPDataTypeManager dataTypeMan) {
-		super(HAPConstant.CONS_SORTING_TYPE_PROGRAMMING, dataTypeMan);
+		super(HAPConstant.SORTING_TYPE_PROGRAMMING, dataTypeMan);
 		this.m_comparable = comparable;
 	}
 

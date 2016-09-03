@@ -18,7 +18,7 @@ public class HAPEntityNewEvent extends HAPEvent{
 
 	@Override
 	public int getType() {
-		return HAPConstant.CONS_EVENTTYPE_ENTITY_NEW;
+		return HAPConstant.EVENTTYPE_ENTITY_NEW;
 	}
 	
 }

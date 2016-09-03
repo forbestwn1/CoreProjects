@@ -81,7 +81,7 @@ public class HAPDataTypeOperations {
 	}
 
 	public HAPServiceData getOperationDependentDataType(String operation){
-		HAPServiceData scriptInfoServiceData = this.getOperateScriptInfo(operation, HAPConstant.CONS_OPERATIONDEF_SCRIPT_JAVASCRIPT);
+		HAPServiceData scriptInfoServiceData = this.getOperateScriptInfo(operation, HAPConstant.OPERATIONDEF_SCRIPT_JAVASCRIPT);
 		if(scriptInfoServiceData.isFail())  return scriptInfoServiceData;
 		else{
 			HAPScriptOperationInfo scriptOpInfo = (HAPScriptOperationInfo)scriptInfoServiceData.getData();

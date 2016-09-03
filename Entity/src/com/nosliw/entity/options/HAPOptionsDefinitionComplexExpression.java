@@ -33,7 +33,7 @@ public abstract class HAPOptionsDefinitionComplexExpression extends HAPOptionsDe
 	}
 
 	@Override
-	public String getType() {	return HAPConstant.CONS_OPTIONS_TYPE_DYNAMIC_EXPRESSION;	}
+	public String getType() {	return HAPConstant.OPTIONS_TYPE_DYNAMIC_EXPRESSION;	}
 
 	
 	
