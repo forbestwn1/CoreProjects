@@ -13,6 +13,7 @@ import java.util.Set;
 import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.basic.HAPStringableValueBasic;
 import com.nosliw.common.strvalue.basic.HAPStringableValueUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoImporterXML;
@@ -75,14 +76,14 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 				Field[] fields = checkClass.getDeclaredFields();
 				for(Field field : fields){
 					String fieldName = field.getName();
-					if(fieldName.startsWith(HAPStringableValueUtility.PREFIX_ENTITYPROPERTY)){
-						try{
+					if(field.isAnnotationPresent(HAPAttributeConstant.class)){
+						try {
 							String constantValue = field.get(null).toString();
-							String constantName = fieldName.substring(HAPStringableValueUtility.PREFIX_ENTITYPROPERTY.length());
+							String baseName = HAPConstantUtility.getBaseName(checkClass);
+							String constantName = HAPNamingConversionUtility.cascadeNameSegment(baseName, fieldName);
 							HAPConstantInfo constantInfo = HAPConstantInfo.build(constantName, constantValue);
 							group.addConstantInfo(constantInfo);
-						}
-						catch(Exception e){
+						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
@@ -90,7 +91,7 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 			}
 
 			@Override
-			protected boolean isValid(Class cls) {		return HAPEntityWithAttributeConstant.class.isAssignableFrom(cls);	}
+			protected boolean isValid(Class cls) {		return true;	}
 		}.process(group);
 
 		this.addConstantGroup(group);

@@ -16,7 +16,7 @@ public abstract class HAPClassFilter {
 		    Set<ClassPath.ClassInfo> classeInfos = classPath.getAllClasses();
 		    //loop all the classes
 			for(ClassPath.ClassInfo classInfo : classeInfos){
-				if(classInfo.getName().contains("com.nosliw")){
+				if(HAPSystemUtility.isHAPClass(classInfo.getClass())){
 					//only check nosliw package
 					Class checkClass = classInfo.load();
 					if(!checkClass.isInterface() && !Modifier.isAbstract(checkClass.getModifiers())){

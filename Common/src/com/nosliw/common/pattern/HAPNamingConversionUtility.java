@@ -17,7 +17,11 @@ public class HAPNamingConversionUtility {
 		return new StringBuffer().append(part1).append(seperator).append(part2).toString();
 	}
 	
+	public static String cascadeNameSegment(String part1, String part2){
+		return cascadeTexts(part1, part2, HAPConstant.SEPERATOR_PREFIX);
+	}
 
+	
 	/*
 	 * cascade two part element together
 	 */

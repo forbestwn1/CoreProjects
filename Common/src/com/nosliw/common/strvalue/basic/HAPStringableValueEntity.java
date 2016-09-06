@@ -166,7 +166,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	}
 
 	public static <T> T buildDefault(Class<T> c) {
-		HAPValueInfoEntity valueInfoEntity = HAPValueInfoManager.getEntityValueInfo(c);
+		HAPValueInfoEntity valueInfoEntity = HAPValueInfoManager.getEntityValueInfoByClass(c);
 		T out = (T)valueInfoEntity.buildDefault();
 		return out;
 	}

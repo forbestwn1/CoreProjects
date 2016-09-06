@@ -85,7 +85,7 @@ public class HAPValueInfoManager {
 		return valueInfo;
 	}
 
-	public static HAPValueInfoEntity getEntityValueInfo(Class cs){
+	public static HAPValueInfoEntity getEntityValueInfoByClass(Class cs){
 		HAPEntityValueInfo info = HAPValueInfoManager.m_entityValueInfos.get(cs.getName());
 		return info.getValueInfoEntity();
 	}
