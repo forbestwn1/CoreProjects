@@ -3,8 +3,10 @@ package com.nosliw.entity.definition;
 import java.util.List;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.strvalue.basic.HAPStringableValueBasic;
 import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
-import com.nosliw.common.strvalue.basic.HAPStringableValueEntityBasic;
 import com.nosliw.common.strvalue.basic.HAPStringableValueMap;
 import com.nosliw.common.strvalue.basic.HAPStringableValueUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -37,17 +39,22 @@ import com.nosliw.common.utils.HAPSegmentParser;
  *      null : invalid or unknown
  *  provide method to create another entity definition based on critical attribute value
  */
-public class HAPEntityDefinitionSegment extends HAPStringableValueEntityBasic{
-	public static String ENTITY_PROPERTY_GROUPS = "groups";
-	public static String ENTITY_PROPERTY_BASECLASS = "baseClass";
-	public static String ENTITY_PROPERTY_ATTRIBUTES = "attributes";
+@HAPEntityWithAttribute(baseName="ENTITYDEFINITION")
+public class HAPEntityDefinitionSegment extends HAPStringableValueEntity{
+	@HAPAttribute
+	public final static String NAME = "name";
+	@HAPAttribute
+	public final static String DESCRIPTION = "description";
+	@HAPAttribute
+	public final static String GROUPS = "groups";
+	@HAPAttribute
+	public final static String BASECLASS = "baseClass";
+	@HAPAttribute
+	public final static String ATTRIBUTES = "attributes";
 	
 	private HAPEntityDefinitionManager m_entityDefinitionMan;
 
-	public HAPEntityDefinitionSegment(){
-	}
-
-	
+	public HAPEntityDefinitionSegment(){}
 	
 	public HAPEntityDefinitionSegment(String name, String baseClassName, Set<String> groups, HAPEntityDefinitionManager entityDefinitionMan){
 		this.m_entityDefinitionMan = entityDefinitionMan;
@@ -75,7 +82,7 @@ public class HAPEntityDefinitionSegment extends HAPStringableValueEntityBasic{
 	/*
 	 * get entity's base attribute definitions info, not including those come with the subclass attribute
 	 */
-	public HAPStringableValueMap getAttributeDefinitions() {	return (HAPStringableValueMap)this.getChild(ENTITY_PROPERTY_ATTRIBUTES);}
+	public HAPStringableValueMap getAttributeDefinitions() {	return (HAPStringableValueMap)this.getChild(ATTRIBUTES);}
 	
 	protected void copyAttributeDefinition(HAPAttributeDefinition defin){
 		HAPAttributeDefinition def1 = defin.cloneDefinition(this);
@@ -113,40 +120,44 @@ public class HAPEntityDefinitionSegment extends HAPStringableValueEntityBasic{
 	}
 
 	/******************************************   Basic Information  *********************************************/
+	public String getName(){  return this.getBasicAncestorValueString(NAME); }
+	public String getDescription(){  return this.getBasicAncestorValueString(DESCRIPTION); }
+
 	public String getEntityName(){return this.getName();}
 	
-	public List<String> getGroups() {	return this.getBasicAncestorValueArray(ENTITY_PROPERTY_GROUPS);	}
-
+	public List<String> getGroups() {	return this.getBasicAncestorValueArray(GROUPS);	}
+	public void addGroups(List<String> groups){
+		List<String> gs = this.getGroups();
+		gs.addAll(groups);
+		HAPStringableValueBasic groupsValue = HAPStringableValueBasic.buildFromObject(gs);
+		this.updateChild(GROUPS, groupsValue);
+	}
+	
 	/* get defined class name for this entity
 	 * if not defined, then use method getDefaultClassName in EntityDefinitionManager instead 
 	 */
-	public String getBaseClassName() {	return this.getBasicAncestorValueString(ENTITY_PROPERTY_BASECLASS);	}
+	public String getBaseClassName() {	return this.getBasicAncestorValueString(BASECLASS);	}
+	public void setBaseClassName(String baseClassName){  this.updateBasicChild(BASECLASS, baseClassName); }
 
 	protected HAPEntityDefinitionManager getEntityDefinitionManager(){return this.m_entityDefinitionMan;}
 	
 	/******************************************   Clone  *********************************************/
-	public HAPEntityDefinitionSegment cloneEntityDefinitionSegment(){
-		HAPEntityDefinitionSegment out = new HAPEntityDefinitionSegment(this.getEntityDefinitionManager());
-		out.cloneFrom(this);
-		return out;
-	}
-
 	protected void cloneFrom(HAPEntityDefinitionSegment entityDef){
 		super.cloneFrom(entityDef);
 		this.m_entityDefinitionMan = entityDef.m_entityDefinitionMan;
 	}
 
 	public HAPEntityDefinitionSegment hardMergeSegment(HAPEntityDefinitionSegment entityDefSegment){
-		HAPEntityDefinitionSegment out = this.cloneEntityDefinitionSegment();
+		HAPEntityDefinitionSegment out = this.clone(HAPEntityDefinitionSegment.class);
 		
 		Set<String> attrs = HAPStringableValueUtility.getExpectedAttributesInEntity(HAPEntityDefinitionSegment.class);
-		attrs.remove(HAPEntityDefinitionSegment.ENTITY_PROPERTY_ATTRIBUTES);
+		attrs.remove(HAPEntityDefinitionSegment.ATTRIBUTES);
 		
-		out.hardMergeWith(this, attrs);
+		out.hardMergeWith(entityDefSegment, attrs);
 		
 		Set<String> attrNames = entityDefSegment.getAttributeNames();
 		for(String attrName : attrNames){
-			out.addAttributeDefinition(entityDefSegment.getAttributeDefinitionByName(attrName).clone());
+			out.addAttributeDefinition(entityDefSegment.getAttributeDefinitionByName(attrName).cloneDefinition(out));
 		}
 		return out;
 	}

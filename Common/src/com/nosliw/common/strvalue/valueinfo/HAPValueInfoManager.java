@@ -63,15 +63,13 @@ public class HAPValueInfoManager {
 		HAPEntityValueInfo entityValueInfo = new HAPEntityValueInfo(valueInfo, this);
 		String className = entityValueInfo.getEntityClassName(); 
 		if(className!=null){
-			if(HAPValueInfoManager.m_entityValueInfos.get(className)==null){
+			HAPEntityValueInfo cached = HAPValueInfoManager.m_entityValueInfos.get(className);
+			if(cached==null){
 				HAPValueInfoManager.m_entityValueInfos.put(className, entityValueInfo);
 			}
-		}
-		
-		Set<String> properties = valueInfo.getProperties();
-		for(String property : properties){
-			HAPValueInfo propertyValueInfo = valueInfo.getPropertyInfo(property);
-			
+			else{
+				if(!cached.getValueInfoEntity().equals(valueInfo))			cached.invalid();
+			}
 		}
 	}
 	
@@ -87,7 +85,8 @@ public class HAPValueInfoManager {
 
 	public static HAPValueInfoEntity getEntityValueInfoByClass(Class cs){
 		HAPEntityValueInfo info = HAPValueInfoManager.m_entityValueInfos.get(cs.getName());
-		return info.getValueInfoEntity();
+		if(info.isValid())  		return info.getValueInfoEntity();
+		return null;
 	}
 	
 	public void registerValueInfo(HAPValueInfo valueInfo){

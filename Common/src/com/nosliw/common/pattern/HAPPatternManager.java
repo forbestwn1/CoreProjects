@@ -10,10 +10,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPClassFilter;
 
 public class HAPPatternManager extends HAPConfigurableImp{
 

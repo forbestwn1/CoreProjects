@@ -9,5 +9,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 
 public @interface HAPEntityWithAttribute {
-	String baseName();
+	String baseName() default "";
 }

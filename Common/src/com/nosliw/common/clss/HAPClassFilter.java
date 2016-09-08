@@ -1,10 +1,11 @@
-package com.nosliw.common.utils;
+package com.nosliw.common.clss;
 
 import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.util.Set;
 
 import com.google.common.reflect.ClassPath;
+import com.nosliw.common.utils.HAPSystemUtility;
 
 public abstract class HAPClassFilter {
 	
@@ -16,7 +17,7 @@ public abstract class HAPClassFilter {
 		    Set<ClassPath.ClassInfo> classeInfos = classPath.getAllClasses();
 		    //loop all the classes
 			for(ClassPath.ClassInfo classInfo : classeInfos){
-				if(HAPSystemUtility.isHAPClass(classInfo.getClass())){
+				if(HAPSystemUtility.isHAPClass(classInfo.getName())){
 					//only check nosliw package
 					Class checkClass = classInfo.load();
 					if(!checkClass.isInterface() && !Modifier.isAbstract(checkClass.getModifiers())){

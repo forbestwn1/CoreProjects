@@ -12,11 +12,15 @@ public class HAPConstantGroup extends HAPStringableValueEntityBasic{
 	public final static String TYPE_ATTRIBUTE = "attribute"; 
 	public final static String TYPE_CLASSATTR = "classAttr"; 
 	
-	@HAPAttributeConstant
+	@HAPAttribute
 	public static String TYPE = "type";
+	@HAPAttribute
 	public static String FILEPATH = "filepath";
+	@HAPAttribute
 	public static String CLASSNAME = "classname";
+	@HAPAttribute
 	public static String PACKAGENAME = "packagename";
+	@HAPAttribute
 	public static String DEFINITIONS = "definitions";
 
 	public HAPConstantGroup(){}

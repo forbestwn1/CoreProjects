@@ -41,6 +41,12 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 	}
 
 	public HAPStringableValueBasic(){}
+
+	public static HAPStringableValueBasic buildFromObject(Object o){
+		HAPStringableValueBasic out = new HAPStringableValueBasic();
+		out.setValue(o);
+		return out;
+	}
 	
 	@Override
 	public String getStringableCategary(){		return HAPConstant.STRINGABLE_VALUECATEGARY_BASIC;	}

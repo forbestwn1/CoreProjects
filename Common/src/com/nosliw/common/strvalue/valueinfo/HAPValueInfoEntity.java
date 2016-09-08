@@ -134,4 +134,13 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 		}
 		return out;
 	}
+	
+	@Override
+	public boolean equals(Object data){
+		boolean out = false;
+		if(data instanceof HAPValueInfoEntity){
+			out = HAPBasicUtility.isEquals(this.getName(), ((HAPValueInfoEntity)data).getName());
+		}
+		return out;
+	}
 }

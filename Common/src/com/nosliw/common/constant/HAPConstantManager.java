@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
@@ -19,7 +20,6 @@ import com.nosliw.common.strvalue.basic.HAPStringableValueUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoImporterXML;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPClassFilter;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -76,7 +76,7 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 				Field[] fields = checkClass.getDeclaredFields();
 				for(Field field : fields){
 					String fieldName = field.getName();
-					if(field.isAnnotationPresent(HAPAttributeConstant.class)){
+					if(field.isAnnotationPresent(HAPAttribute.class)){
 						try {
 							String constantValue = field.get(null).toString();
 							String baseName = HAPConstantUtility.getBaseName(checkClass);

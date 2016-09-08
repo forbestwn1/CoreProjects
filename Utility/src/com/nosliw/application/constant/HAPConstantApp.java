@@ -31,7 +31,7 @@ public class HAPConstantApp extends HAPConfigurableImp{
 		HAPConstantManager constantMan = new HAPConstantManager(null);
 		
 		try{
-			InputStream configureStream = HAPFileUtility.getInputStreamOnClassPath(HAPConstantProcessingApp.class, "constant.xml");
+			InputStream configureStream = HAPFileUtility.getInputStreamOnClassPath(HAPConstantApp.class, "constant.xml");
 			DocumentBuilderFactory DOMfactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder DOMbuilder = DOMfactory.newDocumentBuilder();
 			Document doc = DOMbuilder.parse(configureStream);

@@ -3,13 +3,13 @@ package com.nosliw.application.test;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.test.HAPResult;
 import com.nosliw.common.test.HAPTestDescription;
 import com.nosliw.common.test.HAPTestSuiteInfo;
 import com.nosliw.common.test.HAPTestUtility;
 import com.nosliw.common.test.export.html.HAPTestResultExporter;
-import com.nosliw.common.utils.HAPClassFilter;
 
 public class HAPTestApplication extends HAPConfigurableImp{
 

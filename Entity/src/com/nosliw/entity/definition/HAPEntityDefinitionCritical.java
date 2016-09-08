@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.basic.HAPStringableValueMap;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -28,9 +29,10 @@ import com.nosliw.entity.utils.HAPEntityUtility;
  */
 
 public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
-
-	public static final String ATTR_CRITICALSEGMENTS = "criticalSegments";
-	public static final String ATTR_OTHERCRITICALSEGMENTS = "otherCriticalSegment";
+	@HAPAttribute
+	public static final String CRITICALSEGMENTS = "criticalSegments";
+	@HAPAttribute
+	public static final String OTHERCRITICALSEGMENTS = "otherCriticalSegment";
 	
 	//critical attribute name/definition
 	protected String m_criticalAttribute;
@@ -40,12 +42,10 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 	
 	public HAPEntityDefinitionCritical(String name, String baseClassName, Set<String> groups, HAPEntityDefinitionManager entityDefinitionMan){
 		super(name, baseClassName, groups, entityDefinitionMan);
-		m_criticalEntitySegmentsValue = new LinkedHashMap<String, HAPEntityDefinitionSegment>();
 	}	
 
 	public HAPEntityDefinitionCritical(HAPEntityDefinitionSegment entityDefBasic){
 		super(entityDefBasic);
-		m_criticalEntitySegmentsValue = new LinkedHashMap<String, HAPEntityDefinitionSegment>();
 	}	
 	
 	@Override
@@ -67,10 +67,10 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 	 */
 	public HAPAttributeDefinitionAtom getCriticalAttributeDefinition(){ 	return m_criticalAttrDefinition;	}
 
-	public HAPEntityDefinitionSegment getCriticalEntitySegmentOther(){return (HAPEntityDefinitionSegment)this.getChild(ATTR_OTHERCRITICALSEGMENTS);}
+	public HAPEntityDefinitionSegment getCriticalEntitySegmentOther(){return (HAPEntityDefinitionSegment)this.getChild(OTHERCRITICALSEGMENTS);}
 	public void setCriticalEntitySegmentOther(HAPEntityDefinitionSegment other){
 		this.setupCriticalEntitySegment(other);
-		this.updateChild(ATTR_OTHERCRITICALSEGMENTS, other);
+		this.updateChild(OTHERCRITICALSEGMENTS, other);
 	}
 
 	public void addCriticalEntitySegmentValue(String value, HAPEntityDefinitionSegment criticalEntity){
@@ -79,16 +79,16 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 	}
 	public HAPEntityDefinitionSegment getCriticalEntitySegment(String value){return (HAPEntityDefinitionSegment)this.getCriticalEntitySegments().getChild(value);}
 	
-	private HAPStringableValueMap getCriticalEntitySegments(){	return (HAPStringableValueMap)this.getChild(ATTR_CRITICALSEGMENTS);	}
+	private HAPStringableValueMap getCriticalEntitySegments(){	return (HAPStringableValueMap)this.getChild(CRITICALSEGMENTS);	}
 	
 	/*
 	 * set up child entity segment according to parent entity segment
 	 */
 	protected void setupCriticalEntitySegment(HAPEntityDefinitionSegment entityDef){
 		//segment has the same group information as parent entity
-		entityDef.m_groups.addAll(this.m_groups);
+		entityDef.addGroups(this.getGroups());
 		//base name
-		if(HAPBasicUtility.isStringEmpty(entityDef.m_baseClassName))  entityDef.m_baseClassName = this.m_baseClassName;
+		if(HAPBasicUtility.isStringEmpty(entityDef.getBaseClassName()))  entityDef.setBaseClassName(this.getBaseClassName());
 	}
 	
 	/*
@@ -129,7 +129,7 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 		HAPEntityDefinitionSegment criticalEntityDefSegment = this.getCriticalEntitySegmentByCriticalValue(criticalValue);
 		
 		HAPEntityDefinitionSegment entityDef = null;
-		if(criticalEntityDefSegment!=null)			entityDef = (HAPEntityDefinitionSegment)this.hardMergeWith(criticalEntityDefSegment);
+		if(criticalEntityDefSegment!=null)			entityDef = (HAPEntityDefinitionSegment)this.hardMergeSegment(criticalEntityDefSegment);
 		else	entityDef = this;
 
 		return new HAPEntityDefinition(entityDef, criticalValue, this.getEntityDefinitionManager());
@@ -197,12 +197,4 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 	 * check if value is a valid value for critical attribute value
 	 */
 	private boolean isValidCriticalValue(String value){		return HAPEntityUtility.getEmptyCriticalValue()==value;	}
-	
-	@Override
-	public HAPEntityDefinitionCritical cloneDefinition()
-	{
-		HAPEntityDefinitionCritical entityDef = new HAPEntityDefinitionCritical();
-		entityDef.cloneFrom(this);
-		return entityDef;
-	}
 }

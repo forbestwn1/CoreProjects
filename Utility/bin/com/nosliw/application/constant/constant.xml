@@ -168,14 +168,6 @@
 				classname="HAPAttributeConstant" >
 		<definitions>
 			<definition type="space"/>
-			<definition name="ENTITYDEFINITION_ENTITYNAME" value="entityName"/>
-			<definition name="ENTITYDEFINITION_GROUPS" value="entityGroups"/>
-			<definition name="ENTITYDEFINITION_BASECLASS" value="baseClass"/>
-			<definition name="ENTITYDEFINITION_ATTRIBUTES" value="attributes"/>
-			<definition name="ENTITYDEFINITION_CRITICALENTITYS" value="criticalEntitys"/>
-			<definition name="ENTITYDEFINITION_CRITICALATTRVALUE" value="criticalAttrValue"/>
-			
-			<definition type="space"/>
 			
 			<definition name="OPERATIONINFO_OPERATIONID" value="operationId"/>
 			<definition name="OPERATIONINFO_OPERATION" value="operation"/>

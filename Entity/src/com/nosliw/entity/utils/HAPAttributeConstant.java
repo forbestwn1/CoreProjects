@@ -6,15 +6,6 @@ public class HAPAttributeConstant {
 
 
 
-		public static final String ENTITYDEFINITION_ENTITYNAME = "entityName";
-		public static final String ENTITYDEFINITION_GROUPS = "entityGroups";
-		public static final String ENTITYDEFINITION_BASECLASS = "baseClass";
-		public static final String ENTITYDEFINITION_ATTRIBUTES = "attributes";
-		public static final String ENTITYDEFINITION_CRITICALENTITYS = "criticalEntitys";
-		public static final String ENTITYDEFINITION_CRITICALATTRVALUE = "criticalAttrValue";
-
-
-
 		public static final String OPERATIONINFO_OPERATIONID = "operationId";
 		public static final String OPERATIONINFO_OPERATION = "operation";
 		public static final String OPERATIONINFO_AUTOCOMMIT = "isAutoCommit";

@@ -49,10 +49,10 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	@Override
 	public HAPStringableValue getChild(String name){  return this.m_childrens.get(name);  }
 	
-	public HAPStringableValue updateChild(String name, HAPStringableValue entity){
-		if(entity==null)    this.m_childrens.remove(name);
-		else		this.m_childrens.put(name, entity);
-		return entity;
+	public HAPStringableValue updateChild(String name, HAPStringableValue childValue){
+		if(childValue==null)    this.m_childrens.remove(name);
+		else		this.m_childrens.put(name, childValue);
+		return childValue;
 	}
 
 	public HAPStringableValueComplex updateComplexChild(String name, String type){
@@ -101,8 +101,18 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 
 	@Override
 	public HAPStringableValueEntity clone(){
-		HAPStringableValueEntity out = new HAPStringableValueEntity();
-		out.cloneFrom(this);
+		return this.clone(this.getClass());
+	}
+	
+	public <T extends HAPStringableValueEntity> T clone(Class<T> cs){
+		T out = null;
+		try{
+			out = cs.newInstance();
+			out.cloneFrom(this);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		return out;
 	}
 	
