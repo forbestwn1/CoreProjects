@@ -19,6 +19,8 @@ public abstract class HAPStringableValue extends HAPStringableJson implements HA
 	
 	public abstract boolean isEmpty();
 
+	public abstract HAPStringableValue
+	
 	public HAPInterpolateOutput resolveByConfigure(HAPConfigureImp configure) {
 		Map<HAPInterpolateProcessor, Object> interpolateDatas = new LinkedHashMap<HAPInterpolateProcessor, Object>();
 		interpolateDatas.put(new HAPInterpolateProcessorByConfigureForDoc(), configure);

@@ -123,6 +123,22 @@ public class HAPEntityDefinitionCritical extends HAPEntityDefinitionSegment{
 	 * if criticalValue is not valid one, then return basic entity part
 	 */
 	public HAPEntityDefinition getEntityDefinitionByCriticalValue(String criticalValue) {
+		HAPEntityDefinition out = null;
+		
+		//not critical attribute OR invalid criticalValue, then use base segment 
+		if(!this.hasCriticalAttribute() || this.isValidCriticalValue(criticalValue)){
+			out = this.clone(HAPEntityDefinition.class);
+		}
+		else{
+			HAPEntityDefinitionSegment criticalEntityDefSegment = this.getCriticalEntitySegmentByCriticalValue(criticalValue);
+			out = criticalEntityDefSegment.clone(HAPEntityDefinition.class);
+			out.setCriticalAttrValue(criticalValue);
+			
+			
+		}
+		
+		
+		
 		//not critical attribute OR invalid criticalValue, then use base segment 
 		if(!this.hasCriticalAttribute() || this.isValidCriticalValue(criticalValue))  return new HAPEntityDefinition(this, null, this.getEntityDefinitionManager());
 

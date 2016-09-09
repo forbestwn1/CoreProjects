@@ -2,6 +2,7 @@ package com.nosliw.entity.definition;
 
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.entity.utils.HAPAttributeConstant;
 
 /*
@@ -15,8 +16,9 @@ public class HAPEntityDefinition extends HAPEntityDefinitionSegment{
 
 	//null: no critical attribute
 	//"" : critical attribute value is ""
-	private String m_criticalAttrValue = null;
-	
+	@HAPAttribute
+	public final static String CRITICALATTRVALUE = "criticalAttrValue";
+
 	public HAPEntityDefinition(HAPEntityDefinitionSegment def, String criticalValue, HAPEntityDefinitionManager entityDefinitionMan)
 	{
 		super(entityDefinitionMan);
@@ -24,12 +26,11 @@ public class HAPEntityDefinition extends HAPEntityDefinitionSegment{
 		this.m_criticalAttrValue = criticalValue;
 	}
 	
-	public String getCriticalAttrValue() {
-		return this.m_criticalAttrValue;
-	}
-
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap){
-		jsonMap.put(HAPAttributeConstant.ENTITYDEFINITION_CRITICALATTRVALUE, this.m_criticalAttrValue);
+	public static HAPEntityDefinition buildEntityDefinition(){
+		
 	}
 	
+	public String getCriticalAttrValue() {		return this.getBasicAncestorValueString(CRITICALATTRVALUE);	}
+	public void setCriticalAttrValue(String value){  this.updateBasicChild(CRITICALATTRVALUE, value); }
+
 }

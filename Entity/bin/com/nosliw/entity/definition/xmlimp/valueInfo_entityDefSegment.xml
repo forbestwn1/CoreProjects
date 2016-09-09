@@ -1,4 +1,4 @@
-<entity name="entitySegment" description="entity segment definition" class="com.nosliw.entity.definition.HAPEntityDefinitionSegment">
+<entity name="entityDefinitionSegment" description="entity segment definition" class="com.nosliw.entity.definition.HAPEntityDefinitionSegment">
 	<property name="name" type="string" description="entity name"/>
 	<property name="baseClassName" type="string" description="base class name"/>
 	<property name="groups" type="array" description="groups this entity belong to"/>
