@@ -10,5 +10,9 @@ public abstract class HAPValueInfoContainer extends HAPValueInfoComplex{
 		HAPValueInfo childInfo = (HAPValueInfo)this.getAncestorByPath(HAPValueInfoMap.ENTITY_PROPERTY_CHILD);
 		return childInfo;
 	}
+
+	public void setChildValueInfo(HAPValueInfo valueInfo){
+		this.updateChild(ENTITY_PROPERTY_CHILD, valueInfo);
+	}
 	
 }

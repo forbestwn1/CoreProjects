@@ -29,6 +29,10 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 	public HAPValueInfo getOptionsValueInfo(String value){
 		return (HAPValueInfo)getOptionsMap().getChild(value);
 	}
+
+	public void setOptionsValueInfo(String value, HAPValueInfo valueInfo){
+		this.getOptionsMap().updateChild(value, valueInfo);
+	}
 	
 	public String getKeyName(){
 		return this.getBasicAncestorValueString(ENTITY_PROPERTY_KEY);

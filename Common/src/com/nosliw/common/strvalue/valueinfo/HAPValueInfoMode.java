@@ -3,7 +3,9 @@ package com.nosliw.common.strvalue.valueinfo;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.strvalue.basic.HAPStringableValue;
+import com.nosliw.common.strvalue.basic.HAPStringableValueBasic;
 import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
+import com.nosliw.common.strvalue.entity.test.HAPStringableEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
@@ -13,6 +15,7 @@ public class HAPValueInfoMode extends HAPValueInfo{
 	public static final String ELEMENT_TYPE = "eleType";
 
 	private HAPValueInfoEntity m_solidValueInfo;
+	private HAPValueInfoEntity m_templateValueInfo;
 	
 	public static HAPValueInfoMode build(){
 		HAPValueInfoMode out = new HAPValueInfoMode();
@@ -23,45 +26,59 @@ public class HAPValueInfoMode extends HAPValueInfo{
 	@Override
 	public HAPValueInfo getSolidValueInfo(){
 		if(this.m_solidValueInfo==null){
-			
-			
-			if(HAPBasicUtility.isStringEmpty(this.getParent())){
-				this.m_solidValueInfo = this;
-			}
-			else{
-				HAPValueInfoEntity parentValueInfo = this.getParentEntityValueInfo();
-				this.m_solidValueInfo = parentValueInfo.clone();
-				
-				for(String property : this.getProperties()){
-					if(HAPValueInfoEntity.ENTITY_PROPERTY_PROPERTIES.equals(property)){
-						for(String entityPro : this.getEntityProperties()){
-							this.m_solidValueInfo.updateEntityProperty(entityPro, this.getPropertyInfo(entityPro).clone());
-						}
-					}
-					else if(HAPValueInfoEntity.ENTITY_PROPERTY_PARENT.equals(property)){
-						
-					}
-					else{
-						this.m_solidValueInfo.updateChild(property, this.getChild(property).clone());
-					}
-				}
-			}
+			HAPValueInfoEntity templateValueInfo = this.getTemplateValueInfo();
+			this.m_solidValueInfo = buildModeValueInfo(templateValueInfo);
 		}
 		return this.m_solidValueInfo;
 	}
 	
 	private HAPValueInfoEntity buildModeValueInfo(HAPValueInfo templateValueInfo){
 		HAPValueInfoEntity out = null;
+		String modeValueAttrName = "value";
 		String categary = templateValueInfo.getCategary();
-		if(HAPConstant.STRINGALBE_VALUEINFO_BASIC.equals(categary)){
-			out = this.getEleTypeValueInfo(categary);
-		}
-		else if(HAPConstant.STRINGALBE_VALUEINFO_LIST.equals(categary)){
+		HAPValueInfoEntity eleValueInfoEntity = this.getEleTypeValueInfo(categary); 
+		if(eleValueInfoEntity!=null){
 			out = HAPValueInfoEntity.build(this.getValueInfoManager());
-			out.updateEntityProperty("value", this.getEleTypeValueInfo(categary));
-			HAPValueInfo childValueInfo = ((HAPValueInfoList)templateValueInfo).getChildValueInfo();
-			HAPValueInfoEntity childValueInfoMode = this.buildModeValueInfo(childValueInfo);
-			out.updateEntityProperty("child", childValueInfoMode);
+			out.updateEntityProperty(modeValueAttrName, eleValueInfoEntity);
+			out.updateChild("type", new HAPStringableValueBasic(categary));
+			if(HAPConstant.STRINGALBE_VALUEINFO_BASIC.equals(categary)){
+			}
+			else if(HAPConstant.STRINGALBE_VALUEINFO_LIST.equals(categary)){
+				HAPValueInfoList valueInfoListMode = HAPValueInfoList.build();
+				out.updateEntityProperty("child", valueInfoListMode);
+				HAPValueInfo childValueInfo = ((HAPValueInfoList)templateValueInfo).getChildValueInfo();
+				HAPValueInfoEntity childValueInfoMode = this.buildModeValueInfo(childValueInfo);
+				valueInfoListMode.setChildValueInfo(childValueInfoMode);
+			}
+			else if(HAPConstant.STRINGALBE_VALUEINFO_MAP.equals(categary)){
+				HAPValueInfoMap valueInfoMapMode = HAPValueInfoMap.build();
+				out.updateEntityProperty("child", valueInfoMapMode);
+				HAPValueInfo childValueInfo = ((HAPValueInfoMap)templateValueInfo).getChildValueInfo();
+				HAPValueInfoEntity childValueInfoMode = this.buildModeValueInfo(childValueInfo);
+				valueInfoMapMode.setChildValueInfo(childValueInfoMode);
+			}
+			else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(categary)){
+				HAPValueInfoEntity childValueInfoMode = HAPValueInfoEntity.build(this.getValueInfoManager());
+				out.updateEntityProperty("child", childValueInfoMode);
+				HAPValueInfoEntity templateValueInfoEntity = (HAPValueInfoEntity)templateValueInfo;
+				for(String property : templateValueInfoEntity.getEntityProperties()){
+					HAPValueInfo propertyValueInfo = templateValueInfoEntity.getPropertyInfo(property);
+					HAPValueInfoEntity propertyModeValueInfo = this.buildModeValueInfo(propertyValueInfo);
+					if(propertyModeValueInfo!=null){
+						childValueInfoMode.updateEntityProperty(property, propertyModeValueInfo);
+					}
+				}
+			}
+			else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(categary)){
+				HAPValueInfoEntityOptions valueInfoEntityOptionsMode = HAPValueInfoEntityOptions.build();
+				out.updateEntityProperty("child", valueInfoEntityOptionsMode);
+				HAPValueInfoEntityOptions templateValueInfoEntityOptions = (HAPValueInfoEntityOptions)templateValueInfo;
+				for(String key : templateValueInfoEntityOptions.getOptionsKey()){
+					HAPValueInfo optionsEleValueInfo = templateValueInfoEntityOptions.getOptionsValueInfo(key);
+					HAPValueInfoEntity optionsEleModeValueInfo = this.buildModeValueInfo(optionsEleValueInfo);
+					valueInfoEntityOptionsMode.setOptionsValueInfo(key, optionsEleValueInfo);
+				}
+			}
 		}
 		
 		return out;
@@ -72,6 +89,16 @@ public class HAPValueInfoMode extends HAPValueInfo{
 	}
 	
 	private HAPStringableValueEntity getEleTypesEntity(){		return (HAPStringableValueEntity)this.getChild(ELEMENT_TYPE);	}
+	
+	private HAPValueInfoEntity getTemplateValueInfo(){
+		if(this.m_templateValueInfo==null){
+			String templateName = this.getBasicAncestorValueString(TEMPLATE);
+			if(templateName!=null){
+				this.m_templateValueInfo = (HAPValueInfoEntity)this.getValueInfoManager().getValueInfo(templateName);
+			}
+		}
+		return this.m_templateValueInfo;
+	}
 	
 	@Override
 	public String getCategary() {
