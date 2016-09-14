@@ -1,0 +1,26 @@
+<mirror type="mode" name="entityDefinitionSegmentMergeConfigure" description="entity segment definition" class="com.nosliw.entity.definition.HAPEntityDefinitionSegment">
+	<entity>
+		<commonentity></commonentity>
+	</entity>
+
+
+	<basic>
+		<commonentity></commonentity>
+	</basic>
+
+
+	<list>
+		<commonentity></commonentity>
+	</list>
+
+
+	<map>
+		<commonentity></commonentity>
+	</map>
+
+
+	<options>
+		
+	</options>
+
+</mirror>

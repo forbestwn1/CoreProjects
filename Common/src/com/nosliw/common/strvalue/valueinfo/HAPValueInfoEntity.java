@@ -26,6 +26,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 		return out;
 	}
 
+	@Override
 	public HAPValueInfo getSolidValueInfo(){
 		if(this.m_solidValueInfo==null){
 			if(HAPBasicUtility.isStringEmpty(this.getParent())){
@@ -87,7 +88,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	
 	private HAPStringableValueEntity getPropertiesEntity(){		return (HAPStringableValueEntity)this.getChild(ENTITY_PROPERTY_PROPERTIES);	}
 	
-	private void updateEntityProperty(String name, HAPValueInfo valueInfo){
+	public void updateEntityProperty(String name, HAPValueInfo valueInfo){
 		this.getPropertiesEntity().updateChild(name, valueInfo);
 	}
 	

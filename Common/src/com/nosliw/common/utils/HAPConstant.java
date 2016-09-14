@@ -339,6 +339,7 @@ public class HAPConstant {
 		public static final String STRINGALBE_VALUEINFO_ENTITYOPTIONS = "entityOptions";
 		public static final String STRINGALBE_VALUEINFO_LIST = "list";
 		public static final String STRINGALBE_VALUEINFO_MAP = "map";
+		public static final String STRINGALBE_VALUEINFO_MODE = "mode";
 
 
 

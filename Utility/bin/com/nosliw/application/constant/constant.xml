@@ -557,6 +557,7 @@
 			<definition name="STRINGALBE_VALUEINFO_ENTITYOPTIONS" value="entityOptions"/>
 			<definition name="STRINGALBE_VALUEINFO_LIST" value="list"/>
 			<definition name="STRINGALBE_VALUEINFO_MAP" value="map"/>
+			<definition name="STRINGALBE_VALUEINFO_MODE" value="mode"/>
 	
 			<definition type="space"/>
 			<definition name="CATEGARY_NAME" value="CATEGARY_NAME"/>

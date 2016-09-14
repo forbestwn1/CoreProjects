@@ -6,7 +6,7 @@ import com.nosliw.common.utils.HAPConstant;
 
 public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 
-	public static final String ENTITY_PROPERTY_TYPE = "type";
+	public static final String TYPE = "type";
 
 	private HAPValueInfoManager m_valueInfoMan;
 	
@@ -21,7 +21,7 @@ public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 	}
 	
 	public String getValueDataType(){
-		String type = this.getBasicAncestorValueString(HAPValueInfo.ENTITY_PROPERTY_TYPE);
+		String type = this.getBasicAncestorValueString(HAPValueInfo.TYPE);
 		return type;
 	}
 
@@ -32,7 +32,7 @@ public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 	@Override
 	public void init(){
 		super.init();
-		this.updateBasicChild(ENTITY_PROPERTY_TYPE, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);
+		this.updateBasicChild(TYPE, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);
 	}
 
 	protected HAPValueInfoManager getValueInfoManager(){ return this.m_valueInfoMan; }
