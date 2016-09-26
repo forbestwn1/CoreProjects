@@ -48,7 +48,7 @@ public class HAPStringableValueList extends HAPStringableValueComplex{
 	}
 
 	@Override
-	public HAPStringableValue clone() {
+	public HAPStringableValue cloneStringableValue() {
 		HAPStringableValueList out = new HAPStringableValueList();
 		out.cloneFrom(this);
 		return out;

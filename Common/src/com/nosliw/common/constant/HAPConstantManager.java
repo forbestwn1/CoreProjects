@@ -16,8 +16,6 @@ import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.basic.HAPStringableValueBasic;
-import com.nosliw.common.strvalue.basic.HAPStringableValueUtility;
-import com.nosliw.common.strvalue.valueinfo.HAPValueInfoImporterXML;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -27,8 +25,6 @@ import com.nosliw.common.utils.HAPJsonUtility;
 public class HAPConstantManager  extends HAPConfigurableImp{
 
 	private List<HAPConstantGroup> m_groups;
-	
-	private HAPValueInfoManager m_valueInfoMan;
 	
 	private HAPStringableValueBasic m_jsPath;
 	private HAPStringableValueBasic m_jsAttributeFile;
@@ -47,7 +43,7 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 			inputStreams.add(xmlStream);
 		}
 		
-		this.m_valueInfoMan = new HAPValueInfoManager(inputStreams);
+		HAPValueInfoManager.getInstance().importFromXML(inputStreams);
 	}
 	
 	public void setJsPath(String path){	this.m_jsPath = new HAPStringableValueBasic(path, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);	}
@@ -56,8 +52,6 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 	
 	public void addConstantGroup(HAPConstantGroup group){		this.m_groups.add(group);	}
 	
-	public HAPValueInfoManager getValueInfoManager(){		return this.m_valueInfoMan;	}
-
 	public void resolve(){
 		if(this.m_jsPath!=null)   this.m_jsPath.resolveByConfigure(getConfiguration());
 		if(this.m_jsAttributeFile!=null)   this.m_jsAttributeFile.resolveByConfigure(getConfiguration());

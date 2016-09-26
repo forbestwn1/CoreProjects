@@ -15,11 +15,17 @@ public abstract class HAPStringableValue extends HAPStringableJson implements HA
 
 	public abstract HAPStringableValue getChild(String name);
 
-	public abstract HAPStringableValue clone();
-	
 	public abstract boolean isEmpty();
 
-//	public abstract HAPStringableValue
+	public void afterBuild(){}
+
+	protected abstract HAPStringableValue cloneStringableValue();
+	
+	public HAPStringableValue clone(){
+		HAPStringableValue out = this.cloneStringableValue();
+		out.afterBuild();
+		return out;
+	}
 	
 	public HAPInterpolateOutput resolveByConfigure(HAPConfigureImp configure) {
 		Map<HAPInterpolateProcessor, Object> interpolateDatas = new LinkedHashMap<HAPInterpolateProcessor, Object>();

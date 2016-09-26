@@ -8,8 +8,6 @@ public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 
 	public static final String TYPE = "type";
 
-	private HAPValueInfoManager m_valueInfoMan;
-	
 	abstract public String getCategary();
 	
 	abstract public HAPValueInfo clone();
@@ -35,11 +33,9 @@ public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 		this.updateBasicChild(TYPE, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);
 	}
 
-	protected HAPValueInfoManager getValueInfoManager(){ return this.m_valueInfoMan; }
-	protected void setValueInfoManager(HAPValueInfoManager valueInfoMan){ this.m_valueInfoMan=valueInfoMan; }
+	protected HAPValueInfoManager getValueInfoManager(){ return HAPValueInfoManager.getInstance(); }
 	
 	protected void cloneFrom(HAPValueInfo valueInfo){
 		super.cloneFrom(valueInfo);
-		this.setValueInfoManager(valueInfo.getValueInfoManager());
 	}
 }

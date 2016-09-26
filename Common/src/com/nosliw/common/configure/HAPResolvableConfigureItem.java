@@ -34,7 +34,7 @@ abstract class HAPResolvableConfigureItem extends HAPConfigureItem{
 	
 	protected void cloneFrom(HAPResolvableConfigureItem configureItem){
 		super.cloneFrom(configureItem);
-		this.m_value = configureItem.m_value.clone();
+		this.m_value = (HAPStringableValueBasic)configureItem.m_value.clone();
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-<mirror type="mode" name="entityDefinitionSegmentMergeConfigure" description="entity segment definition" class="com.nosliw.entity.definition.HAPEntityDefinitionSegment">
+<mirror type="mode" name="entityDefinitionSegmentMergeConfigure" template="" description="entity segment definition" class="com.nosliw.entity.definition.HAPEntityDefinitionSegment">
 	<entity>
 		<commonentity></commonentity>
 	</entity>

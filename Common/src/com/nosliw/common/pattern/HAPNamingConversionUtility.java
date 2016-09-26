@@ -1,6 +1,7 @@
 package com.nosliw.common.pattern;
 
-import com.nosliw.common.path.HAPPath;
+import java.util.List;
+
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
@@ -57,6 +58,25 @@ public class HAPNamingConversionUtility {
 		return cascadeTexts(path1, path2, HAPConstant.SEPERATOR_PATH);
 	}
 
+	public static String[] parseElements(String eles){
+		return eles.split(HAPConstant.SEPERATOR_ELEMENT);
+	}
+	
+	public static String cascadeElement(String[] eles){
+		StringBuffer listStr = new StringBuffer();
+		listStr.append(HAPConstant.SEPERATOR_ARRAYSTART);
+		for(int i=0; i<eles.length; i++){
+			listStr.append(eles[i]);
+			if(i<eles.length-1)   listStr.append(HAPConstant.SEPERATOR_ELEMENT);  
+		}
+		listStr.append(HAPConstant.SEPERATOR_ARRAYEND);
+		return listStr.toString();
+	}
+	
+	public static String[] parseProperty(String propertyDef){
+		return propertyDef.split("=");
+	}
+	
 	/*
 	 * get all sub path from full path
 	 */
@@ -64,22 +84,6 @@ public class HAPNamingConversionUtility {
 		return fullPath.split("\\"+HAPConstant.SEPERATOR_PATH);
 	}
 	 
-	public static HAPPath parsePath(String path){
-		HAPPath out = null;
-		int index = path.lastIndexOf(HAPConstant.SEPERATOR_PATH);
-		if(index==-1){
-			//name only
-			out = new HAPPath(path, null, null);
-		}
-		else{
-			String name = path.substring(index+1);
-			String p = path.substring(0, index);
-			String[] pathSegs = parsePathSegs(p);
-			out = new HAPPath(name, p, pathSegs);
-		}
-		return out;
-	}
-	
 	/*
 	 * key word are always satart with "#", this character is the way to judge if it is a keyword
 	 * if yes, then return the keyword part

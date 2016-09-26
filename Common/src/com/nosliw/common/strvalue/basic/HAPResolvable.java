@@ -11,5 +11,4 @@ public interface HAPResolvable {
 	public abstract HAPInterpolateOutput resolveByInterpolateProcessor(Map<HAPInterpolateProcessor, Object> patternDatas);
 	
 	public abstract boolean isResolved();
-
 }

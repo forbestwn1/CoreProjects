@@ -38,6 +38,10 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 		return this.getBasicAncestorValueString(ENTITY_PROPERTY_KEY);
 	}
 	
+	public void setKeyName(String keyName){
+		this.updateBasicChild(ENTITY_PROPERTY_KEY, keyName);
+	}
+	
 	@Override
 	public HAPValueInfoEntityOptions clone(){
 		HAPValueInfoEntityOptions out = new HAPValueInfoEntityOptions();

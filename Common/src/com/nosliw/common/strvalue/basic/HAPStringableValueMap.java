@@ -52,7 +52,7 @@ public class HAPStringableValueMap extends HAPStringableValueComplex{
 	public Set<String> getKeys(){  return this.m_elements.keySet(); }
 	
 	@Override
-	public HAPStringableValue clone() {
+	public HAPStringableValue cloneStringableValue() {
 		HAPStringableValueMap out = new HAPStringableValueMap();
 		out.cloneFrom(this);
 		return out;

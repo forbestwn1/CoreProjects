@@ -151,7 +151,7 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 	}
 
 	@Override
-	public HAPStringableValueBasic clone(){
+	public HAPStringableValueBasic cloneStringableValue(){
 		HAPStringableValueBasic out = new HAPStringableValueBasic();
 		out.cloneFrom(this);
 		return out;

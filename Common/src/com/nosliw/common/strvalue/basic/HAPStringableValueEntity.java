@@ -100,7 +100,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	public Set<String> getProperties(){		return this.m_childrens.keySet();	}
 
 	@Override
-	public HAPStringableValueEntity clone(){
+	public HAPStringableValueEntity cloneStringableValue(){
 		return this.clone(this.getClass());
 	}
 	
@@ -123,7 +123,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	}
 	
 	public HAPStringableValueEntity hardMerge(HAPStringableValueEntity entity){
-		HAPStringableValueEntity out = this.clone();
+		HAPStringableValueEntity out = (HAPStringableValueEntity)this.clone();
 		for(String attr : entity.m_childrens.keySet()){
 			out.m_childrens.put(attr, entity.m_childrens.get(attr).clone());
 		}
@@ -131,7 +131,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	}
 	
 	public HAPStringableValueEntity hardMergeWith(HAPStringableValueEntity entity, Set<String> attrs){
-		HAPStringableValueEntity out = this.clone();
+		HAPStringableValueEntity out = (HAPStringableValueEntity)this.clone();
 		for(String attr : attrs){
 			HAPStringableValue value = entity.m_childrens.get(attr);
 			if(!HAPStringableValueUtility.isStringableValueEmpty(value)){
@@ -142,7 +142,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	}
 
 	public HAPStringableValueEntity hardMergeExcept(HAPStringableValueEntity entity, Set<String> attrs){
-		HAPStringableValueEntity out = this.clone();
+		HAPStringableValueEntity out = (HAPStringableValueEntity)this.clone();
 		for(String attr : entity.m_childrens.keySet()){
 			if(!attrs.contains(attr)){
 				out.m_childrens.put(attr, entity.m_childrens.get(attr).clone());
@@ -176,7 +176,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	}
 
 	public static <T> T buildDefault(Class<T> c) {
-		HAPValueInfoEntity valueInfoEntity = HAPValueInfoManager.getEntityValueInfoByClass(c);
+		HAPValueInfoEntity valueInfoEntity = HAPValueInfoManager.getInstance().getEntityValueInfoByClass(c);
 		T out = (T)valueInfoEntity.buildDefault();
 		return out;
 	}

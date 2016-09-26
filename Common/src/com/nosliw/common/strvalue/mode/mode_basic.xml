@@ -1,0 +1,5 @@
+<entity name="mode_basic" description="" class="com.nosliw.common.strvalue.mode.HAPStringableValueModeBasic">
+
+	<property name="categary" type="string" default="basic"/>
+
+</entity>

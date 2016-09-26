@@ -19,9 +19,8 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	
 	private HAPValueInfoEntity(){}
 	
-	public static HAPValueInfoEntity build(HAPValueInfoManager valueInfoMan){
+	public static HAPValueInfoEntity build(){
 		HAPValueInfoEntity out = new HAPValueInfoEntity();
-		out.setValueInfoManager(valueInfoMan);
 		out.init();
 		return out;
 	}
@@ -94,6 +93,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	
 	public String getParent(){		return this.getBasicAncestorValueString(ENTITY_PROPERTY_PARENT);	}
 	public String getClassName(){  return this.getBasicAncestorValueString(ENTITY_PROPERTY_CLASSNAME); }
+	public void setClassName(String name){  this.updateBasicChild(ENTITY_PROPERTY_CLASSNAME, name); }
 	
 	private HAPValueInfoEntity getParentEntityValueInfo(){
 		HAPValueInfoEntity out = null;

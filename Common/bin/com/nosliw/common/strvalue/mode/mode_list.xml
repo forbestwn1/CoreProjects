@@ -1,0 +1,7 @@
+<entity name="mode_list" description="" class="com.nosliw.common.strvalue.mode.HAPStringableValueModeList">
+
+	<property name="categary" type="string" default="list"/>
+
+	<property name="child" type="list" description=""/>
+		
+</entity>

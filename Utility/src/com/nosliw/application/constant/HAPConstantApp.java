@@ -13,6 +13,7 @@ import com.nosliw.common.constant.HAPConstantGroup;
 import com.nosliw.common.constant.HAPConstantManager;
 import com.nosliw.common.interpolate.HAPInterpolateUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPStringableEntityImporterXML;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPXMLUtility;
 
@@ -47,13 +48,13 @@ public class HAPConstantApp extends HAPConfigurableImp{
 
 			Element[] attrsEles = HAPXMLUtility.getMultiChildElementByName(rootEle, "attributes");
 			for(Element attrsEle : attrsEles){
-				HAPConstantGroup group = (HAPConstantGroup)HAPStringableEntityImporterXML.readRootEntity(attrsEle, "group_attribute", constantMan.getValueInfoManager());
+				HAPConstantGroup group = (HAPConstantGroup)HAPStringableEntityImporterXML.readRootEntity(attrsEle, "group_attribute");
 				constantMan.addConstantGroup(group);
 			}
 			
 			Element[] constantsEles = HAPXMLUtility.getMultiChildElementByName(rootEle, "constants");
 			for(Element constantsEle : constantsEles){
-				HAPConstantGroup group = (HAPConstantGroup)HAPStringableEntityImporterXML.readRootEntity(constantsEle, "group_constant", constantMan.getValueInfoManager());
+				HAPConstantGroup group = (HAPConstantGroup)HAPStringableEntityImporterXML.readRootEntity(constantsEle, "group_constant");
 				constantMan.addConstantGroup(group);
 			}
 			

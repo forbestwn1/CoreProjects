@@ -23,6 +23,14 @@ public class HAPValueInfoMap extends HAPValueInfoContainer{
 		return out;
 	}
 	
+	public String getKey(){
+		return this.getBasicAncestorValueString(ENTITY_PROPERTY_KEY);
+	}
+	
+	public void setKey(String key){
+		this.updateBasicChild(ENTITY_PROPERTY_KEY, key);
+	}
+	
 	@Override
 	public String getCategary() {		return HAPConstant.STRINGALBE_VALUEINFO_MAP;	}
 

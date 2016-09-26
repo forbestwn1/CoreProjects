@@ -11,8 +11,8 @@ import java.util.Set;
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.constant.HAPConstantUtility;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.pattern.HAPPatternManager;
-import com.nosliw.common.strvalue.valueinfo.HAPEntityValueInfo;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
@@ -22,7 +22,7 @@ public class HAPStringableValueUtility {
 
 	public static Set<String> getExpectedAttributesInEntity(Class entityClass){
 		Set<String> out = new HashSet<String>();
-		HAPValueInfoEntity info = HAPValueInfoManager.getEntityValueInfoByClass(entityClass);
+		HAPValueInfoEntity info = HAPValueInfoManager.getInstance().getEntityValueInfoByClass(entityClass);
 		if(info!=null){
 			out = info.getEntityProperties();
 		}
@@ -105,8 +105,7 @@ public class HAPStringableValueUtility {
 				//if the string value represent array, build array instead
 				if(strValue.startsWith(HAPConstant.SEPERATOR_ARRAYSTART) && strValue.endsWith(HAPConstant.SEPERATOR_ARRAYEND)){
 					//value is array
-					HAPSegmentParser valueSegs = new HAPSegmentParser(strValue.substring(1, strValue.length()-1), HAPConstant.SEPERATOR_ELEMENT);
-					out = Arrays.asList(valueSegs.getSegments());
+					out = HAPNamingConversionUtility.parseElements(strValue.substring(1, strValue.length()-1));
 				}
 			}
 			else if(type.equals(HAPConstant.STRINGABLE_BASICVALUETYPE_MAP)){
@@ -133,15 +132,10 @@ public class HAPStringableValueUtility {
 		else if(value.getClass().equals(List.class)){
 			StringBuffer listStr = new StringBuffer();
 			listStr.append(HAPConstant.SEPERATOR_ARRAYSTART);
-			List<String> listValue = (List<String>)value;
-			for(int i=0; i<listValue.size(); i++){
-				listStr.append(listValue.get(i));
-				if(i<listValue.size()-1)   listStr.append(HAPConstant.SEPERATOR_ELEMENT);  
-			}
+			listStr.append(HAPNamingConversionUtility.cascadeElement(((List<String>)value).toArray(new String[0])));
 			listStr.append(HAPConstant.SEPERATOR_ARRAYEND);
 			out = new HAPStringableValueBasic(new HAPResolvableString(listStr.toString(), true), HAPConstant.STRINGABLE_BASICVALUETYPE_ARRAY);
 		}
 		return out;
 	}
-	
 }
