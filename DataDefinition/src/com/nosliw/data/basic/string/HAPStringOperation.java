@@ -2,6 +2,7 @@ package com.nosliw.data.basic.string;
 
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataOperation;
+import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperationInfoAnnotation;
 import com.nosliw.data.HAPScriptOperationInfoAnnotation;
@@ -9,8 +10,8 @@ import com.nosliw.data.basic.bool.HAPBooleanData;
 
 public class HAPStringOperation extends HAPDataOperation{
 
-	public HAPStringOperation(HAPDataTypeManager man) {
-		super(man);
+	public HAPStringOperation(HAPDataTypeManager man, HAPDataType dataType) {
+		super(man, dataType);
 	}
 
 	@HAPOperationInfoAnnotation(in = { "string:simple", "string:simple" }, out = "string:simple", description = "This is operation on string data type to compare two string")

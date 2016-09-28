@@ -98,7 +98,7 @@ public class HAPDataOperationInfo implements HAPStringable{
 		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_DESCRIPTION, this.m_description);
 		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_CONVERTPATH, this.m_convertPath);
 		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_OUT, this.m_outDataTypeInfo.toStringValue(format));
-		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_DEPENDENTDATATYPES, HAPJsonUtility.getSetObjectJson(this.getDependentDataTypeInfos(HAPConstant.OPERATIONDEF_SCRIPT_JAVASCRIPT)));
+		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_DEPENDENTDATATYPES, HAPJsonUtility.getSetObjectJson(this.getDependentDataTypeInfos(HAPConstant.OPERATIONDEF_SCRIPT_JAVASCRIPT), format));
 		
 		List<String> inJsons = new ArrayList<String>();
 		for(HAPDataTypeInfo info : this.m_inDataTypeInfos){

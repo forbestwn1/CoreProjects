@@ -50,8 +50,8 @@ public class HAPDataTypeInfoWithVersion extends HAPDataTypeInfo{
 	
 	
 	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap){
-		super.buildJsonMap(jsonMap, jsonTypeMap);
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap, String format){
+		super.buildJsonMap(jsonMap, jsonTypeMap, format);
 		jsonMap.put(HAPAttributeConstant.DATATYPEINFO_VERSION, this.getVersionNumber()+"");
 		jsonTypeMap.put(HAPAttributeConstant.DATATYPEINFO_VERSION, Integer.class);
 	}

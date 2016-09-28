@@ -326,7 +326,7 @@ public abstract class HAPDataTypeImp implements HAPDataType{
 			for(HAPDataOperationInfo opInfo : this.getNewDataOperations()){
 				jsonNewOpInfoList.add(opInfo.toStringValue(format));
 			}
-			jsonMap.put(HAPAttributeConstant.DATATYPE_NEWOPERATIONINFOS, HAPJsonUtility.getListObjectJson(jsonNewOpInfoList));
+			jsonMap.put(HAPAttributeConstant.DATATYPE_NEWOPERATIONINFOS, HAPJsonUtility.getListObjectJson(jsonNewOpInfoList, HAPConstant.SERIALIZATION_JSON));
 		}
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}

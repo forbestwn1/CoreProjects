@@ -1,5 +1,6 @@
 package com.nosliw.common.utils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -106,4 +107,9 @@ public class HAPBasicUtility {
         return(s.toString());
     }
 	
+	public static <T> T[] concat(T[] first, T[] second) {
+		  T[] result = Arrays.copyOf(first, first.length + second.length);
+		  System.arraycopy(second, 0, result, first.length, second.length);
+		  return result;
+	}	
 }

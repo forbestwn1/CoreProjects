@@ -29,7 +29,7 @@ public class HAPInteger extends HAPDataTypeImp{
 
 	@Override
 	public void buildOperation(){
-		this.setDataTypeOperations(new HAPDataTypeOperationsAnnotation(new HAPIntegerOperation(this.getDataTypeManager()), this.getDataTypeInfo(), this.getDataTypeManager()));
+		this.setDataTypeOperations(new HAPDataTypeOperationsAnnotation(new HAPIntegerOperation(this.getDataTypeManager(), this), this.getDataTypeInfo(), this.getDataTypeManager()));
 	}
 	
 	@Override

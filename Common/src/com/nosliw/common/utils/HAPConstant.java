@@ -106,6 +106,7 @@ public class HAPConstant {
 
 		public static final String DATATYPE_TYPE_INTEGER = "integer";
 		public static final String DATATYPE_TYPE_FLOAT = "float";
+		public static final String DATATYPE_TYPE_DOUBLE = "double";
 		public static final String DATATYPE_TYPE_BOOLEAN = "boolean";
 		public static final String DATATYPE_TYPE_STRING = "string";
 		public static final String DATATYPE_TYPE_CONTAINER_ENTITYATTRIBUTE = "normal";

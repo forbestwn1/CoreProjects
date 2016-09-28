@@ -27,7 +27,7 @@ public class HAPBoolean extends HAPDataTypeImp{
 	
 	@Override
 	public void buildOperation(){
-		this.setDataTypeOperations(new HAPDataTypeOperationsAnnotation(new HAPBooleanOperation(this.getDataTypeManager()), this.getDataTypeInfo(), this.getDataTypeManager()));
+		this.setDataTypeOperations(new HAPDataTypeOperationsAnnotation(new HAPBooleanOperation(this.getDataTypeManager(), this), this.getDataTypeInfo(), this.getDataTypeManager()));
 	}
 	
 	@Override

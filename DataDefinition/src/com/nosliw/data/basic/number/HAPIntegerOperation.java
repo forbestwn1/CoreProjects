@@ -2,6 +2,7 @@ package com.nosliw.data.basic.number;
 
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataOperation;
+import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperationInfoAnnotation;
 import com.nosliw.data.HAPScriptOperationInfoAnnotation;
@@ -10,8 +11,8 @@ import com.nosliw.data.basic.string.HAPStringData;
 
 public class HAPIntegerOperation extends HAPDataOperation{
 
-	HAPIntegerOperation(HAPDataTypeManager dataTypeMan){
-		super(dataTypeMan);
+	HAPIntegerOperation(HAPDataTypeManager dataTypeMan, HAPDataType dataType){
+		super(dataTypeMan, dataType);
 	}
 
 	@HAPOperationInfoAnnotation(in = { "integer:simple", "integer:simple" }, out = "boolean:simple", description = "This is operation on Integer data type to compare two Integer")

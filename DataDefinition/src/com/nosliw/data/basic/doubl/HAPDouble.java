@@ -1,4 +1,4 @@
-package com.nosliw.data.basic.floa;
+package com.nosliw.data.basic.doubl;
 
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.exception.HAPServiceData;
@@ -7,15 +7,13 @@ import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeImp;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPDataTypeOperationsAnnotation;
-import com.nosliw.data.basic.bool.HAPBooleanOperation;
-import com.nosliw.data.info.HAPDataTypeInfo;
 import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
 
-public class HAPFloat extends HAPDataTypeImp{
+public class HAPDouble extends HAPDataTypeImp{
 
-	private static HAPFloat dataType;
+	private static HAPDouble dataType;
 	
-	private HAPFloat(HAPDataTypeInfoWithVersion dataTypeInfo,
+	private HAPDouble(HAPDataTypeInfoWithVersion dataTypeInfo,
 			HAPDataType olderDataType, 
 			HAPDataTypeInfoWithVersion parentDataTypeInfo, 
 			HAPConfigure configure,
@@ -26,7 +24,7 @@ public class HAPFloat extends HAPDataTypeImp{
 	
 	@Override
 	public void buildOperation(){
-		this.setDataTypeOperations(new HAPDataTypeOperationsAnnotation(new HAPFloatOperation(this.getDataTypeManager(), this), this.getDataTypeInfo(), this.getDataTypeManager()));
+		this.setDataTypeOperations(new HAPDataTypeOperationsAnnotation(new HAPDoubleOperation(this.getDataTypeManager(), this), this.getDataTypeInfo(), this.getDataTypeManager()));
 	}
 	
 	@Override
@@ -47,20 +45,20 @@ public class HAPFloat extends HAPDataTypeImp{
 		return null;
 	}
 
-	public HAPFloatData createDataByValue(float value){
-		return new HAPFloatData(value);
+	public HAPDoubleData createDataByValue(double value){
+		return new HAPDoubleData(value);
 	}
 	
 	//factory method to create data type object 
-	static public HAPFloat createDataType(HAPDataTypeInfoWithVersion dataTypeInfo, 
+	static public HAPDouble createDataType(HAPDataTypeInfoWithVersion dataTypeInfo, 
 										HAPDataType olderDataType, 		
 										HAPDataTypeInfoWithVersion parentDataTypeInfo, 
 										HAPConfigure configures,
 										String description,
 										HAPDataTypeManager dataTypeMan){
-		if(HAPFloat.dataType==null){
-			HAPFloat.dataType = new HAPFloat(dataTypeInfo, olderDataType, parentDataTypeInfo, configures, description, dataTypeMan);
+		if(HAPDouble.dataType==null){
+			HAPDouble.dataType = new HAPDouble(dataTypeInfo, olderDataType, parentDataTypeInfo, configures, description, dataTypeMan);
 		}
-		return HAPFloat.dataType;
+		return HAPDouble.dataType;
 	}
 }

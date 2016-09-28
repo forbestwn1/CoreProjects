@@ -21,6 +21,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.basic.bool.HAPBoolean;
+import com.nosliw.data.basic.doubl.HAPDouble;
 import com.nosliw.data.basic.floa.HAPFloat;
 import com.nosliw.data.basic.number.HAPInteger;
 import com.nosliw.data.basic.string.HAPString;
@@ -39,6 +40,7 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 	public static HAPInteger INTEGER;
 	public static HAPString STRING;
 	public static HAPFloat FLOAT;
+	public static HAPDouble DOUBLE;
 	
 	//map for data type string vs data type obj
 	private Map<String, HAPDataType> m_dataTypes;
@@ -69,6 +71,22 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 			this.processDataTypeOperationScript(dataType);
 			
 		}
+	}
+	
+	public HAPData newData(HAPDataTypeInfoWithVersion dataTypeInfo, HAPData[] parms){
+		
+	}
+
+	public HAPData newData(HAPDataTypeInfoWithVersion dataTypeInfo, String name, HAPData[] parms){
+		
+	}
+
+	public HAPData newData(HAPDataTypeInfo dataTypeInfo, String name, HAPData[] parms){
+		return (HAPData)this.getDataType(dataTypeInfo).newData(name, parms).getData();
+	}
+
+	public HAPData newData(HAPDataTypeInfo dataTypeInfo, HAPData[] parms){
+		return (HAPData)this.getDataType(dataTypeInfo).newData(parms).getData();
 	}
 	
 	public HAPDataType registerDataType(HAPDataType dataType){
@@ -141,9 +159,11 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 		HAPDataTypeInfoWithVersion stringDataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_SIMPLE, HAPConstant.DATATYPE_TYPE_STRING);
 		HAPDataTypeManager.STRING = (HAPString)this.registerDataType(HAPString.createDataType(stringDataTypeInfo, null, null, null, "", this));
 		
-		
 		HAPDataTypeInfoWithVersion floatDataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_SIMPLE, HAPConstant.DATATYPE_TYPE_FLOAT);
 		HAPDataTypeManager.FLOAT = (HAPFloat)this.registerDataType(HAPFloat.createDataType(floatDataTypeInfo, null, null, null, "", this));
+
+		HAPDataTypeInfoWithVersion doubleDataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_SIMPLE, HAPConstant.DATATYPE_TYPE_DOUBLE);
+		HAPDataTypeManager.DOUBLE = (HAPDouble)this.registerDataType(HAPFloat.createDataType(doubleDataTypeInfo, null, null, null, "", this));
 	}
 
 	public HAPStringData getStringData(String value){

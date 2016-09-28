@@ -40,11 +40,11 @@ public class HAPDataTypeOperationsAnnotation extends HAPDataTypeOperations{
 				for(Annotation annotation : annotations){
 				    if(annotation instanceof HAPOperationInfoAnnotation){
 				    	HAPOperationInfoAnnotation op = (HAPOperationInfoAnnotation) annotation;
-				    	HAPDataTypeInfo outDataTypeInfo = HAPDataTypeInfo.parseDataTypeInfo(op.out(), this.getDataTypeInfo()); 
+				    	HAPDataTypeInfo outDataTypeInfo = HAPDataTypeInfo.build(op.out(), this.getDataTypeInfo()); 
 				    	
 				    	List<HAPDataTypeInfo> inDataTypeInfos = new ArrayList<HAPDataTypeInfo>();
 				    	for(String inString : op.in()){
-				    		inDataTypeInfos.add(HAPDataTypeInfo.parseDataTypeInfo(inString, this.getDataTypeInfo()));
+				    		inDataTypeInfos.add(HAPDataTypeInfo.build(inString, this.getDataTypeInfo()));
 				    	}
 				    	
 				    	HAPDataOperationInfo opInfo = new HAPDataOperationInfo(this.getDataType(), name, inDataTypeInfos, outDataTypeInfo, op.description());
@@ -69,7 +69,7 @@ public class HAPDataTypeOperationsAnnotation extends HAPDataTypeOperations{
 					    if(annotation instanceof HAPScriptOperationInfoAnnotation){
 					    	HAPScriptOperationInfoAnnotation op = (HAPScriptOperationInfoAnnotation) annotation;
 					    	for(String de : op.dependent()){
-						    	HAPDataTypeInfo dependentDataTypeInfo = HAPDataTypeInfo.parseDataTypeInfo(de, null);
+						    	HAPDataTypeInfo dependentDataTypeInfo = HAPDataTypeInfo.parseDataTypeInfo(de);
 						    	if(dependentDataTypeInfo!=null){
 						    		dependentDataTypeInfos.add(dependentDataTypeInfo);
 						    	}

@@ -60,8 +60,8 @@ public class HAPDataTypeDefInfo extends HAPDataTypeInfo{
 	public void addEntityGroup(String group){		this.m_entityGroups.add(group);	}
 	
 	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap){
-		super.buildJsonMap(jsonMap, jsonTypeMap);
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap, String format){
+		super.buildJsonMap(jsonMap, jsonTypeMap, format);
 		jsonMap.put(HAPAttributeConstant.DATATYPEINFO_ENTITYGROUPS, HAPJsonUtility.getArrayJson(this.getEntityGroups().toArray(new String[0])));
 		jsonMap.put(HAPAttributeConstant.DATATYPEINFO_CHILD_CATEGARY, this.getChildDataCategary());
 		jsonMap.put(HAPAttributeConstant.DATATYPEINFO_CHILD_TYPE, this.getChildDataType());

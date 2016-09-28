@@ -28,7 +28,7 @@ public class HAPString extends HAPDataTypeImp{
 	
 	@Override
 	public void buildOperation(){
-		this.setDataTypeOperations(new HAPDataTypeOperationsAnnotation(new HAPStringOperation(this.getDataTypeManager()), this.getDataTypeInfo(), this.getDataTypeManager()));
+		this.setDataTypeOperations(new HAPDataTypeOperationsAnnotation(new HAPStringOperation(this.getDataTypeManager(), this), this.getDataTypeInfo(), this.getDataTypeManager()));
 	}
 	
 	@Override

@@ -2,13 +2,14 @@ package com.nosliw.data.basic.bool;
 
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataOperation;
+import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperationInfoAnnotation;
 
 public class HAPBooleanOperation extends HAPDataOperation{
 
-	public HAPBooleanOperation(HAPDataTypeManager man) {
-		super(man);
+	public HAPBooleanOperation(HAPDataTypeManager man, HAPDataType dataType) {
+		super(man, dataType);
 	}
 
 	@HAPOperationInfoAnnotation(in = { "integer:simple", "integer:simple" }, out = "boolean:simple", description = "This is operation on Integer data type to compare two Integer")
