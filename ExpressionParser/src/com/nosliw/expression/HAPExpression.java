@@ -194,7 +194,7 @@ public class HAPExpression implements HAPStringable{
 		jsonMap.put(HAPAttributeConstant.EXPRESSION_OPERAND, this.m_operand.toStringValue(format));
 		jsonMap.put(HAPAttributeConstant.EXPRESSION_SCRIPTRUNNALBE, this.isScriptRunnable(HAPConstant.OPERATIONDEF_SCRIPT_JAVASCRIPT)+"");
 
-		jsonMap.put(HAPAttributeConstant.EXPRESSION_VARIABLESINFO, HAPJsonUtility.getMapObjectJson(this.m_varsInfo));
+		jsonMap.put(HAPAttributeConstant.EXPRESSION_VARIABLESINFO, HAPJsonUtility.getMapObjectJson(this.m_varsInfo, format));
 		
 		
 		Map<String, String> constantsJsons = new LinkedHashMap<String, String>();
@@ -203,7 +203,7 @@ public class HAPExpression implements HAPStringable{
 		}
 		jsonMap.put(HAPAttributeConstant.EXPRESSION_CONSTANTS, HAPJsonUtility.getMapJson(constantsJsons));
 
-		jsonMap.put(HAPAttributeConstant.EXPRESSION_ALLDATATYPEINFOS, HAPJsonUtility.getSetObjectJson(this.m_allDataTypeInfo));
+		jsonMap.put(HAPAttributeConstant.EXPRESSION_ALLDATATYPEINFOS, HAPJsonUtility.getSetObjectJson(this.m_allDataTypeInfo, format));
 		
 		Map<String, Class> jsonTypeMap = new LinkedHashMap<String, Class>();
 		jsonTypeMap.put(HAPAttributeConstant.EXPRESSION_SCRIPTRUNNALBE, Boolean.class);

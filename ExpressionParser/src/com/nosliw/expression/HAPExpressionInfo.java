@@ -7,6 +7,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
@@ -60,7 +61,7 @@ public class HAPExpressionInfo implements HAPStringable{
 		Iterator<String> varNames = varInfosJson.keys();
 		while(varNames.hasNext()){
 			String varName = varNames.next();
-			HAPDataTypeInfo varInfo = HAPDataTypeInfo.parse(varInfosJson.optJSONObject(varName));
+			HAPDataTypeInfo varInfo = HAPDataTypeInfo.build(varInfosJson.optJSONObject(varName), HAPValueInfoManager.getInstance());
 			varDataTypeInfos.put(varName, varInfo);
 		}
 		
@@ -80,8 +81,8 @@ public class HAPExpressionInfo implements HAPStringable{
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_EXPRESSION, this.m_expression);
-		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_VARIABLESINFO, HAPJsonUtility.getMapObjectJson(this.m_variableInfos));
-		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_CONSTANTS, HAPJsonUtility.getMapObjectJson(this.m_constantDatas));
+		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_VARIABLESINFO, HAPJsonUtility.getMapObjectJson(this.m_variableInfos, format));
+		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_CONSTANTS, HAPJsonUtility.getMapObjectJson(this.m_constantDatas, format));
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}
 	

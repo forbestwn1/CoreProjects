@@ -14,19 +14,21 @@ public class HAPEntity extends HAPDataTypeImp{
 			HAPDataTypeInfoWithVersion parentDataTypeInfo, HAPConfigure configures, String description,
 			HAPDataTypeManager dataTypeMan) {
 		super(dataTypeInfo, olderDataType, parentDataTypeInfo, configures, description, dataTypeMan);
-		// TODO Auto-generated constructor stub
 	}
 
+	public HAPEntityData newData(){
+		HAPEntityData out = new HAPEntityData(this);
+		return out;
+	}
+	
 	@Override
 	public HAPData getDefaultData() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public HAPServiceData validate(HAPData data) {
-		// TODO Auto-generated method stub
-		return null;
+		return HAPServiceData.createSuccessData();
 	}
 
 }

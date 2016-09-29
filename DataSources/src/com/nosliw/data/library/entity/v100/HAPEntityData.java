@@ -1,5 +1,6 @@
 package com.nosliw.data.library.entity.v100;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.data.HAPData;
@@ -12,9 +13,19 @@ public class HAPEntityData extends HAPDataImp{
 	
 	public HAPEntityData(HAPDataType dataType) {
 		super(dataType);
-		// TODO Auto-generated constructor stub
+		this.m_attributes = new LinkedHashMap<String, HAPData>();
 	}
 
+	public HAPEntityData setAttribute(String attribute, HAPData data){
+		this.m_attributes.put(attribute, data);
+		return this;
+	}
+	
+	public HAPData getAttribute(String name){
+		return this.m_attributes.get(name);
+	}
+
+	
 	@Override
 	public HAPData cloneData() {
 		// TODO Auto-generated method stub
@@ -23,7 +34,6 @@ public class HAPEntityData extends HAPDataImp{
 
 	@Override
 	public String toDataStringValue(String format) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

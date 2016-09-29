@@ -73,22 +73,6 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 		}
 	}
 	
-	public HAPData newData(HAPDataTypeInfoWithVersion dataTypeInfo, HAPData[] parms){
-		
-	}
-
-	public HAPData newData(HAPDataTypeInfoWithVersion dataTypeInfo, String name, HAPData[] parms){
-		
-	}
-
-	public HAPData newData(HAPDataTypeInfo dataTypeInfo, String name, HAPData[] parms){
-		return (HAPData)this.getDataType(dataTypeInfo).newData(name, parms).getData();
-	}
-
-	public HAPData newData(HAPDataTypeInfo dataTypeInfo, HAPData[] parms){
-		return (HAPData)this.getDataType(dataTypeInfo).newData(parms).getData();
-	}
-	
 	public HAPDataType registerDataType(HAPDataType dataType){
 		HAPDataTypeInfo dataTypeInfo = dataType.getDataTypeInfo(); 
 		String key = this.getDataTypeKey(dataTypeInfo);
@@ -174,6 +158,31 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 		return info.toString();
 	}
 
+	/****************************** operation ********************************/
+	public HAPData newData(HAPDataTypeInfoWithVersion dataTypeInfo, HAPData[] parms){
+		
+	}
+
+	public HAPData newData(HAPDataTypeInfoWithVersion dataTypeInfo, String name, HAPData[] parms){
+		
+	}
+
+	public HAPData newData(HAPDataTypeInfo dataTypeInfo, String name, HAPData[] parms){
+		return (HAPData)this.getDataType(dataTypeInfo).newData(name, parms).getData();
+	}
+
+	public HAPData newData(HAPDataTypeInfo dataTypeInfo, HAPData[] parms){
+		return (HAPData)this.getDataType(dataTypeInfo).newData(parms).getData();
+	}
+	
+	public HAPData dataOperate(HAPDataTypeInfo dataTypeInfo, String operation, HAPData[] parms){
+		
+	}
+
+	public HAPData dataOperate(HAPDataType dataType, String operation, HAPData[] parms){
+		
+	}
+	
 	/****************************** operation script ********************************/
 	public Set<String> getSupportedScripts(){
 		Set<String> out = new HashSet<String>();

@@ -109,6 +109,6 @@ public abstract class HAPOperandOperation extends HAPOperandImp{
 		if(this.m_baseDataTypeInfo!=null){
 			jsonMap.put(HAPAttributeConstant.OPERAND_OPERATION_BASEDATATYPEINFO, this.m_baseDataTypeInfo.toStringValue(HAPConstant.SERIALIZATION_JSON));
 		}
-		jsonMap.put(HAPAttributeConstant.OPERAND_OPERATION_PARAMETERS, HAPJsonUtility.getArrayObjectJson(this.m_parms));
+		jsonMap.put(HAPAttributeConstant.OPERAND_OPERATION_PARAMETERS, HAPJsonUtility.getArrayObjectJson(this.m_parms, HAPConstant.SERIALIZATION_JSON));
 	}
 }
