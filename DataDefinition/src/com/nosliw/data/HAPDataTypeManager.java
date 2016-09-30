@@ -23,6 +23,8 @@ import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.basic.bool.HAPBoolean;
 import com.nosliw.data.basic.doubl.HAPDouble;
 import com.nosliw.data.basic.floa.HAPFloat;
+import com.nosliw.data.basic.list.HAPList;
+import com.nosliw.data.basic.map.HAPMap;
 import com.nosliw.data.basic.number.HAPInteger;
 import com.nosliw.data.basic.string.HAPString;
 import com.nosliw.data.basic.string.HAPStringData;
@@ -41,6 +43,8 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 	public static HAPString STRING;
 	public static HAPFloat FLOAT;
 	public static HAPDouble DOUBLE;
+	public static HAPMap MAP;
+	public static HAPList LIST;
 	
 	//map for data type string vs data type obj
 	private Map<String, HAPDataType> m_dataTypes;
@@ -147,7 +151,13 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 		HAPDataTypeManager.FLOAT = (HAPFloat)this.registerDataType(HAPFloat.createDataType(floatDataTypeInfo, null, null, null, "", this));
 
 		HAPDataTypeInfoWithVersion doubleDataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_SIMPLE, HAPConstant.DATATYPE_TYPE_DOUBLE);
-		HAPDataTypeManager.DOUBLE = (HAPDouble)this.registerDataType(HAPFloat.createDataType(doubleDataTypeInfo, null, null, null, "", this));
+		HAPDataTypeManager.DOUBLE = (HAPDouble)this.registerDataType(HAPDouble.createDataType(doubleDataTypeInfo, null, null, null, "", this));
+
+		HAPDataTypeInfoWithVersion mapDataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_SIMPLE, HAPConstant.DATATYPE_TYPE_MAP);
+		HAPDataTypeManager.MAP = (HAPMap)this.registerDataType(HAPMap.createDataType(mapDataTypeInfo, null, null, null, "", this));
+	
+		HAPDataTypeInfoWithVersion listDataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_SIMPLE, HAPConstant.DATATYPE_TYPE_LIST);
+		HAPDataTypeManager.LIST = (HAPList)this.registerDataType(HAPList.createDataType(listDataTypeInfo, null, null, null, "", this));
 	}
 
 	public HAPStringData getStringData(String value){
@@ -160,11 +170,11 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 
 	/****************************** operation ********************************/
 	public HAPData newData(HAPDataTypeInfoWithVersion dataTypeInfo, HAPData[] parms){
-		
+		return (HAPData)this.getDataType(dataTypeInfo).newData(parms).getData();
 	}
 
 	public HAPData newData(HAPDataTypeInfoWithVersion dataTypeInfo, String name, HAPData[] parms){
-		
+		return (HAPData)this.getDataType(dataTypeInfo).newData(name, parms).getData();
 	}
 
 	public HAPData newData(HAPDataTypeInfo dataTypeInfo, String name, HAPData[] parms){
@@ -176,11 +186,11 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 	}
 	
 	public HAPData dataOperate(HAPDataTypeInfo dataTypeInfo, String operation, HAPData[] parms){
-		
+		return (HAPData)this.getDataType(dataTypeInfo).operate(operation, parms).getData();
 	}
 
 	public HAPData dataOperate(HAPDataType dataType, String operation, HAPData[] parms){
-		
+		return (HAPData)dataType.operate(operation, parms).getData();
 	}
 	
 	/****************************** operation script ********************************/

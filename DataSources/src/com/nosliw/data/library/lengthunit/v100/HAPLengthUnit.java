@@ -10,7 +10,7 @@ import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
 
 public class HAPLengthUnit extends HAPDataTypeImp{
 
-	protected HAPLengthUnit(HAPDataTypeInfoWithVersion dataTypeInfo, HAPDataType olderDataType,
+	public HAPLengthUnit(HAPDataTypeInfoWithVersion dataTypeInfo, HAPDataType olderDataType,
 			HAPDataTypeInfoWithVersion parentDataTypeInfo, HAPConfigure configures, String description,
 			HAPDataTypeManager dataTypeMan) {
 		super(dataTypeInfo, olderDataType, parentDataTypeInfo, configures, description, dataTypeMan);

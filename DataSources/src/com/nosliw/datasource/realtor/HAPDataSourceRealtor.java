@@ -17,6 +17,10 @@ public class HAPDataSourceRealtor implements HAPDataSource{
 
 	private HAPDataTypeManager m_dataTypeMan;
 	
+	public HAPDataSourceRealtor(HAPDataTypeManager dataTypeMan){
+		this.m_dataTypeMan = dataTypeMan;
+	}
+	
 	@Override
 	public HAPData getData() {
 		HAPData out = null;

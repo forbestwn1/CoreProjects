@@ -11,7 +11,7 @@ import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
 
 public class HAPDistance extends HAPDataTypeImp{
 
-	protected HAPDistance(HAPDataTypeInfoWithVersion dataTypeInfo, HAPDataType olderDataType,
+	public HAPDistance(HAPDataTypeInfoWithVersion dataTypeInfo, HAPDataType olderDataType,
 			HAPDataTypeInfoWithVersion parentDataTypeInfo, HAPConfigure configures, String description,
 			HAPDataTypeManager dataTypeMan) {
 		super(dataTypeInfo, olderDataType, parentDataTypeInfo, configures, description, dataTypeMan);

@@ -6,10 +6,13 @@ import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeImp;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.basic.floa.HAPFloat;
 import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
 
 public class HAPMap extends HAPDataTypeImp{
 
+	private static HAPMap dataType;
+	
 	protected HAPMap(HAPDataTypeInfoWithVersion dataTypeInfo, HAPDataType olderDataType,
 			HAPDataTypeInfoWithVersion parentDataTypeInfo, HAPConfigure configures, String description,
 			HAPDataTypeManager dataTypeMan) {
@@ -30,4 +33,16 @@ public class HAPMap extends HAPDataTypeImp{
 		return null;
 	}
 
+	//factory method to create data type object 
+	static public HAPMap createDataType(HAPDataTypeInfoWithVersion dataTypeInfo, 
+										HAPDataType olderDataType, 		
+										HAPDataTypeInfoWithVersion parentDataTypeInfo, 
+										HAPConfigure configures,
+										String description,
+										HAPDataTypeManager dataTypeMan){
+		if(HAPMap.dataType==null){
+			HAPMap.dataType = new HAPMap(dataTypeInfo, olderDataType, parentDataTypeInfo, configures, description, dataTypeMan);
+		}
+		return HAPMap.dataType;
+	}
 }

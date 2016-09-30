@@ -23,6 +23,10 @@ public class HAPDataSourceSchool implements HAPDataSource{
 
 	private HAPDataTypeManager m_dataTypeMan;
 	
+	public HAPDataSourceSchool(HAPDataTypeManager dataTypeMan){
+		this.m_dataTypeMan = dataTypeMan;
+	}
+	
 	@Override
 	public HAPData getData(){
 

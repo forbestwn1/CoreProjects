@@ -109,6 +109,8 @@ public class HAPConstant {
 		public static final String DATATYPE_TYPE_DOUBLE = "double";
 		public static final String DATATYPE_TYPE_BOOLEAN = "boolean";
 		public static final String DATATYPE_TYPE_STRING = "string";
+		public static final String DATATYPE_TYPE_MAP = "map";
+		public static final String DATATYPE_TYPE_LIST = "list";
 		public static final String DATATYPE_TYPE_CONTAINER_ENTITYATTRIBUTE = "normal";
 		public static final String DATATYPE_TYPE_CONTAINER_OPTIONS = "options";
 		public static final String DATATYPE_TYPE_CONTAINER_QUERY = "query";

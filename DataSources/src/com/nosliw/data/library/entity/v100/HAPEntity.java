@@ -10,7 +10,7 @@ import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
 
 public class HAPEntity extends HAPDataTypeImp{
 
-	protected HAPEntity(HAPDataTypeInfoWithVersion dataTypeInfo, HAPDataType olderDataType,
+	public HAPEntity(HAPDataTypeInfoWithVersion dataTypeInfo, HAPDataType olderDataType,
 			HAPDataTypeInfoWithVersion parentDataTypeInfo, HAPConfigure configures, String description,
 			HAPDataTypeManager dataTypeMan) {
 		super(dataTypeInfo, olderDataType, parentDataTypeInfo, configures, description, dataTypeMan);
