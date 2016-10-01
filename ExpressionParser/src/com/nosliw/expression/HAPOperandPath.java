@@ -9,6 +9,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperand;
+import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPWraper;
 import com.nosliw.data.info.HAPDataTypeInfo;
 import com.nosliw.expression.utils.HAPAttributeConstant;
@@ -90,8 +91,8 @@ public class HAPOperandPath extends HAPOperandImp{
 	public int getOperandType() {	return HAPConstant.EXPRESSION_OPERAND_PATHOPERATION;	}
 
 	@Override
-	public HAPData execute(Map<String, HAPData> vars, Map<String, HAPWraper> wraperVars) {
-		return m_attributeOperand.execute(vars, wraperVars);
+	public HAPData execute(Map<String, HAPData> vars, Map<String, HAPWraper> wraperVars, HAPOperationContext opContext) {
+		return m_attributeOperand.execute(vars, wraperVars, opContext);
 	}
 
 	@Override

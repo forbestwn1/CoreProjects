@@ -21,7 +21,7 @@ public interface HAPOperand extends HAPStringable{
 	 * 		vars    	available variable values
 	 * 		wraperVars  available wrapered variable values  XXXXX  why this needed ????
 	 */
-	public HAPData execute(Map<String, HAPData> vars, Map<String, HAPWraper> wraperVars);
+	public HAPData execute(Map<String, HAPData> vars, Map<String, HAPWraper> wraperVars, HAPOperationContext opContext);
 	
 	/*
 	 * try best to get output data type information, 

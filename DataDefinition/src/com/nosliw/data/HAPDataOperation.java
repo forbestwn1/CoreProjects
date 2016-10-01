@@ -31,16 +31,16 @@ public class HAPDataOperation {
 		return this.m_dataTypeMan;
 	}
 	
-	protected HAPServiceData dataOperate(HAPData masterData, String operation, HAPData[] parms){
-		return this.dataOperate(masterData.getDataType(), operation, parms);
+	protected HAPServiceData dataOperate(HAPData masterData, String operation, HAPData[] parms, HAPOperationContext opContext){
+		return this.dataOperate(masterData.getDataType(), operation, parms, opContext);
 	}
 	
-	protected HAPServiceData dataOperate(String categary, String type, String operation, HAPData[] parms){
-		return this.dataOperate(this.getDataType(categary, type), operation, parms);
+	protected HAPServiceData dataOperate(String categary, String type, String operation, HAPData[] parms, HAPOperationContext opContext){
+		return this.dataOperate(this.getDataType(categary, type), operation, parms, opContext);
 	}
 	
-	protected HAPServiceData dataOperate(HAPDataType dataType, String operation, HAPData[] parms){
-		HAPServiceData serviceData = dataType.operate(operation, parms);
+	protected HAPServiceData dataOperate(HAPDataType dataType, String operation, HAPData[] parms, HAPOperationContext opContext){
+		HAPServiceData serviceData = dataType.operate(operation, parms, opContext);
 		return serviceData;
 	}
 }

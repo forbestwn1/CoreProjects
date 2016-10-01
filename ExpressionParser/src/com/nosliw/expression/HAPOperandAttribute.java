@@ -49,7 +49,7 @@ public class HAPOperandAttribute extends HAPOperandDataOperaion{
 		//try to get out data type info based on base data type and path info
 		//it is through the operation defined in base data : getChildDatatype
 		if(this.getBaseDataType()!=null){
-			HAPServiceData serviceData = this.getBaseDataType().operate(HAPConstant.DATAOPERATION_GETCHILDDATATYPE, new HAPData[]{HAPDataTypeManager.STRING.createDataByValue(m_attribute)});
+			HAPServiceData serviceData = this.getBaseDataType().operate(HAPConstant.DATAOPERATION_GETCHILDDATATYPE, new HAPData[]{HAPDataTypeManager.STRING.createDataByValue(m_attribute)}, null);
 			this.setOutDataTypeInfo(HAPDataTypeInfo.parseDataTypeInfo(serviceData.getData().toString()));
 		}
 		else{

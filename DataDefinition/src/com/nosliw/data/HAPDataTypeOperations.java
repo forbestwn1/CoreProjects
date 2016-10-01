@@ -47,14 +47,14 @@ public class HAPDataTypeOperations {
 	 *     2. CONS_ERRORCODE_DATAOPERATION_NOTDEFINED    the operation does not define in this set
 	 *     3. CONS_ERRORCODE_DATAOPERATION_NOTEXIST    the operation is defined, but no method is provided
 	 */
-	public HAPServiceData operate(String operation, HAPData[] data){
+	public HAPServiceData operate(String operation, HAPData[] data, HAPOperationContext opContext){
 		HAPDataOperationInfo opInfo = this.getOperationInfoByName(operation);
 		if(opInfo==null) return HAPDataErrorUtility.createDataOperationNotDefinedError(this.m_dataTypeInfo, operation, null);  
 		
 		Class[] paramTypes = new Class[]{HAPData[].class};
 		try {
-			Method m = this.getOperationObject().getClass().getDeclaredMethod(operation, new Class[]{HAPData[].class});
-			Object r = m.invoke(this.getOperationObject(), new Object[]{data});
+			Method m = this.getOperationObject().getClass().getDeclaredMethod(operation, new Class[]{HAPData[].class, HAPOperationContext.class});
+			Object r = m.invoke(this.getOperationObject(), new Object[]{data}, opContext);
 			return HAPServiceData.createSuccessData(r);
 		} catch (Exception e) {
 			e.printStackTrace();

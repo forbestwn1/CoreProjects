@@ -4,6 +4,7 @@ import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataOperation;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPOperationInfoAnnotation;
 import com.nosliw.data.basic.map.HAPMapData;
 import com.nosliw.data.library.entity.v100.HAPEntity;
@@ -16,13 +17,13 @@ public class HAPExpressionOperation extends HAPDataOperation{
 	}
 
 	@HAPOperationInfoAnnotation(in = { "expression:simple", "map:simple" }, out = "any", description = "Excute Expression")
-	public HAPData excute(HAPData[] parms){
+	public HAPData excute(HAPData[] parms, HAPOperationContext opContext){
 		HAPExpressionData expressionData = (HAPExpressionData)parms[0];
 		HAPExpression expression = expressionData.getExpression();
 
 		HAPMapData varsData = (HAPMapData)parms[1];
 		
-		HAPData out = expression.execute(varsData.getMap(), null);
+		HAPData out = expression.execute(varsData.getMap(), null, opContext);
 		return out;
 	}
 

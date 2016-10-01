@@ -6,6 +6,7 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPWraper;
 import com.nosliw.data.info.HAPDataTypeInfo;
 import com.nosliw.expression.utils.HAPAttributeConstant;
@@ -35,7 +36,7 @@ public class HAPOperandVariable extends HAPOperandAtom{
 	public String getVarName(){	return this.m_varName;}
 	
 	@Override
-	public HAPData execute(Map<String, HAPData> vars, Map<String, HAPWraper> wraperVars) {
+	public HAPData execute(Map<String, HAPData> vars, Map<String, HAPWraper> wraperVars, HAPOperationContext opContext) {
 		HAPData out = null;
 		
 		out = vars.get(this.getVarName());

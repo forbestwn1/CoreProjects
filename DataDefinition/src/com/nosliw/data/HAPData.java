@@ -38,6 +38,6 @@ public interface HAPData extends HAPStringable{
 	/*
 	 * run operation on this data
 	 */
-	public HAPServiceData operate(String operation, List<HAPData> parms);
+	public HAPServiceData operate(String operation, List<HAPData> parms, HAPOperationContext opContext);
 
 }

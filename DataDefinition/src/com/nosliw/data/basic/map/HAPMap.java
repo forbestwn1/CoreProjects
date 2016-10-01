@@ -6,7 +6,9 @@ import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeImp;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPDataTypeOperationsAnnotation;
 import com.nosliw.data.basic.floa.HAPFloat;
+import com.nosliw.data.basic.list.HAPListOperation;
 import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
 
 public class HAPMap extends HAPDataTypeImp{
@@ -19,6 +21,11 @@ public class HAPMap extends HAPDataTypeImp{
 		super(dataTypeInfo, olderDataType, parentDataTypeInfo, configures, description, dataTypeMan);
 	}
 
+	@Override
+	public void buildOperation(){
+		this.setDataTypeOperations(new HAPDataTypeOperationsAnnotation(new HAPMapOperation(this.getDataTypeManager(), this), this.getDataTypeInfo(), this.getDataTypeManager()));
+	}
+	
 	public HAPMapData newMap(){
 		return new HAPMapData(this);
 	}

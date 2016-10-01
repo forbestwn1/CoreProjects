@@ -6,6 +6,7 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPWraper;
 import com.nosliw.data.info.HAPDataTypeInfo;
 import com.nosliw.data.utils.HAPDataUtility;
@@ -38,7 +39,7 @@ public class HAPOperandConstant extends HAPOperandAtom{
 	public int getOperandType(){	return HAPConstant.EXPRESSION_OPERAND_CONSTANT;}
 
 	@Override
-	public HAPData execute(Map<String, HAPData> vars, Map<String, HAPWraper> wraperVars) {	return this.m_data;	}
+	public HAPData execute(Map<String, HAPData> vars, Map<String, HAPWraper> wraperVars, HAPOperationContext opContext) {	return this.m_data;	}
 
 	@Override
 	public void preProcess(Map<String, HAPDataTypeInfo> varsInfo, Set<HAPDataTypeInfo> dataTypeInfos){

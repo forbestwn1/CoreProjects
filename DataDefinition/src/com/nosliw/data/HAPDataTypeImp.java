@@ -86,8 +86,8 @@ public abstract class HAPDataTypeImp implements HAPDataType{
 
 	/****************************** Operation Related ********************************/
 	@Override
-	public HAPServiceData localOperate(String operation, HAPData[] parms){
-		return this.getDataTypeOperationsObject().operate(operation, parms);
+	public HAPServiceData localOperate(String operation, HAPData[] parms, HAPOperationContext opContext){
+		return this.getDataTypeOperationsObject().operate(operation, parms, opContext);
 	}
 
 	/*
@@ -96,22 +96,26 @@ public abstract class HAPDataTypeImp implements HAPDataType{
 	 * 		parms: parms for the operation
 	 */
 	@Override
-	public HAPServiceData operate(String operation, HAPData[] parms){
-		return HAPDataOperationUtility.dataOperate(this, operation, parms);
+	public HAPServiceData operate(String operation, HAPData[] parms, HAPOperationContext opContext){
+		return HAPDataOperationUtility.dataOperate(this, operation, parms, opContext);
 	}
 	
 	@Override
-	public HAPDataOperationInfo getNewDataOperation(HAPDataTypeInfo[] dataTypeInfos){	return this.getDataTypeOperationInfos().getNewDataOperation(dataTypeInfos);	}
+	public HAPDataOperationInfo getNewDataOperation(HAPDataTypeInfo[] dataTypeInfos){	
+		return this.getDataTypeOperationInfos().getNewDataOperation(dataTypeInfos);	
+	}
 	
 	@Override
-	public HAPServiceData newData(HAPData[] data){
+	public HAPServiceData newData(HAPData[] data, HAPOperationContext opContext){
 		List<HAPDataTypeInfo> parmTypes = new ArrayList<HAPDataTypeInfo>();
-		for(HAPData d : data)	parmTypes.add(HAPDataUtility.getDataTypeInfo(d));
+		if(data!=null){
+			for(HAPData d : data)	parmTypes.add(HAPDataUtility.getDataTypeInfo(d));
+		}
 		HAPDataOperationInfo newDataOp = this.getNewDataOperation(parmTypes.toArray(new HAPDataTypeInfo[0]));
 		
 		HAPServiceData out = null;
 		if(newDataOp!=null){
-			out = this.localOperate(newDataOp.getName(), data);
+			out = this.localOperate(newDataOp.getName(), data, opContext);
 		}
 		else{
 			out = HAPDataErrorUtility.createNewDataOperationNotDefinedError(this.getDataTypeInfo(), data, null);
@@ -120,7 +124,7 @@ public abstract class HAPDataTypeImp implements HAPDataType{
 	}
 
 	@Override
-	public HAPServiceData newData(String name, HAPData[] data){	return this.localOperate(name, data);	}
+	public HAPServiceData newData(String name, HAPData[] data, HAPOperationContext opContext){	return this.localOperate(name, data, opContext);	}
 	
 	@Override
 	public Set<HAPDataTypeInfo> getOperationDependentDataTypes(String operation){
@@ -287,7 +291,7 @@ public abstract class HAPDataTypeImp implements HAPDataType{
 			//literal
 			//if operation CONS_DATAOPERATION_PARSELITERAL is defined
 			HAPData[] parms = {HAPDataTypeManager.createStringData((String)value)};
-			HAPServiceData serviceData = this.localOperate(HAPConstant.DATAOPERATION_PARSELITERAL, parms);
+			HAPServiceData serviceData = this.localOperate(HAPConstant.DATAOPERATION_PARSELITERAL, parms, null);
 			if(serviceData.isSuccess())  return (HAPData)serviceData.getData();
 			else{
 				return this.parseLiteral((String)value);

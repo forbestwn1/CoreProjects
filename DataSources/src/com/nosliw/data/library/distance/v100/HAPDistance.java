@@ -6,6 +6,7 @@ import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeImp;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.info.HAPDataTypeInfo;
 import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
 
@@ -27,8 +28,8 @@ public class HAPDistance extends HAPDataTypeImp{
 		return HAPServiceData.createSuccessData();
 	}
 
-	public HAPDistanceData newDistanceKm(double distance){
-		HAPData lengthUnit = (HAPData)this.getDataTypeManager().getDataType(new HAPDataTypeInfo("simple", "lengthUnit")).newData("newKm", null).getData();
+	public HAPDistanceData newDistanceKm(double distance, HAPOperationContext opContext){
+		HAPData lengthUnit = (HAPData)this.getDataTypeManager().getDataType(new HAPDataTypeInfo("simple", "lengthUnit")).newData("newKm", null, opContext).getData();
 		return new HAPDistanceData(distance, lengthUnit, this);
 	}
 	

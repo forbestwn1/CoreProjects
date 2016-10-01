@@ -23,11 +23,13 @@ public class HAPDataErrorUtility {
 	 */
 	public static HAPServiceData createNewDataOperationNotDefinedError(HAPDataTypeInfo dataType, HAPData[] parms, Exception ex){
 		StringBuffer parmTypes = new StringBuffer();
-		parmTypes.append("");
-		for(int i=0; i<parms.length ; i++){
-			HAPData parm = parms[i];
-			if(i!=0)  parmTypes.append(", ");
-			parmTypes.append(HAPDataUtility.getDataTypeInfo(parm).toString());
+		parmTypes.append("[");
+		if(parms!=null){
+			for(int i=0; i<parms.length ; i++){
+				HAPData parm = parms[i];
+				if(i!=0)  parmTypes.append(", ");
+				parmTypes.append(HAPDataUtility.getDataTypeInfo(parm).toString());
+			}
 		}
 		parmTypes.append("]");
 		HAPServiceData out = HAPServiceData.createServiceData(HAPConstant.ERRORCODE_NEWDATAOPERATION_NOTDEFINED, 

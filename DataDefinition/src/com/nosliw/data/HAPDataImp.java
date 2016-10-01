@@ -23,11 +23,11 @@ public abstract class HAPDataImp implements HAPData{
 	
 	//*************************  Operate
 	@Override
-	public HAPServiceData operate(String operation, List<HAPData> parms){
+	public HAPServiceData operate(String operation, List<HAPData> parms, HAPOperationContext opContext){
 		List<HAPData> p = new ArrayList<HAPData>();
 		p.add(this);
 		p.addAll(parms);
-		return this.getDataType().operate(operation, p.toArray(new HAPData[0]));
+		return this.getDataType().operate(operation, p.toArray(new HAPData[0]), opContext);
 	}
 	
 	//*************************  Clear Up

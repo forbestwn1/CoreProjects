@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.basic.list.HAPList;
 import com.nosliw.data.info.HAPDataTypeInfo;
 import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
@@ -42,6 +43,7 @@ public class Main {
 		HAPDataTypeInfoWithVersion entityDataTypeInfo = new HAPDataTypeInfoWithVersion(HAPConstant.DATATYPE_CATEGARY_SIMPLE, "entity");
 		m_dataTypeMan.registerDataType(new HAPEntity(entityDataTypeInfo, null, null, null, "", m_dataTypeMan));
 
+		m_dataTypeMan.init();
 		
 		HAPDataSourceRealtor realtorDataSource = new HAPDataSourceRealtor(m_dataTypeMan);
 		
@@ -63,12 +65,14 @@ public class Main {
 		
 		HAPExpressionInfo expressionInfo = new HAPExpressionInfo(mainExprssion, null, null);
 		HAPExpression expression = new HAPExpression(expressionInfo, m_dataTypeMan);
-		HAPData outData = expression.execute(parmDatas, null);
+		HAPOperationContext opContext = new HAPOperationContext();
+		opContext.setVariables(parmDatas);
+		HAPData outData = expression.execute(parmDatas, null, opContext);
 	}
 	
 	private static HAPExpressionData createExpressionData(String expression){
 		HAPData[] parm1 = {HAPDataTypeManager.STRING.createDataByValue(expression)};
-		return (HAPExpressionData)m_dataTypeMan.newData(new HAPDataTypeInfo("simple", "expression"),  parm1);
+		return (HAPExpressionData)m_dataTypeMan.newData(new HAPDataTypeInfo("simple", "expression"),  parm1, null);
 	}
 	
 }

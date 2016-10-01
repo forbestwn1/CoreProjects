@@ -8,6 +8,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperand;
+import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPWraper;
 import com.nosliw.data.info.HAPDataTypeInfo;
 import com.nosliw.expression.utils.HAPAttributeConstant;
@@ -28,13 +29,14 @@ public class HAPOperandDataOperaion extends HAPOperandOperation{
 	public int getOperandType() {	return HAPConstant.EXPRESSION_OPERAND_DATAOPERATION;	}
 
 	@Override
-	public HAPData execute(Map<String, HAPData> vars, Map<String, HAPWraper> wraperVars){
+	public HAPData execute(Map<String, HAPData> vars, Map<String, HAPWraper> wraperVars, HAPOperationContext opContext){
 		HAPData[] parms = new HAPData[this.getParameters().length+1];
-		parms[0] = this.m_baseData.execute(vars, wraperVars);
+		parms[0] = this.m_baseData.execute(vars, wraperVars, opContext);
 		for(int i=0; i<this.getParameters().length; i++){
-			parms[i+1] = this.getParameters()[i].execute(vars, wraperVars);
+			parms[i+1] = this.getParameters()[i].execute(vars, wraperVars, opContext);
 		}
-		HAPServiceData serviceData = parms[0].getDataType().operate(this.getOperationName(), parms);
+		
+		HAPServiceData serviceData = parms[0].getDataType().operate(this.getOperationName(), parms, opContext);
 		return (HAPData)serviceData.getData();
 	}
 

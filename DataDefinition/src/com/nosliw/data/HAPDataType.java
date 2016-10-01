@@ -85,12 +85,12 @@ public interface HAPDataType extends HAPStringable{
 	public Set<HAPDataOperationInfo> getNewDataOperations();
 	
 	//for java, run operate
-	public HAPServiceData operate(String operation, HAPData[] data);
-	public HAPServiceData localOperate(String operation, HAPData[] data);
+	public HAPServiceData operate(String operation, HAPData[] data, HAPOperationContext opContext);
+	public HAPServiceData localOperate(String operation, HAPData[] data, HAPOperationContext opContext);
 	//create a new data instance 
-	public HAPServiceData newData(HAPData[] data);
+	public HAPServiceData newData(HAPData[] data, HAPOperationContext opContext);
 	//create a new data instance by using the name new method
-	public HAPServiceData newData(String name, HAPData[] data);
+	public HAPServiceData newData(String name, HAPData[] data, HAPOperationContext opContext);
 	//get new data operation info by parms type
 	public HAPDataOperationInfo getNewDataOperation(HAPDataTypeInfo[] dataTypeInfos);
 

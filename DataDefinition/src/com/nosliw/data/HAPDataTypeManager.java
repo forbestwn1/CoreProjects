@@ -72,7 +72,7 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 			HAPDataType dataType = this.m_dataTypes.get(key);
 			dataType.buildOperation();
 			//store data type operation script of file and buffer
-			this.processDataTypeOperationScript(dataType);
+//			this.processDataTypeOperationScript(dataType);
 			
 		}
 	}
@@ -169,28 +169,28 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 	}
 
 	/****************************** operation ********************************/
-	public HAPData newData(HAPDataTypeInfoWithVersion dataTypeInfo, HAPData[] parms){
-		return (HAPData)this.getDataType(dataTypeInfo).newData(parms).getData();
+	public HAPData newData(HAPDataTypeInfoWithVersion dataTypeInfo, HAPData[] parms, HAPOperationContext opContext){
+		return (HAPData)this.getDataType(dataTypeInfo).newData(parms, opContext).getData();
 	}
 
-	public HAPData newData(HAPDataTypeInfoWithVersion dataTypeInfo, String name, HAPData[] parms){
-		return (HAPData)this.getDataType(dataTypeInfo).newData(name, parms).getData();
+	public HAPData newData(HAPDataTypeInfoWithVersion dataTypeInfo, String name, HAPData[] parms, HAPOperationContext opContext){
+		return (HAPData)this.getDataType(dataTypeInfo).newData(name, parms, opContext).getData();
 	}
 
-	public HAPData newData(HAPDataTypeInfo dataTypeInfo, String name, HAPData[] parms){
-		return (HAPData)this.getDataType(dataTypeInfo).newData(name, parms).getData();
+	public HAPData newData(HAPDataTypeInfo dataTypeInfo, String name, HAPData[] parms, HAPOperationContext opContext){
+		return (HAPData)this.getDataType(dataTypeInfo).newData(name, parms, opContext).getData();
 	}
 
-	public HAPData newData(HAPDataTypeInfo dataTypeInfo, HAPData[] parms){
-		return (HAPData)this.getDataType(dataTypeInfo).newData(parms).getData();
+	public HAPData newData(HAPDataTypeInfo dataTypeInfo, HAPData[] parms, HAPOperationContext opContext){
+		return (HAPData)this.getDataType(dataTypeInfo).newData(parms, opContext).getData();
 	}
 	
-	public HAPData dataOperate(HAPDataTypeInfo dataTypeInfo, String operation, HAPData[] parms){
-		return (HAPData)this.getDataType(dataTypeInfo).operate(operation, parms).getData();
+	public HAPData dataOperate(HAPDataTypeInfo dataTypeInfo, String operation, HAPData[] parms, HAPOperationContext opContext){
+		return (HAPData)this.getDataType(dataTypeInfo).operate(operation, parms, opContext).getData();
 	}
 
-	public HAPData dataOperate(HAPDataType dataType, String operation, HAPData[] parms){
-		return (HAPData)dataType.operate(operation, parms).getData();
+	public HAPData dataOperate(HAPDataType dataType, String operation, HAPData[] parms, HAPOperationContext opContext){
+		return (HAPData)dataType.operate(operation, parms, opContext).getData();
 	}
 	
 	/****************************** operation script ********************************/

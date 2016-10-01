@@ -7,6 +7,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeImp;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.info.HAPDataOperationInfo;
 
 public class HAPDataOperationUtility {
@@ -16,7 +17,7 @@ public class HAPDataOperationUtility {
 	}
 	
 	
-	public static HAPServiceData dataOperate(HAPDataTypeImp dataType, String operation, HAPData[] parms){
+	public static HAPServiceData dataOperate(HAPDataTypeImp dataType, String operation, HAPData[] parms, HAPOperationContext opContext){
 		HAPDataOperationInfo operationInfo = null;
 		operationInfo = dataType.getOperationInfoByName(operation);
 		
@@ -28,7 +29,7 @@ public class HAPDataOperationUtility {
 		String convertPath = operationInfo.getConvertPath();
 		if(HAPBasicUtility.isStringEmpty(convertPath)){
 			//within current version, no convertion
-			return dataType.localOperate(operation, parms);
+			return dataType.localOperate(operation, parms, opContext);
 		}
 		else{
 			//do convertion of the parms
@@ -46,7 +47,7 @@ public class HAPDataOperationUtility {
 						HAPData d = oldParms[i];
 						if(newDataType.getDataTypeInfo().equalsWithoutVersion(HAPDataUtility.getDataTypeInfo(d))){ // just convert all the parms of the same data type (not considering the version)
 							//conver to parent type
-							HAPServiceData s = d.getDataType().operate(HAPConstant.DATAOPERATION_TOPARENTTYPE, new HAPData[]{d});
+							HAPServiceData s = d.getDataType().operate(HAPConstant.DATAOPERATION_TOPARENTTYPE, new HAPData[]{d}, opContext);
 							if(s.isSuccess())  newParms[i] = (HAPData)s.getData();	
 							else	return s;
 						}
@@ -65,7 +66,7 @@ public class HAPDataOperationUtility {
 						HAPData d = oldParms[i];
 						if(newDataType.getDataTypeInfo().equalsWithoutVersion(HAPDataUtility.getDataTypeInfo(d))){ // just convert all the parms of the same data type (not considering the version)
 							//conver to parent type
-							HAPServiceData s = dataType.operate(HAPConstant.DATAOPERATION_TOVERSION, new HAPData[]{d, HAPDataTypeManager.INTEGER.createDataByValue(newVersion)});
+							HAPServiceData s = dataType.operate(HAPConstant.DATAOPERATION_TOVERSION, new HAPData[]{d, HAPDataTypeManager.INTEGER.createDataByValue(newVersion)}, opContext);
 							if(s.isSuccess())	newParms[i] = (HAPData)s.getData();
 							else	return s;
 						}
@@ -78,12 +79,12 @@ public class HAPDataOperationUtility {
 				}
 				oldParms = newParms; 
 			}
-			HAPServiceData out = newDataType.operate(operation, oldParms);
+			HAPServiceData out = newDataType.operate(operation, oldParms, opContext);
 			if(out.isSuccess() && out.getData()!=null){
 				HAPData outData = (HAPData)out.getData();
 				if(HAPDataUtility.getDataTypeInfoWithVersion(outData).equalsWithoutVersion(dataType.getDataTypeInfo())){
 					//convert the result back to current version
-					HAPServiceData s = dataType.operate(HAPConstant.DATAOPERATION_FROMVERSION, new HAPData[]{outData});
+					HAPServiceData s = dataType.operate(HAPConstant.DATAOPERATION_FROMVERSION, new HAPData[]{outData}, opContext);
 					if(s.isSuccess())	out.setData(s.getData());
 					else	return s;
 				}

@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperand;
+import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPWraper;
 import com.nosliw.data.info.HAPDataTypeInfo;
 import com.nosliw.data.utils.HAPDataUtility;
@@ -176,13 +177,13 @@ public class HAPExpression implements HAPStringable{
 	/*
 	 * run the Expression
 	 */
-	public HAPData execute(Map<String, HAPData> parms, Map<String, HAPWraper> wraperVars){
+	public HAPData execute(Map<String, HAPData> parms, Map<String, HAPWraper> wraperVars, HAPOperationContext opContext){
 		//merge parms input with constantData, data in parms will override constantData
 		Map<String, HAPData> dataParm = new LinkedHashMap<String, HAPData>();
 		dataParm.putAll(this.m_constantDatas);
 		if(parms!=null)  dataParm.putAll(parms);
 		
-		HAPData out = this.m_operand.execute(dataParm, wraperVars);
+		HAPData out = this.m_operand.execute(dataParm, wraperVars, opContext);
 		return out;
 	}
 

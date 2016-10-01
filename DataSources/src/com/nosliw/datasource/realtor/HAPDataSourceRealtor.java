@@ -32,7 +32,7 @@ public class HAPDataSourceRealtor implements HAPDataSource{
 
 			HAPDataTypeInfo listDataTypeInfo = new HAPDataTypeInfo("simple", "list");
 			HAPDataType listDataType = this.m_dataTypeMan.getDataType(listDataTypeInfo);
-			out = (HAPData)listDataType.newData(null).getData();
+			out = (HAPData)listDataType.newData(null, null).getData();
 
 			JSONArray jsonHomesData = new JSONArray(content);
 			for(int i=0; i<jsonHomesData.length(); i++){
@@ -45,19 +45,19 @@ public class HAPDataSourceRealtor implements HAPDataSource{
 						HAPDataTypeManager.DOUBLE.createDataByValue(jsonAddress.optDouble("Latitude")),
 						HAPDataTypeManager.DOUBLE.createDataByValue(jsonAddress.optDouble("Longitude")),
 				};
-				HAPData geoLocationData = this.m_dataTypeMan.newData(new HAPDataTypeInfo("simple", "geoLocation"), parms1);
+				HAPData geoLocationData = this.m_dataTypeMan.newData(new HAPDataTypeInfo("simple", "geoLocation"), parms1, null);
 
 				
 				HAPDataTypeInfo entityDataTypeInfo = new HAPDataTypeInfo("simple", "entity");
 				HAPDataType entityDataType = this.m_dataTypeMan.getDataType(entityDataTypeInfo);
-				HAPData entityData = (HAPData)entityDataType.newData(null).getData();
+				HAPData entityData = (HAPData)entityDataType.newData(null, null).getData();
 				
 				HAPData[] parms2 = {
 						entityData,
 						HAPDataTypeManager.STRING.createDataByValue("geoLocation"),
 						geoLocationData
 				};
-				entityData = (HAPData)entityDataType.operate("setAttribute", parms2).getData();
+				entityData = (HAPData)entityDataType.operate("setAttribute", parms2, null).getData();
 			}			
 		}
 		catch(Exception e){

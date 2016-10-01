@@ -6,6 +6,8 @@ import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeImp;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPDataTypeOperationsAnnotation;
+import com.nosliw.data.basic.bool.HAPBooleanOperation;
 import com.nosliw.data.basic.floa.HAPFloat;
 import com.nosliw.data.basic.map.HAPMap;
 import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
@@ -23,6 +25,11 @@ public class HAPList extends HAPDataTypeImp{
 	public HAPListData newList(){
 		HAPListData out = new HAPListData(this);
 		return out;
+	}
+	
+	@Override
+	public void buildOperation(){
+		this.setDataTypeOperations(new HAPDataTypeOperationsAnnotation(new HAPListOperation(this.getDataTypeManager(), this), this.getDataTypeInfo(), this.getDataTypeManager()));
 	}
 	
 	@Override

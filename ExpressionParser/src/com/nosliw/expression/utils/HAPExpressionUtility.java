@@ -7,6 +7,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperand;
+import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPWraper;
 import com.nosliw.data.basic.bool.HAPBooleanData;
 import com.nosliw.data.basic.floa.HAPFloatData;
@@ -24,9 +25,9 @@ public class HAPExpressionUtility {
 	 * execute some expression with expected return data of boolean type
 	 * if return is not boolean type, then throws exception
 	 */
-	public static boolean executeValidationExpression(HAPExpression expression, Map<String, HAPData> parms, Map<String, HAPWraper> wraperVars) throws HAPServiceDataException
+	public static boolean executeValidationExpression(HAPExpression expression, Map<String, HAPData> parms, Map<String, HAPWraper> wraperVars, HAPOperationContext opContext) throws HAPServiceDataException
 	{
-		HAPData out = expression.execute(parms, wraperVars);
+		HAPData out = expression.execute(parms, wraperVars, opContext);
 		if(HAPDataUtility.isBooleanType(out)){
 			return ((HAPBooleanData)out).getValue();
 		}
@@ -39,9 +40,9 @@ public class HAPExpressionUtility {
 	 * execute some expression with expected return data of integer type
 	 * if return is not integer type, then throws exception
 	 */
-	public static int executeIntegerExpression(HAPExpression expression, Map<String, HAPData> parms, Map<String, HAPWraper> wraperVars) throws HAPServiceDataException
+	public static int executeIntegerExpression(HAPExpression expression, Map<String, HAPData> parms, Map<String, HAPWraper> wraperVars, HAPOperationContext opContext) throws HAPServiceDataException
 	{
-		HAPData out = expression.execute(parms, wraperVars);
+		HAPData out = expression.execute(parms, wraperVars, opContext);
 		if(HAPDataUtility.isIntegerType(out)){
 			return ((HAPIntegerData)out).getValue();
 		}
@@ -54,9 +55,9 @@ public class HAPExpressionUtility {
 	 * execute some expression with expected return data of string type
 	 * if return is not string type, then throws exception
 	 */
-	public static String executeStringExpression(HAPExpression expression, Map<String, HAPData> parms, Map<String, HAPWraper> wraperVars) throws HAPServiceDataException
+	public static String executeStringExpression(HAPExpression expression, Map<String, HAPData> parms, Map<String, HAPWraper> wraperVars, HAPOperationContext opContext) throws HAPServiceDataException
 	{
-		HAPData out = expression.execute(parms, wraperVars);
+		HAPData out = expression.execute(parms, wraperVars, opContext);
 		if(HAPDataUtility.isStringType(out)){
 			return ((HAPStringData)out).getValue();
 		}
@@ -69,9 +70,9 @@ public class HAPExpressionUtility {
 	 * execute some expression with expected return data of string type
 	 * if return is not string type, then throws exception
 	 */
-	public static float executeFloatExpression(HAPExpression expression, Map<String, HAPData> parms, Map<String, HAPWraper> wraperVars) throws HAPServiceDataException
+	public static float executeFloatExpression(HAPExpression expression, Map<String, HAPData> parms, Map<String, HAPWraper> wraperVars, HAPOperationContext opContext) throws HAPServiceDataException
 	{
-		HAPData out = expression.execute(parms, wraperVars);
+		HAPData out = expression.execute(parms, wraperVars, opContext);
 		if(HAPDataUtility.isFloatType(out)){
 			return ((HAPFloatData)out).getValue();
 		}

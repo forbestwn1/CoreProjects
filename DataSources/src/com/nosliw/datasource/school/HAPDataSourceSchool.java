@@ -39,7 +39,7 @@ public class HAPDataSourceSchool implements HAPDataSource{
 
 			HAPDataTypeInfo listDataTypeInfo = new HAPDataTypeInfo("simple", "list");
 			HAPDataType listDataType = this.m_dataTypeMan.getDataType(listDataTypeInfo);
-			out = (HAPData)listDataType.newData(null).getData();
+			out = (HAPData)listDataType.newData(null, null).getData();
 
 			JSONArray jsonSchoolsData = new JSONArray(content);
 			for(int i=0; i<jsonSchoolsData.length(); i++){
@@ -49,7 +49,7 @@ public class HAPDataSourceSchool implements HAPDataSource{
 						HAPDataTypeManager.DOUBLE.createDataByValue(jsonSchoolData.getDouble(INDEX_LAT)),
 						HAPDataTypeManager.DOUBLE.createDataByValue(jsonSchoolData.getDouble(INDEX_LON)),
 				};
-				HAPData geoLocationData = this.m_dataTypeMan.newData(new HAPDataTypeInfo("simple", "geoLocation"), parms1);
+				HAPData geoLocationData = this.m_dataTypeMan.newData(new HAPDataTypeInfo("simple", "geoLocation"), parms1, null);
 
 				
 				HAPData typeData = HAPDataTypeManager.STRING.createDataByValue(jsonSchoolData.getString(INDEX_TYPE));
@@ -61,39 +61,39 @@ public class HAPDataSourceSchool implements HAPDataSource{
 				
 				HAPDataTypeInfo entityDataTypeInfo = new HAPDataTypeInfo("simple", "entity");
 				HAPDataType entityDataType = this.m_dataTypeMan.getDataType(entityDataTypeInfo);
-				HAPData entityData = (HAPData)entityDataType.newData(null).getData();
+				HAPData entityData = (HAPData)entityDataType.newData(null, null).getData();
 				
 				HAPData[] parms2 = {
 						entityData,
 						HAPDataTypeManager.STRING.createDataByValue("geoLocation"),
 						geoLocationData
 				};
-				entityData = (HAPData)entityDataType.operate("setAttribute", parms2).getData();
+				entityData = (HAPData)entityDataType.operate("setAttribute", parms2, null).getData();
 
 				HAPData[] parms3 = {
 						entityData,
 						HAPDataTypeManager.STRING.createDataByValue("name"),
 						nameData
 				};
-				entityData = (HAPData)entityDataType.operate("name", parms3).getData();
+				entityData = (HAPData)entityDataType.operate("name", parms3, null).getData();
 				
 				HAPData[] parms4 = {
 						entityData,
 						HAPDataTypeManager.STRING.createDataByValue("type"),
 						typeData
 				};
-				entityData = (HAPData)entityDataType.operate("type", parms4).getData();
+				entityData = (HAPData)entityDataType.operate("type", parms4, null).getData();
 				
 				HAPData[] parms5 = {
 						entityData,
 						HAPDataTypeManager.STRING.createDataByValue("score"),
 						scoreData
 				};
-				entityData = (HAPData)entityDataType.operate("score", parms5).getData();
+				entityData = (HAPData)entityDataType.operate("score", parms5, null).getData();
 				
 				
 				HAPData[] parms6 = {out, entityData	};
-				out = (HAPData)listDataType.operate("add", parms6).getData();
+				out = (HAPData)listDataType.operate("add", parms6, null).getData();
 			}
 			
 		}
