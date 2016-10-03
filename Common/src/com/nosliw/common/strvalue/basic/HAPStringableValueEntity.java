@@ -170,7 +170,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 		boolean out = false;
 		if(obj instanceof HAPStringableValueEntity){
 			HAPStringableValueEntity value = (HAPStringableValueEntity)obj;
-			out = HAPBasicUtility.isEqualMaps(value.m_childrens, value.m_childrens);
+			out = HAPBasicUtility.isEqualMaps(value.m_childrens, this.m_childrens);
 		}
 		return out;
 	}

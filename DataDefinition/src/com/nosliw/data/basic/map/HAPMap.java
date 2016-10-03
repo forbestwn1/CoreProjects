@@ -1,5 +1,7 @@
 package com.nosliw.data.basic.map;
 
+import java.util.Map;
+
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.HAPData;
@@ -28,6 +30,11 @@ public class HAPMap extends HAPDataTypeImp{
 	
 	public HAPMapData newMap(){
 		return new HAPMapData(this);
+	}
+	
+	public HAPMapData newMap(Map<String, HAPData> mapData){
+		HAPMapData out = new HAPMapData(this, mapData);
+		return out;
 	}
 	
 	@Override

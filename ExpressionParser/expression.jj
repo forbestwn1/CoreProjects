@@ -1,0 +1,119 @@
+
+options {
+	/*create static method */
+	STATIC = false ;
+	/* the location for parser classes */
+	OUTPUT_DIRECTORY = "c:/Temp/JCCTree";
+/*	"/Users/pro/Desktop/WebToApp/CoreProject/Projects/ExpressionParser/src/com/nosliw/expression/parser";*/
+}
+
+PARSER_BEGIN(NosliwExpressionParser)
+/* define the package name for parser classes */
+package com.nosliw.expression.parser;
+
+public class NosliwExpressionParser {
+
+  public static void main(String args[]) throws ParseException, TokenMgrError {
+		NosliwExpressionParser parser = new NosliwExpressionParser( System.in ) ;
+		SimpleNode root = parser.Expression("");
+		root.dump("");
+  }  
+}
+PARSER_END(NosliwExpressionParser)
+
+
+
+/*SKIP:{" " | "\t"}*/
+TOKEN : { < OPEN_PAR : "(" > }
+TOKEN : { < CLOSE_PAR : ")" > }
+TOKEN : { < COMMAR : "," > }
+TOKEN : { < CONSTANT : (["0"-"9","a"-"z","A"-"Z", "{", "}", "[", "]", "_", ":", "#", ",", " ", "\t", "\n", "\r", "'"])+ > }
+/*TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z"])+ > }*/
+
+/*
+
+*/
+Token Name():
+{
+	Token t ;
+}
+{
+	t = <CONSTANT>
+	{jjtThis.value = t.image; return t;}
+}
+
+/*
+constant data, any format allowed, json, string literal, ...
+*/
+void Constant() #CONSTANT:
+{
+	Token t ;
+}
+{
+	"&("  t=<CONSTANT>  ")&"
+	{jjtThis.value = t.image;}
+}
+
+/*
+data type, it is appeared when do data type function call
+*/
+void DataType() #DATATYPE:
+{
+	Token t ;
+}
+{
+	"!("  t=Name()  ")!"
+	{jjtThis.value = t.image;}
+}
+
+/*
+variable in expression. 
+*/
+void Variable() #VARIABLE:
+{
+	Token t ;
+}
+{
+	"?("	t=Name()  ")?"
+	{jjtThis.value = t.image;}
+}
+
+/*
+represent any expression
+*/
+SimpleNode Expression(String index) #EXPRESSION:
+{
+	int i = 0;
+}
+{
+	(
+		Variable() Expression1()
+		|
+		Constant () Expression1()
+		|
+		DataType() "." Name() 
+		<OPEN_PAR> [(Expression(String.valueOf(i)) {i++;})
+		(<COMMAR> Expression(String.valueOf(i))  {i++;})*]	
+		<CLOSE_PAR> Expression1()
+	)
+	{jjtThis.value=index;   return jjtThis;}
+}
+
+/*
+it is create to avoid left recursion.
+*/
+SimpleNode Expression1() #EXPRESSION1:
+{
+	int i = 0;
+}
+{
+	(
+		"." Name() 
+		(
+			[<OPEN_PAR> [(Expression(String.valueOf(i)) {i++;}) (<COMMAR> Expression(String.valueOf(i)) {i++;})*]<CLOSE_PAR> {jjtThis.value="function";}] Expression1()
+		)
+		|
+		{}
+	)
+	{return jjtThis;}
+}

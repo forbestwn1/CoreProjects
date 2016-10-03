@@ -6,6 +6,7 @@ import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPOperationInfoAnnotation;
+import com.nosliw.data.basic.doubl.HAPDoubleData;
 import com.nosliw.data.info.HAPDataTypeInfo;
 
 public class HAPGeoLocationOperation  extends HAPDataOperation{
@@ -25,4 +26,10 @@ public class HAPGeoLocationOperation  extends HAPDataOperation{
 		return out;
 	}
 
+	@HAPOperationInfoAnnotation(in = { "double:simple", "double:simple" }, out = "geoLocation:simple", description = "Calculate the distance between geolocation")
+	public HAPData newData(HAPData[] parms, HAPOperationContext opContext){
+		HAPDoubleData latData = (HAPDoubleData)parms[0];
+		HAPDoubleData lonData = (HAPDoubleData)parms[1];
+		return new HAPGeoLocationData(this.getDataType(), latData.getValue(), lonData.getValue());
+	}
 }

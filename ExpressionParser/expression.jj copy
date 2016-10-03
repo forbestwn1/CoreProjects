@@ -1,0 +1,107 @@
+
+PARSER_BEGIN(NosliwExpressionParser)
+
+public class NosliwExpressionParser {
+
+  public static void main(String args[]) throws ParseException, TokenMgrError {
+		NosliwExpressionParser parser = new NosliwExpressionParser( System.in ) ;
+		parser.Start() ; 
+  }  
+}
+PARSER_END(NosliwExpressionParser)
+
+
+
+SKIP:{" " | "\t" }
+TOKEN : { <CONSTANT_BORDER:"@"> }
+TOKEN : { < VARIABLE : "$" > }
+TOKEN : { < OPEN_DATATYPE : "<" > }
+TOKEN : { < CLOSE_DATATYPE : ">" > }
+TOKEN : { < OPEN_PAR : "(" > }
+TOKEN : { < CLOSE_PAR : ")" > }
+TOKEN : { < DOT : "." > }
+TOKEN : { < COMMA : "," > }
+TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z"])+ > }
+TOKEN : { < CONSTANT : (["0"-"9","a"-"z","A"-"Z", "{", "}", "[", "]", ",", "_"])+ > }
+
+
+double Name() throws NumberFormatException :
+{
+	Token t ;
+}
+{
+	t = <NAME>
+	{ return t.image; }
+}
+
+double Constant() throws NumberFormatException :
+{
+	Token t ;
+}
+{
+	<CONSTANT_BORDER>  <CONSTANT>  <CONSTANT_BORDER>
+	{ return t.image; }
+}
+
+double DataType() throws NumberFormatException :
+{
+	Token t ;
+}
+{
+	<OPEN_DATATYPE>  <NAME>  <CLOSE_DATATYPE>
+	{ return t.image; }
+}
+
+double Variable() throws NumberFormatException :
+{
+	double i ;
+	double value ;
+}
+{
+	<VARIABLE>	Name()
+}
+
+
+double Operation() throws NumberFormatException :
+{
+	double i ;
+	double value ;
+}
+{	
+	(Expression() | DataType()) <DOT> Name() <OPEN_PAR> 
+	(
+		{}
+	|
+		Expression() (<COMMA>Expression())*		
+	)
+	<CLOSE_PAR>
+}
+
+double Path() throws NumberFormatException :
+{
+	double i ;
+	double value ;
+}
+{
+	Expression() 
+	<DOT>
+	Name()
+}
+
+
+void Expression() throws NumberFormatException :
+{
+	double i ;
+	double value ;
+}
+{
+	Variable()
+	|
+	Constant ()
+	|
+	Expression() <DOT> Name()
+	|
+	Operation()
+}
+
+

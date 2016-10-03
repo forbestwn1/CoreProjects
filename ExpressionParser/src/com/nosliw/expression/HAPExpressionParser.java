@@ -18,7 +18,12 @@ public class HAPExpressionParser {
 
 	  public static void main(String args[]) throws ParseException, TokenMgrError {
 		  
-		  String str = "!(this:simple)!.fun1(?(bb)?.fun2(:(dd):), :(cc):.fun3())";
+//		  String str = "!(this:simple)!.fun1(?(bb)?.fun2(:(dd):),:(cc):.fun3())";
+		  
+//		  String str = "?(key)?.largerThan(&(dddd)&,&(dddd)&)";
+		  
+		  String str = "?(schoolsData)?.each(?(validHomeExpression)?,&(schoolData)&,&(out)&)";
+		  
 		  InputStream is = new ByteArrayInputStream(str.getBytes());
 		  
           NosliwExpressionParser parser = new NosliwExpressionParser( is ) ;

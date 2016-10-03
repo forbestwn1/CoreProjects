@@ -81,8 +81,8 @@ public abstract class HAPDataTypeImp implements HAPDataType{
 	 */
 	protected void initDataType(){}
 
-	@Override
-	public void buildOperation(){}
+//	@Override
+//	public void buildOperation(){}
 
 	/****************************** Operation Related ********************************/
 	@Override

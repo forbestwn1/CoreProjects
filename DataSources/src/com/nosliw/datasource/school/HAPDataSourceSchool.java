@@ -75,21 +75,21 @@ public class HAPDataSourceSchool implements HAPDataSource{
 						HAPDataTypeManager.STRING.createDataByValue("name"),
 						nameData
 				};
-				entityData = (HAPData)entityDataType.operate("name", parms3, null).getData();
+				entityData = (HAPData)entityDataType.operate("setAttribute", parms3, null).getData();
 				
 				HAPData[] parms4 = {
 						entityData,
 						HAPDataTypeManager.STRING.createDataByValue("type"),
 						typeData
 				};
-				entityData = (HAPData)entityDataType.operate("type", parms4, null).getData();
+				entityData = (HAPData)entityDataType.operate("setAttribute", parms4, null).getData();
 				
 				HAPData[] parms5 = {
 						entityData,
 						HAPDataTypeManager.STRING.createDataByValue("score"),
 						scoreData
 				};
-				entityData = (HAPData)entityDataType.operate("score", parms5, null).getData();
+				entityData = (HAPData)entityDataType.operate("setAttribute", parms5, null).getData();
 				
 				
 				HAPData[] parms6 = {out, entityData	};

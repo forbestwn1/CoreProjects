@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateProcessorByConfigureForDoc;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 
@@ -89,6 +90,16 @@ public class HAPResolvableString implements HAPResolvable{
 
 	@Override
 	public String toString(){		return this.getValue();	}
+	
+	@Override
+	public boolean equals(Object data){
+		boolean out = false;
+		if(data instanceof HAPResolvableString){
+			HAPResolvableString obj = (HAPResolvableString)data;
+			out = HAPBasicUtility.isEquals(obj.getValue(), this.getValue());
+		}
+		return out;
+	}
 	
 	public HAPResolvableString clone(){
 		HAPResolvableString out = new HAPResolvableString();

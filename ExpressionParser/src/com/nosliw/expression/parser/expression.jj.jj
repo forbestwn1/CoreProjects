@@ -4,7 +4,8 @@ options {
 	/*create static method */
 	STATIC = false ;
 	/* the location for parser classes */
-	OUTPUT_DIRECTORY = "/Users/pro/Desktop/WebToApp/CoreProject/Projects/ExpressionParser/src/com/nosliw/expression/parser";
+	OUTPUT_DIRECTORY = "c:/Temp/JCCTree";
+/*	"/Users/pro/Desktop/WebToApp/CoreProject/Projects/ExpressionParser/src/com/nosliw/expression/parser";*/
 }
 
 PARSER_BEGIN(NosliwExpressionParser)
@@ -76,7 +77,7 @@ void Constant()          :
 {/*@bgen(jjtree) CONSTANT */
         try {
 /*@egen*/
-	":("  t=<CONSTANT>  "):"/*@bgen(jjtree)*/
+	"&("  t=<CONSTANT>  ")&"/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;

@@ -19,8 +19,8 @@ public class HAPEntityOperation extends HAPDataOperation{
 		HAPEntityData entityData = (HAPEntityData)parms[0];
 		HAPStringData nameData = (HAPStringData)parms[1];
 		
-		HAPData out = entityData.getAttribute(nameData.getValue());
-		return out;
+		entityData.getAttribute(nameData.getValue());
+		return entityData;
 	}
 
 	@HAPOperationInfoAnnotation(in = { "entity:simple", "string:simple" }, out = "any", description = "Set Entity attribute")

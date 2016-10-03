@@ -7,6 +7,7 @@ import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPOperationInfoAnnotation;
 import com.nosliw.data.basic.map.HAPMapData;
+import com.nosliw.data.basic.string.HAPStringData;
 import com.nosliw.data.library.entity.v100.HAPEntity;
 import com.nosliw.expression.HAPExpression;
 
@@ -27,5 +28,13 @@ public class HAPExpressionOperation extends HAPDataOperation{
 		return out;
 	}
 
+	@HAPOperationInfoAnnotation(in = { "string:simple", "map:simple" }, out = "any", description = "Excute Expression")
+	public HAPData newData(HAPData[] parms, HAPOperationContext opContext){
+		HAPStringData expressionData = (HAPStringData)parms[0];
+		HAPMapData constantsData = (HAPMapData)parms[1];
+		
+		HAPExpressionType expressionType = (HAPExpressionType)this.getDataType();
+		return expressionType.newExpression(expressionData.getValue(), constantsData.getMap(), null);
+	}
 
 }

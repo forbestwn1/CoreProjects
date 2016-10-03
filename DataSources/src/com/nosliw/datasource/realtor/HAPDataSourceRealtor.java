@@ -26,7 +26,7 @@ public class HAPDataSourceRealtor implements HAPDataSource{
 		HAPData out = null;
 		
 		try{
-			InputStream elementDataInputStream = HAPFileUtility.getInputStreamOnClassPath(HAPDataSourceSchool.class, "element.json");
+			InputStream elementDataInputStream = HAPFileUtility.getInputStreamOnClassPath(HAPDataSourceRealtor.class, "homes.json");
 			
 			String content = HAPFileUtility.readFile(elementDataInputStream);
 

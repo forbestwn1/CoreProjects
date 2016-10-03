@@ -1,11 +1,16 @@
 package com.nosliw.data.library.expression.v100;
 
+import java.util.Map;
+
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeImp;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPDataTypeOperationsAnnotation;
+import com.nosliw.data.basic.list.HAPListOperation;
+import com.nosliw.data.info.HAPDataTypeInfo;
 import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
 
 public class HAPExpressionType extends HAPDataTypeImp{
@@ -16,6 +21,15 @@ public class HAPExpressionType extends HAPDataTypeImp{
 		super(dataTypeInfo, olderDataType, parentDataTypeInfo, configures, description, dataTypeMan);
 	}
 
+	@Override
+	public void buildOperation(){
+		this.setDataTypeOperations(new HAPDataTypeOperationsAnnotation(new HAPExpressionOperation(this.getDataTypeManager(), this), this.getDataTypeInfo(), this.getDataTypeManager()));
+	}
+	
+	public HAPExpressionData newExpression(String expression, Map<String, HAPData> constantDatas, Map<String, HAPDataTypeInfo> varDataTypeInfos){
+		return new HAPExpressionData(this, expression, constantDatas, varDataTypeInfos);
+	}
+	
 	@Override
 	public HAPData getDefaultData() {
 		return null;

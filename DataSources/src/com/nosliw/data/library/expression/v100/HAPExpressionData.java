@@ -13,18 +13,14 @@ public class HAPExpressionData extends HAPDataImp{
 
 	private HAPExpression m_expression;
 	
-	public HAPExpressionData(HAPDataType dataType) {
+	public HAPExpressionData(HAPDataType dataType, String expression, Map<String, HAPData> constantDatas, Map<String, HAPDataTypeInfo> varDataTypeInfos){
 		super(dataType);
+		HAPExpressionInfo info = new HAPExpressionInfo(expression, constantDatas, varDataTypeInfos);
+		this.m_expression = new HAPExpression(info, this.getDataTypeManager());
 	}
 
 	public HAPExpression getExpression(){
 		return this.m_expression;
-	}
-	
-	public HAPExpression newExpression(String expression, Map<String, HAPData> constantDatas, Map<String, HAPDataTypeInfo> varDataTypeInfos){
-		HAPExpressionInfo info = new HAPExpressionInfo(expression, constantDatas, varDataTypeInfos);
-		HAPExpression out = new HAPExpression(info, this.getDataTypeManager());
-		return out;
 	}
 	
 	@Override

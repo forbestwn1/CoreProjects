@@ -16,6 +16,12 @@ public class HAPMapData extends HAPDataImp{
 		this.m_elements = new LinkedHashMap<String, HAPData>();
 	}
 
+	public HAPMapData(HAPDataType dataType, Map<String, HAPData> map) {
+		super(dataType);
+		this.m_elements = new LinkedHashMap<String, HAPData>();
+		this.m_elements.putAll(map);
+	}
+
 	public Map<String, HAPData> getMap(){
 		return this.m_elements;
 	}

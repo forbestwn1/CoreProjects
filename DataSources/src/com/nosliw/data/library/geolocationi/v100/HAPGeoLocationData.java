@@ -6,19 +6,21 @@ import com.nosliw.data.HAPDataType;
 
 public class HAPGeoLocationData extends HAPDataImp{
 
-	private float m_lat;
-	private float m_lon;
+	private double m_lat;
+	private double m_lon;
 	
 	
-	public HAPGeoLocationData(HAPDataType dataType) {
+	public HAPGeoLocationData(HAPDataType dataType, double lat, double lon) {
 		super(dataType);
+		this.m_lat = lat;
+		this.m_lon = lon;
 	}
 
-	public float getLatitude(){
+	public double getLatitude(){
 		return this.m_lat;
 	}
 	
-	public float getLontitude(){
+	public double getLontitude(){
 		return this.m_lon;
 	}
 	

@@ -6,6 +6,8 @@ import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeImp;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPDataTypeOperationsAnnotation;
+import com.nosliw.data.basic.list.HAPListOperation;
 import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
 
 public class HAPLengthUnit extends HAPDataTypeImp{
@@ -16,6 +18,11 @@ public class HAPLengthUnit extends HAPDataTypeImp{
 		super(dataTypeInfo, olderDataType, parentDataTypeInfo, configures, description, dataTypeMan);
 	}
 
+	@Override
+	public void buildOperation(){
+		this.setDataTypeOperations(new HAPDataTypeOperationsAnnotation(new HAPLengthUnitOperation(this.getDataTypeManager(), this), this.getDataTypeInfo(), this.getDataTypeManager()));
+	}
+	
 	@Override
 	public HAPData getDefaultData() {
 		return null;

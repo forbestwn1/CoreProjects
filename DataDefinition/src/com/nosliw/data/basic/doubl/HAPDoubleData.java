@@ -10,7 +10,7 @@ public class HAPDoubleData  extends HAPDataImp{
 	private double m_value;
 	
 	public HAPDoubleData(double value) {
-		super(HAPDataTypeManager.FLOAT);
+		super(HAPDataTypeManager.DOUBLE);
 		this.m_value = value;
 	}
 

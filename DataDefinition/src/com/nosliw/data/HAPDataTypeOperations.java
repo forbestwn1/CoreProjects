@@ -54,7 +54,7 @@ public class HAPDataTypeOperations {
 		Class[] paramTypes = new Class[]{HAPData[].class};
 		try {
 			Method m = this.getOperationObject().getClass().getDeclaredMethod(operation, new Class[]{HAPData[].class, HAPOperationContext.class});
-			Object r = m.invoke(this.getOperationObject(), new Object[]{data}, opContext);
+			Object r = m.invoke(this.getOperationObject(), data, opContext);
 			return HAPServiceData.createSuccessData(r);
 		} catch (Exception e) {
 			e.printStackTrace();

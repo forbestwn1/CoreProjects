@@ -52,9 +52,9 @@ public class Main {
 		HAPData homesData = realtorDataSource.getData();
 		HAPData schoolsData = schoolDataSource.getData();
 
-		String mainExprssion = "?(homesData)?.filter(?(homeFilterExpression)?, !(homeData)!)";
-		HAPExpressionData homeFilterExpression = createExpressionData("?(schoolsData)?.each(?(validHomeExpression)?, !(schoolData)!, !(out)!)");
-		HAPExpressionData validHomeExpression = createExpressionData("?(schoolData).get(!(geoLocation)!).distance( ?(homeData).get(!(geoLocation)!) ).longer(?(distanceData)).not().or(?(out)?)");
+		String mainExprssion = "?(homesData)?.filter(?(homeFilterExpression)?,&(homeData)&)";
+		HAPExpressionData homeFilterExpression = createExpressionData("?(schoolsData)?.each(?(validHomeExpression)?,&(schoolData)&,&(out)&)");
+		HAPExpressionData validHomeExpression = createExpressionData("?(schoolData)?.get(&(geoLocation)&).distance(?(homeData)?.get(&(geoLocation)&)).longer(?(distanceData)?).not().or(?(out)?)");
 		
 		Map<String, HAPData> parmDatas = new LinkedHashMap<String, HAPData>();
 		parmDatas.put("homesData", homesData);
@@ -68,10 +68,11 @@ public class Main {
 		HAPOperationContext opContext = new HAPOperationContext();
 		opContext.setVariables(parmDatas);
 		HAPData outData = expression.execute(parmDatas, null, opContext);
+		System.out.println(outData);
 	}
 	
 	private static HAPExpressionData createExpressionData(String expression){
-		HAPData[] parm1 = {HAPDataTypeManager.STRING.createDataByValue(expression)};
+		HAPData[] parm1 = {HAPDataTypeManager.STRING.createDataByValue(expression), HAPDataTypeManager.MAP.newMap()};
 		return (HAPExpressionData)m_dataTypeMan.newData(new HAPDataTypeInfo("simple", "expression"),  parm1, null);
 	}
 	

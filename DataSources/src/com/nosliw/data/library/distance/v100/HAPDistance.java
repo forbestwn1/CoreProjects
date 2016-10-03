@@ -6,7 +6,9 @@ import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeImp;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPDataTypeOperationsAnnotation;
 import com.nosliw.data.HAPOperationContext;
+import com.nosliw.data.basic.list.HAPListOperation;
 import com.nosliw.data.info.HAPDataTypeInfo;
 import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
 
@@ -19,10 +21,15 @@ public class HAPDistance extends HAPDataTypeImp{
 	}
 
 	@Override
+	public void buildOperation(){
+		this.setDataTypeOperations(new HAPDataTypeOperationsAnnotation(new HAPDistanceOperation(this.getDataTypeManager(), this), this.getDataTypeInfo(), this.getDataTypeManager()));
+	}
+	
+	@Override
 	public HAPData getDefaultData() {
 		return null;
 	}
-
+	
 	@Override
 	public HAPServiceData validate(HAPData data) {
 		return HAPServiceData.createSuccessData();
