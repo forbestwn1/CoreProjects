@@ -18,8 +18,9 @@ public class HAPEntityOperation extends HAPDataOperation{
 	public HAPData setAttribute(HAPData[] parms, HAPOperationContext opContext){
 		HAPEntityData entityData = (HAPEntityData)parms[0];
 		HAPStringData nameData = (HAPStringData)parms[1];
+		HAPData attrData = parms[2];
 		
-		entityData.getAttribute(nameData.getValue());
+		entityData.setAttribute(nameData.getValue(), attrData);
 		return entityData;
 	}
 
@@ -27,10 +28,7 @@ public class HAPEntityOperation extends HAPDataOperation{
 	public HAPData getAttribute(HAPData[] parms, HAPOperationContext opContext){
 		HAPEntityData entityData = (HAPEntityData)parms[0];
 		HAPStringData nameData = (HAPStringData)parms[1];
-		HAPData attrData = parms[2];
-		
-		HAPData out = entityData.setAttribute(nameData.getValue(), attrData);
-		return out;
+		return entityData.getAttribute(nameData.getValue());
 	}
 	
 	@HAPOperationInfoAnnotation(in = {  }, out = "entity:simple", description = "New Entity")

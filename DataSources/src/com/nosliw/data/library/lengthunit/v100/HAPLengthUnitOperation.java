@@ -14,13 +14,6 @@ public class HAPLengthUnitOperation extends HAPDataOperation{
 		super(man, dataType);
 	}
 
-	@HAPOperationInfoAnnotation(in = { "distance:simple", "lengthUnit:simple" }, out = "distance:simple", description = "Convert distance to specified unit")
-	public HAPDistanceData convert(HAPData[] parms, HAPOperationContext opContext){
-		HAPDistanceData distance = (HAPDistanceData)parms[0];
-		HAPLengthUnitData unit = (HAPLengthUnitData)parms[1];
-		return distance;
-	}
-
 	@HAPOperationInfoAnnotation(in = { "string:simple" }, out = "lengthUnit:simple", description = "new method")
 	public HAPLengthUnitData newKm(HAPData[] parms, HAPOperationContext opContext){
 		return ((HAPLengthUnit)this.getDataType()).newKm();

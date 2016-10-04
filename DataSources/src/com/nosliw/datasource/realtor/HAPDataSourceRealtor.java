@@ -1,9 +1,12 @@
 package com.nosliw.datasource.realtor;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONString;
 
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.HAPData;
@@ -47,6 +50,8 @@ public class HAPDataSourceRealtor implements HAPDataSource{
 				};
 				HAPData geoLocationData = this.m_dataTypeMan.newData(new HAPDataTypeInfo("simple", "geoLocation"), parms1, null);
 
+				String jsonMlsNo = jsonHomeData.optString("MlsNumber"); 
+				HAPData mlsData = HAPDataTypeManager.STRING.createDataByValue(jsonMlsNo);
 				
 				HAPDataTypeInfo entityDataTypeInfo = new HAPDataTypeInfo("simple", "entity");
 				HAPDataType entityDataType = this.m_dataTypeMan.getDataType(entityDataTypeInfo);
@@ -58,6 +63,17 @@ public class HAPDataSourceRealtor implements HAPDataSource{
 						geoLocationData
 				};
 				entityData = (HAPData)entityDataType.operate("setAttribute", parms2, null).getData();
+
+				HAPData[] parms4 = {
+						entityData,
+						HAPDataTypeManager.STRING.createDataByValue("MlsNumber"),
+						mlsData
+				};
+				entityData = (HAPData)entityDataType.operate("setAttribute", parms4, null).getData();
+				
+				List<HAPData> parms3 = new ArrayList<HAPData>();
+				parms3.add(entityData);
+				out.operate("add", parms3, null);
 			}			
 		}
 		catch(Exception e){

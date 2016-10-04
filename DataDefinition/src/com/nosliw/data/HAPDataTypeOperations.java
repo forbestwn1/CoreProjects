@@ -58,7 +58,8 @@ public class HAPDataTypeOperations {
 			return HAPServiceData.createSuccessData(r);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return HAPDataErrorUtility.createDataOperationNotExistError(this.m_dataTypeInfo, operation, e); 
+			throw new RuntimeException(e);
+//			return HAPDataErrorUtility.createDataOperationNotExistError(this.m_dataTypeInfo, operation, e); 
 		}
 	}
 	

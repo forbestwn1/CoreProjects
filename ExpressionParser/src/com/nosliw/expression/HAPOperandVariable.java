@@ -39,10 +39,14 @@ public class HAPOperandVariable extends HAPOperandAtom{
 	public HAPData execute(Map<String, HAPData> vars, Map<String, HAPWraper> wraperVars, HAPOperationContext opContext) {
 		HAPData out = null;
 		
-		out = vars.get(this.getVarName());
+		if(vars!=null){
+			out = vars.get(this.getVarName());
+		}
 		if(out==null){
-			HAPWraper wraper = wraperVars.get(this.getVarName());
-			if(wraper!=null)   out = wraper.getData();
+			if(wraperVars!=null){
+				HAPWraper wraper = wraperVars.get(this.getVarName());
+				if(wraper!=null)   out = wraper.getData();
+			}
 		}
 		return out;
 	}

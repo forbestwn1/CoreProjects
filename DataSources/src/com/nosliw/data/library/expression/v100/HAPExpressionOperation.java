@@ -18,7 +18,7 @@ public class HAPExpressionOperation extends HAPDataOperation{
 	}
 
 	@HAPOperationInfoAnnotation(in = { "expression:simple", "map:simple" }, out = "any", description = "Excute Expression")
-	public HAPData excute(HAPData[] parms, HAPOperationContext opContext){
+	public HAPData execute(HAPData[] parms, HAPOperationContext opContext){
 		HAPExpressionData expressionData = (HAPExpressionData)parms[0];
 		HAPExpression expression = expressionData.getExpression();
 

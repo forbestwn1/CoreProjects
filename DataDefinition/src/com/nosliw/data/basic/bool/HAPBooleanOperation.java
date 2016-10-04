@@ -13,10 +13,18 @@ public class HAPBooleanOperation extends HAPDataOperation{
 		super(man, dataType);
 	}
 
-	@HAPOperationInfoAnnotation(in = { "integer:simple", "integer:simple" }, out = "boolean:simple", description = "This is operation on Integer data type to compare two Integer")
+	@HAPOperationInfoAnnotation(in = { "boolean:simple" }, out = "boolean:simple", description = "This is operation on Integer data type to compare two Integer")
 	public HAPBooleanData not(HAPData[] parms, HAPOperationContext opContext){
 		HAPBooleanData booleanData = (HAPBooleanData)parms[0];
 		return HAPDataTypeManager.BOOLEAN.createDataByValue(!booleanData.getValue());
+	}
+
+	@HAPOperationInfoAnnotation(in = { "boolean:simple", "boolean:simple" }, out = "boolean:simple", description = "This is operation on Integer data type to compare two Integer")
+	public HAPBooleanData or(HAPData[] parms, HAPOperationContext opContext){
+		HAPBooleanData booleanData1 = (HAPBooleanData)parms[0];
+		HAPBooleanData booleanData2 = (HAPBooleanData)parms[1];
+		boolean v2 = booleanData2==null ? false : booleanData2.getValue();
+		return HAPDataTypeManager.BOOLEAN.createDataByValue(booleanData1.getValue()||v2);
 	}
 	
 	public String not_javascript(){

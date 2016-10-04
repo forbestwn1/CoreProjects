@@ -43,14 +43,17 @@ public class HAPListOperation extends HAPDataOperation{
 			vars.putAll(opContext.getVariables());
 			vars.put(thisVarName, eleData);
 			
+			HAPOperationContext opContext1 = new HAPOperationContext();
+			opContext1.setVariables(vars);
+			
 			List<HAPData> expressParms = new ArrayList<HAPData>();
 			expressParms.add(parms[1]);
 			expressParms.add(HAPDataTypeManager.MAP.newMap(vars));
 
-			HAPBooleanData expressionOutData = (HAPBooleanData)this.getDataTypeManager().dataOperate(new HAPDataTypeInfo("simple", "expression"), "execute", expressParms.toArray(new HAPData[0]), opContext);
+			HAPBooleanData expressionOutData = (HAPBooleanData)this.getDataTypeManager().dataOperate(new HAPDataTypeInfo("simple", "expression"), "execute", expressParms.toArray(new HAPData[0]), opContext1);
 			if(expressionOutData.getValue()){
 				HAPData[] parms3 = {out, eleData};
-				out = this.getDataTypeManager().dataOperate(new HAPDataTypeInfo("list", "simple"), "add", parms3, opContext);
+				out = this.getDataTypeManager().dataOperate(new HAPDataTypeInfo("simple", "list"), "add", parms3, opContext1);
 			}
 		}
 		return out;
@@ -75,7 +78,7 @@ public class HAPListOperation extends HAPDataOperation{
 			HAPData expressionOutData = this.getDataTypeManager().dataOperate(new HAPDataTypeInfo("simple", "expression"), "execute", parms1, opContext);
 			
 			HAPData[] parms3 = {out, expressionOutData};
-			out = this.getDataTypeManager().dataOperate(new HAPDataTypeInfo("list", "simple"), "add", parms3, opContext);
+			out = this.getDataTypeManager().dataOperate(new HAPDataTypeInfo("simple", "list"), "add", parms3, opContext);
 		}
 		return out;
 	}
