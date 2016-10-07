@@ -15,6 +15,13 @@ public class HAPStringOperation extends HAPDataOperation{
 		super(man, dataType);
 	}
 
+	@HAPOperationInfoAnnotation(in = { "string:simple", "string:simple" }, out = "boolean:simple", description = "This is operation on string data type to compare two string")
+	public HAPBooleanData equals(HAPData[] parms, HAPOperationContext opContext){
+		HAPStringData stringData1 = (HAPStringData)parms[0];
+		HAPStringData stringData2 = (HAPStringData)parms[1];
+		return HAPDataTypeManager.BOOLEAN.createDataByValue(stringData1.getValue().equals(stringData2.getValue()));
+	}
+	
 	@HAPOperationInfoAnnotation(in = { "string:simple", "string:simple" }, out = "string:simple", description = "This is operation on string data type to compare two string")
 	public HAPStringData cascade(HAPData[] parms, HAPOperationContext opContext){
 		HAPStringData stringData1 = (HAPStringData)parms[0];

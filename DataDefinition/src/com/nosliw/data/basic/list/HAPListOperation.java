@@ -28,6 +28,25 @@ public class HAPListOperation extends HAPDataOperation{
 		return out;
 	}
 
+	@HAPOperationInfoAnnotation(in = { "list:simple", "any" }, out = "boolean:simple", description = "")
+	public HAPData contains(HAPData[] parms, HAPOperationContext opContext){
+		HAPListData listData = (HAPListData)parms[0];
+		for(int i=0; i<listData.getSize(); i++){
+			HAPData eleData = listData.getData(i);
+
+			List<HAPData> expressParms = new ArrayList<HAPData>();
+			expressParms.add(eleData);
+			expressParms.add(parms[1]);
+
+			HAPBooleanData expressionOutData = (HAPBooleanData)this.getDataTypeManager().dataOperate(parms[1].getDataType(), "equals", expressParms.toArray(new HAPData[0]), opContext);
+			if(expressionOutData.getValue()){
+				return expressionOutData;
+			}
+		}
+		return HAPDataTypeManager.BOOLEAN.createDataByValue(false);
+	}
+	
+	
 	@HAPOperationInfoAnnotation(in = { "list:simple", "expression:simple" }, out = "list:simple", description = "")
 	public HAPData filter(HAPData[] parms, HAPOperationContext opContext){
 		HAPList listDataType = (HAPList)this.getDataType();

@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperationContext;
@@ -19,7 +20,7 @@ import com.nosliw.data.library.expression.v100.HAPExpressionData;
 import com.nosliw.data.library.expression.v100.HAPExpressionType;
 import com.nosliw.data.library.geolocationi.v100.HAPGeoLocation;
 import com.nosliw.data.library.lengthunit.v100.HAPLengthUnit;
-import com.nosliw.datasource.realtor.HAPDataSourceRealtor;
+import com.nosliw.datasource.realtor.HAPDataSourceRealtorMock;
 import com.nosliw.datasource.school.HAPDataSourceSchool;
 import com.nosliw.expression.HAPExpression;
 import com.nosliw.expression.HAPExpressionInfo;
@@ -27,6 +28,9 @@ import com.nosliw.expression.HAPExpressionInfo;
 public class Main {
 
 	public static HAPDataTypeManager m_dataTypeMan;
+	
+	public static HAPListData m_validSchools;
+	public static HAPListData m_validHomes;
 	
 	public static void main(String[] argus){
 		m_dataTypeMan = new HAPDataTypeManager(null);
@@ -48,20 +52,68 @@ public class Main {
 
 		m_dataTypeMan.init();
 		
-		HAPDataSourceRealtor realtorDataSource = new HAPDataSourceRealtor(m_dataTypeMan);
-		
+		String schoolsContent = getValidSchools();
+		String homesContent = getValidHomes(m_validSchools);
+
+		HAPFileUtility.writeFile("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataSources\\myhomes.js", homesContent);
+		HAPFileUtility.writeFile("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataSources\\myschool.js", schoolsContent);
+	}
+	
+	private static String getValidSchools(){
 		HAPDataSourceSchool schoolDataSource = new HAPDataSourceSchool(m_dataTypeMan);
-		
-		HAPData homesData = realtorDataSource.getData();
 		HAPData schoolsData = schoolDataSource.getData();
 
-//		String mainExprssion = "?(homesData)?.filter(?(homeFilterExpression)?,?(homeDataName)?)";
-//		HAPExpressionData homeFilterExpression = createExpressionData("?(schoolsData)?.each(?(validHomeExpression)?,?(schoolDataName)?,?(out)?)");
-//		HAPExpressionData validHomeExpression = createExpressionData("?(schoolData)?.getAttribute(?(geoLocation)?).distance(?(homeData)?.getAttribute(?(geoLocation)?)).longer(?(distanceData)?).not().or(?(valid)?)");
+		double score = 7.00;
+		
+		String[] schoolColors = {"green"};
+		String[] schoolTypes = {"Public", "Catholic"};
+		
+		String mainExprssion = "?(schoolsData)?.filter(?(schoolFilterExpression)?,&(homeData)&)";
+		
+		String scoreExpression = "?(schoolData)?.getAttribute(&(score)&).largerThan(?(score)?)";
+		
+		String colorExpression = "?(schoolColors)?.contains(?(schoolData)?.getAttribute(&(color)&)))";
 
-		String mainExprssion = "?(homesData)?.filter(?(homeFilterExpression)?,?(homeDataName)?)";
-		HAPExpressionData homeFilterExpression = createExpressionData("?(schoolsData)?.each(?(validHomeExpression)?,?(schoolDataName)?,?(out)?)");
-		HAPExpressionData validHomeExpression = createExpressionData("?(schoolData)?.getAttribute(?(geoLocation)?).distance(?(homeData)?.getAttribute(?(geoLocation)?)).longer(?(distanceData)?).not().or(?(valid)?)");
+		String schoolTypeExpression = "?(schoolTypes)?.contains(?(schoolData)?.getAttribute(&(type)&)))";
+		
+		
+		String[] filters = {scoreExpression, colorExpression, schoolTypeExpression};
+		StringBuffer filterExpression = new StringBuffer();
+		for(int i=0; i<filters.length; i++){
+			filterExpression.append(filters[i]);
+			if(i<filters.length-1){
+				
+			}
+			else{
+				filterExpression.append(")");
+			}
+		}
+		
+		HAPExpressionData schoolFilterExpression = createExpressionData(filterExpression.toString());
+		
+		Map<String, HAPData> parmDatas = new LinkedHashMap<String, HAPData>();
+		parmDatas.put("schoolsData", schoolsData);
+		parmDatas.put("schoolFilterExpression", schoolFilterExpression);
+
+		parmDatas.put("score", HAPDataTypeManager.DOUBLE.createDataByValue(score));
+		parmDatas.put("schoolColors", createListDataByStringArray(schoolColors));
+		parmDatas.put("schoolTypes", createListDataByStringArray(schoolTypes));
+		
+		HAPExpressionInfo expressionInfo = new HAPExpressionInfo(mainExprssion, null, null);
+		HAPExpression expression = new HAPExpression(expressionInfo, m_dataTypeMan);
+		HAPOperationContext opContext = new HAPOperationContext();
+		opContext.setVariables(parmDatas);
+		m_validSchools = (HAPListData)expression.execute(parmDatas, null, opContext);
+		
+	}
+	
+	private static String getValidHomes(HAPListData schoolsData){
+		HAPDataSourceRealtorMock realtorDataSource = new HAPDataSourceRealtorMock(m_dataTypeMan);
+		HAPData homesData = realtorDataSource.getData();
+
+		String mainExprssion = "?(homesData)?.filter(?(homeFilterExpression)?,&(homeData)&)";
+		HAPExpressionData homeFilterExpression = createExpressionData("?(schoolsData)?.each(?(validHomeExpression)?,&(schoolData)&,&(valid)&)");
+		HAPExpressionData validHomeExpression = createExpressionData("?(schoolData)?.getAttribute(&(geoLocation)&).distance(?(homeData)?.getAttribute(&(geoLocation)&)).longer(?(distanceData)?).not().or(?(valid)?)");
 		
 		Map<String, HAPData> parmDatas = new LinkedHashMap<String, HAPData>();
 		parmDatas.put("homesData", homesData);
@@ -69,10 +121,6 @@ public class Main {
 		parmDatas.put("homeFilterExpression", homeFilterExpression);
 		parmDatas.put("validHomeExpression", validHomeExpression);
 
-		parmDatas.put("out", HAPDataTypeManager.STRING.createDataByValue("valid"));
-		parmDatas.put("homeDataName", HAPDataTypeManager.STRING.createDataByValue("homeData"));
-		parmDatas.put("schoolDataName", HAPDataTypeManager.STRING.createDataByValue("schoolData"));
-		parmDatas.put("geoLocation", HAPDataTypeManager.STRING.createDataByValue("geoLocation"));
 		parmDatas.put("distanceData", m_dataTypeMan.newData(new HAPDataTypeInfo("simple", "distance"), "newKm", new HAPData[]{HAPDataTypeManager.DOUBLE.createDataByValue(20)}, null));
 		
 		parmDatas.put("allTrue", HAPDataTypeManager.BOOLEAN.createDataByValue(true));
@@ -84,6 +132,9 @@ public class Main {
 		opContext.setVariables(parmDatas);
 		HAPListData outData = (HAPListData)expression.execute(parmDatas, null, opContext);
 		output(outData);
+
+		String homesOut = realtorDataSource.updatedData(outData);
+		return homesOut;
 	}
 	
 	private static void output(HAPListData outData){
@@ -94,13 +145,22 @@ public class Main {
 			HAPStringData mlsData = (HAPStringData)entityData.getAttribute("MlsNumber");
 			System.out.println(mlsData.getValue());
 		}
-		
 	}
 	
 	
 	private static HAPExpressionData createExpressionData(String expression){
 		HAPData[] parm1 = {HAPDataTypeManager.STRING.createDataByValue(expression), HAPDataTypeManager.MAP.newMap()};
 		return (HAPExpressionData)m_dataTypeMan.newData(new HAPDataTypeInfo("simple", "expression"),  parm1, null);
+	}
+	
+	private static HAPListData createListDataByStringArray(String[] strs){
+		HAPListData out = HAPDataTypeManager.LIST.newList();
+		
+		for(String str : strs){
+			out.addData(HAPDataTypeManager.STRING.createDataByValue(str));
+		}
+		
+		return out;
 	}
 	
 }

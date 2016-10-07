@@ -26,6 +26,14 @@ public class HAPBooleanOperation extends HAPDataOperation{
 		boolean v2 = booleanData2==null ? false : booleanData2.getValue();
 		return HAPDataTypeManager.BOOLEAN.createDataByValue(booleanData1.getValue()||v2);
 	}
+
+	@HAPOperationInfoAnnotation(in = { "boolean:simple", "boolean:simple" }, out = "boolean:simple", description = "This is operation on Integer data type to compare two Integer")
+	public HAPBooleanData and(HAPData[] parms, HAPOperationContext opContext){
+		HAPBooleanData booleanData1 = (HAPBooleanData)parms[0];
+		HAPBooleanData booleanData2 = (HAPBooleanData)parms[1];
+		boolean v2 = booleanData2==null ? false : booleanData2.getValue();
+		return HAPDataTypeManager.BOOLEAN.createDataByValue(booleanData1.getValue()&&v2);
+	}
 	
 	public String not_javascript(){
 		String script = "return nosliwCreateData(!parms[0].value, new NosliwDataTypeInfo(\"simple\", \"boolean\"));";

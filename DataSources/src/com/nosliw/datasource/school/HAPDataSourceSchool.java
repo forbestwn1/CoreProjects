@@ -57,7 +57,9 @@ public class HAPDataSourceSchool implements HAPDataSource{
 				HAPData nameData = HAPDataTypeManager.STRING.createDataByValue(jsonSchoolData.getString(INDEX_NAME));
 
 				HAPData scoreData = HAPDataTypeManager.DOUBLE.createDataByValue(jsonSchoolData.getDouble(INDEX_SCORE));
-				
+
+				HAPData colorData = HAPDataTypeManager.STRING.createDataByValue(jsonSchoolData.getString(INDEX_COLOR));
+
 				
 				HAPDataTypeInfo entityDataTypeInfo = new HAPDataTypeInfo("simple", "entity");
 				HAPDataType entityDataType = this.m_dataTypeMan.getDataType(entityDataTypeInfo);
@@ -91,9 +93,16 @@ public class HAPDataSourceSchool implements HAPDataSource{
 				};
 				entityData = (HAPData)entityDataType.operate("setAttribute", parms5, null).getData();
 				
+
+				HAPData[] parms6 = {
+						entityData,
+						HAPDataTypeManager.STRING.createDataByValue("color"),
+						colorData
+				};
+				entityData = (HAPData)entityDataType.operate("setAttribute", parms6, null).getData();
 				
-				HAPData[] parms6 = {out, entityData	};
-				out = (HAPData)listDataType.operate("add", parms6, null).getData();
+				HAPData[] parms10 = {out, entityData	};
+				out = (HAPData)listDataType.operate("add", parms10, null).getData();
 			}
 			
 		}

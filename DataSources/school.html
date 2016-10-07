@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+   <head>
+      <script>
+      
+
+
+      
+      </script>
+      <script src = "http://maps.googleapis.com/maps/api/js"></script>
+      <script src = "elementSchool.js"></script>
+      <script src = "secondSchool.js"></script>
+      
+      
+      
+      <script>
+      
+      	 var map;
+         var infowindow;
+      		
+         function loadMap() {
+
+            var mapOptions = {
+               center:new google.maps.LatLng(43.753491, -79.409169), zoom:12,
+               mapTypeId:google.maps.MapTypeId.ROADMAP
+            };
+				
+            map = new google.maps.Map(document.getElementById("sample"),mapOptions);
+
+			infowindow = new google.maps.InfoWindow({
+               content:"Hi"
+            });
+
+			drawSchools(slMapData1, "green", "red");
+//			drawSchools(slMapData2, "blue", "yellow");
+         }
+         
+		 var drawSchools = function(slMapData, publicColor, CatholicColor){
+        	var icon1 = 'http://maps.google.com/mapfiles/ms/icons/'+publicColor+'-dot.png'
+        	var icon2 = 'http://maps.google.com/mapfiles/ms/icons/'+CatholicColor+'-dot.png'
+			var icon = undefined;
+
+			for(var i in slMapData){
+				var mapData = slMapData[i];
+				
+				if(mapData.pinColor==="green"){
+					  icon = undefined;
+					 if(mapData.sPubOrInd==="Public")  icon = icon1;
+					 if(mapData.sPubOrInd==="Catholic")  icon = icon2;
+				
+					  if(icon!=undefined){
+						   var marker = new google.maps.Marker({
+    		    	    	   position: new google.maps.LatLng(mapData.lat, mapData.lon),
+        		    	   		map: map,
+        	       				icon: icon
+            				});            
+
+							marker.____data = mapData;
+
+							marker.addListener('mouseover', function() {
+								var html = this.____data.sRating + "<br>" + this.____data.sShortName + "<br>" + this.____data.sPubOrInd;
+								infowindow.setContent(html); 
+						    	infowindow.open(map, this);
+							});
+
+							// assuming you also want to hide the infowindow when user mouses-out
+							marker.addListener('mouseout', function() {
+							    infowindow.close();
+							});
+					  }
+				}
+			}
+		 }
+
+         
+      </script>
+      
+   </head>
+   
+   <body onload = "loadMap()">
+      <div id = "sample" style = "width:900px; height:580px;"></div>
+   </body>
+   
+</html>
