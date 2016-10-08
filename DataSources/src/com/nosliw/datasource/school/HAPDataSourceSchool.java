@@ -1,18 +1,28 @@
 package com.nosliw.datasource.school;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.basic.list.HAPListData;
+import com.nosliw.data.basic.string.HAPStringData;
 import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.library.entity.v100.HAPEntityData;
 import com.nosliw.datasource.HAPDataSource;
 
 public class HAPDataSourceSchool implements HAPDataSource{
 
+	public static int INDEX_ID = 0;
 	public static int INDEX_LAT = 1;
 	public static int INDEX_LON = 2;
 	public static int INDEX_URL = 3;
@@ -22,6 +32,8 @@ public class HAPDataSourceSchool implements HAPDataSource{
 	public static int INDEX_COLOR = 8;
 
 	private HAPDataTypeManager m_dataTypeMan;
+	
+	private JSONArray m_originalData;
 	
 	public HAPDataSourceSchool(HAPDataTypeManager dataTypeMan){
 		this.m_dataTypeMan = dataTypeMan;
@@ -33,7 +45,8 @@ public class HAPDataSourceSchool implements HAPDataSource{
 		HAPData out = null;
 		
 		try{
-			InputStream elementDataInputStream = HAPFileUtility.getInputStreamOnClassPath(HAPDataSourceSchool.class, "element.json");
+			InputStream elementDataInputStream = new FileInputStream(new File("elementSchoolArray.js"));
+//			InputStream elementDataInputStream = HAPFileUtility.getInputStreamOnClassPath(HAPDataSourceSchool.class, "element.json");
 			
 			String content = HAPFileUtility.readFile(elementDataInputStream);
 
@@ -41,9 +54,9 @@ public class HAPDataSourceSchool implements HAPDataSource{
 			HAPDataType listDataType = this.m_dataTypeMan.getDataType(listDataTypeInfo);
 			out = (HAPData)listDataType.newData(null, null).getData();
 
-			JSONArray jsonSchoolsData = new JSONArray(content);
-			for(int i=0; i<jsonSchoolsData.length(); i++){
-				JSONArray jsonSchoolData = jsonSchoolsData.optJSONArray(i);
+			m_originalData = new JSONArray(content);
+			for(int i=0; i<m_originalData.length(); i++){
+				JSONArray jsonSchoolData = m_originalData.optJSONArray(i);
 				
 				HAPData[] parms1 = {
 						HAPDataTypeManager.DOUBLE.createDataByValue(jsonSchoolData.getDouble(INDEX_LAT)),
@@ -51,6 +64,7 @@ public class HAPDataSourceSchool implements HAPDataSource{
 				};
 				HAPData geoLocationData = this.m_dataTypeMan.newData(new HAPDataTypeInfo("simple", "geoLocation"), parms1, null);
 
+				HAPData idData = HAPDataTypeManager.STRING.createDataByValue(jsonSchoolData.getString(INDEX_ID));
 				
 				HAPData typeData = HAPDataTypeManager.STRING.createDataByValue(jsonSchoolData.getString(INDEX_TYPE));
 				
@@ -100,6 +114,13 @@ public class HAPDataSourceSchool implements HAPDataSource{
 						colorData
 				};
 				entityData = (HAPData)entityDataType.operate("setAttribute", parms6, null).getData();
+
+				HAPData[] parms7 = {
+						entityData,
+						HAPDataTypeManager.STRING.createDataByValue("id"),
+						idData
+				};
+				entityData = (HAPData)entityDataType.operate("setAttribute", parms7, null).getData();
 				
 				HAPData[] parms10 = {out, entityData	};
 				out = (HAPData)listDataType.operate("add", parms10, null).getData();
@@ -113,4 +134,23 @@ public class HAPDataSourceSchool implements HAPDataSource{
 		return out;
 	}
 
+	public String updatedData(HAPListData listData){
+		Set<String> idNos = new HashSet<String>();
+		for(int i=0; i<listData.getSize(); i++){
+			HAPStringData idData = (HAPStringData)((HAPEntityData)listData.getData(i)).getAttribute("id");
+			idNos.add(idData.getValue());
+		}
+		
+		JSONArray outJsonArray = new JSONArray();
+		for(int i=0; i<this.m_originalData.length(); i++){
+			JSONArray jsonSchool = this.m_originalData.optJSONArray(i);
+			String jsonId = jsonSchool.optString(0); 
+			if(idNos.contains(jsonId)){
+				outJsonArray.put(jsonSchool);
+			}
+		}
+		
+		String out = outJsonArray.toString();
+		return HAPJsonUtility.formatJson(out);
+	}
 }

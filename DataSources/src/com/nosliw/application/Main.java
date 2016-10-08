@@ -53,22 +53,22 @@ public class Main {
 		m_dataTypeMan.init();
 		
 		String schoolsContent = getValidSchools();
-		String homesContent = getValidHomes(m_validSchools);
+		HAPFileUtility.writeFile("myschool.js", "var slMapData="+schoolsContent+";");
 
-		HAPFileUtility.writeFile("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataSources\\myhomes.js", homesContent);
-		HAPFileUtility.writeFile("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataSources\\myschool.js", schoolsContent);
+		//		String homesContent = getValidHomes(m_validSchools);
+//		HAPFileUtility.writeFile("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataSources\\myhomes.js", homesContent);
 	}
 	
 	private static String getValidSchools(){
 		HAPDataSourceSchool schoolDataSource = new HAPDataSourceSchool(m_dataTypeMan);
 		HAPData schoolsData = schoolDataSource.getData();
 
-		double score = 7.00;
+		double score = 9.00;
 		
 		String[] schoolColors = {"green"};
 		String[] schoolTypes = {"Public", "Catholic"};
 		
-		String mainExprssion = "?(schoolsData)?.filter(?(schoolFilterExpression)?,&(homeData)&)";
+		String mainExprssion = "?(schoolsData)?.filter(?(schoolFilterExpression)?,&(schoolData)&)";
 		
 		String scoreExpression = "?(schoolData)?.getAttribute(&(score)&).largerThan(?(score)?)";
 		
@@ -79,15 +79,7 @@ public class Main {
 		
 		String[] filters = {scoreExpression, colorExpression, schoolTypeExpression};
 		StringBuffer filterExpression = new StringBuffer();
-		for(int i=0; i<filters.length; i++){
-			filterExpression.append(filters[i]);
-			if(i<filters.length-1){
-				
-			}
-			else{
-				filterExpression.append(")");
-			}
-		}
+		buildAndExpression(filterExpression, filters, 0);
 		
 		HAPExpressionData schoolFilterExpression = createExpressionData(filterExpression.toString());
 		
@@ -105,6 +97,20 @@ public class Main {
 		opContext.setVariables(parmDatas);
 		m_validSchools = (HAPListData)expression.execute(parmDatas, null, opContext);
 		
+		String out = schoolDataSource.updatedData(m_validSchools);
+		return out;
+	}
+	
+	private static void buildAndExpression(StringBuffer out, String[] expressions, int i){
+		if(i<expressions.length-1){
+			out.append(expressions[i]+".and(");
+			i++;
+			buildAndExpression(out, expressions, i);
+		}
+		else{
+			out.append(expressions[i]);
+		}
+		out.append(")");
 	}
 	
 	private static String getValidHomes(HAPListData schoolsData){
