@@ -10,6 +10,7 @@
       </script>
       <script src = "http://maps.googleapis.com/maps/api/js"></script>
       <script src = "myschool.js"></script>
+      <script src = "myhomes.js"></script>
       
       <script>
       
@@ -44,6 +45,45 @@
             });
 
 			drawSchools(slMapData, "green", "red");
+			drawHomes(homesData);
+         }
+         
+         
+         var drawHomes = function(homesData){
+        	 
+			for(var i in homesData){
+				var homeData = homesData[i];	
+				
+	         	var icon = 'townhouse.png'
+				if(homeData.Building.Type=='House'){
+					icon = "house.png";
+				}
+				
+				   var marker = new google.maps.Marker({
+	    	    	   position: new google.maps.LatLng(homeData.Property.Address.Latitude, homeData.Property.Address.Longitude),
+		    	   		map: map,
+	       				icon: icon
+    				});            
+
+					marker.____data = homeData;
+
+					marker.addListener('mouseover', function() {
+						var html = this.____data.Property.Price + "<br>" + this.____data.Building.Type + "<br>" + "Bed: "+ this.____data.Building.Bedrooms + "<br>"  + "Bath: "+ this.____data.Building.BathroomTotal + "<br>" + this.____data.Property.Address.Latitude+","+this.____data.Property.Address.Longitude;
+						infowindow.setContent(html); 
+				    	infowindow.open(map, this);
+					});
+
+					// assuming you also want to hide the infowindow when user mouses-out
+					marker.addListener('mouseout', function() {
+					    infowindow.close();
+					});
+				
+					marker.addListener('click', function(){
+						var detailUrl = "https://www.realtor.ca"+this.____data.RelativeDetailsURL;
+						var win = window.open(detailUrl, '_blank');
+					});
+					
+			}
          }
          
 		 var drawSchools = function(slMapData, publicColor, CatholicColor){
@@ -75,7 +115,7 @@
 							marker.____data = mapData;
 
 							marker.addListener('mouseover', function() {
-								var html = this.____data.sRating + "<br>" + this.____data.sShortName + "<br>" + this.____data.sPubOrInd;
+								var html = this.____data.sRating + "<br>" + this.____data.sShortName + "<br>" + this.____data.sPubOrInd + "<br>" + this.____data.lat+","+this.____data.lon;
 								infowindow.setContent(html); 
 						    	infowindow.open(map, this);
 							});

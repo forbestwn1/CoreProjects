@@ -1,5 +1,7 @@
 package com.nosliw.datasource.realtor;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,7 +39,8 @@ public class HAPDataSourceRealtorMock implements HAPDataSource{
 		HAPData out = null;
 		
 		try{
-			InputStream elementDataInputStream = HAPFileUtility.getInputStreamOnClassPath(HAPDataSourceRealtorMock.class, "homes.json");
+			InputStream elementDataInputStream = new FileInputStream(new File("homesArray.js"));
+//			InputStream elementDataInputStream = HAPFileUtility.getInputStreamOnClassPath(HAPDataSourceRealtorMock.class, "homes.json");
 			
 			String content = HAPFileUtility.readFile(elementDataInputStream);
 			this.m_originalData = new JSONArray(content);

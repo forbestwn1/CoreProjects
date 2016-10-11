@@ -19,6 +19,7 @@ import com.nosliw.data.basic.string.HAPStringData;
 import com.nosliw.data.info.HAPDataTypeInfo;
 import com.nosliw.data.library.entity.v100.HAPEntityData;
 import com.nosliw.datasource.HAPDataSource;
+import com.nosliw.datasource.HAPDataSourceUtility;
 
 public class HAPDataSourceSchool implements HAPDataSource{
 
@@ -79,48 +80,12 @@ public class HAPDataSourceSchool implements HAPDataSource{
 				HAPDataType entityDataType = this.m_dataTypeMan.getDataType(entityDataTypeInfo);
 				HAPData entityData = (HAPData)entityDataType.newData(null, null).getData();
 				
-				HAPData[] parms2 = {
-						entityData,
-						HAPDataTypeManager.STRING.createDataByValue("geoLocation"),
-						geoLocationData
-				};
-				entityData = (HAPData)entityDataType.operate("setAttribute", parms2, null).getData();
-
-				HAPData[] parms3 = {
-						entityData,
-						HAPDataTypeManager.STRING.createDataByValue("name"),
-						nameData
-				};
-				entityData = (HAPData)entityDataType.operate("setAttribute", parms3, null).getData();
-				
-				HAPData[] parms4 = {
-						entityData,
-						HAPDataTypeManager.STRING.createDataByValue("type"),
-						typeData
-				};
-				entityData = (HAPData)entityDataType.operate("setAttribute", parms4, null).getData();
-				
-				HAPData[] parms5 = {
-						entityData,
-						HAPDataTypeManager.STRING.createDataByValue("score"),
-						scoreData
-				};
-				entityData = (HAPData)entityDataType.operate("setAttribute", parms5, null).getData();
-				
-
-				HAPData[] parms6 = {
-						entityData,
-						HAPDataTypeManager.STRING.createDataByValue("color"),
-						colorData
-				};
-				entityData = (HAPData)entityDataType.operate("setAttribute", parms6, null).getData();
-
-				HAPData[] parms7 = {
-						entityData,
-						HAPDataTypeManager.STRING.createDataByValue("id"),
-						idData
-				};
-				entityData = (HAPData)entityDataType.operate("setAttribute", parms7, null).getData();
+				HAPDataSourceUtility.setEntityAttribute(entityData, "geoLocation", geoLocationData, m_dataTypeMan);
+				HAPDataSourceUtility.setEntityAttribute(entityData, "name", nameData, m_dataTypeMan);
+				HAPDataSourceUtility.setEntityAttribute(entityData, "type", typeData, m_dataTypeMan);
+				HAPDataSourceUtility.setEntityAttribute(entityData, "score", scoreData, m_dataTypeMan);
+				HAPDataSourceUtility.setEntityAttribute(entityData, "color", colorData, m_dataTypeMan);
+				HAPDataSourceUtility.setEntityAttribute(entityData, "id", idData, m_dataTypeMan);
 				
 				HAPData[] parms10 = {out, entityData	};
 				out = (HAPData)listDataType.operate("add", parms10, null).getData();

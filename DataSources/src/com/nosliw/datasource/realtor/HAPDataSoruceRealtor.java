@@ -7,20 +7,51 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import org.json.JSONObject;
+
+import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.datasource.HAPDataSource;
 
 public class HAPDataSoruceRealtor  implements HAPDataSource{
 
-	private HAPDataTypeManager m_dataTypeMan;
+	private static HAPDataTypeManager m_dataTypeMan;
 	
 	public HAPDataSoruceRealtor(HAPDataTypeManager dataTypeMan){
 		this.m_dataTypeMan = dataTypeMan;
 	}
 
 	public static void main(String[] args) throws Exception{
-		sendPost();
+		StringBuffer out = new StringBuffer();
+		out.append("[");
+
+		String parms;
+		int total;
+		int page;
+		
+		parms = "BuildingTypeId=1";
+		page = 1;
+		total = sendPost(page, out, parms);
+		while(page<total){
+			page++;
+			out.append(",");
+			total = sendPost(page, out, parms);
+		}
+		
+		out.append(",");
+		parms = "BuildingTypeId=16";
+		page = 1;
+		total = sendPost(page, out, parms);
+		while(page<total){
+			page++;
+			out.append(",");
+			total = sendPost(page, out, parms);
+		}
+		
+		out.append("]");
+		HAPFileUtility.writeFile("homesArray.js", HAPJsonUtility.formatJson(out.toString()));
 	}
 	
 	@Override
@@ -29,7 +60,7 @@ public class HAPDataSoruceRealtor  implements HAPDataSource{
 	}
 
 	// HTTP POST request
-		private static void sendPost() throws Exception {
+		private static int sendPost(int page, StringBuffer out, String parms) throws Exception {
 
 			String url = "https://api2.realtor.ca/Listing.svc/PropertySearch_Post";
 			URL obj = new URL(url);
@@ -44,7 +75,7 @@ public class HAPDataSoruceRealtor  implements HAPDataSource{
 			con.setRequestProperty("Accept-Encoding", "gzip, deflate, br");
 			con.setRequestProperty("Accept", "*/*");
 
-			String urlParameters = "CultureId=1&ApplicationId=1&RecordsPerPage=90&MaximumResults=90&PropertySearchTypeId=1&TransactionTypeId=2&StoreyRange=0-0&BedRange=0-0&BathRange=0-0&LongitudeMin=-80.444052&LongitudeMax=-78.570883&LatitudeMin=43.168231&LatitudeMax=44.107412&SortOrder=A&SortBy=1&viewState=m&Longitude=-79.312311&Latitude=43.755543&ZoomLevel=5&CurrentPage=1&PropertyTypeGroupID=1";
+			String urlParameters = "PriceMin=400000&PriceMax=700000&CultureId=1&ApplicationId=1&RecordsPerPage=90&MaximumResults=90&PropertySearchTypeId=1&TransactionTypeId=2&StoreyRange=0-0&BedRange=0-0&BathRange=0-0&LongitudeMin=-80.444052&LongitudeMax=-78.570883&LatitudeMin=43.168231&LatitudeMax=44.107412&SortOrder=A&SortBy=1&viewState=m&Longitude=-79.312311&Latitude=43.755543&ZoomLevel=5&PropertyTypeGroupID=1&CurrentPage="+page+"&"+parms;
 
 			// Send post request
 			con.setDoOutput(true);
@@ -69,8 +100,18 @@ public class HAPDataSoruceRealtor  implements HAPDataSource{
 			in.close();
 
 			//print result
-			System.out.println(response.toString());
-
+//			System.out.println(response.toString());
+			String responseStr = response.toString();
+			JSONObject jsonResponse = new JSONObject(responseStr);
+			
+			String resuleArrayStr = jsonResponse.optJSONArray("Results").toString();
+			int startI = resuleArrayStr.indexOf("[");
+			int endI = resuleArrayStr.lastIndexOf("]");
+			String resultStr = resuleArrayStr.substring(startI+1, endI);
+			out.append(resultStr);
+			
+			int totalPage = jsonResponse.optJSONObject("Paging").optInt("TotalPages");
+			return totalPage;
 		}	
 	
 }
