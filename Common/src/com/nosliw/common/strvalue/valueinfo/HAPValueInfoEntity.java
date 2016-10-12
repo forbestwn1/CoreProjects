@@ -3,8 +3,8 @@ package com.nosliw.common.strvalue.valueinfo;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.nosliw.common.strvalue.basic.HAPStringableValue;
-import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
+import com.nosliw.common.strvalue.HAPStringableValue;
+import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 

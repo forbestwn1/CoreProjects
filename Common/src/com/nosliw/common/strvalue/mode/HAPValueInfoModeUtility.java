@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoMode;
 
 public class HAPValueInfoModeUtility {
 

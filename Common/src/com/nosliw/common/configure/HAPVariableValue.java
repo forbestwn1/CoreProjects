@@ -1,6 +1,6 @@
 package com.nosliw.common.configure;
 
-import com.nosliw.common.strvalue.basic.HAPStringableValueBasic;
+import com.nosliw.common.strvalue.HAPStringableValueBasic;
 
 public class HAPVariableValue extends HAPResolvableConfigureItem{
 

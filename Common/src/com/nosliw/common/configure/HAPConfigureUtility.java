@@ -8,7 +8,7 @@ import java.util.Map;
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.strvalue.basic.HAPStringableValueBasic;
+import com.nosliw.common.strvalue.HAPStringableValueBasic;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPConfigureUtility {

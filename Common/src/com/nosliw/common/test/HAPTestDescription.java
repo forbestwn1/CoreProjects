@@ -1,6 +1,6 @@
 package com.nosliw.common.test;
 
-import com.nosliw.common.strvalue.basic.HAPStringableValueEntityBasic;
+import com.nosliw.common.strvalue.HAPStringableValueEntityBasic;
 
 public class HAPTestDescription extends HAPStringableValueEntityBasic{
 	public HAPTestDescription(){}

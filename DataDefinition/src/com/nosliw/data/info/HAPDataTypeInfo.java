@@ -3,7 +3,7 @@ package com.nosliw.data.info;
 import org.json.JSONObject;
 
 import com.nosliw.common.pattern.HAPPatternManager;
-import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
+import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPStringableEntityImporterJSON;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;

@@ -3,8 +3,8 @@ package com.nosliw.common.configure;
 import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
+import com.nosliw.common.strvalue.HAPStringableValueBasic;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
-import com.nosliw.common.strvalue.basic.HAPStringableValueBasic;
 
 /*
  * wrapper for string content that need to be interpolated

@@ -2,8 +2,8 @@ package com.nosliw.common.strvalue.entity.test;
 
 import java.io.InputStream;
 
-import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoImporterXML;
+import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPStringableEntityImporterXML;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfo;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;

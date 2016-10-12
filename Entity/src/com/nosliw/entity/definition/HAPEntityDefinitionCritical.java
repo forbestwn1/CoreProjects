@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.strvalue.basic.HAPStringableValueMap;
+import com.nosliw.common.strvalue.HAPStringableValueMap;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;

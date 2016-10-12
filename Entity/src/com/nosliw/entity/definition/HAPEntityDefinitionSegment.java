@@ -5,10 +5,10 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.strvalue.basic.HAPStringableValueBasic;
-import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
-import com.nosliw.common.strvalue.basic.HAPStringableValueMap;
-import com.nosliw.common.strvalue.basic.HAPStringableValueUtility;
+import com.nosliw.common.strvalue.HAPStringableValueBasic;
+import com.nosliw.common.strvalue.HAPStringableValueEntity;
+import com.nosliw.common.strvalue.HAPStringableValueMap;
+import com.nosliw.common.strvalue.HAPStringableValueUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 

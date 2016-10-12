@@ -9,9 +9,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
-import com.nosliw.common.strvalue.basic.HAPStringableValueMap;
-import com.nosliw.common.strvalue.mode.HAPValueInfoMode;
+import com.nosliw.common.strvalue.HAPStringableValueEntity;
+import com.nosliw.common.strvalue.HAPStringableValueMap;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;

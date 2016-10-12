@@ -2,8 +2,8 @@ package com.nosliw.common.constant;
 
 import java.util.Iterator;
 
-import com.nosliw.common.strvalue.basic.HAPStringableValueEntityBasic;
-import com.nosliw.common.strvalue.basic.HAPStringableValueList;
+import com.nosliw.common.strvalue.HAPStringableValueEntityBasic;
+import com.nosliw.common.strvalue.HAPStringableValueList;
 
 @HAPEntityWithAttribute(baseName="CONSTANTGROUP")
 public class HAPConstantGroup extends HAPStringableValueEntityBasic{

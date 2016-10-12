@@ -1,7 +1,7 @@
 package com.nosliw.common.strvalue.valueinfo;
 
-import com.nosliw.common.strvalue.basic.HAPStringableValue;
-import com.nosliw.common.strvalue.basic.HAPStringableValueList;
+import com.nosliw.common.strvalue.HAPStringableValue;
+import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoList extends HAPValueInfoContainer{

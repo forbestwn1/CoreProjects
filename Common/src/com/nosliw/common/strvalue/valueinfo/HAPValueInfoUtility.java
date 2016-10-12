@@ -1,6 +1,6 @@
 package com.nosliw.common.strvalue.valueinfo;
 
-import com.nosliw.common.strvalue.basic.HAPStringableValueEntity;
+import com.nosliw.common.strvalue.HAPStringableValueEntity;
 
 public class HAPValueInfoUtility {
 
