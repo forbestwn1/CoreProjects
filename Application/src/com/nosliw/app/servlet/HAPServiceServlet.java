@@ -58,7 +58,7 @@ public class HAPServiceServlet extends HttpServlet{
 						if(result==null){
 							//not in history, then it is new quest
 							HAPServiceData serviceData = processRequest(req, appClientContext);
-							String requestResult = serviceData.toStringValue(HAPConstant.SERIALIZATION_JSON);
+							String requestResult = serviceData.toStringValue(HAPSerializationFormat.JSON);
 							//save result to client context history
 							appClientContext.addReqeustResultHistory(requestInfo, requestResult);
 							requestsResult.add(requestResult);
@@ -73,7 +73,7 @@ public class HAPServiceServlet extends HttpServlet{
 				else{
 					out = clientIdServiceData;
 				}
-				content = out.toStringValue(HAPConstant.SERIALIZATION_JSON);
+				content = out.toStringValue(HAPSerializationFormat.JSON);
 			}
 			
 			response.setContentType("application/json");
@@ -148,7 +148,7 @@ public class HAPServiceServlet extends HttpServlet{
 		
 		HAPServiceData serviceData = HAPJsonService.service(serviceInfo.getCommand(), serviceInfo.getParmsJson(), clientContext);
 		
-		String content = serviceData.toStringValue(HAPConstant.SERIALIZATION_JSON);
+		String content = serviceData.toStringValue(HAPSerializationFormat.JSON);
 		content = HAPJsonUtility.formatJson(content);
 		
 		System.out.println("return: \n" + content);

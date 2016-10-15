@@ -3,14 +3,14 @@ package com.nosliw.data;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
-import com.nosliw.data.info.HAPDataTypeDefInfo;
+import com.nosliw.data.datatype.HAPDataTypeDefInfo;
 import com.nosliw.data.utils.HAPAttributeConstant;
 import com.nosliw.data.utils.HAPDataUtility;
 
-public class HAPWraper implements HAPStringable{
+public class HAPWraper implements HAPSerializable{
 
 	private HAPData m_data = null;
 	private HAPDataTypeDefInfo m_dataTypeDefInfo; 	//the data type for this wraper
@@ -97,7 +97,7 @@ public class HAPWraper implements HAPStringable{
 	@Override
 	public final String toStringValue(String format) {
 		StringBuffer out = new StringBuffer();
-		if(format.equals(HAPConstant.SERIALIZATION_JSON)){
+		if(format.equals(HAPSerializationFormat.JSON)){
 			Map<String, String> dataMap = new LinkedHashMap<String, String>();
 			Map<String, Class> dataTypeMap = new LinkedHashMap<String, Class>();
 			dataMap.put(HAPAttributeConstant.WRAPER_DATATYPE, this.getDataTypeDefInfo().toStringValue(null));
@@ -110,15 +110,15 @@ public class HAPWraper implements HAPStringable{
 			Map<String, Class> infoDataTypeMap = new LinkedHashMap<String, Class>();
 			Map<String, String> infoDataMap = new LinkedHashMap<String, String>();
 			this.buildOjbectJsonMap(infoDataMap, infoDataTypeMap);
-			dataMap.put(HAPAttributeConstant.WRAPER_INFO, HAPJsonUtility.getMapJson(infoDataMap, infoDataTypeMap));
+			dataMap.put(HAPAttributeConstant.WRAPER_INFO, HAPJsonUtility.buildMapJson(infoDataMap, infoDataTypeMap));
 			
-			out.append(HAPJsonUtility.getMapJson(dataMap, dataTypeMap));
+			out.append(HAPJsonUtility.buildMapJson(dataMap, dataTypeMap));
 		}
 		return out.toString();
 	}
 	
 	@Override
-	public String toString(){return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));	}
+	public String toString(){return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));	}
 	
 	protected HAPDataTypeManager getDataTypeManager(){return this.m_dataTypeMan;}
 }

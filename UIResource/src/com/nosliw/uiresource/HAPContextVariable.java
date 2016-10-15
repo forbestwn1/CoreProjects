@@ -3,7 +3,7 @@ package com.nosliw.uiresource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -13,7 +13,7 @@ import com.nosliw.common.utils.HAPJsonUtility;
  * 		context name
  * 		path
  */
-public class HAPContextVariable  implements HAPStringable{
+public class HAPContextVariable  implements HAPSerializable{
 
 	//context name
 	private String m_name;
@@ -54,6 +54,6 @@ public class HAPContextVariable  implements HAPStringable{
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		jsonMap.put(HAPAttributeConstant.CONTEXTVARIABLE_NAME, this.m_name);
 		jsonMap.put(HAPAttributeConstant.CONTEXTVARIABLE_PATH, this.m_path);
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 }

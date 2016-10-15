@@ -8,7 +8,7 @@ import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPWraper;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.data.utils.HAPDataUtility;
 import com.nosliw.expression.utils.HAPAttributeConstant;
 
@@ -49,6 +49,6 @@ public class HAPOperandConstant extends HAPOperandAtom{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonDataTypeMap){
 		super.buildJsonMap(jsonMap, jsonDataTypeMap);
-		jsonMap.put(HAPAttributeConstant.OPERAND_CONSTANT_DATA, this.m_data.toStringValue(HAPConstant.SERIALIZATION_JSON_FULL));
+		jsonMap.put(HAPAttributeConstant.OPERAND_CONSTANT_DATA, this.m_data.toStringValue(HAPSerializationFormat.JSON_FULL));
 	}
 }

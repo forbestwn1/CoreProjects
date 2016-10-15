@@ -1,8 +1,8 @@
 package com.nosliw.entity.validation;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 
-public class HAPValidationInfo implements HAPStringable{
+public class HAPValidationInfo implements HAPSerializable{
 
 	
 	

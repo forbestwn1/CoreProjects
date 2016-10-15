@@ -4,13 +4,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.configure.HAPConfigure;
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.entity.definition.HAPEntityDefinitionManager;
 import com.nosliw.entity.options.HAPOptionsDefinitionManager;
 import com.nosliw.entity.query.HAPQueryDefinitionManager;
 
-public abstract class HAPClientContextManager implements HAPStringable{
+public abstract class HAPClientContextManager implements HAPSerializable{
 
 	private int m_nextId = 100;
 	

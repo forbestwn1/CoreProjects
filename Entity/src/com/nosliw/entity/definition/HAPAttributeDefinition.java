@@ -8,7 +8,7 @@ import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.configure.HAPConfigureValue;
 import com.nosliw.common.configure.HAPConfigureValueString;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.serialization.HAPStringableJson;
+import com.nosliw.common.serialization.HAPSerialiableImp;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueEntityBasic;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -16,8 +16,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.info.HAPDataTypeDefInfo;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeDefInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.entity.options.HAPOptionsDefinition;
 import com.nosliw.entity.options.HAPOptionsDefinitionManager;
 import com.nosliw.entity.utils.HAPAttributeConstant;
@@ -224,12 +224,12 @@ public abstract class HAPAttributeDefinition extends HAPStringableValueEntityBas
 	/******************************************   Serialization  *********************************************/
 	@Override
 	protected void buildFullJsonMap(Map<String, String> map, Map<String, Class> dataTypeMap){
-		map.put(HAPAttributeConstant.ENTITYATTRDEF_DESCRIPTION, this.getProperties().toStringValue(HAPConstant.SERIALIZATION_JSON));
+		map.put(HAPAttributeConstant.ENTITYATTRDEF_DESCRIPTION, this.getProperties().toStringValue(HAPSerializationFormat.JSON));
 		map.put(HAPAttributeConstant.ENTITYATTRDEF_FULLNAME, this.getFullName());
 		map.put(HAPAttributeConstant.ENTITYATTRDEF_CRITICALVALUE, this.m_criticalValue);
 		map.put(HAPAttributeConstant.ENTITYATTRDEF_ISEMPTYONINIT, String.valueOf(this.m_isEmptyOnInit));
 
-		map.put(HAPAttributeConstant.ENTITYATTRDEF_DATATYPEDEFINFO, this.m_dataTypeDefInfo.toStringValue(HAPConstant.SERIALIZATION_JSON));
+		map.put(HAPAttributeConstant.ENTITYATTRDEF_DATATYPEDEFINFO, this.m_dataTypeDefInfo.toStringValue(HAPSerializationFormat.JSON));
 
 		dataTypeMap.put(HAPAttributeConstant.ENTITYATTRDEF_VALIDATION, Boolean.class);
 		if(this.m_validationInfos.size()==0){
@@ -243,14 +243,14 @@ public abstract class HAPAttributeDefinition extends HAPStringableValueEntityBas
 			if(!this.getServerValidationOnly()){
 				List<String> validationJsons = new ArrayList<String>();
 				for(HAPValidationInfoExpression validationInfo : this.m_validationInfos){
-					validationJsons.add(validationInfo.toStringValue(HAPConstant.SERIALIZATION_JSON));
+					validationJsons.add(validationInfo.toStringValue(HAPSerializationFormat.JSON));
 				}
 				map.put(HAPAttributeConstant.ENTITYATTRDEF_RULES, HAPJsonUtility.getArrayJson(validationJsons.toArray(new String[0])));
 			}
 		}
 
 		if(this.m_options!=null){
-			map.put(HAPAttributeConstant.ENTITYATTRDEF_OPTIONS, this.m_options.toStringValue(HAPConstant.SERIALIZATION_JSON));
+			map.put(HAPAttributeConstant.ENTITYATTRDEF_OPTIONS, this.m_options.toStringValue(HAPSerializationFormat.JSON));
 		}
 		
 		map.put(HAPAttributeConstant.ENTITYATTRDEF_EVENTS, HAPJsonUtility.getArrayJson(this.m_events.toArray(new String[0])));

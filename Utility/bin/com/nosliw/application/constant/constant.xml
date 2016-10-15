@@ -276,11 +276,6 @@
 				packagename="com.nosliw.common.utils" 
 				classname="HAPConstant" >
 		<definitions>
-			<definition name="SERIALIZATION_JSON" value="json"/>
-			<definition name="SERIALIZATION_JSON_FULL" value="json_full"/>
-			<definition name="SERIALIZATION_XML" value="xml"/>
-			<definition name="SERIALIZATION_TEXT" value="text"/>
-			<definition type="space"/>
 			<definition name="SERVICECODE_SUCCESS" value="200" type="int"/>
 			<definition name="SERVICECODE_FAILURE" value="400" type="int"/>
 			<definition name="SERVICECODE_EXCEPTION" value="5000" type="int"/>

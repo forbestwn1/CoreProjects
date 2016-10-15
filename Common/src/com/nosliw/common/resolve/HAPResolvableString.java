@@ -1,4 +1,4 @@
-package com.nosliw.common.strvalue;
+package com.nosliw.common.resolve;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -57,7 +57,7 @@ public class HAPResolvableString implements HAPResolvable{
 	public HAPInterpolateOutput resolveByPattern(Map<String, Object> patternDatas){
 		HAPInterpolateOutput out = null;
 		if(patternDatas!=null){
-			out = HAPStringableValueUtility.resolveByPatterns(this.m_value, patternDatas);
+			out = HAPResolvableUtility.resolveByPatterns(this.m_value, patternDatas);
 			this.m_resolvedValue = out.getOutput();
 			this.m_resolved = out.isResolved();
 		}
@@ -74,7 +74,7 @@ public class HAPResolvableString implements HAPResolvable{
 	public HAPInterpolateOutput resolveByInterpolateProcessor(Map<HAPInterpolateProcessor, Object> interpolateDatas){
 		HAPInterpolateOutput out = null;
 		if(interpolateDatas!=null){
-			out = HAPStringableValueUtility.resolveByInterpolateProcessors(this.m_value, interpolateDatas);
+			out = HAPResolvableUtility.resolveByInterpolateProcessors(this.m_value, interpolateDatas);
 			this.m_resolvedValue = out.getOutput();
 			this.m_resolved = out.isResolved();
 		}

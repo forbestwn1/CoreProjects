@@ -11,8 +11,8 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.info.HAPDataTypeDefInfo;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeDefInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.entity.definition.HAPAttributeDefinitionAtom;
 import com.nosliw.entity.definition.HAPAttributeDefinition;
 import com.nosliw.entity.definition.HAPAttributeDefinitionContainer;
@@ -130,7 +130,7 @@ public class HAPEntityContainerAttributeWraper extends HAPDataWraper{
 		{
 			String id = operation.getElementId();
 			String eleId = HAPEntityDataTypeUtility.getContainerAttributeDataType(this.getDataTypeManager()).newContainerElement(this, id);
-			operation.setExtra(this.getChildWraper(eleId).toStringValue(HAPConstant.SERIALIZATION_JSON));
+			operation.setExtra(this.getChildWraper(eleId).toStringValue(HAPSerializationFormat.JSON));
 			
 			HAPDataTypeInfo childDataType = this.getChildDataTypeDefInfo();
 			if(HAPEntityDataTypeUtility.isEntityType(childDataType)){

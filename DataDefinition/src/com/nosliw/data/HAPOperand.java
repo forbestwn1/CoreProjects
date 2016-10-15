@@ -3,14 +3,14 @@ package com.nosliw.data;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPStringable;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 
 /*
  * this interface is for all the entity which can be part of expression (operand)
  * there are three type of operationable : constant, variable, expression
  */
-public interface HAPOperand extends HAPStringable{
+public interface HAPOperand extends HAPSerializable{
 
 	//get type of operand : constant, variable, expression
 	public int getOperandType();

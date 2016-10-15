@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 import com.nosliw.app.instance.HAPApplicationInstance;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 
 public class HAPLoadScriptServlet extends HttpServlet{
 

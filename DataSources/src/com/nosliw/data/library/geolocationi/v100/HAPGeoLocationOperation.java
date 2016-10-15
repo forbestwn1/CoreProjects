@@ -7,7 +7,7 @@ import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPOperationInfoAnnotation;
 import com.nosliw.data.basic.doubl.HAPDoubleData;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 
 public class HAPGeoLocationOperation  extends HAPDataOperation{
 

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -18,7 +18,7 @@ import com.nosliw.entity.utils.HAPAttributeConstant;
  *    type: 	entity type of root entity
  *    id: 		entity id of root entity which is unique within same entity type
  */
-public class HAPEntityID implements HAPStringable{
+public class HAPEntityID implements HAPSerializable{
 	//entity type name
 	private String m_entityType;
 	//root entity id
@@ -62,7 +62,7 @@ public class HAPEntityID implements HAPStringable{
 		jsonMap.put(HAPAttributeConstant.ENTITYID_ID, this.m_id);
 		jsonMap.put(HAPAttributeConstant.ENTITYID_ENTITYTYPE, this.m_entityType);
 		jsonMap.put(HAPAttributeConstant.ENTITYID_KEY, this.getKey());
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 	
 	public static HAPEntityID parseJson(JSONObject jsonEntityID){

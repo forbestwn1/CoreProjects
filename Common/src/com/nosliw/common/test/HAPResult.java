@@ -2,10 +2,10 @@ package com.nosliw.common.test;
 
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPStringableJson;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.serialization.HAPSerialiableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 
-public abstract class HAPResult extends HAPStringableJson{
+public abstract class HAPResult extends HAPSerialiableImp{
 
 	private Boolean m_result = true;
 	private HAPTestDescription m_testDescription;
@@ -27,10 +27,10 @@ public abstract class HAPResult extends HAPStringableJson{
 	protected void setResult(Boolean result){  this.m_result = result;}
 	
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap, String format){
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> jsonTypeMap){
 		jsonMap.put("type", this.getType());
 		jsonMap.put("result", String.valueOf(m_result));
-		jsonMap.put("testDescription", this.m_testDescription.toStringValue(HAPConstant.SERIALIZATION_JSON));
+		jsonMap.put("testDescription", this.m_testDescription.toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 }

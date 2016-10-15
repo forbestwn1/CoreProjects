@@ -60,7 +60,7 @@ public class HAPAttributeDefinitionAtom extends HAPAttributeDefinition{
 		dataTypeMap.put(HAPAttributeConstant.ENTITYATTRDEF_ISCRITICAL, Boolean.class);
 		map.put(HAPAttributeConstant.ENTITYATTRDEF_ISCRITICAL, String.valueOf(m_isCritical));
 		if(this.getDefaultValue()!=null){
-			map.put(HAPAttributeConstant.ENTITYATTRDEF_DEFAULTVALUE, this.getDefaultValue().toStringValue(HAPConstant.SERIALIZATION_JSON));
+			map.put(HAPAttributeConstant.ENTITYATTRDEF_DEFAULTVALUE, this.getDefaultValue().toStringValue(HAPSerializationFormat.JSON));
 		}
 	}
 	

@@ -1,4 +1,4 @@
-package com.nosliw.common.strvalue;
+package com.nosliw.common.resolve;
 
 import java.util.Map;
 

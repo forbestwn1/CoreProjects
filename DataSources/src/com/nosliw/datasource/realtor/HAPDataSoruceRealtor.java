@@ -72,7 +72,7 @@ public class HAPDataSoruceRealtor  implements HAPDataSource{
 			con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 			con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 			con.setRequestProperty("PropertyTypeGroupID", "application/x-www-form-urlencoded; charset=UTF-8");
-			con.setRequestProperty("Accept-Encoding", "gzip, deflate, br");
+//			con.setRequestProperty("Accept-Encoding", "gzip, deflate, br");
 			con.setRequestProperty("Accept", "*/*");
 
 			String urlParameters = "PriceMin=400000&PriceMax=700000&CultureId=1&ApplicationId=1&RecordsPerPage=90&MaximumResults=90&PropertySearchTypeId=1&TransactionTypeId=2&StoreyRange=0-0&BedRange=0-0&BathRange=0-0&LongitudeMin=-80.444052&LongitudeMax=-78.570883&LatitudeMin=43.168231&LatitudeMax=44.107412&SortOrder=A&SortBy=1&viewState=m&Longitude=-79.312311&Latitude=43.755543&ZoomLevel=5&PropertyTypeGroupID=1&CurrentPage="+page+"&"+parms;
@@ -100,7 +100,7 @@ public class HAPDataSoruceRealtor  implements HAPDataSource{
 			in.close();
 
 			//print result
-//			System.out.println(response.toString());
+			System.out.println(response.toString());
 			String responseStr = response.toString();
 			JSONObject jsonResponse = new JSONObject(responseStr);
 			

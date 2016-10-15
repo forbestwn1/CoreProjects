@@ -7,7 +7,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperand;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.expression.utils.HAPAttributeConstant;
 
 public abstract class HAPOperandImp implements HAPOperand{
@@ -43,16 +43,16 @@ public abstract class HAPOperandImp implements HAPOperand{
 		jsonMap.put(HAPAttributeConstant.OPERAND_TYPE, String.valueOf(this.getOperandType()));
 		jsonMap.put(HAPAttributeConstant.OPERAND_SCRIPTRUNNALBE, this.isScriptRunnable(HAPConstant.OPERATIONDEF_SCRIPT_JAVASCRIPT)+"");
 		
-		if(this.m_outDataTypeInfo!=null)		jsonMap.put(HAPAttributeConstant.OPERAND_OUTDATATYPEINFO, this.m_outDataTypeInfo.toStringValue(HAPConstant.SERIALIZATION_JSON));
+		if(this.m_outDataTypeInfo!=null)		jsonMap.put(HAPAttributeConstant.OPERAND_OUTDATATYPEINFO, this.m_outDataTypeInfo.toStringValue(HAPSerializationFormat.JSON));
 
 		Map<String, Class> jsonDataTypeMap = new LinkedHashMap<String, Class>();
 		
 		this.buildJsonMap(jsonMap, jsonDataTypeMap);
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 	
 	@Override
 	public String toString(){
-		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));
+		return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));
 	}
 }

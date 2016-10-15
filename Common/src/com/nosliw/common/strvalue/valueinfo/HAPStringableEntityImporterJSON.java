@@ -7,6 +7,7 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPAttributeConstant;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueBasic;
@@ -34,8 +35,8 @@ public class HAPStringableEntityImporterJSON {
 
 		if(jsonObjEntity!=null){
 			JSONObject propertiesJsonObj = jsonObjEntity;
-			String jsonFormat = getJsonFormat(jsonObjEntity);
-			if(HAPConstant.SERIALIZATION_JSON_FULL.equals(jsonFormat))  propertiesJsonObj = jsonObjEntity.optJSONObject(HAPAttributeConstant.STRINGABLEVALUE_PROPERTIES);
+			HAPSerializationFormat jsonFormat = getJsonFormat(jsonObjEntity);
+			if(HAPSerializationFormat.JSON_FULL.equals(jsonFormat))  propertiesJsonObj = jsonObjEntity.optJSONObject(HAPAttributeConstant.STRINGABLEVALUE_PROPERTIES);
 
 			Set<String> entityOptionsProperties = new HashSet<String>();
 			
@@ -95,8 +96,8 @@ public class HAPStringableEntityImporterJSON {
 		
 		if(mapObj!=null){
 			JSONObject mapPropertiesJsonObj = null;
-			String jsonFormat = getJsonFormat((JSONObject)mapObj);
-			if(HAPConstant.SERIALIZATION_JSON_FULL.equals(jsonFormat))  mapPropertiesJsonObj = ((JSONObject)mapObj).optJSONObject(HAPAttributeConstant.STRINGABLEVALUE_ELEMENTS);
+			HAPSerializationFormat jsonFormat = getJsonFormat((JSONObject)mapObj);
+			if(HAPSerializationFormat.JSON_FULL.equals(jsonFormat))  mapPropertiesJsonObj = ((JSONObject)mapObj).optJSONObject(HAPAttributeConstant.STRINGABLEVALUE_ELEMENTS);
 			else    mapPropertiesJsonObj = (JSONObject)mapObj;
 			
 			HAPValueInfo childInfo = mapValueInfo.getChildValueInfo().getSolidValueInfo();
@@ -186,8 +187,8 @@ public class HAPStringableEntityImporterJSON {
 		return out;
 	}
 	
-	private static String getJsonFormat(JSONObject jsonObj){
-		if(jsonObj.opt(HAPAttributeConstant.STRINGABLEVALUE_CATEGARY)!=null)	return HAPConstant.SERIALIZATION_JSON_FULL;
-		return HAPConstant.SERIALIZATION_JSON;
+	private static HAPSerializationFormat getJsonFormat(JSONObject jsonObj){
+		if(jsonObj.opt(HAPAttributeConstant.STRINGABLEVALUE_CATEGARY)!=null)	return HAPSerializationFormat.JSON_FULL;
+		return HAPSerializationFormat.JSON;
 	}
 }

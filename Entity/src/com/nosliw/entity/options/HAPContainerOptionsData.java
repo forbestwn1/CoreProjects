@@ -6,9 +6,9 @@ import java.util.List;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataImp;
 import com.nosliw.data.HAPWraper;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data.imp.HAPDataImp;
 
 /*
  * 
@@ -39,7 +39,7 @@ public class HAPContainerOptionsData extends HAPDataImp{
 
 	@Override
 	public String toDataStringValue(String format) {
-		if(format.equals(HAPConstant.SERIALIZATION_JSON)){
+		if(format.equals(HAPSerializationFormat.JSON)){
 			List<String> jsonArray = new ArrayList<String>();
 			for(HAPWraper wraper : this.m_eleWrapers){
 				jsonArray.add(wraper.toStringValue(format));

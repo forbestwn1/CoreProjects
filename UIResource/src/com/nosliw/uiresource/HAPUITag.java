@@ -45,6 +45,6 @@ public class HAPUITag extends HAPUIResourceBasic{
 			HAPDataBinding dataBinding = this.m_dataBindings.get(name);
 			dataBindingJsons.put(name, dataBinding.toStringValue(format));
 		}
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_DATABINDINGS, HAPJsonUtility.getMapJson(dataBindingJsons));
+		jsonMap.put(HAPAttributeConstant.UIRESOURCE_DATABINDINGS, HAPJsonUtility.buildMapJson(dataBindingJsons));
 	}
 }

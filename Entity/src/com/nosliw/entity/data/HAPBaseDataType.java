@@ -2,10 +2,10 @@ package com.nosliw.entity.data;
 
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeImp;
 import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.info.HAPDataTypeInfo;
-import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
+import com.nosliw.data.imp.HAPDataTypeImp;
 import com.nosliw.entity.definition.HAPEntityDefinitionManager;
 
 public abstract class HAPBaseDataType extends HAPDataTypeImp{

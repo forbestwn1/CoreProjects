@@ -7,9 +7,8 @@ import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.info.HAPDataOperationInfo;
-import com.nosliw.data.info.HAPDataTypeInfo;
-import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
 import com.nosliw.data.utils.HAPDataErrorUtility;
 
 /*

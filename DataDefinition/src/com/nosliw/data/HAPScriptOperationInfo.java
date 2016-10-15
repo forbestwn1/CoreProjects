@@ -2,7 +2,7 @@ package com.nosliw.data;
 
 import java.util.Set;
 
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 
 /*
  * store all information related with script operation

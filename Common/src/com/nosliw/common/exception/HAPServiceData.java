@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPAttributeConstant;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -17,7 +18,7 @@ import com.nosliw.common.utils.HAPJsonUtility;
  * 		if result code less or equal than SERVICECODE_SUCCESS, we consider the operation success
  * 		if result code more or eqal than SERVICECODE_FAIL, we consier the operation fail
  */
-public class HAPServiceData implements HAPStringable{
+public class HAPServiceData implements HAPSerializable{
 
 	//result code
 	private int m_code = HAPConstant.SERVICECODE_SUCCESS;
@@ -68,9 +69,9 @@ public class HAPServiceData implements HAPStringable{
 	}
 	
 	@Override
-	public String toStringValue(String format){
+	public String toStringValue(HAPSerializationFormat format){
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		Map<String, Class> jsonTypeMap = new LinkedHashMap<String, Class>();
+		Map<String, Class<?>> jsonTypeMap = new LinkedHashMap<String, Class<?>>();
 		
 		//code
 		jsonMap.put(HAPAttributeConstant.SERVICEDATA_CODE, String.valueOf(this.getCode()));
@@ -83,34 +84,34 @@ public class HAPServiceData implements HAPStringable{
 		Object data = this.getData();
 		String dataString = null;
 		if(data!=null){
-			if(data instanceof HAPStringable){
-				dataString = ((HAPStringable)data).toStringValue(format);
+			if(data instanceof HAPSerializable){
+				dataString = ((HAPSerializable)data).toStringValue(format);
 			}
 			else if(data instanceof String){
 				dataString = (String)data;
 			}
 			else if(data instanceof List){
-				dataString = HAPJsonUtility.getListObjectJson((List)data, format);
+				dataString = HAPJsonUtility.buildJson((List)data, format);
 			}
 			else if(data instanceof Set){
-				dataString = HAPJsonUtility.getSetObjectJson((Set)data, format);
+				dataString = HAPJsonUtility.buildJson((Set)data, format);
 			}
 			else if(data instanceof Map){
-				dataString = HAPJsonUtility.getMapObjectJson((Map)data, format);
+				dataString = HAPJsonUtility.buildJson((Map)data, format);
 			}
 			else if(data.getClass().isArray()){
-				dataString = HAPJsonUtility.getArrayObjectJson((Object[])data, format);
+				dataString = HAPJsonUtility.buildJson((Object[])data, format);
 			}
 		}
 		jsonMap.put(HAPAttributeConstant.SERVICEDATA_DATA, dataString);
 		
 		//parms
-		jsonMap.put(HAPAttributeConstant.SERVICEDATA_METADATA, HAPJsonUtility.getMapJson(this.m_metaDatas));
+		jsonMap.put(HAPAttributeConstant.SERVICEDATA_METADATA, HAPJsonUtility.buildMapJson(this.m_metaDatas));
 		
-		return HAPJsonUtility.getMapJson(jsonMap, jsonTypeMap);
+		return HAPJsonUtility.buildMapJson(jsonMap, jsonTypeMap);
 	}
 	
 	public String toString(){
-		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));
+		return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));
 	}
 }

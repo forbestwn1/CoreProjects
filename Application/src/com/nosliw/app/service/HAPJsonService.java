@@ -18,7 +18,7 @@ import com.nosliw.common.log.HAPLogger;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.entity.data.HAPEntityID;
 
 public class HAPJsonService {
@@ -169,7 +169,7 @@ public class HAPJsonService {
 				serviceData = HAPServiceData.createFailureData(null, "No command exist : " + command + "  !!!!!");
 			}
 			
-			out.append(serviceData.toStringValue(HAPConstant.SERIALIZATION_JSON));
+			out.append(serviceData.toStringValue(HAPSerializationFormat.JSON));
 			
 			jsonOut = HAPJsonUtility.formatJson(out.toString());
 
@@ -178,8 +178,8 @@ public class HAPJsonService {
 			logJsonMap.put("parms", jsonParms.toString());
 			logJsonMap.put("output", out.toString());
 			logJsonMap.put("clientId", clientContext.getClientContextInfo().clientId);
-			if(logData)			logJsonMap.put("data", clientContext.getDataContext().toStringValue(HAPConstant.SERIALIZATION_JSON));
-			String logContent = HAPJsonUtility.getMapJson(logJsonMap);
+			if(logData)			logJsonMap.put("data", clientContext.getDataContext().toStringValue(HAPSerializationFormat.JSON));
+			String logContent = HAPJsonUtility.buildMapJson(logJsonMap);
 			logger.log(title, categary, logContent, logAppending);
 		}
 		catch(Exception e){

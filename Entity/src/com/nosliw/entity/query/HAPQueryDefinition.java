@@ -10,13 +10,13 @@ import java.util.Set;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceDataException;
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPWraper;
-import com.nosliw.data.info.HAPDataTypeDefInfo;
+import com.nosliw.data.datatype.HAPDataTypeDefInfo;
 import com.nosliw.entity.data.HAPEntityWraper;
 import com.nosliw.entity.definition.HAPEntityDefinitionCritical;
 import com.nosliw.entity.definition.HAPEntityDefinitionManager;
@@ -41,7 +41,7 @@ import com.nosliw.expression.utils.HAPExpressionUtility;
  *  
  * therefore, each changes on one entity related with either major entity type or secondary entity type may affect the result of query 
  */
-public class HAPQueryDefinition implements HAPStringable{
+public class HAPQueryDefinition implements HAPSerializable{
 	//name for this query definition
 	private String m_name;
 	
@@ -215,7 +215,7 @@ public class HAPQueryDefinition implements HAPStringable{
 
 		jsonMap.put(HAPAttributeConstant.QUERYDEFINITION_PROJECTATTRIBUTES, HAPJsonUtility.getSetObjectJson(this.m_queryAttributes));
 
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 	
 	static public HAPQueryDefinition parse(JSONObject jsonObject, HAPDataTypeManager dataTypeMan, HAPEntityDefinitionManager entityDefMan){

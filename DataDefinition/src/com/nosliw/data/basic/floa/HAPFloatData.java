@@ -2,8 +2,8 @@ package com.nosliw.data.basic.floa;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataImp;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.imp.HAPDataImp;
 
 public class HAPFloatData extends HAPDataImp{
 
@@ -22,7 +22,7 @@ public class HAPFloatData extends HAPDataImp{
 
 	@Override
 	public String toDataStringValue(String format) {
-		if(format.equals(HAPConstant.SERIALIZATION_JSON)){
+		if(format.equals(HAPSerializationFormat.JSON)){
 			return String.valueOf(this.m_value);
 		}
 		return null;

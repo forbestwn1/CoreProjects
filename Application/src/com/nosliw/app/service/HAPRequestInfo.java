@@ -5,10 +5,10 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPJsonUtility;
 
-public class HAPRequestInfo implements HAPStringable{
+public class HAPRequestInfo implements HAPSerializable{
 
 	public String requestId;
 	
@@ -23,7 +23,7 @@ public class HAPRequestInfo implements HAPStringable{
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		jsonMap.put("requestId", this.requestId);
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 
 	public static HAPRequestInfo getRequestInfo(JSONObject jsonObj){

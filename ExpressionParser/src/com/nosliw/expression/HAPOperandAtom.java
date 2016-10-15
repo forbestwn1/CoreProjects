@@ -3,7 +3,7 @@ package com.nosliw.expression;
 import java.util.Map;
 
 import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 
 public abstract class HAPOperandAtom extends HAPOperandImp{
 

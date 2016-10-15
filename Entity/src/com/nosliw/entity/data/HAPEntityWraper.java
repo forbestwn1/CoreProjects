@@ -10,7 +10,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPWraper;
-import com.nosliw.data.info.HAPDataTypeDefInfo;
+import com.nosliw.data.datatype.HAPDataTypeDefInfo;
 import com.nosliw.data.utils.HAPDataUtility;
 import com.nosliw.entity.dataaccess.HAPEntityDataAccess;
 import com.nosliw.entity.definition.HAPAttributeDefinition;

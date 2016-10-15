@@ -8,8 +8,8 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.info.HAPDataTypeDefInfo;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeDefInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.entity.data.HAPAtomWraper;
 import com.nosliw.entity.data.HAPDataWraper;
 import com.nosliw.entity.data.HAPEntityContainerAttributeWraper;
@@ -105,7 +105,7 @@ public class HAPEntityExportUtil {
 
 		if(!referenceAttrWraper.isEmpty()){
 			doc.append("type", referenceAttrWraper.getReferenceType());
-			doc.append("refid", referenceAttrWraper.getReferenceData().toStringValue(HAPConstant.SERIALIZATION_JSON));
+			doc.append("refid", referenceAttrWraper.getReferenceData().toStringValue(HAPSerializationFormat.JSON));
 		}
 		
 		return doc;
@@ -120,7 +120,7 @@ public class HAPEntityExportUtil {
 		attrDataTypeDoc.append("type", dataTypeInfo.getType());
 		doc.append("dataType", attrDataTypeDoc);
 		
-		doc.append("data", atomData.getData().toStringValue(HAPConstant.SERIALIZATION_JSON));
+		doc.append("data", atomData.getData().toStringValue(HAPSerializationFormat.JSON));
 		return doc;
 	}
 }

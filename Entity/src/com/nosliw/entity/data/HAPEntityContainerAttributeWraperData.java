@@ -9,9 +9,9 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataImp;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.info.HAPDataTypeDefInfo;
+import com.nosliw.data.datatype.HAPDataTypeDefInfo;
+import com.nosliw.data.imp.HAPDataImp;
 import com.nosliw.entity.definition.HAPAttributeDefinitionContainer;
 import com.nosliw.entity.definition.HAPEntityDefinitionManager;
 import com.nosliw.entity.utils.HAPEntityDataTypeUtility;
@@ -121,17 +121,17 @@ public class HAPEntityContainerAttributeWraperData extends HAPBaseData{
 	/**************************  Parse  ***************************/
 	@Override
 	public String toDataStringValue(String format) {
-		if(format.equals(HAPConstant.SERIALIZATION_JSON)) 
+		if(format.equals(HAPSerializationFormat.JSON)) 
 		{
 			Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 			Iterator<HAPDataWraper> it = this.iterate();
 			while(it.hasNext()){
 				HAPDataWraper eleWraper = it.next();
 				if(eleWraper!=null){
-					jsonMap.put(eleWraper.getId(), eleWraper.toStringValue(HAPConstant.SERIALIZATION_JSON));
+					jsonMap.put(eleWraper.getId(), eleWraper.toStringValue(HAPSerializationFormat.JSON));
 				}
 			}
-			return HAPJsonUtility.getMapJson(jsonMap);
+			return HAPJsonUtility.buildMapJson(jsonMap);
 		}
 		return null;
 	}

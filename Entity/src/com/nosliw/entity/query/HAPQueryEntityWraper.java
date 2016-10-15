@@ -6,7 +6,7 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPWraper;
-import com.nosliw.data.info.HAPDataTypeDefInfo;
+import com.nosliw.data.datatype.HAPDataTypeDefInfo;
 import com.nosliw.entity.data.HAPEntityID;
 import com.nosliw.entity.data.HAPEntityWraper;
 import com.nosliw.entity.dataaccess.HAPEntityDataAccess;

@@ -16,7 +16,7 @@ import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPWraper;
-import com.nosliw.data.info.HAPDataTypeDefInfo;
+import com.nosliw.data.datatype.HAPDataTypeDefInfo;
 import com.nosliw.entity.dataaccess.HAPEntityDataAccess;
 import com.nosliw.entity.definition.HAPAttributeDefinition;
 import com.nosliw.entity.definition.HAPEntityDefinitionManager;
@@ -337,7 +337,7 @@ public abstract class HAPDataWraper extends HAPWraper{
 			if(this.getParentEntity()==null) values.put(HAPAttributeConstant.DATAWRAPER_PARENTENTITYID, null);
 			else values.put(HAPAttributeConstant.DATAWRAPER_PARENTENTITYID, this.getParentEntity().getWraper().getID().toStringValue(null));
 			
-			if(this.getAttributeDefinition()!=null)	values.put(HAPAttributeConstant.DATAWRAPER_ATTRCONFIGURE, this.getAttributeDefinition().toStringValue(HAPConstant.SERIALIZATION_JSON));
+			if(this.getAttributeDefinition()!=null)	values.put(HAPAttributeConstant.DATAWRAPER_ATTRCONFIGURE, this.getAttributeDefinition().toStringValue(HAPSerializationFormat.JSON));
 			else values.put(HAPAttributeConstant.DATAWRAPER_ATTRCONFIGURE, "{}");
 		}
 

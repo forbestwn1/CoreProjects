@@ -3,7 +3,7 @@ package com.nosliw.entity.path;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.entity.data.HAPEntityID;
 import com.nosliw.entity.data.HAPEntityWraper;
@@ -13,7 +13,7 @@ import com.nosliw.entity.utils.HAPAttributeConstant;
  * describe entity path information : base entity + path
  * this path may be a complex path that cover multiple solid entity
  */
-public class HAPEntityPath implements HAPStringable{
+public class HAPEntityPath implements HAPSerializable{
 
 	//entity ID
 	private HAPEntityID m_entityID;
@@ -40,7 +40,7 @@ public class HAPEntityPath implements HAPStringable{
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		this.setJsonMap(jsonMap);
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 	
 	public HAPEntityPath clone(){

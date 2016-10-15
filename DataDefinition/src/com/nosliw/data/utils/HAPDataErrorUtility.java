@@ -3,7 +3,7 @@ package com.nosliw.data.utils;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 
 public class HAPDataErrorUtility {
 

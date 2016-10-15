@@ -3,13 +3,13 @@ package com.nosliw.uiresource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPJsonUtility;
 
 /*
  * store data binding information
  */
-public class HAPDataBinding implements HAPStringable{
+public class HAPDataBinding implements HAPSerializable{
 
 	//name of data binding
 	private String m_name;
@@ -32,6 +32,6 @@ public class HAPDataBinding implements HAPStringable{
 		jsonMap.put(HAPAttributeConstant.DATABINDING_VARIABLE, this.m_variable.toStringValue(format));
 		jsonMap.put(HAPAttributeConstant.CONTEXTVARIABLE_NAME, this.m_name);
 		
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 }

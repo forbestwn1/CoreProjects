@@ -176,7 +176,7 @@ public abstract class HAPEntityDataAccessImp implements HAPEntityDataAccess{
 			
 			this.addTransitEntity(entityWraper, HAPConstant.DATAACCESS_ENTITYSTATUS_NEW);
 			//store entity wrapper to extra in operation, so that client side can use extra value to create wrapper
-			operation.setExtra(entityWraper.toStringValue(HAPConstant.SERIALIZATION_JSON));
+			operation.setExtra(entityWraper.toStringValue(HAPSerializationFormat.JSON));
 			out = HAPServiceData.createSuccessData(entityWraper);
 			if(operation.getScope()==HAPConstant.ENTITYOPERATION_SCOPE_GLOBAL){
 				this.onEvent(HAPEvent.createEntityNewEvent(entityWraper));
@@ -227,7 +227,7 @@ public abstract class HAPEntityDataAccessImp implements HAPEntityDataAccess{
 
 			HAPEntity entityDataType = (HAPEntity)HAPEntityDataUtility.getEntityDataType(entityWraper.getEntityType(), this.getDataTypeManager());
 			HAPDataWraper attrWraper = entityDataType.newAttributeWraper(attrDef, entityWraper.getEntityData());
-			operation.setExtra(attrWraper.toStringValue(HAPConstant.SERIALIZATION_JSON));
+			operation.setExtra(attrWraper.toStringValue(HAPSerializationFormat.JSON));
 			out = HAPServiceData.createSuccessData(attrWraper);
 			break;
 		}
@@ -501,7 +501,7 @@ public abstract class HAPEntityDataAccessImp implements HAPEntityDataAccess{
 			jsonQueryMap.put(name, this.getQueryComponent(name).toStringValue(format));
 		}
 		
-		return HAPJsonUtility.getMapJson(jsonDataMap);
+		return HAPJsonUtility.buildMapJson(jsonDataMap);
 	}
 	
 	

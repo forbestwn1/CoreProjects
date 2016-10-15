@@ -12,9 +12,9 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataImp;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.info.HAPDataTypeDefInfo;
+import com.nosliw.data.datatype.HAPDataTypeDefInfo;
+import com.nosliw.data.imp.HAPDataImp;
 import com.nosliw.entity.definition.HAPAttributeDefinition;
 import com.nosliw.entity.definition.HAPEntityDefinitionCritical;
 import com.nosliw.entity.definition.HAPEntityDefinitionSegment;
@@ -265,17 +265,17 @@ public class HAPEntityData extends HAPDataImp
 	//***************************   Parse
 	@Override
 	public String toDataStringValue(String format) {
-		if(format.equals(HAPConstant.SERIALIZATION_JSON)){
+		if(format.equals(HAPSerializationFormat.JSON)){
 			Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 			for(String attr : this.getAttributes()){
 				HAPDataWraper attrValue = this.getAttributeValueWraper(attr);
-				jsonMap.put(attr, attrValue.toStringValue(HAPConstant.SERIALIZATION_JSON));
+				jsonMap.put(attr, attrValue.toStringValue(HAPSerializationFormat.JSON));
 			}
 
 			for(String attr : this.m_internalAttributes.keySet()){
 				jsonMap.put(attr, this.m_internalAttributes.get(attr));
 			}
-			return HAPJsonUtility.getMapJson(jsonMap);
+			return HAPJsonUtility.buildMapJson(jsonMap);
 		}
 		return null;
 	}

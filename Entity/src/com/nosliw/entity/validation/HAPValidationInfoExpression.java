@@ -3,12 +3,12 @@ package com.nosliw.entity.validation;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.expression.HAPExpression;
 
-public class HAPValidationInfoExpression implements HAPStringable{
+public class HAPValidationInfoExpression implements HAPSerializable{
 
 	private String m_name;
 	private HAPExpression m_expression;
@@ -44,6 +44,6 @@ public class HAPValidationInfoExpression implements HAPStringable{
 		jsonMap.put("description", this.m_description);
 		jsonMap.put("errorMsg", this.m_errorMessage);
 		if(this.m_expression!=null)		jsonMap.put("dataExpression", this.m_expression.toStringValue(format));
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 }

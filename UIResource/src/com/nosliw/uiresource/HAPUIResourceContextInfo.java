@@ -3,14 +3,14 @@ package com.nosliw.uiresource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 
 /*
  * class for input data info
  */
-public class HAPUIResourceContextInfo implements HAPStringable{
+public class HAPUIResourceContextInfo implements HAPSerializable{
 
 	//name of the context input data
 	private String m_name;
@@ -36,12 +36,12 @@ public class HAPUIResourceContextInfo implements HAPStringable{
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		jsonMap.put(HAPAttributeConstant.UIRESOURCECONTEXTINFO_NAME, this.m_name);
 		jsonMap.put(HAPAttributeConstant.UIRESOURCECONTEXTINFO_TYPE, this.m_type);
-		jsonMap.put(HAPAttributeConstant.UIRESOURCECONTEXTINFO_CONFIGURE, HAPJsonUtility.getMapJson(new LinkedHashMap<String, String>()));
-		return HAPJsonUtility.getMapJson(jsonMap);
+		jsonMap.put(HAPAttributeConstant.UIRESOURCECONTEXTINFO_CONFIGURE, HAPJsonUtility.buildMapJson(new LinkedHashMap<String, String>()));
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 	
 	@Override
 	public String toString(){
-		return this.toStringValue(HAPConstant.SERIALIZATION_JSON);
+		return this.toStringValue(HAPSerializationFormat.JSON);
 	}
 }

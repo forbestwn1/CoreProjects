@@ -8,7 +8,7 @@ import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPWraper;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.expression.utils.HAPAttributeConstant;
 
 /*

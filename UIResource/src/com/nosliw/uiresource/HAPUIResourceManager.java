@@ -5,13 +5,13 @@ import java.util.Map;
 
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.configure.HAPConfigureImp;
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPDataTypeManager;
 
-public class HAPUIResourceManager implements HAPStringable{
+public class HAPUIResourceManager implements HAPSerializable{
 
 	private Map<String, HAPUIResource> m_uiResource;
 	
@@ -79,11 +79,11 @@ public class HAPUIResourceManager implements HAPStringable{
 		for(String name : this.m_uiResource.keySet()){
 			jsonMap.put(name, this.m_uiResource.get(name).toStringValue(format));
 		}
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 	
 	@Override
-	public String toString(){ return this.toStringValue(HAPConstant.SERIALIZATION_JSON); }
+	public String toString(){ return this.toStringValue(HAPSerializationFormat.JSON); }
 
 	protected HAPDataTypeManager getDataTypeManager(){	return this.m_dataTypeMan;	}
 	protected HAPConfigure getConfiguration(){ return this.m_setting; }

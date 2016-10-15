@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.data.HAPData;
 import com.nosliw.entity.data.HAPEntityID;
 import com.nosliw.entity.data.HAPEntityWraper;
@@ -20,7 +20,7 @@ import com.nosliw.entity.query.HAPQueryManager;
 /*
  * 
  */
-public interface HAPEntityDataAccess extends HAPEventListener, HAPStringable{
+public interface HAPEntityDataAccess extends HAPEventListener, HAPSerializable{
 	
 	public void init();
 	public void destroy();

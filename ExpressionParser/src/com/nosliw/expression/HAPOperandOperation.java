@@ -5,11 +5,11 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
+import com.nosliw.data.HAPDataOperationInfo;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperand;
-import com.nosliw.data.info.HAPDataOperationInfo;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.expression.utils.HAPAttributeConstant;
 
 /*
@@ -107,8 +107,8 @@ public abstract class HAPOperandOperation extends HAPOperandImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonDataTypeMap){
 		jsonMap.put(HAPAttributeConstant.OPERAND_OPERATION_OPERATION, this.m_operation);
 		if(this.m_baseDataTypeInfo!=null){
-			jsonMap.put(HAPAttributeConstant.OPERAND_OPERATION_BASEDATATYPEINFO, this.m_baseDataTypeInfo.toStringValue(HAPConstant.SERIALIZATION_JSON));
+			jsonMap.put(HAPAttributeConstant.OPERAND_OPERATION_BASEDATATYPEINFO, this.m_baseDataTypeInfo.toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(HAPAttributeConstant.OPERAND_OPERATION_PARAMETERS, HAPJsonUtility.getArrayObjectJson(this.m_parms, HAPConstant.SERIALIZATION_JSON));
+		jsonMap.put(HAPAttributeConstant.OPERAND_OPERATION_PARAMETERS, HAPJsonUtility.buildJson(this.m_parms, HAPSerializationFormat.JSON));
 	}
 }

@@ -1,8 +1,8 @@
 package com.nosliw.data.library.lengthunit.v100;
 
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataImp;
 import com.nosliw.data.HAPDataType;
+import com.nosliw.data.imp.HAPDataImp;
 
 public class HAPLengthUnitData extends HAPDataImp{
 

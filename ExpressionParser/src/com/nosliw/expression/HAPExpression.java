@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
@@ -14,7 +14,7 @@ import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperand;
 import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPWraper;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.data.utils.HAPDataUtility;
 import com.nosliw.expression.utils.HAPAttributeConstant;
 import com.nosliw.expression.utils.HAPExpressionUtility;
@@ -26,7 +26,7 @@ import com.nosliw.expression.utils.HAPIterateOperandTaskOut;
  * expression can be preprocessed
  *  
  */
-public class HAPExpression implements HAPStringable{
+public class HAPExpression implements HAPSerializable{
 	// original expressiong
 	private String m_expression;
 	// parsed expression
@@ -195,23 +195,23 @@ public class HAPExpression implements HAPStringable{
 		jsonMap.put(HAPAttributeConstant.EXPRESSION_OPERAND, this.m_operand.toStringValue(format));
 		jsonMap.put(HAPAttributeConstant.EXPRESSION_SCRIPTRUNNALBE, this.isScriptRunnable(HAPConstant.OPERATIONDEF_SCRIPT_JAVASCRIPT)+"");
 
-		jsonMap.put(HAPAttributeConstant.EXPRESSION_VARIABLESINFO, HAPJsonUtility.getMapObjectJson(this.m_varsInfo, format));
+		jsonMap.put(HAPAttributeConstant.EXPRESSION_VARIABLESINFO, HAPJsonUtility.buildJson(this.m_varsInfo, format));
 		
 		
 		Map<String, String> constantsJsons = new LinkedHashMap<String, String>();
 		for(String name : m_constantDatas.keySet()){
-			constantsJsons.put(name, m_constantDatas.get(name).toStringValue(HAPConstant.SERIALIZATION_JSON_FULL));
+			constantsJsons.put(name, m_constantDatas.get(name).toStringValue(HAPSerializationFormat.JSON_FULL));
 		}
-		jsonMap.put(HAPAttributeConstant.EXPRESSION_CONSTANTS, HAPJsonUtility.getMapJson(constantsJsons));
+		jsonMap.put(HAPAttributeConstant.EXPRESSION_CONSTANTS, HAPJsonUtility.buildMapJson(constantsJsons));
 
-		jsonMap.put(HAPAttributeConstant.EXPRESSION_ALLDATATYPEINFOS, HAPJsonUtility.getSetObjectJson(this.m_allDataTypeInfo, format));
+		jsonMap.put(HAPAttributeConstant.EXPRESSION_ALLDATATYPEINFOS, HAPJsonUtility.buildJson(this.m_allDataTypeInfo, format));
 		
 		Map<String, Class> jsonTypeMap = new LinkedHashMap<String, Class>();
 		jsonTypeMap.put(HAPAttributeConstant.EXPRESSION_SCRIPTRUNNALBE, Boolean.class);
 		
-		return HAPJsonUtility.getMapJson(jsonMap, jsonTypeMap);
+		return HAPJsonUtility.buildMapJson(jsonMap, jsonTypeMap);
 	}	
 	
 	@Override
-	public String toString(){return this.toStringValue(HAPConstant.SERIALIZATION_JSON);}
+	public String toString(){return this.toStringValue(HAPSerializationFormat.JSON);}
 }

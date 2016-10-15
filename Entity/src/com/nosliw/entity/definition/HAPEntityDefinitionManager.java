@@ -10,13 +10,13 @@ import org.json.JSONObject;
 import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.configure.HAPConfigureImp;
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.info.HAPDataTypeDefInfo;
+import com.nosliw.data.datatype.HAPDataTypeDefInfo;
 import com.nosliw.entity.data.HAPEntity;
 import com.nosliw.entity.definition.xmlimp.HAPEntityDefinitionImporter;
 import com.nosliw.entity.options.HAPOptionsDefinitionManager;
@@ -32,7 +32,7 @@ import com.nosliw.entity.utils.HAPEntityNamingConversion;
  * 		add entty loader object to manager
  */
 
-public class HAPEntityDefinitionManager extends HAPConfigurableImp implements HAPStringable{
+public class HAPEntityDefinitionManager extends HAPConfigurableImp implements HAPSerializable{
 
 	//loader name  --- entity definition loader
 	private Map<String, HAPEntityDefinitionLoader> m_entityLoaders = null;    
@@ -206,12 +206,12 @@ public class HAPEntityDefinitionManager extends HAPConfigurableImp implements HA
 	
 	@Override
 	public String toStringValue(String format){
-		if(format.equals(HAPConstant.SERIALIZATION_JSON)){
+		if(format.equals(HAPSerializationFormat.JSON)){
 			Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
 			for(String name : this.getAllEntityDefinitionName()){
 				outJsonMap.put(name, this.getEntityDefinition(name).toStringValue(format));
 			}
-			return HAPJsonUtility.getMapJson(outJsonMap);
+			return HAPJsonUtility.buildMapJson(outJsonMap);
 		}
 		return null;
 	}
@@ -221,7 +221,7 @@ public class HAPEntityDefinitionManager extends HAPConfigurableImp implements HA
 		StringBuffer out = new StringBuffer();
 		
 		out.append("\n\n\n**************************     EntityDefinitionManager  Start   *****************************\n");
-		out.append(HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON)));
+		out.append(HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON)));
 		out.append("\n**************************     EntityDefinitionManager  End   *****************************\n\n\n");
 		
 		return out.toString();

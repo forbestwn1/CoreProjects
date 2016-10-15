@@ -3,7 +3,7 @@ package com.nosliw.uiresource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPSegmentParser;
 /*
  * store 
  */
-public class HAPElementEvent implements HAPStringable{
+public class HAPElementEvent implements HAPSerializable{
 	//ui id that this event apply to
 	private String m_uiId;
 
@@ -39,6 +39,6 @@ public class HAPElementEvent implements HAPStringable{
 		jsonMap.put(HAPAttributeConstant.ELEMENTEVENT_EVENT, this.m_event);
 		jsonMap.put(HAPAttributeConstant.ELEMENTEVENT_FUNCTION, this.m_function);
 		jsonMap.put(HAPAttributeConstant.ELEMENTEVENT_SELECTION, this.m_selection);
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 }

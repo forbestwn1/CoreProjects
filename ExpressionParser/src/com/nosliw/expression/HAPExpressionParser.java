@@ -8,7 +8,7 @@ import java.util.List;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperand;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.expression.parser.NosliwExpressionParser;
 import com.nosliw.expression.parser.ParseException;
 import com.nosliw.expression.parser.SimpleNode;

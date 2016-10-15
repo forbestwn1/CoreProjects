@@ -3,10 +3,9 @@ package com.nosliw.common.strvalue;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
-import com.nosliw.common.interpolate.HAPInterpolateUtility;
+import com.nosliw.common.resolve.HAPResolvableString;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
@@ -130,8 +129,8 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 	public List<String> getListValue(){		return (List<String>)this.getValue(HAPConstant.STRINGABLE_BASICVALUETYPE_ARRAY);	}
 
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format) {
-		super.buildFullJsonMap(jsonMap, typeJsonMap, format);
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_TYPE, this.m_type);
 		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_STRINGVALUE, this.m_strValue.toString());
 		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_RESOLVED, String.valueOf(this.m_sovled));
@@ -139,7 +138,7 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 	}
 	
 	@Override
-	protected String buildJson(String format){
+	protected String buildJson(){
 		return this.m_strValue.toString();
 	}
 	

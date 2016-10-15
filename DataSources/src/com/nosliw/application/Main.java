@@ -11,8 +11,8 @@ import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.basic.list.HAPList;
 import com.nosliw.data.basic.list.HAPListData;
 import com.nosliw.data.basic.string.HAPStringData;
-import com.nosliw.data.info.HAPDataTypeInfo;
-import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
 import com.nosliw.data.library.distance.v100.HAPDistance;
 import com.nosliw.data.library.entity.v100.HAPEntity;
 import com.nosliw.data.library.entity.v100.HAPEntityData;
@@ -110,7 +110,7 @@ public class Main {
 		HAPExpressionData validHomeExpression = createExpressionData("?(schoolData)?.getAttribute(&(geoLocation)&).distance(?(homeData)?.getAttribute(&(geoLocation)&)).longer(?(distanceData)?).not().or(?(valid)?)");
 		
 		String[] buildingTypes = {"House", "Row / Townhouse"};
-		String[] bedroomsNos = {"4", "5"};
+		String[] bedroomsNos = {"3", "4", "5"};
 
 		String bedroomFilterExpression = "?(bedroomsNos)?.contains(?(homeData)?.getAttribute(&(bedroom1)&)))";
 		String buildingTypeFilterExpression = "?(buildingTypes)?.contains(?(homeData)?.getAttribute(&(buildingType)&)))";

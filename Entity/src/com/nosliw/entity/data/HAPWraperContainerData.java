@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataImp;
 import com.nosliw.data.HAPDataType;
+import com.nosliw.data.imp.HAPDataImp;
 
 public class HAPWraperContainerData extends HAPDataImp{
 	List<HAPDataWraper> m_wrapers;

@@ -1,10 +1,10 @@
 package com.nosliw.entity.options;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPWraper;
-import com.nosliw.data.info.HAPDataTypeDefInfo;
+import com.nosliw.data.datatype.HAPDataTypeDefInfo;
 
 /*
  * options is a limited set of data
@@ -13,7 +13,7 @@ import com.nosliw.data.info.HAPDataTypeDefInfo;
  * not only provide data list, but also provide the display name for each element
  */
 
-public abstract class HAPOptionsDefinition implements HAPStringable{
+public abstract class HAPOptionsDefinition implements HAPSerializable{
 	//unique name for options defintion
 	private String m_name;
 	private String m_description;

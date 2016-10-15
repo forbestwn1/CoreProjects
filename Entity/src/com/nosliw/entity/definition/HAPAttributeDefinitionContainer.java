@@ -7,7 +7,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.info.HAPDataTypeDefInfo;
+import com.nosliw.data.datatype.HAPDataTypeDefInfo;
 import com.nosliw.entity.options.HAPOptionsDefinitionManager;
 import com.nosliw.entity.utils.HAPAttributeConstant;
 
@@ -65,7 +65,7 @@ public class HAPAttributeDefinitionContainer extends HAPAttributeDefinition{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> map, Map<String, Class> dataTypeMap){
 		if(this.getChildAttributeDefinition()!=null){
-			map.put(HAPAttributeConstant.ENTITYATTRDEF_ELEMENT, this.getChildAttributeDefinition().toStringValue(HAPConstant.SERIALIZATION_JSON));
+			map.put(HAPAttributeConstant.ENTITYATTRDEF_ELEMENT, this.getChildAttributeDefinition().toStringValue(HAPSerializationFormat.JSON));
 		}
 	}
 	

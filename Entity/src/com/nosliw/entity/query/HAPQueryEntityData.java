@@ -7,7 +7,7 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataImp;
+import com.nosliw.data.imp.HAPDataImp;
 import com.nosliw.entity.data.HAPEntityID;
 import com.nosliw.entity.data.HAPEntityWraper;
 import com.nosliw.entity.dataaccess.HAPEntityDataAccess;
@@ -67,7 +67,7 @@ public class HAPQueryEntityData extends HAPDataImp{
 
 	@Override
 	public String toDataStringValue(String format) {
-		if(format.equals(HAPConstant.SERIALIZATION_JSON)){
+		if(format.equals(HAPSerializationFormat.JSON)){
 			return HAPJsonUtility.getMapObjectJson(m_attributeDatas);
 		}
 		return null;

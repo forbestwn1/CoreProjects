@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.resource.HAPResource;
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -28,11 +28,12 @@ import com.nosliw.data.basic.map.HAPMap;
 import com.nosliw.data.basic.number.HAPInteger;
 import com.nosliw.data.basic.string.HAPString;
 import com.nosliw.data.basic.string.HAPStringData;
-import com.nosliw.data.info.HAPDataTypeInfo;
-import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
+import com.nosliw.data.imp.HAPDataTypeImp;
 import com.nosliw.data.utils.HAPAttributeConstant;
 
-public class HAPDataTypeManager implements HAPStringable, HAPResource{
+public class HAPDataTypeManager implements HAPSerializable, HAPResource{
 
 	public final static String DEFAULT_CATEGARY = HAPConstant.DATATYPE_CATEGARY_SIMPLE;
 	public final static String DEFAULT_TYPE = HAPConstant.DATATYPE_TYPE_STRING;
@@ -343,12 +344,12 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 			categary = text.substring(p1+1, p2);
 			String value = text.substring(p2+1);
 			HAPDataType dataType = this.getDataType(new HAPDataTypeInfo(categary, type));
-			return dataType.toData(value, HAPConstant.SERIALIZATION_TEXT);
+			return dataType.toData(value, HAPSerializationFormat.TEXT);
 		}
 		else{
 			if(categary!=null && type!=null){
 				HAPDataType dataType = this.getDataType(new HAPDataTypeInfo(categary, type));
-				return dataType.toData(text, HAPConstant.SERIALIZATION_TEXT);
+				return dataType.toData(text, HAPSerializationFormat.TEXT);
 			}
 			else{
 				//simple / text
@@ -366,7 +367,7 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 		}
 		Object valueObj = jsonObj.opt(HAPAttributeConstant.DATA_VALUE);
 		if(valueObj==null)  valueObj = jsonObj;
-		return this.getDataType(new HAPDataTypeInfo(categary, type)).toData(valueObj, HAPConstant.SERIALIZATION_JSON);
+		return this.getDataType(new HAPDataTypeInfo(categary, type)).toData(valueObj, HAPSerializationFormat.JSON);
 	}
 
 	public HAPWraper parseWraper(JSONObject jsonObj){
@@ -383,9 +384,9 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 		for(String key : this.m_dataTypes.keySet()){
 			jsonTypeMap.put(key, this.m_dataTypes.get(key).toStringValue(format));
 		}
-		jsonMap.put("data", HAPJsonUtility.getMapJson(jsonTypeMap));
+		jsonMap.put("data", HAPJsonUtility.buildMapJson(jsonTypeMap));
 		
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 
 	@Override
@@ -393,7 +394,7 @@ public class HAPDataTypeManager implements HAPStringable, HAPResource{
 		StringBuffer out = new StringBuffer();
 		
 		out.append("\n\n\n**************************     DataTypeManager  Start   *****************************\n");
-		out.append(HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON)));
+		out.append(HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON)));
 		out.append("\n**************************     DataTypeManager  End   *****************************\n\n\n");
 		
 		return out.toString();

@@ -11,7 +11,7 @@ import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperand;
 import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPWraper;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.expression.utils.HAPAttributeConstant;
 import com.nosliw.expression.utils.HAPExpressionUtility;
 import com.nosliw.expression.utils.HAPIterateOperandTask;
@@ -110,7 +110,7 @@ public class HAPOperandPath extends HAPOperandImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonDataTypeMap) {
-		jsonMap.put(HAPAttributeConstant.OPERAND_PATH_BASEDATA, this.m_baseData.toStringValue(HAPConstant.SERIALIZATION_JSON));
+		jsonMap.put(HAPAttributeConstant.OPERAND_PATH_BASEDATA, this.m_baseData.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(HAPAttributeConstant.OPERAND_PATH_PATH, this.m_path);
 	}
 }

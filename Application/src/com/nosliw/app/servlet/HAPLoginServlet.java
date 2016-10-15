@@ -37,7 +37,7 @@ public class HAPLoginServlet  extends HttpServlet{
 				HAPApplicationClientInfo clientContextInfo = new HAPApplicationClientInfo();
 				HAPClientContext clientContext = HAPApplicationInstance.getApplicationInstantce().getClientContextManager().newClientContext(clientContextInfo);
 				HAPServiceData out = HAPServiceData.createSuccessData(new HAPServiceData[]{HAPServiceData.createSuccessData(clientContext.getClientContextInfo().clientId)});
-				content = out.toStringValue(HAPConstant.SERIALIZATION_JSON);
+				content = out.toStringValue(HAPSerializationFormat.JSON);
 				
 				System.out.println("*********************** Start Login ************************");
 				System.out.println("login " + content);

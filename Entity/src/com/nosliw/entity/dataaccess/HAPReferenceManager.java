@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.entity.data.HAPEntityID;
 import com.nosliw.entity.data.HAPEntityWraper;
@@ -14,7 +14,7 @@ import com.nosliw.entity.data.HAPReferenceInfoAbsolute;
 import com.nosliw.entity.data.HAPReferenceWraper;
 import com.nosliw.entity.utils.HAPEntityUtility;
 
-public class HAPReferenceManager implements HAPStringable{
+public class HAPReferenceManager implements HAPSerializable{
 
 	Map<String, Set<HAPReferenceInfoAbsolute>> m_parentRefs;
 	HAPEntityDataAccess m_dataAccess;

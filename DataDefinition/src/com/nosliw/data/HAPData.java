@@ -1,21 +1,20 @@
 package com.nosliw.data;
 
-import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 
 /*
  * class that store data
  *  
  */
-public interface HAPData extends HAPStringable{
+public interface HAPData extends HAPSerializable{
 	
 	/*
 	 * get data type object
 	 */
-	public HAPDataType getDataType();
+	public HAPDataTypeInfo getDataTypeInfo();
 	
 	/*
 	 * check if the data is empty data
@@ -35,9 +34,4 @@ public interface HAPData extends HAPStringable{
 	 */
 	public void clearUp(Map<String, Object> parms);
 	
-	/*
-	 * run operation on this data
-	 */
-	public HAPServiceData operate(String operation, List<HAPData> parms, HAPOperationContext opContext);
-
 }

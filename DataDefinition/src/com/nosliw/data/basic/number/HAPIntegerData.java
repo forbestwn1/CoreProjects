@@ -2,8 +2,8 @@ package com.nosliw.data.basic.number;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataImp;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.imp.HAPDataImp;
 
 public class HAPIntegerData extends HAPDataImp{
 
@@ -21,7 +21,7 @@ public class HAPIntegerData extends HAPDataImp{
 
 	@Override
 	public String toDataStringValue(String format) {
-		if(format.equals(HAPConstant.SERIALIZATION_JSON)){
+		if(format.equals(HAPSerializationFormat.JSON)){
 			return String.valueOf(this.m_value);
 		}
 		return null;

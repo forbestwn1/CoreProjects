@@ -7,9 +7,10 @@ import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateProcessorByConfigureForDoc;
-import com.nosliw.common.serialization.HAPStringableJson;
+import com.nosliw.common.resolve.HAPResolvable;
+import com.nosliw.common.serialization.HAPSerialiableImp;
 
-public abstract class HAPStringableValue extends HAPStringableJson implements HAPResolvable{
+public abstract class HAPStringableValue extends HAPSerialiableImp implements HAPResolvable{
 
 	public abstract String getStringableCategary();
 
@@ -34,10 +35,7 @@ public abstract class HAPStringableValue extends HAPStringableJson implements HA
 	}
 	
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format) {
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_CATEGARY, this.getStringableCategary());
 	}
-
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format) {}
 }

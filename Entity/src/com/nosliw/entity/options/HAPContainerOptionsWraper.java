@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPWraper;
-import com.nosliw.data.info.HAPDataTypeDefInfo;
+import com.nosliw.data.datatype.HAPDataTypeDefInfo;
 
 public class HAPContainerOptionsWraper extends HAPWraper {
 

@@ -10,7 +10,7 @@ import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperand;
 import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPWraper;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.expression.utils.HAPAttributeConstant;
 
 /*
@@ -65,7 +65,7 @@ public class HAPOperandDataOperaion extends HAPOperandOperation{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonDataTypeMap){
 		super.buildJsonMap(jsonMap, jsonDataTypeMap);
-		jsonMap.put(HAPAttributeConstant.OPERAND_DATAOPERATION_BASEDATA, this.m_baseData.toStringValue(HAPConstant.SERIALIZATION_JSON));
+		jsonMap.put(HAPAttributeConstant.OPERAND_DATAOPERATION_BASEDATA, this.m_baseData.toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 	@Override

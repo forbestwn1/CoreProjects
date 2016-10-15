@@ -8,8 +8,8 @@ import java.util.Set;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.info.HAPDataOperationInfo;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data.imp.HAPDataTypeImp;
 import com.nosliw.data.utils.HAPDataOperationUtility;
 
 /*

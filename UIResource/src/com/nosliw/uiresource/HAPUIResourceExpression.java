@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -22,7 +22,7 @@ import com.nosliw.expression.HAPExpressionInfo;
  * class for ui resource expression
  * ui resource is combination of js expression and data expression
  */
-public class HAPUIResourceExpression implements HAPStringable{
+public class HAPUIResourceExpression implements HAPSerializable{
 
 	//original expression
 	private String m_expression;
@@ -95,14 +95,14 @@ public class HAPUIResourceExpression implements HAPStringable{
 		
 //		jsonMap.put(HAPAttributeConstant.UIRESOURCEEXPRESSION_VARIABLES, HAPJsonUtility.getSetObjectJson(m_variables));
 		
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 }
 
 /*
  * class store expression in uiresource
  */
-class HAPUIResourceExpressionUnit implements HAPStringable{
+class HAPUIResourceExpressionUnit implements HAPSerializable{
 	//all context variables (it may contain constant name, which one is real context variable, it is left determined on script side)
 	public Set<HAPContextVariable> m_contextVariables;
 	//expression object
@@ -131,6 +131,6 @@ class HAPUIResourceExpressionUnit implements HAPStringable{
 		jsonMap.put(HAPAttributeConstant.UIRESOURCEEXPRESSION_EXPRESSIONOBJECT, this.m_expression.toStringValue(format));
 		jsonMap.put(HAPAttributeConstant.UIRESOURCEEXPRESSION_CONTEXTVARIABLES, HAPJsonUtility.getSetObjectJson(m_contextVariables));
 		
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 }

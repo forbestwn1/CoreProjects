@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -25,7 +25,7 @@ import com.nosliw.entity.utils.HAPAttributeConstant;
  * attribute path may go through some referenced object which make things complex
  * therefore, one entity path may be divided into some segment each represent on solid entity path
  */
-public class HAPEntityPathInfo implements HAPStringable{
+public class HAPEntityPathInfo implements HAPSerializable{
 	//original entity path --- entity + path
 	private HAPEntityPath m_entityPath;
 
@@ -111,7 +111,7 @@ public class HAPEntityPathInfo implements HAPStringable{
 		jsonMap.put(HAPAttributeConstant.ENTITYPATHINFO_ENTITYPATH, this.m_entityPath.toStringValue(format));
 		jsonMap.put(HAPAttributeConstant.ENTITYPATHINFO_PATHSEGMENTS, HAPJsonUtility.getListObjectJson(this.m_pathSegments));
 		if(this.m_data!=null)		jsonMap.put(HAPAttributeConstant.ENTITYPATHINFO_DATA, this.m_data.toStringValue(format));
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 	
 }

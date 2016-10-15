@@ -6,7 +6,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.entity.utils.HAPAttributeConstant;
@@ -16,7 +16,7 @@ import com.nosliw.entity.utils.HAPAttributeConstant;
  * 		entityName
  * 		attribute
  */
-public class HAPQueryProjectAttribute implements HAPStringable{
+public class HAPQueryProjectAttribute implements HAPSerializable{
 	public String entityName;
 	public String attribute;
 	
@@ -42,7 +42,7 @@ public class HAPQueryProjectAttribute implements HAPStringable{
 		jsonMap.put(HAPAttributeConstant.QUERYPROJECTATTRIBUTE_ENTITYNAME, this.entityName);
 		jsonMap.put(HAPAttributeConstant.QUERYPROJECTATTRIBUTE_ATTRIBUTE, this.attribute);
 		
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 	
 	static public HAPQueryProjectAttribute parse(JSONObject jsonObject){

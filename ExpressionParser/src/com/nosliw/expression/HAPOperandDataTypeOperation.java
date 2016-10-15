@@ -10,7 +10,7 @@ import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperand;
 import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPWraper;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 
 /*
  * class for data type operation 

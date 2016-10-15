@@ -2,14 +2,6 @@ package com.nosliw.common.utils;
 
 public class HAPConstant {
 
-
-		public static final String SERIALIZATION_JSON = "json";
-		public static final String SERIALIZATION_JSON_FULL = "json_full";
-		public static final String SERIALIZATION_XML = "xml";
-		public static final String SERIALIZATION_TEXT = "text";
-
-
-
 		public static final int SERVICECODE_SUCCESS = 200;
 		public static final int SERVICECODE_FAILURE = 400;
 		public static final int SERVICECODE_EXCEPTION = 5000;

@@ -2,13 +2,13 @@ package com.nosliw.entity.dataaccess;
 
 import java.util.Collection;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.entity.data.HAPEntityID;
 
 /*
  * class for storing information related with entity request
  */
-public class HAPEntityRequestInfo implements HAPStringable{
+public class HAPEntityRequestInfo implements HAPSerializable{
 
 	//a collection of entity ID that need to be loaded
 	private Collection<HAPEntityID> m_IDs;

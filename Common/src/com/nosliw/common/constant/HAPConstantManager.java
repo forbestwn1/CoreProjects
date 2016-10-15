@@ -94,9 +94,9 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 	
 	public void exportJS(){
 		Map<String, String> attributeJsonMap = new LinkedHashMap<String, String>();
-		Map<String, Class> attributeTypesJsonMap = new LinkedHashMap<String, Class>();
+		Map<String, Class<?>> attributeTypesJsonMap = new LinkedHashMap<String, Class<?>>();
 		Map<String, String> constantJsonMap = new LinkedHashMap<String, String>();
-		Map<String, Class> constantTypesJsonMap = new LinkedHashMap<String, Class>();
+		Map<String, Class<?>> constantTypesJsonMap = new LinkedHashMap<String, Class<?>>();
 		
 		for(HAPConstantGroup group : this.m_groups){
 			Iterator it = group.iterateConstant();
@@ -151,8 +151,8 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 		return attrJavaContent;
 	}
 
-	private void writeJS(Map<String, String> valueMap, Map<String, Class> datatypeMap, String fileName){
-		String jsonContent = HAPJsonUtility.getMapJson(valueMap, datatypeMap);
+	private void writeJS(Map<String, String> valueMap, Map<String, Class<?>> datatypeMap, String fileName){
+		String jsonContent = HAPJsonUtility.buildMapJson(valueMap, datatypeMap);
 		String content = "var " + fileName + "=\n" + HAPJsonUtility.formatJson(jsonContent) + ";";
 		HAPFileUtility.writeFile(m_jsPath.getStringValue()+"/"+fileName+".js", content);
 	}
@@ -160,7 +160,7 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 	/*
 	 * process constant definition and create jason map and type map
 	 */
-	private void processJSItem(HAPConstantInfo info, Map<String, String> valueMap, Map<String, Class> datatypeMap){
+	private void processJSItem(HAPConstantInfo info, Map<String, String> valueMap, Map<String, Class<?>> datatypeMap){
 		if("js".equals(info.getSkip()))  return;
 		
 		if(HAPBasicUtility.isStringEmpty(info.getType())){

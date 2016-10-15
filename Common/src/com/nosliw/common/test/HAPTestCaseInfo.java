@@ -65,8 +65,8 @@ public class HAPTestCaseInfo extends HAPTestInfo{
 	}
 
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap, String format){
-		super.buildFullJsonMap(jsonMap, jsonTypeMap, format);
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> jsonTypeMap){
+		super.buildFullJsonMap(jsonMap, jsonTypeMap);
 		jsonMap.put("runtimeInfo", this.m_testCaseRuntime.toStringValue(null));
 	}
 }

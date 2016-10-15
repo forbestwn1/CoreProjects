@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -275,8 +276,8 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 		return this;
 	}
 
-	public HAPConfigureImp importFromProperty(String file, Class class1){  return this.importFromProperty(file, class1, true);}
-	public HAPConfigureImp importFromProperty(String file, Class class1, boolean isHard){
+	public HAPConfigureImp importFromProperty(String file, Class<?> class1){  return this.importFromProperty(file, class1, true);}
+	public HAPConfigureImp importFromProperty(String file, Class<?> class1, boolean isHard){
 		if(!HAPBasicUtility.isStringEmpty(file)){
 			InputStream input = HAPFileUtility.getInputStreamOnClassPath(class1, file);
 			this.importFromProperty(input, isHard);
@@ -367,16 +368,16 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 	}
 	
 	@Override
-	public String toString(){ return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));}
+	public String toString(){ return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));}
 
 	@Override
-	public String toStringValue(String format) {
+	public String toStringValue(HAPSerializationFormat format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		
-		jsonMap.put("variables", HAPJsonUtility.getMapObjectJson(this.m_variables, format));
-		jsonMap.put("childValues", HAPJsonUtility.getMapObjectJson(this.getChildConfigureValues(), format));
-		jsonMap.put("childConfigurables", HAPJsonUtility.getMapObjectJson(this.getChildConfigurables(), format));
-		return HAPJsonUtility.getMapJson(jsonMap);
+		jsonMap.put("variables", HAPJsonUtility.buildJson(this.m_variables, format));
+		jsonMap.put("childValues", HAPJsonUtility.buildJson(this.getChildConfigureValues(), format));
+		jsonMap.put("childConfigurables", HAPJsonUtility.buildJson(this.getChildConfigurables(), format));
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 
 	@Override

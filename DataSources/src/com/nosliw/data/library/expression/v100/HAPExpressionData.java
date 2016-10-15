@@ -3,9 +3,9 @@ package com.nosliw.data.library.expression.v100;
 import java.util.Map;
 
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataImp;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data.imp.HAPDataImp;
 import com.nosliw.expression.HAPExpression;
 import com.nosliw.expression.HAPExpressionInfo;
 

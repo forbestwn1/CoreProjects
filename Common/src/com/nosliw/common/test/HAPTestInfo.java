@@ -3,11 +3,11 @@ package com.nosliw.common.test;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPStringableJson;
+import com.nosliw.common.serialization.HAPSerialiableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
 
-public abstract class HAPTestInfo extends HAPStringableJson{
+public abstract class HAPTestInfo extends HAPSerialiableImp{
 	//id used to identify test, it is unique globally
 	private int m_id;
 	
@@ -97,11 +97,11 @@ public abstract class HAPTestInfo extends HAPStringableJson{
 	}
 
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap, String format){
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> jsonTypeMap){
 		jsonMap.put("type", this.getType());
 		jsonMap.put("id", String.valueOf(this.m_id));
 		jsonMap.put("sequence", String.valueOf(this.m_sequence));
 		jsonMap.put("inited", String.valueOf(this.m_inited));
-		jsonMap.put("testDescription", this.m_description.toStringValue(HAPConstant.SERIALIZATION_JSON));
+		jsonMap.put("testDescription", this.m_description.toStringValue(HAPSerializationFormat.JSON));
 	}
 }

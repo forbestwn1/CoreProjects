@@ -5,9 +5,9 @@ import java.util.Map;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataTypeImp;
 import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
+import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
+import com.nosliw.data.imp.HAPDataTypeImp;
 
 public class HAPContainerOptions extends HAPDataTypeImp{
 

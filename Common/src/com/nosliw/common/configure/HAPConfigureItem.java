@@ -1,8 +1,8 @@
 package com.nosliw.common.configure;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 
-abstract class HAPConfigureItem implements HAPStringable{
+abstract class HAPConfigureItem implements HAPSerializable{
 
 	public static final String CONFIGURE = "CONFIGURE";
 	public static final String VALUE = "VALUE";

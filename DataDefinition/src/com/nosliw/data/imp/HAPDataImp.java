@@ -1,4 +1,4 @@
-package com.nosliw.data;
+package com.nosliw.data.imp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +9,10 @@ import java.util.Map;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
+import com.nosliw.data.HAPData;
+import com.nosliw.data.HAPDataType;
+import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.utils.HAPAttributeConstant;
 import com.nosliw.data.utils.HAPDataUtility;
 
@@ -61,12 +65,12 @@ public abstract class HAPDataImp implements HAPData{
 		String out = this.toDataStringValue(format);
 		if(out!=null)  return out;
 		
-		if(format.equals(HAPConstant.SERIALIZATION_JSON_FULL)){
+		if(format.equals(HAPSerializationFormat.JSON_FULL)){
 			Map<String, String> jsonMap = new HashMap<String, String>();
 			Map<String, Class> jsonType = null;
 			
-			jsonMap.put(HAPAttributeConstant.DATA_DATATYPEINFO, HAPDataUtility.getDataTypeInfo(this).toStringValue(HAPConstant.SERIALIZATION_JSON));			
-			jsonMap.put(HAPAttributeConstant.DATA_VALUE, this.toStringValue(HAPConstant.SERIALIZATION_JSON));
+			jsonMap.put(HAPAttributeConstant.DATA_DATATYPEINFO, HAPDataUtility.getDataTypeInfo(this).toStringValue(HAPSerializationFormat.JSON));			
+			jsonMap.put(HAPAttributeConstant.DATA_VALUE, this.toStringValue(HAPSerializationFormat.JSON));
 			
 			if(HAPDataUtility.isBooleanType(this)){
 				if(jsonType==null)  jsonType = new LinkedHashMap<String, Class>();
@@ -77,14 +81,14 @@ public abstract class HAPDataImp implements HAPData{
 				jsonType.put(HAPAttributeConstant.DATA_VALUE, Integer.class);
 			}
 			
-			return HAPJsonUtility.getMapJson(jsonMap, jsonType);
+			return HAPJsonUtility.buildMapJson(jsonMap, jsonType);
 		}
 		return out;
 	}
 	
 	@Override
 	public String toString(){
-		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));
+		return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 	//*********************  Clone

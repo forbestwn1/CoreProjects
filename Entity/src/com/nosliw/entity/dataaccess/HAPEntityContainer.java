@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.entity.data.HAPEntityID;
 import com.nosliw.entity.data.HAPEntityWraper;
@@ -21,7 +21,7 @@ import com.nosliw.entity.data.HAPEntityWraper;
  * 		get all entitys
  * 		clear up
  */
-public class HAPEntityContainer implements HAPStringable{
+public class HAPEntityContainer implements HAPSerializable{
 
 	private Map<String, Map<String, HAPEntityWraper>> m_entitys;
 	
@@ -98,8 +98,8 @@ public class HAPEntityContainer implements HAPStringable{
 			for(String key : entitys.keySet()){
 				jsonMap.put(key, entitys.get(key).toStringValue(format));
 			}
-			outJsonMap.put(type, HAPJsonUtility.getMapJson(jsonMap));
+			outJsonMap.put(type, HAPJsonUtility.buildMapJson(jsonMap));
 		}
-		return HAPJsonUtility.getMapJson(outJsonMap);
+		return HAPJsonUtility.buildMapJson(outJsonMap);
 	}
 }

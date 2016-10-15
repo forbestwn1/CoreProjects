@@ -3,6 +3,7 @@ package com.nosliw.common.configure;
 import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPStringableValueBasic;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 
@@ -41,7 +42,7 @@ abstract class HAPResolvableConfigureItem extends HAPConfigureItem{
 	public String toString() {		return this.m_value.toString();	}
 	
 	@Override
-	public String toStringValue(String format) {
+	public String toStringValue(HAPSerializationFormat format) {
 		return this.m_value.toStringValue(format);
 	}
 }

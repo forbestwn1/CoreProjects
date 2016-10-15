@@ -3,8 +3,8 @@ package com.nosliw.entity.data;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataImp;
 import com.nosliw.data.HAPDataType;
+import com.nosliw.data.imp.HAPDataImp;
 
 public class HAPReferenceWraperData extends HAPDataImp {
 	private int m_refType;
@@ -53,7 +53,7 @@ public class HAPReferenceWraperData extends HAPDataImp {
 	@Override
 	public String toDataStringValue(String format) {
 		String out = null;
-		if(format.equals(HAPConstant.SERIALIZATION_JSON)){
+		if(format.equals(HAPSerializationFormat.JSON)){
 			if(this.m_ID!=null){
 				out = this.m_ID.toStringValue(format);
 			}

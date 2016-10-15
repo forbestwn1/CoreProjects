@@ -16,7 +16,7 @@ import org.w3c.dom.Element;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.info.HAPDataTypeDefInfo;
+import com.nosliw.data.datatype.HAPDataTypeDefInfo;
 import com.nosliw.entity.data.HAPEntityContainerAttributeWraper;
 import com.nosliw.entity.data.HAPDataWraper;
 import com.nosliw.entity.data.HAPEntityData;
@@ -61,7 +61,7 @@ public class HAPXMLEntityExporter {
 			if(HAPEntityDataTypeUtility.isAtomType(attrType))
 			{
 				HAPData atomData = entityData.getAttributeValue(attrName);
-				String value = atomData.toStringValue(HAPConstant.SERIALIZATION_XML);
+				String value = atomData.toStringValue(HAPSerializationFormat.XML);
 				if(value != null){
 					node.setAttribute(attrName, value);
 				}

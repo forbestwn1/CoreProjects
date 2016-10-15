@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.entity.data.HAPEntityWraper;
 import com.nosliw.entity.operation.HAPEntityOperationInfo;
@@ -13,7 +13,7 @@ import com.nosliw.entity.operation.HAPEntityOperationInfo;
  * this is class to store the result of an entity operation in the form of a list entity operations
  * this entity is mainly used to return data back to client so that client can execute the same operations
  */
-public class HAPOperationAllResult implements HAPStringable{
+public class HAPOperationAllResult implements HAPSerializable{
 
 	//a list of operation for result
 	private List<HAPEntityOperationInfo> m_results;

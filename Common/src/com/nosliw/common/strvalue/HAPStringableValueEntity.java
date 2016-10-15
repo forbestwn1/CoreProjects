@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -152,16 +153,16 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	}
 	
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format) {
-		super.buildFullJsonMap(jsonMap, typeJsonMap, format);
-		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_PROPERTIES, HAPJsonUtility.getMapObjectJson(this.m_childrens, format));
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_PROPERTIES, HAPJsonUtility.buildJson(this.m_childrens, HAPSerializationFormat.JSON_FULL));
 	}
 
 	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format) {
-		super.buildJsonMap(jsonMap, typeJsonMap, format);
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		for(String child : this.m_childrens.keySet()){
-			jsonMap.put(child, this.m_childrens.get(child).toStringValue(format));
+			jsonMap.put(child, this.m_childrens.get(child).toStringValue(HAPSerializationFormat.JSON));
 		}
 	}
 	

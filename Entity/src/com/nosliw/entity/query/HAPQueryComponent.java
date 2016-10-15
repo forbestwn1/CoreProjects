@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
@@ -27,7 +27,7 @@ import com.nosliw.entity.operation.HAPEntityOperationInfo;
  * a class for container of query entity (query result)
  * 	
  */
-public class HAPQueryComponent implements HAPStringable{
+public class HAPQueryComponent implements HAPSerializable{
 
 	//each query (with same query def and query parm) have unique id
 	protected String m_queryId;

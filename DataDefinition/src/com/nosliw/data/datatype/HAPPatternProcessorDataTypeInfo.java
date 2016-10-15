@@ -1,4 +1,4 @@
-package com.nosliw.data.info;
+package com.nosliw.data.datatype;
 
 import java.util.ArrayList;
 import java.util.List;

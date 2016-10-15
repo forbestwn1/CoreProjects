@@ -4,10 +4,10 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.serialization.HAPStringable;
-import com.nosliw.data.info.HAPDataOperationInfo;
-import com.nosliw.data.info.HAPDataTypeInfo;
-import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
+import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
+import com.nosliw.data.imp.HAPDataTypeImp;
 
 /*
  * The interface for data type in Nosliw
@@ -29,16 +29,51 @@ import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
  * 		2. when ui is binded with data, it should set the data version when set the data
  */
 
-public interface HAPDataType extends HAPStringable{
+public interface HAPDataType extends HAPSerializable{
 
 	public void buildOperation();
+	
+	//object that defined all the operations info
+	public HAPDataTypeOperations getDataTypeOperationsObject();
+	
+	//*****************************************  Data Operation
+
+	//for java, run operate
+	public HAPServiceData operate(String operation, Map<String, HAPData> parms, HAPOperationContext opContext);
+	public HAPServiceData localOperate(String operation, Map<String, HAPData> parms, HAPOperationContext opContext);
+	//create a new data instance 
+	public HAPServiceData newData(Map<String, HAPData> parms, HAPOperationContext opContext);
+	//create a new data instance by using the name new method
+	public HAPServiceData newData(String name, Map<String, HAPData> parms, HAPOperationContext opContext);
+
+	
+	public boolean isScriptAvailable(String operation, String format);
+	public boolean isScriptAvailableLocally(String operation, String format);
+	public String buildLocalOperationScript(String scriptName);
+	//get dependent data type for operation
+	public Set<HAPDataTypeInfo> getOperationDependentDataTypes(String operation);
+	
+
+	//parse literal text to data object
+	public HAPData parseLiteral(String text);
+	public HAPData parseJson(Object jsonObj);
+
+
+	
+	
+	
+	
+	/*****************************************  Basic Info
 	
 	/*
 	 * get basic information for this data type (categary, type, description)
 	 */
-	public HAPDataTypeInfoWithVersion getDataTypeInfo();
+	public HAPDataTypeInfo getDataTypeInfo();
 
 	public String getDescription();
+	
+	
+	//*****************************************  Data
 	
 	/*
 	 * get default value this data type
@@ -47,8 +82,27 @@ public interface HAPDataType extends HAPStringable{
 	public HAPData getDefaultData();
 
 	/*
-	 * get parent data type info
+	 * some data type has limited set of data
+	 * unll or empty array: unlimted domain data
 	 */
+	public HAPData[] getDomainDatas();
+	
+	/*
+	 * validate the data
+	 * nothing to do with rule, but the data itself
+	 * just check if the data is in good structure, good data range
+	 */
+	public HAPServiceData validate(HAPData data);
+
+	// transform object (json, dom, string) to data object
+	public HAPData toData(Object value, String format);
+	public String toDataStringValue(HAPData data, String format);
+
+	
+	
+	//*****************************************  Related Data Type
+
+	 //get parent data type info
 	public HAPDataTypeInfo getParentDataTypeInfo();
 
 	/*
@@ -58,62 +112,20 @@ public interface HAPDataType extends HAPStringable{
 	 */
 	public HAPDataType getOlderDataType();
 	public HAPDataType getNewerDataType();
-	public HAPDataTypeImp getDataTypeByVersion(int version);
+	public HAPDataTypeImp getDataTypeByVersion(HAPDataTypeVersion version);
 	
-	/*
-	 * some data type has limited set of data
-	 * unll or empty array: unlimted domain data
-	 */
-	public HAPData[] getDomainDatas();
 	
-	//operation info
-	/*
-	 * get all available operations info (local, older version, parent)
-	 */
+	//*****************************************  Operation Info
+	 //get all available operations info (local, older version, parent)
 	public Map<String, HAPDataOperationInfo> getOperationInfos();
 	public HAPDataOperationInfo getOperationInfoByName(String name);
 	//get only locally defined operation infos
 	public Map<String, HAPDataOperationInfo> getLocalOperationInfos();
 	public HAPDataOperationInfo getLocalOperationInfoByName(String name);
 	
-	//object that defined all the operations info
-	public HAPDataTypeOperations getDataTypeOperationsObject();
-	
-	/*
-	 * get constructor (newData) operations
-	 */
+	 //get constructor (newData) operations
 	public Set<HAPDataOperationInfo> getNewDataOperations();
 	
-	//for java, run operate
-	public HAPServiceData operate(String operation, HAPData[] data, HAPOperationContext opContext);
-	public HAPServiceData localOperate(String operation, HAPData[] data, HAPOperationContext opContext);
-	//create a new data instance 
-	public HAPServiceData newData(HAPData[] data, HAPOperationContext opContext);
-	//create a new data instance by using the name new method
-	public HAPServiceData newData(String name, HAPData[] data, HAPOperationContext opContext);
 	//get new data operation info by parms type
-	public HAPDataOperationInfo getNewDataOperation(HAPDataTypeInfo[] dataTypeInfos);
-
-	public boolean isScriptAvailable(String operation, String format);
-	public boolean isScriptAvailableLocally(String operation, String format);
-	public String buildLocalOperationScript(String scriptName);
-	//get dependent data type for operation
-	public Set<HAPDataTypeInfo> getOperationDependentDataTypes(String operation);
-	
-	/*
-	 * transform object (json, dom, string) to data object
-	 */
-	public HAPData toData(Object value, String format);
-	public String toDataStringValue(HAPData data, String format);
-
-	//parse literal text to data object
-	public HAPData parseLiteral(String text);
-	public HAPData parseJson(Object jsonObj);
-
-	/*
-	 * validate the data
-	 * nothing to do with rule, but the data itself
-	 * just check if the data is in good structure, good data range
-	 */
-	public HAPServiceData validate(HAPData data);
+	public HAPDataOperationInfo getNewDataOperation(Map<String, HAPDataTypeInfo> parmsDataTypeInfos);
 }

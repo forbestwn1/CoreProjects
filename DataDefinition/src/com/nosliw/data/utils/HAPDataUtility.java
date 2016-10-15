@@ -2,8 +2,8 @@ package com.nosliw.data.utils;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.info.HAPDataTypeInfo;
-import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
 
 public class HAPDataUtility {
 
@@ -39,7 +39,7 @@ public class HAPDataUtility {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 
 		jsonMap.put("type", String.valueOf(data.getOperandType()));
-		jsonMap.put("data", data.toStringValue(HAPConstant.SERIALIZATION_JSON_DATATYPE));
+		jsonMap.put("data", data.toStringValue(HAPSerializationFormat.JSON_DATATYPE));
 		
 		return HAPJsonUtility.getMapJson(jsonMap);
 	}

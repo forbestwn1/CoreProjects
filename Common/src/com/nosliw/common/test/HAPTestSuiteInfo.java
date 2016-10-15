@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -139,10 +140,10 @@ public class HAPTestSuiteInfo extends HAPTestInfo{
 	}
 
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap, String format){
-		super.buildFullJsonMap(jsonMap, jsonTypeMap, format);
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> jsonTypeMap){
+		super.buildFullJsonMap(jsonMap, jsonTypeMap);
 		jsonMap.put("isSolid", String.valueOf(m_isSolid));
-		HAPJsonUtility.getArrayObjectJson(this.m_testCasesInfos.toArray(new HAPTestInfo[0]), format);
-		HAPJsonUtility.getMapObjectJson(this.m_testSuitesInfos, format);
+		HAPJsonUtility.buildJson(this.m_testCasesInfos.toArray(new HAPTestInfo[0]), HAPSerializationFormat.JSON_FULL);
+		HAPJsonUtility.buildJson(this.m_testSuitesInfos, HAPSerializationFormat.JSON_FULL);
 	}
 }

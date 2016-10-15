@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
@@ -16,7 +16,7 @@ import com.nosliw.data.HAPDataTypeManager;
 /*
  * class that 
  */
-public class HAPUIExpressionContent implements HAPStringable{
+public class HAPUIExpressionContent implements HAPSerializable{
 
 	private String m_uiId;
 	
@@ -57,6 +57,6 @@ public class HAPUIExpressionContent implements HAPStringable{
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class> jsonTypeMap = new LinkedHashMap<String, Class>();
 		this.buildJsonMap(jsonMap, jsonTypeMap);
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 }

@@ -48,7 +48,7 @@ public class HAPReferenceInfoAbsolute extends HAPReferenceInfo{
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		
 		
-		String out = HAPJsonUtility.getMapJson(jsonMap);
+		String out = HAPJsonUtility.buildMapJson(jsonMap);
 		return out;
 	}
 

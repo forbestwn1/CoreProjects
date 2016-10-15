@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPStringableJson;
+import com.nosliw.common.serialization.HAPSerialiableImp;
 import com.nosliw.common.utils.HAPJsonUtility;
 
 /*
  * this class store all the information execution related with test case
  */
-public class HAPTestCaseRuntime extends HAPStringableJson{
+public class HAPTestCaseRuntime extends HAPSerialiableImp{
 	private Class m_testCaseClass;
 	
 	private List<Method> m_testCaseBeforeMethods;
@@ -91,17 +91,17 @@ public class HAPTestCaseRuntime extends HAPStringableJson{
 	}
 
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> typeJsonMap, String format){
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put("className", this.m_testCaseClass.getName());
 		if(this.m_testCaseMethod!=null) jsonMap.put("testMethod", this.m_testCaseMethod.getName());
 		if(this.m_testCaseItemFactoryMethod!=null)  jsonMap.put("testItemFactoryMethod", this.m_testCaseItemFactoryMethod.getName());
 		
 		List<String> beforeJson = new ArrayList<String>();
 		for(Method m : this.m_testCaseBeforeMethods)	beforeJson.add(m.getName());
-		jsonMap.put("beforeMethods", HAPJsonUtility.getArrayJson(beforeJson.toArray(new String[0])));
+		jsonMap.put("beforeMethods", HAPJsonUtility.buildArrayJson(beforeJson.toArray(new String[0])));
 		
 		List<String> afterJson = new ArrayList<String>();
 		for(Method m : this.m_testCaseAfterMethods)	afterJson.add(m.getName());
-		jsonMap.put("afterMethods", HAPJsonUtility.getArrayJson(afterJson.toArray(new String[0])));
+		jsonMap.put("afterMethods", HAPJsonUtility.buildArrayJson(afterJson.toArray(new String[0])));
 	}
 }

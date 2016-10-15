@@ -1,7 +1,7 @@
 package com.nosliw.entity.data;
 
-import com.nosliw.data.HAPDataImp;
 import com.nosliw.data.HAPDataType;
+import com.nosliw.data.imp.HAPDataImp;
 import com.nosliw.entity.definition.HAPEntityDefinitionManager;
 
 public abstract class HAPBaseData extends HAPDataImp{

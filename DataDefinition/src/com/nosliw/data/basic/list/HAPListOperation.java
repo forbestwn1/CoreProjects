@@ -13,7 +13,7 @@ import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.HAPOperationInfoAnnotation;
 import com.nosliw.data.basic.bool.HAPBooleanData;
 import com.nosliw.data.basic.string.HAPStringData;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 
 public class HAPListOperation extends HAPDataOperation{
 

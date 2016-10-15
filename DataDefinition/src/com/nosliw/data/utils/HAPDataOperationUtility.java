@@ -5,10 +5,10 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataTypeImp;
+import com.nosliw.data.HAPDataOperationInfo;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPOperationContext;
-import com.nosliw.data.info.HAPDataOperationInfo;
+import com.nosliw.data.imp.HAPDataTypeImp;
 
 public class HAPDataOperationUtility {
 

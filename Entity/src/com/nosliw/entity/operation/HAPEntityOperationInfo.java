@@ -9,7 +9,7 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -129,7 +129,7 @@ public class HAPEntityOperationInfo {
 
 	@Override
 	public String toString(){
-		return this.toStringValue(HAPConstant.SERIALIZATION_JSON);
+		return this.toStringValue(HAPSerializationFormat.JSON);
 	}
 	
 	public String toStringValue(String format){
@@ -164,17 +164,17 @@ public class HAPEntityOperationInfo {
 		}
 		
 		if(this.getExtra()!=null){
-			if(this.getExtra() instanceof HAPStringable){
-				jsonMap.put(HAPAttributeConstant.OPERATIONINFO_EXTRA, ((HAPStringable)this.getExtra()).toStringValue(format));
+			if(this.getExtra() instanceof HAPSerializable){
+				jsonMap.put(HAPAttributeConstant.OPERATIONINFO_EXTRA, ((HAPSerializable)this.getExtra()).toStringValue(format));
 			}
 			else if(this.getExtra() instanceof String){
 				jsonMap.put(HAPAttributeConstant.OPERATIONINFO_EXTRA, (String)this.getExtra());
 			}
 		}
 
-		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_PARMS, HAPJsonUtility.getMapJson(this.m_parms));
+		jsonMap.put(HAPAttributeConstant.OPERATIONINFO_PARMS, HAPJsonUtility.buildMapJson(this.m_parms));
 		
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 	
 	public static HAPEntityOperationInfo parseJson(JSONObject jsonOperation, HAPEntityEnvironment entityEvr){

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 
@@ -48,9 +49,9 @@ public class HAPResultTestCase extends HAPResult{
 	@Override
 	public String getType() {		return HAPConstant.TESTRESULT_TYPE_CASE;	}
 
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap, String format){
-		super.buildFullJsonMap(jsonMap, jsonTypeMap, format);
-		jsonMap.put("childTestItems", HAPJsonUtility.getListObjectJson(this.m_testItems, format));
-		jsonMap.put("exceptions", HAPJsonUtility.getListObjectJson(this.m_e, format));
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> jsonTypeMap){
+		super.buildFullJsonMap(jsonMap, jsonTypeMap);
+		jsonMap.put("childTestItems", HAPJsonUtility.buildJson(this.m_testItems, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put("exceptions", HAPJsonUtility.buildJson(this.m_e, HAPSerializationFormat.JSON_FULL));
 	}
 }

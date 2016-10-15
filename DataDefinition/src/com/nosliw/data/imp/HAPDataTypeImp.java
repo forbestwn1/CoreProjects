@@ -1,4 +1,4 @@
-package com.nosliw.data;
+package com.nosliw.data.imp;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -14,10 +14,16 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
+import com.nosliw.data.HAPData;
+import com.nosliw.data.HAPDataOperationInfo;
+import com.nosliw.data.HAPDataType;
+import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPDataTypeOperationInfos;
+import com.nosliw.data.HAPDataTypeOperations;
+import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.basic.bool.HAPBooleanOperation;
-import com.nosliw.data.info.HAPDataOperationInfo;
-import com.nosliw.data.info.HAPDataTypeInfo;
-import com.nosliw.data.info.HAPDataTypeInfoWithVersion;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
 import com.nosliw.data.utils.HAPAttributeConstant;
 import com.nosliw.data.utils.HAPDataErrorUtility;
 import com.nosliw.data.utils.HAPDataOperationUtility;
@@ -287,7 +293,7 @@ public abstract class HAPDataTypeImp implements HAPDataType{
 	@Override
 	public HAPData toData(Object value, String format){
 		HAPData out = null;
-		if(HAPConstant.SERIALIZATION_TEXT.equals(format)){
+		if(HAPSerializationFormat.TEXT.equals(format)){
 			//literal
 			//if operation CONS_DATAOPERATION_PARSELITERAL is defined
 			HAPData[] parms = {HAPDataTypeManager.createStringData((String)value)};
@@ -297,7 +303,7 @@ public abstract class HAPDataTypeImp implements HAPDataType{
 				return this.parseLiteral((String)value);
 			}
 		}
-		else if(HAPConstant.SERIALIZATION_JSON.equals(format)){
+		else if(HAPSerializationFormat.JSON.equals(format)){
 			return this.parseJson(value);
 		}
 		return out;
@@ -324,19 +330,19 @@ public abstract class HAPDataTypeImp implements HAPDataType{
 			for(String name : this.getOperationInfos().keySet()){
 				jsonOpInfoMap.put(name, this.getOperationInfos().get(name).toStringValue(format));
 			}
-			jsonMap.put(HAPAttributeConstant.DATATYPE_OPERATIONINFOS, HAPJsonUtility.getMapJson(jsonOpInfoMap));
+			jsonMap.put(HAPAttributeConstant.DATATYPE_OPERATIONINFOS, HAPJsonUtility.buildMapJson(jsonOpInfoMap));
 			
 			List<String> jsonNewOpInfoList = new ArrayList<String>();
 			for(HAPDataOperationInfo opInfo : this.getNewDataOperations()){
 				jsonNewOpInfoList.add(opInfo.toStringValue(format));
 			}
-			jsonMap.put(HAPAttributeConstant.DATATYPE_NEWOPERATIONINFOS, HAPJsonUtility.getListObjectJson(jsonNewOpInfoList, HAPConstant.SERIALIZATION_JSON));
+			jsonMap.put(HAPAttributeConstant.DATATYPE_NEWOPERATIONINFOS, HAPJsonUtility.buildJson(jsonNewOpInfoList, HAPSerializationFormat.JSON));
 		}
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 	
 	@Override
 	public String toString(){
-		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));
+		return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));
 	}	
 }

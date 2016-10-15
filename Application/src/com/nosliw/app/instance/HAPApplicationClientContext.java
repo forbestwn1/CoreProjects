@@ -12,7 +12,7 @@ import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.entity.data.HAPEntityID;
 import com.nosliw.entity.data.HAPEntityWraper;
 import com.nosliw.entity.dataaccess.HAPClientContext;

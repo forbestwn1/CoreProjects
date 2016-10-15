@@ -1,4 +1,4 @@
-package com.nosliw.data.info;
+package com.nosliw.data;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
-import com.nosliw.data.HAPDataType;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.data.utils.HAPAttributeConstant;
 
 /*
@@ -26,7 +26,7 @@ import com.nosliw.data.utils.HAPAttributeConstant;
  * for ins and out attribute, data type version information is not appliable 
  * we consider two operation is equal when only when they have the same name. 
  */
-public class HAPDataOperationInfo implements HAPStringable{
+public class HAPDataOperationInfo implements HAPSerializable{
 
 	//operation name
 	private String m_name;
@@ -98,7 +98,7 @@ public class HAPDataOperationInfo implements HAPStringable{
 		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_DESCRIPTION, this.m_description);
 		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_CONVERTPATH, this.m_convertPath);
 		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_OUT, this.m_outDataTypeInfo.toStringValue(format));
-		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_DEPENDENTDATATYPES, HAPJsonUtility.getSetObjectJson(this.getDependentDataTypeInfos(HAPConstant.OPERATIONDEF_SCRIPT_JAVASCRIPT), format));
+		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_DEPENDENTDATATYPES, HAPJsonUtility.buildJson(this.getDependentDataTypeInfos(HAPConstant.OPERATIONDEF_SCRIPT_JAVASCRIPT), format));
 		
 		List<String> inJsons = new ArrayList<String>();
 		for(HAPDataTypeInfo info : this.m_inDataTypeInfos){
@@ -106,12 +106,12 @@ public class HAPDataOperationInfo implements HAPStringable{
 		}
 		jsonMap.put(HAPAttributeConstant.DATAOPERATIONINFO_INS, HAPJsonUtility.getArrayJson(inJsons.toArray(new String[0])));
 		
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 	
 	@Override
 	public String toString(){
-		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));
+		return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 	@Override

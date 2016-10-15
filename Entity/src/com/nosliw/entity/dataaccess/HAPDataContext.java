@@ -10,7 +10,7 @@ import java.util.Stack;
 
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
@@ -50,7 +50,7 @@ import com.nosliw.entity.utils.HAPEntityErrorUtility;
  * so the identity for entity is categary + id
  */
 
-public class HAPDataContext implements HAPStringable{
+public class HAPDataContext implements HAPSerializable{
 	//information related with user who are operating on this user env
 	private HAPDataContextInfo m_dataContextInfo;
 	//data access component for database access
@@ -405,10 +405,10 @@ public class HAPDataContext implements HAPStringable{
 		jsonMap.put(HAPAttributeConstant.ENTITYMANAGER_PERSISTANT, this.m_persistant.toStringValue(format));
 		jsonMap.put(HAPAttributeConstant.ENTITYMANAGER_TRANSACTIONS, HAPJsonUtility.getListObjectJson(this.m_transactions));
 		
-		return HAPJsonUtility.getMapJson(jsonMap);
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 	
 	public String toString(){
-		return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));
+		return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));
 	}
 }

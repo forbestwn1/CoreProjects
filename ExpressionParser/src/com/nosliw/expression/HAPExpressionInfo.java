@@ -6,13 +6,13 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPStringable;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.info.HAPDataTypeInfo;
+import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.expression.utils.HAPAttributeConstant;
 
 /*
@@ -21,7 +21,7 @@ import com.nosliw.expression.utils.HAPAttributeConstant;
  * 		constantDatas : the constant data to put into expression
  * 		variableInfos : data type information for variables in expression 
  */
-public class HAPExpressionInfo implements HAPStringable{
+public class HAPExpressionInfo implements HAPSerializable{
 
 	//expression string
 	private String m_expression;
@@ -81,10 +81,10 @@ public class HAPExpressionInfo implements HAPStringable{
 	public String toStringValue(String format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_EXPRESSION, this.m_expression);
-		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_VARIABLESINFO, HAPJsonUtility.getMapObjectJson(this.m_variableInfos, format));
-		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_CONSTANTS, HAPJsonUtility.getMapObjectJson(this.m_constantDatas, format));
-		return HAPJsonUtility.getMapJson(jsonMap);
+		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_VARIABLESINFO, HAPJsonUtility.buildJson(this.m_variableInfos, format));
+		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_CONSTANTS, HAPJsonUtility.buildJson(this.m_constantDatas, format));
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 	
-	public String toString(){return HAPJsonUtility.formatJson(this.toStringValue(HAPConstant.SERIALIZATION_JSON));}
+	public String toString(){return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));}
 }
