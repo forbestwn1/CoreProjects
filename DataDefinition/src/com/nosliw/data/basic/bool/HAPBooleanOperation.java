@@ -1,11 +1,11 @@
 package com.nosliw.data.basic.bool;
 
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataOperation;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.HAPOperationContext;
-import com.nosliw.data.HAPOperationInfoAnnotation;
+import com.nosliw.data1.HAPDataOperation;
+import com.nosliw.data1.HAPDataTypeManager;
+import com.nosliw.data1.HAPOperationContext;
+import com.nosliw.data1.HAPOperationInfoAnnotation;
 
 public class HAPBooleanOperation extends HAPDataOperation{
 

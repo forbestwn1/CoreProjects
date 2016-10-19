@@ -2,9 +2,9 @@ package com.nosliw.entity.options;
 
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.HAPWraper;
 import com.nosliw.data.datatype.HAPDataTypeDefInfo;
+import com.nosliw.data1.HAPDataTypeManager;
+import com.nosliw.data1.HAPWraper;
 
 /*
  * options is a limited set of data

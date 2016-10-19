@@ -2,8 +2,8 @@ package com.nosliw.data.basic.floa;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.imp.HAPDataImp;
+import com.nosliw.data1.HAPDataTypeManager;
 
 public class HAPFloatData extends HAPDataImp{
 

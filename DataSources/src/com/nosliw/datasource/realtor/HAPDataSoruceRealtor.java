@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.datasource.HAPDataSource;
 
 public class HAPDataSoruceRealtor  implements HAPDataSource{

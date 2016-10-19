@@ -1,7 +1,7 @@
 package com.nosliw.entity.sort;
 
-import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.HAPWraper;
+import com.nosliw.data1.HAPDataTypeManager;
+import com.nosliw.data1.HAPWraper;
 
 public abstract class HAPSortingInfo {
 

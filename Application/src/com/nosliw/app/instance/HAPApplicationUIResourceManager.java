@@ -7,7 +7,7 @@ import java.util.Set;
 import com.nosliw.app.utils.HAPApplicationUtility;
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.uiresource.HAPUIResource;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.HAPUIResourceProcessor;

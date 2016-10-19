@@ -8,7 +8,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPStringableEntityImporterJSON;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeManager;
 
 /*
  * entity store information about a data type information

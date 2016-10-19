@@ -2,7 +2,7 @@ package com.nosliw.entity.definition;
 
 import java.util.Set;
 
-import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.options.HAPOptionsDefinitionManager;
 
 /*

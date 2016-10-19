@@ -7,7 +7,7 @@ import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.log.HAPLogger;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.dataaccess.HAPClientContextManager;
 import com.nosliw.entity.definition.HAPEntityDefinitionManager;
 import com.nosliw.entity.options.HAPOptionsDefinitionManager;

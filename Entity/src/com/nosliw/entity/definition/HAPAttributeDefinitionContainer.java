@@ -6,8 +6,8 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
-import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.datatype.HAPDataTypeDefInfo;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.options.HAPOptionsDefinitionManager;
 import com.nosliw.entity.utils.HAPAttributeConstant;
 

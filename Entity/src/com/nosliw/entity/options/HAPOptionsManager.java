@@ -3,7 +3,7 @@ package com.nosliw.entity.options;
 import java.util.Map;
 
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPWraper;
+import com.nosliw.data1.HAPWraper;
 
 public class HAPOptionsManager {
 

@@ -1,7 +1,7 @@
 package com.nosliw.app.instance;
 
 import com.nosliw.common.configure.HAPConfigure;
-import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.dataaccess.HAPClientContext;
 import com.nosliw.entity.dataaccess.HAPClientContextInfo;
 import com.nosliw.entity.dataaccess.HAPDataContext;

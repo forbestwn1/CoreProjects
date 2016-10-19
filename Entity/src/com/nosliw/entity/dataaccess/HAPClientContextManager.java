@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.serialization.HAPSerializable;
-import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.definition.HAPEntityDefinitionManager;
 import com.nosliw.entity.options.HAPOptionsDefinitionManager;
 import com.nosliw.entity.query.HAPQueryDefinitionManager;

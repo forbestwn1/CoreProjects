@@ -1,6 +1,6 @@
 package com.nosliw.entity.sort;
 
-import com.nosliw.data.HAPWraper;
+import com.nosliw.data1.HAPWraper;
 
 public interface HAPComparable {
 

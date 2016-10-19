@@ -4,12 +4,12 @@ import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.HAPDataTypeOperationsAnnotation;
 import com.nosliw.data.basic.bool.HAPBooleanOperation;
 import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
 import com.nosliw.data.imp.HAPDataTypeImp;
+import com.nosliw.data1.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeOperationsAnnotation;
 
 public class HAPFloat extends HAPDataTypeImp{
 

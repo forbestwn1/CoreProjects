@@ -1,8 +1,8 @@
 package com.nosliw.entity.sort;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.HAPWraper;
+import com.nosliw.data1.HAPDataTypeManager;
+import com.nosliw.data1.HAPWraper;
 
 public class HAPSortingProgramming extends HAPSortingInfo{
 

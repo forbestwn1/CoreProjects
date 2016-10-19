@@ -13,7 +13,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.data.HAPDataWraper;
 import com.nosliw.entity.data.HAPEntity;
 import com.nosliw.entity.data.HAPEntityData;

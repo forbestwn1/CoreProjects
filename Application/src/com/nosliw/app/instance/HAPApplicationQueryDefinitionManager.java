@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import com.nosliw.app.utils.HAPApplicationUtility;
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.definition.HAPEntityDefinitionManager;
 import com.nosliw.entity.query.HAPQueryDefinition;
 import com.nosliw.entity.query.HAPQueryDefinitionManager;

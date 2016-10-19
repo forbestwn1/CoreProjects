@@ -7,6 +7,20 @@ import com.nosliw.common.utils.HAPJsonUtility;
 
 public abstract class HAPSerialiableImp implements HAPSerializable{
 
+	public void buildObject(Object value, HAPSerializationFormat format){
+		switch(format){
+		case JSON_FULL:
+			break;
+		case JSON:
+			break;
+		case XML:
+			break;
+		case LITERATE:
+			break;
+		}
+	}
+
+	
 	@Override
 	public String toString(){
 		String out = "";

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeManager;
 
 
 public class HAPUIExpressionAttribute extends HAPUIExpressionContent{

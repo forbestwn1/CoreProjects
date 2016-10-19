@@ -14,7 +14,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPWraper;
+import com.nosliw.data1.HAPWraper;
 import com.nosliw.entity.data.HAPEntityID;
 import com.nosliw.entity.data.HAPReferenceInfoAbsolute;
 import com.nosliw.entity.definition.HAPAttributeDefinition;

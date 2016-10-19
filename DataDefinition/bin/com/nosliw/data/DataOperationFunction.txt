@@ -1,3 +1,0 @@
-||functionName|| : function(parms){
-	||functionScript||
-},

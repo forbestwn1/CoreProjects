@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.datatype.HAPDataTypeDefInfo;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.definition.HAPEntityDefinitionManager;
 import com.nosliw.entity.operation.HAPEntityOperationInfo;
 import com.nosliw.entity.utils.HAPEntityDataTypeUtility;

@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.data.HAPEntityWraper;
 import com.nosliw.entity.dataaccess.HAPEntityDataAccess;
 import com.nosliw.entity.dataaccess.HAPOperationAllResult;

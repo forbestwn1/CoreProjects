@@ -2,7 +2,7 @@ package com.nosliw.entity.definition.xmlimp;
 
 import org.w3c.dom.Element;
 
-import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.definition.HAPAttributeDefinitionEntity;
 import com.nosliw.entity.definition.HAPEntityDefinitionSegment;
 import com.nosliw.entity.definition.HAPEntityDefinitionManager;

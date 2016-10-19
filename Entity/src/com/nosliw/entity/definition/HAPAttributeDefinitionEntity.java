@@ -1,7 +1,7 @@
 package com.nosliw.entity.definition;
 
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.options.HAPOptionsDefinitionManager;
 
 public class HAPAttributeDefinitionEntity extends HAPAttributeDefinition{

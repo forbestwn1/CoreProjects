@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.nosliw.app.utils.HAPApplicationUtility;
 import com.nosliw.common.configure.HAPConfigure;
-import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.definition.HAPEntityDefinitionLoader;
 import com.nosliw.entity.definition.HAPEntityDefinitionManager;
 import com.nosliw.entity.definition.xmlimp.HAPEntityDefinitionLoaderXML;

@@ -11,10 +11,10 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.utils.HAPAttributeConstant;
 import com.nosliw.data.utils.HAPDataUtility;
+import com.nosliw.data1.HAPDataTypeManager;
+import com.nosliw.data1.HAPOperationContext;
 
 public abstract class HAPDataImp implements HAPData{
 

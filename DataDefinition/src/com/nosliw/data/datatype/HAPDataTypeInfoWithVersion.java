@@ -6,8 +6,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.utils.HAPAttributeConstant;
+import com.nosliw.data1.HAPDataTypeManager;
 
 /*
  * data type info with version number information

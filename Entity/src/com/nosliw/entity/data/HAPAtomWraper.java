@@ -7,10 +7,10 @@ import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.HAPAtomData;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.datatype.HAPDataTypeDefInfo;
+import com.nosliw.data1.HAPAtomData;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.definition.HAPAttributeDefinitionAtom;
 import com.nosliw.entity.definition.HAPEntityDefinitionManager;
 import com.nosliw.entity.operation.HAPEntityOperationInfo;

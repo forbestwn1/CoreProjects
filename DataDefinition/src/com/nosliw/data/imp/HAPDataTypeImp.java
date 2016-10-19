@@ -15,12 +15,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.HAPDataOperationInfo;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.HAPDataTypeOperationInfos;
-import com.nosliw.data.HAPDataTypeOperations;
-import com.nosliw.data.HAPOperationContext;
 import com.nosliw.data.basic.bool.HAPBooleanOperation;
 import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
@@ -28,6 +23,11 @@ import com.nosliw.data.utils.HAPAttributeConstant;
 import com.nosliw.data.utils.HAPDataErrorUtility;
 import com.nosliw.data.utils.HAPDataOperationUtility;
 import com.nosliw.data.utils.HAPDataUtility;
+import com.nosliw.data1.HAPDataOperationInfo;
+import com.nosliw.data1.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeOperationInfos;
+import com.nosliw.data1.HAPDataTypeOperations;
+import com.nosliw.data1.HAPOperationContext;
 
 /*
  * data type definition implemetation

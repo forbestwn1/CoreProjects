@@ -1,6 +1,0 @@
-if(nosliwDataTypeOperations==undefined){
-	var nosliwDataTypeOperations = {};
-}
-
-nosliwDataTypeOperations["||dataTypeInfo||"] = {||dataTypeOperations||};
- 

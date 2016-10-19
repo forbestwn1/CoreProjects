@@ -1,6 +1,6 @@
 package com.nosliw.entity.expression;
 
-import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.definition.HAPAttributeDefinition;
 import com.nosliw.expression.HAPExpression;
 import com.nosliw.expression.HAPExpressionInfo;

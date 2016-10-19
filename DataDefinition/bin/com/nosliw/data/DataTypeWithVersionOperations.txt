@@ -1,6 +1,0 @@
-"||version||":{
-	version : ||version||,
-	opFunctions : {||opFunctions||}, 
-	newFunctions : {||newFunctions||}
-},
-

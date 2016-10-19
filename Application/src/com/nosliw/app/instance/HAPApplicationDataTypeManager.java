@@ -18,9 +18,9 @@ import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPXMLUtility;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
+import com.nosliw.data1.HAPDataTypeManager;
 
 public class HAPApplicationDataTypeManager extends HAPDataTypeManager{
 

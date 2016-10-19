@@ -2,9 +2,9 @@ package com.nosliw.entity.options;
 
 import java.util.Map;
 
-import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.HAPWraper;
 import com.nosliw.data.datatype.HAPDataTypeDefInfo;
+import com.nosliw.data1.HAPDataTypeManager;
+import com.nosliw.data1.HAPWraper;
 
 public class HAPContainerOptionsWraper extends HAPWraper {
 
