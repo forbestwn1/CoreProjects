@@ -9,14 +9,12 @@ public interface HAPDataTypeManager {
 	
 	public HAPDataTypeFamily getDataTypeFamily(HAPDataTypeInfo dataTypeInfo);
 	
-	public List<HAPDataType> queryDataType();
+	public List<HAPDataType> queryDataType(HAPQueryInfo queryInfo);
 	
 	
 	public Set<String> getLanguages();
 	
-	public HAPDataOperationMetadata getHAPDataOperationMeatData(HAPDataOperationInfo dataOpInfo, String language);
-	
-	public HAPExpression compileExpression(HAPExpressionInfo expressionInfo);
+	public HAPExpression compileExpression(HAPExpressionInfo expressionInfo, String lang);
 	
 	
 }

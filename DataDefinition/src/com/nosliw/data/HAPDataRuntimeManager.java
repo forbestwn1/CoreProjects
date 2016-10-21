@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
 
-public interface HAPDataRuntimeManager {
+public interface HAPJavaDataRuntimeManager {
 
 	public HAPServiceData executeDataOperation(HAPDataTypeInfo dataTypeInfo, String operation, Map<String, HAPData> parms, HAPOperationContext opContext, String env);
 	
