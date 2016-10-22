@@ -6,7 +6,6 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
 
 /*
  * utility class for data type operation object

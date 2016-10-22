@@ -1,7 +1,7 @@
 package com.nosliw.app.service;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data1.HAPDataTypeInfo;
 
 /*
  * this interface define all the service/method for UI

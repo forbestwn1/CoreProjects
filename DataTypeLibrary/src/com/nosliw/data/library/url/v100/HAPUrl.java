@@ -6,9 +6,9 @@ import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.basic.number.HAPIntegerOperation;
 import com.nosliw.data.basic.string.HAPStringData;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
-import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
 import com.nosliw.data.imp.HAPDataTypeImp;
+import com.nosliw.data1.HAPDataTypeInfo;
+import com.nosliw.data1.HAPDataTypeInfoWithVersion;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.data1.HAPDataTypeOperationsAnnotation;
 

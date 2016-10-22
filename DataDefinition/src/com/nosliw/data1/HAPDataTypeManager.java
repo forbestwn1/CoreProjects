@@ -30,8 +30,6 @@ import com.nosliw.data.basic.map.HAPMap;
 import com.nosliw.data.basic.number.HAPInteger;
 import com.nosliw.data.basic.string.HAPString;
 import com.nosliw.data.basic.string.HAPStringData;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
-import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
 import com.nosliw.data.imp.HAPDataTypeImp;
 import com.nosliw.data.utils.HAPAttributeConstant;
 

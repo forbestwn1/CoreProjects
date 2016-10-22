@@ -11,7 +11,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data1.HAPDataTypeInfo;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.data.HAPEntityID;
 import com.nosliw.entity.data.HAPEntityWraper;

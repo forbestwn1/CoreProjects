@@ -16,7 +16,7 @@ import org.w3c.dom.Element;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.datatype.HAPDataTypeDefInfo;
+import com.nosliw.data1.HAPDataTypeDefInfo;
 import com.nosliw.entity.data.HAPEntityContainerAttributeWraper;
 import com.nosliw.entity.data.HAPDataWraper;
 import com.nosliw.entity.data.HAPEntityData;

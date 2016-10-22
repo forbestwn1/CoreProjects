@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.basic.list.HAPListData;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data1.HAPDataTypeInfo;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.datasource.HAPDataSourceUtility;
 

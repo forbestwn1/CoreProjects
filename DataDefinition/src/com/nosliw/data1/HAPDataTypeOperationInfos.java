@@ -9,7 +9,6 @@ import java.util.Set;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.data.imp.HAPDataTypeImp;
 import com.nosliw.data.utils.HAPDataOperationUtility;
 

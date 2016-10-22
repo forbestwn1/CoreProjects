@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
-import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
 
 /*
  * DataTypeOperations that all the operation infor is get from annotation of Operation Object

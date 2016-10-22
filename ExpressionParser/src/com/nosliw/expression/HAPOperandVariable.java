@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data1.HAPDataTypeInfo;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.data1.HAPOperationContext;
 import com.nosliw.data1.HAPWraper;

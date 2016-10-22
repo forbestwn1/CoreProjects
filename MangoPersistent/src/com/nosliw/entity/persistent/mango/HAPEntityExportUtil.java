@@ -8,8 +8,8 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.datatype.HAPDataTypeDefInfo;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data1.HAPDataTypeDefInfo;
+import com.nosliw.data1.HAPDataTypeInfo;
 import com.nosliw.entity.data.HAPAtomWraper;
 import com.nosliw.entity.data.HAPDataWraper;
 import com.nosliw.entity.data.HAPEntityContainerAttributeWraper;

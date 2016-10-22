@@ -12,7 +12,6 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.data.utils.HAPAttributeConstant;
 
 /*

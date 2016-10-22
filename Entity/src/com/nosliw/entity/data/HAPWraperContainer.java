@@ -4,8 +4,8 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
 import com.nosliw.data.imp.HAPDataTypeImp;
+import com.nosliw.data1.HAPDataTypeInfoWithVersion;
 import com.nosliw.data1.HAPDataTypeManager;
 
 public class HAPWraperContainer  extends HAPDataTypeImp{

@@ -7,7 +7,6 @@ import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.datatype.HAPDataTypeDefInfo;
 import com.nosliw.data.utils.HAPAttributeConstant;
 import com.nosliw.data.utils.HAPDataUtility;
 

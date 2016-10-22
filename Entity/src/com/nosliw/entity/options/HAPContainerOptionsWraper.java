@@ -2,7 +2,7 @@ package com.nosliw.entity.options;
 
 import java.util.Map;
 
-import com.nosliw.data.datatype.HAPDataTypeDefInfo;
+import com.nosliw.data1.HAPDataTypeDefInfo;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.data1.HAPWraper;
 

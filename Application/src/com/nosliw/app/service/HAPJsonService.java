@@ -18,7 +18,7 @@ import com.nosliw.common.log.HAPLogger;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
+import com.nosliw.data1.HAPDataTypeInfo;
 import com.nosliw.entity.data.HAPEntityID;
 
 public class HAPJsonService {

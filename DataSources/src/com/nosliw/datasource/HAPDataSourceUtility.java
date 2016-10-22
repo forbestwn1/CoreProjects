@@ -2,8 +2,8 @@ package com.nosliw.datasource;
 
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.data.library.entity.v100.HAPEntityData;
+import com.nosliw.data1.HAPDataTypeInfo;
 import com.nosliw.data1.HAPDataTypeManager;
 
 public class HAPDataSourceUtility {

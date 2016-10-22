@@ -1,6 +1,7 @@
 package com.nosliw.common.configure;
 
 import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 
 abstract class HAPConfigureItem implements HAPSerializable{
 
@@ -29,5 +30,7 @@ abstract class HAPConfigureItem implements HAPSerializable{
 	protected void cloneFrom(HAPConfigureItem configureItem){
 		this.m_parent = configureItem.m_parent;
 	}
+
+	public void buildObject(Object value, HAPSerializationFormat format){}
 
 }

@@ -2,9 +2,9 @@ package com.nosliw.entity.data;
 
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
-import com.nosliw.data.datatype.HAPDataTypeInfoWithVersion;
 import com.nosliw.data.imp.HAPDataTypeImp;
+import com.nosliw.data1.HAPDataTypeInfo;
+import com.nosliw.data1.HAPDataTypeInfoWithVersion;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.definition.HAPEntityDefinitionManager;
 

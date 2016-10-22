@@ -4,8 +4,8 @@ import java.util.Map;
 
 import com.nosliw.data.HAPData;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
 import com.nosliw.data.imp.HAPDataImp;
+import com.nosliw.data1.HAPDataTypeInfo;
 import com.nosliw.expression.HAPExpression;
 import com.nosliw.expression.HAPExpressionInfo;
 

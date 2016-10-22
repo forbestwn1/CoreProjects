@@ -5,7 +5,6 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.datatype.HAPDataTypeInfo;
 
 /*
  * this interface is for all the entity which can be part of expression (operand)

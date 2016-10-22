@@ -114,4 +114,10 @@ public class HAPServiceData implements HAPSerializable{
 	public String toString(){
 		return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));
 	}
+
+	@Override
+	public void buildObject(Object value, HAPSerializationFormat format) {
+		// TODO Auto-generated method stub
+		
+	}
 }

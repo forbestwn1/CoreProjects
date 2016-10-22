@@ -16,7 +16,7 @@ import org.xml.sax.SAXException;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPXMLUtility;
 import com.nosliw.data.HAPData;
-import com.nosliw.data.datatype.HAPDataTypeDefInfo;
+import com.nosliw.data1.HAPDataTypeDefInfo;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.data.HAPEntityContainerAttributeWraper;
 import com.nosliw.entity.data.HAPDataWraper;

@@ -102,11 +102,15 @@ public abstract class HAPStringableValueComplex extends HAPStringableValue{
 		else	return value.getListValue();
 	}
 	
+	protected HAPStringableValueEntity getEntityAncestorByPath(String path){ return (HAPStringableValueEntity)this.getAncestorByPath(path); }
 	
-	protected HAPStringableValueBasic getBasicAncestorByPath(String path){
-		HAPStringableValueBasic out = (HAPStringableValueBasic)this.getAncestorByPath(path);
-		return out;
-	}
+	protected HAPStringableValueList getListAncestorByPath(String path){ return (HAPStringableValueList)this.getAncestorByPath(path); }
+	
+	protected HAPStringableValueMap getMapAncestorByPath(String path){ return (HAPStringableValueMap)this.getAncestorByPath(path); }
+
+	protected HAPStringableValueBasic getBasicAncestorByPath(String path){  return (HAPStringableValueBasic)this.getAncestorByPath(path); }
+	
+	
 
 	public HAPStringableValue getAncestorByPath(String path){
 		HAPStringableValue out = this;

@@ -384,4 +384,10 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 	String getType() {
 		return HAPConfigureItem.CONFIGURE;
 	}
+
+	@Override
+	public void buildObject(Object value, HAPSerializationFormat format) {
+		// TODO Auto-generated method stub
+		
+	}
 }
