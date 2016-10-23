@@ -36,7 +36,7 @@ public interface HAPDataType extends HAPSerializable{
 	public static String PARENTINFO = "parentInfo";
 
 	@HAPAttribute
-	public static String LINKEDINFO = "linkedInfo";
+	public static String LINKEDVERSION = "linkedVersion";
 	
 	/*
 	 * get basic information for this data type (categary, type, description)
@@ -53,5 +53,5 @@ public interface HAPDataType extends HAPSerializable{
 	 * through these methods, we know the next node on the chain, 
 	 */
 	public HAPDataTypeInfo getParentDataTypeInfo();
-	public HAPDataTypeInfo getLinkedDataTypeInfo();
+	public HAPDataTypeVersion getLinkedVersion();
 }

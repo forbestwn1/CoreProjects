@@ -1,7 +1,5 @@
 package com.nosliw.common.pattern;
 
-import java.util.List;
-
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
@@ -61,7 +59,11 @@ public class HAPNamingConversionUtility {
 	public static String[] parseElements(String eles){
 		return eles.split(HAPConstant.SEPERATOR_ELEMENT);
 	}
-	
+
+	public static String[] parseSegments(String eles){
+		return eles.split(HAPConstant.SEPERATOR_SEGMENT);
+	}
+
 	public static String cascadeElement(String[] eles){
 		StringBuffer listStr = new StringBuffer();
 		listStr.append(HAPConstant.SEPERATOR_ARRAYSTART);

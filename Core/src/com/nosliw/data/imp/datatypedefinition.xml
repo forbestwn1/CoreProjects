@@ -1,0 +1,11 @@
+<entity name="data.datatypedef" description="this is used to defined data type basic info" class="com.nosliw.data.datatype.HAPDataTypeImp">
+
+	<property name="description" type="string" description="data type description"/>
+
+	<property name="info" type="object" class="com.nosliw.data.datatype.HAPDataTypeInfoImp" description="data type info"/>
+
+	<property name="parentInfo" type="object" class="com.nosliw.data.datatype.HAPDataTypeInfoImp" description="parent data type"/>
+
+	<property name="linkedVersion" type="object" class="com.nosliw.data.datatype.HAPDataTypeVersionImp" description="lined data type in the same family"/>
+
+</entity>

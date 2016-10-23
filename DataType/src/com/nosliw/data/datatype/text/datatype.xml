@@ -1,0 +1,14 @@
+<definition name="core.text,1.0.0" description="description">
+	
+	<operations>
+	
+		<operation name="host" >
+			<parms>
+				<parm name="aa" type="core.text"/>
+				<parm name="bb" type="core.text"/>
+			</parms>
+		</operation>
+	
+	</operations>
+	
+</definition>

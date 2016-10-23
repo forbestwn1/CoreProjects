@@ -14,6 +14,7 @@ import com.nosliw.common.strvalue.HAPStringableValueComplex;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.strvalue.HAPStringableValueMap;
+import com.nosliw.common.strvalue.HAPStringableValueObject;
 import com.nosliw.common.strvalue.HAPStringableValueUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -24,6 +25,10 @@ public class HAPStringableEntityImporterXML {
 	private static String TAG_CONTAINERCHILD = "element";
 	
 	public static HAPStringableValueEntity readRootEntity(InputStream xmlStream){
+		return readRootEntity(xmlStream, null);
+	}
+
+	public static HAPStringableValueEntity readRootEntity(InputStream xmlStream, String valueInfoName){
 		HAPStringableValueEntity out = null;
 		try{
 			DocumentBuilderFactory DOMfactory = DocumentBuilderFactory.newInstance();
@@ -31,7 +36,7 @@ public class HAPStringableEntityImporterXML {
 			Document doc = DOMbuilder.parse(xmlStream);
 
 			Element rootEle = doc.getDocumentElement();
-			out = readRootEntity(rootEle);
+			out = readRootEntity(rootEle, valueInfoName);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -39,15 +44,17 @@ public class HAPStringableEntityImporterXML {
 		
 		return out;
 	}
- 
+	
 	public static HAPStringableValueEntity readRootEntity(Element entityEle){
-		String valueInfoName = entityEle.getTagName();
-		HAPStringableValueEntity out = processEntityValue(entityEle, (HAPValueInfoEntity)HAPValueInfoManager.getInstance().getValueInfo(valueInfoName).getSolidValueInfo());
-		return out;
+		return readRootEntity(entityEle, null);
 	}
 
 	public static HAPStringableValueEntity readRootEntity(Element entityEle, String valueInfoName){
-		HAPStringableValueEntity out = processEntityValue(entityEle, (HAPValueInfoEntity)HAPValueInfoManager.getInstance().getValueInfo(valueInfoName).getSolidValueInfo());
+		String valueInfo = valueInfoName;
+		if(HAPBasicUtility.isStringEmpty(valueInfoName)){
+			valueInfo = entityEle.getTagName();
+		}
+		HAPStringableValueEntity out = processEntityValue(entityEle, (HAPValueInfoEntity)HAPValueInfoManager.getInstance().getValueInfo(valueInfo).getSolidValueInfo());
 		return out;
 	}
 	
@@ -73,14 +80,23 @@ public class HAPStringableEntityImporterXML {
 			else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyCategary)){
 				out = processEntityOptionsValue(propertyContainerEle, (HAPValueInfoEntityOptions)propertyInfo);
 			}
+			else if(HAPConstant.STRINGABLE_VALUECATEGARY_OBJECT.equals(propertyCategary)){
+				String value = HAPXMLUtility.getChildContent(propertyContainerEle, propertyName);
+				if(value!=null)			out = processObjectValue(value, (HAPValueInfoObject)propertyInfo);
+			}
 			else{
-				String value = HAPXMLUtility.getAttributeValue(propertyContainerEle, propertyName); 
-				out = processBasicValue(value, (HAPValueInfoBasic)propertyInfo);
+				String value = HAPXMLUtility.getChildContent(propertyContainerEle, propertyName);
+				if(value!=null)				out = processBasicValue(value, (HAPValueInfoBasic)propertyInfo);
 			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
+		return out;
+	}
+	
+	private static HAPStringableValueObject processObjectValue(String strValue, HAPValueInfoObject objectValueInfo){
+		HAPStringableValueObject out = objectValueInfo.buildValue(strValue);
 		return out;
 	}
 	

@@ -1,4 +1,4 @@
-package com.nosliw.data.datatype;
+package com.nosliw.data.imp;
 
 public class HAPDataTypeImporter {
 

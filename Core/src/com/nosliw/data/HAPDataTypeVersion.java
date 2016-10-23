@@ -8,6 +8,9 @@ import com.nosliw.common.serialization.HAPSerializable;
 public interface HAPDataTypeVersion extends HAPSerializable{
 
 	@HAPAttribute
+	public static String NAME = "name";
+
+	@HAPAttribute
 	public static String MAJOR = "major";
 	
 	@HAPAttribute
@@ -15,6 +18,8 @@ public interface HAPDataTypeVersion extends HAPSerializable{
 	
 	@HAPAttribute
 	public static String REVISION = "revision";
+
+	String getName();
 	
 	int getMajor();
 	
@@ -22,4 +27,5 @@ public interface HAPDataTypeVersion extends HAPSerializable{
 	
 	String getRevision();
 	
+	HAPDataTypeVersion clone();
 }

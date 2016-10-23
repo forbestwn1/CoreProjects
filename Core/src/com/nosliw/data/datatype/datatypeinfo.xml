@@ -1,9 +1,0 @@
-<entity name="data.datatypeinfo" description="data type info" class="com.nosliw.data.datatype.HAPDataTypeInfoImp">
-
-	<property name="type" type="string" description="data type name"/>
-
-	<property name="categary" type="string" description="data type categar"/>
-
-	<property name="version" reference="data.datatypeversion" description="data type version"/>
-
-</entity>

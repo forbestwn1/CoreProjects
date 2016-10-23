@@ -307,7 +307,8 @@
 			<definition name="SYMBOL_GROUP" value="@"/>
 			<definition name="SYMBOL_ENTITYNAME_COMMON" value=".."/>
 			<definition name="SYMBOL_ENTITYNAME_CURRENT" value="."/>
-			<definition name="SEPERATOR_ELEMENT" value=";"/>
+			<definition name="SEPERATOR_ELEMENT" value=","/>
+			<definition name="SEPERATOR_SEGMENT" value=";"/>
 			<definition name="SEPERATOR_PART" value=":"/>
 			<definition name="SEPERATOR_PATH" value="."/>
 			<definition name="SEPERATOR_FULLNAME" value="."/>

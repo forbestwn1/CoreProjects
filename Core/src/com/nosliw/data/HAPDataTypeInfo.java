@@ -8,17 +8,12 @@ import com.nosliw.common.serialization.HAPSerializable;
 public interface HAPDataTypeInfo extends HAPSerializable{
 
 	@HAPAttribute
-	public static String TYPE = "type";
-
-	@HAPAttribute
-	public static String CATEGARY = "categary";
+	public static String NAME = "name";
 
 	@HAPAttribute
 	public static String VERSION = "version";
 
-	String getType();
-	
-	String getCategary();
+	String getName();
 	
 	HAPDataTypeVersion getVersion();
 	

@@ -27,6 +27,15 @@ public class HAPXMLUtility {
 		return null;
 	}
 	
+	public static String getFirstChildElementContent(Element parent, String name){
+		String out = null;
+		Element childEle = getFirstChildElementByName(parent, name);
+		if(childEle!=null){
+			out = childEle.getTextContent();
+		}
+		return out;
+	}
+	
 	public static Element[] getMultiChildElementByName(Element parent, String name){
 		List<Element> out = new ArrayList<Element>(); 
 		NodeList children = parent.getChildNodes();
@@ -78,5 +87,13 @@ public class HAPXMLUtility {
 		else{
 			return null;
 		}
+	}
+	
+	public static String getChildContent(Element parent, String attr){
+		String out = getAttributeValue(parent, attr);
+		if(out==null){
+			getFirstChildElementContent(parent, attr);
+		}
+		return out;
 	}
 }

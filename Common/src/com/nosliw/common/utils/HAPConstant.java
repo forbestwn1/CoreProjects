@@ -38,7 +38,8 @@ public class HAPConstant {
 		public static final String SYMBOL_GROUP = "@";
 		public static final String SYMBOL_ENTITYNAME_COMMON = "..";
 		public static final String SYMBOL_ENTITYNAME_CURRENT = ".";
-		public static final String SEPERATOR_ELEMENT = ";";
+		public static final String SEPERATOR_ELEMENT = ",";
+		public static final String SEPERATOR_SEGMENT = ";";
 		public static final String SEPERATOR_PART = ":";
 		public static final String SEPERATOR_PATH = ".";
 		public static final String SEPERATOR_FULLNAME = ".";
@@ -325,12 +326,14 @@ public class HAPConstant {
 		public static final String STRINGABLE_VALUECATEGARY_MAP = "map";
 		public static final String STRINGABLE_VALUECATEGARY_LIST = "list";
 		public static final String STRINGABLE_VALUECATEGARY_ENTITY = "entity";
+		public static final String STRINGABLE_VALUECATEGARY_OBJECT = "object";
 
 
 
 		public static final String STRINGALBE_VALUEINFO_BASIC = "basic";
 		public static final String STRINGALBE_VALUEINFO_REFERENCE = "reference";
 		public static final String STRINGALBE_VALUEINFO_ENTITY = "entity";
+		public static final String STRINGALBE_VALUEINFO_OBJECT = "object";
 		public static final String STRINGALBE_VALUEINFO_ENTITYOPTIONS = "entityOptions";
 		public static final String STRINGALBE_VALUEINFO_LIST = "list";
 		public static final String STRINGALBE_VALUEINFO_MAP = "map";
