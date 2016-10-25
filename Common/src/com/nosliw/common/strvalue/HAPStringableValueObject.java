@@ -20,9 +20,25 @@ public abstract class HAPStringableValueObject extends HAPStringableValue{
 	abstract protected void parseStringValue(String strValue);
 	
 	@Override
-	public HAPInterpolateOutput resolveByPattern(Map<String, Object> patternDatas){	return this.m_strValue.resolveByPattern(patternDatas);	}
+	protected HAPInterpolateOutput resolveValueByPattern(Map<String, Object> patternDatas){	
+		HAPInterpolateOutput out = this.m_strValue.resolveByPattern(patternDatas);
+		if(out.isResolved()){
+			this.parseStringValue(this.m_strValue.getValue());
+		}
+		return out;
+	}
 	@Override
-	public HAPInterpolateOutput resolveByInterpolateProcessor(Map<HAPInterpolateProcessor, Object> patternDatas){ return this.m_strValue.resolveByInterpolateProcessor(patternDatas);}
+	protected HAPInterpolateOutput resolveValueByInterpolateProcessor(Map<HAPInterpolateProcessor, Object> patternDatas){ 
+		HAPInterpolateOutput out = this.m_strValue.resolveByInterpolateProcessor(patternDatas);
+		return out;
+	}
+	
+	@Override
+	public void afterResolve(HAPInterpolateOutput resolveResult){
+		if(resolveResult.isResolved()){
+			this.parseStringValue(this.m_strValue.getValue());
+		}
+	}
 	
 	@Override
 	public boolean isResolved(){  return this.m_strValue.isResolved();  }
@@ -42,6 +58,7 @@ public abstract class HAPStringableValueObject extends HAPStringableValue{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put("stringValue", this.m_strValue.toString());
 	}
 
 	@Override

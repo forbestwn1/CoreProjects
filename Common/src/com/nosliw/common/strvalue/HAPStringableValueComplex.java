@@ -29,7 +29,7 @@ public abstract class HAPStringableValueComplex extends HAPStringableValue{
 	}
 	
 	@Override
-	public HAPInterpolateOutput resolveByPattern(Map<String, Object> patternDatas) {
+	protected HAPInterpolateOutput resolveValueByPattern(Map<String, Object> patternDatas) {
 		Iterator<HAPStringableValue> iterator = this.iterate();
 		while(iterator.hasNext()){
 			HAPStringableValue value = iterator.next();
@@ -39,7 +39,7 @@ public abstract class HAPStringableValueComplex extends HAPStringableValue{
 	}
 
 	@Override
-	public HAPInterpolateOutput resolveByInterpolateProcessor(
+	protected HAPInterpolateOutput resolveValueByInterpolateProcessor(
 			Map<HAPInterpolateProcessor, Object> patternDatas) {
 		Iterator<HAPStringableValue> iterator = this.iterate();
 		while(iterator.hasNext()){

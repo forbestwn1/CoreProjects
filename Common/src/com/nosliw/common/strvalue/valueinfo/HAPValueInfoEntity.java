@@ -58,6 +58,13 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 		try{
 			String className = this.getBasicAncestorValueString(HAPValueInfoEntity.ENTITY_PROPERTY_CLASSNAME);
 			if(className==null)    	className = HAPStringableValueEntity.class.getName();
+			
+			
+			if("com.nosliw.data.datatype.HAPDataTypeImp".equals(className)){
+				int kkkk = 5555;
+				kkkk++;
+			}
+			
 			out = (HAPStringableValueEntity)Class.forName(className).newInstance();
 		}
 		catch(Exception e){

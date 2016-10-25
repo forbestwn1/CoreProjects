@@ -81,9 +81,9 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 	}
 	
 	@Override
-	public HAPInterpolateOutput resolveByPattern(Map<String, Object> patternDatas){	return this.m_strValue.resolveByPattern(patternDatas);	}
+	protected HAPInterpolateOutput resolveValueByPattern(Map<String, Object> patternDatas){	return this.m_strValue.resolveByPattern(patternDatas);	}
 	@Override
-	public HAPInterpolateOutput resolveByInterpolateProcessor(Map<HAPInterpolateProcessor, Object> patternDatas){ return this.m_strValue.resolveByInterpolateProcessor(patternDatas);}
+	protected HAPInterpolateOutput resolveValueByInterpolateProcessor(Map<HAPInterpolateProcessor, Object> patternDatas){ return this.m_strValue.resolveByInterpolateProcessor(patternDatas);}
 
 	public boolean isValueResolved(){		return this.m_sovled;	}
 	

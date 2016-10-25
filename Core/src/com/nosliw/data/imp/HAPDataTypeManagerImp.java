@@ -1,11 +1,9 @@
 package com.nosliw.data.imp;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.HAPDataOperationInfo;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeFamily;
@@ -18,12 +16,17 @@ import com.nosliw.data.HAPQueryInfo;
 public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 
 	public HAPDataTypeManagerImp(){
-		Set<String> valueInfos = new HashSet<String>();
-		valueInfos.add("datatypedefinition.xml");
-		valueInfos.add("datatypeinfo.xml");
-		valueInfos.add("datatypeversion.xml");
-		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeManagerImp.class, valueInfos);
 	}
+	
+	public void registerDataType(HAPDataType dataType){
+		System.out.println("*****************************************************");
+		System.out.println(dataType.toString());
+	}
+	
+	public void registerDataTypeOperations(HAPDataTypeInfo dataTypeImp){
+		
+	}
+	
 	
 	@Override
 	public HAPDataType getDataType(HAPDataTypeInfo dataTypeInfo) {

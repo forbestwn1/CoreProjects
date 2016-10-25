@@ -86,6 +86,10 @@ public class HAPValueInfoImporterXML {
 			else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(propertyType)){
 				valueInfo = readEntityValueInfo(valueInfoEle);
 			}
+			else if(HAPConstant.STRINGALBE_VALUEINFO_OBJECT.equals(propertyType)){
+				valueInfo = HAPValueInfoObject.build();
+				updateBasicProperty(valueInfoEle, valueInfo);
+			}
 			else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyType)){
 				valueInfo = HAPValueInfoEntityOptions.build();
 				updateBasicProperty(valueInfoEle, valueInfo);
