@@ -8,7 +8,7 @@ import com.nosliw.data.HAPDataTypeVersion;
 public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataType{
 
 	@Override
-	public HAPDataTypeInfo getDataTypeInfo() {	return (HAPDataTypeInfo)this.getAncestorByPath(INFO);	}
+	public HAPDataTypeInfo getDataTypeInfo() {	return (HAPDataTypeInfo)this.getAncestorByPath(NAME);	}
 
 	@Override
 	public String getDescription() {	return this.getBasicAncestorValueString(DESCRIPTION); }

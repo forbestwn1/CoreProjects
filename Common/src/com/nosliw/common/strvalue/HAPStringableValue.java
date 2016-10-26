@@ -38,7 +38,7 @@ public abstract class HAPStringableValue extends HAPSerialiableImp implements HA
 	}
 	@Override
 	final public HAPInterpolateOutput resolveByInterpolateProcessor(Map<HAPInterpolateProcessor, Object> patternDatas){
-		HAPInterpolateOutput out = this.resolveByInterpolateProcessor(patternDatas);
+		HAPInterpolateOutput out = this.resolveValueByInterpolateProcessor(patternDatas);
 		this.afterResolve(out);
 		return out;
 	}

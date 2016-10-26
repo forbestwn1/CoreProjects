@@ -30,7 +30,7 @@ public interface HAPDataType extends HAPSerializable{
 	public static String DESCRIPTION = "description";
 
 	@HAPAttribute
-	public static String INFO = "info";
+	public static String NAME = "name";
 
 	@HAPAttribute
 	public static String PARENTINFO = "parentInfo";

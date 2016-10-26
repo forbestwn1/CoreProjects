@@ -19,6 +19,8 @@ public abstract class HAPStringableValueObject extends HAPStringableValue{
 	
 	abstract protected void parseStringValue(String strValue);
 	
+	public String getStringValue(){  return this.m_strValue.getValue(); }
+	
 	@Override
 	protected HAPInterpolateOutput resolveValueByPattern(Map<String, Object> patternDatas){	
 		HAPInterpolateOutput out = this.m_strValue.resolveByPattern(patternDatas);
