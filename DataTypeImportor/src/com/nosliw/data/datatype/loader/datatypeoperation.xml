@@ -1,0 +1,13 @@
+<entity name="data.operation" class="com.nosliw.data.datatype.loader.HAPOperationImp" description="">
+
+	<property name="description" type="string" description=""/>
+
+	<property name="name" type="string" description=""/>
+
+	<property name="output" reference="data.operationoutput" description=""/>
+
+	<property name="parms" type="map" key="name" description="">
+		<child reference="data.operationparm"/>
+	</property>
+
+</entity>

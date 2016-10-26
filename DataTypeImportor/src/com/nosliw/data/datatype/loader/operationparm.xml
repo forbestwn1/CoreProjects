@@ -1,0 +1,7 @@
+<entity name="data.operationparm" class="com.nosliw.data.datatype.loader.HAPOperationParmImp" description="">
+
+	<property name="description" type="string" description=""/>
+
+	<property name="dataTypeInfo" reference="data.datatypeinfo" description=""/>
+
+</entity>
