@@ -10,22 +10,24 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 
-public class HAPStringableValueMap extends HAPStringableValueComplex{
+public class HAPStringableValueMap<T extends HAPStringableValue> extends HAPStringableValueComplex<T>{
 
-	private Map<String, HAPStringableValue> m_elements;
+	private Map<String, T> m_elements;
 	
 	public HAPStringableValueMap(){
-		this.m_elements = new LinkedHashMap<String, HAPStringableValue>();
+		this.m_elements = new LinkedHashMap<String, T>();
 	}
 	
-	public HAPStringableValue updateChild(String name, HAPStringableValue child){
+	public Map<String, T> getMapValue(){  return this.m_elements;  }
+	
+	public HAPStringableValue updateChild(String name, T child){
 		if(child==null)  this.m_elements.remove(name);
 		else  this.m_elements.put(name, child);
 		return child;
 	}
 	
 	@Override
-	public Iterator<HAPStringableValue> iterate(){		return this.m_elements.values().iterator();	}
+	public Iterator<T> iterate(){		return this.m_elements.values().iterator();	}
 	
 	@Override
 	public String getStringableCategary(){		return HAPConstant.STRINGABLE_VALUECATEGARY_MAP;	}
@@ -54,12 +56,12 @@ public class HAPStringableValueMap extends HAPStringableValueComplex{
 	
 	@Override
 	public HAPStringableValue cloneStringableValue() {
-		HAPStringableValueMap out = new HAPStringableValueMap();
+		HAPStringableValueMap<T> out = new HAPStringableValueMap<T>();
 		out.cloneFrom(this);
 		return out;
 	}
 
-	protected void cloneFrom(HAPStringableValueMap map){
+	protected void cloneFrom(HAPStringableValueMap<T> map){
 		for(String name : map.m_elements.keySet()){
 			this.m_elements.put(name, map.m_elements.get(name));
 		}

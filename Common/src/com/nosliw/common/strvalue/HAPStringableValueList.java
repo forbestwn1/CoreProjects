@@ -12,21 +12,23 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 
-public class HAPStringableValueList extends HAPStringableValueComplex{
+public class HAPStringableValueList<T extends HAPStringableValue> extends HAPStringableValueComplex<T>{
 
-	private List<HAPStringableValue> m_elements;
+	private List<T> m_elements;
 	
 	public HAPStringableValueList(){
-		this.m_elements = new ArrayList<HAPStringableValue>();
+		this.m_elements = new ArrayList<T>();
 	}
 	
-	public HAPStringableValue addChild(HAPStringableValue element){
+	public List<T> getListValue(){  return this.m_elements;  }
+	
+	public HAPStringableValue addChild(T element){
 		this.m_elements.add(element);
 		return element;
 	}
 	
 	@Override
-	public Iterator<HAPStringableValue> iterate(){		return this.m_elements.iterator();	}
+	public Iterator<T> iterate(){		return this.m_elements.iterator();	}
 	
 	@Override
 	public String getStringableCategary(){		return HAPConstant.STRINGABLE_VALUECATEGARY_LIST;	}
@@ -50,13 +52,13 @@ public class HAPStringableValueList extends HAPStringableValueComplex{
 
 	@Override
 	public HAPStringableValue cloneStringableValue() {
-		HAPStringableValueList out = new HAPStringableValueList();
+		HAPStringableValueList<T> out = new HAPStringableValueList<T>();
 		out.cloneFrom(this);
 		return out;
 	}
 
-	protected void cloneFrom(HAPStringableValueList list){
-		for(HAPStringableValue element : list.m_elements){
+	protected void cloneFrom(HAPStringableValueList<T> list){
+		for(T element : list.m_elements){
 			this.m_elements.add(element);
 		}
 	}

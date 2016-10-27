@@ -1,6 +1,8 @@
 package com.nosliw.common.strvalue.valueinfo;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -23,6 +25,30 @@ import com.nosliw.common.utils.HAPXMLUtility;
 public class HAPStringableEntityImporterXML {
 
 	private static String TAG_CONTAINERCHILD = "element";
+
+	public static List<HAPStringableValueEntity> readMutipleEntitys(InputStream xmlStream){
+		return readMutipleEntitys(xmlStream, null);
+	}	
+	
+	public static List<HAPStringableValueEntity> readMutipleEntitys(InputStream xmlStream, String valueInfoName){
+		List<HAPStringableValueEntity> out = new ArrayList<HAPStringableValueEntity>();
+		
+		try{
+			DocumentBuilderFactory DOMfactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder DOMbuilder = DOMfactory.newDocumentBuilder();
+			Document doc = DOMbuilder.parse(xmlStream);
+
+			Element rootEle = doc.getDocumentElement();
+			Element[] eles = HAPXMLUtility.getChildElements(rootEle);
+			for(Element ele : eles){
+				out.add(readRootEntity(ele, valueInfoName));
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return out;
+	}
 	
 	public static HAPStringableValueEntity readRootEntity(InputStream xmlStream){
 		return readRootEntity(xmlStream, null);

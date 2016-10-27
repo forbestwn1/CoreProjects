@@ -9,18 +9,18 @@ import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 
-public abstract class HAPStringableValueComplex extends HAPStringableValue{
+public abstract class HAPStringableValueComplex<T extends HAPStringableValue> extends HAPStringableValue{
 
 	public HAPStringableValueComplex(){
 	}
 	
-	public abstract Iterator<HAPStringableValue> iterate();
+	public abstract Iterator<T> iterate();
 	
 	public void init(){}
 	
 	@Override
 	public boolean isEmpty(){
-		Iterator<HAPStringableValue> iterator = this.iterate();
+		Iterator<T> iterator = this.iterate();
 		while(iterator.hasNext()){
 			HAPStringableValue value = iterator.next();
 			if(value!=null && !value.isEmpty())  return false;
@@ -30,7 +30,7 @@ public abstract class HAPStringableValueComplex extends HAPStringableValue{
 	
 	@Override
 	protected HAPInterpolateOutput resolveValueByPattern(Map<String, Object> patternDatas) {
-		Iterator<HAPStringableValue> iterator = this.iterate();
+		Iterator<T> iterator = this.iterate();
 		while(iterator.hasNext()){
 			HAPStringableValue value = iterator.next();
 			value.resolveByPattern(patternDatas);
@@ -41,7 +41,7 @@ public abstract class HAPStringableValueComplex extends HAPStringableValue{
 	@Override
 	protected HAPInterpolateOutput resolveValueByInterpolateProcessor(
 			Map<HAPInterpolateProcessor, Object> patternDatas) {
-		Iterator<HAPStringableValue> iterator = this.iterate();
+		Iterator<T> iterator = this.iterate();
 		while(iterator.hasNext()){
 			HAPStringableValue value = iterator.next();
 			value.resolveByInterpolateProcessor(patternDatas);
@@ -51,7 +51,7 @@ public abstract class HAPStringableValueComplex extends HAPStringableValue{
 
 	@Override
 	public boolean isResolved() {
-		Iterator<HAPStringableValue> iterator = this.iterate();
+		Iterator<T> iterator = this.iterate();
 		while(iterator.hasNext()){
 			HAPStringableValue value = iterator.next();
 			if(!value.isResolved())  return false;

@@ -7,15 +7,9 @@ import com.nosliw.data.HAPDataTypeInfo;
 public class HAPOperationOutputImp extends HAPStringableValueEntity implements HAPDataOperationOutInfo{
 
 	@Override
-	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public String getDescription() {		return this.getBasicAncestorValueString(DESCRIPTION);	}
 
 	@Override
-	public HAPDataTypeInfo getDataTypeInfo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPDataTypeInfo getDataTypeInfo() {		return (HAPDataTypeInfo)this.getEntityAncestorByPath(DATATYPE);	}
 
 }
