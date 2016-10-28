@@ -4,10 +4,12 @@
 	
 		<operation name="host" >
 			<parms>
-				<parm name="aa" type="core.text"/>
-				<parm name="bb" type="core.text"/>
+				<parm name="aa" dataType="core.text"/>
+				<parm name="bb" dataType="core.text"/>
 			</parms>
 		</operation>
+	
+		<output dataType="core.text"/>
 	
 	</operations>
 	

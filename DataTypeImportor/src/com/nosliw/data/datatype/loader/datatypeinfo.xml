@@ -4,8 +4,4 @@
 
 	<property name="version" type="object" class="com.nosliw.data.datatype.loader.HAPDataTypeVersionImp" description=""/>
 
-	<property name="operations" type="list">
-		<child reference="data.operation"/>
-	</property>
-
 </entity>

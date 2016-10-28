@@ -1,7 +1,7 @@
-<entity name="data.operationutput" class="com.nosliw.data.datatype.loader.HAPOperationOutputImp" description="">
+<entity name="data.operationoutput" class="com.nosliw.data.datatype.loader.HAPOperationOutputImp" description="">
 
 	<property name="description" type="string" description=""/>
 
-	<property name="dataTypeInfo" reference="data.datatypeinfo" description=""/>
+	<property name="dataType" type="object" class="com.nosliw.data.datatype.loader.HAPDataTypeInfoImp" description="data type"/>
 
 </entity>

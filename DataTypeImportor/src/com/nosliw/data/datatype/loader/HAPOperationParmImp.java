@@ -13,6 +13,6 @@ public class HAPOperationParmImp extends HAPStringableValueEntity implements HAP
 	public String getDescription() {		return this.getBasicAncestorValueString(DESCRIPTION);  }
 
 	@Override
-	public HAPDataTypeInfo getDataTypeInfo() {		return (HAPDataTypeInfo)this.getEntityAncestorByPath(DATATYPE);	}
+	public HAPDataTypeInfo getDataTypeInfo() {		return (HAPDataTypeInfo)this.getObjectAncestorByPath(DATATYPE);	}
 
 }

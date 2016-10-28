@@ -10,6 +10,6 @@ public class HAPOperationOutputImp extends HAPStringableValueEntity implements H
 	public String getDescription() {		return this.getBasicAncestorValueString(DESCRIPTION);	}
 
 	@Override
-	public HAPDataTypeInfo getDataTypeInfo() {		return (HAPDataTypeInfo)this.getEntityAncestorByPath(DATATYPE);	}
+	public HAPDataTypeInfo getDataTypeInfo() {		return (HAPDataTypeInfo)this.getObjectAncestorByPath(DATATYPE);	}
 
 }

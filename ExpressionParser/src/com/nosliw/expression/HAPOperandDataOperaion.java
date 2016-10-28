@@ -36,11 +36,6 @@ public class HAPOperandDataOperaion extends HAPOperandOperation{
 			parms[i+1] = this.getParameters()[i].execute(vars, wraperVars, opContext);
 		}
 		
-		if(parms[0]==null){
-			int kkkk = 55;
-			kkkk++;
-		}
-		
 		HAPServiceData serviceData = parms[0].getDataType().operate(this.getOperationName(), parms, opContext);
 		return (HAPData)serviceData.getData();
 	}

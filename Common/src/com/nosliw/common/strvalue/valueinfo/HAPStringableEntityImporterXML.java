@@ -224,6 +224,8 @@ public class HAPStringableEntityImporterXML {
 	}
 
 	private static HAPStringableValueEntity processEntityValue(Element entityEle, HAPValueInfoEntity entityValueInfo){
+		if(entityEle==null)  return null;
+		
 		HAPStringableValueEntity out = null;
 		try{
 			HAPStringableValueEntity entity = entityValueInfo.newEntity();

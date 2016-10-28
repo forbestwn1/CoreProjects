@@ -1,4 +1,4 @@
-<entity name="data.operation" class="com.nosliw.data.datatype.loader.HAPOperationImp" description="">
+<entity name="data.operation" class="com.nosliw.data.datatype.loader.HAPDataOperationInfoImp" description="">
 
 	<property name="description" type="string" description=""/>
 
@@ -6,7 +6,7 @@
 
 	<property name="output" reference="data.operationoutput" description=""/>
 
-	<property name="parms" type="map" key="name" description="">
+	<property name="parms" type="map" key="name" description="" elementTag="parm">
 		<child reference="data.operationparm"/>
 	</property>
 

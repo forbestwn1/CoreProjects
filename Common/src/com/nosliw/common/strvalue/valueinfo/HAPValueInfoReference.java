@@ -84,8 +84,10 @@ public class HAPValueInfoReference extends HAPValueInfo{
 	}
 	
 	private void buildDefaultValue(HAPValueInfo valueInfo, Object defaultValue){
+		if(defaultValue==null)  return;
+		
 		String categary = valueInfo.getCategary();
-		if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(categary)){
+		if(HAPConstant.STRINGALBE_VALUEINFO_BASIC.equals(categary)){
 			valueInfo.updateBasicChild(HAPValueInfoBasic.ENTITY_PROPERTY_DEFAULTVALUE, (String)defaultValue);
 		}
 		else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(categary)){

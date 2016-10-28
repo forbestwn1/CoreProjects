@@ -10,7 +10,7 @@ public class HAPDataTypeInfoImp extends HAPStringableValueObject implements HAPD
 	private String m_name;
 	private HAPDataTypeVersion m_version;
 	
-	protected HAPDataTypeInfoImp(){super(null);}
+	public HAPDataTypeInfoImp(){super(null);}
 	public HAPDataTypeInfoImp(String strValue) {super(strValue);	}
 
 	@Override
@@ -22,7 +22,7 @@ public class HAPDataTypeInfoImp extends HAPStringableValueObject implements HAPD
 	protected void parseStringValue(String strValue) {
 		String[] segs = HAPNamingConversionUtility.parseSegments(strValue);
 		this.m_name = segs[0];
-		if(segs.length>=1)    this.m_version = new HAPDataTypeVersionImp(segs[1]);
+		if(segs.length>=2)    this.m_version = new HAPDataTypeVersionImp(segs[1]);
 	}
 
 	public HAPDataTypeInfoImp clone(){

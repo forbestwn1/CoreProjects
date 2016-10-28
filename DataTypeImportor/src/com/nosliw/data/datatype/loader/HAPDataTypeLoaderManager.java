@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.clss.HAPClassFilter;
@@ -15,6 +16,8 @@ import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPStringableEntityImporterXML;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.HAPDataOperationInfo;
+import com.nosliw.data.HAPDataOperationOutInfo;
+import com.nosliw.data.HAPDataOperationParmInfo;
 import com.nosliw.data.HAPDataTypeInfo;
 import com.nosliw.data.HAPDataTypeProvider;
 import com.nosliw.data.HAPDataTypeVersion;
@@ -31,12 +34,24 @@ public class HAPDataTypeLoaderManager {
 	
    Connection m_connection = null;
    PreparedStatement  m_insertDatatTypeStatement = null;
+   PreparedStatement  m_insertOperationStatement = null;
+   PreparedStatement  m_insertParmStatement = null;
    
    String m_insertDataTypeSql = "INSERT INTO datatypedef (ID, NAME, VERSION, VERSION_MAJOR, VERSION_MINOR, VERSION_REVISION, DESCRIPTION, PARENTINFO, LINKEDVERSION) VALUES (?,?,?,?,?,?,?,?,?)";
+   String m_insertOperationSql = "INSERT INTO DATAOPERATION (ID, DATATYPE, NAME, DESCRIPTION) VALUES (?,?,?,?)";
+   String m_insertParmSql = "INSERT INTO OPERATIONPARM (ID, OPERATION, TYPE, NAME, DATATYPE, DESCRIPTION) VALUES (?,?,?,?,?,?)";
 	   
+   private long m_id;
+   
 	public HAPDataTypeLoaderManager(){
 		registerValueInfos();
 		setupDbConnection();
+		this.m_id = System.currentTimeMillis();
+	}
+	
+	private long getId(){
+		this.m_id++;
+		return this.m_id;
 	}
 	
 	private void setupDbConnection(){
@@ -45,6 +60,8 @@ public class HAPDataTypeLoaderManager {
 		    System.out.println("Connecting to database...");
 			m_connection = DriverManager.getConnection(DB_URL,USER,PASS);		
 			m_insertDatatTypeStatement = m_connection.prepareStatement(m_insertDataTypeSql);
+			m_insertOperationStatement = m_connection.prepareStatement(m_insertOperationSql);
+			m_insertParmStatement = m_connection.prepareStatement(m_insertParmSql);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -56,7 +73,7 @@ public class HAPDataTypeLoaderManager {
 		valueInfos.add("datatypeinfo.xml");
 		valueInfos.add("datatypeversion.xml");
 
-		valueInfos.add("dataoperation.xml");
+		valueInfos.add("datatypeoperation.xml");
 		valueInfos.add("operationoutput.xml");
 		valueInfos.add("operationparm.xml");
 
@@ -91,9 +108,11 @@ public class HAPDataTypeLoaderManager {
 		
 		List<HAPDataOperationInfo> ops = dataType.getDataOperationInfos();
 		InputStream opsStream = cls.getResourceAsStream("operations.xml");
-		List<HAPStringableValueEntity> ops1 = HAPStringableEntityImporterXML.readMutipleEntitys(opsStream, "data.operation");
-		for(HAPStringableValueEntity op : ops1){
-			ops.add((HAPDataOperationInfo)op);
+		if(opsStream!=null){
+			List<HAPStringableValueEntity> ops1 = HAPStringableEntityImporterXML.readMutipleEntitys(opsStream, "data.operation");
+			for(HAPStringableValueEntity op : ops1){
+				ops.add((HAPDataOperationInfo)op);
+			}
 		}
 		
 		for(HAPDataOperationInfo op : ops){
@@ -102,7 +121,40 @@ public class HAPDataTypeLoaderManager {
 	}
 
 	private void saveOperation(HAPDataOperationInfoImp operation, HAPDataTypeImp dataType){
-		
+		try {
+			String operationId = this.getId()+"";
+			m_insertOperationStatement.setString(1, operationId);
+			m_insertOperationStatement.setString(2, ((HAPDataTypeInfoImp)dataType.getDataTypeInfo()).getStringValue());
+			m_insertOperationStatement.setString(3, operation.getName());
+			m_insertOperationStatement.setString(4, operation.getDescription());
+			m_insertOperationStatement.execute();
+			
+			Map<String, HAPDataOperationParmInfo> parms = operation.getParmsInfo();
+			for(String name : parms.keySet()){
+				HAPDataOperationParmInfo parmInfo = parms.get(name);
+				m_insertParmStatement.setString(1, this.getId()+"");
+				m_insertParmStatement.setString(2, operationId);
+				m_insertParmStatement.setString(3, "parm");
+				m_insertParmStatement.setString(4, parmInfo.getName());
+				m_insertParmStatement.setString(5, ((HAPDataTypeInfoImp)parmInfo.getDataTypeInfo()).getStringValue());
+				m_insertParmStatement.setString(6, parmInfo.getDescription());
+				m_insertParmStatement.execute();
+			}
+			
+			HAPDataOperationOutInfo outputInfo = operation.getOutputInfo();
+			if(outputInfo!=null){
+				m_insertParmStatement.setString(1, this.getId()+"");
+				m_insertParmStatement.setString(2, operationId);
+				m_insertParmStatement.setString(3, "output");
+				m_insertParmStatement.setString(4, null);
+				m_insertParmStatement.setString(5, ((HAPDataTypeInfoImp)outputInfo.getDataTypeInfo()).getStringValue());
+				m_insertParmStatement.setString(6, outputInfo.getDescription());
+				m_insertParmStatement.execute();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void saveDataType(HAPDataTypeImp dataType){
