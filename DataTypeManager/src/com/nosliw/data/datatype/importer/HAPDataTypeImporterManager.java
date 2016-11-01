@@ -1,4 +1,4 @@
-package com.nosliw.data.datatype.loader;
+package com.nosliw.data.datatype.importer;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -23,7 +23,7 @@ import com.nosliw.data.HAPDataTypeProvider;
 import com.nosliw.data.HAPDataTypeVersion;
 import com.nosliw.data.imp.HAPDataTypeManagerImp;
 
-public class HAPDataTypeLoaderManager {
+public class HAPDataTypeImporterManager {
 	// JDBC driver name and database URL
    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
    static final String DB_URL = "jdbc:mysql://localhost/nosliw";
@@ -43,7 +43,7 @@ public class HAPDataTypeLoaderManager {
 	   
    private long m_id;
    
-	public HAPDataTypeLoaderManager(){
+	public HAPDataTypeImporterManager(){
 		registerValueInfos();
 		setupDbConnection();
 		this.m_id = System.currentTimeMillis();
@@ -77,7 +77,7 @@ public class HAPDataTypeLoaderManager {
 		valueInfos.add("operationoutput.xml");
 		valueInfos.add("operationparm.xml");
 
-		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeLoaderManager.class, valueInfos);
+		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeImporterManager.class, valueInfos);
 	}
 	
 	public void loadAll(){
@@ -189,7 +189,7 @@ public class HAPDataTypeLoaderManager {
 	}
 	
 	public static void main(String[] args){
-		HAPDataTypeLoaderManager man = new HAPDataTypeLoaderManager();
+		HAPDataTypeImporterManager man = new HAPDataTypeImporterManager();
 		man.loadAll();
 		man.close();
 	}

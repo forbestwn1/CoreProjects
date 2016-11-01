@@ -1,4 +1,4 @@
-package com.nosliw.data.datatype.loader;
+package com.nosliw.data.datatype.importer;
 
 import java.util.Map;
 

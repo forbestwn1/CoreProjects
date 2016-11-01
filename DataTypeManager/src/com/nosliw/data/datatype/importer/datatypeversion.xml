@@ -1,4 +1,4 @@
-<entity name="data.datatypeversion" description="data type version" class="com.nosliw.data.datatype.loader.HAPDataTypeVersionImp">
+<entity name="data.datatypeversion" description="data type version" class="com.nosliw.data.datatype.importer.HAPDataTypeVersionImp">
 
 	<property name="major" type="int" description="major version number"/>
 

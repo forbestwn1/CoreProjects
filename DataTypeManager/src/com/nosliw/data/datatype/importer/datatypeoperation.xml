@@ -1,4 +1,4 @@
-<entity name="data.operation" class="com.nosliw.data.datatype.loader.HAPDataOperationInfoImp" description="">
+<entity name="data.operation" class="com.nosliw.data.datatype.importer.HAPDataOperationInfoImp" description="">
 
 	<property name="description" type="string" description=""/>
 
