@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.configure.HAPConfigureManager;
+import com.nosliw.common.configure.HAPConfigureUtility;
+import com.nosliw.common.configure.HAPImportConfigure;
 
 /*
  * test enviroment data
@@ -35,7 +37,7 @@ public class HAPTestEnv {
 	}
 
 	public HAPTestEnv softMerge(HAPTestEnv testEnv){
-		this.m_configures = this.m_configures.merge(testEnv.m_configures, false, false);
+		this.m_configures = HAPConfigureUtility.merge(m_configures, testEnv.m_configures, new HAPImportConfigure().setIsHard(false).setIsClone(false)); 
 		for(String name : testEnv.m_objects.keySet()){
 			if(this.m_objects.get(name)==null){
 				this.m_objects.put(name, testEnv.m_objects.get(name));

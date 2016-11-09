@@ -13,6 +13,7 @@ import java.util.Set;
 import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigureImp;
+import com.nosliw.common.configure.HAPConfigureUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 
 public class HAPPatternManager extends HAPConfigurableImp{
@@ -34,8 +35,8 @@ public class HAPPatternManager extends HAPConfigurableImp{
 		return m_instance;
 	}
 	
-	public HAPPatternManager(HAPConfigureImp configure){
-		super("patternprocess.properties", configure);
+	public HAPPatternManager(HAPConfigureImp customerConfigure){
+		this.setConfiguration(HAPConfigureUtility.buildConfigure("patternprocess.properties", HAPPatternManager.class, true, customerConfigure));
 		this.m_processorInfos = new LinkedHashMap<String, HAPPatternProcessorInfo>();
 		this.m_processors = new LinkedHashMap<String, HAPPatternProcessor>();
 		this.init();
@@ -145,4 +146,5 @@ public class HAPPatternManager extends HAPConfigurableImp{
 	private String getExportFileByConfigure(){
 		return this.getConfigureValue("exportFile").getStringValue();
 	}
+
 }

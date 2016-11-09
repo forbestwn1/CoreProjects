@@ -9,15 +9,12 @@ public abstract class HAPConfigurableImp implements HAPConfigurable{
 
 	private HAPConfigureImp m_configure;
 
-	protected HAPConfigurableImp(String propertyFile, HAPConfigureImp customerConfigure){
-		this.m_configure = HAPConfigureManager.getInstance().createConfigure();
-		this.m_configure.importFromProperty(propertyFile, this.getClass(), false);
-		if(customerConfigure!=null) 	this.m_configure.merge(customerConfigure, false, true);	
-		this.resolveConfigure();
+	protected HAPConfigurableImp(){
 	}
 
-	protected HAPConfigurableImp(String propertyFile){
-		this(propertyFile, null);
+	protected void setConfiguration(HAPConfigureImp configure){
+		this.m_configure = configure;
+		this.resolveConfigure();
 	}
 	
 	@Override
@@ -34,7 +31,7 @@ public abstract class HAPConfigurableImp implements HAPConfigurable{
 	 * use configure to override current configure
 	 */
 	protected void applyConfiguration(HAPConfigureImp configure){
-		this.m_configure.merge(configure, false, true);
+		HAPConfigureUtility.merge(this.m_configure, configure);
 		this.resolveConfigure();
 	}
 

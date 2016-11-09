@@ -133,6 +133,9 @@ public class HAPNamingConversionUtility {
 		if(HAPBasicUtility.isStringEmpty(path1)){
 			return path2;
 		}
+		if(HAPBasicUtility.isStringEmpty(path2)){
+			return path1;
+		}
 		else{
 			return path1 + HAPConstant.SEPERATOR_PATH + path2;
 		}

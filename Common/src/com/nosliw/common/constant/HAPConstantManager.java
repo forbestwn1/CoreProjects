@@ -13,6 +13,7 @@ import java.util.Set;
 import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigureImp;
+import com.nosliw.common.configure.HAPConfigureUtility;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.HAPStringableValueBasic;
@@ -32,8 +33,8 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 	
 	private String[] m_valueInfoFiles = {"constant.xml","group.xml","group_attribute.xml","group_constant.xml"};
 	
-	public HAPConstantManager(HAPConfigureImp configure){
-		super("constantmanager.properties", configure);
+	public HAPConstantManager(HAPConfigureImp customerConfigure){
+		this.setConfiguration(HAPConfigureUtility.buildConfigure("", HAPConstantManager.class, true, customerConfigure));
 		
 		this.m_groups = new ArrayList<HAPConstantGroup>();
 		

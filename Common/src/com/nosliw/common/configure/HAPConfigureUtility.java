@@ -1,15 +1,24 @@
 package com.nosliw.common.configure;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.HAPStringableValueBasic;
+import com.nosliw.common.strvalue.HAPStringableValueBasicTypeManager;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPConfigureUtility {
 
@@ -75,7 +84,7 @@ public class HAPConfigureUtility {
 	 */
 	public static HAPStringableValueBasic getStringableValue(String strValue){
 		String[] parts = HAPNamingConversionUtility.parsePartlInfos(strValue);
-		String type = HAPConstant.STRINGABLE_BASICVALUETYPE_STRING;
+		String type = null;
 		String value = null; 
 		if(parts.length>=2){
 			value = parts[1];
@@ -84,6 +93,151 @@ public class HAPConfigureUtility {
 		else{
 			value = strValue;
 		}
+		
+		if(!HAPStringableValueBasicTypeManager.isBasicType(type)){
+			//if not invalid type
+			value = strValue;
+			type = null;
+		}
+		if(type==null)  type = HAPConstant.STRINGABLE_BASICVALUETYPE_STRING;
 		return new HAPStringableValueBasic(value, type);
+	}
+	
+	public static HAPConfigureImp importFromProperty(HAPConfigureImp configure, String file, Class<?> class1){  return importFromProperty(configure, file, class1, null);}
+	public static HAPConfigureImp importFromProperty(HAPConfigureImp configure, String file, Class<?> class1, HAPImportConfigure importConfigure){
+		HAPConfigureImp out = configure;
+		if(!HAPBasicUtility.isStringEmpty(file)){
+			InputStream input = HAPFileUtility.getInputStreamOnClassPath(class1, file);
+			out = importFromProperty(configure, input, importConfigure);
+		}
+		return out;
+	}
+	
+	/*
+	 * read configure items from property as file
+	 */
+	public HAPConfigureImp importFromProperty(HAPConfigureImp configure, File file){ return this.importFromProperty(configure, file, null);}
+	public HAPConfigureImp importFromProperty(HAPConfigureImp configure, File file, HAPImportConfigure importConfigure){
+		HAPConfigureImp out = configure;
+		try {
+			FileInputStream input = new FileInputStream(file);
+			out = importFromProperty(configure, input, importConfigure);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
+		
+	/*
+	 * read configure items from property as inputstream
+	 */
+	public static HAPConfigureImp importFromProperty(InputStream input){  return importFromProperty(input); }
+	public static HAPConfigureImp importFromProperty(HAPConfigureImp configure, InputStream input, HAPImportConfigure importConfigure){
+		HAPConfigureImp out = configure;
+		try {
+			Properties prop = new HAPOrderedProperties();
+			prop.load(input);
+			out = importFromProperty(configure, prop, importConfigure);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
+
+	public static HAPConfigureImp importFromProperty(HAPConfigureImp configure, Properties prop){	return importFromProperty(configure, prop, null);	}
+	public static HAPConfigureImp importFromProperty(HAPConfigureImp configure, Properties prop, HAPImportConfigure importConfigure){
+		Map<String, String> valueMap = new LinkedHashMap<String, String>();
+		Enumeration<?> e = prop.propertyNames();
+		while (e.hasMoreElements()) {
+			String name = (String) e.nextElement();
+			String value = prop.getProperty(name).trim();
+			valueMap.put(name, value);
+		}
+		return importFromValueMap(configure, valueMap, importConfigure);
+	}
+	
+	public static HAPConfigureImp importFromValueMap(HAPConfigureImp configure, Map<String, String> valueMap, HAPImportConfigure importConfigure){
+		if(importConfigure==null)   importConfigure = new HAPImportConfigure();
+
+		HAPConfigureImp out = configure;
+		if(out==null){
+			if(importConfigure.getUseBaseConfigureWhenNotSpecified()){
+				out = HAPConfigureManager.getInstance().createConfigure();
+			}
+			else{
+				out = HAPConfigureManager.getInstance().newConfigure();
+			}
+		}
+
+		for(String name : valueMap.keySet()){
+			String path = HAPNamingConversionUtility.buildPath(importConfigure.getBasePath(), name);
+			String value = valueMap.get(name).trim(); 
+			if(importConfigure.isHard()){
+				out.addConfigureItem(path, value);
+			}
+			else{
+				HAPConfigureValue configureValue = out.getConfigureValue(path);
+				if(configureValue==null)  out.addConfigureItem(path, value);
+			}
+		}
+		return out;
+	}
+
+	public static HAPConfigureImp merge(HAPConfigureImp configuration1, HAPConfigureImp configuration2){
+		return merge(configuration1, configuration2, new HAPImportConfigure());
+	}
+		
+	public static HAPConfigureImp merge(HAPConfigureImp configuration1, HAPConfigureImp configuration2, HAPImportConfigure importConfigure){
+		
+		HAPConfigureImp out = configuration1;
+		if(importConfigure.isClone())   out = (HAPConfigureImp)configuration1.clone();
+		
+		if(configuration2==null)  return out;
+		//merge child configurs
+		for(String attr : configuration2.getChildConfigurables().keySet()){
+			HAPConfigureImp configure = out.getChildConfigure(attr);
+			HAPConfigureImp mergeConfigure = configuration2.getChildConfigure(attr);
+			if(configure!=null)			merge(configure, mergeConfigure, importConfigure);
+			else{
+				out.addChildConfigure(attr, (HAPConfigureImp)mergeConfigure.clone());
+			}
+		}
+
+		//merge child configure values
+		for(String attr : configuration2.getChildConfigureValues().keySet()){
+			HAPConfigureValue configureValue = out.getChildConfigureValue(attr);
+			HAPConfigureValueString mergeConfigureValue = configuration2.getChildConfigureValue(attr);
+			if(importConfigure.isHard() || configureValue==null)  out.addChildConfigureValue(attr, mergeConfigureValue.clone());
+		}
+		
+		//merge variable values
+		for(String name : configuration2.getChildVariables().keySet()){
+			HAPVariableValue var = out.getVariableValue(name);
+			HAPVariableValue mergeVar = configuration2.getVariableValue(name);
+			if(importConfigure.isHard() || var==null)  out.addVariableValue(name, mergeVar);
+		}
+		return out;
+	}
+	
+	/**
+	 * Build a configure with first parm has low priority and last parm has high priority
+	 * @param propertyFile
+	 * @param cs
+	 * @param useBase
+	 * @param configure
+	 * @return
+	 */
+	public static HAPConfigureImp buildConfigure(String propertyFile, Class<?> cs, boolean useBase, HAPConfigureImp customerConfigure){
+		HAPConfigureImp out = null;
+		if(useBase){
+			out = HAPConfigureManager.getInstance().createConfigure();
+		}
+		else{
+			out = HAPConfigureManager.getInstance().newConfigure();
+		}
+		
+		HAPConfigureUtility.importFromProperty(out, propertyFile, cs, new HAPImportConfigure().setIsHard(false));
+		if(customerConfigure!=null) 	HAPConfigureUtility.merge(out, customerConfigure);
+		return out;
 	}
 }

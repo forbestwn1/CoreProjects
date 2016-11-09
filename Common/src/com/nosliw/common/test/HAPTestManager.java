@@ -11,7 +11,6 @@ public class HAPTestManager extends HAPConfigurableImp{
 	private int m_id;
 	
 	private HAPTestManager(){
-		super(null);
 		this.m_id = 0;
 	}
 	

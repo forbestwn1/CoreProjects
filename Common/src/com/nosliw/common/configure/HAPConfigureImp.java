@@ -1,19 +1,12 @@
 package com.nosliw.common.configure;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 
@@ -96,7 +89,7 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 				//multiple path
 				HAPConfigureImp subConf = this.getChildConfigure(path.substring(0, index));
 				if(subConf==null)  out = null;
-				else	out = subConf.getChildConfigure(path.substring(index+1));
+				else	out = subConf.getConfigureItemByPath(path.substring(index+1), type);
 			}
 		}
 		return out;
@@ -139,25 +132,25 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 		}
 	}
 	
-	void addVariableValue(String name, String value){
+	public void addVariableValue(String name, String value){
 		HAPVariableValue varValue = new HAPVariableValue(value);
 		this.addVariableValue(name, varValue);
 	}
 	
-	private void addVariableValue(String name, HAPVariableValue value){
+	public void addVariableValue(String name, HAPVariableValue value){
 		value.setParent(this);
 		this.m_variables.put(name, value);
 	}
 	
-	private void addChildConfigureValue(String name, String value){ 
+	public void addChildConfigureValue(String name, String value){ 
 		this.addChildConfigureValue(name, new HAPConfigureValueString(value)); 
 	}
-	private void addChildConfigureValue(String name, HAPConfigureValueString value){
+	public void addChildConfigureValue(String name, HAPConfigureValueString value){
 		value.setParent(this);
 		this.m_values.put(name, value); 
 	}
 
-	private void addChildConfigure(String name, HAPConfigureImp configure){
+	public void addChildConfigure(String name, HAPConfigureImp configure){
 		configure.setParent(this);
 		this.m_childConfigures.put(name, configure); 
 	}
@@ -197,11 +190,12 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 	}
 
 
-	private HAPConfigureImp getChildConfigure(String childName){return this.m_childConfigures.get(childName);}
-	private HAPConfigureValueString getChildConfigureValue(String childName){ return this.m_values.get(childName);  }
-	private HAPVariableValue getChildVaraibleValue(String childName){ return this.m_variables.get(childName);}
-	private Map<String, HAPConfigureImp> getChildConfigurables(){return this.m_childConfigures;}
-	private Map<String, HAPConfigureValueString> getChildConfigureValues(){ return this.m_values;  }
+	public HAPConfigureImp getChildConfigure(String childName){return this.m_childConfigures.get(childName);}
+	public HAPConfigureValueString getChildConfigureValue(String childName){ return this.m_values.get(childName);  }
+	public Map<String, HAPVariableValue> getChildVariables(){ return this.m_variables; }
+	public HAPVariableValue getChildVaraibleValue(String childName){ return this.m_variables.get(childName);}
+	public Map<String, HAPConfigureImp> getChildConfigurables(){return this.m_childConfigures;}
+	public Map<String, HAPConfigureValueString> getChildConfigureValues(){ return this.m_values;  }
 	public Set<String> getConfigureNames(){  return this.m_values.keySet(); }
 	
 	/*
@@ -231,12 +225,12 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 		
 		//clone configure
 		for(String name : this.getChildConfigurables().keySet()){
-			out.addChildConfigure(name, (HAPConfigureImp)this.getChildConfigurables().get(name).clone());
+			out.addChildConfigure(name, (HAPConfigureImp)this.getChildConfigure(name).clone());
 		}
 		
 		//clone configure values
 		for(String name : this.getChildConfigureValues().keySet()){
-			out.addChildConfigureValue(name, (HAPConfigureValueString)this.getChildConfigureValues().get(name).clone());
+			out.addChildConfigureValue(name, (HAPConfigureValueString)this.getChildConfigureValue(name).clone());
 		}
 		return out;
 	}
@@ -269,104 +263,6 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 		}
 	}
 	
-	HAPConfigureImp importFromValueMap(Map<String, String> valueMap){
-		for(String name : valueMap.keySet()){
-			this.addConfigureItem(name, valueMap.get(name));
-		}
-		return this;
-	}
-
-	public HAPConfigureImp importFromProperty(String file, Class<?> class1){  return this.importFromProperty(file, class1, true);}
-	public HAPConfigureImp importFromProperty(String file, Class<?> class1, boolean isHard){
-		if(!HAPBasicUtility.isStringEmpty(file)){
-			InputStream input = HAPFileUtility.getInputStreamOnClassPath(class1, file);
-			this.importFromProperty(input, isHard);
-		}
-		return this;
-	}
-	
-	/*
-	 * read configure items from property as file
-	 */
-	public HAPConfigureImp importFromProperty(File file){ return this.importFromProperty(file, true);}
-	public HAPConfigureImp importFromProperty(File file, boolean isHard){
-		try {
-			FileInputStream input = new FileInputStream(file);
-			this.importFromProperty(input, isHard);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return this;
-	}
-		
-	/*
-	 * read configure items from property as inputstream
-	 */
-	public HAPConfigureImp importFromProperty(InputStream input){  return this.importFromProperty(input); }
-	public HAPConfigureImp importFromProperty(InputStream input, boolean isHard){
-		try {
-			Properties prop = new HAPOrderedProperties();
-			prop.load(input);
-			this.importFromProperty(prop, isHard);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return this;
-	}
-
-	public HAPConfigureImp importFromProperty(Properties prop){	return this.importFromProperty(prop, true);	}
-	public HAPConfigureImp importFromProperty(Properties prop, boolean isHard){
-		Enumeration<?> e = prop.propertyNames();
-		while (e.hasMoreElements()) {
-			String name = (String) e.nextElement();
-			String value = prop.getProperty(name).trim();
-			if(isHard){
-				this.addConfigureItem(name, value);
-			}
-			else{
-				HAPConfigureValue configureValue = this.getConfigureValue(name);
-				if(configureValue==null)  this.addConfigureItem(name, value);
-			}
-		}
-		return this;
-	}
-
-	public HAPConfigureImp merge(HAPConfigure configuration, boolean ifNewConf, boolean isHard){
-		HAPConfigureImp out = this;
-		if(ifNewConf){
-			out = (HAPConfigureImp)this.clone();
-		}
-		out.merge((HAPConfigureImp)configuration, isHard);
-		return out;
-	}
-
-	private void merge(HAPConfigureImp configuration, boolean isHard){
-		if(configuration==null)  return;
-		//merge child configurs
-		for(String attr : configuration.getChildConfigurables().keySet()){
-			HAPConfigureImp configure = this.getChildConfigure(attr);
-			HAPConfigureImp mergeConfigure = configuration.getChildConfigure(attr);
-			if(configure!=null)			configure.merge(mergeConfigure, isHard);
-			else{
-				this.addChildConfigure(attr, (HAPConfigureImp)mergeConfigure.clone());
-			}
-		}
-
-		//merge child configure values
-		for(String attr : configuration.getChildConfigureValues().keySet()){
-			HAPConfigureValue configureValue = this.getChildConfigureValue(attr);
-			HAPConfigureValueString mergeConfigureValue = configuration.getChildConfigureValue(attr);
-			if(isHard || configureValue==null)  this.addChildConfigureValue(attr, mergeConfigureValue.clone());
-		}
-		
-		//merge variable values
-		for(String name : configuration.m_variables.keySet()){
-			HAPVariableValue var = this.m_variables.get(name);
-			HAPVariableValue mergeVar = configuration.m_variables.get(name);
-			if(isHard || var==null)  this.addVariableValue(name, mergeVar);
-		}
-	}
-	
 	@Override
 	public String toString(){ return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));}
 
@@ -387,7 +283,5 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 
 	@Override
 	public void buildObject(Object value, HAPSerializationFormat format) {
-		// TODO Auto-generated method stub
-		
 	}
 }

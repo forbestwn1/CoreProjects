@@ -53,7 +53,7 @@ public class HAPConfigureManager {
 	private void initDefaultBase(){
 		//import global variables
 		HAPConfigureImp baseConfigure = this.newConfigure();
-		baseConfigure.importFromProperty("global.properties", this.getClass());
+		HAPConfigureUtility.importFromProperty(baseConfigure, "global.properties", this.getClass());
 		
 		//import from constant
 		Field[] declaredFields = HAPConstant.class.getDeclaredFields();
