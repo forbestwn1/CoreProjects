@@ -25,6 +25,10 @@ public class HAPDataTypeInfoImp extends HAPStringableValueObject implements HAPD
 		if(segs.length>=2)    this.m_version = new HAPDataTypeVersionImp(segs[1]);
 	}
 
+	public static String buildStringValue(String name, String version){
+		return HAPNamingConversionUtility.cascadeSegments(name, version);
+	}
+	
 	public HAPDataTypeInfoImp clone(){
 		HAPDataTypeInfoImp out = this.clone(this.getClass());
 		return out;

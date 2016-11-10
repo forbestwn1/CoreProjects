@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
+import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.resolve.HAPResolvableString;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -73,8 +74,8 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 	public void setValue(Object value){
 		this.m_value = value;
 		this.m_sovled = true;
-		this.m_type = HAPStringableValueBasicTypeManager.getType(value);
-		this.m_strValue = new HAPResolvableString(HAPStringableValueBasicTypeManager.valueToString(value), true);
+		this.m_type = HAPLiterateManager.getType(value);
+		this.m_strValue = new HAPResolvableString(HAPLiterateManager.valueToString(value), true);
 	}
 	
 	@Override
@@ -102,7 +103,7 @@ public class HAPStringableValueBasic extends HAPStringableValue{
 		//if m_value is not solved, return null
 		if(!this.m_strValue.isResolved())  return null;
 		
-		Object out = HAPStringableValueBasicTypeManager.stringToValue(m_strValue.getValue(), type);
+		Object out = HAPLiterateManager.stringToValue(m_strValue.getValue(), type);
 		if(out!=null)  this.resolved(out, type);
 		return out;
 	}

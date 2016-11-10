@@ -64,6 +64,10 @@ public class HAPNamingConversionUtility {
 		return eles.split(HAPConstant.SEPERATOR_SEGMENT);
 	}
 
+	public static String cascadeSegments(String seg1, String seg2){
+		return cascadeTexts(seg1, seg2, HAPConstant.SEPERATOR_SEGMENT);
+	}
+
 	public static String cascadeElement(String[] eles){
 		StringBuffer listStr = new StringBuffer();
 		listStr.append(HAPConstant.SEPERATOR_ARRAYSTART);

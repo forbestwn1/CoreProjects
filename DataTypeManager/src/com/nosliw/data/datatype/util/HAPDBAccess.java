@@ -3,18 +3,21 @@ package com.nosliw.data.datatype.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
 import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.configure.HAPConfigureManager;
+import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.data.HAPDataOperationOutInfo;
 import com.nosliw.data.HAPDataOperationParmInfo;
 import com.nosliw.data.datatype.importer.HAPDataOperationInfoImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeInfoImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeVersionImp;
+import com.nosliw.data.datatype.importer.js.HAPJSOperationInfo;
 
 public class HAPDBAccess extends HAPConfigurableImp{
 
@@ -32,11 +35,10 @@ public class HAPDBAccess extends HAPConfigurableImp{
 	   PreparedStatement  m_insertDatatTypeStatement = null;
 	   PreparedStatement  m_insertOperationStatement = null;
 	   PreparedStatement  m_insertParmStatement = null;
-	   
-	   String m_insertDataTypeSql = "INSERT INTO datatypedef (ID, NAME, VERSION, VERSION_MAJOR, VERSION_MINOR, VERSION_REVISION, DESCRIPTION, PARENTINFO, LINKEDVERSION) VALUES (?,?,?,?,?,?,?,?,?)";
-	   String m_insertOperationSql = "INSERT INTO DATAOPERATION (ID, DATATYPE, NAME, DESCRIPTION) VALUES (?,?,?,?)";
-	   String m_insertParmSql = "INSERT INTO OPERATIONPARM (ID, OPERATION, TYPE, NAME, DATATYPE, DESCRIPTION) VALUES (?,?,?,?,?,?)";
+	   PreparedStatement m_getOperationIdStatement = null;
 
+	   PreparedStatement  m_insertJSOperationStatement = null;
+	   
 	   private long m_id;
 	   
 	   public static HAPDBAccess getInstance(){
@@ -67,9 +69,13 @@ public class HAPDBAccess extends HAPConfigurableImp{
 					this.getConfigureValue("jdbc.url").getStringContent(),
 					this.getConfigureValue("username").getStringContent(),
 					this.getConfigureValue("password").getStringContent());		
-			m_insertDatatTypeStatement = m_connection.prepareStatement(m_insertDataTypeSql);
-			m_insertOperationStatement = m_connection.prepareStatement(m_insertOperationSql);
-			m_insertParmStatement = m_connection.prepareStatement(m_insertParmSql);
+			this.m_insertDatatTypeStatement = m_connection.prepareStatement("INSERT INTO datatypedef (ID, NAME, VERSION, VERSION_MAJOR, VERSION_MINOR, VERSION_REVISION, DESCRIPTION, PARENTINFO, LINKEDVERSION) VALUES (?,?,?,?,?,?,?,?,?)");
+			this.m_insertOperationStatement = m_connection.prepareStatement("INSERT INTO DATAOPERATION (ID, DATATYPE, NAME, DESCRIPTION) VALUES (?,?,?,?)");
+			this.m_insertParmStatement = m_connection.prepareStatement("INSERT INTO OPERATIONPARM (ID, OPERATION, TYPE, NAME, DATATYPE, DESCRIPTION) VALUES (?,?,?,?,?,?)");
+			this.m_getOperationIdStatement = m_connection.prepareStatement("SELECT ID FROM DATAOPERATION WHERE DATATYPE=? AND NAME=?");
+			
+			this.m_insertJSOperationStatement = m_connection.prepareStatement("INSERT INTO OPERATIONJS (ID, OPERATION, SCRIPT, RESOURCES) VALUES (?,?,?,?)");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -136,6 +142,35 @@ public class HAPDBAccess extends HAPConfigurableImp{
 		}
 	}
 
+	public String getOperationId(String dataTypeName, String dataTypeVersion, String operation){
+		String out = null;
+		try {
+			this.m_getOperationIdStatement.setString(1, HAPDataTypeInfoImp.buildStringValue(dataTypeName, dataTypeVersion));
+			this.m_getOperationIdStatement.setString(2, operation);
+			ResultSet resultSet = this.m_getOperationIdStatement.executeQuery();
+			if(resultSet.next()){
+				out = resultSet.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
+
+	
+	
+	public void saveOperationInfoJS(HAPJSOperationInfo jsOpInfo){
+		try {
+			this.m_insertJSOperationStatement.setString(1, this.getId()+"");
+			this.m_insertJSOperationStatement.setString(2, jsOpInfo.getOperationId());
+			this.m_insertJSOperationStatement.setString(3, jsOpInfo.getScript());
+			this.m_insertJSOperationStatement.setString(4, HAPLiterateManager.valueToString(jsOpInfo.getResources()));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public void close(){
 		try {
 			m_connection.close();

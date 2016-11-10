@@ -12,9 +12,12 @@ import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.datatype.util.HAPDBAccess;
 
 public class HAPJSImporter {
 
+	private HAPDBAccess m_dbAccess = null;
+	
 	private static String HEAD = null;
 	
 	public void importFromFile(InputStream inputStream){

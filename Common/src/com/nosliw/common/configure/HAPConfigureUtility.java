@@ -12,10 +12,10 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
+import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.HAPStringableValueBasic;
-import com.nosliw.common.strvalue.HAPStringableValueBasicTypeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -94,7 +94,7 @@ public class HAPConfigureUtility {
 			value = strValue;
 		}
 		
-		if(!HAPStringableValueBasicTypeManager.isBasicType(type)){
+		if(!HAPLiterateManager.isBasicType(type)){
 			//if not invalid type
 			value = strValue;
 			type = null;

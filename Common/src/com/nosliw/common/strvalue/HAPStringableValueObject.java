@@ -32,6 +32,9 @@ public abstract class HAPStringableValueObject extends HAPStringableValue{
 	@Override
 	protected HAPInterpolateOutput resolveValueByInterpolateProcessor(Map<HAPInterpolateProcessor, Object> patternDatas){ 
 		HAPInterpolateOutput out = this.m_strValue.resolveByInterpolateProcessor(patternDatas);
+		if(out.isResolved()){
+			this.parseStringValue(this.m_strValue.getValue());
+		}
 		return out;
 	}
 	
