@@ -32,13 +32,13 @@ public class HAPStringableValueUtility {
 	
 	public static HAPStringableValueComplex newStringableValueComplex(String type){
 		HAPStringableValueComplex out = null;
-		if(HAPConstant.STRINGABLE_VALUECATEGARY_ENTITY.equals(type)){
+		if(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY.equals(type)){
 			out = new HAPStringableValueEntity();
 		}
-		else if(HAPConstant.STRINGABLE_VALUECATEGARY_LIST.equals(type)){
+		else if(HAPConstant.STRINGABLE_VALUESTRUCTURE_LIST.equals(type)){
 			out = new HAPStringableValueList();
 		}
-		else if(HAPConstant.STRINGABLE_VALUECATEGARY_MAP.equals(type)){
+		else if(HAPConstant.STRINGABLE_VALUESTRUCTURE_MAP.equals(type)){
 			out = new HAPStringableValueMap();
 		}
 		return out;

@@ -49,7 +49,7 @@ public abstract class HAPStringableValueObject extends HAPStringableValue{
 	public boolean isResolved(){  return this.m_strValue.isResolved();  }
 
 	@Override
-	public String getStringableCategary() {  return HAPConstant.STRINGABLE_VALUECATEGARY_OBJECT;  }
+	public String getStringableStructure() {  return HAPConstant.STRINGABLE_VALUESTRUCTURE_OBJECT;  }
 
 	@Override
 	public HAPStringableValue getChild(String name) {		return null;	}

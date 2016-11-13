@@ -55,7 +55,7 @@ public class HAPValueInfoMode extends HAPValueInfo{
 		if(categaryValueInfoEntity!=null){
 			modeValueInfo = getModeValueInfo(templateCategary); 
 			modeValueInfo.updateEntityProperty(SOLID_ATTRIBUTE_MODE, categaryValueInfoEntity.clone());
-			if(HAPConstant.STRINGALBE_VALUEINFO_BASIC.equals(templateCategary)){
+			if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(templateCategary)){
 			}
 			else if(HAPConstant.STRINGALBE_VALUEINFO_LIST.equals(templateCategary)){
 				HAPValueInfoList modeListValueInfo = (HAPValueInfoList)modeValueInfo.getPropertyInfo(SOLID_ATTRIBUTE_CHILD);

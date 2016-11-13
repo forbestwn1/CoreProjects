@@ -16,7 +16,7 @@ import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.configure.HAPConfigureUtility;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.strvalue.HAPStringableValueBasic;
+import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -27,9 +27,9 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 
 	private List<HAPConstantGroup> m_groups;
 	
-	private HAPStringableValueBasic m_jsPath;
-	private HAPStringableValueBasic m_jsAttributeFile;
-	private HAPStringableValueBasic m_jsConstantFile;
+	private HAPStringableValueAtomic m_jsPath;
+	private HAPStringableValueAtomic m_jsAttributeFile;
+	private HAPStringableValueAtomic m_jsConstantFile;
 	
 	private String[] m_valueInfoFiles = {"constant.xml","group.xml","group_attribute.xml","group_constant.xml"};
 	
@@ -47,9 +47,9 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 		HAPValueInfoManager.getInstance().importFromXML(inputStreams);
 	}
 	
-	public void setJsPath(String path){	this.m_jsPath = new HAPStringableValueBasic(path, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);	}
-	public void setJsAttributeFile(String file){	this.m_jsAttributeFile = new HAPStringableValueBasic(file, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);	}
-	public void setJsConstantFile(String file){	this.m_jsConstantFile = new HAPStringableValueBasic(file, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);	}
+	public void setJsPath(String path){	this.m_jsPath = new HAPStringableValueAtomic(path, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);	}
+	public void setJsAttributeFile(String file){	this.m_jsAttributeFile = new HAPStringableValueAtomic(file, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);	}
+	public void setJsConstantFile(String file){	this.m_jsConstantFile = new HAPStringableValueAtomic(file, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);	}
 	
 	public void addConstantGroup(HAPConstantGroup group){		this.m_groups.add(group);	}
 	

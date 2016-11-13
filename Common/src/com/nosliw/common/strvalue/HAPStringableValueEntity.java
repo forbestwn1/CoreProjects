@@ -27,7 +27,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	public Iterator<HAPStringableValue> iterate(){		return this.m_childrens.values().iterator();	}
 	
 	@Override
-	public String getStringableCategary(){		return HAPConstant.STRINGABLE_VALUECATEGARY_ENTITY;	}
+	public String getStringableStructure(){		return HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY;	}
 	
 	public HAPStringableValueList getListChild(String name){
 		HAPStringableValueList out = (HAPStringableValueList)this.getChild(name);
@@ -67,11 +67,11 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 		return out;
 	}
 	
-	public HAPStringableValueBasic updateBasicChild(String name, String strValue, String type){
-		HAPStringableValueBasic out = null; 
+	public HAPStringableValueAtomic updateBasicChild(String name, String strValue, String type){
+		HAPStringableValueAtomic out = null; 
 		HAPStringableValue child = this.getChild(name);
-		if(child==null || child.getStringableCategary().equals(HAPConstant.STRINGABLE_VALUECATEGARY_BASIC)){
-			out = new HAPStringableValueBasic(strValue, type);
+		if(child==null || child.getStringableStructure().equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
+			out = new HAPStringableValueAtomic(strValue, type);
 			this.m_childrens.put(name, out);
 		}
 		return out;
@@ -81,11 +81,11 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 		this.updateBasicChild(name, strValue, null);
 	}
 
-	public HAPStringableValueBasic updateBasicChildValue(String name, Object value){
-		HAPStringableValueBasic out = null; 
+	public HAPStringableValueAtomic updateBasicChildValue(String name, Object value){
+		HAPStringableValueAtomic out = null; 
 		HAPStringableValue child = this.getChild(name);
-		if(child==null || child.getStringableCategary().equals(HAPConstant.STRINGABLE_VALUECATEGARY_BASIC)){
-			out = new HAPStringableValueBasic();
+		if(child==null || child.getStringableStructure().equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
+			out = new HAPStringableValueAtomic();
 			out.setValue(value);
 			this.m_childrens.put(name, out);
 		}

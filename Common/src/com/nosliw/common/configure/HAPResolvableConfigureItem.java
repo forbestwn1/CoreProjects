@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.strvalue.HAPStringableValueBasic;
+import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 
 /*
@@ -12,13 +12,13 @@ import com.nosliw.common.interpolate.HAPInterpolateOutput;
  */
 abstract class HAPResolvableConfigureItem extends HAPConfigureItem{
 	
-	private HAPStringableValueBasic m_value;
+	private HAPStringableValueAtomic m_value;
 	
-	public HAPResolvableConfigureItem(HAPStringableValueBasic value){
+	public HAPResolvableConfigureItem(HAPStringableValueAtomic value){
 		this.setStringableValue(value);
 	}
 
-	protected void setStringableValue(HAPStringableValueBasic value){ this.m_value = value; }
+	protected void setStringableValue(HAPStringableValueAtomic value){ this.m_value = value; }
 	
 	public String getStringContent(){ return this.m_value.getStringContent(); }
 	
@@ -27,7 +27,7 @@ abstract class HAPResolvableConfigureItem extends HAPConfigureItem{
 		return this.m_value.getValue(type);
 	}
 	
-	public HAPStringableValueBasic getStringableValue(){ return this.m_value; }
+	public HAPStringableValueAtomic getStringableValue(){ return this.m_value; }
 	
 	public boolean isResolved(){  return this.m_value.isResolved(); }
 	
@@ -35,7 +35,7 @@ abstract class HAPResolvableConfigureItem extends HAPConfigureItem{
 	
 	protected void cloneFrom(HAPResolvableConfigureItem configureItem){
 		super.cloneFrom(configureItem);
-		this.m_value = (HAPStringableValueBasic)configureItem.m_value.clone();
+		this.m_value = (HAPStringableValueAtomic)configureItem.m_value.clone();
 	}
 	
 	@Override

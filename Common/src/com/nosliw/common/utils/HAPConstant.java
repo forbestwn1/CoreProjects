@@ -313,24 +313,25 @@ public class HAPConstant {
 
 
 
-		public static final String STRINGABLE_BASICVALUETYPE_STRING = "string";
-		public static final String STRINGABLE_BASICVALUETYPE_BOOLEAN = "boolean";
-		public static final String STRINGABLE_BASICVALUETYPE_INTEGER = "integer";
-		public static final String STRINGABLE_BASICVALUETYPE_FLOAT = "float";
-		public static final String STRINGABLE_BASICVALUETYPE_ARRAY = "array";
-		public static final String STRINGABLE_BASICVALUETYPE_MAP = "map";
+		public static final String STRINGABLE_ATOMICVALUETYPE_STRING = "string";
+		public static final String STRINGABLE_ATOMICVALUETYPE_BOOLEAN = "boolean";
+		public static final String STRINGABLE_ATOMICVALUETYPE_INTEGER = "integer";
+		public static final String STRINGABLE_ATOMICVALUETYPE_FLOAT = "float";
+		public static final String STRINGABLE_ATOMICVALUETYPE_ARRAY = "array";
+		public static final String STRINGABLE_ATOMICVALUETYPE_MAP = "map";
+		public static final String STRINGABLE_ATOMICVALUETYPE_OBJECT = "object";
 
 
 
-		public static final String STRINGABLE_VALUECATEGARY_BASIC = "basic";
-		public static final String STRINGABLE_VALUECATEGARY_MAP = "map";
-		public static final String STRINGABLE_VALUECATEGARY_LIST = "list";
-		public static final String STRINGABLE_VALUECATEGARY_ENTITY = "entity";
-		public static final String STRINGABLE_VALUECATEGARY_OBJECT = "object";
+		public static final String STRINGABLE_VALUESTRUCTURE_ATOMIC = "atomic";
+		public static final String STRINGABLE_VALUESTRUCTURE_MAP = "map";
+		public static final String STRINGABLE_VALUESTRUCTURE_LIST = "list";
+		public static final String STRINGABLE_VALUESTRUCTURE_ENTITY = "entity";
+		public static final String STRINGABLE_VALUESTRUCTURE_OBJECT = "object";
 
 
 
-		public static final String STRINGALBE_VALUEINFO_BASIC = "basic";
+		public static final String STRINGALBE_VALUEINFO_ATOMIC = "atomic";
 		public static final String STRINGALBE_VALUEINFO_REFERENCE = "reference";
 		public static final String STRINGALBE_VALUEINFO_ENTITY = "entity";
 		public static final String STRINGALBE_VALUEINFO_OBJECT = "object";

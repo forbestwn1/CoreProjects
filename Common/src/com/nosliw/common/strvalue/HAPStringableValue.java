@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPSerialiableImp;
 
 public abstract class HAPStringableValue extends HAPSerialiableImp implements HAPResolvable{
 
-	public abstract String getStringableCategary();
+	public abstract String getStringableStructure();
 
 	public abstract HAPStringableValue getChild(String name);
 
@@ -56,6 +56,6 @@ public abstract class HAPStringableValue extends HAPSerialiableImp implements HA
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_CATEGARY, this.getStringableCategary());
+		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_STRUCTURE, this.getStringableStructure());
 	}
 }

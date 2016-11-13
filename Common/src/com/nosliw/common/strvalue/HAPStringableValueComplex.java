@@ -60,44 +60,44 @@ public abstract class HAPStringableValueComplex<T extends HAPStringableValue> ex
 	}
 
 	public Object getBasicAncestorValue(String path, String type){
-		HAPStringableValueBasic value = this.getBasicAncestorByPath(path);
+		HAPStringableValueAtomic value = this.getBasicAncestorByPath(path);
 		if(value==null)  return null;
 		else		return value.getValue(type);
 	}
 	
 	public Object getBasicAncestorValue(String path){
-		HAPStringableValueBasic value = getBasicAncestorByPath(path);
+		HAPStringableValueAtomic value = getBasicAncestorByPath(path);
 		if(value==null)  return null;
 		return value.getValue();
 	}
 	
 
 	public String getBasicAncestorValueString(String path){
-		HAPStringableValueBasic value = this.getBasicAncestorByPath(path);
+		HAPStringableValueAtomic value = this.getBasicAncestorByPath(path);
 		if(value==null)  return null;
 		else	return value.getStringValue();
 	}
 	
 	public Boolean getBasicAncestorValueBoolean(String path){
-		HAPStringableValueBasic value = this.getBasicAncestorByPath(path);
+		HAPStringableValueAtomic value = this.getBasicAncestorByPath(path);
 		if(value==null)  return null;
 		else	return value.getBooleanValue();
 	}
 	
 	public Integer getBasicAncestorValueInteger(String path){
-		HAPStringableValueBasic value = this.getBasicAncestorByPath(path);
+		HAPStringableValueAtomic value = this.getBasicAncestorByPath(path);
 		if(value==null)  return null;
 		else	return value.getIntegerValue();
 	}
 	
 	public Float getBasicAncestorValueFloat(String path){
-		HAPStringableValueBasic value = this.getBasicAncestorByPath(path);
+		HAPStringableValueAtomic value = this.getBasicAncestorByPath(path);
 		if(value==null)  return null;
 		else	return value.getFloatValue();
 	}
 	
 	public List<String> getBasicAncestorValueArray(String path){
-		HAPStringableValueBasic value = this.getBasicAncestorByPath(path);
+		HAPStringableValueAtomic value = this.getBasicAncestorByPath(path);
 		if(value==null)  return null;
 		else	return value.getListValue();
 	}
@@ -110,7 +110,7 @@ public abstract class HAPStringableValueComplex<T extends HAPStringableValue> ex
 	
 	protected HAPStringableValueMap getMapAncestorByPath(String path){ return (HAPStringableValueMap)this.getAncestorByPath(path); }
 
-	protected HAPStringableValueBasic getBasicAncestorByPath(String path){  return (HAPStringableValueBasic)this.getAncestorByPath(path); }
+	protected HAPStringableValueAtomic getBasicAncestorByPath(String path){  return (HAPStringableValueAtomic)this.getAncestorByPath(path); }
 	
 	
 

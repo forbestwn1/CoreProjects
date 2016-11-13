@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPAttributeConstant;
 import com.nosliw.common.strvalue.HAPStringableValue;
-import com.nosliw.common.strvalue.HAPStringableValueBasic;
+import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.strvalue.HAPStringableValueComplex;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueList;
@@ -108,7 +108,7 @@ public class HAPStringableEntityImporterJSON {
 				String key = it.next();
 				Object keyValue = mapPropertiesJsonObj.opt(key);
 				HAPStringableValue mapElementValue = null;
-				if(HAPConstant.STRINGALBE_VALUEINFO_BASIC.equals(childCategary)){
+				if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(childCategary)){
 					mapElementValue = processBasicValue(keyValue, (HAPValueInfoBasic)childInfo, valueInfoMan);
 				}		
 				else{
@@ -134,7 +134,7 @@ public class HAPStringableEntityImporterJSON {
 			for(int i=0; i<listJsonObj.length(); i++){
 				Object listEleObj = listJsonObj.opt(i);
 				HAPStringableValue listElementValue = null;
-				if(HAPConstant.STRINGALBE_VALUEINFO_BASIC.equals(childCategary)){
+				if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(childCategary)){
 					listElementValue = processBasicValue(listEleObj, (HAPValueInfoBasic)childInfo, valueInfoMan);
 				}
 				else{
@@ -151,9 +151,9 @@ public class HAPStringableEntityImporterJSON {
 		if(basicValue instanceof JSONObject)  strValue = ((JSONObject)basicValue).optString(HAPAttributeConstant.STRINGABLEVALUE_VALUE);  
 		else  strValue = basicValue.toString();
 		
-		HAPStringableValueBasic out = null;
-		if(strValue!=null)  out = new HAPStringableValueBasic(strValue, basicValueInfo.getValueDataType());
-		else   out = (HAPStringableValueBasic)basicValueInfo.buildDefault();
+		HAPStringableValueAtomic out = null;
+		if(strValue!=null)  out = new HAPStringableValueAtomic(strValue, basicValueInfo.getValueDataType());
+		else   out = (HAPStringableValueAtomic)basicValueInfo.buildDefault();
 
 		if(out.isEmpty())  out = null;
 		return out;
@@ -163,7 +163,7 @@ public class HAPStringableEntityImporterJSON {
 		HAPValueInfo optionValueInfo = entityOptionsValueInfo.getOptionsValueInfo(keyValue).getSolidValueInfo();
 		String categary = optionValueInfo.getCategary();
 		HAPStringableValue out = null;
-		if(HAPConstant.STRINGALBE_VALUEINFO_BASIC.equals(categary)){
+		if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(categary)){
 			out = processBasicValue(optionsValue, (HAPValueInfoBasic)optionValueInfo, valueInfoMan);
 		}
 		else{
@@ -188,7 +188,7 @@ public class HAPStringableEntityImporterJSON {
 	}
 	
 	private static HAPSerializationFormat getJsonFormat(JSONObject jsonObj){
-		if(jsonObj.opt(HAPAttributeConstant.STRINGABLEVALUE_CATEGARY)!=null)	return HAPSerializationFormat.JSON_FULL;
+		if(jsonObj.opt(HAPAttributeConstant.STRINGABLEVALUE_STRUCTURE)!=null)	return HAPSerializationFormat.JSON_FULL;
 		return HAPSerializationFormat.JSON;
 	}
 }

@@ -1,7 +1,7 @@
 package com.nosliw.common.strvalue.valueinfo;
 
 import com.nosliw.common.strvalue.HAPStringableValue;
-import com.nosliw.common.strvalue.HAPStringableValueBasic;
+import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoBasic extends HAPValueInfo{
@@ -24,14 +24,14 @@ public class HAPValueInfoBasic extends HAPValueInfo{
 	}
 	
 	@Override
-	public String getCategary() {		return HAPConstant.STRINGALBE_VALUEINFO_BASIC;	}
+	public String getCategary() {		return HAPConstant.STRINGALBE_VALUEINFO_ATOMIC;	}
 
 	@Override
 	public HAPStringableValue buildDefault() {
 		HAPStringableValue out = null;
 		String defaultValue = this.getBasicAncestorValueString(HAPValueInfoBasic.ENTITY_PROPERTY_DEFAULTVALUE);
 		if(defaultValue!=null){
-			out = new HAPStringableValueBasic(defaultValue, this.getValueDataType());
+			out = new HAPStringableValueAtomic(defaultValue, this.getValueDataType());
 		}
 		return out;
 	}

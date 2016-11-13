@@ -533,21 +533,22 @@
 			<definition name="CONFIGURATION_DEFAULTBASE" value="default"/>
 	
 			<definition type="space"/>
-			<definition name="STRINGABLE_BASICVALUETYPE_STRING" value="string"/>
-			<definition name="STRINGABLE_BASICVALUETYPE_BOOLEAN" value="boolean"/>
-			<definition name="STRINGABLE_BASICVALUETYPE_INTEGER" value="integer"/>
-			<definition name="STRINGABLE_BASICVALUETYPE_FLOAT" value="float"/>
-			<definition name="STRINGABLE_BASICVALUETYPE_ARRAY" value="array"/>
-			<definition name="STRINGABLE_BASICVALUETYPE_MAP" value="map"/>
+			<definition name="STRINGABLE_ATOMICVALUETYPE_STRING" value="string"/>
+			<definition name="STRINGABLE_ATOMICVALUETYPE_BOOLEAN" value="boolean"/>
+			<definition name="STRINGABLE_ATOMICVALUETYPE_INTEGER" value="integer"/>
+			<definition name="STRINGABLE_ATOMICVALUETYPE_FLOAT" value="float"/>
+			<definition name="STRINGABLE_ATOMICVALUETYPE_ARRAY" value="array"/>
+			<definition name="STRINGABLE_ATOMICVALUETYPE_MAP" value="map"/>
+			<definition name="STRINGABLE_ATOMICVALUETYPE_OBJECT" value="object"/>
 	
 			<definition type="space"/>
-			<definition name="STRINGABLE_VALUECATEGARY_BASIC" value="basic"/>
-			<definition name="STRINGABLE_VALUECATEGARY_MAP" value="map"/>
-			<definition name="STRINGABLE_VALUECATEGARY_LIST" value="list"/>
-			<definition name="STRINGABLE_VALUECATEGARY_ENTITY" value="entity"/>
+			<definition name="STRINGABLE_VALUESTRUCTURE_ATOMIC" value="atomic"/>
+			<definition name="STRINGABLE_VALUESTRUCTURE_MAP" value="map"/>
+			<definition name="STRINGABLE_VALUESTRUCTURE_LIST" value="list"/>
+			<definition name="STRINGABLE_VALUESTRUCTURE_ENTITY" value="entity"/>
 	
 			<definition type="space"/>
-			<definition name="STRINGALBE_VALUEINFO_BASIC" value="basic"/>
+			<definition name="STRINGALBE_VALUEINFO_ATOMIC" value="atomic"/>
 			<definition name="STRINGALBE_VALUEINFO_REFERENCE" value="reference"/>
 			<definition name="STRINGALBE_VALUEINFO_ENTITY" value="entity"/>
 			<definition name="STRINGALBE_VALUEINFO_ENTITYOPTIONS" value="entityOptions"/>

@@ -30,7 +30,7 @@ public class HAPStringableValueMap<T extends HAPStringableValue> extends HAPStri
 	public Iterator<T> iterate(){		return this.m_elements.values().iterator();	}
 	
 	@Override
-	public String getStringableCategary(){		return HAPConstant.STRINGABLE_VALUECATEGARY_MAP;	}
+	public String getStringableStructure(){		return HAPConstant.STRINGABLE_VALUESTRUCTURE_MAP;	}
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

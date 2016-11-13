@@ -7,6 +7,7 @@ import com.nosliw.common.utils.HAPJsonUtility;
 
 public abstract class HAPSerialiableImp implements HAPSerializable{
 
+	@Override
 	public void buildObject(Object value, HAPSerializationFormat format){
 		switch(format){
 		case JSON_FULL:
@@ -61,11 +62,14 @@ public abstract class HAPSerialiableImp implements HAPSerializable{
 		case XML:
 			break;
 		case LITERATE:
+			out = this.buildLiterate();
 			break;
 		}
 		return out;
 	}
 
+	protected String buildLiterate(){  return null; }
+	
 	protected String buildFullJson(){ return null; }
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){}
 

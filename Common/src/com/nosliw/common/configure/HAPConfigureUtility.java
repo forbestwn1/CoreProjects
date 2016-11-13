@@ -15,7 +15,7 @@ import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.strvalue.HAPStringableValueBasic;
+import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -82,7 +82,7 @@ public class HAPConfigureUtility {
 	 * create StringAbleValue from string value from configure file
 	 * it follow the format of type:value or value if the value type is String  
 	 */
-	public static HAPStringableValueBasic getStringableValue(String strValue){
+	public static HAPStringableValueAtomic getStringableValue(String strValue){
 		String[] parts = HAPNamingConversionUtility.parsePartlInfos(strValue);
 		String type = null;
 		String value = null; 
@@ -94,13 +94,13 @@ public class HAPConfigureUtility {
 			value = strValue;
 		}
 		
-		if(!HAPLiterateManager.isBasicType(type)){
+		if(!HAPLiterateManager.isValidType(type)){
 			//if not invalid type
 			value = strValue;
 			type = null;
 		}
 		if(type==null)  type = HAPConstant.STRINGABLE_BASICVALUETYPE_STRING;
-		return new HAPStringableValueBasic(value, type);
+		return new HAPStringableValueAtomic(value, type);
 	}
 	
 	public static HAPConfigureImp importFromProperty(HAPConfigureImp configure, String file, Class<?> class1){  return importFromProperty(configure, file, class1, null);}

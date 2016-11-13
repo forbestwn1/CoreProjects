@@ -1,12 +1,33 @@
 package com.nosliw.common.literate;
 
-public interface HAPLiterateType{
+import com.nosliw.common.utils.HAPBasicUtility;
+
+public class HAPLiterateType {
+
+	private String m_type;
+	private String m_subType;
 	
-	String getName();
+	public HAPLiterateType(String type, String subType){
+		this.m_type = type;
+		this.m_subType = subType;
+	}
 	
-	Object stringToValue(String strValue);
+	public String getType(){  return this.m_type; }
+	public String getSubType(){  return this.m_subType;  }
+
+	@Override
+	public boolean equals(Object o){
+		boolean out = false;
+		if(o instanceof HAPLiterateType){
+			HAPLiterateType value = (HAPLiterateType)o;
+			out = HAPBasicUtility.isEquals(m_type, value.m_type) && HAPBasicUtility.isEquals(m_subType, value.m_subType);
+		}
+		return out;
+	}
 	
-	String valueToString(Object value);
+	public HAPLiterateType clone(){
+		HAPLiterateType out = new HAPLiterateType(this.m_type, this.m_subType);
+		return out;
+	}
 	
-	Class getObjectClass();
 }

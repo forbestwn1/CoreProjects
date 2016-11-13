@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.strvalue.HAPStringableValueBasic;
+import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueMap;
 import com.nosliw.common.strvalue.HAPStringableValueUtility;
@@ -129,7 +129,7 @@ public class HAPEntityDefinitionSegment extends HAPStringableValueEntity{
 	public void addGroups(List<String> groups){
 		List<String> gs = this.getGroups();
 		gs.addAll(groups);
-		HAPStringableValueBasic groupsValue = HAPStringableValueBasic.buildFromObject(gs);
+		HAPStringableValueAtomic groupsValue = HAPStringableValueAtomic.buildFromObject(gs);
 		this.updateChild(GROUPS, groupsValue);
 	}
 	
