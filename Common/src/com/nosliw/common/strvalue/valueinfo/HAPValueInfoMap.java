@@ -6,7 +6,7 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoMap extends HAPValueInfoContainer{
 
-	public static final String ENTITY_PROPERTY_KEY = "key";
+	public static final String KEY = "key";
 	
 	private HAPValueInfoMap(){}
 	
@@ -24,20 +24,17 @@ public class HAPValueInfoMap extends HAPValueInfoContainer{
 	}
 	
 	public String getKey(){
-		return this.getBasicAncestorValueString(ENTITY_PROPERTY_KEY);
+		return this.getAtomicAncestorValueString(KEY);
 	}
 	
 	public void setKey(String key){
-		this.updateBasicChild(ENTITY_PROPERTY_KEY, key);
+		this.updateBasicChild(KEY, key);
 	}
 	
 	@Override
-	public String getCategary() {		return HAPConstant.STRINGALBE_VALUEINFO_MAP;	}
-
-	@Override
 	public void init(){
 		super.init();
-		this.updateBasicChild(ENTITY_PROPERTY_KEY, "name");
+		this.updateBasicChild(KEY, "name");
 	}
 
 	@Override

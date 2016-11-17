@@ -14,7 +14,7 @@ public class HAPValueInfoManager {
 
 	private static HAPValueInfoManager m_instance;
 	
-	public Map<String, HAPEntityValueInfo> m_entityValueInfos = new LinkedHashMap<String, HAPEntityValueInfo>();
+	private Map<String, HAPEntityValueInfo> m_entityValueInfos = new LinkedHashMap<String, HAPEntityValueInfo>();
 	
 	private Map<String, HAPValueInfo> m_valueInfos;
 
@@ -64,16 +64,16 @@ public class HAPValueInfoManager {
 
 	private void registerEntityValueInfoByClass(HAPValueInfo vf){
 		HAPValueInfo valueInfo = vf.getSolidValueInfo();
-		String categary = valueInfo.getCategary();
-		if(HAPConstant.STRINGALBE_VALUEINFO_MAP.equals(categary)){
+		String valueInfoType = valueInfo.getValueInfoType();
+		if(HAPConstant.STRINGALBE_VALUEINFO_MAP.equals(valueInfoType)){
 			HAPValueInfo childValueInfo = ((HAPValueInfoMap)valueInfo).getChildValueInfo();
 			this.registerEntityValueInfoByClass(childValueInfo);
 		}
-		else if(HAPConstant.STRINGALBE_VALUEINFO_LIST.equals(categary)){
+		else if(HAPConstant.STRINGALBE_VALUEINFO_LIST.equals(valueInfoType)){
 			HAPValueInfo childValueInfo = ((HAPValueInfoList)valueInfo).getChildValueInfo();
 			this.registerEntityValueInfoByClass(childValueInfo);
 		}
-		else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(categary)){
+		else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(valueInfoType)){
 			HAPEntityValueInfo entityValueInfo = new HAPEntityValueInfo((HAPValueInfoEntity)valueInfo, this);
 			String className = entityValueInfo.getEntityClassName(); 
 			if(className!=null){
@@ -86,7 +86,7 @@ public class HAPValueInfoManager {
 				}
 			}
 		}
-		else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(categary)){
+		else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(valueInfoType)){
 			HAPValueInfoEntityOptions entityOptionsValueInfo = (HAPValueInfoEntityOptions)valueInfo;
 			Set<String> keys = entityOptionsValueInfo.getOptionsKey();
 			for(String key : keys){

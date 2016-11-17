@@ -46,10 +46,9 @@ public class HAPStringableValueMap<T extends HAPStringableValue> extends HAPStri
 		}
 	}
 
-
 	@Override
 	public HAPStringableValue getChild(String name) {
-		return m_elements.get(Integer.valueOf(name));
+		return m_elements.get(name);
 	}
 
 	public Set<String> getKeys(){  return this.m_elements.keySet(); }

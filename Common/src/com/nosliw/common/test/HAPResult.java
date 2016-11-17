@@ -20,7 +20,7 @@ public abstract class HAPResult extends HAPSerialiableImp{
 		return this.m_testDescription;
 	}
 	
-	public String getName(){  return this.getTestDescription().getBasicAncestorValueString(HAPTestDescription.ENTITY_PROPERTY_NAME); }
+	public String getName(){  return this.getTestDescription().getAtomicAncestorValueString(HAPTestDescription.ENTITY_PROPERTY_NAME); }
 
 	public Boolean isSuccess(){	return this.m_result;	}
 	protected void setFail(){  this.m_result = false; }

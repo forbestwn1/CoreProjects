@@ -7,10 +7,10 @@ import com.nosliw.data.HAPDataTypeInfo;
 public class HAPOperationParmImp extends HAPStringableValueEntity implements HAPDataOperationParmInfo{
 
 	@Override
-	public String getName() {		return this.getBasicAncestorValueString(NAME);	}
+	public String getName() {		return this.getAtomicAncestorValueString(NAME);	}
 
 	@Override
-	public String getDescription() {		return this.getBasicAncestorValueString(DESCRIPTION);  }
+	public String getDescription() {		return this.getAtomicAncestorValueString(DESCRIPTION);  }
 
 	@Override
 	public HAPDataTypeInfo getDataTypeInfo() {		return (HAPDataTypeInfo)this.getObjectAncestorByPath(DATATYPE);	}

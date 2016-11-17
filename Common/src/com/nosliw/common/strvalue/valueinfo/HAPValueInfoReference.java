@@ -11,8 +11,8 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoReference extends HAPValueInfo{
 
-	public static final String ENTITY_PROPERTY_REFERENCE = "reference";
-	public static final String ENTITY_PROPERTY_DEFAULT = "default";
+	public static final String REFERENCE = "reference";
+	public static final String DEFAULT = "default";
 	
 	private HAPValueInfo m_solidValueInfo;
 	
@@ -33,7 +33,7 @@ public class HAPValueInfoReference extends HAPValueInfo{
 
 	@Override
 	public void afterBuild(){
-		String defaultValues = this.getBasicAncestorValueString(ENTITY_PROPERTY_DEFAULT);
+		String defaultValues = this.getAtomicAncestorValueString(DEFAULT);
 		if(HAPBasicUtility.isStringNotEmpty(defaultValues)){
 			String[] valuesDef = HAPNamingConversionUtility.parseElements(defaultValues);
 			for(String valueDef : valuesDef){
@@ -62,16 +62,16 @@ public class HAPValueInfoReference extends HAPValueInfo{
 		}
 	}
 
-	
-	
 	@Override
-	public String getCategary() {
-		return HAPConstant.STRINGALBE_VALUEINFO_REFERENCE;
+	public String getValueInfoType(){	
+		String out = super.getValueInfoType();
+		if(out==null)  out = HAPConstant.STRINGALBE_VALUEINFO_REFERENCE;
+		return out;
 	}
 	
 	@Override
-	public String getValueDataType(){
-		return this.getSolidValueInfo().getValueDataType();
+	public String getSolidValueInfoType(){
+		return this.getSolidValueInfo().getValueInfoType();
 	}
 	
 	@Override
@@ -86,9 +86,9 @@ public class HAPValueInfoReference extends HAPValueInfo{
 	private void buildDefaultValue(HAPValueInfo valueInfo, Object defaultValue){
 		if(defaultValue==null)  return;
 		
-		String categary = valueInfo.getCategary();
+		String categary = valueInfo.getValueInfoType();
 		if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(categary)){
-			valueInfo.updateBasicChild(HAPValueInfoBasic.ENTITY_PROPERTY_DEFAULTVALUE, (String)defaultValue);
+			valueInfo.updateBasicChild(HAPValueInfoAtomic.DEFAULTVALUE, (String)defaultValue);
 		}
 		else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(categary)){
 			HAPValueInfoEntity valueInfoEntity = (HAPValueInfoEntity)valueInfo;
@@ -119,7 +119,7 @@ public class HAPValueInfoReference extends HAPValueInfo{
 	}
 	
 	private String getReferencedName(){
-		return this.getBasicAncestorValueString(ENTITY_PROPERTY_REFERENCE);
+		return this.getAtomicAncestorValueString(REFERENCE);
 	}
 
 	@Override

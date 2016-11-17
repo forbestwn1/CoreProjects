@@ -52,7 +52,7 @@ public class HAPTestSuiteInfo extends HAPTestInfo{
 	public void setParentName(String name){ 
 		if(HAPBasicUtility.isStringNotEmpty(name)) this.getTestDescription().updateBasicChild(DESCRIPTION_PARENTNAME, name); 
 	}
-	public String getParentName(){  return (String)this.getTestDescription().getBasicAncestorValue(DESCRIPTION_PARENTNAME); }
+	public String getParentName(){  return (String)this.getTestDescription().getAtomicAncestorValue(DESCRIPTION_PARENTNAME); }
 	
 	public boolean isSolid(){ return this.m_isSolid; }
 	

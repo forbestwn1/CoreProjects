@@ -8,8 +8,6 @@ public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 
 	public static final String TYPE = "type";
 
-	abstract public String getCategary();
-	
 	abstract public HAPValueInfo clone();
 	
 	abstract public HAPStringableValue buildDefault();
@@ -18,19 +16,15 @@ public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 		return null;
 	}
 	
-	public String getValueDataType(){
-		String type = this.getBasicAncestorValueString(HAPValueInfo.TYPE);
-		return type;
-	}
+	public String getValueInfoType(){	return this.getAtomicAncestorValueString(HAPValueInfo.TYPE);	}
 
-	public HAPValueInfo getSolidValueInfo(){
-		return this;
-	}
+	public HAPValueInfo getSolidValueInfo(){		return this;	}
+	public String getSolidValueInfoType(){		return this.getValueInfoType();	}
 	
 	@Override
 	public void init(){
 		super.init();
-		this.updateBasicChild(TYPE, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);
+		this.updateBasicChild(TYPE, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);
 	}
 
 	protected HAPValueInfoManager getValueInfoManager(){ return HAPValueInfoManager.getInstance(); }

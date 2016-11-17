@@ -50,7 +50,7 @@ public class HAPValueInfoMode extends HAPValueInfo{
 	
 	private HAPValueInfoEntity buildModeValueInfo(HAPValueInfo templateValueInfo){
 		HAPValueInfoEntity modeValueInfo = null;
-		String templateCategary = templateValueInfo.getCategary();
+		String templateCategary = templateValueInfo.getValueInfoType();
 		HAPValueInfoEntity categaryValueInfoEntity = this.getModeDefValueInfoByCategary(templateCategary); 
 		if(categaryValueInfoEntity!=null){
 			modeValueInfo = getModeValueInfo(templateCategary); 
@@ -105,7 +105,7 @@ public class HAPValueInfoMode extends HAPValueInfo{
 	
 	private HAPValueInfoEntity getTemplateValueInfo(){
 		if(this.m_templateValueInfo==null){
-			String templateName = this.getBasicAncestorValueString(TEMPLATE);
+			String templateName = this.getAtomicAncestorValueString(TEMPLATE);
 			if(templateName!=null){
 				this.m_templateValueInfo = (HAPValueInfoEntity)this.getValueInfoManager().getValueInfo(templateName);
 			}
@@ -113,11 +113,6 @@ public class HAPValueInfoMode extends HAPValueInfo{
 		return this.m_templateValueInfo;
 	}
 	
-	@Override
-	public String getCategary() {
-		return HAPConstant.STRINGALBE_VALUEINFO_MODE;
-	}
-
 	@Override
 	public HAPValueInfoMode clone(){
 		HAPValueInfoMode out = new HAPValueInfoMode();

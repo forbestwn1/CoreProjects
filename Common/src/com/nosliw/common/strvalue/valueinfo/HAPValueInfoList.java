@@ -22,9 +22,6 @@ public class HAPValueInfoList extends HAPValueInfoContainer{
 	}
 	
 	@Override
-	public String getCategary() {		return HAPConstant.STRINGALBE_VALUEINFO_LIST;	}
-
-	@Override
 	public HAPStringableValue buildDefault() {
 		return new HAPStringableValueList();
 	}

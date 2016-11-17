@@ -12,7 +12,7 @@ public class HAPStringableValueMode extends HAPStringableValueEntity{
 	}
 	
 	public String getTemplateCategary(){
-		return this.getBasicAncestorValueString(CATEGARY);
+		return this.getAtomicAncestorValueString(CATEGARY);
 	}
 	
 }

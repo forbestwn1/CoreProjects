@@ -17,9 +17,9 @@ public class HAPConstantInfo extends HAPStringableValueEntity{
 	}
 	
 	
-	public String getName(){ return this.getBasicAncestorValueString(ENTITY_PROPERTY_NAME); }
-	public String getType(){ return this.getBasicAncestorValueString(ENTITY_PROPERTY_TYPE); }
-	public String getValue(){ return this.getBasicAncestorValueString(ENTITY_PROPERTY_VALUE); }
-	public String getSkip(){ return this.getBasicAncestorValueString(ENTITY_PROPERTY_SKIP); }
+	public String getName(){ return this.getAtomicAncestorValueString(ENTITY_PROPERTY_NAME); }
+	public String getType(){ return this.getAtomicAncestorValueString(ENTITY_PROPERTY_TYPE); }
+	public String getValue(){ return this.getAtomicAncestorValueString(ENTITY_PROPERTY_VALUE); }
+	public String getSkip(){ return this.getAtomicAncestorValueString(ENTITY_PROPERTY_SKIP); }
 	
 }

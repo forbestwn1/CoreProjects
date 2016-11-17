@@ -19,7 +19,7 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	public HAPDataTypeInfo getDataTypeInfo() {	return (HAPDataTypeInfo)this.getAncestorByPath(NAME);	}
 
 	@Override
-	public String getDescription() {	return this.getBasicAncestorValueString(DESCRIPTION); }
+	public String getDescription() {	return this.getAtomicAncestorValueString(DESCRIPTION); }
 
 	@Override
 	public HAPDataTypeInfo getParentDataTypeInfo() {	return (HAPDataTypeInfo)this.getAncestorByPath(PARENTINFO);	}

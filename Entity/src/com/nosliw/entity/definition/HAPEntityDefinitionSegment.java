@@ -120,12 +120,12 @@ public class HAPEntityDefinitionSegment extends HAPStringableValueEntity{
 	}
 
 	/******************************************   Basic Information  *********************************************/
-	public String getName(){  return this.getBasicAncestorValueString(NAME); }
-	public String getDescription(){  return this.getBasicAncestorValueString(DESCRIPTION); }
+	public String getName(){  return this.getAtomicAncestorValueString(NAME); }
+	public String getDescription(){  return this.getAtomicAncestorValueString(DESCRIPTION); }
 
 	public String getEntityName(){return this.getName();}
 	
-	public List<String> getGroups() {	return this.getBasicAncestorValueArray(GROUPS);	}
+	public List<String> getGroups() {	return this.getAtomicAncestorValueArray(GROUPS);	}
 	public void addGroups(List<String> groups){
 		List<String> gs = this.getGroups();
 		gs.addAll(groups);
@@ -136,7 +136,7 @@ public class HAPEntityDefinitionSegment extends HAPStringableValueEntity{
 	/* get defined class name for this entity
 	 * if not defined, then use method getDefaultClassName in EntityDefinitionManager instead 
 	 */
-	public String getBaseClassName() {	return this.getBasicAncestorValueString(BASECLASS);	}
+	public String getBaseClassName() {	return this.getAtomicAncestorValueString(BASECLASS);	}
 	public void setBaseClassName(String baseClassName){  this.updateBasicChild(BASECLASS, baseClassName); }
 
 	protected HAPEntityDefinitionManager getEntityDefinitionManager(){return this.m_entityDefinitionMan;}

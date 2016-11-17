@@ -35,7 +35,7 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 	}
 	
 	public String getKeyName(){
-		return this.getBasicAncestorValueString(ENTITY_PROPERTY_KEY);
+		return this.getAtomicAncestorValueString(ENTITY_PROPERTY_KEY);
 	}
 	
 	public void setKeyName(String keyName){
@@ -49,9 +49,6 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 		return out;
 	}
 	
-	@Override
-	public String getCategary() {		return HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS;	}
-
 	@Override
 	public HAPStringableValue buildDefault() {		return null;	}
 	

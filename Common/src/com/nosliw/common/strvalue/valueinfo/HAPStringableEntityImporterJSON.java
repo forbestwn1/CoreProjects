@@ -42,7 +42,7 @@ public class HAPStringableEntityImporterJSON {
 			
 			for(String property : entityValueInfo.getEntityProperties()){
 				HAPValueInfo propertyValueInfo = entityValueInfo.getPropertyInfo(property);
-				String propertyCategary = propertyValueInfo.getCategary();
+				String propertyCategary = propertyValueInfo.getValueInfoType();
 				if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyCategary))  entityOptionsProperties.add(property);
 				else{
 					HAPStringableValue entityProperty = readPropertyValueOfEntity(propertiesJsonObj, propertyValueInfo, valueInfoMan);
@@ -53,7 +53,7 @@ public class HAPStringableEntityImporterJSON {
 			for(String propertyName : entityOptionsProperties){
 				HAPValueInfoEntityOptions propertyValueInfo = (HAPValueInfoEntityOptions)entityValueInfo.getPropertyInfo(propertyName).getSolidValueInfo();
 				Object propertyObj = propertiesJsonObj.opt(propertyName);
-				String keyValue = entity.getBasicAncestorValueString(propertyValueInfo.getKeyName());
+				String keyValue = entity.getAtomicAncestorValueString(propertyValueInfo.getKeyName());
 				HAPStringableValue entityProperty = processEntityOptionsValue(propertyObj, keyValue, propertyValueInfo, valueInfoMan);
 				if(entityProperty!=null)			entity.updateChild(propertyName, entityProperty);
 			}
@@ -67,7 +67,7 @@ public class HAPStringableEntityImporterJSON {
 		HAPStringableValue out = null;
 		try{
 			HAPValueInfo propertyInfo = propertyValueInfo.getSolidValueInfo();
-			String propertyCategary = propertyInfo.getCategary();
+			String propertyCategary = propertyInfo.getValueInfoType();
 			Object propertyObj = propertiesJsonObj.opt(propertyName);
 			if(HAPConstant.STRINGALBE_VALUEINFO_LIST.equals(propertyCategary)){
 				out = processListValue(propertyObj, (HAPValueInfoList)propertyInfo, valueInfoMan);
@@ -82,7 +82,7 @@ public class HAPStringableEntityImporterJSON {
 				throw new Exception();
 			}
 			else{
-				out = processBasicValue(propertyObj, (HAPValueInfoBasic)propertyInfo, valueInfoMan);
+				out = processBasicValue(propertyObj, (HAPValueInfoAtomic)propertyInfo, valueInfoMan);
 			}
 		}
 		catch(Exception e){
@@ -101,7 +101,7 @@ public class HAPStringableEntityImporterJSON {
 			else    mapPropertiesJsonObj = (JSONObject)mapObj;
 			
 			HAPValueInfo childInfo = mapValueInfo.getChildValueInfo().getSolidValueInfo();
-			String childCategary = childInfo.getCategary();
+			String childCategary = childInfo.getValueInfoType();
 
 			Iterator<String> it = mapPropertiesJsonObj.keys();
 			while(it.hasNext()){
@@ -109,7 +109,7 @@ public class HAPStringableEntityImporterJSON {
 				Object keyValue = mapPropertiesJsonObj.opt(key);
 				HAPStringableValue mapElementValue = null;
 				if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(childCategary)){
-					mapElementValue = processBasicValue(keyValue, (HAPValueInfoBasic)childInfo, valueInfoMan);
+					mapElementValue = processBasicValue(keyValue, (HAPValueInfoAtomic)childInfo, valueInfoMan);
 				}		
 				else{
 					mapElementValue = processComplexValue(keyValue, childInfo, valueInfoMan);
@@ -129,13 +129,13 @@ public class HAPStringableEntityImporterJSON {
 			else if(listObj instanceof JSONArray)  listJsonObj = (JSONArray)listObj;
 			
 			HAPValueInfo childInfo = listValueInfo.getChildValueInfo().getSolidValueInfo();
-			String childCategary = childInfo.getCategary();
+			String childCategary = childInfo.getValueInfoType();
 
 			for(int i=0; i<listJsonObj.length(); i++){
 				Object listEleObj = listJsonObj.opt(i);
 				HAPStringableValue listElementValue = null;
 				if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(childCategary)){
-					listElementValue = processBasicValue(listEleObj, (HAPValueInfoBasic)childInfo, valueInfoMan);
+					listElementValue = processBasicValue(listEleObj, (HAPValueInfoAtomic)childInfo, valueInfoMan);
 				}
 				else{
 					listElementValue = processComplexValue(listEleObj, childInfo, valueInfoMan);
@@ -146,14 +146,14 @@ public class HAPStringableEntityImporterJSON {
 		return list;
 	}
 	
-	private static HAPStringableValue processBasicValue(Object basicValue, HAPValueInfoBasic basicValueInfo, HAPValueInfoManager valueInfoMan){
+	private static HAPStringableValue processBasicValue(Object basicValue, HAPValueInfoAtomic atomicValueInfo, HAPValueInfoManager valueInfoMan){
 		String strValue = null;
 		if(basicValue instanceof JSONObject)  strValue = ((JSONObject)basicValue).optString(HAPAttributeConstant.STRINGABLEVALUE_VALUE);  
 		else  strValue = basicValue.toString();
 		
 		HAPStringableValueAtomic out = null;
-		if(strValue!=null)  out = new HAPStringableValueAtomic(strValue, basicValueInfo.getValueDataType());
-		else   out = (HAPStringableValueAtomic)basicValueInfo.buildDefault();
+		if(strValue!=null)  out = new HAPStringableValueAtomic(strValue, atomicValueInfo.getDataType(), atomicValueInfo.getSubDataType());
+		else   out = (HAPStringableValueAtomic)atomicValueInfo.buildDefault();
 
 		if(out.isEmpty())  out = null;
 		return out;
@@ -161,10 +161,10 @@ public class HAPStringableEntityImporterJSON {
 
 	private static HAPStringableValue processEntityOptionsValue(Object optionsValue, String keyValue, HAPValueInfoEntityOptions entityOptionsValueInfo, HAPValueInfoManager valueInfoMan){
 		HAPValueInfo optionValueInfo = entityOptionsValueInfo.getOptionsValueInfo(keyValue).getSolidValueInfo();
-		String categary = optionValueInfo.getCategary();
+		String categary = optionValueInfo.getValueInfoType();
 		HAPStringableValue out = null;
 		if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(categary)){
-			out = processBasicValue(optionsValue, (HAPValueInfoBasic)optionValueInfo, valueInfoMan);
+			out = processBasicValue(optionsValue, (HAPValueInfoAtomic)optionValueInfo, valueInfoMan);
 		}
 		else{
 			out = processComplexValue(optionsValue, optionValueInfo, valueInfoMan);
@@ -174,7 +174,7 @@ public class HAPStringableEntityImporterJSON {
 	
 	private static HAPStringableValue processComplexValue(Object complexValue, HAPValueInfo valueInfo, HAPValueInfoManager valueInfoMan){
 		HAPStringableValueComplex out = null;
-		String categary = valueInfo.getCategary();
+		String categary = valueInfo.getValueInfoType();
 		if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(categary)){
 			out = processEntityValue((JSONObject)complexValue, (HAPValueInfoEntity)valueInfo, valueInfoMan);
 		}

@@ -1,10 +1,10 @@
 <entity parent="parent" description="this is entity property" class="com.nosliw.common.strvalue.entity.test.HAPStringableEntity">
 
-<property name="boolean_property" type="boolean" description="this is boolean property" default="true"/>
+<property name="boolean_property" dataType="boolean" description="this is boolean property" default="true"/>
 
 <property name="reference_property" reference="intreference"/>
 
-<property name="list_basic_property" type="list" description="this is list property">
+<property name="list_basic_property" dataType="list" description="this is list property">
 	<child type="int" description="this is list child property"/>
 </property> 
 
@@ -13,26 +13,26 @@
 </property> 
 
 <property name="entity_property" type="entity" description="this is entity property" class="com.nosliw.common.strvalue.entity.test.HAPStringableEntity" mandatory="true">
-	<property name="name" type="int"/>
-	<property name="childPro1" type="int" default="888"/>
-	<property name="childPro2" type="boolean" default="false"/>
+	<property name="name" dataType="int"/>
+	<property name="childPro1" dataType="int" default="888"/>
+	<property name="childPro2" dataType="boolean" default="false"/>
 </property> 
  
 <property name="map_property" type="map" description="this is map property" key="name">
 	<child type="entity" class="com.nosliw.common.strvalue.entity.test.HAPStringableEntity" description="this is map child property">
-		<property name="name" type="string"/>
-		<property name="childPro1" type="int" default="888"/>
-		<property name="childPro2" type="boolean" default="false"/>
+		<property name="name" dataType="string"/>
+		<property name="childPro1" dataType="int" default="888"/>
+		<property name="childPro2" dataType="boolean" default="false"/>
 	</child>
 </property> 
 
  <property name="entityoptions_property" type="entityOptions" description="this is entity options property" key="type">
 	<options value="type1" type="entity" description="this is entity property" class="com.nosliw.common.strvalue.entity.test.HAPStringableEntity" mandatory="true">
 		<property name="name" type="int"/>
-		<property name="childPro1" type="int" default="888"/>
-		<property name="childPro2" type="boolean" default="false"/>
+		<property name="childPro1" dataType="int" default="888"/>
+		<property name="childPro2" dataType="boolean" default="false"/>
 	</options> 
-	<options value="type2" type="string" description="this is entity property" default="defaulttype2"/>
+	<options value="type2" dataType="string" description="this is entity property" default="defaulttype2"/>
  </property>
 
 </entity>

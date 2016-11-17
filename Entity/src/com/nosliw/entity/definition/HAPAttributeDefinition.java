@@ -75,7 +75,7 @@ public abstract class HAPAttributeDefinition extends HAPStringableValueEntityBas
 	private void init(){
 		this.initProperty(HAPAttributeConstant.ENTITYATTRDEF_ISEMPTYONINIT);
 		
-		Boolean isEmptyOnInit = this.getProperties().getBasicAncestorValueBoolean(HAPAttributeConstant.ENTITYATTRDEF_ISEMPTYONINIT);
+		Boolean isEmptyOnInit = this.getProperties().getAtomicAncestorValueBoolean(HAPAttributeConstant.ENTITYATTRDEF_ISEMPTYONINIT);
 		if(isEmptyOnInit==null){
 			isEmptyOnInit = this.getEntityDefinitionManager().getConfiguration().getConfigureValue(HAPConstant.CONFIGUREITEM_ENTITY_ISEMPTYONINIT).getBooleanValue();
 			if(isEmptyOnInit!=null)		this.m_isEmptyOnInit = isEmptyOnInit; 

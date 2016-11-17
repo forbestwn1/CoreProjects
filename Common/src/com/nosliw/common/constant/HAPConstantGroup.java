@@ -38,8 +38,8 @@ public class HAPConstantGroup extends HAPStringableValueEntityBasic{
 		return list.iterate();
 	}
 	
-	public String getType(){ return this.getBasicAncestorValueString(TYPE); }
-	public String getFilePath(){ return this.getBasicAncestorValueString(FILEPATH); }
-	public String getClassName(){ return this.getBasicAncestorValueString(CLASSNAME); }
-	public String getPackageName(){ return this.getBasicAncestorValueString(PACKAGENAME);  }
+	public String getType(){ return this.getAtomicAncestorValueString(TYPE); }
+	public String getFilePath(){ return this.getAtomicAncestorValueString(FILEPATH); }
+	public String getClassName(){ return this.getAtomicAncestorValueString(CLASSNAME); }
+	public String getPackageName(){ return this.getAtomicAncestorValueString(PACKAGENAME);  }
 }

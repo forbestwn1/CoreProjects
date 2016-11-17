@@ -30,7 +30,7 @@ public class HAPEntityDefinition extends HAPEntityDefinitionSegment{
 		
 	}
 	
-	public String getCriticalAttrValue() {		return this.getBasicAncestorValueString(CRITICALATTRVALUE);	}
+	public String getCriticalAttrValue() {		return this.getAtomicAncestorValueString(CRITICALATTRVALUE);	}
 	public void setCriticalAttrValue(String value){  this.updateBasicChild(CRITICALATTRVALUE, value); }
 
 }
