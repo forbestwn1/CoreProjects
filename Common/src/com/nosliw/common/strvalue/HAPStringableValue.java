@@ -4,14 +4,20 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.configure.HAPConfigureImp;
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateProcessorByConfigureForDoc;
 import com.nosliw.common.resolve.HAPResolvable;
 import com.nosliw.common.serialization.HAPSerialiableImp;
 
+@HAPEntityWithAttribute(baseName="STRINGABLEVALUE")
 public abstract class HAPStringableValue extends HAPSerialiableImp implements HAPResolvable{
 
+	@HAPAttribute
+	public static String STRUCTURE = "structure";
+	
 	public abstract String getStringableStructure();
 
 	public abstract HAPStringableValue getChild(String name);
@@ -56,6 +62,6 @@ public abstract class HAPStringableValue extends HAPSerialiableImp implements HA
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_STRUCTURE, this.getStringableStructure());
+		jsonMap.put(STRUCTURE, this.getStringableStructure());
 	}
 }

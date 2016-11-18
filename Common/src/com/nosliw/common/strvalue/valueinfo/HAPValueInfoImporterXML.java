@@ -93,11 +93,11 @@ public class HAPValueInfoImporterXML {
 			else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(valueInfoType)){
 				valueInfo = HAPValueInfoEntityOptions.build();
 				updateBasicProperty(valueInfoEle, valueInfo);
-				HAPStringableValueMap optionsInfoMap = (HAPStringableValueMap)valueInfo.updateComplexChild(HAPValueInfoEntityOptions.ENTITY_PROPERTY_OPTIONS, HAPConstant.STRINGABLE_VALUESTRUCTURE_MAP);
-				Element[] optionEles = HAPXMLUtility.getMultiChildElementByName(valueInfoEle, HAPValueInfoEntityOptions.ENTITY_PROPERTY_OPTIONS);
+				HAPStringableValueMap optionsInfoMap = (HAPStringableValueMap)valueInfo.updateComplexChild(HAPValueInfoEntityOptions.OPTIONS, HAPConstant.STRINGABLE_VALUESTRUCTURE_MAP);
+				Element[] optionEles = HAPXMLUtility.getMultiChildElementByName(valueInfoEle, HAPValueInfoEntityOptions.OPTIONS);
 				for(Element optionEle : optionEles){
 					HAPValueInfo optionPropertyInfo = readValueInfoFromElement(optionEle, null);
-					optionsInfoMap.updateChild(optionPropertyInfo.getAtomicAncestorValueString(HAPValueInfoEntityOptions.ENTITY_PROPERTY_VALUE), optionPropertyInfo);
+					optionsInfoMap.updateChild(optionPropertyInfo.getAtomicAncestorValueString(HAPValueInfoEntityOptions.VALUE), optionPropertyInfo);
 				}
 			}
 			else if(HAPConstant.STRINGALBE_VALUEINFO_MODE.equals(valueInfoType)){
@@ -141,9 +141,9 @@ public class HAPValueInfoImporterXML {
 	}
 	
 	private static HAPValueInfo readContainerChildValueInfo(Element valueInfoEle, HAPValueInfo containerValueInfo){
-		Element childEle = HAPXMLUtility.getFirstChildElementByName(valueInfoEle, HAPValueInfoList.ENTITY_PROPERTY_CHILD);
+		Element childEle = HAPXMLUtility.getFirstChildElementByName(valueInfoEle, HAPValueInfoList.CHILD);
 		HAPValueInfo childPropertyInfo = readValueInfoFromElement(childEle, null);
-		containerValueInfo.updateChild(HAPValueInfoList.ENTITY_PROPERTY_CHILD, childPropertyInfo);
+		containerValueInfo.updateChild(HAPValueInfoList.CHILD, childPropertyInfo);
 		return childPropertyInfo;
 	}
 	

@@ -159,16 +159,15 @@ var NOSLIWATCOMMONTRIBUTECONSTANT=
   "QUERYPROJECTATTRIBUTE_ATTRIBUTE": "attribute",
   "ENTITYMANAGER_PERSISTANT": "persistent",
   "ENTITYMANAGER_TRANSACTIONS": "transactions",
-  "STRINGABLEVALUE_CATEGARY": "stringablevalue_categary",
-  "STRINGABLEVALUE_TYPE": "stringablevalue_type",
-  "STRINGABLEVALUE_STRINGVALUE": "stringablevalue_stringvalue",
-  "STRINGABLEVALUE_RESOLVED": "stringablevalue_resolved",
-  "STRINGABLEVALUE_VALUE": "stringablevalue_value",
-  "STRINGABLEVALUE_PROPERTIES": "stringablevalue_properties",
-  "STRINGABLEVALUE_ELEMENTS": "stringablevalue_elements",
   "CONSTANTGROUP_TYPE": "type",
   "CONSTANTGROUP_FILEPATH": "filepath",
   "CONSTANTGROUP_CLASSNAME": "classname",
   "CONSTANTGROUP_PACKAGENAME": "packagename",
-  "CONSTANTGROUP_DEFINITIONS": "definitions"
+  "CONSTANTGROUP_DEFINITIONS": "definitions",
+  "STRINGABLEVALUE_TYPE": "type",
+  "STRINGABLEVALUE_SUBTYPE": "subType",
+  "STRINGABLEVALUE_STRINGVALUE": "stringValue",
+  "STRINGABLEVALUE_RESOLVED": "resolved",
+  "STRINGABLEVALUE_VALUE": "value",
+  "STRINGABLEVALUE_PROPERTIES": "properties"
 };

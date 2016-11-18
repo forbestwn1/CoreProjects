@@ -325,6 +325,7 @@ public class HAPConstant {
 		public static final String STRINGABLE_VALUESTRUCTURE_MAP = "map";
 		public static final String STRINGABLE_VALUESTRUCTURE_LIST = "list";
 		public static final String STRINGABLE_VALUESTRUCTURE_ENTITY = "entity";
+		public static final String STRINGABLE_VALUESTRUCTURE_OBJECT = "object";
 
 
 
@@ -334,6 +335,7 @@ public class HAPConstant {
 		public static final String STRINGALBE_VALUEINFO_ENTITYOPTIONS = "entityOptions";
 		public static final String STRINGALBE_VALUEINFO_LIST = "list";
 		public static final String STRINGALBE_VALUEINFO_MAP = "map";
+		public static final String STRINGALBE_VALUEINFO_OBJECT = "object";
 		public static final String STRINGALBE_VALUEINFO_MODE = "mode";
 
 

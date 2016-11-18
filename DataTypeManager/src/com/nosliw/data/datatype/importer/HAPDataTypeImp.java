@@ -3,6 +3,7 @@ package com.nosliw.data.datatype.importer;
 import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.data.HAPDataOperationInfo;
@@ -10,6 +11,7 @@ import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeInfo;
 import com.nosliw.data.HAPDataTypeVersion;
 
+@HAPEntityWithAttribute(parent="com.nosliw.data.HAPDataType")
 public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataType{
 
 	@HAPAttribute

@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
@@ -17,6 +18,9 @@ import com.nosliw.common.utils.HAPJsonUtility;
  */
 public class HAPStringableValueEntity extends HAPStringableValueComplex{
 
+	@HAPAttribute
+	public static String PROPERTIES = "properties";
+	
 	private Map<String, HAPStringableValue> m_childrens;
 
 	public HAPStringableValueEntity(){
@@ -155,7 +159,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_PROPERTIES, HAPJsonUtility.buildJson(this.m_childrens, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(PROPERTIES, HAPJsonUtility.buildJson(this.m_childrens, HAPSerializationFormat.JSON_FULL));
 	}
 
 	@Override

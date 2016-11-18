@@ -68,12 +68,6 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 		new HAPClassFilter(){
 			@Override
 			protected void process(Class checkClass, Object data) {
-				try{
-				if(checkClass.getName().contains("LHAPDataType")){
-					int kkkk = 555;
-					kkkk ++;
-				}
-				System.out.println(checkClass.getName());
 				Field[] fields = checkClass.getDeclaredFields();
 				for(Field field : fields){
 					String fieldName = field.getName();
@@ -88,10 +82,6 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 							e.printStackTrace();
 						}
 					}
-				}
-				}
-				catch(Throwable a){
-					a.printStackTrace();
 				}
 			}
 

@@ -152,7 +152,7 @@ public class HAPStringableEntityImporterXML {
 	private static HAPStringableValue processEntityOptionsValue(Element containerEle, HAPValueInfoEntityOptions entityOptionsValueInfo){
 		String propertyName = entityOptionsValueInfo.getName();
 
-		String optionsKey = entityOptionsValueInfo.getAtomicAncestorValueString(HAPValueInfoEntityOptions.ENTITY_PROPERTY_KEY);
+		String optionsKey = entityOptionsValueInfo.getAtomicAncestorValueString(HAPValueInfoEntityOptions.KEY);
 		String keyValue = HAPXMLUtility.getAttributeValue(containerEle, optionsKey);
 		HAPValueInfo optionValueInfo = entityOptionsValueInfo.getOptionsValueInfo(keyValue).getSolidValueInfo();
 		String optionValueInfoType = optionValueInfo.getValueInfoType();
@@ -177,7 +177,7 @@ public class HAPStringableEntityImporterXML {
 
 			String mapKey = mapValueInfo.getAtomicAncestorValueString(HAPValueInfoMap.KEY);
 
-			String childElementTag = mapValueInfo.getAtomicAncestorValueString(HAPValueInfoContainer.ENTITY_PROPERTY_ELEMENTTAG);
+			String childElementTag = mapValueInfo.getAtomicAncestorValueString(HAPValueInfoContainer.ELEMENTTAG);
 			if(HAPBasicUtility.isStringEmpty(childElementTag))  childElementTag = TAG_CONTAINERCHILD; 
 			
 			Element[] eleEles = HAPXMLUtility.getMultiChildElementByName(mapEle, childElementTag);
@@ -205,7 +205,7 @@ public class HAPStringableEntityImporterXML {
 			HAPValueInfo childInfo = listValueInfo.getChildValueInfo().getSolidValueInfo();
 			String childValueInfoType = childInfo.getValueInfoType();
 
-			String childElementTag = listValueInfo.getAtomicAncestorValueString(HAPValueInfoContainer.ENTITY_PROPERTY_ELEMENTTAG);
+			String childElementTag = listValueInfo.getAtomicAncestorValueString(HAPValueInfoContainer.ELEMENTTAG);
 			if(HAPBasicUtility.isStringEmpty(childElementTag))  childElementTag = TAG_CONTAINERCHILD; 
 			Element[] eleEles = HAPXMLUtility.getMultiChildElementByName(listEle, childElementTag);
 			for(Element eleEle : eleEles){

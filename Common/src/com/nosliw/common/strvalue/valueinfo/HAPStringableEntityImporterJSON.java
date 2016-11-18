@@ -8,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.strvalue.HAPAttributeConstant;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.strvalue.HAPStringableValueComplex;
@@ -36,7 +35,7 @@ public class HAPStringableEntityImporterJSON {
 		if(jsonObjEntity!=null){
 			JSONObject propertiesJsonObj = jsonObjEntity;
 			HAPSerializationFormat jsonFormat = getJsonFormat(jsonObjEntity);
-			if(HAPSerializationFormat.JSON_FULL.equals(jsonFormat))  propertiesJsonObj = jsonObjEntity.optJSONObject(HAPAttributeConstant.STRINGABLEVALUE_PROPERTIES);
+			if(HAPSerializationFormat.JSON_FULL.equals(jsonFormat))  propertiesJsonObj = jsonObjEntity.optJSONObject(HAPStringableValueEntity.PROPERTIES);
 
 			Set<String> entityOptionsProperties = new HashSet<String>();
 			
@@ -82,7 +81,7 @@ public class HAPStringableEntityImporterJSON {
 				throw new Exception();
 			}
 			else{
-				out = processBasicValue(propertyObj, (HAPValueInfoAtomic)propertyInfo, valueInfoMan);
+				out = processAtomicValue(propertyObj, (HAPValueInfoAtomic)propertyInfo, valueInfoMan);
 			}
 		}
 		catch(Exception e){
@@ -97,7 +96,7 @@ public class HAPStringableEntityImporterJSON {
 		if(mapObj!=null){
 			JSONObject mapPropertiesJsonObj = null;
 			HAPSerializationFormat jsonFormat = getJsonFormat((JSONObject)mapObj);
-			if(HAPSerializationFormat.JSON_FULL.equals(jsonFormat))  mapPropertiesJsonObj = ((JSONObject)mapObj).optJSONObject(HAPAttributeConstant.STRINGABLEVALUE_ELEMENTS);
+			if(HAPSerializationFormat.JSON_FULL.equals(jsonFormat))  mapPropertiesJsonObj = ((JSONObject)mapObj).optJSONObject(HAPStringableValueMap.ELEMENTS);
 			else    mapPropertiesJsonObj = (JSONObject)mapObj;
 			
 			HAPValueInfo childInfo = mapValueInfo.getChildValueInfo().getSolidValueInfo();
@@ -109,7 +108,7 @@ public class HAPStringableEntityImporterJSON {
 				Object keyValue = mapPropertiesJsonObj.opt(key);
 				HAPStringableValue mapElementValue = null;
 				if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(childCategary)){
-					mapElementValue = processBasicValue(keyValue, (HAPValueInfoAtomic)childInfo, valueInfoMan);
+					mapElementValue = processAtomicValue(keyValue, (HAPValueInfoAtomic)childInfo, valueInfoMan);
 				}		
 				else{
 					mapElementValue = processComplexValue(keyValue, childInfo, valueInfoMan);
@@ -125,7 +124,7 @@ public class HAPStringableEntityImporterJSON {
 		
 		if(listObj!=null){
 			JSONArray listJsonObj = null;
-			if(listObj instanceof JSONObject)  listJsonObj = ((JSONObject) listObj).optJSONArray(HAPAttributeConstant.STRINGABLEVALUE_ELEMENTS);
+			if(listObj instanceof JSONObject)  listJsonObj = ((JSONObject) listObj).optJSONArray(HAPStringableValueList.ELEMENTS);
 			else if(listObj instanceof JSONArray)  listJsonObj = (JSONArray)listObj;
 			
 			HAPValueInfo childInfo = listValueInfo.getChildValueInfo().getSolidValueInfo();
@@ -135,7 +134,7 @@ public class HAPStringableEntityImporterJSON {
 				Object listEleObj = listJsonObj.opt(i);
 				HAPStringableValue listElementValue = null;
 				if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(childCategary)){
-					listElementValue = processBasicValue(listEleObj, (HAPValueInfoAtomic)childInfo, valueInfoMan);
+					listElementValue = processAtomicValue(listEleObj, (HAPValueInfoAtomic)childInfo, valueInfoMan);
 				}
 				else{
 					listElementValue = processComplexValue(listEleObj, childInfo, valueInfoMan);
@@ -146,9 +145,9 @@ public class HAPStringableEntityImporterJSON {
 		return list;
 	}
 	
-	private static HAPStringableValue processBasicValue(Object basicValue, HAPValueInfoAtomic atomicValueInfo, HAPValueInfoManager valueInfoMan){
+	private static HAPStringableValue processAtomicValue(Object basicValue, HAPValueInfoAtomic atomicValueInfo, HAPValueInfoManager valueInfoMan){
 		String strValue = null;
-		if(basicValue instanceof JSONObject)  strValue = ((JSONObject)basicValue).optString(HAPAttributeConstant.STRINGABLEVALUE_VALUE);  
+		if(basicValue instanceof JSONObject)  strValue = ((JSONObject)basicValue).optString(HAPStringableValueAtomic.VALUE);  
 		else  strValue = basicValue.toString();
 		
 		HAPStringableValueAtomic out = null;
@@ -164,7 +163,7 @@ public class HAPStringableEntityImporterJSON {
 		String categary = optionValueInfo.getValueInfoType();
 		HAPStringableValue out = null;
 		if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(categary)){
-			out = processBasicValue(optionsValue, (HAPValueInfoAtomic)optionValueInfo, valueInfoMan);
+			out = processAtomicValue(optionsValue, (HAPValueInfoAtomic)optionValueInfo, valueInfoMan);
 		}
 		else{
 			out = processComplexValue(optionsValue, optionValueInfo, valueInfoMan);
@@ -188,7 +187,7 @@ public class HAPStringableEntityImporterJSON {
 	}
 	
 	private static HAPSerializationFormat getJsonFormat(JSONObject jsonObj){
-		if(jsonObj.opt(HAPAttributeConstant.STRINGABLEVALUE_STRUCTURE)!=null)	return HAPSerializationFormat.JSON_FULL;
+		if(jsonObj.opt(HAPStringableValue.STRUCTURE)!=null)	return HAPSerializationFormat.JSON_FULL;
 		return HAPSerializationFormat.JSON;
 	}
 }

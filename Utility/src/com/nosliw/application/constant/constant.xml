@@ -254,24 +254,6 @@
 		</definitions>
 	</attributes>
 
-	<attributes filepath="{{projectsPath}}/Common/src/com/nosliw/common/strvalue" 
-				packagename="com.nosliw.common.strvalue.basic" 
-				classname="HAPAttributeConstant" >
-		<definitions>
-			<definition type="space"/>
-			<definition name="STRINGABLEVALUE_CATEGARY" value="stringablevalue_categary"/>
-			<definition name="STRINGABLEVALUE_TYPE" value="stringablevalue_type"/>
-			<definition name="STRINGABLEVALUE_STRINGVALUE" value="stringablevalue_stringvalue"/>
-			<definition name="STRINGABLEVALUE_RESOLVED" value="stringablevalue_resolved"/>
-			<definition name="STRINGABLEVALUE_VALUE" value="stringablevalue_value"/>
-			<definition name="STRINGABLEVALUE_PROPERTIES" value="stringablevalue_properties"/>
-			<definition name="STRINGABLEVALUE_ELEMENTS" value="stringablevalue_elements"/>
-			
-			<definition type="space"/>
-		</definitions>
-	</attributes>
-
-
 	<constants filepath="{{projectsPath}}/Common/src/com/nosliw/common/utils" 
 				packagename="com.nosliw.common.utils" 
 				classname="HAPConstant" >
@@ -546,6 +528,7 @@
 			<definition name="STRINGABLE_VALUESTRUCTURE_MAP" value="map"/>
 			<definition name="STRINGABLE_VALUESTRUCTURE_LIST" value="list"/>
 			<definition name="STRINGABLE_VALUESTRUCTURE_ENTITY" value="entity"/>
+			<definition name="STRINGABLE_VALUESTRUCTURE_OBJECT" value="object"/>
 	
 			<definition type="space"/>
 			<definition name="STRINGALBE_VALUEINFO_ATOMIC" value="atomic"/>
@@ -554,6 +537,7 @@
 			<definition name="STRINGALBE_VALUEINFO_ENTITYOPTIONS" value="entityOptions"/>
 			<definition name="STRINGALBE_VALUEINFO_LIST" value="list"/>
 			<definition name="STRINGALBE_VALUEINFO_MAP" value="map"/>
+			<definition name="STRINGALBE_VALUEINFO_OBJECT" value="object"/>
 			<definition name="STRINGALBE_VALUEINFO_MODE" value="mode"/>
 	
 			<definition type="space"/>

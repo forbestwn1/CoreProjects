@@ -9,9 +9,9 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoEntityOptions extends HAPValueInfo{
 
-	public static final String ENTITY_PROPERTY_KEY = "key";
-	public static final String ENTITY_PROPERTY_VALUE = "value";
-	public static final String ENTITY_PROPERTY_OPTIONS = "options";
+	public static final String KEY = "key";
+	public static final String VALUE = "value";
+	public static final String OPTIONS = "options";
 	
 	private HAPValueInfoEntityOptions(){}
 
@@ -41,11 +41,11 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 	}
 	
 	public String getKeyName(){
-		return this.getAtomicAncestorValueString(ENTITY_PROPERTY_KEY);
+		return this.getAtomicAncestorValueString(KEY);
 	}
 	
 	public void setKeyName(String keyName){
-		this.updateAtomicChild(ENTITY_PROPERTY_KEY, keyName);
+		this.updateAtomicChild(KEY, keyName);
 	}
 	
 	@Override
@@ -63,7 +63,7 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 	}
 	
 	private HAPStringableValueMap getOptionsMap(){
-		HAPStringableValueMap optionsValueInfo = (HAPStringableValueMap)this.getChild(HAPValueInfoEntityOptions.ENTITY_PROPERTY_OPTIONS);
+		HAPStringableValueMap optionsValueInfo = (HAPStringableValueMap)this.getChild(HAPValueInfoEntityOptions.OPTIONS);
 		return optionsValueInfo;
 	}
 }

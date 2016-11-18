@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.literate.HAPLiterateType;
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.resolve.HAPResolvableString;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -16,6 +17,22 @@ import com.nosliw.common.utils.HAPConstant;
  */
 public class HAPStringableValueAtomic extends HAPStringableValue{
 
+	@HAPAttribute
+	public static String TYPE = "type";
+
+	@HAPAttribute
+	public static String SUBTYPE = "subType";
+	
+	@HAPAttribute
+	public static String STRINGVALUE = "stringValue";
+	
+	@HAPAttribute
+	public static String RESOLVED = "resolved";
+
+	@HAPAttribute
+	public static String VALUE = "value";
+
+	
 	private HAPResolvableString m_strValue;
 	
 	private HAPLiterateType m_type;
@@ -153,11 +170,11 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_TYPE, this.m_type.getType());
-		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_SUBTYPE, this.m_type.getSubType());
-		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_STRINGVALUE, this.m_strValue.toString());
-		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_RESOLVED, String.valueOf(this.m_sovled));
-		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_VALUE, this.m_value==null?null : this.m_value.toString());
+		jsonMap.put(TYPE, this.m_type.getType());
+		jsonMap.put(SUBTYPE, this.m_type.getSubType());
+		jsonMap.put(STRINGVALUE, this.m_strValue.toString());
+		jsonMap.put(RESOLVED, String.valueOf(this.m_sovled));
+		jsonMap.put(VALUE, this.m_value==null?null : this.m_value.toString());
 	}
 	
 	@Override

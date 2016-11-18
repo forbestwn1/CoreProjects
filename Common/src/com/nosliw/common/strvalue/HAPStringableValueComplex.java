@@ -5,12 +5,16 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 
 public abstract class HAPStringableValueComplex<T extends HAPStringableValue> extends HAPStringableValue{
 
+	@HAPAttribute
+	public static String ELEMENTS = "elements";
+	
 	public HAPStringableValueComplex(){
 	}
 	

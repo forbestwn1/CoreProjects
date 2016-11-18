@@ -36,7 +36,7 @@ public class HAPStringableValueList<T extends HAPStringableValue> extends HAPStr
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(HAPAttributeConstant.STRINGABLEVALUE_ELEMENTS, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(HAPStringableValueComplex.ELEMENTS, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON_FULL));
 	}
 	
 	@Override

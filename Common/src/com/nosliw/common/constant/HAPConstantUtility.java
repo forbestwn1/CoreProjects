@@ -14,9 +14,21 @@ public class HAPConstantUtility {
 		String out = null;
 		if(cs.isAnnotationPresent(HAPEntityWithAttribute.class)){
 			HAPEntityWithAttribute entityWithAttr = (HAPEntityWithAttribute)cs.getAnnotation(HAPEntityWithAttribute.class);
-			out = entityWithAttr.baseName();
-			if(HAPBasicUtility.isStringEmpty(out)){
-				out = HAPSystemUtility.getHAPBaseClassName(cs);
+			String parent = entityWithAttr.parent();
+			if(HAPBasicUtility.isStringEmpty(parent)){
+				out = entityWithAttr.baseName();
+				if(HAPBasicUtility.isStringEmpty(out)){
+					//if not defined, then use class name as base name
+					out = HAPSystemUtility.getHAPBaseClassName(cs);
+				}
+			}
+			else{
+				//if parent is defined, get base name from parent
+				try {
+					out = getBaseName(Class.forName(parent));
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		else{
