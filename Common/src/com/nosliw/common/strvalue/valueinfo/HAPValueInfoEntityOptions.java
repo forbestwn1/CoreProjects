@@ -21,6 +21,12 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 		return out;
 	}
 
+	@Override
+	public void init(){
+		super.init();
+		this.updateAtomicChild(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS);
+	}
+	
 	public Set<String> getOptionsKey(){
 		HAPStringableValueMap optionsValueInfo = this.getOptionsMap();
 		return optionsValueInfo.getKeys();
@@ -39,7 +45,7 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 	}
 	
 	public void setKeyName(String keyName){
-		this.updateBasicChild(ENTITY_PROPERTY_KEY, keyName);
+		this.updateAtomicChild(ENTITY_PROPERTY_KEY, keyName);
 	}
 	
 	@Override

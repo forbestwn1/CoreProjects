@@ -3,8 +3,10 @@ package com.nosliw.application.test;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.nosliw.application.constant.HAPConstantApp;
 import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.configure.HAPConfigurableImp;
+import com.nosliw.common.configure.HAPConfigureUtility;
 import com.nosliw.common.test.HAPResult;
 import com.nosliw.common.test.HAPTestDescription;
 import com.nosliw.common.test.HAPTestSuiteInfo;
@@ -14,7 +16,7 @@ import com.nosliw.common.test.export.html.HAPTestResultExporter;
 public class HAPTestApplication extends HAPConfigurableImp{
 
 	protected HAPTestApplication() {
-		super("testapp.properties");
+		this.setConfiguration(HAPConfigureUtility.buildConfigure("testapp.properties", HAPTestApplication.class, true, null));
 	}
 	
 	private void prepareTest(HAPTestSuiteInfo rootSuite){

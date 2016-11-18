@@ -11,8 +11,8 @@ public class HAPConstantInfo extends HAPStringableValueEntity{
 	
 	static public HAPConstantInfo build(String name, String value){
 		HAPConstantInfo out = buildDefault(HAPConstantInfo.class);
-		out.updateBasicChild(ENTITY_PROPERTY_NAME, name);
-		out.updateBasicChild(ENTITY_PROPERTY_VALUE, value);
+		out.updateAtomicChild(ENTITY_PROPERTY_NAME, name);
+		out.updateAtomicChild(ENTITY_PROPERTY_VALUE, value);
 		return out;
 	}
 	

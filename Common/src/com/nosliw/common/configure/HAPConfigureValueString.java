@@ -2,9 +2,11 @@ package com.nosliw.common.configure;
 
 import java.util.List;
 
+import com.nosliw.common.strvalue.HAPStringableValueAtomic;
+
 public class HAPConfigureValueString extends HAPResolvableConfigureItem implements HAPConfigureValue{
 	public HAPConfigureValueString(String value){
-		super(HAPConfigureUtility.getStringableValue(value));
+		super(new HAPStringableValueAtomic(value));
 	}
 	
 	private HAPConfigureValueString(){ super(null); }
@@ -25,7 +27,7 @@ public class HAPConfigureValueString extends HAPResolvableConfigureItem implemen
 	public Float getFloatValue() {		return this.getStringableValue().getFloatValue();  }
 
 	@Override
-	public List<String> getListValue(){  	return this.getStringableValue().getListValue(); }
+	public <T> List<T> getListValue(Class<T> cs){  	return this.getStringableValue().getListValue(cs); }
 	
 	public HAPConfigureValueString clone(){
 		HAPConfigureValueString out = new HAPConfigureValueString();

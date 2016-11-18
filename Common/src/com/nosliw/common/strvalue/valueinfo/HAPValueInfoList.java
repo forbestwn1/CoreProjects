@@ -15,6 +15,12 @@ public class HAPValueInfoList extends HAPValueInfoContainer{
 	}
 	
 	@Override
+	public void init(){
+		super.init();
+		this.updateAtomicChild(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_LIST);
+	}
+	
+	@Override
 	public HAPValueInfoList clone(){
 		HAPValueInfoList out = new HAPValueInfoList();
 		out.cloneFrom(this);

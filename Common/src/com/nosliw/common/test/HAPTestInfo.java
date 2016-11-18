@@ -58,9 +58,9 @@ public abstract class HAPTestInfo extends HAPSerialiableImp{
 	protected void setTestDescription(HAPTestDescription desc){  this.m_description = desc; }
 	public int getSequence(){  return this.m_sequence;  }
 	public String getDescription(){ return this.getTestDescription().getDescription(); }
-	protected void setDescription(String description){ this.getTestDescription().updateBasicChild(HAPTestDescription.ENTITY_PROPERTY_DESCRIPTION, description);}
+	protected void setDescription(String description){ this.getTestDescription().updateAtomicChild(HAPTestDescription.ENTITY_PROPERTY_DESCRIPTION, description);}
 	public String getName(){ return this.getTestDescription().getName(); }
-	protected void setName(String name){ this.getTestDescription().updateBasicChild(HAPTestDescription.ENTITY_PROPERTY_NAME, name);}
+	protected void setName(String name){ this.getTestDescription().updateAtomicChild(HAPTestDescription.ENTITY_PROPERTY_NAME, name);}
 	public boolean inited(){ return this.m_inited; }
 	protected void setInited(){  this.m_inited = true; }
 	

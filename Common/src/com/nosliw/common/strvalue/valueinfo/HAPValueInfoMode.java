@@ -33,6 +33,12 @@ public class HAPValueInfoMode extends HAPValueInfo{
 	}
 
 	@Override
+	public void init(){
+		super.init();
+		this.updateAtomicChild(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_MODE);
+	}
+	
+	@Override
 	public HAPValueInfo getSolidValueInfo(){
 		if(this.m_solidValueInfo==null){
 			HAPValueInfoEntity templateValueInfo = this.getTemplateValueInfo();

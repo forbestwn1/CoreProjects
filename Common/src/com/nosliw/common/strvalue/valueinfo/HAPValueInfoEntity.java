@@ -26,6 +26,13 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	}
 
 	@Override
+	public String getValueInfoType(){	
+		String out = super.getValueInfoType();
+		if(out==null)  out = HAPConstant.STRINGALBE_VALUEINFO_ENTITY;
+		return out;
+	}
+
+	@Override
 	public HAPValueInfo getSolidValueInfo(){
 		if(this.m_solidValueInfo==null){
 			if(HAPBasicUtility.isStringEmpty(this.getParent())){
@@ -71,6 +78,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	public void init(){
 		super.init();
 		this.updateBasicChildValue(MANDATORY, true);
+		this.updateAtomicChild(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_ENTITY);
 	}
 	
 	public HAPValueInfo getPropertyInfo(String name){
@@ -91,7 +99,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	
 	public String getParent(){		return this.getAtomicAncestorValueString(PARENT);	}
 	public String getClassName(){  return this.getAtomicAncestorValueString(CLASSNAME); }
-	public void setClassName(String name){  this.updateBasicChild(CLASSNAME, name); }
+	public void setClassName(String name){  this.updateAtomicChild(CLASSNAME, name); }
 	
 	private HAPValueInfoEntity getParentEntityValueInfo(){
 		HAPValueInfoEntity out = null;

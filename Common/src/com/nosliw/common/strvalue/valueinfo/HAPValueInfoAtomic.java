@@ -21,10 +21,10 @@ public class HAPValueInfoAtomic extends HAPValueInfo{
 	}
 
 	@Override
-	public String getValueInfoType(){	
-		String out = super.getValueInfoType();
-		if(out==null)  out = HAPConstant.STRINGALBE_VALUEINFO_ATOMIC;
-		return out;
+	public void init(){
+		super.init();
+		this.updateAtomicChild(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_ATOMIC);
+		this.updateAtomicChild(HAPValueInfoAtomic.DATATYPE, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);
 	}
 	
 	public String getDataType(){	return this.getAtomicAncestorValueString(HAPValueInfoAtomic.DATATYPE);	}

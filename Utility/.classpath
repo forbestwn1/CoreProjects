@@ -3,13 +3,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Entity"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Common"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataDefinition"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataTypeLibrary"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ExpressionParser"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/MangoPersistent"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/UIResource"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Core"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

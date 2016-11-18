@@ -2,6 +2,7 @@ package com.nosliw.common.utils;
 
 public class HAPConstant {
 
+
 		public static final int SERVICECODE_SUCCESS = 200;
 		public static final int SERVICECODE_FAILURE = 400;
 		public static final int SERVICECODE_EXCEPTION = 5000;
@@ -99,11 +100,8 @@ public class HAPConstant {
 
 		public static final String DATATYPE_TYPE_INTEGER = "integer";
 		public static final String DATATYPE_TYPE_FLOAT = "float";
-		public static final String DATATYPE_TYPE_DOUBLE = "double";
 		public static final String DATATYPE_TYPE_BOOLEAN = "boolean";
 		public static final String DATATYPE_TYPE_STRING = "string";
-		public static final String DATATYPE_TYPE_MAP = "map";
-		public static final String DATATYPE_TYPE_LIST = "list";
 		public static final String DATATYPE_TYPE_CONTAINER_ENTITYATTRIBUTE = "normal";
 		public static final String DATATYPE_TYPE_CONTAINER_OPTIONS = "options";
 		public static final String DATATYPE_TYPE_CONTAINER_QUERY = "query";
@@ -327,14 +325,12 @@ public class HAPConstant {
 		public static final String STRINGABLE_VALUESTRUCTURE_MAP = "map";
 		public static final String STRINGABLE_VALUESTRUCTURE_LIST = "list";
 		public static final String STRINGABLE_VALUESTRUCTURE_ENTITY = "entity";
-		public static final String STRINGABLE_VALUESTRUCTURE_OBJECT = "object";
 
 
 
 		public static final String STRINGALBE_VALUEINFO_ATOMIC = "atomic";
 		public static final String STRINGALBE_VALUEINFO_REFERENCE = "reference";
 		public static final String STRINGALBE_VALUEINFO_ENTITY = "entity";
-		public static final String STRINGALBE_VALUEINFO_OBJECT = "object";
 		public static final String STRINGALBE_VALUEINFO_ENTITYOPTIONS = "entityOptions";
 		public static final String STRINGALBE_VALUEINFO_LIST = "list";
 		public static final String STRINGALBE_VALUEINFO_MAP = "map";

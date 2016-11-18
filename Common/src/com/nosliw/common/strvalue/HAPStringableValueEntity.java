@@ -67,7 +67,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 		return out;
 	}
 	
-	public HAPStringableValueAtomic updateBasicChild(String name, String strValue, String type, String subType){
+	public HAPStringableValueAtomic updateAtomicChild(String name, String strValue, String type, String subType){
 		HAPStringableValueAtomic out = null; 
 		HAPStringableValue child = this.getChild(name);
 		if(child==null || child.getStringableStructure().equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
@@ -77,8 +77,8 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 		return out;
 	}
 	
-	public void updateBasicChild(String name, String strValue){
-		this.updateBasicChild(name, strValue, null, null);
+	public void updateAtomicChild(String name, String strValue){
+		this.updateAtomicChild(name, strValue, null, null);
 	}
 
 	public HAPStringableValueAtomic updateBasicChildValue(String name, Object value){
@@ -92,9 +92,9 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 		return out;
 	}
 	
-	public void updateBasicChildrens(Map<String, String> values){
+	public void updateAtomicChildrens(Map<String, String> values){
 		for(String name : values.keySet()){
-			this.updateBasicChild(name, values.get(name));
+			this.updateAtomicChild(name, values.get(name));
 		}
 	}
 	

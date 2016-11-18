@@ -8,7 +8,7 @@ public class HAPStringableValueMode extends HAPStringableValueEntity{
 
 	
 	public void setTmeplateCategary(String categary){
-		this.updateBasicChild(CATEGARY, categary);
+		this.updateAtomicChild(CATEGARY, categary);
 	}
 	
 	public String getTemplateCategary(){

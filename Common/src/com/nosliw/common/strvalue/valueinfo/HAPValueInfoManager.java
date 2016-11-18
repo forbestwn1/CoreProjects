@@ -106,6 +106,12 @@ public class HAPValueInfoManager {
 
 	public HAPValueInfoEntity getEntityValueInfoByClassName(String csName){
 		HAPEntityValueInfo info = this.m_entityValueInfos.get(csName);
+		
+		if(info==null){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		if(info.isValid())  		return info.getValueInfoEntity();
 		return null;
 	}

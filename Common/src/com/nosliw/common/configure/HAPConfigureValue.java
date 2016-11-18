@@ -14,7 +14,7 @@ public interface HAPConfigureValue{
 
 	public Float getFloatValue();
 
-	public List<String> getListValue();
+	public <T> List<T> getListValue(Class<T> cs);
 	
 	public HAPConfigureValue clone();
 }

@@ -25,7 +25,7 @@ public class HAPConstantGroup extends HAPStringableValueEntityBasic{
 
 	public HAPConstantGroup(){}
 	public HAPConstantGroup(String type){
-		this.updateBasicChild(TYPE, type);
+		this.updateAtomicChild(TYPE, type);
 	}
 
 	public void addConstantInfo(HAPConstantInfo constantInfo){

@@ -10,6 +10,7 @@
 		<project>UIResource</project>
 		<project>Common</project>
 		<project>DataDefinition</project>
+		<project>Core</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

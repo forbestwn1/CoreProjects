@@ -1,8 +1,8 @@
 <group description="this is entity property" class="com.nosliw.common.constant.HAPConstantGroup">
 
-	<property name="filepath" type="string" description="java file path"/>
-	<property name="packagename" type="string" description="java package name"/>
-	<property name="classname" type="string" description="java class name"/>
+	<property name="filepath" dataType="string" description="java file path"/>
+	<property name="packagename" dataType="string" description="java package name"/>
+	<property name="classname" dataType="string" description="java class name"/>
 
 	<property name="definitions" type="list" description="this is map property" elementTag="definition">
 		<child reference="constant"/>

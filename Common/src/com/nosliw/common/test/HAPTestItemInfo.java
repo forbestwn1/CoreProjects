@@ -26,14 +26,14 @@ public abstract class HAPTestItemInfo extends HAPTestInfo{
 	protected Object getOutput(){ return this.m_output; }
 	protected void setOutput(Object output){  this.m_output = output; }
 	
-	protected void setInputStr(String input){ this.getTestDescription().updateBasicChild(ATTR_INPUT, input);}
+	protected void setInputStr(String input){ this.getTestDescription().updateAtomicChild(ATTR_INPUT, input);}
 	protected String getInputStr(){  return this.getTestDescription().getAtomicAncestorValueString(ATTR_INPUT); }  
 	
-	protected void setOutputStr(String output){ this.getTestDescription().updateBasicChild(ATTR_OUTPUT, output);}
+	protected void setOutputStr(String output){ this.getTestDescription().updateAtomicChild(ATTR_OUTPUT, output);}
 	protected String getOutputStr(){  return this.getTestDescription().getAtomicAncestorValueString(ATTR_OUTPUT); }  
 	
 	public String getValueStr(String name){  return this.getTestDescription().getAtomicAncestorValueString(name); }
-	public void setValueStr(String name, String value){  this.getTestDescription().updateBasicChild(name, value); }
+	public void setValueStr(String name, String value){  this.getTestDescription().updateAtomicChild(name, value); }
 	
 	abstract public void doTest(HAPResultTestCase testResult);
 

@@ -149,6 +149,6 @@ public class HAPValueInfoImporterXML {
 	
 	private static void updateBasicProperty(Element element, HAPStringableValueEntity entity){
 		Map<String, String> propertyAttrs = HAPXMLUtility.getAllAttributes(element);
-		entity.updateBasicChildrens(propertyAttrs);
+		entity.updateAtomicChildrens(propertyAttrs);
 	}
 }

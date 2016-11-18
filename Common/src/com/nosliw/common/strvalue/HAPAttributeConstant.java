@@ -1,4 +1,4 @@
-package com.nosliw.common.strvalue;
+package com.nosliw.common.strvalue.basic;
 
 public class HAPAttributeConstant {
 
@@ -6,9 +6,8 @@ public class HAPAttributeConstant {
 
 
 
-		public static final String STRINGABLEVALUE_STRUCTURE = "stringablevalue_structure";
+		public static final String STRINGABLEVALUE_CATEGARY = "stringablevalue_categary";
 		public static final String STRINGABLEVALUE_TYPE = "stringablevalue_type";
-		public static final String STRINGABLEVALUE_SUBTYPE = "stringablevalue_subtype";
 		public static final String STRINGABLEVALUE_STRINGVALUE = "stringablevalue_stringvalue";
 		public static final String STRINGABLEVALUE_RESOLVED = "stringablevalue_resolved";
 		public static final String STRINGABLEVALUE_VALUE = "stringablevalue_value";

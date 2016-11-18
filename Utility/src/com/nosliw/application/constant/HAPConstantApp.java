@@ -9,6 +9,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.nosliw.common.configure.HAPConfigurableImp;
+import com.nosliw.common.configure.HAPConfigure;
+import com.nosliw.common.configure.HAPConfigureImp;
+import com.nosliw.common.configure.HAPConfigureManager;
+import com.nosliw.common.configure.HAPConfigureUtility;
 import com.nosliw.common.constant.HAPConstantGroup;
 import com.nosliw.common.constant.HAPConstantManager;
 import com.nosliw.common.interpolate.HAPInterpolateUtility;
@@ -20,7 +24,7 @@ import com.nosliw.common.utils.HAPXMLUtility;
 public class HAPConstantApp extends HAPConfigurableImp{
 
 	protected HAPConstantApp(){
-		super("constantprocess.properties", null);
+		this.setConfiguration(HAPConfigureUtility.buildConfigure("constantprocess.properties", HAPConstantApp.class, true, null));
 	}
 
 	public static void main(String[] args){

@@ -137,7 +137,7 @@ public class HAPEntityDefinitionSegment extends HAPStringableValueEntity{
 	 * if not defined, then use method getDefaultClassName in EntityDefinitionManager instead 
 	 */
 	public String getBaseClassName() {	return this.getAtomicAncestorValueString(BASECLASS);	}
-	public void setBaseClassName(String baseClassName){  this.updateBasicChild(BASECLASS, baseClassName); }
+	public void setBaseClassName(String baseClassName){  this.updateAtomicChild(BASECLASS, baseClassName); }
 
 	protected HAPEntityDefinitionManager getEntityDefinitionManager(){return this.m_entityDefinitionMan;}
 	

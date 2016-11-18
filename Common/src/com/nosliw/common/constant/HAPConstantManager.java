@@ -47,9 +47,9 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 		HAPValueInfoManager.getInstance().importFromXML(inputStreams);
 	}
 	
-	public void setJsPath(String path){	this.m_jsPath = new HAPStringableValueAtomic(path, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);	}
-	public void setJsAttributeFile(String file){	this.m_jsAttributeFile = new HAPStringableValueAtomic(file, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);	}
-	public void setJsConstantFile(String file){	this.m_jsConstantFile = new HAPStringableValueAtomic(file, HAPConstant.STRINGABLE_BASICVALUETYPE_STRING);	}
+	public void setJsPath(String path){	this.m_jsPath = new HAPStringableValueAtomic(path, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);	}
+	public void setJsAttributeFile(String file){	this.m_jsAttributeFile = new HAPStringableValueAtomic(file, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);	}
+	public void setJsConstantFile(String file){	this.m_jsConstantFile = new HAPStringableValueAtomic(file, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);	}
 	
 	public void addConstantGroup(HAPConstantGroup group){		this.m_groups.add(group);	}
 	
@@ -68,6 +68,12 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 		new HAPClassFilter(){
 			@Override
 			protected void process(Class checkClass, Object data) {
+				try{
+				if(checkClass.getName().contains("LHAPDataType")){
+					int kkkk = 555;
+					kkkk ++;
+				}
+				System.out.println(checkClass.getName());
 				Field[] fields = checkClass.getDeclaredFields();
 				for(Field field : fields){
 					String fieldName = field.getName();
@@ -82,6 +88,10 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 							e.printStackTrace();
 						}
 					}
+				}
+				}
+				catch(Throwable a){
+					a.printStackTrace();
 				}
 			}
 

@@ -8,9 +8,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.application.constant.HAPConstantApp;
 import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.configure.HAPConfigureManager;
+import com.nosliw.common.configure.HAPConfigureUtility;
 import com.nosliw.common.pattern.HAPPatternManager;
 import com.nosliw.common.pattern.HAPPatternProcessorInfo;
 import com.nosliw.common.test.HAPResult;
@@ -24,8 +26,8 @@ import com.nosliw.common.test.export.html.HAPTestResultExporter;
 public class HAPPatternProcessorApp extends HAPConfigurableImp{
 
 	protected HAPPatternProcessorApp() {
-		super("patternprocess.properties");
-
+		this.setConfiguration(HAPConfigureUtility.buildConfigure("patternprocess.properties", HAPPatternProcessorApp.class, true, null));
+		
 		//configure
 		HAPConfigureImp configure = HAPConfigureManager.getInstance().newConfigure()
 										.addConfigureItem("loadMode", "scan");

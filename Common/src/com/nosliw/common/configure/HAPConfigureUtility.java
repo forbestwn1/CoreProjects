@@ -78,31 +78,6 @@ public class HAPConfigureUtility {
 		return out;
 	}
 	
-	/*
-	 * create StringAbleValue from string value from configure file
-	 * it follow the format of type:value or value if the value type is String  
-	 */
-	public static HAPStringableValueAtomic getStringableValue(String strValue){
-		String[] parts = HAPNamingConversionUtility.parsePartlInfos(strValue);
-		String type = null;
-		String value = null; 
-		if(parts.length>=2){
-			value = parts[1];
-			type = parts[0];
-		}
-		else{
-			value = strValue;
-		}
-		
-		if(!HAPLiterateManager.isValidType(type)){
-			//if not invalid type
-			value = strValue;
-			type = null;
-		}
-		if(type==null)  type = HAPConstant.STRINGABLE_BASICVALUETYPE_STRING;
-		return new HAPStringableValueAtomic(value, type);
-	}
-	
 	public static HAPConfigureImp importFromProperty(HAPConfigureImp configure, String file, Class<?> class1){  return importFromProperty(configure, file, class1, null);}
 	public static HAPConfigureImp importFromProperty(HAPConfigureImp configure, String file, Class<?> class1, HAPImportConfigure importConfigure){
 		HAPConfigureImp out = configure;
@@ -236,7 +211,7 @@ public class HAPConfigureUtility {
 			out = HAPConfigureManager.getInstance().newConfigure();
 		}
 		
-		HAPConfigureUtility.importFromProperty(out, propertyFile, cs, new HAPImportConfigure().setIsHard(false));
+		out = HAPConfigureUtility.importFromProperty(out, propertyFile, cs, new HAPImportConfigure().setIsHard(false));
 		if(customerConfigure!=null) 	HAPConfigureUtility.merge(out, customerConfigure);
 		return out;
 	}

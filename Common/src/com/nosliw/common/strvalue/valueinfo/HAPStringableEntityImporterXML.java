@@ -112,7 +112,7 @@ public class HAPStringableEntityImporterXML {
 			}
 			else{
 				String value = HAPXMLUtility.getChildContent(propertyContainerEle, propertyName);
-				if(value!=null)				out = processAtomicValue(value, (HAPValueInfoAtomic)propertyInfo);
+				out = processAtomicValue(value, (HAPValueInfoAtomic)propertyInfo);
 			}
 		}
 		catch(Exception e){

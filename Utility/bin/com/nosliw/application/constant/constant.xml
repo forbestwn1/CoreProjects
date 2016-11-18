@@ -254,7 +254,7 @@
 		</definitions>
 	</attributes>
 
-	<attributes filepath="{{projectsPath}}/Common/src/com/nosliw/common/strvalue/basic" 
+	<attributes filepath="{{projectsPath}}/Common/src/com/nosliw/common/strvalue" 
 				packagename="com.nosliw.common.strvalue.basic" 
 				classname="HAPAttributeConstant" >
 		<definitions>

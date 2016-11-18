@@ -50,7 +50,7 @@ public class HAPTestSuiteInfo extends HAPTestInfo{
 	public String getType(){ return HAPConstant.TEST_TYPE_SUITE; }
 
 	public void setParentName(String name){ 
-		if(HAPBasicUtility.isStringNotEmpty(name)) this.getTestDescription().updateBasicChild(DESCRIPTION_PARENTNAME, name); 
+		if(HAPBasicUtility.isStringNotEmpty(name)) this.getTestDescription().updateAtomicChild(DESCRIPTION_PARENTNAME, name); 
 	}
 	public String getParentName(){  return (String)this.getTestDescription().getAtomicAncestorValue(DESCRIPTION_PARENTNAME); }
 	

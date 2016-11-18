@@ -24,7 +24,6 @@ public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 	@Override
 	public void init(){
 		super.init();
-		this.updateBasicChild(TYPE, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);
 	}
 
 	protected HAPValueInfoManager getValueInfoManager(){ return HAPValueInfoManager.getInstance(); }

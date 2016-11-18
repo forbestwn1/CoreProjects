@@ -22,9 +22,9 @@ abstract class HAPResolvableConfigureItem extends HAPConfigureItem{
 	
 	public String getStringContent(){ return this.m_value.getStringContent(); }
 	
-	public Object getValue(String type){
+	public Object getValue(String type, String subType){
 		if(this.m_value==null)   return null;
-		return this.m_value.getValue(type);
+		return this.m_value.getValue(type, subType);
 	}
 	
 	public HAPStringableValueAtomic getStringableValue(){ return this.m_value; }
