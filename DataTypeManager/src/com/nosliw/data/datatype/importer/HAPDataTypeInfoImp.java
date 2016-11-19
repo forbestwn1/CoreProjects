@@ -1,42 +1,52 @@
 package com.nosliw.data.datatype.importer;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.serialization.HAPSerialiableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.strvalue.HAPStringableValueAtomic;
+import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueObject;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPDataTypeInfo;
 import com.nosliw.data.HAPDataTypeVersion;
 
-public class HAPDataTypeInfoImp extends HAPStringableValueObject implements HAPDataTypeInfo{
-
-	private String m_name;
-	private HAPDataTypeVersion m_version;
-	
-	public HAPDataTypeInfoImp(){super(null);}
-	public HAPDataTypeInfoImp(String strValue) {super(strValue);	}
+public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPDataTypeInfo{
 
 	@Override
-	public String getName() {		return this.m_name;	}
+	public String getName() {		return this.getAtomicAncestorValueString(HAPDataTypeInfo.NAME);	}
 	@Override
-	public HAPDataTypeVersion getVersion() {	return this.m_version;	}
-
-	@Override
-	protected void parseStringValue(String strValue) {
-		String[] segs = HAPNamingConversionUtility.parseSegments(strValue);
-		this.m_name = segs[0];
-		if(segs.length>=2)    this.m_version = new HAPDataTypeVersionImp(segs[1]);
+	public HAPDataTypeVersion getVersion() {
+		HAPDataTypeVersionImp version = this.getAtomicAncestorValueObject(VERSION, HAPDataTypeVersionImp.class);
+		return version;
 	}
 
+	@Override
+	protected String buildLiterate(){
+		HAPDataTypeVersionImp version = (HAPDataTypeVersionImp)this.getVersion();
+		String versionLiterate = null;
+		if(version!=null){
+			versionLiterate = version.toStringValue(HAPSerializationFormat.LITERATE);
+		}
+		return HAPNamingConversionUtility.cascadeSegments(this.getName(), versionLiterate);
+	}
+
+	@Override
+	protected void buildObjectByLiterate(String literateValue){	
+		String[] segs = HAPNamingConversionUtility.parseSegments(literateValue);
+		this.updateAtomicChild(NAME, segs[0], HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
+		if(segs.length>=2){
+			HAPStringableValueAtomic versionValue = new HAPStringableValueAtomic(segs[1], HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeVersionImp.class.getName());
+			this.updateChild(VERSION, versionValue);
+		}
+	}
+	
 	public static String buildStringValue(String name, String version){
 		return HAPNamingConversionUtility.cascadeSegments(name, version);
 	}
 	
 	public HAPDataTypeInfoImp clone(){
-		HAPDataTypeInfoImp out = this.clone(this.getClass());
+		HAPDataTypeInfoImp out = new HAPDataTypeInfoImp();
+		out.cloneFrom(this);
 		return out;
-	}
-
-	protected void cloneFrom(HAPDataTypeInfoImp dataTypeInfo){
-		super.cloneFrom(dataTypeInfo);
-		this.m_name = dataTypeInfo.m_name;
-		this.m_version = dataTypeInfo.m_version.clone();
 	}
 }

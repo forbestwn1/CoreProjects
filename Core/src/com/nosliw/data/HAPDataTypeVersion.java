@@ -9,7 +9,7 @@ public interface HAPDataTypeVersion extends HAPSerializable{
 
 	@HAPAttribute
 	public static String NAME = "name";
-
+	
 	@HAPAttribute
 	public static String MAJOR = "major";
 	
@@ -21,11 +21,11 @@ public interface HAPDataTypeVersion extends HAPSerializable{
 
 	String getName();
 	
-	int getMajor();
+	Integer getMajor();
 	
-	int getMinor();
+	Integer getMinor();
 	
 	String getRevision();
 	
-	HAPDataTypeVersion clone();
+	HAPDataTypeVersion cloneVersion();
 }

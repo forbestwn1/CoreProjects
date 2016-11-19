@@ -166,7 +166,10 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 		String literateType = HAPLiterateManager.getInstance().getSubLiterateTypeByClass(subClass);
 		return (List<T>)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, literateType);	
 	}
-
+	public <T> T getObjectValue(Class<T> cs){
+		return (T)this.getValue();
+	}
+	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildFullJsonMap(jsonMap, typeJsonMap);

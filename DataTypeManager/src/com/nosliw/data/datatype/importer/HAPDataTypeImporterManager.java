@@ -67,8 +67,9 @@ public class HAPDataTypeImporterManager {
 		InputStream dataTypeStream = cls.getResourceAsStream("datatype.xml");
 		HAPDataTypeImp dataType = (HAPDataTypeImp)HAPStringableEntityImporterXML.readRootEntity(dataTypeStream, "data.datatypedef");
 		dataType.resolveByConfigure(null);
-		m_dbAccess.saveDataType(dataType);
-		
+//		m_dbAccess.saveDataType(dataType);
+
+/*		
 		List<HAPDataOperationInfo> ops = dataType.getDataOperationInfos();
 		InputStream opsStream = cls.getResourceAsStream("operations.xml");
 		if(opsStream!=null){
@@ -81,6 +82,7 @@ public class HAPDataTypeImporterManager {
 		for(HAPDataOperationInfo op : ops){
 			m_dbAccess.saveOperation((HAPDataOperationInfoImp)op, dataType);
 		}
+*/		
 	}
 
 	

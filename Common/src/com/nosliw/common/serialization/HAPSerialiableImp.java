@@ -17,10 +17,13 @@ public abstract class HAPSerialiableImp implements HAPSerializable{
 		case XML:
 			break;
 		case LITERATE:
+			this.buildObjectByLiterate((String)value);
 			break;
 		}
 	}
 
+	
+	protected void buildObjectByLiterate(String literateValue){	}
 	
 	@Override
 	public String toString(){

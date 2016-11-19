@@ -1,12 +1,12 @@
 <entity name="data.datatypedef" description="this is used to defined data type basic info" class="com.nosliw.data.datatype.importer.HAPDataTypeImp">
 
-	<property name="description" type="string" description="data type description"/>
+	<property name="description" dataType="string" description="data type description"/>
 
-	<property name="name" type="object" class="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="data type info"/>
+	<property name="name" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="data type info"/>
 
-	<property name="parentInfo" type="object" class="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="parent data type"/>
+	<property name="parentInfo" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="parent data type"/>
 
-	<property name="linkedVersion" type="object" class="com.nosliw.data.datatype.importer.HAPDataTypeVersionImp" description="lined data type in the same family"/>
+	<property name="linkedVersion" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeVersionImp" description="lined data type in the same family"/>
 
 	<property name="operations" type="list" elementTag="operation">
 		<child reference="data.operation"/>

@@ -85,7 +85,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 		this.updateAtomicChild(name, strValue, null, null);
 	}
 
-	public HAPStringableValueAtomic updateBasicChildValue(String name, Object value){
+	public HAPStringableValueAtomic updateAtomicChildValue(String name, Object value){
 		HAPStringableValueAtomic out = null; 
 		HAPStringableValue child = this.getChild(name);
 		if(child==null || child.getStringableStructure().equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){

@@ -77,7 +77,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	@Override
 	public void init(){
 		super.init();
-		this.updateBasicChildValue(MANDATORY, true);
+		this.updateAtomicChildValue(MANDATORY, true);
 		this.updateAtomicChild(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_ENTITY);
 	}
 	

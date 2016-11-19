@@ -105,6 +105,12 @@ public abstract class HAPStringableValueComplex<T extends HAPStringableValue> ex
 		if(value==null)  return null;
 		else	return value.getListValue(cs);
 	}
+
+	public <T> T getAtomicAncestorValueObject(String path, Class<T> cs){
+		HAPStringableValueAtomic value = this.getAtomicAncestorByPath(path);
+		if(value==null)  return null;
+		else	return value.getObjectValue(cs);
+	}
 	
 	protected HAPStringableValueEntity getEntityAncestorByPath(String path){ return (HAPStringableValueEntity)this.getAncestorByPath(path); }
 
