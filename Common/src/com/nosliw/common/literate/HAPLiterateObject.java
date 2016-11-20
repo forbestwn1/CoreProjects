@@ -12,10 +12,10 @@ public class HAPLiterateObject implements HAPLiterateDef{
 
 	@Override
 	public Object stringToValue(String strValue, String subType) {
-		Object out = null;
+		HAPSerializable out = null;
 		try {
-			HAPSerializable serObj = (HAPSerializable)Class.forName(subType).newInstance();
-			out = serObj.toStringValue(HAPSerializationFormat.LITERATE);
+			 out = (HAPSerializable)Class.forName(subType).newInstance();
+			 out.buildObject(strValue, HAPSerializationFormat.LITERATE);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

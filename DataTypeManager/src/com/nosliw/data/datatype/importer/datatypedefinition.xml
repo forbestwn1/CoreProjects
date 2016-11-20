@@ -7,9 +7,9 @@
 	<property name="parentInfo" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="parent data type"/>
 
 	<property name="linkedVersion" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeVersionImp" description="lined data type in the same family"/>
-
+<!-- 
 	<property name="operations" type="list" elementTag="operation">
 		<child reference="data.operation"/>
 	</property>
-
+ -->
 </entity>

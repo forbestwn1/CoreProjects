@@ -33,12 +33,12 @@ public class HAPDataTypeImporterManager {
 	private void registerValueInfos(){
 		Set<String> valueInfos = new HashSet<String>();
 		valueInfos.add("datatypedefinition.xml");
-		valueInfos.add("datatypeinfo.xml");
-		valueInfos.add("datatypeversion.xml");
+//		valueInfos.add("datatypeinfo.xml");
+//		valueInfos.add("datatypeversion.xml");
 
-		valueInfos.add("datatypeoperation.xml");
-		valueInfos.add("operationoutput.xml");
-		valueInfos.add("operationparm.xml");
+//		valueInfos.add("datatypeoperation.xml");
+//		valueInfos.add("operationoutput.xml");
+//		valueInfos.add("operationparm.xml");
 
 		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeImporterManager.class, valueInfos);
 	}
@@ -67,7 +67,7 @@ public class HAPDataTypeImporterManager {
 		InputStream dataTypeStream = cls.getResourceAsStream("datatype.xml");
 		HAPDataTypeImp dataType = (HAPDataTypeImp)HAPStringableEntityImporterXML.readRootEntity(dataTypeStream, "data.datatypedef");
 		dataType.resolveByConfigure(null);
-//		m_dbAccess.saveDataType(dataType);
+		m_dbAccess.saveDataType(dataType);
 
 /*		
 		List<HAPDataOperationInfo> ops = dataType.getDataOperationInfos();

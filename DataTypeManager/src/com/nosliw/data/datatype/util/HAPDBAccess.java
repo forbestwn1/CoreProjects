@@ -11,11 +11,12 @@ import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.configure.HAPConfigureManager;
 import com.nosliw.common.literate.HAPLiterateManager;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.HAPDataOperationOutInfo;
 import com.nosliw.data.HAPDataOperationParmInfo;
 import com.nosliw.data.datatype.importer.HAPDataOperationInfoImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeImp;
-import com.nosliw.data.datatype.importer.HAPDataTypeInfoImp1;
+import com.nosliw.data.datatype.importer.HAPDataTypeInfoImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeVersionImp;
 import com.nosliw.data.datatype.importer.js.HAPJSOperationInfo;
 
@@ -86,7 +87,7 @@ public class HAPDBAccess extends HAPConfigurableImp{
 		try {
 			String operationId = this.getId()+"";
 			m_insertOperationStatement.setString(1, operationId);
-			m_insertOperationStatement.setString(2, ((HAPDataTypeInfoImp1)dataType.getDataTypeInfo()).getStringValue());
+			m_insertOperationStatement.setString(2, ((HAPDataTypeInfoImp)dataType.getDataTypeInfo()).toStringValue(HAPSerializationFormat.LITERATE));
 			m_insertOperationStatement.setString(3, operation.getName());
 			m_insertOperationStatement.setString(4, operation.getDescription());
 			m_insertOperationStatement.execute();
@@ -98,7 +99,7 @@ public class HAPDBAccess extends HAPConfigurableImp{
 				m_insertParmStatement.setString(2, operationId);
 				m_insertParmStatement.setString(3, "parm");
 				m_insertParmStatement.setString(4, parmInfo.getName());
-				m_insertParmStatement.setString(5, ((HAPDataTypeInfoImp1)parmInfo.getDataTypeInfo()).getStringValue());
+				m_insertParmStatement.setString(5, ((HAPDataTypeInfoImp)parmInfo.getDataTypeInfo()).toStringValue(HAPSerializationFormat.LITERATE));
 				m_insertParmStatement.setString(6, parmInfo.getDescription());
 				m_insertParmStatement.execute();
 			}
@@ -109,7 +110,7 @@ public class HAPDBAccess extends HAPConfigurableImp{
 				m_insertParmStatement.setString(2, operationId);
 				m_insertParmStatement.setString(3, "output");
 				m_insertParmStatement.setString(4, null);
-				m_insertParmStatement.setString(5, ((HAPDataTypeInfoImp1)outputInfo.getDataTypeInfo()).getStringValue());
+				m_insertParmStatement.setString(5, ((HAPDataTypeInfoImp)outputInfo.getDataTypeInfo()).toStringValue(HAPSerializationFormat.LITERATE));
 				m_insertParmStatement.setString(6, outputInfo.getDescription());
 				m_insertParmStatement.execute();
 			}
@@ -121,20 +122,20 @@ public class HAPDBAccess extends HAPConfigurableImp{
 	
 	public void saveDataType(HAPDataTypeImp dataType){
 		try {
-			HAPDataTypeInfoImp1 dataTypeInfo = (HAPDataTypeInfoImp1)dataType.getDataTypeInfo();
+			HAPDataTypeInfoImp dataTypeInfo = (HAPDataTypeInfoImp)dataType.getDataTypeInfo();
 			HAPDataTypeVersionImp dataTypeVersion = (HAPDataTypeVersionImp)dataTypeInfo.getVersion();
-			HAPDataTypeInfoImp1 parentDataTypeInfo = (HAPDataTypeInfoImp1)dataType.getParentDataTypeInfo();
+			HAPDataTypeInfoImp parentDataTypeInfo = (HAPDataTypeInfoImp)dataType.getParentDataTypeInfo();
 			HAPDataTypeVersionImp linkedVersion = (HAPDataTypeVersionImp)dataType.getLinkedVersion();
 			
-			m_insertDatatTypeStatement.setString(1, dataTypeInfo.getStringValue());
+			m_insertDatatTypeStatement.setString(1, dataTypeInfo.toStringValue(HAPSerializationFormat.LITERATE));
 			m_insertDatatTypeStatement.setString(2, dataTypeInfo.getName());
-			m_insertDatatTypeStatement.setString(3, dataTypeVersion.getStringValue());
+			m_insertDatatTypeStatement.setString(3, dataTypeVersion.toStringValue(HAPSerializationFormat.LITERATE));
 			m_insertDatatTypeStatement.setInt(4, dataTypeVersion.getMajor());
 			m_insertDatatTypeStatement.setInt(5, dataTypeVersion.getMinor());
 			m_insertDatatTypeStatement.setString(6, dataTypeVersion.getRevision());
 			m_insertDatatTypeStatement.setString(7, dataType.getDescription());
-			m_insertDatatTypeStatement.setString(8, parentDataTypeInfo==null?null:parentDataTypeInfo.getStringValue());
-			m_insertDatatTypeStatement.setString(9, linkedVersion==null?null:linkedVersion.getStringValue());
+			m_insertDatatTypeStatement.setString(8, parentDataTypeInfo==null?null:parentDataTypeInfo.toStringValue(HAPSerializationFormat.LITERATE));
+			m_insertDatatTypeStatement.setString(9, linkedVersion==null?null:linkedVersion.toStringValue(HAPSerializationFormat.LITERATE));
 			
 			m_insertDatatTypeStatement.execute();
 		} catch (SQLException e) {
@@ -145,7 +146,7 @@ public class HAPDBAccess extends HAPConfigurableImp{
 	public String getOperationId(String dataTypeName, String dataTypeVersion, String operation){
 		String out = null;
 		try {
-			this.m_getOperationIdStatement.setString(1, HAPDataTypeInfoImp1.buildStringValue(dataTypeName, dataTypeVersion));
+			this.m_getOperationIdStatement.setString(1, HAPDataTypeInfoImp.buildStringValue(dataTypeName, dataTypeVersion));
 			this.m_getOperationIdStatement.setString(2, operation);
 			ResultSet resultSet = this.m_getOperationIdStatement.executeQuery();
 			if(resultSet.next()){
@@ -164,7 +165,7 @@ public class HAPDBAccess extends HAPConfigurableImp{
 			this.m_insertJSOperationStatement.setString(1, this.getId()+"");
 			this.m_insertJSOperationStatement.setString(2, jsOpInfo.getOperationId());
 			this.m_insertJSOperationStatement.setString(3, jsOpInfo.getScript());
-			this.m_insertJSOperationStatement.setString(4, HAPLiterateManager.valueToString(jsOpInfo.getResources()));
+//			this.m_insertJSOperationStatement.setString(4, HAPLiterateManager.valueToString(jsOpInfo.getResources()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

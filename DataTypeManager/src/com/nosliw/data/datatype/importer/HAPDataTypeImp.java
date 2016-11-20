@@ -18,16 +18,18 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	public static String OPERATIONS = "operations";
 
 	@Override
-	public HAPDataTypeInfo getDataTypeInfo() {	return (HAPDataTypeInfo)this.getAncestorByPath(NAME);	}
+	public HAPDataTypeInfo getDataTypeInfo() {	
+		return (HAPDataTypeInfo)this.getAtomicValueAncestorByPath(NAME);
+	}
 
 	@Override
 	public String getDescription() {	return this.getAtomicAncestorValueString(DESCRIPTION); }
 
 	@Override
-	public HAPDataTypeInfo getParentDataTypeInfo() {	return (HAPDataTypeInfo)this.getAncestorByPath(PARENTINFO);	}
+	public HAPDataTypeInfo getParentDataTypeInfo() {	return (HAPDataTypeInfo)this.getAtomicValueAncestorByPath(PARENTINFO);	}
 
 	@Override
-	public HAPDataTypeVersion getLinkedVersion() {  return (HAPDataTypeVersion)this.getAncestorByPath(LINKEDVERSION);	}
+	public HAPDataTypeVersion getLinkedVersion() {  return (HAPDataTypeVersion)this.getAtomicValueAncestorByPath(LINKEDVERSION);	}
 
 	public List<HAPDataOperationInfo> getDataOperationInfos(){
 		HAPStringableValueList list = (HAPStringableValueList)this.getListAncestorByPath(OPERATIONS);

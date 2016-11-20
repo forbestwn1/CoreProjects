@@ -16,7 +16,7 @@ public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPD
 	public String getName() {		return this.getAtomicAncestorValueString(HAPDataTypeInfo.NAME);	}
 	@Override
 	public HAPDataTypeVersion getVersion() {
-		HAPDataTypeVersionImp version = this.getAtomicAncestorValueObject(VERSION, HAPDataTypeVersionImp.class);
+		HAPDataTypeVersionImp version = (HAPDataTypeVersionImp)this.getAtomicAncestorValueObject(VERSION, HAPDataTypeVersionImp.class);
 		return version;
 	}
 

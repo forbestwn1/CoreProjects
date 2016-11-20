@@ -167,7 +167,7 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 		return (List<T>)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, literateType);	
 	}
 	public <T> T getObjectValue(Class<T> cs){
-		return (T)this.getValue();
+		return (T)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, cs.getName());
 	}
 	
 	@Override

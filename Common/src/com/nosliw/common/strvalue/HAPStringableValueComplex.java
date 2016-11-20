@@ -8,6 +8,7 @@ import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPBasicUtility;
 
 public abstract class HAPStringableValueComplex<T extends HAPStringableValue> extends HAPStringableValue{
@@ -100,13 +101,13 @@ public abstract class HAPStringableValueComplex<T extends HAPStringableValue> ex
 		else	return value.getFloatValue();
 	}
 	
-	public List<T> getAtomicAncestorValueArray(String path, Class<T> cs){
+	public <K> List<K> getAtomicAncestorValueArray(String path, Class<K> cs){
 		HAPStringableValueAtomic value = this.getAtomicAncestorByPath(path);
 		if(value==null)  return null;
 		else	return value.getListValue(cs);
 	}
 
-	public <T> T getAtomicAncestorValueObject(String path, Class<T> cs){
+	public <K> K getAtomicAncestorValueObject(String path, Class<K> cs){
 		HAPStringableValueAtomic value = this.getAtomicAncestorByPath(path);
 		if(value==null)  return null;
 		else	return value.getObjectValue(cs);
@@ -122,7 +123,11 @@ public abstract class HAPStringableValueComplex<T extends HAPStringableValue> ex
 
 	protected HAPStringableValueAtomic getAtomicAncestorByPath(String path){  return (HAPStringableValueAtomic)this.getAncestorByPath(path); }
 	
-	
+	protected Object getAtomicValueAncestorByPath(String path){
+		HAPStringableValueAtomic atomicValue = this.getAtomicAncestorByPath(path);
+		if(atomicValue==null)  return null;
+		else return atomicValue.getValue();
+	}
 
 	public HAPStringableValue getAncestorByPath(String path){
 		HAPStringableValue out = this;

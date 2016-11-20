@@ -10,7 +10,7 @@ public class HAPValueInfoAtomic extends HAPValueInfo{
 
 	public static final String DATATYPE = "dataType";
 
-	public static final String DATASUBTYPE = "dataSubType";
+	public static final String SUBDATATYPE = "subDataType";
 	
 	private HAPValueInfoAtomic(){}
 	
@@ -28,7 +28,7 @@ public class HAPValueInfoAtomic extends HAPValueInfo{
 	}
 	
 	public String getDataType(){	return this.getAtomicAncestorValueString(HAPValueInfoAtomic.DATATYPE);	}
-	public String getSubDataType(){	return this.getAtomicAncestorValueString(HAPValueInfoAtomic.DATASUBTYPE);	}
+	public String getSubDataType(){	return this.getAtomicAncestorValueString(HAPValueInfoAtomic.SUBDATATYPE);	}
 	
 	
 	@Override
