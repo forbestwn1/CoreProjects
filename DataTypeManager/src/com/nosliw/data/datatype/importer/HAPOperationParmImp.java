@@ -1,10 +1,11 @@
 package com.nosliw.data.datatype.importer;
 
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
-import com.nosliw.data.HAPDataOperationParmInfo;
+import com.nosliw.data.HAPOperationParmInfo;
+import com.nosliw.data.HAPDataTypeCriteria;
 import com.nosliw.data.HAPDataTypeInfo;
 
-public class HAPOperationParmImp extends HAPStringableValueEntity implements HAPDataOperationParmInfo{
+public class HAPOperationParmImp extends HAPStringableValueEntity implements HAPOperationParmInfo{
 
 	@Override
 	public String getName() {		return this.getAtomicAncestorValueString(NAME);	}
@@ -13,6 +14,6 @@ public class HAPOperationParmImp extends HAPStringableValueEntity implements HAP
 	public String getDescription() {		return this.getAtomicAncestorValueString(DESCRIPTION);  }
 
 	@Override
-	public HAPDataTypeInfo getDataTypeInfo() {		return (HAPDataTypeInfo)this.getObjectAncestorByPath(DATATYPE);	}
+	public HAPDataTypeCriteria getDataTypeCriteria() {		return (HAPDataTypeCriteria)this.getAtomicValueAncestorByPath(DATATYPECRITERIA);	}
 
 }

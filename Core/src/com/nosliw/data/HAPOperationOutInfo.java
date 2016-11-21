@@ -4,7 +4,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 
 @HAPEntityWithAttribute(baseName="DATAOPERATIONOUTPUTINFO")
-public interface HAPDataOperationOutInfo {
+public interface HAPOperationOutInfo {
 
 	@HAPAttribute
 	public static String DESCRIPTION = "description";

@@ -4,10 +4,10 @@ public interface HAPOperationManager {
 
 	public String getLanguage();
 	
-	public HAPDataOperationResource getDataOperationResource(HAPDataOperationInfo dataOpInfo);
+	public HAPOperationResource getDataOperationResource(HAPOperationInfo dataOpInfo);
 
-	public HAPDataOperationResource getExpressionExecuteResource(HAPExpression expression);
+	public HAPOperationResource getExpressionExecuteResource(HAPExpression expression);
 
-	public HAPDataOperationResource prepareResources(HAPDataOperationResource resources);
+	public HAPOperationResource prepareResources(HAPOperationResource resources);
 
 }

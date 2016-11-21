@@ -4,8 +4,8 @@
 	
 		<operation name="host" >
 			<parms>
-				<parm name="aa" dataType="core.text"/>
-				<parm name="bb" dataType="core.text"/>
+				<parm name="aa" dataTypeCriteria="core.text"/>
+				<parm name="bb" dataTypeCriteria="core.text"/>
 			</parms>
 		</operation>
 	

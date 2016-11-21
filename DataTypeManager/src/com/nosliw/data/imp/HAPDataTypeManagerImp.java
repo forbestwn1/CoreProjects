@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.data.HAPDataOperationInfo;
+import com.nosliw.data.HAPOperationInfo;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeFamily;
 import com.nosliw.data.HAPDataTypeInfo;
@@ -34,37 +34,37 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 	}
 
 	@Override
-	public Set<HAPDataOperationInfo> getOperationInfos(HAPDataTypeInfo dataTypeInfo) {
+	public Set<HAPOperationInfo> getOperationInfos(HAPDataTypeInfo dataTypeInfo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public HAPDataOperationInfo getOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name) {
+	public HAPOperationInfo getOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<HAPDataOperationInfo> getLocalOperationInfos(HAPDataTypeInfo dataTypeInfo) {
+	public Set<HAPOperationInfo> getLocalOperationInfos(HAPDataTypeInfo dataTypeInfo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public HAPDataOperationInfo getLocalOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name) {
+	public HAPOperationInfo getLocalOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<HAPDataOperationInfo> getNewDataOperations(HAPDataTypeInfo dataTypeInfo) {
+	public Set<HAPOperationInfo> getNewDataOperations(HAPDataTypeInfo dataTypeInfo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public HAPDataOperationInfo getNewDataOperation(HAPDataTypeInfo dataTypeInfo,
+	public HAPOperationInfo getNewDataOperation(HAPDataTypeInfo dataTypeInfo,
 			Map<String, HAPDataTypeInfo> parmsDataTypeInfos) {
 		// TODO Auto-generated method stub
 		return null;

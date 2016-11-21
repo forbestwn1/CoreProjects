@@ -1,9 +1,9 @@
 <entity name="data.operationparm" class="com.nosliw.data.datatype.importer.HAPOperationParmImp" description="">
 
-	<property name="name" type="string" description=""/>
+	<property name="name" dataType="string" description=""/>
 
-	<property name="description" type="string" description=""/>
+	<property name="description" dataType="string" description=""/>
 
-	<property name="dataType" type="object" class="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="data type"/>
+	<property name="dataTypeCriteria" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeCriteriaImp" description="data type"/>
 
 </entity>

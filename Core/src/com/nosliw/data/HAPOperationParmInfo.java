@@ -4,7 +4,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 
 @HAPEntityWithAttribute(baseName="DATAOPERATIONPARMINFO")
-public interface HAPDataOperationParmInfo {
+public interface HAPOperationParmInfo {
 
 	@HAPAttribute
 	public static String NAME = "name";
@@ -13,12 +13,12 @@ public interface HAPDataOperationParmInfo {
 	public static String DESCRIPTION = "description";
 
 	@HAPAttribute
-	public static String DATATYPE = "dataType";
+	public static String DATATYPECRITERIA = "dataTypeCriteria";
 
 	String getName();
 	
 	String getDescription();
 	
-	HAPDataTypeInfo getDataTypeInfo();
+	HAPDataTypeCriteria getDataTypeCriteria();
 
 }

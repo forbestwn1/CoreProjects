@@ -1,8 +1,8 @@
-<entity name="data.operation" class="com.nosliw.data.datatype.importer.HAPDataOperationInfoImp" description="">
+<entity name="data.operation" class="com.nosliw.data.datatype.importer.HAPOperationInfoImp" description="">
 
-	<property name="description" type="string" description=""/>
+	<property name="description" dataType="string" description=""/>
 
-	<property name="name" type="string" description=""/>
+	<property name="name" dataType="string" description=""/>
 
 	<property name="output" reference="data.operationoutput" description=""/>
 

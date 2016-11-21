@@ -1,11 +1,9 @@
 package com.nosliw.data.datatype.importer;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.serialization.HAPSerialiableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
-import com.nosliw.common.strvalue.HAPStringableValueObject;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPDataTypeInfo;
 import com.nosliw.data.HAPDataTypeVersion;

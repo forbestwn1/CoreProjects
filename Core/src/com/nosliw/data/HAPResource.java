@@ -1,4 +1,4 @@
-package com.nosliw.data.datatype.importer;
+package com.nosliw.data;
 
 import com.nosliw.common.serialization.HAPSerializable;
 

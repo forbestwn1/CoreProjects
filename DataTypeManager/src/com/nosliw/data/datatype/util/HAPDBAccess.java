@@ -10,11 +10,11 @@ import java.util.Map;
 import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.configure.HAPConfigureManager;
-import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.HAPDataOperationOutInfo;
-import com.nosliw.data.HAPDataOperationParmInfo;
-import com.nosliw.data.datatype.importer.HAPDataOperationInfoImp;
+import com.nosliw.data.HAPOperationOutInfo;
+import com.nosliw.data.HAPOperationParmInfo;
+import com.nosliw.data.datatype.importer.HAPOperationInfoImp;
+import com.nosliw.data.datatype.importer.HAPDataTypeCriteriaImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeInfoImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeVersionImp;
@@ -83,7 +83,7 @@ public class HAPDBAccess extends HAPConfigurableImp{
 	}
 	
 	   
-	public void saveOperation(HAPDataOperationInfoImp operation, HAPDataTypeImp dataType){
+	public void saveOperation(HAPOperationInfoImp operation, HAPDataTypeImp dataType){
 		try {
 			String operationId = this.getId()+"";
 			m_insertOperationStatement.setString(1, operationId);
@@ -92,19 +92,19 @@ public class HAPDBAccess extends HAPConfigurableImp{
 			m_insertOperationStatement.setString(4, operation.getDescription());
 			m_insertOperationStatement.execute();
 			
-			Map<String, HAPDataOperationParmInfo> parms = operation.getParmsInfo();
+			Map<String, HAPOperationParmInfo> parms = operation.getParmsInfo();
 			for(String name : parms.keySet()){
-				HAPDataOperationParmInfo parmInfo = parms.get(name);
+				HAPOperationParmInfo parmInfo = parms.get(name);
 				m_insertParmStatement.setString(1, this.getId()+"");
 				m_insertParmStatement.setString(2, operationId);
 				m_insertParmStatement.setString(3, "parm");
 				m_insertParmStatement.setString(4, parmInfo.getName());
-				m_insertParmStatement.setString(5, ((HAPDataTypeInfoImp)parmInfo.getDataTypeInfo()).toStringValue(HAPSerializationFormat.LITERATE));
+				m_insertParmStatement.setString(5, ((HAPDataTypeCriteriaImp)parmInfo.getDataTypeCriteria()).toStringValue(HAPSerializationFormat.LITERATE));
 				m_insertParmStatement.setString(6, parmInfo.getDescription());
 				m_insertParmStatement.execute();
 			}
 			
-			HAPDataOperationOutInfo outputInfo = operation.getOutputInfo();
+			HAPOperationOutInfo outputInfo = operation.getOutputInfo();
 			if(outputInfo!=null){
 				m_insertParmStatement.setString(1, this.getId()+"");
 				m_insertParmStatement.setString(2, operationId);

@@ -1,7 +1,7 @@
 package com.nosliw.data.operation.java;
 
-import com.nosliw.data.HAPDataOperationInfo;
-import com.nosliw.data.HAPDataOperationResource;
+import com.nosliw.data.HAPOperationInfo;
+import com.nosliw.data.HAPOperationResource;
 import com.nosliw.data.HAPExpression;
 import com.nosliw.data.HAPOperationManager;
 
@@ -13,17 +13,17 @@ public class HAPOperationManagerJava implements HAPOperationManager{
 	}
 
 	@Override
-	public HAPDataOperationResource getDataOperationResource(HAPDataOperationInfo dataOpInfo) {
+	public HAPOperationResource getDataOperationResource(HAPOperationInfo dataOpInfo) {
 		return null;
 	}
 
 	@Override
-	public HAPDataOperationResource getExpressionExecuteResource(HAPExpression expression) {
+	public HAPOperationResource getExpressionExecuteResource(HAPExpression expression) {
 		return null;
 	}
 
 	@Override
-	public HAPDataOperationResource prepareResources(HAPDataOperationResource resources) {
+	public HAPOperationResource prepareResources(HAPOperationResource resources) {
 		return null;
 	}
 

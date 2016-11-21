@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 
 @HAPEntityWithAttribute(baseName="DATAOPERATIONINFO")
-public interface HAPDataOperationInfo {
+public interface HAPOperationInfo {
 
 	@HAPAttribute
 	public static String NAME = "name";
@@ -24,8 +24,8 @@ public interface HAPDataOperationInfo {
 
 	String getDescription();
 	
-	Map<String, HAPDataOperationParmInfo> getParmsInfo();
+	Map<String, HAPOperationParmInfo> getParmsInfo();
 	
-	HAPDataOperationOutInfo getOutputInfo();
+	HAPOperationOutInfo getOutputInfo();
 	
 }

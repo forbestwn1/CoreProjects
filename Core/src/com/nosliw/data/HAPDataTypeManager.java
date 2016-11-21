@@ -16,17 +16,17 @@ public interface HAPDataTypeManager {
 	
 	//*****************************************  Operation Info
 	 //get all available operations info (local, older version, parent)
-	public Set<HAPDataOperationInfo> getOperationInfos(HAPDataTypeInfo dataTypeInfo);
-	public HAPDataOperationInfo getOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name);
+	public Set<HAPOperationInfo> getOperationInfos(HAPDataTypeInfo dataTypeInfo);
+	public HAPOperationInfo getOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name);
 	//get only locally defined operation infos
-	public Set<HAPDataOperationInfo> getLocalOperationInfos(HAPDataTypeInfo dataTypeInfo);
-	public HAPDataOperationInfo getLocalOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name);
+	public Set<HAPOperationInfo> getLocalOperationInfos(HAPDataTypeInfo dataTypeInfo);
+	public HAPOperationInfo getLocalOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name);
 	
 	 //get constructor (newData) operations
-	public Set<HAPDataOperationInfo> getNewDataOperations(HAPDataTypeInfo dataTypeInfo);
+	public Set<HAPOperationInfo> getNewDataOperations(HAPDataTypeInfo dataTypeInfo);
 	
 	//get new data operation info by parms type
-	public HAPDataOperationInfo getNewDataOperation(HAPDataTypeInfo dataTypeInfo, Map<String, HAPDataTypeInfo> parmsDataTypeInfos);
+	public HAPOperationInfo getNewDataOperation(HAPDataTypeInfo dataTypeInfo, Map<String, HAPDataTypeInfo> parmsDataTypeInfos);
 
 	
 	

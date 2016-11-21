@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueList;
-import com.nosliw.data.HAPDataOperationInfo;
+import com.nosliw.data.HAPOperationInfo;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeInfo;
 import com.nosliw.data.HAPDataTypeVersion;
@@ -31,8 +31,8 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	@Override
 	public HAPDataTypeVersion getLinkedVersion() {  return (HAPDataTypeVersion)this.getAtomicValueAncestorByPath(LINKEDVERSION);	}
 
-	public List<HAPDataOperationInfo> getDataOperationInfos(){
+	public List<HAPOperationInfo> getDataOperationInfos(){
 		HAPStringableValueList list = (HAPStringableValueList)this.getListAncestorByPath(OPERATIONS);
-		return (List<HAPDataOperationInfo>)list.getListValue();
+		return (List<HAPOperationInfo>)list.getListValue();
 	}
 }
