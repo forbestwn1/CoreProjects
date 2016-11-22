@@ -1,5 +1,8 @@
 package com.nosliw.data.datatype.importer.js;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +14,9 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 
+import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.datatype.importer.HAPResourceDataOperationImp;
 import com.nosliw.data.datatype.util.HAPDBAccess;
 
 public class HAPJSImporter {
@@ -20,8 +25,34 @@ public class HAPJSImporter {
 	
 	private static String HEAD = null;
 	
-	public void importFromFile(InputStream inputStream){
-		String content = this.getHead() + HAPFileUtility.readFile(inputStream);
+	public HAPJSImporter(HAPDBAccess dbAccess){
+		this.m_dbAccess = dbAccess;
+	}
+	
+	public void importFromFolder(String folderPath, List<HAPJSOperationInfo> out){
+		File folder = new File(folderPath);
+		File[] listOfFiles = folder.listFiles();
+	    for (int i = 0; i < listOfFiles.length; i++) {
+	    	File file = listOfFiles[i];
+	    	if (listOfFiles[i].isFile()) {
+	    		String fileName = file.getName();
+	    		if(fileName.endsWith(".js")){
+	    			try {
+						out.addAll(this.importFromFile(new FileInputStream(file)));
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
+	    		}
+	    	} else if (listOfFiles[i].isDirectory()) {
+	    		this.importFromFolder(file.getPath(), out);
+	    	}
+	    }		
+	}
+	
+	public List<HAPJSOperationInfo> importFromFile(InputStream inputStream){
+        List<HAPJSOperationInfo> out = new ArrayList<HAPJSOperationInfo>();
+
+        String content = this.getHead() + HAPFileUtility.readFile(inputStream);
 		Context cx = Context.enter();
 	    try {
 	        Scriptable scope = cx.initStandardObjects(null);
@@ -42,7 +73,6 @@ public class HAPJSImporter {
             	}
             }
 
-            List<HAPJSOperationInfo> out = new ArrayList<HAPJSOperationInfo>();
             String dataTypeId = null;
             if(dataTypeName!=null){
                 Set<Object> keys1 = operationsObj.keySet();
@@ -62,18 +92,33 @@ public class HAPJSImporter {
             // Exit from the context.
             Context.exit();
         }	
+	    return out;
     }
 
 	private void saveOperations(List<HAPJSOperationInfo> ops){
-		
+		for(HAPJSOperationInfo op : ops){
+			this.m_dbAccess.saveOperationInfoJS(op);
+		}
 	}
 	
 	private String getOperationId(String dataTypeName, String dataTypeVersion, String operation){
-		return null;
+		return this.m_dbAccess.getOperationId(dataTypeName, dataTypeVersion, operation);
 	}
 	
 	private String getResources(String script){
-		return null;
+		List<HAPResourceDataOperationImp> out = new ArrayList<HAPResourceDataOperationImp>();
+		
+		String lines[] = script.split("\\r?\\n");
+		for(String line : lines){
+			if(line.contains(".operate(")){
+				String[] segs = line.split("\"");
+				String dataType = segs[1];
+				String operation = segs[3];
+				HAPResourceDataOperationImp resource = new HAPResourceDataOperationImp(dataType, operation);
+				out.add(resource);
+			}
+		}
+		return HAPLiterateManager.getInstance().valueToString(out);
 	}
 	
 	private String getHead(){

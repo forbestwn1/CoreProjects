@@ -14,6 +14,6 @@ public interface HAPResourceDataOperation extends HAPResource{
 	
 	HAPDataTypeCriteria getDataTypeCriteria();
 	
-	HAPOperationInfo getOperation();
+	String getOperation();
 	
 }

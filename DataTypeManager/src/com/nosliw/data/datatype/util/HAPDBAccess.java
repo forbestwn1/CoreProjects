@@ -10,6 +10,7 @@ import java.util.Map;
 import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.configure.HAPConfigureManager;
+import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.HAPOperationOutInfo;
 import com.nosliw.data.HAPOperationParmInfo;
@@ -158,14 +159,12 @@ public class HAPDBAccess extends HAPConfigurableImp{
 		return out;
 	}
 
-	
-	
 	public void saveOperationInfoJS(HAPJSOperationInfo jsOpInfo){
 		try {
 			this.m_insertJSOperationStatement.setString(1, this.getId()+"");
 			this.m_insertJSOperationStatement.setString(2, jsOpInfo.getOperationId());
 			this.m_insertJSOperationStatement.setString(3, jsOpInfo.getScript());
-//			this.m_insertJSOperationStatement.setString(4, HAPLiterateManager.valueToString(jsOpInfo.getResources()));
+			this.m_insertJSOperationStatement.setString(4, HAPLiterateManager.getInstance().valueToString(jsOpInfo.getResources()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

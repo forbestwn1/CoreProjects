@@ -1,10 +1,12 @@
 package com.nosliw.data.datatype.importer;
 
+import java.io.File;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -18,16 +20,22 @@ import com.nosliw.data.HAPOperationInfo;
 import com.nosliw.data.HAPOperationOutInfo;
 import com.nosliw.data.HAPOperationParmInfo;
 import com.nosliw.data.HAPDataTypeProvider;
+import com.nosliw.data.datatype.importer.js.HAPJSImporter;
+import com.nosliw.data.datatype.importer.js.HAPJSOperationInfo;
 import com.nosliw.data.datatype.util.HAPDBAccess;
 
 public class HAPDataTypeImporterManager {
 	
 	private HAPDBAccess m_dbAccess; 
 	
+	private HAPJSImporter m_jsImporter;
+	
 	public HAPDataTypeImporterManager(){
 		this.m_dbAccess = HAPDBAccess.getInstance();
 		
 		registerValueInfos();
+		
+		this.m_jsImporter = new HAPJSImporter(this.m_dbAccess);
 	}
 	
 	private void registerValueInfos(){
@@ -80,6 +88,14 @@ public class HAPDataTypeImporterManager {
 		
 		for(HAPOperationInfo op : ops){
 			m_dbAccess.saveOperation((HAPOperationInfoImp)op, dataType);
+		}
+		
+		//find js operation
+		File f = new File(cls.getProtectionDomain().getCodeSource().getLocation().getPath());
+		List<HAPJSOperationInfo> jsout = new ArrayList<HAPJSOperationInfo>();
+		this.m_jsImporter.importFromFolder(f.getPath(), jsout);
+		for(HAPJSOperationInfo jsInfo : jsout){
+			this.m_dbAccess.saveOperationInfoJS(jsInfo);
 		}
 	}
 
