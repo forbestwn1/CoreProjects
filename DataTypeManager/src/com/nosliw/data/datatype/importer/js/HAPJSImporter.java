@@ -25,11 +25,20 @@ public class HAPJSImporter {
 	
 	private static String HEAD = null;
 	
-	public HAPJSImporter(HAPDBAccess dbAccess){
-		this.m_dbAccess = dbAccess;
+	public HAPJSImporter(){
+		this.m_dbAccess = HAPDBAccess.getInstance();
 	}
 	
-	public void importFromFolder(String folderPath, List<HAPJSOperationInfo> out){
+	public void loadFromFolder(String folderPath){
+		//find js operation
+		List<HAPJSOperationInfo> jsout = new ArrayList<HAPJSOperationInfo>();
+		this.importFromFolder(folderPath, jsout);
+		for(HAPJSOperationInfo jsInfo : jsout){
+			this.m_dbAccess.saveOperationInfoJS(jsInfo);
+		}
+	}
+	
+	private void importFromFolder(String folderPath, List<HAPJSOperationInfo> out){
 		File folder = new File(folderPath);
 		File[] listOfFiles = folder.listFiles();
 	    for (int i = 0; i < listOfFiles.length; i++) {
@@ -49,7 +58,7 @@ public class HAPJSImporter {
 	    }		
 	}
 	
-	public List<HAPJSOperationInfo> importFromFile(InputStream inputStream){
+	private List<HAPJSOperationInfo> importFromFile(InputStream inputStream){
         List<HAPJSOperationInfo> out = new ArrayList<HAPJSOperationInfo>();
 
         String content = this.getHead() + HAPFileUtility.readFile(inputStream);
@@ -57,7 +66,8 @@ public class HAPJSImporter {
 	    try {
 	        Scriptable scope = cx.initStandardObjects(null);
 
-            NativeObject operationsObj = (NativeObject)cx.evaluateString(scope, content, "<cmd>", 1, null);
+	        Object obj = cx.evaluateString(scope, content, "<cmd>", 1, null);
+            NativeObject operationsObj = (NativeObject)obj;
 
             //Get data type info
             String dataTypeName = null;
@@ -80,7 +90,7 @@ public class HAPJSImporter {
                 	Object attrObj = ScriptableObject.getProperty(operationsObj, (String)key);
                 	if(attrObj instanceof Function){
                     	String script = Context.toString(attrObj);
-                    	String resources = this.getResources(script);
+                    	List<HAPResourceDataOperationImp> resources = this.getResources(script);
                     	String operationId = this.getOperationId(dataTypeName, dataTypeVersion, (String)key);
                     	HAPJSOperationInfo opInfo = new HAPJSOperationInfo(script, resources, operationId);
                     	out.add(opInfo);
@@ -105,7 +115,7 @@ public class HAPJSImporter {
 		return this.m_dbAccess.getOperationId(dataTypeName, dataTypeVersion, operation);
 	}
 	
-	private String getResources(String script){
+	private List<HAPResourceDataOperationImp> getResources(String script){
 		List<HAPResourceDataOperationImp> out = new ArrayList<HAPResourceDataOperationImp>();
 		
 		String lines[] = script.split("\\r?\\n");
@@ -118,7 +128,7 @@ public class HAPJSImporter {
 				out.add(resource);
 			}
 		}
-		return HAPLiterateManager.getInstance().valueToString(out);
+		return out;
 	}
 	
 	private String getHead(){

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.data.HAPResource;
+import com.nosliw.data.datatype.importer.HAPResourceDataOperationImp;
 
 public class HAPJSOperationInfo {
 
@@ -13,10 +14,11 @@ public class HAPJSOperationInfo {
 	
 	private List<HAPResource> m_resources;
 	
-	public HAPJSOperationInfo(String script, String resources, String operationId){
+	public HAPJSOperationInfo(String script, List<HAPResourceDataOperationImp> resources, String operationId){
 		this.m_operationId = operationId;
 		this.m_script = script;
 		this.m_resources = new ArrayList<HAPResource>();
+		this.m_resources.addAll(resources);
 	}
 	
 	public String getOperationId(){

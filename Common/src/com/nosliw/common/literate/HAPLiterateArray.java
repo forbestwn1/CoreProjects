@@ -44,15 +44,11 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 	@Override
 	public String valueToString(Object value) {  
 		StringBuffer arrayStr = new StringBuffer();
-		arrayStr.append(HAPConstant.SEPERATOR_ARRAYSTART);
-		
 		List<String> elesStr = new ArrayList<String>();
 		for(Object eleObj : (List<Object>)value){
 			elesStr.add(HAPLiterateManager.getInstance().valueToString(eleObj));
 		}
-		
 		arrayStr.append(HAPNamingConversionUtility.cascadeElement(elesStr.toArray(new String[0])));
-		arrayStr.append(HAPConstant.SEPERATOR_ARRAYEND);
 		return arrayStr.toString(); 
 		
 	}
@@ -61,6 +57,7 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 	public Set<Class> getObjectClasses() {  
 		Set<Class> out = new HashSet<Class>(); 
 		out.add(List.class);
+		out.add(ArrayList.class);
 		return out;
 	}
 

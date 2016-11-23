@@ -165,6 +165,8 @@ public class HAPDBAccess extends HAPConfigurableImp{
 			this.m_insertJSOperationStatement.setString(2, jsOpInfo.getOperationId());
 			this.m_insertJSOperationStatement.setString(3, jsOpInfo.getScript());
 			this.m_insertJSOperationStatement.setString(4, HAPLiterateManager.getInstance().valueToString(jsOpInfo.getResources()));
+			
+			this.m_insertJSOperationStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
