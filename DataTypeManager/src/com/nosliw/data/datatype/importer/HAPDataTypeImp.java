@@ -6,6 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueList;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPOperationInfo;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeInfo;
@@ -17,6 +18,16 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	@HAPAttribute
 	public static String OPERATIONS = "operations";
 
+	public static String ID = "id";
+	
+	public HAPDataTypeImp(String Id, String name, String version, String description, String parent, String linked){
+		this.updateAtomicChild(ID, Id);
+		this.updateAtomicChild(NAME, HAPDataTypeInfoImp.buildStringValue(name, version), HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeInfoImp.class.getName());
+		this.updateAtomicChild(DESCRIPTION, description);
+		this.updateAtomicChild(PARENTINFO, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeInfoImp.class.getName());
+		this.updateAtomicChild(LINKEDVERSION, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeVersionImp.class.getName());
+	}
+	
 	@Override
 	public HAPDataTypeInfo getDataTypeInfo() {	
 		return (HAPDataTypeInfo)this.getAtomicValueAncestorByPath(NAME);

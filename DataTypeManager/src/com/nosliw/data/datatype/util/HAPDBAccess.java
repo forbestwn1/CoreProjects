@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.configure.HAPConfigurableImp;
@@ -12,6 +14,10 @@ import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.configure.HAPConfigureManager;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.data.HAPDataTypeInfo;
+import com.nosliw.data.HAPDataTypeVersion;
+import com.nosliw.data.HAPOperationInfo;
 import com.nosliw.data.HAPOperationOutInfo;
 import com.nosliw.data.HAPOperationParmInfo;
 import com.nosliw.data.datatype.importer.HAPOperationInfoImp;
@@ -37,7 +43,12 @@ public class HAPDBAccess extends HAPConfigurableImp{
 	   PreparedStatement  m_insertDatatTypeStatement = null;
 	   PreparedStatement  m_insertOperationStatement = null;
 	   PreparedStatement  m_insertParmStatement = null;
-	   PreparedStatement m_getOperationIdStatement = null;
+
+	   PreparedStatement m_getOperationInfoStatement = null;
+	   PreparedStatement m_getOperationInfosByDataTypeInfoStatement = null;
+	   PreparedStatement m_getOperationInfosByDataTypeNameStatement = null;
+	   PreparedStatement m_getDataTypeByInfoStatement = null;
+	   PreparedStatement m_getDataTypesByNameStatement = null;
 
 	   PreparedStatement  m_insertJSOperationStatement = null;
 	   
@@ -72,10 +83,15 @@ public class HAPDBAccess extends HAPConfigurableImp{
 					this.getConfigureValue("username").getStringContent(),
 					this.getConfigureValue("password").getStringContent());		
 			this.m_insertDatatTypeStatement = m_connection.prepareStatement("INSERT INTO datatypedef (ID, NAME, VERSION, VERSION_MAJOR, VERSION_MINOR, VERSION_REVISION, DESCRIPTION, PARENTINFO, LINKEDVERSION) VALUES (?,?,?,?,?,?,?,?,?)");
-			this.m_insertOperationStatement = m_connection.prepareStatement("INSERT INTO DATAOPERATION (ID, DATATYPE, NAME, DESCRIPTION) VALUES (?,?,?,?)");
+			this.m_insertOperationStatement = m_connection.prepareStatement("INSERT INTO DATAOPERATION (ID, DATATYPENAME, DATATYPEVERSION, NAME, DESCRIPTION) VALUES (?,?,?,?,?)");
 			this.m_insertParmStatement = m_connection.prepareStatement("INSERT INTO OPERATIONPARM (ID, OPERATION, TYPE, NAME, DATATYPE, DESCRIPTION) VALUES (?,?,?,?,?,?)");
-			this.m_getOperationIdStatement = m_connection.prepareStatement("SELECT ID FROM DATAOPERATION WHERE DATATYPE=? AND NAME=?");
-			
+
+			this.m_getOperationInfoStatement = m_connection.prepareStatement("SELECT ID, NAME, DESCRIPTION FROM DATAOPERATION WHERE DATATYPENAME=? AND DATATYPEVERSION=? AND NAME=?");
+			this.m_getOperationInfosByDataTypeInfoStatement = m_connection.prepareStatement("SELECT ID, DATATYPENAME, DATATYPEVERSION, NAME, DESCRIPTION FROM DATAOPERATION WHERE DATATYPENAME=? AND DATATYPEVERSION=?");
+			this.m_getOperationInfosByDataTypeNameStatement = m_connection.prepareStatement("SELECT ID, DATATYPENAME, DATATYPEVERSION, NAME, DESCRIPTION FROM DATAOPERATION WHERE DATATYPENAME=?");
+			this.m_getDataTypeByInfoStatement = m_connection.prepareStatement("SELECT ID, NAME, VERSION, DESCRIPTION, PARENTINFO, LINKEDVERSION FROM DATATYPEDEF WHERE NAME=? AND VERSION=?");
+			this.m_getDataTypesByNameStatement = m_connection.prepareStatement("SELECT ID, NAME, VERSION, DESCRIPTION, PARENTINFO, LINKEDVERSION FROM DATATYPEDEF WHERE NAME=?");
+
 			this.m_insertJSOperationStatement = m_connection.prepareStatement("INSERT INTO OPERATIONJS (ID, OPERATION, SCRIPT, RESOURCES) VALUES (?,?,?,?)");
 
 		} catch (Exception e) {
@@ -88,9 +104,10 @@ public class HAPDBAccess extends HAPConfigurableImp{
 		try {
 			String operationId = this.getId()+"";
 			m_insertOperationStatement.setString(1, operationId);
-			m_insertOperationStatement.setString(2, ((HAPDataTypeInfoImp)dataType.getDataTypeInfo()).toStringValue(HAPSerializationFormat.LITERATE));
-			m_insertOperationStatement.setString(3, operation.getName());
-			m_insertOperationStatement.setString(4, operation.getDescription());
+			m_insertOperationStatement.setString(2, dataType.getDataTypeInfo().getName());
+			m_insertOperationStatement.setString(3, dataType.getDataTypeInfo().getVersion().toStringValue(HAPSerializationFormat.LITERATE));
+			m_insertOperationStatement.setString(4, operation.getName());
+			m_insertOperationStatement.setString(5, operation.getDescription());
 			m_insertOperationStatement.execute();
 			
 			Map<String, HAPOperationParmInfo> parms = operation.getParmsInfo();
@@ -144,14 +161,20 @@ public class HAPDBAccess extends HAPConfigurableImp{
 		}
 	}
 
-	public String getOperationId(String dataTypeName, String dataTypeVersion, String operation){
-		String out = null;
+	public HAPDataTypeImp getDataTypeByInfo(HAPDataTypeInfo dataTypeInfo){
+		HAPDataTypeImp out = null;
 		try {
-			this.m_getOperationIdStatement.setString(1, HAPDataTypeInfoImp.buildStringValue(dataTypeName, dataTypeVersion));
-			this.m_getOperationIdStatement.setString(2, operation);
-			ResultSet resultSet = this.m_getOperationIdStatement.executeQuery();
+			this.m_getDataTypeByInfoStatement.setString(1, dataTypeInfo.getName());
+			this.m_getDataTypeByInfoStatement.setString(2, HAPLiterateManager.getInstance().valueToString(dataTypeInfo.getVersion()));
+			ResultSet resultSet = this.m_getDataTypeByInfoStatement.executeQuery();
 			if(resultSet.next()){
-				out = resultSet.getString(1);
+				String ID = resultSet.getString(1);
+				String name = resultSet.getString(2);
+				String version = resultSet.getString(3);
+				String description = resultSet.getString(4);
+				String parent = resultSet.getString(5);
+				String linked = resultSet.getString(6);
+				out = new HAPDataTypeImp(ID, name, version, description, parent, linked);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -159,6 +182,78 @@ public class HAPDBAccess extends HAPConfigurableImp{
 		return out;
 	}
 
+	public List<HAPDataTypeImp> getDataTypesByName(String dataTypeName){
+		List<HAPDataTypeImp> out = new ArrayList<HAPDataTypeImp>();
+		try {
+			this.m_getDataTypesByNameStatement.setString(1, dataTypeName);
+			ResultSet resultSet = this.m_getDataTypesByNameStatement.executeQuery();
+			while(resultSet.next()){
+				String ID = resultSet.getString(1);
+				String name = resultSet.getString(2);
+				String version = resultSet.getString(3);
+				String description = resultSet.getString(4);
+				String parent = resultSet.getString(5);
+				String linked = resultSet.getString(6);
+				out.add(new HAPDataTypeImp(ID, name, version, description, parent, linked));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
+
+	public HAPOperationInfoImp getOperationInfo(String dataTypeName, String dataTypeVersion, String operation){
+		HAPOperationInfoImp out = null;
+		try {
+			this.m_getOperationInfoStatement.setString(1, dataTypeName);
+			this.m_getOperationInfoStatement.setString(2, dataTypeVersion);
+			this.m_getOperationInfoStatement.setString(3, operation);
+			ResultSet resultSet = this.m_getOperationInfoStatement.executeQuery();
+			if(resultSet.next()){
+				String id = resultSet.getString(1);
+				String name = resultSet.getString(2);
+				String description = resultSet.getString(3);
+				out = new HAPOperationInfoImp(id, name, description, dataTypeName, dataTypeVersion);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
+
+	
+	public List<HAPOperationInfoImp> getOperationsInfosByDataTypeInfo(HAPDataTypeInfo dataTypeInfo, String operation){
+		List<HAPOperationInfoImp> out = new ArrayList<HAPOperationInfoImp>();
+		String dataTypeName = dataTypeInfo.getName();
+		String dataTypeVersion = null;
+		HAPDataTypeVersion version = dataTypeInfo.getVersion();
+		if(version!=null)		dataTypeVersion = version.toStringValue(HAPSerializationFormat.LITERATE);
+		
+		ResultSet resultSet = null;
+		try {
+			if(HAPBasicUtility.isStringEmpty(dataTypeVersion)){
+				this.m_getOperationInfosByDataTypeNameStatement.setString(1, dataTypeName);
+				resultSet = this.m_getOperationInfosByDataTypeNameStatement.executeQuery();
+			}
+			else{
+				this.m_getOperationInfosByDataTypeInfoStatement.setString(1, dataTypeName);
+				this.m_getOperationInfosByDataTypeInfoStatement.setString(2, dataTypeVersion);
+				resultSet = this.m_getOperationInfosByDataTypeInfoStatement.executeQuery();
+			}
+
+			while(resultSet.next()){
+				String id = resultSet.getString(1);
+				dataTypeVersion = resultSet.getString(3);
+				String name = resultSet.getString(4);
+				String description = resultSet.getString(5);
+				out.add(new HAPOperationInfoImp(id, name, description, dataTypeName, dataTypeVersion));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
+	
 	public void saveOperationInfoJS(HAPJSOperationInfo jsOpInfo){
 		try {
 			this.m_insertJSOperationStatement.setString(1, this.getId()+"");
