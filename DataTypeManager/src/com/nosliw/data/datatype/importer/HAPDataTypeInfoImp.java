@@ -10,6 +10,13 @@ import com.nosliw.data.HAPDataTypeVersion;
 
 public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPDataTypeInfo{
 
+	public HAPDataTypeInfoImp(){}
+	
+	public HAPDataTypeInfoImp(String name, HAPDataTypeVersion version){
+		this.updateAtomicChild(NAME, name, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
+		this.updateAtomicChildValue(VERSION, version);
+	}
+	
 	@Override
 	public String getName() {		return this.getAtomicAncestorValueString(HAPDataTypeInfo.NAME);	}
 	@Override

@@ -24,6 +24,7 @@ import com.nosliw.data.datatype.importer.HAPOperationInfoImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeCriteriaImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeInfoImp;
+import com.nosliw.data.datatype.importer.HAPDataTypePicture;
 import com.nosliw.data.datatype.importer.HAPDataTypeVersionImp;
 import com.nosliw.data.datatype.importer.js.HAPJSOperationInfo;
 
@@ -222,13 +223,8 @@ public class HAPDBAccess extends HAPConfigurableImp{
 	}
 
 	
-	public List<HAPOperationInfoImp> getOperationsInfosByDataTypeInfo(HAPDataTypeInfo dataTypeInfo, String operation){
+	public List<HAPOperationInfoImp> getOperationsInfosByDataTypeInfo(String dataTypeName, String dataTypeVersion){
 		List<HAPOperationInfoImp> out = new ArrayList<HAPOperationInfoImp>();
-		String dataTypeName = dataTypeInfo.getName();
-		String dataTypeVersion = null;
-		HAPDataTypeVersion version = dataTypeInfo.getVersion();
-		if(version!=null)		dataTypeVersion = version.toStringValue(HAPSerializationFormat.LITERATE);
-		
 		ResultSet resultSet = null;
 		try {
 			if(HAPBasicUtility.isStringEmpty(dataTypeVersion)){
@@ -267,6 +263,13 @@ public class HAPDBAccess extends HAPConfigurableImp{
 		}
 	}
 	
+	public HAPDataTypePicture getDataTypePicture(String dataTypeId){
+		return null;
+	}
+	
+	public void saveDataTypePicture(HAPDataTypePicture dataTypePic){
+		
+	}
 	
 	public void close(){
 		try {

@@ -15,6 +15,10 @@ import com.nosliw.data.HAPDataTypeVersion;
 @HAPEntityWithAttribute(parent="com.nosliw.data.HAPDataType")
 public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataType{
 
+	private HAPDataTypeImp m_parent;
+	
+	private HAPDataTypeImp m_linked;
+	
 	@HAPAttribute
 	public static String OPERATIONS = "operations";
 
@@ -42,6 +46,8 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	@Override
 	public HAPDataTypeVersion getLinkedVersion() {  return (HAPDataTypeVersion)this.getAtomicValueAncestorByPath(LINKEDVERSION);	}
 
+	public String getId(){ return this.getAtomicAncestorValueString(ID); }
+	
 	public List<HAPOperationInfo> getDataOperationInfos(){
 		HAPStringableValueList list = (HAPStringableValueList)this.getListAncestorByPath(OPERATIONS);
 		return (List<HAPOperationInfo>)list.getListValue();

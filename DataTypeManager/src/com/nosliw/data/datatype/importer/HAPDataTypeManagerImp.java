@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeFamily;
 import com.nosliw.data.HAPDataTypeInfo;
@@ -26,19 +27,35 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 
 	@Override
 	public HAPDataTypeFamily getDataTypeFamily(HAPDataTypeInfo dataTypeInfo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<HAPDataTypeImp> dataTypes = this.m_dbAccess.getDataTypesByName(dataTypeInfo.getName());
+		HAPDataTypeFamily out = new HAPDataTypeFamily(dataTypes);
+		return out;
 	}
 
 	@Override
-	public List<HAPDataType> queryDataType(HAPQueryInfo queryInfo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<? extends HAPOperationInfo> getLocalOperationInfos(HAPDataTypeInfo dataTypeInfo) {
+		String dataTypeVersion = null;
+		HAPDataTypeVersion version = dataTypeInfo.getVersion();
+		dataTypeVersion = version.toStringValue(HAPSerializationFormat.LITERATE);
+		return this.m_dbAccess.getOperationsInfosByDataTypeInfo(dataTypeInfo.getName(), dataTypeVersion);
 	}
 
 	@Override
-	public Set<HAPOperationInfo> getOperationInfos(HAPDataTypeInfo dataTypeInfo) {
-		return null;
+	public HAPOperationInfo getLocalOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name) {
+		return this.m_dbAccess.getOperationInfo(dataTypeInfo.getName(), dataTypeInfo.getVersion().toStringValue(HAPSerializationFormat.LITERATE), name);
+	}
+
+	@Override
+	public List<? extends HAPOperationInfo> getOperationInfos(HAPDataTypeInfo dataTypeInfo) {
+		
+		
+		
+		String dataTypeVersion = null;
+		HAPDataTypeVersion version = dataTypeInfo.getVersion();
+		if(version!=null){
+			dataTypeVersion = version.toStringValue(HAPSerializationFormat.LITERATE);
+		}
+		return this.m_dbAccess.getOperationsInfosByDataTypeInfo(dataTypeInfo.getName(), dataTypeVersion);
 	}
 
 	@Override
@@ -48,19 +65,7 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 	}
 
 	@Override
-	public Set<HAPOperationInfo> getLocalOperationInfos(HAPDataTypeInfo dataTypeInfo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public HAPOperationInfo getLocalOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set<HAPOperationInfo> getNewDataOperations(HAPDataTypeInfo dataTypeInfo) {
+	public List<? extends HAPOperationInfo> getNewDataOperations(HAPDataTypeInfo dataTypeInfo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -73,15 +78,58 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 	}
 
 	@Override
-	public Set<String> getLanguages() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public HAPExpression compileExpression(HAPExpressionInfo expressionInfo, String lang) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public List<HAPDataType> queryDataType(HAPQueryInfo queryInfo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getLanguages() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private HAPDataTypePicture buildDataTypePicture(HAPDataTypeInfo dataTypeInfo){
+		HAPDataTypeImp dataType = (HAPDataTypeImp)this.getDataType(dataTypeInfo);
+		HAPDataTypePicture out = new HAPDataTypePicture(dataType);
+		{
+			HAPDataTypeInfo parentDataTypeInfo = dataType.getParentDataTypeInfo();
+			HAPDataTypeImp parentDataType = (HAPDataTypeImp)this.getDataType(parentDataTypeInfo);
+			HAPDataTypePicture parentDataTypePic = this.getDataTypePicture(parentDataType.getId());
+			if(parentDataTypePic==null){
+				parentDataTypePic = this.buildDataTypePicture(parentDataTypeInfo);
+			}
+			Set<HAPDataTypePictureElement> dataTypePicEles = parentDataTypePic.getDataTypeElements();
+			for(HAPDataTypePictureElement picEle : dataTypePicEles){
+				out.addElement(picEle.extendPathSegment(HAPDataTypePathSegment.buildPathSegmentForParent()));
+			}
+		}
+		
+		HAPDataTypeVersion linkedVersion = dataType.getLinkedVersion();
+		if(linkedVersion!=null){
+			HAPDataTypeInfo linkedDataTypeInfo = new HAPDataTypeInfoImp(dataTypeInfo.getName(), linkedVersion);
+			HAPDataTypeImp linkedDataType = (HAPDataTypeImp)this.getDataType(linkedDataTypeInfo);
+			HAPDataTypePicture linkedDataTypePic = this.getDataTypePicture(linkedDataType.getId());
+			if(linkedDataTypePic==null){
+				linkedDataTypePic = this.buildDataTypePicture(linkedDataTypeInfo);
+			}
+			Set<HAPDataTypePictureElement> dataTypePicEles = linkedDataTypePic.getDataTypeElements();
+			for(HAPDataTypePictureElement picEle : dataTypePicEles){
+				out.addElement(picEle.extendPathSegment(HAPDataTypePathSegment.buildPathSegmentForLinked()));
+			}
+		}
+		return out;
+	}
+	
+	
+	private HAPDataTypePicture getDataTypePicture(String dataTypeId){
+		return this.m_dbAccess.getDataTypePicture(dataTypeId);
+	}
+	
 }
