@@ -9,29 +9,29 @@ public class HAPDataTypePicture {
 
 	private HAPDataTypeImp m_mainDataType;
 	
-	private Map<String, HAPDataTypePictureElement> m_dataTypeElements;
+	private Map<String, HAPDataTypePictureNodeImp> m_dataTypeElements;
 	
 	public HAPDataTypePicture(HAPDataTypeImp mainDataType){
 		this.m_mainDataType = mainDataType;
-		this.m_dataTypeElements = new LinkedHashMap<String, HAPDataTypePictureElement>();
+		this.m_dataTypeElements = new LinkedHashMap<String, HAPDataTypePictureNodeImp>();
 	}
 	
 	public HAPDataTypeImp getMainDataType(){
 		return this.m_mainDataType;
 	}
 	
-	public Set<HAPDataTypePictureElement> getDataTypeElements(){
-		Set<HAPDataTypePictureElement> out = new HashSet<HAPDataTypePictureElement>();
+	public Set<HAPDataTypePictureNodeImp> getDataTypeNodes(){
+		Set<HAPDataTypePictureNodeImp> out = new HashSet<HAPDataTypePictureNodeImp>();
 		out.addAll(this.m_dataTypeElements.values());
 		return out;
 	}
 	
-	public HAPDataTypePictureElement getElement(String dataTypeId){
+	public HAPDataTypePictureNodeImp getNode(String dataTypeId){
 		return this.m_dataTypeElements.get(dataTypeId);
 	}
 
-	public void addElement(HAPDataTypePictureElement ele){
-		this.m_dataTypeElements.put(ele.getDataType().getId(), ele);
+	public void addNode(HAPDataTypePictureNodeImp node){
+		this.m_dataTypeElements.put(((HAPDataTypeImp)node.getDataType()).getId(), node);
 	}
 	
 }

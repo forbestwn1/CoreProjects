@@ -10,12 +10,27 @@ import com.nosliw.data.HAPDataTypeVersion;
 
 public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPDataTypeInfo{
 
+	public static String ID = "id";
+	
 	public HAPDataTypeInfoImp(){}
 	
 	public HAPDataTypeInfoImp(String name, HAPDataTypeVersion version){
 		this.updateAtomicChild(NAME, name, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
 		this.updateAtomicChildValue(VERSION, version);
 	}
+
+	public HAPDataTypeInfoImp(String id){
+		this.setId(id);
+	}
+
+	public HAPDataTypeInfoImp(String id, String name, HAPDataTypeVersion version){
+		this.setId(id);
+		this.updateAtomicChild(NAME, name, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);
+		this.updateAtomicChildValue(VERSION, version);
+	}
+
+	public String getId(){ return this.getAtomicAncestorValueString(ID); }
+	public void setId(String id){		this.updateAtomicChild(ID, id, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);	}
 	
 	@Override
 	public String getName() {		return this.getAtomicAncestorValueString(HAPDataTypeInfo.NAME);	}

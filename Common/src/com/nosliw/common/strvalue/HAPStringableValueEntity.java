@@ -81,6 +81,10 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 		return out;
 	}
 	
+	public void updateAtomicChild(String name, String strValue, String type){
+		this.updateAtomicChild(name, strValue, type, null);
+	}
+	
 	public void updateAtomicChild(String name, String strValue){
 		this.updateAtomicChild(name, strValue, null, null);
 	}

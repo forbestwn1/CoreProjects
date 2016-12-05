@@ -111,6 +111,11 @@ public class HAPConstant {
 
 
 
+		public static final int DATATYPE_PATHSEGMENT_PARENT = 0;
+		public static final int DATATYPE_PATHSEGMENT_LINKED = 1;
+
+
+
 		public static final String UIRESOURCE_TYPE_RESOURCE = "resource";
 		public static final String UIRESOURCE_TYPE_TAG = "tag";
 

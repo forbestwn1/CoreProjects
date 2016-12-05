@@ -5,10 +5,12 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeFamily;
 import com.nosliw.data.HAPDataTypeInfo;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPDataTypePathSegment;
 import com.nosliw.data.HAPDataTypeVersion;
 import com.nosliw.data.HAPExpression;
 import com.nosliw.data.HAPExpressionInfo;
@@ -98,38 +100,31 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 	private HAPDataTypePicture buildDataTypePicture(HAPDataTypeInfo dataTypeInfo){
 		HAPDataTypeImp dataType = (HAPDataTypeImp)this.getDataType(dataTypeInfo);
 		HAPDataTypePicture out = new HAPDataTypePicture(dataType);
-		{
-			HAPDataTypeInfo parentDataTypeInfo = dataType.getParentDataTypeInfo();
-			HAPDataTypeImp parentDataType = (HAPDataTypeImp)this.getDataType(parentDataTypeInfo);
-			HAPDataTypePicture parentDataTypePic = this.getDataTypePicture(parentDataType.getId());
-			if(parentDataTypePic==null){
-				parentDataTypePic = this.buildDataTypePicture(parentDataTypeInfo);
-			}
-			Set<HAPDataTypePictureElement> dataTypePicEles = parentDataTypePic.getDataTypeElements();
-			for(HAPDataTypePictureElement picEle : dataTypePicEles){
-				out.addElement(picEle.extendPathSegment(HAPDataTypePathSegment.buildPathSegmentForParent()));
-			}
-		}
 		
-		HAPDataTypeVersion linkedVersion = dataType.getLinkedVersion();
-		if(linkedVersion!=null){
-			HAPDataTypeInfo linkedDataTypeInfo = new HAPDataTypeInfoImp(dataTypeInfo.getName(), linkedVersion);
-			HAPDataTypeImp linkedDataType = (HAPDataTypeImp)this.getDataType(linkedDataTypeInfo);
-			HAPDataTypePicture linkedDataTypePic = this.getDataTypePicture(linkedDataType.getId());
-			if(linkedDataTypePic==null){
-				linkedDataTypePic = this.buildDataTypePicture(linkedDataTypeInfo);
-			}
-			Set<HAPDataTypePictureElement> dataTypePicEles = linkedDataTypePic.getDataTypeElements();
-			for(HAPDataTypePictureElement picEle : dataTypePicEles){
-				out.addElement(picEle.extendPathSegment(HAPDataTypePathSegment.buildPathSegmentForLinked()));
-			}
-		}
+		this.buildDataTypePictureFromConntectedDataType(dataType, out, HAPConstant.DATATYPE_PATHSEGMENT_PARENT);
+		this.buildDataTypePictureFromConntectedDataType(dataType, out, HAPConstant.DATATYPE_PATHSEGMENT_LINKED);
 		return out;
 	}
 	
 	
-	private HAPDataTypePicture getDataTypePicture(String dataTypeId){
-		return this.m_dbAccess.getDataTypePicture(dataTypeId);
+	private void buildDataTypePictureFromConntectedDataType(HAPDataTypeImp dataType, HAPDataTypePicture out, int connectType){
+		HAPDataTypeInfoImp connectDataTypeInfo = dataType.getConntectedDataTypeInfo(connectType);
+		HAPDataTypeImp connectDataType = (HAPDataTypeImp)this.getDataType(connectDataTypeInfo);
+		HAPDataTypePicture connectDataTypePic = this.getDataTypePicture(connectDataTypeInfo);
+		if(connectDataTypePic==null){
+			connectDataTypePic = this.buildDataTypePicture(connectDataTypeInfo);
+		}
+		Set<HAPDataTypePictureNodeImp> dataTypePicNodes = connectDataTypePic.getDataTypeNodes();
+		for(HAPDataTypePictureNodeImp picNode : dataTypePicNodes){
+			out.addNode(picNode.extendPathSegment(HAPDataTypePathSegment.buildPathSegment(connectType)));
+		}
+		
+		HAPDataTypePictureNodeImp connectNode = new HAPDataTypePictureNodeImp(connectDataType);
+		connectNode.appendPathSegment(HAPDataTypePathSegment.buildPathSegment(connectType));
+	}
+	
+	private HAPDataTypePicture getDataTypePicture(HAPDataTypeInfoImp dataTypeInfo){
+		return this.m_dbAccess.getDataTypePicture(dataTypeInfo);
 	}
 	
 }
