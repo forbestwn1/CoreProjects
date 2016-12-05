@@ -34,7 +34,6 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 		return out;
 	}
 
-	@Override
 	public List<? extends HAPOperationInfo> getLocalOperationInfos(HAPDataTypeInfo dataTypeInfo) {
 		String dataTypeVersion = null;
 		HAPDataTypeVersion version = dataTypeInfo.getVersion();
@@ -42,7 +41,6 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 		return this.m_dbAccess.getOperationsInfosByDataTypeInfo(dataTypeInfo.getName(), dataTypeVersion);
 	}
 
-	@Override
 	public HAPOperationInfo getLocalOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name) {
 		return this.m_dbAccess.getOperationInfo(dataTypeInfo.getName(), dataTypeInfo.getVersion().toStringValue(HAPSerializationFormat.LITERATE), name);
 	}
@@ -97,7 +95,30 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 		return null;
 	}
 
-	private HAPDataTypePicture buildDataTypePicture(HAPDataTypeInfo dataTypeInfo){
+	private HAPDataTypeImpOperations buildDataTypeOperations(HAPDataTypeInfoImp dataTypeInfo){
+		HAPDataTypeImpOperations out = new HAPDataTypeImpOperations();
+		
+		m_dbAccess.getDataTypeByInfo(dataTypeInfo, out);
+		
+		HAPDataTypeInfoImp connectDataTypeInfo = (HAPDataTypeInfoImp)out.getParentDataTypeInfo();
+		HAPDataTypeImpOperations connectDataTypeOps = this.getDataTypeOperations(dataTypeInfo);
+		if(connectDataTypeOps==null){
+			connectDataTypeOps = this.buildDataTypeOperations(dataTypeInfo);
+		}
+		
+		for(HAPDataTypeOperationImp dataTypeOp : connectDataTypeOps.getOperations()){
+			dataTypeOp.getBaseDataType().appendPathSegment(HAPDataTypePathSegment.buildPathSegment());
+			out.addOperation(dataTypeOp);
+		}
+		
+		return out;
+	}
+	
+	private HAPDataTypeImpOperations getDataTypeOperations(HAPDataTypeInfoImp dataTypeInfo){
+		
+	}
+	
+	private HAPDataTypePicture buildDataTypePicture(HAPDataTypeInfoImp dataTypeInfo){
 		HAPDataTypeImp dataType = (HAPDataTypeImp)this.getDataType(dataTypeInfo);
 		HAPDataTypePicture out = new HAPDataTypePicture(dataType);
 		

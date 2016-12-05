@@ -162,8 +162,7 @@ public class HAPDBAccess extends HAPConfigurableImp{
 		}
 	}
 
-	public HAPDataTypeImp getDataTypeByInfo(HAPDataTypeInfo dataTypeInfo){
-		HAPDataTypeImp out = null;
+	public void getDataTypeByInfo(HAPDataTypeInfo dataTypeInfo, HAPDataTypeImp dataType){
 		try {
 			this.m_getDataTypeByInfoStatement.setString(1, dataTypeInfo.getName());
 			this.m_getDataTypeByInfoStatement.setString(2, HAPLiterateManager.getInstance().valueToString(dataTypeInfo.getVersion()));
@@ -175,12 +174,11 @@ public class HAPDBAccess extends HAPConfigurableImp{
 				String description = resultSet.getString(4);
 				String parent = resultSet.getString(5);
 				String linked = resultSet.getString(6);
-				out = new HAPDataTypeImp(ID, name, version, description, parent, linked);
+				dataType.init(ID, name, version, description, parent, linked);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return out;
 	}
 
 	public List<HAPDataTypeImp> getDataTypesByName(String dataTypeName){

@@ -1,4 +1,4 @@
-<entity name="data.datatypedef" description="this is used to defined data type basic info" class="com.nosliw.data.datatype.importer.HAPDataTypeImp">
+<entity name="data.datatypedef" description="this is used to defined data type basic info" class="com.nosliw.data.datatype.importer.HAPDataTypeImpLoad">
 
 	<property name="description" dataType="string" description="data type description"/>
 

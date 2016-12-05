@@ -1,13 +1,8 @@
 package com.nosliw.data.datatype.importer;
 
-import java.util.List;
-
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
-import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.HAPOperationInfo;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeInfo;
 import com.nosliw.data.HAPDataTypeVersion;
@@ -17,10 +12,13 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 
 	public static String ID = "id";
 
-	@HAPAttribute
-	public static String OPERATIONS = "operations";
-
+	public HAPDataTypeImp(){}
+	
 	public HAPDataTypeImp(String Id, String name, String version, String description, String parent, String linked){
+		this.init(Id, name, version, description, parent, linked);
+	}
+
+	public void init(String Id, String name, String version, String description, String parent, String linked){
 		this.updateAtomicChild(ID, Id);
 		this.updateAtomicChild(NAME, HAPDataTypeInfoImp.buildStringValue(name, version), HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeInfoImp.class.getName());
 		this.updateAtomicChild(DESCRIPTION, description);
@@ -63,8 +61,4 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	@Override
 	public HAPDataTypeVersion getLinkedVersion() {  return (HAPDataTypeVersion)this.getAtomicValueAncestorByPath(LINKEDVERSION);	}
 
-	public List<HAPOperationInfo> getDataOperationInfos(){
-		HAPStringableValueList list = (HAPStringableValueList)this.getListAncestorByPath(OPERATIONS);
-		return (List<HAPOperationInfo>)list.getListValue();
-	}
 }
