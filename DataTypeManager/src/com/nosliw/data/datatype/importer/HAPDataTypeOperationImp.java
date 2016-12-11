@@ -6,6 +6,10 @@ import com.nosliw.data.HAPOperationInfo;
 
 public class HAPDataTypeOperationImp implements HAPDataTypeOperation{
 
+	public HAPDataTypeOperationImp(HAPOperationInfoImp op){
+		
+	}
+	
 	@Override
 	public HAPOperationInfo getOperationInfo() {
 		return null;

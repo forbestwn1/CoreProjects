@@ -11,6 +11,7 @@ import com.nosliw.data.HAPDataTypeFamily;
 import com.nosliw.data.HAPDataTypeInfo;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPDataTypePathSegment;
+import com.nosliw.data.HAPDataTypePicture;
 import com.nosliw.data.HAPDataTypeVersion;
 import com.nosliw.data.HAPExpression;
 import com.nosliw.data.HAPExpressionInfo;
@@ -100,18 +101,30 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 		
 		m_dbAccess.getDataTypeByInfo(dataTypeInfo, out);
 		
-		HAPDataTypeInfoImp connectDataTypeInfo = (HAPDataTypeInfoImp)out.getParentDataTypeInfo();
-		HAPDataTypeImpOperations connectDataTypeOps = this.getDataTypeOperations(dataTypeInfo);
+		//from connected operations
+		this.buildDataTypeOperationsFromConnectedDataType(out, HAPConstant.DATATYPE_PATHSEGMENT_PARENT);
+		this.buildDataTypeOperationsFromConnectedDataType(out, HAPConstant.DATATYPE_PATHSEGMENT_LINKED);
+		
+		//from own operation
+		List<HAPOperationInfoImp> ops = this.m_dbAccess.getOperationsInfosByDataTypeInfo(dataTypeInfo.getName(), dataTypeInfo.getVersion().toStringValue(HAPSerializationFormat.LITERATE));
+		for(HAPOperationInfoImp op : ops){
+			out.addOperation(new HAPDataTypeOperationImp(op));
+		}
+		return out;
+	}
+	
+	private void buildDataTypeOperationsFromConnectedDataType(HAPDataTypeImpOperations out, int connectType){
+		HAPDataTypeInfoImp connectDataTypeInfo = (HAPDataTypeInfoImp)out.getConntectedDataTypeInfo(connectType);
+		HAPDataTypeImpOperations connectDataTypeOps = this.getDataTypeOperations(connectDataTypeInfo);
 		if(connectDataTypeOps==null){
-			connectDataTypeOps = this.buildDataTypeOperations(dataTypeInfo);
+			connectDataTypeOps = this.buildDataTypeOperations(connectDataTypeInfo);
 		}
 		
 		for(HAPDataTypeOperationImp dataTypeOp : connectDataTypeOps.getOperations()){
-			dataTypeOp.getBaseDataType().appendPathSegment(HAPDataTypePathSegment.buildPathSegment());
+			dataTypeOp.getBaseDataType().appendPathSegment(HAPDataTypePathSegment.buildPathSegment(connectType));
 			out.addOperation(dataTypeOp);
 		}
 		
-		return out;
 	}
 	
 	private HAPDataTypeImpOperations getDataTypeOperations(HAPDataTypeInfoImp dataTypeInfo){

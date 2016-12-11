@@ -13,6 +13,10 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	public static String ID = "id";
 
 	public HAPDataTypeImp(){}
+
+	public HAPDataTypeImp(HAPDataTypeImp dataType){
+		this.cloneFrom(dataType);
+	}
 	
 	public HAPDataTypeImp(String Id, String name, String version, String description, String parent, String linked){
 		this.init(Id, name, version, description, parent, linked);

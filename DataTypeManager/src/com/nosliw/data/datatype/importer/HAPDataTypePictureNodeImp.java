@@ -3,11 +3,12 @@ package com.nosliw.data.datatype.importer;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypePathSegment;
 import com.nosliw.data.HAPDataTypePictureNode;
 
-public class HAPDataTypePictureNodeImp implements HAPDataTypePictureNode{
+public class HAPDataTypePictureNodeImp extends HAPStringableValueEntity implements HAPDataTypePictureNode{
 
 	private List<HAPDataTypePathSegment> m_pathSegs;
 

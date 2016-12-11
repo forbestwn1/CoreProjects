@@ -16,15 +16,14 @@ import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.HAPDataTypeInfo;
-import com.nosliw.data.HAPDataTypeVersion;
-import com.nosliw.data.HAPOperationInfo;
+import com.nosliw.data.HAPDataTypePicture;
 import com.nosliw.data.HAPOperationOutInfo;
 import com.nosliw.data.HAPOperationParmInfo;
 import com.nosliw.data.datatype.importer.HAPOperationInfoImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeCriteriaImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeInfoImp;
-import com.nosliw.data.datatype.importer.HAPDataTypePicture;
+import com.nosliw.data.datatype.importer.HAPDataTypePictureImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeVersionImp;
 import com.nosliw.data.datatype.importer.js.HAPJSOperationInfo;
 
@@ -42,6 +41,7 @@ public class HAPDBAccess extends HAPConfigurableImp{
 		
 	   Connection m_connection = null;
 	   PreparedStatement  m_insertDatatTypeStatement = null;
+	   PreparedStatement  m_insertDatatTypePicStatement = null;
 	   PreparedStatement  m_insertOperationStatement = null;
 	   PreparedStatement  m_insertParmStatement = null;
 
@@ -49,6 +49,7 @@ public class HAPDBAccess extends HAPConfigurableImp{
 	   PreparedStatement m_getOperationInfosByDataTypeInfoStatement = null;
 	   PreparedStatement m_getOperationInfosByDataTypeNameStatement = null;
 	   PreparedStatement m_getDataTypeByInfoStatement = null;
+	   PreparedStatement m_getDataTypeByIdStatement = null;
 	   PreparedStatement m_getDataTypesByNameStatement = null;
 
 	   PreparedStatement  m_insertJSOperationStatement = null;
@@ -83,15 +84,17 @@ public class HAPDBAccess extends HAPConfigurableImp{
 					this.getConfigureValue("jdbc.url").getStringContent(),
 					this.getConfigureValue("username").getStringContent(),
 					this.getConfigureValue("password").getStringContent());		
-			this.m_insertDatatTypeStatement = m_connection.prepareStatement("INSERT INTO datatypedef (ID, NAME, VERSION, VERSION_MAJOR, VERSION_MINOR, VERSION_REVISION, DESCRIPTION, PARENTINFO, LINKEDVERSION) VALUES (?,?,?,?,?,?,?,?,?)");
+			this.m_insertDatatTypeStatement = m_connection.prepareStatement("INSERT INTO DATATYPE (ID, NAME, VERSION, VERSION_MAJOR, VERSION_MINOR, VERSION_REVISION, DESCRIPTION, PARENTINFO, LINKEDVERSION) VALUES (?,?,?,?,?,?,?,?,?)");
+			this.m_insertDatatTypePicStatement = m_connection.prepareStatement("INSERT INTO DATATYPE (ID, NAME, VERSION, VERSION_MAJOR, VERSION_MINOR, VERSION_REVISION, DESCRIPTION, PARENTINFO, LINKEDVERSION, NODES) VALUES (?,?,?,?,?,?,?,?,?,?)");
 			this.m_insertOperationStatement = m_connection.prepareStatement("INSERT INTO DATAOPERATION (ID, DATATYPENAME, DATATYPEVERSION, NAME, DESCRIPTION) VALUES (?,?,?,?,?)");
 			this.m_insertParmStatement = m_connection.prepareStatement("INSERT INTO OPERATIONPARM (ID, OPERATION, TYPE, NAME, DATATYPE, DESCRIPTION) VALUES (?,?,?,?,?,?)");
 
 			this.m_getOperationInfoStatement = m_connection.prepareStatement("SELECT ID, NAME, DESCRIPTION FROM DATAOPERATION WHERE DATATYPENAME=? AND DATATYPEVERSION=? AND NAME=?");
 			this.m_getOperationInfosByDataTypeInfoStatement = m_connection.prepareStatement("SELECT ID, DATATYPENAME, DATATYPEVERSION, NAME, DESCRIPTION FROM DATAOPERATION WHERE DATATYPENAME=? AND DATATYPEVERSION=?");
 			this.m_getOperationInfosByDataTypeNameStatement = m_connection.prepareStatement("SELECT ID, DATATYPENAME, DATATYPEVERSION, NAME, DESCRIPTION FROM DATAOPERATION WHERE DATATYPENAME=?");
-			this.m_getDataTypeByInfoStatement = m_connection.prepareStatement("SELECT ID, NAME, VERSION, DESCRIPTION, PARENTINFO, LINKEDVERSION FROM DATATYPEDEF WHERE NAME=? AND VERSION=?");
-			this.m_getDataTypesByNameStatement = m_connection.prepareStatement("SELECT ID, NAME, VERSION, DESCRIPTION, PARENTINFO, LINKEDVERSION FROM DATATYPEDEF WHERE NAME=?");
+			this.m_getDataTypeByInfoStatement = m_connection.prepareStatement("SELECT ID, NAME, VERSION, DESCRIPTION, PARENTINFO, LINKEDVERSION FROM DATATYPE WHERE NAME=? AND VERSION=?");
+			this.m_getDataTypeByIdStatement = m_connection.prepareStatement("SELECT ID, NAME, VERSION, DESCRIPTION, PARENTINFO, LINKEDVERSION FROM DATATYPE WHERE ID=?");
+			this.m_getDataTypesByNameStatement = m_connection.prepareStatement("SELECT ID, NAME, VERSION, DESCRIPTION, PARENTINFO, LINKEDVERSION FROM DATATYPE WHERE NAME=?");
 
 			this.m_insertJSOperationStatement = m_connection.prepareStatement("INSERT INTO OPERATIONJS (ID, OPERATION, SCRIPT, RESOURCES) VALUES (?,?,?,?)");
 
@@ -139,23 +142,33 @@ public class HAPDBAccess extends HAPConfigurableImp{
 		}
 	}
 	
-	public void saveDataType(HAPDataTypeImp dataType){
+	private int saveDataTypeToStatement(HAPDataTypeImp dataType, PreparedStatement statement){
+		int i = 1;
+		
 		try {
 			HAPDataTypeInfoImp dataTypeInfo = (HAPDataTypeInfoImp)dataType.getDataTypeInfo();
 			HAPDataTypeVersionImp dataTypeVersion = (HAPDataTypeVersionImp)dataTypeInfo.getVersion();
 			HAPDataTypeInfoImp parentDataTypeInfo = (HAPDataTypeInfoImp)dataType.getParentDataTypeInfo();
 			HAPDataTypeVersionImp linkedVersion = (HAPDataTypeVersionImp)dataType.getLinkedVersion();
-			
-			m_insertDatatTypeStatement.setString(1, dataTypeInfo.toStringValue(HAPSerializationFormat.LITERATE));
-			m_insertDatatTypeStatement.setString(2, dataTypeInfo.getName());
-			m_insertDatatTypeStatement.setString(3, dataTypeVersion.toStringValue(HAPSerializationFormat.LITERATE));
-			m_insertDatatTypeStatement.setInt(4, dataTypeVersion.getMajor());
-			m_insertDatatTypeStatement.setInt(5, dataTypeVersion.getMinor());
-			m_insertDatatTypeStatement.setString(6, dataTypeVersion.getRevision());
-			m_insertDatatTypeStatement.setString(7, dataType.getDescription());
-			m_insertDatatTypeStatement.setString(8, parentDataTypeInfo==null?null:parentDataTypeInfo.toStringValue(HAPSerializationFormat.LITERATE));
-			m_insertDatatTypeStatement.setString(9, linkedVersion==null?null:linkedVersion.toStringValue(HAPSerializationFormat.LITERATE));
-			
+
+			statement.setString(i++, dataTypeInfo.toStringValue(HAPSerializationFormat.LITERATE));
+			statement.setString(i++, dataTypeInfo.getName());
+			statement.setString(i++, dataTypeVersion.toStringValue(HAPSerializationFormat.LITERATE));
+			statement.setInt(i++, dataTypeVersion.getMajor());
+			statement.setInt(i++, dataTypeVersion.getMinor());
+			statement.setString(i++, dataTypeVersion.getRevision());
+			statement.setString(i++, dataType.getDescription());
+			statement.setString(i++, parentDataTypeInfo==null?null:parentDataTypeInfo.toStringValue(HAPSerializationFormat.LITERATE));
+			statement.setString(i++, linkedVersion==null?null:linkedVersion.toStringValue(HAPSerializationFormat.LITERATE));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return i;
+	}
+	
+	public void saveDataType(HAPDataTypeImp dataType){
+		this.saveDataTypeToStatement(dataType, m_insertDatatTypeStatement);
+		try {
 			m_insertDatatTypeStatement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -265,8 +278,14 @@ public class HAPDBAccess extends HAPConfigurableImp{
 		return null;
 	}
 	
-	public void saveDataTypePicture(HAPDataTypePicture dataTypePic){
-		
+	public void saveDataTypePicture(HAPDataTypePictureImp dataTypePic){
+		try {
+			int index = this.saveDataTypeToStatement(dataTypePic, m_insertDatatTypePicStatement);
+			this.m_insertDatatTypePicStatement.setString(index++, dataTypePic.toStringValue(HAPSerializationFormat.JSON));
+			m_insertDatatTypeStatement.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void close(){

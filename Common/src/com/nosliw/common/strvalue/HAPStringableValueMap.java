@@ -1,5 +1,6 @@
 package com.nosliw.common.strvalue;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -52,6 +53,10 @@ public class HAPStringableValueMap<T extends HAPStringableValue> extends HAPStri
 	}
 
 	public Set<String> getKeys(){  return this.m_elements.keySet(); }
+	
+	public Set<T> getValues(){
+		return new HashSet<T>(this.m_elements.values());
+	}
 	
 	@Override
 	public HAPStringableValue cloneStringableValue() {
