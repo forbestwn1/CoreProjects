@@ -1,5 +1,6 @@
 <group description="this is entity property" class="com.nosliw.common.constant.HAPConstantGroup">
 
+	<property name="type" dataType="string" description=""/>
 	<property name="filepath" dataType="string" description="java file path"/>
 	<property name="packagename" dataType="string" description="java package name"/>
 	<property name="classname" dataType="string" description="java class name"/>

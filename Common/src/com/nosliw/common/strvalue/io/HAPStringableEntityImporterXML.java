@@ -1,4 +1,4 @@
-package com.nosliw.common.strvalue.valueinfo;
+package com.nosliw.common.strvalue.io;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -18,6 +18,16 @@ import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.strvalue.HAPStringableValueMap;
 import com.nosliw.common.strvalue.HAPStringableValueObject;
 import com.nosliw.common.strvalue.HAPStringableValueUtility;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfo;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoAtomic;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoContainer;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntityOptions;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoList;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoMap;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoObject;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPXMLUtility;

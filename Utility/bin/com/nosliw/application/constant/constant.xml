@@ -289,6 +289,7 @@
 			<definition name="SYMBOL_GROUP" value="@"/>
 			<definition name="SYMBOL_ENTITYNAME_COMMON" value=".."/>
 			<definition name="SYMBOL_ENTITYNAME_CURRENT" value="."/>
+			<definition name="SEPERATOR_NAMEVALUE" value="="/>
 			<definition name="SEPERATOR_ELEMENT" value=","/>
 			<definition name="SEPERATOR_SEGMENT" value=";"/>
 			<definition name="SEPERATOR_PART" value=":"/>

@@ -1,4 +1,4 @@
-package com.nosliw.common.strvalue.valueinfo;
+package com.nosliw.common.strvalue.io;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,6 +14,14 @@ import com.nosliw.common.strvalue.HAPStringableValueComplex;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.strvalue.HAPStringableValueMap;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfo;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoAtomic;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntityOptions;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoList;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoMap;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoUtility;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPStringableEntityImporterJSON {

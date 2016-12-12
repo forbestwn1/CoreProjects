@@ -16,7 +16,7 @@ import com.nosliw.common.configure.HAPConfigureUtility;
 import com.nosliw.common.constant.HAPConstantGroup;
 import com.nosliw.common.constant.HAPConstantManager;
 import com.nosliw.common.interpolate.HAPInterpolateUtility;
-import com.nosliw.common.strvalue.valueinfo.HAPStringableEntityImporterXML;
+import com.nosliw.common.strvalue.io.HAPStringableEntityImporterXML;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPXMLUtility;

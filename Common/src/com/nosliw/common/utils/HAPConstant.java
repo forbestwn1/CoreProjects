@@ -39,6 +39,7 @@ public class HAPConstant {
 		public static final String SYMBOL_GROUP = "@";
 		public static final String SYMBOL_ENTITYNAME_COMMON = "..";
 		public static final String SYMBOL_ENTITYNAME_CURRENT = ".";
+		public static final String SEPERATOR_NAMEVALUE = "=";
 		public static final String SEPERATOR_ELEMENT = ",";
 		public static final String SEPERATOR_SEGMENT = ";";
 		public static final String SEPERATOR_PART = ":";

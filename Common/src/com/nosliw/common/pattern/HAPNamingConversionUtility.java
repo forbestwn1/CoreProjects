@@ -1,5 +1,8 @@
 package com.nosliw.common.pattern;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
@@ -10,6 +13,16 @@ public class HAPNamingConversionUtility {
 		return text.split(token);
 	}
 
+	public static Map<String, String> parsePropertyValuePairs(String value){
+		Map<String, String> out = new LinkedHashMap<String, String>();
+		String[] eleStrs = parseElements(value);
+		for(String eleStr : eleStrs){
+			String[] nameValuePair = parseNameValuePair(eleStr);
+			out.put(nameValuePair[0], nameValuePair[1]);
+		}
+		return out;
+	}
+	
 	public static String cascadeTexts(String part1, String part2, String seperator){
 		if(HAPBasicUtility.isStringEmpty(part1))	part1 = "";
 		if(HAPBasicUtility.isStringEmpty(part2))	part2 = "";
@@ -33,6 +46,10 @@ public class HAPNamingConversionUtility {
 	 */
 	public static String[] parsePartlInfos(String parts){
 		return parts.split(HAPConstant.SEPERATOR_PART);
+	}
+	
+	public static String[] parseNameValuePair(String nameValueStr){
+		return nameValueStr.split(HAPConstant.SEPERATOR_NAMEVALUE);
 	}
 	
 	/*

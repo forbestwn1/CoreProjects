@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
-import com.nosliw.common.strvalue.valueinfo.HAPStringableEntityImporterXML;
+import com.nosliw.common.strvalue.io.HAPStringableEntityImporterXML;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.HAPOperationInfo;
 import com.nosliw.data.HAPDataTypeProvider;
