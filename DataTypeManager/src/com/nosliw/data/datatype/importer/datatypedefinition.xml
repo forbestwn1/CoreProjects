@@ -1,8 +1,21 @@
 <entity name="data.datatypedef" description="this is used to defined data type basic info" class="com.nosliw.data.datatype.importer.HAPDataTypeImpLoad">
 
-	<property name="description" dataType="string" description="data type description"/>
+	<property name="description" dataType="string" description="data type description">
+		<sqlInfos>
+			<sqlInfo definition="VARCHAR(20)"/>
+		</sqlInfos>
+	</property>
 
-	<property name="name" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="data type info"/>
+	<property name="name" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="data type info">
+		<sqlInfos>
+			<sqlInfo column="id" definition="VARCHAR(20) NOT NULL PRIMARY KEY"/>
+			<sqlInfo column="name" definition="VARCHAR(20) NOT NULL" />
+			<sqlInfo column="version" definition="VARCHAR(20) NOT NULL"/>
+			<sqlInfo column="versionMajor" definition="INT" setter="no"/>
+			<sqlInfo column="versionMinor" definition="INT" setter="no"/>
+			<sqlInfo column="versionRevision" type="string" definition="VARCHAR(20)" setter="no"/>
+		</sqlInfos>
+	</property>
 
 	<property name="parentInfo" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="parent data type"/>
 

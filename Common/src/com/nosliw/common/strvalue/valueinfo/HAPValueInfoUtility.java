@@ -1,6 +1,11 @@
 package com.nosliw.common.strvalue.valueinfo;
 
+import java.util.Map;
+
+import org.w3c.dom.Element;
+
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
+import com.nosliw.common.utils.HAPXMLUtility;
 
 public class HAPValueInfoUtility {
 
@@ -10,6 +15,5 @@ public class HAPValueInfoUtility {
 		if(!isMandatory && entity.isEmpty())   return null;
 		return entity;
 	}
-	
 	
 }

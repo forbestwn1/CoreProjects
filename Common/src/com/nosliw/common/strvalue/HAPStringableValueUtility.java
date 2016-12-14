@@ -1,8 +1,11 @@
 package com.nosliw.common.strvalue;
 
 import java.util.List;
+import java.util.Map;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.w3c.dom.Element;
 
 import com.nosliw.common.constant.HAPConstantUtility;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
@@ -10,6 +13,7 @@ import com.nosliw.common.resolve.HAPResolvableString;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPXMLUtility;
 
 public class HAPStringableValueUtility {
 
@@ -42,5 +46,10 @@ public class HAPStringableValueUtility {
 			out = new HAPStringableValueMap();
 		}
 		return out;
+	}
+	
+	public static void updateBasicProperty(Element element, HAPStringableValueEntity entity){
+		Map<String, String> propertyAttrs = HAPXMLUtility.getAllAttributes(element);
+		entity.updateAtomicChildrens(propertyAttrs);
 	}
 }

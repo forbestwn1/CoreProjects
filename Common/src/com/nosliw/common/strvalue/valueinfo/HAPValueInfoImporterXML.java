@@ -12,6 +12,7 @@ import org.w3c.dom.Element;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.strvalue.HAPStringableValueMap;
+import com.nosliw.common.strvalue.HAPStringableValueUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -68,7 +69,7 @@ public class HAPValueInfoImporterXML {
 		if(reference!=null){
 			//for property reference to another property
 			valueInfo = HAPValueInfoReference.build(); 
-			updateBasicProperty(valueInfoEle, valueInfo);
+			HAPStringableValueUtility.updateBasicProperty(valueInfoEle, valueInfo);
 		}
 		else{
 			String valueInfoType = valueInfoType1;
@@ -76,12 +77,12 @@ public class HAPValueInfoImporterXML {
 			
 			if(HAPConstant.STRINGALBE_VALUEINFO_LIST.equals(valueInfoType)){
 				valueInfo = HAPValueInfoList.build(); 
-				updateBasicProperty(valueInfoEle, valueInfo);
+				HAPStringableValueUtility.updateBasicProperty(valueInfoEle, valueInfo);
 				readContainerChildValueInfo(valueInfoEle, valueInfo);
 			}
 			else if(HAPConstant.STRINGALBE_VALUEINFO_MAP.equals(valueInfoType)){
 				valueInfo = HAPValueInfoMap.build();
-				updateBasicProperty(valueInfoEle, valueInfo);
+				HAPStringableValueUtility.updateBasicProperty(valueInfoEle, valueInfo);
 				readContainerChildValueInfo(valueInfoEle, valueInfo);
 			}
 			else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(valueInfoType)){
@@ -89,11 +90,11 @@ public class HAPValueInfoImporterXML {
 			}
 			else if(HAPConstant.STRINGALBE_VALUEINFO_OBJECT.equals(valueInfoType)){
 				valueInfo = HAPValueInfoObject.build();
-				updateBasicProperty(valueInfoEle, valueInfo);
+				HAPStringableValueUtility.updateBasicProperty(valueInfoEle, valueInfo);
 			}
 			else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(valueInfoType)){
 				valueInfo = HAPValueInfoEntityOptions.build();
-				updateBasicProperty(valueInfoEle, valueInfo);
+				HAPStringableValueUtility.updateBasicProperty(valueInfoEle, valueInfo);
 				HAPStringableValueMap optionsInfoMap = (HAPStringableValueMap)valueInfo.updateComplexChild(HAPValueInfoEntityOptions.OPTIONS, HAPConstant.STRINGABLE_VALUESTRUCTURE_MAP);
 				Element[] optionEles = HAPXMLUtility.getMultiChildElementByName(valueInfoEle, HAPValueInfoEntityOptions.OPTIONS);
 				for(Element optionEle : optionEles){
@@ -103,7 +104,7 @@ public class HAPValueInfoImporterXML {
 			}
 			else if(HAPConstant.STRINGALBE_VALUEINFO_MODE.equals(valueInfoType)){
 				valueInfo = HAPValueInfoMode.build();
-				updateBasicProperty(valueInfoEle, valueInfo);
+				HAPStringableValueUtility.updateBasicProperty(valueInfoEle, valueInfo);
 				HAPStringableValueEntity elesAttrs = (HAPStringableValueEntity)valueInfo.updateComplexChild(HAPValueInfoEntity.PROPERTIES, HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY);
 				String[] eleTypes = {
 									HAPConstant.STRINGALBE_VALUEINFO_ATOMIC, 
@@ -122,7 +123,25 @@ public class HAPValueInfoImporterXML {
 			}
 			else{
 				valueInfo = HAPValueInfoAtomic.build();
-				updateBasicProperty(valueInfoEle, valueInfo);
+				HAPStringableValueUtility.updateBasicProperty(valueInfoEle, valueInfo);
+			}
+			
+			//read sql info
+			Element[] sqlInfoEles = null;
+			sqlInfoEles = HAPXMLUtility.getMultiChildElementByName(valueInfoEle, HAPValueInfo.SQLINFO);
+			if(sqlInfoEles!=null && sqlInfoEles.length==0){
+				Element sqlInfosEle = HAPXMLUtility.getFirstChildElementByName(valueInfoEle, HAPValueInfo.SQLINFOS);
+				if(sqlInfosEle!=null){
+					sqlInfoEles = HAPXMLUtility.getMultiChildElementByName(sqlInfosEle, HAPValueInfo.SQLINFO);
+				}
+			}
+			
+			if(sqlInfoEles!=null){
+				for(Element sqlInfoEle : sqlInfoEles){
+					HAPSqlInfo sqlInfo = new HAPSqlInfo();
+					HAPStringableValueUtility.updateBasicProperty(sqlInfoEle, sqlInfo);
+					valueInfo.addSqlInfo(sqlInfo);
+				}
 			}
 		}
 		
@@ -131,7 +150,7 @@ public class HAPValueInfoImporterXML {
 	
 	private static HAPValueInfoEntity readEntityValueInfo(Element entityEle){
 		HAPValueInfoEntity valueInfo = HAPValueInfoEntity.build();
-		updateBasicProperty(entityEle, valueInfo);
+		HAPStringableValueUtility.updateBasicProperty(entityEle, valueInfo);
 		HAPStringableValueEntity propertyInfoEntity = (HAPStringableValueEntity)valueInfo.updateComplexChild(HAPValueInfoEntity.PROPERTIES, HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY);
 		Element[] childPropertyEles = HAPXMLUtility.getMultiChildElementByName(entityEle, HAPValueInfoEntity.PROPERTIES);
 		for(Element childPropertyEle : childPropertyEles){
@@ -144,7 +163,7 @@ public class HAPValueInfoImporterXML {
 		Element[] overrideEles = HAPXMLUtility.getMultiChildElementByName(entityEle, HAPValueInfoEntity.OVERRIDE);
 		for(Element overrideEle : overrideEles){
 			HAPStringableValueEntity overrideProperty = new HAPStringableValueEntity();
-			updateBasicProperty(overrideEle, overrideProperty);
+			HAPStringableValueUtility.updateBasicProperty(overrideEle, overrideProperty);
 			overrideList.addChild(overrideProperty);
 		}
 		return valueInfo;
@@ -157,8 +176,4 @@ public class HAPValueInfoImporterXML {
 		return childPropertyInfo;
 	}
 	
-	private static void updateBasicProperty(Element element, HAPStringableValueEntity entity){
-		Map<String, String> propertyAttrs = HAPXMLUtility.getAllAttributes(element);
-		entity.updateAtomicChildrens(propertyAttrs);
-	}
 }
