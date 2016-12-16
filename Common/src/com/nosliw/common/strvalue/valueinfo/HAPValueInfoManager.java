@@ -6,7 +6,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.strvalue.mode.HAPValueInfoModeUtility;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 
@@ -14,10 +17,15 @@ public class HAPValueInfoManager {
 
 	private static HAPValueInfoManager m_instance;
 	
+	//entity value info by entity class name
 	private Map<String, HAPEntityValueInfo> m_entityValueInfos = new LinkedHashMap<String, HAPEntityValueInfo>();
 	
+	//value info by name
 	private Map<String, HAPValueInfo> m_valueInfos;
 
+	//database table infos
+	private Map<String, HAPDBTableInfo> m_dbTables;
+	
 	public static HAPValueInfoManager getInstance(){
 		if(m_instance==null){
 			m_instance = new HAPValueInfoManager();
@@ -60,6 +68,7 @@ public class HAPValueInfoManager {
 			HAPValueInfo valueInfo = this.m_valueInfos.get(name);
 			this.registerEntityValueInfoByClass(valueInfo);
 		}
+		processDBInfo();
 	}
 
 	private void registerEntityValueInfoByClass(HAPValueInfo vf){
@@ -94,6 +103,41 @@ public class HAPValueInfoManager {
 			}
 		}
 	}
+
+	private void processDBInfo(){
+		for(String name : this.m_valueInfos.keySet()){
+			HAPValueInfo vf = this.m_valueInfos.get(name);
+			String valueInfoType = vf.getValueInfoType();
+			if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(valueInfoType)){
+				HAPValueInfoEntity valueInfo = (HAPValueInfoEntity)vf.getSolidValueInfo();
+				String table = valueInfo.getTable();
+				if(HAPBasicUtility.isStringNotEmpty(table)){
+					String className = valueInfo.getClassName();
+					HAPDBTableInfo tableInfo = new HAPDBTableInfo(table, className);
+					this.readColumnInfoFromEntity(tableInfo, valueInfo, null);
+					this.m_dbTables.put(valueInfo.getName(), tableInfo);
+				}
+			}
+		}
+	}
+	
+	private void readColumnInfoFromEntity(HAPDBTableInfo tableInfo, HAPValueInfoEntity valueInfoEntity, String path){
+		Set<String> properties = valueInfoEntity.getProperties();
+		for(String property : properties){
+			HAPValueInfo propertyValueInfo = valueInfoEntity.getPropertyInfo(property);
+			HAPStringableValueList<HAPDBColumnInfo> columns = propertyValueInfo.getDBColumnInfos();
+			for(int i=0; i<columns.size(); i++){
+				HAPDBColumnInfo column = columns.get(i).clone(HAPDBColumnInfo.class);
+				column.updateAtomicChild(HAPDBColumnInfo.ATTRPATH, path);
+				tableInfo.addColumnInfo(column, property);
+			}
+			
+			String propertyValueInfoType = propertyValueInfo.getValueInfoType();
+			if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(propertyValueInfoType)){
+				readColumnInfoFromEntity(tableInfo, (HAPValueInfoEntity)propertyValueInfo, HAPNamingConversionUtility.cascadePath(path, property));
+			}
+		}
+	}
 	
 	public HAPValueInfo getValueInfo(String name){
 		HAPValueInfo out = this.m_valueInfos.get(name);
@@ -106,11 +150,6 @@ public class HAPValueInfoManager {
 
 	public HAPValueInfoEntity getEntityValueInfoByClassName(String csName){
 		HAPEntityValueInfo info = this.m_entityValueInfos.get(csName);
-		
-		if(info==null){
-			int kkkk = 5555;
-			kkkk++;
-		}
 		
 		if(info.isValid())  		return info.getValueInfoEntity();
 		return null;

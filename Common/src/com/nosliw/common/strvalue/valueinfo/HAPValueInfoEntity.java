@@ -21,6 +21,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	public static final String OVERRIDE = "override";
 	public static final String OVERRIDE_PROPERTY = "property";
 	public static final String OVERRIDE_VALUE = "value";
+	public static final String TABLE = "table";
 	
 	private HAPValueInfoEntity m_solidValueInfo;
 	
@@ -123,6 +124,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	public String getParent(){		return this.getAtomicAncestorValueString(PARENT);	}
 	public String getClassName(){  return this.getAtomicAncestorValueString(CLASSNAME); }
 	public void setClassName(String name){  this.updateAtomicChild(CLASSNAME, name); }
+	public String getTable(){  return this.getAtomicAncestorValueString(TABLE);  }
 	
 	private HAPValueInfoEntity getParentEntityValueInfo(){
 		HAPValueInfoEntity out = null;

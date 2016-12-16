@@ -19,6 +19,9 @@ public class HAPStringableValueList<T extends HAPStringableValue> extends HAPStr
 	public HAPStringableValueList(){
 		this.m_elements = new ArrayList<T>();
 	}
+
+	public int size(){		return this.m_elements.size();	}
+	public T get(int index){  return this.m_elements.get(index); }
 	
 	public List<T> getListValue(){  return this.m_elements;  }
 	
