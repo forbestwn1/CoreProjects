@@ -139,6 +139,10 @@ public class HAPValueInfoManager {
 		}
 	}
 	
+	public HAPDBTableInfo getDBTableInfo(String name){
+		return this.m_dbTables.get(name);
+	}
+	
 	public HAPValueInfo getValueInfo(String name){
 		HAPValueInfo out = this.m_valueInfos.get(name);
 		return out;

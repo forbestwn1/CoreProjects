@@ -1,11 +1,17 @@
 package com.nosliw.common.strvalue.valueinfo;
 
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.nosliw.common.constant.HAPConstantManager;
+import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPDBTableInfo {
 
@@ -24,6 +30,9 @@ public class HAPDBTableInfo {
 			e.printStackTrace();
 		}
 	}
+	
+	public String getTableName(){ return this.m_tableName; }
+	public List<HAPDBColumnInfo> getColumnsInfo(){  return this.m_columns;  }
 	
 	public void addColumnInfo(HAPDBColumnInfo columnInfo, String entityProperty){
 		String column = columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.COLUMN);
@@ -44,13 +53,13 @@ public class HAPDBTableInfo {
 			columnInfo.updateAtomicChild(HAPDBColumnInfo.SETTER, setter);
 		}
 		
-		String type = columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.TYPE);
+		String type = columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.DATATYPE);
 		if(HAPBasicUtility.isStringEmpty(type)){
 			try {
 				Method getMethod = this.m_entityClass.getMethod(getter);
 				Class returnType = getMethod.getReturnType();
 				type = HAPLiterateManager.getInstance().getSubLiterateTypeByClass(returnType);
-				columnInfo.updateAtomicChild(HAPDBColumnInfo.TYPE, type);
+				columnInfo.updateAtomicChild(HAPDBColumnInfo.DATATYPE, type);
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 
