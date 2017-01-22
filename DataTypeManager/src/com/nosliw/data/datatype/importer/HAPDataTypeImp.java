@@ -24,15 +24,15 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 
 	public void init(String Id, String name, String version, String description, String parent, String linked){
 		this.updateAtomicChild(ID, Id);
-		this.updateAtomicChild(NAME, HAPDataTypeInfoImp.buildStringValue(name, version), HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeInfoImp.class.getName());
+		this.updateAtomicChild(INFO, HAPDataTypeInfoImp.buildStringValue(name, version), HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeInfoImp.class.getName());
 		this.updateAtomicChild(DESCRIPTION, description);
 		this.updateAtomicChild(PARENTINFO, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeInfoImp.class.getName());
 		this.updateAtomicChild(LINKEDVERSION, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeVersionImp.class.getName());
 	}
 	
 	@Override
-	public HAPDataTypeInfo getDataTypeInfo() {	
-		HAPDataTypeInfoImp out = (HAPDataTypeInfoImp)this.getAtomicValueAncestorByPath(NAME);
+	public HAPDataTypeInfo getInfo() {	
+		HAPDataTypeInfoImp out = (HAPDataTypeInfoImp)this.getAtomicValueAncestorByPath(INFO);
 		out.setId(this.getId());
 		return out;
 	}
@@ -44,7 +44,7 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 			out = (HAPDataTypeInfoImp)this.getLinkedDataTypeInfo();
 			break;
 		case HAPConstant.DATATYPE_PATHSEGMENT_PARENT:
-			out = (HAPDataTypeInfoImp)this.getParentDataTypeInfo();
+			out = (HAPDataTypeInfoImp)this.getParentInfo();
 			break;
 		}
 		return out;
@@ -56,10 +56,10 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	public String getDescription() {	return this.getAtomicAncestorValueString(DESCRIPTION); }
 
 	@Override
-	public HAPDataTypeInfo getParentDataTypeInfo() {	return (HAPDataTypeInfo)this.getAtomicValueAncestorByPath(PARENTINFO);	}
+	public HAPDataTypeInfo getParentInfo() {	return (HAPDataTypeInfo)this.getAtomicValueAncestorByPath(PARENTINFO);	}
 
 	public HAPDataTypeInfoImp getLinkedDataTypeInfo(){
-		return new HAPDataTypeInfoImp(this.getDataTypeInfo().getName(), this.getLinkedVersion());
+		return new HAPDataTypeInfoImp(this.getInfo().getName(), this.getLinkedVersion());
 	}
 	
 	@Override

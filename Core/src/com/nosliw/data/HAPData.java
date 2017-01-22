@@ -4,8 +4,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializable;
 
-/*
- * class that store data
+/**
+ * class that store data which is composed of two part: value and dataTypeInfo 
  *  
  */
 @HAPEntityWithAttribute(baseName="DATA")

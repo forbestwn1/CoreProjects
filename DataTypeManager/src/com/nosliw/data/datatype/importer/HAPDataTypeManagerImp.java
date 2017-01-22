@@ -121,7 +121,7 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 		}
 		
 		for(HAPDataTypeOperationImp dataTypeOp : connectDataTypeOps.getOperations()){
-			dataTypeOp.getBaseDataType().appendPathSegment(HAPDataTypePathSegment.buildPathSegment(connectType));
+			dataTypeOp.getTargetDataType().appendPathSegment(HAPDataTypePathSegment.buildPathSegment(connectType));
 			out.addOperation(dataTypeOp);
 		}
 		
@@ -148,7 +148,7 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 		if(connectDataTypePic==null){
 			connectDataTypePic = this.buildDataTypePicture(connectDataTypeInfo);
 		}
-		Set<HAPDataTypePictureNodeImp> dataTypePicNodes = connectDataTypePic.getDataTypeNodes();
+		Set<HAPDataTypePictureNodeImp> dataTypePicNodes = connectDataTypePic.getRelationships();
 		for(HAPDataTypePictureNodeImp picNode : dataTypePicNodes){
 			out.addNode(picNode.extendPathSegment(HAPDataTypePathSegment.buildPathSegment(connectType)));
 		}

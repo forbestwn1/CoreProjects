@@ -4,7 +4,7 @@ public interface HAPOperationManager {
 
 	public String getLanguage();
 	
-	public HAPOperationResource getDataOperationResource(HAPOperationInfo dataOpInfo);
+	public HAPOperationResource getDataOperationResource(HAPDataTypeInfo dataTypeInfo, HAPOperationInfo dataOpInfo);
 
 	public HAPOperationResource getExpressionExecuteResource(HAPExpression expression);
 

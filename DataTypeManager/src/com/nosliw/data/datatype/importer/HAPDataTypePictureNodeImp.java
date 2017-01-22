@@ -6,9 +6,9 @@ import java.util.List;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypePathSegment;
-import com.nosliw.data.HAPDataTypePictureNode;
+import com.nosliw.data.HAPDataTypeRelationship;
 
-public class HAPDataTypePictureNodeImp extends HAPStringableValueEntity implements HAPDataTypePictureNode{
+public class HAPDataTypePictureNodeImp extends HAPStringableValueEntity implements HAPDataTypeRelationship{
 
 	private List<HAPDataTypePathSegment> m_pathSegs;
 
@@ -20,12 +20,12 @@ public class HAPDataTypePictureNodeImp extends HAPStringableValueEntity implemen
 	}
 	
 	@Override
-	public HAPDataType getDataType(){
+	public HAPDataType getTargetDataType(){
 		return this.m_dataTypeImp;
 	}
 	
 	@Override
-	public List<HAPDataTypePathSegment> getPathSegments(){
+	public List<HAPDataTypePathSegment> getPath(){
 		return this.m_pathSegs;
 	}
 	

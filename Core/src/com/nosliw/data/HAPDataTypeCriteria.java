@@ -1,17 +1,12 @@
 package com.nosliw.data;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 
 @HAPEntityWithAttribute(baseName="DATATYPECRITERIA")
-public interface HAPDataTypeCriteria extends HAPDataTypeInfo{
+public interface HAPDataTypeCriteria{
 
-	@HAPAttribute
-	public static String NAME = "name";
+	public boolean match(HAPDataTypeInfo dataTypeInfo);
 
-	@HAPAttribute
-	public static String VERSION = "version";
-
-	public boolean isValidDataType(HAPDataTypeInfo dataTypeInfo);
+	public boolean match(HAPDataTypeCriteria criteria);
 	
 }

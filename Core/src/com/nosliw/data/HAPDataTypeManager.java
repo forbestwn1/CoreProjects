@@ -7,16 +7,15 @@ public interface HAPDataTypeManager {
 
 	//*****************************************  Data Type
 	public HAPDataType getDataType(HAPDataTypeInfo dataTypeInfo);
-	
-	public HAPDataTypeFamily getDataTypeFamily(HAPDataTypeInfo dataTypeInfo);
-	
-	public List<HAPDataType> queryDataType(HAPQueryInfo queryInfo);
-	
+	public HAPDataTypePicture buildDataTypePicture(HAPDataTypeInfo dataTypeInfo);
 	
 	//*****************************************  Operation Info
 	 //get all available operations info (local, older version, parent)
 	public List<? extends HAPDataTypeOperation> getOperationInfos(HAPDataTypeInfo dataTypeInfo);
 	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name);
+	
+	
+	
 	
 	
 	
@@ -26,11 +25,6 @@ public interface HAPDataTypeManager {
 	//get new data operation info by parms type
 	public HAPOperationInfo getNewDataOperation(HAPDataTypeInfo dataTypeInfo, Map<String, HAPDataTypeInfo> parmsDataTypeInfos);
 
-	//get only locally defined operation infos
-//	public List<? extends HAPOperationInfo> getLocalOperationInfos(HAPDataTypeInfo dataTypeInfo);
-//	public HAPOperationInfo getLocalOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name);
-	
-	
 	
 	//*****************************************  
 	public List<String> getLanguages();

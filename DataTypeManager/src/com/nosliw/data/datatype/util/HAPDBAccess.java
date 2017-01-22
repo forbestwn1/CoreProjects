@@ -108,8 +108,8 @@ public class HAPDBAccess extends HAPConfigurableImp{
 		try {
 			String operationId = this.getId()+"";
 			m_insertOperationStatement.setString(1, operationId);
-			m_insertOperationStatement.setString(2, dataType.getDataTypeInfo().getName());
-			m_insertOperationStatement.setString(3, dataType.getDataTypeInfo().getVersion().toStringValue(HAPSerializationFormat.LITERATE));
+			m_insertOperationStatement.setString(2, dataType.getInfo().getName());
+			m_insertOperationStatement.setString(3, dataType.getInfo().getVersion().toStringValue(HAPSerializationFormat.LITERATE));
 			m_insertOperationStatement.setString(4, operation.getName());
 			m_insertOperationStatement.setString(5, operation.getDescription());
 			m_insertOperationStatement.execute();
@@ -146,9 +146,9 @@ public class HAPDBAccess extends HAPConfigurableImp{
 		int i = 1;
 		
 		try {
-			HAPDataTypeInfoImp dataTypeInfo = (HAPDataTypeInfoImp)dataType.getDataTypeInfo();
+			HAPDataTypeInfoImp dataTypeInfo = (HAPDataTypeInfoImp)dataType.getInfo();
 			HAPDataTypeVersionImp dataTypeVersion = (HAPDataTypeVersionImp)dataTypeInfo.getVersion();
-			HAPDataTypeInfoImp parentDataTypeInfo = (HAPDataTypeInfoImp)dataType.getParentDataTypeInfo();
+			HAPDataTypeInfoImp parentDataTypeInfo = (HAPDataTypeInfoImp)dataType.getParentInfo();
 			HAPDataTypeVersionImp linkedVersion = (HAPDataTypeVersionImp)dataType.getLinkedVersion();
 
 			statement.setString(i++, dataTypeInfo.toStringValue(HAPSerializationFormat.LITERATE));

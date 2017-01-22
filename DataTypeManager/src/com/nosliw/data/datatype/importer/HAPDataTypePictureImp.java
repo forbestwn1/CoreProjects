@@ -6,7 +6,7 @@ import com.nosliw.common.strvalue.HAPStringableValueMap;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeInfo;
 import com.nosliw.data.HAPDataTypePicture;
-import com.nosliw.data.HAPDataTypePictureNode;
+import com.nosliw.data.HAPDataTypeRelationship;
 
 public class HAPDataTypePictureImp extends HAPDataTypeImp implements HAPDataTypePicture{
 
@@ -18,21 +18,21 @@ public class HAPDataTypePictureImp extends HAPDataTypeImp implements HAPDataType
 	}
 	
 	@Override
-	public HAPDataType getMainDataType(){		return this;	}
+	public HAPDataType getSourceDataType(){		return this;	}
 	
 	@Override
-	public Set<? extends HAPDataTypePictureNode> getDataTypeNodes(){
+	public Set<? extends HAPDataTypeRelationship> getRelationships(){
 		Set<HAPDataTypePictureNodeImp> out = this.getNodesMap().getValues(); 
 		return out;
 	}
 	
 	@Override
-	public HAPDataTypePictureNodeImp getNode(HAPDataTypeInfo dataTypeInfo){
+	public HAPDataTypePictureNodeImp getRelationship(HAPDataTypeInfo dataTypeInfo){
 		return (HAPDataTypePictureNodeImp)this.getNodesMap().getChild(((HAPDataTypeInfoImp)dataTypeInfo).getId());
 	}
 
 	public void addNode(HAPDataTypePictureNodeImp node){
-		this.getNodesMap().updateChild(((HAPDataTypeImp)node.getDataType()).getId(), node);
+		this.getNodesMap().updateChild(((HAPDataTypeImp)node.getTargetDataType()).getId(), node);
 	}
 
 	private HAPStringableValueMap<HAPDataTypePictureNodeImp> getNodesMap(){		return (HAPStringableValueMap<HAPDataTypePictureNodeImp>)this.getChild(NODES);	}
