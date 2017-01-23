@@ -1,29 +1,29 @@
 package com.nosliw.data.operation.java;
 
 import com.nosliw.data.HAPOperationInfo;
-import com.nosliw.data.HAPOperationResource;
+import com.nosliw.data.HAPResources;
 import com.nosliw.data.HAPExpression;
-import com.nosliw.data.HAPOperationManager;
+import com.nosliw.data.HAPResourceManager;
 
-public class HAPOperationManagerJava implements HAPOperationManager{
+public class HAPOperationManagerJava implements HAPResourceManager{
 
 	@Override
-	public String getLanguage() {
+	public String getRuntimeInfo() {
 		return null;
 	}
 
 	@Override
-	public HAPOperationResource getDataOperationResource(HAPOperationInfo dataOpInfo) {
+	public HAPResources getDataOperationResource(HAPOperationInfo dataOpInfo) {
 		return null;
 	}
 
 	@Override
-	public HAPOperationResource getExpressionExecuteResource(HAPExpression expression) {
+	public HAPResources getExpressionExecuteResource(HAPExpression expression) {
 		return null;
 	}
 
 	@Override
-	public HAPOperationResource prepareResources(HAPOperationResource resources) {
+	public HAPResources prepareResources(HAPResources resources) {
 		return null;
 	}
 

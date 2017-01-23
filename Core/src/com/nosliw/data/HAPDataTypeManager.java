@@ -14,7 +14,11 @@ public interface HAPDataTypeManager {
 	public List<? extends HAPDataTypeOperation> getOperationInfos(HAPDataTypeInfo dataTypeInfo);
 	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name);
 	
+
+	//*****************************************   Expression
+	public HAPExpression compileExpression(HAPExpressionInfo expressionInfo);
 	
+
 	
 	
 	
@@ -28,8 +32,6 @@ public interface HAPDataTypeManager {
 	
 	//*****************************************  
 	public List<String> getLanguages();
-	
-	public HAPExpression compileExpression(HAPExpressionInfo expressionInfo, String lang);
 	
 	
 }
