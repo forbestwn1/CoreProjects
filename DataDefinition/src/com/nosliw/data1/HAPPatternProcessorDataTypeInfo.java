@@ -22,7 +22,7 @@ public class HAPPatternProcessorDataTypeInfo extends HAPPatternProcessorImp{
 		String categary = null;
 		String type = null;
 		if(!HAPBasicUtility.isStringEmpty(text)){
-	    	String[] parts = HAPNamingConversionUtility.splitText(text, HAPConstant.SEPERATOR_PART);
+	    	String[] parts = HAPNamingConversionUtility.splitTextByComponents(text, HAPConstant.SEPERATOR_PART);
 			type = parts[0];
 			if(HAPBasicUtility.isStringEmpty(type))  type = null;
 			if(parts.length>=2)   categary = parts[1];
@@ -35,7 +35,7 @@ public class HAPPatternProcessorDataTypeInfo extends HAPPatternProcessorImp{
 	@Override
 	public String compose(Object obj, Object data) {
 		HAPDataTypeInfo dataTypeInfo = (HAPDataTypeInfo)obj;
-		return HAPNamingConversionUtility.cascadeTexts(dataTypeInfo.getType(), dataTypeInfo.getCategary(), HAPConstant.SEPERATOR_PART);
+		return HAPNamingConversionUtility.cascadeComponents(dataTypeInfo.getType(), dataTypeInfo.getCategary(), HAPConstant.SEPERATOR_PART);
 	}
 
 	@HAPTestCaseItem(name="${this.getName()}", description="type{{CONS_SEPERATOR_PART}}categary, ")

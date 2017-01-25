@@ -10,8 +10,6 @@ import com.nosliw.data.HAPDataTypeVersion;
 @HAPEntityWithAttribute(parent="com.nosliw.data.HAPDataType")
 public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataType{
 
-	public static String ID = "id";
-
 	public HAPDataTypeImp(){}
 
 	public HAPDataTypeImp(HAPDataTypeImp dataType){

@@ -1,5 +1,7 @@
 <entity name="data.datatypeinfo" description="data type info" class="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp">
 
+	<property name="id" dataType="string" description="data type id"/>
+
 	<property name="name" dataType="string" description="data type name"/>
 
 	<property name="version" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeVersionImp" description=""/>

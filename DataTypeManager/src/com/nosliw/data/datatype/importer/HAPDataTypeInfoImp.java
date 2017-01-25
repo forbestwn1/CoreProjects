@@ -1,5 +1,6 @@
 package com.nosliw.data.datatype.importer;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPStringableValueAtomic;
@@ -10,6 +11,7 @@ import com.nosliw.data.HAPDataTypeVersion;
 
 public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPDataTypeInfo{
 
+	@HAPAttribute
 	public static String ID = "id";
 	
 	public HAPDataTypeInfoImp(){}

@@ -1,6 +1,8 @@
 package com.nosliw.common.pattern;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -9,10 +11,54 @@ import com.nosliw.common.utils.HAPSegmentParser;
 
 public class HAPNamingConversionUtility {
 
-	public static String[] splitText(String text, String token){
+	public static String cascadeComponents(String[] parts, String seperator){
+		StringBuffer out = new StringBuffer();
+		
+		for(int i=0; i<parts.length; i++){
+			String part = parts[i];
+			if(i)
+		}
+		
+		
+		if(HAPBasicUtility.isStringEmpty(part1))	part1 = "";
+		if(HAPBasicUtility.isStringEmpty(part2))	part2 = "";
+		return new StringBuffer().append(part1).append(seperator).append(part2).toString();
+	}
+	
+	/**
+	 * Cascade two 
+	 * @param part1
+	 * @param part2
+	 * @param seperator
+	 * @return
+	 */
+	public static String cascadeComponents(String part1, String part2, String seperator){
+		if(HAPBasicUtility.isStringEmpty(part1))	part1 = "";
+		if(HAPBasicUtility.isStringEmpty(part2))	part2 = "";
+		return new StringBuffer().append(part1).append(seperator).append(part2).toString();
+	}
+
+	public static String cascadeElements(String part1, String part2, String seperator){
+		if(HAPBasicUtility.isStringEmpty(part1))	return part2;
+		if(HAPBasicUtility.isStringEmpty(part2))	return part1;
+		return new StringBuffer().append(part1).append(seperator).append(part2).toString();
+	}
+	
+	public static String[] splitTextByComponents(String text, String token){
 		return text.split(token);
 	}
 
+	public static String[] splitTextByElements(String text, String token){
+		String[] split = text.split(token);
+		List<String> out = new ArrayList<String>();
+		for(String ele : split){
+			if(HAPBasicUtility.isStringNotEmpty(ele)){
+				out.add(ele);
+			}
+		}
+		return out.toArray(new String[0]);
+	}
+	
 	public static Map<String, String> parsePropertyValuePairs(String value){
 		Map<String, String> out = new LinkedHashMap<String, String>();
 		String[] eleStrs = parseElements(value);
@@ -23,14 +69,8 @@ public class HAPNamingConversionUtility {
 		return out;
 	}
 	
-	public static String cascadeTexts(String part1, String part2, String seperator){
-		if(HAPBasicUtility.isStringEmpty(part1))	part1 = "";
-		if(HAPBasicUtility.isStringEmpty(part2))	part2 = "";
-		return new StringBuffer().append(part1).append(seperator).append(part2).toString();
-	}
-	
 	public static String cascadeNameSegment(String part1, String part2){
-		return cascadeTexts(part1, part2, HAPConstant.SEPERATOR_PREFIX);
+		return cascadeComponents(part1, part2, HAPConstant.SEPERATOR_PREFIX);
 	}
 
 	
@@ -38,7 +78,7 @@ public class HAPNamingConversionUtility {
 	 * cascade two part element together
 	 */
 	public static String cascadePart(String part1, String part2){
-		return cascadeTexts(part1, part2, HAPConstant.SEPERATOR_PART);
+		return cascadeComponents(part1, part2, HAPConstant.SEPERATOR_PART);
 	}
 
 	/*
@@ -56,7 +96,7 @@ public class HAPNamingConversionUtility {
 	 * cascade two detail element together
 	 */
 	public static String cascadeDetail(String detail1, String detail2){
-		return cascadeTexts(detail1, detail2, HAPConstant.SEPERATOR_DETAIL);
+		return cascadeComponents(detail1, detail2, HAPConstant.SEPERATOR_DETAIL);
 	}
 
 	/*
@@ -70,7 +110,7 @@ public class HAPNamingConversionUtility {
 	 * cascade two Path element together
 	 */
 	public static String cascadePath(String path1, String path2){
-		return cascadeTexts(path1, path2, HAPConstant.SEPERATOR_PATH);
+		return cascadeComponents(path1, path2, HAPConstant.SEPERATOR_PATH);
 	}
 
 	public static String[] parseElements(String eles){
@@ -82,7 +122,7 @@ public class HAPNamingConversionUtility {
 	}
 
 	public static String cascadeSegments(String seg1, String seg2){
-		return cascadeTexts(seg1, seg2, HAPConstant.SEPERATOR_SEGMENT);
+		return cascadeComponents(seg1, seg2, HAPConstant.SEPERATOR_SEGMENT);
 	}
 
 	public static String cascadeElement(String[] eles){
