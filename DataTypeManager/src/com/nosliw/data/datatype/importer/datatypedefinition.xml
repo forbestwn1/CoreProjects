@@ -1,12 +1,12 @@
 <entity name="data.datatypedef" description="this is used to defined data type basic info" class="com.nosliw.data.datatype.importer.HAPDataTypeImpLoad">
 
 	<property name="description" dataType="string" description="data type description">
-		<sqlInfos>
-			<sqlInfo definition="VARCHAR(20)"/>
-		</sqlInfos>
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
 	</property>
 
-	<property name="name" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="data type info">
+	<property name="info" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="data type info">
 		<dbColumnInfos>
 			<dbColumnInfo column="id" definition="VARCHAR(20) NOT NULL PRIMARY KEY"/>
 			<dbColumnInfo column="name" definition="VARCHAR(20) NOT NULL" />

@@ -12,12 +12,17 @@ import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPSqlUtility {
 
-	
+	/**
+	 * Build create table sql 
+	 * @param tableInfo
+	 * @return
+	 */
 	public static String createTableSql(HAPDBTableInfo tableInfo){
 		StringBuffer sqlColumns = new StringBuffer();
 		List<HAPDBColumnInfo> columns = new ArrayList<HAPDBColumnInfo>();
@@ -43,9 +48,65 @@ public class HAPSqlUtility {
 		String columnDef = columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.DEFINITION);
 		return columnName + " " + columnDef;
 	}
-	
 
-	private static void saveToDB(HAPStringableValueEntity obj, Connection connection){
+	/**
+	 * Build insert sql according to db table info
+	 * @param dbTableInfo
+	 * @return
+	 */
+	public static String buildInstertSql(HAPDBTableInfo dbTableInfo){
+		StringBuffer insertSql = new StringBuffer().append("INSERT INTO "+ dbTableInfo.getTableName() +" ( ");
+
+		StringBuffer questions = new StringBuffer();
+		List<HAPDBColumnInfo> columnInfos = dbTableInfo.getColumnsInfo();
+		for(int i=0; i<columnInfos.size(); i++){
+			HAPDBColumnInfo columnInfo = columnInfos.get(i);
+			if(i>0)    {
+				insertSql.append(", ");
+				questions.append(",");
+			}
+			insertSql.append(columnInfo.getColumnName());
+			questions.append("?");
+		}
+		insertSql.append(") VALUES (" + questions.toString() + ")");
+		return insertSql.toString();
+	}
+	
+	public static void saveToDB(HAPStringableValueEntity obj, PreparedStatement statement){
+		try {
+			HAPValueInfoEntity valueInfoEntity = HAPValueInfoManager.getInstance().getEntityValueInfoByClass(obj.getClass());
+			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valueInfoEntity.getName());
+
+			List<HAPDBColumnInfo> columnInfos = dbTableInfo.getColumnsInfo();
+			for(int i=0; i<columnInfos.size(); i++){
+				HAPDBColumnInfo columnInfo = columnInfos.get(i);
+				String attrPath = columnInfo.getAttrPath();
+				HAPStringableValueEntity columnObj = (HAPStringableValueEntity)obj.getAncestorByPath(attrPath);
+				
+				Object columnValue = columnObj.getClass().getMethod(columnInfo.getGetter()).invoke(columnObj, null);
+				
+				String dataType = columnInfo.getDataType();
+				if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING.equals(dataType)){
+					statement.setString(i+1, (String)columnValue);
+				}
+				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER.equals(dataType)){
+					statement.setInt(i+1, (Integer)columnValue);
+				}
+				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_BOOLEAN.equals(dataType)){
+					statement.setBoolean(i+1, (Boolean)columnValue);
+				}
+				if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_FLOAT.equals(dataType)){
+					statement.setFloat(i+1, (Float)columnValue);
+				}
+				statement.execute();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	public static void saveToDB(HAPStringableValueEntity obj, Connection connection){
 		try {
 			HAPValueInfoEntity valueInfoEntity = HAPValueInfoManager.getInstance().getEntityValueInfoByClass(obj.getClass());
 			
@@ -66,35 +127,57 @@ public class HAPSqlUtility {
 				if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING.equals(dataType)){
 					statement.setString(i+1, (String)columnValue);
 				}
+				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER.equals(dataType)){
+					statement.setInt(i+1, (Integer)columnValue);
+				}
+				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_BOOLEAN.equals(dataType)){
+					statement.setBoolean(i+1, (Boolean)columnValue);
+				}
+				if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_FLOAT.equals(dataType)){
+					statement.setFloat(i+1, (Float)columnValue);
+				}
+				statement.execute();
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
-	private static List<Object> queryFromDB(String dataTypeName, String query){
-		
+	public static String buildQuerySql(String dataTypeName, String query){
+		HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(dataTypeName);
+		String tableName = dbTableInfo.getTableName();
+		StringBuffer out = new StringBuffer();
+		out.append("SELECT * FROM ").append(tableName).append(" WHERE ").append(query);
+		return out.toString();
 	}
 	
-	
-	private static String buildInstertSql(HAPDBTableInfo dbTableInfo){
-		StringBuffer insertSql = new StringBuffer().append("INSERT INTO "+ dbTableInfo.getTableName() +" ( ");
-
-		StringBuffer questions = new StringBuffer();
-		List<HAPDBColumnInfo> columnInfos = dbTableInfo.getColumnsInfo();
-		for(int i=0; i<columnInfos.size(); i++){
-			HAPDBColumnInfo columnInfo = columnInfos.get(i);
-			if(i>0)    {
-				insertSql.append(", ");
-				questions.append(",");
+	private static List<Object> queryFromDB(String dataTypeName, PreparedStatement statement){
+		List<Object> out = new ArrayList<Object>();
+		
+		try {
+			ResultSet resultSet = statement.executeQuery();
+			while(resultSet.next()){
+				HAPValueInfoEntity valueInfo = (HAPValueInfoEntity)HAPValueInfoManager.getInstance().getValueInfo(dataTypeName);
+				Object entity = Class.forName(valueInfo.getClassName()).newInstance();
+				
+				HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(dataTypeName);
+				List<HAPDBColumnInfo> columns = dbTableInfo.getColumnsInfo();
+				for(HAPDBColumnInfo column : columns){
+					String setter = column.getSetter();
+					if(!HAPBasicUtility.isStringEmpty(setter)){
+						if("String".equals(column.getDataType())){
+							entity.getClass().getMethod(setter, String.class).invoke(entity, resultSet.getString(column.getColumnName()));
+						}
+						else if("Integer".equals(column.getDataType())){
+							entity.getClass().getMethod(setter, Integer.class).invoke(entity, resultSet.getInt(column.getColumnName()));
+						}
+					}
+				}
+				out.add(entity);
 			}
-			insertSql.append(columnInfo.getColumnName());
-			questions.append("?");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		insertSql.append(") VALUES (" + questions.toString() + ")");
-		return insertSql.toString();
+		return out;
 	}
-	
 }
