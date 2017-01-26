@@ -37,7 +37,7 @@ public class HAPDataTypeInfoWithVersion extends HAPDataTypeInfo{
 	public static HAPDataTypeInfoWithVersion parseDataTypeInfo(String infoStr, HAPDataTypeInfoWithVersion backup){
 		if(HAPBasicUtility.isStringEmpty(infoStr))	return backup;
 		else{
-	    	String[] parts = HAPNamingConversionUtility.parsePartlInfos(infoStr);
+	    	String[] parts = HAPNamingConversionUtility.parsePartls(infoStr);
 			String type = parts[0];
 			String categary = HAPDataTypeManager.DEFAULT_TYPE;
 			if(parts.length>=2)   categary = parts[1];

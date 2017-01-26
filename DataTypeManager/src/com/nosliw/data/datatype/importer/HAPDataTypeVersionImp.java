@@ -29,8 +29,8 @@ public class HAPDataTypeVersionImp extends HAPStringableValueEntity implements H
 	@Override
 	protected String buildLiterate(){
 		String out = "";
-		out = HAPNamingConversionUtility.buildPath(String.valueOf(this.getMajor()), String.valueOf(this.getMinor()));
-		out = HAPNamingConversionUtility.buildPath(out, this.getRevision());
+		out = HAPNamingConversionUtility.cascadePath(String.valueOf(this.getMajor()), String.valueOf(this.getMinor()));
+		out = HAPNamingConversionUtility.cascadePath(out, this.getRevision());
 		return out; 
 	}
 	

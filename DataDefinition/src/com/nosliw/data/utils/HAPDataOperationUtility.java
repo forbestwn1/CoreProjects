@@ -38,7 +38,7 @@ public class HAPDataOperationUtility {
 			String[] convertPathSegs = HAPNamingConversionUtility.parsePathSegs(convertPath); 
 			for(String convertPathSeg : convertPathSegs){
 				HAPData[] newParms = new HAPData[parms.length];
-				String[] convertPathSegDetails = HAPNamingConversionUtility.parseDetailInfos(convertPathSeg);
+				String[] convertPathSegDetails = HAPNamingConversionUtility.parseDetails(convertPathSeg);
 				switch(convertPathSegDetails[0]){
 				case HAPConstant.OPERATIONDEF_PATH_PARENT:
 				{

@@ -62,7 +62,7 @@ public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPD
 		}
 	}
 	
-	public static String buildStringValue(String name, String version){
+	public static String buildStringValue(String id, String name, String version){
 		return HAPNamingConversionUtility.cascadeSegments(name, version);
 	}
 	

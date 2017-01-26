@@ -12,10 +12,8 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
-import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -145,7 +143,7 @@ public class HAPConfigureUtility {
 		}
 
 		for(String name : valueMap.keySet()){
-			String path = HAPNamingConversionUtility.buildPath(importConfigure.getBasePath(), name);
+			String path = HAPNamingConversionUtility.cascadePath(importConfigure.getBasePath(), name);
 			String value = valueMap.get(name).trim(); 
 			if(importConfigure.isHard()){
 				out.addConfigureItem(path, value);

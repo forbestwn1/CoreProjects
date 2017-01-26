@@ -48,7 +48,7 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 		for(Object eleObj : (List<Object>)value){
 			elesStr.add(HAPLiterateManager.getInstance().valueToString(eleObj));
 		}
-		arrayStr.append(HAPNamingConversionUtility.cascadeElement(elesStr.toArray(new String[0])));
+		arrayStr.append(HAPNamingConversionUtility.cascadeElementArray(elesStr.toArray(new String[0])));
 		return arrayStr.toString(); 
 		
 	}

@@ -222,7 +222,7 @@ public class HAPEntityContainerAttributeWraper extends HAPDataWraper{
 		super.setParentEntity(parentEntity, attributePath, attrDef);
 		HAPAttributeDefinitionContainer attrDefinition = (HAPAttributeDefinitionContainer)this.getAttributeDefinition();
 		for(HAPDataWraper eleWraper : this.getContainerData().getElementWrapers()){
-			eleWraper.setParentEntity(this.getParentEntity(), HAPNamingConversionUtility.buildPath(this.getParentEntityAttributePath(), eleWraper.getId()), attrDefinition.getChildAttributeDefinition());
+			eleWraper.setParentEntity(this.getParentEntity(), HAPNamingConversionUtility.cascadePath(this.getParentEntityAttributePath(), eleWraper.getId()), attrDefinition.getChildAttributeDefinition());
 		}
 	}
 }
