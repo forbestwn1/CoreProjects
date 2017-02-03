@@ -13,14 +13,20 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoEntity extends HAPValueInfoComplex{
-
+	//class name for entity
 	public static final String CLASSNAME = "class";
+	//when it is used to define property of entity, whether this property is mandatory 
 	public static final String MANDATORY = "mandatory";
+	//all properties
 	public static final String PROPERTIES = "property";
+	//parent entity, the entity that this entity inherit property from
 	public static final String PARENT = "parent";
+	//a list of override property. It is used when we want to change some attribute value for property inherited from parent
+	//for each element in it, it has "property" which is property name and "value" which is all the attributes value want to override  
 	public static final String OVERRIDE = "override";
 	public static final String OVERRIDE_PROPERTY = "property";
 	public static final String OVERRIDE_VALUE = "value";
+	//table name this entity represent
 	public static final String TABLE = "table";
 	
 	private HAPValueInfoEntity m_solidValueInfo;

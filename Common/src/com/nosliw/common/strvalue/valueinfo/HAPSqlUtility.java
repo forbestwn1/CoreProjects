@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
+import com.nosliw.common.path.HAPComplexName;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -79,10 +80,10 @@ public class HAPSqlUtility {
 			List<HAPDBColumnInfo> columnInfos = dbTableInfo.getColumnsInfo();
 			for(int i=0; i<columnInfos.size(); i++){
 				HAPDBColumnInfo columnInfo = columnInfos.get(i);
-				String attrPath = columnInfo.getAttrPath();
-				HAPStringableValueEntity columnObj = (HAPStringableValueEntity)obj.getAncestorByPath(attrPath);
+				HAPComplexName complexName = new HAPComplexName(columnInfo.getGetter());
+				HAPStringableValueEntity columnObj = (HAPStringableValueEntity)obj.getAncestorByPath(complexName.getPath());
 				
-				Object columnValue = columnObj.getClass().getMethod(columnInfo.getGetter()).invoke(columnObj, null);
+				Object columnValue = columnObj.getClass().getMethod(complexName.getSimpleName()).invoke(columnObj, null);
 				
 				String dataType = columnInfo.getDataType();
 				if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING.equals(dataType)){
@@ -114,29 +115,7 @@ public class HAPSqlUtility {
 			String insertSql = buildInstertSql(dbTableInfo);
 			PreparedStatement statement = connection.prepareStatement(insertSql);
 			
-			List<HAPDBColumnInfo> columnInfos = dbTableInfo.getColumnsInfo();
-			for(int i=0; i<columnInfos.size(); i++){
-				HAPDBColumnInfo columnInfo = columnInfos.get(i);
-				String attrPath = columnInfo.getAttrPath();
-				HAPStringableValueEntity columnObj = (HAPStringableValueEntity)obj.getAncestorByPath(attrPath);
-				
-				Object columnValue = columnObj.getClass().getMethod(columnInfo.getGetter()).invoke(columnObj, null);
-				
-				String dataType = columnInfo.getDataType();
-				if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING.equals(dataType)){
-					statement.setString(i+1, (String)columnValue);
-				}
-				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER.equals(dataType)){
-					statement.setInt(i+1, (Integer)columnValue);
-				}
-				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_BOOLEAN.equals(dataType)){
-					statement.setBoolean(i+1, (Boolean)columnValue);
-				}
-				if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_FLOAT.equals(dataType)){
-					statement.setFloat(i+1, (Float)columnValue);
-				}
-				statement.execute();
-			}
+			saveToDB(obj, statement);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

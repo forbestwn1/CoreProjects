@@ -28,13 +28,6 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 		return this.m_dbAccess.getDataTypeByInfo(dataTypeInfo);
 	}
 
-	@Override
-	public HAPDataTypeFamily getDataTypeFamily(HAPDataTypeInfo dataTypeInfo) {
-		List<HAPDataTypeImp> dataTypes = this.m_dbAccess.getDataTypesByName(dataTypeInfo.getName());
-		HAPDataTypeFamily out = new HAPDataTypeFamily(dataTypes);
-		return out;
-	}
-
 	public List<? extends HAPOperationInfo> getLocalOperationInfos(HAPDataTypeInfo dataTypeInfo) {
 		String dataTypeVersion = null;
 		HAPDataTypeVersion version = dataTypeInfo.getVersion();

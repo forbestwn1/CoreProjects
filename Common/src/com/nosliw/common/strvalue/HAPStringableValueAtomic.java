@@ -181,9 +181,10 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	}
 	
 	@Override
-	protected String buildJson(){
-		return this.m_strValue.toString();
-	}
+	protected String buildJson(){		return this.m_strValue.toString();	}
+	
+	@Override
+	protected String buildLiterate(){  return this.m_strValue.toString(); }
 	
 	protected void cloneFrom(HAPStringableValueAtomic stringableValue){
 		this.m_strValue = stringableValue.m_strValue.clone();

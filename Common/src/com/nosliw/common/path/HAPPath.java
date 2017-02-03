@@ -10,7 +10,7 @@ public class HAPPath {
 
 	public HAPPath(String path){
 		this.m_path = path;
-		this.m_pathSegs = HAPNamingConversionUtility.parsePathSegs(this.m_path);
+		this.m_pathSegs = HAPNamingConversionUtility.parsePaths(this.m_path);
 	}
 	
 	public String getPath(){

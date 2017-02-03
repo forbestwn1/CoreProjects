@@ -5,8 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -158,6 +162,27 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 			}
 		}
 		return out;
+	}
+	
+	@Override
+	protected void buildObjectByFullJson(Object json){		this.buildByJson((JSONObject)json);	}
+
+	@Override
+	protected void buildObjectByJson(Object json){		this.buildByJson((JSONObject)json);	}
+
+	@Override
+	protected void buildObjectByLiterate(String literateValue){	
+		try {
+			buildByJson(new JSONObject(literateValue));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} 
+	}
+
+	
+	private void buildByJson(JSONObject json){
+		HAPValueInfoEntity entityValueInfo = HAPValueInfoManager.getInstance().getEntityValueInfoByClass(this.getClass());
+		HAPStringableEntityImporterJSON.parseJsonEntity(json, this.getClass(), HAPValueInfoManager.getInstance());
 	}
 	
 	@Override

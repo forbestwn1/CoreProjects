@@ -47,7 +47,7 @@ public class HAPDataTypeInfo extends HAPStringableValueEntity{
 	public String toString(){	return this.getKey();	}
 	
 	public static HAPDataTypeInfo build(JSONObject jsonObj, HAPValueInfoManager valueInfoMan){
-		HAPDataTypeInfo out = HAPStringableEntityImporterJSON.parseJson(jsonObj, HAPDataTypeInfo.class, valueInfoMan);
+		HAPDataTypeInfo out = HAPStringableEntityImporterJSON.parseJsonEntity(jsonObj, HAPDataTypeInfo.class, valueInfoMan);
 		return out;
 	}
 	

@@ -12,27 +12,25 @@ import com.nosliw.data.HAPDataTypeVersion;
 public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPDataTypeInfo{
 
 	@HAPAttribute
-	public static String ID = "id";
+	public static String FULLNAME = "fullName";
 	
 	public HAPDataTypeInfoImp(){}
 	
 	public HAPDataTypeInfoImp(String name, HAPDataTypeVersion version){
 		this.updateAtomicChild(NAME, name, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
 		this.updateAtomicChildValue(VERSION, version);
+		this.updateAtomicChild(FULLNAME, this.buildLiterate(), HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
 	}
 
-	public HAPDataTypeInfoImp(String id){
-		this.setId(id);
+	public HAPDataTypeInfoImp(String fullName){
+		this.setFullName(fullName);
 	}
-
-	public HAPDataTypeInfoImp(String id, String name, HAPDataTypeVersion version){
-		this.setId(id);
-		this.updateAtomicChild(NAME, name, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);
-		this.updateAtomicChildValue(VERSION, version);
+	
+	public String getFullName(){  return this.getAtomicAncestorValueString(FULLNAME);  }
+	public void setFullName(String fullName){
+		this.updateAtomicChild(FULLNAME, fullName, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
+		buildObjectByLiterate(fullName);
 	}
-
-	public String getId(){ return this.getAtomicAncestorValueString(ID); }
-	public void setId(String id){		this.updateAtomicChild(ID, id, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);	}
 	
 	@Override
 	public String getName() {		return this.getAtomicAncestorValueString(HAPDataTypeInfo.NAME);	}
@@ -62,7 +60,7 @@ public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPD
 		}
 	}
 	
-	public static String buildStringValue(String id, String name, String version){
+	public static String buildStringValue(String name, String version){
 		return HAPNamingConversionUtility.cascadeSegments(name, version);
 	}
 	

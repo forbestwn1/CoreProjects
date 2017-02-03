@@ -128,7 +128,7 @@ public class HAPValueInfoManager {
 			HAPStringableValueList<HAPDBColumnInfo> columns = propertyValueInfo.getDBColumnInfos();
 			for(int i=0; i<columns.size(); i++){
 				HAPDBColumnInfo column = columns.get(i).clone(HAPDBColumnInfo.class);
-				column.updateAtomicChild(HAPDBColumnInfo.ATTRPATH, path);
+//				column.updateAtomicChild(HAPDBColumnInfo.ATTRPATH, path);
 				tableInfo.addColumnInfo(column, property);
 			}
 			

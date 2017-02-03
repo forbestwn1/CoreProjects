@@ -11,10 +11,13 @@ public abstract class HAPSerialiableImp implements HAPSerializable{
 	public void buildObject(Object value, HAPSerializationFormat format){
 		switch(format){
 		case JSON_FULL:
+			this.buildObjectByFullJson(value);
 			break;
 		case JSON:
+			this.buildObjectByJson(value);
 			break;
 		case XML:
+			this.buildObjectByXml(value);
 			break;
 		case LITERATE:
 			this.buildObjectByLiterate((String)value);
@@ -22,6 +25,11 @@ public abstract class HAPSerialiableImp implements HAPSerializable{
 		}
 	}
 
+	protected void buildObjectByFullJson(Object json){}
+
+	protected void buildObjectByJson(Object json){}
+	
+	protected void buildObjectByXml(Object xml){}
 	
 	protected void buildObjectByLiterate(String literateValue){	}
 	

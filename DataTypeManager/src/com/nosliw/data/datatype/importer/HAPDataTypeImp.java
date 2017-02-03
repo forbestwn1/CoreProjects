@@ -1,5 +1,6 @@
 package com.nosliw.data.datatype.importer;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPConstant;
@@ -10,6 +11,9 @@ import com.nosliw.data.HAPDataTypeVersion;
 @HAPEntityWithAttribute(parent="com.nosliw.data.HAPDataType")
 public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataType{
 
+	@HAPAttribute
+	public static String ID = "id";
+	
 	public HAPDataTypeImp(){}
 
 	public HAPDataTypeImp(HAPDataTypeImp dataType){
@@ -29,11 +33,7 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	}
 	
 	@Override
-	public HAPDataTypeInfo getInfo() {	
-		HAPDataTypeInfoImp out = (HAPDataTypeInfoImp)this.getAtomicValueAncestorByPath(INFO);
-		out.setId(this.getId());
-		return out;
-	}
+	public HAPDataTypeInfo getInfo() {		return (HAPDataTypeInfoImp)this.getAtomicValueAncestorByPath(INFO);	}
 
 	public HAPDataTypeInfoImp getConntectedDataTypeInfo(int connectType){
 		HAPDataTypeInfoImp out = null;
@@ -49,6 +49,8 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	}
 	
 	public String getId(){ return this.getAtomicAncestorValueString(ID); }
+	public void setId(String id){		this.updateAtomicChild(ID, id, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);	}
+
 	
 	@Override
 	public String getDescription() {	return this.getAtomicAncestorValueString(DESCRIPTION); }

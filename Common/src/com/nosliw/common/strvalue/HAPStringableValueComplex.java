@@ -132,7 +132,7 @@ public abstract class HAPStringableValueComplex<T extends HAPStringableValue> ex
 	public HAPStringableValue getAncestorByPath(String path){
 		HAPStringableValue out = this;
 		if(HAPBasicUtility.isStringNotEmpty(path)){
-			String[] pathSegs = HAPNamingConversionUtility.parsePartls(path);
+			String[] pathSegs = HAPNamingConversionUtility.parsePaths(path);
 			if(pathSegs!=null){
 				for(String pathSeg : pathSegs){
 					out = out.getChild(pathSeg);

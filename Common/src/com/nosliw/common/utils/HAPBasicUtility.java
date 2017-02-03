@@ -112,4 +112,8 @@ public class HAPBasicUtility {
 		  System.arraycopy(second, 0, result, first.length, second.length);
 		  return result;
 	}	
+	
+	public static String upperCaseFirstLetter(String name){
+		return name.substring(0, 1).toUpperCase() + name.substring(1);
+	}
 }
