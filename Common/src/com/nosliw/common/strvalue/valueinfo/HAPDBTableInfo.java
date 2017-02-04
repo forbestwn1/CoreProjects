@@ -19,18 +19,14 @@ public class HAPDBTableInfo {
 
 	private String m_tableName;
 	
-	private Class m_entityClass;
+	private HAPValueInfoEntity m_valueInfoEntity;
 	
 	private List<HAPDBColumnInfo> m_columns;
 	
-	public HAPDBTableInfo(String table, String className){
+	public HAPDBTableInfo(String table, HAPValueInfoEntity valueInfoEntity){
 		this.m_tableName = table;
 		this.m_columns = new ArrayList<HAPDBColumnInfo>();
-		try {
-			this.m_entityClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		this.m_valueInfoEntity = valueInfoEntity;
 	}
 	
 	public String getTableName(){ return this.m_tableName; }
@@ -52,18 +48,22 @@ public class HAPDBTableInfo {
 			columnInfo.updateAtomicChild(HAPDBColumnInfo.COLUMN, property);
 		}
 	
-		String getter = columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.GETTER);
-		this.buildGetSetMethod(getter, columnInfo, HAPDBColumnInfo.GETTER, path, property);
+		if("info".equals(propertyPath)){
+			int kkkk = 5555;
+			kkkk++;
+		}
 		
-		String setter = columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.SETTER);
-		this.buildGetSetMethod(setter, columnInfo, HAPDBColumnInfo.SETTER, path, property);
+		String getter = this.buildGetSetMethod(columnInfo, HAPDBColumnInfo.GETTER, path, property);
+		
+		String setter = this.buildGetSetMethod(columnInfo, HAPDBColumnInfo.SETTER, path, property);
 
 		String type = columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.DATATYPE);
 		if(HAPBasicUtility.isStringEmpty(type)){
 			//if data type is not specify, try to get from return type of getter method
 			try {
-				Method getMethod = this.m_entityClass.getMethod(getter);
-				Class returnType = getMethod.getReturnType();
+				HAPComplexName getterPath = new HAPComplexName(getter);
+				HAPValueInfoEntity leafEntityInfo = (HAPValueInfoEntity)this.m_valueInfoEntity.getChildByPath(getterPath.getPath());
+				Class returnType = Class.forName(leafEntityInfo.getClassName()).getMethod(getter).getReturnType();
 				type = HAPLiterateManager.getInstance().getSubLiterateTypeByClass(returnType);
 				columnInfo.updateAtomicChild(HAPDBColumnInfo.DATATYPE, type);
 			} catch (Exception e) {
@@ -72,15 +72,17 @@ public class HAPDBTableInfo {
 		}		
 	}
 	
-	private void buildGetSetMethod(String gs, HAPDBColumnInfo columnInfo, String type, String path, String property){
+	private String buildGetSetMethod(HAPDBColumnInfo columnInfo, String type, String path, String property){
+		String out = columnInfo.getAtomicAncestorValueString(type);
+
 		String uperProperty = property.substring(0, 1).toUpperCase() + property.substring(1);
 
-		if(HAPDBColumnInfo.SETTER.equals(type) && "no".equals(gs)){
-			columnInfo.updateAtomicChild(HAPDBColumnInfo.SETTER, null);
+		if(HAPDBColumnInfo.SETTER.equals(type) && "no".equals(out)){
+			out = null;
 		}
 		else{
 			String op = null;
-			switch(gs){
+			switch(type){
 			case HAPDBColumnInfo.GETTER:
 				op = "get";
 				break;
@@ -91,15 +93,17 @@ public class HAPDBTableInfo {
 			
 			String opPath = path;
 			String opProperty = null;
-			if(HAPBasicUtility.isStringEmpty(gs)){
+			if(HAPBasicUtility.isStringEmpty(out)){
 				opPath = path;
 				opProperty =  op + uperProperty;
 			}
 			else{
 				opPath = path;
-				opProperty = gs;
+				opProperty = out;
 			}
-			HAPNamingConversionUtility.cascadePath(opPath, opProperty);
+			out = HAPNamingConversionUtility.cascadePath(opPath, opProperty);
 		}
+		columnInfo.updateAtomicChild(type, out);
+		return out;
 	}
 }

@@ -112,8 +112,7 @@ public class HAPValueInfoManager {
 				HAPValueInfoEntity valueInfo = (HAPValueInfoEntity)vf.getSolidValueInfo();
 				String table = valueInfo.getTable();
 				if(HAPBasicUtility.isStringNotEmpty(table)){
-					String className = valueInfo.getClassName();
-					HAPDBTableInfo tableInfo = new HAPDBTableInfo(table, className);
+					HAPDBTableInfo tableInfo = new HAPDBTableInfo(table, valueInfo);
 					this.readColumnInfoFromEntity(tableInfo, valueInfo, null);
 					this.m_dbTables.put(valueInfo.getName(), tableInfo);
 				}
@@ -122,7 +121,7 @@ public class HAPValueInfoManager {
 	}
 	
 	private void readColumnInfoFromEntity(HAPDBTableInfo tableInfo, HAPValueInfoEntity valueInfoEntity, String path){
-		Set<String> properties = valueInfoEntity.getProperties();
+		Set<String> properties = valueInfoEntity.getEntityProperties();
 		for(String property : properties){
 			HAPValueInfo propertyValueInfo = valueInfoEntity.getPropertyInfo(property);
 			HAPStringableValueList<HAPDBColumnInfo> columns = propertyValueInfo.getDBColumnInfos();

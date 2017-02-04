@@ -8,6 +8,8 @@ import java.util.Set;
 import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterXML;
+import com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo;
+import com.nosliw.common.strvalue.valueinfo.HAPSqlUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.HAPOperationInfo;
 import com.nosliw.data.HAPDataTypeProvider;
@@ -19,7 +21,7 @@ public class HAPDataTypeImporterManager {
 	private HAPDBAccess m_dbAccess; 
 	
 	public HAPDataTypeImporterManager(){
-		this.m_dbAccess = HAPDBAccess.getInstance();
+//		this.m_dbAccess = HAPDBAccess.getInstance();
 		
 		registerValueInfos();
 	}
@@ -35,6 +37,10 @@ public class HAPDataTypeImporterManager {
 		valueInfos.add("operationparm.xml");
 
 		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeImporterManager.class, valueInfos);
+		
+		HAPDBTableInfo tableInfo = HAPValueInfoManager.getInstance().getDBTableInfo("data.datatypedef");
+		String sql = HAPSqlUtility.createTableSql(tableInfo);
+		System.out.println(sql);
 	}
 	
 	public void loadAll(){
@@ -80,11 +86,11 @@ public class HAPDataTypeImporterManager {
 	
 	public static void main(String[] args){
 		HAPDataTypeImporterManager man = new HAPDataTypeImporterManager();
-		man.loadAll();
-		
-		HAPJSImporter jsImporter = new HAPJSImporter();
-		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");
-		
-		HAPDBAccess.getInstance().close();
+//		man.loadAll();
+//		
+//		HAPJSImporter jsImporter = new HAPJSImporter();
+//		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");
+//		
+//		HAPDBAccess.getInstance().close();
 	}
 }

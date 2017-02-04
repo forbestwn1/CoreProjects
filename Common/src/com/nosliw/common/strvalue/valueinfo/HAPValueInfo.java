@@ -1,5 +1,6 @@
 package com.nosliw.common.strvalue.valueinfo;
 
+import com.nosliw.common.path.HAPComplexName;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntityBasic;
 import com.nosliw.common.strvalue.HAPStringableValueList;
@@ -18,15 +19,21 @@ public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 	abstract public HAPStringableValue buildDefault();
 	
 	public HAPValueInfo(){
-		this.updateComplexChild(DBCOLUMNINFOS, HAPConstant.STRINGALBE_VALUEINFO_LIST);
 	}
 	
-	public HAPValueInfo getElement(String name){
-		return null;
+	public HAPValueInfo getChildByPath(String path){
+		HAPValueInfo out = this;
+		HAPComplexName complexName = new HAPComplexName(path);
+		for(String pathSeg: complexName.getPathSegs()){
+			out = this.getElement(pathSeg);
+		}
+		return out;
 	}
 	
-	public HAPStringableValueList<HAPDBColumnInfo> getDBColumnInfos(){		return this.getListAncestorByPath(DBCOLUMNINFOS);	}
-	public void addDbColumnInfo(HAPDBColumnInfo columnInfo){		this.getDBColumnInfos().addChild(columnInfo);	}
+	protected HAPValueInfo getElement(String name){		return this;	}
+	
+	public HAPDBColumnsInfo getDBColumnsInfo(){		return (HAPDBColumnsInfo)this.getEntityAncestorByPath(DBCOLUMNINFOS);	}
+	public void setDBColumnsInfo(HAPDBColumnsInfo columnsInfo){		this.updateChild(DBCOLUMNINFOS, columnsInfo);	}
 	
 	public String getValueInfoType(){	return this.getAtomicAncestorValueString(HAPValueInfo.TYPE);	}
 
@@ -34,13 +41,9 @@ public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 	public String getSolidValueInfoType(){		return this.getValueInfoType();	}
 	
 	@Override
-	public void init(){
-		super.init();
-	}
+	public void init(){		super.init();	}
 
 	protected HAPValueInfoManager getValueInfoManager(){ return HAPValueInfoManager.getInstance(); }
 	
-	protected void cloneFrom(HAPValueInfo valueInfo){
-		super.cloneFrom(valueInfo);
-	}
+	protected void cloneFrom(HAPValueInfo valueInfo){		super.cloneFrom(valueInfo);	}
 }

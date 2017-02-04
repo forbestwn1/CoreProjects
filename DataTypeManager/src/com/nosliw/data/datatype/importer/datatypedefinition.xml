@@ -1,4 +1,4 @@
-<entity name="data.datatypedef" description="this is used to defined data type basic info" class="com.nosliw.data.datatype.importer.HAPDataTypeImpLoad">
+<entity name="data.datatypedef" table="nosliw.DATATYPE" description="this is used to defined data type basic info" class="com.nosliw.data.datatype.importer.HAPDataTypeImpLoad">
 	<property name="description" dataType="string" description="data type description">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(20)"/>
@@ -6,7 +6,7 @@
 	</property>
 
 	<property name="info" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="data type info">
-		<dbColumnInfos>
+		<dbColumnInfos relative="true">
 			<dbColumnInfo column="id" definition="VARCHAR(20) NOT NULL PRIMARY KEY" getter="getFullName" setter="setFullName"/>
 			<dbColumnInfo column="name" definition="VARCHAR(20) NOT NULL" />
 			<dbColumnInfo column="version" definition="VARCHAR(20) NOT NULL"/>

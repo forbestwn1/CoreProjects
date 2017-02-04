@@ -128,20 +128,25 @@ public class HAPValueInfoImporterXML {
 			
 			//read sql info
 			Element[] sqlInfoEles = null;
+			Element sqlInfosEle = null;
 			sqlInfoEles = HAPXMLUtility.getMultiChildElementByName(valueInfoEle, HAPValueInfo.DBCOLUMNLINFO);
 			if(sqlInfoEles!=null && sqlInfoEles.length==0){
-				Element sqlInfosEle = HAPXMLUtility.getFirstChildElementByName(valueInfoEle, HAPValueInfo.DBCOLUMNINFOS);
+				sqlInfosEle = HAPXMLUtility.getFirstChildElementByName(valueInfoEle, HAPValueInfo.DBCOLUMNINFOS);
 				if(sqlInfosEle!=null){
 					sqlInfoEles = HAPXMLUtility.getMultiChildElementByName(sqlInfosEle, HAPValueInfo.DBCOLUMNLINFO);
 				}
 			}
 			
-			if(sqlInfoEles!=null){
+			if(sqlInfoEles!=null && sqlInfoEles.length>0){
+				HAPDBColumnsInfo columnsInfo = new HAPDBColumnsInfo(); 
+				if(sqlInfosEle!=null)		HAPStringableValueUtility.updateBasicProperty(sqlInfosEle, columnsInfo);
+				
 				for(Element sqlInfoEle : sqlInfoEles){
 					HAPDBColumnInfo sqlInfo = new HAPDBColumnInfo();
 					HAPStringableValueUtility.updateBasicProperty(sqlInfoEle, sqlInfo);
-					valueInfo.addDbColumnInfo(sqlInfo);
+					columnsInfo.addDbColumnInfo(sqlInfo);
 				}
+				valueInfo.setDBColumnsInfo(columnsInfo);
 			}
 		}
 		

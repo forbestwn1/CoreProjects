@@ -1,6 +1,7 @@
 package com.nosliw.common.path;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPComplexName {
@@ -18,17 +19,19 @@ public class HAPComplexName {
 	}
 	
 	public HAPComplexName(String fullName){
-		this.m_fullName = fullName;
-		
-		int index = this.m_fullName.lastIndexOf(HAPConstant.SEPERATOR_PATH);
-		if(index==-1){
-			//name only
-			this.m_simpleName = this.m_fullName;
-		}
-		else{
-			this.m_simpleName = this.m_fullName.substring(index+1);
-			String p = this.m_fullName.substring(0, index);
-			this.m_path = new HAPPath(p);
+		if(HAPBasicUtility.isStringNotEmpty(fullName)){
+			this.m_fullName = fullName;
+			
+			int index = this.m_fullName.lastIndexOf(HAPConstant.SEPERATOR_PATH);
+			if(index==-1){
+				//name only
+				this.m_simpleName = this.m_fullName;
+			}
+			else{
+				this.m_simpleName = this.m_fullName.substring(index+1);
+				String p = this.m_fullName.substring(0, index);
+				this.m_path = new HAPPath(p);
+			}
 		}
 	}
 	
@@ -37,10 +40,12 @@ public class HAPComplexName {
 	}
 	
 	public String getPath(){
+		if(this.m_path==null)   return null;
 		return this.m_path.getPath();
 	}
 
 	public String[] getPathSegs(){
+		if(this.m_path==null)  return new String[0];
 		return this.m_path.getPathSegs();
 	}
 	
