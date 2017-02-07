@@ -32,6 +32,10 @@ public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPD
 		buildObjectByLiterate(fullName);
 	}
 	
+	public int getVersionMajor(){  return this.getVersion().getMajor(); }
+	public int getVersionMinor(){  return this.getVersion().getMinor(); }
+	public String getVersionRevision(){  return this.getVersion().getRevision();  }
+	
 	@Override
 	public String getName() {		return this.getAtomicAncestorValueString(HAPDataTypeInfo.NAME);	}
 	@Override

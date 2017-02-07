@@ -16,9 +16,9 @@ public class HAPDataTypeVersionImp extends HAPStringableValueEntity implements H
 	public void setName(String name){ this.buildObjectByLiterate(name); }
 	
 	@Override
-	public String getMajor(){  return this.getAtomicAncestorValueString(HAPDataTypeVersion.MAJOR);	}
+	public int getMajor(){  return this.getAtomicAncestorValueInteger(HAPDataTypeVersion.MAJOR);	}
 	@Override
-	public String getMinor(){ return this.getAtomicAncestorValueString(HAPDataTypeVersion.MINOR);	}
+	public int getMinor(){ return this.getAtomicAncestorValueInteger(HAPDataTypeVersion.MINOR);	}
 	@Override
 	public String getRevision(){  return this.getAtomicAncestorValueString(HAPDataTypeVersion.REVISION);	}
 
@@ -36,10 +36,7 @@ public class HAPDataTypeVersionImp extends HAPStringableValueEntity implements H
 	protected String buildLiterate(){
 		String out = this.getName();
 		if(HAPBasicUtility.isStringEmpty(out)){
-			out = HAPNamingConversionUtility.cascadePath(String.valueOf(this.getMajor()), String.valueOf(this.getMinor()));
-			if(HAPBasicUtility.isStringNotEmpty(this.getMinor())){
-				out = HAPNamingConversionUtility.cascadePath(out, this.getRevision());
-			}
+			out = HAPNamingConversionUtility.cascadeComponentPath(new String[]{String.valueOf(this.getMajor()), String.valueOf(this.getMinor()), this.getRevision()});
 			this.updateAtomicChild(HAPDataTypeVersionImp.NAME, out, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
 		}
 		

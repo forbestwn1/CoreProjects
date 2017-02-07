@@ -114,6 +114,7 @@ public class HAPBasicUtility {
 	}	
 	
 	public static String upperCaseFirstLetter(String name){
+		if(HAPBasicUtility.isStringEmpty(name))  return name;
 		return name.substring(0, 1).toUpperCase() + name.substring(1);
 	}
 }

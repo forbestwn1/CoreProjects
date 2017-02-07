@@ -1,0 +1,13 @@
+
+psquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(„Á’ž
+bsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ˆïˆÈ
+bsquid:CommentedOutCodeLineH"<This block of commented-out lines of code should be removed.(Ž¿ÜÙ
+asquid:CommentedOutCodeLineQ"<This block of commented-out lines of code should be removed.(ðºó^
+gsquid:CommentedOutCodeLineY"<This block of commented-out lines of code should be removed.( «ŸÓùÿÿÿÿ
+gsquid:CommentedOutCodeLine["<This block of commented-out lines of code should be removed.(ÊÕÄ´úÿÿÿÿ
+bsquid:CommentedOutCodeLine^"<This block of commented-out lines of code should be removed.(„Þâ
+Q
+squid:S106+";Replace this usage of System.out or System.err by a logger.(Â–‘ö
+Dsquid:S1481X"(Remove this unused "man" local variable.(©ìá‚ùÿÿÿÿ
+Ssquid:S1854X"7Remove this useless assignment to local variable "man".(©ìá‚ùÿÿÿÿ
+rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ

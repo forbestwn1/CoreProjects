@@ -142,7 +142,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	}
 
 	@Override
-	protected HAPValueInfo getElement(String name){		return this.getChildByPath(name);	}
+	protected HAPValueInfo getElement(String name){		return this.getPropertyInfo(name);	}
 	
 	@Override
 	public HAPValueInfoEntity clone(){

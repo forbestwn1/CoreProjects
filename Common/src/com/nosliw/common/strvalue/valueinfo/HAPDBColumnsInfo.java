@@ -7,16 +7,16 @@ import com.nosliw.common.utils.HAPConstant;
 public class HAPDBColumnsInfo  extends HAPStringableValueEntity{
 
 	//whether the name in column info is relative or not
-	public static final String RELATIVE = "relative";
+	public static final String PATHTYPE = "pathType";
 	
 	public static final String COLUMNS = "columns";
 	
 	public HAPDBColumnsInfo(){
 		this.updateComplexChild(COLUMNS, HAPConstant.STRINGALBE_VALUEINFO_LIST);
+		this.updateAtomicChild(PATHTYPE, HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_ABSOLUTE);
 	}
 	
-	
-	public boolean getRelative(){  return this.getAtomicAncestorValueBoolean(RELATIVE);  }
+	public String getPathType(){  return this.getAtomicAncestorValueString(PATHTYPE);  }
 	
 	public HAPStringableValueList<HAPDBColumnInfo> getColumns(){
 		return (HAPStringableValueList<HAPDBColumnInfo>)this.getListChild(COLUMNS);

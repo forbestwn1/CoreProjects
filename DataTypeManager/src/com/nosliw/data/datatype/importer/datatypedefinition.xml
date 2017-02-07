@@ -6,7 +6,7 @@
 	</property>
 
 	<property name="info" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="data type info">
-		<dbColumnInfos relative="true">
+		<dbColumnInfos pathType="propertyAsPath">
 			<dbColumnInfo column="id" definition="VARCHAR(20) NOT NULL PRIMARY KEY" getter="getFullName" setter="setFullName"/>
 			<dbColumnInfo column="name" definition="VARCHAR(20) NOT NULL" />
 			<dbColumnInfo column="version" definition="VARCHAR(20) NOT NULL"/>
@@ -17,13 +17,13 @@
 	</property>
 
 	<property name="parentInfo" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="parent data type">
-		<dbColumnInfos>
+		<dbColumnInfos pathType="propertyAsPath">
 			<dbColumnInfo definition="VARCHAR(20)" getter="getFullName" setter="setFullName"/>
 		</dbColumnInfos>
 	</property>
 
 	<property name="linkedVersion" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeVersionImp" description="lined data type in the same family">
-		<dbColumnInfos>
+		<dbColumnInfos pathType="propertyAsPath">
 			<dbColumnInfo definition="VARCHAR(20)" getter="getName" setter="setName"/>
 		</dbColumnInfos>
 	</property>

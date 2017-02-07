@@ -23,9 +23,9 @@ public interface HAPDataTypeVersion extends HAPSerializable{
 	@HAPAttribute
 	public static String REVISION = "revision";
 
-	String getMajor();
+	int getMajor();
 	
-	String getMinor();
+	int getMinor();
 	
 	String getRevision();
 	

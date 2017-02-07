@@ -57,6 +57,7 @@ public class HAPValueInfoManager {
 	
 	private HAPValueInfoManager(){	
 		this.m_valueInfos = new LinkedHashMap<String, HAPValueInfo>();
+		this.m_dbTables = new LinkedHashMap<String, HAPDBTableInfo>();
 	}
 	
 	private void registerValueInfo(HAPValueInfo valueInfo){
@@ -124,16 +125,19 @@ public class HAPValueInfoManager {
 		Set<String> properties = valueInfoEntity.getEntityProperties();
 		for(String property : properties){
 			HAPValueInfo propertyValueInfo = valueInfoEntity.getPropertyInfo(property);
-			HAPStringableValueList<HAPDBColumnInfo> columns = propertyValueInfo.getDBColumnInfos();
-			for(int i=0; i<columns.size(); i++){
-				HAPDBColumnInfo column = columns.get(i).clone(HAPDBColumnInfo.class);
-//				column.updateAtomicChild(HAPDBColumnInfo.ATTRPATH, path);
-				tableInfo.addColumnInfo(column, property);
-			}
-			
-			String propertyValueInfoType = propertyValueInfo.getValueInfoType();
-			if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(propertyValueInfoType)){
-				readColumnInfoFromEntity(tableInfo, (HAPValueInfoEntity)propertyValueInfo, HAPNamingConversionUtility.cascadePath(path, property));
+			HAPDBColumnsInfo columnsInfo = propertyValueInfo.getDBColumnsInfo();
+			if(columnsInfo!=null){
+				HAPStringableValueList<HAPDBColumnInfo> columns = columnsInfo.getColumns();
+				for(int i=0; i<columns.size(); i++){
+					HAPDBColumnInfo column = columns.get(i).clone(HAPDBColumnInfo.class);
+//					column.updateAtomicChild(HAPDBColumnInfo.ATTRPATH, path);
+					tableInfo.addColumnInfo(column, path, property, columnsInfo.getPathType());
+				}
+				
+				String propertyValueInfoType = propertyValueInfo.getValueInfoType();
+				if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(propertyValueInfoType)){
+					readColumnInfoFromEntity(tableInfo, (HAPValueInfoEntity)propertyValueInfo, HAPNamingConversionUtility.cascadePath(path, property));
+				}
 			}
 		}
 	}

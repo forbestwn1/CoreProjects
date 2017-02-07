@@ -346,6 +346,12 @@ public class HAPConstant {
 
 
 
+		public static final String STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_ABSOLUTE = "absolute";
+		public static final String STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTY = "property";
+		public static final String STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTYASPATH = "propertyAsPath";
+
+
+
 		public static final String CATEGARY_NAME = "CATEGARY_NAME";
 
 

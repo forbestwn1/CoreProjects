@@ -543,6 +543,12 @@
 			<definition name="STRINGALBE_VALUEINFO_MAP" value="map"/>
 			<definition name="STRINGALBE_VALUEINFO_OBJECT" value="object"/>
 			<definition name="STRINGALBE_VALUEINFO_MODE" value="mode"/>
+
+			<definition type="space"/>
+			<definition name="STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_ABSOLUTE" value="absolute"/>
+			<definition name="STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTY" value="property"/>
+			<definition name="STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTYASPATH" value="propertyAsPath"/>
+
 	
 			<definition type="space"/>
 			<definition name="CATEGARY_NAME" value="CATEGARY_NAME"/>

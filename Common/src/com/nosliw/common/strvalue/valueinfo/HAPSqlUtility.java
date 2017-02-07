@@ -25,7 +25,7 @@ public class HAPSqlUtility {
 	 */
 	public static String createTableSql(HAPDBTableInfo tableInfo){
 		StringBuffer sqlColumns = new StringBuffer();
-		List<HAPDBColumnInfo> columns = new ArrayList<HAPDBColumnInfo>();
+		List<HAPDBColumnInfo> columns = tableInfo.getColumnsInfo(); 
 		for(int i=0; i<columns.size(); i++){
 			HAPDBColumnInfo columnInfo = columns.get(i);
 			String columnSql = createColumnSql(columnInfo);
