@@ -55,15 +55,7 @@ public class HAPDBTableInfo {
 			try {
 				HAPComplexName getterPath = new HAPComplexName(getter);
 				HAPValueInfo childValueInfo = this.m_valueInfoEntity.getChildByPath(getterPath.getPath());
-				String className = null;
-				if(childValueInfo.getValueInfoType().equals(HAPConstant.STRINGALBE_VALUEINFO_ENTITY)){
-					className = ((HAPValueInfoEntity)childValueInfo).getClassName();
-				}
-				else if(childValueInfo.getValueInfoType().equals(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC)){
-					if(((HAPValueInfoAtomic)childValueInfo).getDataType().equals(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT)){
-						className = ((HAPValueInfoAtomic)childValueInfo).getSubDataType();
-					}
-				}
+				String className = HAPValueInfoUtility.getEntityClassNameFromValueInfo(childValueInfo);
 				Class returnType = Class.forName(className).getMethod(getterPath.getSimpleName()).getReturnType();
 				type = HAPLiterateManager.getInstance().getSubLiterateTypeByClass(returnType);
 				columnInfo.updateAtomicChild(HAPDBColumnInfo.DATATYPE, type);

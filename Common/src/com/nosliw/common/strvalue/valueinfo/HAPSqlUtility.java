@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.path.HAPComplexName;
+import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -18,6 +21,46 @@ import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPSqlUtility {
 
+	public static String dropoffTableSql(HAPDBTableInfo tableInfo){
+		return "DROP TABLE IF EXISTS " + tableInfo.getTableName() + ";";
+	}
+	
+	public static void createDBTable(HAPDBTableInfo tableInfo, Connection connection){
+		String dropoffSql = HAPSqlUtility.dropoffTableSql(tableInfo);
+		String createSql = HAPSqlUtility.createTableSql(tableInfo);
+		
+		Statement stmt = null;
+		try {
+			stmt = connection.createStatement();
+			stmt.executeUpdate(dropoffSql);
+			stmt.executeUpdate(createSql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println(createSql);
+	}
+	
+	public static void saveToDB(HAPStringableValueEntity obj, Connection connection){
+		HAPValueInfoEntity valueInfoEntity = HAPValueInfoManager.getInstance().getEntityValueInfoByClass(obj.getClass());
+		saveToDB(obj, valueInfoEntity, connection);
+	}
+
+	public static void saveToDB(HAPStringableValueEntity obj, HAPValueInfoEntity valueInfoEntity, Connection connection){
+		HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valueInfoEntity.getName());
+		saveToDB(obj, dbTableInfo, connection);
+	}
+
+	public static void saveToDB(HAPStringableValueEntity obj, HAPDBTableInfo dbTableInfo, Connection connection){
+		try {
+			String insertSql = buildInstertSql(dbTableInfo);
+			PreparedStatement statement = connection.prepareStatement(insertSql);
+			
+			saveToDB(obj, dbTableInfo, statement);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Build create table sql 
 	 * @param tableInfo
@@ -72,18 +115,16 @@ public class HAPSqlUtility {
 		return insertSql.toString();
 	}
 	
-	public static void saveToDB(HAPStringableValueEntity obj, PreparedStatement statement){
+	public static void saveToDB(HAPStringableValueEntity obj, HAPDBTableInfo dbTableInfo, PreparedStatement statement){
 		try {
-			HAPValueInfoEntity valueInfoEntity = HAPValueInfoManager.getInstance().getEntityValueInfoByClass(obj.getClass());
-			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valueInfoEntity.getName());
-
 			List<HAPDBColumnInfo> columnInfos = dbTableInfo.getColumnsInfo();
 			for(int i=0; i<columnInfos.size(); i++){
 				HAPDBColumnInfo columnInfo = columnInfos.get(i);
-				HAPComplexName complexName = new HAPComplexName(columnInfo.getGetter());
-				HAPStringableValueEntity columnObj = (HAPStringableValueEntity)obj.getAncestorByPath(complexName.getPath());
 				
-				Object columnValue = columnObj.getClass().getMethod(complexName.getSimpleName()).invoke(columnObj, null);
+				String getterMethod = columnInfo.getGetter();
+				String getterPath = columnInfo.getGetterPath();
+				Object columnObj = HAPValueInfoUtility.getObjectFromStringableValue(obj.getAncestorByPath(getterPath));
+				Object columnValue = columnObj.getClass().getMethod(getterMethod).invoke(columnObj, null);
 				
 				String dataType = columnInfo.getDataType();
 				if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING.equals(dataType)){
@@ -98,28 +139,13 @@ public class HAPSqlUtility {
 				if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_FLOAT.equals(dataType)){
 					statement.setFloat(i+1, (Float)columnValue);
 				}
-				statement.execute();
 			}
+			statement.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	
-	public static void saveToDB(HAPStringableValueEntity obj, Connection connection){
-		try {
-			HAPValueInfoEntity valueInfoEntity = HAPValueInfoManager.getInstance().getEntityValueInfoByClass(obj.getClass());
-			
-			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valueInfoEntity.getName());
-
-			String insertSql = buildInstertSql(dbTableInfo);
-			PreparedStatement statement = connection.prepareStatement(insertSql);
-			
-			saveToDB(obj, statement);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 	public static String buildQuerySql(String dataTypeName, String query){
 		HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(dataTypeName);

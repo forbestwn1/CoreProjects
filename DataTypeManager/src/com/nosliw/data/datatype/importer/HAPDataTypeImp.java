@@ -26,14 +26,14 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 
 	public void init(String Id, String name, String version, String description, String parent, String linked){
 		this.updateAtomicChild(ID, Id);
-		this.updateAtomicChild(INFO, HAPDataTypeInfoImp.buildStringValue(name, version), HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeInfoImp.class.getName());
+		this.updateAtomicChild(NAME, HAPDataTypeInfoImp.buildStringValue(name, version), HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeInfoImp.class.getName());
 		this.updateAtomicChild(DESCRIPTION, description);
 		this.updateAtomicChild(PARENTINFO, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeInfoImp.class.getName());
 		this.updateAtomicChild(LINKEDVERSION, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeVersionImp.class.getName());
 	}
 	
 	@Override
-	public HAPDataTypeInfo getInfo() {		return (HAPDataTypeInfoImp)this.getAtomicValueAncestorByPath(INFO);	}
+	public HAPDataTypeInfo getName() {		return (HAPDataTypeInfoImp)this.getAtomicValueAncestorByPath(NAME);	}
 
 	public HAPDataTypeInfoImp getConntectedDataTypeInfo(int connectType){
 		HAPDataTypeInfoImp out = null;
@@ -59,7 +59,7 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	public HAPDataTypeInfo getParentInfo() {	return (HAPDataTypeInfo)this.getAtomicValueAncestorByPath(PARENTINFO);	}
 
 	public HAPDataTypeInfoImp getLinkedDataTypeInfo(){
-		return new HAPDataTypeInfoImp(this.getInfo().getName(), this.getLinkedVersion());
+		return new HAPDataTypeInfoImp(this.getName().getName(), this.getLinkedVersion());
 	}
 	
 	@Override

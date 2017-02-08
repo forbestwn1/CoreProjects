@@ -27,9 +27,9 @@ import com.nosliw.data.datatype.importer.HAPDataTypePictureImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeVersionImp;
 import com.nosliw.data.datatype.importer.js.HAPJSOperationInfo;
 
-public class HAPDBAccess extends HAPConfigurableImp{
+public class HAPDBAccess1 extends HAPConfigurableImp{
 
-	private static HAPDBAccess m_dbAccess;
+	private static HAPDBAccess1 m_dbAccess;
 	
 	// JDBC driver name and database URL
 	   static final String m_dbDrive = null;  
@@ -56,14 +56,14 @@ public class HAPDBAccess extends HAPConfigurableImp{
 	   
 	   private long m_id;
 	   
-	   public static HAPDBAccess getInstance(){
+	   public static HAPDBAccess1 getInstance(){
 		   if(m_dbAccess==null){
-			   m_dbAccess = new HAPDBAccess();
+			   m_dbAccess = new HAPDBAccess1();
 		   }
 		   return m_dbAccess;
 	   }
 	   
-	   private HAPDBAccess(){
+	   private HAPDBAccess1(){
 		    HAPConfigureImp configure = (HAPConfigureImp)HAPConfigureManager.getInstance().createConfigure().cloneChildConfigure("dataTypeManager.database");
 		    this.setConfiguration(configure);
 		   
@@ -108,8 +108,8 @@ public class HAPDBAccess extends HAPConfigurableImp{
 		try {
 			String operationId = this.getId()+"";
 			m_insertOperationStatement.setString(1, operationId);
-			m_insertOperationStatement.setString(2, dataType.getInfo().getName());
-			m_insertOperationStatement.setString(3, dataType.getInfo().getVersion().toStringValue(HAPSerializationFormat.LITERATE));
+			m_insertOperationStatement.setString(2, dataType.getName().getName());
+			m_insertOperationStatement.setString(3, dataType.getName().getVersion().toStringValue(HAPSerializationFormat.LITERATE));
 			m_insertOperationStatement.setString(4, operation.getName());
 			m_insertOperationStatement.setString(5, operation.getDescription());
 			m_insertOperationStatement.execute();
@@ -146,7 +146,7 @@ public class HAPDBAccess extends HAPConfigurableImp{
 		int i = 1;
 		
 		try {
-			HAPDataTypeInfoImp dataTypeInfo = (HAPDataTypeInfoImp)dataType.getInfo();
+			HAPDataTypeInfoImp dataTypeInfo = (HAPDataTypeInfoImp)dataType.getName();
 			HAPDataTypeVersionImp dataTypeVersion = (HAPDataTypeVersionImp)dataTypeInfo.getVersion();
 			HAPDataTypeInfoImp parentDataTypeInfo = (HAPDataTypeInfoImp)dataType.getParentInfo();
 			HAPDataTypeVersionImp linkedVersion = (HAPDataTypeVersionImp)dataType.getLinkedVersion();

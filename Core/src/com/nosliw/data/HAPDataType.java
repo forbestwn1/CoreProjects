@@ -24,7 +24,7 @@ public interface HAPDataType extends HAPSerializable{
 	public static String DESCRIPTION = "description";
 
 	@HAPAttribute
-	public static String INFO = "info";
+	public static String NAME = "name";
 
 	@HAPAttribute
 	public static String PARENTINFO = "parentInfo";
@@ -35,7 +35,7 @@ public interface HAPDataType extends HAPSerializable{
 	/*
 	 * get basic information for this data type (categary, type, description)
 	 */
-	public HAPDataTypeInfo getInfo();
+	public HAPDataTypeInfo getName();
 
 	public String getDescription();
 	

@@ -17,16 +17,16 @@ import org.mozilla.javascript.ScriptableObject;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.datatype.importer.HAPResourceDataOperationImp;
-import com.nosliw.data.datatype.util.HAPDBAccess;
+import com.nosliw.data.datatype.util.HAPDBAccess1;
 
 public class HAPJSImporter {
 
-	private HAPDBAccess m_dbAccess = null;
+	private HAPDBAccess1 m_dbAccess = null;
 	
 	private static String HEAD = null;
 	
 	public HAPJSImporter(){
-		this.m_dbAccess = HAPDBAccess.getInstance();
+		this.m_dbAccess = HAPDBAccess1.getInstance();
 	}
 	
 	public void loadFromFolder(String folderPath){

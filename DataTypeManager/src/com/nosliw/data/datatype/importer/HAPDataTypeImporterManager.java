@@ -14,14 +14,14 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.HAPOperationInfo;
 import com.nosliw.data.HAPDataTypeProvider;
 import com.nosliw.data.datatype.importer.js.HAPJSImporter;
-import com.nosliw.data.datatype.util.HAPDBAccess;
+import com.nosliw.data.datatype.util.HAPDBAccess1;
 
 public class HAPDataTypeImporterManager {
 	
 	private HAPDBAccess m_dbAccess; 
 	
 	public HAPDataTypeImporterManager(){
-//		this.m_dbAccess = HAPDBAccess.getInstance();
+		this.m_dbAccess = HAPDBAccess.getInstance();
 		
 		registerValueInfos();
 	}
@@ -37,10 +37,7 @@ public class HAPDataTypeImporterManager {
 		valueInfos.add("operationparm.xml");
 
 		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeImporterManager.class, valueInfos);
-		
-		HAPDBTableInfo tableInfo = HAPValueInfoManager.getInstance().getDBTableInfo("data.datatypedef");
-		String sql = HAPSqlUtility.createTableSql(tableInfo);
-		System.out.println(sql);
+		this.m_dbAccess.createDBTable("data.datatypedef");
 	}
 	
 	public void loadAll(){
@@ -86,7 +83,7 @@ public class HAPDataTypeImporterManager {
 	
 	public static void main(String[] args){
 		HAPDataTypeImporterManager man = new HAPDataTypeImporterManager();
-//		man.loadAll();
+		man.loadAll();
 //		
 //		HAPJSImporter jsImporter = new HAPJSImporter();
 //		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");

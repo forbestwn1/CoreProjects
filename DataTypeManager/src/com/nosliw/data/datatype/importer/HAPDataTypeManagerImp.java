@@ -17,11 +17,11 @@ import com.nosliw.data.HAPExpression;
 import com.nosliw.data.HAPExpressionInfo;
 import com.nosliw.data.HAPOperationInfo;
 import com.nosliw.data.HAPQueryInfo;
-import com.nosliw.data.datatype.util.HAPDBAccess;
+import com.nosliw.data.datatype.util.HAPDBAccess1;
 
 public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 
-	private HAPDBAccess m_dbAccess;
+	private HAPDBAccess1 m_dbAccess;
 	
 	@Override
 	public HAPDataType getDataType(HAPDataTypeInfo dataTypeInfo) {
