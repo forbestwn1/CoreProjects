@@ -55,7 +55,7 @@ public class HAPLiterateManager {
 	
 	public String valueToString(Object value){
 		String out = null;
-		HAPLiterateDef typeObj = this.getLiterateTypeByObject(value);
+		HAPLiterateDef typeObj = this.getLiterateDefByObject(value);
 		if(typeObj!=null){
 			out = typeObj.valueToString(value);
 		}
@@ -63,8 +63,20 @@ public class HAPLiterateManager {
 	}
 	
 	public HAPLiterateType getLiterateType(Object value){
-		HAPLiterateDef literateDef = this.getLiterateTypeByObject(value);
+		HAPLiterateDef literateDef = this.getLiterateDefByObject(value);
 		String subType = literateDef.getSubTypeByObject(value);
+		return new HAPLiterateType(literateDef.getName(), subType);
+	}
+	
+	public HAPLiterateType getLiterateTypeByClass(Class cs){
+		HAPLiterateDef literateDef = this.getLiterateDefByClass(cs);
+		String subType = getSubLiterateTypeByClass(cs);
+		
+		if(literateDef==null){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		return new HAPLiterateType(literateDef.getName(), subType);
 	}
 	
@@ -83,21 +95,24 @@ public class HAPLiterateManager {
 		}
 	}
 	
-	private HAPLiterateDef getLiterateTypeByObject(Object value){
-		HAPLiterateDef out = m_typesByClass.get(value.getClass());
+	private HAPLiterateDef getLiterateDefByObject(Object value){
+		return this.getLiterateDefByClass(value.getClass());
+	}
+
+	private HAPLiterateDef getLiterateDefByClass(Class cs){
+		HAPLiterateDef out = m_typesByClass.get(cs);
 		if(out==null){
-			if(value instanceof HAPSerializable){
+			if(HAPSerializable.class.isAssignableFrom(cs)){
 				out = this.m_typeObject;
 			}
 		}
 		return out;
 	}
-
+	
 	private void registerBasic(HAPLiterateDef typeObj){
 		m_typesByName.put(typeObj.getName(), typeObj);
 		for(Class cs : typeObj.getObjectClasses()){
 			m_typesByClass.put(cs, typeObj);
 		}
 	}
-
 }

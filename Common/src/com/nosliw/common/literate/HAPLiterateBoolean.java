@@ -20,6 +20,7 @@ public class HAPLiterateBoolean implements HAPLiterateDef{
 	public Set<Class> getObjectClasses() {  
 		Set<Class> out = new HashSet<Class>(); 
 		out.add(Boolean.class);
+		out.add(Boolean.TYPE);
 		return out;
 	}
 

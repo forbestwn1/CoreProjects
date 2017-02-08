@@ -11,8 +11,6 @@ b
 2src/com/nosliw/data/imp/HAPDataTypeManagerImp.java,5\1\51e667b4e69607ac89ea844357f2bd6b0f0580dd
 u
 Esrc/com/nosliw/data/datatype/importer/HAPDataTypeImporterManager.java,8\0\801a7c8bd16eb11367bdb2c5c25f51aedf75bb72
-b
-2src/com/nosliw/data/datatype/util/HAPDBAccess.java,2\b\2b22bb3113414364644ada56642ca7ba4e2e8feb
 k
 ;src/com/nosliw/data/datatype/importer/js/HAPJSImporter.java,5\9\59e448bae39502f14dafdc4cc42e2ca89ac9dd82
 :
@@ -26,3 +24,5 @@ c
 3src/com/nosliw/data/datatype/util/HAPDBAccess1.java,4\0\40920b42a21dcce8f347b6033a5084a33234b9cb
 p
 @src/com/nosliw/data/datatype/importer/datatypedefinition.out.xml,2\4\242394e99c2de695af49d3592761e570e0be302a
+f
+6src/com/nosliw/data/datatype/importer/datatypeinfo.xml,6\9\690843fde78c40035fc7b12631d9aa55f1f6f059

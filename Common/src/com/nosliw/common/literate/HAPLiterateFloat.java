@@ -19,7 +19,8 @@ public class HAPLiterateFloat implements HAPLiterateDef{
 	@Override
 	public Set<Class> getObjectClasses() {  
 		Set<Class> out = new HashSet<Class>(); 
-		out.add(Integer.class);
+		out.add(Float.class);
+		out.add(Float.TYPE);
 		return out;
 	}
 

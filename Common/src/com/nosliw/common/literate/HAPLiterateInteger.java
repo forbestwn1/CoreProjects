@@ -20,6 +20,7 @@ public class HAPLiterateInteger implements HAPLiterateDef{
 	public Set<Class> getObjectClasses() {  
 		Set<Class> out = new HashSet<Class>(); 
 		out.add(Integer.class);
+		out.add(Integer.TYPE);
 		return out;
 	}
 

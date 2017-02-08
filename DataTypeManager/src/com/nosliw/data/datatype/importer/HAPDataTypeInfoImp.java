@@ -26,7 +26,7 @@ public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPD
 		this.setFullName(fullName);
 	}
 	
-	public String getFullName(){  return this.getAtomicAncestorValueString(FULLNAME);  }
+	public String getFullName(){  return this.buildLiterate();  }
 	public void setFullName(String fullName){
 		this.updateAtomicChild(FULLNAME, fullName, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
 		buildObjectByLiterate(fullName);
@@ -44,6 +44,8 @@ public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPD
 		return version;
 	}
 
+	public String getVersionFullName(){ return ((HAPDataTypeVersionImp)this.getVersion()).getName(); }
+	
 	@Override
 	protected String buildLiterate(){
 		HAPDataTypeVersionImp version = (HAPDataTypeVersionImp)this.getVersion();

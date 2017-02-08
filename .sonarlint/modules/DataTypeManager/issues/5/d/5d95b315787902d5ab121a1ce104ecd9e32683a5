@@ -1,14 +1,14 @@
 
-ssquid:S3008"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›êÿ‰8…¹ÝÝ¡+
-Fsquid:S1148="#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8ÔºõÝ¡+
-Fsquid:S1068"(Remove this unused "m_id" private field.(ä§ìõ8·ÙàÝ¡+
-Csquid:S1166<"%Either log or rethrow this exception.(”ý¾8ÄïâÝ¡+
+nsquid:S00116"ORename this field "m_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä§ìõ8·ÙàÝ¡+
+Xsquid:S1213#";Move this constructor to comply with Java Code Conventions.(ê»·8…¹ÝÝ¡+
 ~squid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ú¬Ë©üÿÿÿÿ8…¹ÝÝ¡+
 ysquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(©¢Ší8…¹ÝÝ¡+
-Xsquid:S1213#";Move this constructor to comply with Java Code Conventions.(ê»·8…¹ÝÝ¡+
-nsquid:S00116"ORename this field "m_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä§ìõ8·ÙàÝ¡+
-tsquid:S00116"WRename this field "m_connection" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ã©[8“ÝãÝ¡+
-ysquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ë˜Ü”8…¹ÝÝ¡+
 ]
 squid:S1068";Replace this usage of System.out or System.err by a logger.(Ô²À¯ûÿÿÿÿ8‘æÝ¡+
 ~squid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(àçÿçûÿÿÿÿ8…¹ÝÝ¡+
+Csquid:S1166<"%Either log or rethrow this exception.(”ý¾8ÄïâÝ¡+
+ysquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ë˜Ü”8…¹ÝÝ¡+
+ssquid:S3008"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›êÿ‰8…¹ÝÝ¡+
+Fsquid:S1148="#Use a logger to log this exception.(€ÉÔ…ýÿÿÿÿ8ÔºõÝ¡+
+tsquid:S00116"WRename this field "m_connection" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ã©[8“ÝãÝ¡+
+Fsquid:S1068"(Remove this unused "m_id" private field.(ä§ìõ8ƒ†‰ý¡+

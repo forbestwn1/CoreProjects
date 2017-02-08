@@ -9,7 +9,7 @@
 		<dbColumnInfos pathType="propertyAsPath">
 			<dbColumnInfo column="id" definition="VARCHAR(20) NOT NULL PRIMARY KEY" getter="getFullName" setter="setFullName"/>
 			<dbColumnInfo column="name" definition="VARCHAR(20) NOT NULL" />
-			<dbColumnInfo column="version" definition="VARCHAR(20) NOT NULL"/>
+			<dbColumnInfo column="versionFullName" definition="VARCHAR(20) NOT NULL"/>
 			<dbColumnInfo column="versionMajor" definition="INT" setter="no"/>
 			<dbColumnInfo column="versionMinor" definition="INT" setter="no"/>
 			<dbColumnInfo column="versionRevision" definition="VARCHAR(20)" setter="no"/>

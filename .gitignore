@@ -11,6 +11,7 @@
 *.pydevproject
 .metadata
 .recommenders
+.sonarlint
 bin/**
 tmp/**
 tmp/**/*

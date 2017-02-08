@@ -53,6 +53,7 @@ public class HAPSqlUtility {
 	public static void saveToDB(HAPStringableValueEntity obj, HAPDBTableInfo dbTableInfo, Connection connection){
 		try {
 			String insertSql = buildInstertSql(dbTableInfo);
+			System.out.println(insertSql);
 			PreparedStatement statement = connection.prepareStatement(insertSql);
 			
 			saveToDB(obj, dbTableInfo, statement);
@@ -121,11 +122,20 @@ public class HAPSqlUtility {
 			for(int i=0; i<columnInfos.size(); i++){
 				HAPDBColumnInfo columnInfo = columnInfos.get(i);
 				
+				if(columnInfo.getColumnName().equals("id")){
+					int kkkk = 555;
+					kkkk++;
+				}
+				
+				
 				String getterMethod = columnInfo.getGetter();
 				String getterPath = columnInfo.getGetterPath();
-				Object columnObj = HAPValueInfoUtility.getObjectFromStringableValue(obj.getAncestorByPath(getterPath));
-				Object columnValue = columnObj.getClass().getMethod(getterMethod).invoke(columnObj, null);
-				
+				HAPStringableValue columnStrableValue = obj.getAncestorByPath(getterPath);
+				Object columnValue = null;
+				if(columnStrableValue!=null){
+					Object columnObj = HAPValueInfoUtility.getObjectFromStringableValue(columnStrableValue);
+					columnValue = columnObj.getClass().getMethod(getterMethod).invoke(columnObj, null);
+				}
 				String dataType = columnInfo.getDataType();
 				if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING.equals(dataType)){
 					statement.setString(i+1, (String)columnValue);
@@ -136,8 +146,12 @@ public class HAPSqlUtility {
 				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_BOOLEAN.equals(dataType)){
 					statement.setBoolean(i+1, (Boolean)columnValue);
 				}
-				if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_FLOAT.equals(dataType)){
+				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_FLOAT.equals(dataType)){
 					statement.setFloat(i+1, (Float)columnValue);
+				}
+				else{
+					int kkkkk = 55;
+					kkkkk++;
 				}
 			}
 			statement.execute();
