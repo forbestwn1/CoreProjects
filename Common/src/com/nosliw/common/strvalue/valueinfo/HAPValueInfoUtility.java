@@ -40,11 +40,6 @@ public class HAPValueInfoUtility {
 	public static Object getObjectFromStringableValue(HAPStringableValue value){
 		Object out = null;
 		
-		if(value==null || value.getStringableStructure()==null){
-			int kkkk = 555;
-			kkkk++;
-		}
-		
 		if(value.getStringableStructure().equals(HAPConstant.STRINGALBE_VALUEINFO_ENTITY)){
 			out = value;
 		}

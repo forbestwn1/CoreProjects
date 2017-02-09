@@ -1,14 +1,15 @@
 
-nsquid:S00116"ORename this field "m_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä§ìõ8·Ùàİ¡+
-Xsquid:S1213#";Move this constructor to comply with Java Code Conventions.(ê»·8…¹İİ¡+
 ~squid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ú¬Ë©üÿÿÿÿ8…¹İİ¡+
-ysquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(©¢Ší8…¹İİ¡+
-]
-squid:S1068";Replace this usage of System.out or System.err by a logger.(Ô²À¯ûÿÿÿÿ8‘æİ¡+
-~squid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(àçÿçûÿÿÿÿ8…¹İİ¡+
-Csquid:S1166<"%Either log or rethrow this exception.(”ı¾8Äïâİ¡+
 ysquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ë˜Ü”8…¹İİ¡+
-ssquid:S3008"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›êÿ‰8…¹İİ¡+
-Fsquid:S1148="#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ôºõİ¡+
+Csquid:S1166A"%Either log or rethrow this exception.(”ı¾8Äïâİ¡+
+]
+squid:S106=";Replace this usage of System.out or System.err by a logger.(Ô²À¯ûÿÿÿÿ8‘æİ¡+
 tsquid:S00116"WRename this field "m_connection" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ã©[8“İãİ¡+
-Fsquid:S1068"(Remove this unused "m_id" private field.(ä§ìõ8ƒ†‰ı¡+
+Xsquid:S1213#";Move this constructor to comply with Java Code Conventions.(ê»·8…¹İİ¡+
+nsquid:S00116"ORename this field "m_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä§ìõ8·Ùàİ¡+
+[squid:UnusedPrivateMethodF"*Remove this unused private "getId" method.(øóğøÿÿÿÿ8ºàÛˆ¢+
+ysquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(©¢Ší8…¹İİ¡+
+ssquid:S3008"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›êÿ‰8…¹İİ¡+
+~squid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(àçÿçûÿÿÿÿ8…¹İİ¡+
+Fsquid:S1148B"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ôºõİ¡+
+Rsquid:S1172,"/Remove this unused method parameter "dataType".(ÉĞµşÿÿÿÿ8ñ†‰¢+

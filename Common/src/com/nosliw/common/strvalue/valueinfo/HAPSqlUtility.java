@@ -122,12 +122,6 @@ public class HAPSqlUtility {
 			for(int i=0; i<columnInfos.size(); i++){
 				HAPDBColumnInfo columnInfo = columnInfos.get(i);
 				
-				if(columnInfo.getColumnName().equals("id")){
-					int kkkk = 555;
-					kkkk++;
-				}
-				
-				
 				String getterMethod = columnInfo.getGetter();
 				String getterPath = columnInfo.getGetterPath();
 				HAPStringableValue columnStrableValue = obj.getAncestorByPath(getterPath);
@@ -150,8 +144,6 @@ public class HAPSqlUtility {
 					statement.setFloat(i+1, (Float)columnValue);
 				}
 				else{
-					int kkkkk = 55;
-					kkkkk++;
 				}
 			}
 			statement.execute();

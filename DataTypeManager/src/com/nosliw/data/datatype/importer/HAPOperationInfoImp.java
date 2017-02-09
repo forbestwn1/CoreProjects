@@ -3,6 +3,8 @@ package com.nosliw.data.datatype.importer;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.interpolate.HAPInterpolateOutput;
+import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueMap;
 import com.nosliw.common.utils.HAPConstant;
@@ -20,7 +22,7 @@ public class HAPOperationInfoImp extends HAPStringableValueEntity implements HAP
 	
 	@HAPAttribute
 	public static String DATATYPEVERSION = "dataTypeVersion";
-	
+
 	public HAPOperationInfoImp(){}
 	
 	public HAPOperationInfoImp(String id, String name, String description, String dataTypeName, String dataTypeVersion){
@@ -53,4 +55,9 @@ public class HAPOperationInfoImp extends HAPStringableValueEntity implements HAP
 	@Override
 	public HAPOperationOutInfo getOutputInfo() {		return (HAPOperationOutInfo)this.getEntityAncestorByPath(OUTPUT);	}
 
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

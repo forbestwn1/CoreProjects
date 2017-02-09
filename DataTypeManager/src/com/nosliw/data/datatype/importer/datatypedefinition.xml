@@ -1,4 +1,4 @@
-<entity name="data.datatypedef" table="nosliw.DATATYPE" description="this is used to defined data type basic info" class="com.nosliw.data.datatype.importer.HAPDataTypeImpLoad">
+<entity name="data.datatypedef" class="com.nosliw.data.datatype.importer.HAPDataTypeImpLoad" table="nosliw.DATATYPE" description="this is used to defined data type basic info">
 	<property name="description" dataType="string" description="data type description">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(20)"/>

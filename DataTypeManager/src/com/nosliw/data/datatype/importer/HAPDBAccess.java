@@ -41,6 +41,11 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		this.m_id = System.currentTimeMillis();
 	}
 
+	public void saveOperation(HAPOperationInfoImp operation, HAPDataTypeImp dataType){
+		
+		HAPSqlUtility.saveToDB(operation, m_connection);
+	}
+	
 	public void saveDataType(HAPDataTypeImp dataType) {
 		HAPSqlUtility.saveToDB(dataType, m_connection);
 	}
@@ -62,4 +67,8 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		}
 	}
 
+	private long getId(){
+		this.m_id++;
+		return this.m_id;
+	}
 }

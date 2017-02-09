@@ -58,12 +58,6 @@ public class HAPDBTableInfo {
 				String className = HAPValueInfoUtility.getEntityClassNameFromValueInfo(childValueInfo);
 				Class returnType = Class.forName(className).getMethod(getterPath.getSimpleName()).getReturnType();
 				type = HAPLiterateManager.getInstance().getLiterateTypeByClass(returnType).getType();
-				
-				if(type.equals("com.nosliw.data.HAPDataTypeVersion")){
-					int kkkk = 5555;
-					kkkk++;
-				}
-				
 				columnInfo.updateAtomicChild(HAPDBColumnInfo.DATATYPE, type);
 			} catch (Exception e) {
 				e.printStackTrace();

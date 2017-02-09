@@ -71,12 +71,6 @@ public class HAPLiterateManager {
 	public HAPLiterateType getLiterateTypeByClass(Class cs){
 		HAPLiterateDef literateDef = this.getLiterateDefByClass(cs);
 		String subType = getSubLiterateTypeByClass(cs);
-		
-		if(literateDef==null){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		return new HAPLiterateType(literateDef.getName(), subType);
 	}
 	

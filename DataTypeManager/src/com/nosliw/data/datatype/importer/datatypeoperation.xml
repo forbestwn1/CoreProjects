@@ -1,8 +1,34 @@
-<entity name="data.operation" class="com.nosliw.data.datatype.importer.HAPOperationInfoImp" description="">
+<entity name="data.operation" table="nosliw.DATAOPERATION" class="com.nosliw.data.datatype.importer.HAPOperationInfoImp" description="">
 
-	<property name="description" dataType="string" description=""/>
+	<property name="id" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20) NOT NULL PRIMARY KEY"/>
+		</dbColumnInfos>
+	</property>
 
-	<property name="name" dataType="string" description=""/>
+	<property name="dataType" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="description" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="name" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="type" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
 
 	<property name="output" reference="data.operationoutput" description=""/>
 
