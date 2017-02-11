@@ -16,6 +16,7 @@ import com.nosliw.common.path.HAPComplexName;
 import com.nosliw.common.serialization.HAPSerializableUtility;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
+import com.nosliw.common.strvalue.HAPStringableValueUtility;
 import com.nosliw.common.strvalue.entity.test.HAPStringableEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -25,6 +26,10 @@ public class HAPSqlUtility {
 
 	public static String dropoffTableSql(HAPDBTableInfo tableInfo){
 		return "DROP TABLE IF EXISTS " + tableInfo.getTableName() + ";";
+	}
+	
+	public static String buildEntityQuerySql(String tableName, String query){
+		return "SELECT * FROM " + tableName + " WHERE " + query;
 	}
 	
 	public static void createDBTable(HAPDBTableInfo tableInfo, Connection connection){
@@ -164,7 +169,7 @@ public class HAPSqlUtility {
 		return out.toString();
 	}
 	
-	private static List<Object> queryFromDB(String dataTypeName, PreparedStatement statement){
+	public static List<Object> queryFromDB(String dataTypeName, PreparedStatement statement){
 		List<Object> out = new ArrayList<Object>();
 		
 		try {
@@ -179,12 +184,13 @@ public class HAPSqlUtility {
 					String setterMethod = column.getSetter();
 					if(!HAPBasicUtility.isStringNotEmpty(setterMethod)){
 						String setterPath = column.getSetterPath();
-						HAPStringableValue columnStrableValue = entity.getAncestorByPath(setterPath);
+						HAPStringableValue columnStrableValue = HAPStringableValueUtility.buildAncestorByPath(entity, setterPath, valueInfo);
+						Object obj = HAPValueInfoUtility.getObjectFromStringableValue(columnStrableValue);
 						if("String".equals(column.getDataType())){
-							entity.getClass().getMethod(setterMethod, String.class).invoke(entity, resultSet.getString(column.getColumnName()));
+							entity.getClass().getMethod(setterMethod, String.class).invoke(obj, resultSet.getString(column.getColumnName()));
 						}
 						else if("Integer".equals(column.getDataType())){
-							entity.getClass().getMethod(setterMethod, Integer.class).invoke(entity, resultSet.getInt(column.getColumnName()));
+							entity.getClass().getMethod(setterMethod, Integer.class).invoke(obj, resultSet.getInt(column.getColumnName()));
 						}
 					}
 				}

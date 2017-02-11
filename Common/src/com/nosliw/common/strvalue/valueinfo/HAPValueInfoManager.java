@@ -145,6 +145,12 @@ public class HAPValueInfoManager {
 	public HAPDBTableInfo getDBTableInfo(String name){
 		return this.m_dbTables.get(name);
 	}
+
+	public HAPDBTableInfo getDBTableInfoByClass(Class objClass){
+		String valuInfoName = this.getEntityValueInfoByClass(objClass).getName();
+		HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valuInfoName);
+		return dbTableInfo;
+	}
 	
 	public HAPValueInfo getValueInfo(String name){
 		HAPValueInfo out = this.m_valueInfos.get(name);

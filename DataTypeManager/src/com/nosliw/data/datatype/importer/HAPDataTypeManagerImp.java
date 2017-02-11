@@ -1,10 +1,12 @@
 package com.nosliw.data.datatype.importer;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeInfo;
@@ -22,11 +24,24 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 
 	private HAPDBAccess m_dbAccess;
 
+	public HAPDataTypeManagerImp(){
+		this.m_dbAccess = HAPDBAccess.getInstance();
+		
+		Set<String> valueInfos = new HashSet<String>();
+		valueInfos.add("datatypedefinition.xml");
+		valueInfos.add("datatypeinfo.xml");
+		valueInfos.add("datatypeversion.xml");
+
+		valueInfos.add("datatypeoperation.xml");
+		valueInfos.add("operationoutput.xml");
+		valueInfos.add("operationparm.xml");
+
+		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeImporterManager.class, valueInfos);
+	}
+	
 	@Override
 	public HAPDataType getDataType(HAPDataTypeInfo dataTypeInfo) {
-		this.m_getDataTypeByInfoStatement = m_connection.prepareStatement("SELECT ID, NAME, VERSION, DESCRIPTION, PARENTINFO, LINKEDVERSION FROM DATATYPE WHERE NAME=? AND VERSION=?");
-		
-		return null;
+		return this.m_dbAccess.getDataType((HAPDataTypeInfoImp)dataTypeInfo);
 	}
 
 	@Override
@@ -173,4 +188,12 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 		return this.m_dbAccess.getDataTypePicture(dataTypeInfo);
 	}
 */	
+	
+	
+	public static void main(String[] args){
+		HAPDataTypeManagerImp man = new HAPDataTypeManagerImp();
+		HAPDataTypeImp dataType = (HAPDataTypeImp)man.getDataType(new HAPDataTypeInfoImp("core.url;1.0.0"));
+		System.out.println(dataType.toString());
+	}
+	
 }

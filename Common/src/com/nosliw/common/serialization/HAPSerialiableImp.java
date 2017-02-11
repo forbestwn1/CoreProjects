@@ -37,7 +37,7 @@ public abstract class HAPSerialiableImp implements HAPSerializable{
 	public String toString(){
 		String out = "";
 		try{
-			out = this.toStringValue(HAPSerializationFormat.JSON_FULL);
+			out = this.toStringValue(HAPSerializationFormat.JSON);
 			out = HAPJsonUtility.formatJson(out);
 		}
 		catch(Exception e){
