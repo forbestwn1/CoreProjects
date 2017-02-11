@@ -18,19 +18,16 @@ public class HAPOperationInfoImp extends HAPStringableValueEntity implements HAP
 	public static String ID = "id";
 	
 	@HAPAttribute
-	public static String DATATYPENAME = "dataTypeName";
+	public static String DATATYPINFO = "dataTypeInfo";
 	
-	@HAPAttribute
-	public static String DATATYPEVERSION = "dataTypeVersion";
-
 	public HAPOperationInfoImp(){}
 	
 	public HAPOperationInfoImp(String id, String name, String description, String dataTypeName, String dataTypeVersion){
 		this.updateAtomicChild(ID, id);
 		this.updateAtomicChild(NAME, name);
 		this.updateAtomicChild(DESCRIPTION, description);
-		this.updateAtomicChild(DATATYPENAME, dataTypeName);
-		this.updateAtomicChild(DATATYPEVERSION, dataTypeVersion, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeVersionImp.class.getName());
+//		this.updateAtomicChild(DATATYPENAME, dataTypeName);
+//		this.updateAtomicChild(DATATYPEVERSION, dataTypeVersion, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeVersionImp.class.getName());
 	}
 
 	@Override
@@ -41,9 +38,7 @@ public class HAPOperationInfoImp extends HAPStringableValueEntity implements HAP
 
 	public String getId(){		return this.getAtomicAncestorValueString(ID);	}
 
-	public String getDataTypeName(){		return this.getAtomicAncestorValueString(DATATYPENAME);	}
-	
-	public HAPDataTypeVersionImp getDataTypeVersion(){		return (HAPDataTypeVersionImp)this.getAtomicValueAncestorByPath(DATATYPEVERSION);	}
+	public HAPDataTypeInfoImp getDataTypeInfo(){ return (HAPDataTypeInfoImp)this.getAtomicAncestorValueObject(DATATYPINFO, HAPDataTypeInfoImp.class); }
 	
 	@Override
 	public Map<String, HAPOperationParmInfo> getParmsInfo() {

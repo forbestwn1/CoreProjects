@@ -13,8 +13,10 @@ import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.path.HAPComplexName;
+import com.nosliw.common.serialization.HAPSerializableUtility;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
+import com.nosliw.common.strvalue.entity.test.HAPStringableEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -143,7 +145,8 @@ public class HAPSqlUtility {
 				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_FLOAT.equals(dataType)){
 					statement.setFloat(i+1, (Float)columnValue);
 				}
-				else{
+				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT.equals(dataType)){
+					statement.setString(i+1, HAPSerializableUtility.toLiterateString(columnValue));
 				}
 			}
 			statement.execute();
@@ -168,18 +171,20 @@ public class HAPSqlUtility {
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()){
 				HAPValueInfoEntity valueInfo = (HAPValueInfoEntity)HAPValueInfoManager.getInstance().getValueInfo(dataTypeName);
-				Object entity = Class.forName(valueInfo.getClassName()).newInstance();
+				HAPStringableValueEntity entity = (HAPStringableValueEntity)valueInfo.newValue(); 
 				
 				HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(dataTypeName);
 				List<HAPDBColumnInfo> columns = dbTableInfo.getColumnsInfo();
 				for(HAPDBColumnInfo column : columns){
-					String setter = column.getSetter();
-					if(!HAPBasicUtility.isStringEmpty(setter)){
+					String setterMethod = column.getSetter();
+					if(!HAPBasicUtility.isStringNotEmpty(setterMethod)){
+						String setterPath = column.getSetterPath();
+						HAPStringableValue columnStrableValue = entity.getAncestorByPath(setterPath);
 						if("String".equals(column.getDataType())){
-							entity.getClass().getMethod(setter, String.class).invoke(entity, resultSet.getString(column.getColumnName()));
+							entity.getClass().getMethod(setterMethod, String.class).invoke(entity, resultSet.getString(column.getColumnName()));
 						}
 						else if("Integer".equals(column.getDataType())){
-							entity.getClass().getMethod(setter, Integer.class).invoke(entity, resultSet.getInt(column.getColumnName()));
+							entity.getClass().getMethod(setterMethod, Integer.class).invoke(entity, resultSet.getInt(column.getColumnName()));
 						}
 					}
 				}

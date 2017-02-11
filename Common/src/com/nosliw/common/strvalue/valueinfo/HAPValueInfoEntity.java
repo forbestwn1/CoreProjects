@@ -89,7 +89,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 		return this.m_solidValueInfo;
 	}
 	
-	public HAPStringableValueEntity newEntity(){
+	private HAPStringableValueEntity newEntity(){
 		HAPStringableValueEntity out = null;
 		try{
 			String className = this.getAtomicAncestorValueString(HAPValueInfoEntity.CLASSNAME);
@@ -152,7 +152,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	}
 
 	@Override
-	public HAPStringableValue buildDefault() {
+	public HAPStringableValue newValue() {
 		HAPStringableValueEntity out = this.newEntity();
 		if(out!=null){
 			Set<String> optionsAttr = new HashSet<String>();
@@ -161,7 +161,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 				HAPValueInfo propertyValueInfo = this.getPropertyInfo(property);
 				if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyValueInfo.getValueInfoType()))  optionsAttr.add(property);
 				else{
-					HAPStringableValue entityProperty = propertyValueInfo.buildDefault();
+					HAPStringableValue entityProperty = propertyValueInfo.newValue();
 					if(entityProperty!=null)			out.updateChild(property, entityProperty);
 				}
 			}

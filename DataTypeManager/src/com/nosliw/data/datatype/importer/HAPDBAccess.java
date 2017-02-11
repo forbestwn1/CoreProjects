@@ -42,8 +42,12 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	}
 
 	public void saveOperation(HAPOperationInfoImp operation, HAPDataTypeImp dataType){
-		
+		operation.updateAtomicChild(HAPOperationInfoImp.ID, this.getId()+"");
+		operation.updateAtomicChildValue(HAPOperationInfoImp.DATATYPINFO, dataType.getName());
 		HAPSqlUtility.saveToDB(operation, m_connection);
+		
+		
+		
 	}
 	
 	public void saveDataType(HAPDataTypeImp dataType) {

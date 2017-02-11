@@ -1,18 +1,14 @@
 
-Lsquid:S1905n"5Remove this unnecessary cast to "HAPDataTypeInfoImp".(¶ˆ×ó
-Nsquid:S1135X"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-Bsquid:S1168S"+Return an empty collection instead of null.(¥¹ï
+rsquid:UselessImportCheck"GRemove this unused import 'com.nosliw.data.datatype.util.HAPDBAccess1'.(ÓòÍ¹8³›‹±¢+
+hsquid:CommentedOutCodeLine."<This block of commented-out lines of code should be removed.(Ñâøe8»á‘±¢+
 Nsquid:S1135R"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-Bsquid:S1168Y"+Return an empty collection instead of null.(¥¹ï
-gsquid:UselessImportCheck
-">Remove this unused import 'com.nosliw.data.HAPDataTypeFamily'.(üÕõûÿÿÿÿ
+Nsquid:S1135("2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+Nsquid:S1135_"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+Qsquid:S1068".Remove this unused "m_dbAccess" private field.(³×·Øÿÿÿÿÿ8»á‘±¢+
+Nsquid:S1135Y"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+Isquid:S1168#"+Return an empty collection instead of null.(¥¹ï8›¬’±¢+
+rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
+Usquid:S1135k"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ8›¬’±¢+
+Nsquid:S1135""2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+Usquid:S1135e"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ8›¬’±¢+
 Nsquid:S1135L"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-Bsquid:S1168@"+Return an empty collection instead of null.(¥¹ï
-Nsquid:S11359"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-Jsquid:S1172{"3Remove this unused method parameter "dataTypeInfo".(Â‘éŸ
-rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ëŞ¼¨ùÿÿÿÿ
-Bsquid:S1452"&Remove usage of generic wildcard type.(³Íâƒüÿÿÿÿ
-Nsquid:S1135F"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-˜squid:S1186{"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Â‘éŸ
-Ysquid:S1854 "CRemove this useless assignment to local variable "dataTypeVersion".(ˆ³Ú#
-Nsquid:S1135?"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ

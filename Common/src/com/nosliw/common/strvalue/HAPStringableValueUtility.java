@@ -10,8 +10,11 @@ import org.w3c.dom.Element;
 import com.nosliw.common.constant.HAPConstantUtility;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.resolve.HAPResolvableString;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfo;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoAtomic;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPXMLUtility;
 
@@ -51,5 +54,34 @@ public class HAPStringableValueUtility {
 	public static void updateBasicProperty(Element element, HAPStringableValueEntity entity){
 		Map<String, String> propertyAttrs = HAPXMLUtility.getAllAttributes(element);
 		entity.updateAtomicChildrens(propertyAttrs);
+	}
+	
+	public static HAPStringableValue buildAncestorByPath(HAPStringableValueEntity entity, String path, HAPValueInfoEntity valueInfo){
+		HAPStringableValue out = entity;
+		if(HAPBasicUtility.isStringNotEmpty(path)){
+			String[] pathSegs = HAPNamingConversionUtility.parsePaths(path);
+			HAPStringableValueEntity parent = null;
+			HAPValueInfoEntity parentValueInfo = null;
+			HAPValueInfo childValueInfo = valueInfo;
+			for(String pathSeg : pathSegs){
+				parent = (HAPStringableValueEntity)out;
+				out = parent.getChild(pathSeg);
+				parentValueInfo = (HAPValueInfoEntity)childValueInfo;
+				childValueInfo = parentValueInfo.getChildByPath(pathSeg);
+				if(out==null){
+					String childVaueInfoType = childValueInfo.getValueInfoType();
+					if(childVaueInfoType.equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY)){
+						parentValueInfo = (HAPValueInfoEntity)childValueInfo;
+						out = ((HAPValueInfoEntity)childValueInfo).newValue();
+						parent.updateChild(pathSeg, out);
+					}
+					else if(childVaueInfoType.equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
+						HAPValueInfoAtomic atomicValueInfo = (HAPValueInfoAtomic)childValueInfo;
+						out = atomicValueInfo.newValue();
+					}
+				}
+			}
+		}
+		return out;
 	}
 }

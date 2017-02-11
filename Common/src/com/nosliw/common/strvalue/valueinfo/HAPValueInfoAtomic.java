@@ -39,11 +39,21 @@ public class HAPValueInfoAtomic extends HAPValueInfo{
 	}
 	
 	@Override
-	public HAPStringableValue buildDefault() {
+	public HAPStringableValue newValue() {
 		HAPStringableValue out = null;
 		String defaultValue = this.getAtomicAncestorValueString(HAPValueInfoAtomic.DEFAULTVALUE);
 		if(defaultValue!=null){
 			out = new HAPStringableValueAtomic(defaultValue, this.getDataType(), this.getSubDataType());
+		}
+		else{
+			if(this.getDataType().equals(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT)){
+				try {
+					Object obj = Class.forName(this.getSubDataType()).newInstance();
+					out = HAPStringableValueAtomic.buildFromObject(obj);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return out;
 	}

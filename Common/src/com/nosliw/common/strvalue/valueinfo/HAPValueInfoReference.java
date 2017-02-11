@@ -130,5 +130,5 @@ public class HAPValueInfoReference extends HAPValueInfo{
 	}
 
 	@Override
-	public HAPStringableValue buildDefault() {		return null;	}
+	public HAPStringableValue newValue() {		return null;	}
 }

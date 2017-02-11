@@ -56,10 +56,10 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 	}
 	
 	@Override
-	public HAPStringableValue buildDefault() {		return null;	}
+	public HAPStringableValue newValue() {		return null;	}
 	
 	public HAPStringableValue buildDefault(String optionsValue){
-		return this.getOptionsValueInfo(optionsValue).buildDefault();
+		return this.getOptionsValueInfo(optionsValue).newValue();
 	}
 	
 	private HAPStringableValueMap getOptionsMap(){

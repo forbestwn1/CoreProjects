@@ -7,22 +7,41 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeFamily;
 import com.nosliw.data.HAPDataTypeInfo;
 import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPDataTypeOperation;
 import com.nosliw.data.HAPDataTypePathSegment;
 import com.nosliw.data.HAPDataTypePicture;
 import com.nosliw.data.HAPDataTypeVersion;
 import com.nosliw.data.HAPExpression;
 import com.nosliw.data.HAPExpressionInfo;
 import com.nosliw.data.HAPOperationInfo;
-import com.nosliw.data.HAPQueryInfo;
 import com.nosliw.data.datatype.util.HAPDBAccess1;
 
 public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 
-	private HAPDBAccess1 m_dbAccess;
+	private HAPDBAccess m_dbAccess;
+
+	@Override
+	public HAPDataType getDataType(HAPDataTypeInfo dataTypeInfo) {
+		this.m_getDataTypeByInfoStatement = m_connection.prepareStatement("SELECT ID, NAME, VERSION, DESCRIPTION, PARENTINFO, LINKEDVERSION FROM DATATYPE WHERE NAME=? AND VERSION=?");
+		
+		return null;
+	}
+
+	@Override
+	public List<? extends HAPDataTypeOperation> getOperationInfos(HAPDataTypeInfo dataTypeInfo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
+/*	
 	@Override
 	public HAPDataType getDataType(HAPDataTypeInfo dataTypeInfo) {
 		return this.m_dbAccess.getDataTypeByInfo(dataTypeInfo);
@@ -153,5 +172,5 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 	private HAPDataTypePicture getDataTypePicture(HAPDataTypeInfoImp dataTypeInfo){
 		return this.m_dbAccess.getDataTypePicture(dataTypeInfo);
 	}
-	
+*/	
 }

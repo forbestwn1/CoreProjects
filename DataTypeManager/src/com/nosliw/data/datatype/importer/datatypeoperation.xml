@@ -6,9 +6,10 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="dataType" dataType="string" description="">
-		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(20)"/>
+	<property name="dataTypeInfo" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="">
+		<dbColumnInfos pathType="propertyAsPath">
+			<dbColumnInfo column="dataTypeName" definition="VARCHAR(20)" getter="getName"/>
+			<dbColumnInfo column="versionFullName" definition="VARCHAR(20)"/>
 		</dbColumnInfos>
 	</property>
 

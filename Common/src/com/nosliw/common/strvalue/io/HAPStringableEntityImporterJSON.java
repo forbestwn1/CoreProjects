@@ -28,20 +28,20 @@ public class HAPStringableEntityImporterJSON {
 
 	public static <T> T parseJsonEntity(JSONObject jsonObjEntity, Class<T> entityClass, HAPValueInfoManager valueInfoMan){
 		HAPValueInfoEntity entityValueInfo = valueInfoMan.getEntityValueInfoByClass(entityClass); 
-		HAPStringableValueEntity entity = entityValueInfo.newEntity();
+		HAPStringableValueEntity entity = (HAPStringableValueEntity)entityValueInfo.newValue();
 		buildStringableValueEntity(jsonObjEntity, entity, entityValueInfo, valueInfoMan);
 		return (T)entity;
 	}
 	
 	public static HAPStringableValueEntity parseJsonEntity(JSONObject jsonObjEntity, String entityType, HAPValueInfoManager valueInfoMan){
 		HAPValueInfoEntity entityValueInfo = (HAPValueInfoEntity)valueInfoMan.getValueInfo(entityType);
-		HAPStringableValueEntity entity = entityValueInfo.newEntity();
+		HAPStringableValueEntity entity = (HAPStringableValueEntity)entityValueInfo.newValue();
 		buildStringableValueEntity(jsonObjEntity, entity, entityValueInfo, valueInfoMan);
 		return entity;
 	}
 
 	public static HAPStringableValueEntity parseJsonEntity(JSONObject jsonObjEntity, HAPValueInfoEntity entityValueInfo, HAPValueInfoManager valueInfoMan){
-		HAPStringableValueEntity entity = entityValueInfo.newEntity();
+		HAPStringableValueEntity entity = (HAPStringableValueEntity)entityValueInfo.newValue();
 		buildStringableValueEntity(jsonObjEntity, entity, entityValueInfo, valueInfoMan);
 		return entity;
 	}
@@ -76,7 +76,7 @@ public class HAPStringableEntityImporterJSON {
 	}
 	
 	private static HAPStringableValueEntity processEntityValue1(JSONObject jsonObjEntity, HAPValueInfoEntity entityValueInfo, HAPValueInfoManager valueInfoMan){
-		HAPStringableValueEntity entity = entityValueInfo.newEntity();
+		HAPStringableValueEntity entity = (HAPStringableValueEntity)entityValueInfo.newValue();
 
 		if(jsonObjEntity!=null){
 			JSONObject propertiesJsonObj = jsonObjEntity;
@@ -137,7 +137,7 @@ public class HAPStringableEntityImporterJSON {
 	}
 
 	public static HAPStringableValueMap parseJsonMap(JSONObject mapObj, HAPValueInfoMap mapValueInfo, HAPValueInfoManager valueInfoMan){
-		HAPStringableValueMap map = (HAPStringableValueMap)mapValueInfo.buildDefault();
+		HAPStringableValueMap map = (HAPStringableValueMap)mapValueInfo.newValue();
 		
 		if(mapObj!=null){
 			JSONObject mapPropertiesJsonObj = null;
@@ -166,7 +166,7 @@ public class HAPStringableEntityImporterJSON {
 	}
 
 	public static HAPStringableValueList parseJsonList(Object listObj, HAPValueInfoList listValueInfo, HAPValueInfoManager valueInfoMan){
-		HAPStringableValueList list = (HAPStringableValueList)listValueInfo.buildDefault();
+		HAPStringableValueList list = (HAPStringableValueList)listValueInfo.newValue();
 		
 		if(listObj!=null){
 			JSONArray listJsonObj = null;
@@ -198,7 +198,7 @@ public class HAPStringableEntityImporterJSON {
 		
 		HAPStringableValueAtomic out = null;
 		if(strValue!=null)  out = new HAPStringableValueAtomic(strValue, atomicValueInfo.getDataType(), atomicValueInfo.getSubDataType());
-		else   out = (HAPStringableValueAtomic)atomicValueInfo.buildDefault();
+		else   out = (HAPStringableValueAtomic)atomicValueInfo.newValue();
 
 		if(out.isEmpty())  out = null;
 		return out;

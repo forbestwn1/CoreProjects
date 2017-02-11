@@ -7,7 +7,7 @@ public interface HAPDataTypeManager {
 
 	//*****************************************  Data Type
 	public HAPDataType getDataType(HAPDataTypeInfo dataTypeInfo);
-	public HAPDataTypePicture buildDataTypePicture(HAPDataTypeInfo dataTypeInfo);
+//	public HAPDataTypePicture buildDataTypePicture(HAPDataTypeInfo dataTypeInfo);
 	
 	//*****************************************  Operation Info
 	 //get all available operations info (local, older version, parent)
@@ -16,7 +16,7 @@ public interface HAPDataTypeManager {
 	
 
 	//*****************************************   Expression
-	public HAPExpression compileExpression(HAPExpressionInfo expressionInfo);
+//	public HAPExpression compileExpression(HAPExpressionInfo expressionInfo);
 	
 
 	
@@ -24,14 +24,14 @@ public interface HAPDataTypeManager {
 	
 	
 	 //get constructor (newData) operations
-	public List<? extends HAPOperationInfo> getNewDataOperations(HAPDataTypeInfo dataTypeInfo);
+//	public List<? extends HAPOperationInfo> getNewDataOperations(HAPDataTypeInfo dataTypeInfo);
 	
 	//get new data operation info by parms type
-	public HAPOperationInfo getNewDataOperation(HAPDataTypeInfo dataTypeInfo, Map<String, HAPDataTypeInfo> parmsDataTypeInfos);
+//	public HAPOperationInfo getNewDataOperation(HAPDataTypeInfo dataTypeInfo, Map<String, HAPDataTypeInfo> parmsDataTypeInfos);
 
 	
 	//*****************************************  
-	public List<String> getLanguages();
+//	public List<String> getLanguages();
 	
 	
 }

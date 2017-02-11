@@ -1,8 +1,8 @@
 
-jsquid:S3008"SRename this field "FULLNAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İæº®
-˜squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÿ›ƒÚ
-{squid:S1488+"_Immediately return this expression instead of assigning it to the temporary variable "version".(¨İËüøÿÿÿÿ
 Qsquid:S1161I":Add the "@Override" annotation above this method signature(úÖÎú
 Esquid:S1444".Make this "public static FULLNAME" field final(İæº®
-jsquid:S2975I"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(úÖÎú
+{squid:S1488+"_Immediately return this expression instead of assigning it to the temporary variable "version".(¨İËüøÿÿÿÿ
+˜squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÿ›ƒÚ
 _squid:S1182I"HUse super.clone() to create and seed the cloned instance to be returned.(úÖÎú
+jsquid:S2975I"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(úÖÎú
+jsquid:S3008"SRename this field "FULLNAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İæº®

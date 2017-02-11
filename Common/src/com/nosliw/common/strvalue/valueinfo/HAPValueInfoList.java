@@ -28,7 +28,7 @@ public class HAPValueInfoList extends HAPValueInfoContainer{
 	}
 	
 	@Override
-	public HAPStringableValue buildDefault() {
+	public HAPStringableValue newValue() {
 		return new HAPStringableValueList();
 	}
 

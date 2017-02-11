@@ -139,7 +139,7 @@ public class HAPStringableEntityImporterXML {
 	private static HAPStringableValueAtomic processAtomicValue(String strValue, HAPValueInfoAtomic atomicValueInfo){
 		HAPStringableValueAtomic out = null;
 		if(strValue!=null)		out = new HAPStringableValueAtomic(strValue, atomicValueInfo.getDataType(), atomicValueInfo.getSubDataType());		
-		else		out = (HAPStringableValueAtomic)atomicValueInfo.buildDefault();		
+		else		out = (HAPStringableValueAtomic)atomicValueInfo.newValue();		
 		if(HAPStringableValueUtility.isStringableValueEmpty(out))  out = null;
 		return out;
 	}
@@ -179,7 +179,7 @@ public class HAPStringableEntityImporterXML {
 	}
 	
 	private static HAPStringableValueMap processMapValue(Element mapEle, HAPValueInfoMap mapValueInfo){
-		HAPStringableValueMap map = (HAPStringableValueMap)mapValueInfo.buildDefault();
+		HAPStringableValueMap map = (HAPStringableValueMap)mapValueInfo.newValue();
 		
 		if(mapEle!=null){
 			HAPValueInfo childInfo = mapValueInfo.getChildValueInfo().getSolidValueInfo();
@@ -209,7 +209,7 @@ public class HAPStringableEntityImporterXML {
 	}
 	
 	private static HAPStringableValueList processListValue(Element listEle, HAPValueInfoList listValueInfo){
-		HAPStringableValueList list = (HAPStringableValueList)listValueInfo.buildDefault();
+		HAPStringableValueList list = (HAPStringableValueList)listValueInfo.newValue();
 		
 		if(listEle!=null){
 			HAPValueInfo childInfo = listValueInfo.getChildValueInfo().getSolidValueInfo();
@@ -238,7 +238,7 @@ public class HAPStringableEntityImporterXML {
 		
 		HAPStringableValueEntity out = null;
 		try{
-			HAPStringableValueEntity entity = entityValueInfo.newEntity();
+			HAPStringableValueEntity entity = (HAPStringableValueEntity)entityValueInfo.newValue();
 
 			if(entityEle!=null){
 				for(String property : entityValueInfo.getEntityProperties()){

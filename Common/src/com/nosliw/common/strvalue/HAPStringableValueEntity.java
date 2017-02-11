@@ -9,8 +9,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfo;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoAtomic;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -211,7 +214,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 
 	public static <T> T buildDefault(Class<T> c) {
 		HAPValueInfoEntity valueInfoEntity = HAPValueInfoManager.getInstance().getEntityValueInfoByClass(c);
-		T out = (T)valueInfoEntity.buildDefault();
+		T out = (T)valueInfoEntity.newValue();
 		return out;
 	}
 }

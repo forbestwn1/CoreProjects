@@ -18,7 +18,7 @@ public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 	
 	abstract public HAPValueInfo clone();
 	
-	abstract public HAPStringableValue buildDefault();
+	abstract public HAPStringableValue newValue();
 	
 	public HAPValueInfo(){
 	}
