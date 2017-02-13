@@ -26,6 +26,7 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	@HAPAttribute
 	public static String STRINGVALUE = "stringValue";
 	
+	//when resolved is true, it means that the value is resolved (value data and its type and subType)
 	@HAPAttribute
 	public static String RESOLVED = "resolved";
 
@@ -67,16 +68,17 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	}
 	
 	@Override
-	public String getStringableStructure(){		return HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC;	}
-	
-	@Override
 	public boolean isEmpty(){
 		if(this.m_value!=null)  return false;
 		if(this.m_strValue==null)  return true;
 		else	return this.m_strValue.isEmpty();
 	}
 	
-	public String getStringContent(){  return this.m_strValue.getValue();  }
+	public String getStringContent(){
+		if(this.m_sovled)			this.buildStringValueByValue();		
+		return this.m_strValue.getValue();  
+	}
+	
 	public void setStringContent(String content){ 
 		this.m_strValue.setValue(content);
 		this.m_sovled = false;
@@ -89,16 +91,12 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	
 
 	public HAPLiterateType getLiterateType(){
-		if(this.m_type==null){
-			this.buildLiterateTypeByValue();
-		}
+		if(this.m_type==null)		this.buildLiterateTypeByValue();
 		return this.m_type;
 	}
 
 	private void buildLiterateTypeByValue(){
-		if(this.m_value!=null){
-			this.m_type = HAPLiterateManager.getInstance().getLiterateType(this.m_value);
-		}
+		if(this.m_value!=null)			this.m_type = HAPLiterateManager.getInstance().getLiterateType(this.m_value);
 	}
 	
 	private void buildStringValueByValue(){
@@ -135,6 +133,7 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 			out = this.m_value;
 		}
 		else{
+			if(this.m_sovled)  this.getStringContent();
 			out = this.calValue(literateType);
 			if(out!=null)		this.resolved(out, type, subType);
 		}
@@ -158,7 +157,7 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 		this.m_type = null;
 	}
 	
-	public String getStringValue() {	return this.m_strValue.getValue();	}
+	public String getStringValue() {	return this.getStringContent();	}
 	public Boolean getBooleanValue() {		return (Boolean)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_BOOLEAN, null);	}
 	public Integer getIntegerValue() {		return (Integer)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER, null);	}
 	public Float getFloatValue() {		return (Float)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_FLOAT, null);	}
@@ -177,14 +176,14 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 		jsonMap.put(SUBTYPE, this.m_type.getSubType());
 		jsonMap.put(STRINGVALUE, this.m_strValue.toString());
 		jsonMap.put(RESOLVED, String.valueOf(this.m_sovled));
-		jsonMap.put(VALUE, this.m_value==null?null : this.m_value.toString());
+		jsonMap.put(VALUE, this.m_value==null?null : this.getStringContent());
 	}
 	
 	@Override
-	protected String buildJson(){		return this.m_strValue.toString();	}
+	protected String buildJson(){		return this.getStringContent();	}
 	
 	@Override
-	protected String buildLiterate(){  return this.m_strValue.toString(); }
+	protected String buildLiterate(){  return this.getStringContent(); }
 	
 	protected void cloneFrom(HAPStringableValueAtomic stringableValue){
 		this.m_strValue = stringableValue.m_strValue.clone();
@@ -217,4 +216,7 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	public HAPStringableValue getChild(String name) {
 		return null;
 	}
+	
+	@Override
+	public String getStringableStructure(){		return HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC;	}
 }

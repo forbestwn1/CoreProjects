@@ -139,8 +139,8 @@ public class HAPStringableEntityImporterXML {
 	private static HAPStringableValueAtomic processAtomicValue(String strValue, HAPValueInfoAtomic atomicValueInfo){
 		HAPStringableValueAtomic out = null;
 		if(strValue!=null)		out = new HAPStringableValueAtomic(strValue, atomicValueInfo.getDataType(), atomicValueInfo.getSubDataType());		
-		else		out = (HAPStringableValueAtomic)atomicValueInfo.newValue();		
-		if(HAPStringableValueUtility.isStringableValueEmpty(out))  out = null;
+//		else		out = (HAPStringableValueAtomic)atomicValueInfo.newValue();		
+//		if(HAPStringableValueUtility.isStringableValueEmpty(out))  out = null;
 		return out;
 	}
 

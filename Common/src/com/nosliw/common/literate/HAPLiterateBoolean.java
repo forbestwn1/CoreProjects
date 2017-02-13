@@ -1,6 +1,8 @@
 package com.nosliw.common.literate;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
@@ -17,8 +19,8 @@ public class HAPLiterateBoolean implements HAPLiterateDef{
 	public String valueToString(Object value) {  return value.toString(); }
 
 	@Override
-	public Set<Class> getObjectClasses() {  
-		Set<Class> out = new HashSet<Class>(); 
+	public List<Class> getObjectClasses() {  
+		List<Class> out = new ArrayList<Class>(); 
 		out.add(Boolean.class);
 		out.add(Boolean.TYPE);
 		return out;

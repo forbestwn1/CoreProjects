@@ -1,6 +1,6 @@
 package com.nosliw.common.literate;
 
-import java.util.Set;
+import java.util.List;
 
 public interface HAPLiterateDef{
 	
@@ -10,7 +10,7 @@ public interface HAPLiterateDef{
 	
 	String valueToString(Object value);
 	
-	Set<Class> getObjectClasses();
+	List<Class> getObjectClasses();
 
 	String getSubTypeByObject(Object value);
 }

@@ -1,16 +1,16 @@
 
+wsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(„Á’ž8¸®Øì¢+
+rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
+Usquid:S11351"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ8›¬’±¢+
+Nsquid:S1135a"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
 Nsquid:S1135h"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
-Nsquid:S1135["2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
-Nsquid:S1135n"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
-Usquid:S1135z"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ8›¬’±¢+
-Nsquid:S1135t"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
-rsquid:UselessImportCheck"GRemove this unused import 'com.nosliw.data.datatype.util.HAPDBAccess1'.(ÓòÍ¹8³›‹±¢+
 Y
 squid:S106Ä";Replace this usage of System.out or System.err by a logger.(Í§†ß8±‹Ïì¢+
-rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
-Nsquid:S1135a"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
-Usquid:S11351"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ8›¬’±¢+
-Nsquid:S11357"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
+Nsquid:S1135t"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
 hsquid:CommentedOutCodeLine="<This block of commented-out lines of code should be removed.(Ñâøe8»á‘±¢+
+rsquid:UselessImportCheck"GRemove this unused import 'com.nosliw.data.datatype.util.HAPDBAccess1'.(ÓòÍ¹8³›‹±¢+
+Nsquid:S1135["2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
+Nsquid:S1135n"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
 Isquid:S11682"+Return an empty collection instead of null.(¥¹ï8›¬’±¢+
-wsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(„Á’ž8¸®Øì¢+
+Usquid:S1135z"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ8›¬’±¢+
+Nsquid:S11357"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ

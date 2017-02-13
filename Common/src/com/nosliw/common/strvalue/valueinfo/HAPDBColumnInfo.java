@@ -10,6 +10,8 @@ public class HAPDBColumnInfo extends HAPStringableValueEntity{
 	//data type, used when do get/set during query. by default, use the getter return type
 	public static final String DATATYPE = "dataType";
 
+	public static final String SUBDATATYPE = "subDataType";
+	
 	//sql column definition
 	public static final String DEFINITION = "definition";
 	
@@ -27,6 +29,7 @@ public class HAPDBColumnInfo extends HAPStringableValueEntity{
 	
 	public String getColumnName(){  return this.getAtomicAncestorValueString(COLUMN);  }
 	public String getDataType(){  return this.getAtomicAncestorValueString(DATATYPE);  }
+	public String getSubDataType(){  return this.getAtomicAncestorValueString(SUBDATATYPE);  }
 
 	public String getDefinition(){  return this.getAtomicAncestorValueString(DEFINITION);  }
 	

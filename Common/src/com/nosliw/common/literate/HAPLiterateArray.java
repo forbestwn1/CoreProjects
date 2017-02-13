@@ -54,10 +54,10 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 	}
 
 	@Override
-	public Set<Class> getObjectClasses() {  
-		Set<Class> out = new HashSet<Class>(); 
-		out.add(List.class);
+	public List<Class> getObjectClasses() {  
+		List<Class> out = new ArrayList<Class>(); 
 		out.add(ArrayList.class);
+		out.add(List.class);
 		return out;
 	}
 

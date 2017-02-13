@@ -1,6 +1,7 @@
 package com.nosliw.common.strvalue.valueinfo;
 
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
+import com.nosliw.common.literate.HAPLiterateManager;
+import com.nosliw.common.literate.HAPLiterateType;
 import com.nosliw.common.path.HAPComplexName;
 import com.nosliw.common.serialization.HAPSerializableUtility;
 import com.nosliw.common.strvalue.HAPStringableValue;
@@ -181,16 +184,37 @@ public class HAPSqlUtility {
 				HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(dataTypeName);
 				List<HAPDBColumnInfo> columns = dbTableInfo.getColumnsInfo();
 				for(HAPDBColumnInfo column : columns){
-					String setterMethod = column.getSetter();
-					if(!HAPBasicUtility.isStringNotEmpty(setterMethod)){
+					
+					if("linkedVersion".equals(column.getColumnName())){
+						int kkkk = 5555;
+						kkkk++;
+					}
+
+					String setterMethodName = column.getSetter();
+					if(HAPBasicUtility.isStringNotEmpty(setterMethodName)){
 						String setterPath = column.getSetterPath();
 						HAPStringableValue columnStrableValue = HAPStringableValueUtility.buildAncestorByPath(entity, setterPath, valueInfo);
 						Object obj = HAPValueInfoUtility.getObjectFromStringableValue(columnStrableValue);
-						if("String".equals(column.getDataType())){
-							entity.getClass().getMethod(setterMethod, String.class).invoke(obj, resultSet.getString(column.getColumnName()));
+						
+						HAPLiterateType literateType = new HAPLiterateType(column.getDataType(), column.getSubDataType());
+						Class parmClass = HAPLiterateManager.getInstance().getClassByLiterateType(literateType);
+						
+						Method setterMethod = null;
+						Object columnObject = null;
+						try{
+							columnObject = resultSet.getObject(column.getColumnName());
+							if(columnObject!=null){
+								if(columnObject instanceof String){
+									columnObject = HAPLiterateManager.getInstance().stringToValue((String)columnObject, literateType);
+								}
+								setterMethod = obj.getClass().getMethod(setterMethodName, parmClass);
+								setterMethod.invoke(obj, columnObject);
+							}
 						}
-						else if("Integer".equals(column.getDataType())){
-							entity.getClass().getMethod(setterMethod, Integer.class).invoke(obj, resultSet.getInt(column.getColumnName()));
+						catch(NoSuchMethodException e){
+							if(obj instanceof HAPStringableValueEntity){
+								((HAPStringableValueEntity)obj).updateAtomicChild(column.getColumnName(), columnObject.toString(), literateType.getType(), literateType.getSubType());
+							}
 						}
 					}
 				}

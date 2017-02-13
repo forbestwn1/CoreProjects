@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
 
 public class HAPLiterateManager {
 
@@ -34,6 +35,22 @@ public class HAPLiterateManager {
 			m_instance = new HAPLiterateManager();
 		}
 		return m_instance;
+	}
+	
+	public Class getClassByLiterateType(HAPLiterateType literateType){
+		Class out = null;
+		if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT.equals(literateType.getType())){
+			try {
+				out = Class.forName(literateType.getSubType());
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		else{
+			HAPLiterateDef literateDef = this.m_typesByName.get(literateType.getType());
+			out = literateDef.getObjectClasses().get(0);
+		}
+		return out;
 	}
 	
 	public Object stringToValue(String strValue, HAPLiterateType literateType){

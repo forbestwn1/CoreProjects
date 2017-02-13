@@ -10,6 +10,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPConstantManager;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.literate.HAPLiterateManager;
+import com.nosliw.common.literate.HAPLiterateType;
 import com.nosliw.common.path.HAPComplexName;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -48,7 +49,7 @@ public class HAPDBTableInfo {
 
 		String getter = this.buildGetSetMethod(columnInfo, HAPDBColumnInfo.GETTER, attrPath, property, methodProperty, relativePath);
 		String setter = this.buildGetSetMethod(columnInfo, HAPDBColumnInfo.SETTER, attrPath, property, methodProperty, relativePath);
-
+		
 		String type = columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.DATATYPE);
 		if(HAPBasicUtility.isStringEmpty(type)){
 			//if data type is not specify, try to get from return type of getter method
@@ -57,8 +58,9 @@ public class HAPDBTableInfo {
 				HAPValueInfo childValueInfo = this.m_valueInfoEntity.getChildByPath(getterPath.getPath());
 				String className = HAPValueInfoUtility.getEntityClassNameFromValueInfo(childValueInfo);
 				Class returnType = Class.forName(className).getMethod(getterPath.getSimpleName()).getReturnType();
-				type = HAPLiterateManager.getInstance().getLiterateTypeByClass(returnType).getType();
-				columnInfo.updateAtomicChild(HAPDBColumnInfo.DATATYPE, type);
+				HAPLiterateType litType = HAPLiterateManager.getInstance().getLiterateTypeByClass(returnType);
+				columnInfo.updateAtomicChild(HAPDBColumnInfo.DATATYPE, litType.getType());
+				columnInfo.updateAtomicChild(HAPDBColumnInfo.SUBDATATYPE, litType.getSubType());
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 
@@ -70,6 +72,8 @@ public class HAPDBTableInfo {
 		String methodName = columnInfo.getAtomicAncestorValueString(type);
 		
 		if(HAPDBColumnInfo.SETTER.equals(type) && "no".equals(methodName)){
+			columnInfo.updateAtomicChild(HAPDBColumnInfo.SETTER, null);
+			columnInfo.updateAtomicChild(HAPDBColumnInfo.SETTER_PATH, null);
 			return null;
 		}
 		else{

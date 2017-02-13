@@ -32,3 +32,5 @@ k
 ;src/com/nosliw/data/datatype/importer/datatypeoperation.xml,3\1\3122109e05e6becea6379c50661d45a09f05aff0
 n
 >src/com/nosliw/data/datatype/importer/HAPOperationInfoImp.java,a\1\a15bd6e0e97cf86f413dc1e34371a1afeda26992
+p
+@src/com/nosliw/data/datatype/importer/datatypedefinition.out.xml,2\4\242394e99c2de695af49d3592761e570e0be302a

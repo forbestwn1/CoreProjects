@@ -8,8 +8,8 @@
 	<property name="name" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="data type info">
 		<dbColumnInfos pathType="propertyAsPath">
 			<dbColumnInfo column="id" definition="VARCHAR(20) NOT NULL PRIMARY KEY" getter="getFullName" setter="setFullName"/>
-			<dbColumnInfo column="name" definition="VARCHAR(20) NOT NULL" />
-			<dbColumnInfo column="versionFullName" definition="VARCHAR(20) NOT NULL"/>
+			<dbColumnInfo column="name" definition="VARCHAR(20) NOT NULL" setter="no"/>
+			<dbColumnInfo column="versionFullName" definition="VARCHAR(20) NOT NULL" setter="no"/>
 			<dbColumnInfo column="versionMajor" definition="INT" setter="no"/>
 			<dbColumnInfo column="versionMinor" definition="INT" setter="no"/>
 			<dbColumnInfo column="versionRevision" definition="VARCHAR(20)" setter="no"/>
@@ -23,8 +23,8 @@
 	</property>
 
 	<property name="linkedVersion" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeVersionImp" description="lined data type in the same family">
-		<dbColumnInfos pathType="propertyAsPath">
-			<dbColumnInfo definition="VARCHAR(20)" getter="getName" setter="setName"/>
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)" setter="setName"/>
 		</dbColumnInfos>
 	</property>
 

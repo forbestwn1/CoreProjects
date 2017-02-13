@@ -161,8 +161,10 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 				HAPValueInfo propertyValueInfo = this.getPropertyInfo(property);
 				if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyValueInfo.getValueInfoType()))  optionsAttr.add(property);
 				else{
-					HAPStringableValue entityProperty = propertyValueInfo.newValue();
-					if(entityProperty!=null)			out.updateChild(property, entityProperty);
+					if(!propertyValueInfo.getValueInfoType().equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
+						HAPStringableValue entityProperty = propertyValueInfo.newValue();
+						if(entityProperty!=null)			out.updateChild(property, entityProperty);
+					}
 				}
 			}
 			

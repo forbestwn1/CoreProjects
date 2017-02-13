@@ -66,6 +66,10 @@ public abstract class HAPStringableValue extends HAPSerialiableImp implements HA
 	}
 	
 	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+	}
+
+	@Override
 	protected String buildLiterate(){  return this.buildJson(); }
 
 }

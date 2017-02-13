@@ -78,6 +78,8 @@ public class HAPStringableValueUtility {
 					else if(childVaueInfoType.equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
 						HAPValueInfoAtomic atomicValueInfo = (HAPValueInfoAtomic)childValueInfo;
 						out = atomicValueInfo.newValue();
+						parent.updateChild(pathSeg, out);
+						break;
 					}
 				}
 			}

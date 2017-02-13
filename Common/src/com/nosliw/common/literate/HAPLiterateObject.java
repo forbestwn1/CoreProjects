@@ -1,5 +1,6 @@
 package com.nosliw.common.literate;
 
+import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializable;
@@ -29,7 +30,7 @@ public class HAPLiterateObject implements HAPLiterateDef{
 	}
 
 	@Override
-	public Set<Class> getObjectClasses() {
+	public List<Class> getObjectClasses() {
 		return null;
 	}
 
