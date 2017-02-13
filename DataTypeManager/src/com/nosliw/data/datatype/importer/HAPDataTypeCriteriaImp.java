@@ -1,16 +1,13 @@
 package com.nosliw.data.datatype.importer;
 
+import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.data.HAPDataTypeCriteria;
-import com.nosliw.data.HAPDataTypeInfo;
 
-public class HAPDataTypeCriteriaImp extends HAPDataTypeInfoImp implements HAPDataTypeCriteria{
+public class HAPDataTypeCriteriaImp extends HAPStringableValueEntity implements HAPDataTypeCriteria{
 
 	@Override
-	public boolean isValidDataType(HAPDataTypeInfo dataTypeInfo) {
-		boolean out = true;
-		if(!this.getName().equals(dataTypeInfo.getName())){
-			out = false;
-		}
-		return out;
+	public String getCriteria() {
+		return this.getAtomicAncestorValueString(HAPDataTypeCriteria.CRITERIA);
 	}
+
 }

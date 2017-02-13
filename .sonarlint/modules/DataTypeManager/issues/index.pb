@@ -32,5 +32,13 @@ k
 ;src/com/nosliw/data/datatype/importer/datatypeoperation.xml,3\1\3122109e05e6becea6379c50661d45a09f05aff0
 n
 >src/com/nosliw/data/datatype/importer/HAPOperationInfoImp.java,a\1\a15bd6e0e97cf86f413dc1e34371a1afeda26992
+q
+Asrc/com/nosliw/data/datatype/importer/HAPDataTypeCriteriaImp.java,5\a\5a9a137457bf9f9a607d2cf41748ae4d8ff0cb0c
+i
+9src/com/nosliw/data/datatype/importer/operationoutput.xml,9\6\96641be0d8c3e0e989b2bfbd7c955e26415865cb
+g
+7src/com/nosliw/data/datatype/importer/operationparm.xml,f\8\f8c00e8a7ce136eb7d45cde8709ae9b5505b0a6c
+n
+>src/com/nosliw/data/datatype/importer/HAPOperationParmImp.java,f\b\fbfb34964d620d1d5fc55e752a95a07035190824
 p
-@src/com/nosliw/data/datatype/importer/datatypedefinition.out.xml,2\4\242394e99c2de695af49d3592761e570e0be302a
+@src/com/nosliw/data/datatype/importer/HAPOperationOutputImp.java,0\3\03304d5c7128cda952ed53b5cb3a02a9e33c502c

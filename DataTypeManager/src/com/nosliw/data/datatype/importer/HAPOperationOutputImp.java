@@ -2,7 +2,7 @@ package com.nosliw.data.datatype.importer;
 
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.data.HAPOperationOutInfo;
-import com.nosliw.data.HAPDataTypeInfo;
+import com.nosliw.data.HAPDataTypeCriteria;
 
 public class HAPOperationOutputImp extends HAPStringableValueEntity implements HAPOperationOutInfo{
 
@@ -10,6 +10,6 @@ public class HAPOperationOutputImp extends HAPStringableValueEntity implements H
 	public String getDescription() {		return this.getAtomicAncestorValueString(DESCRIPTION);	}
 
 	@Override
-	public HAPDataTypeInfo getDataTypeInfo() {		return (HAPDataTypeInfo)this.getAtomicValueAncestorByPath(DATATYPE);	}
+	public HAPDataTypeCriteria getCriteria() {		return (HAPDataTypeCriteria)this.getAtomicValueAncestorByPath(CRITERIA);	}
 
 }

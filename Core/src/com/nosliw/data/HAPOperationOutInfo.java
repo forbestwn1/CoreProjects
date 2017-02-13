@@ -14,10 +14,10 @@ public interface HAPOperationOutInfo {
 	public static String DESCRIPTION = "description";
 
 	@HAPAttribute
-	public static String DATATYPECRITERIA = "dataTypeCriteria";
+	public static String CRITERIA = "criteria";
 
 	String getDescription();	
 	
-	HAPDataTypeCriteria getDataTypeCriteria();
+	HAPDataTypeCriteria getCriteria();
 	
 }

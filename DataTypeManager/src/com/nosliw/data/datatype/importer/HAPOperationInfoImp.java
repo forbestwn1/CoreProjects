@@ -22,12 +22,10 @@ public class HAPOperationInfoImp extends HAPStringableValueEntity implements HAP
 	
 	public HAPOperationInfoImp(){}
 	
-	public HAPOperationInfoImp(String id, String name, String description, String dataTypeName, String dataTypeVersion){
+	public HAPOperationInfoImp(String id, String name, String description){
 		this.updateAtomicChild(ID, id);
 		this.updateAtomicChild(NAME, name);
 		this.updateAtomicChild(DESCRIPTION, description);
-//		this.updateAtomicChild(DATATYPENAME, dataTypeName);
-//		this.updateAtomicChild(DATATYPEVERSION, dataTypeVersion, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeVersionImp.class.getName());
 	}
 
 	@Override

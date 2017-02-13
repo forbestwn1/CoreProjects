@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigureImp;
@@ -16,6 +17,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPSqlUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeInfo;
+import com.nosliw.data.HAPOperationParmInfo;
 
 public class HAPDBAccess extends HAPConfigurableImp {
 
@@ -53,8 +55,10 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		operation.updateAtomicChildValue(HAPOperationInfoImp.DATATYPINFO, dataType.getName());
 		HAPSqlUtility.saveToDB(operation, m_connection);
 		
-		
-		
+		Map<String, HAPOperationParmInfo> parms = operation.getParmsInfo();
+		for(String name : parms.keySet()){
+
+		}		
 	}
 	
 	public HAPDataTypeImp getDataType(HAPDataTypeInfoImp dataTypeInfo) {

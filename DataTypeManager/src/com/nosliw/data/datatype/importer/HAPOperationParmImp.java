@@ -14,6 +14,6 @@ public class HAPOperationParmImp extends HAPStringableValueEntity implements HAP
 	public String getDescription() {		return this.getAtomicAncestorValueString(DESCRIPTION);  }
 
 	@Override
-	public HAPDataTypeCriteria getDataTypeCriteria() {		return (HAPDataTypeCriteria)this.getAtomicValueAncestorByPath(DATATYPECRITERIA);	}
+	public HAPDataTypeCriteria getCriteria() {		return (HAPDataTypeCriteria)this.getAtomicValueAncestorByPath(CRITERIA);	}
 
 }

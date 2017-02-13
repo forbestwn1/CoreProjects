@@ -2,18 +2,18 @@
 
 	<operation name="host1" >
 		<parms>
-			<parm name="aa1" dataTypeCriteria="core.text"/>
-			<parm name="bb1" dataTypeCriteria="core.text"/>
+			<parm name="aa1" criteria="core.text"/>
+			<parm name="bb1" criteria="core.text"/>
 		</parms>
-		<output dataType="core.text"/>
+		<output criteria="core.text"/>
 	</operation>
 
 	<operation name="host2" >
 		<parms>
-			<parm name="aa2" dataTypeCriteria="core.text"/>
-			<parm name="bb2" dataTypeCriteria="core.text"/>
+			<parm name="aa2" criteria="core.text"/>
+			<parm name="bb2" criteria="core.text"/>
 		</parms>
-		<output dataType="core.text"/>
+		<output criteria="core.text"/>
 	</operation>
 
 </operations>

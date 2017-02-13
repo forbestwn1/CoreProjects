@@ -4,6 +4,6 @@
 
 	<property name="description" dataType="string" description=""/>
 
-	<property name="dataTypeCriteria" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeCriteriaImp" description="data type"/>
+	<property name="criteria" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeCriteriaImp" description="data type"/>
 
 </entity>

@@ -19,12 +19,12 @@ public interface HAPOperationParmInfo {
 	public static String DESCRIPTION = "description";
 
 	@HAPAttribute
-	public static String DATATYPECRITERIA = "dataTypeCriteria";
+	public static String CRITERIA = "criteria";
 
 	String getName();
 	
 	String getDescription();
 	
-	HAPDataTypeCriteria getDataTypeCriteria();
+	HAPDataTypeCriteria getCriteria();
 
 }
