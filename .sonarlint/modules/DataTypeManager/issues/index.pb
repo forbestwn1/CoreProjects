@@ -42,3 +42,5 @@ n
 >src/com/nosliw/data/datatype/importer/HAPOperationParmImp.java,f\b\fbfb34964d620d1d5fc55e752a95a07035190824
 p
 @src/com/nosliw/data/datatype/importer/HAPOperationOutputImp.java,0\3\03304d5c7128cda952ed53b5cb3a02a9e33c502c
+r
+Bsrc/com/nosliw/data/datatype/importer/HAPOperationParmInfoImp.java,f\4\f4a82045fb013d77c993f134be2401bde7717cf5

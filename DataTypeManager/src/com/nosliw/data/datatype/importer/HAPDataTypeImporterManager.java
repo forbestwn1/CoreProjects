@@ -39,6 +39,7 @@ public class HAPDataTypeImporterManager {
 		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeImporterManager.class, valueInfos);
 		this.m_dbAccess.createDBTable("data.datatypedef");
 		this.m_dbAccess.createDBTable("data.operation");
+		this.m_dbAccess.createDBTable("data.operationparm");
 	}
 	
 	public void loadAll(){

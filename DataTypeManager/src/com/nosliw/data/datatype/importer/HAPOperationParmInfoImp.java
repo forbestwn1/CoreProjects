@@ -4,8 +4,9 @@ import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.data.HAPOperationParmInfo;
 import com.nosliw.data.HAPDataTypeCriteria;
 import com.nosliw.data.HAPDataTypeInfo;
+import com.nosliw.data.HAPOperationOutInfo;
 
-public class HAPOperationParmImp extends HAPStringableValueEntity implements HAPOperationParmInfo{
+public class HAPOperationParmInfoImp extends HAPStringableValueEntity implements HAPOperationParmInfo, HAPOperationOutInfo{
 
 	@Override
 	public String getName() {		return this.getAtomicAncestorValueString(NAME);	}

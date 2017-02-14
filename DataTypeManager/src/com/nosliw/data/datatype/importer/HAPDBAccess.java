@@ -57,7 +57,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		
 		Map<String, HAPOperationParmInfo> parms = operation.getParmsInfo();
 		for(String name : parms.keySet()){
-
+			HAPSqlUtility.saveToDB((HAPOperationParmInfoImp)parms.get(name), this.m_connection);
 		}		
 	}
 	

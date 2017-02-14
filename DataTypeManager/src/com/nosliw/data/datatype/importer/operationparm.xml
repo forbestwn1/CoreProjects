@@ -1,9 +1,21 @@
-<entity name="data.operationparm" class="com.nosliw.data.datatype.importer.HAPOperationParmImp" description="">
+<entity name="data.operationparm" class="com.nosliw.data.datatype.importer.HAPOperationParmInfoImp" description="">
 
-	<property name="name" dataType="string" description=""/>
+	<property name="name" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+	
+	<property name="description" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
 
-	<property name="description" dataType="string" description=""/>
-
-	<property name="criteria" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeCriteriaImp" description="data type"/>
+	<property name="criteria" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeCriteriaImp" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
 
 </entity>
