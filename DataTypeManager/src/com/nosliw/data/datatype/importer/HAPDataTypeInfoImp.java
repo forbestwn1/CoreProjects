@@ -17,9 +17,9 @@ public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPD
 	public HAPDataTypeInfoImp(){}
 	
 	public HAPDataTypeInfoImp(String name, HAPDataTypeVersion version){
-		this.updateAtomicChild(NAME, name, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
-		this.updateAtomicChildValue(VERSION, version);
-		this.updateAtomicChild(FULLNAME, this.buildLiterate(), HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
+		this.updateAtomicChildStrValue(NAME, name, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
+		this.updateAtomicChildObjectValue(VERSION, version);
+		this.updateAtomicChildStrValue(FULLNAME, this.buildLiterate(), HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
 	}
 
 	public HAPDataTypeInfoImp(String fullName){
@@ -28,7 +28,7 @@ public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPD
 	
 	public String getFullName(){  return this.buildLiterate();  }
 	public void setFullName(String fullName){
-		this.updateAtomicChild(FULLNAME, fullName, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
+		this.updateAtomicChildStrValue(FULLNAME, fullName, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
 		buildObjectByLiterate(fullName);
 	}
 	
@@ -59,7 +59,7 @@ public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPD
 	@Override
 	protected void buildObjectByLiterate(String literateValue){	
 		String[] segs = HAPNamingConversionUtility.parseSegments(literateValue);
-		this.updateAtomicChild(NAME, segs[0], HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
+		this.updateAtomicChildStrValue(NAME, segs[0], HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
 		if(segs.length>=2){
 			HAPStringableValueAtomic versionValue = new HAPStringableValueAtomic(segs[1], HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeVersionImp.class.getName());
 			this.updateChild(VERSION, versionValue);

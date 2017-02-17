@@ -25,11 +25,11 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	}
 
 	public void init(String Id, String name, String version, String description, String parent, String linked){
-		this.updateAtomicChild(ID, Id);
-		this.updateAtomicChild(NAME, HAPDataTypeInfoImp.buildStringValue(name, version), HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeInfoImp.class.getName());
-		this.updateAtomicChild(DESCRIPTION, description);
-		this.updateAtomicChild(PARENTINFO, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeInfoImp.class.getName());
-		this.updateAtomicChild(LINKEDVERSION, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeVersionImp.class.getName());
+		this.updateAtomicChildStrValue(ID, Id);
+		this.updateAtomicChildStrValue(NAME, HAPDataTypeInfoImp.buildStringValue(name, version), HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeInfoImp.class.getName());
+		this.updateAtomicChildStrValue(DESCRIPTION, description);
+		this.updateAtomicChildStrValue(PARENTINFO, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeInfoImp.class.getName());
+		this.updateAtomicChildStrValue(LINKEDVERSION, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeVersionImp.class.getName());
 	}
 	
 	@Override
@@ -49,7 +49,7 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	}
 	
 	public String getId(){ return this.getAtomicAncestorValueString(ID); }
-	public void setId(String id){		this.updateAtomicChild(ID, id, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);	}
+	public void setId(String id){		this.updateAtomicChildStrValue(ID, id, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);	}
 
 	
 	@Override

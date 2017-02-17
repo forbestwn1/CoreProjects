@@ -17,7 +17,7 @@ public class HAPValueInfoList extends HAPValueInfoContainer{
 	@Override
 	public void init(){
 		super.init();
-		this.updateAtomicChild(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_LIST);
+		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_LIST);
 	}
 	
 	@Override

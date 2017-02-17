@@ -12,7 +12,7 @@ import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
-public class HAPValueInfoEntity extends HAPValueInfoComplex{
+public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueInfoEntityable{
 	//class name for entity
 	public static final String CLASSNAME = "class";
 	//when it is used to define property of entity, whether this property is mandatory 
@@ -76,7 +76,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 							Map<String, String> propertyValues = HAPNamingConversionUtility.parsePropertyValuePairs(overridePropertyValues);
 							HAPValueInfo propertyValueInfo = this.m_solidValueInfo.getPropertyInfo(overridePropertyName);
 							for(String pro : propertyValues.keySet()){
-								propertyValueInfo.updateAtomicChild(pro, propertyValues.get(pro));
+								propertyValueInfo.updateAtomicChildStrValue(pro, propertyValues.get(pro));
 							}
 						}
 					}
@@ -96,6 +96,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 			if(className==null)    	className = HAPStringableValueEntity.class.getName();
 			
 			out = (HAPStringableValueEntity)Class.forName(className).newInstance();
+			out.setValueInfo(this);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -106,10 +107,11 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	@Override
 	public void init(){
 		super.init();
-		this.updateAtomicChildValue(MANDATORY, true);
-		this.updateAtomicChild(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_ENTITY);
+		this.updateAtomicChildObjectValue(MANDATORY, true);
+		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_ENTITY);
 	}
 	
+	@Override
 	public HAPValueInfo getPropertyInfo(String name){
 		HAPStringableValueEntity properties = this.getPropertiesEntity();
 		return (HAPValueInfo)properties.getChild(name);
@@ -129,7 +131,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 	
 	public String getParent(){		return this.getAtomicAncestorValueString(PARENT);	}
 	public String getClassName(){  return this.getAtomicAncestorValueString(CLASSNAME); }
-	public void setClassName(String name){  this.updateAtomicChild(CLASSNAME, name); }
+	public void setClassName(String name){  this.updateAtomicChildStrValue(CLASSNAME, name); }
 	public String getTable(){  return this.getAtomicAncestorValueString(TABLE);  }
 	
 	private HAPValueInfoEntity getParentEntityValueInfo(){
@@ -156,14 +158,16 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex{
 		HAPStringableValueEntity out = this.newEntity();
 		if(out!=null){
 			Set<String> optionsAttr = new HashSet<String>();
-			
 			for(String property : this.getEntityProperties()){
 				HAPValueInfo propertyValueInfo = this.getPropertyInfo(property);
 				if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyValueInfo.getValueInfoType()))  optionsAttr.add(property);
 				else{
-					if(!propertyValueInfo.getValueInfoType().equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
-						HAPStringableValue entityProperty = propertyValueInfo.newValue();
-						if(entityProperty!=null)			out.updateChild(property, entityProperty);
+					HAPStringableValue propertyValue = propertyValueInfo.newValue();
+					if(propertyValueInfo.getValueInfoType().equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
+						if(!propertyValue.isEmpty())  out.updateChild(property, propertyValue);
+					}
+					else{
+						if(propertyValue!=null)			out.updateChild(property, propertyValue);
 					}
 				}
 			}

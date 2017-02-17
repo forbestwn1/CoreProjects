@@ -1,23 +1,29 @@
 
-ssquid:S3008"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›êÿ‰8…¹İİ¡+
+\squid:S1155S">Use isEmpty() to check whether the collection is empty or not.(Í”‚‹8İãçÒ¤+
 ]
-squid:S106b";Replace this usage of System.out or System.err by a logger.(Ô²À¯ûÿÿÿÿ8‘æİ¡+
-Rsquid:S2864;"4Iterate over the "entrySet" instead of the "keySet".(¤¡8±¥ªÕ£+
-Fsquid:S1148g"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ôºõİ¡+
-ysquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ë˜Ü”8…¹İİ¡+
-Bsquid:S2095H"Close this "PreparedStatement".(¢ü¶Öøÿÿÿÿ8ÖÏ›ì¢+
-Ysquid:UselessImportCheck"/Remove this unused import 'java.sql.ResultSet'.(ˆóÚw8ÆÙÄì¢+
-tsquid:S00116""WRename this field "m_connection" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ã©[8“İãİ¡+
-~squid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ú¬Ë©üÿÿÿÿ8…¹İİ¡+
-lsquid:UselessImportCheck"<Remove this unused import 'com.nosliw.data.HAPDataTypeInfo'.(ìµÇ»ÿÿÿÿÿ8ö‚¤ë¢+
-?squid:S21316"Use "Long.toString" instead.(‹·¬ûÿÿÿÿ8áßÆ°¢+
-Xsquid:S1213,";Move this constructor to comply with Java Code Conventions.(ê»·8…¹İİ¡+
-Csquid:S1166f"%Either log or rethrow this exception.(”ı¾8Äïâİ¡+
+squid:S106|";Replace this usage of System.out or System.err by a logger.(Ô²À¯ûÿÿÿÿ8‘æİ¡+
+ssquid:S00122S"TAt most one statement is allowed per line, but 2 statements were found on this line.(Í”‚‹8İãçÒ¤+
+Rsquid:S2864<"4Iterate over the "entrySet" instead of the "keySet".(¤¡8±¥ªÕ£+
+~squid:S00115 "ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ú¬Ë©üÿÿÿÿ8…¹İİ¡+
+Gsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Î½¥ì¢+
+?squid:S21317"Use "Long.toString" instead.(Šà•ıûÿÿÿÿ8áßÆ°¢+
+tsquid:S00116#"WRename this field "m_connection" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ã©[8“İãİ¡+
+Fsquid:S1148i"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ôºõİ¡+
+lsquid:UselessImportCheck"<Remove this unused import 'com.nosliw.data.HAPDataTypeInfo'.(ìµÇ»ÿÿÿÿÿ8Ï½ÄÒ¤+
+ysquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(©¢Ší8…¹İİ¡+
+Fsquid:S1148U"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8İãçÒ¤+
+nsquid:S00116$"ORename this field "m_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä§ìõ8·Ùàİ¡+
+Bsquid:S2095b"Close this "PreparedStatement".(¢ü¶Öøÿÿÿÿ8ÖÏ›ì¢+
 hsquid:UselessImportCheck"8Remove this unused import 'com.nosliw.data.HAPDataType'.(Åšá‘ÿÿÿÿÿ8ö‚¤ë¢+
-asquid:S1155M">Use isEmpty() to check whether the collection is empty or not.(ÿÚéøÿÿÿÿ8ÆÙÄì¢+
-nsquid:S00116#"ORename this field "m_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä§ìõ8·Ùàİ¡+
-~squid:S00115 "ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(àçÿçûÿÿÿÿ8…¹İİ¡+
-Csquid:S1166N"%Either log or rethrow this exception.(É®£8Î½¥ì¢+
-ysquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(©¢Ší8…¹İİ¡+
-xsquid:S00122M"TAt most one statement is allowed per line, but 2 statements were found on this line.(ÿÚéøÿÿÿÿ8ÆÙÄì¢+
-Fsquid:S1148O"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Î½¥ì¢+
+:squid:S2131>"Use "Long.toString" instead.(±ÎÏü8ˆ±´ª¤+
+Xsquid:S1213-";Move this constructor to comply with Java Code Conventions.(ê»·8…¹İİ¡+
+Ysquid:UselessImportCheck"/Remove this unused import 'java.sql.ResultSet'.(ˆóÚw8ÆÙÄì¢+
+asquid:S1155g">Use isEmpty() to check whether the collection is empty or not.(ÿÚéøÿÿÿÿ8ÆÙÄì¢+
+Csquid:S1166T"%Either log or rethrow this exception.(É®£8İãçÒ¤+
+ysquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ë˜Ü”8…¹İİ¡+
+xsquid:S00122g"TAt most one statement is allowed per line, but 2 statements were found on this line.(ÿÚéøÿÿÿÿ8ÆÙÄì¢+
+Dsquid:S1166€"%Either log or rethrow this exception.(”ı¾8Äïâİ¡+
+Csquid:S1166h"%Either log or rethrow this exception.(É®£8Î½¥ì¢+
+Bsquid:S2095M"Close this "PreparedStatement".(¢ü¶Öøÿÿÿÿ8İãçÒ¤+
+~squid:S00115!"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(àçÿçûÿÿÿÿ8…¹İİ¡+
+ssquid:S3008"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›êÿ‰8…¹İİ¡+

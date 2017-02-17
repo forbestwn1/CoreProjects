@@ -3,11 +3,10 @@ package com.nosliw.common.strvalue.valueinfo;
 import java.util.Set;
 
 import com.nosliw.common.strvalue.HAPStringableValue;
-import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueMap;
 import com.nosliw.common.utils.HAPConstant;
 
-public class HAPValueInfoEntityOptions extends HAPValueInfo{
+public class HAPValueInfoEntityOptions extends HAPValueInfo implements HAPValueInfoEntityable{
 
 	public static final String KEY = "key";
 	public static final String VALUE = "value";
@@ -24,7 +23,7 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 	@Override
 	public void init(){
 		super.init();
-		this.updateAtomicChild(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS);
+		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS);
 	}
 	
 	public Set<String> getOptionsKey(){
@@ -45,7 +44,7 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 	}
 	
 	public void setKeyName(String keyName){
-		this.updateAtomicChild(KEY, keyName);
+		this.updateAtomicChildStrValue(KEY, keyName);
 	}
 	
 	@Override
@@ -65,5 +64,10 @@ public class HAPValueInfoEntityOptions extends HAPValueInfo{
 	private HAPStringableValueMap getOptionsMap(){
 		HAPStringableValueMap optionsValueInfo = (HAPStringableValueMap)this.getChild(HAPValueInfoEntityOptions.OPTIONS);
 		return optionsValueInfo;
+	}
+
+	@Override
+	public HAPValueInfo getPropertyInfo(String name) {
+		return null;
 	}
 }

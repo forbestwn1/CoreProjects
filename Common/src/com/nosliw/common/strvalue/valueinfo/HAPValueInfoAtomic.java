@@ -23,8 +23,8 @@ public class HAPValueInfoAtomic extends HAPValueInfo{
 	@Override
 	public void init(){
 		super.init();
-		this.updateAtomicChild(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_ATOMIC);
-		this.updateAtomicChild(HAPValueInfoAtomic.DATATYPE, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);
+		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_ATOMIC);
+		this.updateAtomicChildStrValue(HAPValueInfoAtomic.DATATYPE, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);
 	}
 	
 	public String getDataType(){	return this.getAtomicAncestorValueString(HAPValueInfoAtomic.DATATYPE);	}
@@ -40,21 +40,14 @@ public class HAPValueInfoAtomic extends HAPValueInfo{
 	
 	@Override
 	public HAPStringableValue newValue() {
+		//Create new object only when default value is defined, otherwise, create empty one 
 		HAPStringableValue out = null;
 		String defaultValue = this.getAtomicAncestorValueString(HAPValueInfoAtomic.DEFAULTVALUE);
-		if(defaultValue!=null){
-			out = new HAPStringableValueAtomic(defaultValue, this.getDataType(), this.getSubDataType());
-		}
-		else{
-			if(this.getDataType().equals(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT)){
-				try {
-					Object obj = Class.forName(this.getSubDataType()).newInstance();
-					out = HAPStringableValueAtomic.buildFromObject(obj);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		out = new HAPStringableValueAtomic(defaultValue, this.getDataType(), this.getSubDataType());
 		return out;
 	}
+
+	public HAPStringableValue newValue(String strValue) {
+		return new HAPStringableValueAtomic(strValue, this.getDataType(), this.getSubDataType());
+	}	
 }

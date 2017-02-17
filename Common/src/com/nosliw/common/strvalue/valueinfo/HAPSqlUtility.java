@@ -32,7 +32,9 @@ public class HAPSqlUtility {
 	}
 	
 	public static String buildEntityQuerySql(String tableName, String query){
-		return "SELECT * FROM " + tableName + " WHERE " + query;
+		String out = "SELECT * FROM " + tableName + " WHERE " + query;
+		System.out.println(out);
+		return out;
 	}
 	
 	public static void createDBTable(HAPDBTableInfo tableInfo, Connection connection){
@@ -185,11 +187,6 @@ public class HAPSqlUtility {
 				List<HAPDBColumnInfo> columns = dbTableInfo.getColumnsInfo();
 				for(HAPDBColumnInfo column : columns){
 					
-					if("linkedVersion".equals(column.getColumnName())){
-						int kkkk = 5555;
-						kkkk++;
-					}
-
 					String setterMethodName = column.getSetter();
 					if(HAPBasicUtility.isStringNotEmpty(setterMethodName)){
 						String setterPath = column.getSetterPath();
@@ -213,7 +210,7 @@ public class HAPSqlUtility {
 						}
 						catch(NoSuchMethodException e){
 							if(obj instanceof HAPStringableValueEntity){
-								((HAPStringableValueEntity)obj).updateAtomicChild(column.getColumnName(), columnObject.toString(), literateType.getType(), literateType.getSubType());
+								((HAPStringableValueEntity)obj).updateAtomicChildStrValue(column.getColumnName(), columnObject.toString(), literateType.getType(), literateType.getSubType());
 							}
 						}
 					}

@@ -1,6 +1,6 @@
 
-qsquid:S00122%"TAt most one statement is allowed per line, but 2 statements were found on this line.(ß¢œˆşÿÿÿÿ
-Fsquid:S1444"*Make this "public static NAME" field final(şìÒÂûÿÿÿÿ
-qsquid:S00122#"TAt most one statement is allowed per line, but 2 statements were found on this line.(­¸ß˜úÿÿÿÿ
-lsquid:S00122$"TAt most one statement is allowed per line, but 2 statements were found on this line.(³İŒŞ
 ksquid:S3008"ORename this field "NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(şìÒÂûÿÿÿÿ
+qsquid:S00122#"TAt most one statement is allowed per line, but 2 statements were found on this line.(òé¤³şÿÿÿÿ
+Fsquid:S1444"*Make this "public static NAME" field final(şìÒÂûÿÿÿÿ
+lsquid:S00122$"TAt most one statement is allowed per line, but 2 statements were found on this line.(½·Ñà
+lsquid:S00122%"TAt most one statement is allowed per line, but 2 statements were found on this line.(‘³¾Î

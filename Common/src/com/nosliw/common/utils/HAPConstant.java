@@ -352,6 +352,11 @@ public class HAPConstant {
 
 
 
+		public static final String DATAOPERATION_VAR_TYPE_IN = "parm";
+		public static final String DATAOPERATION_VAR_TYPE_OUT = "out";
+
+
+
 		public static final String CATEGARY_NAME = "CATEGARY_NAME";
 
 

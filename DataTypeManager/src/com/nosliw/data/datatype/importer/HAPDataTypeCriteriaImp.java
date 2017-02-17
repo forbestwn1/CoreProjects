@@ -10,4 +10,13 @@ public class HAPDataTypeCriteriaImp extends HAPStringableValueEntity implements 
 		return this.getAtomicAncestorValueString(HAPDataTypeCriteria.CRITERIA);
 	}
 
+	@Override
+	protected void buildObjectByLiterate(String literateValue){	
+		this.updateAtomicChildStrValue(CRITERIA, literateValue);
+	}
+
+	@Override
+	protected String buildLiterate(){
+		return this.getCriteria();
+	}
 }

@@ -31,7 +31,7 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="output" reference="data.operationoutput" description=""/>
+	<property name="output" reference="data.operationparm" description=""/>
 
 	<property name="parms" type="map" key="name" description="" elementTag="parm">
 		<child reference="data.operationparm"/>

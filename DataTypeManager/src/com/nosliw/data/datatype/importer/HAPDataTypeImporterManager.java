@@ -33,8 +33,7 @@ public class HAPDataTypeImporterManager {
 		valueInfos.add("datatypeversion.xml");
 
 		valueInfos.add("datatypeoperation.xml");
-		valueInfos.add("operationoutput.xml");
-		valueInfos.add("operationparm.xml");
+		valueInfos.add("operationvar.xml");
 
 		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeImporterManager.class, valueInfos);
 		this.m_dbAccess.createDBTable("data.datatypedef");

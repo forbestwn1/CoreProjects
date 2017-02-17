@@ -57,32 +57,40 @@ public class HAPStringableValueUtility {
 	}
 	
 	public static HAPStringableValue buildAncestorByPath(HAPStringableValueEntity entity, String path, HAPValueInfoEntity valueInfo){
-		HAPStringableValue out = entity;
-		if(HAPBasicUtility.isStringNotEmpty(path)){
-			String[] pathSegs = HAPNamingConversionUtility.parsePaths(path);
-			HAPStringableValueEntity parent = null;
-			HAPValueInfoEntity parentValueInfo = null;
-			HAPValueInfo childValueInfo = valueInfo;
-			for(String pathSeg : pathSegs){
-				parent = (HAPStringableValueEntity)out;
-				out = parent.getChild(pathSeg);
-				parentValueInfo = (HAPValueInfoEntity)childValueInfo;
-				childValueInfo = parentValueInfo.getChildByPath(pathSeg);
-				if(out==null){
-					String childVaueInfoType = childValueInfo.getValueInfoType();
-					if(childVaueInfoType.equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY)){
-						parentValueInfo = (HAPValueInfoEntity)childValueInfo;
-						out = ((HAPValueInfoEntity)childValueInfo).newValue();
-						parent.updateChild(pathSeg, out);
-					}
-					else if(childVaueInfoType.equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
-						HAPValueInfoAtomic atomicValueInfo = (HAPValueInfoAtomic)childValueInfo;
-						out = atomicValueInfo.newValue();
-						parent.updateChild(pathSeg, out);
-						break;
+		HAPStringableValue out = null;
+		try{
+			if(HAPBasicUtility.isStringNotEmpty(path)){
+				String[] pathSegs = HAPNamingConversionUtility.parsePaths(path);
+				HAPStringableValueEntity parent = null;
+				HAPValueInfoEntity parentValueInfo = null;
+				HAPValueInfo childValueInfo = valueInfo;
+				for(String pathSeg : pathSegs){
+					parent = (HAPStringableValueEntity)out;
+					out = parent.getChild(pathSeg);
+					parentValueInfo = (HAPValueInfoEntity)childValueInfo;
+					childValueInfo = parentValueInfo.getChildByPath(pathSeg);
+					if(out==null){
+						String childVaueInfoType = childValueInfo.getValueInfoType();
+						if(childVaueInfoType.equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY)){
+							parentValueInfo = (HAPValueInfoEntity)childValueInfo;
+							out = ((HAPValueInfoEntity)childValueInfo).newValue();
+							parent.updateChild(pathSeg, out);
+						}
+						else if(childVaueInfoType.equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
+							HAPValueInfoAtomic atomicValueInfo = (HAPValueInfoAtomic)childValueInfo;
+							if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT.equals(atomicValueInfo.getDataType())){
+								Object obj = Class.forName(atomicValueInfo.getSubDataType()).newInstance();
+								out = HAPStringableValueAtomic.buildFromObject(obj);
+								parent.updateChild(pathSeg, out);
+							}
+							break;
+						}
 					}
 				}
 			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
 		}
 		return out;
 	}

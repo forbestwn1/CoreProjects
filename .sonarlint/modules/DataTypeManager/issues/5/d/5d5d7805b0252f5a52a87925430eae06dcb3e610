@@ -1,16 +1,15 @@
 
-wsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(„Á’8¸®Øì¢+
-rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
-Usquid:S11351"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ8›¬’±¢+
-Nsquid:S1135a"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-Nsquid:S1135h"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+hsquid:CommentedOutCodeLine<"<This block of commented-out lines of code should be removed.(Ñâøe8»á‘±¢+
+Nsquid:S1135s"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+Nsquid:S1135g"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
 Y
-squid:S106Ä";Replace this usage of System.out or System.err by a logger.(Í§†ß8±‹Ïì¢+
-Nsquid:S1135t"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-hsquid:CommentedOutCodeLine="<This block of commented-out lines of code should be removed.(Ñâøe8»á‘±¢+
+squid:S106Ã";Replace this usage of System.out or System.err by a logger.(Í§†ß8±‹Ïì¢+
+wsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(„Á’8¸®Øì¢+
+Usquid:S11356"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ8›¬’±¢+
+rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
+Nsquid:S1135`"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+Nsquid:S1135y"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
 rsquid:UselessImportCheck"GRemove this unused import 'com.nosliw.data.datatype.util.HAPDBAccess1'.(ÓòÍ¹8³›‹±¢+
-Nsquid:S1135["2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-Nsquid:S1135n"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-Isquid:S11682"+Return an empty collection instead of null.(¥¹ï8›¬’±¢+
-Usquid:S1135z"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ8›¬’±¢+
-Nsquid:S11357"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+Usquid:S1135m"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ8›¬’±¢+
+Nsquid:S1135Z"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+Isquid:S11687"+Return an empty collection instead of null.(¥¹ï8›¬’±¢+

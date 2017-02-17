@@ -10,21 +10,11 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
  *
  */
 @HAPEntityWithAttribute(baseName="DATAOPERATIONPARMINFO")
-public interface HAPOperationParmInfo {
+public interface HAPOperationParmInfo extends HAPOperationOutInfo{
 
 	@HAPAttribute
 	public static String NAME = "name";
 
-	@HAPAttribute
-	public static String DESCRIPTION = "description";
-
-	@HAPAttribute
-	public static String CRITERIA = "criteria";
-
 	String getName();
 	
-	String getDescription();
-	
-	HAPDataTypeCriteria getCriteria();
-
 }

@@ -1,8 +1,8 @@
 
+rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
 squid:UselessImportCheck"ORemove this unused import 'com.nosliw.common.strvalue.valueinfo.HAPSqlUtility'.(‘ó¼ûÿÿÿÿ8Ö‘şİ¡+
-bsquid:CommentedOutCodeLine]"<This block of commented-out lines of code should be removed.(„Şâ
-€squid:UselessImportCheck"PRemove this unused import 'com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo'.(¯èÉğıÿÿÿÿ8Ö‘şİ¡+
-gsquid:CommentedOutCodeLineZ"<This block of commented-out lines of code should be removed.(ÊÕÄ´úÿÿÿÿ
 rsquid:UselessImportCheck"GRemove this unused import 'com.nosliw.data.datatype.util.HAPDBAccess1'.(ÓòÍ¹8Ö‘şİ¡+
 psquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(„Á’
-rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
+gsquid:CommentedOutCodeLineY"<This block of commented-out lines of code should be removed.(ÊÕÄ´úÿÿÿÿ
+bsquid:CommentedOutCodeLine\"<This block of commented-out lines of code should be removed.(„Şâ
+€squid:UselessImportCheck"PRemove this unused import 'com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo'.(¯èÉğıÿÿÿÿ8Ö‘şİ¡+

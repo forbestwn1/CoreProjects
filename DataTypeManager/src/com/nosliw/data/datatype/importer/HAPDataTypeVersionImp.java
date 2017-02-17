@@ -13,8 +13,8 @@ public class HAPDataTypeVersionImp extends HAPStringableValueEntity implements H
 	public static String NAME = "name";
 	
 	public HAPDataTypeVersionImp(){
-		this.updateAtomicChild(MAJOR, "0", HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER, null);
-		this.updateAtomicChild(MINOR, "0", HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER, null);
+		this.updateAtomicChildStrValue(MAJOR, "0", HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER, null);
+		this.updateAtomicChildStrValue(MINOR, "0", HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER, null);
 	}
 	
 	public String getName(){  return this.getAtomicAncestorValueString(HAPDataTypeVersionImp.NAME);	}
@@ -29,12 +29,12 @@ public class HAPDataTypeVersionImp extends HAPStringableValueEntity implements H
 
 	@Override
 	protected void buildObjectByLiterate(String literateValue){	
-		this.updateAtomicChild(HAPDataTypeVersionImp.NAME, literateValue, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
+		this.updateAtomicChildStrValue(HAPDataTypeVersionImp.NAME, literateValue, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
 
 		String[] segs = HAPNamingConversionUtility.parsePaths(literateValue);
-		if(segs.length>=3) this.updateAtomicChild(HAPDataTypeVersion.REVISION, segs[2], HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);   
-		if(segs.length>=2) this.updateAtomicChild(HAPDataTypeVersion.MINOR, segs[1], HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER, null);   
-		if(segs.length>=1) this.updateAtomicChild(HAPDataTypeVersion.MAJOR, segs[0], HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER, null);   
+		if(segs.length>=3) this.updateAtomicChildStrValue(HAPDataTypeVersion.REVISION, segs[2], HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);   
+		if(segs.length>=2) this.updateAtomicChildStrValue(HAPDataTypeVersion.MINOR, segs[1], HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER, null);   
+		if(segs.length>=1) this.updateAtomicChildStrValue(HAPDataTypeVersion.MAJOR, segs[0], HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER, null);   
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class HAPDataTypeVersionImp extends HAPStringableValueEntity implements H
 		String out = this.getName();
 		if(HAPBasicUtility.isStringEmpty(out)){
 			out = HAPNamingConversionUtility.cascadeComponentPath(new String[]{String.valueOf(this.getMajor()), String.valueOf(this.getMinor()), this.getRevision()});
-			this.updateAtomicChild(HAPDataTypeVersionImp.NAME, out, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
+			this.updateAtomicChildStrValue(HAPDataTypeVersionImp.NAME, out, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
 		}
 		
 		return out; 

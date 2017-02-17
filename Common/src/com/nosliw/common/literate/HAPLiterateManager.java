@@ -112,11 +112,7 @@ public class HAPLiterateManager {
 
 	private HAPLiterateDef getLiterateDefByClass(Class cs){
 		HAPLiterateDef out = m_typesByClass.get(cs);
-		if(out==null){
-			if(HAPSerializable.class.isAssignableFrom(cs)){
-				out = this.m_typeObject;
-			}
-		}
+		if(out==null)				out = this.m_typeObject;
 		return out;
 	}
 	

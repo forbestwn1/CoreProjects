@@ -549,6 +549,9 @@
 			<definition name="STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTY" value="property"/>
 			<definition name="STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTYASPATH" value="propertyAsPath"/>
 
+			<definition type="space"/>
+			<definition name="DATAOPERATION_VAR_TYPE_IN" value="parm"/>
+			<definition name="DATAOPERATION_VAR_TYPE_OUT" value="out"/>
 	
 			<definition type="space"/>
 			<definition name="CATEGARY_NAME" value="CATEGARY_NAME"/>

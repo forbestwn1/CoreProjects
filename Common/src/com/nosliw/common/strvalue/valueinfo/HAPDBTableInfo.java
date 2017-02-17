@@ -42,7 +42,7 @@ public class HAPDBTableInfo {
 	public void addColumnInfo(HAPDBColumnInfo columnInfo, String attrPath, String property, String relativePath){
 		//if no column name specified, use property name
 		if(HAPBasicUtility.isStringEmpty(columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.COLUMN))){
-			columnInfo.updateAtomicChild(HAPDBColumnInfo.COLUMN, property);
+			columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.COLUMN, property);
 		}
 	
 		String methodProperty = columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.COLUMN);
@@ -59,8 +59,8 @@ public class HAPDBTableInfo {
 				String className = HAPValueInfoUtility.getEntityClassNameFromValueInfo(childValueInfo);
 				Class returnType = Class.forName(className).getMethod(getterPath.getSimpleName()).getReturnType();
 				HAPLiterateType litType = HAPLiterateManager.getInstance().getLiterateTypeByClass(returnType);
-				columnInfo.updateAtomicChild(HAPDBColumnInfo.DATATYPE, litType.getType());
-				columnInfo.updateAtomicChild(HAPDBColumnInfo.SUBDATATYPE, litType.getSubType());
+				columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.DATATYPE, litType.getType());
+				columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.SUBDATATYPE, litType.getSubType());
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 
@@ -72,8 +72,8 @@ public class HAPDBTableInfo {
 		String methodName = columnInfo.getAtomicAncestorValueString(type);
 		
 		if(HAPDBColumnInfo.SETTER.equals(type) && "no".equals(methodName)){
-			columnInfo.updateAtomicChild(HAPDBColumnInfo.SETTER, null);
-			columnInfo.updateAtomicChild(HAPDBColumnInfo.SETTER_PATH, null);
+			columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.SETTER, null);
+			columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.SETTER_PATH, null);
 			return null;
 		}
 		else{
@@ -110,12 +110,12 @@ public class HAPDBTableInfo {
 			
 			switch(type){
 			case HAPDBColumnInfo.GETTER:
-				columnInfo.updateAtomicChild(HAPDBColumnInfo.GETTER, methodMethod);
-				columnInfo.updateAtomicChild(HAPDBColumnInfo.GETTER_PATH, methodPath);
+				columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.GETTER, methodMethod);
+				columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.GETTER_PATH, methodPath);
 				break;
 			case HAPDBColumnInfo.SETTER:
-				columnInfo.updateAtomicChild(HAPDBColumnInfo.SETTER, methodMethod);
-				columnInfo.updateAtomicChild(HAPDBColumnInfo.SETTER_PATH, methodPath);
+				columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.SETTER, methodMethod);
+				columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.SETTER_PATH, methodPath);
 				break;
 			}
 			

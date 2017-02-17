@@ -28,14 +28,14 @@ public class HAPValueInfoMap extends HAPValueInfoContainer{
 	}
 	
 	public void setKey(String key){
-		this.updateAtomicChild(KEY, key);
+		this.updateAtomicChildStrValue(KEY, key);
 	}
 	
 	@Override
 	public void init(){
 		super.init();
-		this.updateAtomicChild(KEY, "name");
-		this.updateAtomicChild(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_MAP);
+		this.updateAtomicChildStrValue(KEY, "name");
+		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_MAP);
 	}
 
 	@Override

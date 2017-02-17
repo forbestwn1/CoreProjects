@@ -28,7 +28,7 @@ public class HAPValueInfoReference extends HAPValueInfo{
 	public void init(){
 		super.init();
 		this.m_defaultValues = new LinkedHashMap<String, Object>();
-		this.updateAtomicChild(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_REFERENCE);
+		this.updateAtomicChildStrValue(HAPValueInfo.TYPE, HAPConstant.STRINGALBE_VALUEINFO_REFERENCE);
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class HAPValueInfoReference extends HAPValueInfo{
 		
 		String categary = valueInfo.getValueInfoType();
 		if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(categary)){
-			valueInfo.updateAtomicChild(HAPValueInfoAtomic.DEFAULTVALUE, (String)defaultValue);
+			valueInfo.updateAtomicChildStrValue(HAPValueInfoAtomic.DEFAULTVALUE, (String)defaultValue);
 		}
 		else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(categary)){
 			HAPValueInfoEntity valueInfoEntity = (HAPValueInfoEntity)valueInfo;

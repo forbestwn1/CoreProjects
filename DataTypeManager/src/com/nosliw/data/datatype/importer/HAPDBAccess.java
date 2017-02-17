@@ -17,6 +17,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPSqlUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeInfo;
+import com.nosliw.data.HAPDataTypeOperation;
 import com.nosliw.data.HAPOperationParmInfo;
 
 public class HAPDBAccess extends HAPConfigurableImp {
@@ -51,14 +52,39 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	}
 
 	public void saveOperation(HAPOperationInfoImp operation, HAPDataTypeImp dataType){
-		operation.updateAtomicChild(HAPOperationInfoImp.ID, this.getId()+"");
-		operation.updateAtomicChildValue(HAPOperationInfoImp.DATATYPINFO, dataType.getName());
+		operation.updateAtomicChildStrValue(HAPOperationInfoImp.ID, this.getId()+"");
+		operation.updateAtomicChildObjectValue(HAPOperationInfoImp.DATATYPINFO, dataType.getName());
 		HAPSqlUtility.saveToDB(operation, m_connection);
 		
 		Map<String, HAPOperationParmInfo> parms = operation.getParmsInfo();
 		for(String name : parms.keySet()){
-			HAPSqlUtility.saveToDB((HAPOperationParmInfoImp)parms.get(name), this.m_connection);
+			HAPOperationVarInfoImp parm = (HAPOperationVarInfoImp)parms.get(name);
+			parm.updateAtomicChildStrValue(HAPOperationVarInfoImp.ID, this.getId()+"");
+			parm.updateAtomicChildStrValue(HAPOperationVarInfoImp.OPERATIONID, operation.getId());
+			parm.updateAtomicChildObjectValue(HAPOperationVarInfoImp.DATATYPEID, dataType.getName());
+			HAPSqlUtility.saveToDB(parm, this.m_connection);
 		}		
+	}
+	
+	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeInfoImp dataTypeInfo, String name) {
+		HAPDataTypeOperationImp out = null;
+		
+		try {
+			String valuInfoName = "data.operation";
+			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valuInfoName);
+			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "name=? AND dataTypeName=? AND versionFullName=?");
+
+			PreparedStatement statement = m_connection.prepareStatement(sql);
+			statement.setString(1, name);
+			statement.setString(2, dataTypeInfo.getName());
+			statement.setString(3, dataTypeInfo.getVersionFullName());
+
+			List<Object> results = HAPSqlUtility.queryFromDB(valuInfoName, statement);
+			if(results.size()>0)  out = (HAPDataTypeOperationImp)results.get(0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return out;
 	}
 	
 	public HAPDataTypeImp getDataType(HAPDataTypeInfoImp dataTypeInfo) {

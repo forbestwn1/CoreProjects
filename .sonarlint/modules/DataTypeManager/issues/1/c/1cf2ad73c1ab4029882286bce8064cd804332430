@@ -1,10 +1,10 @@
 
-ssquid:S00117"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğ®ú–ıÿÿÿÿ
-dsquid:S3008"MRename this field "ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğ‘Õ¢
 nsquid:S00117"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø³ï
-O"squid:SwitchLastCaseIsDefaultCheck(""Add a default case to this switch.(»•Ó
-Isquid:S1172"-Remove this unused method parameter "linked".(Ğ®ú–ıÿÿÿÿ
-˜squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ï¼ÜË
-asquid:S1301("KReplace this "switch" statement by "if" statements to increase readability.(»•Ó
-?squid:S1444"(Make this "public static ID" field final(Ğ‘Õ¢
 Qsquid:S1905*"5Remove this unnecessary cast to "HAPDataTypeInfoImp".(‰„á„ÿÿÿÿÿ
+Isquid:S1172"-Remove this unused method parameter "linked".(Ğ®ú–ıÿÿÿÿ
+dsquid:S3008"MRename this field "ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğ‘Õ¢
+?squid:S1444"(Make this "public static ID" field final(Ğ‘Õ¢
+O"squid:SwitchLastCaseIsDefaultCheck(""Add a default case to this switch.(»•Ó
+˜squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ï¼ÜË
+ssquid:S00117"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğ®ú–ıÿÿÿÿ
+asquid:S1301("KReplace this "switch" statement by "if" statements to increase readability.(»•Ó

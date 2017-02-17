@@ -13,7 +13,7 @@ public class HAPDBColumnsInfo  extends HAPStringableValueEntity{
 	
 	public HAPDBColumnsInfo(){
 		this.updateComplexChild(COLUMNS, HAPConstant.STRINGALBE_VALUEINFO_LIST);
-		this.updateAtomicChild(PATHTYPE, HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_ABSOLUTE);
+		this.updateAtomicChildStrValue(PATHTYPE, HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_ABSOLUTE);
 	}
 	
 	public String getPathType(){  return this.getAtomicAncestorValueString(PATHTYPE);  }

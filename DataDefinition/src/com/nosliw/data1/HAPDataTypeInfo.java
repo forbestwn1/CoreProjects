@@ -27,7 +27,7 @@ public class HAPDataTypeInfo extends HAPStringableValueEntity{
 		
 		this.setType(type);
 		String key =  HAPPatternManager.getInstance().compose(HAPPatternProcessorDataTypeInfo.class.getName(), this, null);
-		this.updateAtomicChild(ENTITY_PROPERTY_KEY, key);
+		this.updateAtomicChildStrValue(ENTITY_PROPERTY_KEY, key);
 	}
 
 	public String getCategary(){return this.getAtomicAncestorValueString(ENTITY_PROPERTY_CATEGARY);}
