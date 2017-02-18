@@ -31,10 +31,10 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="output" reference="data.operationparm" description=""/>
+	<property name="output" reference="data.operationvar" description=""/>
 
 	<property name="parms" type="map" key="name" description="" elementTag="parm">
-		<child reference="data.operationparm"/>
+		<child reference="data.operationvar"/>
 	</property>
 
 </entity>
