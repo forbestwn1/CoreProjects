@@ -1,16 +1,22 @@
 package com.nosliw.common.strvalue.valueinfo;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.HAPStringableValue;
+import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoReference extends HAPValueInfo{
 
+	//a list of AttributeValues. It is used when we want to change some attribute value for property inherited from parent
+	//for each element in it, it has "path" which is path to sub value info and "attributes" which is all the attributes value want to override  
+	public static final String OVERRIDE = "override";
+	
 	public static final String REFERENCE = "reference";
 	public static final String DEFAULT = "default";
 	
@@ -33,35 +39,37 @@ public class HAPValueInfoReference extends HAPValueInfo{
 
 	@Override
 	public void afterBuild(){
-		String defaultValues = this.getAtomicAncestorValueString(DEFAULT);
-		if(HAPBasicUtility.isStringNotEmpty(defaultValues)){
-			String[] valuesDef = HAPNamingConversionUtility.parseElements(defaultValues);
-			for(String valueDef : valuesDef){
-				Map<String, Object> defaultValuesMap = this.m_defaultValues;
-				String[] valueDefSegs = HAPNamingConversionUtility.parseProperty(valueDef);
-				String name = valueDefSegs[0];
-				String value = valueDefSegs[1];
-				HAPPath path = new HAPPath(name);
-				String[] nameSegs = path.getPathSegs(); 
-				for(int i=0; i<nameSegs.length; i++){
-					String nameSeg = nameSegs[i];
-					if(i+1>=nameSegs.length){
-						defaultValuesMap.put(nameSeg, value);
-					}
-					else{
-						Map<String, Object> childMap = null;
-						Object o = defaultValuesMap.get(nameSeg);
-						if(o==null){
-							childMap = new LinkedHashMap<String, Object>();
-							defaultValuesMap.put(nameSeg, childMap);
-						}
-						defaultValuesMap = childMap;
-					}
-				}
-			}
-		}
+//		String defaultValues = this.getAtomicAncestorValueString(DEFAULT);
+//		if(HAPBasicUtility.isStringNotEmpty(defaultValues)){
+//			String[] valuesDef = HAPNamingConversionUtility.parseElements(defaultValues);
+//			for(String valueDef : valuesDef){
+//				Map<String, Object> defaultValuesMap = this.m_defaultValues;
+//				String[] valueDefSegs = HAPNamingConversionUtility.parseProperty(valueDef);
+//				String name = valueDefSegs[0];
+//				String value = valueDefSegs[1];
+//				HAPPath path = new HAPPath(name);
+//				String[] nameSegs = path.getPathSegs(); 
+//				for(int i=0; i<nameSegs.length; i++){
+//					String nameSeg = nameSegs[i];
+//					if(i+1>=nameSegs.length){
+//						defaultValuesMap.put(nameSeg, value);
+//					}
+//					else{
+//						Map<String, Object> childMap = null;
+//						Object o = defaultValuesMap.get(nameSeg);
+//						if(o==null){
+//							childMap = new LinkedHashMap<String, Object>();
+//							defaultValuesMap.put(nameSeg, childMap);
+//						}
+//						defaultValuesMap = childMap;
+//					}
+//				}
+//			}
+//		}
 	}
 
+	private HAPStringableValueList<HAPAttributeValues> getOverrideList(){  return (HAPStringableValueList)this.getChild(OVERRIDE); }
+	
 	@Override
 	public String getValueInfoType(){	
 		String out = super.getValueInfoType();
@@ -78,7 +86,15 @@ public class HAPValueInfoReference extends HAPValueInfo{
 	public HAPValueInfo getSolidValueInfo(){
 		if(this.m_solidValueInfo==null){
 			this.m_solidValueInfo = this.getValueInfoManager().getValueInfo(this.getReferencedName()).getSolidValueInfo().clone();
-			this.buildDefaultValue(m_solidValueInfo, m_defaultValues);
+			
+			HAPStringableValueList overrideProperties = this.getOverrideList();
+			Iterator overridePropertiesIt = overrideProperties.iterate();
+			while(overridePropertiesIt.hasNext()){
+				HAPAttributeValues overrideAttributeValues = (HAPAttributeValues)overridePropertiesIt.next();
+				HAPValueInfoUtility.updateValueInfoAttributeValue(m_solidValueInfo, overrideAttributeValues);
+			}
+			
+//			this.buildDefaultValue(m_solidValueInfo, m_defaultValues);
 		}
 		return this.m_solidValueInfo;
 	}

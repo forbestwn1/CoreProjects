@@ -80,7 +80,8 @@ public class HAPDBAccess extends HAPConfigurableImp {
 			statement.setString(3, dataTypeInfo.getVersionFullName());
 
 			List<Object> results = HAPSqlUtility.queryFromDB(valuInfoName, statement);
-			if(results.size()>0)  out = (HAPDataTypeOperationImp)results.get(0);
+			HAPOperationInfoImp operationInfo = null;
+			if(results.size()>0)  operationInfo = (HAPOperationInfoImp)results.get(0);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

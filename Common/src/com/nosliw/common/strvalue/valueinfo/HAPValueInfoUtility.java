@@ -3,6 +3,7 @@ package com.nosliw.common.strvalue.valueinfo;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
+import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPValueInfoUtility {
@@ -52,4 +53,13 @@ public class HAPValueInfoUtility {
 		return out;
 	}
 
+	public static void updateValueInfoAttributeValue(HAPValueInfo valueInfo, HAPAttributeValues attValues){
+		String path = attValues.getPath();
+		HAPValueInfo childValueInfo = valueInfo.getChildByPath(path);
+		
+		HAPStringableValueList<HAPAttributeValue> attrValueList = attValues.getAttributes();
+		for(HAPAttributeValue attrValue : attrValueList.getListValue()){
+			childValueInfo.updateAtomicChildStrValue(attrValue.getAttribute(), attrValue.getValue());
+		}
+	}
 }

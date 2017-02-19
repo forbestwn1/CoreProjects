@@ -27,7 +27,7 @@ public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 		HAPValueInfo out = this;
 		String[] pathSegs = HAPNamingConversionUtility.parsePaths(path);
 		for(String pathSeg: pathSegs){
-			out = this.getElement(pathSeg);
+			out = out.getElement(pathSeg);
 		}
 		return out;
 	}

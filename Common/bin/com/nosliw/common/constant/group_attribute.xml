@@ -1,5 +1,5 @@
 <group_attribute parent="group" class="com.nosliw.common.constant.HAPConstantGroup">
 	
-	<override property="type" value="default=attribute"/>
+	<override path="type" attributes="default=attribute"/>
 	
 </group_attribute>

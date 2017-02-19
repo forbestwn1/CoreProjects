@@ -6,10 +6,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.HAPDataTypeInfo;
+import com.nosliw.data.HAPDataTypeId;
 import com.nosliw.data.HAPDataTypeVersion;
 
-public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPDataTypeInfo{
+public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPDataTypeId{
 
 	@HAPAttribute
 	public static String FULLNAME = "fullName";
@@ -37,7 +37,7 @@ public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPD
 	public String getVersionRevision(){  return this.getVersion().getRevision();  }
 	
 	@Override
-	public String getName() {		return this.getAtomicAncestorValueString(HAPDataTypeInfo.NAME);	}
+	public String getName() {		return this.getAtomicAncestorValueString(HAPDataTypeId.NAME);	}
 	@Override
 	public HAPDataTypeVersion getVersion() {
 		HAPDataTypeVersionImp version = (HAPDataTypeVersionImp)this.getAtomicAncestorValueObject(VERSION, HAPDataTypeVersionImp.class);

@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.nosliw.common.strvalue.HAPStringableValueMap;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeInfo;
+import com.nosliw.data.HAPDataTypeId;
 import com.nosliw.data.HAPDataTypePicture;
 import com.nosliw.data.HAPDataTypeRelationship;
 
@@ -27,7 +27,7 @@ public class HAPDataTypePictureImp extends HAPDataTypeImp implements HAPDataType
 	}
 	
 	@Override
-	public HAPDataTypePictureNodeImp getRelationship(HAPDataTypeInfo dataTypeInfo){
+	public HAPDataTypePictureNodeImp getRelationship(HAPDataTypeId dataTypeInfo){
 		return (HAPDataTypePictureNodeImp)this.getNodesMap().getChild(((HAPDataTypeInfoImp)dataTypeInfo).getId());
 	}
 

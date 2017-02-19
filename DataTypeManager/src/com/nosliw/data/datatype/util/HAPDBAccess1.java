@@ -15,7 +15,7 @@ import com.nosliw.common.configure.HAPConfigureManager;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.HAPDataTypeInfo;
+import com.nosliw.data.HAPDataTypeId;
 import com.nosliw.data.HAPDataTypePicture;
 import com.nosliw.data.HAPOperationOutInfo;
 import com.nosliw.data.HAPOperationParmInfo;
@@ -108,8 +108,8 @@ public class HAPDBAccess1 extends HAPConfigurableImp{
 		try {
 			String operationId = this.getId()+"";
 			m_insertOperationStatement.setString(1, operationId);
-			m_insertOperationStatement.setString(2, dataType.getName().getName());
-			m_insertOperationStatement.setString(3, dataType.getName().getVersion().toStringValue(HAPSerializationFormat.LITERATE));
+			m_insertOperationStatement.setString(2, dataType.getId().getName());
+			m_insertOperationStatement.setString(3, dataType.getId().getVersion().toStringValue(HAPSerializationFormat.LITERATE));
 			m_insertOperationStatement.setString(4, operation.getName());
 			m_insertOperationStatement.setString(5, operation.getDescription());
 			m_insertOperationStatement.execute();
@@ -146,7 +146,7 @@ public class HAPDBAccess1 extends HAPConfigurableImp{
 		int i = 1;
 		
 		try {
-			HAPDataTypeInfoImp dataTypeInfo = (HAPDataTypeInfoImp)dataType.getName();
+			HAPDataTypeInfoImp dataTypeInfo = (HAPDataTypeInfoImp)dataType.getId();
 			HAPDataTypeVersionImp dataTypeVersion = (HAPDataTypeVersionImp)dataTypeInfo.getVersion();
 			HAPDataTypeInfoImp parentDataTypeInfo = (HAPDataTypeInfoImp)dataType.getParentInfo();
 			HAPDataTypeVersionImp linkedVersion = (HAPDataTypeVersionImp)dataType.getLinkedVersion();
@@ -157,7 +157,7 @@ public class HAPDBAccess1 extends HAPConfigurableImp{
 			statement.setInt(i++, dataTypeVersion.getMajor());
 			statement.setInt(i++, dataTypeVersion.getMinor());
 			statement.setString(i++, dataTypeVersion.getRevision());
-			statement.setString(i++, dataType.getDescription());
+			statement.setString(i++, dataType.getInfo());
 			statement.setString(i++, parentDataTypeInfo==null?null:parentDataTypeInfo.toStringValue(HAPSerializationFormat.LITERATE));
 			statement.setString(i++, linkedVersion==null?null:linkedVersion.toStringValue(HAPSerializationFormat.LITERATE));
 		} catch (SQLException e) {
@@ -175,7 +175,7 @@ public class HAPDBAccess1 extends HAPConfigurableImp{
 		}
 	}
 
-	public void getDataTypeByInfo(HAPDataTypeInfo dataTypeInfo, HAPDataTypeImp dataType){
+	public void getDataTypeByInfo(HAPDataTypeId dataTypeInfo, HAPDataTypeImp dataType){
 		try {
 			this.m_getDataTypeByInfoStatement.setString(1, dataTypeInfo.getName());
 			this.m_getDataTypeByInfoStatement.setString(2, HAPLiterateManager.getInstance().valueToString(dataTypeInfo.getVersion()));

@@ -9,6 +9,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.strvalue.HAPStringableValueMap;
@@ -70,6 +71,12 @@ public class HAPValueInfoImporterXML {
 			//for property reference to another property
 			valueInfo = HAPValueInfoReference.build(); 
 			HAPStringableValueUtility.updateBasicProperty(valueInfoEle, valueInfo);
+			//read override properties
+			HAPStringableValueList overrideList = (HAPStringableValueList)valueInfo.updateComplexChild(HAPValueInfoReference.OVERRIDE, HAPConstant.STRINGABLE_VALUESTRUCTURE_LIST);
+			Element[] overrideEles = HAPXMLUtility.getMultiChildElementByName(valueInfoEle, HAPValueInfoEntity.OVERRIDE);
+			for(Element overrideEle : overrideEles){
+				overrideList.addChild(readAttributeValues(overrideEle));
+			}
 		}
 		else{
 			String valueInfoType = valueInfoType1;
@@ -167,9 +174,7 @@ public class HAPValueInfoImporterXML {
 		HAPStringableValueList overrideList = (HAPStringableValueList)valueInfo.updateComplexChild(HAPValueInfoEntity.OVERRIDE, HAPConstant.STRINGABLE_VALUESTRUCTURE_LIST);
 		Element[] overrideEles = HAPXMLUtility.getMultiChildElementByName(entityEle, HAPValueInfoEntity.OVERRIDE);
 		for(Element overrideEle : overrideEles){
-			HAPStringableValueEntity overrideProperty = new HAPStringableValueEntity();
-			HAPStringableValueUtility.updateBasicProperty(overrideEle, overrideProperty);
-			overrideList.addChild(overrideProperty);
+			overrideList.addChild(readAttributeValues(overrideEle));
 		}
 		return valueInfo;
 	}
@@ -179,6 +184,20 @@ public class HAPValueInfoImporterXML {
 		HAPValueInfo childPropertyInfo = readValueInfoFromElement(childEle, null);
 		containerValueInfo.updateChild(HAPValueInfoList.CHILD, childPropertyInfo);
 		return childPropertyInfo;
+	}
+	
+	private static HAPAttributeValues readAttributeValues(Element attrValuesEle){
+		String path = attrValuesEle.getAttribute(HAPAttributeValues.PATH);
+		HAPAttributeValues out = new HAPAttributeValues(path);
+		
+		String attrsValue = attrValuesEle.getAttribute(HAPAttributeValues.ATTRIBUTES); 
+		Map<String, String> attrs = HAPNamingConversionUtility.parsePropertyValuePairs(attrsValue);
+		
+		for(String attr : attrs.keySet()){
+			out.addAttributeValue(new HAPAttributeValue(attr, attrs.get(attr)));
+		}
+		
+		return out;
 	}
 	
 }

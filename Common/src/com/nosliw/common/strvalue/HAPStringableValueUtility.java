@@ -57,7 +57,7 @@ public class HAPStringableValueUtility {
 	}
 	
 	public static HAPStringableValue buildAncestorByPath(HAPStringableValueEntity entity, String path, HAPValueInfoEntity valueInfo){
-		HAPStringableValue out = null;
+		HAPStringableValue out = entity;
 		try{
 			if(HAPBasicUtility.isStringNotEmpty(path)){
 				String[] pathSegs = HAPNamingConversionUtility.parsePaths(path);

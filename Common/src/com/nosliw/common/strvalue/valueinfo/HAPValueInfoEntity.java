@@ -21,11 +21,9 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 	public static final String PROPERTIES = "property";
 	//parent entity, the entity that this entity inherit property from
 	public static final String PARENT = "parent";
-	//a list of override property. It is used when we want to change some attribute value for property inherited from parent
-	//for each element in it, it has "property" which is property name and "value" which is all the attributes value want to override  
+	//a list of AttributeValues. It is used when we want to change some attribute value for property inherited from parent
+	//for each element in it, it has "path" which is path to sub value info and "attributes" which is all the attributes value want to override  
 	public static final String OVERRIDE = "override";
-	public static final String OVERRIDE_PROPERTY = "property";
-	public static final String OVERRIDE_VALUE = "value";
 	//table name this entity represent
 	public static final String TABLE = "table";
 	
@@ -66,23 +64,18 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 						//ignore parent
 					}
 					else if(HAPValueInfoEntity.OVERRIDE.equals(property)){
-						//apply override property
-						HAPStringableValueList overrideProperties = this.getOverrideList();
-						Iterator overridePropertiesIt = overrideProperties.iterate();
-						while(overridePropertiesIt.hasNext()){
-							HAPStringableValueEntity overridePropertyEntity = (HAPStringableValueEntity)overridePropertiesIt.next();
-							String overridePropertyName = overridePropertyEntity.getAtomicAncestorValueString(OVERRIDE_PROPERTY);
-							String overridePropertyValues = overridePropertyEntity.getAtomicAncestorValueString(OVERRIDE_VALUE);
-							Map<String, String> propertyValues = HAPNamingConversionUtility.parsePropertyValuePairs(overridePropertyValues);
-							HAPValueInfo propertyValueInfo = this.m_solidValueInfo.getPropertyInfo(overridePropertyName);
-							for(String pro : propertyValues.keySet()){
-								propertyValueInfo.updateAtomicChildStrValue(pro, propertyValues.get(pro));
-							}
-						}
+						//do nothing
 					}
 					else{
 						this.m_solidValueInfo.updateChild(property, this.getChild(property).clone());
 					}
+				}
+
+				HAPStringableValueList overrideProperties = this.getOverrideList();
+				Iterator overridePropertiesIt = overrideProperties.iterate();
+				while(overridePropertiesIt.hasNext()){
+					HAPAttributeValues overrideAttributeValues = (HAPAttributeValues)overridePropertiesIt.next();
+					HAPValueInfoUtility.updateValueInfoAttributeValue(m_solidValueInfo, overrideAttributeValues);
 				}
 			}
 		}
@@ -123,7 +116,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 	}
 	
 	private HAPStringableValueEntity getPropertiesEntity(){		return (HAPStringableValueEntity)this.getChild(PROPERTIES);	}
-	private HAPStringableValueList getOverrideList(){  return (HAPStringableValueList)this.getChild(OVERRIDE); }
+	private HAPStringableValueList<HAPAttributeValues> getOverrideList(){  return (HAPStringableValueList)this.getChild(OVERRIDE); }
 	
 	public void updateEntityProperty(String name, HAPValueInfo valueInfo){
 		this.getPropertiesEntity().updateChild(name, valueInfo);

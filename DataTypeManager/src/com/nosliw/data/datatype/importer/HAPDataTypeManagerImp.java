@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeInfo;
+import com.nosliw.data.HAPDataTypeId;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPDataTypeOperation;
 import com.nosliw.data.HAPDataTypePathSegment;
@@ -39,18 +39,18 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 	}
 	
 	@Override
-	public HAPDataType getDataType(HAPDataTypeInfo dataTypeInfo) {
+	public HAPDataType getDataType(HAPDataTypeId dataTypeInfo) {
 		return this.m_dbAccess.getDataType((HAPDataTypeInfoImp)dataTypeInfo);
 	}
 
 	@Override
-	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name) {
+	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeId dataTypeInfo, String name) {
 		return this.m_dbAccess.getOperationInfoByName((HAPDataTypeInfoImp)dataTypeInfo, name);
 	}
 	
 	
 	@Override
-	public List<? extends HAPDataTypeOperation> getOperationInfos(HAPDataTypeInfo dataTypeInfo) {
+	public List<? extends HAPDataTypeOperation> getOperationInfos(HAPDataTypeId dataTypeInfo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -6,13 +6,13 @@ import java.util.Map;
 public interface HAPDataTypeManager {
 
 	//*****************************************  Data Type
-	public HAPDataType getDataType(HAPDataTypeInfo dataTypeInfo);
+	public HAPDataType getDataType(HAPDataTypeId dataTypeInfo);
 //	public HAPDataTypePicture buildDataTypePicture(HAPDataTypeInfo dataTypeInfo);
 	
 	//*****************************************  Operation Info
 	 //get all available operations info (local, older version, parent)
-	public List<? extends HAPDataTypeOperation> getOperationInfos(HAPDataTypeInfo dataTypeInfo);
-	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeInfo dataTypeInfo, String name);
+	public List<? extends HAPDataTypeOperation> getOperationInfos(HAPDataTypeId dataTypeInfo);
+	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeId dataTypeInfo, String name);
 	
 
 	//*****************************************   Expression

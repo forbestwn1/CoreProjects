@@ -20,29 +20,18 @@ import com.nosliw.common.serialization.HAPSerializable;
 
 @HAPEntityWithAttribute(baseName="DATATYPE")
 public interface HAPDataType extends HAPSerializable{
-	@HAPAttribute
-	public static String DESCRIPTION = "description";
 
 	@HAPAttribute
-	public static String NAME = "name";
+	public static String INFO = "info";
 
 	@HAPAttribute
-	public static String PARENTINFO = "parentInfo";
+	public static String ID = "id";
 
-	@HAPAttribute
-	public static String LINKEDVERSION = "linkedVersion";
-	
 	/*
 	 * get basic information for this data type (categary, type, description)
 	 */
-	public HAPDataTypeInfo getName();
+	public HAPDataTypeId getId();
 
-	public String getDescription();
+	public HAPDataTypeInfo getInfo();
 	
-
-	/*
-	 * information for building the data type picture
-	 */
-	public HAPDataTypeInfo getParentInfo();
-	public HAPDataTypeVersion getLinkedVersion();
 }

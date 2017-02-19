@@ -21,7 +21,7 @@ public interface HAPResourceManager {
 	 * @param dataOpInfo
 	 * @return
 	 */
-	public HAPResources discoverResourceRequirement(HAPDataTypeInfo dataTypeInfo, HAPOperationInfo dataOpInfo);
+	public HAPResources discoverResourceRequirement(HAPDataTypeId dataTypeInfo, HAPOperationInfo dataOpInfo);
 
 	/**
 	 * Discover resources required for expression 

@@ -15,12 +15,12 @@ public interface HAPData extends HAPSerializable{
 	public static String VALUE = "value";
 
 	@HAPAttribute
-	public static String DATATYPEINFO = "dataTypeInfo";
+	public static String DATATYPEID = "dataTypeId";
 	
 	/**
 	 * get data type object
 	 */
-	public HAPDataTypeInfo getDataTypeInfo();
+	public HAPDataTypeId getDataTypeId();
 	
 	/**
 	 * get value within data
