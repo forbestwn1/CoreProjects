@@ -1,5 +1,6 @@
 package com.nosliw.common.strvalue.valueinfo;
 
+import com.nosliw.common.literate.HAPLiterateType;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.utils.HAPConstant;
@@ -29,7 +30,7 @@ public class HAPValueInfoAtomic extends HAPValueInfo{
 	
 	public String getDataType(){	return this.getAtomicAncestorValueString(HAPValueInfoAtomic.DATATYPE);	}
 	public String getSubDataType(){	return this.getAtomicAncestorValueString(HAPValueInfoAtomic.SUBDATATYPE);	}
-	
+	public HAPLiterateType getLiterateType(){ return new HAPLiterateType(this.getDataType(), this.getSubDataType()); }
 	
 	@Override
 	public HAPValueInfoAtomic clone(){

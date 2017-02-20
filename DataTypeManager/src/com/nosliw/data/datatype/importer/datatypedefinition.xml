@@ -31,4 +31,5 @@
 	<property name="operations" type="list" elementTag="operation">
 		<child reference="data.operation"/>
 	</property>
+
 </entity>

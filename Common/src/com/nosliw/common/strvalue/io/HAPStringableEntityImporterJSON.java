@@ -45,6 +45,11 @@ public class HAPStringableEntityImporterJSON {
 		buildStringableValueEntity(jsonObjEntity, entity, entityValueInfo, valueInfoMan);
 		return entity;
 	}
+
+	public static void buildStringableValueEntity(JSONObject jsonObjEntity, HAPStringableValueEntity entity, Class entityClass, HAPValueInfoManager valueInfoMan){
+		HAPValueInfoEntity entityValueInfo = valueInfoMan.getEntityValueInfoByClass(entityClass); 
+		buildStringableValueEntity(jsonObjEntity, entity, entityValueInfo, valueInfoMan);
+	}
 	
 	public static void buildStringableValueEntity(JSONObject jsonObjEntity, HAPStringableValueEntity entity, HAPValueInfoEntity entityValueInfo, HAPValueInfoManager valueInfoMan){
 		if(jsonObjEntity!=null){

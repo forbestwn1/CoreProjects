@@ -3,12 +3,10 @@ package com.nosliw.common.constant;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.configure.HAPConfigurableImp;
@@ -31,20 +29,13 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 	private HAPStringableValueAtomic m_jsAttributeFile;
 	private HAPStringableValueAtomic m_jsConstantFile;
 	
-	private String[] m_valueInfoFiles = {"constant.xml","group.xml","group_attribute.xml","group_constant.xml"};
-	
 	public HAPConstantManager(HAPConfigureImp customerConfigure){
 		this.setConfiguration(HAPConfigureUtility.buildConfigure("", HAPConstantManager.class, true, customerConfigure));
 		
 		this.m_groups = new ArrayList<HAPConstantGroup>();
 		
-		Set<InputStream> inputStreams = new HashSet<InputStream>();
-		for(String valueInfoFile : this.m_valueInfoFiles){
-			InputStream xmlStream = HAPFileUtility.getInputStreamOnClassPath(HAPConstantManager.class, valueInfoFile);
-			inputStreams.add(xmlStream);
-		}
-		
-		HAPValueInfoManager.getInstance().importFromXML(inputStreams);
+		HAPValueInfoManager.getInstance().importFromXML(HAPConstantManager.class, new String[]{
+				"constant.xml","group.xml","group_attribute.xml","group_constant.xml"});
 	}
 	
 	public void setJsPath(String path){	this.m_jsPath = new HAPStringableValueAtomic(path, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);	}

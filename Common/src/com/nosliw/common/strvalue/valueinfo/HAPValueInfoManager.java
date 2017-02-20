@@ -1,8 +1,10 @@
 package com.nosliw.common.strvalue.valueinfo;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,7 +36,7 @@ public class HAPValueInfoManager {
 		return m_instance;
 	}
 	
-	public void importFromXML(Set<InputStream> xmlInputStreams){
+	public void importFromXML(List<InputStream> xmlInputStreams){
 		for(InputStream xmlInputStream : xmlInputStreams){
 			HAPValueInfo valueInfo = HAPValueInfoImporterXML.importFromXML(xmlInputStream);
 			this.registerValueInfo(valueInfo);
@@ -42,15 +44,19 @@ public class HAPValueInfoManager {
 		this.afterImportProcess();
 	}
 	
-	public void importFromXML(Class<?> cs, Set<String> files){
-		Set<InputStream> inputStreams = new HashSet<InputStream>();
+	public void importFromXML(Class<?> cs, List<String> files){
+		this.importFromXML(cs, files.toArray(new String[0]));
+	}
+
+	public void importFromXML(Class<?> cs, String[] files){
+		List<InputStream> inputStreams = new ArrayList<InputStream>();
 		for(String file: files){
 			InputStream xmlStream = HAPFileUtility.getInputStreamOnClassPath(cs, file);
 			inputStreams.add(xmlStream);
 		}
 		this.importFromXML(inputStreams);
 	}
-
+	
 	private void loadValueInfos(){
 		HAPValueInfoModeUtility.loadValueInfos();
 	}

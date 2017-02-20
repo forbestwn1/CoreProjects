@@ -1,6 +1,7 @@
 package com.nosliw.data.datatype.importer;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,16 +28,16 @@ public class HAPDataTypeImporterManager {
 	}
 	
 	private void registerValueInfos(){
-		Set<String> valueInfos = new HashSet<String>();
-		valueInfos.add("datatypedefinition.xml");
-		valueInfos.add("datatypeid.xml");
-		valueInfos.add("datatypeinfo.xml");
-		valueInfos.add("datatypeversion.xml");
+		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeImporterManager.class, new String[]{
+				"datatypedefinition.xml",
+				"datatypeid.xml",
+				"datatypeinfo.xml",
+				"datatypeversion.xml",
 
-		valueInfos.add("datatypeoperation.xml");
-		valueInfos.add("operationvar.xml");
+				"datatypeoperation.xml",
+				"operationvar.xml"
+		});
 
-		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeImporterManager.class, valueInfos);
 		this.m_dbAccess.createDBTable("data.datatypedef");
 		this.m_dbAccess.createDBTable("data.operation");
 		this.m_dbAccess.createDBTable("data.operationvar");

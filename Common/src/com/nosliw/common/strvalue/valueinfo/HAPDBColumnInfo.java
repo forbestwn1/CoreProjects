@@ -7,6 +7,9 @@ public class HAPDBColumnInfo extends HAPStringableValueEntity{
 	//table column, be default use the attribute name
 	public static final String COLUMN = "column";
 
+	//table column, be default use the attribute name
+	public static final String PROPERTY = "property";
+	
 	//data type, used when do get/set during query. by default, use the getter return type
 	public static final String DATATYPE = "dataType";
 
@@ -26,6 +29,9 @@ public class HAPDBColumnInfo extends HAPStringableValueEntity{
 
 	//the path for the setter method
 	public static final String SETTER_PATH = "setterPath";
+
+	public String getProperty(){  return this.getAtomicAncestorValueString(PROPERTY);  }
+	public void setProperty(String property){ this.updateAtomicChildStrValue(PROPERTY, property);  }
 	
 	public String getColumnName(){  return this.getAtomicAncestorValueString(COLUMN);  }
 	public String getDataType(){  return this.getAtomicAncestorValueString(DATATYPE);  }

@@ -1,5 +1,6 @@
 package com.nosliw.data.datatype.importer;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -27,16 +28,15 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 	public HAPDataTypeManagerImp(){
 		this.m_dbAccess = HAPDBAccess.getInstance();
 		
-		Set<String> valueInfos = new HashSet<String>();
-		valueInfos.add("datatypedefinition.xml");
-		valueInfos.add("datatypeid.xml");
-		valueInfos.add("datatypeinfo.xml");
-		valueInfos.add("datatypeversion.xml");
+		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeImporterManager.class, new String[]{
+				"datatypedefinition.xml",
+				"datatypeid.xml",
+				"datatypeinfo.xml",
+				"datatypeversion.xml",
 
-		valueInfos.add("datatypeoperation.xml");
-		valueInfos.add("operationvar.xml");
-
-		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeImporterManager.class, valueInfos);
+				"datatypeoperation.xml",
+				"operationvar.xml"
+		});
 	}
 	
 	@Override

@@ -203,7 +203,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	
 	private void buildByJson(JSONObject json){
 		HAPValueInfoEntity entityValueInfo = HAPValueInfoManager.getInstance().getEntityValueInfoByClass(this.getClass());
-		HAPStringableEntityImporterJSON.parseJsonEntity(json, this.getClass(), HAPValueInfoManager.getInstance());
+		HAPStringableEntityImporterJSON.buildStringableValueEntity(json, this, this.getClass(), HAPValueInfoManager.getInstance());
 	}
 	
 	@Override

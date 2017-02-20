@@ -11,6 +11,7 @@ import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateProcessorByConfigureForDoc;
 import com.nosliw.common.resolve.HAPResolvable;
 import com.nosliw.common.serialization.HAPSerialiableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute(baseName="STRINGABLEVALUE")
 public abstract class HAPStringableValue extends HAPSerialiableImp implements HAPResolvable{
@@ -70,6 +71,6 @@ public abstract class HAPStringableValue extends HAPSerialiableImp implements HA
 	}
 
 	@Override
-	protected String buildLiterate(){  return this.buildJson(); }
+	protected String buildLiterate(){  return this.toStringValue(HAPSerializationFormat.JSON); }
 
 }

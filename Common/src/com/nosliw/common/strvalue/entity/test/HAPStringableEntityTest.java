@@ -14,11 +14,8 @@ import com.nosliw.common.utils.HAPFileUtility;
 public class HAPStringableEntityTest {
 	
 	public static void main(String[] args){
-		Set<String> files = new HashSet<String>();
-		files.add("entitydef.xml");
-		files.add("reference.xml");
-		files.add("parent.xml");
-		HAPValueInfoManager.getInstance().importFromXML(HAPStringableEntityTest.class, files);
+		HAPValueInfoManager.getInstance().importFromXML(HAPStringableEntityTest.class, 
+				new String[]{"entitydef.xml", "reference.xml", "parent.xml"});
 		
 		InputStream entityInputStream = HAPFileUtility.getInputStreamOnClassPath(HAPStringableEntityTest.class, "entity.xml");
 		HAPStringableValueEntity entity = HAPStringableEntityImporterXML.readRootEntity(entityInputStream);

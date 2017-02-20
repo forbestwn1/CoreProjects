@@ -133,28 +133,30 @@ public class HAPValueInfoImporterXML {
 				HAPStringableValueUtility.updateBasicProperty(valueInfoEle, valueInfo);
 			}
 			
-			//read sql info
-			Element[] sqlInfoEles = null;
-			Element sqlInfosEle = null;
-			sqlInfoEles = HAPXMLUtility.getMultiChildElementByName(valueInfoEle, HAPValueInfo.DBCOLUMNLINFO);
-			if(sqlInfoEles!=null && sqlInfoEles.length==0){
-				sqlInfosEle = HAPXMLUtility.getFirstChildElementByName(valueInfoEle, HAPValueInfo.DBCOLUMNINFOS);
-				if(sqlInfosEle!=null){
-					sqlInfoEles = HAPXMLUtility.getMultiChildElementByName(sqlInfosEle, HAPValueInfo.DBCOLUMNLINFO);
-				}
+		}
+
+		//read sql info
+		Element[] sqlInfoEles = null;
+		Element sqlInfosEle = null;
+		sqlInfoEles = HAPXMLUtility.getMultiChildElementByName(valueInfoEle, HAPValueInfo.DBCOLUMNLINFO);
+		if(sqlInfoEles!=null && sqlInfoEles.length==0){
+			sqlInfosEle = HAPXMLUtility.getFirstChildElementByName(valueInfoEle, HAPValueInfo.DBCOLUMNINFOS);
+			if(sqlInfosEle!=null){
+				sqlInfoEles = HAPXMLUtility.getMultiChildElementByName(sqlInfosEle, HAPValueInfo.DBCOLUMNLINFO);
 			}
+		}
+		
+		if(sqlInfoEles!=null && sqlInfoEles.length>0){
+			HAPDBColumnsInfo columnsInfo = new HAPDBColumnsInfo(); 
+			if(sqlInfosEle!=null)		HAPStringableValueUtility.updateBasicProperty(sqlInfosEle, columnsInfo);
 			
-			if(sqlInfoEles!=null && sqlInfoEles.length>0){
-				HAPDBColumnsInfo columnsInfo = new HAPDBColumnsInfo(); 
-				if(sqlInfosEle!=null)		HAPStringableValueUtility.updateBasicProperty(sqlInfosEle, columnsInfo);
-				
-				for(Element sqlInfoEle : sqlInfoEles){
-					HAPDBColumnInfo sqlInfo = new HAPDBColumnInfo();
-					HAPStringableValueUtility.updateBasicProperty(sqlInfoEle, sqlInfo);
-					columnsInfo.addDbColumnInfo(sqlInfo);
-				}
-				valueInfo.setDBColumnsInfo(columnsInfo);
+			for(Element sqlInfoEle : sqlInfoEles){
+				HAPDBColumnInfo sqlInfo = new HAPDBColumnInfo();
+				HAPStringableValueUtility.updateBasicProperty(sqlInfoEle, sqlInfo);
+				sqlInfo.setProperty(valueInfo.getName());
+				columnsInfo.addDbColumnInfo(sqlInfo);
 			}
+			valueInfo.setDBColumnsInfo(columnsInfo);
 		}
 		
 		return valueInfo;

@@ -16,7 +16,7 @@ public class HAPValueInfoModeUtility {
 //		files.add("mode_list.xml");
 //		files.add("mode_entityoptions.xml");
 
-		HAPValueInfoManager.getInstance().importFromXML(HAPValueInfoModeUtility.class, files);
+		HAPValueInfoManager.getInstance().importFromXML(HAPValueInfoModeUtility.class, new String[]{});
 	}
 	
 }

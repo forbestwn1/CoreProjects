@@ -187,6 +187,11 @@ public class HAPSqlUtility {
 				List<HAPDBColumnInfo> columns = dbTableInfo.getColumnsInfo();
 				for(HAPDBColumnInfo column : columns){
 					
+					if("info".equals(column.getColumnName())){
+						int kkkk = 444;
+						kkkk++;
+					}
+					
 					String setterMethodName = column.getSetter();
 					if(HAPBasicUtility.isStringNotEmpty(setterMethodName)){
 						String setterPath = column.getSetterPath();
@@ -199,10 +204,22 @@ public class HAPSqlUtility {
 						Method setterMethod = null;
 						Object columnObject = null;
 						try{
-							columnObject = resultSet.getObject(column.getColumnName());
-							if(columnObject!=null){
-								if(columnObject instanceof String){
-									columnObject = HAPLiterateManager.getInstance().stringToValue((String)columnObject, literateType);
+							Object columnValue = resultSet.getObject(column.getColumnName());
+							if(columnValue!=null){
+								if(columnValue instanceof String){
+									columnObject = HAPLiterateManager.getInstance().stringToValue((String)columnValue, literateType);
+									if(columnObject==null){
+										//if literateType is not a valid one, then use the type info from property
+										HAPValueInfo propertyValueInfo = valueInfo.getPropertyInfo(column.getProperty()).getSolidValueInfo();
+										String propertyValueInfoType = propertyValueInfo.getValueInfoType();
+										if(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY.equals(propertyValueInfoType)){
+											literateType = new HAPLiterateType(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, ((HAPValueInfoEntity)propertyValueInfo).getClassName());
+										}
+										else if(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC.equals(propertyValueInfoType)){
+											literateType = ((HAPValueInfoAtomic)propertyValueInfo).getLiterateType();
+										}
+									}
+									columnObject = HAPLiterateManager.getInstance().stringToValue((String)columnValue, literateType);
 								}
 								setterMethod = obj.getClass().getMethod(setterMethodName, parmClass);
 								setterMethod.invoke(obj, columnObject);
@@ -210,7 +227,14 @@ public class HAPSqlUtility {
 						}
 						catch(NoSuchMethodException e){
 							if(obj instanceof HAPStringableValueEntity){
-								((HAPStringableValueEntity)obj).updateAtomicChildStrValue(column.getColumnName(), columnObject.toString(), literateType.getType(), literateType.getSubType());
+								HAPValueInfo propertyValueInfo = valueInfo.getPropertyInfo(column.getProperty());
+								String propertyValueInfoType = propertyValueInfo.getValueInfoType();
+								if(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY.equals(propertyValueInfoType)){
+									((HAPStringableValueEntity)obj).updateChild(column.getColumnName(), (HAPStringableValue)columnObject);
+								}
+								else if(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC.equals(propertyValueInfoType)){
+									((HAPStringableValueEntity)obj).updateAtomicChildStrValue(column.getColumnName(), columnObject.toString(), literateType.getType(), literateType.getSubType());
+								}
 							}
 						}
 					}
