@@ -187,11 +187,6 @@ public class HAPSqlUtility {
 				List<HAPDBColumnInfo> columns = dbTableInfo.getColumnsInfo();
 				for(HAPDBColumnInfo column : columns){
 					
-					if("info".equals(column.getColumnName())){
-						int kkkk = 444;
-						kkkk++;
-					}
-					
 					String setterMethodName = column.getSetter();
 					if(HAPBasicUtility.isStringNotEmpty(setterMethodName)){
 						String setterPath = column.getSetterPath();
@@ -227,7 +222,7 @@ public class HAPSqlUtility {
 						}
 						catch(NoSuchMethodException e){
 							if(obj instanceof HAPStringableValueEntity){
-								HAPValueInfo propertyValueInfo = valueInfo.getPropertyInfo(column.getProperty());
+								HAPValueInfo propertyValueInfo = valueInfo.getPropertyInfo(column.getProperty()).getSolidValueInfo();
 								String propertyValueInfoType = propertyValueInfo.getValueInfoType();
 								if(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY.equals(propertyValueInfoType)){
 									((HAPStringableValueEntity)obj).updateChild(column.getColumnName(), (HAPStringableValue)columnObject);
