@@ -29,6 +29,7 @@ public class HAPDataTypeImporterManager {
 	private void registerValueInfos(){
 		Set<String> valueInfos = new HashSet<String>();
 		valueInfos.add("datatypedefinition.xml");
+		valueInfos.add("datatypeid.xml");
 		valueInfos.add("datatypeinfo.xml");
 		valueInfos.add("datatypeversion.xml");
 

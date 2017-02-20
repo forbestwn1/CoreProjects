@@ -1,5 +1,5 @@
-<definition name="core.url;1.0.0" parentInfo="core.text;1.0.0" description="description">
-	
+<definition name="core.url;1.0.0" parentInfo="core.text;1.0.0">
+	<info description="core.url;1.0.0 description"/>
 	<operations>
 	
 		<operation name="host" >

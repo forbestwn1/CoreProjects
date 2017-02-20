@@ -18,7 +18,7 @@ public class HAPOperationInfoImp extends HAPStringableValueEntity implements HAP
 	public static String ID = "id";
 	
 	@HAPAttribute
-	public static String DATATYPINFO = "dataTypeInfo";
+	public static String DATATYPID = "dataTypeId";
 	
 	public HAPOperationInfoImp(){}
 	
@@ -36,7 +36,7 @@ public class HAPOperationInfoImp extends HAPStringableValueEntity implements HAP
 
 	public String getId(){		return this.getAtomicAncestorValueString(ID);	}
 
-	public HAPDataTypeInfoImp getDataTypeInfo(){ return (HAPDataTypeInfoImp)this.getAtomicAncestorValueObject(DATATYPINFO, HAPDataTypeInfoImp.class); }
+	public HAPDataTypeIdImp getDataTypeInfo(){ return (HAPDataTypeIdImp)this.getAtomicAncestorValueObject(DATATYPID, HAPDataTypeIdImp.class); }
 	
 	@Override
 	public Map<String, HAPOperationParmInfo> getParmsInfo() {

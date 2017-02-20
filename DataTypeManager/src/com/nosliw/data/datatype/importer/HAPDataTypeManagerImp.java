@@ -29,6 +29,7 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 		
 		Set<String> valueInfos = new HashSet<String>();
 		valueInfos.add("datatypedefinition.xml");
+		valueInfos.add("datatypeid.xml");
 		valueInfos.add("datatypeinfo.xml");
 		valueInfos.add("datatypeversion.xml");
 
@@ -40,12 +41,12 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 	
 	@Override
 	public HAPDataType getDataType(HAPDataTypeId dataTypeInfo) {
-		return this.m_dbAccess.getDataType((HAPDataTypeInfoImp)dataTypeInfo);
+		return this.m_dbAccess.getDataType((HAPDataTypeIdImp)dataTypeInfo);
 	}
 
 	@Override
 	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeId dataTypeInfo, String name) {
-		return this.m_dbAccess.getOperationInfoByName((HAPDataTypeInfoImp)dataTypeInfo, name);
+		return this.m_dbAccess.getOperationInfoByName((HAPDataTypeIdImp)dataTypeInfo, name);
 	}
 	
 	
@@ -191,10 +192,10 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 	
 	public static void main(String[] args){
 		HAPDataTypeManagerImp man = new HAPDataTypeManagerImp();
-		HAPDataTypeImp dataType = (HAPDataTypeImp)man.getDataType(new HAPDataTypeInfoImp("core.url;1.0.0"));
+		HAPDataTypeImp dataType = (HAPDataTypeImp)man.getDataType(new HAPDataTypeIdImp("core.url;1.0.0"));
 		System.out.println(dataType.toString());
 		
-		man.getOperationInfoByName(new HAPDataTypeInfoImp("core.url;1.0.0"), "host");
+		man.getOperationInfoByName(new HAPDataTypeIdImp("core.url;1.0.0"), "host");
 	}
 	
 }

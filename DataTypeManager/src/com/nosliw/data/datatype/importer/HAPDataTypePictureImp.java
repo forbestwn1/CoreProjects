@@ -28,7 +28,7 @@ public class HAPDataTypePictureImp extends HAPDataTypeImp implements HAPDataType
 	
 	@Override
 	public HAPDataTypePictureNodeImp getRelationship(HAPDataTypeId dataTypeInfo){
-		return (HAPDataTypePictureNodeImp)this.getNodesMap().getChild(((HAPDataTypeInfoImp)dataTypeInfo).getId());
+		return (HAPDataTypePictureNodeImp)this.getNodesMap().getChild(((HAPDataTypeIdImp)dataTypeInfo).getId());
 	}
 
 	public void addNode(HAPDataTypePictureNodeImp node){

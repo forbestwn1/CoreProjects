@@ -22,7 +22,7 @@ import com.nosliw.data.HAPOperationParmInfo;
 import com.nosliw.data.datatype.importer.HAPOperationInfoImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeCriteriaImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeImp;
-import com.nosliw.data.datatype.importer.HAPDataTypeInfoImp;
+import com.nosliw.data.datatype.importer.HAPDataTypeIdImp;
 import com.nosliw.data.datatype.importer.HAPDataTypePictureImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeVersionImp;
 import com.nosliw.data.datatype.importer.js.HAPJSOperationInfo;
@@ -132,7 +132,7 @@ public class HAPDBAccess1 extends HAPConfigurableImp{
 				m_insertParmStatement.setString(2, operationId);
 				m_insertParmStatement.setString(3, "output");
 				m_insertParmStatement.setString(4, null);
-				m_insertParmStatement.setString(5, ((HAPDataTypeInfoImp)outputInfo.getDataTypeInfo()).toStringValue(HAPSerializationFormat.LITERATE));
+				m_insertParmStatement.setString(5, ((HAPDataTypeIdImp)outputInfo.getDataTypeInfo()).toStringValue(HAPSerializationFormat.LITERATE));
 				m_insertParmStatement.setString(6, outputInfo.getDescription());
 				m_insertParmStatement.execute();
 			}
@@ -146,9 +146,9 @@ public class HAPDBAccess1 extends HAPConfigurableImp{
 		int i = 1;
 		
 		try {
-			HAPDataTypeInfoImp dataTypeInfo = (HAPDataTypeInfoImp)dataType.getId();
+			HAPDataTypeIdImp dataTypeInfo = (HAPDataTypeIdImp)dataType.getId();
 			HAPDataTypeVersionImp dataTypeVersion = (HAPDataTypeVersionImp)dataTypeInfo.getVersion();
-			HAPDataTypeInfoImp parentDataTypeInfo = (HAPDataTypeInfoImp)dataType.getParentInfo();
+			HAPDataTypeIdImp parentDataTypeInfo = (HAPDataTypeIdImp)dataType.getParentInfo();
 			HAPDataTypeVersionImp linkedVersion = (HAPDataTypeVersionImp)dataType.getLinkedVersion();
 
 			statement.setString(i++, dataTypeInfo.toStringValue(HAPSerializationFormat.LITERATE));

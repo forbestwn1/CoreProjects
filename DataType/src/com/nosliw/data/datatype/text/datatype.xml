@@ -1,5 +1,7 @@
 <definition name="core.text;1.0.0" description="description">
 	
+	<info description="core.text;1.0.0 description"/>
+
 	<operations>
 	
 		<operation name="host" >

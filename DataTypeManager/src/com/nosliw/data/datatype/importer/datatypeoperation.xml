@@ -6,7 +6,7 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="dataTypeInfo" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp" description="">
+	<property name="dataTypeInfo" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
 		<dbColumnInfos pathType="propertyAsPath">
 			<dbColumnInfo column="dataTypeName" definition="VARCHAR(20)" getter="getName"/>
 			<dbColumnInfo column="versionFullName" definition="VARCHAR(20)"/>

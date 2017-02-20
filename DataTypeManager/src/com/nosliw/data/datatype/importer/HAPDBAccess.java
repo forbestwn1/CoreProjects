@@ -16,7 +16,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo;
 import com.nosliw.common.strvalue.valueinfo.HAPSqlUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeInfo;
+import com.nosliw.data.HAPDataTypeId;
 import com.nosliw.data.HAPDataTypeOperation;
 import com.nosliw.data.HAPOperationParmInfo;
 
@@ -53,7 +53,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 
 	public void saveOperation(HAPOperationInfoImp operation, HAPDataTypeImp dataType){
 		operation.updateAtomicChildStrValue(HAPOperationInfoImp.ID, this.getId()+"");
-		operation.updateAtomicChildObjectValue(HAPOperationInfoImp.DATATYPINFO, dataType.getName());
+		operation.updateAtomicChildObjectValue(HAPOperationInfoImp.DATATYPID, dataType.getId());
 		HAPSqlUtility.saveToDB(operation, m_connection);
 		
 		Map<String, HAPOperationParmInfo> parms = operation.getParmsInfo();
@@ -61,12 +61,12 @@ public class HAPDBAccess extends HAPConfigurableImp {
 			HAPOperationVarInfoImp parm = (HAPOperationVarInfoImp)parms.get(name);
 			parm.updateAtomicChildStrValue(HAPOperationVarInfoImp.ID, this.getId()+"");
 			parm.updateAtomicChildStrValue(HAPOperationVarInfoImp.OPERATIONID, operation.getId());
-			parm.updateAtomicChildObjectValue(HAPOperationVarInfoImp.DATATYPEID, dataType.getName());
+			parm.updateAtomicChildObjectValue(HAPOperationVarInfoImp.DATATYPEID, dataType.getId());
 			HAPSqlUtility.saveToDB(parm, this.m_connection);
 		}		
 	}
 	
-	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeInfoImp dataTypeInfo, String name) {
+	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeIdImp dataTypeInfo, String name) {
 		HAPDataTypeOperationImp out = null;
 		
 		try {
@@ -82,13 +82,16 @@ public class HAPDBAccess extends HAPConfigurableImp {
 			List<Object> results = HAPSqlUtility.queryFromDB(valuInfoName, statement);
 			HAPOperationInfoImp operationInfo = null;
 			if(results.size()>0)  operationInfo = (HAPOperationInfoImp)results.get(0);
+			
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return out;
 	}
 	
-	public HAPDataTypeImp getDataType(HAPDataTypeInfoImp dataTypeInfo) {
+	public HAPDataTypeImp getDataType(HAPDataTypeIdImp dataTypeInfo) {
 		HAPDataTypeImp out = null;
 		
 		try {
