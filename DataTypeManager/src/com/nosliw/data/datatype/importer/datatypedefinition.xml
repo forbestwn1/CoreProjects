@@ -21,14 +21,14 @@
 	</property>
 
 	<property name="parentInfo" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="parent data type">
-		<dbColumnInfos pathType="propertyAsPath">
-			<dbColumnInfo definition="VARCHAR(20)" getter="getFullName" setter="setFullName"/>
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
 		</dbColumnInfos>
 	</property>
 
 	<property name="linkedVersion" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeVersionImp" description="lined data type in the same family">
 		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(20)" setter="setName"/>
+			<dbColumnInfo definition="VARCHAR(20)"/>
 		</dbColumnInfos>
 	</property>
 

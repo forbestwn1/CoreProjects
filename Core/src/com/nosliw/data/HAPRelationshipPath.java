@@ -5,7 +5,7 @@ import java.util.List;
 
 public class HAPRelationshipPath {
 
-	private List<HAPRelationshipPathSegment> m_segments = null;
+	protected List<HAPRelationshipPathSegment> m_segments = null;
 	
 	public HAPRelationshipPath(){
 		this.m_segments = new ArrayList<HAPRelationshipPathSegment>();
@@ -18,5 +18,6 @@ public class HAPRelationshipPath {
 	public void addSegment(HAPRelationshipPathSegment segment){
 		this.m_segments.add(segment);
 	}
+
 	
 }

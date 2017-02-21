@@ -1,40 +1,42 @@
 package com.nosliw.data.datatype.importer;
 
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.strvalue.HAPStringableValueMap;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeId;
 import com.nosliw.data.HAPDataTypePicture;
 import com.nosliw.data.HAPRelationship;
 
-public class HAPDataTypePictureImp extends HAPDataTypeImp implements HAPDataTypePicture{
+public class HAPDataTypePictureImp implements HAPDataTypePicture{
 
+	private HAPDataTypeImp m_sourceDataType;
+	
+	private Map<HAPDataTypeId, HAPRelationshipImp> m_relationships;
+	
 	public static String NODES = "nodes";
 	
 	public HAPDataTypePictureImp(HAPDataTypeImp mainDataType){
-		super(mainDataType);
-		this.updateChild(NODES, new HAPStringableValueMap<HAPDataTypePictureNodeImp>());
+		this.m_relationships = new LinkedHashMap<HAPDataTypeId, HAPRelationshipImp>();
 	}
 	
 	@Override
-	public HAPDataType getSourceDataType(){		return this;	}
-	
+	public HAPDataType getSourceDataType(){		return this.m_sourceDataType;  }
+
+	@Override
+	public HAPRelationshipImp getRelationship(HAPDataTypeId dataTypeInfo){
+		return this.m_relationships.get(dataTypeInfo);
+	}
+
 	@Override
 	public Set<? extends HAPRelationship> getRelationships(){
-		Set<HAPDataTypePictureNodeImp> out = this.getNodesMap().getValues(); 
-		return out;
-	}
-	
-	@Override
-	public HAPDataTypePictureNodeImp getRelationship(HAPDataTypeId dataTypeInfo){
-		return (HAPDataTypePictureNodeImp)this.getNodesMap().getChild(((HAPDataTypeIdImp)dataTypeInfo).getId());
+		return new HashSet( this.m_relationships.values());
 	}
 
-	public void addNode(HAPDataTypePictureNodeImp node){
-		this.getNodesMap().updateChild(((HAPDataTypeImp)node.getTargetDataType()).getId(), node);
+	public void addRelationship(HAPRelationshipImp relationship){
+		this.m_relationships.put(relationship.getTargetDataType().getId(), relationship);
 	}
-
-	private HAPStringableValueMap<HAPDataTypePictureNodeImp> getNodesMap(){		return (HAPStringableValueMap<HAPDataTypePictureNodeImp>)this.getChild(NODES);	}
 	
 }

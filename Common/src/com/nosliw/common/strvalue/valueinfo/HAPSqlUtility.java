@@ -32,7 +32,10 @@ public class HAPSqlUtility {
 	}
 	
 	public static String buildEntityQuerySql(String tableName, String query){
-		String out = "SELECT * FROM " + tableName + " WHERE " + query;
+		String out = "SELECT * FROM " + tableName;
+		if(HAPBasicUtility.isStringNotEmpty(query)){
+			out = "SELECT * FROM " + tableName + " WHERE " + query;
+		}
 		System.out.println(out);
 		return out;
 	}
@@ -228,7 +231,7 @@ public class HAPSqlUtility {
 									((HAPStringableValueEntity)obj).updateChild(column.getColumnName(), (HAPStringableValue)columnObject);
 								}
 								else if(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC.equals(propertyValueInfoType)){
-									((HAPStringableValueEntity)obj).updateAtomicChildStrValue(column.getColumnName(), columnObject.toString(), literateType.getType(), literateType.getSubType());
+									((HAPStringableValueEntity)obj).updateAtomicChildStrValue(column.getColumnName(), HAPLiterateManager.getInstance().valueToString(columnObject), literateType.getType(), literateType.getSubType());
 								}
 							}
 						}

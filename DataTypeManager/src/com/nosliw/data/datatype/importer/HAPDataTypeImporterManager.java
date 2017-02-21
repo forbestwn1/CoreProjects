@@ -14,7 +14,10 @@ import com.nosliw.common.strvalue.valueinfo.HAPSqlUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPOperationInfo;
+import com.nosliw.data.HAPRelationship;
 import com.nosliw.data.HAPRelationshipPathSegment;
+import com.nosliw.data.HAPDataType;
+import com.nosliw.data.HAPDataTypeId;
 import com.nosliw.data.HAPDataTypePicture;
 import com.nosliw.data.HAPDataTypeProvider;
 import com.nosliw.data.datatype.importer.js.HAPJSImporter;
@@ -49,7 +52,7 @@ public class HAPDataTypeImporterManager {
 		this.m_dbAccess.createDBTable("data.relationship");
 	}
 	
-	public void loadAll(){
+	public void loadAllDataType(){
 		new HAPClassFilter(){
 			@Override
 			protected void process(Class cls, Object data) {
@@ -67,12 +70,16 @@ public class HAPDataTypeImporterManager {
 				return false;
 			}
 		}.process(null);
-		
-		
-		
-		
 	}
 
+	public void buildDataTypePictures(){
+		List<HAPDataTypeImp> dataTypes = this.m_dbAccess.getAllDataTypes();
+		for(HAPDataTypeImp dataType : dataTypes){
+			HAPDataTypePictureImp dataTypePic = this.buildDataTypePicture((HAPDataTypeIdImp)dataType.getId());
+			this.m_dbAccess.saveDataTypePicture(dataTypePic);
+		}
+	}
+	
 	private void loadDataType(Class cls){
 		InputStream dataTypeStream = cls.getResourceAsStream("datatype.xml");
 		HAPDataTypeImpLoad dataType = (HAPDataTypeImpLoad)HAPStringableEntityImporterXML.readRootEntity(dataTypeStream, "data.datatypedef");
@@ -93,40 +100,49 @@ public class HAPDataTypeImporterManager {
 		}
 	}
 
-	private HAPDataTypePicture buildDataTypePicture(HAPDataTypeInfoImp dataTypeInfo){
-		HAPDataTypeImp dataType = (HAPDataTypeImp)this.getDataType(dataTypeInfo);
-		HAPDataTypePicture out = new HAPDataTypePicture(dataType);
+	private HAPDataTypePictureImp buildDataTypePicture(HAPDataTypeIdImp dataTypeId){
+		if("core.url;1.0.0".equals(dataTypeId.getFullName())){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
+		
+		HAPDataTypeImp dataType = this.getDataType(dataTypeId);
+		HAPDataTypePictureImp out = new HAPDataTypePictureImp(dataType);
 		
 		this.buildDataTypePictureFromConntectedDataType(dataType, out, HAPConstant.DATATYPE_PATHSEGMENT_PARENT);
 		this.buildDataTypePictureFromConntectedDataType(dataType, out, HAPConstant.DATATYPE_PATHSEGMENT_LINKED);
 		return out;
 	}
 	
-	
-	private void buildDataTypePictureFromConntectedDataType(HAPDataTypeImp dataType, HAPDataTypePicture out, int connectType){
-		HAPDataTypeInfoImp connectDataTypeInfo = dataType.getConntectedDataTypeInfo(connectType);
-		HAPDataTypeImp connectDataType = (HAPDataTypeImp)this.getDataType(connectDataTypeInfo);
-		HAPDataTypePicture connectDataTypePic = this.getDataTypePicture(connectDataTypeInfo);
-		if(connectDataTypePic==null){
-			connectDataTypePic = this.buildDataTypePicture(connectDataTypeInfo);
+	private void buildDataTypePictureFromConntectedDataType(HAPDataTypeImp dataType, HAPDataTypePictureImp out, int connectType){
+		HAPDataTypeIdImp connectDataTypeId = dataType.getConntectedDataTypeId(connectType);
+		if(connectDataTypeId!=null){
+			HAPDataTypeImp connectDataType = (HAPDataTypeImp)this.getDataType(connectDataTypeId);
+			HAPDataTypePicture connectDataTypePic = this.getDataTypePicture(connectDataTypeId);
+			if(connectDataTypePic==null){
+				connectDataTypePic = this.buildDataTypePicture(connectDataTypeId);
+			}
+			Set<? extends HAPRelationship> connectRelationships = connectDataTypePic.getRelationships();
+			for(HAPRelationship connectRelationship : connectRelationships){
+				out.addRelationship(((HAPRelationshipImp)connectRelationship).extendPathSegment(HAPRelationshipPathSegment.buildPathSegment(connectType), (HAPDataTypeIdImp)dataType.getId()));
+			}
 		}
-		Set<HAPDataTypePictureNodeImp> dataTypePicNodes = connectDataTypePic.getRelationships();
-		for(HAPDataTypePictureNodeImp picNode : dataTypePicNodes){
-			out.addNode(picNode.extendPathSegment(HAPRelationshipPathSegment.buildPathSegment(connectType)));
-		}
-		
-		HAPDataTypePictureNodeImp connectNode = new HAPDataTypePictureNodeImp(connectDataType);
-		connectNode.appendPathSegment(HAPRelationshipPathSegment.buildPathSegment(connectType));
 	}
 	
-	private HAPDataTypePicture getDataTypePicture(HAPDataTypeInfoImp dataTypeInfo){
-		return this.m_dbAccess.getDataTypePicture(dataTypeInfo);
+	private HAPDataTypePicture getDataTypePicture(HAPDataTypeIdImp dataTypeId){
+		return this.m_dbAccess.getDataTypePicture(dataTypeId);
+	}
+	
+	private HAPDataTypeImp getDataType(HAPDataTypeIdImp dataTypeId) {
+		return this.m_dbAccess.getDataType(dataTypeId);
 	}
 	
 	
 	public static void main(String[] args){
 		HAPDataTypeImporterManager man = new HAPDataTypeImporterManager();
-		man.loadAll();
+		man.loadAllDataType();
+		man.buildDataTypePictures();
 //		
 //		HAPJSImporter jsImporter = new HAPJSImporter();
 //		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");

@@ -14,17 +14,26 @@ public class HAPDataTypeIdImp extends HAPStringableValueEntity implements HAPDat
 	@HAPAttribute
 	public static String FULLNAME = "fullName";
 	
-	public HAPDataTypeIdImp(){}
+	public HAPDataTypeIdImp(){
+		int kkkk = 555;
+		kkkk++;
+	}
 	
 	public HAPDataTypeIdImp(String name, HAPDataTypeVersion version){
 		this.updateAtomicChildStrValue(NAME, name, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
 		this.updateAtomicChildObjectValue(VERSION, version);
 		this.updateAtomicChildStrValue(FULLNAME, this.buildLiterate(), HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
+
+		int kkkk = 555;
+		kkkk++;
 	}
 
 	public HAPDataTypeIdImp(String fullName){
 		this.setFullName(fullName);
-	}
+
+		int kkkk = 555;
+		kkkk++;
+}
 	
 	public String getFullName(){  return this.buildLiterate();  }
 	public void setFullName(String fullName){
@@ -44,7 +53,16 @@ public class HAPDataTypeIdImp extends HAPStringableValueEntity implements HAPDat
 		return version;
 	}
 
-	public String getVersionFullName(){ return ((HAPDataTypeVersionImp)this.getVersion()).getName(); }
+	public String getVersionFullName(){
+		
+		if(this.getVersion()==null){
+			int kkkk = 55555;
+			kkkk++;
+			this.getVersion();
+		}
+		
+		return ((HAPDataTypeVersionImp)this.getVersion()).getName(); 
+	}
 	
 	@Override
 	protected String buildLiterate(){

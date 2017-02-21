@@ -39,7 +39,7 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 
 	
 	
-	public HAPDataTypeIdImp getConntectedDataTypeInfo(int connectType){
+	public HAPDataTypeIdImp getConntectedDataTypeId(int connectType){
 		HAPDataTypeIdImp out = null;
 		switch(connectType){
 		case HAPConstant.DATATYPE_PATHSEGMENT_LINKED:
@@ -60,7 +60,10 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	@Override
 	public HAPDataTypeId getParentInfo() {	return (HAPDataTypeId)this.getAtomicValueAncestorByPath(PARENTINFO);	}
 
-	public HAPDataTypeIdImp getLinkedDataTypeId(){	return new HAPDataTypeIdImp(this.getId().getName(), this.getLinkedVersion());	}
+	public HAPDataTypeIdImp getLinkedDataTypeId(){
+		if(this.getLinkedVersion()==null)  return null;
+		else return new HAPDataTypeIdImp(this.getId().getName(), this.getLinkedVersion());	
+	}
 	
 	@Override
 	public HAPDataTypeVersion getLinkedVersion() {  return (HAPDataTypeVersion)this.getAtomicValueAncestorByPath(LINKEDVERSION);	}

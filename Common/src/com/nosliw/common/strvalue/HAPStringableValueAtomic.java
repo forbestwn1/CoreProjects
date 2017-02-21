@@ -42,21 +42,41 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	
 	private boolean m_sovled = false;
 	
+	private void checkStrValue(){
+		if(this.m_strValue!=null && this.m_strValue.toString()!=null){
+			if(this.m_strValue.toString().contains("\"name\": \"core.text\",")){
+				int kkkk = 555;
+				kkkk++;
+			}
+		}
+	}
+	
 	public HAPStringableValueAtomic(String strValue, String type, String subType, String defaultValue){
 		if(strValue!=null)		this.setStringContent(new HAPResolvableString(strValue), type, subType);
 		else	this.setStringContent(new HAPResolvableString(defaultValue), type, subType);
+		
+		checkStrValue();
 	}
 
 	public HAPStringableValueAtomic(String strValue, String type, String subType){
 		this(new HAPResolvableString(strValue), type, subType);
+
+		
+		checkStrValue();
 	}
 
 	public HAPStringableValueAtomic(HAPResolvableString strValue, String type, String subType){
 		this.setStringContent(strValue, type, subType);
+
+		
+		checkStrValue();
 	}
 	
 	public HAPStringableValueAtomic(String strValue){
 		this(strValue, null, null);
+
+		
+		checkStrValue();
 	}
 
 	public HAPStringableValueAtomic(){}
@@ -76,17 +96,24 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	
 	public String getStringContent(){
 		if(this.m_sovled)			this.buildStringValueByValue();		
-		return this.m_strValue.getValue();  
+		if(this.m_strValue==null)  return null;
+		else return this.m_strValue.getValue();  
 	}
 	
 	public void setStringContent(String content){ 
 		this.m_strValue.setValue(content);
 		this.m_sovled = false;
+
+		
+		checkStrValue();
 	}
 	private void setStringContent(HAPResolvableString strValue, String type, String subType){
 		this.m_strValue = strValue;
 		this.m_type = new HAPLiterateType(type, subType);
 		this.m_sovled = false;
+
+		
+		checkStrValue();
 	}
 	
 
@@ -97,10 +124,12 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 
 	private void buildLiterateTypeByValue(){
 		if(this.m_value!=null)			this.m_type = HAPLiterateManager.getInstance().getLiterateType(this.m_value);
+		else this.m_type = null;
 	}
 	
 	private void buildStringValueByValue(){
-		this.m_strValue = new HAPResolvableString(HAPLiterateManager.getInstance().valueToString(this.m_value), true);
+		if(this.m_value!=null)		this.m_strValue = new HAPResolvableString(HAPLiterateManager.getInstance().valueToString(this.m_value), true);
+		else  this.m_strValue = null;
 	}
 	
 	public void setValue(Object value){
@@ -135,14 +164,14 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 		else{
 			if(this.m_sovled)  this.getStringContent();
 			out = this.calValue(literateType);
-			if(out!=null)		this.resolved(out, type, subType);
+			this.resolved(out, type, subType);
 		}
 		return out;
 	}
 	
 	private Object calValue(HAPLiterateType literateType){
-		Object out = HAPLiterateManager.getInstance().stringToValue(m_strValue.getValue(), literateType);
-		return out;
+		if(this.m_strValue==null)  return null;
+		else return HAPLiterateManager.getInstance().stringToValue(m_strValue.getValue(), literateType);
 	}
 	
 	private void resolved(Object value, String type, String subType){
