@@ -27,11 +27,22 @@ public interface HAPDataType extends HAPSerializable{
 	@HAPAttribute
 	public static String ID = "id";
 
+	@HAPAttribute
+	public static String PARENTINFO = "parentInfo";
+
+	@HAPAttribute
+	public static String LINKEDVERSION = "linkedVersion";
+	
+	
 	/*
 	 * get basic information for this data type (categary, type, description)
 	 */
-	public HAPDataTypeId getId();
+	HAPDataTypeId getId();
 
-	public HAPDataTypeInfo getInfo();
+	HAPDataTypeInfo getInfo();
+	
+	HAPDataTypeId getParentInfo();
+
+	HAPDataTypeVersion getLinkedVersion();
 	
 }

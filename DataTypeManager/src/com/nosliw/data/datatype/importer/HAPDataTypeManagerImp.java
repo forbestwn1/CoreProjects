@@ -13,7 +13,7 @@ import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeId;
 import com.nosliw.data.HAPDataTypeManager;
 import com.nosliw.data.HAPDataTypeOperation;
-import com.nosliw.data.HAPDataTypePathSegment;
+import com.nosliw.data.HAPRelationshipPathSegment;
 import com.nosliw.data.HAPDataTypePicture;
 import com.nosliw.data.HAPDataTypeVersion;
 import com.nosliw.data.HAPExpression;
@@ -158,6 +158,8 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 		
 	}
 	
+*/	
+	
 	private HAPDataTypePicture buildDataTypePicture(HAPDataTypeInfoImp dataTypeInfo){
 		HAPDataTypeImp dataType = (HAPDataTypeImp)this.getDataType(dataTypeInfo);
 		HAPDataTypePicture out = new HAPDataTypePicture(dataType);
@@ -177,18 +179,16 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 		}
 		Set<HAPDataTypePictureNodeImp> dataTypePicNodes = connectDataTypePic.getRelationships();
 		for(HAPDataTypePictureNodeImp picNode : dataTypePicNodes){
-			out.addNode(picNode.extendPathSegment(HAPDataTypePathSegment.buildPathSegment(connectType)));
+			out.addNode(picNode.extendPathSegment(HAPRelationshipPathSegment.buildPathSegment(connectType)));
 		}
 		
 		HAPDataTypePictureNodeImp connectNode = new HAPDataTypePictureNodeImp(connectDataType);
-		connectNode.appendPathSegment(HAPDataTypePathSegment.buildPathSegment(connectType));
+		connectNode.appendPathSegment(HAPRelationshipPathSegment.buildPathSegment(connectType));
 	}
 	
 	private HAPDataTypePicture getDataTypePicture(HAPDataTypeInfoImp dataTypeInfo){
 		return this.m_dbAccess.getDataTypePicture(dataTypeInfo);
 	}
-*/	
-	
 	
 	public static void main(String[] args){
 		HAPDataTypeManagerImp man = new HAPDataTypeManagerImp();

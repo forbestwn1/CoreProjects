@@ -9,14 +9,14 @@ import java.util.Set;
  * This interface can be used:
  * 		Build all operations for particular data type
  * 		Quickly find whether a data type is compatible with another data type 
- * 		Show while picture for particular data type on UI
+ * 		Show whole picture for particular data type on UI
  */
 public interface HAPDataTypePicture {
 
 	public HAPDataType getSourceDataType();
 
-	public HAPDataTypeRelationship getRelationship(HAPDataTypeId dataTypeInfo);
+	public HAPRelationship getRelationship(HAPDataTypeId dataTypeInfo);
 
-	public Set<? extends HAPDataTypeRelationship> getRelationships();
+	public Set<? extends HAPRelationship> getRelationships();
 	
 }

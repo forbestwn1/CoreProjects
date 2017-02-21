@@ -1,7 +1,7 @@
 package com.nosliw.data.datatype.importer;
 
 import com.nosliw.data.HAPDataTypeOperation;
-import com.nosliw.data.HAPDataTypeRelationship;
+import com.nosliw.data.HAPRelationship;
 import com.nosliw.data.HAPOperationInfo;
 
 public class HAPDataTypeOperationImp implements HAPDataTypeOperation{
@@ -16,7 +16,7 @@ public class HAPDataTypeOperationImp implements HAPDataTypeOperation{
 	}
 
 	@Override
-	public HAPDataTypeRelationship getTargetDataType() {
+	public HAPRelationship getTargetDataType() {
 		return null;
 	}
 

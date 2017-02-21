@@ -20,6 +20,6 @@ public interface HAPDataTypeOperation {
 	
 	HAPOperationInfo getOperationInfo();
 	
-	HAPDataTypeRelationship getTargetDataType();
+	HAPRelationship getTargetDataType();
 	
 }

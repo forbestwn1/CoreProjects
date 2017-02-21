@@ -1,0 +1,25 @@
+<entity name="data.relationship" 
+		class="com.nosliw.data.datatype.importer.HAPRelationshipImp"
+		parent="data.datatypedef" 
+		table="nosliw.RELATIONSHIP" 
+		description="">
+		
+	<property name="id" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20) NOT NULL PRIMARY KEY"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="source" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+	
+	<property name="path" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPRelationshipPathImp" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+
+</entity>

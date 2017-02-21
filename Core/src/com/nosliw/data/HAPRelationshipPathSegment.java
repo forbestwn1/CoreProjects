@@ -6,19 +6,19 @@ import com.nosliw.common.utils.HAPConstant;
  * Segment in path that indicate how to convert source data type to target data type
  * There are only two type of segment: parent and linked  
  */
-public class HAPDataTypePathSegment {
+public class HAPRelationshipPathSegment {
 
-	private static HAPDataTypePathSegment parent = new HAPDataTypePathSegment(HAPConstant.DATATYPE_PATHSEGMENT_PARENT);
-	private static HAPDataTypePathSegment linked = new HAPDataTypePathSegment(HAPConstant.DATATYPE_PATHSEGMENT_LINKED);
+	private static HAPRelationshipPathSegment parent = new HAPRelationshipPathSegment(HAPConstant.DATATYPE_PATHSEGMENT_PARENT);
+	private static HAPRelationshipPathSegment linked = new HAPRelationshipPathSegment(HAPConstant.DATATYPE_PATHSEGMENT_LINKED);
 	
 	private int m_segment;
 	
-	public HAPDataTypePathSegment(int segType){
+	public HAPRelationshipPathSegment(int segType){
 		this.m_segment = segType;
 	}
 
-	public static HAPDataTypePathSegment buildPathSegment(int segType){
-		HAPDataTypePathSegment out = null;
+	public static HAPRelationshipPathSegment buildPathSegment(int segType){
+		HAPRelationshipPathSegment out = null;
 		switch(segType){
 		case HAPConstant.DATATYPE_PATHSEGMENT_PARENT:
 			out = parent;
@@ -30,11 +30,11 @@ public class HAPDataTypePathSegment {
 		return out;
 	}
 	
-	public static HAPDataTypePathSegment buildPathSegmentForParent(){
+	public static HAPRelationshipPathSegment buildPathSegmentForParent(){
 		return parent;
 	}
 	
-	public static HAPDataTypePathSegment buildPathSegmentForLinked(){
+	public static HAPRelationshipPathSegment buildPathSegmentForLinked(){
 		return linked;
 	}
 	
@@ -44,7 +44,7 @@ public class HAPDataTypePathSegment {
 	
 	public boolean equals(Object segment){
 		boolean out = false;
-		if(segment instanceof HAPDataTypePathSegment){
+		if(segment instanceof HAPRelationshipPathSegment){
 			out = (segment == this);
 		}
 		return out;

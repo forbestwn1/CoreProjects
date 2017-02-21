@@ -5,18 +5,18 @@ import java.util.List;
 
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypePathSegment;
-import com.nosliw.data.HAPDataTypeRelationship;
+import com.nosliw.data.HAPRelationshipPathSegment;
+import com.nosliw.data.HAPRelationship;
 
-public class HAPDataTypePictureNodeImp extends HAPStringableValueEntity implements HAPDataTypeRelationship{
+public class HAPDataTypePictureNodeImp extends HAPStringableValueEntity implements HAPRelationship{
 
-	private List<HAPDataTypePathSegment> m_pathSegs;
+	private List<HAPRelationshipPathSegment> m_pathSegs;
 
 	private HAPDataTypeImp m_dataTypeImp;
 
 	public HAPDataTypePictureNodeImp(HAPDataTypeImp dataType){
 		this.m_dataTypeImp = dataType;
-		this.m_pathSegs = new ArrayList<HAPDataTypePathSegment>();
+		this.m_pathSegs = new ArrayList<HAPRelationshipPathSegment>();
 	}
 	
 	@Override
@@ -25,17 +25,17 @@ public class HAPDataTypePictureNodeImp extends HAPStringableValueEntity implemen
 	}
 	
 	@Override
-	public List<HAPDataTypePathSegment> getPath(){
+	public List<HAPRelationshipPathSegment> getPath(){
 		return this.m_pathSegs;
 	}
 	
 	@Override
-	public void appendPathSegment(HAPDataTypePathSegment segment){
+	public void appendPathSegment(HAPRelationshipPathSegment segment){
 		this.m_pathSegs.add(0, segment);
 	}
 	
 	@Override
-	public HAPDataTypePictureNodeImp extendPathSegment(HAPDataTypePathSegment segment){
+	public HAPDataTypePictureNodeImp extendPathSegment(HAPRelationshipPathSegment segment){
 		HAPDataTypePictureNodeImp out = new HAPDataTypePictureNodeImp(this.m_dataTypeImp);
 		out.m_pathSegs.addAll(this.m_pathSegs);
 		out.appendPathSegment(segment);

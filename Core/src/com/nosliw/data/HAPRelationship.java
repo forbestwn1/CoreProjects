@@ -1,11 +1,9 @@
 package com.nosliw.data;
 
-import java.util.List;
-
 /**
  * This interface describe the related data type
  */
-public interface HAPDataTypeRelationship {
+public interface HAPRelationship {
 
 	/**
 	 * Get target data type that source have relationship with 
@@ -17,6 +15,6 @@ public interface HAPDataTypeRelationship {
 	 * Get path from source data type to target data type
 	 * @return
 	 */
-	List<HAPDataTypePathSegment> getPath();
+	HAPRelationshipPath getPath();
 	
 }

@@ -15,12 +15,6 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	@HAPAttribute
 	public static String NAME = "name";
 
-	@HAPAttribute
-	public static String PARENTINFO = "parentInfo";
-
-	@HAPAttribute
-	public static String LINKEDVERSION = "linkedVersion";
-	
 	public HAPDataTypeImp(){}
 
 	public HAPDataTypeImp(HAPDataTypeImp dataType){
@@ -63,9 +57,11 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	@Override
 	public HAPDataTypeInfo getInfo() {	return (HAPDataTypeInfo)this.getEntityAncestorByPath(INFO); }
 
+	@Override
 	public HAPDataTypeId getParentInfo() {	return (HAPDataTypeId)this.getAtomicValueAncestorByPath(PARENTINFO);	}
 
 	public HAPDataTypeIdImp getLinkedDataTypeId(){	return new HAPDataTypeIdImp(this.getId().getName(), this.getLinkedVersion());	}
 	
+	@Override
 	public HAPDataTypeVersion getLinkedVersion() {  return (HAPDataTypeVersion)this.getAtomicValueAncestorByPath(LINKEDVERSION);	}
 }
