@@ -160,35 +160,6 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 	
 */	
 	
-	private HAPDataTypePicture buildDataTypePicture(HAPDataTypeInfoImp dataTypeInfo){
-		HAPDataTypeImp dataType = (HAPDataTypeImp)this.getDataType(dataTypeInfo);
-		HAPDataTypePicture out = new HAPDataTypePicture(dataType);
-		
-		this.buildDataTypePictureFromConntectedDataType(dataType, out, HAPConstant.DATATYPE_PATHSEGMENT_PARENT);
-		this.buildDataTypePictureFromConntectedDataType(dataType, out, HAPConstant.DATATYPE_PATHSEGMENT_LINKED);
-		return out;
-	}
-	
-	
-	private void buildDataTypePictureFromConntectedDataType(HAPDataTypeImp dataType, HAPDataTypePicture out, int connectType){
-		HAPDataTypeInfoImp connectDataTypeInfo = dataType.getConntectedDataTypeInfo(connectType);
-		HAPDataTypeImp connectDataType = (HAPDataTypeImp)this.getDataType(connectDataTypeInfo);
-		HAPDataTypePicture connectDataTypePic = this.getDataTypePicture(connectDataTypeInfo);
-		if(connectDataTypePic==null){
-			connectDataTypePic = this.buildDataTypePicture(connectDataTypeInfo);
-		}
-		Set<HAPDataTypePictureNodeImp> dataTypePicNodes = connectDataTypePic.getRelationships();
-		for(HAPDataTypePictureNodeImp picNode : dataTypePicNodes){
-			out.addNode(picNode.extendPathSegment(HAPRelationshipPathSegment.buildPathSegment(connectType)));
-		}
-		
-		HAPDataTypePictureNodeImp connectNode = new HAPDataTypePictureNodeImp(connectDataType);
-		connectNode.appendPathSegment(HAPRelationshipPathSegment.buildPathSegment(connectType));
-	}
-	
-	private HAPDataTypePicture getDataTypePicture(HAPDataTypeInfoImp dataTypeInfo){
-		return this.m_dbAccess.getDataTypePicture(dataTypeInfo);
-	}
 	
 	public static void main(String[] args){
 		HAPDataTypeManagerImp man = new HAPDataTypeManagerImp();

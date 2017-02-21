@@ -1,8 +1,12 @@
-<entity name="data.operation" table="nosliw.DATAOPERATION" class="com.nosliw.data.datatype.importer.HAPOperationInfoImp" description="">
+<entity name="data.operation" 
+		table="nosliw.DATAOPERATION"
+		primaryKeys="id" 
+		class="com.nosliw.data.datatype.importer.HAPOperationInfoImp" 
+		description="">
 
 	<property name="id" dataType="string" description="">
 		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(20) NOT NULL PRIMARY KEY"/>
+			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
 		</dbColumnInfos>
 	</property>
 

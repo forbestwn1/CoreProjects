@@ -1,34 +1,34 @@
 package com.nosliw.common.strvalue.valueinfo;
 
-import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
-import com.nosliw.common.constant.HAPConstantManager;
-import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.literate.HAPLiterateType;
 import com.nosliw.common.path.HAPComplexName;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPDBTableInfo {
 
 	private String m_tableName;
 	
+	private Set<String> m_primaryKeys;
+	
 	private HAPValueInfoEntity m_valueInfoEntity;
 	
 	private List<HAPDBColumnInfo> m_columns;
 	
-	public HAPDBTableInfo(String table, HAPValueInfoEntity valueInfoEntity){
+	public HAPDBTableInfo(String table, Set<String> primaryKeys, HAPValueInfoEntity valueInfoEntity){
 		this.m_tableName = table;
 		this.m_columns = new ArrayList<HAPDBColumnInfo>();
 		this.m_valueInfoEntity = valueInfoEntity;
+		
+		if(primaryKeys==null)  primaryKeys = new HashSet<String>();
+		else		this.m_primaryKeys = primaryKeys;
 	}
 	
 	public String getTableName(){ return this.m_tableName; }
@@ -47,6 +47,11 @@ public class HAPDBTableInfo {
 	
 		String methodProperty = columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.COLUMN);
 
+		if(this.m_primaryKeys.contains(methodProperty)){
+			//primary key column
+			columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.PRIMARYKEY, String.valueOf(true));
+		}
+		
 		String getter = this.buildGetSetMethod(columnInfo, HAPDBColumnInfo.GETTER, attrPath, property, methodProperty, relativePath);
 		String setter = this.buildGetSetMethod(columnInfo, HAPDBColumnInfo.SETTER, attrPath, property, methodProperty, relativePath);
 		

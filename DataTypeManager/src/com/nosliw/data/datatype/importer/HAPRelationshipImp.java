@@ -18,7 +18,7 @@ public class HAPRelationshipImp extends HAPDataTypeImp implements HAPRelationshi
 		return null;
 	}
 
-	public HAPDataTypeIdImp getSourceDataTypeId(){
+	public HAPDataTypeIdImp getSource(){
 		return this.m_sourceDataType;
 	}
 	

@@ -119,7 +119,7 @@ public class HAPValueInfoManager {
 				HAPValueInfoEntity valueInfo = (HAPValueInfoEntity)vf.getSolidValueInfo();
 				String table = valueInfo.getTable();
 				if(HAPBasicUtility.isStringNotEmpty(table)){
-					HAPDBTableInfo tableInfo = new HAPDBTableInfo(table, valueInfo);
+					HAPDBTableInfo tableInfo = new HAPDBTableInfo(table, new HashSet(valueInfo.getPrimaryKeys()), valueInfo);
 					this.readColumnInfoFromEntity(tableInfo, valueInfo, null);
 					this.m_dbTables.put(valueInfo.getName(), tableInfo);
 				}

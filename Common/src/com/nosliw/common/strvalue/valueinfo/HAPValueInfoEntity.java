@@ -2,10 +2,9 @@ package com.nosliw.common.strvalue.valueinfo;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueList;
@@ -26,6 +25,8 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 	public static final String OVERRIDE = "override";
 	//table name this entity represent
 	public static final String TABLE = "table";
+	//all the primaryKeys for table
+	public static final String 	PRIMARYKEYS = "primaryKeys";
 	
 	private HAPValueInfoEntity m_solidValueInfo;
 	
@@ -126,6 +127,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 	public String getClassName(){  return this.getAtomicAncestorValueString(CLASSNAME); }
 	public void setClassName(String name){  this.updateAtomicChildStrValue(CLASSNAME, name); }
 	public String getTable(){  return this.getAtomicAncestorValueString(TABLE);  }
+	public List<String> getPrimaryKeys(){  return this.getAtomicAncestorValueArray(PRIMARYKEYS, String.class);   }
 	
 	private HAPValueInfoEntity getParentEntityValueInfo(){
 		HAPValueInfoEntity out = null;

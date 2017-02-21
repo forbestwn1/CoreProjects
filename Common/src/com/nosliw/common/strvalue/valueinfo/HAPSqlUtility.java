@@ -102,7 +102,7 @@ public class HAPSqlUtility {
 	private static String createColumnSql(HAPDBColumnInfo columnInfo){
 		String columnName = columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.COLUMN);
 		String columnDef = columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.DEFINITION);
-		return columnName + " " + columnDef;
+		return columnName + " " + columnDef + (columnInfo.isPrimaryKey()?" PRIMARY KEY " : "");
 	}
 
 	/**

@@ -7,6 +7,9 @@ public class HAPDBColumnInfo extends HAPStringableValueEntity{
 	//table column, be default use the attribute name
 	public static final String COLUMN = "column";
 
+	//whether this column is primary key
+	public static final String PRIMARYKEY = "primaryKey";
+	
 	//table column, be default use the attribute name
 	public static final String PROPERTY = "property";
 	
@@ -30,6 +33,10 @@ public class HAPDBColumnInfo extends HAPStringableValueEntity{
 	//the path for the setter method
 	public static final String SETTER_PATH = "setterPath";
 
+	public HAPDBColumnInfo(){
+		this.updateAtomicChildStrValue(PRIMARYKEY, String.valueOf(false));
+	}
+	
 	public String getProperty(){  return this.getAtomicAncestorValueString(PROPERTY);  }
 	public void setProperty(String property){ this.updateAtomicChildStrValue(PROPERTY, property);  }
 	
@@ -44,5 +51,7 @@ public class HAPDBColumnInfo extends HAPStringableValueEntity{
 	
 	public String getSetter(){  return this.getAtomicAncestorValueString(SETTER);  }
 	public String getSetterPath(){  return this.getAtomicAncestorValueString(SETTER_PATH);  }
+	
+	public boolean isPrimaryKey(){  return this.getAtomicAncestorValueBoolean(PRIMARYKEY);  }
 	
 }

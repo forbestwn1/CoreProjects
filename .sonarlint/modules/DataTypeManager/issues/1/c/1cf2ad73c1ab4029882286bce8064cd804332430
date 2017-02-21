@@ -1,14 +1,10 @@
 
-Isquid:S1172""-Remove this unused method parameter "linked".(Ğ®ú–ıÿÿÿÿ
-O"squid:SwitchLastCaseIsDefaultCheck2""Add a default case to this switch.(»•Ó
-ssquid:S00117""VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğ®ú–ıÿÿÿÿ
-asquid:S13012"KReplace this "switch" statement by "if" statements to increase readability.(»•Ó
-Qsquid:S19054"3Remove this unnecessary cast to "HAPDataTypeIdImp".(şûéÂ8¥áµÍ¥+
-Msquid:S1444"*Make this "public static NAME" field final(şìÒÂûÿÿÿÿ8Ù¹öÏ¥+
-ssquid:S3008"URename this field "PARENTINFO" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ı’±Õ8˜ç·¸¥+
+˜squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ï¼ÜË
+Isquid:S1172"-Remove this unused method parameter "linked".(Ğ®ú–ıÿÿÿÿ
+asquid:S1301,"KReplace this "switch" statement by "if" statements to increase readability.(»•Ó
+O"squid:SwitchLastCaseIsDefaultCheck,""Add a default case to this switch.(»•Ó
 rsquid:S3008"ORename this field "NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(şìÒÂûÿÿÿÿ8Ù¹öÏ¥+
-{squid:S3008"XRename this field "LINKEDVERSION" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ãúöşÿÿÿÿ8˜ç·¸¥+
-Nsquid:S1444"0Make this "public static PARENTINFO" field final(ı’±Õ8˜ç·¸¥+
-Vsquid:S1444"3Make this "public static LINKEDVERSION" field final(Ãúöşÿÿÿÿ8˜ç·¸¥+
-˜squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ï¼ÜË
-nsquid:S00117"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø³ï
+Msquid:S1444"*Make this "public static NAME" field final(şìÒÂûÿÿÿÿ8Ù¹öÏ¥+
+nsquid:S00117"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø³ï
+ssquid:S00117"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğ®ú–ıÿÿÿÿ
+Qsquid:S1905."3Remove this unnecessary cast to "HAPDataTypeIdImp".(şûéÂ8¥áµÍ¥+

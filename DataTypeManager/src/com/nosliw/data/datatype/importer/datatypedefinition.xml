@@ -1,4 +1,8 @@
-<entity name="data.datatypedef" class="com.nosliw.data.datatype.importer.HAPDataTypeImpLoad" table="nosliw.DATATYPE" description="this is used to defined data type basic info">
+<entity name="data.datatypedef" 
+		class="com.nosliw.data.datatype.importer.HAPDataTypeImpLoad" 
+		table="nosliw.DATATYPE"
+		primaryKeys="fullName" 
+		description="this is used to defined data type basic info">
 	<property name="info" reference="data.datatypeinfo" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(2000)"/>
@@ -7,7 +11,7 @@
 
 	<property name="name" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="data type info">
 		<dbColumnInfos pathType="propertyAsPath">
-			<dbColumnInfo column="id" definition="VARCHAR(20) NOT NULL PRIMARY KEY" getter="getFullName" setter="setFullName"/>
+			<dbColumnInfo column="fullName" definition="VARCHAR(20) NOT NULL" getter="getFullName" setter="setFullName"/>
 			<dbColumnInfo column="name" definition="VARCHAR(20) NOT NULL" setter="no"/>
 			<dbColumnInfo column="versionFullName" definition="VARCHAR(20) NOT NULL" setter="no"/>
 			<dbColumnInfo column="versionMajor" definition="INT" setter="no"/>
