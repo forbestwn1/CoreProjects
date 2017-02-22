@@ -1,19 +1,33 @@
 package com.nosliw.data.datatype.importer;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.HAPDataTypeOperation;
 import com.nosliw.data.HAPRelationship;
-import com.nosliw.data.HAPOperationInfo;
+import com.nosliw.data.HAPOperation;
 
-public class HAPDataTypeOperationImp implements HAPDataTypeOperation{
+public class HAPDataTypeOperationImp extends HAPOperationImp implements HAPDataTypeOperation{
 
-	public HAPDataTypeOperationImp(HAPOperationInfoImp op){
+	@HAPAttribute
+	public static String ID = "id";
+
+	@HAPAttribute
+	public static String OPERATIONID = "operationId";
+
+	@HAPAttribute
+	public static String TARGET = "target";
+
+	@HAPAttribute
+	public static String SOURCE = "source";
+	
+	@HAPAttribute
+	public static String PATH = "path";
+	
+	public HAPDataTypeOperationImp(HAPOperationImp op){
 		
 	}
 	
 	@Override
-	public HAPOperationInfo getOperationInfo() {
-		return null;
-	}
+	public HAPOperation getOperationInfo() {  return this;  }
 
 	@Override
 	public HAPRelationship getTargetDataType() {

@@ -1,44 +1,32 @@
-<entity name="data.operation" 
-		table="nosliw.DATAOPERATION"
+<entity name="data.datatypeoperation" 
+		table="nosliw.DATATYPEOPERATION"
 		primaryKeys="id" 
-		class="com.nosliw.data.datatype.importer.HAPOperationInfoImp" 
+		class="com.nosliw.data.datatype.importer.HAPDataTypeOperationImp"
+		parent="data.operation" 
 		description="">
 
-	<property name="id" dataType="string" description="">
+	<property name="operationId" dataType="string" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
 		</dbColumnInfos>
 	</property>
 
-	<property name="dataTypeId" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
-		<dbColumnInfos pathType="propertyAsPath">
-			<dbColumnInfo column="dataTypeName" definition="VARCHAR(20)" getter="getName"/>
-			<dbColumnInfo column="versionFullName" definition="VARCHAR(20)"/>
-		</dbColumnInfos>
-	</property>
-
-	<property name="description" dataType="string" description="">
+	<property name="source" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(20)"/>
 		</dbColumnInfos>
 	</property>
 
-	<property name="name" dataType="string" description="">
+	<property name="target" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(20)"/>
 		</dbColumnInfos>
 	</property>
-
-	<property name="type" dataType="string" description="">
+	
+	<property name="path" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPRelationshipPathImp" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(20)"/>
 		</dbColumnInfos>
-	</property>
-
-	<property name="output" reference="data.operationvar" description=""/>
-
-	<property name="parms" type="map" key="name" description="" elementTag="parm">
-		<child reference="data.operationvar"/>
 	</property>
 
 </entity>

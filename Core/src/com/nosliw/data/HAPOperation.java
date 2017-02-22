@@ -15,7 +15,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
  *  This means that in design time both parameter and output may not be a single data type
  */
 @HAPEntityWithAttribute(baseName="DATAOPERATIONINFO")
-public interface HAPOperationInfo {
+public interface HAPOperation {
 
 	@HAPAttribute
 	public static String NAME = "name";
@@ -30,13 +30,13 @@ public interface HAPOperationInfo {
 	public static String OUTPUT = "output";
 	
 	@HAPAttribute
-	public static String DESCRIPTION = "description";
+	public static String INFO = "info";
 
 	String getName();
 
 	String getType();
 	
-	String getDescription();
+	HAPInfo getInfo();
 	
 	Map<String, HAPOperationParmInfo> getParmsInfo();
 	

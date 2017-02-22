@@ -81,9 +81,9 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	}
 	
 	
-	public void saveOperation(HAPOperationInfoImp operation, HAPDataTypeImp dataType){
-		operation.updateAtomicChildStrValue(HAPOperationInfoImp.ID, this.getId()+"");
-		operation.updateAtomicChildObjectValue(HAPOperationInfoImp.DATATYPID, dataType.getName());
+	public void saveOperation(HAPOperationImp operation, HAPDataTypeImp dataType){
+		operation.updateAtomicChildStrValue(HAPOperationImp.ID, this.getId()+"");
+		operation.updateAtomicChildObjectValue(HAPOperationImp.DATATYPID, dataType.getName());
 		HAPSqlUtility.saveToDB(operation, m_connection);
 		
 		Map<String, HAPOperationParmInfo> parms = operation.getParmsInfo();
@@ -110,8 +110,8 @@ public class HAPDBAccess extends HAPConfigurableImp {
 			statement.setString(3, dataTypeInfo.getVersionFullName());
 
 			List<Object> results = HAPSqlUtility.queryFromDB(valuInfoName, statement);
-			HAPOperationInfoImp operationInfo = null;
-			if(results.size()>0)  operationInfo = (HAPOperationInfoImp)results.get(0);
+			HAPOperationImp operationInfo = null;
+			if(results.size()>0)  operationInfo = (HAPOperationImp)results.get(0);
 			
 			
 			

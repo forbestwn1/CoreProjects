@@ -52,3 +52,15 @@ m
 =src/com/nosliw/data/datatype/importer/HAPRelationshipImp.java,4\3\4304130286f62506ba5a2f69b4cb35aee9078372
 n
 >src/com/nosliw/data/datatype/importer/datatyperelationship.xml,d\c\dc52e8e7094a79fb64f0a1e6562478e747856ab0
+i
+9src/com/nosliw/data/datatype/importer/datatypeversion.xml,e\5\e5b64b9c87cd49dd5fb16f96a3e3b0698e863435
+j
+:src/com/nosliw/data/datatype/importer/operationvar.out.xml,4\f\4fcffe68c49322e94e036bb0500d7a9d287a5bc0
+g
+7src/com/nosliw/data/datatype/importer/operationinfo.xml,2\6\2659dbf0cab8407a23d60241fd5ddee32d807dd0
+j
+:src/com/nosliw/data/datatype/importer/HAPOperationImp.java,5\5\5586c4c413593760ce60058b4ad02a1e70c28b27
+c
+3src/com/nosliw/data/datatype/importer/operation.xml,c\0\c04f9337ba122a9b1073a1b2d619d980abcb26ae
+o
+?src/com/nosliw/data/datatype/importer/datatypeoperation.out.xml,8\8\88232308e6f1519d71556563a6478ee1286c7097

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueList;
-import com.nosliw.data.HAPOperationInfo;
+import com.nosliw.data.HAPOperation;
 
 public class HAPDataTypeImpLoad extends HAPDataTypeImp{
 
@@ -17,8 +17,8 @@ public class HAPDataTypeImpLoad extends HAPDataTypeImp{
 		super(Id, name, version, description, parent, linked);
 	}
 
-	public List<HAPOperationInfo> getDataOperationInfos(){
+	public List<HAPOperation> getDataOperationInfos(){
 		HAPStringableValueList list = (HAPStringableValueList)this.getListAncestorByPath(OPERATIONS);
-		return (List<HAPOperationInfo>)list.getListValue();
+		return (List<HAPOperation>)list.getListValue();
 	}
 }

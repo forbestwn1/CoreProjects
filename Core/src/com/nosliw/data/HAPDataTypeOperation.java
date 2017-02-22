@@ -18,7 +18,7 @@ public interface HAPDataTypeOperation {
 	@HAPAttribute
 	public static String TARGETDATATYPE = "targetDataType";
 	
-	HAPOperationInfo getOperationInfo();
+	HAPOperation getOperationInfo();
 	
 	HAPRelationship getTargetDataType();
 	

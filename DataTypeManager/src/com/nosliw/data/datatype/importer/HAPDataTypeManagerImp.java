@@ -18,7 +18,7 @@ import com.nosliw.data.HAPDataTypePicture;
 import com.nosliw.data.HAPDataTypeVersion;
 import com.nosliw.data.HAPExpression;
 import com.nosliw.data.HAPExpressionInfo;
-import com.nosliw.data.HAPOperationInfo;
+import com.nosliw.data.HAPOperation;
 import com.nosliw.data.datatype.util.HAPDBAccess1;
 
 public class HAPDataTypeManagerImp implements HAPDataTypeManager{
@@ -32,9 +32,10 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 				"datatypedefinition.xml",
 				"datatypeid.xml",
 				"datatypeinfo.xml",
+				"operationinfo.xml",
 				"datatypeversion.xml",
 
-				"datatypeoperation.xml",
+				"operation.xml",
 				"operationvar.xml"
 		});
 	}

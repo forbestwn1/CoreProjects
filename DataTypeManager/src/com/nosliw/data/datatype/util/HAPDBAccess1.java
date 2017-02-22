@@ -19,7 +19,7 @@ import com.nosliw.data.HAPDataTypeId;
 import com.nosliw.data.HAPDataTypePicture;
 import com.nosliw.data.HAPOperationOutInfo;
 import com.nosliw.data.HAPOperationParmInfo;
-import com.nosliw.data.datatype.importer.HAPOperationInfoImp;
+import com.nosliw.data.datatype.importer.HAPOperationImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeCriteriaImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeIdImp;
@@ -104,14 +104,14 @@ public class HAPDBAccess1 extends HAPConfigurableImp{
 	}
 	
 	   
-	public void saveOperation(HAPOperationInfoImp operation, HAPDataTypeImp dataType){
+	public void saveOperation(HAPOperationImp operation, HAPDataTypeImp dataType){
 		try {
 			String operationId = this.getId()+"";
 			m_insertOperationStatement.setString(1, operationId);
 			m_insertOperationStatement.setString(2, dataType.getId().getName());
 			m_insertOperationStatement.setString(3, dataType.getId().getVersion().toStringValue(HAPSerializationFormat.LITERATE));
 			m_insertOperationStatement.setString(4, operation.getName());
-			m_insertOperationStatement.setString(5, operation.getDescription());
+			m_insertOperationStatement.setString(5, operation.getInfo());
 			m_insertOperationStatement.execute();
 			
 			Map<String, HAPOperationParmInfo> parms = operation.getParmsInfo();
@@ -214,8 +214,8 @@ public class HAPDBAccess1 extends HAPConfigurableImp{
 		return out;
 	}
 
-	public HAPOperationInfoImp getOperationInfo(String dataTypeName, String dataTypeVersion, String operation){
-		HAPOperationInfoImp out = null;
+	public HAPOperationImp getOperationInfo(String dataTypeName, String dataTypeVersion, String operation){
+		HAPOperationImp out = null;
 		try {
 			this.m_getOperationInfoStatement.setString(1, dataTypeName);
 			this.m_getOperationInfoStatement.setString(2, dataTypeVersion);
@@ -225,7 +225,7 @@ public class HAPDBAccess1 extends HAPConfigurableImp{
 				String id = resultSet.getString(1);
 				String name = resultSet.getString(2);
 				String description = resultSet.getString(3);
-				out = new HAPOperationInfoImp(id, name, description, dataTypeName, dataTypeVersion);
+				out = new HAPOperationImp(id, name, description, dataTypeName, dataTypeVersion);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -234,8 +234,8 @@ public class HAPDBAccess1 extends HAPConfigurableImp{
 	}
 
 	
-	public List<HAPOperationInfoImp> getOperationsInfosByDataTypeInfo(String dataTypeName, String dataTypeVersion){
-		List<HAPOperationInfoImp> out = new ArrayList<HAPOperationInfoImp>();
+	public List<HAPOperationImp> getOperationsInfosByDataTypeInfo(String dataTypeName, String dataTypeVersion){
+		List<HAPOperationImp> out = new ArrayList<HAPOperationImp>();
 		ResultSet resultSet = null;
 		try {
 			if(HAPBasicUtility.isStringEmpty(dataTypeVersion)){
@@ -253,7 +253,7 @@ public class HAPDBAccess1 extends HAPConfigurableImp{
 				dataTypeVersion = resultSet.getString(3);
 				String name = resultSet.getString(4);
 				String description = resultSet.getString(5);
-				out.add(new HAPOperationInfoImp(id, name, description, dataTypeName, dataTypeVersion));
+				out.add(new HAPOperationImp(id, name, description, dataTypeName, dataTypeVersion));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

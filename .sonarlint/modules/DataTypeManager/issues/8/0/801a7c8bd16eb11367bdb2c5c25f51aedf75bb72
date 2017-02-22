@@ -1,14 +1,8 @@
 
-jsquid:UselessImportCheck":Remove this unused import 'com.nosliw.data.HAPDataTypeId'.(é€¸ûûÿÿÿÿ8Ğëûˆ¦+
-hsquid:UselessImportCheck"8Remove this unused import 'com.nosliw.data.HAPDataType'.(Åšá‘ÿÿÿÿÿ8Ğëûˆ¦+
-squid:UselessImportCheck"ORemove this unused import 'com.nosliw.common.strvalue.valueinfo.HAPSqlUtility'.(‘ó¼ûÿÿÿÿ8Ö‘şİ¡+
-Rsquid:S1481x"4Remove this unused "connectDataType" local variable.(´¢‰À8µ¥Œ¦+
-[squid:UselessImportCheck"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8Ş›ß¥+
-asquid:S1854x"CRemove this useless assignment to local variable "connectDataType".(´¢‰À8µ¥Œ¦+
-csquid:CommentedOutCodeLine•"<This block of commented-out lines of code should be removed.(„Şâ
-rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
-rsquid:UselessImportCheck"GRemove this unused import 'com.nosliw.data.datatype.util.HAPDBAccess1'.(ÓòÍ¹8Ö‘şİ¡+
-€squid:UselessImportCheck"PRemove this unused import 'com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo'.(¯èÉğıÿÿÿÿ8Ö‘şİ¡+
-Osquid:S1905x"1Remove this unnecessary cast to "HAPDataTypeImp".(´¢‰À8õÕæŠ¦+
-Xsquid:UselessImportCheck".Remove this unused import 'java.util.HashSet'.(Ê‚êX8¥ëß¥+
-hsquid:CommentedOutCodeLine’"<This block of commented-out lines of code should be removed.(ÊÕÄ´úÿÿÿÿ
+Osquid:S1905v"1Remove this unnecessary cast to "HAPDataTypeImp".(´¢‰À8õÕæŠ¦+
+asquid:S1854v"CRemove this useless assignment to local variable "connectDataType".(´¢‰À8µ¥Œ¦+
+csquid:CommentedOutCodeLine”"<This block of commented-out lines of code should be removed.(„Şâ
+rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
+hsquid:CommentedOutCodeLine‘"<This block of commented-out lines of code should be removed.(ÊÕÄ´úÿÿÿÿ
+Rsquid:S1481v"4Remove this unused "connectDataType" local variable.(´¢‰À8µ¥Œ¦+
+¤squid:S1186M"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ø³Ğşüÿÿÿÿ8ı°Ùº¦+

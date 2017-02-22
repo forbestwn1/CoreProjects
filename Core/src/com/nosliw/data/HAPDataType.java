@@ -39,7 +39,7 @@ public interface HAPDataType extends HAPSerializable{
 	 */
 	HAPDataTypeId getName();
 
-	HAPDataTypeInfo getInfo();
+	HAPInfo getInfo();
 	
 	HAPDataTypeId getParentInfo();
 

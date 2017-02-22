@@ -1,27 +1,19 @@
 package com.nosliw.data.datatype.importer;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterXML;
-import com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo;
-import com.nosliw.common.strvalue.valueinfo.HAPSqlUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.HAPOperationInfo;
+import com.nosliw.data.HAPOperation;
 import com.nosliw.data.HAPRelationship;
 import com.nosliw.data.HAPRelationshipPathSegment;
-import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeId;
 import com.nosliw.data.HAPDataTypePicture;
 import com.nosliw.data.HAPDataTypeProvider;
-import com.nosliw.data.datatype.importer.js.HAPJSImporter;
-import com.nosliw.data.datatype.util.HAPDBAccess1;
 
 public class HAPDataTypeImporterManager {
 	
@@ -38,9 +30,10 @@ public class HAPDataTypeImporterManager {
 				"datatypedefinition.xml",
 				"datatypeid.xml",
 				"datatypeinfo.xml",
+				"operationinfo.xml",
 				"datatypeversion.xml",
 
-				"datatypeoperation.xml",
+				"operation.xml",
 				"operationvar.xml",
 
 				"datatyperelationship.xml"
@@ -48,6 +41,7 @@ public class HAPDataTypeImporterManager {
 
 		this.m_dbAccess.createDBTable("data.datatypedef");
 		this.m_dbAccess.createDBTable("data.operation");
+		this.m_dbAccess.createDBTable("data.datatypeoperation");
 		this.m_dbAccess.createDBTable("data.operationvar");
 		this.m_dbAccess.createDBTable("data.relationship");
 	}
@@ -80,23 +74,27 @@ public class HAPDataTypeImporterManager {
 		}
 	}
 	
+	public void buildDataTypeOperations(){
+		
+	}
+	
 	private void loadDataType(Class cls){
 		InputStream dataTypeStream = cls.getResourceAsStream("datatype.xml");
 		HAPDataTypeImpLoad dataType = (HAPDataTypeImpLoad)HAPStringableEntityImporterXML.readRootEntity(dataTypeStream, "data.datatypedef");
 		dataType.resolveByConfigure(null);
 		m_dbAccess.saveDataType(dataType);
 
-		List<HAPOperationInfo> ops = dataType.getDataOperationInfos();
+		List<HAPOperation> ops = dataType.getDataOperationInfos();
 		InputStream opsStream = cls.getResourceAsStream("operations.xml");
 		if(opsStream!=null){
 			List<HAPStringableValueEntity> ops1 = HAPStringableEntityImporterXML.readMutipleEntitys(opsStream, "data.operation");
 			for(HAPStringableValueEntity op : ops1){
-				ops.add((HAPOperationInfo)op);
+				ops.add((HAPOperation)op);
 			}
 		}
 		
-		for(HAPOperationInfo op : ops){
-			m_dbAccess.saveOperation((HAPOperationInfoImp)op, dataType);
+		for(HAPOperation op : ops){
+			m_dbAccess.saveOperation((HAPOperationImp)op, dataType);
 		}
 	}
 
@@ -142,6 +140,7 @@ public class HAPDataTypeImporterManager {
 		HAPDataTypeImporterManager man = new HAPDataTypeImporterManager();
 		man.loadAllDataType();
 		man.buildDataTypePictures();
+		man.buildDataTypeOperations();
 //		
 //		HAPJSImporter jsImporter = new HAPJSImporter();
 //		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");

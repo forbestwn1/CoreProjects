@@ -1,5 +1,6 @@
 package com.nosliw.data;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,5 +19,6 @@ public interface HAPDataTypePicture {
 	public HAPRelationship getRelationship(HAPDataTypeId dataTypeInfo);
 
 	public Set<? extends HAPRelationship> getRelationships();
-	
+
+	public List<HAPDataTypeOperation> getOperations(); 
 }

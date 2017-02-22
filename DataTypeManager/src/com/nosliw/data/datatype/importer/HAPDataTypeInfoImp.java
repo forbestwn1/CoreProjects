@@ -1,8 +1,12 @@
 package com.nosliw.data.datatype.importer;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
-import com.nosliw.data.HAPDataTypeInfo;
+import com.nosliw.data.HAPInfo;
 
-public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPDataTypeInfo{
+public class HAPDataTypeInfoImp extends HAPStringableValueEntity implements HAPInfo{
+
+	@HAPAttribute
+	public static String DESCRIPTION = "description";
 
 }
