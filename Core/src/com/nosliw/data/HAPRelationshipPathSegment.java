@@ -1,12 +1,13 @@
 package com.nosliw.data;
 
+import com.nosliw.common.serialization.HAPSerialiableImp;
 import com.nosliw.common.utils.HAPConstant;
 
 /**
  * Segment in path that indicate how to convert source data type to target data type
  * There are only two type of segment: parent and linked  
  */
-public class HAPRelationshipPathSegment {
+public class HAPRelationshipPathSegment extends HAPSerialiableImp{
 
 	private static HAPRelationshipPathSegment parent = new HAPRelationshipPathSegment(HAPConstant.DATATYPE_PATHSEGMENT_PARENT);
 	private static HAPRelationshipPathSegment linked = new HAPRelationshipPathSegment(HAPConstant.DATATYPE_PATHSEGMENT_LINKED);
@@ -49,4 +50,9 @@ public class HAPRelationshipPathSegment {
 		}
 		return out;
 	}
+	
+	protected void buildObjectByLiterate(String literateValue){ this.m_segment = Integer.valueOf(literateValue);	}
+	
+	protected String buildLiterate(){  return this.m_segment+""; }
+
 }

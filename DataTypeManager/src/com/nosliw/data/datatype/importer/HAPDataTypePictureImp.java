@@ -34,7 +34,7 @@ public class HAPDataTypePictureImp implements HAPDataTypePicture{
 	}
 
 	public void addRelationship(HAPRelationshipImp relationship){
-		this.m_relationships.put(relationship.getTargetDataType().getId(), relationship);
+		this.m_relationships.put(relationship.getTargetDataType().getName(), relationship);
 	}
 	
 }

@@ -9,6 +9,7 @@ import com.nosliw.common.literate.HAPLiterateType;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.resolve.HAPResolvableString;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
@@ -191,8 +192,8 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	protected void cloneFrom(HAPStringableValueAtomic stringableValue){
 		this.m_strValue = stringableValue.m_strValue.clone();
 		this.m_type = stringableValue.m_type;
-		this.m_value = stringableValue.m_value;
 		this.m_sovled = stringableValue.m_sovled;
+		this.m_value = HAPLiterateManager.getInstance().clone(stringableValue.m_value);
 	}
 
 	@Override

@@ -75,7 +75,7 @@ public class HAPDataTypeImporterManager {
 	public void buildDataTypePictures(){
 		List<HAPDataTypeImp> dataTypes = this.m_dbAccess.getAllDataTypes();
 		for(HAPDataTypeImp dataType : dataTypes){
-			HAPDataTypePictureImp dataTypePic = this.buildDataTypePicture((HAPDataTypeIdImp)dataType.getId());
+			HAPDataTypePictureImp dataTypePic = this.buildDataTypePicture((HAPDataTypeIdImp)dataType.getName());
 			this.m_dbAccess.saveDataTypePicture(dataTypePic);
 		}
 	}
@@ -105,8 +105,8 @@ public class HAPDataTypeImporterManager {
 		HAPDataTypePictureImp out = new HAPDataTypePictureImp(dataType);
 		
 		//self as a relationship as well
-		HAPRelationshipImp self = new HAPRelationshipImp();
-		self.setSource((HAPDataTypeIdImp)dataType.getId());
+		HAPRelationshipImp self = new HAPRelationshipImp(dataType);
+		self.setSource((HAPDataTypeIdImp)dataType.getName());
 		out.addRelationship(self);
 		
 		this.buildDataTypePictureFromConntectedDataType(dataType, out, HAPConstant.DATATYPE_PATHSEGMENT_PARENT);
@@ -124,7 +124,7 @@ public class HAPDataTypeImporterManager {
 			}
 			Set<? extends HAPRelationship> connectRelationships = connectDataTypePic.getRelationships();
 			for(HAPRelationship connectRelationship : connectRelationships){
-				out.addRelationship(((HAPRelationshipImp)connectRelationship).extendPathSegment(HAPRelationshipPathSegment.buildPathSegment(connectType), (HAPDataTypeIdImp)dataType.getId()));
+				out.addRelationship(((HAPRelationshipImp)connectRelationship).extendPathSegment(HAPRelationshipPathSegment.buildPathSegment(connectType), (HAPDataTypeIdImp)dataType.getName()));
 			}
 		}
 	}

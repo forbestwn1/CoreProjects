@@ -2,7 +2,7 @@
 		class="com.nosliw.data.datatype.importer.HAPRelationshipImp"
 		parent="data.datatypedef" 
 		table="nosliw.RELATIONSHIP" 
-		primaryKey="id"
+		primaryKeys="id"
 		description="">
 		
 	<property name="id" dataType="string" description="">

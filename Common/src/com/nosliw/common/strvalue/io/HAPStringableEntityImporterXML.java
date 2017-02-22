@@ -99,6 +99,11 @@ public class HAPStringableEntityImporterXML {
 		
 		HAPStringableValue out = null;
 		try{
+			if("reference".equals(propertyValueInfo.getValueInfoType()) && "info".equals(propertyValueInfo.getName())){
+				int kkkk = 5555;
+				kkkk++;
+			}
+			
 			HAPValueInfo propertyInfo = propertyValueInfo.getSolidValueInfo();
 			String propertyCategary = propertyInfo.getValueInfoType();
 			if(HAPConstant.STRINGALBE_VALUEINFO_LIST.equals(propertyCategary)){

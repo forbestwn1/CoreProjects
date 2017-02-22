@@ -19,5 +19,13 @@ public class HAPRelationshipPath {
 		this.m_segments.add(segment);
 	}
 
+	public void insert(HAPRelationshipPathSegment segment){
+		this.m_segments.add(0, segment);
+	}
+	
+	public void setPath(HAPRelationshipPath path){
+		this.m_segments.clear();
+		this.m_segments.addAll(path.getSegments());
+	}
 	
 }

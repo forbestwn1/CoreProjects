@@ -1,5 +1,6 @@
 package com.nosliw.data.datatype.importer;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPRelationship;
 import com.nosliw.data.HAPRelationshipPath;
@@ -7,33 +8,36 @@ import com.nosliw.data.HAPRelationshipPathSegment;
 
 public class HAPRelationshipImp extends HAPDataTypeImp implements HAPRelationship{
 
-	private String m_id;
+	@HAPAttribute
+	public static String ID = "id";
+
+	@HAPAttribute
+	public static String SOURCE = "source";
 	
-	private HAPDataTypeIdImp m_sourceDataType; 
+	public HAPRelationshipImp(){}
 	
-	private HAPRelationshipPathImp m_path;
-	
-	public HAPRelationshipImp(){
-		this.m_path = new HAPRelationshipPathImp();
+	public HAPRelationshipImp(HAPDataTypeImp target){
+		this.updateAtomicChildObjectValue(PATH, new HAPRelationshipPathImp());
+		this.cloneFrom(target);
 	}
 	
 	@Override
 	public HAPDataType getTargetDataType() {		return this;	}
-
+	
 	@Override
-	public HAPRelationshipPath getPath() {		return this.m_path;	}
+	public HAPRelationshipPath getPath() {		return (HAPRelationshipPathImp)this.getAtomicAncestorValueObject(PATH, HAPRelationshipPathImp.class);	}
 
-	public HAPDataTypeIdImp getSource(){		return this.m_sourceDataType;	}
+	public String getId(){ return this.getAtomicAncestorValueString(ID);  }
+	
+	public HAPDataTypeIdImp getSource(){	return (HAPDataTypeIdImp)this.getAtomicAncestorValueObject(SOURCE, HAPDataTypeIdImp.class);	}
 
-	public void setSource(HAPDataTypeIdImp source){  this.m_sourceDataType=source;  }
-	public void setId(String id){  this.m_id = id;  }
-	public void setPath(HAPRelationshipPathImp path){  this.m_path = path; }
+	public void setSource(HAPDataTypeIdImp source){  this.updateAtomicChildObjectValue(SOURCE, source);  }
+	public void setId(String id){  this.updateAtomicChildStrValue(ID, id);  }
+	public void setPath(HAPRelationshipPath path){		this.getPath().setPath(path);	}
 	
 	public HAPRelationshipImp extendPathSegment(HAPRelationshipPathSegment segment, HAPDataTypeIdImp sourceId){
-		HAPRelationshipImp out = (HAPRelationshipImp)this.clone();
-		out.m_sourceDataType = sourceId;
-		out.m_path = this.m_path.clone();
-		out.m_path.insert(segment);
+		HAPRelationshipImp out = this.clone(HAPRelationshipImp.class);
+		out.getPath().insert(segment);
 		return out;
 	}
 }

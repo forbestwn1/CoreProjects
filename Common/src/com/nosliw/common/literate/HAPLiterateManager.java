@@ -37,6 +37,21 @@ public class HAPLiterateManager {
 		return m_instance;
 	}
 	
+	public Object clone(Object obj){
+		Object out = null;
+		if(obj!=null){
+			if(obj instanceof HAPSerializable){
+				HAPLiterateType literateType = this.getLiterateType(obj);
+				String strValue = this.valueToString(obj);
+				out = this.stringToValue(strValue, literateType);
+			}
+			else{
+				out = obj;
+			}
+		}
+		return out;
+	}
+	
 	public Class getClassByLiterateType(HAPLiterateType literateType){
 		Class out = null;
 		if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT.equals(literateType.getType())){

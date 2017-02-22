@@ -10,6 +10,14 @@ public class HAPValueInfoUtility {
 
 	public static HAPStringableValueEntity validateStringableValueEntity(HAPValueInfoEntity entityValueInfo, HAPStringableValueEntity entity){
 		HAPStringableValueEntity out = null;
+		
+		
+		Boolean b = entityValueInfo.getAtomicAncestorValueBoolean(HAPValueInfoEntity.MANDATORY);
+		if(b==null){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		boolean isMandatory = entityValueInfo.getAtomicAncestorValueBoolean(HAPValueInfoEntity.MANDATORY);
 		if(!isMandatory && entity.isEmpty())   return null;
 		return entity;

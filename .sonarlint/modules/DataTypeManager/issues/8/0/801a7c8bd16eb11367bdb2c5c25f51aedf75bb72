@@ -1,16 +1,14 @@
 
-rsquid:UselessImportCheck"GRemove this unused import 'com.nosliw.data.datatype.util.HAPDBAccess1'.(ÓòÍ¹8Ö‘şİ¡+
-csquid:CommentedOutCodeLine–"<This block of commented-out lines of code should be removed.(„Şâ
-asquid:S1854y"CRemove this useless assignment to local variable "connectDataType".(´¢‰À8µ¥Œ¦+
-hsquid:UselessImportCheck"8Remove this unused import 'com.nosliw.data.HAPDataType'.(Åšá‘ÿÿÿÿÿ8Ğëûˆ¦+
-rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
-hsquid:CommentedOutCodeLine“"<This block of commented-out lines of code should be removed.(ÊÕÄ´úÿÿÿÿ
-Xsquid:UselessImportCheck".Remove this unused import 'java.util.HashSet'.(Ê‚êX8¥ëß¥+
-€squid:UselessImportCheck"PRemove this unused import 'com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo'.(¯èÉğıÿÿÿÿ8Ö‘şİ¡+
-[squid:UselessImportCheck"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8Ş›ß¥+
-Rsquid:S1481y"4Remove this unused "connectDataType" local variable.(´¢‰À8µ¥Œ¦+
-squid:UselessImportCheck"ORemove this unused import 'com.nosliw.common.strvalue.valueinfo.HAPSqlUtility'.(‘ó¼ûÿÿÿÿ8Ö‘şİ¡+
-Osquid:S1905y"1Remove this unnecessary cast to "HAPDataTypeImp".(´¢‰À8õÕæŠ¦+
 jsquid:UselessImportCheck":Remove this unused import 'com.nosliw.data.HAPDataTypeId'.(é€¸ûûÿÿÿÿ8Ğëûˆ¦+
-Fsquid:S1481i")Remove this unused "kkkk" local variable.(«½î8Ï™î’¦+
-Vsquid:S1854j"8Remove this useless assignment to local variable "kkkk".(°ÒÔ8Ï™î’¦+
+hsquid:UselessImportCheck"8Remove this unused import 'com.nosliw.data.HAPDataType'.(Åšá‘ÿÿÿÿÿ8Ğëûˆ¦+
+squid:UselessImportCheck"ORemove this unused import 'com.nosliw.common.strvalue.valueinfo.HAPSqlUtility'.(‘ó¼ûÿÿÿÿ8Ö‘şİ¡+
+Rsquid:S1481x"4Remove this unused "connectDataType" local variable.(´¢‰À8µ¥Œ¦+
+[squid:UselessImportCheck"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8Ş›ß¥+
+asquid:S1854x"CRemove this useless assignment to local variable "connectDataType".(´¢‰À8µ¥Œ¦+
+csquid:CommentedOutCodeLine•"<This block of commented-out lines of code should be removed.(„Şâ
+rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
+rsquid:UselessImportCheck"GRemove this unused import 'com.nosliw.data.datatype.util.HAPDBAccess1'.(ÓòÍ¹8Ö‘şİ¡+
+€squid:UselessImportCheck"PRemove this unused import 'com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo'.(¯èÉğıÿÿÿÿ8Ö‘şİ¡+
+Osquid:S1905x"1Remove this unnecessary cast to "HAPDataTypeImp".(´¢‰À8õÕæŠ¦+
+Xsquid:UselessImportCheck".Remove this unused import 'java.util.HashSet'.(Ê‚êX8¥ëß¥+
+hsquid:CommentedOutCodeLine’"<This block of commented-out lines of code should be removed.(ÊÕÄ´úÿÿÿÿ

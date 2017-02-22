@@ -1,6 +1,5 @@
 package com.nosliw.data.datatype.importer;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPConstant;
@@ -11,9 +10,6 @@ import com.nosliw.data.HAPDataTypeVersion;
 
 @HAPEntityWithAttribute(parent="com.nosliw.data.HAPDataType")
 public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataType{
-
-	@HAPAttribute
-	public static String NAME = "name";
 
 	public HAPDataTypeImp(){}
 
@@ -26,15 +22,15 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	}
 
 	public void init(String Id, String name, String version, String description, String parent, String linked){
-		this.updateAtomicChildStrValue(ID, Id);
-		this.updateAtomicChildStrValue(ID, HAPDataTypeIdImp.buildStringValue(name, version), HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeIdImp.class.getName());
+		this.updateAtomicChildStrValue(NAME, Id);
+		this.updateAtomicChildStrValue(NAME, HAPDataTypeIdImp.buildStringValue(name, version), HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeIdImp.class.getName());
 		this.updateAtomicChildStrValue(INFO, description);
 		this.updateAtomicChildStrValue(PARENTINFO, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeIdImp.class.getName());
 		this.updateAtomicChildStrValue(LINKEDVERSION, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeVersionImp.class.getName());
 	}
 	
 	@Override
-	public HAPDataTypeId getId() {		return (HAPDataTypeIdImp)this.getAtomicValueAncestorByPath(NAME);	}
+	public HAPDataTypeId getName() {		return (HAPDataTypeIdImp)this.getAtomicValueAncestorByPath(NAME);	}
 	public void setId(String id){		this.updateAtomicChildStrValue(NAME, id, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);	}
 
 	
@@ -62,7 +58,7 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 
 	public HAPDataTypeIdImp getLinkedDataTypeId(){
 		if(this.getLinkedVersion()==null)  return null;
-		else return new HAPDataTypeIdImp(this.getId().getName(), this.getLinkedVersion());	
+		else return new HAPDataTypeIdImp(this.getName().getName(), this.getLinkedVersion());	
 	}
 	
 	@Override

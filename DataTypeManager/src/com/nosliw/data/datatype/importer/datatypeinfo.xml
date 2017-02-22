@@ -1,4 +1,6 @@
-<entity name="data.datatypeinfo" description="data type info" class="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp">
+<entity name="data.datatypeinfo" 
+		description="data type info" 
+		class="com.nosliw.data.datatype.importer.HAPDataTypeInfoImp">
 
 	<property name="description" dataType="string" description=""/>
 

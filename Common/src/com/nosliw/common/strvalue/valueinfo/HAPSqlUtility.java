@@ -153,8 +153,11 @@ public class HAPSqlUtility {
 					if(statement==null || columnValue==null){
 						int kkkk = 5555;
 						kkkk++;
+						statement.setObject(i+1, null);
 					}
-					statement.setInt(i+1, (Integer)columnValue);
+					else{
+						statement.setInt(i+1, (Integer)columnValue);
+					}
 				}
 				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_BOOLEAN.equals(dataType)){
 					statement.setBoolean(i+1, (Boolean)columnValue);
