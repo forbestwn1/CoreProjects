@@ -56,7 +56,28 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	}
 
 	public HAPDataTypePictureImp getDataTypePicture(HAPDataTypeIdImp dataTypeId){
-		return null;
+		HAPDataTypePictureImp out = null;
+		
+		try {
+			String valuInfoName = "data.relationship";
+			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valuInfoName);
+			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "source=?");
+
+			PreparedStatement statement = m_connection.prepareStatement(sql);
+			statement.setString(1, dataTypeId.getName());
+
+			List<Object> results = HAPSqlUtility.queryFromDB(valuInfoName, statement);
+			if(results.size()>0){
+				HAPDataTypeImp sourceDataType = this.getDataType(dataTypeId);
+				out = new HAPDataTypePictureImp(sourceDataType);
+				for(Object result : results){
+					out.addRelationship((HAPRelationshipImp)result);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return out;
 	}
 	
 	
@@ -121,7 +142,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		HAPDataTypeImp sourceDataTypeImp = (HAPDataTypeImp)pic.getSourceDataType();
 		
 		for(HAPRelationship relationship : relationships){
-			
+			((HAPRelationshipImp)relationship).setId(this.getId()+"");
 			HAPSqlUtility.saveToDB((HAPStringableValueEntity)relationship, m_connection);
 		}
 	}
@@ -136,11 +157,6 @@ public class HAPDBAccess extends HAPConfigurableImp {
 			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "name=? AND versionFullName=?");
 
 			PreparedStatement statement = m_connection.prepareStatement(sql);
-			
-			if(dataTypeInfo==null){
-				int kkkkk = 5555;
-				kkkkk++;
-			}
 			
 			statement.setString(1, dataTypeInfo.getName());
 			statement.setString(2, HAPLiterateManager.getInstance().valueToString(dataTypeInfo.getVersionFullName()));

@@ -42,41 +42,21 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	
 	private boolean m_sovled = false;
 	
-	private void checkStrValue(){
-		if(this.m_strValue!=null && this.m_strValue.toString()!=null){
-			if(this.m_strValue.toString().contains("\"name\": \"core.text\",")){
-				int kkkk = 555;
-				kkkk++;
-			}
-		}
-	}
-	
 	public HAPStringableValueAtomic(String strValue, String type, String subType, String defaultValue){
 		if(strValue!=null)		this.setStringContent(new HAPResolvableString(strValue), type, subType);
 		else	this.setStringContent(new HAPResolvableString(defaultValue), type, subType);
-		
-		checkStrValue();
 	}
 
 	public HAPStringableValueAtomic(String strValue, String type, String subType){
 		this(new HAPResolvableString(strValue), type, subType);
-
-		
-		checkStrValue();
 	}
 
 	public HAPStringableValueAtomic(HAPResolvableString strValue, String type, String subType){
 		this.setStringContent(strValue, type, subType);
-
-		
-		checkStrValue();
 	}
 	
 	public HAPStringableValueAtomic(String strValue){
 		this(strValue, null, null);
-
-		
-		checkStrValue();
 	}
 
 	public HAPStringableValueAtomic(){}
@@ -103,17 +83,11 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	public void setStringContent(String content){ 
 		this.m_strValue.setValue(content);
 		this.m_sovled = false;
-
-		
-		checkStrValue();
 	}
 	private void setStringContent(HAPResolvableString strValue, String type, String subType){
 		this.m_strValue = strValue;
 		this.m_type = new HAPLiterateType(type, subType);
 		this.m_sovled = false;
-
-		
-		checkStrValue();
 	}
 	
 

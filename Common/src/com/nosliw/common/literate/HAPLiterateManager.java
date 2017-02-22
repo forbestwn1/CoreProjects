@@ -107,12 +107,6 @@ public class HAPLiterateManager {
 	}
 	
 	private HAPLiterateDef getLiterateDefByObject(Object value){
-		
-		if(value==null){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		return this.getLiterateDefByClass(value.getClass());
 	}
 

@@ -150,6 +150,10 @@ public class HAPSqlUtility {
 					statement.setString(i+1, (String)columnValue);
 				}
 				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER.equals(dataType)){
+					if(statement==null || columnValue==null){
+						int kkkk = 5555;
+						kkkk++;
+					}
 					statement.setInt(i+1, (Integer)columnValue);
 				}
 				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_BOOLEAN.equals(dataType)){

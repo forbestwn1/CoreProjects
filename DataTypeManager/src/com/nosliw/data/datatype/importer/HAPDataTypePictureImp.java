@@ -16,8 +16,6 @@ public class HAPDataTypePictureImp implements HAPDataTypePicture{
 	
 	private Map<HAPDataTypeId, HAPRelationshipImp> m_relationships;
 	
-	public static String NODES = "nodes";
-	
 	public HAPDataTypePictureImp(HAPDataTypeImp mainDataType){
 		this.m_relationships = new LinkedHashMap<HAPDataTypeId, HAPRelationshipImp>();
 	}

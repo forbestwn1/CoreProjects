@@ -13,6 +13,10 @@ public class HAPRelationshipImp extends HAPDataTypeImp implements HAPRelationshi
 	
 	private HAPRelationshipPathImp m_path;
 	
+	public HAPRelationshipImp(){
+		this.m_path = new HAPRelationshipPathImp();
+	}
+	
 	@Override
 	public HAPDataType getTargetDataType() {		return this;	}
 

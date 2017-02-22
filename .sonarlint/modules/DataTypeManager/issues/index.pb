@@ -40,8 +40,6 @@ v
 Fsrc/com/nosliw/data/datatype/importer/HAPResourceDataOperationImp.java,c\1\c18a9f27a68c1394b0c94b69b0d6021c863c017a
 f
 6src/com/nosliw/data/datatype/importer/operationvar.xml,b\8\b83d4aced116a2dc3ba803fb6c5b206f25796e8b
-t
-Dsrc/com/nosliw/data/datatype/importer/HAPDataTypePictureNodeImp.java,2\9\29545de162c9d56c727afee5f228b60a502d5cc2
 p
 @src/com/nosliw/data/datatype/importer/HAPDataTypePictureImp.java,7\1\7186945244ca93b11b205605b92b156e139e753d
 d
@@ -54,5 +52,3 @@ m
 =src/com/nosliw/data/datatype/importer/HAPRelationshipImp.java,4\3\4304130286f62506ba5a2f69b4cb35aee9078372
 n
 >src/com/nosliw/data/datatype/importer/datatyperelationship.xml,d\c\dc52e8e7094a79fb64f0a1e6562478e747856ab0
-p
-@src/com/nosliw/data/datatype/importer/datatypedefinition.out.xml,2\4\242394e99c2de695af49d3592761e570e0be302a

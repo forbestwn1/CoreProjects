@@ -101,14 +101,13 @@ public class HAPDataTypeImporterManager {
 	}
 
 	private HAPDataTypePictureImp buildDataTypePicture(HAPDataTypeIdImp dataTypeId){
-		if("core.url;1.0.0".equals(dataTypeId.getFullName())){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
-		
 		HAPDataTypeImp dataType = this.getDataType(dataTypeId);
 		HAPDataTypePictureImp out = new HAPDataTypePictureImp(dataType);
+		
+		//self as a relationship as well
+		HAPRelationshipImp self = new HAPRelationshipImp();
+		self.setSource((HAPDataTypeIdImp)dataType.getId());
+		out.addRelationship(self);
 		
 		this.buildDataTypePictureFromConntectedDataType(dataType, out, HAPConstant.DATATYPE_PATHSEGMENT_PARENT);
 		this.buildDataTypePictureFromConntectedDataType(dataType, out, HAPConstant.DATATYPE_PATHSEGMENT_LINKED);
