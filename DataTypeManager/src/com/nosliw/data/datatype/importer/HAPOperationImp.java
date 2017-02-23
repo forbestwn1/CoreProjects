@@ -19,7 +19,7 @@ public class HAPOperationImp extends HAPStringableValueEntity implements HAPOper
 	public static String TYPE = "type";
 	
 	@HAPAttribute
-	public static String DATATYPID = "dataTypeId";
+	public static String DATATYPNAME = "dataTypeName";
 	
 	@Override
 	public String getName() {		return this.getAtomicAncestorValueString(NAME);	}
@@ -29,7 +29,7 @@ public class HAPOperationImp extends HAPStringableValueEntity implements HAPOper
 
 	public String getId(){		return this.getAtomicAncestorValueString(ID);	}
 
-	public HAPDataTypeIdImp getDataTypeId(){ return (HAPDataTypeIdImp)this.getAtomicAncestorValueObject(DATATYPID, HAPDataTypeIdImp.class); }
+	public HAPDataTypeIdImp getDataTypeName(){ return (HAPDataTypeIdImp)this.getAtomicAncestorValueObject(DATATYPNAME, HAPDataTypeIdImp.class); }
 	
 	@Override
 	public Map<String, HAPOperationParmInfo> getParmsInfo() {

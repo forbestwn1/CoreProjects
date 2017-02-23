@@ -1,19 +1,19 @@
 
-Nsquid:S1135u"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
-rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
-Isquid:S11689"+Return an empty collection instead of null.(¥¹ï8›¬’±¢+
-Nsquid:S11358"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
-rsquid:UselessImportCheck"GRemove this unused import 'com.nosliw.data.datatype.util.HAPDBAccess1'.(ÓòÍ¹8³›‹±¢+
-Nsquid:S1135b"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
-Nsquid:S1135{"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
-osquid:UselessImportCheck"?Remove this unused import 'com.nosliw.data.HAPDataTypePicture'.(„ˆ˜´üÿÿÿÿ8ð‡¦+
-[squid:UselessImportCheck"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8é‚šß¥+
-hsquid:CommentedOutCodeLine>"<This block of commented-out lines of code should be removed.(Ñâøe8»á‘±¢+
-Usquid:S1135i"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ8›¬’±¢+
-Zsquid:UselessImportCheck"*Remove this unused import 'java.util.Set'.(ö²„¤þÿÿÿÿ8ð‡¦+
-Xsquid:UselessImportCheck".Remove this unused import 'java.util.HashSet'.(Ê‚êX8¤ñŽß¥+
-Nsquid:S1135o"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
-Usquid:S1135\"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ8›¬’±¢+
 wsquid:UselessImportCheck"GRemove this unused import 'com.nosliw.data.HAPRelationshipPathSegment'.( ´þøÿÿÿÿ8ð‡¦+
+Usquid:S1135r"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ8›¬’±¢+
+Nsquid:S1135l"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
+rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
+Isquid:S1168<"+Return an empty collection instead of null.(¥¹ï8›¬’±¢+
 Y
-squid:S106¨";Replace this usage of System.out or System.err by a logger.(Í§†ß8±‹Ïì¢+
+squid:S106«";Replace this usage of System.out or System.err by a logger.(Í§†ß8±‹Ïì¢+
+Zsquid:UselessImportCheck"*Remove this unused import 'java.util.Set'.(ö²„¤þÿÿÿÿ8ð‡¦+
+[squid:UselessImportCheck"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8é‚šß¥+
+Nsquid:S1135;"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
+Usquid:S1135x"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ8›¬’±¢+
+Xsquid:UselessImportCheck".Remove this unused import 'java.util.HashSet'.(Ê‚êX8¤ñŽß¥+
+osquid:UselessImportCheck"?Remove this unused import 'com.nosliw.data.HAPDataTypePicture'.(„ˆ˜´üÿÿÿÿ8ð‡¦+
+Nsquid:S1135_"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
+rsquid:UselessImportCheck"GRemove this unused import 'com.nosliw.data.datatype.util.HAPDBAccess1'.(ÓòÍ¹8³›‹±¢+
+Nsquid:S1135~"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ
+hsquid:CommentedOutCodeLineA"<This block of commented-out lines of code should be removed.(Ñâøe8»á‘±¢+
+Nsquid:S1135e"2Complete the task associated to this TODO comment.(» æžÿÿÿÿÿ

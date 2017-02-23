@@ -36,7 +36,10 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 				"datatypeversion.xml",
 
 				"operation.xml",
-				"operationvar.xml"
+				"operationvar.xml",
+				"datatypeoperation.xml",
+
+				"datatyperelationship.xml"
 		});
 	}
 	

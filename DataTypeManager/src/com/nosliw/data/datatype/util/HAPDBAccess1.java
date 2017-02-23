@@ -132,7 +132,7 @@ public class HAPDBAccess1 extends HAPConfigurableImp{
 				m_insertParmStatement.setString(2, operationId);
 				m_insertParmStatement.setString(3, "output");
 				m_insertParmStatement.setString(4, null);
-				m_insertParmStatement.setString(5, ((HAPDataTypeIdImp)outputInfo.getDataTypeId()).toStringValue(HAPSerializationFormat.LITERATE));
+				m_insertParmStatement.setString(5, ((HAPDataTypeIdImp)outputInfo.getDataTypeName()).toStringValue(HAPSerializationFormat.LITERATE));
 				m_insertParmStatement.setString(6, outputInfo.getDescription());
 				m_insertParmStatement.execute();
 			}

@@ -17,7 +17,7 @@ public interface HAPRelationship {
 	 * Get target data type that source have relationship with 
 	 * @return
 	 */
-	HAPDataType getTargetDataType();
+	HAPDataTypeId getTargetDataTypeName();
 	
 	/**
 	 * Get path from source data type to target data type

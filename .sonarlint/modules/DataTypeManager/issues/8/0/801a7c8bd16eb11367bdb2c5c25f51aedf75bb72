@@ -1,8 +1,11 @@
 
-Osquid:S1905v"1Remove this unnecessary cast to "HAPDataTypeImp".(¥¢â¿8ı’Êä¶+
-asquid:S1854v"CRemove this useless assignment to local variable "connectDataType".(¥¢â¿8ùµ•å¶+
-csquid:CommentedOutCodeLineî"<This block of commented-out lines of code should be removed.(Ñﬁù‚
-rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(≥◊∑ÿˇˇˇˇˇ
-hsquid:CommentedOutCodeLineë"<This block of commented-out lines of code should be removed.( ’ƒ¥˙ˇˇˇˇ
-Rsquid:S1481v"4Remove this unused "connectDataType" local variable.(¥¢â¿8ùµ•å¶+
-§squid:S1186M"ÄAdd a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¯≥–˛¸ˇˇˇˇ8˝∞Ÿ∫¶+
+Ssquid:S1481Å"4Remove this unused "connectDataType" local variable.(¥¢â¿8ùµ•å¶+
+hsquid:CommentedOutCodeLineú"<This block of commented-out lines of code should be removed.( ’ƒ¥˙ˇˇˇˇ
+Psquid:S1481Q"-Remove this unused "dataType" local variable.(ŸÅ™±˘ˇˇˇˇ8˛·‘ ¶+
+rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(≥◊∑ÿˇˇˇˇˇ
+Psquid:S1905Å"1Remove this unnecessary cast to "HAPDataTypeImp".(¥¢â¿8ı’Êä¶+
+üsquid:S1186X"ÄAdd a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(°˝„ƒ8¬ËîÀ¶+
+bsquid:S1854Å"CRemove this useless assignment to local variable "connectDataType".(¥¢â¿8ùµ•å¶+
+Msquid:S00108Q")Either remove or fill this block of code.(ŸÅ™±˘ˇˇˇˇ8˛·‘ ¶+
+csquid:CommentedOutCodeLineü"<This block of commented-out lines of code should be removed.(Ñﬁù‚
+qsquid:UselessImportCheck"ARemove this unused import 'com.nosliw.data.HAPDataTypeOperation'.(ØÉúÒ˘ˇˇˇˇ8™“óÀ¶+

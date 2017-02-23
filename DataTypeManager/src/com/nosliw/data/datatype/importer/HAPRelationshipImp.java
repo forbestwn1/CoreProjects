@@ -2,6 +2,7 @@ package com.nosliw.data.datatype.importer;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.HAPDataType;
+import com.nosliw.data.HAPDataTypeId;
 import com.nosliw.data.HAPRelationship;
 import com.nosliw.data.HAPRelationshipPath;
 import com.nosliw.data.HAPRelationshipPathSegment;
@@ -22,10 +23,12 @@ public class HAPRelationshipImp extends HAPDataTypeImp implements HAPRelationshi
 	}
 	
 	@Override
-	public HAPDataType getTargetDataType() {		return this;	}
+	public HAPDataTypeId getTargetDataTypeName() {		return this.getName();	}
 	
 	@Override
 	public HAPRelationshipPath getPath() {		return (HAPRelationshipPathImp)this.getAtomicAncestorValueObject(PATH, HAPRelationshipPathImp.class);	}
+
+	public HAPDataType getTargetDataType() {		return this;	}
 
 	public String getId(){ return this.getAtomicAncestorValueString(ID);  }
 	

@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPOperation;
 import com.nosliw.data.HAPRelationship;
 import com.nosliw.data.HAPRelationshipPathSegment;
+import com.nosliw.data.HAPDataTypeOperation;
 import com.nosliw.data.HAPDataTypePicture;
 import com.nosliw.data.HAPDataTypeProvider;
 
@@ -35,6 +36,7 @@ public class HAPDataTypeImporterManager {
 
 				"operation.xml",
 				"operationvar.xml",
+				"datatypeoperation.xml",
 
 				"datatyperelationship.xml"
 		});
@@ -75,6 +77,15 @@ public class HAPDataTypeImporterManager {
 	}
 	
 	public void buildDataTypeOperations(){
+		List<HAPDataTypeImp> dataTypes = this.m_dbAccess.getAllDataTypes();
+		for(HAPDataTypeImp dataType : dataTypes){
+			
+		
+		
+		}
+	}
+	
+	public List<HAPDataTypeOperationImp> getDataTypeOperations(HAPDataTypeIdImp dataTypeId){
 		
 	}
 	
