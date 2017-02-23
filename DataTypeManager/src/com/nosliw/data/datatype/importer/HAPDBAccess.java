@@ -86,6 +86,11 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		return out;
 	}
 	
+	public void saveDataTypeOperation(List<HAPDataTypeOperationImp> dataTypeOperations){
+		for(HAPDataTypeOperationImp dataTypeOperation : dataTypeOperations){
+			HAPSqlUtility.saveToDB(dataTypeOperation, this.m_connection);
+		}
+	}
 	
 	public void saveOperation(HAPOperationImp operation, HAPDataTypeImp dataType){
 		operation.updateAtomicChildStrValue(HAPOperationImp.ID, this.getId()+"");
@@ -126,24 +131,8 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	
 	
 	public HAPDataTypeImp getDataType(HAPDataTypeId dataTypeInfo) {
-		HAPDataTypeImp out = null;
-		
-		try {
-			String valuInfoName = "data.datatypedef";
-			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valuInfoName);
-			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "name=? AND versionFullName=?");
-
-			PreparedStatement statement = m_connection.prepareStatement(sql);
-			
-			statement.setString(1, dataTypeInfo.getName());
-			statement.setString(2, HAPLiterateManager.getInstance().valueToString(((HAPDataTypeIdImp)dataTypeInfo).getVersionFullName()));
-
-			List<Object> results = HAPSqlUtility.queryFromDB(valuInfoName, statement);
-			if(results.size()>0)  out = (HAPDataTypeImp)results.get(0);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return out;
+		return (HAPDataTypeImp)this.queryEntityFromDB("data.datatypedef", "name=? AND versionFullName=?",
+				new Object[]{dataTypeInfo.getName(), HAPLiterateManager.getInstance().valueToString(((HAPDataTypeIdImp)dataTypeInfo).getVersionFullName())});
 	}
 	
 	
