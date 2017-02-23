@@ -40,6 +40,7 @@ public class HAPRelationshipImp extends HAPDataTypeImp implements HAPRelationshi
 	
 	public HAPRelationshipImp extendPathSegment(HAPRelationshipPathSegment segment, HAPDataTypeIdImp sourceId){
 		HAPRelationshipImp out = this.clone(HAPRelationshipImp.class);
+		out.setSource(sourceId);
 		out.getPath().insert(segment);
 		return out;
 	}

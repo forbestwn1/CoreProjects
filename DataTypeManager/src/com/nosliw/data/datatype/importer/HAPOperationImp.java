@@ -30,6 +30,7 @@ public class HAPOperationImp extends HAPStringableValueEntity implements HAPOper
 	public String getId(){		return this.getAtomicAncestorValueString(ID);	}
 
 	public HAPDataTypeIdImp getDataTypeName(){ return (HAPDataTypeIdImp)this.getAtomicAncestorValueObject(DATATYPNAME, HAPDataTypeIdImp.class); }
+	public void setDataTypeName(HAPDataTypeIdImp dataTypeId){  this.updateAtomicChildObjectValue(DATATYPNAME, dataTypeId);  }
 	
 	@Override
 	public Map<String, HAPOperationParmInfo> getParmsInfo() {

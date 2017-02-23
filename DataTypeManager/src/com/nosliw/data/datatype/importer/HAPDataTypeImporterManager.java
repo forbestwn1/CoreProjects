@@ -80,13 +80,30 @@ public class HAPDataTypeImporterManager {
 		List<HAPDataTypeImp> dataTypes = this.m_dbAccess.getAllDataTypes();
 		for(HAPDataTypeImp dataType : dataTypes){
 			
-		
-		
+			
 		}
 	}
 	
-	public List<HAPDataTypeOperationImp> getDataTypeOperations(HAPDataTypeIdImp dataTypeId){
+	private List<HAPDataTypeOperationImp> buildDataTypeOperations(HAPDataTypeImp dataType){
+		List<HAPDataTypeOperationImp> out = this.m_dbAccess.getDataTypeOperations(dataType.getName());
+		if(out.size()==0){
+			//not build yet
+			HAPDataTypePictureImp pic = this.m_dbAccess.getDataTypePicture(dataType.getName());
+			HAPRelationshipImp parentRelationship = pic.getRelationship(dataType.getParentInfo());
+			
+			List<HAPDataTypeOperationImp> parentDataTypeOperations = buildDataTypeOperations(parentRelationship);
+			for(HAPDataTypeOperationImp dataTypeOp : parentDataTypeOperations){
+				HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(HAPRelationshipPathSegment.buildPathSegmentForParent(), (HAPDataTypeIdImp)pic.getSourceDataType().getName());
+				out.add(dataTypeOperation);
+			}
+		}
 		
+		List<HAPOperationImp> ownOperations = this.m_dbAccess.getOperationInfosByDataType((HAPDataTypeIdImp)dataType.getName());
+		for(HAPOperationImp ownOperation : ownOperations){
+			out.add(new HAPDataTypeOperationImp(ownOperation));
+		}
+		
+		return out;
 	}
 	
 	private void loadDataType(Class cls){

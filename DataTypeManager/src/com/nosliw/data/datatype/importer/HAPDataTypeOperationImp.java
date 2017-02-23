@@ -5,6 +5,7 @@ import com.nosliw.data.HAPDataTypeId;
 import com.nosliw.data.HAPDataTypeOperation;
 import com.nosliw.data.HAPRelationship;
 import com.nosliw.data.HAPRelationshipPath;
+import com.nosliw.data.HAPRelationshipPathSegment;
 import com.nosliw.data.HAPOperation;
 
 public class HAPDataTypeOperationImp extends HAPOperationImp implements HAPRelationship, HAPDataTypeOperation{
@@ -15,7 +16,14 @@ public class HAPDataTypeOperationImp extends HAPOperationImp implements HAPRelat
 	@HAPAttribute
 	public static String TARGETDATATYPENAME = "targetDataTypeName";
 
-	public HAPDataTypeOperationImp(HAPOperationImp op){
+	public HAPDataTypeOperationImp(HAPOperationImp targetOperation, HAPRelationshipImp relationship){
+		this.cloneFrom(targetOperation);
+		this.updateAtomicChildObjectValue(TARGETDATATYPENAME, relationship.getTargetDataTypeName());
+		this.updateAtomicChildObjectValue(PATH, relationship.getPath());
+		this.setOperationId(targetOperation.getId());
+	}
+	
+	public HAPDataTypeOperationImp(HAPOperationImp operation){
 		
 	}
 	
@@ -32,4 +40,12 @@ public class HAPDataTypeOperationImp extends HAPOperationImp implements HAPRelat
 	public HAPRelationshipPath getPath() {		return (HAPRelationshipPathImp)this.getAtomicAncestorValueObject(PATH, HAPRelationshipPathImp.class);	}
 
 	public String getOperationId(){ return this.getAtomicAncestorValueString(OPERATIONID);  }
+	public void setOperationId(String opId){ this.updateAtomicChildStrValue(OPERATIONID, opId);  }
+	
+	public HAPDataTypeOperationImp extendPathSegment(HAPRelationshipPathSegment segment, HAPDataTypeIdImp sourceId){
+		HAPDataTypeOperationImp out = this.clone(HAPDataTypeOperationImp.class);
+		out.getPath().insert(segment);
+		out.setDataTypeName(sourceId);
+		return out;
+	}
 }

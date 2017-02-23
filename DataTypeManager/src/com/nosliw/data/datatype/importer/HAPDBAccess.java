@@ -21,6 +21,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.HAPDataType;
 import com.nosliw.data.HAPDataTypeId;
 import com.nosliw.data.HAPDataTypeOperation;
+import com.nosliw.data.HAPOperation;
 import com.nosliw.data.HAPOperationParmInfo;
 import com.nosliw.data.HAPRelationship;
 
@@ -55,7 +56,12 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		this.m_id = System.currentTimeMillis();
 	}
 
-	public HAPDataTypePictureImp getDataTypePicture(HAPDataTypeIdImp dataTypeId){
+	public List<HAPDataTypeOperationImp> getDataTypeOperations(HAPDataTypeId dataTypeId){
+		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB("data.datatypeoperation", "dataTypeName=?", new Object[]{dataTypeId.getName()});
+	}
+	
+	
+	public HAPDataTypePictureImp getDataTypePicture(HAPDataTypeId dataTypeId){
 		HAPDataTypePictureImp out = null;
 		
 		try {
@@ -95,46 +101,17 @@ public class HAPDBAccess extends HAPConfigurableImp {
 			HAPSqlUtility.saveToDB(parm, this.m_connection);
 		}		
 	}
+
+	public List<HAPOperationImp> getOperationInfosByDataType(HAPDataTypeIdImp dataTypeName){
+		return (List<HAPOperationImp>)this.queryEntityFromDB("data.operation", "dataTypeName=? AND versionFullName=?", new Object[]{dataTypeName.getName(), dataTypeName.getVersionFullName()});
+	}
 	
-	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeIdImp dataTypeInfo, String name) {
-		HAPDataTypeOperationImp out = null;
-		
-		try {
-			String valuInfoName = "data.operation";
-			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valuInfoName);
-			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "name=? AND dataTypeName=? AND versionFullName=?");
-
-			PreparedStatement statement = m_connection.prepareStatement(sql);
-			statement.setString(1, name);
-			statement.setString(2, dataTypeInfo.getName());
-			statement.setString(3, dataTypeInfo.getVersionFullName());
-
-			List<Object> results = HAPSqlUtility.queryFromDB(valuInfoName, statement);
-			HAPOperationImp operationInfo = null;
-			if(results.size()>0)  operationInfo = (HAPOperationImp)results.get(0);
-			
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return out;
+	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeIdImp dataTypeName, String name) {
+		return (HAPDataTypeOperation)this.queryEntityFromDB("data.operation", "name=? AND dataTypeName=? AND versionFullName=?", new Object[]{name, dataTypeName.getName(), dataTypeName.getVersionFullName()});
 	}
 	
 	public List<HAPDataTypeImp> getAllDataTypes(){
-		List out = new ArrayList<HAPDataTypeImp>();
-		
-		try {
-			String valuInfoName = "data.datatypedef";
-			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valuInfoName);
-			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "");
-
-			PreparedStatement statement = m_connection.prepareStatement(sql);
-			out = HAPSqlUtility.queryFromDB(valuInfoName, statement);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return out;
+		return this.queryEntitysFromDB("data.datatypedef", "", null);
 	}
 	
 	public void saveDataTypePicture(HAPDataTypePictureImp pic){
@@ -148,7 +125,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	}
 	
 	
-	public HAPDataTypeImp getDataType(HAPDataTypeIdImp dataTypeInfo) {
+	public HAPDataTypeImp getDataType(HAPDataTypeId dataTypeInfo) {
 		HAPDataTypeImp out = null;
 		
 		try {
@@ -159,7 +136,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 			PreparedStatement statement = m_connection.prepareStatement(sql);
 			
 			statement.setString(1, dataTypeInfo.getName());
-			statement.setString(2, HAPLiterateManager.getInstance().valueToString(dataTypeInfo.getVersionFullName()));
+			statement.setString(2, HAPLiterateManager.getInstance().valueToString(((HAPDataTypeIdImp)dataTypeInfo).getVersionFullName()));
 
 			List<Object> results = HAPSqlUtility.queryFromDB(valuInfoName, statement);
 			if(results.size()>0)  out = (HAPDataTypeImp)results.get(0);
@@ -195,5 +172,33 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	private long getId(){
 		this.m_id++;
 		return this.m_id;
+	}
+	
+	private List queryEntitysFromDB(String valueInfoName, String query, Object[] parms){
+		List<Object> out = new ArrayList<Object>();
+		
+		try {
+			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valueInfoName);
+			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), query);
+
+			PreparedStatement statement = m_connection.prepareStatement(sql);
+			if(parms!=null){
+				for(int i=0; i<parms.length; i++){
+					statement.setObject(i+1, parms[i]);
+				}
+			}
+
+			out = HAPSqlUtility.queryFromDB(valueInfoName, statement);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
+	
+	private Object queryEntityFromDB(String valueInfoName, String query, Object[] parms){
+		Object out = null;
+		List entitys = this.queryEntitysFromDB(valueInfoName, query, parms);
+		if(entitys.size()>0)  out = entitys.get(0);
+		return out;
 	}
 }
