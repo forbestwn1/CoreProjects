@@ -1,17 +1,25 @@
-<definition name="core.url;1.1.0" parentInfo="core.text;1.0.0" linkedVersion="1.0.0" description="description">
+<definition name="core.url;1.1.0" linkedVersion="1.0.0" description="description">
 	
 	<info description="core.url;1.1.0 description"/>
 	
 	<operations>
 	
-		<operation name="host" >
+		<operation name="url_normal2" >
 			<parms>
 				<parm name="aa" criteria="core.text"/>
 				<parm name="bb" criteria="core.text"/>
 			</parms>
+			<output criteria="core.text"/>
+		</operation>
+
+		<operation name="url_normal3" >
+			<parms>
+				<parm name="aa" criteria="core.text"/>
+				<parm name="bb" criteria="core.text"/>
+			</parms>
+			<output criteria="core.text"/>
 		</operation>
 	
-		<output criteria="core.text"/>
 	
 	</operations>
 	

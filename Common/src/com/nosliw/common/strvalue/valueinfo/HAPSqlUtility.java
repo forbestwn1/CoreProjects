@@ -28,11 +28,6 @@ import com.nosliw.common.utils.HAPFileUtility;
 public class HAPSqlUtility {
 
 	public static String dropoffTableSql(HAPDBTableInfo tableInfo){
-		if(tableInfo==null){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		return "DROP TABLE IF EXISTS " + tableInfo.getTableName() + ";";
 	}
 	
@@ -156,8 +151,6 @@ public class HAPSqlUtility {
 				}
 				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER.equals(dataType)){
 					if(statement==null || columnValue==null){
-						int kkkk = 5555;
-						kkkk++;
 						statement.setObject(i+1, null);
 					}
 					else{
@@ -195,7 +188,7 @@ public class HAPSqlUtility {
 		try {
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()){
-				HAPValueInfoEntity valueInfo = (HAPValueInfoEntity)HAPValueInfoManager.getInstance().getValueInfo(dataTypeName);
+				HAPValueInfoEntity valueInfo = (HAPValueInfoEntity)HAPValueInfoManager.getInstance().getValueInfo(dataTypeName).getSolidValueInfo();
 				HAPStringableValueEntity entity = (HAPStringableValueEntity)valueInfo.newValue(); 
 				
 				HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(dataTypeName);

@@ -2,7 +2,7 @@
 		table="nosliw.DATATYPEOPERATION"
 		primaryKeys="id" 
 		class="com.nosliw.data.datatype.importer.HAPDataTypeOperationImp"
-		parent="data.operation" 
+		parent="data.interface.operation" 
 		description="">
 
 	<property name="operationId" dataType="string" description="">

@@ -1,10 +1,13 @@
 package com.nosliw.data.datatype.importer;
 
+import java.util.List;
+
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPRelationshipPath;
+import com.nosliw.data.HAPRelationshipPathSegment;
 
 public class HAPRelationshipPathImp extends HAPRelationshipPath implements HAPSerializable {
 
@@ -15,7 +18,7 @@ public class HAPRelationshipPathImp extends HAPRelationshipPath implements HAPSe
 
 	@Override
 	public void buildObject(Object value, HAPSerializationFormat format) {
-		HAPLiterateManager.getInstance().stringToValue((String)value, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, "com.nosliw.data.HAPRelationshipPathSegment");
+		this.m_segments = (List<HAPRelationshipPathSegment>)HAPLiterateManager.getInstance().stringToValue((String)value, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, "com.nosliw.data.HAPRelationshipPathSegment");
 	} 
 
 	public HAPRelationshipPathImp clone(){

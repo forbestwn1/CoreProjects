@@ -1,0 +1,28 @@
+<entity name="data.interface.operation" 
+		description="">
+
+	<property name="info" reference="data.operationinfo" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(2000)"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="name" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="type" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="output" reference="data.operationvar" description=""/>
+
+	<property name="parms" type="map" key="name" description="" elementTag="parm">
+		<child reference="data.operationvar"/>
+	</property>
+
+</entity>

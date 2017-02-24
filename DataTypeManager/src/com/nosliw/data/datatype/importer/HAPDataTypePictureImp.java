@@ -1,5 +1,6 @@
 package com.nosliw.data.datatype.importer;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ public class HAPDataTypePictureImp implements HAPDataTypePicture{
 	
 	public HAPDataTypePictureImp(HAPDataTypeImp mainDataType){
 		this.m_relationships = new LinkedHashMap<HAPDataTypeId, HAPRelationshipImp>();
+		this.m_sourceDataType = mainDataType;
 	}
 	
 	@Override
@@ -41,8 +43,9 @@ public class HAPDataTypePictureImp implements HAPDataTypePicture{
 
 	@Override
 	public List<HAPDataTypeOperation> getOperations() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList(this.m_relationships.values());
 	}
+	
+	
 	
 }

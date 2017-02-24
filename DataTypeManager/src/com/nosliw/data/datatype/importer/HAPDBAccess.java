@@ -57,11 +57,15 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	}
 
 	public List<HAPDataTypeOperationImp> getDataTypeOperations(HAPDataTypeId dataTypeId){
-		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB("data.datatypeoperation", "dataTypeName=?", new Object[]{dataTypeId.getName()});
+		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB("data.datatypeoperation", "sourceDataTypeName=?", new Object[]{dataTypeId.getName()});
+	}
+	
+	public List<HAPDataTypeOperationImp> getNormalDataTypeOperations(HAPDataTypeId dataTypeId){
+		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB("data.datatypeoperation", "type=null && sourceDataTypeName=?", new Object[]{dataTypeId.getName()});
 	}
 	
 	
-	public HAPDataTypePictureImp getDataTypePicture(HAPDataTypeId dataTypeId){
+	public HAPDataTypePictureImp getDataTypePicture(HAPDataTypeIdImp dataTypeId){
 		HAPDataTypePictureImp out = null;
 		
 		try {
@@ -70,7 +74,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "source=?");
 
 			PreparedStatement statement = m_connection.prepareStatement(sql);
-			statement.setString(1, dataTypeId.getName());
+			statement.setString(1, dataTypeId.getFullName());
 
 			List<Object> results = HAPSqlUtility.queryFromDB(valuInfoName, statement);
 			if(results.size()>0){
@@ -88,6 +92,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	
 	public void saveDataTypeOperation(List<HAPDataTypeOperationImp> dataTypeOperations){
 		for(HAPDataTypeOperationImp dataTypeOperation : dataTypeOperations){
+			dataTypeOperation.setId(this.getId()+"");
 			HAPSqlUtility.saveToDB(dataTypeOperation, this.m_connection);
 		}
 	}
@@ -108,11 +113,11 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	}
 
 	public List<HAPOperationImp> getOperationInfosByDataType(HAPDataTypeIdImp dataTypeName){
-		return (List<HAPOperationImp>)this.queryEntityFromDB("data.operation", "dataTypeName=? AND versionFullName=?", new Object[]{dataTypeName.getName(), dataTypeName.getVersionFullName()});
+		return (List<HAPOperationImp>)this.queryEntitysFromDB("data.operation", "dataTypeName=?", new Object[]{dataTypeName.getFullName()});
 	}
 	
 	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeIdImp dataTypeName, String name) {
-		return (HAPDataTypeOperation)this.queryEntityFromDB("data.operation", "name=? AND dataTypeName=? AND versionFullName=?", new Object[]{name, dataTypeName.getName(), dataTypeName.getVersionFullName()});
+		return (HAPDataTypeOperation)this.queryEntityFromDB("data.operation", "name=? AND dataTypeName=?", new Object[]{name, dataTypeName.getFullName()});
 	}
 	
 	public List<HAPDataTypeImp> getAllDataTypes(){

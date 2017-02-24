@@ -19,6 +19,8 @@ public class HAPDataTypeOperationImp extends HAPOperationImp implements HAPRelat
 	@HAPAttribute
 	public static String SOURCEDATATYPENAME = "sourceDataTypeName";
 
+	public HAPDataTypeOperationImp(){}
+	
 	public HAPDataTypeOperationImp(HAPOperationImp targetOperation, HAPRelationshipImp relationship){
 		this.init(targetOperation, relationship);
 	}

@@ -36,6 +36,11 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 		List<Object> out = new ArrayList<Object>();
 		String[] elesArray = HAPNamingConversionUtility.parseElements(arrayStr);
 		for(String eleStr : elesArray){
+			if(type.equals("object")){
+				int kkkk = 5555;
+				kkkk++;
+			}
+			
 			out.add(HAPLiterateManager.getInstance().stringToValue(eleStr, type, type1));
 		}
 		return out;  

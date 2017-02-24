@@ -4,11 +4,28 @@
 
 	<operations>
 	
-		<operation name="host" >
+		<operation name="text_normal1" >
 			<parms>
 				<parm name="aa" criteria="core.text"/>
 				<parm name="bb" criteria="core.text"/>
 			</parms>
+			<output criteria="core.text"/>
+		</operation>
+
+		<operation name="text_normal2" >
+			<parms>
+				<parm name="text_normal_aa" criteria="core.text"/>
+				<parm name="text_normal_bb" criteria="core.text"/>
+			</parms>
+			<output criteria="core.text"/>
+		</operation>
+
+		<operation name="text_normal3" >
+			<parms>
+				<parm name="text_normal_aa" criteria="core.text"/>
+				<parm name="text_normal_bb" criteria="core.text"/>
+			</parms>
+			<output criteria="core.text"/>
 		</operation>
 	
 	</operations>

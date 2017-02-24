@@ -1,4 +1,5 @@
-<entity name="data.operation" 
+<entity name="data.operation"
+		parent="data.interface.operation" 
 		table="nosliw.OPERATION"
 		primaryKeys="id" 
 		class="com.nosliw.data.datatype.importer.HAPOperationImp" 
@@ -11,34 +12,9 @@
 	</property>
 
 	<property name="dataTypeName" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
-		<dbColumnInfos pathType="propertyAsPath">
-			<dbColumnInfo column="dataTypeName" definition="VARCHAR(20)" getter="getName"/>
-			<dbColumnInfo column="versionFullName" definition="VARCHAR(20)"/>
-		</dbColumnInfos>
-	</property>
-
-	<property name="info" reference="data.operationinfo" description="">
 		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(2000)"/>
+			<dbColumnInfo column="dataTypeName" definition="VARCHAR(20)"/>
 		</dbColumnInfos>
-	</property>
-
-	<property name="name" dataType="string" description="">
-		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(20)"/>
-		</dbColumnInfos>
-	</property>
-
-	<property name="type" dataType="string" description="">
-		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(20)"/>
-		</dbColumnInfos>
-	</property>
-
-	<property name="output" reference="data.operationvar" description=""/>
-
-	<property name="parms" type="map" key="name" description="" elementTag="parm">
-		<child reference="data.operationvar"/>
 	</property>
 
 </entity>

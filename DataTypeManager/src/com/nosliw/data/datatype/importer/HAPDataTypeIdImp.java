@@ -5,6 +5,7 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPDataTypeId;
 import com.nosliw.data.HAPDataTypeVersion;
@@ -75,6 +76,21 @@ public class HAPDataTypeIdImp extends HAPStringableValueEntity implements HAPDat
 	public HAPDataTypeIdImp clone(){
 		HAPDataTypeIdImp out = new HAPDataTypeIdImp();
 		out.cloneFrom(this);
+		return out;
+	}
+	
+	@Override
+	public int hashCode(){
+		return this.getFullName().hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		boolean out = false;
+		if(obj instanceof HAPDataTypeIdImp){
+			HAPDataTypeIdImp id = (HAPDataTypeIdImp)obj;
+			out = HAPBasicUtility.isEquals(id.getFullName(), this.getFullName());
+		}
 		return out;
 	}
 }

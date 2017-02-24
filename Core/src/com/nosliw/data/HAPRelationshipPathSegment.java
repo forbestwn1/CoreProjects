@@ -14,6 +14,8 @@ public class HAPRelationshipPathSegment extends HAPSerialiableImp{
 	
 	private int m_segment;
 	
+	public HAPRelationshipPathSegment(){}
+	
 	public HAPRelationshipPathSegment(int segType){
 		this.m_segment = segType;
 	}
@@ -51,7 +53,9 @@ public class HAPRelationshipPathSegment extends HAPSerialiableImp{
 		return out;
 	}
 	
-	protected void buildObjectByLiterate(String literateValue){ this.m_segment = Integer.valueOf(literateValue);	}
+	protected void buildObjectByLiterate(String literateValue){ 
+		this.m_segment = Integer.valueOf(literateValue);	
+	}
 	
 	protected String buildLiterate(){  return this.m_segment+""; }
 

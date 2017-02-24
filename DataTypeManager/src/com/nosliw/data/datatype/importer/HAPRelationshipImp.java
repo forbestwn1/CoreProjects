@@ -15,13 +15,15 @@ public class HAPRelationshipImp extends HAPDataTypeImp implements HAPRelationshi
 	@HAPAttribute
 	public static String SOURCE = "source";
 	
-	public HAPRelationshipImp(){}
+	public HAPRelationshipImp(){
+		this.updateAtomicChildObjectValue(PATH, new HAPRelationshipPathImp());
+	}
 	
 	public HAPRelationshipImp(HAPDataTypeImp target){
 		this.updateAtomicChildObjectValue(PATH, new HAPRelationshipPathImp());
 		this.cloneFrom(target);
 	}
-	
+
 	@Override
 	public HAPDataTypeId getTargetDataTypeName() {		return this.getName();	}
 	

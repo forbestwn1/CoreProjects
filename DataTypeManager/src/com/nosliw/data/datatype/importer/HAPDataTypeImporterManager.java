@@ -38,6 +38,7 @@ public class HAPDataTypeImporterManager {
 				"operationinfo.xml",
 				"datatypeversion.xml",
 
+				"interfaceoperation.xml",
 				"operation.xml",
 				"operationvar.xml",
 				"datatypeoperation.xml",
@@ -45,14 +46,13 @@ public class HAPDataTypeImporterManager {
 				"datatyperelationship.xml"
 		});
 
-		this.m_dbAccess.createDBTable("data.datatypedef");
-		this.m_dbAccess.createDBTable("data.operation");
-		this.m_dbAccess.createDBTable("data.datatypeoperation");
-		this.m_dbAccess.createDBTable("data.operationvar");
-		this.m_dbAccess.createDBTable("data.relationship");
 	}
 	
 	public void loadAllDataType(){
+		this.m_dbAccess.createDBTable("data.datatypedef");
+		this.m_dbAccess.createDBTable("data.operation");
+		this.m_dbAccess.createDBTable("data.operationvar");
+		
 		new HAPClassFilter(){
 			@Override
 			protected void process(Class cls, Object data) {
@@ -73,6 +73,8 @@ public class HAPDataTypeImporterManager {
 	}
 
 	public void buildDataTypePictures(){
+		this.m_dbAccess.createDBTable("data.relationship");
+		
 		List<HAPDataTypeImp> dataTypes = this.m_dbAccess.getAllDataTypes();
 		for(HAPDataTypeImp dataType : dataTypes){
 			HAPDataTypePictureImp dataTypePic = this.buildDataTypePicture((HAPDataTypeIdImp)dataType.getName());
@@ -81,6 +83,8 @@ public class HAPDataTypeImporterManager {
 	}
 	
 	public void buildDataTypeOperations(){
+		this.m_dbAccess.createDBTable("data.datatypeoperation");
+
 		List<HAPDataTypeImp> dataTypes = this.m_dbAccess.getAllDataTypes();
 		for(HAPDataTypeImp dataType : dataTypes){
 			this.buildDataTypeOperations(dataType);
@@ -90,23 +94,33 @@ public class HAPDataTypeImporterManager {
 	private Map<String, HAPDataTypeOperationImp> buildDataTypeOperations(HAPDataTypeImp dataType){
 		Map<String, HAPDataTypeOperationImp> out = new LinkedHashMap<String, HAPDataTypeOperationImp>();
 		
-		List<HAPDataTypeOperationImp> currentDataTypeOperations = this.m_dbAccess.getDataTypeOperations(dataType.getName());
+		List<HAPDataTypeOperationImp> currentDataTypeOperations = this.m_dbAccess.getNormalDataTypeOperations(dataType.getName());
 		if(currentDataTypeOperations.size()==0){
 			//not build yet
-			List<HAPDataTypeOperationImp> toSave = new ArrayList<HAPDataTypeOperationImp>();
-			
-			HAPDataTypePictureImp pic = this.m_dbAccess.getDataTypePicture(dataType.getName());
+			HAPDataTypePictureImp pic = this.m_dbAccess.getDataTypePicture((HAPDataTypeIdImp)dataType.getName());
 			
 			//operations from parent
-			HAPRelationshipImp parentRelationship = pic.getRelationship(dataType.getParentInfo());
-			Map<String, HAPDataTypeOperationImp> parentDataTypeOperations = buildDataTypeOperations(parentRelationship);
-			for(String opeartionName : parentDataTypeOperations.keySet()){
-				HAPDataTypeOperationImp dataTypeOp = parentDataTypeOperations.get(opeartionName);
-				HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(HAPRelationshipPathSegment.buildPathSegmentForParent(), (HAPDataTypeIdImp)pic.getSourceDataType().getName());
-				out.put(dataTypeOperation.getName(), dataTypeOperation);
-				toSave.add(dataTypeOperation);
+			if(dataType.getParentInfo()!=null){
+				HAPRelationshipImp parentRelationship = pic.getRelationship(dataType.getParentInfo());
+				Map<String, HAPDataTypeOperationImp> parentDataTypeOperations = buildDataTypeOperations(parentRelationship);
+				for(String opeartionName : parentDataTypeOperations.keySet()){
+					HAPDataTypeOperationImp dataTypeOp = parentDataTypeOperations.get(opeartionName);
+					HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(HAPRelationshipPathSegment.buildPathSegmentForParent(), (HAPDataTypeIdImp)pic.getSourceDataType().getName());
+					out.put(dataTypeOperation.getName(), dataTypeOperation);
+				}
 			}
 
+			if(dataType.getLinkedDataTypeId()!=null){
+				HAPRelationshipImp relationship = pic.getRelationship(dataType.getLinkedDataTypeId());
+				Map<String, HAPDataTypeOperationImp> ataTypeOperations = buildDataTypeOperations(relationship);
+				for(String opeartionName : ataTypeOperations.keySet()){
+					HAPDataTypeOperationImp dataTypeOp = ataTypeOperations.get(opeartionName);
+					HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(HAPRelationshipPathSegment.buildPathSegmentForLinked(), (HAPDataTypeIdImp)pic.getSourceDataType().getName());
+					out.put(dataTypeOperation.getName(), dataTypeOperation);
+				}
+			}
+
+			List<HAPDataTypeOperationImp> toSave = new ArrayList<HAPDataTypeOperationImp>();
 			//operations from own
 			List<HAPOperationImp> ownOperations = this.m_dbAccess.getOperationInfosByDataType((HAPDataTypeIdImp)dataType.getName());
 			for(HAPOperationImp ownOperation : ownOperations){
@@ -115,8 +129,12 @@ public class HAPDataTypeImporterManager {
 					//regular operation
 					out.put(ownDataTypeOperation.getName(), ownDataTypeOperation);
 				}
-				toSave.add(ownDataTypeOperation);
+				else{
+					toSave.add(ownDataTypeOperation);
+				}
 			}
+
+			toSave.addAll(out.values());
 			this.m_dbAccess.saveDataTypeOperation(toSave);
 		}
 		else{
@@ -126,7 +144,6 @@ public class HAPDataTypeImporterManager {
 				}
 			}
 		}
-		
 		return out;
 	}
 	
@@ -151,6 +168,12 @@ public class HAPDataTypeImporterManager {
 	}
 
 	private HAPDataTypePictureImp buildDataTypePicture(HAPDataTypeIdImp dataTypeId){
+		
+		if(dataTypeId.getFullName().equals("core.url;1.1.0")){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		HAPDataTypeImp dataType = this.getDataType(dataTypeId);
 		HAPDataTypePictureImp out = new HAPDataTypePictureImp(dataType);
 		

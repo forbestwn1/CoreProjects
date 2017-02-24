@@ -28,6 +28,7 @@ public class HAPOperationImp extends HAPStringableValueEntity implements HAPOper
 	public HAPInfo getInfo() {		return (HAPInfo)this.getAtomicAncestorValueObject(INFO, HAPInfo.class);  }
 
 	public String getId(){		return this.getAtomicAncestorValueString(ID);	}
+	public void setId(String id){  this.updateAtomicChildStrValue(ID, id);  }
 
 	public HAPDataTypeIdImp getDataTypeName(){ return (HAPDataTypeIdImp)this.getAtomicAncestorValueObject(DATATYPNAME, HAPDataTypeIdImp.class); }
 	public void setDataTypeName(HAPDataTypeIdImp dataTypeId){  this.updateAtomicChildObjectValue(DATATYPNAME, dataTypeId);  }

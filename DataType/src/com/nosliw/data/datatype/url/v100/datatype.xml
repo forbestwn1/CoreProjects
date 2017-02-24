@@ -2,7 +2,23 @@
 	<info description="core.url;1.0.0 description"/>
 	<operations>
 	
-		<operation name="host" >
+		<operation name="text_normal1" >
+			<parms>
+				<parm name="aa" criteria="core.text"/>
+				<parm name="bb" criteria="core.text"/>
+			</parms>
+			<output criteria="core.text"/>
+		</operation>
+	
+		<operation name="url_normal1" >
+			<parms>
+				<parm name="aa" criteria="core.text"/>
+				<parm name="bb" criteria="core.text"/>
+			</parms>
+			<output criteria="core.text"/>
+		</operation>
+
+		<operation name="url_normal2" >
 			<parms>
 				<parm name="aa" criteria="core.text"/>
 				<parm name="bb" criteria="core.text"/>
