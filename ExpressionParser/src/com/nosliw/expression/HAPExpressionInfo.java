@@ -7,12 +7,16 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
-import com.nosliw.data1.HAPDataTypeInfo;
-import com.nosliw.data1.HAPDataTypeManager;
+import com.nosliw.data.HAPDataTypeCriteria;
+import com.nosliw.data.HAPDataTypeManager;
+import com.nosliw.data.HAPDataUtility;
 import com.nosliw.expression.utils.HAPAttributeConstant;
 
 /*
@@ -21,70 +25,70 @@ import com.nosliw.expression.utils.HAPAttributeConstant;
  * 		constantDatas : the constant data to put into expression
  * 		variableInfos : data type information for variables in expression 
  */
-public class HAPExpressionInfo implements HAPSerializable{
+public class HAPExpressionInfo extends HAPSerializableImp{
 
 	//expression string
 	private String m_expression;
 	
 	//constants value info
-	private Map<String, HAPData> m_constantDatas;
+	private Map<String, HAPData> m_constants;
 	
 	//variable data type info
-	private Map<String, HAPDataTypeInfo> m_variableInfos;
+	private Map<String, HAPDataTypeCriteria> m_variables;
 	
-	public HAPExpressionInfo(String expression, Map<String, HAPData> constantDatas, Map<String, HAPDataTypeInfo> variableInfos){
+	public HAPExpressionInfo(String expression, Map<String, HAPData> constants, Map<String, HAPDataTypeCriteria> variables){
 		this.m_expression = expression;
 		
-		if(constantDatas==null)   this.m_constantDatas = new LinkedHashMap<String, HAPData>();
-		else   this.m_constantDatas = constantDatas;
+		if(constants==null)   this.m_constants = new LinkedHashMap<String, HAPData>();
+		else   this.m_constants = constants;
 		
-		if(variableInfos==null)   this.m_variableInfos = new LinkedHashMap<String, HAPDataTypeInfo>();
-		else  	this.m_variableInfos = variableInfos;
+		if(variables==null)   this.m_variables = new LinkedHashMap<String, HAPDataTypeCriteria>();
+		else this.m_variables = variables;
 	}
 
-	public HAPExpressionInfo addVariableInfo(Map<String, HAPDataTypeInfo> m_variableInfos){
-		this.m_variableInfos.putAll(m_variableInfos);
+	public HAPExpressionInfo addVariable(Map<String, HAPDataTypeCriteria> m_variableInfos){
+		this.m_variables.putAll(m_variableInfos);
 		return this;
 	}
 	
 	public String getExpression(){ return this.m_expression; }
-	public Map<String, HAPData> getConstantDatas(){return this.m_constantDatas;}
-	public Map<String, HAPDataTypeInfo> getVariableInfos(){ return this.m_variableInfos; }
+	public Map<String, HAPData> getConstants(){return this.m_constants;}
+	public Map<String, HAPDataTypeCriteria> getVariableInfos(){ return this.m_variables; }
 
-	
-	public static HAPExpressionInfo parse(JSONObject jsonObj, HAPDataTypeManager dataTypeMan){
-		String expression = jsonObj.optString(HAPAttributeConstant.EXPRESSIONINFO_EXPRESSION);
+	@Override
+	protected void buildObjectByFullJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		this.m_expression = jsonObj.optString(HAPAttributeConstant.EXPRESSIONINFO_EXPRESSION);
 
-		//read variable infos
-		Map<String, HAPDataTypeInfo> varDataTypeInfos = new LinkedHashMap<String, HAPDataTypeInfo>();
+		//read variable info part
+		m_variables = new LinkedHashMap<String, HAPDataTypeCriteria>();
 		JSONObject varInfosJson = jsonObj.optJSONObject(HAPAttributeConstant.EXPRESSIONINFO_VARIABLESINFO);
 		Iterator<String> varNames = varInfosJson.keys();
 		while(varNames.hasNext()){
 			String varName = varNames.next();
-			HAPDataTypeInfo varInfo = HAPDataTypeInfo.build(varInfosJson.optJSONObject(varName), HAPValueInfoManager.getInstance());
-			varDataTypeInfos.put(varName, varInfo);
+			HAPDataTypeCriteria varInfo = HAPDataUtility.buildDataTypeCriteriaFromJson(varInfosJson);
+			m_variables.put(varName, varInfo);
 		}
 		
-		Map<String, HAPData> constantInfos = new LinkedHashMap<String, HAPData>();
+		//process constants part
+		m_constants = new LinkedHashMap<String, HAPData>();
 		JSONObject constantsJson = jsonObj.optJSONObject(HAPAttributeConstant.EXPRESSIONINFO_CONSTANTS);
 		Iterator<String> constantNames = constantsJson.keys();
 		while(constantNames.hasNext()){
 			String constantName = constantNames.next();
-			HAPData constant = dataTypeMan.parseJson(constantsJson.optJSONObject(constantName), null, null); 
-			constantInfos.put(constantName, constant);
+			HAPData constant = HAPDataUtility.buildDataWrapperJson(constantsJson); 
+			m_constants.put(constantName, constant);
 		}
-		
-		return new HAPExpressionInfo(expression, constantInfos, varDataTypeInfos);
 	}
 	
 	@Override
-	public String toStringValue(String format) {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+	protected void buildObjectByJson(Object json){  this.buildObjectByJson(json);}
+
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_EXPRESSION, this.m_expression);
-		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_VARIABLESINFO, HAPJsonUtility.buildJson(this.m_variableInfos, format));
-		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_CONSTANTS, HAPJsonUtility.buildJson(this.m_constantDatas, format));
-		return HAPJsonUtility.buildMapJson(jsonMap);
+		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_VARIABLESINFO, HAPJsonUtility.buildJson(this.m_variables, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_CONSTANTS, HAPJsonUtility.buildJson(this.m_constants, HAPSerializationFormat.JSON_FULL));
 	}
-	
+
 	public String toString(){return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));}
 }

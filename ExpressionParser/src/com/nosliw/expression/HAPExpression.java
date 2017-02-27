@@ -51,7 +51,7 @@ public class HAPExpression implements HAPSerializable{
 		this.m_varsInfo = expressionInfo.getVariableInfos();
 		this.m_allDataTypeInfo = new HashSet<HAPDataTypeInfo>();
 		
-		this.m_constantDatas = expressionInfo.getConstantDatas();
+		this.m_constantDatas = expressionInfo.getConstants();
 		//add variable infor related with constant data
 		for(String constantName : this.m_constantDatas.keySet()){
 			this.m_varsInfo.put(constantName, HAPDataUtility.getDataTypeInfo(this.m_constantDatas.get(constantName)));

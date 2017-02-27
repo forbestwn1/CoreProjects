@@ -35,7 +35,7 @@ public class HAPAttributeExpressionUtility {
 		varInfos.put(HAPConstant.EXPRESSION_VARIABLE_THIS, attrDef.getDataTypeDefinitionInfo());
 		String entityName = attrDef.getEntityDefinition().getEntityName();
 		varInfos.put(HAPConstant.EXPRESSION_VARIABLE_PARENT, new HAPDataTypeInfo(HAPConstant.DATATYPE_CATEGARY_ENTITY, entityName));
-		return expressionInfo.addVariableInfo(varInfos);
+		return expressionInfo.addVariable(varInfos);
 	}
 	
 	/*

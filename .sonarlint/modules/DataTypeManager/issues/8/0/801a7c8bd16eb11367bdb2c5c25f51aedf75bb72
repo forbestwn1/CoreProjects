@@ -1,11 +1,13 @@
 
-Ssquid:S1481"4Remove this unused "connectDataType" local variable.(´¢‰À8µ¥Œ¦+
-hsquid:CommentedOutCodeLineœ"<This block of commented-out lines of code should be removed.(ÊÕÄ´úÿÿÿÿ
-Psquid:S1481Q"-Remove this unused "dataType" local variable.(Ùª±ùÿÿÿÿ8şáÔÊ¦+
-rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
-Psquid:S1905"1Remove this unnecessary cast to "HAPDataTypeImp".(´¢‰À8õÕæŠ¦+
-Ÿsquid:S1186X"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¡ıãÄ8Âè”Ë¦+
-bsquid:S1854"CRemove this useless assignment to local variable "connectDataType".(´¢‰À8µ¥Œ¦+
-Msquid:S00108Q")Either remove or fill this block of code.(Ùª±ùÿÿÿÿ8şáÔÊ¦+
-csquid:CommentedOutCodeLineŸ"<This block of commented-out lines of code should be removed.(„Şâ
-qsquid:UselessImportCheck"ARemove this unused import 'com.nosliw.data.HAPDataTypeOperation'.(¯ƒœñùÿÿÿÿ8ªÒ—Ë¦+
+|squid:S2293|"YReplace the type specification in this constructor call with the diamond operator ("<>").(Íı­°ûÿÿÿÿ8¤ãÑß¦+
+bsquid:S1854¼"CRemove this useless assignment to local variable "connectDataType".(´¢‰À8‚·†Ú¦+
+Psquid:S1905¼"1Remove this unnecessary cast to "HAPDataTypeImp".(´¢‰À8‚·†Ú¦+
+Rsquid:S2864k"4Iterate over the "entrySet" instead of the "keySet".(›ÔÃ8³¼Áß¦+
+Rsquid:S2864u"4Iterate over the "entrySet" instead of the "keySet".(‰ã¬Î8 ÈÓ§+
+rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
+|squid:S2293`"YReplace the type specification in this constructor call with the diamond operator ("<>").( ¯ÈÓùÿÿÿÿ8“¶³ß¦+
+qsquid:UselessImportCheck"ARemove this unused import 'com.nosliw.data.HAPDataTypeOperation'.(¯ƒœñùÿÿÿÿ8Şœ•Û¦+
+jsquid:CommentedOutCodeLineÚ"<This block of commented-out lines of code should be removed.(„Şâ8‚·†Ú¦+
+\squid:S1155c">Use isEmpty() to check whether the collection is empty or not.(à–ÛÏ8ÔóåÙ¦+
+psquid:S3776_"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(¸ªÇÀ8ô•Éâ¦+
+Ssquid:S1481¼"4Remove this unused "connectDataType" local variable.(´¢‰À8‚·†Ú¦+

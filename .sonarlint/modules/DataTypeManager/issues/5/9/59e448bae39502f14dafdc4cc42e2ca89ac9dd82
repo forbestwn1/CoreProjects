@@ -1,19 +1,19 @@
 
-]squid:UnusedPrivateMethodl"3Remove this unused private "saveOperations" method.(»°¿Àùÿÿÿÿ
-Osquid:S1197y"8Move the array designator from the variable to the type.(Š˜¡ß
-ksquid:S3008"ORename this field "HEAD" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(şÍÑ øÿÿÿÿ
-usquid:S2293""YReplace the type specification in this constructor call with the diamond operator ("<>").(”Ğˆòùÿÿÿÿ
+?squid:S11484"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
 usquid:S2293>"YReplace the type specification in this constructor call with the diamond operator ("<>").(öß‡÷ıÿÿÿÿ
+Fsquid:S1481V"/Remove this unused "dataTypeId" local variable.(ıûË
+i
+squid:S134["NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(Äéúïÿÿÿÿÿ
+Usquid:S1854V">Remove this useless assignment to local variable "dataTypeId".(ıûË
+ksquid:S3008"ORename this field "HEAD" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(şÍÑ øÿÿÿÿ
+]squid:UnusedPrivateMethodl"3Remove this unused private "saveOperations" method.(»°¿Àùÿÿÿÿ
+<squid:S11663"%Either log or rethrow this exception.(‹±ÃÆ
+rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Öû˜Ğüÿÿÿÿ
 usquid:S2293w"YReplace the type specification in this constructor call with the diamond operator ("<>").(şãßûÿÿÿÿ
 i
 squid:S1341"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(¡»¢üùÿÿÿÿ
-i
-squid:S134["NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(Äéúïÿÿÿÿÿ
+ssquid:UselessImportCheck"JRemove this unused import 'com.nosliw.common.literate.HAPLiterateManager'.(çÙÃùÿÿÿÿ
+Osquid:S1197y"8Move the array designator from the variable to the type.(Š˜¡ß
+usquid:S2293""YReplace the type specification in this constructor call with the diamond operator ("<>").(”Ğˆòùÿÿÿÿ
 Ssquid:S2696‰"6Make the enclosing method "static" or remove this set.(ÀÂúœıÿÿÿÿ
 jsquid:S1132N"NMove the "dataType" string literal on the left side of this string comparison.(¯¤‡®ÿÿÿÿÿ
-Fsquid:S1481V"/Remove this unused "dataTypeId" local variable.(ıûË
-<squid:S11663"%Either log or rethrow this exception.(‹±ÃÆ
-Usquid:S1854V">Remove this useless assignment to local variable "dataTypeId".(ıûË
-rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Öû˜Ğüÿÿÿÿ
-ssquid:UselessImportCheck"JRemove this unused import 'com.nosliw.common.literate.HAPLiterateManager'.(çÙÃùÿÿÿÿ
-?squid:S11484"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ

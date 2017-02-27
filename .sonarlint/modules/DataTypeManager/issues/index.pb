@@ -60,3 +60,9 @@ j
 :src/com/nosliw/data/datatype/importer/HAPOperationImp.java,5\5\5586c4c413593760ce60058b4ad02a1e70c28b27
 c
 3src/com/nosliw/data/datatype/importer/operation.xml,c\0\c04f9337ba122a9b1073a1b2d619d980abcb26ae
+l
+<src/com/nosliw/data/datatype/importer/interfaceoperation.xml,c\8\c8cdb5742ddb367034f22822b0e01a67ee333d01
+p
+@src/com/nosliw/data/datatype/importer/js/HAPJSOperationInfo.java,e\2\e2b8df2b032142ea0ebbadeb39c9c78f2d24c5ce
+q
+Asrc/com/nosliw/data/datatype/importer/HAPOperationVarInfoImp.java,f\f\ffbb6d364c615fb7e676dda32ceefbd940a6bf15

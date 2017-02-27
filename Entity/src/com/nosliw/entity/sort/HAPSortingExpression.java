@@ -25,7 +25,7 @@ public class HAPSortingExpression extends HAPSortingInfo{
 		Map<String, HAPDataTypeInfo> expressionDataTypeInfos = new LinkedHashMap<String, HAPDataTypeInfo>();
 		expressionDataTypeInfos.put(HAPConstant.EXPRESSION_VARIABLE_DATA1, dataTypeInfo);
 		expressionDataTypeInfos.put(HAPConstant.EXPRESSION_VARIABLE_DATA2, dataTypeInfo);
-		this.m_expression = new HAPExpression(expression.addVariableInfo(expressionDataTypeInfos), this.getDataTypeManager());
+		this.m_expression = new HAPExpression(expression.addVariable(expressionDataTypeInfos), this.getDataTypeManager());
 	}
 
 	@Override

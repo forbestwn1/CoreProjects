@@ -17,6 +17,8 @@ public interface HAPResource extends HAPSerializable{
 	
 	public String getType();
 	
-	public String getStatus();
+	public HAPInfo getInfo();
+	
+	public Object getResource();
 	
 }

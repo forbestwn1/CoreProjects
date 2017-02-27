@@ -3,11 +3,11 @@ package com.nosliw.common.test;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPSerialiableImp;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 
-public abstract class HAPTestInfo extends HAPSerialiableImp{
+public abstract class HAPTestInfo extends HAPSerializableImp{
 	//id used to identify test, it is unique globally
 	private int m_id;
 	

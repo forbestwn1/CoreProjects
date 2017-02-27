@@ -16,6 +16,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPOperation;
 import com.nosliw.data.HAPRelationship;
 import com.nosliw.data.HAPRelationshipPathSegment;
+import com.nosliw.data.datatype.importer.js.HAPJSImporter;
 import com.nosliw.data.HAPDataTypeOperation;
 import com.nosliw.data.HAPDataTypePicture;
 import com.nosliw.data.HAPDataTypeProvider;
@@ -168,12 +169,6 @@ public class HAPDataTypeImporterManager {
 	}
 
 	private HAPDataTypePictureImp buildDataTypePicture(HAPDataTypeIdImp dataTypeId){
-		
-		if(dataTypeId.getFullName().equals("core.url;1.1.0")){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		HAPDataTypeImp dataType = this.getDataType(dataTypeId);
 		HAPDataTypePictureImp out = new HAPDataTypePictureImp(dataType);
 		
@@ -216,9 +211,9 @@ public class HAPDataTypeImporterManager {
 		man.loadAllDataType();
 		man.buildDataTypePictures();
 		man.buildDataTypeOperations();
-//		
-//		HAPJSImporter jsImporter = new HAPJSImporter();
-//		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");
+		
+		HAPJSImporter jsImporter = new HAPJSImporter();
+		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");
 //		
 //		HAPDBAccess.getInstance().close();
 	}

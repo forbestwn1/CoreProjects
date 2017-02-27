@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPSerialiableImp;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPJsonUtility;
 
 /*
  * this class store all the information execution related with test case
  */
-public class HAPTestCaseRuntime extends HAPSerialiableImp{
+public class HAPTestCaseRuntime extends HAPSerializableImp{
 	private Class m_testCaseClass;
 	
 	private List<Method> m_testCaseBeforeMethods;

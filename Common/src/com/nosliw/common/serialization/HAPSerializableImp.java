@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPJsonUtility;
 
-public abstract class HAPSerialiableImp implements HAPSerializable{
+public abstract class HAPSerializableImp implements HAPSerializable{
 
 	@Override
 	public void buildObject(Object value, HAPSerializationFormat format){

@@ -10,11 +10,11 @@ import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateProcessorByConfigureForDoc;
 import com.nosliw.common.resolve.HAPResolvable;
-import com.nosliw.common.serialization.HAPSerialiableImp;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute(baseName="STRINGABLEVALUE")
-public abstract class HAPStringableValue extends HAPSerialiableImp implements HAPResolvable{
+public abstract class HAPStringableValue extends HAPSerializableImp implements HAPResolvable{
 
 	@HAPAttribute
 	public static String STRUCTURE = "structure";

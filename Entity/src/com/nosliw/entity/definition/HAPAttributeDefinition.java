@@ -8,7 +8,7 @@ import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.configure.HAPConfigureValue;
 import com.nosliw.common.configure.HAPConfigureValueString;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.serialization.HAPSerialiableImp;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueEntityBasic;
 import com.nosliw.common.utils.HAPBasicUtility;

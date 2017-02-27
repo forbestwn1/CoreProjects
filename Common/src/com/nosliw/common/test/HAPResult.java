@@ -2,10 +2,10 @@ package com.nosliw.common.test;
 
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPSerialiableImp;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
-public abstract class HAPResult extends HAPSerialiableImp{
+public abstract class HAPResult extends HAPSerializableImp{
 
 	private Boolean m_result = true;
 	private HAPTestDescription m_testDescription;
