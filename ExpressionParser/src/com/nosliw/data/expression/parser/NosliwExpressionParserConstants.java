@@ -18,7 +18,9 @@ public interface NosliwExpressionParserConstants {
   /** RegularExpression Id. */
   int COMMAR = 3;
   /** RegularExpression Id. */
-  int CONSTANT = 4;
+  int COLON = 4;
+  /** RegularExpression Id. */
+  int CONSTANT = 5;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -29,6 +31,7 @@ public interface NosliwExpressionParserConstants {
     "\"(\"",
     "\")\"",
     "\",\"",
+    "\":\"",
     "<CONSTANT>",
     "\"&(\"",
     "\")&\"",
@@ -36,6 +39,8 @@ public interface NosliwExpressionParserConstants {
     "\")!\"",
     "\"?(\"",
     "\")?\"",
+    "\"<(\"",
+    "\")>\"",
     "\".\"",
   };
 

@@ -1,107 +1,134 @@
 
+options {
+	/*create static method */
+	STATIC = false ;
+	/* the location for parser classes */
+	OUTPUT_DIRECTORY = "c:/Temp/JCCTree";
+/*	"/Users/pro/Desktop/WebToApp/CoreProject/Projects/ExpressionParser/src/com/nosliw/data/expression/parser";*/
+}
+
 PARSER_BEGIN(NosliwExpressionParser)
+/* define the package name for parser classes */
+package com.nosliw.data.expression.parser;
 
 public class NosliwExpressionParser {
 
   public static void main(String args[]) throws ParseException, TokenMgrError {
 		NosliwExpressionParser parser = new NosliwExpressionParser( System.in ) ;
-		parser.Start() ; 
+		SimpleNode root = parser.Expression("");
+		root.dump("");
   }  
 }
 PARSER_END(NosliwExpressionParser)
 
 
 
-SKIP:{" " | "\t" }
-TOKEN : { <CONSTANT_BORDER:"@"> }
-TOKEN : { < VARIABLE : "$" > }
-TOKEN : { < OPEN_DATATYPE : "<" > }
-TOKEN : { < CLOSE_DATATYPE : ">" > }
+/*SKIP:{" " | "\t"}*/
 TOKEN : { < OPEN_PAR : "(" > }
 TOKEN : { < CLOSE_PAR : ")" > }
-TOKEN : { < DOT : "." > }
-TOKEN : { < COMMA : "," > }
-TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z"])+ > }
-TOKEN : { < CONSTANT : (["0"-"9","a"-"z","A"-"Z", "{", "}", "[", "]", ",", "_"])+ > }
+TOKEN : { < COMMAR : "," > }
+TOKEN : { < CONSTANT : (["0"-"9","a"-"z","A"-"Z", "{", "}", "[", "]", "_", ":", "#", ",", " ", "\t", "\n", "\r", "'"])+ > }
+/*TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z"])+ > }*/
 
+/*
 
-double Name() throws NumberFormatException :
+*/
+Token Name():
 {
 	Token t ;
 }
 {
-	t = <NAME>
-	{ return t.image; }
+	t = <CONSTANT>
+	{jjtThis.value = t.image; return t;}
 }
 
-double Constant() throws NumberFormatException :
+/*
+constant data, any format allowed, json, string literal, ...
+*/
+void Constant() #CONSTANT:
 {
 	Token t ;
 }
 {
-	<CONSTANT_BORDER>  <CONSTANT>  <CONSTANT_BORDER>
-	{ return t.image; }
+	"&("  t=<CONSTANT>  ")&"
+	{jjtThis.value = t.image;}
 }
 
-double DataType() throws NumberFormatException :
+/*
+data type, it is appeared when do data type function call
+*/
+void DataType() #DATATYPE:
 {
 	Token t ;
 }
 {
-	<OPEN_DATATYPE>  <NAME>  <CLOSE_DATATYPE>
-	{ return t.image; }
+	"!("  t=Name()  ")!"
+	{jjtThis.value = t.image;}
 }
 
-double Variable() throws NumberFormatException :
+/*
+variable in expression. 
+*/
+void Variable() #VARIABLE:
 {
-	double i ;
-	double value ;
+	Token t ;
 }
 {
-	<VARIABLE>	Name()
+	"?("	t=Name()  ")?"
+	{jjtThis.value = t.image;}
+}
+
+/*
+reference in expression. 
+*/
+void Reference() #ERFERENCE:
+{
+	Token t ;
+}
+{
+	"<("	t=Name()  ")>"
+	{jjtThis.value = t.image;}
 }
 
 
-double Operation() throws NumberFormatException :
+/*
+represent any expression
+*/
+SimpleNode Expression(String index) #EXPRESSION:
 {
-	double i ;
-	double value ;
+	int i = 0;
 }
-{	
-	(Expression() | DataType()) <DOT> Name() <OPEN_PAR> 
+{
 	(
-		{}
-	|
-		Expression() (<COMMA>Expression())*		
+		Variable() Expression1()
+		|
+		Constant () Expression1()
+		|
+		Reference () Expression1()
+		|
+		DataType() "." Name() 
+		<OPEN_PAR> [(Expression(String.valueOf(i)) {i++;})
+		(<COMMAR> Expression(String.valueOf(i))  {i++;})*]	
+		<CLOSE_PAR> Expression1()
 	)
-	<CLOSE_PAR>
+	{jjtThis.value=index;   return jjtThis;}
 }
 
-double Path() throws NumberFormatException :
+/*
+it is create to avoid left recursion.
+*/
+SimpleNode Expression1() #EXPRESSION1:
 {
-	double i ;
-	double value ;
-}
-{
-	Expression() 
-	<DOT>
-	Name()
-}
-
-
-void Expression() throws NumberFormatException :
-{
-	double i ;
-	double value ;
+	int i = 0;
 }
 {
-	Variable()
-	|
-	Constant ()
-	|
-	Expression() <DOT> Name()
-	|
-	Operation()
+	(
+		"." Name() 
+		(
+			[<OPEN_PAR> [(Expression(String.valueOf(i)) {i++;}) (<COMMAR> Expression(String.valueOf(i)) {i++;})*]<CLOSE_PAR> {jjtThis.value="function";}] Expression1()
+		)
+		|
+		{}
+	)
+	{return jjtThis;}
 }
-
-

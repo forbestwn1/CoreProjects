@@ -7,8 +7,11 @@ public interface NosliwExpressionParserTreeConstants
   public int JJTCONSTANT = 1;
   public int JJTDATATYPE = 2;
   public int JJTVARIABLE = 3;
-  public int JJTEXPRESSION = 4;
-  public int JJTEXPRESSION1 = 5;
+  public int JJTPARMNAME = 4;
+  public int JJTREFERENCE = 5;
+  public int JJTPARAMETER = 6;
+  public int JJTEXPRESSION = 7;
+  public int JJTEXPRESSION1 = 8;
 
 
   public String[] jjtNodeName = {
@@ -16,8 +19,11 @@ public interface NosliwExpressionParserTreeConstants
     "CONSTANT",
     "DATATYPE",
     "VARIABLE",
+    "PARMNAME",
+    "REFERENCE",
+    "PARAMETER",
     "EXPRESSION",
     "EXPRESSION1",
   };
 }
-/* JavaCC - OriginalChecksum=d5c8c0fffce1d6872c84c22223c40a31 (do not edit this line) */
+/* JavaCC - OriginalChecksum=5d01bb0f1b021e3a5dfcbebcefb27bbb (do not edit this line) */

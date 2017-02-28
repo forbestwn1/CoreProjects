@@ -27,7 +27,8 @@ PARSER_END(NosliwExpressionParser)
 TOKEN : { < OPEN_PAR : "(" > }
 TOKEN : { < CLOSE_PAR : ")" > }
 TOKEN : { < COMMAR : "," > }
-TOKEN : { < CONSTANT : (["0"-"9","a"-"z","A"-"Z", "{", "}", "[", "]", "_", ":", "#", ",", " ", "\t", "\n", "\r", "'"])+ > }
+TOKEN : { < COLON : ":" > }
+TOKEN : { < CONSTANT : (["0"-"9","a"-"z","A"-"Z", "{", "}", "[", "]", "_", "#", " ", "\t", "\n", "\r", "'"])+ > }
 /*TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z"])+ > }*/
 
 /*
@@ -79,6 +80,48 @@ void Variable() #VARIABLE:
 }
 
 /*
+parm name in expression. 
+*/
+void ParmName() #PARMNAME:
+{
+	Token t ;
+}
+{
+	t = <CONSTANT>
+	{jjtThis.value = t.image;}
+}
+
+
+/*
+reference in expression. 
+*/
+void Reference() #REFERENCE:
+{
+	Token t ;
+}
+{
+	"<("	t=Name()  ")>"
+	{jjtThis.value = t.image;}
+}
+
+/*
+operation parm
+*/
+SimpleNode Parameter(String index) #PARAMETER:
+{
+	int i = Integer.valueOf(index);
+}
+{
+	(
+		ParmName() <COLON> Expression(String.valueOf(i))
+		|	
+		Expression(String.valueOf(i))
+	)
+	{jjtThis.value=index;   return jjtThis;}
+} 
+
+
+/*
 represent any expression
 */
 SimpleNode Expression(String index) #EXPRESSION:
@@ -91,9 +134,11 @@ SimpleNode Expression(String index) #EXPRESSION:
 		|
 		Constant () Expression1()
 		|
+		Reference () Expression1()
+		|
 		DataType() "." Name() 
-		<OPEN_PAR> [(Expression(String.valueOf(i)) {i++;})
-		(<COMMAR> Expression(String.valueOf(i))  {i++;})*]	
+		<OPEN_PAR> [(Parameter(String.valueOf(i)) {i++;})
+		(<COMMAR> Parameter(String.valueOf(i))  {i++;})*]	
 		<CLOSE_PAR> Expression1()
 	)
 	{jjtThis.value=index;   return jjtThis;}
@@ -110,10 +155,57 @@ SimpleNode Expression1() #EXPRESSION1:
 	(
 		"." Name() 
 		(
-			[<OPEN_PAR> [(Expression(String.valueOf(i)) {i++;}) (<COMMAR> Expression(String.valueOf(i)) {i++;})*]<CLOSE_PAR> {jjtThis.value="function";}] Expression1()
+			[<OPEN_PAR> [(Parameter(String.valueOf(i)) {i++;}) (<COMMAR> Parameter(String.valueOf(i)) {i++;})*]<CLOSE_PAR> {jjtThis.value="function";}] Expression1()
 		)
 		|
 		{}
 	)
 	{return jjtThis;}
 }
+
+
+/*
+represent any expression
+*/
+/*
+SimpleNode Expression(String index) #EXPRESSION:
+{
+	int i = 0;
+}
+{
+	(
+		Variable() Expression1()
+		|
+		Constant () Expression1()
+		|
+		Reference () Expression1()
+		|
+		DataType() "." Name() 
+		<OPEN_PAR> [ParmName() <COLON> (Expression(String.valueOf(i)) {i++;})
+		(<COMMAR> ParmName() <COLON> Expression(String.valueOf(i))  {i++;})*]	
+		<CLOSE_PAR> Expression1()
+	)
+	{jjtThis.value=index;   return jjtThis;}
+}
+*/
+
+/*
+it is create to avoid left recursion.
+*/
+/*
+SimpleNode Expression1() #EXPRESSION1:
+{
+	int i = 0;
+}
+{
+	(
+		"." Name() 
+		(
+			[<OPEN_PAR> [(ParmName() <COLON> Expression(String.valueOf(i)) {i++;}) (<COMMAR> ParmName() <COLON> Expression(String.valueOf(i)) {i++;})*]<CLOSE_PAR> {jjtThis.value="function";}] Expression1()
+		)
+		|
+		{}
+	)
+	{return jjtThis;}
+}
+*/

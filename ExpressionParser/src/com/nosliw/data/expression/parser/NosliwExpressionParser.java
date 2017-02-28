@@ -41,9 +41,9 @@ constant data, any format allowed, json, string literal, ...
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t ;
     try {
-      jj_consume_token(5);
-      t = jj_consume_token(CONSTANT);
       jj_consume_token(6);
+      t = jj_consume_token(CONSTANT);
+      jj_consume_token(7);
 jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
 jjtn000.value = t.image;
@@ -62,9 +62,9 @@ data type, it is appeared when do data type function call
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t ;
     try {
-      jj_consume_token(7);
-      t = Name();
       jj_consume_token(8);
+      t = Name();
+      jj_consume_token(9);
 jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
 jjtn000.value = t.image;
@@ -97,9 +97,9 @@ variable in expression.
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t ;
     try {
-      jj_consume_token(9);
-      t = Name();
       jj_consume_token(10);
+      t = Name();
+      jj_consume_token(11);
 jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
 jjtn000.value = t.image;
@@ -125,6 +125,112 @@ if (jjtc000) {
   }
 
 /*
+parm name in expression. 
+*/
+  final public void ParmName() throws ParseException {/*@bgen(jjtree) PARMNAME */
+        SimpleNode jjtn000 = new SimpleNode(JJTPARMNAME);
+        boolean jjtc000 = true;
+        jjtree.openNodeScope(jjtn000);Token t ;
+    try {
+      t = jj_consume_token(CONSTANT);
+jjtree.closeNodeScope(jjtn000, true);
+          jjtc000 = false;
+jjtn000.value = t.image;
+    } finally {
+if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+    }
+  }
+
+/*
+reference in expression. 
+*/
+  final public void Reference() throws ParseException {/*@bgen(jjtree) REFERENCE */
+        SimpleNode jjtn000 = new SimpleNode(JJTREFERENCE);
+        boolean jjtc000 = true;
+        jjtree.openNodeScope(jjtn000);Token t ;
+    try {
+      jj_consume_token(12);
+      t = Name();
+      jj_consume_token(13);
+jjtree.closeNodeScope(jjtn000, true);
+          jjtc000 = false;
+jjtn000.value = t.image;
+    } catch (Throwable jjte000) {
+if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            {if (true) throw (RuntimeException)jjte000;}
+          }
+          if (jjte000 instanceof ParseException) {
+            {if (true) throw (ParseException)jjte000;}
+          }
+          {if (true) throw (Error)jjte000;}
+    } finally {
+if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+    }
+  }
+
+/*
+operation parm
+*/
+  final public SimpleNode Parameter(String index) throws ParseException {/*@bgen(jjtree) PARAMETER */
+        SimpleNode jjtn000 = new SimpleNode(JJTPARAMETER);
+        boolean jjtc000 = true;
+        jjtree.openNodeScope(jjtn000);int i = Integer.valueOf(index);
+    try {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case CONSTANT:{
+        ParmName();
+        jj_consume_token(COLON);
+        Expression(String.valueOf(i));
+        break;
+        }
+      case 6:
+      case 8:
+      case 10:
+      case 12:{
+        Expression(String.valueOf(i));
+        break;
+        }
+      default:
+        jj_la1[0] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+jjtree.closeNodeScope(jjtn000, true);
+          jjtc000 = false;
+jjtn000.value=index;   {if ("" != null) return jjtn000;}
+    } catch (Throwable jjte000) {
+if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            {if (true) throw (RuntimeException)jjte000;}
+          }
+          if (jjte000 instanceof ParseException) {
+            {if (true) throw (ParseException)jjte000;}
+          }
+          {if (true) throw (Error)jjte000;}
+    } finally {
+if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+/*
 represent any expression
 */
   final public SimpleNode Expression(String index) throws ParseException {/*@bgen(jjtree) EXPRESSION */
@@ -133,26 +239,33 @@ represent any expression
         jjtree.openNodeScope(jjtn000);int i = 0;
     try {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case 9:{
+      case 10:{
         Variable();
         Expression1();
         break;
         }
-      case 5:{
+      case 6:{
         Constant();
         Expression1();
         break;
         }
-      case 7:{
+      case 12:{
+        Reference();
+        Expression1();
+        break;
+        }
+      case 8:{
         DataType();
-        jj_consume_token(11);
+        jj_consume_token(14);
         Name();
         jj_consume_token(OPEN_PAR);
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case 5:
-        case 7:
-        case 9:{
-          Expression(String.valueOf(i));
+        case CONSTANT:
+        case 6:
+        case 8:
+        case 10:
+        case 12:{
+          Parameter(String.valueOf(i));
 i++;
           label_1:
           while (true) {
@@ -162,17 +275,17 @@ i++;
               break;
               }
             default:
-              jj_la1[0] = jj_gen;
+              jj_la1[1] = jj_gen;
               break label_1;
             }
             jj_consume_token(COMMAR);
-            Expression(String.valueOf(i));
+            Parameter(String.valueOf(i));
 i++;
           }
           break;
           }
         default:
-          jj_la1[1] = jj_gen;
+          jj_la1[2] = jj_gen;
           ;
         }
         jj_consume_token(CLOSE_PAR);
@@ -180,7 +293,7 @@ i++;
         break;
         }
       default:
-        jj_la1[2] = jj_gen;
+        jj_la1[3] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -218,17 +331,19 @@ it is create to avoid left recursion.
         jjtree.openNodeScope(jjtn000);int i = 0;
     try {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case 11:{
-        jj_consume_token(11);
+      case 14:{
+        jj_consume_token(14);
         Name();
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case OPEN_PAR:{
           jj_consume_token(OPEN_PAR);
           switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-          case 5:
-          case 7:
-          case 9:{
-            Expression(String.valueOf(i));
+          case CONSTANT:
+          case 6:
+          case 8:
+          case 10:
+          case 12:{
+            Parameter(String.valueOf(i));
 i++;
             label_2:
             while (true) {
@@ -238,17 +353,17 @@ i++;
                 break;
                 }
               default:
-                jj_la1[3] = jj_gen;
+                jj_la1[4] = jj_gen;
                 break label_2;
               }
               jj_consume_token(COMMAR);
-              Expression(String.valueOf(i));
+              Parameter(String.valueOf(i));
 i++;
             }
             break;
             }
           default:
-            jj_la1[4] = jj_gen;
+            jj_la1[5] = jj_gen;
             ;
           }
           jj_consume_token(CLOSE_PAR);
@@ -256,14 +371,14 @@ jjtn000.value="function";
           break;
           }
         default:
-          jj_la1[5] = jj_gen;
+          jj_la1[6] = jj_gen;
           ;
         }
         Expression1();
         break;
         }
       default:
-        jj_la1[6] = jj_gen;
+        jj_la1[7] = jj_gen;
 
       }
 jjtree.closeNodeScope(jjtn000, true);
@@ -300,13 +415,13 @@ if (jjtc000) {
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[7];
+  final private int[] jj_la1 = new int[8];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x8,0x2a0,0x2a0,0x8,0x2a0,0x2,0x800,};
+      jj_la1_0 = new int[] {0x1560,0x8,0x1560,0x1540,0x8,0x1560,0x2,0x4000,};
    }
 
   /** Constructor with InputStream. */
@@ -320,7 +435,7 @@ if (jjtc000) {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 8; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -335,7 +450,7 @@ if (jjtc000) {
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 8; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -345,7 +460,7 @@ if (jjtc000) {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 8; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -356,7 +471,7 @@ if (jjtc000) {
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 8; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -365,7 +480,7 @@ if (jjtc000) {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 8; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -375,7 +490,7 @@ if (jjtc000) {
     jj_ntk = -1;
     jjtree.reset();
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 8; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -426,12 +541,12 @@ if (jjtc000) {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[12];
+    boolean[] la1tokens = new boolean[15];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 8; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -440,7 +555,7 @@ if (jjtc000) {
         }
       }
     }
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < 15; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

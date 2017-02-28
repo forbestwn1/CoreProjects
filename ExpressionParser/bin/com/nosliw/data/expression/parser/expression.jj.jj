@@ -5,12 +5,12 @@ options {
 	STATIC = false ;
 	/* the location for parser classes */
 	OUTPUT_DIRECTORY = "c:/Temp/JCCTree";
-/*	"/Users/pro/Desktop/WebToApp/CoreProject/Projects/ExpressionParser/src/com/nosliw/expression/parser";*/
+/*	"/Users/pro/Desktop/WebToApp/CoreProject/Projects/ExpressionParser/src/com/nosliw/data/expression/parser";*/
 }
 
 PARSER_BEGIN(NosliwExpressionParser)
 /* define the package name for parser classes */
-package com.nosliw.expression.parser;
+package com.nosliw.data.expression.parser;
 
 public class NosliwExpressionParser/*@bgen(jjtree)*/implements NosliwExpressionParserTreeConstants/*@egen*/ {/*@bgen(jjtree)*/
   protected JJTNosliwExpressionParserState jjtree = new JJTNosliwExpressionParserState();
@@ -31,7 +31,8 @@ PARSER_END(NosliwExpressionParser)
 TOKEN : { < OPEN_PAR : "(" > }
 TOKEN : { < CLOSE_PAR : ")" > }
 TOKEN : { < COMMAR : "," > }
-TOKEN : { < CONSTANT : (["0"-"9","a"-"z","A"-"Z", "{", "}", "[", "]", "_", ":", "#", ",", " ", "\t", "\n", "\r", "'"])+ > }
+TOKEN : { < COLON : ":" > }
+TOKEN : { < CONSTANT : (["0"-"9","a"-"z","A"-"Z", "{", "}", "[", "]", "_", "#", " ", "\t", "\n", "\r", "'"])+ > }
 /*TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z"])+ > }*/
 
 /*
@@ -179,6 +180,127 @@ void Variable()          :
 }
 
 /*
+parm name in expression. 
+*/
+void ParmName()          :
+{/*@bgen(jjtree) PARMNAME */
+        SimpleNode jjtn000 = new SimpleNode(JJTPARMNAME);
+        boolean jjtc000 = true;
+        jjtree.openNodeScope(jjtn000);
+/*@egen*/
+	Token t ;
+}
+{/*@bgen(jjtree) PARMNAME */
+        try {
+/*@egen*/
+	t = <CONSTANT>/*@bgen(jjtree)*/
+        {
+          jjtree.closeNodeScope(jjtn000, true);
+          jjtc000 = false;
+        }
+/*@egen*/
+	{jjtn000.value = t.image;}/*@bgen(jjtree)*/
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/
+}
+
+
+/*
+reference in expression. 
+*/
+void Reference()           :
+{/*@bgen(jjtree) REFERENCE */
+        SimpleNode jjtn000 = new SimpleNode(JJTREFERENCE);
+        boolean jjtc000 = true;
+        jjtree.openNodeScope(jjtn000);
+/*@egen*/
+	Token t ;
+}
+{/*@bgen(jjtree) REFERENCE */
+        try {
+/*@egen*/
+	"<("	t=Name()  ")>"/*@bgen(jjtree)*/
+        {
+          jjtree.closeNodeScope(jjtn000, true);
+          jjtc000 = false;
+        }
+/*@egen*/
+	{jjtn000.value = t.image;}/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
+          }
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
+          }
+          throw (Error)jjte000;
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/
+}
+
+/*
+operation parm
+*/
+SimpleNode Parameter(String index)           :
+{/*@bgen(jjtree) PARAMETER */
+        SimpleNode jjtn000 = new SimpleNode(JJTPARAMETER);
+        boolean jjtc000 = true;
+        jjtree.openNodeScope(jjtn000);
+/*@egen*/
+	int i = Integer.valueof(index);
+}
+{/*@bgen(jjtree) PARAMETER */
+        try {
+/*@egen*/
+	(
+		ParmName() <COLON> Expression(String.valueOf(i))
+		|	
+		Expression(String.valueOf(i))
+	)/*@bgen(jjtree)*/
+        {
+          jjtree.closeNodeScope(jjtn000, true);
+          jjtc000 = false;
+        }
+/*@egen*/
+	{jjtn000.value=index;   return jjtn000;}/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
+          }
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
+          }
+          throw (Error)jjte000;
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/
+} 
+
+
+/*
 represent any expression
 */
 SimpleNode Expression(String index)            :
@@ -197,9 +319,11 @@ SimpleNode Expression(String index)            :
 		|
 		Constant () Expression1()
 		|
+		Reference () Expression1()
+		|
 		DataType() "." Name() 
-		<OPEN_PAR> [(Expression(String.valueOf(i)) {i++;})
-		(<COMMAR> Expression(String.valueOf(i))  {i++;})*]	
+		<OPEN_PAR> [(Parameter(String.valueOf(i)) {i++;})
+		(<COMMAR> Parameter(String.valueOf(i))  {i++;})*]	
 		<CLOSE_PAR> Expression1()
 	)/*@bgen(jjtree)*/
         {
@@ -247,7 +371,7 @@ SimpleNode Expression1()             :
 	(
 		"." Name() 
 		(
-			[<OPEN_PAR> [(Expression(String.valueOf(i)) {i++;}) (<COMMAR> Expression(String.valueOf(i)) {i++;})*]<CLOSE_PAR> {jjtn000.value="function";}] Expression1()
+			[<OPEN_PAR> [(Parameter(String.valueOf(i)) {i++;}) (<COMMAR> Parameter(String.valueOf(i)) {i++;})*]<CLOSE_PAR> {jjtn000.value="function";}] Expression1()
 		)
 		|
 		{}

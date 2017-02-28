@@ -1,5 +1,5 @@
 package com.nosliw.data.expression;
 
-public class HAPOperand {
+public interface HAPOperand {
 
 }

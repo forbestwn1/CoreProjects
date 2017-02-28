@@ -1,5 +1,9 @@
 package com.nosliw.data.expression;
 
-public class HAPOperandDataTypeOperation {
+import java.util.Map;
 
+public class HAPOperandDataTypeOperation implements HAPOperand{
+
+	public HAPOperandDataTypeOperation(String dataTypeId, String operation, Map<String, HAPOperand> parms){
+	}
 }
