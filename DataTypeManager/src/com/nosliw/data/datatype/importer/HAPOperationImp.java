@@ -5,10 +5,10 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueMap;
-import com.nosliw.data.HAPInfo;
-import com.nosliw.data.HAPOperation;
-import com.nosliw.data.HAPOperationOutInfo;
-import com.nosliw.data.HAPOperationParmInfo;
+import com.nosliw.data.core.HAPInfo;
+import com.nosliw.data.core.HAPOperation;
+import com.nosliw.data.core.HAPOperationOutInfo;
+import com.nosliw.data.core.HAPOperationParmInfo;
 
 public class HAPOperationImp extends HAPStringableValueEntity implements HAPOperation{
 

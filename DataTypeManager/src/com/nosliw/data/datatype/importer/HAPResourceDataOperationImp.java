@@ -4,8 +4,8 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.HAPDataTypeCriteria;
-import com.nosliw.data.HAPResourceDataOperation;
+import com.nosliw.data.core.HAPDataTypeCriteria;
+import com.nosliw.data.core.HAPResourceDataOperation;
 
 public class HAPResourceDataOperationImp extends HAPStringableValueEntity implements HAPResourceDataOperation{
 

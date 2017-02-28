@@ -5,6 +5,9 @@ import java.util.List;
 import com.nosliw.common.exception.HAPServiceDataException;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.expression.utils.HAPExpressionUtility;
+import com.nosliw.data.expression1.HAPExpression;
+import com.nosliw.data.expression1.HAPExpressionInfo;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.data1.HAPWraper;
 import com.nosliw.entity.data.HAPDataWraper;
@@ -13,9 +16,6 @@ import com.nosliw.entity.expression.HAPAttributeExpression;
 import com.nosliw.entity.expression.HAPAttributeExpressionUtility;
 import com.nosliw.entity.sort.HAPSortingInfo;
 import com.nosliw.entity.sort.HAPSortingUtility;
-import com.nosliw.expression.HAPExpression;
-import com.nosliw.expression.HAPExpressionInfo;
-import com.nosliw.expression.utils.HAPExpressionUtility;
 
 /*
  * this is option attribute object that attached to attribute definition

@@ -20,6 +20,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.common.utils.HAPXMLUtility;
 import com.nosliw.data.HAPData;
+import com.nosliw.data.expression1.HAPExpressionInfo;
 import com.nosliw.data1.HAPDataTypeDefInfo;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.definition.HAPAttributeDefinition;
@@ -33,7 +34,6 @@ import com.nosliw.entity.options.HAPOptionsDefinitionDynamic;
 import com.nosliw.entity.options.HAPOptionsDefinitionManager;
 import com.nosliw.entity.options.HAPOptionsDefinitionStatic;
 import com.nosliw.entity.utils.HAPEntityDataTypeUtility;
-import com.nosliw.expression.HAPExpressionInfo;
 
 /*
  * name : basic type

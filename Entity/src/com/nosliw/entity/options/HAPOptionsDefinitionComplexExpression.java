@@ -6,10 +6,10 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.HAPData;
+import com.nosliw.data.expression1.HAPExpression;
+import com.nosliw.data.expression1.HAPExpressionInfo;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.data1.HAPWraper;
-import com.nosliw.expression.HAPExpression;
-import com.nosliw.expression.HAPExpressionInfo;
 
 /*
  * this options is based on one dynamic options

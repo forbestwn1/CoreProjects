@@ -6,8 +6,8 @@ import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.HAPRelationshipPath;
-import com.nosliw.data.HAPRelationshipPathSegment;
+import com.nosliw.data.core.HAPRelationshipPath;
+import com.nosliw.data.core.HAPRelationshipPathSegment;
 
 public class HAPRelationshipPathImp extends HAPRelationshipPath implements HAPSerializable {
 

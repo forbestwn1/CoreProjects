@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueList;
-import com.nosliw.data.HAPOperation;
+import com.nosliw.data.core.HAPOperation;
 
 public class HAPDataTypeImpLoad extends HAPDataTypeImp{
 

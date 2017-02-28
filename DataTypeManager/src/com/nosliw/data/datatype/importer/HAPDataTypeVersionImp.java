@@ -5,7 +5,7 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.HAPDataTypeVersion;
+import com.nosliw.data.core.HAPDataTypeVersion;
 
 public class HAPDataTypeVersionImp extends HAPStringableValueEntity implements HAPDataTypeVersion{
 

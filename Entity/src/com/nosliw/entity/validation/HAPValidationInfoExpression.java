@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
-import com.nosliw.expression.HAPExpression;
+import com.nosliw.data.expression1.HAPExpression;
 
 public class HAPValidationInfoExpression implements HAPSerializable{
 

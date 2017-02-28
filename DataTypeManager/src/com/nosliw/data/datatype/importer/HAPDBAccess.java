@@ -18,12 +18,12 @@ import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo;
 import com.nosliw.common.strvalue.valueinfo.HAPSqlUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeId;
-import com.nosliw.data.HAPDataTypeOperation;
-import com.nosliw.data.HAPOperation;
-import com.nosliw.data.HAPOperationParmInfo;
-import com.nosliw.data.HAPRelationship;
+import com.nosliw.data.core.HAPDataType;
+import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPDataTypeOperation;
+import com.nosliw.data.core.HAPOperation;
+import com.nosliw.data.core.HAPOperationParmInfo;
+import com.nosliw.data.core.HAPRelationship;
 
 public class HAPDBAccess extends HAPConfigurableImp {
 

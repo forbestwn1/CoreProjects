@@ -1,8 +1,8 @@
 package com.nosliw.data.datatype.importer;
 
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
-import com.nosliw.data.HAPOperationOutInfo;
-import com.nosliw.data.HAPDataTypeCriteria;
+import com.nosliw.data.core.HAPDataTypeCriteria;
+import com.nosliw.data.core.HAPOperationOutInfo;
 
 public class HAPOperationOutputImp extends HAPStringableValueEntity implements HAPOperationOutInfo{
 

@@ -1,9 +1,9 @@
 package com.nosliw.entity.expression;
 
+import com.nosliw.data.expression1.HAPExpression;
+import com.nosliw.data.expression1.HAPExpressionInfo;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.definition.HAPAttributeDefinition;
-import com.nosliw.expression.HAPExpression;
-import com.nosliw.expression.HAPExpressionInfo;
 
 /*
  * an expression which is based on entity attribute, it has at lease predfined two variable

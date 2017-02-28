@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.data.HAPOperation;
-import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeFamily;
-import com.nosliw.data.HAPDataTypeId;
-import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.HAPExpression;
-import com.nosliw.data.HAPExpressionInfo;
-import com.nosliw.data.HAPQueryInfo;
+import com.nosliw.data.core.HAPDataType;
+import com.nosliw.data.core.HAPDataTypeFamily;
+import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPDataTypeManager;
+import com.nosliw.data.core.HAPExpression;
+import com.nosliw.data.core.HAPExpressionInfo;
+import com.nosliw.data.core.HAPOperation;
+import com.nosliw.data.core.HAPQueryInfo;
 
 public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 

@@ -14,6 +14,9 @@ import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.HAPData;
+import com.nosliw.data.expression.utils.HAPExpressionUtility;
+import com.nosliw.data.expression1.HAPExpression;
+import com.nosliw.data.expression1.HAPExpressionInfo;
 import com.nosliw.data1.HAPDataTypeDefInfo;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.data1.HAPWraper;
@@ -23,9 +26,6 @@ import com.nosliw.entity.definition.HAPEntityDefinitionManager;
 import com.nosliw.entity.sort.HAPSortingInfo;
 import com.nosliw.entity.sort.HAPSortingQueryAttribute;
 import com.nosliw.entity.utils.HAPAttributeConstant;
-import com.nosliw.expression.HAPExpression;
-import com.nosliw.expression.HAPExpressionInfo;
-import com.nosliw.expression.utils.HAPExpressionUtility;
 
 /*
  * class store all the information about defining a query

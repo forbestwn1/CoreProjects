@@ -7,8 +7,8 @@ import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.HAPDataTypeId;
-import com.nosliw.data.HAPDataTypeVersion;
+import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPDataTypeVersion;
 
 public class HAPDataTypeIdImp extends HAPStringableValueEntity implements HAPDataTypeId{
 

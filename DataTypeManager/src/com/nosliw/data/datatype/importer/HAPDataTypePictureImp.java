@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeId;
-import com.nosliw.data.HAPDataTypeOperation;
-import com.nosliw.data.HAPDataTypePicture;
-import com.nosliw.data.HAPRelationship;
+import com.nosliw.data.core.HAPDataType;
+import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPDataTypeOperation;
+import com.nosliw.data.core.HAPDataTypePicture;
+import com.nosliw.data.core.HAPRelationship;
 
 public class HAPDataTypePictureImp implements HAPDataTypePicture{
 

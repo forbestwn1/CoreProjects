@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.expression1.HAPExpressionInfo;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.data1.HAPWraper;
 import com.nosliw.entity.data.HAPDataWraper;
 import com.nosliw.entity.definition.HAPAttributeDefinition;
 import com.nosliw.entity.expression.HAPAttributeExpressionUtility;
-import com.nosliw.expression.HAPExpressionInfo;
 
 /*
  * this options is based on Dynamic Expression Options

@@ -1,11 +1,11 @@
 package com.nosliw.data.datatype.importer;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeId;
-import com.nosliw.data.HAPRelationship;
-import com.nosliw.data.HAPRelationshipPath;
-import com.nosliw.data.HAPRelationshipPathSegment;
+import com.nosliw.data.core.HAPDataType;
+import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPRelationship;
+import com.nosliw.data.core.HAPRelationshipPath;
+import com.nosliw.data.core.HAPRelationshipPathSegment;
 
 public class HAPRelationshipImp extends HAPDataTypeImp implements HAPRelationship{
 

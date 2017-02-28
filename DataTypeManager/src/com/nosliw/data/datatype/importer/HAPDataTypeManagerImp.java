@@ -9,16 +9,16 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.HAPDataType;
-import com.nosliw.data.HAPDataTypeId;
-import com.nosliw.data.HAPDataTypeManager;
-import com.nosliw.data.HAPDataTypeOperation;
-import com.nosliw.data.HAPRelationshipPathSegment;
-import com.nosliw.data.HAPDataTypePicture;
-import com.nosliw.data.HAPDataTypeVersion;
-import com.nosliw.data.HAPExpression;
-import com.nosliw.data.HAPExpressionInfo;
-import com.nosliw.data.HAPOperation;
+import com.nosliw.data.core.HAPDataType;
+import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPDataTypeManager;
+import com.nosliw.data.core.HAPDataTypeOperation;
+import com.nosliw.data.core.HAPDataTypePicture;
+import com.nosliw.data.core.HAPDataTypeVersion;
+import com.nosliw.data.core.HAPExpression;
+import com.nosliw.data.core.HAPExpressionInfo;
+import com.nosliw.data.core.HAPOperation;
+import com.nosliw.data.core.HAPRelationshipPathSegment;
 import com.nosliw.data.datatype.util.HAPDBAccess1;
 
 public class HAPDataTypeManagerImp implements HAPDataTypeManager{

@@ -1,9 +1,9 @@
 package com.nosliw.data.operation.java;
 
-import com.nosliw.data.HAPOperation;
-import com.nosliw.data.HAPResources;
-import com.nosliw.data.HAPExpression;
-import com.nosliw.data.HAPResourceManager;
+import com.nosliw.data.core.HAPExpression;
+import com.nosliw.data.core.HAPOperation;
+import com.nosliw.data.core.HAPResourceManager;
+import com.nosliw.data.core.HAPResources;
 
 public class HAPOperationManagerJava implements HAPResourceManager{
 

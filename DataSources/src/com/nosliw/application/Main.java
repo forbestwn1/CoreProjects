@@ -9,6 +9,8 @@ import com.nosliw.data.HAPData;
 import com.nosliw.data.basic.list.HAPList;
 import com.nosliw.data.basic.list.HAPListData;
 import com.nosliw.data.basic.string.HAPStringData;
+import com.nosliw.data.expression1.HAPExpression;
+import com.nosliw.data.expression1.HAPExpressionInfo;
 import com.nosliw.data.library.distance.v100.HAPDistance;
 import com.nosliw.data.library.entity.v100.HAPEntity;
 import com.nosliw.data.library.entity.v100.HAPEntityData;
@@ -22,8 +24,6 @@ import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.data1.HAPOperationContext;
 import com.nosliw.datasource.realtor.HAPDataSourceRealtorMock;
 import com.nosliw.datasource.school.HAPDataSourceSchool;
-import com.nosliw.expression.HAPExpression;
-import com.nosliw.expression.HAPExpressionInfo;
 
 public class Main {
 

@@ -3,7 +3,7 @@ package com.nosliw.data.datatype.importer.js;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.data.HAPResource;
+import com.nosliw.data.core.HAPResource;
 import com.nosliw.data.datatype.importer.HAPResourceDataOperationImp;
 
 public class HAPJSOperationInfo {

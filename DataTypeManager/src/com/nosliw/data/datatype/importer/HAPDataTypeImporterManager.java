@@ -13,13 +13,13 @@ import com.nosliw.common.strvalue.io.HAPStringableEntityImporterXML;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.HAPOperation;
-import com.nosliw.data.HAPRelationship;
-import com.nosliw.data.HAPRelationshipPathSegment;
+import com.nosliw.data.core.HAPDataTypeOperation;
+import com.nosliw.data.core.HAPDataTypePicture;
+import com.nosliw.data.core.HAPDataTypeProvider;
+import com.nosliw.data.core.HAPOperation;
+import com.nosliw.data.core.HAPRelationship;
+import com.nosliw.data.core.HAPRelationshipPathSegment;
 import com.nosliw.data.datatype.importer.js.HAPJSImporter;
-import com.nosliw.data.HAPDataTypeOperation;
-import com.nosliw.data.HAPDataTypePicture;
-import com.nosliw.data.HAPDataTypeProvider;
 
 public class HAPDataTypeImporterManager {
 	

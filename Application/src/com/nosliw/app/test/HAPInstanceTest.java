@@ -5,11 +5,11 @@ import java.util.Map;
 
 import com.nosliw.app.instance.HAPApplicationInstance;
 import com.nosliw.data.HAPData;
+import com.nosliw.data.expression1.HAPExpression;
+import com.nosliw.data.expression1.HAPExpressionInfo;
+import com.nosliw.data.expression1.HAPExpressionParser;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.data1.HAPOperand;
-import com.nosliw.expression.HAPExpression;
-import com.nosliw.expression.HAPExpressionInfo;
-import com.nosliw.expression.HAPExpressionParser;
 import com.nosliw.uiresource.HAPUIResource;
 
 public class HAPInstanceTest {

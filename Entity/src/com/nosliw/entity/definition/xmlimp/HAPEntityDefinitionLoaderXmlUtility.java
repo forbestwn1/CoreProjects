@@ -7,6 +7,8 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.common.utils.HAPXMLUtility;
+import com.nosliw.data.expression1.HAPExpression;
+import com.nosliw.data.expression1.HAPExpressionInfo;
 import com.nosliw.data1.HAPDataTypeDefInfo;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.entity.definition.HAPAttributeDefinition;
@@ -14,8 +16,6 @@ import com.nosliw.entity.definition.HAPEntityDefinitionSegment;
 import com.nosliw.entity.expression.HAPAttributeExpression;
 import com.nosliw.entity.utils.HAPEntityNamingConversion;
 import com.nosliw.entity.validation.HAPValidationInfoExpression;
-import com.nosliw.expression.HAPExpression;
-import com.nosliw.expression.HAPExpressionInfo;
 
 public class HAPEntityDefinitionLoaderXmlUtility {
 

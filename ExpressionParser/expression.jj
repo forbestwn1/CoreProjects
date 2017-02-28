@@ -4,12 +4,12 @@ options {
 	STATIC = false ;
 	/* the location for parser classes */
 	OUTPUT_DIRECTORY = "c:/Temp/JCCTree";
-/*	"/Users/pro/Desktop/WebToApp/CoreProject/Projects/ExpressionParser/src/com/nosliw/expression/parser";*/
+/*	"/Users/pro/Desktop/WebToApp/CoreProject/Projects/ExpressionParser/src/com/nosliw/data/expression/parser";*/
 }
 
 PARSER_BEGIN(NosliwExpressionParser)
 /* define the package name for parser classes */
-package com.nosliw.expression.parser;
+package com.nosliw.data.expression.parser;
 
 public class NosliwExpressionParser {
 
