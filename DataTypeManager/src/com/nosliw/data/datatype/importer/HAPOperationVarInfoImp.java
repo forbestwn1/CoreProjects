@@ -33,5 +33,7 @@ public class HAPOperationVarInfoImp extends HAPStringableValueEntity implements 
 	public String getDataTypeId() {		return this.getAtomicAncestorValueString(DATATYPEID);	}
 	public String getOperationId() {		return this.getAtomicAncestorValueString(OPERATIONID);	}
 	public String getType() {		return this.getAtomicAncestorValueString(TYPE);	}
-	
+
+	@Override
+	public boolean isBase() { return this.getAtomicAncestorValueBoolean(ISBASE); }
 }

@@ -1,4 +1,4 @@
-package com.nosliw.data.expression.utils;
+package com.nosliw.expression.utils;
 
 public class HAPAttributeConstant {
 

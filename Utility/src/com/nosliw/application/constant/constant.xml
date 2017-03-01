@@ -95,7 +95,7 @@
 	</attributes>
 
 
-	<attributes filepath="{{projectsPath}}/ExpressionParser/src/com/nosliw/expression/utils" 
+	<attributes filepath="{{projectsPath}}/ExpressionParser/src/com/nosliw/data/expression/utils" 
 				packagename="com.nosliw.expression.utils" 
 				classname="HAPAttributeConstant" >
 		<definitions>
@@ -315,13 +315,14 @@
 			<definition name="DATAOPERATION_COMPARE" value="compare"/>
 			<definition name="DATAOPERATION_PARSELITERAL" value="parseLiteral"/>
 			<definition type="space"/>
-			<definition name="EXPRESSION_OPERAND_CONSTANT" value="1" type="int"/>
-			<definition name="EXPRESSION_OPERAND_VARIABLE" value="2" type="int"/>
-			<definition name="EXPRESSION_OPERAND_DATAOPERATION" value="3" type="int"/>
-			<definition name="EXPRESSION_OPERAND_DATATYPEOPERATION" value="4" type="int"/>
-			<definition name="EXPRESSION_OPERAND_ATTRIBUTEOPERATION" value="5" type="int"/>
-			<definition name="EXPRESSION_OPERAND_PATHOPERATION" value="6" type="int"/>
-			<definition name="EXPRESSION_OPERAND_NEWOPERATION" value="7" type="int"/>
+			<definition name="EXPRESSION_OPERAND_CONSTANT" value="constant"/>
+			<definition name="EXPRESSION_OPERAND_VARIABLE" value="variable"/>
+			<definition name="EXPRESSION_OPERAND_OPERATION" value="operation"/>
+			<definition name="EXPRESSION_OPERAND_DATAOPERATION" value="dataoperation"/>
+			<definition name="EXPRESSION_OPERAND_DATATYPEOPERATION" value="datatypeoperation"/>
+			<definition name="EXPRESSION_OPERAND_ATTRIBUTEOPERATION" value="attributeoperation"/>
+			<definition name="EXPRESSION_OPERAND_PATHOPERATION" value="pathoperation"/>
+			<definition name="EXPRESSION_OPERAND_NEWOPERATION" value="newoperation"/>
 			<definition type="space"/>
 			<definition name="EXPRESSION_VARIABLE_THIS" value="this"/>
 			<definition name="EXPRESSION_VARIABLE_PARENT" value="parent"/>

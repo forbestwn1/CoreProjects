@@ -15,6 +15,10 @@ public interface HAPOperationParmInfo extends HAPOperationOutInfo{
 	@HAPAttribute
 	public static String NAME = "name";
 
+	@HAPAttribute
+	public static String ISBASE = "isBase";
+	
 	String getName();
 	
+	boolean isBase();
 }

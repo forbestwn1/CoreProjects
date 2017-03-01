@@ -10,6 +10,12 @@
 		</dbColumnInfos>
 	</property>
 
+	<property name="isBase" dataType="boolean" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+
 	<property name="dataTypeId" dataType="string" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(20)"/>

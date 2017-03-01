@@ -69,13 +69,14 @@ public class HAPConstant {
 
 
 
-		public static final int EXPRESSION_OPERAND_CONSTANT = 1;
-		public static final int EXPRESSION_OPERAND_VARIABLE = 2;
-		public static final int EXPRESSION_OPERAND_DATAOPERATION = 3;
-		public static final int EXPRESSION_OPERAND_DATATYPEOPERATION = 4;
-		public static final int EXPRESSION_OPERAND_ATTRIBUTEOPERATION = 5;
-		public static final int EXPRESSION_OPERAND_PATHOPERATION = 6;
-		public static final int EXPRESSION_OPERAND_NEWOPERATION = 7;
+		public static final String EXPRESSION_OPERAND_CONSTANT = "constant";
+		public static final String EXPRESSION_OPERAND_VARIABLE = "variable";
+		public static final String EXPRESSION_OPERAND_OPERATION = "operation";
+		public static final String EXPRESSION_OPERAND_DATAOPERATION = "dataoperation";
+		public static final String EXPRESSION_OPERAND_DATATYPEOPERATION = "datatypeoperation";
+		public static final String EXPRESSION_OPERAND_ATTRIBUTEOPERATION = "attributeoperation";
+		public static final String EXPRESSION_OPERAND_PATHOPERATION = "pathoperation";
+		public static final String EXPRESSION_OPERAND_NEWOPERATION = "newoperation";
 
 
 

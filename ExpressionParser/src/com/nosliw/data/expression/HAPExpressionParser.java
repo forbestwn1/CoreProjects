@@ -21,7 +21,7 @@ public class HAPExpressionParser {
 		  
 //		  String str = "?(key)?.largerThan(&(dddd)&,&(dddd)&)";
 		  
-		  String str = "?(schoolsData)?.each(parm1:?(validHomeExpression)?,parm2:&(constantData2)&,parm3:&(constantData)&,parm4:<(referenceData)>)";
+		  String str = "?(schoolsData)?.each(parm1:?(validHomeExpression)?,parm2:&(constantData2)&,parm3:&(constantData)&,parm4:<(referenceData)>).aaa.bbb";
 //		  String str = "?(schoolsData)?.each(parm1:?(validHomeExpression)?,parm2:&(schoolData)&)";
 //		  String str = "?(schoolsData)?.each(parm1:?(validHomeExpression)?)";
 		  
@@ -63,14 +63,7 @@ public class HAPExpressionParser {
 		  else if(expressionEles.dataTypeNode!=null){
 			  String dataTypeInfo = (String)expressionEles.dataTypeNode.jjtGetValue();
 			  String operation = (String)expressionEles.nameNode.jjtGetValue();
-			  if(HAPConstant.DATAOPERATION_NEWDATA.equals(operation)){
-				  //new operation
-				  operand = new HAPOperandNewOperation(dataTypeInfo, getOperationParms(expressionEles.expressionNodes));
-			  }
-			  else{
-				  //normal data type operation
-				  operand = new HAPOperandDataTypeOperation(dataTypeInfo, operation, getOperationParms(expressionEles.expressionNodes));
-			  }
+			  operand = new HAPOperandOperation(dataTypeInfo, operation, getOperationParms(expressionEles.expressionNodes));
 		  }
 		  
 		  out = processExpression1Node(expressionEles.expression1Node, operand);
@@ -86,7 +79,7 @@ public class HAPExpressionParser {
 		  HAPOperand operand = null;
 		  if("function".equals(parentNode.jjtGetValue())){
 			  //function call
-			  operand = new HAPOperandDataOperation(aheadOperand, name, getOperationParms(expressionEles.expressionNodes));
+			  operand = new HAPOperandOperation(aheadOperand, name, getOperationParms(expressionEles.expressionNodes));
 		  }
 		  else{
 			  //path
