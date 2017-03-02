@@ -60,13 +60,14 @@ public class HAPDataTypeIdImp extends HAPStringableValueEntity implements HAPDat
 	}
 
 	@Override
-	protected void buildObjectByLiterate(String literateValue){	
+	protected boolean buildObjectByLiterate(String literateValue){	
 		String[] segs = HAPNamingConversionUtility.parseSegments(literateValue);
 		this.updateAtomicChildStrValue(NAME, segs[0], HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
 		if(segs.length>=2){
 			HAPStringableValueAtomic versionValue = new HAPStringableValueAtomic(segs[1], HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeVersionImp.class.getName());
 			this.updateChild(VERSION, versionValue);
 		}
+		return true;
 	}
 	
 	public static String buildStringValue(String name, String version){

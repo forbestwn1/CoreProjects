@@ -53,8 +53,9 @@ public class HAPRelationshipPathSegment extends HAPSerializableImp{
 		return out;
 	}
 	
-	protected void buildObjectByLiterate(String literateValue){ 
-		this.m_segment = Integer.valueOf(literateValue);	
+	protected boolean buildObjectByLiterate(String literateValue){ 
+		this.m_segment = Integer.valueOf(literateValue);
+		return true;
 	}
 	
 	protected String buildLiterate(){  return this.m_segment+""; }

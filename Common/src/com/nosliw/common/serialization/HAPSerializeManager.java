@@ -54,7 +54,10 @@ public class HAPSerializeManager {
 			if(cs==null){
 				cs = Class.forName(className);
 				out = ((HAPSerializable)cs.newInstance());
-				out.buildObject(out, format);
+				if(!out.buildObject(out, format)){
+					//build failed
+					out = null;
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -6,8 +6,11 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeCriteria;
@@ -15,13 +18,34 @@ import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.expression.utils.HAPAttributeConstant;
 
 /*
- * store information related with expression
- * 		expression string
- * 		constantDatas : the constant data to put into expression
- * 		variableInfos : data type information for variables in expression 
+ * ExpressionInfo is the expression definition unit  
+ * store information related with expression, it include expression itself and its configuration:
+ * 		expression itself
+ * 		name : name of expression. so that other expression can reference it by name
+ * 		constants : the constant data to put into expression
+ * 		variables : data type information for variables in expression
+ * 		references : reference information in expression 
  */
-public class HAPExpressionInfo extends HAPSerializableImp{
+public class HAPExpressionInfo extends HAPStringableValueEntity{
 
+	@HAPAttribute
+	public static String INFO = "info";
+
+	@HAPAttribute
+	public static String EXPRESSION = "expression";
+
+	@HAPAttribute
+	public static String CONSTANTS = "constants";
+	
+	@HAPAttribute
+	public static String VARIABLES = "variables";
+	
+	@HAPAttribute
+	public static String REFERENCES = "references";
+
+	//the name of the expression
+	private String m_name;
+	
 	//expression string
 	private String m_expression;
 	
@@ -53,7 +77,7 @@ public class HAPExpressionInfo extends HAPSerializableImp{
 	public Map<String, HAPDataTypeCriteria> getVariableInfos(){ return this.m_variables; }
 
 	@Override
-	protected void buildObjectByFullJson(Object json){
+	protected boolean buildObjectByFullJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_expression = jsonObj.optString(HAPAttributeConstant.EXPRESSIONINFO_EXPRESSION);
 
@@ -76,10 +100,14 @@ public class HAPExpressionInfo extends HAPSerializableImp{
 			HAPData constant = HAPDataUtility.buildDataWrapperJson(constantsJson); 
 			m_constants.put(constantName, constant);
 		}
+		return true;
 	}
 	
 	@Override
-	protected void buildObjectByJson(Object json){  this.buildObjectByJson(json);}
+	protected boolean buildObjectByJson(Object json){  
+		this.buildObjectByJson(json);
+		return true;
+	}
 
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(HAPAttributeConstant.EXPRESSIONINFO_EXPRESSION, this.m_expression);

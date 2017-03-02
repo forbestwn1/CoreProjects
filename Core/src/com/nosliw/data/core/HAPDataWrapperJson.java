@@ -22,14 +22,14 @@ public class HAPDataWrapperJson extends HAPDataImp{
 	}
 
 	@Override
-	protected String toJsonValue() {
-		if(this.m_jsonValue==null)  return null;
-		return this.m_jsonValue.toString();
-	}
-
-	@Override
 	Object buildObjectVale(Object value, HAPSerializationFormat format) {
 		this.m_jsonValue = value;
 		return this.m_jsonValue;
+	}
+
+	@Override
+	protected String toStringValueValue(HAPSerializationFormat format) {
+		if(this.m_jsonValue==null)  return null;
+		return this.m_jsonValue.toString();
 	}
 }

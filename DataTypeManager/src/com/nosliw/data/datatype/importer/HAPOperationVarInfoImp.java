@@ -35,5 +35,5 @@ public class HAPOperationVarInfoImp extends HAPStringableValueEntity implements 
 	public String getType() {		return this.getAtomicAncestorValueString(TYPE);	}
 
 	@Override
-	public boolean isBase() { return this.getAtomicAncestorValueBoolean(ISBASE); }
+	public boolean getIsBase() { return this.getAtomicAncestorValueBoolean(ISBASE); }
 }

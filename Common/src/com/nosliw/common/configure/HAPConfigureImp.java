@@ -282,6 +282,5 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 	}
 
 	@Override
-	public void buildObject(Object value, HAPSerializationFormat format) {
-	}
+	public boolean buildObject(Object value, HAPSerializationFormat format) { return true;	}
 }

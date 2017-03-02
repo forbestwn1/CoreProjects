@@ -2,6 +2,8 @@ package com.nosliw.data.expression;
 
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 
@@ -25,8 +27,10 @@ public class HAPOperandOperation implements HAPOperand{
 		this.m_parms = parms;
 	}
 	
-	public HAPOperandOperation(String dataTypeId, String operation, Map<String, HAPOperand> parms){
-		
+	public HAPOperandOperation(String dataTypeIdLiterate, String operation, Map<String, HAPOperand> parms){
+		this.m_dataTypeId = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), dataTypeIdLiterate, HAPSerializationFormat.LITERATE);
+		this.m_operation = operation;
+		this.m_parms = parms;
 	}
 
 	
@@ -34,6 +38,5 @@ public class HAPOperandOperation implements HAPOperand{
 
 	@Override
 	public String getType() {		return HAPConstant.EXPRESSION_OPERAND_OPERATION;	}
-	
 	
 }

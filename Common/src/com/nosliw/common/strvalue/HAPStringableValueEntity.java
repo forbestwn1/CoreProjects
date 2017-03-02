@@ -186,24 +186,27 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	}
 	
 	@Override
-	protected void buildObjectByFullJson(Object json){		this.buildByJson((JSONObject)json);	}
+	protected boolean buildObjectByFullJson(Object json){	return this.buildByJson((JSONObject)json);	}
 
 	@Override
-	protected void buildObjectByJson(Object json){		this.buildByJson((JSONObject)json);	}
+	protected boolean buildObjectByJson(Object json){		return this.buildByJson((JSONObject)json);	}
 
 	@Override
-	protected void buildObjectByLiterate(String literateValue){	
+	protected boolean buildObjectByLiterate(String literateValue){
+		boolean out = false;
 		try {
-			buildByJson(new JSONObject(literateValue));
+			out = buildByJson(new JSONObject(literateValue));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} 
+		return out;
 	}
 
 	
-	private void buildByJson(JSONObject json){
+	private boolean buildByJson(JSONObject json){
 		HAPValueInfoEntity entityValueInfo = HAPValueInfoManager.getInstance().getEntityValueInfoByClass(this.getClass());
 		HAPStringableEntityImporterJSON.buildStringableValueEntity(json, this, this.getClass(), HAPValueInfoManager.getInstance());
+		return true;
 	}
 	
 	@Override

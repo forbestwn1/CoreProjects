@@ -17,8 +17,9 @@ public class HAPRelationshipPathImp extends HAPRelationshipPath implements HAPSe
 	}
 
 	@Override
-	public void buildObject(Object value, HAPSerializationFormat format) {
-		this.m_segments = (List<HAPRelationshipPathSegment>)HAPLiterateManager.getInstance().stringToValue((String)value, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, "com.nosliw.data.HAPRelationshipPathSegment");
+	public boolean buildObject(Object value, HAPSerializationFormat format) {
+		this.m_segments = (List<HAPRelationshipPathSegment>)HAPLiterateManager.getInstance().stringToValue((String)value, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, "com.nosliw.data.core.HAPRelationshipPathSegment");
+		return true;
 	} 
 
 	public HAPRelationshipPathImp clone(){

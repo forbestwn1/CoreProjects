@@ -1,0 +1,12 @@
+<entity name="data.expression" 
+		class="com.nosliw.data.expression.HAPReferenceInfo" 
+		description="">
+		
+	<property name="name" dataType="string" description="">
+	</property>
+
+	<property name="variablesMap" type="map" key="from" description="">
+		<child dataType="string"></child>
+	</property>
+
+</entity>

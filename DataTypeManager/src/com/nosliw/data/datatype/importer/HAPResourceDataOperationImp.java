@@ -32,10 +32,11 @@ public class HAPResourceDataOperationImp extends HAPStringableValueEntity implem
 	}
 	
 	@Override
-	protected void buildObjectByLiterate(String literateValue){
+	protected boolean buildObjectByLiterate(String literateValue){
 		String[] parts = HAPNamingConversionUtility.parseSegments(literateValue);
 		this.setDataTypeCriteriaLiterate(parts[0]);
 		this.setOperationLiterate(parts[1]);
+		return true;
 	}
 	
 	private void setDataTypeCriteriaLiterate(String dataTypeCriteriaLiterate){

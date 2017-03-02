@@ -20,5 +20,5 @@ public interface HAPOperationParmInfo extends HAPOperationOutInfo{
 	
 	String getName();
 	
-	boolean isBase();
+	boolean getIsBase();
 }

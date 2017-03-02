@@ -10,7 +10,7 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="isBase" dataType="boolean" description="">
+	<property name="isBase" dataType="boolean" description="" default="false">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(20)"/>
 		</dbColumnInfos>

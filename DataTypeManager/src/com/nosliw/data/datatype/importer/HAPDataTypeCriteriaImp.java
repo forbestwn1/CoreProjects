@@ -11,9 +11,10 @@ public class HAPDataTypeCriteriaImp extends HAPStringableValueEntity implements 
 	}
 
 	@Override
-	protected void buildObjectByLiterate(String literateValue){	
+	protected boolean buildObjectByLiterate(String literateValue){	
 		this.updateAtomicChildStrValue(CRITERIA, literateValue);
-	}
+		return true;
+}
 
 	@Override
 	protected String buildLiterate(){

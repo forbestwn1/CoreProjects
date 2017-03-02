@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPAttributeConstant;
 import com.nosliw.common.utils.HAPConstant;
@@ -18,7 +19,7 @@ import com.nosliw.common.utils.HAPJsonUtility;
  * 		if result code less or equal than SERVICECODE_SUCCESS, we consider the operation success
  * 		if result code more or eqal than SERVICECODE_FAIL, we consier the operation fail
  */
-public class HAPServiceData implements HAPSerializable{
+public class HAPServiceData extends HAPSerializableImp{
 
 	//result code
 	private int m_code = HAPConstant.SERVICECODE_SUCCESS;
@@ -113,11 +114,5 @@ public class HAPServiceData implements HAPSerializable{
 	
 	public String toString(){
 		return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));
-	}
-
-	@Override
-	public void buildObject(Object value, HAPSerializationFormat format) {
-		// TODO Auto-generated method stub
-		
 	}
 }

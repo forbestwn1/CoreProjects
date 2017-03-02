@@ -10,6 +10,8 @@ import com.nosliw.data.core.HAPDataTypeCriteria;
  */
 public class HAPExpression {
 
+	private String m_name;
+	
 	// original expressiong
 	private String m_expression;
 

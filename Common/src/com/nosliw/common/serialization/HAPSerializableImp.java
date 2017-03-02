@@ -8,30 +8,32 @@ import com.nosliw.common.utils.HAPJsonUtility;
 public abstract class HAPSerializableImp implements HAPSerializable{
 
 	@Override
-	public void buildObject(Object value, HAPSerializationFormat format){
+	public boolean buildObject(Object value, HAPSerializationFormat format){
+		boolean out = false;
 		switch(format){
 		case JSON_FULL:
-			this.buildObjectByFullJson(value);
+			out = this.buildObjectByFullJson(value);
 			break;
 		case JSON:
-			this.buildObjectByJson(value);
+			out = this.buildObjectByJson(value);
 			break;
 		case XML:
-			this.buildObjectByXml(value);
+			out = this.buildObjectByXml(value);
 			break;
 		case LITERATE:
-			this.buildObjectByLiterate((String)value);
+			out = this.buildObjectByLiterate((String)value);
 			break;
 		}
+		return out;
 	}
 
-	protected void buildObjectByFullJson(Object json){}
+	protected boolean buildObjectByFullJson(Object json){ return false; }
 
-	protected void buildObjectByJson(Object json){}
+	protected boolean buildObjectByJson(Object json){  return false;  }
 	
-	protected void buildObjectByXml(Object xml){}
+	protected boolean buildObjectByXml(Object xml){  return false;  }
 	
-	protected void buildObjectByLiterate(String literateValue){	}
+	protected boolean buildObjectByLiterate(String literateValue){	return false;  }
 	
 	@Override
 	public String toString(){
