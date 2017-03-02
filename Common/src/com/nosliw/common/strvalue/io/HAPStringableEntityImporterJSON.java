@@ -1,10 +1,12 @@
 package com.nosliw.common.strvalue.io;
 
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -23,20 +25,32 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoMap;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPStringableEntityImporterJSON {
-
+	
 	public static <T> T parseJsonEntity(JSONObject jsonObjEntity, Class<T> entityClass, HAPValueInfoManager valueInfoMan){
 		HAPValueInfoEntity entityValueInfo = valueInfoMan.getEntityValueInfoByClass(entityClass); 
 		HAPStringableValueEntity entity = (HAPStringableValueEntity)entityValueInfo.newValue();
 		buildStringableValueEntity(jsonObjEntity, entity, entityValueInfo, valueInfoMan);
 		return (T)entity;
 	}
+
+	public static HAPStringableValueEntity parseJsonEntity(InputStream inputStream, String entityType, HAPValueInfoManager valueInfoMan){
+		HAPStringableValueEntity out = null;		
+		try {
+			String content = HAPFileUtility.readFile(inputStream);
+			JSONObject jsonObjEntity = new JSONObject(content);
+			 out = parseJsonEntity(jsonObjEntity, entityType, valueInfoMan);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
 	
 	public static HAPStringableValueEntity parseJsonEntity(JSONObject jsonObjEntity, String entityType, HAPValueInfoManager valueInfoMan){
 		HAPValueInfoEntity entityValueInfo = (HAPValueInfoEntity)valueInfoMan.getValueInfo(entityType);
-		HAPStringableValueEntity entity = (HAPStringableValueEntity)entityValueInfo.newValue();
-		buildStringableValueEntity(jsonObjEntity, entity, entityValueInfo, valueInfoMan);
+		HAPStringableValueEntity entity = parseJsonEntity(jsonObjEntity, entityValueInfo, valueInfoMan);
 		return entity;
 	}
 
@@ -46,6 +60,10 @@ public class HAPStringableEntityImporterJSON {
 		return entity;
 	}
 
+	
+	
+	
+	
 	public static void buildStringableValueEntity(JSONObject jsonObjEntity, HAPStringableValueEntity entity, Class entityClass, HAPValueInfoManager valueInfoMan){
 		HAPValueInfoEntity entityValueInfo = valueInfoMan.getEntityValueInfoByClass(entityClass); 
 		buildStringableValueEntity(jsonObjEntity, entity, entityValueInfo, valueInfoMan);
@@ -78,37 +96,6 @@ public class HAPStringableEntityImporterJSON {
 			}
 		}
 		HAPValueInfoUtility.validateStringableValueEntity(entityValueInfo, entity);
-	}
-	
-	private static HAPStringableValueEntity processEntityValue1(JSONObject jsonObjEntity, HAPValueInfoEntity entityValueInfo, HAPValueInfoManager valueInfoMan){
-		HAPStringableValueEntity entity = (HAPStringableValueEntity)entityValueInfo.newValue();
-
-		if(jsonObjEntity!=null){
-			JSONObject propertiesJsonObj = jsonObjEntity;
-			HAPSerializationFormat jsonFormat = getJsonFormat(jsonObjEntity);
-			if(HAPSerializationFormat.JSON_FULL.equals(jsonFormat))  propertiesJsonObj = jsonObjEntity.optJSONObject(HAPStringableValueEntity.PROPERTIES);
-
-			Set<String> entityOptionsProperties = new HashSet<String>();
-			
-			for(String property : entityValueInfo.getEntityProperties()){
-				HAPValueInfo propertyValueInfo = entityValueInfo.getPropertyInfo(property);
-				String propertyCategary = propertyValueInfo.getValueInfoType();
-				if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyCategary))  entityOptionsProperties.add(property);
-				else{
-					HAPStringableValue entityProperty = readPropertyValueOfEntity(propertiesJsonObj, propertyValueInfo, valueInfoMan);
-					if(entityProperty!=null)			entity.updateChild(property, entityProperty);
-				}
-			}
-			
-			for(String propertyName : entityOptionsProperties){
-				HAPValueInfoEntityOptions propertyValueInfo = (HAPValueInfoEntityOptions)entityValueInfo.getPropertyInfo(propertyName).getSolidValueInfo();
-				Object propertyObj = propertiesJsonObj.opt(propertyName);
-				String keyValue = entity.getAtomicAncestorValueString(propertyValueInfo.getKeyName());
-				HAPStringableValue entityProperty = processEntityOptionsValue(propertyObj, keyValue, propertyValueInfo, valueInfoMan);
-				if(entityProperty!=null)			entity.updateChild(propertyName, entityProperty);
-			}
-		}
-		return HAPValueInfoUtility.validateStringableValueEntity(entityValueInfo, entity);
 	}
 	
 	private static HAPStringableValue readPropertyValueOfEntity(JSONObject propertiesJsonObj, HAPValueInfo propertyValueInfo, HAPValueInfoManager valueInfoMan){
@@ -144,28 +131,38 @@ public class HAPStringableEntityImporterJSON {
 	public static HAPStringableValueMap parseJsonMap(JSONObject mapObj, HAPValueInfoMap mapValueInfo, HAPValueInfoManager valueInfoMan){
 		HAPStringableValueMap map = (HAPStringableValueMap)mapValueInfo.newValue();
 		
-		if(mapObj!=null){
-			JSONObject mapPropertiesJsonObj = null;
-			HAPSerializationFormat jsonFormat = getJsonFormat(mapObj);
-			if(HAPSerializationFormat.JSON_FULL.equals(jsonFormat))  mapPropertiesJsonObj = (mapObj).optJSONObject(HAPStringableValueMap.ELEMENTS);
-			else    mapPropertiesJsonObj = mapObj;
-			
-			HAPValueInfo childInfo = mapValueInfo.getChildValueInfo().getSolidValueInfo();
-			String childCategary = childInfo.getValueInfoType();
+		try{
+			if(mapObj!=null){
+				JSONObject mapPropertiesJsonObj = null;
+				HAPSerializationFormat jsonFormat = getJsonFormat(mapObj);
+				if(HAPSerializationFormat.JSON_FULL.equals(jsonFormat))  mapPropertiesJsonObj = (mapObj).optJSONObject(HAPStringableValueMap.ELEMENTS);
+				else    mapPropertiesJsonObj = mapObj;
+				
+				HAPValueInfo childInfo = mapValueInfo.getChildValueInfo().getSolidValueInfo();
+				String childCategary = childInfo.getValueInfoType();
 
-			Iterator<String> it = mapPropertiesJsonObj.keys();
-			while(it.hasNext()){
-				String key = it.next();
-				Object keyValue = mapPropertiesJsonObj.opt(key);
-				HAPStringableValue mapElementValue = null;
-				if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(childCategary)){
-					mapElementValue = processAtomicValue(keyValue, (HAPValueInfoAtomic)childInfo, valueInfoMan);
-				}		
-				else{
-					mapElementValue = processComplexValue(keyValue, childInfo, valueInfoMan);
+				Iterator<String> it = mapPropertiesJsonObj.keys();
+				while(it.hasNext()){
+					String key = it.next();
+					Object keyValue = mapPropertiesJsonObj.opt(key);
+					HAPStringableValue mapElementValue = null;
+					if(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC.equals(childCategary)){
+						mapElementValue = processAtomicValue(keyValue, (HAPValueInfoAtomic)childInfo, valueInfoMan);
+					}		
+					else{
+						if(keyValue instanceof JSONObject){
+							//for key value is JSONObject, add key as property, so that we don't need to duplicate the key in value part in original json
+							String mapKey = mapValueInfo.getAtomicAncestorValueString(HAPValueInfoMap.KEY);
+							((JSONObject)keyValue).putOpt(mapKey, key);
+						}
+						mapElementValue = processComplexValue(keyValue, childInfo, valueInfoMan);
+					}
+					map.updateChild(key, mapElementValue);
 				}
-				map.updateChild(key, mapElementValue);
 			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
 		}
 		return map;
 	}

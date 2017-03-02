@@ -7,8 +7,6 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -56,6 +54,10 @@ public class HAPExpressionInfo extends HAPStringableValueEntity{
 	private Map<String, HAPDataTypeCriteria> m_variables;
 	
 	private Map<String, HAPReferenceInfo> m_references;
+	
+	public HAPExpressionInfo(){
+		
+	}
 	
 	public HAPExpressionInfo(String expression, Map<String, HAPData> constants, Map<String, HAPDataTypeCriteria> variables){
 		this.m_expression = expression;

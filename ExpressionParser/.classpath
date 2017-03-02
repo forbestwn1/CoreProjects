@@ -9,5 +9,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/Core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DataTypeManager"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

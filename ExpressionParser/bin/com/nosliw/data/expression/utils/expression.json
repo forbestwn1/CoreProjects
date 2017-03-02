@@ -1,0 +1,40 @@
+{
+	"name" : "expression1",
+	"expression" : "?(schoolsData)?.each(parm1:?(validHomeExpression)?,parm2:&(constantData2)&,parm3:&(constantData)&,parm4:<(referenceData)>).aaa.bbb, parm5:<(theirReferenceData)>",
+	"constants" :{
+		"constantData2":{
+			"dataTypeId": "core.text;1.0.0",
+			"value":{
+				"a" : "aaa",
+				"b" : "bbb"
+			}
+		},
+		"constantData":{
+			"dataTypeId": "core.text;1.0.0",
+			"value": "constantDataValue"
+		}
+	},
+	"variables":{
+		"schoolsData":{
+			"criteria" : "schoolData variable criteria"
+		},
+		"validHomeExpression":{
+			"criteria" : "validHomeExpression variable criteria"
+		}
+	},	
+	"references":{
+		"referenceData": {
+			"name" : "myReferenceData",
+			"variableMap" : {
+				"a" : "aa", 
+				"b" : "bb"
+			}
+		},
+		"theirReferenceData": {
+			"variableMap" : {
+				"a" : "aa", 
+				"b" : "bb"
+			}
+		}
+	}
+}

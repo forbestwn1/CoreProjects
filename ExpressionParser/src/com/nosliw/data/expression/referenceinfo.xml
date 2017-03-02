@@ -1,4 +1,4 @@
-<entity name="data.expression" 
+<entity name="data.expression.referenceinfo" 
 		class="com.nosliw.data.expression.HAPReferenceInfo" 
 		description="">
 		

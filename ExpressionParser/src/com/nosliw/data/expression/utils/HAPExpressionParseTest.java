@@ -3,6 +3,13 @@ package com.nosliw.data.expression.utils;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.datatype.importer.HAPDataTypeManagerImp;
+import com.nosliw.data.expression.HAPExpressionInfo;
+import com.nosliw.data.expression.HAPExpressionManager;
 import com.nosliw.data.expression.parser.NosliwExpressionParser;
 import com.nosliw.data.expression.parser.ParseException;
 import com.nosliw.data.expression.parser.SimpleNode;
@@ -26,10 +33,10 @@ public class HAPExpressionParseTest {
           SimpleNode root = parser.Expression("");
           root.dump("");
 
-          
-	  
-	  
+          HAPDataTypeManagerImp dataTypeMan = new HAPDataTypeManagerImp();
+          HAPExpressionManager.getInstance();
+          InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(HAPExpressionParseTest.class, "expression.json");
+          HAPExpressionInfo expressionInfo = (HAPExpressionInfo)HAPStringableEntityImporterJSON.parseJsonEntity(inputStream, "data.expression", HAPValueInfoManager.getInstance());
+          System.out.println(expressionInfo.toStringValue(HAPSerializationFormat.JSON));
 	  }
-
-
 }
