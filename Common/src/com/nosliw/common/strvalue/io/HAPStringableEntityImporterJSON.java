@@ -78,6 +78,13 @@ public class HAPStringableEntityImporterJSON {
 			Set<String> entityOptionsProperties = new HashSet<String>();
 			
 			for(String property : entityValueInfo.getEntityProperties()){
+				
+				if("constants".equals(property)){
+					int kkkk = 5555;
+					kkkk++;
+				}
+				
+				
 				HAPValueInfo propertyValueInfo = entityValueInfo.getPropertyInfo(property);
 				String propertyCategary = propertyValueInfo.getValueInfoType();
 				if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyCategary))  entityOptionsProperties.add(property);
@@ -194,15 +201,20 @@ public class HAPStringableEntityImporterJSON {
 	}
 	
 	private static HAPStringableValue processAtomicValue(Object basicValue, HAPValueInfoAtomic atomicValueInfo, HAPValueInfoManager valueInfoMan){
+		if(basicValue==null)  return null;
+		
 		String strValue = null;
-		if(basicValue instanceof JSONObject)  strValue = ((JSONObject)basicValue).optString(HAPStringableValueAtomic.VALUE);  
+		if(basicValue instanceof JSONObject){
+			//check if atom is in full json
+			Object v = ((JSONObject)basicValue).opt(HAPStringableValueAtomic.VALUE);
+			if(v==null)   strValue = basicValue.toString();
+			else   strValue = v.toString();
+		}
 		else  strValue = basicValue.toString();
 		
 		HAPStringableValueAtomic out = null;
 		if(strValue!=null)  out = new HAPStringableValueAtomic(strValue, atomicValueInfo.getDataType(), atomicValueInfo.getSubDataType());
-		else   out = (HAPStringableValueAtomic)atomicValueInfo.newValue();
 
-		if(out.isEmpty())  out = null;
 		return out;
 	}
 

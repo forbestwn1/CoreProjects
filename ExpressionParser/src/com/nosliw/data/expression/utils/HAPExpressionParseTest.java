@@ -7,6 +7,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.datatype.importer.HAPDataTypeManagerImp;
 import com.nosliw.data.expression.HAPExpressionInfo;
 import com.nosliw.data.expression.HAPExpressionManager;
@@ -37,6 +38,7 @@ public class HAPExpressionParseTest {
           HAPExpressionManager.getInstance();
           InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(HAPExpressionParseTest.class, "expression.json");
           HAPExpressionInfo expressionInfo = (HAPExpressionInfo)HAPStringableEntityImporterJSON.parseJsonEntity(inputStream, "data.expression", HAPValueInfoManager.getInstance());
-          System.out.println(expressionInfo.toStringValue(HAPSerializationFormat.JSON));
+          System.out.println(HAPJsonUtility.formatJson(expressionInfo.toStringValue(HAPSerializationFormat.JSON)));
+
 	  }
 }

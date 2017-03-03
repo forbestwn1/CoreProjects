@@ -2,8 +2,9 @@
 		class="com.nosliw.data.expression.HAPExpressionInfo" 
 		description="">
 		
-	<property name="expression" dataType="string" description="">
-	</property>
+	<property name="name" dataType="string" description=""/>
+
+	<property name="expression" dataType="string" description=""/>
 
 	<property name="info" reference="data.datatypeinfo" description="">
 	</property>

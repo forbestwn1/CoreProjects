@@ -25,13 +25,13 @@
 	"references":{
 		"referenceData": {
 			"name" : "myReferenceData",
-			"variableMap" : {
+			"variablesMap" : {
 				"a" : "aa", 
 				"b" : "bb"
 			}
 		},
 		"theirReferenceData": {
-			"variableMap" : {
+			"variablesMap" : {
 				"a" : "aa", 
 				"b" : "bb"
 			}

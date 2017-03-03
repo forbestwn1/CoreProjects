@@ -32,7 +32,7 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	public static String RESOLVED = "resolved";
 
 	@HAPAttribute
-	public static String VALUE = "value";
+	public static String VALUE = "atomic_value";
 
 	
 	private HAPResolvableString m_strValue;
