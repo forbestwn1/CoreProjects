@@ -1,19 +1,13 @@
 
-Usquid:S1135<"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ8›¬’±¢+
-Isquid:S1168="+Return an empty collection instead of null.(¥¹ï8›¬’±¢+
-Nsquid:S1135f"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-hsquid:CommentedOutCodeLineB"<This block of commented-out lines of code should be removed.(Ñâøe8»á‘±¢+
-[squid:UselessImportCheck"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8é‚šß¥+
-Zsquid:UselessImportCheck"*Remove this unused import 'java.util.Set'.(ö²„¤şÿÿÿÿ8ğ‡¦+
-Nsquid:S1135m"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-Nsquid:S1135`"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
-Usquid:S1135"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ8›¬’±¢+
-|squid:UselessImportCheck"LRemove this unused import 'com.nosliw.data.core.HAPRelationshipPathSegment'.(§ÖşÃıÿÿÿÿ8æöĞƒ©+
-Nsquid:S1135y"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-Nsquid:S1135s"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-rsquid:UselessImportCheck"GRemove this unused import 'com.nosliw.data.datatype.util.HAPDBAccess1'.(ÓòÍ¹8³›‹±¢+
+rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
+Nsquid:S11352"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+Nsquid:S1135\"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+Nsquid:S1135c"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
 Y
-squid:S106¬";Replace this usage of System.out or System.err by a logger.(Í§†ß8±‹Ïì¢+
-tsquid:UselessImportCheck"DRemove this unused import 'com.nosliw.data.core.HAPDataTypePicture'.(àÜ±©ùÿÿÿÿ8æöĞƒ©+
-Xsquid:UselessImportCheck".Remove this unused import 'java.util.HashSet'.(Ê‚êX8¤ñß¥+
+squid:S106¢";Replace this usage of System.out or System.err by a logger.(Í§†ß8±‹Ïì¢+
+Nsquid:S1135V"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+Usquid:S1135u"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ8›¬’±¢+
+Usquid:S1135i"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ8›¬’±¢+
+hsquid:CommentedOutCodeLine8"<This block of commented-out lines of code should be removed.(Ñâøe8»á‘±¢+
+Nsquid:S1135o"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+Isquid:S11683"+Return an empty collection instead of null.(¥¹ï8›¬’±¢+

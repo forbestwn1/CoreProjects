@@ -1,26 +1,13 @@
 package com.nosliw.data.datatype.importer;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataType;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.HAPDataTypeOperation;
-import com.nosliw.data.core.HAPDataTypePicture;
-import com.nosliw.data.core.HAPDataTypeVersion;
-import com.nosliw.data.core.HAPOperation;
-import com.nosliw.data.core.HAPRelationshipPathSegment;
-import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.expression.HAPExpressionInfo;
-import com.nosliw.data.datatype.util.HAPDBAccess1;
 
 public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 
