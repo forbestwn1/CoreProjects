@@ -9,7 +9,7 @@ import com.nosliw.common.strvalue.HAPStringableValueEntity;
  * 		reference : the name of expression
  * 		variableMap: the mapping from variable in parent expression to variable in referenced expression 
  */
-public class HAPReferenceInfo extends HAPStringableValueEntity{
+public class HAPReferenceInfoImp extends HAPStringableValueEntity{
 
 	private String m_reference;
 	

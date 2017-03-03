@@ -1,4 +1,4 @@
-package com.nosliw.data.expression;
+package com.nosliw.data.core.expression;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeCriteria;

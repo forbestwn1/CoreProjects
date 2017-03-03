@@ -1,9 +1,9 @@
 package com.nosliw.data.operation.javascript;
 
-import com.nosliw.data.core.HAPExpression;
 import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPResourceManager;
 import com.nosliw.data.core.HAPResources;
+import com.nosliw.data.core.expression.HAPExpression;
 
 public class HAPOperationManagerJavascript implements HAPResourceManager{
 

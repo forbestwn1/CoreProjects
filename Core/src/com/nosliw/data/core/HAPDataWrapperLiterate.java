@@ -6,6 +6,8 @@ public class HAPDataWrapperLiterate extends HAPDataImp{
 
 	private String m_valueLiterate;
 	
+	public HAPDataWrapperLiterate(){}
+	
 	public HAPDataWrapperLiterate(String dataLiterate){
 		this.buildObjectByLiterate(this.m_valueLiterate);
 	}

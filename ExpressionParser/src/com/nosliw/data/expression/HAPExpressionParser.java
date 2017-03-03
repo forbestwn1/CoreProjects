@@ -7,11 +7,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.expression.HAPOperand;
+import com.nosliw.data.core.expression.HAPOperandAttribute;
+import com.nosliw.data.core.expression.HAPOperandConstant;
+import com.nosliw.data.core.expression.HAPOperandOperation;
+import com.nosliw.data.core.expression.HAPOperandVariable;
 import com.nosliw.data.expression.parser.NosliwExpressionParser;
-import com.nosliw.data.expression.parser.ParseException;
 import com.nosliw.data.expression.parser.SimpleNode;
-import com.nosliw.data.expression.parser.TokenMgrError;
 
 /**
  * This is utility class to parse a expression as a string

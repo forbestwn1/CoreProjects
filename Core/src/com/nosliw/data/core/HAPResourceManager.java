@@ -1,5 +1,7 @@
 package com.nosliw.data.core;
 
+import com.nosliw.data.core.expression.HAPExpression;
+
 /**
  * This interface manage all the resources for runtime
  * The implementation depend on runtime env  

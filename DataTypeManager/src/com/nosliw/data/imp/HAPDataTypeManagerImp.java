@@ -8,10 +8,10 @@ import com.nosliw.data.core.HAPDataType;
 import com.nosliw.data.core.HAPDataTypeFamily;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeManager;
-import com.nosliw.data.core.HAPExpression;
-import com.nosliw.data.core.HAPExpressionInfo;
 import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPQueryInfo;
+import com.nosliw.data.core.expression.HAPExpression;
+import com.nosliw.data.core.expression.HAPExpressionInfo;
 
 public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 

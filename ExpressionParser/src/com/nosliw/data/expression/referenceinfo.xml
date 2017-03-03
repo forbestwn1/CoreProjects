@@ -1,5 +1,5 @@
 <entity name="data.expression.referenceinfo" 
-		class="com.nosliw.data.expression.HAPReferenceInfo" 
+		class="com.nosliw.data.expression.HAPReferenceInfoImp" 
 		description="">
 		
 	<property name="name" dataType="string" description="">

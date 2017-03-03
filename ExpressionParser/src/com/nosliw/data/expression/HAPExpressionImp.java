@@ -4,11 +4,14 @@ import java.util.Map;
 
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeCriteria;
+import com.nosliw.data.core.expression.HAPExpression;
+import com.nosliw.data.core.expression.HAPExpressionInfo;
+import com.nosliw.data.core.expression.HAPOperand;
 
 /**
  * Parsed expression 
  */
-public class HAPExpression {
+public class HAPExpressionImp implements HAPExpression{
 
 	private String m_name;
 	
@@ -23,6 +26,21 @@ public class HAPExpression {
 	private Map<String, HAPDataTypeCriteria> m_varsInfo;
 	
 	//store constant data to used in expression
-	private Map<String, HAPData> m_constantDatas; 
+	private Map<String, HAPData> m_constantDatas;
+
+	@Override
+	public HAPExpressionInfo getExpressionInfo() {
+		return null;
+	}
+
+	@Override
+	public String getOperand() {
+		return null;
+	}
+
+	@Override
+	public Map<String, HAPDataTypeCriteria> getVariables() {
+		return null;
+	} 
 	
 }
