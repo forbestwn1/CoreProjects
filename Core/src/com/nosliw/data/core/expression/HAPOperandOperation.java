@@ -1,14 +1,24 @@
 package com.nosliw.data.core.expression;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataTypeId;
 
-public class HAPOperandOperation implements HAPOperand{
+public class HAPOperandOperation extends HAPOperandImp{
 
+	public static final String DATATYPE = "dataType";
+	
+	public static final String BASEDATA = "baseData";
+	
+	public static final String OPERATION = "operation";
+	
+	public static final String PARMS = "parms";
+	
 	//the data type operation defined on
 	protected HAPDataTypeId m_dataTypeId;
 	
@@ -38,5 +48,33 @@ public class HAPOperandOperation implements HAPOperand{
 
 	@Override
 	public String getType() {		return HAPConstant.EXPRESSION_OPERAND_OPERATION;	}
+
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(OPERATION, this.m_operation);
+		jsonMap.put(DATATYPE, HAPSerializeManager.getInstance().toStringValue(this.m_dataTypeId, HAPSerializationFormat.LITERATE));
+		jsonMap.put(BASEDATA, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON_FULL));
+		
+		Map<String, String> parmsJsonMap = new LinkedHashMap<String, String>();
+		for(String parmName : this.m_parms.keySet()){
+			parmsJsonMap.put(parmName, HAPSerializeManager.getInstance().toStringValue(this.m_parms.get(parmName), HAPSerializationFormat.JSON_FULL));
+		}
+		jsonMap.put(PARMS, HAPJsonUtility.buildMapJson(parmsJsonMap));
+	}
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(OPERATION, this.m_operation);
+		jsonMap.put(DATATYPE, HAPSerializeManager.getInstance().toStringValue(this.m_dataTypeId, HAPSerializationFormat.LITERATE));
+		jsonMap.put(BASEDATA, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON));
+		
+		Map<String, String> parmsJsonMap = new LinkedHashMap<String, String>();
+		for(String parmName : this.m_parms.keySet()){
+			parmsJsonMap.put(parmName, HAPSerializeManager.getInstance().toStringValue(this.m_parms.get(parmName), HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(PARMS, HAPJsonUtility.buildMapJson(parmsJsonMap));
+	}
+		
 }

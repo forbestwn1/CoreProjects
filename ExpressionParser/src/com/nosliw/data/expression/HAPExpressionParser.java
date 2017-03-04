@@ -11,6 +11,7 @@ import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPOperandAttribute;
 import com.nosliw.data.core.expression.HAPOperandConstant;
 import com.nosliw.data.core.expression.HAPOperandOperation;
+import com.nosliw.data.core.expression.HAPOperandReference;
 import com.nosliw.data.core.expression.HAPOperandVariable;
 import com.nosliw.data.expression.parser.NosliwExpressionParser;
 import com.nosliw.data.expression.parser.SimpleNode;
@@ -48,6 +49,10 @@ public class HAPExpressionParser {
 		  else if(expressionEles.variableNode!=null){
 			  //it is a variable operand
 			 operand = new HAPOperandVariable(((String)expressionEles.variableNode.jjtGetValue()));
+		  }
+		  else if(expressionEles.referenceNode!=null){
+			  //it is a variable operand
+			 operand = new HAPOperandReference(((String)expressionEles.referenceNode.jjtGetValue()));
 		  }
 		  else if(expressionEles.dataTypeNode!=null){
 			  String dataTypeInfo = (String)expressionEles.dataTypeNode.jjtGetValue();

@@ -78,13 +78,6 @@ public class HAPStringableEntityImporterJSON {
 			Set<String> entityOptionsProperties = new HashSet<String>();
 			
 			for(String property : entityValueInfo.getEntityProperties()){
-				
-				if("constants".equals(property)){
-					int kkkk = 5555;
-					kkkk++;
-				}
-				
-				
 				HAPValueInfo propertyValueInfo = entityValueInfo.getPropertyInfo(property);
 				String propertyCategary = propertyValueInfo.getValueInfoType();
 				if(HAPConstant.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyCategary))  entityOptionsProperties.add(property);

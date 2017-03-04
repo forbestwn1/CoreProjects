@@ -21,10 +21,6 @@ public abstract class HAPSerializableImp implements HAPSerializable{
 			out = this.buildObjectByXml(value);
 			break;
 		case LITERATE:
-			if(!(value instanceof String)){
-				int kkkk = 5555;
-				kkkk++;
-			}
 			out = this.buildObjectByLiterate((String)value);
 			break;
 		}

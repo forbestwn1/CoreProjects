@@ -96,7 +96,7 @@ public class HAPNamingConversionUtility {
 	public static String[] parseNameValuePair(String nameValueStr){		return splitTextByComponents(nameValueStr, HAPConstant.SEPERATOR_NAMEVALUE);	}
 	
 	public static String cascadeDetail(String detail1, String detail2){	return cascadeComponents(detail1, detail2, HAPConstant.SEPERATOR_DETAIL);	}
-	public static String[] parseDetails(String details){		return splitTextByComponents(details, HAPConstant.SEPERATOR_DETAIL);	}
+	public static String[] parseDetails(String details){		return splitTextByComponents(details, "\\"+HAPConstant.SEPERATOR_DETAIL);	}
 	
 	public static String cascadeNameSegment(String part1, String part2){		return cascadeComponents(part1, part2, HAPConstant.SEPERATOR_PREFIX);	}
 	public static String[] parseNameSegments(String nameSegs){		return splitTextByComponents(nameSegs, HAPConstant.SEPERATOR_PREFIX);	}

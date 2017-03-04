@@ -1,9 +1,17 @@
 package com.nosliw.data.core.expression;
 
+import java.util.Map;
+
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 
-public class HAPOperandAttribute implements HAPOperand{
+public class HAPOperandAttribute extends HAPOperandImp{
 
+	public static final String ATTRIBUTE = "attribute";
+	
+	public static final String BASEDATA = "baseData";
+	
 	private String m_attribute;
 	
 	private HAPOperand m_base;
@@ -16,4 +24,18 @@ public class HAPOperandAttribute implements HAPOperand{
 	@Override
 	public String getType(){	return HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION;}
 
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ATTRIBUTE, this.m_attribute);
+		jsonMap.put(BASEDATA, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON_FULL));
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ATTRIBUTE, this.m_attribute);
+		jsonMap.put(BASEDATA, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON));
+	}
+	
 }

@@ -1,10 +1,16 @@
 package com.nosliw.data.core.expression;
 
+import java.util.Map;
+
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeCriteria;
 
-public class HAPOperandVariable implements HAPOperand{
+public class HAPOperandVariable extends HAPOperandImp{
 
+	public final static String VARIABLENAME = "variableName";
+	
 	protected String m_variableName;
 	
 	protected HAPDataTypeCriteria m_dataTypeCriteria;
@@ -15,4 +21,17 @@ public class HAPOperandVariable implements HAPOperand{
 	
 	@Override
 	public String getType(){	return HAPConstant.EXPRESSION_OPERAND_VARIABLE;}
+	
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(VARIABLENAME, m_variableName);
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(VARIABLENAME, m_variableName);
+	}
+	
 }
