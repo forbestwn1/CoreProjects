@@ -1,6 +1,8 @@
 package com.nosliw.data.core.expression;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -76,5 +78,13 @@ public class HAPOperandOperation extends HAPOperandImp{
 		}
 		jsonMap.put(PARMS, HAPJsonUtility.buildMapJson(parmsJsonMap));
 	}
-		
+
+	@Override
+	public List<HAPOperand> getChildren() {
+		List<HAPOperand> out = new ArrayList<HAPOperand>();
+		out.add(m_base);
+		out.addAll(this.m_parms.values());
+		return out;
+	}
+	
 }

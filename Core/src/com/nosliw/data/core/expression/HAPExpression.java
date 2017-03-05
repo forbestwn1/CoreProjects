@@ -14,7 +14,7 @@ public interface HAPExpression {
 	HAPExpressionInfo getExpressionInfo();
 	
 	//Operand to represent the expression
-	String getOperand();
+	HAPOperand getOperand();
 	
 	//Variables infos
 	Map<String, HAPDataTypeCriteria> getVariables();

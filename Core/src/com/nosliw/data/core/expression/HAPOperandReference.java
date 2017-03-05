@@ -1,5 +1,7 @@
 package com.nosliw.data.core.expression;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
@@ -19,6 +21,10 @@ public class HAPOperandReference extends HAPOperandImp{
 	@Override
 	public String getType() {		return HAPConstant.EXPRESSION_OPERAND_REFERENCE;	}
 
+	public String getExpressionName(){  return this.m_expressionName;  }
+	
+	public void setExpression(HAPExpression expression){  this.m_expression = expression;  }
+	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
@@ -31,4 +37,12 @@ public class HAPOperandReference extends HAPOperandImp{
 		jsonMap.put(EXPRESSIONNAME, m_expressionName);
 	}
 	
+	@Override
+	public List<HAPOperand> getChildren() {
+		List<HAPOperand> out = new ArrayList<HAPOperand>();
+		if(this.m_expression!=null){
+			out.add(this.m_expression.getOperand());
+		}
+		return out;
+	}
 }
