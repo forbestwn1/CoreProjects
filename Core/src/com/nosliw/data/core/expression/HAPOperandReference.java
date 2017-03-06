@@ -23,7 +23,13 @@ public class HAPOperandReference extends HAPOperandImp{
 
 	public String getExpressionName(){  return this.m_expressionName;  }
 	
-	public void setExpression(HAPExpression expression){  this.m_expression = expression;  }
+	public void setExpression(HAPExpression expression){ 
+		this.m_expression = expression;  
+		if(this.m_expression!=null){
+			this.addChildOperand(this.m_expression.getOperand());
+		}
+	}
+	public HAPExpression getExpression(){  return this.m_expression;  }
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -35,14 +41,5 @@ public class HAPOperandReference extends HAPOperandImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(EXPRESSIONNAME, m_expressionName);
-	}
-	
-	@Override
-	public List<HAPOperand> getChildren() {
-		List<HAPOperand> out = new ArrayList<HAPOperand>();
-		if(this.m_expression!=null){
-			out.add(this.m_expression.getOperand());
-		}
-		return out;
 	}
 }

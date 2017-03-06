@@ -19,13 +19,18 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	private HAPOperand m_base;
 	
 	public HAPOperandAttribute(HAPOperand base, String attribute){
-		this.m_base = base;
+		this.setBase(base);
 		this.m_attribute = attribute;
 	}
 	
 	@Override
 	public String getType(){	return HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION;}
 
+	public void setBase(HAPOperand base){
+		this.addChildOperand(base);
+		this.m_base = base;  
+	}
+	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);

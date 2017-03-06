@@ -45,6 +45,17 @@ public class HAPOperandOperation extends HAPOperandImp{
 		this.m_parms = parms;
 	}
 
+	public void setBase(HAPOperand base){
+		this.m_base = base;
+		if(this.m_base!=null)		this.addChildOperand(m_base);
+	}
+	
+	public void setParms(Map<String, HAPOperand> parms){
+		this.m_parms.putAll(parms);
+		for(HAPOperand parm : parms.values()){
+			this.addChildOperand(parm);
+		}
+	}
 	
 	public HAPDataTypeId getDataTypeId(){   return this.m_dataTypeId; }
 
@@ -78,13 +89,4 @@ public class HAPOperandOperation extends HAPOperandImp{
 		}
 		jsonMap.put(PARMS, HAPJsonUtility.buildMapJson(parmsJsonMap));
 	}
-
-	@Override
-	public List<HAPOperand> getChildren() {
-		List<HAPOperand> out = new ArrayList<HAPOperand>();
-		out.add(m_base);
-		out.addAll(this.m_parms.values());
-		return out;
-	}
-	
 }

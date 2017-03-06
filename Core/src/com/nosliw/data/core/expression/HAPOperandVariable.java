@@ -36,11 +36,4 @@ public class HAPOperandVariable extends HAPOperandImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VARIABLENAME, m_variableName);
 	}
-	
-	@Override
-	public List<HAPOperand> getChildren() {
-		List<HAPOperand> out = new ArrayList<HAPOperand>();
-		return out;
-	}
-	
 }

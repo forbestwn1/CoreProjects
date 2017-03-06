@@ -17,7 +17,17 @@ public interface HAPDataTypeCriteria{
 
 	String getCriteria();
 	
-//	public boolean match(HAPDataTypeInfo dataTypeInfo);
+	/**
+	 * Combine two criteria together
+	 * For instance, if two criteria does not compatable with each other, then the result is non
+	 * 
+	 */
+	void merge(HAPDataTypeCriteria criteria);
+	
+	
+	public boolean compactable(HAPDataTypeId dataTypeId);
+	
+	
 //	public boolean match(HAPDataTypeCriteria criteria);
 	
 }

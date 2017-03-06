@@ -34,7 +34,7 @@ public class HAPExpressionImp implements HAPExpression{
 	}
 
 	@Override
-	public String getOperand() {
+	public HAPOperand getOperand() {
 		return null;
 	}
 
@@ -43,4 +43,7 @@ public class HAPExpressionImp implements HAPExpression{
 		return null;
 	} 
 	
+	public void mergeVariable(String variable, HAPDataTypeCriteria varInfo){
+		
+	}
 }

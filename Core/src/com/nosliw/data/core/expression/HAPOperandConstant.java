@@ -45,9 +45,4 @@ public class HAPOperandConstant extends HAPOperandImp{
 		jsonMap.put(DATA, HAPSerializeManager.getInstance().toStringValue(this.m_data, HAPSerializationFormat.JSON));
 	}
 	
-	@Override
-	public List<HAPOperand> getChildren() {
-		List<HAPOperand> out = new ArrayList<HAPOperand>();
-		return out;
-	}
 }
