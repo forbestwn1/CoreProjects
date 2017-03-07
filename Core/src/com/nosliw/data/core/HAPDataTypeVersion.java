@@ -8,8 +8,19 @@ import com.nosliw.common.serialization.HAPSerializable;
  * Every data type have a version with it
  * Version information have three components: major, minor, revision
  * There is no restriction for each components technically as long as they are unique
- *  
- *
+ *  	major:  
+ *  		number
+ *  		sequence, one after another
+ *  		change major version only when data structure change
+ *  	minor:
+ *  		number
+ *  		sequence, one after another
+ *  		change minor version when new functions are added
+ *  	revision:
+ *  		string
+ *  		no sequence (cannot compare to each other under same major.minor)
+ *  		used for customerization
+ *			
  */
 @HAPEntityWithAttribute(baseName="DATATYPEVERSION")
 public interface HAPDataTypeVersion extends HAPSerializable{
