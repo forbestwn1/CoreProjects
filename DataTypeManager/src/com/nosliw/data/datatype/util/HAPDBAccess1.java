@@ -20,7 +20,7 @@ import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypePicture;
 import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
-import com.nosliw.data.datatype.importer.HAPDataTypeCriteriaImp;
+import com.nosliw.data.datatype.importer.HAPDataTypeCriteriaWrapperLiterate;
 import com.nosliw.data.datatype.importer.HAPDataTypeImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeIdImp;
 import com.nosliw.data.datatype.importer.HAPDataTypePictureImp;
@@ -121,7 +121,7 @@ public class HAPDBAccess1 extends HAPConfigurableImp{
 				m_insertParmStatement.setString(2, operationId);
 				m_insertParmStatement.setString(3, "parm");
 				m_insertParmStatement.setString(4, parmInfo.getName());
-				m_insertParmStatement.setString(5, ((HAPDataTypeCriteriaImp)parmInfo.getCriteria()).toStringValue(HAPSerializationFormat.LITERATE));
+				m_insertParmStatement.setString(5, ((HAPDataTypeCriteriaWrapperLiterate)parmInfo.getCriteria()).toStringValue(HAPSerializationFormat.LITERATE));
 				m_insertParmStatement.setString(6, parmInfo.getDescription());
 				m_insertParmStatement.execute();
 			}

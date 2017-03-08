@@ -40,7 +40,7 @@ public class HAPResourceDataOperationImp extends HAPStringableValueEntity implem
 	}
 	
 	private void setDataTypeCriteriaLiterate(String dataTypeCriteriaLiterate){
-		this.updateAtomicChildStrValue(DATATYPECRITERIA, dataTypeCriteriaLiterate, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeCriteriaImp.class.getName());
+		this.updateAtomicChildStrValue(DATATYPECRITERIA, dataTypeCriteriaLiterate, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeCriteriaWrapperLiterate.class.getName());
 	}
 	
 	private void setOperationLiterate(String operationLiterate){

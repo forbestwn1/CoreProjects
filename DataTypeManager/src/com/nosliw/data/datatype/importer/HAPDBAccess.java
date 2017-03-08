@@ -64,7 +64,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB("data.datatypeoperation", "type=null && sourceDataTypeName=?", new Object[]{dataTypeId.getName()});
 	}
 	
-	
+
 	public HAPDataTypePictureImp getDataTypePicture(HAPDataTypeIdImp dataTypeId){
 		HAPDataTypePictureImp out = null;
 		

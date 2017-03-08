@@ -69,10 +69,13 @@ public class HAPConstant {
 
 
 
+		public static final String DATATYPECRITERIA_TYPE_ANY = "any";
 		public static final String DATATYPECRITERIA_TYPE_DATATYPEID = "dataTypeId";
+		public static final String DATATYPECRITERIA_TYPE_DATATYPEIDS = "dataTypeIds";
 		public static final String DATATYPECRITERIA_TYPE_DATATYPERANGE = "dataTypeRange";
 		public static final String DATATYPECRITERIA_TYPE_AND = "and";
 		public static final String DATATYPECRITERIA_TYPE_OR = "or";
+		public static final String DATATYPECRITERIA_TYPE_LITERATE = "literate";
 
 
 

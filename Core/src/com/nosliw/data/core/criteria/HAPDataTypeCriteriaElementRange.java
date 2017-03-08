@@ -24,6 +24,8 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 
 	@Override
 	public Set<HAPDataTypeId> getValidDataTypeId() {
+		
+		
 		return null;
 	}
 }

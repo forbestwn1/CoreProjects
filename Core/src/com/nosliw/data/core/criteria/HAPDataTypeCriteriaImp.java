@@ -1,8 +1,9 @@
 package com.nosliw.data.core.criteria;
 
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.HAPDataTypeId;
 
-public abstract class HAPDataTypeCriteriaImp implements HAPDataTypeCriteria{
+public abstract class HAPDataTypeCriteriaImp extends HAPSerializableImp implements HAPDataTypeCriteria{
 
 	@Override
 	public boolean validate(HAPDataTypeCriteria criteria) {
