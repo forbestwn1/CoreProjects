@@ -1,8 +1,11 @@
 package com.nosliw.data.core.criteria;
 
+import java.util.Set;
+
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 
-public class HAPDataTypeCriteriaElementRange implements HAPDataTypeCriteria{
+public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 
 	private HAPDataTypeId m_from;
 	
@@ -13,4 +16,14 @@ public class HAPDataTypeCriteriaElementRange implements HAPDataTypeCriteria{
 		this.m_to = to;
 	}
 	
+	public HAPDataTypeId getFromDataTypeId(){  return this.m_from;  }
+	public HAPDataTypeId getToDataTypeId(){  return this.m_to;  }
+	
+	@Override
+	public String getType() {		return HAPConstant.DATATYPECRITERIA_TYPE_DATATYPERANGE;	}
+
+	@Override
+	public Set<HAPDataTypeId> getValidDataTypeId() {
+		return null;
+	}
 }

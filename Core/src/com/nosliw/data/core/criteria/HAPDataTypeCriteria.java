@@ -1,5 +1,7 @@
 package com.nosliw.data.core.criteria;
 
+import java.util.Set;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.HAPDataTypeId;
@@ -16,6 +18,16 @@ public interface HAPDataTypeCriteria{
 	@HAPAttribute
 	public static String CRITERIA = "criteria";
 
+	String getType();
+	
+	boolean validate(HAPDataTypeCriteria criteria);
+	
+	boolean validate(HAPDataTypeId dataTypeId);
+	
+	Set<HAPDataTypeId> getValidDataTypeId();
+	
+	
+	
 //	String getCriteria();
 	
 	
