@@ -315,6 +315,11 @@
 			<definition name="DATAOPERATION_COMPARE" value="compare"/>
 			<definition name="DATAOPERATION_PARSELITERAL" value="parseLiteral"/>
 			<definition type="space"/>
+			<definition name="DATATYPECRITERIA_TYPE_DATATYPEID" value="dataTypeId"/>
+			<definition name="DATATYPECRITERIA_TYPE_DATATYPERANGE" value="dataTypeRange"/>
+			<definition name="DATATYPECRITERIA_TYPE_AND" value="and"/>
+			<definition name="DATATYPECRITERIA_TYPE_OR" value="or"/>
+			<definition type="space"/>
 			<definition name="EXPRESSION_OPERAND_CONSTANT" value="constant"/>
 			<definition name="EXPRESSION_OPERAND_VARIABLE" value="variable"/>
 			<definition name="EXPRESSION_OPERAND_REFERENCE" value="reference"/>

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public class HAPOperandVariable extends HAPOperandImp{
 

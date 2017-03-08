@@ -2,7 +2,7 @@ package com.nosliw.data.core.expression;
 
 import java.util.Map;
 
-import com.nosliw.data.core.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 /**
  * Expression object we get after processing HAPExpressionInfo

@@ -1,7 +1,7 @@
 package com.nosliw.data.datatype.importer;
 
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
-import com.nosliw.data.core.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public class HAPDataTypeCriteriaImp extends HAPStringableValueEntity implements HAPDataTypeCriteria{
 
@@ -14,7 +14,7 @@ public class HAPDataTypeCriteriaImp extends HAPStringableValueEntity implements 
 	protected boolean buildObjectByLiterate(String literateValue){	
 		this.updateAtomicChildStrValue(CRITERIA, literateValue);
 		return true;
-}
+	}
 
 	@Override
 	protected String buildLiterate(){

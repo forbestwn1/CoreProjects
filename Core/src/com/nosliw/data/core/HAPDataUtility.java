@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public class HAPDataUtility {
 

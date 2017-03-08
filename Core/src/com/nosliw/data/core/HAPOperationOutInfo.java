@@ -2,6 +2,7 @@ package com.nosliw.data.core;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 /**
  * Entity for operation output information

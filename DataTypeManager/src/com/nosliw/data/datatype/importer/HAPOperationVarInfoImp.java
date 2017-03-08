@@ -2,9 +2,9 @@ package com.nosliw.data.datatype.importer;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
-import com.nosliw.data.core.HAPDataTypeCriteria;
 import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public class HAPOperationVarInfoImp extends HAPStringableValueEntity implements HAPOperationParmInfo, HAPOperationOutInfo{
 

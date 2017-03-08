@@ -1,7 +1,8 @@
-package com.nosliw.data.core;
+package com.nosliw.data.core.criteria;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.data.core.HAPDataTypeId;
 
 /**
  * DataTypeCriteria is a way to describe what data type is possible
@@ -15,17 +16,18 @@ public interface HAPDataTypeCriteria{
 	@HAPAttribute
 	public static String CRITERIA = "criteria";
 
-	String getCriteria();
+//	String getCriteria();
+	
 	
 	/**
 	 * Combine two criteria together
 	 * For instance, if two criteria does not compatable with each other, then the result is non
 	 * 
 	 */
-	void merge(HAPDataTypeCriteria criteria);
+//	void merge(HAPDataTypeCriteria criteria);
 	
 	
-	public boolean compactable(HAPDataTypeId dataTypeId);
+//	public boolean compactable(HAPDataTypeId dataTypeId);
 	
 	
 //	public boolean match(HAPDataTypeCriteria criteria);

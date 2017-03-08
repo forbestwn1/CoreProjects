@@ -4,8 +4,8 @@ import java.util.Map;
 
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataTypeCriteria;
 import com.nosliw.data.core.HAPInfo;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionInfo;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
 

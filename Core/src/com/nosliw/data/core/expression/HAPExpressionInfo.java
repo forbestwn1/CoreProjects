@@ -4,8 +4,8 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataTypeCriteria;
 import com.nosliw.data.core.HAPInfo;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 /**
  * ExpressionInfo is the basic unit to define a expression 

@@ -2,7 +2,7 @@ package com.nosliw.data.core.expression;
 
 import java.util.List;
 
-import com.nosliw.data.core.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public interface HAPOperand {
 

@@ -33,8 +33,8 @@ public class HAPDataTypeIdImp extends HAPStringableValueEntity implements HAPDat
 		buildObjectByLiterate(fullName);
 	}
 	
-	public int getVersionMajor(){  return this.getVersion().getMajor(); }
-	public int getVersionMinor(){  return this.getVersion().getMinor(); }
+	public String getVersionMajor(){  return this.getVersion().getMajor(); }
+	public String getVersionMinor(){  return this.getVersion().getMinor(); }
 	public String getVersionRevision(){  return this.getVersion().getRevision();  }
 	
 	@Override

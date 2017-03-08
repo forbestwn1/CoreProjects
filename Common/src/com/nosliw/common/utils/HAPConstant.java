@@ -69,6 +69,13 @@ public class HAPConstant {
 
 
 
+		public static final String DATATYPECRITERIA_TYPE_DATATYPEID = "dataTypeId";
+		public static final String DATATYPECRITERIA_TYPE_DATATYPERANGE = "dataTypeRange";
+		public static final String DATATYPECRITERIA_TYPE_AND = "and";
+		public static final String DATATYPECRITERIA_TYPE_OR = "or";
+
+
+
 		public static final String EXPRESSION_OPERAND_CONSTANT = "constant";
 		public static final String EXPRESSION_OPERAND_VARIABLE = "variable";
 		public static final String EXPRESSION_OPERAND_REFERENCE = "reference";

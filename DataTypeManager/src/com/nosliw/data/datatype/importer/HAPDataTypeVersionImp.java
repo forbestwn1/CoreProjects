@@ -21,9 +21,9 @@ public class HAPDataTypeVersionImp extends HAPStringableValueEntity implements H
 	public void setName(String name){ this.buildObjectByLiterate(name); }
 	
 	@Override
-	public int getMajor(){  return this.getAtomicAncestorValueInteger(HAPDataTypeVersion.MAJOR);	}
+	public String getMajor(){  return this.getAtomicAncestorValueString(HAPDataTypeVersion.MAJOR);	}
 	@Override
-	public int getMinor(){ return this.getAtomicAncestorValueInteger(HAPDataTypeVersion.MINOR);	}
+	public String getMinor(){ return this.getAtomicAncestorValueString(HAPDataTypeVersion.MINOR);	}
 	@Override
 	public String getRevision(){  return this.getAtomicAncestorValueString(HAPDataTypeVersion.REVISION);	}
 
