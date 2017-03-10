@@ -1,33 +1,37 @@
 
-ssquid:S3008"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›êÿ‰8…¹İİ¡+
-Fsquid:S1148X"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ˆ‘¬ ¦+
-Rsquid:S2864j"4Iterate over the "entrySet" instead of the "keySet".(¤¡8±¥ªÕ£+
-asquid:S1155P">Use isEmpty() to check whether the collection is empty or not.(ğ”õÂıÿÿÿÿ8Ô¸ŸÙ¦+
-Gsquid:S1148¢"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8àõãŒ¦+
-tsquid:S00122Ã"TAt most one statement is allowed per line, but 2 statements were found on this line.( ·­¹8éúÚ¦+
-?squid:S2131e"Use "Long.toString" instead.(äÚÌ‘úÿÿÿÿ8ˆ±´ª¤+
-Dsquid:S1166º"%Either log or rethrow this exception.(É®£8Ş¡´Ù¦+
-dsquid:S1854"ERemove this useless assignment to local variable "sourceDataTypeImp".(‘ÍÖ¤8À­ñ¦+
-Bsquid:S2095L"Close this "PreparedStatement".(¢ü¶Öøÿÿÿÿ8ˆ‘¬ ¦+
-~squid:S00115&"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(àçÿçûÿÿÿÿ8…¹İİ¡+
-Usquid:S1481"6Remove this unused "sourceDataTypeImp" local variable.(‘ÍÖ¤8À­ñ¦+
-~squid:S00115%"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ú¬Ë©üÿÿÿÿ8…¹İİ¡+
-:squid:S2131_"Use "Long.toString" instead.(İÛù¨8—Û ¦+
-Ysquid:UselessImportCheck"/Remove this unused import 'java.sql.ResultSet'.(ˆóÚw8ÆÙÄì¢+
-Csquid:S2095²"Close this "PreparedStatement".(¢ü¶Öøÿÿÿÿ8Ô¸ŸÙ¦+
-]squid:S1155Ã">Use isEmpty() to check whether the collection is empty or not.( ·­¹8éúÚ¦+
-nsquid:S00116)"ORename this field "m_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä§ìõ8·Ùàİ¡+
-Gsquid:S1148»"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ôºõİ¡+
-Dsquid:S1166¡"%Either log or rethrow this exception.(”ı¾8Äïâİ¡+
-tsquid:S00116("WRename this field "m_connection" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ã©[8“İãİ¡+
-ysquid:S00115""ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ë˜Ü”8…¹İİ¡+
-hsquid:UselessImportCheck">Remove this unused import 'com.nosliw.data.core.HAPOperation'.(´•§_8²½Åşª+
-^
-squid:S106";Replace this usage of System.out or System.err by a logger.(Ô²À¯ûÿÿÿÿ8‘æİ¡+
-xsquid:S2293¬"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÙå«8úè¾Ù¦+
-Csquid:S1166W"%Either log or rethrow this exception.(É®£8ˆ‘¬ ¦+
-:squid:S2131l"Use "Long.toString" instead.(±ÎÏü8áßÆ°¢+
-msquid:UselessImportCheck"=Remove this unused import 'com.nosliw.data.core.HAPDataType'.(˜¨Áèıÿÿÿÿ8²½Åşª+
-@squid:S2131„"Use "Long.toString" instead.(±ÚæÍùÿÿÿÿ8™Ü‚ã¦+
-ysquid:S00115!"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(©¢Ší8…¹İİ¡+
 Xsquid:S12132";Move this constructor to comply with Java Code Conventions.(ê»·8…¹İİ¡+
+^
+squid:S106µ";Replace this usage of System.out or System.err by a logger.(Ô²À¯ûÿÿÿÿ8‘æİ¡+
+Dsquid:S1166¹"%Either log or rethrow this exception.(”ı¾8Äïâİ¡+
+Ssquid:S2864‚"4Iterate over the "entrySet" instead of the "keySet".(¤¡8±¥ªÕ£+
+Fsquid:S1148W"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8àõãŒ¦+
+Fsquid:S1148p"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ôºõİ¡+
+Csquid:S2095Ê"Close this "PreparedStatement".(¢ü¶Öøÿÿÿÿ8Ô¸ŸÙ¦+
+ysquid:S00115!"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(©¢Ší8…¹İİ¡+
+~squid:S00115%"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ú¬Ë©üÿÿÿÿ8…¹İİ¡+
+hsquid:UselessImportCheck">Remove this unused import 'com.nosliw.data.core.HAPOperation'.(´•§_8²½Åşª+
+ssquid:S3008"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›êÿ‰8…¹İİ¡+
+ysquid:S00115""ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ë˜Ü”8…¹İİ¡+
+xsquid:S2293Ä"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÙå«8úè¾Ù¦+
+Dsquid:S1166Ò"%Either log or rethrow this exception.(É®£8Õı©Ì«+
+Csquid:S1166V"%Either log or rethrow this exception.(É®£8Ş¡´Ù¦+
+Gsquid:S1148Ó"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Õı©Ì«+
+tsquid:S00116("WRename this field "m_connection" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ã©[8“İãİ¡+
+:squid:S2131w"Use "Long.toString" instead.(İÛù¨8ˆ±´ª¤+
+@squid:S2131œ"Use "Long.toString" instead.(±ÚæÍùÿÿÿÿ8™Ü‚ã¦+
+asquid:S1155h">Use isEmpty() to check whether the collection is empty or not.(ğ”õÂıÿÿÿÿ8Õı©Ì«+
+nsquid:S00116)"ORename this field "m_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä§ìõ8·Ùàİ¡+
+]squid:S1155Û">Use isEmpty() to check whether the collection is empty or not.( ·­¹8éúÚ¦+
+Gsquid:S1148º"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ˆ‘¬ ¦+
+Ysquid:UselessImportCheck"/Remove this unused import 'java.sql.ResultSet'.(ˆóÚw8ÆÙÄì¢+
+Usquid:S1481™"6Remove this unused "sourceDataTypeImp" local variable.(‘ÍÖ¤8À­ñ¦+
+msquid:UselessImportCheck"=Remove this unused import 'com.nosliw.data.core.HAPDataType'.(˜¨Áèıÿÿÿÿ8²½Åşª+
+tsquid:S00122Û"TAt most one statement is allowed per line, but 2 statements were found on this line.( ·­¹8éúÚ¦+
+Bsquid:S2095K"Close this "PreparedStatement".(¢ü¶Öøÿÿÿÿ8ˆ‘¬ ¦+
+asquid:S1155O">Use isEmpty() to check whether the collection is empty or not.(ğ”õÂıÿÿÿÿ8Ô¸ŸÙ¦+
+dsquid:S1854™"ERemove this useless assignment to local variable "sourceDataTypeImp".(‘ÍÖ¤8À­ñ¦+
+?squid:S2131}"Use "Long.toString" instead.(äÚÌ‘úÿÿÿÿ8áßÆ°¢+
+~squid:S00115&"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(àçÿçûÿÿÿÿ8…¹İİ¡+
+;squid:S2131„"Use "Long.toString" instead.(±ÎÏü8—Û ¦+
+Csquid:S1166o"%Either log or rethrow this exception.(É®£8ˆ‘¬ ¦+
+Bsquid:S2095d"Close this "PreparedStatement".(¢ü¶Öøÿÿÿÿ8Õı©Ì«+

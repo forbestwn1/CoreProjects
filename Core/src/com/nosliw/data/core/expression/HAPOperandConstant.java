@@ -1,7 +1,5 @@
 package com.nosliw.data.core.expression;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -9,6 +7,8 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapperLiterate;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
 
 public class HAPOperandConstant extends HAPOperandImp{
 
@@ -43,6 +43,12 @@ public class HAPOperandConstant extends HAPOperandImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(NAME, m_name);
 		jsonMap.put(DATA, HAPSerializeManager.getInstance().toStringValue(this.m_data, HAPSerializationFormat.JSON));
+	}
+
+	@Override
+	public HAPDataTypeCriteria getDataTypeInfo() {
+		if(this.m_data==null)  return null;
+		else return new HAPDataTypeCriteriaElementId(this.m_data.getDataTypeId());
 	}
 	
 }

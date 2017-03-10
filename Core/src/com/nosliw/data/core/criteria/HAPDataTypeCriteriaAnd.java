@@ -8,12 +8,10 @@ import com.google.common.collect.Sets;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 
-public class HAPDataTypeCriteriaAnd extends HAPDataTypeCriteriaImp{
+public class HAPDataTypeCriteriaAnd extends HAPDataTypeCriteriaComplex{
 
-	private List<HAPDataTypeCriteria> m_criterias;
-	
-	public HAPDataTypeCriteriaAnd(List<HAPDataTypeCriteria> criterias){
-		this.m_criterias = criterias;
+	public HAPDataTypeCriteriaAnd(List<HAPDataTypeCriteria> ele, HAPDataTypeCriteriaManager criteriaMan){
+		super(ele, criteriaMan);
 	}
 
 	@Override
@@ -23,7 +21,7 @@ public class HAPDataTypeCriteriaAnd extends HAPDataTypeCriteriaImp{
 	public Set<HAPDataTypeId> getValidDataTypeId() {
 		Set<HAPDataTypeId> out = new HashSet<HAPDataTypeId>();
 		int i = 0;
-		for(HAPDataTypeCriteria ele : this.m_criterias){
+		for(HAPDataTypeCriteria ele : this.getElements()){
 			if(i==0){
 				out = ele.getValidDataTypeId();
 			}

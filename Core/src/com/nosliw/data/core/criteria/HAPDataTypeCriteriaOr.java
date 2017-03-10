@@ -7,12 +7,10 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 
-public class HAPDataTypeCriteriaOr extends HAPDataTypeCriteriaImp{
+public class HAPDataTypeCriteriaOr extends HAPDataTypeCriteriaComplex{
 
-	private List<HAPDataTypeCriteria> m_criterias;
-	
-	public HAPDataTypeCriteriaOr(List<HAPDataTypeCriteria> criterias){
-		this.m_criterias = criterias;
+	public HAPDataTypeCriteriaOr(List<HAPDataTypeCriteria> eles, HAPDataTypeCriteriaManager criteriaMan){
+		super(eles, criteriaMan);
 	}
 
 	@Override
@@ -21,7 +19,7 @@ public class HAPDataTypeCriteriaOr extends HAPDataTypeCriteriaImp{
 	@Override
 	public Set<HAPDataTypeId> getValidDataTypeId() {
 		Set<HAPDataTypeId> out = new HashSet<HAPDataTypeId>();
-		for(HAPDataTypeCriteria ele : this.m_criterias){
+		for(HAPDataTypeCriteria ele : this.getElements()){
 			out.addAll(ele.getValidDataTypeId());
 		}
 		return out;

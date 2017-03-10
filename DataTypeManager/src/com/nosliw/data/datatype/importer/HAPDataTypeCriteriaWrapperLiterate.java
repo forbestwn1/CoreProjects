@@ -27,6 +27,8 @@ public class HAPDataTypeCriteriaWrapperLiterate extends HAPSerializableImp imple
 	
 	private HAPDataTypeCriteria m_criteria;
 	
+	public String getLiterateValue(){		return this.m_literateValue;	}
+	
 	@Override
 	public String getType() {		return HAPConstant.DATATYPECRITERIA_TYPE_LITERATE;	}
 
@@ -67,50 +69,6 @@ public class HAPDataTypeCriteriaWrapperLiterate extends HAPSerializableImp imple
 			HAPSerializeManager.getInstance().toStringValue(this.m_criteria, HAPSerializationFormat.LITERATE);
 		}
 		return this.m_literateValue;
-	}
-
-	private HAPDataTypeCriteria parseLiterate(String criteriaLiterate){
-		HAPDataTypeCriteria out = null;
-		
-		 criteriaLiterate = criteriaLiterate.trim();
-		 if(criteriaLiterate.startsWith(START_AND)){
-			 out = new HAPDataTypeCriteriaAnd(parseMutiple(criteriaLiterate.substring(START_AND.length(), criteriaLiterate.length()-END_AND.length())));
-		 }
-		 else if(criteriaLiterate.startsWith(START_OR)){
-			 out = new HAPDataTypeCriteriaAnd(parseMutiple(criteriaLiterate.substring(START_OR.length(), criteriaLiterate.length()-END_OR.length())));
-		 }
-		 else{
-			 String[] criteriaParts = criteriaLiterate.split("-");
-			 if(criteriaParts.length==1){
-				 //id
-				 out = new HAPDataTypeCriteriaElementId((HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), criteriaParts[0], HAPSerializationFormat.LITERATE));
-			 }
-			 else{
-				 //range
-				 HAPDataTypeId from = null;
-				 HAPDataTypeId to = null;
-				 if(HAPBasicUtility.isStringNotEmpty(criteriaParts[0])){
-					 from = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), criteriaParts[0], HAPSerializationFormat.LITERATE);
-				 }
-				 
-				 if(HAPBasicUtility.isStringNotEmpty(criteriaParts[1])){
-					 to = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), criteriaParts[1], HAPSerializationFormat.LITERATE);
-				 }
-				 out = new HAPDataTypeCriteriaElementRange(from, to);
-			 }
-		 }
-		 
-		 return out;
-	}
-	
-	private List<HAPDataTypeCriteria> parseMutiple(String mutipleLiterate){
-		List<HAPDataTypeCriteria> out = new ArrayList<HAPDataTypeCriteria>();
-		String[] literates = mutipleLiterate.split(",");
-		
-		for(String literate : literates){
-			out.add(this.parseLiterate(literate));
-		}
-		return out;
 	}
 
 }

@@ -11,7 +11,8 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 	
 	private HAPDataTypeId m_to;
 
-	public HAPDataTypeCriteriaElementRange(HAPDataTypeId from, HAPDataTypeId to){
+	public HAPDataTypeCriteriaElementRange(HAPDataTypeId from, HAPDataTypeId to, HAPDataTypeCriteriaManager criteriaMan){
+		super(criteriaMan);
 		this.m_from = from;
 		this.m_to = to;
 	}
@@ -24,8 +25,6 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 
 	@Override
 	public Set<HAPDataTypeId> getValidDataTypeId() {
-		
-		
-		return null;
+		return this.getDataTypeCriteraManager().getAllDataTypeInRange(m_from, m_to);
 	}
 }

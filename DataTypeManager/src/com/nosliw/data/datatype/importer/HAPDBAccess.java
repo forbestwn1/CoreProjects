@@ -64,6 +64,30 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB("data.datatypeoperation", "type=null && sourceDataTypeName=?", new Object[]{dataTypeId.getName()});
 	}
 	
+	public HAPDataTypeFamilyImp getDataTypeFamily(HAPDataTypeIdImp dataTypeId){
+		HAPDataTypeFamilyImp out = null;
+		
+		try {
+			String valuInfoName = "data.relationship";
+			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valuInfoName);
+			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "target_fullName=?");
+
+			PreparedStatement statement = m_connection.prepareStatement(sql);
+			statement.setString(1, dataTypeId.getFullName());
+
+			List<Object> results = HAPSqlUtility.queryFromDB(valuInfoName, statement);
+			if(results.size()>0){
+				HAPDataTypeImp targetDataType = this.getDataType(dataTypeId);
+				out = new HAPDataTypeFamilyImp(targetDataType);
+				for(Object result : results){
+					out.addRelationship((HAPRelationshipImp)result);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
 
 	public HAPDataTypePictureImp getDataTypePicture(HAPDataTypeIdImp dataTypeId){
 		HAPDataTypePictureImp out = null;

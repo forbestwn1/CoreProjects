@@ -3,6 +3,7 @@ package com.nosliw.data.datatype.importer;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.common.collect.Sets;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -14,6 +15,7 @@ public class HAPDataTypeCriteriaManagerImp implements HAPDataTypeCriteriaManager
 	
 	@Override
 	public Set<HAPDataTypeId> getAllDataTypeInRange(HAPDataTypeId from, HAPDataTypeId to) {
+		Set<HAPDataTypeId> out = null;
 		Set<HAPDataTypeId> toSet = null;
 		Set<HAPDataTypeId> fromSet = null;
 		
@@ -25,8 +27,20 @@ public class HAPDataTypeCriteriaManagerImp implements HAPDataTypeCriteriaManager
 				toSet.add(relationship.getTargetDataTypeName());
 			}
 		}
+
+		if(from!=null){
+			fromSet = new HashSet<HAPDataTypeId>();
+			HAPDataTypeFamilyImp fromFamily = this.m_dbAccess.getDataTypeFamily((HAPDataTypeIdImp)from);
+			Set<HAPRelationship> relationships = (Set<HAPRelationship>)fromFamily.getRelationships();
+			for(HAPRelationship relationship : relationships){
+				fromSet.add(relationship.getSourceDataTypeName());
+			}
+		}
 		
-		return null;
+		if(to==null)  out = fromSet;
+		else if(from==null)  out = toSet;
+		else out = Sets.intersection(fromSet, toSet);
+		return out;
 	}
 
 	@Override

@@ -6,23 +6,23 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.data.core.HAPDataType;
+import com.nosliw.data.core.HAPDataTypeFamily;
 import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPDataTypePicture;
 import com.nosliw.data.core.HAPRelationship;
 
-public class HAPDataTypePictureImp implements HAPDataTypePicture{
+public class HAPDataTypeFamilyImp implements HAPDataTypeFamily{
 
-	private HAPDataTypeImp m_sourceDataType;
+	private HAPDataTypeImp m_targetDataType;
 	
 	private Map<HAPDataTypeId, HAPRelationshipImp> m_relationships;
 	
-	public HAPDataTypePictureImp(HAPDataTypeImp mainDataType){
+	public HAPDataTypeFamilyImp(HAPDataTypeImp mainDataType){
 		this.m_relationships = new LinkedHashMap<HAPDataTypeId, HAPRelationshipImp>();
-		this.m_sourceDataType = mainDataType;
+		this.m_targetDataType = mainDataType;
 	}
 	
 	@Override
-	public HAPDataType getSourceDataType(){		return this.m_sourceDataType;  }
+	public HAPDataType getTargetDataType(){		return this.m_targetDataType;  }
 
 	@Override
 	public HAPRelationshipImp getRelationship(HAPDataTypeId dataTypeInfo){
@@ -35,8 +35,7 @@ public class HAPDataTypePictureImp implements HAPDataTypePicture{
 	}
 
 	public void addRelationship(HAPRelationshipImp relationship){
-		relationship.setSource(this.m_sourceDataType);
-		this.m_relationships.put(relationship.getTargetDataTypeName(), relationship);
+		relationship.setSource(this.m_targetDataType);
+		this.m_relationships.put(relationship.getSourceDataTypeName(), relationship);
 	}
-
 }

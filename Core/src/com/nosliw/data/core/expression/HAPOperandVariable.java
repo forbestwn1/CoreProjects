@@ -36,4 +36,9 @@ public class HAPOperandVariable extends HAPOperandImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VARIABLENAME, m_variableName);
 	}
+
+	@Override
+	public HAPDataTypeCriteria getDataTypeInfo() {
+		return null;
+	}
 }

@@ -5,6 +5,12 @@ import com.nosliw.data.core.HAPDataTypeId;
 
 public abstract class HAPDataTypeCriteriaImp extends HAPSerializableImp implements HAPDataTypeCriteria{
 
+	private HAPDataTypeCriteriaManager m_dataTypeCriteriaMan;
+	
+	public HAPDataTypeCriteriaImp(HAPDataTypeCriteriaManager criteriaMan){
+		this.m_dataTypeCriteriaMan = criteriaMan;
+	}
+	
 	@Override
 	public boolean validate(HAPDataTypeCriteria criteria) {
 		return this.getValidDataTypeId().containsAll(criteria.getValidDataTypeId());
@@ -14,4 +20,6 @@ public abstract class HAPDataTypeCriteriaImp extends HAPSerializableImp implemen
 	public boolean validate(HAPDataTypeId dataTypeId) {
 		return this.getValidDataTypeId().contains(dataTypeId);
 	}
+	
+	protected HAPDataTypeCriteriaManager getDataTypeCriteraManager(){ return this.m_dataTypeCriteriaMan; }
 }

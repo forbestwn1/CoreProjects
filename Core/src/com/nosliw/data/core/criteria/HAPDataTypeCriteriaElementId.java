@@ -10,7 +10,8 @@ public class HAPDataTypeCriteriaElementId  extends HAPDataTypeCriteriaImp{
 
 	private HAPDataTypeId m_dataTypeId;
 
-	public HAPDataTypeCriteriaElementId(HAPDataTypeId dataTypeId){
+	public HAPDataTypeCriteriaElementId(HAPDataTypeId dataTypeId, HAPDataTypeCriteriaManager criteriaMan){
+		super(criteriaMan);
 		this.m_dataTypeId = dataTypeId;
 	}
 
