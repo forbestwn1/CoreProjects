@@ -45,6 +45,9 @@ public class HAPDBTableInfo {
 			columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.COLUMN, property);
 		}
 	
+		//update property
+		columnInfo.setProperty(HAPNamingConversionUtility.cascadePath(attrPath, property));
+		
 		String methodProperty = columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.COLUMN);
 
 		if(this.m_primaryKeys.contains(methodProperty)){

@@ -13,12 +13,11 @@ public class HAPDBColumnInfo extends HAPStringableValueEntity{
 	//whether this column is primary key
 	public static final String PRIMARYKEY = "primaryKey";
 	
-	//table column, be default use the attribute name
+	//property name/path used to define the column from the root entity defining the table
 	public static final String PROPERTY = "property";
 	
-	//data type, used when do get/set during query. by default, use the getter return type
+	//data type/sub data type, used when do get/set during query. by default, use the getter return type
 	public static final String DATATYPE = "dataType";
-
 	public static final String SUBDATATYPE = "subDataType";
 	
 	//sql column definition

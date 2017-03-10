@@ -213,7 +213,13 @@ public class HAPSqlUtility {
 									columnObject = HAPLiterateManager.getInstance().stringToValue((String)columnValue, literateType);
 									if(columnObject==null){
 										//if literateType is not a valid one, then use the type info from property
-										HAPValueInfo propertyValueInfo = valueInfo.getPropertyInfo(column.getProperty()).getSolidValueInfo();
+										
+										if(valueInfo==null || column==null || column.getProperty()==null || valueInfo.getPropertyInfo(column.getProperty())==null){
+											int kkkk = 5555;
+											kkkk++;
+										}
+										
+										HAPValueInfo propertyValueInfo = valueInfo.getChildByPath(column.getProperty()).getSolidValueInfo();
 										String propertyValueInfoType = propertyValueInfo.getValueInfoType();
 										if(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY.equals(propertyValueInfoType)){
 											literateType = new HAPLiterateType(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, ((HAPValueInfoEntity)propertyValueInfo).getClassName());
@@ -230,7 +236,7 @@ public class HAPSqlUtility {
 						}
 						catch(NoSuchMethodException e){
 							if(obj instanceof HAPStringableValueEntity){
-								HAPValueInfo propertyValueInfo = valueInfo.getPropertyInfo(column.getProperty()).getSolidValueInfo();
+								HAPValueInfo propertyValueInfo = valueInfo.getChildByPath(column.getProperty()).getSolidValueInfo();
 								String propertyValueInfoType = propertyValueInfo.getValueInfoType();
 								if(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY.equals(propertyValueInfoType)){
 									((HAPStringableValueEntity)obj).updateChild(column.getColumnName(), (HAPStringableValue)columnObject);
