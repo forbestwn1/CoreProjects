@@ -71,7 +71,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		try {
 			String valuInfoName = "data.relationship";
 			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valuInfoName);
-			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "source=?");
+			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "source_fullName=?");
 
 			PreparedStatement statement = m_connection.prepareStatement(sql);
 			statement.setString(1, dataTypeId.getFullName());

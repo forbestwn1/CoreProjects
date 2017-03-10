@@ -34,7 +34,7 @@ public class HAPDataTypeOperationImp extends HAPOperationImp implements HAPRelat
 		this.setOperationId(targetOperation.getId());
 		this.setTargetDataTypeName(targetOperation.getDataTypeName());
 		if(relationship!=null){
-			this.setSourceDataTypeName(relationship.getSource());
+			this.setSourceDataTypeName((HAPDataTypeIdImp)relationship.getSourceDataTypeName());
 			this.updateAtomicChildObjectValue(PATH, relationship.getPath());
 		}
 		else{

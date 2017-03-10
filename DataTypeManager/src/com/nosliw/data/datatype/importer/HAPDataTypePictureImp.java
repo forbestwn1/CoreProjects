@@ -38,14 +38,13 @@ public class HAPDataTypePictureImp implements HAPDataTypePicture{
 	}
 
 	public void addRelationship(HAPRelationshipImp relationship){
-		this.m_relationships.put(relationship.getTargetDataType().getName(), relationship);
+		relationship.setSource(this.m_sourceDataType);
+		this.m_relationships.put(relationship.getTargetDataTypeName(), relationship);
 	}
 
 	@Override
 	public List<HAPDataTypeOperation> getOperations() {
 		return new ArrayList(this.m_relationships.values());
 	}
-	
-	
 	
 }

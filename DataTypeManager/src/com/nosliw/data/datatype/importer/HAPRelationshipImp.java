@@ -1,20 +1,18 @@
 package com.nosliw.data.datatype.importer;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.data.core.HAPDataType;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.HAPRelationshipPath;
 import com.nosliw.data.core.HAPRelationshipPathSegment;
 
-public class HAPRelationshipImp extends HAPDataTypeImp implements HAPRelationship{
+public class HAPRelationshipImp extends HAPStringableValueEntity implements HAPRelationship{
 
 	@HAPAttribute
 	public static String ID = "id";
 
-	@HAPAttribute
-	public static String SOURCE = "source";
-	
 	public HAPRelationshipImp(){
 		this.updateAtomicChildObjectValue(PATH, new HAPRelationshipPathImp());
 	}
@@ -25,25 +23,36 @@ public class HAPRelationshipImp extends HAPDataTypeImp implements HAPRelationshi
 	}
 
 	@Override
-	public HAPDataTypeId getTargetDataTypeName() {		return this.getName();	}
+	public HAPDataTypeId getTargetDataTypeName() {		return this.getTarget().getName();	}
 	
+	@Override
+	public HAPDataTypeId getSourceDataTypeName(){	return this.getSource().getName();	}
+
 	@Override
 	public HAPRelationshipPath getPath() {		return (HAPRelationshipPathImp)this.getAtomicAncestorValueObject(PATH, HAPRelationshipPathImp.class);	}
 
-	public HAPDataType getTargetDataType() {		return this;	}
+	public HAPDataTypeImp getTarget() {		return (HAPDataTypeImp)this.getEntityAncestorByPath(TARGET);	}
 
+	public HAPDataTypeImp getSource() {		return (HAPDataTypeImp)this.getEntityAncestorByPath(SOURCE);	}
+	
 	public String getId(){ return this.getAtomicAncestorValueString(ID);  }
 	
-	public HAPDataTypeIdImp getSource(){	return (HAPDataTypeIdImp)this.getAtomicAncestorValueObject(SOURCE, HAPDataTypeIdImp.class);	}
-
-	public void setSource(HAPDataTypeIdImp source){  this.updateAtomicChildObjectValue(SOURCE, source);  }
+	public void setSource(HAPDataTypeImp source){  this.updateChild(SOURCE, source);  }
+	public void setTarget(HAPDataTypeImp source){  this.updateChild(TARGET, source);  }
 	public void setId(String id){  this.updateAtomicChildStrValue(ID, id);  }
 	public void setPath(HAPRelationshipPath path){		this.getPath().setPath(path);	}
 	
-	public HAPRelationshipImp extendPathSegment(HAPRelationshipPathSegment segment, HAPDataTypeIdImp sourceId){
+	public HAPRelationshipImp extendPathSegmentSource(HAPRelationshipPathSegment segment, HAPDataTypeImp source){
 		HAPRelationshipImp out = this.clone(HAPRelationshipImp.class);
-		out.setSource(sourceId);
+		out.setSource(source);
 		out.getPath().insert(segment);
+		return out;
+	}
+
+	public HAPRelationshipImp extendPathSegmentTarget(HAPRelationshipPathSegment segment, HAPDataTypeImp target){
+		HAPRelationshipImp out = this.clone(HAPRelationshipImp.class);
+		out.setTarget(target);
+		out.getPath().append(segment);
 		return out;
 	}
 }

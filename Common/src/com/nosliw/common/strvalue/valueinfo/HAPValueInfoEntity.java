@@ -48,9 +48,17 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 
 	@Override
 	public HAPValueInfo getSolidValueInfo(){
+		if("nosliw.RELATIONSHIP".equals(this.getTable())){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		if(this.m_solidValueInfo==null){
 			if(HAPBasicUtility.isStringEmpty(this.getParent())){
-				this.m_solidValueInfo = this;
+				this.m_solidValueInfo = this.clone();
+				for(String property : this.m_solidValueInfo.getEntityProperties()){
+					this.m_solidValueInfo.updateEntityProperty(property, this.getPropertyInfo(property).getSolidValueInfo().clone());
+				}
 			}
 			else{
 				HAPValueInfoEntity parentValueInfo = this.getParentEntityValueInfo();
@@ -59,7 +67,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 				for(String property : this.getProperties()){
 					if(HAPValueInfoEntity.PROPERTIES.equals(property)){
 						for(String entityPro : this.getEntityProperties()){
-							this.m_solidValueInfo.updateEntityProperty(entityPro, this.getPropertyInfo(entityPro).clone());
+							this.m_solidValueInfo.updateEntityProperty(entityPro, this.getPropertyInfo(entityPro).getSolidValueInfo().clone());
 						}
 					}
 					else if(HAPValueInfoEntity.PARENT.equals(property)){

@@ -1,13 +1,13 @@
 
-|squid:S2293|"YReplace the type specification in this constructor call with the diamond operator ("<>").(Íı­°ûÿÿÿÿ8¤ãÑß¦+
-bsquid:S1854¼"CRemove this useless assignment to local variable "connectDataType".(´¢‰À8‚·†Ú¦+
-Psquid:S1905¼"1Remove this unnecessary cast to "HAPDataTypeImp".(´¢‰À8‚·†Ú¦+
-Rsquid:S2864k"4Iterate over the "entrySet" instead of the "keySet".(›ÔÃ8³¼Áß¦+
-Rsquid:S2864u"4Iterate over the "entrySet" instead of the "keySet".(‰ã¬Î8 ÈÓ§+
-rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
-|squid:S2293`"YReplace the type specification in this constructor call with the diamond operator ("<>").( ¯ÈÓùÿÿÿÿ8“¶³ß¦+
-qsquid:UselessImportCheck"ARemove this unused import 'com.nosliw.data.HAPDataTypeOperation'.(¯ƒœñùÿÿÿÿ8Şœ•Û¦+
 jsquid:CommentedOutCodeLineÚ"<This block of commented-out lines of code should be removed.(„Şâ8‚·†Ú¦+
+Rsquid:S2864u"4Iterate over the "entrySet" instead of the "keySet".(‰ã¬Î8 ÈÓ§+
+Psquid:S1905¼"1Remove this unnecessary cast to "HAPDataTypeImp".(´¢‰À8‚·†Ú¦+
 \squid:S1155c">Use isEmpty() to check whether the collection is empty or not.(à–ÛÏ8ÔóåÙ¦+
+vsquid:UselessImportCheck"FRemove this unused import 'com.nosliw.data.core.HAPDataTypeOperation'.(Í¦è“şÿÿÿÿ8Üö´¥«+
+bsquid:S1854¼"CRemove this useless assignment to local variable "connectDataType".(´¢‰À8‚·†Ú¦+
 psquid:S3776_"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(¸ªÇÀ8ô•Éâ¦+
+Rsquid:S2864k"4Iterate over the "entrySet" instead of the "keySet".(›ÔÃ8³¼Áß¦+
+|squid:S2293`"YReplace the type specification in this constructor call with the diamond operator ("<>").( ¯ÈÓùÿÿÿÿ8“¶³ß¦+
+|squid:S2293|"YReplace the type specification in this constructor call with the diamond operator ("<>").(Íı­°ûÿÿÿÿ8¤ãÑß¦+
 Ssquid:S1481¼"4Remove this unused "connectDataType" local variable.(´¢‰À8‚·†Ú¦+
+rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ

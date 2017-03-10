@@ -47,7 +47,6 @@ public class HAPStringableValueList<T extends HAPStringableValue> extends HAPStr
 		return HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON);
 	}
 	
-
 	@Override
 	public HAPStringableValue getChild(String name) {
 		return m_elements.get(Integer.valueOf(name));
@@ -60,9 +59,11 @@ public class HAPStringableValueList<T extends HAPStringableValue> extends HAPStr
 		return out;
 	}
 
+	public void clear(){  this.m_elements.clear();  }
+	
 	protected void cloneFrom(HAPStringableValueList<T> list){
 		for(T element : list.m_elements){
-			this.m_elements.add(element);
+			this.m_elements.add((T)element.clone());
 		}
 	}
 

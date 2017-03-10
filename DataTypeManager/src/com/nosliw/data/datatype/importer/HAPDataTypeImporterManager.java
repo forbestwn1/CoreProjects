@@ -103,7 +103,7 @@ public class HAPDataTypeImporterManager {
 			//operations from parent
 			if(dataType.getParentInfo()!=null){
 				HAPRelationshipImp parentRelationship = pic.getRelationship(dataType.getParentInfo());
-				Map<String, HAPDataTypeOperationImp> parentDataTypeOperations = buildDataTypeOperations(parentRelationship);
+				Map<String, HAPDataTypeOperationImp> parentDataTypeOperations = buildDataTypeOperations(parentRelationship.getTarget());
 				for(String opeartionName : parentDataTypeOperations.keySet()){
 					HAPDataTypeOperationImp dataTypeOp = parentDataTypeOperations.get(opeartionName);
 					HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(HAPRelationshipPathSegment.buildPathSegmentForParent(), (HAPDataTypeIdImp)pic.getSourceDataType().getName());
@@ -113,7 +113,7 @@ public class HAPDataTypeImporterManager {
 
 			if(dataType.getLinkedDataTypeId()!=null){
 				HAPRelationshipImp relationship = pic.getRelationship(dataType.getLinkedDataTypeId());
-				Map<String, HAPDataTypeOperationImp> ataTypeOperations = buildDataTypeOperations(relationship);
+				Map<String, HAPDataTypeOperationImp> ataTypeOperations = buildDataTypeOperations(relationship.getTarget());
 				for(String opeartionName : ataTypeOperations.keySet()){
 					HAPDataTypeOperationImp dataTypeOp = ataTypeOperations.get(opeartionName);
 					HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(HAPRelationshipPathSegment.buildPathSegmentForLinked(), (HAPDataTypeIdImp)pic.getSourceDataType().getName());
@@ -174,7 +174,7 @@ public class HAPDataTypeImporterManager {
 		
 		//self as a relationship as well
 		HAPRelationshipImp self = new HAPRelationshipImp(dataType);
-		self.setSource((HAPDataTypeIdImp)dataType.getName());
+		self.setTarget(dataType);
 		out.addRelationship(self);
 		
 		this.buildDataTypePictureFromConntectedDataType(dataType, out, HAPConstant.DATATYPE_PATHSEGMENT_PARENT);
@@ -192,7 +192,7 @@ public class HAPDataTypeImporterManager {
 			}
 			Set<? extends HAPRelationship> connectRelationships = connectDataTypePic.getRelationships();
 			for(HAPRelationship connectRelationship : connectRelationships){
-				out.addRelationship(((HAPRelationshipImp)connectRelationship).extendPathSegment(HAPRelationshipPathSegment.buildPathSegment(connectType), (HAPDataTypeIdImp)dataType.getName()));
+				out.addRelationship(((HAPRelationshipImp)connectRelationship).extendPathSegmentSource(HAPRelationshipPathSegment.buildPathSegment(connectType), dataType));
 			}
 		}
 	}

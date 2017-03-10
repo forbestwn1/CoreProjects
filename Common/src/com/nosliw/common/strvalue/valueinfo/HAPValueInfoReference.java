@@ -3,6 +3,7 @@ package com.nosliw.common.strvalue.valueinfo;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
@@ -39,33 +40,6 @@ public class HAPValueInfoReference extends HAPValueInfo{
 
 	@Override
 	public void afterBuild(){
-//		String defaultValues = this.getAtomicAncestorValueString(DEFAULT);
-//		if(HAPBasicUtility.isStringNotEmpty(defaultValues)){
-//			String[] valuesDef = HAPNamingConversionUtility.parseElements(defaultValues);
-//			for(String valueDef : valuesDef){
-//				Map<String, Object> defaultValuesMap = this.m_defaultValues;
-//				String[] valueDefSegs = HAPNamingConversionUtility.parseProperty(valueDef);
-//				String name = valueDefSegs[0];
-//				String value = valueDefSegs[1];
-//				HAPPath path = new HAPPath(name);
-//				String[] nameSegs = path.getPathSegs(); 
-//				for(int i=0; i<nameSegs.length; i++){
-//					String nameSeg = nameSegs[i];
-//					if(i+1>=nameSegs.length){
-//						defaultValuesMap.put(nameSeg, value);
-//					}
-//					else{
-//						Map<String, Object> childMap = null;
-//						Object o = defaultValuesMap.get(nameSeg);
-//						if(o==null){
-//							childMap = new LinkedHashMap<String, Object>();
-//							defaultValuesMap.put(nameSeg, childMap);
-//						}
-//						defaultValuesMap = childMap;
-//					}
-//				}
-//			}
-//		}
 	}
 
 	private HAPStringableValueList<HAPAttributeValues> getOverrideList(){  return (HAPStringableValueList)this.getChild(OVERRIDE); }
@@ -86,18 +60,91 @@ public class HAPValueInfoReference extends HAPValueInfo{
 	public HAPValueInfo getSolidValueInfo(){
 		if(this.m_solidValueInfo==null){
 			this.m_solidValueInfo = this.getValueInfoManager().getValueInfo(this.getReferencedName()).getSolidValueInfo().clone();
+
+			//columns
+			if(this.m_solidValueInfo.getValueInfoType().equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY)){
+				HAPValueInfoEntity solidValueInfoEntity = (HAPValueInfoEntity)m_solidValueInfo;
+				if(this.getDBColumnsInfo()!=null){
+					solidValueInfoEntity.setDBColumnsInfo(this.getDBColumnsInfo().clone(HAPDBColumnsInfo.class));
+					if(solidValueInfoEntity.getDBColumnsInfo().isIncludeColumn())				processSolidEntityValueInfo(solidValueInfoEntity);
+					else			removeColumnInfo(solidValueInfoEntity);
+				}
+				else{
+					removeColumnInfo(solidValueInfoEntity);
+				}
+			}
 			
+			//override attirubtes
 			HAPStringableValueList overrideProperties = this.getOverrideList();
 			Iterator overridePropertiesIt = overrideProperties.iterate();
 			while(overridePropertiesIt.hasNext()){
 				HAPAttributeValues overrideAttributeValues = (HAPAttributeValues)overridePropertiesIt.next();
 				HAPValueInfoUtility.updateValueInfoAttributeValue(m_solidValueInfo, overrideAttributeValues);
 			}
-			
-//			this.buildDefaultValue(m_solidValueInfo, m_defaultValues);
 		}
 		return this.m_solidValueInfo;
 	}
+	
+	private void processSolidEntityValueInfo(HAPValueInfoEntity valueInfoEntity){
+		Set<String> properties = valueInfoEntity.getEntityProperties();
+		for(String property : properties){
+			HAPValueInfo propertyValueInfo = valueInfoEntity.getPropertyInfo(property);
+			HAPDBColumnsInfo columnsInfo = propertyValueInfo.getDBColumnsInfo();
+
+			if(columnsInfo!=null){
+				//get prefix for column
+				String prefix = columnsInfo.getPrefix();
+				if(prefix==null){
+					prefix = this.getName();
+				}
+				else if(prefix.equals("")){
+					prefix = null;
+				}
+
+				HAPStringableValueList<HAPDBColumnInfo> columns = columnsInfo.getColumns();
+				for(int i=0; i<columns.size(); i++){
+					HAPDBColumnInfo column = columns.get(i);
+					
+					switch(columnsInfo.getPathType()){
+					case HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_ABSOLUTE:
+						columnsInfo.setPathType(HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTY);
+						break;
+					case HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTY:
+						break;
+					case HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_PROPERTYASPATH:
+						break;
+					}
+					
+//					column.setGetterPath(HAPNamingConversionUtility.cascadePath(this.getName(), column.getGetterPath()));
+//					column.setSetterPath(HAPNamingConversionUtility.cascadePath(this.getName(), column.getSetterPath()));
+					
+					if(prefix!=null)  column.setColumnNamePrefix(prefix);  
+				}
+				
+				String propertyValueInfoType = propertyValueInfo.getValueInfoType();
+				if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(propertyValueInfoType)){
+					processSolidEntityValueInfo((HAPValueInfoEntity)propertyValueInfo);
+				}
+			}
+		}
+	}
+	
+	private void removeColumnInfo(HAPValueInfoEntity valueInfoEntity){
+		Set<String> properties = valueInfoEntity.getEntityProperties();
+		for(String property : properties){
+			HAPValueInfo propertyValueInfo = valueInfoEntity.getPropertyInfo(property);
+			HAPDBColumnsInfo columnsInfo = propertyValueInfo.getDBColumnsInfo();
+			if(columnsInfo!=null){
+				columnsInfo.getColumns().clear();
+			}
+
+			String propertyValueInfoType = propertyValueInfo.getValueInfoType();
+			if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(propertyValueInfoType)){
+				removeColumnInfo((HAPValueInfoEntity)propertyValueInfo);
+			}
+		}
+	}
+	
 	
 	private void buildDefaultValue(HAPValueInfo valueInfo, Object defaultValue){
 		if(defaultValue==null)  return;

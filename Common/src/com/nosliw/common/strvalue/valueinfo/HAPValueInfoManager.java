@@ -118,7 +118,13 @@ public class HAPValueInfoManager {
 			if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(valueInfoType)){
 				HAPValueInfoEntity valueInfo = (HAPValueInfoEntity)vf.getSolidValueInfo();
 				String table = valueInfo.getTable();
+				
 				if(HAPBasicUtility.isStringNotEmpty(table)){
+					if(table.equals("nosliw.RELATIONSHIP")){
+						int kkkkk = 5555;
+						kkkkk++;
+					}
+					
 					HAPDBTableInfo tableInfo = new HAPDBTableInfo(table, new HashSet(valueInfo.getPrimaryKeys()), valueInfo);
 					this.readColumnInfoFromEntity(tableInfo, valueInfo, null);
 					this.m_dbTables.put(valueInfo.getName(), tableInfo);
@@ -130,7 +136,7 @@ public class HAPValueInfoManager {
 	private void readColumnInfoFromEntity(HAPDBTableInfo tableInfo, HAPValueInfoEntity valueInfoEntity, String path){
 		Set<String> properties = valueInfoEntity.getEntityProperties();
 		for(String property : properties){
-			HAPValueInfo propertyValueInfo = valueInfoEntity.getPropertyInfo(property);
+			HAPValueInfo propertyValueInfo = valueInfoEntity.getPropertyInfo(property).getSolidValueInfo();
 			HAPDBColumnsInfo columnsInfo = propertyValueInfo.getDBColumnsInfo();
 			if(columnsInfo!=null){
 				HAPStringableValueList<HAPDBColumnInfo> columns = columnsInfo.getColumns();

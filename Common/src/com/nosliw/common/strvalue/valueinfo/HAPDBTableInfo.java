@@ -52,6 +52,11 @@ public class HAPDBTableInfo {
 			columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.PRIMARYKEY, String.valueOf(true));
 		}
 		
+		if(columnInfo.getColumnName().equals("source_info")){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		String getter = this.buildGetSetMethod(columnInfo, HAPDBColumnInfo.GETTER, attrPath, property, methodProperty, relativePath);
 		String setter = this.buildGetSetMethod(columnInfo, HAPDBColumnInfo.SETTER, attrPath, property, methodProperty, relativePath);
 		
@@ -60,8 +65,15 @@ public class HAPDBTableInfo {
 			//if data type is not specify, try to get from return type of getter method
 			try {
 				HAPComplexName getterPath = new HAPComplexName(getter);
+
+				if(getterPath.getSimpleName().equals("getFullName")){
+					int kkkk = 555;
+					kkkk++;
+				}
+				
 				HAPValueInfo childValueInfo = this.m_valueInfoEntity.getChildByPath(getterPath.getPath());
 				String className = HAPValueInfoUtility.getEntityClassNameFromValueInfo(childValueInfo);
+				
 				Class returnType = Class.forName(className).getMethod(getterPath.getSimpleName()).getReturnType();
 				HAPLiterateType litType = HAPLiterateManager.getInstance().getLiterateTypeByClass(returnType);
 				columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.DATATYPE, litType.getType());
@@ -116,7 +128,7 @@ public class HAPDBTableInfo {
 			switch(type){
 			case HAPDBColumnInfo.GETTER:
 				columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.GETTER, methodMethod);
-				columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.GETTER_PATH, methodPath);
+				columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.GETTER_PATH,  methodPath);
 				break;
 			case HAPDBColumnInfo.SETTER:
 				columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.SETTER, methodMethod);

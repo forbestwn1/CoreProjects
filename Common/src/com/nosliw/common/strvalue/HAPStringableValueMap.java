@@ -67,7 +67,7 @@ public class HAPStringableValueMap<T extends HAPStringableValue> extends HAPStri
 
 	protected void cloneFrom(HAPStringableValueMap<T> map){
 		for(String name : map.m_elements.keySet()){
-			this.m_elements.put(name, map.m_elements.get(name));
+			this.m_elements.put(name, (T)map.m_elements.get(name).clone());
 		}
 	}
 	

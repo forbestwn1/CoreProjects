@@ -1,9 +1,14 @@
 <entity name="data.relationship" 
 		class="com.nosliw.data.datatype.importer.HAPRelationshipImp"
-		parent="data.datatypedef" 
 		table="nosliw.RELATIONSHIP" 
 		primaryKeys="id"
 		description="">
+
+	<property name="source" type="entity" reference="data.datatypedef" description="">
+		<dbColumnInfos  includeColumn="true">
+		</dbColumnInfos>
+	</property>
+
 		
 	<property name="id" dataType="string" description="">
 		<dbColumnInfos>
@@ -11,15 +16,14 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="source" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
+	<property name="path" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPRelationshipPathImp" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(20)"/>
 		</dbColumnInfos>
 	</property>
-	
-	<property name="path" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPRelationshipPathImp" description="">
-		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(20)"/>
+
+	<property name="target" type="entity" reference="data.datatypedef" description="">
+		<dbColumnInfos includeColumn="yes">
 		</dbColumnInfos>
 	</property>
 

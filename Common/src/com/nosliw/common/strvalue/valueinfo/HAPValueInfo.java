@@ -1,12 +1,8 @@
 package com.nosliw.common.strvalue.valueinfo;
 
-import com.nosliw.common.path.HAPComplexName;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntityBasic;
-import com.nosliw.common.strvalue.HAPStringableValueList;
-import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
 
 public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 
@@ -48,4 +44,5 @@ public abstract class HAPValueInfo extends HAPStringableValueEntityBasic{
 	protected HAPValueInfoManager getValueInfoManager(){ return HAPValueInfoManager.getInstance(); }
 	
 	protected void cloneFrom(HAPValueInfo valueInfo){		super.cloneFrom(valueInfo);	}
+	
 }
