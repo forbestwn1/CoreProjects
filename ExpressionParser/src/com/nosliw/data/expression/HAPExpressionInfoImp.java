@@ -11,6 +11,8 @@ import com.nosliw.data.core.expression.HAPReferenceInfo;
 
 public class HAPExpressionInfoImp extends HAPStringableValueEntity implements HAPExpressionInfo{
 
+	public HAPExpressionInfoImp(){	}
+	
 	@Override
 	public String getName() {  return this.getAtomicAncestorValueString(NAME);	}
 
@@ -30,7 +32,6 @@ public class HAPExpressionInfoImp extends HAPStringableValueEntity implements HA
 	public Map<String, HAPReferenceInfo> getReferences() {  return this.getMapAncestorByPath(REFERENCES).getMapValue();  }
 
 	
-	public HAPExpressionInfoImp(){	}
 	
 
 //	public HAPExpressionInfoImp addVariable(Map<String, HAPDataTypeCriteria> m_variableInfos){

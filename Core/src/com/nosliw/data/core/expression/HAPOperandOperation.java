@@ -10,6 +10,11 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPDataTypeManager;
+import com.nosliw.data.core.HAPDataTypeOperation;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 
 public class HAPOperandOperation extends HAPOperandImp{
 
@@ -33,13 +38,17 @@ public class HAPOperandOperation extends HAPOperandImp{
 	//operation parms
 	protected Map<String, HAPOperand> m_parms;
 
-	public HAPOperandOperation(HAPOperand base, String operation, Map<String, HAPOperand> parms){
+	protected HAPDataTypeManager m_dataTypeMan;
+	
+	public HAPOperandOperation(HAPOperand base, String operation, Map<String, HAPOperand> parms, HAPDataTypeCriteriaManager criteriaMan){
+		super(criteriaMan);
 		this.m_base = base;
 		this.m_operation = operation;
 		this.m_parms = parms;
 	}
 	
-	public HAPOperandOperation(String dataTypeIdLiterate, String operation, Map<String, HAPOperand> parms){
+	public HAPOperandOperation(String dataTypeIdLiterate, String operation, Map<String, HAPOperand> parms, HAPDataTypeCriteriaManager criteriaMan){
+		super(criteriaMan);
 		this.m_dataTypeId = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), dataTypeIdLiterate, HAPSerializationFormat.LITERATE);
 		this.m_operation = operation;
 		this.m_parms = parms;
@@ -88,5 +97,23 @@ public class HAPOperandOperation extends HAPOperandImp{
 			parmsJsonMap.put(parmName, HAPSerializeManager.getInstance().toStringValue(this.m_parms.get(parmName), HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(PARMS, HAPJsonUtility.buildMapJson(parmsJsonMap));
+	}
+
+	@Override
+	public HAPDataTypeCriteria process(HAPExpressionInfo expressionInfo) {
+		//try to get base data type
+		if(this.m_dataTypeId==null && this.m_base!=null){
+			HAPDataTypeCriteria baseDataTypeCriteria = this.m_base.getDataTypeCriteria();
+			if(baseDataTypeCriteria.getType().equals(HAPConstant.DATATYPECRITERIA_TYPE_DATATYPEID)){
+				this.m_dataTypeId = ((HAPDataTypeCriteriaElementId)baseDataTypeCriteria).getDataTypeId();
+			}
+		}
+
+		if(this.m_dataTypeId !=null){
+			HAPDataTypeOperation dataTypeOperation = this.m_dataTypeMan.getOperationInfoByName(m_dataTypeId, m_operation);
+			return dataTypeOperation.getOperationInfo().getOutputInfo().getCriteria();
+		}
+		
+		return null;
 	}
 }

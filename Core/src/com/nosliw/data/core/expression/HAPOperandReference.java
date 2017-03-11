@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public class HAPOperandReference extends HAPOperandImp{
 
@@ -41,5 +42,21 @@ public class HAPOperandReference extends HAPOperandImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(EXPRESSIONNAME, m_expressionName);
+	}
+
+	@Override
+	public HAPDataTypeCriteria process(HAPExpressionInfo expressionInfo) {
+		if(this.m_expression==null){
+			
+		}
+		
+		//merge variable info
+		
+		return this.m_expression.getOperand().getDataTypeCriteria();
+	}
+
+	@Override
+	public HAPDataTypeCriteria getDataTypeCriteria() {
+		return this.m_expression.getOperand().getDataTypeCriteria();
 	}
 }

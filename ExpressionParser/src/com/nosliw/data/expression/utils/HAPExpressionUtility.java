@@ -32,7 +32,7 @@ public class HAPExpressionUtility {
 			return ((HAPBooleanData)out).getValue();
 		}
 		else{
-			throw new HAPServiceDataException(HAPDataErrorUtility.createDataTypeError(HAPDataUtility.getDataTypeInfo(out), HAPDataTypeManager.BOOLEAN.getDataTypeInfo(), null));
+			throw new HAPServiceDataException(HAPDataErrorUtility.createDataTypeError(HAPDataUtility.getDataTypeInfo(out), HAPDataTypeManager.BOOLEAN.process(), null));
 		}
 	}
 
@@ -47,7 +47,7 @@ public class HAPExpressionUtility {
 			return ((HAPIntegerData)out).getValue();
 		}
 		else{
-			throw new HAPServiceDataException(HAPDataErrorUtility.createDataTypeError(HAPDataUtility.getDataTypeInfo(out), HAPDataTypeManager.INTEGER.getDataTypeInfo(), null));
+			throw new HAPServiceDataException(HAPDataErrorUtility.createDataTypeError(HAPDataUtility.getDataTypeInfo(out), HAPDataTypeManager.INTEGER.process(), null));
 		}
 	}
 	
@@ -62,7 +62,7 @@ public class HAPExpressionUtility {
 			return ((HAPStringData)out).getValue();
 		}
 		else{
-			throw new HAPServiceDataException(HAPDataErrorUtility.createDataTypeError(HAPDataUtility.getDataTypeInfo(out), HAPDataTypeManager.STRING.getDataTypeInfo(), null));
+			throw new HAPServiceDataException(HAPDataErrorUtility.createDataTypeError(HAPDataUtility.getDataTypeInfo(out), HAPDataTypeManager.STRING.process(), null));
 		}
 	}
 
@@ -77,7 +77,7 @@ public class HAPExpressionUtility {
 			return ((HAPFloatData)out).getValue();
 		}
 		else{
-			throw new HAPServiceDataException(HAPDataErrorUtility.createDataTypeError(HAPDataUtility.getDataTypeInfo(out), HAPDataTypeManager.FLOAT.getDataTypeInfo(), null));
+			throw new HAPServiceDataException(HAPDataErrorUtility.createDataTypeError(HAPDataUtility.getDataTypeInfo(out), HAPDataTypeManager.FLOAT.process(), null));
 		}
 	}
 	

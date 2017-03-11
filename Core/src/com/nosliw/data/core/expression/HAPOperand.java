@@ -16,6 +16,9 @@ public interface HAPOperand {
 
 	List<HAPOperand> getChildren();
 
-	HAPDataTypeCriteria getDataTypeInfo();
+	HAPDataTypeCriteria process(HAPExpressionInfo expressionInfo);
 
+	HAPDataTypeCriteria getDataTypeCriteria();
+	
+	
 }

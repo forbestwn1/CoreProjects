@@ -1,11 +1,10 @@
 package com.nosliw.data.core.expression;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 
 public class HAPOperandVariable extends HAPOperandImp{
 
@@ -15,7 +14,8 @@ public class HAPOperandVariable extends HAPOperandImp{
 	
 	protected HAPDataTypeCriteria m_dataTypeCriteria;
 
-	public HAPOperandVariable(String name){
+	public HAPOperandVariable(String name, HAPDataTypeCriteriaManager criteriaMan){
+		super(criteriaMan);
 		this.m_variableName = name;
 	}
 	
@@ -38,7 +38,10 @@ public class HAPOperandVariable extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria getDataTypeInfo() {
-		return null;
+	public HAPDataTypeCriteria process(HAPExpressionInfo expressionInfo) {
+		if(this.m_dataTypeCriteria==null){
+			this.m_dataTypeCriteria = expressionInfo.getVariables().get(this.m_variableName);
+		}
+		return this.m_dataTypeCriteria;
 	}
 }

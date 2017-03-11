@@ -9,6 +9,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapperLiterate;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 
 public class HAPOperandConstant extends HAPOperandImp{
 
@@ -20,7 +21,8 @@ public class HAPOperandConstant extends HAPOperandImp{
 
 	protected String m_name;
 	
-	public HAPOperandConstant(String constantStr){
+	public HAPOperandConstant(String constantStr, HAPDataTypeCriteriaManager criteriaMan){
+		super(criteriaMan);
 		this.m_data = (HAPData)HAPSerializeManager.getInstance().buildObject(HAPDataWrapperLiterate.class.getName(), constantStr, HAPSerializationFormat.LITERATE);
 		if(this.m_data==null){
 			//not a valid data literate, then it is a constant name
@@ -46,9 +48,12 @@ public class HAPOperandConstant extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria getDataTypeInfo() {
-		if(this.m_data==null)  return null;
-		else return new HAPDataTypeCriteriaElementId(this.m_data.getDataTypeId());
+	public HAPDataTypeCriteria process(HAPExpressionInfo expressionInfo) {
+		if(this.m_data==null){
+			this.m_data = expressionInfo.getConstants().get(this.m_name);
+		}
+		if(this.m_data == null)   throw new NullPointerException();
+		return new HAPDataTypeCriteriaElementId(this.m_data.getDataTypeId(), this.getDataTypeCriteriaManager());
 	}
 	
 }
