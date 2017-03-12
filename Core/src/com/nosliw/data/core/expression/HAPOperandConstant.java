@@ -30,6 +30,10 @@ public class HAPOperandConstant extends HAPOperandImp{
 		}
 	}
 	
+	public String getName(){  return this.m_name;  }
+	
+	public void setData(HAPData data){ this.m_data = data; }
+	
 	@Override
 	public String getType(){	return HAPConstant.EXPRESSION_OPERAND_CONSTANT;}
 

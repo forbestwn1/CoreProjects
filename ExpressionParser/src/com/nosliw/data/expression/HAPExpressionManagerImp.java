@@ -1,6 +1,7 @@
 package com.nosliw.data.expression;
 
 import java.util.List;
+import java.beans.Expression;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionInfo;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPOperand;
+import com.nosliw.data.core.expression.HAPOperandConstant;
 import com.nosliw.data.core.expression.HAPOperandReference;
 import com.nosliw.data.core.expression.HAPOperandVariable;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
@@ -28,23 +30,110 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		return m_instance;
 	}
 	
-	
 	public HAPExpressionManagerImp(){
 		HAPValueInfoManager.getInstance().importFromXML(HAPExpressionManagerImp.class, new String[]{
 				"expression.xml",
 				"referenceinfo.xml"
 		});
-		
 		this.m_expressionInfos = new LinkedHashMap<String, HAPExpressionInfo>();
-		
 	}
 
 
 	@Override
-	public HAPExpressionInfo getExpressionInfo(String name) {
-		return this.m_expressionInfos.get(name);
+	public HAPExpressionInfo getExpressionInfo(String name) {		return this.m_expressionInfos.get(name);	}
+
+	
+	public HAPExpression processExpressionInfo(String expressionName) {
+		HAPExpression expression = this.buildExpression(expressionName);
+		
+		//process reference
+		this.processReferences(expression.getOperand(), new LinkedHashMap<String, String>(), expression.getExpressionInfo());
+		
+		//process constant
+		this.processConstants(expression.getOperand(), expression.getExpressionInfo());
+		
+		//process variables
+		
+		
+		
+		return expression;
 	}
 
+	private HAPExpression buildExpression(String expressionName){
+		HAPExpressionInfo expressionInfo = getExpressionInfo(expressionName);
+		HAPOperand expressionOperand = HAPExpressionParser.parseExpression(expressionInfo.getExpression());
+		HAPExpressionImp expression = new HAPExpressionImp();
+		return expression;
+	}
+
+	private void processConstants(HAPOperand operand, final HAPExpressionInfo expressionInfo){
+		this.processAllOperand(operand, null, new HAPExpressionTask(){
+
+			@Override
+			public boolean processOperand(HAPOperand operand, Object data) {
+				String opType = operand.getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+					HAPOperandReference reference = (HAPOperandReference)operand;
+					HAPExpression expression = reference.getExpression();
+					processConstants(expression.getOperand(), expression.getExpressionInfo());
+				}
+				else if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
+					HAPOperandConstant constantOperand = (HAPOperandConstant)operand;
+					constantOperand.setData(expressionInfo.getConstants().get(constantOperand.getName()));
+				}
+				return false;
+			}
+
+			@Override
+			public void postPross(HAPOperand operand, Object data) {
+			}
+		});		
+	}
+	
+	private void processReferences(HAPOperand expressionOperand, Map<String, String> varsMapping, final HAPExpressionInfo expressionInfo) {
+		this.processAllOperand(expressionOperand, varsMapping, new HAPExpressionTask(){
+			@Override
+			public boolean processOperand(HAPOperand operand, Object data) {
+				Map<String, String> varMap = (Map<String, String>)data;
+				String opType = operand.getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+					HAPOperandReference reference = (HAPOperandReference)operand;
+					String referenceName = reference.getExpressionName();
+					HAPReferenceInfo referenceInfo = expressionInfo.getReferences().get(referenceName);
+					
+					HAPExpression refExpression = buildExpression(referenceInfo.getReference());
+					
+					//var mapping
+					Map<String, String> childRefVarMap = new LinkedHashMap<String, String>();
+					Map<String, String> refVarMap = referenceInfo.getVariableMap();
+					for(String r : refVarMap.keySet()){
+						if(varMap.get(r)!=null)   childRefVarMap.put(r, varMap.get(r));
+						else  childRefVarMap.put(r, refVarMap.get(r));
+					}
+					
+					processReferences(refExpression.getOperand(), childRefVarMap, refExpression.getExpressionInfo());
+					reference.setExpression(refExpression);
+					return false;
+				}
+				else if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
+					HAPOperandVariable variableChild = (HAPOperandVariable)operand;
+					String mappedVarName = varMap.get(variableChild);
+					if(mappedVarName!=null){
+						variableChild.setVariableName(mappedVarName);
+					}
+				}
+				return true;
+			}
+
+			@Override
+			public void postPross(HAPOperand operand, Object data) {
+			}});
+		
+	}
+	
+
+	
+	
 	private void mergeVariableInfo(Map<String, HAPDataTypeCriteria> baseVariablesInfo, String varName, HAPDataTypeCriteria variableInfo){
 		HAPDataTypeCriteria baseVarInfo = baseVariablesInfo.get(varName);
 		if(baseVarInfo==null){
@@ -91,50 +180,13 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 
 	}
 
-	public HAPExpression processReferences(String expressionName, Map<String, String> varsMapping) {
-		//replace all reference
-		final HAPExpressionInfo expressionInfo = this.getExpressionInfo(expressionName);
-		
-		HAPOperand expressionOperand = HAPExpressionParser.parseExpression(expressionInfo.getExpression());
-		
-		this.processAllOperand(expressionOperand, varsMapping, new HAPExpressionTask(){
-			@Override
-			public boolean processOperand(HAPOperand operand, Object data) {
-				Map<String, String> varMap = (Map<String, String>)data;
-				String opType = operand.getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
-					HAPOperandReference referenceChild = (HAPOperandReference)operand;
-					
-					String referenceName = referenceChild.getExpressionName();
-					HAPReferenceInfo referenceInfo = expressionInfo.getReferences().get(referenceName);
-					HAPExpression referenceExpression = processReferences(referenceName, referenceInfo.getVariableMap());
-					referenceChild.setExpression(referenceExpression);
-					return false;
-				}
-				else if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
-					HAPOperandVariable variableChild = (HAPOperandVariable)operand;
-					String mappedVarName = varMap.get(variableChild);
-					if(mappedVarName!=null){
-						variableChild.setVariableName(mappedVarName);
-					}
-				}
-				return true;
-			}
-
-			@Override
-			public void postPross(HAPOperand operand, Object data) {
-			}});
-		
-		return null;
-	}
-	
 	private void processAllOperand(HAPOperand operand, Object data, HAPExpressionTask task){
 		if(task.processOperand(operand, data)){
 			List<HAPOperand> children = operand.getChildren();
 			for(HAPOperand child : children){
 				this.processAllOperand(child, data, task);
 			}
+			task.postPross(operand, data);
 		}
 	}
-	
 }

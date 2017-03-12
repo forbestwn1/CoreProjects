@@ -59,4 +59,18 @@ public class HAPOperandReference extends HAPOperandImp{
 	public HAPDataTypeCriteria getDataTypeCriteria() {
 		return this.m_expression.getOperand().getDataTypeCriteria();
 	}
+
+	@Override
+	public HAPDataTypeCriteria processVariable(Map<String, HAPDataTypeCriteria> variablesInfo,
+			HAPDataTypeCriteria expectCriteria) {
+		
+		
+		return null;
+	}
+
+	@Override
+	public String getStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

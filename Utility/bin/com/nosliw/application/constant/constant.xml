@@ -333,6 +333,10 @@
 			<definition name="EXPRESSION_OPERAND_PATHOPERATION" value="pathoperation"/>
 			<definition name="EXPRESSION_OPERAND_NEWOPERATION" value="newoperation"/>
 			<definition type="space"/>
+			<definition name="EXPRESSION_OPERAND_STATUS_NEW" value="new"/>
+			<definition name="EXPRESSION_OPERAND_STATUS_PROCESSED" value="processed"/>
+			<definition name="EXPRESSION_OPERAND_STATUS_INVALID" value="invalid"/>
+			<definition type="space"/>
 			<definition name="EXPRESSION_VARIABLE_THIS" value="this"/>
 			<definition name="EXPRESSION_VARIABLE_PARENT" value="parent"/>
 			<definition name="EXPRESSION_VARIABLE_ENTITY" value="entity"/>

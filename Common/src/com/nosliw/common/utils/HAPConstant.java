@@ -91,6 +91,12 @@ public class HAPConstant {
 
 
 
+		public static final String EXPRESSION_OPERAND_STATUS_NEW = "new";
+		public static final String EXPRESSION_OPERAND_STATUS_PROCESSED = "processed";
+		public static final String EXPRESSION_OPERAND_STATUS_INVALID = "invalid";
+
+
+
 		public static final String EXPRESSION_VARIABLE_THIS = "this";
 		public static final String EXPRESSION_VARIABLE_PARENT = "parent";
 		public static final String EXPRESSION_VARIABLE_ENTITY = "entity";

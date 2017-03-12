@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.HAPDataTypeOperation;
+import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
@@ -100,7 +101,12 @@ public class HAPOperandOperation extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria process(HAPExpressionInfo expressionInfo) {
+	public HAPDataTypeCriteria processVariable(Map<String, HAPDataTypeCriteria> variables, HAPDataTypeCriteria expectCriteria) {
+		//process base first
+		if(this.m_base!=null){
+			this.m_base.processVariable(variables, null);
+		}
+		
 		//try to get base data type
 		if(this.m_dataTypeId==null && this.m_base!=null){
 			HAPDataTypeCriteria baseDataTypeCriteria = this.m_base.getDataTypeCriteria();
@@ -111,6 +117,13 @@ public class HAPOperandOperation extends HAPOperandImp{
 
 		if(this.m_dataTypeId !=null){
 			HAPDataTypeOperation dataTypeOperation = this.m_dataTypeMan.getOperationInfoByName(m_dataTypeId, m_operation);
+			
+			Map<String, HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
+			for(String parm: this.m_parms.keySet()){
+				HAPOperand parmDataType = this.m_parms.get(parm);
+				parmDataType.processVariable(variables, parmsInfo.get(parm).getCriteria());
+			}
+			
 			return dataTypeOperation.getOperationInfo().getOutputInfo().getCriteria();
 		}
 		
