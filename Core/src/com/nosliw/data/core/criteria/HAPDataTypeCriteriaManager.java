@@ -11,4 +11,6 @@ public interface HAPDataTypeCriteriaManager {
 	HAPDataTypeCriteria buildDataTypeCriteria(Set<HAPDataTypeId> dataTypeIds);
 
 	HAPDataTypeCriteria and(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2);
+
+	HAPDataTypeCriteria looseCriteria(HAPDataTypeCriteria criteria);
 }

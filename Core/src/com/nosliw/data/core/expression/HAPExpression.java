@@ -18,5 +18,7 @@ public interface HAPExpression {
 	
 	//Variables infos
 	Map<String, HAPDataTypeCriteria> getVariables();
-	
+
+	//error message used to indicate whether the expression is successfully processed
+	String getErrorMessage();
 }

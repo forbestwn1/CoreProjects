@@ -4,8 +4,10 @@ import java.util.List;
 import java.beans.Expression;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
@@ -15,6 +17,7 @@ import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPOperandConstant;
 import com.nosliw.data.core.expression.HAPOperandReference;
 import com.nosliw.data.core.expression.HAPOperandVariable;
+import com.nosliw.data.core.expression.HAPProcessVariablesContext;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
 
 public class HAPExpressionManagerImp implements HAPExpressionManager{
@@ -52,12 +55,27 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		//process constant
 		this.processConstants(expression.getOperand(), expression.getExpressionInfo());
 		
-		//process variables
+		//discover variables
 		Map<String, HAPDataTypeCriteria> expressionVars = new LinkedHashMap<String, HAPDataTypeCriteria>();
 		expressionVars.putAll(expression.getVariables());
-		expression.getOperand().processVariable(expressionVars, null);
-		expression.setVariables(expressionVars);
 		
+		HAPProcessVariablesContext context = new HAPProcessVariablesContext();
+		Map<String, HAPDataTypeCriteria> oldVars;
+		//Do discovery util vars not change or fail 
+		do{
+			oldVars = new LinkedHashMap<String, HAPDataTypeCriteria>();
+			oldVars.putAll(expressionVars);
+			
+			context.clear();
+			expression.getOperand().discoverVariables(expressionVars, null, context);
+		}while(!HAPBasicUtility.isEqualMaps(expressionVars, oldVars) && context.isSuccess());
+		
+		if(context.isSuccess()){
+			expression.setVariables(expressionVars);
+		}
+		else{
+			expression.setErrorMessage(context.getMessage());
+		}
 		return expression;
 	}
 

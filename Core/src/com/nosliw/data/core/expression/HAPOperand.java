@@ -25,7 +25,9 @@ public interface HAPOperand {
 	 * @param expectCriteria expected output criteria for this operand
 	 * @return  output criteria
 	 */
-	HAPDataTypeCriteria processVariable(Map<String, HAPDataTypeCriteria> variablesInfo, HAPDataTypeCriteria expectCriteria);
+	HAPDataTypeCriteria discoverVariables(Map<String, HAPDataTypeCriteria> variablesInfo,
+										HAPDataTypeCriteria expectCriteria,
+										HAPProcessVariablesContext context);
 
 	//operand output data type criteria
 	HAPDataTypeCriteria getDataTypeCriteria();

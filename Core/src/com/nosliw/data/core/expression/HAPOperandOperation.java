@@ -98,35 +98,45 @@ public class HAPOperandOperation extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria processVariable(Map<String, HAPDataTypeCriteria> variables, HAPDataTypeCriteria expectCriteria) {
+	public HAPDataTypeCriteria discoverVariables(
+			Map<String, HAPDataTypeCriteria> variables, 
+			HAPDataTypeCriteria expectCriteria,
+			HAPProcessVariablesContext context) {
 		//process base first
-		if(this.m_base!=null){
-			this.m_base.processVariable(variables, null);
-		}
+		if(this.m_base!=null)			this.m_base.discoverVariables(variables, null, context);
+		
+		//define seperate one, do not work on original one
+		HAPDataTypeId dataTypeId = this.m_dataTypeId;
 		
 		//try to get base data type
-		if(this.m_dataTypeId==null && this.m_base!=null){
+		if(dataTypeId==null && this.m_base!=null){
 			HAPDataTypeCriteria baseDataTypeCriteria = this.m_base.getDataTypeCriteria();
 			if(baseDataTypeCriteria.getType().equals(HAPConstant.DATATYPECRITERIA_TYPE_DATATYPEID)){
-				this.m_dataTypeId = ((HAPDataTypeCriteriaElementId)baseDataTypeCriteria).getDataTypeId();
+				dataTypeId = ((HAPDataTypeCriteriaElementId)baseDataTypeCriteria).getDataTypeId();
 			}
 		}
 
-		if(this.m_dataTypeId !=null){
-			HAPDataTypeOperation dataTypeOperation = this.m_dataTypeMan.getOperationInfoByName(m_dataTypeId, m_operation);
+		if(dataTypeId !=null){
+			HAPDataTypeOperation dataTypeOperation = this.m_dataTypeMan.getOperationInfoByName(dataTypeId, m_operation);
 			
 			Map<String, HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
 			for(String parm: this.m_parms.keySet()){
 				HAPOperand parmDataType = this.m_parms.get(parm);
-				parmDataType.processVariable(variables, parmsInfo.get(parm).getCriteria());
+				HAPDataTypeCriteria parmCriteria = parmsInfo.get(parm).getCriteria();
+				//loose input criteria
+				parmCriteria = this.getDataTypeCriteriaManager().looseCriteria(parmCriteria);
+				parmDataType.discoverVariables(variables, parmCriteria, context);
 			}
 			
 			return dataTypeOperation.getOperationInfo().getOutputInfo().getCriteria();
 		}
 		
-		return null;
+		return this.getDataTypeCriteria();
 	}
 
+	
+	
+	
 	@Override
 	public HAPDataTypeCriteria getDataTypeCriteria() {
 		// TODO Auto-generated method stub

@@ -9,6 +9,7 @@ public class HAPBasicUtility {
 
 	public static boolean isEqualMaps(Map m1, Map m2) {
 	   if (m1.size() != m2.size())	      return false;
+	   if (!m1.keySet().equals(m2.keySet()))  return false;
 	   for (Object key: m1.keySet()){
 		   if(!HAPBasicUtility.isEquals(m1.get(key), m2.get(key)))  return false;
 	   }

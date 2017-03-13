@@ -20,6 +20,8 @@ public class HAPExpressionImp implements HAPExpression{
 	// parsed expression
 	private HAPOperand m_operand;
 	
+	private String m_errorMsg;
+	
 	// store all variable information in expression (variable name -- variable data type infor)
 	// for variable that we don't know data type, its value in this map is null
 	private Map<String, HAPDataTypeCriteria> m_varsInfo;
@@ -45,7 +47,12 @@ public class HAPExpressionImp implements HAPExpression{
 		this.m_varsInfo.putAll(vars);
 	}
 	
+	@Override
+	public String getErrorMessage() {		return this.m_errorMsg;	}
+	public void setErrorMessage(String msg){  this.m_errorMsg = msg;  } 
+	
 	public void mergeVariable(String variable, HAPDataTypeCriteria varInfo){
 		
 	}
+
 }

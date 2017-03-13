@@ -45,16 +45,30 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 		jsonMap.put(TYPE, this.getType());
 	}
 	
-	protected String outputCompatible(HAPDataTypeCriteria targetCriteria){
-		if(targetCriteria == null)   return null;
+	protected HAPDataTypeCriteria validate(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context){
+		HAPDataTypeCriteria out = null;
+		if(criteria==null){
+			//if var is not defined in context, use expect one
+			out = expectCriteria;
+		}
 		else{
-			if(targetCriteria.validate(this.getDataTypeCriteria()))
-			{
-				return null;
+			//if var is defined in context, use and between var in context and expect
+			out = this.getDataTypeCriteriaManager().and(criteria, expectCriteria);
+			if(expectCriteria!=null && out==null){
+				//error
+				context.setFailure("Error");
 			}
-			else{
+		}
+		return out;
+	}
+	
+	protected void outputCompatible(HAPDataTypeCriteria targetCriteria, HAPProcessVariablesContext context){
+		if(targetCriteria != null)
+		{
+			if(!targetCriteria.validate(this.getDataTypeCriteria()))
+			{
 				this.setStatusInvalid();
-				return "error";
+				context.setFailure("Error!!!!");
 			}
 		}
 	}
