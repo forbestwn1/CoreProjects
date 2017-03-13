@@ -1,5 +1,6 @@
 package com.nosliw.data.expression;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.data.core.HAPData;
@@ -13,10 +14,8 @@ import com.nosliw.data.core.expression.HAPOperand;
  */
 public class HAPExpressionImp implements HAPExpression{
 
-	private String m_name;
-	
 	// original expressiong
-	private String m_expression;
+	private HAPExpressionInfo m_expressionInfo;
 
 	// parsed expression
 	private HAPOperand m_operand;
@@ -25,23 +24,26 @@ public class HAPExpressionImp implements HAPExpression{
 	// for variable that we don't know data type, its value in this map is null
 	private Map<String, HAPDataTypeCriteria> m_varsInfo;
 	
-	//store constant data to used in expression
-	private Map<String, HAPData> m_constantDatas;
-
-	@Override
-	public HAPExpressionInfo getExpressionInfo() {
-		return null;
+	public HAPExpressionImp(HAPExpressionInfo expressionInfo, HAPOperand operand){
+		this.m_expressionInfo = expressionInfo;
+		this.m_operand = operand;
+		this.m_varsInfo = new LinkedHashMap<String, HAPDataTypeCriteria>();
+		this.m_varsInfo.putAll(this.m_expressionInfo.getVariables());
 	}
+	
+	@Override
+	public HAPExpressionInfo getExpressionInfo() {		return this.m_expressionInfo;	}
 
 	@Override
-	public HAPOperand getOperand() {
-		return null;
+	public HAPOperand getOperand() {  return this.m_operand;  }
+
+	@Override
+	public Map<String, HAPDataTypeCriteria> getVariables() {		return this.m_varsInfo;	}
+	
+	public void setVariables(Map<String, HAPDataTypeCriteria> vars){
+		this.m_varsInfo.clear();
+		this.m_varsInfo.putAll(vars);
 	}
-
-	@Override
-	public Map<String, HAPDataTypeCriteria> getVariables() {
-		return null;
-	} 
 	
 	public void mergeVariable(String variable, HAPDataTypeCriteria varInfo){
 		

@@ -12,15 +12,25 @@ public interface HAPOperand {
 	public static final String CHILDREN = "children"; 
 
 	public static final String DATATYPEINFO = "dataTypeInfo"; 
-	
+
+	//type of operand
 	String getType();
 
+	//children operand
 	List<HAPOperand> getChildren();
 
+	/**
+	 * Process variables in operand 
+	 * @param variablesInfo  all the variables info in context
+	 * @param expectCriteria expected output criteria for this operand
+	 * @return  output criteria
+	 */
 	HAPDataTypeCriteria processVariable(Map<String, HAPDataTypeCriteria> variablesInfo, HAPDataTypeCriteria expectCriteria);
 
+	//operand output data type criteria
 	HAPDataTypeCriteria getDataTypeCriteria();
 	
+	//status of operand: new, processed, failed
 	String getStatus();
 	
 }

@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataWrapperLiterate;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 
 public class HAPOperandReference extends HAPOperandImp{
 
@@ -15,12 +20,10 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	private HAPExpression m_expression;
 	
-	public HAPOperandReference(String expressionName){
+	public HAPOperandReference(String expressionName, HAPDataTypeCriteriaManager criteriaMan){
+		super(HAPConstant.EXPRESSION_OPERAND_REFERENCE, criteriaMan);
 		this.m_expressionName = expressionName;
 	}
-
-	@Override
-	public String getType() {		return HAPConstant.EXPRESSION_OPERAND_REFERENCE;	}
 
 	public String getExpressionName(){  return this.m_expressionName;  }
 	
@@ -45,17 +48,6 @@ public class HAPOperandReference extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria process(HAPExpressionInfo expressionInfo) {
-		if(this.m_expression==null){
-			
-		}
-		
-		//merge variable info
-		
-		return this.m_expression.getOperand().getDataTypeCriteria();
-	}
-
-	@Override
 	public HAPDataTypeCriteria getDataTypeCriteria() {
 		return this.m_expression.getOperand().getDataTypeCriteria();
 	}
@@ -63,14 +55,13 @@ public class HAPOperandReference extends HAPOperandImp{
 	@Override
 	public HAPDataTypeCriteria processVariable(Map<String, HAPDataTypeCriteria> variablesInfo,
 			HAPDataTypeCriteria expectCriteria) {
-		
-		
-		return null;
-	}
-
-	@Override
-	public String getStatus() {
-		// TODO Auto-generated method stub
-		return null;
+		//expression var info
+		for(String varName : this.m_expression.getVariables().keySet()){
+			HAPDataTypeCriteria criteria = this.getDataTypeCriteriaManager().and(this.m_expression.getVariables().get(varName), variablesInfo.get(varName));
+			variablesInfo.put(varName, criteria);
+		}
+			
+		HAPDataTypeCriteria out = this.m_expression.getOperand().processVariable(variablesInfo, null);
+		return out;
 	}
 }

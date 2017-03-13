@@ -42,14 +42,14 @@ public class HAPOperandOperation extends HAPOperandImp{
 	protected HAPDataTypeManager m_dataTypeMan;
 	
 	public HAPOperandOperation(HAPOperand base, String operation, Map<String, HAPOperand> parms, HAPDataTypeCriteriaManager criteriaMan){
-		super(criteriaMan);
+		super(HAPConstant.EXPRESSION_OPERAND_OPERATION, criteriaMan);
 		this.m_base = base;
 		this.m_operation = operation;
 		this.m_parms = parms;
 	}
 	
 	public HAPOperandOperation(String dataTypeIdLiterate, String operation, Map<String, HAPOperand> parms, HAPDataTypeCriteriaManager criteriaMan){
-		super(criteriaMan);
+		super(HAPConstant.EXPRESSION_OPERAND_OPERATION, criteriaMan);
 		this.m_dataTypeId = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), dataTypeIdLiterate, HAPSerializationFormat.LITERATE);
 		this.m_operation = operation;
 		this.m_parms = parms;
@@ -68,9 +68,6 @@ public class HAPOperandOperation extends HAPOperandImp{
 	}
 	
 	public HAPDataTypeId getDataTypeId(){   return this.m_dataTypeId; }
-
-	@Override
-	public String getType() {		return HAPConstant.EXPRESSION_OPERAND_OPERATION;	}
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -127,6 +124,12 @@ public class HAPOperandOperation extends HAPOperandImp{
 			return dataTypeOperation.getOperationInfo().getOutputInfo().getCriteria();
 		}
 		
+		return null;
+	}
+
+	@Override
+	public HAPDataTypeCriteria getDataTypeCriteria() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

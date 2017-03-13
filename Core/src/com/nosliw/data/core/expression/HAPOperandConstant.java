@@ -22,7 +22,7 @@ public class HAPOperandConstant extends HAPOperandImp{
 	protected String m_name;
 	
 	public HAPOperandConstant(String constantStr, HAPDataTypeCriteriaManager criteriaMan){
-		super(criteriaMan);
+		super(HAPConstant.EXPRESSION_OPERAND_CONSTANT, criteriaMan);
 		this.m_data = (HAPData)HAPSerializeManager.getInstance().buildObject(HAPDataWrapperLiterate.class.getName(), constantStr, HAPSerializationFormat.LITERATE);
 		if(this.m_data==null){
 			//not a valid data literate, then it is a constant name
@@ -34,9 +34,6 @@ public class HAPOperandConstant extends HAPOperandImp{
 	
 	public void setData(HAPData data){ this.m_data = data; }
 	
-	@Override
-	public String getType(){	return HAPConstant.EXPRESSION_OPERAND_CONSTANT;}
-
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
@@ -52,11 +49,14 @@ public class HAPOperandConstant extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria process(HAPExpressionInfo expressionInfo) {
-		if(this.m_data==null){
-			this.m_data = expressionInfo.getConstants().get(this.m_name);
-		}
-		if(this.m_data == null)   throw new NullPointerException();
+	public HAPDataTypeCriteria processVariable(Map<String, HAPDataTypeCriteria> variablesInfo,
+			HAPDataTypeCriteria expectCriteria) {
+		this.outputCompatible(expectCriteria);
+		return this.getDataTypeCriteria();
+	}
+
+	@Override
+	public HAPDataTypeCriteria getDataTypeCriteria() {
 		return new HAPDataTypeCriteriaElementId(this.m_data.getDataTypeId(), this.getDataTypeCriteriaManager());
 	}
 	

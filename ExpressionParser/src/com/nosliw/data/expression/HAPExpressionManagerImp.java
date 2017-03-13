@@ -44,7 +44,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 
 	
 	public HAPExpression processExpressionInfo(String expressionName) {
-		HAPExpression expression = this.buildExpression(expressionName);
+		HAPExpressionImp expression = this.buildExpression(expressionName);
 		
 		//process reference
 		this.processReferences(expression.getOperand(), new LinkedHashMap<String, String>(), expression.getExpressionInfo());
@@ -53,16 +53,18 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		this.processConstants(expression.getOperand(), expression.getExpressionInfo());
 		
 		//process variables
-		
-		
+		Map<String, HAPDataTypeCriteria> expressionVars = new LinkedHashMap<String, HAPDataTypeCriteria>();
+		expressionVars.putAll(expression.getVariables());
+		expression.getOperand().processVariable(expressionVars, null);
+		expression.setVariables(expressionVars);
 		
 		return expression;
 	}
 
-	private HAPExpression buildExpression(String expressionName){
+	private HAPExpressionImp buildExpression(String expressionName){
 		HAPExpressionInfo expressionInfo = getExpressionInfo(expressionName);
 		HAPOperand expressionOperand = HAPExpressionParser.parseExpression(expressionInfo.getExpression());
-		HAPExpressionImp expression = new HAPExpressionImp();
+		HAPExpressionImp expression = new HAPExpressionImp(expressionInfo, expressionOperand);
 		return expression;
 	}
 
@@ -101,17 +103,28 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 					String referenceName = reference.getExpressionName();
 					HAPReferenceInfo referenceInfo = expressionInfo.getReferences().get(referenceName);
 					
-					HAPExpression refExpression = buildExpression(referenceInfo.getReference());
+					HAPExpressionImp refExpression = buildExpression(referenceInfo.getReference());
 					
+					Map<String, String> refVarMap = referenceInfo.getVariableMap();
+
 					//var mapping
 					Map<String, String> childRefVarMap = new LinkedHashMap<String, String>();
-					Map<String, String> refVarMap = referenceInfo.getVariableMap();
 					for(String r : refVarMap.keySet()){
 						if(varMap.get(r)!=null)   childRefVarMap.put(r, varMap.get(r));
 						else  childRefVarMap.put(r, refVarMap.get(r));
 					}
-					
 					processReferences(refExpression.getOperand(), childRefVarMap, refExpression.getExpressionInfo());
+					
+					//variables mapping in var infos
+					Map<String, HAPDataTypeCriteria> originalVarInfos = refExpression.getVariables();
+					Map<String, HAPDataTypeCriteria> varInfos = new LinkedHashMap<String, HAPDataTypeCriteria>();
+					for(String originalVarName : originalVarInfos.keySet()){
+						String varName = refVarMap.get(originalVarName);
+						if(varName==null)  varName = originalVarName;
+						varInfos.put(varName, originalVarInfos.get(originalVarName));
+					}
+					refExpression.setVariables(varInfos);
+					
 					reference.setExpression(refExpression);
 					return false;
 				}
