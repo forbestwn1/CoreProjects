@@ -1,13 +1,16 @@
 
-Psquid:S1905¼"1Remove this unnecessary cast to "HAPDataTypeImp".(´¢‰À8‚·†Ú¦+
-|squid:S2293`"YReplace the type specification in this constructor call with the diamond operator ("<>").( ¯ÈÓùÿÿÿÿ8“¶³ß¦+
-Rsquid:S2864k"4Iterate over the "entrySet" instead of the "keySet".(›ÔÃ8³¼Áß¦+
-psquid:S3776_"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(¸ªÇÀ8ô•Éâ¦+
-Rsquid:S2864u"4Iterate over the "entrySet" instead of the "keySet".(‰ã¬Î8 ÈÓ§+
-Ssquid:S1481¼"4Remove this unused "connectDataType" local variable.(´¢‰À8‚·†Ú¦+
-vsquid:UselessImportCheck"FRemove this unused import 'com.nosliw.data.core.HAPDataTypeOperation'.(Í¦è“þÿÿÿÿ8Üö´¥«+
 \squid:S1155c">Use isEmpty() to check whether the collection is empty or not.(à–ÛÏ8ÔóåÙ¦+
+Ssquid:S1481¼"4Remove this unused "connectDataType" local variable.(´¢‰À8‚·†Ú¦+
 |squid:S2293|"YReplace the type specification in this constructor call with the diamond operator ("<>").(Íý­°ûÿÿÿÿ8¤ãÑß¦+
-jsquid:CommentedOutCodeLineÚ"<This block of commented-out lines of code should be removed.(„Þâ8‚·†Ú¦+
 rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
+Rsquid:S2864k"4Iterate over the "entrySet" instead of the "keySet".(›ÔÃ8³¼Áß¦+
+Rsquid:S2864u"4Iterate over the "entrySet" instead of the "keySet".(‰ã¬Î8 ÈÓ§+
+|squid:S2293`"YReplace the type specification in this constructor call with the diamond operator ("<>").( ¯ÈÓùÿÿÿÿ8“¶³ß¦+
+jsquid:CommentedOutCodeLineÚ"<This block of commented-out lines of code should be removed.(„Þâ8‚·†Ú¦+
+psquid:S3776_"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(¸ªÇÀ8ô•Éâ¦+
 bsquid:S1854¼"CRemove this useless assignment to local variable "connectDataType".(´¢‰À8‚·†Ú¦+
+Psquid:S1905¼"1Remove this unnecessary cast to "HAPDataTypeImp".(´¢‰À8‚·†Ú¦+
+vsquid:UselessImportCheck"FRemove this unused import 'com.nosliw.data.core.HAPDataTypeOperation'.(Í¦è“þÿÿÿÿ8Üö´¥«+
+osquid:CommentedOutCodeLineØ"<This block of commented-out lines of code should be removed.(ÃÑ·áúÿÿÿÿ8ÓË¼ò¬+
+Ssquid:S1481×"/Remove this unused "jsImporter" local variable.(ÊÍ—ºøÿÿÿÿ8ÓË¼ò¬+
+bsquid:S1854×">Remove this useless assignment to local variable "jsImporter".(ÊÍ—ºøÿÿÿÿ8ÓË¼ò¬+

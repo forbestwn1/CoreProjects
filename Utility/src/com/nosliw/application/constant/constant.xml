@@ -566,6 +566,11 @@
 			<definition type="space"/>
 			<definition name="DATAOPERATION_VAR_TYPE_IN" value="parm"/>
 			<definition name="DATAOPERATION_VAR_TYPE_OUT" value="out"/>
+
+			<definition type="space"/>
+			<definition name="DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION" value="operation"/>
+			<definition name="DATAOPERATION_RESOURCE_TYPE_DATATYPE" value="datatype"/>
+
 	
 			<definition type="space"/>
 			<definition name="CATEGARY_NAME" value="CATEGARY_NAME"/>

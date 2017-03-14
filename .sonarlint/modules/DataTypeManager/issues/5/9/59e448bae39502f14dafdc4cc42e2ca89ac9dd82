@@ -1,19 +1,26 @@
 
-?squid:S11484"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-usquid:S2293>"YReplace the type specification in this constructor call with the diamond operator ("<>").(öß‡÷ıÿÿÿÿ
-Fsquid:S1481V"/Remove this unused "dataTypeId" local variable.(ıûË
+Psquid:S1197‚"8Move the array designator from the variable to the type.(Š˜¡ß
+Usquid:S1854^">Remove this useless assignment to local variable "dataTypeId".(ıûË
+isquid:CommentedOutCodeLine{"<This block of commented-out lines of code should be removed.(„•¶Ñ8ÖÑ³ò¬+
 i
-squid:S134["NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(Äéúïÿÿÿÿÿ
-Usquid:S1854V">Remove this useless assignment to local variable "dataTypeId".(ıûË
-ksquid:S3008"ORename this field "HEAD" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(şÍÑ øÿÿÿÿ
-]squid:UnusedPrivateMethodl"3Remove this unused private "saveOperations" method.(»°¿Àùÿÿÿÿ
-<squid:S11663"%Either log or rethrow this exception.(‹±ÃÆ
-rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Öû˜Ğüÿÿÿÿ
-usquid:S2293w"YReplace the type specification in this constructor call with the diamond operator ("<>").(şãßûÿÿÿÿ
+squid:S1349"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(¡»¢üùÿÿÿÿ
 i
-squid:S1341"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(¡»¢üùÿÿÿÿ
+squid:S134c"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(Äéúïÿÿÿÿÿ
+usquid:S2293*"YReplace the type specification in this constructor call with the diamond operator ("<>").(”Ğˆòùÿÿÿÿ
+ksquid:S3008"ORename this field "HEAD" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(şÍÑ øÿÿÿÿ
+nsquid:CommentedOutCodeLine-"<This block of commented-out lines of code should be removed.(¬ş“âúÿÿÿÿ8ÖÑ³ò¬+
+Nsquid:S1481,"+Remove this unused "jsInfo" local variable.(¨­•©úÿÿÿÿ8ÖÑ³ò¬+
+?squid:S1148<"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+ƒsquid:UselessImportCheck"YRemove this unused import 'com.nosliw.data.datatype.importer.HAPDataTypeImporterManager'.(‚ÏÃ8ˆí¹ò¬+
+vsquid:S2293€"YReplace the type specification in this constructor call with the diamond operator ("<>").(şãßûÿÿÿÿ
 ssquid:UselessImportCheck"JRemove this unused import 'com.nosliw.common.literate.HAPLiterateManager'.(çÙÃùÿÿÿÿ
-Osquid:S1197y"8Move the array designator from the variable to the type.(Š˜¡ß
-usquid:S2293""YReplace the type specification in this constructor call with the diamond operator ("<>").(”Ğˆòùÿÿÿÿ
-Ssquid:S2696‰"6Make the enclosing method "static" or remove this set.(ÀÂúœıÿÿÿÿ
-jsquid:S1132N"NMove the "dataType" string literal on the left side of this string comparison.(¯¤‡®ÿÿÿÿÿ
+Ssquid:S2696’"6Make the enclosing method "static" or remove this set.(ÀÂúœıÿÿÿÿ
+rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼»Í ûÿÿÿÿ
+isquid:CommentedOutCodeLinev"<This block of commented-out lines of code should be removed.(Íó¨¤8ÖÑ³ò¬+
+jsquid:S1132V"NMove the "dataType" string literal on the left side of this string comparison.(¯¤‡®ÿÿÿÿÿ
+]squid:UnusedPrivateMethodt"3Remove this unused private "saveOperations" method.(»°¿Àùÿÿÿÿ
+Fsquid:S1481^"/Remove this unused "dataTypeId" local variable.(ıûË
+Esquid:S1481u"'Remove this unused "op" local variable.(‡„ùÖ8ÖÑ³ò¬+
+usquid:S2293F"YReplace the type specification in this constructor call with the diamond operator ("<>").(öß‡÷ıÿÿÿÿ
+Psquid:S1172z"3Remove this unused method parameter "dataTypeName".(¢¶‹8ÖÑ³ò¬+
+<squid:S1166;"%Either log or rethrow this exception.(‹±ÃÆ

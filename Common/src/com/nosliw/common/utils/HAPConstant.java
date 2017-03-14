@@ -375,6 +375,11 @@ public class HAPConstant {
 
 
 
+		public static final String DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION = "operation";
+		public static final String DATAOPERATION_RESOURCE_TYPE_DATATYPE = "datatype";
+
+
+
 		public static final String CATEGARY_NAME = "CATEGARY_NAME";
 
 

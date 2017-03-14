@@ -1,5 +1,7 @@
 package com.nosliw.data.core.resource;
 
+import java.util.Set;
+
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.expression.HAPExpression;
@@ -25,20 +27,20 @@ public interface HAPResourceManager {
 	 * @param dataOpInfo
 	 * @return
 	 */
-	public HAPResources discoverResourceRequirement(HAPDataTypeId dataTypeInfo, HAPOperation dataOpInfo);
+	public Set<HAPResourceId> discoverResourceRequirement(HAPDataTypeId dataTypeInfo, HAPOperation dataOpInfo);
 
 	/**
 	 * Discover resources required for expression 
 	 * @param expression
 	 * @return
 	 */
-	public HAPResources discoverResourceRequirement(HAPExpression expression);
+	public Set<HAPResourceId> discoverResourceRequirement(HAPExpression expression);
 
 	/**
 	 * Prepare the actual resource
 	 * @param resources
 	 * @return
 	 */
-	public HAPResources prepareResources(HAPResources resources);
+	public Set<HAPResource> getResources(Set<HAPResourceId> resourcesId);
 
 }

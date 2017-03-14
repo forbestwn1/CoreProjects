@@ -213,7 +213,7 @@ public class HAPDataTypeImporterManager {
 		man.buildDataTypeOperations();
 		
 		HAPJSImporter jsImporter = new HAPJSImporter();
-		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");
+//		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");
 //		
 //		HAPDBAccess.getInstance().close();
 	}

@@ -1,0 +1,31 @@
+<entity name="data.operation.js"
+		table="nosliw.OPERATIONJS"
+		primaryKeys="id" 
+		class="com.nosliw.data.datatype.importer.js.HAPJSOperation" 
+		description="">
+
+	<property name="id" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="script" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(2000) NOT NULL"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="operationId" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="dataTypeId" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
+		<dbColumnInfos>
+			<dbColumnInfo column="dataTypeName" definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+
+</entity>

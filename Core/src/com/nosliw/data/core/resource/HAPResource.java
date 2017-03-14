@@ -1,5 +1,7 @@
 package com.nosliw.data.core.resource;
 
+import java.util.List;
+
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.data.core.HAPInfo;
 
@@ -16,5 +18,7 @@ public interface HAPResource extends HAPSerializable{
 	
 	HAPInfo getInfo();
 	
-	Object getResource();
+	Object getResourceData();
+	
+	List<HAPResourceId> getDependentResources();
 }

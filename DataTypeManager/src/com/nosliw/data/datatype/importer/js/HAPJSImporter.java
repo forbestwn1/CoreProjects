@@ -15,18 +15,26 @@ import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 
 import com.nosliw.common.literate.HAPLiterateManager;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.datatype.importer.HAPDBAccess;
+import com.nosliw.data.datatype.importer.HAPDataTypeImporterManager;
 import com.nosliw.data.datatype.importer.HAPResourceDataOperationImp;
-import com.nosliw.data.datatype.util.HAPDBAccess1;
 
 public class HAPJSImporter {
 
-	private HAPDBAccess1 m_dbAccess = null;
+	private HAPDBAccess m_dbAccess = null;
 	
 	private static String HEAD = null;
 	
 	public HAPJSImporter(){
-		this.m_dbAccess = HAPDBAccess1.getInstance();
+		this.m_dbAccess = HAPDBAccess.getInstance();
+		
+		HAPValueInfoManager.getInstance().importFromXML(HAPJSImporter.class, new String[]{
+				"jsoperation.xml"
+		});
+		
+		this.m_dbAccess.createDBTable("data.operation.js");
 	}
 	
 	public void loadFromFolder(String folderPath){
@@ -34,7 +42,7 @@ public class HAPJSImporter {
 		List<HAPJSOperationInfo> jsout = new ArrayList<HAPJSOperationInfo>();
 		this.importFromFolder(folderPath, jsout);
 		for(HAPJSOperationInfo jsInfo : jsout){
-			this.m_dbAccess.saveOperationInfoJS(jsInfo);
+//			this.m_dbAccess.saveOperationInfoJS(jsInfo);
 		}
 	}
 	
@@ -107,12 +115,13 @@ public class HAPJSImporter {
 
 	private void saveOperations(List<HAPJSOperationInfo> ops){
 		for(HAPJSOperationInfo op : ops){
-			this.m_dbAccess.saveOperationInfoJS(op);
+//			this.m_dbAccess.saveOperationInfoJS(op);
 		}
 	}
 	
 	private String getOperationId(String dataTypeName, String dataTypeVersion, String operation){
-		return this.m_dbAccess.getOperationId(dataTypeName, dataTypeVersion, operation);
+//		return this.m_dbAccess.getOperationId(dataTypeName, dataTypeVersion, operation);
+		return null;
 	}
 	
 	private List<HAPResourceDataOperationImp> getResources(String script){
