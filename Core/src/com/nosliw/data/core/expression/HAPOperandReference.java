@@ -1,14 +1,8 @@
 package com.nosliw.data.core.expression;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataWrapperLiterate;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 
@@ -62,8 +56,11 @@ public class HAPOperandReference extends HAPOperandImp{
 			HAPDataTypeCriteria criteria = this.getDataTypeCriteriaManager().and(this.m_expression.getVariables().get(varName), variablesInfo.get(varName));
 			variablesInfo.put(varName, criteria);
 		}
+		
+		//clear variables info in expression 
+		this.m_expression.getVariables().clear();
 			
-		HAPDataTypeCriteria out = this.m_expression.getOperand().discoverVariables(variablesInfo, null, context);
+		HAPDataTypeCriteria out = this.m_expression.getOperand().discoverVariables(variablesInfo, expectCriteria, context);
 		return out;
 	}
 }

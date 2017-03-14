@@ -7,6 +7,8 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 
 public class HAPOperandAttribute extends HAPOperandImp{
 
@@ -18,7 +20,8 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	
 	private HAPOperand m_base;
 	
-	public HAPOperandAttribute(HAPOperand base, String attribute){
+	public HAPOperandAttribute(HAPOperand base, String attribute, HAPDataTypeCriteriaManager criteriaMan){
+		super(HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION, criteriaMan);
 		this.setBase(base);
 		this.m_attribute = attribute;
 	}
@@ -51,5 +54,15 @@ public class HAPOperandAttribute extends HAPOperandImp{
 		out.add(m_base);
 		return out;
 	}
-	
+
+	@Override
+	public HAPDataTypeCriteria discoverVariables(Map<String, HAPDataTypeCriteria> variablesInfo,
+			HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context) {
+		return null;
+	}
+
+	@Override
+	public HAPDataTypeCriteria getDataTypeCriteria() {
+		return null;
+	}
 }

@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPOperandAttribute;
 import com.nosliw.data.core.expression.HAPOperandConstant;
@@ -22,7 +23,7 @@ import com.nosliw.data.expression.parser.SimpleNode;
  */
 public class HAPExpressionParser {
 
-	  public static HAPOperand parseExpression(String expression){
+	  public static HAPOperand parseExpression(String expression, HAPDataTypeCriteriaManager criteriaMan){
 		  SimpleNode root = null;
 		  try{
 			  InputStream is = new ByteArrayInputStream(expression.getBytes());
@@ -33,10 +34,10 @@ public class HAPExpressionParser {
 			  e.printStackTrace();
 			  return null;
 		  }
-          return processExpressionNode(root);
+          return processExpressionNode(root, criteriaMan);
 	  }
 	  
-	  private static HAPOperand processExpressionNode(SimpleNode parentNode){
+	  private static HAPOperand processExpressionNode(SimpleNode parentNode, HAPDataTypeCriteriaManager criteriaMan){
 		  HAPOperand out = null;
 		  
 		  ExpressionElements expressionEles = getExpressionElements(parentNode);
@@ -44,27 +45,27 @@ public class HAPExpressionParser {
 		  HAPOperand operand = null;
 		  if(expressionEles.constantNode!=null){
 			//it is a constant operand  
-			 operand = new HAPOperandConstant((String)expressionEles.constantNode.jjtGetValue());
+			 operand = new HAPOperandConstant((String)expressionEles.constantNode.jjtGetValue(), criteriaMan);
 		  }
 		  else if(expressionEles.variableNode!=null){
 			  //it is a variable operand
-			 operand = new HAPOperandVariable(((String)expressionEles.variableNode.jjtGetValue()));
+			 operand = new HAPOperandVariable(((String)expressionEles.variableNode.jjtGetValue()), criteriaMan);
 		  }
 		  else if(expressionEles.referenceNode!=null){
 			  //it is a variable operand
-			 operand = new HAPOperandReference(((String)expressionEles.referenceNode.jjtGetValue()));
+			 operand = new HAPOperandReference(((String)expressionEles.referenceNode.jjtGetValue()), criteriaMan);
 		  }
 		  else if(expressionEles.dataTypeNode!=null){
 			  String dataTypeInfo = (String)expressionEles.dataTypeNode.jjtGetValue();
 			  String operation = (String)expressionEles.nameNode.jjtGetValue();
-			  operand = new HAPOperandOperation(dataTypeInfo, operation, getOperationParms(expressionEles.expressionNodes));
+			  operand = new HAPOperandOperation(dataTypeInfo, operation, getOperationParms(expressionEles.expressionNodes, criteriaMan), criteriaMan);
 		  }
 		  
-		  out = processExpression1Node(expressionEles.expression1Node, operand);
+		  out = processExpression1Node(expressionEles.expression1Node, operand, criteriaMan);
 		  return out;
 	  }
 
-	  private static HAPOperand processExpression1Node(SimpleNode parentNode, HAPOperand aheadOperand){
+	  private static HAPOperand processExpression1Node(SimpleNode parentNode, HAPOperand aheadOperand, HAPDataTypeCriteriaManager criteriaMan){
 		  if(isNodeEmpty(parentNode))  return aheadOperand;
 
 		  HAPOperand out = null;
@@ -73,20 +74,20 @@ public class HAPExpressionParser {
 		  HAPOperand operand = null;
 		  if("function".equals(parentNode.jjtGetValue())){
 			  //function call
-			  operand = new HAPOperandOperation(aheadOperand, name, getOperationParms(expressionEles.expressionNodes));
+			  operand = new HAPOperandOperation(aheadOperand, name, getOperationParms(expressionEles.expressionNodes, criteriaMan), criteriaMan);
 		  }
 		  else{
 			  //path
-			  operand = new HAPOperandAttribute(aheadOperand, name);
+			  operand = new HAPOperandAttribute(aheadOperand, name, criteriaMan);
 		  }
-		  out = processExpression1Node(expressionEles.expression1Node, operand);
+		  out = processExpression1Node(expressionEles.expression1Node, operand, criteriaMan);
 		  return out;
 	  }
 
-	  private static Map<String, HAPOperand> getOperationParms(List<Parm> expressionParms){
+	  private static Map<String, HAPOperand> getOperationParms(List<Parm> expressionParms, HAPDataTypeCriteriaManager criteriaMan){
 		  Map<String, HAPOperand> out = new LinkedHashMap<String, HAPOperand>();
 		  for(Parm parm : expressionParms){
-			  HAPOperand op = processExpressionNode(parm.valuNode);
+			  HAPOperand op = processExpressionNode(parm.valuNode, criteriaMan);
 			  out.put(parm.name, op);
 		  }
 		  return out;

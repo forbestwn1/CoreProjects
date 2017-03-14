@@ -28,12 +28,9 @@ public class HAPDataTypeCriteriaUtil {
 	private static final String SEPERATOR_ELEMENT = ",";
 	private static final String SEPERATOR_RANGE = "-";
 	
-	
 	private static final String ANY = "*";
 	
-	
 	private HAPDataTypeCriteriaManagerImp m_criteriaMan;
-	
 	
 	public String toCriteriaLiterate(HAPDataTypeCriteria criteria){
 		String out = null;

@@ -1,5 +1,7 @@
-package com.nosliw.data.core;
+package com.nosliw.data.core.resource;
 
+import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.expression.HAPExpression;
 
 /**

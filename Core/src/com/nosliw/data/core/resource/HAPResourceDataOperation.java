@@ -1,4 +1,4 @@
-package com.nosliw.data.core;
+package com.nosliw.data.core.resource;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;

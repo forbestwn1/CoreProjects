@@ -45,7 +45,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	@Override
 	public HAPExpressionInfo getExpressionInfo(String name) {		return this.m_expressionInfos.get(name);	}
 
-	
+	@Override
 	public HAPExpression processExpressionInfo(String expressionName) {
 		HAPExpressionImp expression = this.buildExpression(expressionName);
 		
@@ -162,55 +162,6 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		
 	}
 	
-
-	
-	
-	private void mergeVariableInfo(Map<String, HAPDataTypeCriteria> baseVariablesInfo, String varName, HAPDataTypeCriteria variableInfo){
-		HAPDataTypeCriteria baseVarInfo = baseVariablesInfo.get(varName);
-		if(baseVarInfo==null){
-			baseVariablesInfo.put(varName, variableInfo);
-		}
-		else{
-			baseVarInfo.merge(variableInfo);
-		}
-	}
-	
-	public void processVariables(HAPExpressionImp expression, final Map<String, HAPDataTypeCriteria> variablesInfo) {
-		
-		//get variables information
-		this.processAllOperand(expression.getOperand(), null, new HAPExpressionTask(){
-			@Override
-			public boolean processOperand(HAPOperand operand, Object data) {
-				return true;
-			}
-
-			@Override
-			public void postPross(HAPOperand operand, Object data) {
-				String opType = operand.getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
-					HAPOperandReference referenceChild = (HAPOperandReference)operand;
-					HAPExpressionImp referenceExpression = (HAPExpressionImp)referenceChild.getExpression();
-					Map<String, HAPDataTypeCriteria> referenceVarsInfo = new LinkedHashMap<String, HAPDataTypeCriteria>();
-					referenceVarsInfo.putAll(referenceExpression.getExpressionInfo().getVariables());
-					processVariables(referenceExpression, referenceVarsInfo);
-					
-					for(String v : referenceVarsInfo.keySet()){
-						mergeVariableInfo(variablesInfo, v, referenceVarsInfo.get(v));
-					}
-					return false;
-				}
-				else if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
-					HAPOperandVariable variableChild = (HAPOperandVariable)operand;
-					mergeVariableInfo(variablesInfo, variableChild.getVariableName(), null);
-				}
-				else if(opType.equals(HAPConstant.EXPRESSION_OPERAND_OPERATION)){
-					
-				}
-				return true;
-			}});
-
-	}
-
 	private void processAllOperand(HAPOperand operand, Object data, HAPExpressionTask task){
 		if(task.processOperand(operand, data)){
 			List<HAPOperand> children = operand.getChildren();

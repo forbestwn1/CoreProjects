@@ -1,4 +1,4 @@
-package com.nosliw.data.core;
+package com.nosliw.data.core.resource;
 
 import java.util.Set;
 

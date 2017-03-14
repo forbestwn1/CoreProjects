@@ -43,7 +43,7 @@ public class HAPDataTypeCriteriaWrapperLiterate extends HAPSerializableImp imple
 	@Override
 	public boolean validate(HAPDataTypeId dataTypeId) {
 		if(this.m_criteria==null){
-			this.m_criteria = this.parseLiterate(this.m_literateValue);
+			this.m_criteria = HAPDataTypeCriteriaUtil.parseLiterate(this.m_literateValue);
 		}
 		return this.m_criteria.validate(dataTypeId);
 	}

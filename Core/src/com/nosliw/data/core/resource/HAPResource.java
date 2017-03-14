@@ -1,6 +1,7 @@
-package com.nosliw.data.core;
+package com.nosliw.data.core.resource;
 
 import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.data.core.HAPInfo;
 
 /**
  * This interface represent a resource 
@@ -8,17 +9,12 @@ import com.nosliw.common.serialization.HAPSerializable;
  * 		a global unique id
  *  	type of resource
  *  	status of resource: available, not available
- * @author ewaniwa
- *
  */
 public interface HAPResource extends HAPSerializable{
 
-	public String getId();
+	HAPResourceId getId();
 	
-	public String getType();
+	HAPInfo getInfo();
 	
-	public HAPInfo getInfo();
-	
-	public Object getResource();
-	
+	Object getResource();
 }

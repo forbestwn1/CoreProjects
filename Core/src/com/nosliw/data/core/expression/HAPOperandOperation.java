@@ -15,6 +15,7 @@ import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementRange;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 
 public class HAPOperandOperation extends HAPOperandImp{
@@ -39,6 +40,9 @@ public class HAPOperandOperation extends HAPOperandImp{
 	//operation parms
 	protected Map<String, HAPOperand> m_parms;
 
+	//out put criteria
+	protected HAPDataTypeCriteria m_output;
+	
 	protected HAPDataTypeManager m_dataTypeMan;
 	
 	public HAPOperandOperation(HAPOperand base, String operation, Map<String, HAPOperand> parms, HAPDataTypeCriteriaManager criteriaMan){
@@ -117,8 +121,8 @@ public class HAPOperandOperation extends HAPOperandImp{
 		}
 
 		if(dataTypeId !=null){
+			//discover parms by operation definition
 			HAPDataTypeOperation dataTypeOperation = this.m_dataTypeMan.getOperationInfoByName(dataTypeId, m_operation);
-			
 			Map<String, HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
 			for(String parm: this.m_parms.keySet()){
 				HAPOperand parmDataType = this.m_parms.get(parm);
@@ -128,15 +132,22 @@ public class HAPOperandOperation extends HAPOperandImp{
 				parmDataType.discoverVariables(variables, parmCriteria, context);
 			}
 			
-			return dataTypeOperation.getOperationInfo().getOutputInfo().getCriteria();
+			//discover base
+			if(this.m_base!=null){
+				this.m_base.discoverVariables(variables, new HAPDataTypeCriteriaElementRange(dataTypeId, null, this.getDataTypeCriteriaManager()), context);
+			}
+			this.m_output = dataTypeOperation.getOperationInfo().getOutputInfo().getCriteria();
 		}
-		
-		return this.getDataTypeCriteria();
+		else{
+			for(String parm: this.m_parms.keySet()){
+				HAPOperand parmDataType = this.m_parms.get(parm);
+				parmDataType.discoverVariables(variables, null, context);
+			}
+			this.m_output = null;
+		}
+		return this.m_output;
 	}
 
-	
-	
-	
 	@Override
 	public HAPDataTypeCriteria getDataTypeCriteria() {
 		// TODO Auto-generated method stub

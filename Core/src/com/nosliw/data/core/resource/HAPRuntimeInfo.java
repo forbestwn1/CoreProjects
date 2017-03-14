@@ -1,4 +1,4 @@
-package com.nosliw.data.core;
+package com.nosliw.data.core.resource;
 
 /*
  * This entity represent a runtime env
