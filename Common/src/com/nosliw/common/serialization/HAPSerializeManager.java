@@ -3,6 +3,8 @@ package com.nosliw.common.serialization;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.literate.HAPLiterateManager;
+
 /**
  * Manager class to do serialzation job 
  * @param <K>
@@ -39,11 +41,16 @@ public class HAPSerializeManager {
 	
 	public String toStringValue(Object obj, HAPSerializationFormat format){
 		if(obj == null)   return null;
-		if(obj instanceof HAPSerializable){
-			return ((HAPSerializable)obj).toStringValue(format);
+		if(format==HAPSerializationFormat.LITERATE){
+			return HAPLiterateManager.getInstance().valueToString(obj);
 		}
 		else{
-			return obj.toString();
+			if(obj instanceof HAPSerializable){
+				return ((HAPSerializable)obj).toStringValue(format);
+			}
+			else{
+				return obj.toString();
+			}
 		}
 	}
 	

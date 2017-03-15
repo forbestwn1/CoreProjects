@@ -15,12 +15,11 @@ import java.util.Map;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.literate.HAPLiterateType;
-import com.nosliw.common.path.HAPComplexName;
-import com.nosliw.common.serialization.HAPSerializableUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueUtility;
-import com.nosliw.common.strvalue.entity.test.HAPStringableEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -164,7 +163,10 @@ public class HAPSqlUtility {
 					statement.setFloat(i+1, (Float)columnValue);
 				}
 				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT.equals(dataType)){
-					statement.setString(i+1, HAPSerializableUtility.toLiterateString(columnValue));
+					statement.setString(i+1, HAPSerializeManager.getInstance().toStringValue(columnValue, HAPSerializationFormat.LITERATE));
+				}
+				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY.equals(dataType)){
+					statement.setString(i+1, HAPSerializeManager.getInstance().toStringValue(columnValue, HAPSerializationFormat.LITERATE));
 				}
 			}
 			statement.execute();
@@ -213,12 +215,6 @@ public class HAPSqlUtility {
 									columnObject = HAPLiterateManager.getInstance().stringToValue((String)columnValue, literateType);
 									if(columnObject==null){
 										//if literateType is not a valid one, then use the type info from property
-										
-										if(valueInfo==null || column==null || column.getProperty()==null || valueInfo.getPropertyInfo(column.getProperty())==null){
-											int kkkk = 5555;
-											kkkk++;
-										}
-										
 										HAPValueInfo propertyValueInfo = valueInfo.getChildByPath(column.getProperty()).getSolidValueInfo();
 										String propertyValueInfoType = propertyValueInfo.getValueInfoType();
 										if(HAPConstant.STRINGABLE_VALUESTRUCTURE_ENTITY.equals(propertyValueInfoType)){

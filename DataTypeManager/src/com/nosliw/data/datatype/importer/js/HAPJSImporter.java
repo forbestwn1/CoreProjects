@@ -45,7 +45,7 @@ public class HAPJSImporter {
 		op.setScript("script");
 
 		List<HAPResourceId> resourcesId = new ArrayList<HAPResourceId>();
-		resourcesId.add(new HAPResourceIdImp());
+		resourcesId.add(new HAPResourceIdImp("type1", "id2"));
 		op.setDependency(resourcesId);
 
 		this.m_dbAccess.saveOperationJS(op);

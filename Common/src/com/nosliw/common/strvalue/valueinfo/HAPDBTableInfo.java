@@ -55,11 +55,6 @@ public class HAPDBTableInfo {
 			columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.PRIMARYKEY, String.valueOf(true));
 		}
 		
-		if(columnInfo.getColumnName().equals("source_info")){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		String getter = this.buildGetSetMethod(columnInfo, HAPDBColumnInfo.GETTER, attrPath, property, methodProperty, relativePath);
 		String setter = this.buildGetSetMethod(columnInfo, HAPDBColumnInfo.SETTER, attrPath, property, methodProperty, relativePath);
 		
@@ -69,11 +64,6 @@ public class HAPDBTableInfo {
 			try {
 				HAPComplexName getterPath = new HAPComplexName(getter);
 
-				if(getterPath.getSimpleName().equals("getFullName")){
-					int kkkk = 555;
-					kkkk++;
-				}
-				
 				HAPValueInfo childValueInfo = this.m_valueInfoEntity.getChildByPath(getterPath.getPath());
 				String className = HAPValueInfoUtility.getEntityClassNameFromValueInfo(childValueInfo);
 				

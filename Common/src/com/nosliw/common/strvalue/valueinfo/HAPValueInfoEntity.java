@@ -48,11 +48,6 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 
 	@Override
 	public HAPValueInfo getSolidValueInfo(){
-		if("nosliw.RELATIONSHIP".equals(this.getTable())){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		if(this.m_solidValueInfo==null){
 			if(HAPBasicUtility.isStringEmpty(this.getParent())){
 				this.m_solidValueInfo = this.clone();

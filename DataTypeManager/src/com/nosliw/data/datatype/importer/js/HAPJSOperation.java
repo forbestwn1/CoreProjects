@@ -6,6 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.datatype.importer.HAPResourceIdImp;
 
 public class HAPJSOperation extends HAPStringableValueEntity{
 
@@ -36,7 +37,9 @@ public class HAPJSOperation extends HAPStringableValueEntity{
 	public String getDataTypeId(){  return this.getAtomicAncestorValueString(DATATYPEID);  }
 	public void setDataTypeId(String dataTypeId){  this.updateAtomicChildStrValue(DATATYPEID, dataTypeId);  }
 	
-	public List<HAPResourceId> getDependency(){  return this.getAtomicAncestorValueArray(DEPENDENCY, HAPResourceId.class); }
+	public List<HAPResourceId> getDependency(){  
+		return this.getAtomicAncestorValueArray(DEPENDENCY, HAPResourceIdImp.class); 
+	}
 	public void setDependency(List<HAPResourceId> resourcesId){
 		this.updateAtomicChildObjectValue(DEPENDENCY, resourcesId);
 	}

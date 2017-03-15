@@ -120,11 +120,6 @@ public class HAPValueInfoManager {
 				String table = valueInfo.getTable();
 				
 				if(HAPBasicUtility.isStringNotEmpty(table)){
-					if(table.equals("nosliw.RELATIONSHIP")){
-						int kkkkk = 5555;
-						kkkkk++;
-					}
-					
 					HAPDBTableInfo tableInfo = new HAPDBTableInfo(table, new HashSet(valueInfo.getPrimaryKeys()), valueInfo);
 					this.readColumnInfoFromEntity(tableInfo, valueInfo, null);
 					this.m_dbTables.put(valueInfo.getName(), tableInfo);
