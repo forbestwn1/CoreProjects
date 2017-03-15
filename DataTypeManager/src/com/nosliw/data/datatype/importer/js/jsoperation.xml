@@ -22,11 +22,18 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="dataTypeId" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
+	<property name="operationName" dataType="string" description="">
 		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(20)"/>
+			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
 		</dbColumnInfos>
 	</property>
+
+	<property name="dataTypeName" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
+		</dbColumnInfos>
+	</property>
+
 
 	<property name="dependency" dataType="array" subDataType="com.nosliw.data.datatype.importer.HAPResourceIdImp">
 		<dbColumnInfos>

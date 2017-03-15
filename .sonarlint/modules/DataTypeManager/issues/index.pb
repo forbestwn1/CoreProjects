@@ -80,3 +80,17 @@ l
 <src/com/nosliw/data/datatype/importer/js/HAPJSOperation.java,f\6\f631af32227aac076c84577af619887766662c19
 h
 8src/com/nosliw/data/datatype/importer/js/jsoperation.xml,b\5\b55582ed82075bc6d1b59f224acb01856041b0fb
+k
+;src/com/nosliw/data/datatype/importer/HAPResourceIdImp.java,b\f\bfcc67b9369039c4cb35fab82e4821095c77bd99
+`
+0src/com/nosliw/data/datatype/importer/js/tail.js,b\8\b86105b61899b02df69a4b911a92aadab57e7c2f
+m
+=src/com/nosliw/data/datatype/importer/js/operationtemplate.js,3\d\3df1bf27f8b82ce26ed05a4a0a2a371ae8a7ecaa
+b
+2src/com/nosliw/data/datatype/importer/js/AAAA.java,1\a\1ad913b095d73d36abdd83527fe166b967c68f99
+t
+Dsrc/com/nosliw/data/datatype/importer/HAPResourceIdOperationImp.java,8\e\8e591be23f4094c098f9f7f4146034936e5c3bad
+u
+Esrc/com/nosliw/data/datatype/importer/js/HAPResourceManagerImpJS.java,1\a\1a48b1e61b506c133976a2b68a321152d0688819
+i
+9src/com/nosliw/data/datatype/importer/HAPResourceImp.java,1\3\139747ca9c6257da103357613b6a9dee154e957d

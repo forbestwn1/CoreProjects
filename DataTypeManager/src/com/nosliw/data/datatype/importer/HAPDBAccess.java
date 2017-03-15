@@ -120,6 +120,14 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		HAPSqlUtility.saveToDB(operationJs, this.m_connection);
 	}
 	
+	public HAPJSOperation getJSOperation(HAPDataTypeIdImp dataTypeId, String operation){
+		return (HAPJSOperation)this.queryEntityFromDB(
+				HAPJSOperation.DATADEFINITION_NAME, 
+				HAPJSOperation.DATATYPENAME+"=? AND +"+HAPJSOperation.OPERATIONNAME+"=?",
+				new Object[]{dataTypeId.getFullName(), operation});
+		
+	}
+	
 	public void saveDataTypeOperation(List<HAPDataTypeOperationImp> dataTypeOperations){
 		for(HAPDataTypeOperationImp dataTypeOperation : dataTypeOperations){
 			dataTypeOperation.setId(this.getId()+"");
@@ -146,8 +154,8 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		return (List<HAPOperationImp>)this.queryEntitysFromDB("data.operation", "dataTypeName=?", new Object[]{dataTypeName.getFullName()});
 	}
 	
-	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeIdImp dataTypeName, String name) {
-		return (HAPDataTypeOperation)this.queryEntityFromDB("data.operation", "name=? AND dataTypeName=?", new Object[]{name, dataTypeName.getFullName()});
+	public HAPDataTypeOperationImp getOperationInfoByName(HAPDataTypeIdImp dataTypeName, String name) {
+		return (HAPDataTypeOperationImp)this.queryEntityFromDB("data.operation", "name=? AND dataTypeName=?", new Object[]{name, dataTypeName.getFullName()});
 	}
 	
 	public List<HAPDataTypeImp> getAllDataTypes(){

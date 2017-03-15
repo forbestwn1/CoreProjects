@@ -17,6 +17,10 @@ public class HAPDataTypeVersionImp extends HAPStringableValueEntity implements H
 		this.updateAtomicChildStrValue(MINOR, "0", HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER, null);
 	}
 	
+	public HAPDataTypeVersionImp(String literate){
+		this.buildObjectByLiterate(literate);
+	}
+	
 	public String getName(){  return this.getAtomicAncestorValueString(HAPDataTypeVersionImp.NAME);	}
 	public void setName(String name){ this.buildObjectByLiterate(name); }
 	

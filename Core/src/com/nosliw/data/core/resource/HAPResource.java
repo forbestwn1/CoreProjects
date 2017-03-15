@@ -12,7 +12,7 @@ import com.nosliw.data.core.HAPInfo;
  *  	type of resource
  *  	status of resource: available, not available
  */
-public interface HAPResource extends HAPSerializable{
+public interface HAPResource{
 
 	HAPResourceId getId();
 	

@@ -1,3 +1,8 @@
+//run seperately
+//		which data type (name + version) belong to
+//      dependency
+//		each operation (operation name, script, dependency)
+
 var operations = initForOperation("core.url", "1.1.0");
 
 operations['host'] = function(parms, context){
@@ -12,4 +17,3 @@ operations['host1'] = function(parms, context){
 	
 };		 
 
-operations;
