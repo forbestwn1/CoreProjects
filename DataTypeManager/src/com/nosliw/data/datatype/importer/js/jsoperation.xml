@@ -24,8 +24,15 @@
 
 	<property name="dataTypeId" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
 		<dbColumnInfos>
-			<dbColumnInfo column="dataTypeName" definition="VARCHAR(20)"/>
+			<dbColumnInfo definition="VARCHAR(20)"/>
 		</dbColumnInfos>
 	</property>
+
+	<property name="dependency" dataType="array" subDataType="com.nosliw.data.datatype.importer.HAPResourceIdImp">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(200)"/>
+		</dbColumnInfos>
+	</property>
+
 
 </entity>

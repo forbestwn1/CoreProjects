@@ -24,6 +24,7 @@ import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.HAPRelationship;
+import com.nosliw.data.datatype.importer.js.HAPJSOperation;
 
 public class HAPDBAccess extends HAPConfigurableImp {
 
@@ -112,6 +113,11 @@ public class HAPDBAccess extends HAPConfigurableImp {
 			e.printStackTrace();
 		}
 		return out;
+	}
+	
+	public void saveOperationJS(HAPJSOperation operationJs){
+		operationJs.setId(this.getId()+"");
+		HAPSqlUtility.saveToDB(operationJs, this.m_connection);
 	}
 	
 	public void saveDataTypeOperation(List<HAPDataTypeOperationImp> dataTypeOperations){

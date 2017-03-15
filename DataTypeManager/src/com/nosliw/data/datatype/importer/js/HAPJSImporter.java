@@ -17,9 +17,11 @@ import org.mozilla.javascript.ScriptableObject;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.datatype.importer.HAPDBAccess;
 import com.nosliw.data.datatype.importer.HAPDataTypeImporterManager;
 import com.nosliw.data.datatype.importer.HAPResourceDataOperationImp;
+import com.nosliw.data.datatype.importer.HAPResourceIdImp;
 
 public class HAPJSImporter {
 
@@ -35,6 +37,20 @@ public class HAPJSImporter {
 		});
 		
 		this.m_dbAccess.createDBTable("data.operation.js");
+		
+		HAPJSOperation op = new HAPJSOperation();
+		op.setId("id");
+		op.setOperationId("11111");
+		op.setDataTypeId("22222");
+		op.setScript("script");
+
+		List<HAPResourceId> resourcesId = new ArrayList<HAPResourceId>();
+		resourcesId.add(new HAPResourceIdImp());
+		op.setDependency(resourcesId);
+
+		this.m_dbAccess.saveOperationJS(op);
+	
+		
 	}
 	
 	public void loadFromFolder(String folderPath){
