@@ -154,8 +154,8 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		return (List<HAPOperationImp>)this.queryEntitysFromDB("data.operation", "dataTypeName=?", new Object[]{dataTypeName.getFullName()});
 	}
 	
-	public HAPDataTypeOperationImp getOperationInfoByName(HAPDataTypeIdImp dataTypeName, String name) {
-		return (HAPDataTypeOperationImp)this.queryEntityFromDB("data.operation", "name=? AND dataTypeName=?", new Object[]{name, dataTypeName.getFullName()});
+	public HAPOperationImp getOperationInfoByName(HAPDataTypeIdImp dataTypeName, String name) {
+		return (HAPOperationImp)this.queryEntityFromDB("data.operation", "name=? AND dataTypeName=?", new Object[]{name, dataTypeName.getFullName()});
 	}
 	
 	public List<HAPDataTypeImp> getAllDataTypes(){

@@ -2,6 +2,7 @@ package com.nosliw.data.datatype.importer.js;
 
 import java.util.Set;
 
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperation;
@@ -11,7 +12,8 @@ import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.resource.HAPRuntimeInfo;
 import com.nosliw.data.datatype.importer.HAPDBAccess;
-import com.nosliw.data.datatype.importer.HAPResourceIdOperationImp;
+import com.nosliw.data.datatype.importer.HAPDataTypeIdImp;
+import com.nosliw.data.datatype.importer.HAPResourceImp;
 
 public class HAPResourceManagerImpJS implements HAPResourceManager{
 
@@ -57,16 +59,18 @@ public class HAPResourceManagerImpJS implements HAPResourceManager{
 
 	
 	public HAPResource getResourceById(HAPResourceId resourceId){
+		HAPResource out = null;
 		String resourceType = resourceId.getType();
 		switch(resourceType)
 		{
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION:
-			HAPResourceIdOperationImp resourceIdOperation = (HAPResourceIdOperationImp)resourceId; 
-			HAPJSOperation jsOperation = this.m_dataAccess.getJSOperation(resourceIdOperation, resourceIdOperation.getOperation());
+			String[] segs = HAPNamingConversionUtility.parseSegments(resourceId.getId());
+			HAPJSOperation jsOperation = this.m_dataAccess.getJSOperation(new HAPDataTypeIdImp(segs[0], segs[1]), segs[2]);
+			out = new HAPResourceImp(resourceId, null, jsOperation, jsOperation.getDependency());
 			break;
 		}
 		
-		return null;
+		return out;
 	}
 	
 	

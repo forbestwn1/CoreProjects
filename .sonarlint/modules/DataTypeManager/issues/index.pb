@@ -60,8 +60,6 @@ c
 3src/com/nosliw/data/datatype/importer/operation.xml,c\0\c04f9337ba122a9b1073a1b2d619d980abcb26ae
 l
 <src/com/nosliw/data/datatype/importer/interfaceoperation.xml,c\8\c8cdb5742ddb367034f22822b0e01a67ee333d01
-p
-@src/com/nosliw/data/datatype/importer/js/HAPJSOperationInfo.java,e\2\e2b8df2b032142ea0ebbadeb39c9c78f2d24c5ce
 q
 Asrc/com/nosliw/data/datatype/importer/HAPOperationVarInfoImp.java,f\f\ffbb6d364c615fb7e676dda32ceefbd940a6bf15
 }
@@ -72,8 +70,6 @@ o
 ?src/com/nosliw/data/datatype/importer/HAPDataTypeFamilyImp.java,5\9\598bf4537f35e22e481d2a62d791dde00b259dd0
 r
 Bsrc/com/nosliw/data/datatype/importer/HAPDataTypeCriteriaUtil.java,e\d\ed25755fad879c2b36d32dfbe49c493d25b59bd9
-`
-0src/com/nosliw/data/datatype/importer/js/head.js,a\2\a2ff336507b272ffb7c8c29017402b0913257857
 v
 Fsrc/com/nosliw/data/datatype/importer/js/HAPResourceDataOperation.java,6\5\6556407a3f20004314f3bbd4c3168fbf91564356
 l
@@ -82,8 +78,6 @@ h
 8src/com/nosliw/data/datatype/importer/js/jsoperation.xml,b\5\b55582ed82075bc6d1b59f224acb01856041b0fb
 k
 ;src/com/nosliw/data/datatype/importer/HAPResourceIdImp.java,b\f\bfcc67b9369039c4cb35fab82e4821095c77bd99
-`
-0src/com/nosliw/data/datatype/importer/js/tail.js,b\8\b86105b61899b02df69a4b911a92aadab57e7c2f
 m
 =src/com/nosliw/data/datatype/importer/js/operationtemplate.js,3\d\3df1bf27f8b82ce26ed05a4a0a2a371ae8a7ecaa
 b

@@ -23,7 +23,6 @@ import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.datatype.importer.HAPDBAccess;
 import com.nosliw.data.datatype.importer.HAPDataTypeIdImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeVersionImp;
-import com.nosliw.data.datatype.importer.HAPResourceDataOperationImp;
 import com.nosliw.data.datatype.importer.HAPResourceIdImp;
 
 public class HAPJSImporter {
@@ -124,7 +123,7 @@ public class HAPJSImporter {
 				String[] segs = line.split("\"");
 				String dataType = segs[1];
 				String operation = segs[3];
-				HAPResourceDataOperationImp resource = new HAPResourceDataOperationImp(dataType, operation);
+				HAPResourceIdImp resource = new HAPResourceIdImp(dataType, operation);
 				out.add(resource);
 			}
 		}

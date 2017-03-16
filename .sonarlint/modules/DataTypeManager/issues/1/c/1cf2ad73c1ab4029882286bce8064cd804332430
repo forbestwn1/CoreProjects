@@ -1,9 +1,9 @@
 
-Msquid:S1172"-Remove this unused method parameter "linked".(Ğ®ú–ıÿÿÿÿH”ı2
-œsquid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ï¼ÜËH•ı2
-wsquid:S00117"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğ®ú–ıÿÿÿÿH–ı2
-rsquid:S00117"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø³ïH—ı2
-|squid:S00122<"TAt most one statement is allowed per line, but 2 statements were found on this line.(Ï•ÍÓúÿÿÿÿ8ƒ§‘¦+H˜ı2
-esquid:S1301("KReplace this "switch" statement by "if" statements to increase readability.(»•ÓH™ı2
-S"squid:SwitchLastCaseIsDefaultCheck(""Add a default case to this switch.(»•ÓHšı2
-Usquid:S1905*"3Remove this unnecessary cast to "HAPDataTypeIdImp".(şûéÂ8¥áµÍ¥+H›ı2
+Usquid:S1905*"3Remove this unnecessary cast to "HAPDataTypeIdImp".(şûéÂ8¥áµÍ¥+H¹‡3
+wsquid:S00117"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğ®ú–ıÿÿÿÿH¶‡3
+rsquid:S00117"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø³ïH½‡3
+esquid:S1301("KReplace this "switch" statement by "if" statements to increase readability.(»•ÓH»‡3
+S"squid:SwitchLastCaseIsDefaultCheck(""Add a default case to this switch.(»•ÓH¼‡3
+Msquid:S1172"-Remove this unused method parameter "linked".(Ğ®ú–ıÿÿÿÿHº‡3
+œsquid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ï¼ÜËH·‡3
+|squid:S00122<"TAt most one statement is allowed per line, but 2 statements were found on this line.(Ï•ÍÓúÿÿÿÿ8ƒ§‘¦+H¸‡3

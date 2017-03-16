@@ -16,7 +16,11 @@ public class HAPDataTypeIdImp extends HAPStringableValueEntity implements HAPDat
 	public static String FULLNAME = "fullName";
 	
 	public HAPDataTypeIdImp(){	}
-	
+
+	public HAPDataTypeIdImp(String name, String version){
+		this(name, new HAPDataTypeVersionImp(version));
+	}
+		
 	public HAPDataTypeIdImp(String name, HAPDataTypeVersion version){
 		this.updateAtomicChildStrValue(NAME, name, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING, null);
 		this.updateAtomicChildObjectValue(VERSION, version);
