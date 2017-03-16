@@ -1,17 +1,14 @@
 
-ysquid:S2293v"YReplace the type specification in this constructor call with the diamond operator ("<>").(ëÇÃ‰şÿÿÿÿHú†3
-}squid:S1488‹"[Immediately return this expression instead of assigning it to the temporary variable "out".(ç´¨Y8ÁØà˜­+Hù†3
-^squid:UselessImportCheck"*Remove this unused import 'java.util.Set'.(ö²„¤şÿÿÿÿ8÷÷£š­+Hû†3
-ysquid:S2293H"YReplace the type specification in this constructor call with the diamond operator ("<>").(²›¯¨üÿÿÿÿHó†3
-squid:S00116 "^Rename this field "m_operationTemplate" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½ŸÙ8’‹Ê˜­+Hş†3
-Csquid:S1148>"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿHñ†3
-tsquid:S2293."YReplace the type specification in this constructor call with the diamond operator ("<>").(Ò£Ô¬H÷†3
-@squid:S1166="%Either log or rethrow this exception.(‹±ÃÆHı†3
-\
-squid:S106O";Replace this usage of System.out or System.err by a logger.(ù§é8ä·Ë™­+Hõ†3
-vsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼»Í ûÿÿÿÿHÿ†3
-xsquid:UselessImportCheck"DRemove this unused import 'org.mozilla.javascript.ScriptableObject'.(µªÉ¥øÿÿÿÿ8ü¨š­+Hö†3
-squid:S2293ˆ"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ìş¼ëùÿÿÿÿ8Ü†Ü˜­+Hø†3
+squid:S00116!"^Rename this field "m_operationTemplate" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½ŸÙ8’‹Ê˜­+H¯‹3
+tsquid:S22931"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ò£Ô¬H¶‹3
+vsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼»Í ûÿÿÿÿHµ‹3
+ksquid:S1132F"IMove the "bin" string literal on the left side of this string comparison.(ñ±¤8¨—¡»­+Hß‹3
+{squid:S22932"YReplace the type specification in this constructor call with the diamond operator ("<>").(·¶ñ¥8İ‹Ù¾­+Hã‘3
+@squid:S1166B"%Either log or rethrow this exception.(‹±ÃÆH°‹3
+squid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ìş¼ëùÿÿÿÿ8Ü†Ü˜­+H®‹3
+ysquid:S2293~"YReplace the type specification in this constructor call with the diamond operator ("<>").(ëÇÃ‰şÿÿÿÿH²‹3
+Csquid:S1148C"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿH¬‹3
+Tsquid:S1197€"8Move the array designator from the variable to the type.(Š˜¡ßH·‹3
 m
-squid:S134;"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(¡»¢üùÿÿÿÿHü†3
-Ssquid:S1197x"8Move the array designator from the variable to the type.(Š˜¡ßHô†3
+squid:S134@"NRefactor this code to not nest more than 3 if/for/while/switch/try statements.(¡»¢üùÿÿÿÿH«‹3
+}squid:S1488“"[Immediately return this expression instead of assigning it to the temporary variable "out".(ç´¨Y8ÁØà˜­+H­‹3

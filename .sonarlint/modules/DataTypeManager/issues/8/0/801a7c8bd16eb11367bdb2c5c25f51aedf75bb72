@@ -1,16 +1,13 @@
 
-_squid:S1854Ò"7Remove this useless assignment to local variable "man".(©ìá‚ùÿÿÿÿ8õàŞ€­+H‹‡3
-ssquid:CommentedOutCodeLineÓ"<This block of commented-out lines of code should be removed.(¥ÙÉ”ÿÿÿÿÿ8õàŞ€­+H€‡3
-€squid:S2293`"YReplace the type specification in this constructor call with the diamond operator ("<>").( ¯ÈÓùÿÿÿÿ8“¶³ß¦+H‚‡3
-€squid:S2293|"YReplace the type specification in this constructor call with the diamond operator ("<>").(Íı­°ûÿÿÿÿ8¤ãÑß¦+HŒ‡3
-Vsquid:S2864u"4Iterate over the "entrySet" instead of the "keySet".(‰ã¬Î8 ÈÓ§+H‡3
-nsquid:CommentedOutCodeLineÚ"<This block of commented-out lines of code should be removed.(„Şâ8üÌÆ™­+H‡‡3
-tsquid:S3776_"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(¸ªÇÀ8ô•Éâ¦+Hˆ‡3
-fsquid:S1854¼"CRemove this useless assignment to local variable "connectDataType".(´¢‰À8‚·†Ú¦+HŠ‡3
-Wsquid:S1481¼"4Remove this unused "connectDataType" local variable.(´¢‰À8‚·†Ú¦+H„‡3
-vsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·ØÿÿÿÿÿHƒ‡3
-zsquid:UselessImportCheck"FRemove this unused import 'com.nosliw.data.core.HAPDataTypeOperation'.(Í¦è“şÿÿÿÿ8Üö´¥«+H†‡3
-Psquid:S1481Ò"(Remove this unused "man" local variable.(©ìá‚ùÿÿÿÿ8õàŞ€­+H…‡3
-`squid:S1155c">Use isEmpty() to check whether the collection is empty or not.(à–ÛÏ8ÔóåÙ¦+H‡3
-Tsquid:S1905¼"1Remove this unnecessary cast to "HAPDataTypeImp".(´¢‰À8‚·†Ú¦+H‡3
-Vsquid:S2864k"4Iterate over the "entrySet" instead of the "keySet".(›ÔÃ8³¼Áß¦+H‰‡3
+Vsquid:S2864k"4Iterate over the "entrySet" instead of the "keySet".(›ÔÃ8³¼Áß¦+H¹Æ3
+vsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·ØÿÿÿÿÿH½Æ3
+Tsquid:S1905¼"1Remove this unnecessary cast to "HAPDataTypeImp".(´¢‰À8‚·†Ú¦+HÄÆ3
+tsquid:S3776_"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(¸ªÇÀ8ô•Éâ¦+HºÆ3
+zsquid:UselessImportCheck"FRemove this unused import 'com.nosliw.data.core.HAPDataTypeOperation'.(Í¦è“şÿÿÿÿ8Üö´¥«+H¿Æ3
+€squid:S2293`"YReplace the type specification in this constructor call with the diamond operator ("<>").( ¯ÈÓùÿÿÿÿ8“¶³ß¦+H·Æ3
+Wsquid:S1481¼"4Remove this unused "connectDataType" local variable.(´¢‰À8‚·†Ú¦+HÀÆ3
+Vsquid:S2864u"4Iterate over the "entrySet" instead of the "keySet".(‰ã¬Î8 ÈÓ§+HÃÆ3
+fsquid:S1854¼"CRemove this useless assignment to local variable "connectDataType".(´¢‰À8‚·†Ú¦+H¼Æ3
+€squid:S2293|"YReplace the type specification in this constructor call with the diamond operator ("<>").(Íı­°ûÿÿÿÿ8¤ãÑß¦+HÁÆ3
+nsquid:CommentedOutCodeLineÚ"<This block of commented-out lines of code should be removed.(„Şâ8üÌÆ™­+HÂÆ3
+`squid:S1155c">Use isEmpty() to check whether the collection is empty or not.(à–ÛÏ8ÔóåÙ¦+H¾Æ3

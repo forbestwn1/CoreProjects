@@ -3,19 +3,16 @@ package com.nosliw.data.datatype.importer;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.strvalue.HAPStringableValueEntity;
+import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.common.strvalue.HAPStringableValueMap;
 import com.nosliw.data.core.HAPInfo;
 import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
 
-public class HAPOperationImp extends HAPStringableValueEntity implements HAPOperation{
+public class HAPOperationImp extends HAPStringableValueEntityWithID implements HAPOperation{
 
 	public static String _VALUEINFO_NAME;
-
-	@HAPAttribute
-	public static String ID = "id";
 
 	@HAPAttribute
 	public static String TYPE = "type";
@@ -28,9 +25,6 @@ public class HAPOperationImp extends HAPStringableValueEntity implements HAPOper
 
 	@Override
 	public HAPInfo getInfo() {		return (HAPInfo)this.getAtomicAncestorValueObject(INFO, HAPInfo.class);  }
-
-	public String getId(){		return this.getAtomicAncestorValueString(ID);	}
-	public void setId(String id){  this.updateAtomicChildStrValue(ID, id);  }
 
 	public HAPDataTypeIdImp getDataTypeName(){ return (HAPDataTypeIdImp)this.getAtomicAncestorValueObject(DATATYPNAME, HAPDataTypeIdImp.class); }
 	public void setDataTypeName(HAPDataTypeIdImp dataTypeId){  this.updateAtomicChildObjectValue(DATATYPNAME, dataTypeId);  }

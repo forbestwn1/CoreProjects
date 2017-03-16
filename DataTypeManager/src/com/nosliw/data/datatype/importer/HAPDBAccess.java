@@ -3,7 +3,6 @@ package com.nosliw.data.datatype.importer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +13,11 @@ import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.configure.HAPConfigureManager;
 import com.nosliw.common.literate.HAPLiterateManager;
-import com.nosliw.common.strvalue.HAPStringableValueEntity;
+import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo;
 import com.nosliw.common.strvalue.valueinfo.HAPSqlUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.data.core.HAPDataType;
 import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPDataTypeOperation;
-import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.datatype.importer.js.HAPJSOperation;
@@ -59,38 +55,27 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	}
 
 	
-//	public void saveEntity()
-	
-	public void saveJSResourceDependency(HAPJSResourceDependency resourceDependency){
-		resourceDependency.setId(this.getId()+"");
-		HAPSqlUtility.saveToDB(resourceDependency, this.m_connection);
+	public void saveEntity(HAPStringableValueEntityWithID entity){
+		entity.setId(this.getId()+"");
+		HAPSqlUtility.saveToDB(entity, this.m_connection);
 	}
-
+	
 	public void saveDataTypeOperation(List<HAPDataTypeOperationImp> dataTypeOperations){
 		for(HAPDataTypeOperationImp dataTypeOperation : dataTypeOperations){
-			dataTypeOperation.setId(this.getId()+"");
-			HAPSqlUtility.saveToDB(dataTypeOperation, this.m_connection);
+			this.saveEntity(dataTypeOperation);
 		}
 	}
 	
-	public void saveOperationJS(HAPJSOperation operationJs){
-		operationJs.setId(this.getId()+"");
-		HAPSqlUtility.saveToDB(operationJs, this.m_connection);
-	}
-	
-	
 	public void saveOperation(HAPOperationImp operation, HAPDataTypeImp dataType){
-		operation.updateAtomicChildStrValue(HAPOperationImp.ID, this.getId()+"");
 		operation.updateAtomicChildObjectValue(HAPOperationImp.DATATYPNAME, dataType.getName());
-		HAPSqlUtility.saveToDB(operation, m_connection);
+		this.saveEntity(operation);
 		
 		Map<String, HAPOperationParmInfo> parms = operation.getParmsInfo();
 		for(String name : parms.keySet()){
 			HAPOperationVarInfoImp parm = (HAPOperationVarInfoImp)parms.get(name);
-			parm.updateAtomicChildStrValue(HAPOperationVarInfoImp.ID, this.getId()+"");
 			parm.updateAtomicChildStrValue(HAPOperationVarInfoImp.OPERATIONID, operation.getId());
 			parm.updateAtomicChildObjectValue(HAPOperationVarInfoImp.DATATYPEID, dataType.getName());
-			HAPSqlUtility.saveToDB(parm, this.m_connection);
+			this.saveEntity(parm);
 		}		
 	}
 
@@ -99,8 +84,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		HAPDataTypeImp sourceDataTypeImp = (HAPDataTypeImp)pic.getSourceDataType();
 		
 		for(HAPRelationship relationship : relationships){
-			((HAPRelationshipImp)relationship).setId(this.getId()+"");
-			HAPSqlUtility.saveToDB((HAPStringableValueEntity)relationship, m_connection);
+			this.saveEntity((HAPRelationshipImp)relationship);
 		}
 	}
 	

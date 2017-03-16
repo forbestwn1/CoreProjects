@@ -1,19 +1,14 @@
 package com.nosliw.data.datatype.importer;
 
-import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.strvalue.HAPStringableValueEntity;
-import com.nosliw.data.core.HAPDataType;
+import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.HAPRelationshipPath;
 import com.nosliw.data.core.HAPRelationshipPathSegment;
 
-public class HAPRelationshipImp extends HAPStringableValueEntity implements HAPRelationship{
+public class HAPRelationshipImp extends HAPStringableValueEntityWithID implements HAPRelationship{
 
 	public static String _VALUEINFO_NAME;
-
-	@HAPAttribute
-	public static String ID = "id";
 
 	public HAPRelationshipImp(){
 		this.updateAtomicChildObjectValue(PATH, new HAPRelationshipPathImp());
@@ -37,11 +32,8 @@ public class HAPRelationshipImp extends HAPStringableValueEntity implements HAPR
 
 	public HAPDataTypeImp getSource() {		return (HAPDataTypeImp)this.getEntityAncestorByPath(SOURCE);	}
 	
-	public String getId(){ return this.getAtomicAncestorValueString(ID);  }
-	
 	public void setSource(HAPDataTypeImp source){  this.updateChild(SOURCE, source);  }
 	public void setTarget(HAPDataTypeImp source){  this.updateChild(TARGET, source);  }
-	public void setId(String id){  this.updateAtomicChildStrValue(ID, id);  }
 	public void setPath(HAPRelationshipPath path){		this.getPath().setPath(path);	}
 	
 	public HAPRelationshipImp extendPathSegmentSource(HAPRelationshipPathSegment segment, HAPDataTypeImp source){

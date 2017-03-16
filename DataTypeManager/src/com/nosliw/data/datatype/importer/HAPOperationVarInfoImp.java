@@ -1,18 +1,15 @@
 package com.nosliw.data.datatype.importer;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.strvalue.HAPStringableValueEntity;
+import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
-public class HAPOperationVarInfoImp extends HAPStringableValueEntity implements HAPOperationParmInfo, HAPOperationOutInfo{
+public class HAPOperationVarInfoImp extends HAPStringableValueEntityWithID implements HAPOperationParmInfo, HAPOperationOutInfo{
 
 	public static String _VALUEINFO_NAME;
 
-	@HAPAttribute
-	public static String ID = "id";
-	
 	@HAPAttribute
 	public static String DATATYPEID = "dataTypeId";
 
@@ -31,7 +28,6 @@ public class HAPOperationVarInfoImp extends HAPStringableValueEntity implements 
 	@Override
 	public HAPDataTypeCriteria getCriteria() {		return (HAPDataTypeCriteria)this.getAtomicValueAncestorByPath(CRITERIA);	}
 
-	public String getId() {		return this.getAtomicAncestorValueString(ID);	}
 	public String getDataTypeId() {		return this.getAtomicAncestorValueString(DATATYPEID);	}
 	public String getOperationId() {		return this.getAtomicAncestorValueString(OPERATIONID);	}
 	public String getType() {		return this.getAtomicAncestorValueString(TYPE);	}

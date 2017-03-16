@@ -1,16 +1,13 @@
 package com.nosliw.data.datatype.importer.js;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.strvalue.HAPStringableValueEntity;
+import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.datatype.importer.HAPDataTypeIdImp;
 
-public class HAPJSOperation extends HAPStringableValueEntity{
+public class HAPJSOperation extends HAPStringableValueEntityWithID{
 
 	public static String _VALUEINFO_NAME;
-	
-	@HAPAttribute
-	public static String ID = "id";
 	
 	@HAPAttribute
 	public static String SCRIPT = "script";
@@ -30,9 +27,6 @@ public class HAPJSOperation extends HAPStringableValueEntity{
 		this.setDataTypeName(dataTypeName);
 		this.setOperationId(operationId);
 	}
-	
-	public String getId(){  return this.getAtomicAncestorValueString(ID);  }
-	public void setId(String id){  this.updateAtomicChildStrValue(ID, id);  }
 	
 	public String getScript(){  return this.getAtomicAncestorValueString(SCRIPT);  }
 	public void setScript(String script){  this.updateAtomicChildStrValue(SCRIPT, script);  }

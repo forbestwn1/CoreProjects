@@ -82,3 +82,15 @@ u
 Esrc/com/nosliw/data/datatype/importer/js/HAPResourceManagerImpJS.java,1\a\1a48b1e61b506c133976a2b68a321152d0688819
 i
 9src/com/nosliw/data/datatype/importer/HAPResourceImp.java,1\3\139747ca9c6257da103357613b6a9dee154e957d
+h
+8src/com/nosliw/data/datatype/importer/js/jsresources.xml,9\b\9bcecbf36527328204907bf2196aecaef41b9ef3
+j
+:src/com/nosliw/data/datatype/importer/js/HAPJSUtility.java,9\1\919e168338bcefb2b5c3876efe39fe73696aea02
+l
+<src/com/nosliw/data/datatype/importer/HAPOperationIdImp.java,6\2\62f89fa665b02dbe955e44312afe94133c1f18de
+u
+Esrc/com/nosliw/data/datatype/importer/js/jsresourcedependency.out.xml,e\c\ecaed91dd5e40e60a93256dabfd1b88edb4ab6f8
+l
+<src/com/nosliw/data/datatype/importer/js/jsoperation.out.xml,0\8\08ca6cc4ecf538fea7957c6512e71deb946ab93b
+u
+Esrc/com/nosliw/data/datatype/importer/js/HAPJSResourceDependency.java,2\5\2517e518b9d9d452e2da36baf3051ee0beb560e6

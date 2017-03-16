@@ -108,13 +108,13 @@ public class HAPJSImporter {
 
 	private void saveOperations(List<HAPJSOperation> ops){
 		for(HAPJSOperation op : ops){
-			this.m_dbAccess.saveOperationJS(op);
+			this.m_dbAccess.saveEntity(op);
 		}
 	}
 
 	private void saveResourceDependencys(List<HAPJSResourceDependency> dependencys){
 		for(HAPJSResourceDependency dependency : dependencys){
-			this.m_dbAccess.saveJSResourceDependency(dependency);
+			this.m_dbAccess.saveEntity(dependency);
 		}
 	}
 
