@@ -10,6 +10,8 @@ import com.nosliw.data.core.HAPRelationshipPathSegment;
 
 public class HAPDataTypeOperationImp extends HAPOperationImp implements HAPRelationship, HAPDataTypeOperation{
 
+	public static String _VALUEINFO_NAME;
+	
 	@HAPAttribute
 	public static String OPERATIONID = "operationId";
 

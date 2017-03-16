@@ -34,8 +34,6 @@ n
 >src/com/nosliw/data/datatype/importer/HAPOperationInfoImp.java,a\1\a15bd6e0e97cf86f413dc1e34371a1afeda26992
 p
 @src/com/nosliw/data/datatype/importer/HAPOperationOutputImp.java,0\3\03304d5c7128cda952ed53b5cb3a02a9e33c502c
-v
-Fsrc/com/nosliw/data/datatype/importer/HAPResourceDataOperationImp.java,c\1\c18a9f27a68c1394b0c94b69b0d6021c863c017a
 f
 6src/com/nosliw/data/datatype/importer/operationvar.xml,b\8\b83d4aced116a2dc3ba803fb6c5b206f25796e8b
 p
@@ -70,8 +68,6 @@ o
 ?src/com/nosliw/data/datatype/importer/HAPDataTypeFamilyImp.java,5\9\598bf4537f35e22e481d2a62d791dde00b259dd0
 r
 Bsrc/com/nosliw/data/datatype/importer/HAPDataTypeCriteriaUtil.java,e\d\ed25755fad879c2b36d32dfbe49c493d25b59bd9
-v
-Fsrc/com/nosliw/data/datatype/importer/js/HAPResourceDataOperation.java,6\5\6556407a3f20004314f3bbd4c3168fbf91564356
 l
 <src/com/nosliw/data/datatype/importer/js/HAPJSOperation.java,f\6\f631af32227aac076c84577af619887766662c19
 h
@@ -82,8 +78,6 @@ m
 =src/com/nosliw/data/datatype/importer/js/operationtemplate.js,3\d\3df1bf27f8b82ce26ed05a4a0a2a371ae8a7ecaa
 b
 2src/com/nosliw/data/datatype/importer/js/AAAA.java,1\a\1ad913b095d73d36abdd83527fe166b967c68f99
-t
-Dsrc/com/nosliw/data/datatype/importer/HAPResourceIdOperationImp.java,8\e\8e591be23f4094c098f9f7f4146034936e5c3bad
 u
 Esrc/com/nosliw/data/datatype/importer/js/HAPResourceManagerImpJS.java,1\a\1a48b1e61b506c133976a2b68a321152d0688819
 i

@@ -17,12 +17,6 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementRange;
 
 public class HAPDataTypeCriteriaWrapperLiterate extends HAPSerializableImp implements HAPDataTypeCriteria{
 
-	private static final String START_AND = "[[";
-	private static final String END_AND = "]]";
-
-	private static final String START_OR = "((";
-	private static final String END_OR = "))";
-
 	private String m_literateValue;
 	
 	private HAPDataTypeCriteria m_criteria;

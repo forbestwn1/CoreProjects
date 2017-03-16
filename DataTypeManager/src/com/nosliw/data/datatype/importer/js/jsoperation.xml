@@ -1,4 +1,4 @@
-<entity name="data.operation.js"
+<entity name="data.js.operation"
 		table="nosliw.OPERATIONJS"
 		primaryKeys="id" 
 		class="com.nosliw.data.datatype.importer.js.HAPJSOperation" 
@@ -33,13 +33,5 @@
 			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
 		</dbColumnInfos>
 	</property>
-
-
-	<property name="dependency" dataType="array" subDataType="com.nosliw.data.datatype.importer.HAPResourceIdImp">
-		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(200)"/>
-		</dbColumnInfos>
-	</property>
-
 
 </entity>

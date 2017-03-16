@@ -25,6 +25,7 @@ import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.datatype.importer.js.HAPJSOperation;
+import com.nosliw.data.datatype.importer.js.HAPJSResourceDependency;
 
 public class HAPDBAccess extends HAPConfigurableImp {
 
@@ -57,19 +58,73 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		this.m_id = System.currentTimeMillis();
 	}
 
+	
+//	public void saveEntity()
+	
+	public void saveJSResourceDependency(HAPJSResourceDependency resourceDependency){
+		resourceDependency.setId(this.getId()+"");
+		HAPSqlUtility.saveToDB(resourceDependency, this.m_connection);
+	}
+
+	public void saveDataTypeOperation(List<HAPDataTypeOperationImp> dataTypeOperations){
+		for(HAPDataTypeOperationImp dataTypeOperation : dataTypeOperations){
+			dataTypeOperation.setId(this.getId()+"");
+			HAPSqlUtility.saveToDB(dataTypeOperation, this.m_connection);
+		}
+	}
+	
+	public void saveOperationJS(HAPJSOperation operationJs){
+		operationJs.setId(this.getId()+"");
+		HAPSqlUtility.saveToDB(operationJs, this.m_connection);
+	}
+	
+	
+	public void saveOperation(HAPOperationImp operation, HAPDataTypeImp dataType){
+		operation.updateAtomicChildStrValue(HAPOperationImp.ID, this.getId()+"");
+		operation.updateAtomicChildObjectValue(HAPOperationImp.DATATYPNAME, dataType.getName());
+		HAPSqlUtility.saveToDB(operation, m_connection);
+		
+		Map<String, HAPOperationParmInfo> parms = operation.getParmsInfo();
+		for(String name : parms.keySet()){
+			HAPOperationVarInfoImp parm = (HAPOperationVarInfoImp)parms.get(name);
+			parm.updateAtomicChildStrValue(HAPOperationVarInfoImp.ID, this.getId()+"");
+			parm.updateAtomicChildStrValue(HAPOperationVarInfoImp.OPERATIONID, operation.getId());
+			parm.updateAtomicChildObjectValue(HAPOperationVarInfoImp.DATATYPEID, dataType.getName());
+			HAPSqlUtility.saveToDB(parm, this.m_connection);
+		}		
+	}
+
+	public void saveDataTypePicture(HAPDataTypePictureImp pic){
+		Set<? extends HAPRelationship> relationships = pic.getRelationships();
+		HAPDataTypeImp sourceDataTypeImp = (HAPDataTypeImp)pic.getSourceDataType();
+		
+		for(HAPRelationship relationship : relationships){
+			((HAPRelationshipImp)relationship).setId(this.getId()+"");
+			HAPSqlUtility.saveToDB((HAPStringableValueEntity)relationship, m_connection);
+		}
+	}
+	
+	public void saveDataType(HAPDataTypeImp dataType) {
+		HAPSqlUtility.saveToDB(dataType, m_connection);
+	}
+
+	
+
+	
+	
 	public List<HAPDataTypeOperationImp> getDataTypeOperations(HAPDataTypeId dataTypeId){
-		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB("data.datatypeoperation", "sourceDataTypeName=?", new Object[]{dataTypeId.getName()});
+		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB(HAPDataTypeOperationImp._VALUEINFO_NAME, "sourceDataTypeName=?", new Object[]{dataTypeId.getName()});
 	}
 	
 	public List<HAPDataTypeOperationImp> getNormalDataTypeOperations(HAPDataTypeId dataTypeId){
-		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB("data.datatypeoperation", "type=null && sourceDataTypeName=?", new Object[]{dataTypeId.getName()});
+		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB(HAPDataTypeOperationImp._VALUEINFO_NAME, "type=null && sourceDataTypeName=?", new Object[]{dataTypeId.getName()});
 	}
 	
 	public HAPDataTypeFamilyImp getDataTypeFamily(HAPDataTypeIdImp dataTypeId){
 		HAPDataTypeFamilyImp out = null;
 		
 		try {
-			String valuInfoName = "data.relationship";
+			String valuInfoName = HAPRelationshipImp._VALUEINFO_NAME;
 			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valuInfoName);
 			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "target_fullName=?");
 
@@ -94,7 +149,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		HAPDataTypePictureImp out = null;
 		
 		try {
-			String valuInfoName = "data.relationship";
+			String valuInfoName = HAPRelationshipImp._VALUEINFO_NAME;
 			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valuInfoName);
 			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "source_fullName=?");
 
@@ -114,76 +169,42 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		}
 		return out;
 	}
-	
-	public void saveOperationJS(HAPJSOperation operationJs){
-		operationJs.setId(this.getId()+"");
-		HAPSqlUtility.saveToDB(operationJs, this.m_connection);
-	}
-	
-	public HAPJSOperation getJSOperation(HAPDataTypeIdImp dataTypeId, String operation){
-		return (HAPJSOperation)this.queryEntityFromDB(
-				HAPJSOperation.DATADEFINITION_NAME, 
-				HAPJSOperation.DATATYPENAME+"=? AND +"+HAPJSOperation.OPERATIONNAME+"=?",
-				new Object[]{dataTypeId.getFullName(), operation});
-		
-	}
-	
-	public void saveDataTypeOperation(List<HAPDataTypeOperationImp> dataTypeOperations){
-		for(HAPDataTypeOperationImp dataTypeOperation : dataTypeOperations){
-			dataTypeOperation.setId(this.getId()+"");
-			HAPSqlUtility.saveToDB(dataTypeOperation, this.m_connection);
-		}
-	}
-	
-	public void saveOperation(HAPOperationImp operation, HAPDataTypeImp dataType){
-		operation.updateAtomicChildStrValue(HAPOperationImp.ID, this.getId()+"");
-		operation.updateAtomicChildObjectValue(HAPOperationImp.DATATYPNAME, dataType.getName());
-		HAPSqlUtility.saveToDB(operation, m_connection);
-		
-		Map<String, HAPOperationParmInfo> parms = operation.getParmsInfo();
-		for(String name : parms.keySet()){
-			HAPOperationVarInfoImp parm = (HAPOperationVarInfoImp)parms.get(name);
-			parm.updateAtomicChildStrValue(HAPOperationVarInfoImp.ID, this.getId()+"");
-			parm.updateAtomicChildStrValue(HAPOperationVarInfoImp.OPERATIONID, operation.getId());
-			parm.updateAtomicChildObjectValue(HAPOperationVarInfoImp.DATATYPEID, dataType.getName());
-			HAPSqlUtility.saveToDB(parm, this.m_connection);
-		}		
-	}
 
+	public List<HAPJSResourceDependency> getJSResourceDependency(HAPResourceIdImp resourceId){
+		String resourceIdStr = resourceId.buildLiterate();
+		return this.queryEntitysFromDB(
+				HAPJSResourceDependency._VALUEINFO_NAME, 
+				HAPJSResourceDependency.RESOURCEID+"=?",
+				new Object[]{resourceIdStr});
+	}
+	
+	public HAPJSOperation getJSOperation(HAPOperationIdImp operationId){
+		return (HAPJSOperation)this.queryEntityFromDB(
+				HAPJSOperation._VALUEINFO_NAME, 
+				HAPJSOperation.DATATYPENAME+"=? AND +"+HAPJSOperation.OPERATIONNAME+"=?",
+				new Object[]{operationId.getFullName(), operationId.getOperation()});
+		
+	}
+	
 	public List<HAPOperationImp> getOperationInfosByDataType(HAPDataTypeIdImp dataTypeName){
-		return (List<HAPOperationImp>)this.queryEntitysFromDB("data.operation", "dataTypeName=?", new Object[]{dataTypeName.getFullName()});
+		return (List<HAPOperationImp>)this.queryEntitysFromDB(HAPOperationImp._VALUEINFO_NAME, "dataTypeName=?", new Object[]{dataTypeName.getFullName()});
 	}
 	
 	public HAPOperationImp getOperationInfoByName(HAPDataTypeIdImp dataTypeName, String name) {
-		return (HAPOperationImp)this.queryEntityFromDB("data.operation", "name=? AND dataTypeName=?", new Object[]{name, dataTypeName.getFullName()});
+		return (HAPOperationImp)this.queryEntityFromDB(HAPOperationImp._VALUEINFO_NAME, "name=? AND dataTypeName=?", new Object[]{name, dataTypeName.getFullName()});
 	}
 	
 	public List<HAPDataTypeImp> getAllDataTypes(){
-		return this.queryEntitysFromDB("data.datatypedef", "", null);
+		return this.queryEntitysFromDB(HAPDataTypeImpLoad._VALUEINFO_NAME, "", null);
 	}
-	
-	public void saveDataTypePicture(HAPDataTypePictureImp pic){
-		Set<? extends HAPRelationship> relationships = pic.getRelationships();
-		HAPDataTypeImp sourceDataTypeImp = (HAPDataTypeImp)pic.getSourceDataType();
-		
-		for(HAPRelationship relationship : relationships){
-			((HAPRelationshipImp)relationship).setId(this.getId()+"");
-			HAPSqlUtility.saveToDB((HAPStringableValueEntity)relationship, m_connection);
-		}
-	}
-	
 	
 	public HAPDataTypeImp getDataType(HAPDataTypeId dataTypeInfo) {
-		return (HAPDataTypeImp)this.queryEntityFromDB("data.datatypedef", "name=? AND versionFullName=?",
+		return (HAPDataTypeImp)this.queryEntityFromDB(HAPDataTypeImpLoad._VALUEINFO_NAME, "name=? AND versionFullName=?",
 				new Object[]{dataTypeInfo.getName(), HAPLiterateManager.getInstance().valueToString(((HAPDataTypeIdImp)dataTypeInfo).getVersionFullName())});
 	}
 	
 	
 	
-	public void saveDataType(HAPDataTypeImp dataType) {
-		HAPSqlUtility.saveToDB(dataType, m_connection);
-	}
-
 	public void createDBTable(String dataTypeName) {
 		HAPDBTableInfo tableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(dataTypeName);
 		HAPSqlUtility.createDBTable(tableInfo, m_connection);

@@ -8,6 +8,8 @@ import com.nosliw.data.core.HAPOperation;
 
 public class HAPDataTypeImpLoad extends HAPDataTypeImp{
 
+	public static String _VALUEINFO_NAME;
+	
 	@HAPAttribute
 	public static String OPERATIONS = "operations";
 

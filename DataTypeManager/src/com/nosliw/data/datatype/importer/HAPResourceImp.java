@@ -12,7 +12,11 @@ public class HAPResourceImp implements HAPResource{
 	public HAPResourceImp(HAPResourceId resourceId, HAPInfo info, Object resourceData, List<HAPResourceId> dependency){
 		
 	}
-	
+
+	public HAPResourceImp(HAPResourceId resourceId, HAPInfo info, Object resourceData){
+		
+	}
+
 	@Override
 	public HAPResourceId getId() {
 		// TODO Auto-generated method stub

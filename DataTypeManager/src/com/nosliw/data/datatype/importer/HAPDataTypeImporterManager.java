@@ -50,9 +50,9 @@ public class HAPDataTypeImporterManager {
 	}
 	
 	public void loadAllDataType(){
-		this.m_dbAccess.createDBTable("data.datatypedef");
-		this.m_dbAccess.createDBTable("data.operation");
-		this.m_dbAccess.createDBTable("data.operationvar");
+		this.m_dbAccess.createDBTable(HAPDataTypeImpLoad._VALUEINFO_NAME);
+		this.m_dbAccess.createDBTable(HAPOperationImp._VALUEINFO_NAME);
+		this.m_dbAccess.createDBTable(HAPOperationVarInfoImp._VALUEINFO_NAME);
 		
 		new HAPClassFilter(){
 			@Override
@@ -74,7 +74,7 @@ public class HAPDataTypeImporterManager {
 	}
 
 	public void buildDataTypePictures(){
-		this.m_dbAccess.createDBTable("data.relationship");
+		this.m_dbAccess.createDBTable(HAPRelationshipImp._VALUEINFO_NAME);
 		
 		List<HAPDataTypeImp> dataTypes = this.m_dbAccess.getAllDataTypes();
 		for(HAPDataTypeImp dataType : dataTypes){
@@ -84,7 +84,7 @@ public class HAPDataTypeImporterManager {
 	}
 	
 	public void buildDataTypeOperations(){
-		this.m_dbAccess.createDBTable("data.datatypeoperation");
+		this.m_dbAccess.createDBTable(HAPDataTypeOperationImp._VALUEINFO_NAME);
 
 		List<HAPDataTypeImp> dataTypes = this.m_dbAccess.getAllDataTypes();
 		for(HAPDataTypeImp dataType : dataTypes){
@@ -150,14 +150,14 @@ public class HAPDataTypeImporterManager {
 	
 	private void loadDataType(Class cls){
 		InputStream dataTypeStream = cls.getResourceAsStream("datatype.xml");
-		HAPDataTypeImpLoad dataType = (HAPDataTypeImpLoad)HAPStringableEntityImporterXML.readRootEntity(dataTypeStream, "data.datatypedef");
+		HAPDataTypeImpLoad dataType = (HAPDataTypeImpLoad)HAPStringableEntityImporterXML.readRootEntity(dataTypeStream, HAPDataTypeImpLoad._VALUEINFO_NAME);
 		dataType.resolveByConfigure(null);
 		m_dbAccess.saveDataType(dataType);
 
 		List<HAPOperation> ops = dataType.getDataOperationInfos();
 		InputStream opsStream = cls.getResourceAsStream("operations.xml");
 		if(opsStream!=null){
-			List<HAPStringableValueEntity> ops1 = HAPStringableEntityImporterXML.readMutipleEntitys(opsStream, "data.operation");
+			List<HAPStringableValueEntity> ops1 = HAPStringableEntityImporterXML.readMutipleEntitys(opsStream, HAPOperationImp._VALUEINFO_NAME);
 			for(HAPStringableValueEntity op : ops1){
 				ops.add((HAPOperation)op);
 			}
@@ -208,9 +208,9 @@ public class HAPDataTypeImporterManager {
 	
 	public static void main(String[] args){
 		HAPDataTypeImporterManager man = new HAPDataTypeImporterManager();
-//		man.loadAllDataType();
-//		man.buildDataTypePictures();
-//		man.buildDataTypeOperations();
+		man.loadAllDataType();
+		man.buildDataTypePictures();
+		man.buildDataTypeOperations();
 		
 		HAPJSImporter jsImporter = new HAPJSImporter();
 		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");

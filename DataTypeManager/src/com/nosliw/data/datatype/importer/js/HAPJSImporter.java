@@ -8,21 +8,22 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
-import org.mozilla.javascript.ScriptableObject;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.datatype.importer.HAPDBAccess;
 import com.nosliw.data.datatype.importer.HAPDataTypeIdImp;
 import com.nosliw.data.datatype.importer.HAPDataTypeVersionImp;
+import com.nosliw.data.datatype.importer.HAPOperationIdImp;
 import com.nosliw.data.datatype.importer.HAPResourceIdImp;
 
 public class HAPJSImporter {
@@ -35,20 +36,24 @@ public class HAPJSImporter {
 		this.m_dbAccess = HAPDBAccess.getInstance();
 		
 		HAPValueInfoManager.getInstance().importFromXML(HAPJSImporter.class, new String[]{
-				"jsoperation.xml"
+				"jsoperation.xml",
+				"jsresourcedependency.xml"
 		});
 		
-		this.m_dbAccess.createDBTable("data.operation.js");
+		this.m_dbAccess.createDBTable(HAPJSOperation._VALUEINFO_NAME);
+		this.m_dbAccess.createDBTable(HAPJSResourceDependency._VALUEINFO_NAME);
 	}
 	
 	public void loadFromFolder(String folderPath){
 		//find js operation
 		List<HAPJSOperation> jsout = new ArrayList<HAPJSOperation>();
-		this.importFromFolder(folderPath, jsout);
+		List<HAPJSResourceDependency> dependency = new ArrayList<HAPJSResourceDependency>();
+		this.importFromFolder(folderPath, jsout, dependency);
 		this.saveOperations(jsout);
+		this.saveResourceDependencys(dependency);
 	}
 	
-	private void importFromFolder(String folderPath, List<HAPJSOperation> out){
+	private void importFromFolder(String folderPath, List<HAPJSOperation> out, List<HAPJSResourceDependency> dependency){
 		File folder = new File(folderPath);
 		File[] listOfFiles = folder.listFiles();
 	    for (int i = 0; i < listOfFiles.length; i++) {
@@ -57,27 +62,23 @@ public class HAPJSImporter {
 	    		String fileName = file.getName();
 	    		if(fileName.endsWith(".js")){
 	    			try {
-						out.addAll(this.importFromFile(new FileInputStream(file)));
+						this.importFromFile(new FileInputStream(file), out, dependency);
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}
 	    		}
-	    	} else if (listOfFiles[i].isDirectory()) {
-	    		this.importFromFolder(file.getPath(), out);
+	    	} else if (listOfFiles[i].isDirectory() && !listOfFiles[i].getName().equals("bin")) {
+	    		this.importFromFolder(file.getPath(), out, dependency);
 	    	}
 	    }		
 	}
 	
-	private List<HAPJSOperation> importFromFile(InputStream inputStream){
-        List<HAPJSOperation> out = new ArrayList<HAPJSOperation>();
-
+	private List<HAPJSOperation> importFromFile(InputStream inputStream, List<HAPJSOperation> out, List<HAPJSResourceDependency> dependency){
         String content = this.getOperationDefinition(inputStream);
 		Context cx = Context.enter();
 	    try {
 	        Scriptable scope = cx.initStandardObjects(null);
 
-	        System.out.println(content);
-	        
 	        Object obj = cx.evaluateString(scope, content, "<cmd>", 1, null);
             NativeObject operationsObjJS = (NativeObject)obj;
 
@@ -92,9 +93,10 @@ public class HAPJSImporter {
             	if(opObjectJS instanceof Function){
                 	String script = Context.toString(opObjectJS);
                 	String operationId = this.getOperationId(dataTypeId, (String)key);
+                	out.add(new HAPJSOperation(script, operationId, dataTypeId, opName));
+
                 	List<HAPResourceId> resources = this.discoverResources(script);
-                	HAPJSOperation opInfo = new HAPJSOperation(script, operationId, dataTypeId, opName, resources);
-                	out.add(opInfo);
+                	dependency.add(new HAPJSResourceDependency(new HAPResourceIdImp(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION, new HAPOperationIdImp(dataTypeId, opName).toStringValue(HAPSerializationFormat.LITERATE)), resources));
             	}
             }
         } finally {
@@ -109,7 +111,13 @@ public class HAPJSImporter {
 			this.m_dbAccess.saveOperationJS(op);
 		}
 	}
-	
+
+	private void saveResourceDependencys(List<HAPJSResourceDependency> dependencys){
+		for(HAPJSResourceDependency dependency : dependencys){
+			this.m_dbAccess.saveJSResourceDependency(dependency);
+		}
+	}
+
 	private String getOperationId(HAPDataTypeIdImp dataTypeId, String operation){
 		return this.m_dbAccess.getOperationInfoByName(dataTypeId, operation).getId();
 	}

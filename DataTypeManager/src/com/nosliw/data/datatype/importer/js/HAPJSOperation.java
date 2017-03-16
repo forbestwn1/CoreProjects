@@ -1,17 +1,13 @@
 package com.nosliw.data.datatype.importer.js;
 
-import java.util.List;
-
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.datatype.importer.HAPDataTypeIdImp;
-import com.nosliw.data.datatype.importer.HAPResourceIdImp;
 
 public class HAPJSOperation extends HAPStringableValueEntity{
 
-	public static String DATADEFINITION_NAME = "data.operation.js";
+	public static String _VALUEINFO_NAME;
 	
 	@HAPAttribute
 	public static String ID = "id";
@@ -28,15 +24,11 @@ public class HAPJSOperation extends HAPStringableValueEntity{
 	@HAPAttribute
 	public static String DATATYPENAME = "dataTypeName";
 	
-	@HAPAttribute
-	public static String DEPENDENCY = "dependency";
-	
-	public HAPJSOperation(String script, String operationId, HAPDataTypeId dataTypeName, String operationName,List<HAPResourceId> dependency){
+	public HAPJSOperation(String script, String operationId, HAPDataTypeId dataTypeName, String operationName){
 		this.setScript(script);
 		this.setOperationName(operationName);
 		this.setDataTypeName(dataTypeName);
 		this.setOperationId(operationId);
-		this.setDependency(dependency);
 	}
 	
 	public String getId(){  return this.getAtomicAncestorValueString(ID);  }
@@ -53,11 +45,4 @@ public class HAPJSOperation extends HAPStringableValueEntity{
 	
 	public HAPDataTypeId getDataTypeName() {	return (HAPDataTypeIdImp)this.getAtomicAncestorValueObject(DATATYPENAME, HAPDataTypeIdImp.class);	}
 	public void setDataTypeName(HAPDataTypeId dataTypeName){ this.updateAtomicChildObjectValue(DATATYPENAME, dataTypeName); }
-	
-	public List<HAPResourceId> getDependency(){  
-		return this.getAtomicAncestorValueArray(DEPENDENCY, HAPResourceIdImp.class); 
-	}
-	public void setDependency(List<HAPResourceId> resourcesId){
-		this.updateAtomicChildObjectValue(DEPENDENCY, resourcesId);
-	}
 }

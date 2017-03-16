@@ -10,6 +10,8 @@ import com.nosliw.data.core.HAPRelationshipPathSegment;
 
 public class HAPRelationshipImp extends HAPStringableValueEntity implements HAPRelationship{
 
+	public static String _VALUEINFO_NAME;
+
 	@HAPAttribute
 	public static String ID = "id";
 

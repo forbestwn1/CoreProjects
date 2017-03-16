@@ -1,6 +1,7 @@
 package com.nosliw.common.strvalue.valueinfo;
 
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -17,6 +18,8 @@ import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPValueInfoManager {
 
+	public static final String VALUEINFO_NAME = "_VALUEINFO_NAME";
+	
 	private static HAPValueInfoManager m_instance;
 	
 	//entity value info by entity class name
@@ -96,6 +99,14 @@ public class HAPValueInfoManager {
 				HAPEntityValueInfo cached = this.m_entityValueInfos.get(className);
 				if(cached==null){
 					this.m_entityValueInfos.put(className, entityValueInfo);
+					
+					try {
+						//if class has valueinfo 
+						Field valueInfoNameField = Class.forName(className).getDeclaredField(VALUEINFO_NAME);
+						valueInfoNameField.set(null, valueInfo.getName());
+					} catch (Exception e) {
+//						e.printStackTrace();
+					}
 				}
 				else{
 					if(!cached.getValueInfoEntity().equals(valueInfo))			cached.invalid();

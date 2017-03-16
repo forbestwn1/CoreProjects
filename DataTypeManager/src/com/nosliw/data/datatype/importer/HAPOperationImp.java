@@ -12,6 +12,8 @@ import com.nosliw.data.core.HAPOperationParmInfo;
 
 public class HAPOperationImp extends HAPStringableValueEntity implements HAPOperation{
 
+	public static String _VALUEINFO_NAME;
+
 	@HAPAttribute
 	public static String ID = "id";
 

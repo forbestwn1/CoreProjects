@@ -1,8 +1,12 @@
 package com.nosliw.data.datatype.importer.js;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperation;
@@ -13,6 +17,8 @@ import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.resource.HAPRuntimeInfo;
 import com.nosliw.data.datatype.importer.HAPDBAccess;
 import com.nosliw.data.datatype.importer.HAPDataTypeIdImp;
+import com.nosliw.data.datatype.importer.HAPOperationIdImp;
+import com.nosliw.data.datatype.importer.HAPResourceIdImp;
 import com.nosliw.data.datatype.importer.HAPResourceImp;
 
 public class HAPResourceManagerImpJS implements HAPResourceManager{
@@ -40,7 +46,6 @@ public class HAPResourceManagerImpJS implements HAPResourceManager{
 
 	@Override
 	public Set<HAPResourceId> discoverResourceRequirement(HAPDataTypeId dataTypeInfo, HAPOperation dataOpInfo) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -52,11 +57,35 @@ public class HAPResourceManagerImpJS implements HAPResourceManager{
 
 	@Override
 	public Set<HAPResource> getResources(Set<HAPResourceId> resourcesId) {
-		
-		
-		return null;
+		Set<HAPResource> out = new HashSet<HAPResource>();
+		for(HAPResourceId resourceId : resourcesId){
+			out.add(this.getResourceById(resourceId));
+		}
+		return out;
 	}
 
+	public Set<HAPResourceId> discoverResourceDependency(Set<HAPResourceIdImp> resourceIds){
+		Set<HAPResourceId> out = new HashSet<HAPResourceId>();
+		for(HAPResourceIdImp resourceId : resourceIds){
+			this.discoverResourceDependency(resourceId, out);
+		}
+		return out;
+	}
+
+	private void discoverResourceDependency(HAPResourceIdImp resourceId, Set<HAPResourceId> resourceIds){
+		resourceIds.add(resourceId);
+		Set<HAPResourceId> dependencys = this.getResourceDependency(resourceId);
+		for(HAPResourceId dependencyId : dependencys){
+			if(!resourceIds.contains(dependencyId)){
+				this.discoverResourceDependency(resourceId, resourceIds);
+			}
+		}
+	}
+	
+	public Set<HAPResourceId> getResourceDependency(HAPResourceIdImp resourceId){
+		return new HashSet(this.m_dataAccess.getJSResourceDependency(resourceId));
+	}
+	
 	
 	public HAPResource getResourceById(HAPResourceId resourceId){
 		HAPResource out = null;
@@ -64,9 +93,9 @@ public class HAPResourceManagerImpJS implements HAPResourceManager{
 		switch(resourceType)
 		{
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION:
-			String[] segs = HAPNamingConversionUtility.parseSegments(resourceId.getId());
-			HAPJSOperation jsOperation = this.m_dataAccess.getJSOperation(new HAPDataTypeIdImp(segs[0], segs[1]), segs[2]);
-			out = new HAPResourceImp(resourceId, null, jsOperation, jsOperation.getDependency());
+			HAPOperationIdImp operationId = (HAPOperationIdImp)HAPSerializeManager.getInstance().buildObject(resourceId.getId(), HAPOperationIdImp.class, HAPSerializationFormat.LITERATE);
+			HAPJSOperation jsOperation = this.m_dataAccess.getJSOperation(operationId);
+			out = new HAPResourceImp(resourceId, null, jsOperation);
 			break;
 		}
 		

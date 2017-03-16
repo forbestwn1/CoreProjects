@@ -8,6 +8,8 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public class HAPOperationVarInfoImp extends HAPStringableValueEntity implements HAPOperationParmInfo, HAPOperationOutInfo{
 
+	public static String _VALUEINFO_NAME;
+
 	@HAPAttribute
 	public static String ID = "id";
 	

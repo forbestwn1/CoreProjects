@@ -1,0 +1,26 @@
+<entity name="data.js.resource.dependency"
+		table="nosliw.RESOURCEDEPENDENCY"
+		primaryKeys="id" 
+		class="com.nosliw.data.datatype.importer.js.HAPJSResourceDependency" 
+		description="">
+
+	<property name="id" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="resourceId" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPResourceIdImp" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(100) NOT NULL"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="dependency" dataType="array" subDataType="com.nosliw.data.datatype.importer.HAPResourceIdImp">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(200)"/>
+		</dbColumnInfos>
+	</property>
+
+
+</entity>
