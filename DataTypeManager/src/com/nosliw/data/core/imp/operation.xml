@@ -1,0 +1,20 @@
+<entity name="data.operation"
+		parent="data.interface.operation" 
+		table="nosliw.OPERATION"
+		primaryKeys="id" 
+		class="com.nosliw.data.core.imp.HAPOperationImp" 
+		description="">
+
+	<property name="id" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="dataTypeName" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
+		<dbColumnInfos>
+			<dbColumnInfo column="dataTypeName" definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+
+</entity>

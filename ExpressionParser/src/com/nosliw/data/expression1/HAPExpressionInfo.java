@@ -17,7 +17,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.expression.utils.HAPAttributeConstant;
+import com.nosliw.data.imp.expression.parser.utils.HAPAttributeConstant;
 
 /*
  * store information related with expression

@@ -1,0 +1,7 @@
+<entity name="data.operationinfo" 
+		description="operation info" 
+		class="com.nosliw.data.core.imp.HAPOperationInfoImp">
+
+	<property name="description" dataType="string" description=""/>
+
+</entity>

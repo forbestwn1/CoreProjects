@@ -11,15 +11,15 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.expression.HAPExpression;
+import com.nosliw.data.core.imp.HAPDataTypeIdImp;
+import com.nosliw.data.core.imp.HAPOperationIdImp;
+import com.nosliw.data.core.imp.io.HAPDBAccess;
+import com.nosliw.data.core.imp.resource.HAPResourceIdImp;
+import com.nosliw.data.core.imp.resource.HAPResourceImp;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.resource.HAPRuntimeInfo;
-import com.nosliw.data.datatype.importer.HAPDBAccess;
-import com.nosliw.data.datatype.importer.HAPDataTypeIdImp;
-import com.nosliw.data.datatype.importer.HAPOperationIdImp;
-import com.nosliw.data.datatype.importer.HAPResourceIdImp;
-import com.nosliw.data.datatype.importer.HAPResourceImp;
 
 public class HAPResourceManagerImpJS implements HAPResourceManager{
 

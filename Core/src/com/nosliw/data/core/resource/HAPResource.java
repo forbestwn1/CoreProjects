@@ -2,7 +2,6 @@ package com.nosliw.data.core.resource;
 
 import java.util.List;
 
-import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.data.core.HAPInfo;
 
 /**

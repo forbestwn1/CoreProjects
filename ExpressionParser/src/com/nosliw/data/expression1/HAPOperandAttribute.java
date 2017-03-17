@@ -9,7 +9,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core1.HAPDataTypeInfo;
 import com.nosliw.data.core1.HAPDataTypeManager;
 import com.nosliw.data.core1.HAPOperand;
-import com.nosliw.data.expression.utils.HAPAttributeConstant;
+import com.nosliw.data.imp.expression.parser.utils.HAPAttributeConstant;
 
 /*
  * this is path operation

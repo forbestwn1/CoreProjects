@@ -1,0 +1,11 @@
+<entity name="data.datatypeversion" 
+		description="data type version" 
+		class="com.nosliw.data.core.imp.HAPDataTypeVersionImp">
+
+	<property name="major" type="int" description="major version number"/>
+
+	<property name="minor" type="minor" description="minor version number"/>
+
+	<property name="revision" type="string" description="revision"/>
+
+</entity>

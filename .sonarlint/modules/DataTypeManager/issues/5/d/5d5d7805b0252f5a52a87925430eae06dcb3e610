@@ -1,13 +1,13 @@
 
-Nsquid:S1135\"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-rsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·Øÿÿÿÿÿ
-Usquid:S1135i"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ8›¬’±¢+
-Nsquid:S1135V"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-Isquid:S11683"+Return an empty collection instead of null.(¥¹ï8›¬’±¢+
-Nsquid:S1135c"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-hsquid:CommentedOutCodeLine8"<This block of commented-out lines of code should be removed.(Ñâøe8»á‘±¢+
-Y
-squid:S106¢";Replace this usage of System.out or System.err by a logger.(Í§†ß8±‹Ïì¢+
-Usquid:S1135u"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ8›¬’±¢+
-Nsquid:S11352"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
-Nsquid:S1135o"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ
+lsquid:CommentedOutCodeLine8"<This block of commented-out lines of code should be removed.(Ñâøe8»á‘±¢+Häå3
+vsquid:S00116"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³×·ØÿÿÿÿÿHåå3
+]
+squid:S106¢";Replace this usage of System.out or System.err by a logger.(Í§†ß8±‹Ïì¢+Hæå3
+Rsquid:S11352"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿHçå3
+Rsquid:S1135c"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿHèå3
+Rsquid:S1135V"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿHéå3
+Rsquid:S1135\"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿHêå3
+Ysquid:S1135i"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ8›¬’±¢+Hëå3
+Rsquid:S1135o"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿHìå3
+Msquid:S11683"+Return an empty collection instead of null.(¥¹ï8›¬’±¢+Híå3
+Ysquid:S1135u"2Complete the task associated to this TODO comment.(» æÿÿÿÿÿ8›¬’±¢+Hîå3

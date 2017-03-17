@@ -10,7 +10,7 @@ import com.nosliw.data.core1.HAPDataOperationInfo;
 import com.nosliw.data.core1.HAPDataTypeInfo;
 import com.nosliw.data.core1.HAPDataTypeManager;
 import com.nosliw.data.core1.HAPOperand;
-import com.nosliw.data.expression.utils.HAPAttributeConstant;
+import com.nosliw.data.imp.expression.parser.utils.HAPAttributeConstant;
 
 /*
  * parent class for all the operand related with data operation

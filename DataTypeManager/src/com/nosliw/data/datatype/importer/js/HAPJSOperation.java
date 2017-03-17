@@ -3,7 +3,7 @@ package com.nosliw.data.datatype.importer.js;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.datatype.importer.HAPDataTypeIdImp;
+import com.nosliw.data.core.imp.HAPDataTypeIdImp;
 
 public class HAPJSOperation extends HAPStringableValueEntityWithID{
 

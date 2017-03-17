@@ -1,0 +1,24 @@
+<entity name="data.expression" 
+		class="com.nosliw.data.core.imp.expression.HAPExpressionInfoImp" 
+		description="">
+		
+	<property name="name" dataType="string" description=""/>
+
+	<property name="expression" dataType="string" description=""/>
+
+	<property name="info" reference="data.datatypeinfo" description="">
+	</property>
+
+	<property name="constants" type="map" key="name" description="">
+		<child dataType="object" subDataType="com.nosliw.data.core.HAPDataWrapperJson"></child>
+	</property>
+
+	<property name="variables" type="map" key="name" description="">
+		<child dataType="object" subDataType="com.nosliw.data.core.HAPDataTypeCriteria"></child>
+	</property>
+
+	<property name="references" type="map" key="name" description="">
+		<child reference="data.expression.referenceinfo"></child>
+	</property>
+
+</entity>

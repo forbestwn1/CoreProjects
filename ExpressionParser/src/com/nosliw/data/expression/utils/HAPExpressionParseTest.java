@@ -9,14 +9,14 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.expression.HAPOperand;
-import com.nosliw.data.datatype.importer.HAPDataTypeManagerImp;
-import com.nosliw.data.expression.HAPExpressionInfoImp;
-import com.nosliw.data.expression.HAPExpressionManagerImp;
-import com.nosliw.data.expression.HAPExpressionParser;
-import com.nosliw.data.expression.parser.NosliwExpressionParser;
-import com.nosliw.data.expression.parser.ParseException;
-import com.nosliw.data.expression.parser.SimpleNode;
-import com.nosliw.data.expression.parser.TokenMgrError;
+import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
+import com.nosliw.data.core.imp.expression.HAPExpressionInfoImp;
+import com.nosliw.data.core.imp.expression.HAPExpressionManagerImp;
+import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
+import com.nosliw.data.imp.expression.parser.generated.NosliwExpressionParser;
+import com.nosliw.data.imp.expression.parser.generated.ParseException;
+import com.nosliw.data.imp.expression.parser.generated.SimpleNode;
+import com.nosliw.data.imp.expression.parser.generated.TokenMgrError;
 
 public class HAPExpressionParseTest {
 
@@ -44,7 +44,7 @@ public class HAPExpressionParseTest {
           HAPExpressionInfoImp expressionInfo = (HAPExpressionInfoImp)HAPStringableEntityImporterJSON.parseJsonEntity(inputStream, "data.expression", HAPValueInfoManager.getInstance());
           System.out.println(HAPJsonUtility.formatJson(expressionInfo.toStringValue(HAPSerializationFormat.JSON)));
 
-          HAPOperand operand = HAPExpressionParser.parseExpression(expressionInfo.getExpression());
+          HAPOperand operand = HAPExpressionParserImp.parseExpression(expressionInfo.getExpression());
           System.out.println(operand);
           
 	  }

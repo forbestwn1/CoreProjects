@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
+import com.nosliw.data.core.imp.resource.HAPResourceIdImp;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.datatype.importer.HAPResourceIdImp;
 
 public class HAPJSResourceDependency  extends HAPStringableValueEntityWithID{
 

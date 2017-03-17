@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
-import com.nosliw.data.expression.utils.HAPAttributeConstant;
+import com.nosliw.data.imp.expression.parser.utils.HAPAttributeConstant;
 import com.nosliw.data1.HAPDataTypeInfo;
 import com.nosliw.data1.HAPDataTypeManager;
 import com.nosliw.data1.HAPOperand;

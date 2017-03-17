@@ -1,0 +1,32 @@
+<entity name="data.datatypeoperation" 
+		table="nosliw.DATATYPEOPERATION"
+		primaryKeys="id" 
+		class="com.nosliw.data.core.imp.HAPDataTypeOperationImp"
+		parent="data.interface.operation" 
+		description="">
+
+	<property name="operationId" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="sourceDataTypeName" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="targetDataTypeName" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+	
+	<property name="path" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPRelationshipPathImp" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+
+</entity>
