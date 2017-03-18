@@ -1,10 +1,13 @@
 package com.nosliw.data.core.expression;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HAPProcessVariablesContext {
 
 	private boolean m_success;
 	
-	private String m_message;
+	private List<String> m_messages;
 	
 	public HAPProcessVariablesContext(){
 		this.clear();
@@ -12,16 +15,16 @@ public class HAPProcessVariablesContext {
 	
 	public void clear(){
 		this.m_success = true;
-		this.m_message = null;
+		this.m_messages = new ArrayList<String>();
 	}
 	
 	public boolean isSuccess(){  return this.m_success;  }
 	public void setFailure(String message){
 		this.m_success = false;
-		this.m_message = message;
+		this.m_messages.add(message);
 	}
 	
-	public String getMessage(){  return this.m_message;  }
-	public void setMessage(String message){  this.m_message = message;  }
+	public List<String> getMessages(){  return this.m_messages;  }
+	public void addMessage(String message){  this.m_messages.add(message);  }
 	
 }

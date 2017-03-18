@@ -29,6 +29,8 @@ public interface HAPOperand {
 										HAPDataTypeCriteria expectCriteria,
 										HAPProcessVariablesContext context);
 
+	HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo);
+	
 	//operand output data type criteria
 	HAPDataTypeCriteria getDataTypeCriteria();
 	

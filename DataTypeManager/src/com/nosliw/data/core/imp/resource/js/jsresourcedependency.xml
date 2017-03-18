@@ -1,7 +1,7 @@
 <entity name="data.js.resource.dependency"
 		table="nosliw.RESOURCEDEPENDENCY"
 		primaryKeys="id" 
-		class="com.nosliw.data.datatype.importer.js.HAPJSResourceDependency" 
+		class="com.nosliw.data.core.imp.resource.js.HAPJSResourceDependency" 
 		description="">
 
 	<property name="id" dataType="string" description="">

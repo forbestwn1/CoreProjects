@@ -65,4 +65,7 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	public HAPDataTypeCriteria getDataTypeCriteria() {
 		return null;
 	}
+	
+	@Override
+	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo){return null;}
 }

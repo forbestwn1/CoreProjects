@@ -72,13 +72,20 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		
 		if(context.isSuccess()){
 			expression.setVariables(expressionVars);
+			
+			//normalize variable -- for every variable criteria, find root from data type
+			expression.buildNormalizedVariablesInfo();
+			
+			//add data type converter according to normalized variables
+			
 		}
 		else{
-			expression.setErrorMessage(context.getMessage());
+			expression.addErrorMessages(context.getMessages());
 		}
 		return expression;
 	}
 
+	
 	private HAPExpressionImp buildExpression(String expressionName){
 		HAPExpressionInfo expressionInfo = getExpressionInfo(expressionName);
 		HAPOperand expressionOperand = this.getExpressionParser().parseExpression(expressionInfo.getExpression());

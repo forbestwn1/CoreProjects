@@ -13,4 +13,8 @@ public interface HAPDataTypeCriteriaManager {
 	HAPDataTypeCriteria and(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2);
 
 	HAPDataTypeCriteria looseCriteria(HAPDataTypeCriteria criteria);
+
+	boolean compatibleWith(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2);
+	
+	
 }

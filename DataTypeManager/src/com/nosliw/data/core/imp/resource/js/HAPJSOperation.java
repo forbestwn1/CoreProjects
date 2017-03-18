@@ -1,4 +1,4 @@
-package com.nosliw.data.datatype.importer.js;
+package com.nosliw.data.core.imp.resource.js;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;

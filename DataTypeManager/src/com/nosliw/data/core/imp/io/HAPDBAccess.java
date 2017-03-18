@@ -32,8 +32,8 @@ import com.nosliw.data.core.imp.HAPOperationImp;
 import com.nosliw.data.core.imp.HAPOperationVarInfoImp;
 import com.nosliw.data.core.imp.HAPRelationshipImp;
 import com.nosliw.data.core.imp.resource.HAPResourceIdImp;
-import com.nosliw.data.datatype.importer.js.HAPJSOperation;
-import com.nosliw.data.datatype.importer.js.HAPJSResourceDependency;
+import com.nosliw.data.core.imp.resource.js.HAPJSOperation;
+import com.nosliw.data.core.imp.resource.js.HAPJSResourceDependency;
 
 public class HAPDBAccess extends HAPConfigurableImp {
 

@@ -1,31 +1,0 @@
-
-Hsquid:S1166å"%Either log or rethrow this exception.(É®£8ˆ‘¬ ¦+Hœå3
-|squid:S2293×"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÙå«8úè¾Ù¦+Hå3
-}squid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(©¢Ší8…¹İİ¡+Hå3
-Ksquid:S1148˜"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ˆ‘¬ ¦+HŸå3
-Vsquid:S2864J"4Iterate over the "entrySet" instead of the "keySet".(¤¡8±¥ªÕ£+H å3
-esquid:S1155w">Use isEmpty() to check whether the collection is empty or not.(ğ”õÂıÿÿÿÿ8Õı©Ì«+H¡å3
->squid:S2131;"Use "Long.toString" instead.(Ûï»Û8—Û ¦+H¢å3
-gsquid:S1854T"ERemove this useless assignment to local variable "sourceDataTypeImp".(‘ÍÖ¤8À­ñ¦+H£å3
-Xsquid:S1481T"6Remove this unused "sourceDataTypeImp" local variable.(‘ÍÖ¤8À­ñ¦+H¤å3
-Ksquid:S1148Í"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Õı©Ì«+H¥å3
-Hsquid:S1166—"%Either log or rethrow this exception.(É®£8Ş¡´Ù¦+H¦å3
-}squid:S00115 "ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ë˜Ü”8…¹İİ¡+H§å3
-Gsquid:S2095İ"Close this "PreparedStatement".(¢ü¶Öøÿÿÿÿ8Õı©Ì«+H¨å3
-Fsquid:S2095s"Close this "PreparedStatement".(¢ü¶Öøÿÿÿÿ8ˆ‘¬ ¦+H©å3
-‚squid:S00115$"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(àçÿçûÿÿÿÿ8…¹İİ¡+Hªå3
-Jsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8Ôºõİ¡+H«å3
-Hsquid:S1166Ì"%Either log or rethrow this exception.(”ı¾8Äïâİ¡+H¬å3
-\squid:S12130";Move this constructor to comply with Java Code Conventions.(ê»·8…¹İİ¡+H­å3
-Gsquid:S2095Œ"Close this "PreparedStatement".(¢ü¶Öøÿÿÿÿ8Ô¸ŸÙ¦+H®å3
-b
-squid:S106È";Replace this usage of System.out or System.err by a logger.(Ô²À¯ûÿÿÿÿ8‘æİ¡+H¯å3
-Ksquid:S1148æ"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8àõãŒ¦+H°å3
-xsquid:S00116&"WRename this field "m_connection" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ã©[8“İãİ¡+H±å3
-rsquid:S00116'"ORename this field "m_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä§ìõ8·Ùàİ¡+H²å3
-‚squid:S00115#"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ú¬Ë©üÿÿÿÿ8…¹İİ¡+H³å3
-fsquid:S1155">Use isEmpty() to check whether the collection is empty or not.(ğ”õÂıÿÿÿÿ8Ô¸ŸÙ¦+H´å3
-asquid:S1155î">Use isEmpty() to check whether the collection is empty or not.( ·­¹8éúÚ¦+Hµå3
-wsquid:S3008"URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›êÿ‰8…¹İİ¡+H¶å3
-Gsquid:S1166~"%Either log or rethrow this exception.(É®£8Õı©Ì«+H·å3
-xsquid:S00122î"TAt most one statement is allowed per line, but 2 statements were found on this line.( ·­¹8éúÚ¦+H¸å3

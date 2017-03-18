@@ -41,11 +41,13 @@ public class HAPOperandVariable extends HAPOperandImp{
 			HAPProcessVariablesContext context) {
 		this.m_dataTypeCriteria = this.validate(variablesInfo.get(this.m_variableName), expectCriteria, context);
 		variablesInfo.put(m_variableName, m_dataTypeCriteria);
+		this.setDataTypeCriteria(m_dataTypeCriteria);
 		return this.getDataTypeCriteria();
 	}
 
 	@Override
-	public HAPDataTypeCriteria getDataTypeCriteria() {
-		return this.m_dataTypeCriteria;
+	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo){
+		this.setDataTypeCriteria(variablesInfo.get(this.getVariableName()));
+		return this.getDataTypeCriteria();
 	}
 }

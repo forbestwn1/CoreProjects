@@ -1,4 +1,4 @@
-package com.nosliw.data.datatype.importer.js;
+package com.nosliw.data.core.imp.resource.js.io;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,6 +24,9 @@ import com.nosliw.data.core.imp.HAPDataTypeVersionImp;
 import com.nosliw.data.core.imp.HAPOperationIdImp;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.imp.resource.HAPResourceIdImp;
+import com.nosliw.data.core.imp.resource.js.HAPJSOperation;
+import com.nosliw.data.core.imp.resource.js.HAPJSResourceDependency;
+import com.nosliw.data.core.imp.resource.js.HAPResourceManagerImpJS;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPJSImporter {
@@ -32,13 +35,11 @@ public class HAPJSImporter {
 	
 	private String m_operationTemplate = null;
 	
-	public HAPJSImporter(){
-		this.m_dbAccess = HAPDBAccess.getInstance();
-		
-		HAPValueInfoManager.getInstance().importFromXML(HAPJSImporter.class, new String[]{
-				"jsoperation.xml",
-				"jsresourcedependency.xml"
-		});
+	private HAPResourceManagerImpJS m_resourceJSMan;
+	
+	public HAPJSImporter(HAPResourceManagerImpJS resourceJSMan){
+		this.m_resourceJSMan = resourceJSMan;
+		this.m_dbAccess = this.m_resourceJSMan.getDBAccess();
 		
 		this.m_dbAccess.createDBTable(HAPJSOperation._VALUEINFO_NAME);
 		this.m_dbAccess.createDBTable(HAPJSResourceDependency._VALUEINFO_NAME);

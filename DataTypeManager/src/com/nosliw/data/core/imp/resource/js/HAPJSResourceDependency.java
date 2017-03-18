@@ -1,4 +1,4 @@
-package com.nosliw.data.datatype.importer.js;
+package com.nosliw.data.core.imp.resource.js;
 
 import java.util.List;
 

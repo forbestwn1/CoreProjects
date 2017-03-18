@@ -4,6 +4,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeVersion;
 
 public class HAPOperationIdImp extends HAPDataTypeIdImp{
@@ -26,7 +27,7 @@ public class HAPOperationIdImp extends HAPDataTypeIdImp{
 		this.setOperation(operation);
 	}
 	
-	public HAPOperationIdImp(HAPDataTypeIdImp dataTypeId, String operation){
+	public HAPOperationIdImp(HAPDataTypeId dataTypeId, String operation){
 		super(dataTypeId.getName(), dataTypeId.getVersion());
 		this.setOperation(operation);
 	}

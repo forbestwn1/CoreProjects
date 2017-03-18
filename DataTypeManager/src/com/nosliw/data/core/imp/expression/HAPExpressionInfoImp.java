@@ -30,14 +30,4 @@ public class HAPExpressionInfoImp extends HAPStringableValueEntity implements HA
 
 	@Override
 	public Map<String, HAPReferenceInfo> getReferences() {  return this.getMapAncestorByPath(REFERENCES).getMapValue();  }
-
-	
-	
-
-//	public HAPExpressionInfoImp addVariable(Map<String, HAPDataTypeCriteria> m_variableInfos){
-//		this.m_variables.putAll(m_variableInfos);
-//		return this;
-//	}
-	
-
 }

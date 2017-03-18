@@ -121,6 +121,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 		}
 
 		if(dataTypeId !=null){
+			this.m_dataTypeId = dataTypeId;
 			//discover parms by operation definition
 			HAPDataTypeOperation dataTypeOperation = this.m_dataTypeMan.getOperationInfoByName(dataTypeId, m_operation);
 			Map<String, HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
@@ -128,29 +129,53 @@ public class HAPOperandOperation extends HAPOperandImp{
 				HAPOperand parmDataType = this.m_parms.get(parm);
 				HAPDataTypeCriteria parmCriteria = parmsInfo.get(parm).getCriteria();
 				//loose input criteria
-				parmCriteria = this.getDataTypeCriteriaManager().looseCriteria(parmCriteria);
-				parmDataType.discoverVariables(variables, parmCriteria, context);
+				HAPDataTypeCriteria loosedParmCriteria = this.getDataTypeCriteriaManager().looseCriteria(parmCriteria);
+				loosedParmCriteria = parmDataType.discoverVariables(variables, loosedParmCriteria, context);
 			}
 			
 			//discover base
 			if(this.m_base!=null){
 				this.m_base.discoverVariables(variables, new HAPDataTypeCriteriaElementRange(dataTypeId, null, this.getDataTypeCriteriaManager()), context);
 			}
-			this.m_output = dataTypeOperation.getOperationInfo().getOutputInfo().getCriteria();
+			this.setDataTypeCriteria(dataTypeOperation.getOperationInfo().getOutputInfo().getCriteria());
+			//check if output compatible with expect
+			if(!this.getDataTypeCriteriaManager().compatibleWith(this.m_output, expectCriteria)){
+				context.addMessage("Error");
+			}
 		}
 		else{
 			for(String parm: this.m_parms.keySet()){
 				HAPOperand parmDataType = this.m_parms.get(parm);
 				parmDataType.discoverVariables(variables, null, context);
 			}
-			this.m_output = null;
+			this.setDataTypeCriteria(null);
 		}
-		return this.m_output;
+		return this.getDataTypeCriteria();
 	}
 
 	@Override
-	public HAPDataTypeCriteria getDataTypeCriteria() {
-		// TODO Auto-generated method stub
-		return null;
+	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo){
+
+		if(this.m_dataTypeId !=null){
+			//normalize parms
+			HAPDataTypeOperation dataTypeOperation = this.m_dataTypeMan.getOperationInfoByName(this.m_dataTypeId, m_operation);
+			Map<String, HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
+			for(String parm: this.m_parms.keySet()){
+				HAPDataTypeCriteria parmDefCriteria = parmsInfo.get(parm).getCriteria();
+				HAPOperand parmDataType = this.m_parms.get(parm);
+				HAPDataTypeCriteria normalizedParmCriteria = parmDataType.normalize(variablesInfo);
+				
+				//figure out the convertor: from normalized to parmDataType
+				//????
+			}
+
+			//process base
+			if(this.m_base!=null){
+				HAPDataTypeCriteria normalizedParmCriteria = this.m_base.normalize(variablesInfo);
+				//convertor : from normalized to this.m_dataTypeId
+				//????
+			}
+		}
+		return this.getDataTypeCriteria();
 	}
 }

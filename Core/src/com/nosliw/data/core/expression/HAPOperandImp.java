@@ -19,6 +19,8 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	
 	private HAPDataTypeCriteriaManager m_criteriaMan;
 	
+	private HAPDataTypeCriteria m_outputCriteria;
+	
 	public HAPOperandImp(String type, HAPDataTypeCriteriaManager criteriaMan){
 		this.m_type = type;
 		this.m_children = new ArrayList<HAPOperand>();
@@ -29,6 +31,10 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	
 	@Override
 	public String getType(){ return this.m_type;  }
+	
+	@Override
+	public HAPDataTypeCriteria getDataTypeCriteria(){  return this.m_outputCriteria; }
+	protected void setDataTypeCriteria(HAPDataTypeCriteria dataTypeCriteria){  this.m_outputCriteria = dataTypeCriteria; }
 	
 	@Override
 	public String getStatus(){		return this.m_status;	}

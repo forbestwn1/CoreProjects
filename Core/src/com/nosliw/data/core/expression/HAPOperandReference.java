@@ -42,11 +42,6 @@ public class HAPOperandReference extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria getDataTypeCriteria() {
-		return this.m_expression.getOperand().getDataTypeCriteria();
-	}
-
-	@Override
 	public HAPDataTypeCriteria discoverVariables(
 			Map<String, HAPDataTypeCriteria> variablesInfo,
 			HAPDataTypeCriteria expectCriteria,
@@ -61,6 +56,14 @@ public class HAPOperandReference extends HAPOperandImp{
 		this.m_expression.getVariables().clear();
 			
 		HAPDataTypeCriteria out = this.m_expression.getOperand().discoverVariables(variablesInfo, expectCriteria, context);
+		this.setDataTypeCriteria(out);
+		return out;
+	}
+
+	@Override
+	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo) {
+		HAPDataTypeCriteria out = this.m_expression.getOperand().normalize(variablesInfo);
+		this.setDataTypeCriteria(out);
 		return out;
 	}
 }
