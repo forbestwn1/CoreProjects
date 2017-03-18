@@ -25,4 +25,6 @@ public interface HAPDataTypeCriteria{
 	boolean validate(HAPDataTypeId dataTypeId);
 	
 	Set<HAPDataTypeId> getValidDataTypeId();
+
+	HAPDataTypeCriteria normalize();
 }

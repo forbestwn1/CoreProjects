@@ -21,4 +21,7 @@ public class HAPDataTypeCriteriaAny implements HAPDataTypeCriteria{
 	@Override
 	public Set<HAPDataTypeId> getValidDataTypeId() {		return null;	}
 
+	@Override
+	public HAPDataTypeCriteria normalize() {		return this;	}
+
 }

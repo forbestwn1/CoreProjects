@@ -27,4 +27,22 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 	public Set<HAPDataTypeId> getValidDataTypeId() {
 		return this.getDataTypeCriteraManager().getAllDataTypeInRange(m_from, m_to);
 	}
+
+	@Override
+	public HAPDataTypeCriteria normalize() {
+		HAPDataTypeId dataTypeId = null;
+		HAPDataTypeCriteria out = null;
+		if(this.m_from!=null){
+			dataTypeId = this.m_from;
+			out = new HAPDataTypeCriteriaElementId(dataTypeId, this.getDataTypeCriteraManager());
+		}
+		else if(this.m_to!=null){
+			dataTypeId = this.getDataTypeCriteraManager().getRootDataTypeId(m_to);
+			out = new HAPDataTypeCriteriaElementId(dataTypeId, this.getDataTypeCriteraManager());
+		}
+		else{
+			out = new HAPDataTypeCriteriaAny();
+		}
+		return out;
+	}
 }

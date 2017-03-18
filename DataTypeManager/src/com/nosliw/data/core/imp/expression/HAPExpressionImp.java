@@ -62,11 +62,15 @@ public class HAPExpressionImp implements HAPExpression{
 	public void addErrorMessages(List<String> msgs){  this.m_errorMsgs.addAll(msgs);  } 
 	
 	public void buildNormalizedVariablesInfo(){
-		//???????
-		
-	}
-	
-	public void mergeVariable(String variable, HAPDataTypeCriteria varInfo){
-		
+		this.m_normalizedVarsInfo = new LinkedHashMap<String, HAPDataTypeCriteria>();
+		for(String varName : this.m_varsInfo.keySet()){
+			HAPDataTypeCriteria criteria = this.m_varsInfo.get(varName);
+			if(criteria!=null){
+				this.m_normalizedVarsInfo.put(varName, criteria.normalize());
+			}
+			else{
+				this.m_normalizedVarsInfo.put(varName, null);
+			}
+		}
 	}
 }

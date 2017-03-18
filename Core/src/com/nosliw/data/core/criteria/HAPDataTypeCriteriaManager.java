@@ -16,5 +16,7 @@ public interface HAPDataTypeCriteriaManager {
 
 	boolean compatibleWith(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2);
 	
+	HAPDataTypeId getRootDataTypeId(HAPDataTypeId dataTypeId);
 	
+	Set<HAPDataTypeId> normalize(Set<HAPDataTypeId> dataTypeIds);
 }

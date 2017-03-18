@@ -27,4 +27,7 @@ public class HAPDataTypeCriteriaElementId  extends HAPDataTypeCriteriaImp{
 		return out;
 	}
 
+	@Override
+	public HAPDataTypeCriteria normalize() {		return this;	}
+
 }

@@ -27,5 +27,10 @@ public class HAPDataTypeCriteriaElementIds extends HAPDataTypeCriteriaImp{
 		HAPDataTypeCriteriaOr out = new HAPDataTypeCriteriaOr(new ArrayList(this.m_eles), this.getDataTypeCriteraManager());
 		return out;
 	}
-	
+
+	@Override
+	public HAPDataTypeCriteria normalize() {
+		Set<HAPDataTypeId> normalizedIds = this.getDataTypeCriteraManager().normalize(m_eles);
+		return this.buildCriteriaByIds(normalizedIds);
+	}
 }

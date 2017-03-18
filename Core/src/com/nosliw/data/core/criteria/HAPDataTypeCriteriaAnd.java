@@ -32,4 +32,10 @@ public class HAPDataTypeCriteriaAnd extends HAPDataTypeCriteriaComplex{
 		return out;
 	}
 
+	@Override
+	public HAPDataTypeCriteria normalize() {
+		Set<HAPDataTypeId> ids = this.getValidDataTypeId();
+		Set<HAPDataTypeId> norIds = this.getDataTypeCriteraManager().normalize(ids);
+		return this.buildCriteriaByIds(norIds);
+	}
 }

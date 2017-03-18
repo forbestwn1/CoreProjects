@@ -64,4 +64,10 @@ public class HAPDataTypeCriteriaManagerImp implements HAPDataTypeCriteriaManager
 		return null;
 	}
 
+	@Override
+	public boolean compatibleWith(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
