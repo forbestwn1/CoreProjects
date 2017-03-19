@@ -83,6 +83,7 @@ public class HAPConstant {
 		public static final String EXPRESSION_OPERAND_VARIABLE = "variable";
 		public static final String EXPRESSION_OPERAND_REFERENCE = "reference";
 		public static final String EXPRESSION_OPERAND_OPERATION = "operation";
+		public static final String EXPRESSION_OPERAND_CONVERTOR = "convertor";
 		public static final String EXPRESSION_OPERAND_DATAOPERATION = "dataoperation";
 		public static final String EXPRESSION_OPERAND_DATATYPEOPERATION = "datatypeoperation";
 		public static final String EXPRESSION_OPERAND_ATTRIBUTEOPERATION = "attributeoperation";

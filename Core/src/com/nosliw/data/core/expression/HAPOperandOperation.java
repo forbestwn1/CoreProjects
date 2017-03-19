@@ -1,8 +1,6 @@
 package com.nosliw.data.core.expression;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -13,6 +11,7 @@ import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPOperationParmInfo;
+import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementRange;
@@ -33,6 +32,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 	
 	//base data
 	protected HAPOperand m_base;
+	private HAPOperandConverter m_baseConvertors;
 
 	//operation name
 	protected String m_operation;
@@ -40,6 +40,8 @@ public class HAPOperandOperation extends HAPOperandImp{
 	//operation parms
 	protected Map<String, HAPOperand> m_parms;
 
+	private Map<String, HAPOperandConverter> m_convertors;
+	
 	//out put criteria
 	protected HAPDataTypeCriteria m_output;
 	
@@ -166,14 +168,18 @@ public class HAPOperandOperation extends HAPOperandImp{
 				HAPDataTypeCriteria normalizedParmCriteria = parmDataType.normalize(variablesInfo);
 				
 				//figure out the convertor: from normalized to parmDataType
-				//????
+				HAPRelationship relationship = this.getDataTypeCriteriaManager().buildConvertor(normalizedParmCriteria, parmDefCriteria);
+				if(relationship!=null){
+					this.m_convertors.put(parm, new HAPOperandConverter(relationship, this.getDataTypeCriteriaManager()));
+				}
 			}
 
 			//process base
 			if(this.m_base!=null){
 				HAPDataTypeCriteria normalizedParmCriteria = this.m_base.normalize(variablesInfo);
 				//convertor : from normalized to this.m_dataTypeId
-				//????
+				HAPRelationship relationship = this.getDataTypeCriteriaManager().buildConvertor(normalizedParmCriteria, new HAPDataTypeCriteriaElementId(this.m_dataTypeId, this.getDataTypeCriteriaManager()));
+				this.m_baseConvertors = new HAPOperandConverter(relationship, this.getDataTypeCriteriaManager());
 			}
 		}
 		return this.getDataTypeCriteria();

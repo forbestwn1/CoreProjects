@@ -74,10 +74,8 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 			expression.setVariables(expressionVars);
 			
 			//normalize variable -- for every variable criteria, find root from data type
+			//for operator, build convertor
 			expression.buildNormalizedVariablesInfo();
-			
-			//add data type converter according to normalized variables
-			
 		}
 		else{
 			expression.addErrorMessages(context.getMessages());

@@ -327,6 +327,7 @@
 			<definition name="EXPRESSION_OPERAND_VARIABLE" value="variable"/>
 			<definition name="EXPRESSION_OPERAND_REFERENCE" value="reference"/>
 			<definition name="EXPRESSION_OPERAND_OPERATION" value="operation"/>
+			<definition name="EXPRESSION_OPERAND_CONVERTOR" value="convertor"/>
 			<definition name="EXPRESSION_OPERAND_DATAOPERATION" value="dataoperation"/>
 			<definition name="EXPRESSION_OPERAND_DATATYPEOPERATION" value="datatypeoperation"/>
 			<definition name="EXPRESSION_OPERAND_ATTRIBUTEOPERATION" value="attributeoperation"/>

@@ -70,4 +70,22 @@ public class HAPDataTypeCriteriaManagerImp implements HAPDataTypeCriteriaManager
 		return false;
 	}
 
+	@Override
+	public HAPDataTypeId getRootDataTypeId(HAPDataTypeId dataTypeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<HAPDataTypeId> normalize(Set<HAPDataTypeId> dataTypeIds) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HAPRelationship buildConvertor(HAPDataTypeCriteria from, HAPDataTypeCriteria to) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

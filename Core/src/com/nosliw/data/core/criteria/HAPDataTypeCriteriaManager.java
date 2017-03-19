@@ -3,6 +3,7 @@ package com.nosliw.data.core.criteria;
 import java.util.Set;
 
 import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPRelationship;
 
 public interface HAPDataTypeCriteriaManager {
 
@@ -19,4 +20,6 @@ public interface HAPDataTypeCriteriaManager {
 	HAPDataTypeId getRootDataTypeId(HAPDataTypeId dataTypeId);
 	
 	Set<HAPDataTypeId> normalize(Set<HAPDataTypeId> dataTypeIds);
+	
+	HAPRelationship buildConvertor(HAPDataTypeCriteria from, HAPDataTypeCriteria to);
 }

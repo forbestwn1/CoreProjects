@@ -36,26 +36,17 @@ public class HAPDataTypeCriteriaWrapperLiterate extends HAPSerializableImp imple
 
 	@Override
 	public boolean validate(HAPDataTypeCriteria criteria) {
-		if(this.m_criteria==null){
-			this.m_criteria = HAPDataTypeCriteriaParser.parseLiterate(this.m_literateValue, m_dataTypeCriteriaMan);
-		}
-		return this.m_criteria.validate(criteria);
+		return this.getCriteria().validate(criteria);
 	}
 
 	@Override
 	public boolean validate(HAPDataTypeId dataTypeId) {
-		if(this.m_criteria==null){
-			this.m_criteria = HAPDataTypeCriteriaParser.parseLiterate(this.m_literateValue, m_dataTypeCriteriaMan);
-		}
-		return this.m_criteria.validate(dataTypeId);
+		return this.getCriteria().validate(dataTypeId);
 	}
 
 	@Override
 	public Set<HAPDataTypeId> getValidDataTypeId() {
-		if(this.m_criteria==null){
-			this.m_criteria = HAPDataTypeCriteriaParser.parseLiterate(this.m_literateValue, m_dataTypeCriteriaMan);
-		}
-		return this.m_criteria.getValidDataTypeId();
+		return this.getCriteria().getValidDataTypeId();
 	}
 
 	
@@ -73,4 +64,16 @@ public class HAPDataTypeCriteriaWrapperLiterate extends HAPSerializableImp imple
 		return this.m_literateValue;
 	}
 
+	@Override
+	public HAPDataTypeCriteria normalize() {
+		return this.getCriteria().normalize();
+	}
+
+	private HAPDataTypeCriteria getCriteria(){
+		if(this.m_criteria==null){
+			this.m_criteria = HAPDataTypeCriteriaParser.parseLiterate(this.m_literateValue, m_dataTypeCriteriaMan);
+		}
+		return this.m_criteria;
+	}
+	
 }
