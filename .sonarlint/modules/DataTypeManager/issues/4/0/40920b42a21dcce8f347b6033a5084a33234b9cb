@@ -1,56 +1,56 @@
 
-…squid:S001165"hRename this field "m_getDataTypesByNameStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ß¶Ç„ıÿÿÿÿ
-’squid:S001162"uRename this field "m_getOperationInfosByDataTypeNameStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(äñ„ıüÿÿÿÿ
-Nsquid:S1172•"1Remove this unused method parameter "dataTypeId".(—æÆ°øÿÿÿÿ
-=squid:S1166æ"%Either log or rethrow this exception.(É®£
-=squid:S1166Ó"%Either log or rethrow this exception.(É®£
-wsquid:S00116."`Rename this field "m_insertParmStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(èÄø
-rsquid:S00115$"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ë˜Ü”
-gsquid:S001169"ORename this field "m_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä§ìõ
-@squid:S1148Ÿ"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-~squid:S001163"gRename this field "m_getDataTypeByInfoStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êñ–a
-~squid:S001160"fRename this field "m_getOperationInfoStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¦ßœ
-8squid:S2131m"Use "Long.toString" instead.(ß¥­®ÿÿÿÿÿ
-@squid:S1148Ô"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-8squid:S2131x"Use "Long.toString" instead.(ü‚ò•øÿÿÿÿ
-tsquid:S00117Ë"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ºÛŠ²ûÿÿÿÿ
-@squid:S1148§"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-msquid:S00116*"WRename this field "m_connection" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ã©[
-=squid:S1166¦"%Either log or rethrow this exception.(É®£
-wsquid:S00115("ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(àçÿçûÿÿÿÿ
-@squid:S1148®"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-€squid:S00116,"hRename this field "m_insertDatatTypePicStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸şİ¾
-=squid:S1166Œ"%Either log or rethrow this exception.(É®£
-rsquid:S00115#"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(©¢Ší
-‚squid:S001164"eRename this field "m_getDataTypeByIdStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(äåş‹ùÿÿÿÿ
-@squid:S1148‘"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-qsquid:S2293Æ"YReplace the type specification in this constructor call with the diamond operator ("<>").(¨ã‘…
-?squid:S1148f"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-dsquid:S1226ı"LIntroduce a new variable instead of reusing the parameter "dataTypeVersion".(´şö
-4squid:S2131Š"Use "Long.toString" instead.(ˆâİ
-Wsquid:S1213B";Move this constructor to comply with Java Code Conventions.(êéÔ¨ùÿÿÿÿ
-vsquid:S2293î"YReplace the type specification in this constructor call with the diamond operator ("<>").(±ª¢Áüÿÿÿÿ
-@squid:S1148¤"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-=squid:S1166"%Either log or rethrow this exception.(É®£
-=squid:S1166­"%Either log or rethrow this exception.(É®£
-wsquid:S00115'"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ú¬Ë©üÿÿÿÿ
-@squid:S1148Á"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-‚squid:S00116+"eRename this field "m_insertDatatTypeStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( ÚÍñıÿÿÿÿ
-tsquid:S00117¸"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ºÛŠ²ûÿÿÿÿ
-squid:S001167"gRename this field "m_insertJSOperationStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(øİ¬Ò
-=squid:S1166£"%Either log or rethrow this exception.(É®£
-=squid:S1166À"%Either log or rethrow this exception.(É®£
-@squid:S1148ç"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-<squid:S1166e"%Either log or rethrow this exception.(”ı¾
-‚squid:S00116-"eRename this field "m_insertOperationStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¹²ı¬ıÿÿÿÿ
-=squid:S1166"%Either log or rethrow this exception.(É®£
-9squid:S2131ƒ"Use "Long.toString" instead.(ü‚ò•øÿÿÿÿ
-Ksquid:S2864v"4Iterate over the "entrySet" instead of the "keySet".(¤¡
-@squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-@squid:S1148ƒ"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-Qsquid:S1854œ"9Remove this useless assignment to local variable "index".(íãÒ¯
-’squid:S001161"uRename this field "m_getOperationInfosByDataTypeInfoStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŞÆªÜşÿÿÿÿ
-=squid:S1166‚"%Either log or rethrow this exception.(É®£
-V
-squid:S106R";Replace this usage of System.out or System.err by a logger.(Ô²À¯ûÿÿÿÿ
-qsquid:S3008 "URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·®±çúÿÿÿÿ
+Osquid:S2864v"4Iterate over the "entrySet" instead of the "keySet".(¤¡H ‡5
+Z
+squid:S106R";Replace this usage of System.out or System.err by a logger.(Ô²À¯ûÿÿÿÿH¡‡5
+Asquid:S1166Ó"%Either log or rethrow this exception.(É®£H¢‡5
+{squid:S00116."`Rename this field "m_insertParmStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(èÄøH£‡5
+ksquid:S001169"ORename this field "m_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä§ìõH¤‡5
+Dsquid:S1148ç"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿH¥‡5
+=squid:S2131ƒ"Use "Long.toString" instead.(ü‚ò•øÿÿÿÿH¦‡5
+†squid:S00116-"eRename this field "m_insertOperationStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¹²ı¬ıÿÿÿÿH§‡5
+[squid:S1213B";Move this constructor to comply with Java Code Conventions.(êéÔ¨ùÿÿÿÿH¨‡5
+†squid:S00116+"eRename this field "m_insertDatatTypeStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( ÚÍñıÿÿÿÿH©‡5
+Rsquid:S1172•"1Remove this unused method parameter "dataTypeId".(—æÆ°øÿÿÿÿHª‡5
+Asquid:S1166À"%Either log or rethrow this exception.(É®£H«‡5
+vsquid:S00115$"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ë˜Ü”H¬‡5
+Dsquid:S1148ƒ"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿH­‡5
+Dsquid:S1148Á"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿH®‡5
+Usquid:S1854œ"9Remove this useless assignment to local variable "index".(íãÒ¯H¯‡5
+Dsquid:S1148Ô"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿH°‡5
+–squid:S001162"uRename this field "m_getOperationInfosByDataTypeNameStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(äñ„ıüÿÿÿÿH±‡5
+‰squid:S001165"hRename this field "m_getDataTypesByNameStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ß¶Ç„ıÿÿÿÿH²‡5
+usquid:S3008 "URename this field "m_dbAccess" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·®±çúÿÿÿÿH³‡5
+Asquid:S1166"%Either log or rethrow this exception.(É®£H´‡5
+usquid:S2293Æ"YReplace the type specification in this constructor call with the diamond operator ("<>").(¨ã‘…Hµ‡5
+Dsquid:S1148¤"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿH¶‡5
+Asquid:S1166‚"%Either log or rethrow this exception.(É®£H·‡5
+Asquid:S1166£"%Either log or rethrow this exception.(É®£H¸‡5
+Csquid:S1148f"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿH¹‡5
+Asquid:S1166Œ"%Either log or rethrow this exception.(É®£Hº‡5
+Dsquid:S1148Ÿ"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿH»‡5
+ƒsquid:S001167"gRename this field "m_insertJSOperationStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(øİ¬ÒH¼‡5
+hsquid:S1226ı"LIntroduce a new variable instead of reusing the parameter "dataTypeVersion".(´şöH½‡5
+„squid:S00116,"hRename this field "m_insertDatatTypePicStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸şİ¾H¾‡5
+Asquid:S1166¦"%Either log or rethrow this exception.(É®£H¿‡5
+Dsquid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿHÀ‡5
+Dsquid:S1148®"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿHÁ‡5
+{squid:S00115("ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(àçÿçûÿÿÿÿHÂ‡5
+Dsquid:S1148§"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿHÃ‡5
+@squid:S1166e"%Either log or rethrow this exception.(”ı¾HÄ‡5
+–squid:S001161"uRename this field "m_getOperationInfosByDataTypeInfoStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŞÆªÜşÿÿÿÿHÅ‡5
+<squid:S2131x"Use "Long.toString" instead.(ü‚ò•øÿÿÿÿHÆ‡5
+Asquid:S1166æ"%Either log or rethrow this exception.(É®£HÇ‡5
+Asquid:S1166­"%Either log or rethrow this exception.(É®£HÈ‡5
+xsquid:S00117Ë"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ºÛŠ²ûÿÿÿÿHÉ‡5
+‚squid:S001163"gRename this field "m_getDataTypeByInfoStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êñ–aHÊ‡5
+8squid:S2131Š"Use "Long.toString" instead.(ˆâİHË‡5
+vsquid:S00115#"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(©¢ŠíHÌ‡5
+Asquid:S1166"%Either log or rethrow this exception.(É®£HÍ‡5
+zsquid:S2293î"YReplace the type specification in this constructor call with the diamond operator ("<>").(±ª¢ÁüÿÿÿÿHÎ‡5
+Dsquid:S1148‘"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿHÏ‡5
+<squid:S2131m"Use "Long.toString" instead.(ß¥­®ÿÿÿÿÿHĞ‡5
+{squid:S00115'"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ú¬Ë©üÿÿÿÿHÑ‡5
+‚squid:S001160"fRename this field "m_getOperationInfoStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¦ßœHÒ‡5
+xsquid:S00117¸"VRename this local variable name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ºÛŠ²ûÿÿÿÿHÓ‡5
+†squid:S001164"eRename this field "m_getDataTypeByIdStatement" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(äåş‹ùÿÿÿÿHÔ‡5
+qsquid:S00116*"WRename this field "m_connection" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ã©[HÕ‡5

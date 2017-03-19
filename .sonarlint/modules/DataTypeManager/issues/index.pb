@@ -64,3 +64,9 @@ u
 Esrc/com/nosliw/data/core/imp/resource/js/HAPResourceManagerImpJS.java,c\6\c670151c6350ac9205290a89af21fe9b7ea9feaa
 n
 >src/com/nosliw/data/core/imp/resource/js/io/HAPJSImporter.java,f\4\f4d909c0efcc7c72c43ddfcda0ad82b058d379dd
+^
+.src/com/nosliw/data/core/imp/operation.out.xml,2\5\25a4ac15c61b701d010c143277953cf7af43b569
+d
+4src/com/nosliw/data/core/imp/HAPRelationshipImp.java,6\d\6d95216ec298b8fc700339806ae6a273dc0d77bb
+h
+8src/com/nosliw/data/core/imp/HAPRelationshipPathImp.java,4\d\4dcb5474bd1fdafe65466d358c9e01b9d2a59cc0
