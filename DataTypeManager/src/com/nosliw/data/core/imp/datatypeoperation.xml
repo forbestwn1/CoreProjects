@@ -11,19 +11,19 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="sourceDataTypeName" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
+	<property name="sourceDataTypeName" dataType="object" subDataType="com.nosliw.data.core.imp.HAPDataTypeIdImp" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(20)"/>
 		</dbColumnInfos>
 	</property>
 
-	<property name="targetDataTypeName" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeIdImp" description="">
+	<property name="targetDataTypeName" dataType="object" subDataType="com.nosliw.data.core.imp.HAPDataTypeIdImp" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(20)"/>
 		</dbColumnInfos>
 	</property>
 	
-	<property name="path" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPRelationshipPathImp" description="">
+	<property name="path" dataType="object" subDataType="com.nosliw.data.core.imp.HAPRelationshipPathImp" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(20)"/>
 		</dbColumnInfos>

@@ -29,6 +29,13 @@ public class HAPRelationshipPath {
 	
 	public void setPath(HAPRelationshipPath path){
 		this.m_segments.clear();
+		
+		if(this.m_segments==null || path==null){
+			int kkkkk = 5555;
+			kkkkk++;
+		}
+		
+		
 		this.m_segments.addAll(path.getSegments());
 	}
 	

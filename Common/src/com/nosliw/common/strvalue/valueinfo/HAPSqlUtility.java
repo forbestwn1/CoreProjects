@@ -225,6 +225,11 @@ public class HAPSqlUtility {
 											literateType = ((HAPValueInfoAtomic)propertyValueInfo).getLiterateType();
 										}
 									}
+									
+									if(columnValue.equals("[]")){
+										int kkkk = 555;
+										kkkk++;
+									}
 									columnObject = HAPLiterateManager.getInstance().stringToValue((String)columnValue, literateType);
 								}
 								setterMethod = obj.getClass().getMethod(setterMethodName, parmClass);

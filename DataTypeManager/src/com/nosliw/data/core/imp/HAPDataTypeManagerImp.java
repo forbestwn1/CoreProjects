@@ -24,7 +24,7 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 	private void init(){
 		this.m_dbAccess = HAPDBAccess.getInstance();
 		
-		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeImporterManager.class, new String[]{
+		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeManagerImp.class, new String[]{
 				"datatypedefinition.xml",
 				"datatypeid.xml",
 				"datatypeinfo.xml",
@@ -49,7 +49,8 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 
 	@Override
 	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeId dataTypeInfo, String name) {
-		return this.m_dbAccess.getOperationInfoByName((HAPDataTypeIdImp)dataTypeInfo, name);
+//		return this.m_dbAccess.getOperationInfoByName((HAPDataTypeIdImp)dataTypeInfo, name);
+		return null;
 	}
 	
 	

@@ -1,10 +1,8 @@
 package com.nosliw.data.core.imp.resource.js;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
@@ -12,7 +10,6 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.imp.HAPDataTypeIdImp;
 import com.nosliw.data.core.imp.HAPOperationIdImp;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.imp.resource.HAPResourceIdImp;
@@ -39,7 +36,7 @@ public class HAPResourceManagerImpJS implements HAPResourceManager{
 	private void init(){
 		this.m_dbAccess = HAPDBAccess.getInstance();
 		
-		HAPValueInfoManager.getInstance().importFromXML(HAPJSImporter.class, new String[]{
+		HAPValueInfoManager.getInstance().importFromXML(HAPResourceManagerImpJS.class, new String[]{
 				"jsoperation.xml",
 				"jsresourcedependency.xml"
 		});

@@ -10,7 +10,9 @@ import com.nosliw.data.core.HAPRelationshipPath;
 import com.nosliw.data.core.HAPRelationshipPathSegment;
 
 public class HAPRelationshipPathImp extends HAPRelationshipPath implements HAPSerializable {
-
+	
+	public HAPRelationshipPathImp(){}
+	
 	@Override
 	public String toStringValue(HAPSerializationFormat format) {
 		return HAPLiterateManager.getInstance().valueToString(this.m_segments);
@@ -18,7 +20,7 @@ public class HAPRelationshipPathImp extends HAPRelationshipPath implements HAPSe
 
 	@Override
 	public boolean buildObject(Object value, HAPSerializationFormat format) {
-		this.m_segments = (List<HAPRelationshipPathSegment>)HAPLiterateManager.getInstance().stringToValue((String)value, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, "com.nosliw.data.core.HAPRelationshipPathSegment");
+		this.m_segments = (List<HAPRelationshipPathSegment>)HAPLiterateManager.getInstance().stringToValue((String)value, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, HAPRelationshipPathSegment.class.getName());
 		return true;
 	} 
 
