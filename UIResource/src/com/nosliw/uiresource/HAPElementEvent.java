@@ -1,17 +1,15 @@
 package com.nosliw.uiresource;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 
 /*
  * store 
  */
-public class HAPElementEvent implements HAPSerializable{
+public class HAPElementEvent extends HAPSerializableImp{
 	//ui id that this event apply to
 	private String m_uiId;
 
@@ -33,12 +31,11 @@ public class HAPElementEvent implements HAPSerializable{
 	}
 
 	@Override
-	public String toStringValue(String format) {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(HAPAttributeConstant.ELEMENTEVENT_UIID, this.m_uiId);
 		jsonMap.put(HAPAttributeConstant.ELEMENTEVENT_EVENT, this.m_event);
 		jsonMap.put(HAPAttributeConstant.ELEMENTEVENT_FUNCTION, this.m_function);
 		jsonMap.put(HAPAttributeConstant.ELEMENTEVENT_SELECTION, this.m_selection);
-		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
+	
 }

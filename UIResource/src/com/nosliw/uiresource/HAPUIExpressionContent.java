@@ -1,22 +1,19 @@
 package com.nosliw.uiresource;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPSerializable;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPJsonUtility;
-import com.nosliw.data.HAPData;
-import com.nosliw.data1.HAPDataTypeManager;
+import com.nosliw.data.core.HAPDataTypeManager;
 
 /*
  * class that 
  */
-public class HAPUIExpressionContent implements HAPSerializable{
+public class HAPUIExpressionContent extends HAPSerializableImp{
 
 	private String m_uiId;
 	
@@ -47,16 +44,9 @@ public class HAPUIExpressionContent implements HAPSerializable{
 
 	protected HAPDataTypeManager getDataTypeManager(){ return this.m_dataTypeMan; }
 
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap){
-		jsonMap.put(HAPAttributeConstant.UIEXPRESSIONCONTENT_UIID, this.m_uiId);
-		jsonMap.put(HAPAttributeConstant.UIEXPRESSIONCONTENT_UIEXPRESSIONELEMENTS, HAPJsonUtility.getListObjectJson(this.m_contentElements));
-	}
-	
 	@Override
-	public String toStringValue(String format) {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		Map<String, Class> jsonTypeMap = new LinkedHashMap<String, Class>();
-		this.buildJsonMap(jsonMap, jsonTypeMap);
-		return HAPJsonUtility.buildMapJson(jsonMap);
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(HAPAttributeConstant.UIEXPRESSIONCONTENT_UIID, this.m_uiId);
+		jsonMap.put(HAPAttributeConstant.UIEXPRESSIONCONTENT_UIEXPRESSIONELEMENTS, HAPJsonUtility.buildJson(this.m_contentElements, HAPSerializationFormat.JSON_FULL));
 	}
 }

@@ -1,8 +1,8 @@
-package com.nosliw.data.core.imp.resource;
+package com.nosliw.data.core.imp.runtime;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResourceId;
 
 public class HAPResourceIdImp extends HAPStringableValueEntity implements HAPResourceId{
 

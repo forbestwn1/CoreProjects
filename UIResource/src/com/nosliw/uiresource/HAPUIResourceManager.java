@@ -6,12 +6,14 @@ import java.util.Map;
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
-import com.nosliw.data1.HAPDataTypeManager;
+import com.nosliw.data.core.HAPDataTypeManager;
 
-public class HAPUIResourceManager implements HAPSerializable{
+public class HAPUIResourceManager extends HAPSerializableImp{
 
 	private Map<String, HAPUIResource> m_uiResource;
 	
@@ -74,14 +76,12 @@ public class HAPUIResourceManager implements HAPSerializable{
 	}
 	
 	@Override
-	public String toStringValue(String format) {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		for(String name : this.m_uiResource.keySet()){
-			jsonMap.put(name, this.m_uiResource.get(name).toStringValue(format));
+			jsonMap.put(name, this.m_uiResource.get(name).toStringValue(HAPSerializationFormat.JSON_FULL));
 		}
-		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
-	
+		
 	@Override
 	public String toString(){ return this.toStringValue(HAPSerializationFormat.JSON); }
 

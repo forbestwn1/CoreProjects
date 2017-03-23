@@ -3,9 +3,7 @@ package com.nosliw.uiresource;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.data.HAPData;
-import com.nosliw.data1.HAPDataTypeManager;
-
+import com.nosliw.data.core.HAPDataTypeManager;
 
 public class HAPUIExpressionAttribute extends HAPUIExpressionContent{
 	//attribute name
@@ -19,8 +17,9 @@ public class HAPUIExpressionAttribute extends HAPUIExpressionContent{
 	public void setAttribute(String attr){this.m_attribute=attr;}
 	public String getAttribute(){return this.m_attribute;}
 
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class> jsonTypeMap){
-		super.buildJsonMap(jsonMap, jsonTypeMap);
-		jsonMap.put(HAPAttributeConstant.UIEXPRESSIONCONTENT_ATTRIBUTE, this.m_attribute	);
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(HAPAttributeConstant.UIEXPRESSIONCONTENT_ATTRIBUTE, this.m_attribute);
 	}
 }

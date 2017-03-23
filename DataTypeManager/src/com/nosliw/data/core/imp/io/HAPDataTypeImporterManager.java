@@ -26,8 +26,8 @@ import com.nosliw.data.core.imp.HAPDataTypePictureImp;
 import com.nosliw.data.core.imp.HAPOperationImp;
 import com.nosliw.data.core.imp.HAPOperationVarInfoImp;
 import com.nosliw.data.core.imp.HAPRelationshipImp;
-import com.nosliw.data.core.imp.resource.js.HAPResourceManagerImpJS;
-import com.nosliw.data.core.imp.resource.js.io.HAPJSImporter;
+import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerImpJS;
+import com.nosliw.data.core.imp.runtime.js.io.HAPJSImporter;
 
 public class HAPDataTypeImporterManager {
 	

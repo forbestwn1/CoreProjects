@@ -25,10 +25,8 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
-import com.nosliw.data.HAPData;
-import com.nosliw.data.expression1.HAPExpression;
-import com.nosliw.data.expression1.HAPExpressionInfo;
-import com.nosliw.data1.HAPDataTypeManager;
+import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataTypeManager;
 
 /*
  * This is a utility class that process ui resource file and create ui resource object
@@ -285,13 +283,6 @@ public class HAPUIResourceProcessor {
 				removes.add(childEle);
 			}
 		}
-/*		
-		Elements scriptEles = ele.getElementsByTag(HAPConstant.UIRESOURCE_TAG_SCRIPT);
-		for(int i=0; i<scriptEles.size(); i++){
-			processJSBlock(scriptEles.get(i), resource);
-			removes.add(scriptEles.get(i));
-		}
-*/		
 		//remove script ele from doc
 		for(Element remove : removes)		remove.remove();
 	}
@@ -348,28 +339,6 @@ public class HAPUIResourceProcessor {
 		datas.put(name, out);
 		return out;
 	}
-	
-	/*
-	 * process constant definition
-	 */
-//	private void processConstantDefinition(Element ele, HAPUIResourceBasic resource){
-//		try{
-//			String content = ele.html();
-//			
-//			JSONObject defsJson = new JSONObject(content);
-//			Iterator<String> defNames = defsJson.keys();
-//			while(defNames.hasNext()){
-//				String defName = defNames.next();
-//				JSONObject defJson = defsJson.getJSONObject(defName);
-//				HAPData data = this.getDataTypeManager().parseJson(defJson, null, null);
-//				resource.addConstant(defName, data);
-//			}
-//		}
-//		catch(Exception e){
-//			e.printStackTrace();
-//		}
-//	}
-	
 	
 	/*
 	 * process a tag element 

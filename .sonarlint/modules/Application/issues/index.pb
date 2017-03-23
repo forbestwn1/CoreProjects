@@ -7,3 +7,7 @@ h
 8WebContent/js/generated/NOSLIWATCOMMONTRIBUTECONSTANT.js,2\6\26726204436cf1b5cc299b6a2033c476fb847e8b
 \
 ,src/com/nosliw/app/test/HAPInstanceTest.java,b\b\bb8d26abc0c15d4993683cf98e443ff774756267
+p
+@src/com/nosliw/app/instance/HAPApplicationUIResourceManager.java,9\0\907cc36233fa62372a3af96e9d61aa94cab68c16
+g
+7src/com/nosliw/app/instance/HAPApplicationInstance.java,6\d\6d3a12a1289f95d7303e1d34be53618c12cc4007

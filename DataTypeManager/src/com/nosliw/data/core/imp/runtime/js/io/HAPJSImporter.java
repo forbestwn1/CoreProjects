@@ -1,4 +1,4 @@
-package com.nosliw.data.core.imp.resource.js.io;
+package com.nosliw.data.core.imp.runtime.js.io;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,11 +23,11 @@ import com.nosliw.data.core.imp.HAPDataTypeIdImp;
 import com.nosliw.data.core.imp.HAPDataTypeVersionImp;
 import com.nosliw.data.core.imp.HAPOperationIdImp;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
-import com.nosliw.data.core.imp.resource.HAPResourceIdImp;
-import com.nosliw.data.core.imp.resource.js.HAPJSOperation;
-import com.nosliw.data.core.imp.resource.js.HAPJSResourceDependency;
-import com.nosliw.data.core.imp.resource.js.HAPResourceManagerImpJS;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.imp.runtime.HAPResourceIdImp;
+import com.nosliw.data.core.imp.runtime.js.HAPJSOperation;
+import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
+import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerImpJS;
+import com.nosliw.data.core.runtime.HAPResourceId;
 
 public class HAPJSImporter {
 

@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -13,7 +15,7 @@ import com.nosliw.common.utils.HAPJsonUtility;
  * 		context name
  * 		path
  */
-public class HAPContextVariable  implements HAPSerializable{
+public class HAPContextVariable extends HAPSerializableImp{
 
 	//context name
 	private String m_name;
@@ -50,10 +52,9 @@ public class HAPContextVariable  implements HAPSerializable{
 	}
 
 	@Override
-	public String toStringValue(String format) {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(HAPAttributeConstant.CONTEXTVARIABLE_NAME, this.m_name);
 		jsonMap.put(HAPAttributeConstant.CONTEXTVARIABLE_PATH, this.m_path);
-		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
+
 }

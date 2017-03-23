@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
@@ -23,9 +24,9 @@ public class HAPUIResource extends HAPUIResourceBasic{
 
 	
 	@Override
-	protected void buildBasicJsonMap(Map<String, String> jsonMap, String format){
-		super.buildBasicJsonMap(jsonMap, format);
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_UITAGLIBS, HAPJsonUtility.getSetObjectJson(this.m_uiTagLibs));
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(HAPAttributeConstant.UIRESOURCE_UITAGLIBS, HAPJsonUtility.buildJson(this.m_uiTagLibs, HAPSerializationFormat.JSON_FULL));
 	}
 		
 	@Override

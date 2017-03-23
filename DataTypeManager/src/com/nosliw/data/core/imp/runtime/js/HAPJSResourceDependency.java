@@ -1,11 +1,11 @@
-package com.nosliw.data.core.imp.resource.js;
+package com.nosliw.data.core.imp.runtime.js;
 
 import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
-import com.nosliw.data.core.imp.resource.HAPResourceIdImp;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.imp.runtime.HAPResourceIdImp;
+import com.nosliw.data.core.runtime.HAPResourceId;
 
 public class HAPJSResourceDependency  extends HAPStringableValueEntityWithID{
 

@@ -1,11 +1,11 @@
-package com.nosliw.data.core.imp.resource;
+package com.nosliw.data.core.imp.runtime;
 
 import java.util.List;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPInfo;
-import com.nosliw.data.core.resource.HAPResource;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResource;
+import com.nosliw.data.core.runtime.HAPResourceId;
 
 public class HAPResourceImp implements HAPResource{
 

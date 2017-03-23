@@ -1,4 +1,4 @@
-package com.nosliw.data.core.imp.resource.js;
+package com.nosliw.data.core.imp.runtime.js;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,13 +12,13 @@ import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.imp.HAPOperationIdImp;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
-import com.nosliw.data.core.imp.resource.HAPResourceIdImp;
-import com.nosliw.data.core.imp.resource.HAPResourceImp;
-import com.nosliw.data.core.imp.resource.js.io.HAPJSImporter;
-import com.nosliw.data.core.resource.HAPResource;
-import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceManager;
-import com.nosliw.data.core.resource.HAPRuntimeInfo;
+import com.nosliw.data.core.imp.runtime.HAPResourceIdImp;
+import com.nosliw.data.core.imp.runtime.HAPResourceImp;
+import com.nosliw.data.core.imp.runtime.js.io.HAPJSImporter;
+import com.nosliw.data.core.runtime.HAPResource;
+import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResourceManager;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPResourceManagerImpJS implements HAPResourceManager{
 

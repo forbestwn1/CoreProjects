@@ -4,7 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Common"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ExpressionParser"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/DataDefinition"/>
 	<classpathentry exported="true" kind="lib" path="libs/jsoup-1.8.3.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
@@ -15,5 +14,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/Core"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

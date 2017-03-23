@@ -3,6 +3,7 @@ package com.nosliw.uiresource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 
@@ -35,15 +36,15 @@ public class HAPUITag extends HAPUIResourceBasic{
 	}
 	
 	@Override
-	protected void buildBasicJsonMap(Map<String, String> jsonMap, String format){
-		super.buildBasicJsonMap(jsonMap, format);
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
 		
 		jsonMap.put(HAPAttributeConstant.UIRESOURCE_TAGNAME, this.m_tagName);
 		
 		Map<String, String> dataBindingJsons = new LinkedHashMap<String, String>();
 		for(String name : this.m_dataBindings.keySet()){
 			HAPDataBinding dataBinding = this.m_dataBindings.get(name);
-			dataBindingJsons.put(name, dataBinding.toStringValue(format));
+			dataBindingJsons.put(name, dataBinding.toStringValue(HAPSerializationFormat.JSON_FULL));
 		}
 		jsonMap.put(HAPAttributeConstant.UIRESOURCE_DATABINDINGS, HAPJsonUtility.buildMapJson(dataBindingJsons));
 	}

@@ -1,15 +1,14 @@
 package com.nosliw.uiresource;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPSerializable;
-import com.nosliw.common.utils.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 
 /*
  * store data binding information
  */
-public class HAPDataBinding implements HAPSerializable{
+public class HAPDataBinding extends HAPSerializableImp{
 
 	//name of data binding
 	private String m_name;
@@ -26,12 +25,8 @@ public class HAPDataBinding implements HAPSerializable{
 	public HAPContextVariable getContextVariablePath(){ return this.m_variable; }
 	
 	@Override
-	public String toStringValue(String format) {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		
-		jsonMap.put(HAPAttributeConstant.DATABINDING_VARIABLE, this.m_variable.toStringValue(format));
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(HAPAttributeConstant.DATABINDING_VARIABLE, this.m_variable.toStringValue(HAPSerializationFormat.JSON_FULL));
 		jsonMap.put(HAPAttributeConstant.CONTEXTVARIABLE_NAME, this.m_name);
-		
-		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 }

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.resource;
+package com.nosliw.data.core.runtime;
 
 import com.nosliw.common.constant.HAPAttribute;
 
