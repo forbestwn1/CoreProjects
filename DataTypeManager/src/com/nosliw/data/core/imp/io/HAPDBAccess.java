@@ -31,9 +31,9 @@ import com.nosliw.data.core.imp.HAPOperationIdImp;
 import com.nosliw.data.core.imp.HAPOperationImp;
 import com.nosliw.data.core.imp.HAPOperationVarInfoImp;
 import com.nosliw.data.core.imp.HAPRelationshipImp;
-import com.nosliw.data.core.imp.runtime.HAPResourceIdImp;
 import com.nosliw.data.core.imp.runtime.js.HAPJSOperation;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
+import com.nosliw.data.core.runtime.HAPResourceId;
 
 public class HAPDBAccess extends HAPConfigurableImp {
 
@@ -166,7 +166,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		return out;
 	}
 
-	public List<HAPJSResourceDependency> getJSResourceDependency(HAPResourceIdImp resourceId){
+	public List<HAPJSResourceDependency> getJSResourceDependency(HAPResourceId resourceId){
 		String resourceIdStr = resourceId.toStringValue(HAPSerializationFormat.LITERATE);
 		return this.queryEntitysFromDB(
 				HAPJSResourceDependency._VALUEINFO_NAME, 

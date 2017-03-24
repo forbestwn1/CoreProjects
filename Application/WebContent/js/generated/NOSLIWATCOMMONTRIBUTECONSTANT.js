@@ -170,5 +170,7 @@ var NOSLIWATCOMMONTRIBUTECONSTANT=
   "STRINGABLEVALUE_RESOLVED": "resolved",
   "STRINGABLEVALUE_VALUE": "atomic_value",
   "STRINGABLEVALUE_PROPERTIES": "properties",
-  "STRINGABLEVALUE_ID": "id"
+  "STRINGABLEVALUE_ID": "id",
+  "null_ID": "id",
+  "null_TYPE": "type"
 };

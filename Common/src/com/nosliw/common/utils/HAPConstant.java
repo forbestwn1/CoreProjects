@@ -381,6 +381,11 @@ public class HAPConstant {
 
 
 
+		public static final String RUNTIME_LANGUAGE_JS = "javascript";
+		public static final String RUNTIME_ENVIRONMENT_RHINO = "rhino";
+
+
+
 		public static final String CATEGARY_NAME = "CATEGARY_NAME";
 
 

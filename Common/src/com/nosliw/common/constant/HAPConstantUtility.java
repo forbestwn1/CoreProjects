@@ -33,12 +33,14 @@ public class HAPConstantUtility {
 		}
 		else{
 			Class superCs = cs.getSuperclass();
-			out = getBaseName(superCs);
-			if(HAPBasicUtility.isStringEmpty(out)){
-				Class[] infs = cs.getInterfaces();
-				for(Class inf : infs){
-					out = getBaseName(inf);
-					if(HAPBasicUtility.isStringNotEmpty(out))  break;
+			if(superCs!=null){
+				out = getBaseName(superCs);
+				if(HAPBasicUtility.isStringEmpty(out)){
+					Class[] infs = cs.getInterfaces();
+					for(Class inf : infs){
+						out = getBaseName(inf);
+						if(HAPBasicUtility.isStringNotEmpty(out))  break;
+					}
 				}
 			}
 		}

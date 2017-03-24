@@ -16,12 +16,6 @@ import com.nosliw.data.core.expression.HAPExpression;
 public interface HAPResourceManager {
 
 	/**
-	 * what runtime env this resource manager represent
-	 * @return
-	 */
-	public HAPRuntimeInfo getRuntimeInfo();
-	
-	/**
 	 * Discover resources required for data type operation
 	 * @param dataTypeInfo
 	 * @param dataOpInfo

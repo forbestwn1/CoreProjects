@@ -16,14 +16,12 @@ import org.mozilla.javascript.Scriptable;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.HAPDataTypeIdImp;
 import com.nosliw.data.core.imp.HAPDataTypeVersionImp;
 import com.nosliw.data.core.imp.HAPOperationIdImp;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
-import com.nosliw.data.core.imp.runtime.HAPResourceIdImp;
 import com.nosliw.data.core.imp.runtime.js.HAPJSOperation;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerImpJS;
@@ -97,7 +95,7 @@ public class HAPJSImporter {
                 	out.add(new HAPJSOperation(script, operationId, dataTypeId, opName));
 
                 	List<HAPResourceId> resources = this.discoverResources(script);
-                	dependency.add(new HAPJSResourceDependency(new HAPResourceIdImp(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION, new HAPOperationIdImp(dataTypeId, opName).toStringValue(HAPSerializationFormat.LITERATE)), resources));
+                	dependency.add(new HAPJSResourceDependency(new HAPResourceId(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION, new HAPOperationIdImp(dataTypeId, opName).toStringValue(HAPSerializationFormat.LITERATE)), resources));
             	}
             }
         } finally {
@@ -132,7 +130,7 @@ public class HAPJSImporter {
 				String[] segs = line.split("\"");
 				String dataType = segs[1];
 				String operation = segs[3];
-				HAPResourceIdImp resource = new HAPResourceIdImp(dataType, operation);
+				HAPResourceId resource = new HAPResourceId(dataType, operation);
 				out.add(resource);
 			}
 		}
