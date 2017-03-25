@@ -10,7 +10,7 @@
 	</property>
 
 	<property name="constants" type="map" key="name" description="">
-		<child dataType="object" subDataType="com.nosliw.data.core.HAPDataWrapperJson"></child>
+		<child dataType="object" subDataType="com.nosliw.data.core.HAPDataWrapper"></child>
 	</property>
 
 	<property name="variables" type="map" key="name" description="">

@@ -16,6 +16,7 @@ public class JSTest {
 
 	public static void main(String[] args) throws JavaScriptException{
 		
+		
 		InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(JSTest.class, "operations.js");
 		String content = HAPFileUtility.readFile(inputStream);
 		

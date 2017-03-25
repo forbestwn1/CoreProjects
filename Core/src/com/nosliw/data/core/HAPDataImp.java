@@ -54,7 +54,10 @@ public abstract class HAPDataImp extends HAPSerializableImp implements HAPData{
 	}
 
 	@Override
-	protected boolean buildObjectByJson(Object json){		return this.buildObjectByFullJson(json);	}
+	protected boolean buildObjectByJson(Object json){		
+		this.m_value = this.buildObjectVale(json, HAPSerializationFormat.JSON_FULL);
+		return true;
+	}
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
