@@ -8,9 +8,10 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public class HAPDataUtility {
 
-	public static HAPData buildDataWrapperJson(JSONObject jsonObj){
-		HAPData out = (HAPData)HAPSerializeManager.getInstance().buildObject(HAPDataWrapperJson.class.getName(), jsonObj, HAPSerializationFormat.JSON_FULL); 
-		return out;
+	public static HAPDataWrapper buildDataWrapper(String strValue){
+		HAPDataWrapper wrapper = new HAPDataWrapper();
+		if(wrapper.buildDataObject(strValue, null))  return wrapper;
+		return null;
 	}
 
 	public static HAPDataTypeCriteria buildDataTypeCriteriaFromJson(JSONObject jsonObj){

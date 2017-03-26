@@ -6,7 +6,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataWrapperLiterate;
+import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
@@ -23,7 +23,7 @@ public class HAPOperandConstant extends HAPOperandImp{
 	
 	public HAPOperandConstant(String constantStr, HAPDataTypeCriteriaManager criteriaMan){
 		super(HAPConstant.EXPRESSION_OPERAND_CONSTANT, criteriaMan);
-		this.m_data = (HAPData)HAPSerializeManager.getInstance().buildObject(HAPDataWrapperLiterate.class.getName(), constantStr, HAPSerializationFormat.LITERATE);
+		this.m_data = HAPDataUtility.buildDataWrapper(constantStr);
 		if(this.m_data==null){
 			//not a valid data literate, then it is a constant name
 			this.m_name = constantStr;
