@@ -8,5 +8,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="libs/rhino-1.7.7.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

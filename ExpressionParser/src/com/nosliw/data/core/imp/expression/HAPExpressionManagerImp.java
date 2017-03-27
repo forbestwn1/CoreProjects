@@ -1,6 +1,5 @@
 package com.nosliw.data.core.imp.expression;
 
-import java.util.List;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -13,6 +12,8 @@ import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionInfo;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPExpressionParser;
+import com.nosliw.data.core.expression.HAPExpressionTask;
+import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPOperandConstant;
 import com.nosliw.data.core.expression.HAPOperandReference;
@@ -92,7 +93,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	}
 
 	private void processConstants(HAPOperand operand, final HAPExpressionInfo expressionInfo){
-		this.processAllOperand(operand, null, new HAPExpressionTask(){
+		HAPExpressionUtility.processAllOperand(operand, null, new HAPExpressionTask(){
 
 			@Override
 			public boolean processOperand(HAPOperand operand, Object data) {
@@ -116,7 +117,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	}
 	
 	private void processReferences(HAPOperand expressionOperand, Map<String, String> varsMapping, final HAPExpressionInfo expressionInfo) {
-		this.processAllOperand(expressionOperand, varsMapping, new HAPExpressionTask(){
+		HAPExpressionUtility.processAllOperand(expressionOperand, varsMapping, new HAPExpressionTask(){
 			@Override
 			public boolean processOperand(HAPOperand operand, Object data) {
 				Map<String, String> varMap = (Map<String, String>)data;
@@ -167,15 +168,6 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		
 	}
 	
-	private void processAllOperand(HAPOperand operand, Object data, HAPExpressionTask task){
-		if(task.processOperand(operand, data)){
-			List<HAPOperand> children = operand.getChildren();
-			for(HAPOperand child : children){
-				this.processAllOperand(child, data, task);
-			}
-			task.postPross(operand, data);
-		}
-	}
 	
 	protected HAPExpressionParser getExpressionParser(){		return this.m_expressionParser;	}
 	protected HAPDataTypeCriteriaManager getCriteriaManager(){   return this.m_criteriaMan;   }

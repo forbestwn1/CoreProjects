@@ -571,6 +571,7 @@
 			<definition type="space"/>
 			<definition name="DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION" value="operation"/>
 			<definition name="DATAOPERATION_RESOURCE_TYPE_DATATYPE" value="datatype"/>
+			<definition name="DATAOPERATION_RESOURCE_TYPE_LIBRARY" value="library"/>
 
 			<definition type="space"/>
 			<definition name="RUNTIME_LANGUAGE_JS" value="javascript"/>

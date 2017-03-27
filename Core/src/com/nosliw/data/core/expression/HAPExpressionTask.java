@@ -1,6 +1,4 @@
-package com.nosliw.data.core.imp.expression;
-
-import com.nosliw.data.core.expression.HAPOperand;
+package com.nosliw.data.core.expression;
 
 public interface HAPExpressionTask {
 

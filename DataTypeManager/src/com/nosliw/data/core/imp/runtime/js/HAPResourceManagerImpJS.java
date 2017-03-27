@@ -60,7 +60,6 @@ public class HAPResourceManagerImpJS implements HAPResourceManager{
 	public Set<HAPResourceId> discoverResourceRequirement(HAPExpression expression) {
 		
 		
-		// TODO Auto-generated method stub
 		return null;
 	}
 

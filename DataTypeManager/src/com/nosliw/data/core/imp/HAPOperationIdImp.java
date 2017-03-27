@@ -1,17 +1,14 @@
 package com.nosliw.data.core.imp;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeVersion;
+import com.nosliw.data.core.HAPOperationId;
 
-public class HAPOperationIdImp extends HAPDataTypeIdImp{
+public class HAPOperationIdImp extends HAPDataTypeIdImp implements HAPOperationId{
 
-	@HAPAttribute
-	public static String OPERATION = "operation";
-	
 	public HAPOperationIdImp(String name, String version, String operation){
 		super(name, version);
 		this.setOperation(operation);
@@ -31,7 +28,8 @@ public class HAPOperationIdImp extends HAPDataTypeIdImp{
 		super(dataTypeId.getName(), dataTypeId.getVersion());
 		this.setOperation(operation);
 	}
-	
+
+	@Override
 	public String getOperation(){		return this.getAtomicAncestorValueString(OPERATION);	}
 	public void setOperation(String operation){ this.updateAtomicChildStrValue(OPERATION, operation);  }
 	

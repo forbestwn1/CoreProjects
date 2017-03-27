@@ -10,6 +10,7 @@ import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.HAPDataTypeOperation;
+import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -75,6 +76,8 @@ public class HAPOperandOperation extends HAPOperandImp{
 	
 	public HAPDataTypeId getDataTypeId(){   return this.m_dataTypeId; }
 
+	public HAPOperationId getOperationId(){  return null;  }
+	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
