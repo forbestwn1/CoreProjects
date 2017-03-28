@@ -76,7 +76,13 @@ public class HAPOperandOperation extends HAPOperandImp{
 	
 	public HAPDataTypeId getDataTypeId(){   return this.m_dataTypeId; }
 
-	public HAPOperationId getOperationId(){  return null;  }
+	public HAPOperationId getOperationId(){
+		HAPOperationId out = null;
+		if(this.m_dataTypeId!=null){
+			out = new HAPOperationId(this.m_dataTypeId, this.m_operation);
+		}
+		return out;  
+	}
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

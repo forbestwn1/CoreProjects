@@ -39,12 +39,12 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 				"datatyperelationship.xml"
 		});
 		
-		HAPSerializeManager.getInstance().registerClassName(HAPDataTypeId.class.getName(), HAPDataTypeIdImp.class.getName());
+		HAPSerializeManager.getInstance().registerClassName(HAPDataTypeId.class.getName(), HAPDataTypeId.class.getName());
 	}
 	
 	@Override
 	public HAPDataType getDataType(HAPDataTypeId dataTypeInfo) {
-		return this.m_dbAccess.getDataType((HAPDataTypeIdImp)dataTypeInfo);
+		return this.m_dbAccess.getDataType(dataTypeInfo);
 	}
 
 	@Override
@@ -167,10 +167,10 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 	
 	public static void main(String[] args){
 		HAPDataTypeManagerImp man = new HAPDataTypeManagerImp();
-		HAPDataTypeImp dataType = (HAPDataTypeImp)man.getDataType(new HAPDataTypeIdImp("core.url;1.0.0"));
+		HAPDataTypeImp dataType = (HAPDataTypeImp)man.getDataType(new HAPDataTypeId("core.url;1.0.0"));
 		System.out.println(dataType.toString());
 		
-		man.getOperationInfoByName(new HAPDataTypeIdImp("core.url;1.0.0"), "host");
+		man.getOperationInfoByName(new HAPDataTypeId("core.url;1.0.0"), "host");
 	}
 	
 }

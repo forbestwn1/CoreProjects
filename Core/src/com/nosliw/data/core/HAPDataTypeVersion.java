@@ -2,7 +2,9 @@ package com.nosliw.data.core;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.utils.HAPBasicUtility;
 
 /**
  * Every data type have a version with it
@@ -15,7 +17,7 @@ import com.nosliw.common.serialization.HAPSerializable;
  * When a data type change involved operation change, then new minor version should be introduced 
  */
 @HAPEntityWithAttribute(baseName="DATATYPEVERSION")
-public interface HAPDataTypeVersion extends HAPSerializable{
+public class HAPDataTypeVersion extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String MAJOR = "major";
@@ -26,11 +28,68 @@ public interface HAPDataTypeVersion extends HAPSerializable{
 	@HAPAttribute
 	public static String REVISION = "revision";
 
-	String getMajor();
+	@HAPAttribute
+	public static String NAME = "name";
 	
-	String getMinor();
+	private String m_major;
 	
-	String getRevision();
+	private String m_minor;
 	
-	HAPDataTypeVersion cloneVersion();
+	private String m_revision;
+
+	private String m_name;
+	
+	public HAPDataTypeVersion(){
+		this.m_major = "0";
+		this.m_minor = "0";
+	}
+	
+	public HAPDataTypeVersion(String literate){
+		this.buildObjectByLiterate(literate);
+	}
+	
+	public String getName(){	
+		if(HAPBasicUtility.isStringEmpty(this.m_name)){
+			this.m_name = this.buildLiterate();
+		}
+		return this.m_name;
+	}
+	public void setName(String name){ this.buildObjectByLiterate(name); }
+	
+	public String getMajor(){  return this.m_major;	}
+	private void setMajor(String major){  this.m_major = major;  }
+	public String getMinor(){ return this.m_minor;	}
+	private void setMinor(String minor){  this.m_minor = minor;  }
+	public String getRevision(){  return this.m_revision;	}
+	private void setRevision(String revision){  this.m_revision = revision;  }
+
+	@Override
+	protected boolean buildObjectByLiterate(String literateValue){
+		this.m_name = literateValue;
+
+		String[] segs = HAPNamingConversionUtility.parsePaths(literateValue);
+		if(segs.length>=3) this.setRevision(segs[2]);   
+		if(segs.length>=2) this.setMinor(segs[1]); 
+		if(segs.length>=1) this.setMajor(segs[0]); 
+		return true;
+	}
+
+	@Override
+	protected String buildLiterate(){
+		String out = this.m_name;
+		if(HAPBasicUtility.isStringEmpty(out)){
+			out = HAPNamingConversionUtility.cascadeComponentPath(new String[]{String.valueOf(this.getMajor()), String.valueOf(this.getMinor()), this.getRevision()});
+			this.m_name = out;
+		}
+		return out; 
+	}
+	
+	public HAPDataTypeVersion cloneVersion(){
+		HAPDataTypeVersion out = new HAPDataTypeVersion();
+		out.m_major = this.m_major;
+		out.m_minor = this.m_minor;
+		out.m_revision = this.m_revision;
+		out.m_name = this.m_name;
+		return out;
+	}
 }

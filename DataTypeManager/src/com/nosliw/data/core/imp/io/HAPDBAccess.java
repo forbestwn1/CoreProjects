@@ -19,15 +19,14 @@ import com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo;
 import com.nosliw.common.strvalue.valueinfo.HAPSqlUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.imp.HAPDataTypeFamilyImp;
-import com.nosliw.data.core.imp.HAPDataTypeIdImp;
 import com.nosliw.data.core.imp.HAPDataTypeImp;
 import com.nosliw.data.core.imp.HAPDataTypeImpLoad;
 import com.nosliw.data.core.imp.HAPDataTypeOperationImp;
 import com.nosliw.data.core.imp.HAPDataTypePictureImp;
-import com.nosliw.data.core.imp.HAPOperationIdImp;
 import com.nosliw.data.core.imp.HAPOperationImp;
 import com.nosliw.data.core.imp.HAPOperationVarInfoImp;
 import com.nosliw.data.core.imp.HAPRelationshipImp;
@@ -116,7 +115,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB(HAPDataTypeOperationImp._VALUEINFO_NAME, "type=null && sourceDataTypeName=?", new Object[]{dataTypeId.getName()});
 	}
 	
-	public HAPDataTypeFamilyImp getDataTypeFamily(HAPDataTypeIdImp dataTypeId){
+	public HAPDataTypeFamilyImp getDataTypeFamily(HAPDataTypeId dataTypeId){
 		HAPDataTypeFamilyImp out = null;
 		
 		try {
@@ -141,7 +140,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		return out;
 	}
 
-	public HAPDataTypePictureImp getDataTypePicture(HAPDataTypeIdImp dataTypeId){
+	public HAPDataTypePictureImp getDataTypePicture(HAPDataTypeId dataTypeId){
 		HAPDataTypePictureImp out = null;
 		
 		try {
@@ -174,7 +173,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 				new Object[]{resourceIdStr});
 	}
 	
-	public HAPJSOperation getJSOperation(HAPOperationIdImp operationId){
+	public HAPJSOperation getJSOperation(HAPOperationId operationId){
 		return (HAPJSOperation)this.queryEntityFromDB(
 				HAPJSOperation._VALUEINFO_NAME, 
 				HAPJSOperation.DATATYPENAME+"=? AND +"+HAPJSOperation.OPERATIONNAME+"=?",
@@ -182,11 +181,11 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		
 	}
 	
-	public List<HAPOperationImp> getOperationInfosByDataType(HAPDataTypeIdImp dataTypeName){
+	public List<HAPOperationImp> getOperationInfosByDataType(HAPDataTypeId dataTypeName){
 		return (List<HAPOperationImp>)this.queryEntitysFromDB(HAPOperationImp._VALUEINFO_NAME, "dataTypeName=?", new Object[]{dataTypeName.getFullName()});
 	}
 	
-	public HAPOperationImp getOperationInfoByName(HAPDataTypeIdImp dataTypeName, String name) {
+	public HAPOperationImp getOperationInfoByName(HAPDataTypeId dataTypeName, String name) {
 		return (HAPOperationImp)this.queryEntityFromDB(HAPOperationImp._VALUEINFO_NAME, "name=? AND dataTypeName=?", new Object[]{name, dataTypeName.getFullName()});
 	}
 	
@@ -196,7 +195,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	
 	public HAPDataTypeImp getDataType(HAPDataTypeId dataTypeInfo) {
 		return (HAPDataTypeImp)this.queryEntityFromDB(HAPDataTypeImpLoad._VALUEINFO_NAME, "name=? AND versionFullName=?",
-				new Object[]{dataTypeInfo.getName(), HAPLiterateManager.getInstance().valueToString(((HAPDataTypeIdImp)dataTypeInfo).getVersionFullName())});
+				new Object[]{dataTypeInfo.getName(), HAPLiterateManager.getInstance().valueToString(dataTypeInfo.getVersionFullName())});
 	}
 	
 	

@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.common.strvalue.HAPStringableValueMap;
+import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPInfo;
 import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPOperationOutInfo;
@@ -26,8 +27,8 @@ public class HAPOperationImp extends HAPStringableValueEntityWithID implements H
 	@Override
 	public HAPInfo getInfo() {		return (HAPInfo)this.getAtomicAncestorValueObject(INFO, HAPInfo.class);  }
 
-	public HAPDataTypeIdImp getDataTypeName(){ return (HAPDataTypeIdImp)this.getAtomicAncestorValueObject(DATATYPNAME, HAPDataTypeIdImp.class); }
-	public void setDataTypeName(HAPDataTypeIdImp dataTypeId){  this.updateAtomicChildObjectValue(DATATYPNAME, dataTypeId);  }
+	public HAPDataTypeId getDataTypeName(){ return (HAPDataTypeId)this.getAtomicAncestorValueObject(DATATYPNAME, HAPDataTypeId.class); }
+	public void setDataTypeName(HAPDataTypeId dataTypeId){  this.updateAtomicChildObjectValue(DATATYPNAME, dataTypeId);  }
 	
 	@Override
 	public Map<String, HAPOperationParmInfo> getParmsInfo() {

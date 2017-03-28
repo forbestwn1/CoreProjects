@@ -3,7 +3,6 @@ package com.nosliw.data.core.imp.runtime.js;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.imp.HAPDataTypeIdImp;
 
 public class HAPJSOperation extends HAPStringableValueEntityWithID{
 
@@ -37,6 +36,6 @@ public class HAPJSOperation extends HAPStringableValueEntityWithID{
 	public String getOperationName(){  return this.getAtomicAncestorValueString(OPERATIONNAME);  }
 	public void setOperationName(String operationName){  this.updateAtomicChildStrValue(OPERATIONNAME, operationName);  }
 	
-	public HAPDataTypeId getDataTypeName() {	return (HAPDataTypeIdImp)this.getAtomicAncestorValueObject(DATATYPENAME, HAPDataTypeIdImp.class);	}
+	public HAPDataTypeId getDataTypeName() {	return (HAPDataTypeId)this.getAtomicAncestorValueObject(DATATYPENAME, HAPDataTypeId.class);	}
 	public void setDataTypeName(HAPDataTypeId dataTypeName){ this.updateAtomicChildObjectValue(DATATYPENAME, dataTypeName); }
 }

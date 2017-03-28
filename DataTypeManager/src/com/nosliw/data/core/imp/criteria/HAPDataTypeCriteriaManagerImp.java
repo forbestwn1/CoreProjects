@@ -9,7 +9,6 @@ import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 import com.nosliw.data.core.imp.HAPDataTypeFamilyImp;
-import com.nosliw.data.core.imp.HAPDataTypeIdImp;
 import com.nosliw.data.core.imp.HAPDataTypePictureImp;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
 
@@ -25,7 +24,7 @@ public class HAPDataTypeCriteriaManagerImp implements HAPDataTypeCriteriaManager
 		
 		if(to!=null){
 			toSet = new HashSet<HAPDataTypeId>();
-			HAPDataTypePictureImp toPic = this.m_dbAccess.getDataTypePicture((HAPDataTypeIdImp)to);
+			HAPDataTypePictureImp toPic = this.m_dbAccess.getDataTypePicture(to);
 			Set<HAPRelationship> relationships = (Set<HAPRelationship>)toPic.getRelationships();
 			for(HAPRelationship relationship : relationships){
 				toSet.add(relationship.getTargetDataTypeName());
@@ -34,7 +33,7 @@ public class HAPDataTypeCriteriaManagerImp implements HAPDataTypeCriteriaManager
 
 		if(from!=null){
 			fromSet = new HashSet<HAPDataTypeId>();
-			HAPDataTypeFamilyImp fromFamily = this.m_dbAccess.getDataTypeFamily((HAPDataTypeIdImp)from);
+			HAPDataTypeFamilyImp fromFamily = this.m_dbAccess.getDataTypeFamily(from);
 			Set<HAPRelationship> relationships = (Set<HAPRelationship>)fromFamily.getRelationships();
 			for(HAPRelationship relationship : relationships){
 				fromSet.add(relationship.getSourceDataTypeName());

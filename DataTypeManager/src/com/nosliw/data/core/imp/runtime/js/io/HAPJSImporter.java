@@ -18,9 +18,9 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.imp.HAPDataTypeIdImp;
-import com.nosliw.data.core.imp.HAPDataTypeVersionImp;
-import com.nosliw.data.core.imp.HAPOperationIdImp;
+import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPDataTypeVersion;
+import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.imp.runtime.js.HAPJSOperation;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
@@ -84,7 +84,7 @@ public class HAPJSImporter {
             NativeObject dataTypeJS = (NativeObject)operationsObjJS.get("dataType");
 			String dataTypeName = (String)dataTypeJS.get("name");
 			String dataTypeVersion = (String)dataTypeJS.get("version");
-			HAPDataTypeIdImp dataTypeId = new HAPDataTypeIdImp(dataTypeName, new HAPDataTypeVersionImp(dataTypeVersion));
+			HAPDataTypeId dataTypeId = new HAPDataTypeId(dataTypeName, new HAPDataTypeVersion(dataTypeVersion));
 			NativeObject operationsJS = (NativeObject)operationsObjJS.get("operations");
             for(Object key : operationsJS.keySet()){
             	String opName = (String)key;
@@ -95,7 +95,7 @@ public class HAPJSImporter {
                 	out.add(new HAPJSOperation(script, operationId, dataTypeId, opName));
 
                 	List<HAPResourceId> resources = this.discoverResources(script);
-                	dependency.add(new HAPJSResourceDependency(new HAPResourceId(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION, new HAPOperationIdImp(dataTypeId, opName).toStringValue(HAPSerializationFormat.LITERATE)), resources));
+                	dependency.add(new HAPJSResourceDependency(new HAPResourceId(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION, new HAPOperationId(dataTypeId, opName).toStringValue(HAPSerializationFormat.LITERATE)), resources));
             	}
             }
         } finally {
@@ -117,7 +117,7 @@ public class HAPJSImporter {
 		}
 	}
 
-	private String getOperationId(HAPDataTypeIdImp dataTypeId, String operation){
+	private String getOperationId(HAPDataTypeId dataTypeId, String operation){
 		return this.m_dbAccess.getOperationInfoByName(dataTypeId, operation).getId();
 	}
 	

@@ -9,8 +9,8 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperation;
+import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.imp.HAPOperationIdImp;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
@@ -47,7 +47,7 @@ public class HAPResourceManagerImpJS implements HAPResourceManager{
 	
 	@Override
 	public Set<HAPResourceId> discoverResourceRequirement(HAPDataTypeId dataTypeId, HAPOperation dataOpInfo) {
-		HAPOperationIdImp operationId = new HAPOperationIdImp(dataTypeId, dataOpInfo.getName());
+		HAPOperationId operationId = new HAPOperationId(dataTypeId, dataOpInfo.getName());
 		HAPResourceId resourceId = new HAPResourceId(
 				HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION, 
 				operationId.toStringValue(HAPSerializationFormat.LITERATE));
@@ -101,7 +101,7 @@ public class HAPResourceManagerImpJS implements HAPResourceManager{
 		switch(resourceType)
 		{
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION:
-			HAPOperationIdImp operationId = (HAPOperationIdImp)HAPSerializeManager.getInstance().buildObject(resourceId.getId(), HAPOperationIdImp.class, HAPSerializationFormat.LITERATE);
+			HAPOperationId operationId = (HAPOperationId)HAPSerializeManager.getInstance().buildObject(resourceId.getId(), HAPOperationId.class, HAPSerializationFormat.LITERATE);
 			HAPJSOperation jsOperation = this.m_dbAccess.getJSOperation(operationId);
 			out = new HAPResource(resourceId, jsOperation, null);
 			break;

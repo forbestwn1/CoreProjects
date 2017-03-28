@@ -36,7 +36,7 @@ public class HAPDataTypeOperationImp extends HAPOperationImp implements HAPRelat
 		this.setOperationId(targetOperation.getId());
 		this.setTargetDataTypeName(targetOperation.getDataTypeName());
 		if(relationship!=null){
-			this.setSourceDataTypeName((HAPDataTypeIdImp)relationship.getSourceDataTypeName());
+			this.setSourceDataTypeName(relationship.getSourceDataTypeName());
 			this.updateAtomicChildObjectValue(PATH, relationship.getPath());
 		}
 		else{
@@ -53,19 +53,19 @@ public class HAPDataTypeOperationImp extends HAPOperationImp implements HAPRelat
 
 	//methods from HAPRelationship
 	@Override
-	public HAPDataTypeId getTargetDataTypeName() {	return (HAPDataTypeIdImp)this.getAtomicAncestorValueObject(TARGETDATATYPENAME, HAPDataTypeIdImp.class);	}
+	public HAPDataTypeId getTargetDataTypeName() {	return (HAPDataTypeId)this.getAtomicAncestorValueObject(TARGETDATATYPENAME, HAPDataTypeId.class);	}
 	@Override
 	public HAPRelationshipPath getPath() {		return (HAPRelationshipPathImp)this.getAtomicAncestorValueObject(PATH, HAPRelationshipPathImp.class);	}
 
-	public void setTargetDataTypeName(HAPDataTypeIdImp dataTypeName){ this.updateAtomicChildObjectValue(TARGETDATATYPENAME, dataTypeName); }
+	public void setTargetDataTypeName(HAPDataTypeId dataTypeName){ this.updateAtomicChildObjectValue(TARGETDATATYPENAME, dataTypeName); }
 	
-	public HAPDataTypeIdImp getSourceDataTypeName(){   return (HAPDataTypeIdImp)this.getAtomicAncestorValueObject(SOURCEDATATYPENAME, HAPDataTypeIdImp.class);  }
-	public void setSourceDataTypeName(HAPDataTypeIdImp dataTypeName){  this.updateAtomicChildObjectValue(SOURCEDATATYPENAME, dataTypeName);  }
+	public HAPDataTypeId getSourceDataTypeName(){   return (HAPDataTypeId)this.getAtomicAncestorValueObject(SOURCEDATATYPENAME, HAPDataTypeId.class);  }
+	public void setSourceDataTypeName(HAPDataTypeId dataTypeName){  this.updateAtomicChildObjectValue(SOURCEDATATYPENAME, dataTypeName);  }
 	
 	public String getOperationId(){ return this.getAtomicAncestorValueString(OPERATIONID);  }
 	public void setOperationId(String opId){ this.updateAtomicChildStrValue(OPERATIONID, opId);  }
 	
-	public HAPDataTypeOperationImp extendPathSegment(HAPRelationshipPathSegment segment, HAPDataTypeIdImp sourceId){
+	public HAPDataTypeOperationImp extendPathSegment(HAPRelationshipPathSegment segment, HAPDataTypeId sourceId){
 		HAPDataTypeOperationImp out = this.clone(HAPDataTypeOperationImp.class);
 		out.getPath().insert(segment);
 		out.setDataTypeName(sourceId);
