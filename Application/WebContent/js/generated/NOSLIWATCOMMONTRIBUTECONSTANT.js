@@ -171,7 +171,15 @@ var NOSLIWATCOMMONTRIBUTECONSTANT=
   "STRINGABLEVALUE_VALUE": "atomic_value",
   "STRINGABLEVALUE_PROPERTIES": "properties",
   "STRINGABLEVALUE_ID": "id",
+  "DATATYPEID_NAME": "name",
+  "DATATYPEID_VERSION": "version",
+  "DATATYPEID_FULLNAME": "fullName",
+  "DATATYPEVERSION_MAJOR": "major",
+  "DATATYPEVERSION_MINOR": "minor",
+  "DATATYPEVERSION_REVISION": "revision",
+  "DATATYPEVERSION_NAME": "name",
   "DATA_WAPPER_TYPE": "wapperType",
+  "DATATYPEID_OPERATION": "operation",
   "null_ID": "id",
   "null_TYPE": "type"
 };

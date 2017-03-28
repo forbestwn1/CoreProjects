@@ -61,7 +61,9 @@ public class HAPJSImporter {
 	    		String fileName = file.getName();
 	    		if(fileName.endsWith(".js")){
 	    			try {
-						this.importFromFile(new FileInputStream(file), out, dependency);
+	    				Context cx = Context.enter();
+	    		        Scriptable scope = cx.initStandardObjects(null);
+						this.importFromFile(cx, scope, new FileInputStream(file), out, dependency);
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}
@@ -72,15 +74,47 @@ public class HAPJSImporter {
 	    }		
 	}
 	
-	private List<HAPJSOperation> importFromFile(InputStream inputStream, List<HAPJSOperation> out, List<HAPJSResourceDependency> dependency){
+	private List<HAPJSOperation> importFromFile(Context cx, Scriptable scope, InputStream inputStream, List<HAPJSOperation> out, List<HAPJSResourceDependency> dependency){
         String content = this.getOperationDefinition(inputStream);
-		Context cx = Context.enter();
 	    try {
-	        Scriptable scope = cx.initStandardObjects(null);
+	        cx.evaluateString(scope, content, "<cmd>", 1, null);
+	        Object obj = scope.get("nosliw", scope);
+            
+	        NativeObject nosliwObjJS = (NativeObject)obj;
+            for(Object dataTypeNameKey : nosliwObjJS.keySet()){
+            	String dataTypeName = (String)dataTypeNameKey;
+            	NativeObject dataTypeObjJS = (NativeObject)nosliwObjJS.get(dataTypeName);
+            	
+            	NativeObject dataTypeIdObjJS = (NativeObject)dataTypeObjJS.get("dataType");
+    			String dataTypeName = (String)dataTypeIdObjJS.get("name");
+    			String dataTypeVersion = (String)dataTypeIdObjJS.get("version");
+    			HAPDataTypeId dataTypeId = new HAPDataTypeId(dataTypeName, new HAPDataTypeVersion(dataTypeVersion));
 
-	        Object obj = cx.evaluateString(scope, content, "<cmd>", 1, null);
+    			NativeObject dataTypeRequiresObjJS = (NativeObject)dataTypeObjJS.get("requires");
+    			NativeObject operationsObjJS = (NativeObject)dataTypeObjJS.get("operations");
+    			for(Object operationNameKey : operationsObjJS.keySet()){
+    				String operationName = (String)operationNameKey;
+    				NativeObject operationObjJS = (NativeObject)operationsObjJS.get(operationName);
+    				
+    				//operation
+    				Function operationFunJS = (Function)operationObjJS.get("operation");
+                	String script = Context.toString(operationFunJS);
+                	String operationId = this.getOperationId(dataTypeId, operationName);
+                	out.add(new HAPJSOperation(script, operationId, dataTypeId, operationName));
+                	
+    				NativeObject operationRequiresObjJS = (NativeObject)operationObjJS.get("requires");
+                	for(Object requiredTypeObjJS : operationRequiresObjJS.keySet()){
+                		String requiredResourceType = (String)requiredTypeObjJS;
+                		NativeObject requiresObjectJS = (NativeObject)operationRequiresObjJS.get(requiredResourceType);
+                	}
+    			}
+            }
+            
+            
+            
+            
+            
             NativeObject operationsObjJS = (NativeObject)obj;
-
             NativeObject dataTypeJS = (NativeObject)operationsObjJS.get("dataType");
 			String dataTypeName = (String)dataTypeJS.get("name");
 			String dataTypeVersion = (String)dataTypeJS.get("version");
