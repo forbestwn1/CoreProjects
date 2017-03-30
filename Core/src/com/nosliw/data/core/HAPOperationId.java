@@ -10,6 +10,10 @@ public class HAPOperationId extends HAPDataTypeId{
 	
 	private String m_operation;
 
+	public HAPOperationId(String literate){
+		this.buildObjectByLiterate(literate);
+	}
+	
 	public HAPOperationId(String name, String version, String operation){
 		super(name, version);
 		this.setOperation(operation);

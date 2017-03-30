@@ -1,0 +1,19 @@
+<entity name="data.js.operation"
+		table="nosliw.HELPERJS"
+		primaryKeys="id" 
+		class="com.nosliw.data.core.imp.runtime.js.HAPResourceHelperImp" 
+		description="">
+
+	<property name="id" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
+		</dbColumnInfos>
+	</property>
+
+	<property name="script" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(2000) NOT NULL"/>
+		</dbColumnInfos>
+	</property>
+
+</entity>

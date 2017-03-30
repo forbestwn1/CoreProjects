@@ -14,17 +14,17 @@ import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPResourceManager;
+import com.nosliw.data.core.runtime.js.HAPResourceManagerJS;
 
-public class HAPResourceManagerImpJS implements HAPResourceManager{
+public class HAPResourceManagerJSImp extends HAPResourceManagerJS{
 
-	private static HAPResourceManagerImpJS m_instance;
+	private static HAPResourceManagerJSImp m_instance;
 	
 	private HAPDBAccess m_dbAccess;
 	
-	public static HAPResourceManagerImpJS getInstance(){
+	public static HAPResourceManagerJSImp getInstance(){
 		if(m_instance==null){
-			m_instance = new HAPResourceManagerImpJS();
+			m_instance = new HAPResourceManagerJSImp();
 		}
 		return m_instance;
 	}
@@ -32,13 +32,14 @@ public class HAPResourceManagerImpJS implements HAPResourceManager{
 	private void init(){
 		this.m_dbAccess = HAPDBAccess.getInstance();
 		
-		HAPValueInfoManager.getInstance().importFromXML(HAPResourceManagerImpJS.class, new String[]{
+		HAPValueInfoManager.getInstance().importFromXML(HAPResourceManagerJSImp.class, new String[]{
 				"jsoperation.xml",
-				"jsresourcedependency.xml"
+				"jsresourcedependency.xml",
+				"jshelper.xml"
 		});
 	}
 	
-	private HAPResourceManagerImpJS(){
+	private HAPResourceManagerJSImp(){
 		this.m_dbAccess = HAPDBAccess.getInstance();
 		this.init();
 	}
@@ -102,7 +103,7 @@ public class HAPResourceManagerImpJS implements HAPResourceManager{
 		{
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION:
 			HAPOperationId operationId = (HAPOperationId)HAPSerializeManager.getInstance().buildObject(resourceId.getId(), HAPOperationId.class, HAPSerializationFormat.LITERATE);
-			HAPJSOperation jsOperation = this.m_dbAccess.getJSOperation(operationId);
+			HAPResourceOperationImp jsOperation = this.m_dbAccess.getJSOperation(operationId);
 			out = new HAPResource(resourceId, jsOperation, null);
 			break;
 		}

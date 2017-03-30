@@ -16,13 +16,13 @@ public class HAPResource{
 
 	private HAPResourceId m_id;
 	
-	private Object m_resourceData;
+	private HAPResourceData m_resourceData;
 	
 	private HAPInfo m_info;
 	
 	private Set<HAPResourceId> m_dependency = new HashSet<HAPResourceId>();
 	
-	public HAPResource(HAPResourceId id, Object resourceData, HAPInfo info){
+	public HAPResource(HAPResourceId id, HAPResourceData resourceData, HAPInfo info){
 		this.m_id = id;
 		this.m_resourceData = resourceData;
 		this.m_info = info;
@@ -32,7 +32,7 @@ public class HAPResource{
 	
 	public HAPInfo getInfo(){  return this.m_info;  }
 	
-	public Object getResourceData(){  return this.m_resourceData;  }
+	public HAPResourceData getResourceData(){  return this.m_resourceData;  }
 	
 	public Set<HAPResourceId> getDependentResources(){  return this.m_dependency;  }
 	public void addDependendcy(HAPResourceId resourceId){  this.m_dependency.add(resourceId); }

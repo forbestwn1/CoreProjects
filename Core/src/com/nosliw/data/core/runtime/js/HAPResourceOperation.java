@@ -1,17 +1,29 @@
 package com.nosliw.data.core.runtime.js;
 
-import com.nosliw.data.core.HAPInfo;
-import com.nosliw.data.core.runtime.HAPResource;
-import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.runtime.HAPResourceData;
 
-public class HAPResourceOperation extends HAPResource{
+public interface HAPResourceOperation extends HAPResourceData{
 
-	public HAPResourceOperation(HAPResourceId id, Object resourceData, HAPInfo info) {
-		super(id, resourceData, info);
-	}
+	@HAPAttribute
+	public static String SCRIPT = "script";
+	
+	@HAPAttribute
+	public static String OPERATIONID = "operationId";
 
-	public String getOperationScript(){
-		return (String)this.getResourceData();
-	}
+	@HAPAttribute
+	public static String OPERATIONNAME = "operationName";
+	
+	@HAPAttribute
+	public static String DATATYPENAME = "dataTypeName";
+	
+	String getScript();
+	
+	String getOperationId();
+	
+	String getOperationName();
+	
+	HAPDataTypeId getDataTypeName();
 	
 }

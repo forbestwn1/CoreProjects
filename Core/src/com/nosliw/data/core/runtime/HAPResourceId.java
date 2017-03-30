@@ -16,45 +16,34 @@ public class HAPResourceId extends HAPSerializableImp{
 	@HAPAttribute
 	public static String TYPE = "type";
 	
-	private String m_type;
-	private String m_id;
+	protected String m_type;
+	protected String m_id;
 	
-	public HAPResourceId(String literate){
-		this.buildObjectByLiterate(literate);
-	}
-
 	public HAPResourceId(String type, String id){
 		this.m_type = type;
-		this.m_id = id;
+		this.setId(id);
 	}
 	
 	public String getId() {		return this.m_id;	}
 	
 	public String getType() {  return this.m_type;  }
 
+	protected void setId(String id){  this.m_id = id; }
+	
 	@Override
 	protected String buildLiterate(){
 		return HAPNamingConversionUtility.cascadeDetail(this.getType(), this.getId());
 	}
 
 	@Override
-	protected boolean buildObjectByLiterate(String literateValue){	
-		String[] segs = HAPNamingConversionUtility.parseDetails(literateValue);
-		this.m_type = segs[0];
-		this.m_id = segs[1];
-		return true;
-	}
-	
-	@Override
 	public boolean equals(Object o){
 		if(o instanceof HAPResourceId){
 			HAPResourceId resourceId = (HAPResourceId)o;
 			return HAPBasicUtility.isEquals(this.m_type, resourceId.getType()) &&
-					HAPBasicUtility.isEquals(this.m_id, resourceId.getId());
+					HAPBasicUtility.isEquals(this.getId(), resourceId.getId());
 		}
 		else{
 			return false;
 		}
 	}
-	
 }

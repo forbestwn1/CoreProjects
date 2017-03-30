@@ -1,41 +1,33 @@
 package com.nosliw.data.core.imp.runtime.js;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.runtime.js.HAPResourceOperation;
 
-public class HAPJSOperation extends HAPStringableValueEntityWithID{
+public class HAPResourceOperationImp extends HAPStringableValueEntityWithID implements HAPResourceOperation{
 
 	public static String _VALUEINFO_NAME;
 	
-	@HAPAttribute
-	public static String SCRIPT = "script";
-	
-	@HAPAttribute
-	public static String OPERATIONID = "operationId";
-
-	@HAPAttribute
-	public static String OPERATIONNAME = "operationName";
-	
-	@HAPAttribute
-	public static String DATATYPENAME = "dataTypeName";
-	
-	public HAPJSOperation(String script, String operationId, HAPDataTypeId dataTypeName, String operationName){
+	public HAPResourceOperationImp(String script, String operationId, HAPDataTypeId dataTypeName, String operationName){
 		this.setScript(script);
 		this.setOperationName(operationName);
 		this.setDataTypeName(dataTypeName);
 		this.setOperationId(operationId);
 	}
 	
+	@Override
 	public String getScript(){  return this.getAtomicAncestorValueString(SCRIPT);  }
 	public void setScript(String script){  this.updateAtomicChildStrValue(SCRIPT, script);  }
 	
+	@Override
 	public String getOperationId(){  return this.getAtomicAncestorValueString(OPERATIONID);  }
 	public void setOperationId(String operationId){  this.updateAtomicChildStrValue(OPERATIONID, operationId);  }
 	
+	@Override
 	public String getOperationName(){  return this.getAtomicAncestorValueString(OPERATIONNAME);  }
 	public void setOperationName(String operationName){  this.updateAtomicChildStrValue(OPERATIONNAME, operationName);  }
 	
+	@Override
 	public HAPDataTypeId getDataTypeName() {	return (HAPDataTypeId)this.getAtomicAncestorValueObject(DATATYPENAME, HAPDataTypeId.class);	}
 	public void setDataTypeName(HAPDataTypeId dataTypeName){ this.updateAtomicChildObjectValue(DATATYPENAME, dataTypeName); }
 }

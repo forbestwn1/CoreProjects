@@ -19,3 +19,7 @@ Q
 !WebContent/js/datatype/entitys.js,0\3\03c44298fc25daa391d3341cd32427e9c8724864
 D
 WebContent/main.html,6\a\6a51af4f781c66a9fe7265c69c7e8ceb8d21c183
+N
+WebContent/js/nosliw/nosliw.js,8\0\8061dba9999a4ae09a3286bef8ada6612c549e1d
+Z
+*WebContent/js/1_dataoperation/operation.js,3\6\36a33b124d933413f083689a5da64c3158c16525
