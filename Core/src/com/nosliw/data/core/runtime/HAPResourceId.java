@@ -1,9 +1,16 @@
 package com.nosliw.data.core.runtime;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
 
 /**
  * Resource Id to identify resource 
@@ -21,11 +28,11 @@ public class HAPResourceId extends HAPSerializableImp{
 	
 	protected String m_type;
 	protected String m_id;
-	protected String m_alias;
+	protected Set<String> m_alias;
 	
 	public HAPResourceId(String type, String id, String alias){
 		this.m_type = type;
-		this.m_alias = alias;
+		this.m_alias = new HashSet<String>((List<String>)HAPLiterateManager.getInstance().stringToValue(alias, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING));
 		this.setId(id);
 	}
 	
@@ -33,13 +40,20 @@ public class HAPResourceId extends HAPSerializableImp{
 	
 	public String getType() {  return this.m_type;  }
 
-	public String getAlias(){  return this.m_alias;  }
+	public Set<String> getAlias(){  return this.m_alias;  }
+	public void addAlias(String alias){
+		if(this.m_alias==null){
+			this.m_alias = new HashSet<String>();
+		}
+		this.m_alias.add(alias);
+	}
 	
 	protected void setId(String id){  this.m_id = id; }
 	
 	@Override
 	protected String buildLiterate(){
-		return HAPNamingConversionUtility.cascadeDetail(new String[]{this.getType(), this.getId(), this.getAlias()});
+		String aliasLiterate = HAPLiterateManager.getInstance().valueToString(this.m_alias);
+		return HAPNamingConversionUtility.cascadeDetail(new String[]{this.getType(), this.getId(), aliasLiterate});
 	}
 
 	@Override

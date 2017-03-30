@@ -1,7 +1,9 @@
 package com.nosliw.common.literate;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -45,9 +47,14 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 	public String valueToString(Object value) {  
 		StringBuffer arrayStr = new StringBuffer();
 		List<String> elesStr = new ArrayList<String>();
-		for(Object eleObj : (List<Object>)value){
+		
+		Collection collectionValue = (Collection)value;
+		Iterator it = collectionValue.iterator();
+		while(it.hasNext()){
+			Object eleObj = it.next();
 			elesStr.add(HAPLiterateManager.getInstance().valueToString(eleObj));
 		}
+		
 		arrayStr.append(HAPNamingConversionUtility.cascadeElementArray(elesStr.toArray(new String[0])));
 		return arrayStr.toString(); 
 		
@@ -58,6 +65,8 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 		List<Class> out = new ArrayList<Class>(); 
 		out.add(ArrayList.class);
 		out.add(List.class);
+		out.add(Set.class);
+		out.add(HashSet.class);
 		return out;
 	}
 

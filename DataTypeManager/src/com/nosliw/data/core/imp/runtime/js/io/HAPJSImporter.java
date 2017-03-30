@@ -150,6 +150,24 @@ public class HAPJSImporter {
 	    return out;
     }
 
+	private void addResourceIdToSet(HAPResourceId resourceId, Set<HAPResourceId> resourceIdSet){
+		Set<String> alias = resourceId.getAlias();
+		
+		for(HAPResourceId resourceIdEle : resourceIdSet){
+			if()
+			
+		}
+		
+		HAPResourceId existing = resourceIdMap.get(resourceId);
+		if(existing!=null){
+			if(!HAPBasicUtility.isEquals(existing.getAlias(), resourceId.getAlias())){
+				resourceIdMap.put(resourceId, resourceId);
+			}
+		}
+		else{
+			resourceIdMap.put(resourceId, resourceId);
+		}
+	}
 	
 	private void addResourceIdToMap(HAPResourceId resourceId, Map<HAPResourceId, HAPResourceId> resourceIdMap){
 		
