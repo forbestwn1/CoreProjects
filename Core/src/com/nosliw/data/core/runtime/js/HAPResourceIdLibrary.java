@@ -10,12 +10,12 @@ public class HAPResourceIdLibrary extends HAPResourceId{
 	
 	private String m_version;
 
-	public HAPResourceIdLibrary(String idLiterate){
-		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_LIBRARY, idLiterate);
+	public HAPResourceIdLibrary(String idLiterate, String alias){
+		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_LIBRARY, idLiterate, alias);
 	}
 
-	public HAPResourceIdLibrary(String name, String version){
-		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_LIBRARY, null);
+	public HAPResourceIdLibrary(String name, String version, String alias){
+		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_LIBRARY, null, alias);
 		this.m_id = HAPNamingConversionUtility.cascadeSegments(name, version);
 		this.m_name = name;
 		this.m_version = version;

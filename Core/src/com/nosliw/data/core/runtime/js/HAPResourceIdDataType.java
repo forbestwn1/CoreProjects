@@ -10,12 +10,12 @@ public class HAPResourceIdDataType extends HAPResourceId{
 
 	private HAPDataTypeId m_dataTypeId;
 	
-	public HAPResourceIdDataType(String idLiterate) {
-		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPE, idLiterate);
+	public HAPResourceIdDataType(String idLiterate, String alias) {
+		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPE, idLiterate, alias);
 	}
 
-	public HAPResourceIdDataType(HAPDataTypeId dataTypeId){
-		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPE, null);
+	public HAPResourceIdDataType(HAPDataTypeId dataTypeId, String alias){
+		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPE, null, alias);
 		this.setDataTypeId(dataTypeId);
 	}
 

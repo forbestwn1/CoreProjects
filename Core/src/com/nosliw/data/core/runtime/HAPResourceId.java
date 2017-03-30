@@ -16,11 +16,16 @@ public class HAPResourceId extends HAPSerializableImp{
 	@HAPAttribute
 	public static String TYPE = "type";
 	
+	@HAPAttribute
+	public static String ALIAS = "alias";
+	
 	protected String m_type;
 	protected String m_id;
+	protected String m_alias;
 	
-	public HAPResourceId(String type, String id){
+	public HAPResourceId(String type, String id, String alias){
 		this.m_type = type;
+		this.m_alias = alias;
 		this.setId(id);
 	}
 	
@@ -28,18 +33,20 @@ public class HAPResourceId extends HAPSerializableImp{
 	
 	public String getType() {  return this.m_type;  }
 
+	public String getAlias(){  return this.m_alias;  }
+	
 	protected void setId(String id){  this.m_id = id; }
 	
 	@Override
 	protected String buildLiterate(){
-		return HAPNamingConversionUtility.cascadeDetail(this.getType(), this.getId());
+		return HAPNamingConversionUtility.cascadeDetail(new String[]{this.getType(), this.getId(), this.getAlias()});
 	}
 
 	@Override
 	public boolean equals(Object o){
 		if(o instanceof HAPResourceId){
 			HAPResourceId resourceId = (HAPResourceId)o;
-			return HAPBasicUtility.isEquals(this.m_type, resourceId.getType()) &&
+			return HAPBasicUtility.isEquals(this.getType(), resourceId.getType()) &&
 					HAPBasicUtility.isEquals(this.getId(), resourceId.getId());
 		}
 		else{

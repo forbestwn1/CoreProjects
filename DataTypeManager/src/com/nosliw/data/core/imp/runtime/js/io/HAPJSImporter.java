@@ -28,6 +28,7 @@ import com.nosliw.data.core.imp.runtime.js.HAPResourceOperationImp;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerJSImp;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.js.HAPResourceManagerJS;
 
 public class HAPJSImporter {
 
@@ -113,11 +114,13 @@ public class HAPJSImporter {
                 		for(Object requiredResourceKey : requiresTypeObjectJS.keySet()){
                 			String requiredResourceName = (String) requiredResourceKey;
                 			NativeObject requiredResourceObjJS = (NativeObject)requiresTypeObjectJS.get(requiredResourceName);
-                			HAPResourceId resourceId = this.processResource(requiredResourceObjJS);
+                			HAPResourceId resourceId = this.processResource(requiredResourceType, requiredResourceObjJS);
                 			resources.add(resourceId);
                 		}
                 	}
-                	dependency.add(new HAPJSResourceDependency(new HAPResourceId(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION, new HAPOperationId(dataTypeId, operationName).toStringValue(HAPSerializationFormat.LITERATE)), new ArrayList(resources)));
+                	HAPResourceId baseResourceId = this.getResourceManagerJS().buildResourceIdObject(literate)
+                	new HAPResourceId(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION, new HAPOperationId(dataTypeId, operationName).toStringValue(HAPSerializationFormat.LITERATE))
+                	dependency.add(new HAPJSResourceDependency(, new ArrayList(resources)));
     			}
             }
             
@@ -216,5 +219,7 @@ public class HAPJSImporter {
 		}
 		return this.m_operationTemplate;
 	}
+	
+	private HAPResourceManagerJS getResourceManagerJS(){		return this.m_resourceJSMan;	}
 	
 }
