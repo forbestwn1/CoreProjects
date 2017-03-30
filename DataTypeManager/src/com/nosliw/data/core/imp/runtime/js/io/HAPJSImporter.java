@@ -18,6 +18,7 @@ import org.mozilla.javascript.Scriptable;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataTypeId;
@@ -26,8 +27,13 @@ import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceOperationImp;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
+import com.nosliw.data.core.imp.runtime.js.HAPResourceHelperImp;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerJSImp;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.js.HAPResourceIdDataType;
+import com.nosliw.data.core.runtime.js.HAPResourceIdHelper;
+import com.nosliw.data.core.runtime.js.HAPResourceIdLibrary;
+import com.nosliw.data.core.runtime.js.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.js.HAPResourceManagerJS;
 
 public class HAPJSImporter {
@@ -70,6 +76,10 @@ public class HAPJSImporter {
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}
+	    		    finally {
+	    	            // Exit from the context.
+	    	            Context.exit();
+	    	        }	
 	    		}
 	    	} else if (listOfFiles[i].isDirectory() && !listOfFiles[i].getName().equals("bin")) {
 	    		this.importFromFolder(file.getPath(), out, dependency);
@@ -79,92 +89,100 @@ public class HAPJSImporter {
 	
 	private List<HAPResourceOperationImp> importFromFile(Context cx, Scriptable scope, InputStream inputStream, List<HAPResourceOperationImp> out, List<HAPJSResourceDependency> dependency){
         String content = this.getOperationDefinition(inputStream);
-	    try {
-	        cx.evaluateString(scope, content, "<cmd>", 1, null);
-	        Object obj = scope.get("nosliw", scope);
-            
-	        NativeObject nosliwObjJS = (NativeObject)obj;
-            for(Object dataTypeNameKey : nosliwObjJS.keySet()){
-            	String dataTypeName = (String)dataTypeNameKey;
-            	NativeObject dataTypeObjJS = (NativeObject)nosliwObjJS.get(dataTypeName);
-            	
-            	NativeObject dataTypeIdObjJS = (NativeObject)dataTypeObjJS.get("dataType");
-    			String dataTypeName = (String)dataTypeIdObjJS.get("name");
-    			String dataTypeVersion = (String)dataTypeIdObjJS.get("version");
-    			HAPDataTypeId dataTypeId = new HAPDataTypeId(dataTypeName, new HAPDataTypeVersion(dataTypeVersion));
-
-    			NativeObject dataTypeRequiresObjJS = (NativeObject)dataTypeObjJS.get("requires");
-    			NativeObject operationsObjJS = (NativeObject)dataTypeObjJS.get("operations");
-    			for(Object operationNameKey : operationsObjJS.keySet()){
-    				String operationName = (String)operationNameKey;
-    				NativeObject operationObjJS = (NativeObject)operationsObjJS.get(operationName);
-    				
-    				//operation
-    				Function operationFunJS = (Function)operationObjJS.get("operation");
-                	String script = Context.toString(operationFunJS);
-                	String operationId = this.getOperationId(dataTypeId, operationName);
-                	out.add(new HAPResourceOperationImp(script, operationId, dataTypeId, operationName));
-                	
-    				NativeObject operationRequiresObjJS = (NativeObject)operationObjJS.get("requires");
-    				Set<HAPResourceId> resources = new HashSet<HAPResourceId>(); 
-                	for(Object requiredTypeObjJS : operationRequiresObjJS.keySet()){
-                		String requiredResourceType = (String)requiredTypeObjJS;
-                		NativeObject requiresTypeObjectJS = (NativeObject)operationRequiresObjJS.get(requiredResourceType);
-                
-                		for(Object requiredResourceKey : requiresTypeObjectJS.keySet()){
-                			String requiredResourceName = (String) requiredResourceKey;
-                			NativeObject requiredResourceObjJS = (NativeObject)requiresTypeObjectJS.get(requiredResourceName);
-                			HAPResourceId resourceId = this.processResource(requiredResourceType, requiredResourceObjJS);
-                			resources.add(resourceId);
-                		}
-                	}
-                	HAPResourceId baseResourceId = this.getResourceManagerJS().buildResourceIdObject(literate)
-                	new HAPResourceId(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION, new HAPOperationId(dataTypeId, operationName).toStringValue(HAPSerializationFormat.LITERATE))
-                	dependency.add(new HAPJSResourceDependency(, new ArrayList(resources)));
-    			}
-            }
-            
-            
-            
-            
-            
-            NativeObject operationsObjJS = (NativeObject)obj;
-            NativeObject dataTypeJS = (NativeObject)operationsObjJS.get("dataType");
-			String dataTypeName = (String)dataTypeJS.get("name");
-			String dataTypeVersion = (String)dataTypeJS.get("version");
+        cx.evaluateString(scope, content, "<cmd>", 1, null);
+        Object obj = scope.get("nosliw", scope);
+        
+        NativeObject nosliwObjJS = (NativeObject)obj;
+        for(Object dataTypeNameKeyObj : nosliwObjJS.keySet()){
+        	String dataTypeNameKey = (String)dataTypeNameKeyObj;
+        	NativeObject dataTypeObjJS = (NativeObject)nosliwObjJS.get(dataTypeNameKey);
+        	
+        	NativeObject dataTypeIdObjJS = (NativeObject)dataTypeObjJS.get("dataType");
+			String dataTypeName = (String)dataTypeIdObjJS.get("name");
+			String dataTypeVersion = (String)dataTypeIdObjJS.get("version");
 			HAPDataTypeId dataTypeId = new HAPDataTypeId(dataTypeName, new HAPDataTypeVersion(dataTypeVersion));
-			NativeObject operationsJS = (NativeObject)operationsObjJS.get("operations");
-            for(Object key : operationsJS.keySet()){
-            	String opName = (String)key;
-            	Object opObjectJS = operationsJS.get(key);  
-            	if(opObjectJS instanceof Function){
-                	String script = Context.toString(opObjectJS);
-                	String operationId = this.getOperationId(dataTypeId, (String)key);
-                	out.add(new HAPResourceOperationImp(script, operationId, dataTypeId, opName));
 
-                	List<HAPResourceId> resources = this.discoverResources(script);
-                	dependency.add(new HAPJSResourceDependency(new HAPResourceId(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION, new HAPOperationId(dataTypeId, opName).toStringValue(HAPSerializationFormat.LITERATE)), resources));
+			//get all resources required by data type
+			NativeObject dataTypeRequiresObjJS = (NativeObject)dataTypeObjJS.get("requires");
+			Map<HAPResourceId, HAPResourceId> dataTypeResources = new LinkedHashMap<HAPResourceId, HAPResourceId>(); 
+        	for(Object requiredTypeObjJS : dataTypeRequiresObjJS.keySet()){
+        		String requiredResourceType = (String)requiredTypeObjJS;
+        		NativeObject requiresTypeObjectJS = (NativeObject)dataTypeRequiresObjJS.get(requiredResourceType);
+        
+        		for(Object requiredResourceKey : requiresTypeObjectJS.keySet()){
+        			String requiredResourceName = (String) requiredResourceKey;
+        			Object requiredResourceObjJS = requiresTypeObjectJS.get(requiredResourceName);
+        			HAPResourceId resourceId = this.processResource(requiredResourceType, requiredResourceObjJS, requiredResourceName);
+        			dataTypeResources.put(resourceId, resourceId);
+        		}
+        	}
+			
+			NativeObject operationsObjJS = (NativeObject)dataTypeObjJS.get("operations");
+			for(Object operationNameKey : operationsObjJS.keySet()){
+				//get resources for operation
+				String operationName = (String)operationNameKey;
+				NativeObject operationObjJS = (NativeObject)operationsObjJS.get(operationName);
+				
+				//operation
+				Function operationFunJS = (Function)operationObjJS.get("operation");
+            	String script = Context.toString(operationFunJS);
+            	String operationId = this.getOperationId(dataTypeId, operationName);
+            	out.add(new HAPResourceOperationImp(script, operationId, dataTypeId, operationName));
+            	
+				NativeObject operationRequiresObjJS = (NativeObject)operationObjJS.get("requires");
+				Map<HAPResourceId, HAPResourceId> operationResources = new LinkedHashMap<HAPResourceId, HAPResourceId>(); 
+				operationResources.putAll(dataTypeResources);
+            	for(Object requiredTypeObjJS : operationRequiresObjJS.keySet()){
+            		String requiredResourceType = (String)requiredTypeObjJS;
+            		NativeObject requiresTypeObjectJS = (NativeObject)operationRequiresObjJS.get(requiredResourceType);
+            
+            		for(Object requiredResourceKey : requiresTypeObjectJS.keySet()){
+            			String requiredResourceName = (String) requiredResourceKey;
+            			NativeObject requiredResourceObjJS = (NativeObject)requiresTypeObjectJS.get(requiredResourceName);
+            			HAPResourceId resourceId = this.processResource(requiredResourceType, requiredResourceObjJS, requiredResourceName);
+            			operationResources.add(resourceId);
+            		}
             	}
-            }
-        } finally {
-            // Exit from the context.
-            Context.exit();
-        }	
+            	HAPResourceId baseResourceId = this.getResourceManagerJS().buildResourceIdFromIdData(new HAPOperationId(dataTypeId, operationName), null);
+            	dependency.add(new HAPJSResourceDependency(baseResourceId, new ArrayList(operationResources)));
+			}
+        }
 	    return out;
     }
 
 	
-	private HAPResourceId processResource(String type, NativeObject resourceObjJS){
+	private void addResourceIdToMap(HAPResourceId resourceId, Map<HAPResourceId, HAPResourceId> resourceIdMap){
+		
+		HAPResourceId existing = resourceIdMap.get(resourceId);
+		if(existing!=null){
+			if(!HAPBasicUtility.isEquals(existing.getAlias(), resourceId.getAlias())){
+				resourceIdMap.put(resourceId, resourceId);
+			}
+		}
+		else{
+			resourceIdMap.put(resourceId, resourceId);
+		}
+	}
+	
+	private HAPResourceId processResource(String type, Object resourceObjJS, String alais){
 		HAPResourceId out = null;
 		switch(type){
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION:
-			
+			String operationIdLiterate = (String)resourceObjJS;
+			out = new HAPResourceIdOperation(operationIdLiterate, alais);
 			break;
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_LIBRARY:
+			String libraryIdLiterate = (String)resourceObjJS;
+			out = new HAPResourceIdLibrary(libraryIdLiterate, alais);
 			break;
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPE:
+			String dataTypeIdLiterate = (String)resourceObjJS;
+			out = new HAPResourceIdDataType(dataTypeIdLiterate, alais);
 			break;
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_HELPER:
+			HAPResourceHelperImp helperResource = new HAPResourceHelperImp(resourceObjJS.toString());
+			helperResource = (HAPResourceHelperImp)this.m_dbAccess.saveEntity(helperResource);
+			out = new HAPResourceIdHelper(helperResource.getId(), alais);
 			break;
 		}
 		return out;

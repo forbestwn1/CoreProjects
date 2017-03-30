@@ -11,6 +11,10 @@ public class HAPResourceHelperImp extends HAPStringableValueEntityWithID impleme
 	@HAPAttribute
 	public static String SCRIPT = "script";
 
+	public HAPResourceHelperImp(String script){
+		this.updateAtomicChildStrValue(SCRIPT, script);
+	}
+	
 	@Override
 	public String getScript(){  return this.getAtomicAncestorValueString(SCRIPT);  }
 }

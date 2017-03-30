@@ -66,9 +66,10 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	}
 
 	
-	public void saveEntity(HAPStringableValueEntityWithID entity){
+	public HAPStringableValueEntityWithID saveEntity(HAPStringableValueEntityWithID entity){
 		entity.setId(this.getId()+"");
 		HAPSqlUtility.saveToDB(entity, this.m_connection);
+		return entity;
 	}
 	
 	public void saveDataTypeOperation(List<HAPDataTypeOperationImp> dataTypeOperations){

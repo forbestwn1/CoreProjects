@@ -52,8 +52,6 @@ t
 Dsrc/com/nosliw/data/core/imp/runtime/js/HAPJSResourceDependency.java,a\f\af206c87f22a46fa036aa100aefe790960c9f462
 m
 =src/com/nosliw/data/core/imp/runtime/js/io/HAPJSImporter.java,d\2\d2eae22d3864dc25d071a45bd55d3e156a335a52
-t
-Dsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerImpJS.java,1\b\1b62f0af30549545a11856de402a5b2d2a373f20
 a
 1src/com/nosliw/data/core/imp/HAPOperationImp.java,0\9\09e22b8571dc30099e06f4d335d484925db4aabe
 `
@@ -68,3 +66,5 @@ t
 Dsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceOperationImp.java,5\3\5316c1dd36582766665d80e1faaeb202194bab2b
 q
 Asrc/com/nosliw/data/core/imp/runtime/js/HAPResourceHelperImp.java,8\2\82d376e920ab79a93840f1563ed8abe924415ee5
+t
+Dsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerJSImp.java,c\6\c6f353c914497dafc3efcdea49e8efcaea698a12

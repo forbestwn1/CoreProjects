@@ -3,6 +3,7 @@ package com.nosliw.data.core.runtime.js;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManager;
@@ -28,7 +29,7 @@ public abstract class HAPResourceManagerJS  implements HAPResourceManager{
 			out = new HAPResourceIdLibrary(id, alias);
 			break;
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_HELPER:
-			out = new HAPResourceId(HAPConstant.DATAOPERATION_RESOURCE_TYPE_HELPER, id, alias);
+			out = new HAPResourceIdHelper(id, alias);
 			break;
 		}
 		return out;
@@ -42,6 +43,15 @@ public abstract class HAPResourceManagerJS  implements HAPResourceManager{
 		HAPResourceId out = null;
 		if(resourceIdData instanceof HAPOperationId){
         	out = new HAPResourceIdOperation((HAPOperationId)resourceIdData, alias);
+		}
+		else if(resourceIdData instanceof HAPDataTypeId){
+        	out = new HAPResourceIdDataType((HAPDataTypeId)resourceIdData, alias);
+		}
+		else if(resourceIdData instanceof HAPJSLibraryId){
+        	out = new HAPResourceIdLibrary((HAPJSLibraryId)resourceIdData, alias);
+		}
+		else if(resourceIdData instanceof String){
+			out = new HAPResourceIdHelper((String)resourceIdData, alias);
 		}
 		return out;
 	}
