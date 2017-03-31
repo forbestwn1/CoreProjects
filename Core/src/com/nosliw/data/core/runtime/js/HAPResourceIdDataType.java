@@ -10,6 +10,8 @@ public class HAPResourceIdDataType extends HAPResourceId{
 
 	private HAPDataTypeId m_dataTypeId;
 	
+	public HAPResourceIdDataType(){}
+	
 	public HAPResourceIdDataType(String idLiterate, String alias) {
 		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPE, idLiterate, alias);
 	}
@@ -31,4 +33,15 @@ public class HAPResourceIdDataType extends HAPResourceId{
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(dataTypeId, HAPSerializationFormat.LITERATE); 
 	}
 
+	public HAPResourceIdDataType clone(){
+		HAPResourceIdDataType out = new HAPResourceIdDataType();
+		out.cloneFrom(this);
+		return out;
+	}
+
+	protected void cloneFrom(HAPResourceIdDataType resourceId){
+		super.cloneFrom(resourceId);
+		this.m_dataTypeId = resourceId.m_dataTypeId;
+	}
+	
 }

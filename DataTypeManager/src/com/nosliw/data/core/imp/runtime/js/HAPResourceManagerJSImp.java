@@ -14,6 +14,7 @@ import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.js.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.js.HAPResourceManagerJS;
 
 public class HAPResourceManagerJSImp extends HAPResourceManagerJS{
@@ -49,9 +50,7 @@ public class HAPResourceManagerJSImp extends HAPResourceManagerJS{
 	@Override
 	public Set<HAPResourceId> discoverResourceRequirement(HAPDataTypeId dataTypeId, HAPOperation dataOpInfo) {
 		HAPOperationId operationId = new HAPOperationId(dataTypeId, dataOpInfo.getName());
-		HAPResourceId resourceId = new HAPResourceId(
-				HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION, 
-				operationId.toStringValue(HAPSerializationFormat.LITERATE));
+		HAPResourceId resourceId = new HAPResourceIdOperation(operationId, null);
 		Set<HAPResourceId> resourceIds = new HashSet<HAPResourceId>();
 		resourceIds.add(resourceId);
 		return this.discoverResourceDependency(resourceIds);

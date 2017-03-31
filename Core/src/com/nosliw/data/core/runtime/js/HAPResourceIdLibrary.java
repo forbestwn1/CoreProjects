@@ -9,6 +9,8 @@ public class HAPResourceIdLibrary extends HAPResourceId{
 
 	private HAPJSLibraryId m_jsLibraryId; 
 	
+	public HAPResourceIdLibrary(){}
+	
 	public HAPResourceIdLibrary(String idLiterate, String alias) {
 		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_LIBRARY, idLiterate, alias);
 	}
@@ -29,4 +31,16 @@ public class HAPResourceIdLibrary extends HAPResourceId{
 		this.m_jsLibraryId = libraryId;
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(libraryId, HAPSerializationFormat.LITERATE); 
 	}
+
+	public HAPResourceIdLibrary clone(){
+		HAPResourceIdLibrary out = new HAPResourceIdLibrary();
+		out.cloneFrom(this);
+		return out;
+	}
+
+	protected void cloneFrom(HAPResourceIdLibrary resourceId){
+		super.cloneFrom(resourceId);
+		this.m_jsLibraryId = resourceId.m_jsLibraryId;
+	}
+	
 }

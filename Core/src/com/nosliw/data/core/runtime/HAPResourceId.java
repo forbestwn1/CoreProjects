@@ -1,6 +1,7 @@
 package com.nosliw.data.core.runtime;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +31,10 @@ public class HAPResourceId extends HAPSerializableImp{
 	protected String m_id;
 	protected Set<String> m_alias;
 	
+	public HAPResourceId(){
+		this.m_alias = new HashSet<String>();
+	}
+	
 	public HAPResourceId(String type, String id, String alias){
 		this.m_type = type;
 		this.m_alias = new HashSet<String>((List<String>)HAPLiterateManager.getInstance().stringToValue(alias, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING));
@@ -42,10 +47,15 @@ public class HAPResourceId extends HAPSerializableImp{
 
 	public Set<String> getAlias(){  return this.m_alias;  }
 	public void addAlias(String alias){
-		if(this.m_alias==null){
-			this.m_alias = new HashSet<String>();
-		}
 		this.m_alias.add(alias);
+	}
+	
+	public void addAlias(Collection alias){
+		this.m_alias.addAll(alias);
+	}
+	
+	public void removeAlias(String alias){
+		this.m_alias.remove(alias);
 	}
 	
 	protected void setId(String id){  this.m_id = id; }
@@ -66,5 +76,17 @@ public class HAPResourceId extends HAPSerializableImp{
 		else{
 			return false;
 		}
+	}
+	
+	public HAPResourceId clone(){
+		HAPResourceId out = new HAPResourceId();
+		out.cloneFrom(this);
+		return out;
+	}
+	
+	protected void cloneFrom(HAPResourceId resourceId){
+		this.m_id = resourceId.m_id;
+		this.m_type = resourceId.m_type;
+		this.m_alias.addAll(resourceId.m_alias);
 	}
 }

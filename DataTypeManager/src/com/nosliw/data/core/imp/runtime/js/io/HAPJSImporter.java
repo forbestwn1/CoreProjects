@@ -104,7 +104,7 @@ public class HAPJSImporter {
 
 			//get all resources required by data type
 			NativeObject dataTypeRequiresObjJS = (NativeObject)dataTypeObjJS.get("requires");
-			Map<HAPResourceId, HAPResourceId> dataTypeResources = new LinkedHashMap<HAPResourceId, HAPResourceId>(); 
+			Set<HAPResourceId> dataTypeResources = new HashSet<HAPResourceId>(); 
         	for(Object requiredTypeObjJS : dataTypeRequiresObjJS.keySet()){
         		String requiredResourceType = (String)requiredTypeObjJS;
         		NativeObject requiresTypeObjectJS = (NativeObject)dataTypeRequiresObjJS.get(requiredResourceType);
@@ -113,7 +113,7 @@ public class HAPJSImporter {
         			String requiredResourceName = (String) requiredResourceKey;
         			Object requiredResourceObjJS = requiresTypeObjectJS.get(requiredResourceName);
         			HAPResourceId resourceId = this.processResource(requiredResourceType, requiredResourceObjJS, requiredResourceName);
-        			dataTypeResources.put(resourceId, resourceId);
+        			this.addResourceIdToSet(resourceId, dataTypeResources);
         		}
         	}
 			
@@ -130,8 +130,14 @@ public class HAPJSImporter {
             	out.add(new HAPResourceOperationImp(script, operationId, dataTypeId, operationName));
             	
 				NativeObject operationRequiresObjJS = (NativeObject)operationObjJS.get("requires");
-				Map<HAPResourceId, HAPResourceId> operationResources = new LinkedHashMap<HAPResourceId, HAPResourceId>(); 
-				operationResources.putAll(dataTypeResources);
+				Set<HAPResourceId> operationResources = new HashSet<HAPResourceId>();
+				//add data type requires first
+				for(HAPResourceId dataTypeResourceId : dataTypeResources)	this.addResourceIdToSet(dataTypeResourceId.clone(), dataTypeResources);
+
+            	//get resource from script
+            	List<HAPResourceId> discoverResources = discoverResources(script);
+            	for(HAPResourceId discoverResource : discoverResources)  this.addResourceIdToSet(discoverResource, dataTypeResources);
+				
             	for(Object requiredTypeObjJS : operationRequiresObjJS.keySet()){
             		String requiredResourceType = (String)requiredTypeObjJS;
             		NativeObject requiresTypeObjectJS = (NativeObject)operationRequiresObjJS.get(requiredResourceType);
@@ -140,7 +146,7 @@ public class HAPJSImporter {
             			String requiredResourceName = (String) requiredResourceKey;
             			NativeObject requiredResourceObjJS = (NativeObject)requiresTypeObjectJS.get(requiredResourceName);
             			HAPResourceId resourceId = this.processResource(requiredResourceType, requiredResourceObjJS, requiredResourceName);
-            			operationResources.add(resourceId);
+            			this.addResourceIdToSet(resourceId, operationResources);
             		}
             	}
             	HAPResourceId baseResourceId = this.getResourceManagerJS().buildResourceIdFromIdData(new HAPOperationId(dataTypeId, operationName), null);
@@ -153,33 +159,23 @@ public class HAPJSImporter {
 	private void addResourceIdToSet(HAPResourceId resourceId, Set<HAPResourceId> resourceIdSet){
 		Set<String> alias = resourceId.getAlias();
 		
+		boolean added = false;
 		for(HAPResourceId resourceIdEle : resourceIdSet){
-			if()
-			
-		}
-		
-		HAPResourceId existing = resourceIdMap.get(resourceId);
-		if(existing!=null){
-			if(!HAPBasicUtility.isEquals(existing.getAlias(), resourceId.getAlias())){
-				resourceIdMap.put(resourceId, resourceId);
+			if(resourceIdEle.equals(resourceId)){
+				resourceIdEle.addAlias(resourceId.getAlias());
+				added = true;
+				break;
+			}
+			else{
+				if(resourceId.getType().equals(resourceIdEle.getType())){
+					//if found alias under same type, remove it
+					for(String aliasEle : alias){
+						resourceIdEle.removeAlias(aliasEle);
+					}
+				}
 			}
 		}
-		else{
-			resourceIdMap.put(resourceId, resourceId);
-		}
-	}
-	
-	private void addResourceIdToMap(HAPResourceId resourceId, Map<HAPResourceId, HAPResourceId> resourceIdMap){
-		
-		HAPResourceId existing = resourceIdMap.get(resourceId);
-		if(existing!=null){
-			if(!HAPBasicUtility.isEquals(existing.getAlias(), resourceId.getAlias())){
-				resourceIdMap.put(resourceId, resourceId);
-			}
-		}
-		else{
-			resourceIdMap.put(resourceId, resourceId);
-		}
+		if(!added)  resourceIdSet.add(resourceId);
 	}
 	
 	private HAPResourceId processResource(String type, Object resourceObjJS, String alais){
@@ -231,7 +227,7 @@ public class HAPJSImporter {
 				String[] segs = line.split("\"");
 				String dataType = segs[1];
 				String operation = segs[3];
-				HAPResourceId resource = new HAPResourceId(dataType, operation);
+				HAPResourceId resource = new HAPResourceIdOperation(new HAPOperationId(dataType), operation);
 				out.add(resource);
 			}
 		}
