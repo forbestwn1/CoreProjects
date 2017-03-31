@@ -40,11 +40,14 @@ public class HAPValueInfoManager {
 	}
 	
 	public void importFromXML(List<InputStream> xmlInputStreams){
+		Set<String> valueInfoNames = new HashSet<String>();
+		
 		for(InputStream xmlInputStream : xmlInputStreams){
 			HAPValueInfo valueInfo = HAPValueInfoImporterXML.importFromXML(xmlInputStream);
 			this.registerValueInfo(valueInfo);
+			valueInfoNames.add(valueInfo.getName());
 		}
-		this.afterImportProcess();
+		this.afterImportProcess(valueInfoNames);
 	}
 	
 	public void importFromXML(Class<?> cs, List<String> files){
@@ -73,8 +76,8 @@ public class HAPValueInfoManager {
 		this.m_valueInfos.put(valueInfo.getName(), valueInfo);
 	}
 
-	private void afterImportProcess(){
-		for(String name : this.m_valueInfos.keySet()){
+	private void afterImportProcess(Set<String> valueInfoNames){
+		for(String name : valueInfoNames){
 			HAPValueInfo valueInfo = this.m_valueInfos.get(name);
 			this.registerEntityValueInfoByClass(valueInfo);
 		}

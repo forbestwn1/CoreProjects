@@ -8,7 +8,7 @@ var dataTypeDefition = nosliw.getDataTypeDefinition("core.url", "1.1.0");
 //define what this data type globlely requires (operation, datatype, library)
 dataTypeDefition.requires = {
 	"operation" : { 
-		op: "core.text;1.0.0;operation"
+		op: "core.text;1.0.0;text_normal3"
 	},
 	"datatype" : {
 		text : "core.text;1.0.0"
@@ -17,7 +17,12 @@ dataTypeDefition.requires = {
 		underline : "underscore;1.8.3"
 	},
 	"helper" : {
-		globalHelper : {}
+		globalHelper : {
+			a : "aa",
+			b : function(parm1){
+				parm1 = parm1 + "aaa";
+			}
+		}
 	}
 };
 
@@ -33,18 +38,23 @@ dataTypeDefition.localRequires = {
 		underline : "underscore;1.8.3"
 	},
 	"helper" : {
-		localHelper : {}
+		globalHelper : {
+			c : "cc",
+			d : function(parm1){
+				parm1 = parm1 + "fff";
+			}
+		}
 	}
 };
 
 
 //define operation
-dataTypeDefition.operations['host1'] = {
+dataTypeDefition.operations['url_normal2'] = {
 	//define required resources for operation
 	requires:{
 		"operation" : { 
-			op1: "core.text;1.0.0;operation1",
-			op2: "core.text;1.0.0;operation2",
+			op1: "core.text;1.0.0;text_normal1",
+			op2: "core.text;1.0.0;text_normal2",
 		},
 		"datatype" : {
 			text : "core.text;1.0.0"
@@ -69,11 +79,9 @@ dataTypeDefition.operations['host1'] = {
 		
 		context.library.underline;
 		
-		context.operate("op1", parms, context);
+		context.executeOperation("dataType1", "operation1", parms, context);
 		
-		context.operate("dataType1", "operation1", parms, context);
-		
-		context.operate("dataType2", "operation2", parms, context);
+		context.executeOperation("dataType2", "operation2", parms, context);
 	} 
 };
 

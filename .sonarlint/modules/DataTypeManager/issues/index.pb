@@ -68,3 +68,5 @@ q
 Asrc/com/nosliw/data/core/imp/runtime/js/HAPResourceHelperImp.java,8\2\82d376e920ab79a93840f1563ed8abe924415ee5
 t
 Dsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerJSImp.java,c\6\c6f353c914497dafc3efcdea49e8efcaea698a12
+t
+Dsrc/com/nosliw/data/core/imp/runtime/js/jsresourcedependency.out.xml,d\c\dca60b72e1501cbd3a9227e4c2543712579de510

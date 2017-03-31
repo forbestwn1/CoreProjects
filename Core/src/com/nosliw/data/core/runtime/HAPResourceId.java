@@ -38,7 +38,7 @@ public class HAPResourceId extends HAPSerializableImp{
 	public HAPResourceId(String type, String id, String alias){
 		this.m_type = type;
 		this.m_alias = new HashSet<String>((List<String>)HAPLiterateManager.getInstance().stringToValue(alias, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING));
-		this.setId(id);
+		if(id!=null)		this.setId(id);
 	}
 	
 	public String getId() {		return this.m_id;	}

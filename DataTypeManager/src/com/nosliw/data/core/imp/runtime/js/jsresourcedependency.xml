@@ -10,13 +10,13 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="resourceId" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPResourceIdImp" description="">
+	<property name="resourceId" dataType="object" subDataType="com.nosliw.data.core.runtime.HAPResourceId" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(100) NOT NULL"/>
 		</dbColumnInfos>
 	</property>
 
-	<property name="dependency" dataType="array" subDataType="com.nosliw.data.datatype.importer.HAPResourceIdImp">
+	<property name="dependency" dataType="array" subDataType="com.nosliw.data.core.runtime.HAPResourceId">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(200)"/>
 		</dbColumnInfos>

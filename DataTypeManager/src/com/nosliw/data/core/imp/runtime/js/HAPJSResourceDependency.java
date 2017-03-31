@@ -21,7 +21,10 @@ public class HAPJSResourceDependency  extends HAPStringableValueEntityWithID{
 		this.setDependency(dependency);
 	}
 	
-	public HAPResourceId getResourceId(){  return (HAPResourceId)this.getAtomicAncestorValueObject(RESOURCEID, HAPResourceId.class);  }
+	public HAPResourceId getResourceId(){  
+		return (HAPResourceId)this.getAtomicAncestorValueObject(RESOURCEID, HAPResourceId.class);  
+	}
+	
 	public void setResourceId(HAPResourceId resourceId){  this.updateAtomicChildObjectValue(RESOURCEID, resourceId);  }
 	
 	public List<HAPResourceId> getDependency(){  		return this.getAtomicAncestorValueArray(DEPENDENCY, HAPResourceId.class);	}

@@ -17,6 +17,9 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 
 	@Override
 	public Object stringToValue(String strValue, String subType) {
+		List<Object> out = new ArrayList<Object>();
+		if(strValue==null)   return out;
+		
 		int startIndex = strValue.indexOf(HAPConstant.SEPERATOR_ARRAYSTART);
 		int endIndex = strValue.lastIndexOf(HAPConstant.SEPERATOR_ARRAYEND);
 		
@@ -35,7 +38,6 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 			type1 = subType;
 		}
 		
-		List<Object> out = new ArrayList<Object>();
 		String[] elesArray = HAPNamingConversionUtility.parseElements(arrayStr);
 		for(String eleStr : elesArray){
 			out.add(HAPLiterateManager.getInstance().stringToValue(eleStr, type, type1));

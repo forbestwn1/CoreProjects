@@ -6,7 +6,7 @@ if(nosliw==undefined){
 				var out = this.newDataType();
 				out.dataTypeName = this.getDataTypeName(dataType, version);
 				out.dataType = {
-					dataType : dataType,
+					name : dataType,
 					version : version
 				};
 				return out;

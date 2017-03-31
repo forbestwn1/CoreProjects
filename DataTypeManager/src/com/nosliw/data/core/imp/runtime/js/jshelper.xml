@@ -1,4 +1,4 @@
-<entity name="data.js.operation"
+<entity name="data.js.helper"
 		table="nosliw.HELPERJS"
 		primaryKeys="id" 
 		class="com.nosliw.data.core.imp.runtime.js.HAPResourceHelperImp" 

@@ -18,12 +18,12 @@ import org.mozilla.javascript.Scriptable;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeVersion;
 import com.nosliw.data.core.HAPOperationId;
+import com.nosliw.data.core.imp.HAPOperationImp;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceOperationImp;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
@@ -35,6 +35,7 @@ import com.nosliw.data.core.runtime.js.HAPResourceIdHelper;
 import com.nosliw.data.core.runtime.js.HAPResourceIdLibrary;
 import com.nosliw.data.core.runtime.js.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.js.HAPResourceManagerJS;
+import com.nosliw.data.core.runtime.js.rhino.HAPRhinoUtility;
 
 public class HAPJSImporter {
 
@@ -50,6 +51,7 @@ public class HAPJSImporter {
 		
 		this.m_dbAccess.createDBTable(HAPResourceOperationImp._VALUEINFO_NAME);
 		this.m_dbAccess.createDBTable(HAPJSResourceDependency._VALUEINFO_NAME);
+		this.m_dbAccess.createDBTable(HAPResourceHelperImp._VALUEINFO_NAME);
 	}
 	
 	public void loadFromFolder(String folderPath){
@@ -93,9 +95,11 @@ public class HAPJSImporter {
         Object obj = scope.get("nosliw", scope);
         
         NativeObject nosliwObjJS = (NativeObject)obj;
-        for(Object dataTypeNameKeyObj : nosliwObjJS.keySet()){
+        Function getDataTypesFun = (Function)nosliwObjJS.get("getDataTypes");
+        NativeObject dataTypesObjJS = (NativeObject)getDataTypesFun.call(cx, scope, nosliwObjJS, null);
+        for(Object dataTypeNameKeyObj : dataTypesObjJS.keySet()){
         	String dataTypeNameKey = (String)dataTypeNameKeyObj;
-        	NativeObject dataTypeObjJS = (NativeObject)nosliwObjJS.get(dataTypeNameKey);
+        	NativeObject dataTypeObjJS = (NativeObject)dataTypesObjJS.get(dataTypeNameKey);
         	
         	NativeObject dataTypeIdObjJS = (NativeObject)dataTypeObjJS.get("dataType");
 			String dataTypeName = (String)dataTypeIdObjJS.get("name");
@@ -112,7 +116,7 @@ public class HAPJSImporter {
         		for(Object requiredResourceKey : requiresTypeObjectJS.keySet()){
         			String requiredResourceName = (String) requiredResourceKey;
         			Object requiredResourceObjJS = requiresTypeObjectJS.get(requiredResourceName);
-        			HAPResourceId resourceId = this.processResource(requiredResourceType, requiredResourceObjJS, requiredResourceName);
+        			HAPResourceId resourceId = this.processResource(cx, scope, requiredResourceType, requiredResourceObjJS, requiredResourceName);
         			this.addResourceIdToSet(resourceId, dataTypeResources);
         		}
         	}
@@ -144,13 +148,18 @@ public class HAPJSImporter {
             
             		for(Object requiredResourceKey : requiresTypeObjectJS.keySet()){
             			String requiredResourceName = (String) requiredResourceKey;
-            			NativeObject requiredResourceObjJS = (NativeObject)requiresTypeObjectJS.get(requiredResourceName);
-            			HAPResourceId resourceId = this.processResource(requiredResourceType, requiredResourceObjJS, requiredResourceName);
+            			Object requiredResourceObjJS = requiresTypeObjectJS.get(requiredResourceName);
+            			HAPResourceId resourceId = this.processResource(cx, scope, requiredResourceType, requiredResourceObjJS, requiredResourceName);
             			this.addResourceIdToSet(resourceId, operationResources);
             		}
             	}
             	HAPResourceId baseResourceId = this.getResourceManagerJS().buildResourceIdFromIdData(new HAPOperationId(dataTypeId, operationName), null);
-            	dependency.add(new HAPJSResourceDependency(baseResourceId, new ArrayList(operationResources)));
+            	
+            	System.out.println(baseResourceId.toStringValue(HAPSerializationFormat.LITERATE));
+            	
+            	HAPJSResourceDependency dep = new HAPJSResourceDependency(baseResourceId, new ArrayList(operationResources));
+            	
+            	dependency.add(dep);
 			}
         }
 	    return out;
@@ -178,7 +187,7 @@ public class HAPJSImporter {
 		if(!added)  resourceIdSet.add(resourceId);
 	}
 	
-	private HAPResourceId processResource(String type, Object resourceObjJS, String alais){
+	private HAPResourceId processResource(Context cx, Scriptable scope, String type, Object resourceObjJS, String alais){
 		HAPResourceId out = null;
 		switch(type){
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION:
@@ -194,7 +203,8 @@ public class HAPJSImporter {
 			out = new HAPResourceIdDataType(dataTypeIdLiterate, alais);
 			break;
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_HELPER:
-			HAPResourceHelperImp helperResource = new HAPResourceHelperImp(resourceObjJS.toString());
+			String helperScript = new HAPRhinoUtility().toJSONString(resourceObjJS); 
+			HAPResourceHelperImp helperResource = new HAPResourceHelperImp(helperScript);
 			helperResource = (HAPResourceHelperImp)this.m_dbAccess.saveEntity(helperResource);
 			out = new HAPResourceIdHelper(helperResource.getId(), alais);
 			break;
@@ -210,12 +220,19 @@ public class HAPJSImporter {
 
 	private void saveResourceDependencys(List<HAPJSResourceDependency> dependencys){
 		for(HAPJSResourceDependency dependency : dependencys){
+			{
+				int kkkk = 555;
+				kkkk++;
+				HAPResourceId resourceId = dependency.getResourceId();
+			}
+
 			this.m_dbAccess.saveEntity(dependency);
 		}
 	}
 
-	private String getOperationId(HAPDataTypeId dataTypeId, String operation){
-		return this.m_dbAccess.getOperationInfoByName(dataTypeId, operation).getId();
+	private String getOperationId(HAPDataTypeId dataTypeId, String operationName){
+		HAPOperationImp operation = this.m_dbAccess.getOperationInfoByName(dataTypeId, operationName);
+		return operation.getId();
 	}
 	
 	private List<HAPResourceId> discoverResources(String script){
@@ -223,11 +240,11 @@ public class HAPJSImporter {
 		
 		String lines[] = script.split("\\r?\\n");
 		for(String line : lines){
-			if(line.contains(".operate(")){
+			if(line.contains(".executeOperation(")){
 				String[] segs = line.split("\"");
 				String dataType = segs[1];
 				String operation = segs[3];
-				HAPResourceId resource = new HAPResourceIdOperation(new HAPOperationId(dataType), operation);
+				HAPResourceId resource = new HAPResourceIdOperation(new HAPOperationId(dataType, operation), null);
 				out.add(resource);
 			}
 		}
