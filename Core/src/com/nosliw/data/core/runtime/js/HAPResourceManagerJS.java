@@ -10,26 +10,21 @@ import com.nosliw.data.core.runtime.HAPResourceManager;
 
 public abstract class HAPResourceManagerJS  implements HAPResourceManager{
 
-	public HAPResourceId buildResourceIdObject(String literate){
-		String[] segs = HAPNamingConversionUtility.parseDetails(literate);
-		String type = segs[0];
-		String id = segs[1];
-		String alias = null;
-		if(segs.length>=3)   alias = segs[2];
+	public static HAPResourceId buildResourceIdObject(String literate){
+		HAPResourceId out = new HAPResourceId(literate);
 		
-		HAPResourceId out = null;
-		switch(type){
+		switch(out.getType()){
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION:
-			out = new HAPResourceIdOperation(id, alias);
+			out = new HAPResourceIdOperation(out);
 			break;
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPE:
-			out = new HAPResourceIdDataType(id, alias);
+			out = new HAPResourceIdDataType(out);
 			break;
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_LIBRARY:
-			out = new HAPResourceIdLibrary(id, alias);
+			out = new HAPResourceIdLibrary(out);
 			break;
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_HELPER:
-			out = new HAPResourceIdHelper(id, alias);
+			out = new HAPResourceIdHelper(out);
 			break;
 		}
 		return out;

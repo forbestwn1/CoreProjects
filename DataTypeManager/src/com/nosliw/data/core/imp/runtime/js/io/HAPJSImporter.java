@@ -224,6 +224,7 @@ public class HAPJSImporter {
 				int kkkk = 555;
 				kkkk++;
 				HAPResourceId resourceId = dependency.getResourceId();
+				kkkk++;
 			}
 
 			this.m_dbAccess.saveEntity(dependency);

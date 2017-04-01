@@ -18,7 +18,7 @@
 
 	<property name="dependency" dataType="array" subDataType="com.nosliw.data.core.runtime.HAPResourceId">
 		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(200)"/>
+			<dbColumnInfo definition="VARCHAR(2000)"/>
 		</dbColumnInfos>
 	</property>
 

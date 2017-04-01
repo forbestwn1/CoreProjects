@@ -11,6 +11,10 @@ public class HAPResourceIdOperation extends HAPResourceId{
 	private HAPOperationId m_operationId;
 	
 	public HAPResourceIdOperation(){}
+
+	public HAPResourceIdOperation(HAPResourceId resourceId){
+		this.cloneFrom(resourceId);
+	}
 	
 	public HAPResourceIdOperation(String idLiterate, String alias) {
 		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION, idLiterate, alias);
@@ -37,10 +41,5 @@ public class HAPResourceIdOperation extends HAPResourceId{
 		HAPResourceIdOperation out = new HAPResourceIdOperation();
 		out.cloneFrom(this);
 		return out;
-	}
-
-	protected void cloneFrom(HAPResourceIdOperation resourceId){
-		super.cloneFrom(resourceId);
-		this.m_operationId = resourceId.m_operationId;
 	}
 }

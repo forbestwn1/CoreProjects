@@ -219,7 +219,16 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		for(String child : this.m_childrens.keySet()){
-			jsonMap.put(child, this.m_childrens.get(child).toStringValue(HAPSerializationFormat.JSON));
+			HAPStringableValue propertyValue = this.m_childrens.get(child);
+			switch(propertyValue.getStringableStructure()){
+			case HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC:
+				jsonMap.put(child, this.m_childrens.get(child).toStringValue(HAPSerializationFormat.JSON));
+				typeJsonMap.put(child, String.class);
+				break;
+			default:
+				jsonMap.put(child, this.m_childrens.get(child).toStringValue(HAPSerializationFormat.JSON));
+				break;
+			}
 		}
 	}
 	

@@ -1,6 +1,5 @@
 package com.nosliw.data.core.runtime;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -35,9 +34,13 @@ public class HAPResourceId extends HAPSerializableImp{
 		this.m_alias = new HashSet<String>();
 	}
 	
+	public HAPResourceId(String literate){
+		this.buildObjectByLiterate(literate);
+	}
+	
 	public HAPResourceId(String type, String id, String alias){
 		this.m_type = type;
-		this.m_alias = new HashSet<String>((List<String>)HAPLiterateManager.getInstance().stringToValue(alias, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING));
+		this.setAlias(alias);
 		if(id!=null)		this.setId(id);
 	}
 	
@@ -48,6 +51,9 @@ public class HAPResourceId extends HAPSerializableImp{
 	public Set<String> getAlias(){  return this.m_alias;  }
 	public void addAlias(String alias){
 		this.m_alias.add(alias);
+	}
+	private void setAlias(String aliasLiterate){
+		this.m_alias = new HashSet<String>((List<String>)HAPLiterateManager.getInstance().stringToValue(aliasLiterate, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING));
 	}
 	
 	public void addAlias(Collection alias){
@@ -65,6 +71,16 @@ public class HAPResourceId extends HAPSerializableImp{
 		String aliasLiterate = HAPLiterateManager.getInstance().valueToString(this.m_alias);
 		return HAPNamingConversionUtility.cascadeDetail(new String[]{this.getType(), this.getId(), aliasLiterate});
 	}
+	
+	@Override
+	protected boolean buildObjectByLiterate(String literateValue){	
+		String[] segs = HAPNamingConversionUtility.parseDetails(literateValue);
+		this.m_type = segs[0];
+		this.m_id = segs[1];
+		if(segs.length>=3)   this.setAlias(segs[2]);
+		return true;  
+	}
+	
 
 	@Override
 	public boolean equals(Object o){
@@ -85,7 +101,7 @@ public class HAPResourceId extends HAPSerializableImp{
 	}
 	
 	protected void cloneFrom(HAPResourceId resourceId){
-		this.m_id = resourceId.m_id;
+		this.setId(resourceId.m_id);
 		this.m_type = resourceId.m_type;
 		this.m_alias.addAll(resourceId.m_alias);
 	}

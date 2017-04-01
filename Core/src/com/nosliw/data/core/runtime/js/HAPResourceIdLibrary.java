@@ -11,6 +11,10 @@ public class HAPResourceIdLibrary extends HAPResourceId{
 	
 	public HAPResourceIdLibrary(){}
 	
+	public HAPResourceIdLibrary(HAPResourceId resourceId){
+		this.cloneFrom(resourceId);
+	}
+	
 	public HAPResourceIdLibrary(String idLiterate, String alias) {
 		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_LIBRARY, idLiterate, alias);
 	}
@@ -38,9 +42,4 @@ public class HAPResourceIdLibrary extends HAPResourceId{
 		return out;
 	}
 
-	protected void cloneFrom(HAPResourceIdLibrary resourceId){
-		super.cloneFrom(resourceId);
-		this.m_jsLibraryId = resourceId.m_jsLibraryId;
-	}
-	
 }

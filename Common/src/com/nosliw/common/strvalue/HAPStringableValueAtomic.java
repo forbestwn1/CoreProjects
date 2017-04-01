@@ -223,4 +223,7 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	
 	@Override
 	public String getStringableStructure(){		return HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC;	}
+	
+	@Override
+	public String toString(){		return this.buildLiterate();	}
 }

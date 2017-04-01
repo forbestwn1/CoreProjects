@@ -12,6 +12,10 @@ public class HAPResourceIdDataType extends HAPResourceId{
 	
 	public HAPResourceIdDataType(){}
 	
+	public HAPResourceIdDataType(HAPResourceId resourceId){
+		this.cloneFrom(resourceId);
+	}
+	
 	public HAPResourceIdDataType(String idLiterate, String alias) {
 		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPE, idLiterate, alias);
 	}
@@ -38,10 +42,4 @@ public class HAPResourceIdDataType extends HAPResourceId{
 		out.cloneFrom(this);
 		return out;
 	}
-
-	protected void cloneFrom(HAPResourceIdDataType resourceId){
-		super.cloneFrom(resourceId);
-		this.m_dataTypeId = resourceId.m_dataTypeId;
-	}
-	
 }
