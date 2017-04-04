@@ -16,6 +16,8 @@ public interface HAPRuntime {
 	
 	HAPData executeExpression(HAPExpression expression);
 	
+	HAPResourceDiscovery getResourceDiscovery();
+	
 	HAPResourceManager getResourceManager();
 	
 }

@@ -28,13 +28,13 @@ import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceOperationImp;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceHelperImp;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerJSImp;
+import com.nosliw.data.core.imp.runtime.js.HAPResourceDiscoveryJSImp;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.js.HAPResourceIdDataType;
 import com.nosliw.data.core.runtime.js.HAPResourceIdHelper;
 import com.nosliw.data.core.runtime.js.HAPResourceIdLibrary;
 import com.nosliw.data.core.runtime.js.HAPResourceIdOperation;
-import com.nosliw.data.core.runtime.js.HAPResourceManagerJS;
+import com.nosliw.data.core.runtime.js.HAPResourceDiscoveryJS;
 import com.nosliw.data.core.runtime.js.rhino.HAPRhinoUtility;
 
 public class HAPJSImporter {
@@ -43,9 +43,9 @@ public class HAPJSImporter {
 	
 	private String m_operationTemplate = null;
 	
-	private HAPResourceManagerJSImp m_resourceJSMan;
+	private HAPResourceDiscoveryJSImp m_resourceJSMan;
 	
-	public HAPJSImporter(HAPResourceManagerJSImp resourceJSMan){
+	public HAPJSImporter(HAPResourceDiscoveryJSImp resourceJSMan){
 		this.m_resourceJSMan = resourceJSMan;
 		this.m_dbAccess = this.m_resourceJSMan.getDBAccess();
 		
@@ -270,6 +270,6 @@ public class HAPJSImporter {
 		return this.m_operationTemplate;
 	}
 	
-	private HAPResourceManagerJS getResourceManagerJS(){		return this.m_resourceJSMan;	}
+	private HAPResourceDiscoveryJS getResourceManagerJS(){		return this.m_resourceJSMan;	}
 	
 }

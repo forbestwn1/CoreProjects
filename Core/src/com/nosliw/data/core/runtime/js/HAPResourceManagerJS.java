@@ -1,53 +1,48 @@
 package com.nosliw.data.core.runtime.js;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPOperationId;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
+import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManager;
 
-public abstract class HAPResourceManagerJS  implements HAPResourceManager{
+public class HAPResourceManagerJS implements HAPResourceManager{
 
-	public static HAPResourceId buildResourceIdObject(String literate){
-		HAPResourceId out = new HAPResourceId(literate);
+	private Map<String, HAPResourceManager> m_resourceMans = new LinkedHashMap<String, HAPResourceManager>();
+
+	public void registerResourceManager(String type, HAPResourceManager resourceMan){
+		this.m_resourceMans.put(type, resourceMan);
+	}
+	
+	@Override
+	public Set<HAPResource> getResources(Set<HAPResourceId> resourcesId) {
+		Set<HAPResource> out = new HashSet<HAPResource>();
 		
-		switch(out.getType()){
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION:
-			out = new HAPResourceIdOperation(out);
-			break;
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPE:
-			out = new HAPResourceIdDataType(out);
-			break;
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_LIBRARY:
-			out = new HAPResourceIdLibrary(out);
-			break;
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_HELPER:
-			out = new HAPResourceIdHelper(out);
-			break;
+		//sort out resource by type
+		Map<String, Set<HAPResourceId>> sortedResourcesId = new LinkedHashMap<String, Set<HAPResourceId>>();
+		for(HAPResourceId resourceId : resourcesId){
+			String type = resourceId.getType();
+			Set<HAPResourceId> typedResourcesId = sortedResourcesId.get(type);
+			if(typedResourcesId==null){
+				typedResourcesId = new HashSet<HAPResourceId>();
+				sortedResourcesId.put(type, typedResourcesId);
+			}
+			typedResourcesId.add(resourceId);
 		}
+
+		for(String resourceType : sortedResourcesId.keySet()){
+			HAPResourceManager resourceMan = this.getResourceManager(resourceType);
+			Set<HAPResource> reosurces = resourceMan.getResources(sortedResourcesId.get(resourceType));
+			out.addAll(reosurces);
+		}
+		
 		return out;
 	}
 	
-	public String buildResourceIdLiterate(HAPResourceId resourceId){
-		return resourceId.toStringValue(HAPSerializationFormat.LITERATE);
-	}
-	
-	public HAPResourceId buildResourceIdFromIdData(Object resourceIdData, String alias){
-		HAPResourceId out = null;
-		if(resourceIdData instanceof HAPOperationId){
-        	out = new HAPResourceIdOperation((HAPOperationId)resourceIdData, alias);
-		}
-		else if(resourceIdData instanceof HAPDataTypeId){
-        	out = new HAPResourceIdDataType((HAPDataTypeId)resourceIdData, alias);
-		}
-		else if(resourceIdData instanceof HAPJSLibraryId){
-        	out = new HAPResourceIdLibrary((HAPJSLibraryId)resourceIdData, alias);
-		}
-		else if(resourceIdData instanceof String){
-			out = new HAPResourceIdHelper((String)resourceIdData, alias);
-		}
-		return out;
+	private HAPResourceManager getResourceManager(String resourceType){
+		return this.m_resourceMans.get(resourceType);
 	}
 }

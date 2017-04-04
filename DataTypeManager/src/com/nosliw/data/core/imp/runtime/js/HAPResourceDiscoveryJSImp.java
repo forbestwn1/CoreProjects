@@ -15,17 +15,17 @@ import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.js.HAPResourceIdOperation;
-import com.nosliw.data.core.runtime.js.HAPResourceManagerJS;
+import com.nosliw.data.core.runtime.js.HAPResourceDiscoveryJS;
 
-public class HAPResourceManagerJSImp extends HAPResourceManagerJS{
+public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 
-	private static HAPResourceManagerJSImp m_instance;
+	private static HAPResourceDiscoveryJSImp m_instance;
 	
 	private HAPDBAccess m_dbAccess;
 	
-	public static HAPResourceManagerJSImp getInstance(){
+	public static HAPResourceDiscoveryJSImp getInstance(){
 		if(m_instance==null){
-			m_instance = new HAPResourceManagerJSImp();
+			m_instance = new HAPResourceDiscoveryJSImp();
 		}
 		return m_instance;
 	}
@@ -33,14 +33,14 @@ public class HAPResourceManagerJSImp extends HAPResourceManagerJS{
 	private void init(){
 		this.m_dbAccess = HAPDBAccess.getInstance();
 		
-		HAPValueInfoManager.getInstance().importFromXML(HAPResourceManagerJSImp.class, new String[]{
+		HAPValueInfoManager.getInstance().importFromXML(HAPResourceDiscoveryJSImp.class, new String[]{
 				"jsoperation.xml",
 				"jsresourcedependency.xml",
 				"jshelper.xml"
 		});
 	}
 	
-	private HAPResourceManagerJSImp(){
+	private HAPResourceDiscoveryJSImp(){
 		this.m_dbAccess = HAPDBAccess.getInstance();
 		this.init();
 	}
