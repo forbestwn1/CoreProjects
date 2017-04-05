@@ -1,6 +1,5 @@
 package com.nosliw.data.core.runtime.js.rhino;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.mozilla.javascript.Context;
@@ -11,17 +10,16 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPResourceDiscovery;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPResourceIdDataType;
-import com.nosliw.data.core.runtime.js.HAPResourceIdHelper;
-import com.nosliw.data.core.runtime.js.HAPResourceIdLibrary;
-import com.nosliw.data.core.runtime.js.HAPResourceIdOperation;
 
 public class HAPRuntimeImp implements HAPRuntime{
 
-	private HAPResourceDiscovery m_resourceMan;
+	private HAPResourceDiscovery m_resourceDiscovery;
+	
+	private HAPResourceManager m_resourceManager;
 	
 	@Override
 	public HAPRuntimeInfo getRuntimeInfo() {
@@ -42,7 +40,7 @@ public class HAPRuntimeImp implements HAPRuntime{
 
 	@Override
 	public HAPResourceDiscovery getResourceDiscovery() {
-		return this.m_resourceMan;
+		return this.m_resourceDiscovery;
 	}
 
 	private Scriptable initScope(HAPExpression expression){
@@ -89,33 +87,18 @@ public class HAPRuntimeImp implements HAPRuntime{
 		return null;
 	}
 	
-	private Map<HAPResourceId, HAPResource> loadResources(Set<HAPResourceId> resourcesId){
+	private void loadResources(Set<HAPResourceId> resourcesId){
+		Set<HAPResource> missedResource = this.getResourceManager().getResources(resourcesId);
 		
-		
-		
-		return null;
-	}
-	
-	private HAPResource loadResource(){
-		switch(out.getType()){
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION:
-			out = new HAPResourceIdOperation(out);
-			break;
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPE:
-			out = new HAPResourceIdDataType(out);
-			break;
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_LIBRARY:
-			out = new HAPResourceIdLibrary(out);
-			break;
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_HELPER:
-			out = new HAPResourceIdHelper(out);
-			break;
-		}
-
 	}
 	
 	private HAPData execute(HAPExpression expression){
 		return null;
+	}
+
+	@Override
+	public HAPResourceManager getResourceManager() {
+		return this.m_resourceManager;
 	}
 	
 }

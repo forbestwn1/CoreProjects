@@ -4,7 +4,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.runtime.HAPResourceData;
 
-public interface HAPResourceOperation extends HAPResourceData{
+public interface HAPResourceDataOperation extends HAPResourceData{
 
 	@HAPAttribute
 	public static String SCRIPT = "script";

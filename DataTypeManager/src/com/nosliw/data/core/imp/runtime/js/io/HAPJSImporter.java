@@ -25,7 +25,7 @@ import com.nosliw.data.core.HAPDataTypeVersion;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.imp.HAPOperationImp;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceOperationImp;
+import com.nosliw.data.core.imp.runtime.js.HAPResourceDataOperationImp;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceHelperImp;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDiscoveryJSImp;
@@ -49,21 +49,21 @@ public class HAPJSImporter {
 		this.m_resourceJSMan = resourceJSMan;
 		this.m_dbAccess = this.m_resourceJSMan.getDBAccess();
 		
-		this.m_dbAccess.createDBTable(HAPResourceOperationImp._VALUEINFO_NAME);
+		this.m_dbAccess.createDBTable(HAPResourceDataOperationImp._VALUEINFO_NAME);
 		this.m_dbAccess.createDBTable(HAPJSResourceDependency._VALUEINFO_NAME);
 		this.m_dbAccess.createDBTable(HAPResourceHelperImp._VALUEINFO_NAME);
 	}
 	
 	public void loadFromFolder(String folderPath){
 		//find js operation
-		List<HAPResourceOperationImp> jsout = new ArrayList<HAPResourceOperationImp>();
+		List<HAPResourceDataOperationImp> jsout = new ArrayList<HAPResourceDataOperationImp>();
 		List<HAPJSResourceDependency> dependency = new ArrayList<HAPJSResourceDependency>();
 		this.importFromFolder(folderPath, jsout, dependency);
 		this.saveOperations(jsout);
 		this.saveResourceDependencys(dependency);
 	}
 	
-	private void importFromFolder(String folderPath, List<HAPResourceOperationImp> out, List<HAPJSResourceDependency> dependency){
+	private void importFromFolder(String folderPath, List<HAPResourceDataOperationImp> out, List<HAPJSResourceDependency> dependency){
 		File folder = new File(folderPath);
 		File[] listOfFiles = folder.listFiles();
 	    for (int i = 0; i < listOfFiles.length; i++) {
@@ -89,7 +89,7 @@ public class HAPJSImporter {
 	    }		
 	}
 	
-	private List<HAPResourceOperationImp> importFromFile(Context cx, Scriptable scope, InputStream inputStream, List<HAPResourceOperationImp> out, List<HAPJSResourceDependency> dependency){
+	private List<HAPResourceDataOperationImp> importFromFile(Context cx, Scriptable scope, InputStream inputStream, List<HAPResourceDataOperationImp> out, List<HAPJSResourceDependency> dependency){
         String content = this.getOperationDefinition(inputStream);
         cx.evaluateString(scope, content, "<cmd>", 1, null);
         Object obj = scope.get("nosliw", scope);
@@ -131,7 +131,7 @@ public class HAPJSImporter {
 				Function operationFunJS = (Function)operationObjJS.get("operation");
             	String script = Context.toString(operationFunJS);
             	String operationId = this.getOperationId(dataTypeId, operationName);
-            	out.add(new HAPResourceOperationImp(script, operationId, dataTypeId, operationName));
+            	out.add(new HAPResourceDataOperationImp(script, operationId, dataTypeId, operationName));
             	
 				NativeObject operationRequiresObjJS = (NativeObject)operationObjJS.get("requires");
 				Set<HAPResourceId> operationResources = new HashSet<HAPResourceId>();
@@ -212,8 +212,8 @@ public class HAPJSImporter {
 		return out;
 	}
 	
-	private void saveOperations(List<HAPResourceOperationImp> ops){
-		for(HAPResourceOperationImp op : ops){
+	private void saveOperations(List<HAPResourceDataOperationImp> ops){
+		for(HAPResourceDataOperationImp op : ops){
 			this.m_dbAccess.saveEntity(op);
 		}
 	}

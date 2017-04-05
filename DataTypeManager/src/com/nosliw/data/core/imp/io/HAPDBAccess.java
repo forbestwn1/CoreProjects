@@ -30,7 +30,7 @@ import com.nosliw.data.core.imp.HAPDataTypePictureImp;
 import com.nosliw.data.core.imp.HAPOperationImp;
 import com.nosliw.data.core.imp.HAPOperationVarInfoImp;
 import com.nosliw.data.core.imp.HAPRelationshipImp;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceOperationImp;
+import com.nosliw.data.core.imp.runtime.js.HAPResourceDataOperationImp;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceHelperImp;
 import com.nosliw.data.core.runtime.HAPResourceId;
@@ -177,10 +177,10 @@ public class HAPDBAccess extends HAPConfigurableImp {
 				new Object[]{resourceIdStr});
 	}
 	
-	public HAPResourceOperationImp getJSOperation(HAPOperationId operationId){
-		return (HAPResourceOperationImp)this.queryEntityFromDB(
-				HAPResourceOperationImp._VALUEINFO_NAME, 
-				HAPResourceOperationImp.DATATYPENAME+"=? AND +"+HAPResourceOperationImp.OPERATIONNAME+"=?",
+	public HAPResourceDataOperationImp getJSOperation(HAPOperationId operationId){
+		return (HAPResourceDataOperationImp)this.queryEntityFromDB(
+				HAPResourceDataOperationImp._VALUEINFO_NAME, 
+				HAPResourceDataOperationImp.DATATYPENAME+"=? AND +"+HAPResourceDataOperationImp.OPERATIONNAME+"=?",
 				new Object[]{operationId.getFullName(), operationId.getOperation()});
 		
 	}

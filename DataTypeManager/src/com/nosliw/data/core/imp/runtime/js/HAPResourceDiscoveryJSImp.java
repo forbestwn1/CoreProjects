@@ -63,15 +63,6 @@ public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 		return null;
 	}
 
-	@Override
-	public Set<HAPResource> getResources(Set<HAPResourceId> resourcesId) {
-		Set<HAPResource> out = new HashSet<HAPResource>();
-		for(HAPResourceId resourceId : resourcesId){
-			out.add(this.getResourceById(resourceId));
-		}
-		return out;
-	}
-
 	public Set<HAPResourceId> discoverResourceDependency(Set<HAPResourceId> resourceIds){
 		Set<HAPResourceId> out = new HashSet<HAPResourceId>();
 		for(HAPResourceId resourceId : resourceIds){
@@ -92,21 +83,5 @@ public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 	
 	public Set<HAPResourceId> getResourceDependency(HAPResourceId resourceId){
 		return new HashSet(this.m_dbAccess.getJSResourceDependency(resourceId));
-	}
-	
-	
-	public HAPResource getResourceById(HAPResourceId resourceId){
-		HAPResource out = null;
-		String resourceType = resourceId.getType();
-		switch(resourceType)
-		{
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION:
-			HAPOperationId operationId = (HAPOperationId)HAPSerializeManager.getInstance().buildObject(resourceId.getId(), HAPOperationId.class, HAPSerializationFormat.LITERATE);
-			HAPResourceOperationImp jsOperation = this.m_dbAccess.getJSOperation(operationId);
-			out = new HAPResource(resourceId, jsOperation, null);
-			break;
-		}
-		
-		return out;
 	}
 }
