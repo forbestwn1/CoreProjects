@@ -28,19 +28,19 @@ public class HAPRuntimeImp implements HAPRuntime{
 
 	@Override
 	public HAPData executeExpression(HAPExpression expression) {
+		//discover required resources
 		Set<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
 		
+		//find which resource is missing
 		Set<HAPResourceId> missedResourceId = this.findMissedResources(resourcesId);
+		
+		//load missed resources
 		this.loadResources(missedResourceId);
 		
+		//execute expression
 		HAPData out = this.execute(expression);
 		
 		return out;
-	}
-
-	@Override
-	public HAPResourceDiscovery getResourceDiscovery() {
-		return this.m_resourceDiscovery;
 	}
 
 	private Scriptable initScope(HAPExpression expression){
@@ -97,8 +97,8 @@ public class HAPRuntimeImp implements HAPRuntime{
 	}
 
 	@Override
-	public HAPResourceManager getResourceManager() {
-		return this.m_resourceManager;
-	}
-	
+	public HAPResourceManager getResourceManager() {		return this.m_resourceManager;	}
+
+	@Override
+	public HAPResourceDiscovery getResourceDiscovery() {		return this.m_resourceDiscovery;	}
 }

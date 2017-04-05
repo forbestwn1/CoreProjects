@@ -3,6 +3,9 @@ package com.nosliw.data.core.runtime;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.HAPInfo;
 
 /**
@@ -12,8 +15,18 @@ import com.nosliw.data.core.HAPInfo;
  *  	type of resource
  *  	status of resource: available, not available
  */
-public class HAPResource{
+@HAPEntityWithAttribute
+public class HAPResource extends HAPSerializableImp{
 
+	@HAPAttribute
+	public static String ID = "id";
+
+	@HAPAttribute
+	public static String DATA = "data";
+
+	@HAPAttribute
+	public static String INFO = "info";
+	
 	private HAPResourceId m_id;
 	
 	private HAPResourceData m_resourceData;

@@ -1,5 +1,7 @@
 package com.nosliw.data.core.runtime;
 
-public interface HAPResourceData {
+import com.nosliw.common.serialization.HAPSerializable;
+
+public interface HAPResourceData extends HAPSerializable{
 
 }
