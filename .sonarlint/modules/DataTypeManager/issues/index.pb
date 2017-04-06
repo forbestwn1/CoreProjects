@@ -72,3 +72,5 @@ z
 Jsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerJSOperation.java,f\c\fc3a0c2a47e335ada3a23174296f637bf29d7057
 v
 Fsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDiscoveryJSImp.java,5\2\52439fa6610f1fde2afcf4b2f5f7f6bc03ac24f5
+x
+Hsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDataOperationImp.java,d\e\de63e25afc4ddc995eff4c29c743435238f0d67f

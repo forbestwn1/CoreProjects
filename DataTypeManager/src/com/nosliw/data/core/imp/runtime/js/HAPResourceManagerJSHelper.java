@@ -17,7 +17,7 @@ public class HAPResourceManagerJSHelper implements HAPResourceManager{
 		Set<HAPResource> out = new HashSet<HAPResource>();
 		
 		for(HAPResourceId resourceId : resourcesId){
-			HAPResourceHelperImp helperResource = this.m_dbAccess.getResourceHelper(resourceId.getId());
+			HAPResourceDataHelperImp helperResource = this.m_dbAccess.getResourceHelper(resourceId.getId());
 			out.add(new HAPResource(resourceId, helperResource, null));
 		}
 		return out;

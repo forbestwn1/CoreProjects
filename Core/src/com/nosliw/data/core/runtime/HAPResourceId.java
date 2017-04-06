@@ -3,18 +3,25 @@ package com.nosliw.data.core.runtime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPJsonUtility;
 
 /**
  * Resource Id to identify resource 
  */
+@HAPEntityWithAttribute
 public class HAPResourceId extends HAPSerializableImp{
 
 	@HAPAttribute
@@ -65,6 +72,37 @@ public class HAPResourceId extends HAPSerializableImp{
 	}
 	
 	protected void setId(String id){  this.m_id = id; }
+	
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(ID, this.getId());
+		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(ALIAS, HAPJsonUtility.buildArrayJson(this.getAlias().toArray(new String[0])));
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		this.buildFullJsonMap(jsonMap, typeJsonMap);
+	}
+
+	@Override
+	protected boolean buildObjectByFullJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		this.setId(jsonObj.optString(ID));
+		this.m_type = jsonObj.optString(TYPE);
+		JSONArray alaisArray = jsonObj.optJSONArray(ALIAS);
+		for(int i=0; i<alaisArray.length(); i++){
+			String aliais = alaisArray.optString(i);
+			this.m_alias.add(aliais);
+		}
+		return true; 
+	}
+
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		this.buildObjectByFullJson(json);
+		return true; 
+	}
 	
 	@Override
 	protected String buildLiterate(){

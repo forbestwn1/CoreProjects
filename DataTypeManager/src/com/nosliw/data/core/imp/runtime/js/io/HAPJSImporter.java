@@ -27,7 +27,7 @@ import com.nosliw.data.core.imp.HAPOperationImp;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataOperationImp;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceHelperImp;
+import com.nosliw.data.core.imp.runtime.js.HAPResourceDataHelperImp;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDiscoveryJSImp;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.js.HAPResourceIdDataType;
@@ -51,7 +51,7 @@ public class HAPJSImporter {
 		
 		this.m_dbAccess.createDBTable(HAPResourceDataOperationImp._VALUEINFO_NAME);
 		this.m_dbAccess.createDBTable(HAPJSResourceDependency._VALUEINFO_NAME);
-		this.m_dbAccess.createDBTable(HAPResourceHelperImp._VALUEINFO_NAME);
+		this.m_dbAccess.createDBTable(HAPResourceDataHelperImp._VALUEINFO_NAME);
 	}
 	
 	public void loadFromFolder(String folderPath){
@@ -204,8 +204,8 @@ public class HAPJSImporter {
 			break;
 		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_HELPER:
 			String helperScript = new HAPRhinoUtility().toJSONString(resourceObjJS); 
-			HAPResourceHelperImp helperResource = new HAPResourceHelperImp(helperScript);
-			helperResource = (HAPResourceHelperImp)this.m_dbAccess.saveEntity(helperResource);
+			HAPResourceDataHelperImp helperResource = new HAPResourceDataHelperImp(helperScript);
+			helperResource = (HAPResourceDataHelperImp)this.m_dbAccess.saveEntity(helperResource);
 			out = new HAPResourceIdHelper(helperResource.getId(), alais);
 			break;
 		}

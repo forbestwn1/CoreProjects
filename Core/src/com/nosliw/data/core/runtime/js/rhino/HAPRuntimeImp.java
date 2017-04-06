@@ -14,6 +14,7 @@ import com.nosliw.data.core.runtime.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPResourceDiscovery;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
 
 public class HAPRuntimeImp implements HAPRuntime{
 
@@ -87,9 +88,12 @@ public class HAPRuntimeImp implements HAPRuntime{
 		return null;
 	}
 	
-	private void loadResources(Set<HAPResourceId> resourcesId){
+	private void loadResources(Set<HAPResourceId> resourcesId, Scriptable scope, Context context){
 		Set<HAPResource> missedResource = this.getResourceManager().getResources(resourcesId);
-		
+		for(HAPResource resource : missedResource){
+			String resourceScript = HAPRuntimeJSUtility.buildScriptForResource(resource);
+			context.compileString(resourceScript, "", 1, null);
+		}
 	}
 	
 	private HAPData execute(HAPExpression expression){

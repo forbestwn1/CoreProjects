@@ -9,15 +9,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.nosliw.common.configure.HAPConfigurableImp;
-import com.nosliw.common.configure.HAPConfigure;
-import com.nosliw.common.configure.HAPConfigureImp;
-import com.nosliw.common.configure.HAPConfigureManager;
 import com.nosliw.common.configure.HAPConfigureUtility;
 import com.nosliw.common.constant.HAPConstantGroup;
 import com.nosliw.common.constant.HAPConstantManager;
 import com.nosliw.common.interpolate.HAPInterpolateUtility;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterXML;
-import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPXMLUtility;
 

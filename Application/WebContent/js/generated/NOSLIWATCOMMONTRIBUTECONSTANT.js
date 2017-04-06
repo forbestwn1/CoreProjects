@@ -181,11 +181,12 @@ var NOSLIWATCOMMONTRIBUTECONSTANT=
   "DATA_WAPPER_TYPE": "wapperType",
   "DATATYPEID_OPERATION": "operation",
   "RESOURCE_ID": "id",
-  "RESOURCE_DATA": "data",
+  "RESOURCE_RESOURCEDATA": "resourceData",
   "RESOURCE_INFO": "info",
-  "null_ID": "id",
-  "null_TYPE": "type",
-  "null_ALIAS": "alias",
+  "RESOURCEID_ID": "id",
+  "RESOURCEID_TYPE": "type",
+  "RESOURCEID_ALIAS": "alias",
   "null_NAME": "name",
-  "null_VERSION": "version"
+  "null_VERSION": "version",
+  "RESOURCEDATALIBRARY_SCRIPT": "script"
 };
