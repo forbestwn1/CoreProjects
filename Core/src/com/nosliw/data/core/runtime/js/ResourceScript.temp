@@ -7,7 +7,7 @@ function(){
 	};
 
 	resource.info = ||info||;
-	resource.script = ||script||;
+	resource.value = ||value||;
 
 	return resource;
 }());

@@ -1,6 +1,7 @@
 package com.nosliw.data.core.imp.runtime.js;
 
 import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,13 +27,12 @@ public class HAPResourceManagerJSLibrary implements HAPResourceManager{
 			HAPResourceIdLibrary resourceLibraryId = new HAPResourceIdLibrary(resourceId);
 			HAPJSLibraryId libraryId =  resourceLibraryId.getLibraryId();
 
-			StringBuffer libraryContent = new StringBuffer();
 			List<File> files = this.getLibraryFileName(libraryId);
+			List<URI> uris = new ArrayList<URI>();
 			for(File file : files){
-				String fileContent = HAPFileUtility.readFile(file);
-				libraryContent.append(fileContent);
+				uris.add(file.toURI());
 			}
-			HAPResourceDataLibrary libraryResourceData = new HAPResourceDataLibrary(libraryContent.toString());
+			HAPResourceDataLibrary libraryResourceData = new HAPResourceDataLibrary(uris);
 			HAPResource resource = new HAPResource(resourceId, libraryResourceData, null);
 			out.add(resource);
 		}

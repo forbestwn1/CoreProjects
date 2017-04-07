@@ -1,7 +1,7 @@
 /**
  * 
  */
-var nosliwCreateRemoteServiceManager = function(){
+var nosliwCreateResourceManager = function(){
 	
 	var loc_resources = {};
 	
@@ -22,16 +22,16 @@ var nosliwCreateRemoteServiceManager = function(){
 		},
 		
 		resourceExists : function(resourceId){
-			if(this.getResource===undefined)  return false;
+			if(this.getResource(resourceId)===undefined)  return false;
 			else return true;
 		},
 		
 		findMissingResources : function(resourcesIdArray){
 			var out = [];
-			for(var index in resourcesIdArray){
-				var resourceId = resourcesIdArray[index];
+			for(var i=0; i<resourcesIdArray.length; i++){
+				var resourceId = resourcesIdArray[i];
 				if(!this.resoruceExists(resourceId)){
-					out.push(resourceId);
+					out.push(i);
 				}
 			}
 			return out;

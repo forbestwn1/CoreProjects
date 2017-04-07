@@ -1,9 +1,15 @@
 package com.nosliw.data.core.runtime.js.rhino;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Function;
+import org.mozilla.javascript.NativeArray;
+import org.mozilla.javascript.NativeJavaArray;
+import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 
@@ -29,6 +35,8 @@ public class HAPRuntimeImp implements HAPRuntime{
 	
 	private Scriptable m_scope;
 	
+	private Map<String, Scriptable> m_taskScope;
+	
 	public HAPRuntimeImp(HAPResourceDiscovery resourceDiscovery, HAPResourceManager resourceMan){
 		this.m_resourceDiscovery = resourceDiscovery;
 		this.m_resourceManager = resourceMan;
@@ -40,6 +48,17 @@ public class HAPRuntimeImp implements HAPRuntime{
 		return new HAPRuntimeInfo(HAPConstant.RUNTIME_LANGUAGE_JS, HAPConstant.RUNTIME_ENVIRONMENT_RHINO);
 	}
 
+	/**
+	 * this method is call back method by js 
+	 */
+	public void loadResources(String[][] resourcesIdArray, String taskId){
+		List<HAPResourceId> resourcesId = new ArrayList<HAPResourceId>();
+		for(String[] resourceIdArray : resourcesIdArray){
+			resourcesId.add(new HAPResourceId(resourceIdArray[0], resourceIdArray[1], null));
+		}
+		this.loadResources(resourcesId, this.getTaskScope(taskId), m_context);
+	}
+	
 	@Override
 	public HAPData executeExpression(HAPExpression expression) {
 		//discover required resources
@@ -49,7 +68,8 @@ public class HAPRuntimeImp implements HAPRuntime{
 		List<HAPResourceId> missedResourceId = this.findMissedResources(resourcesId);
 		
 		//init scope
-		Scriptable scope = this.initScope();
+		String taskId = this.initExecuteExpression();
+		Scriptable scope = this.getTaskScope(taskId); 
 		
 		//load missed resources
 		this.loadResources(missedResourceId, scope, this.m_context);
@@ -73,9 +93,13 @@ public class HAPRuntimeImp implements HAPRuntime{
 	    }
 	}
 	
-	private Scriptable initScope(){
-		return this.m_scope;
+	private String initExecuteExpression(){
+		String out = this.getTaskId();
+		this.m_taskScope.put(out, this.m_scope);
+		return out;
 	}
+	
+	private Scriptable getTaskScope(String taskId){  return this.m_taskScope.get(taskId);  }
 	
 	/**
 	 * Init essencial object, include base, all the library for expression and all basic data type
@@ -96,7 +120,24 @@ public class HAPRuntimeImp implements HAPRuntime{
 	}
 	
 	private List<HAPResourceId> findMissedResources(List<HAPResourceId> resourcesId){
-		return null;
+		NativeObject nosliwObjJS = (NativeObject)this.m_scope.get("nosliw", this.m_scope);
+		NativeObject resourceManJS = (NativeObject)nosliwObjJS.get("resourceManager");
+		Function findMissingResourcesFunJS = (Function)resourceManJS.get("findMissingResources");
+		
+		List<ResourceIdJS> jsArgs = new ArrayList<ResourceIdJS>();
+		for(HAPResourceId resourceId : resourcesId){
+			jsArgs.add(new ResourceIdJS(resourceId.getType(), resourceId.getId()));
+		}
+		
+		List<HAPResourceId> out = new ArrayList<HAPResourceId>();
+		NativeArray missedArrayJS = (NativeArray)findMissingResourcesFunJS.call(this.m_context, this.m_scope, resourceManJS, new Object[]{jsArgs.toArray(new ResourceIdJS[0])});
+		for(Object o : missedArrayJS.getIds()){
+		    int index = (Integer) o;
+		    Object a = missedArrayJS.get(index);
+		    int missedIndex = Integer.valueOf(a.toString());
+			out.add(resourcesId.get(missedIndex));
+		}
+		return out;
 	}
 	
 	private void loadResources(List<HAPResourceId> resourcesId, Scriptable scope, Context context){
@@ -106,9 +147,6 @@ public class HAPRuntimeImp implements HAPRuntime{
 			context.evaluateString(scope, resourceScript, "Resource_"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE), 1, null);
 		}
 	}
-	
-
-	
 	
 	private HAPData execute(HAPExpression expression){
 		
@@ -121,4 +159,17 @@ public class HAPRuntimeImp implements HAPRuntime{
 
 	@Override
 	public HAPResourceDiscovery getResourceDiscovery() {		return this.m_resourceDiscovery;	}
+	
+	private String getTaskId(){return System.currentTimeMillis()+"";}
+	
+	class ResourceIdJS{
+		public String type;
+		public String id;
+		
+		public ResourceIdJS(String type, String id){
+			this.type = type;
+			this.id = id;
+		}
+	}
+	
 }

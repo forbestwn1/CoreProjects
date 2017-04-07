@@ -188,5 +188,5 @@ var NOSLIWATCOMMONTRIBUTECONSTANT=
   "RESOURCEID_ALIAS": "alias",
   "null_NAME": "name",
   "null_VERSION": "version",
-  "RESOURCEDATALIBRARY_SCRIPT": "script"
+  "RESOURCEDATALIBRARY_URIS": "uris"
 };

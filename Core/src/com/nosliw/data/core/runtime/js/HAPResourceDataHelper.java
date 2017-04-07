@@ -1,5 +1,5 @@
 package com.nosliw.data.core.runtime.js;
 
-public interface HAPResourceDataHelper extends HAPResourceDataScript{
+public interface HAPResourceDataHelper extends HAPResourceDataJSValue{
 
 }
