@@ -1,6 +1,6 @@
 package com.nosliw.data.core.runtime;
 
-import java.util.Set;
+import java.util.List;
 
 public interface HAPResourceManager {
 
@@ -9,6 +9,6 @@ public interface HAPResourceManager {
 	 * @param resources
 	 * @return
 	 */
-	public Set<HAPResource> getResources(Set<HAPResourceId> resourcesId);
+	public List<HAPResource> getResources(List<HAPResourceId> resourcesId);
 
 }

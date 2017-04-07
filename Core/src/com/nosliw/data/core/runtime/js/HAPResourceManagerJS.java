@@ -1,7 +1,9 @@
 package com.nosliw.data.core.runtime.js;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,16 +20,16 @@ public class HAPResourceManagerJS implements HAPResourceManager{
 	}
 	
 	@Override
-	public Set<HAPResource> getResources(Set<HAPResourceId> resourcesId) {
-		Set<HAPResource> out = new HashSet<HAPResource>();
+	public List<HAPResource> getResources(List<HAPResourceId> resourcesId) {
+		List<HAPResource> out = new ArrayList<HAPResource>();
 		
 		//sort out resource by type
-		Map<String, Set<HAPResourceId>> sortedResourcesId = new LinkedHashMap<String, Set<HAPResourceId>>();
+		Map<String, List<HAPResourceId>> sortedResourcesId = new LinkedHashMap<String, List<HAPResourceId>>();
 		for(HAPResourceId resourceId : resourcesId){
 			String type = resourceId.getType();
-			Set<HAPResourceId> typedResourcesId = sortedResourcesId.get(type);
+			List<HAPResourceId> typedResourcesId = sortedResourcesId.get(type);
 			if(typedResourcesId==null){
-				typedResourcesId = new HashSet<HAPResourceId>();
+				typedResourcesId = new ArrayList<HAPResourceId>();
 				sortedResourcesId.put(type, typedResourcesId);
 			}
 			typedResourcesId.add(resourceId);
@@ -35,7 +37,7 @@ public class HAPResourceManagerJS implements HAPResourceManager{
 
 		for(String resourceType : sortedResourcesId.keySet()){
 			HAPResourceManager resourceMan = this.getResourceManager(resourceType);
-			Set<HAPResource> reosurces = resourceMan.getResources(sortedResourcesId.get(resourceType));
+			List<HAPResource> reosurces = resourceMan.getResources(sortedResourcesId.get(resourceType));
 			out.addAll(reosurces);
 		}
 		

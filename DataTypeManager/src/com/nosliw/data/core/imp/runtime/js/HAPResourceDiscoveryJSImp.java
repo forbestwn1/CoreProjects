@@ -1,18 +1,16 @@
 package com.nosliw.data.core.imp.runtime.js;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
-import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.js.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.js.HAPResourceDiscoveryJS;
@@ -48,30 +46,30 @@ public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 	public HAPDBAccess getDBAccess(){		return this.m_dbAccess;	}
 	
 	@Override
-	public Set<HAPResourceId> discoverResourceRequirement(HAPDataTypeId dataTypeId, HAPOperation dataOpInfo) {
+	public List<HAPResourceId> discoverResourceRequirement(HAPDataTypeId dataTypeId, HAPOperation dataOpInfo) {
 		HAPOperationId operationId = new HAPOperationId(dataTypeId, dataOpInfo.getName());
 		HAPResourceId resourceId = new HAPResourceIdOperation(operationId, null);
-		Set<HAPResourceId> resourceIds = new HashSet<HAPResourceId>();
+		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		resourceIds.add(resourceId);
 		return this.discoverResourceDependency(resourceIds);
 	}
 
 	@Override
-	public Set<HAPResourceId> discoverResourceRequirement(HAPExpression expression) {
+	public List<HAPResourceId> discoverResourceRequirement(HAPExpression expression) {
 		
 		
 		return null;
 	}
 
-	public Set<HAPResourceId> discoverResourceDependency(Set<HAPResourceId> resourceIds){
-		Set<HAPResourceId> out = new HashSet<HAPResourceId>();
+	public List<HAPResourceId> discoverResourceDependency(List<HAPResourceId> resourceIds){
+		List<HAPResourceId> out = new ArrayList<HAPResourceId>();
 		for(HAPResourceId resourceId : resourceIds){
 			this.discoverResourceDependency(resourceId, out);
 		}
 		return out;
 	}
 
-	private void discoverResourceDependency(HAPResourceId resourceId, Set<HAPResourceId> resourceIds){
+	private void discoverResourceDependency(HAPResourceId resourceId, List<HAPResourceId> resourceIds){
 		resourceIds.add(resourceId);
 		Set<HAPResourceId> dependencys = this.getResourceDependency(resourceId);
 		for(HAPResourceId dependencyId : dependencys){

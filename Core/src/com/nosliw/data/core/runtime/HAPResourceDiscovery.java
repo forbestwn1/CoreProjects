@@ -1,6 +1,6 @@
 package com.nosliw.data.core.runtime;
 
-import java.util.Set;
+import java.util.List;
 
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperation;
@@ -19,15 +19,15 @@ public interface HAPResourceDiscovery {
 	 * Discover resources required for data type operation
 	 * @param dataTypeInfo
 	 * @param dataOpInfo
-	 * @return
+	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
 	 */
-	Set<HAPResourceId> discoverResourceRequirement(HAPDataTypeId dataTypeInfo, HAPOperation dataOpInfo);
+	List<HAPResourceId> discoverResourceRequirement(HAPDataTypeId dataTypeInfo, HAPOperation dataOpInfo);
 
 	/**
 	 * Discover resources required for expression 
 	 * @param expression
-	 * @return
+	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
 	 */
-	Set<HAPResourceId> discoverResourceRequirement(HAPExpression expression);
+	List<HAPResourceId> discoverResourceRequirement(HAPExpression expression);
 
 }

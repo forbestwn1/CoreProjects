@@ -1,3 +1,4 @@
+nowliw.getResourceManager().addResource(
 function(){
 
 	var resource = {
@@ -9,5 +10,5 @@ function(){
 	resource.script = ||script||;
 
 	return resource;
-}();
+}());
 

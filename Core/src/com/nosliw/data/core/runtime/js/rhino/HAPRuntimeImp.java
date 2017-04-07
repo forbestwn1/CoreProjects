@@ -1,10 +1,13 @@
 package com.nosliw.data.core.runtime.js.rhino;
 
+import java.util.List;
 import java.util.Set;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
+import org.mozilla.javascript.ScriptableObject;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
@@ -22,6 +25,16 @@ public class HAPRuntimeImp implements HAPRuntime{
 	
 	private HAPResourceManager m_resourceManager;
 	
+	private Context m_context;
+	
+	private Scriptable m_scope;
+	
+	public HAPRuntimeImp(HAPResourceDiscovery resourceDiscovery, HAPResourceManager resourceMan){
+		this.m_resourceDiscovery = resourceDiscovery;
+		this.m_resourceManager = resourceMan;
+		this.init();
+	}
+	
 	@Override
 	public HAPRuntimeInfo getRuntimeInfo() {
 		return new HAPRuntimeInfo(HAPConstant.RUNTIME_LANGUAGE_JS, HAPConstant.RUNTIME_ENVIRONMENT_RHINO);
@@ -30,13 +43,16 @@ public class HAPRuntimeImp implements HAPRuntime{
 	@Override
 	public HAPData executeExpression(HAPExpression expression) {
 		//discover required resources
-		Set<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
+		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
 		
 		//find which resource is missing
-		Set<HAPResourceId> missedResourceId = this.findMissedResources(resourcesId);
+		List<HAPResourceId> missedResourceId = this.findMissedResources(resourcesId);
+		
+		//init scope
+		Scriptable scope = this.initScope();
 		
 		//load missed resources
-		this.loadResources(missedResourceId);
+		this.loadResources(missedResourceId, scope, this.m_context);
 		
 		//execute expression
 		HAPData out = this.execute(expression);
@@ -44,28 +60,21 @@ public class HAPRuntimeImp implements HAPRuntime{
 		return out;
 	}
 
-	private Scriptable initScope(HAPExpression expression){
-		Scriptable out = null;
-		Context context = Context.enter();
+	private void init(){
+		this.m_context = Context.enter();
 	    try {
-	        Scriptable scope = this.initEsencialScope(context, null);
-	        scope = this.initRelatedResource(expression, context, scope);
+	        this.m_scope = this.initEsencialScope(m_context, null);
 	        
+	        Object wrappedRuntime = Context.javaToJS(this, this.m_scope);
+	        ScriptableObject.putProperty(this.m_scope, "resourceManager", wrappedRuntime);
 	    }
 	    catch(Exception e){
 	    	e.printStackTrace();
 	    }
-	    return out;
 	}
 	
-	/**
-	 * Init resources related with expression
-	 * @param context
-	 * @param parent
-	 * @return
-	 */
-	private Scriptable initRelatedResource(HAPExpression expression, Context context, Scriptable parent){
-		return null;
+	private Scriptable initScope(){
+		return this.m_scope;
 	}
 	
 	/**
@@ -77,26 +86,33 @@ public class HAPRuntimeImp implements HAPRuntime{
 	private Scriptable initEsencialScope(Context context, Scriptable parent){
 		Scriptable out = context.initStandardObjects(null);
 		
+		
 		//library
+		
 		
 		//data type
 		
 		return out;
 	}
 	
-	private Set<HAPResourceId> findMissedResources(Set<HAPResourceId> resourcesId){
+	private List<HAPResourceId> findMissedResources(List<HAPResourceId> resourcesId){
 		return null;
 	}
 	
-	private void loadResources(Set<HAPResourceId> resourcesId, Scriptable scope, Context context){
-		Set<HAPResource> missedResource = this.getResourceManager().getResources(resourcesId);
+	private void loadResources(List<HAPResourceId> resourcesId, Scriptable scope, Context context){
+		List<HAPResource> missedResource = this.getResourceManager().getResources(resourcesId);
 		for(HAPResource resource : missedResource){
 			String resourceScript = HAPRuntimeJSUtility.buildScriptForResource(resource);
-			context.compileString(resourceScript, "", 1, null);
+			context.evaluateString(scope, resourceScript, "Resource_"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE), 1, null);
 		}
 	}
 	
+
+	
+	
 	private HAPData execute(HAPExpression expression){
+		
+		
 		return null;
 	}
 

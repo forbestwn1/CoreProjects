@@ -3,7 +3,6 @@ package com.nosliw.data.core.imp.runtime.js;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,8 +19,8 @@ public class HAPResourceManagerJSLibrary implements HAPResourceManager{
 	private String m_baseFolder;
 	
 	@Override
-	public Set<HAPResource> getResources(Set<HAPResourceId> resourcesId) {
-		Set<HAPResource> out = new HashSet<HAPResource>();
+	public List<HAPResource> getResources(List<HAPResourceId> resourcesId) {
+		List<HAPResource> out = new ArrayList<HAPResource>();
 		
 		for(HAPResourceId resourceId : resourcesId){
 			HAPResourceIdLibrary resourceLibraryId = new HAPResourceIdLibrary(resourceId);
