@@ -1,0 +1,14 @@
+nowliw.getResourceManager().addResource(
+function(){
+
+	var resource = {
+		type : ||type||,
+		id : ||id||		
+	};
+
+	resource.info = ||info||;
+	resource.value = ||value||;
+
+	return resource;
+}());
+

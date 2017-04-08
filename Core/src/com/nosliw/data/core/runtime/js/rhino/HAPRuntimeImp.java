@@ -3,12 +3,10 @@ package com.nosliw.data.core.runtime.js.rhino;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.NativeArray;
-import org.mozilla.javascript.NativeJavaArray;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
@@ -23,7 +21,7 @@ import com.nosliw.data.core.runtime.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPResourceDiscovery;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
+import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
 public class HAPRuntimeImp implements HAPRuntime{
 
@@ -75,7 +73,7 @@ public class HAPRuntimeImp implements HAPRuntime{
 		this.loadResources(missedResourceId, scope, this.m_context);
 		
 		//execute expression
-		HAPData out = this.execute(expression);
+		HAPData out = this.execute(expression, scope, this.m_context);
 		
 		return out;
 	}
@@ -143,13 +141,15 @@ public class HAPRuntimeImp implements HAPRuntime{
 	private void loadResources(List<HAPResourceId> resourcesId, Scriptable scope, Context context){
 		List<HAPResource> missedResource = this.getResourceManager().getResources(resourcesId);
 		for(HAPResource resource : missedResource){
-			String resourceScript = HAPRuntimeJSUtility.buildScriptForResource(resource);
+			String resourceScript = HAPRuntimeJSScriptUtility.buildScriptForResource(resource);
 			context.evaluateString(scope, resourceScript, "Resource_"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE), 1, null);
 		}
 	}
 	
-	private HAPData execute(HAPExpression expression){
+	private HAPData execute(HAPExpression expression, Scriptable scope, Context context){
 		
+		String script = HAPRuntimeJSScriptUtility.buildScriptForExecuteExpression(expression);
+		NativeObject dataJS = (NativeObject)context.evaluateString(scope, script, "", 1, null);
 		
 		return null;
 	}
