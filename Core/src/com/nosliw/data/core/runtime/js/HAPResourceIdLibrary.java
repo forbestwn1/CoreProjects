@@ -16,11 +16,11 @@ public class HAPResourceIdLibrary extends HAPResourceId{
 	}
 	
 	public HAPResourceIdLibrary(String idLiterate, String alias) {
-		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_LIBRARY, idLiterate, alias);
+		super(HAPConstant.RUNTIME_RESOURCE_TYPE_LIBRARY, idLiterate, alias);
 	}
 
 	public HAPResourceIdLibrary(HAPJSLibraryId operationId, String alias){
-		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_LIBRARY, null, alias);
+		super(HAPConstant.RUNTIME_RESOURCE_TYPE_LIBRARY, null, alias);
 		this.setLibraryId(operationId);
 	}
 	

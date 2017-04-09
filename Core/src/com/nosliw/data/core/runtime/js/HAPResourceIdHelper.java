@@ -12,7 +12,7 @@ public class HAPResourceIdHelper extends HAPResourceId{
 	}
 	
 	public HAPResourceIdHelper(String id, String alias) {
-		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_HELPER, id, alias);
+		super(HAPConstant.RUNTIME_RESOURCE_TYPE_HELPER, id, alias);
 	}
 
 	public HAPResourceIdHelper clone(){

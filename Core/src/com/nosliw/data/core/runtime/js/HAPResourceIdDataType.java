@@ -17,11 +17,11 @@ public class HAPResourceIdDataType extends HAPResourceId{
 	}
 	
 	public HAPResourceIdDataType(String idLiterate, String alias) {
-		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPE, idLiterate, alias);
+		super(HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPE, idLiterate, alias);
 	}
 
 	public HAPResourceIdDataType(HAPDataTypeId dataTypeId, String alias){
-		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPE, null, alias);
+		super(HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPE, null, alias);
 		this.setDataTypeId(dataTypeId);
 	}
 

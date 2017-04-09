@@ -190,19 +190,19 @@ public class HAPJSImporter {
 	private HAPResourceId processResource(Context cx, Scriptable scope, String type, Object resourceObjJS, String alais){
 		HAPResourceId out = null;
 		switch(type){
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION:
+		case HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION:
 			String operationIdLiterate = (String)resourceObjJS;
 			out = new HAPResourceIdOperation(operationIdLiterate, alais);
 			break;
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_LIBRARY:
+		case HAPConstant.RUNTIME_RESOURCE_TYPE_LIBRARY:
 			String libraryIdLiterate = (String)resourceObjJS;
 			out = new HAPResourceIdLibrary(libraryIdLiterate, alais);
 			break;
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPE:
+		case HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPE:
 			String dataTypeIdLiterate = (String)resourceObjJS;
 			out = new HAPResourceIdDataType(dataTypeIdLiterate, alais);
 			break;
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_HELPER:
+		case HAPConstant.RUNTIME_RESOURCE_TYPE_HELPER:
 			String helperScript = new HAPRhinoUtility().toJSONString(resourceObjJS); 
 			HAPResourceDataHelperImp helperResource = new HAPResourceDataHelperImp(helperScript);
 			helperResource = (HAPResourceDataHelperImp)this.m_dbAccess.saveEntity(helperResource);

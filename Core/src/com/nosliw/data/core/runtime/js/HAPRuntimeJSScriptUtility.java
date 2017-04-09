@@ -34,7 +34,7 @@ public class HAPRuntimeJSScriptUtility {
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ResourceScript.temp");
 		String out = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		
-		if(resource.getId().getType().equals(HAPConstant.DATAOPERATION_RESOURCE_TYPE_LIBRARY)){
+		if(resource.getId().getType().equals(HAPConstant.RUNTIME_RESOURCE_TYPE_LIBRARY)){
 			out = out + "\n" + buildScriptForLibrary(resource);
 		}
 		

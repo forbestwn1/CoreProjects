@@ -13,16 +13,16 @@ public abstract class HAPResourceDiscoveryJS  implements HAPResourceDiscovery{
 		HAPResourceId out = new HAPResourceId(literate);
 		
 		switch(out.getType()){
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION:
+		case HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION:
 			out = new HAPResourceIdOperation(out);
 			break;
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPE:
+		case HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPE:
 			out = new HAPResourceIdDataType(out);
 			break;
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_LIBRARY:
+		case HAPConstant.RUNTIME_RESOURCE_TYPE_LIBRARY:
 			out = new HAPResourceIdLibrary(out);
 			break;
-		case HAPConstant.DATAOPERATION_RESOURCE_TYPE_HELPER:
+		case HAPConstant.RUNTIME_RESOURCE_TYPE_HELPER:
 			out = new HAPResourceIdHelper(out);
 			break;
 		}

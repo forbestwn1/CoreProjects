@@ -17,11 +17,11 @@ public class HAPResourceIdOperation extends HAPResourceId{
 	}
 	
 	public HAPResourceIdOperation(String idLiterate, String alias) {
-		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION, idLiterate, alias);
+		super(HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION, idLiterate, alias);
 	}
 
 	public HAPResourceIdOperation(HAPOperationId operationId, String alias){
-		super(HAPConstant.DATAOPERATION_RESOURCE_TYPE_DATATYPEOPERATION, null, alias);
+		super(HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION, null, alias);
 		this.setOperationId(operationId);
 	}
 	
