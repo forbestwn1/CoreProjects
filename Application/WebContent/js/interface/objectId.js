@@ -19,13 +19,11 @@ var nosliwObjectWithIdUtility = function(){
  * object with type information
  */
 var nosliwCreateObjectWithId = function(){
+	var loc_id = nosliw.generateId();
+	
 	var loc_out = {
-		objectId : nosliw.generateId(),
-		getObjectId :function(){  return this.objectId; },
+		objectId : loc_id,
+		getObjectId :function(){  return loc_id; },
 	};
 	return loc_out;
 };
-
-
-
-

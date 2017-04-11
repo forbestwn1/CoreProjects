@@ -1,0 +1,41 @@
+<definition name="core.distance;1.0.0">
+	
+	<info description="Data type for distance between two points"/>
+
+	<operations>
+	
+		<operation name="isLonger" >
+			<parms>
+				<parm name="distance1" criteria="core.distance"/>
+				<parm name="distance2" criteria="core.distance"/>
+			</parms>
+			<output criteria="base.boolean"/>
+		</operation>
+
+		<operation name="getDistance" >
+			<parms>
+				<parm name="distance" criteria="core.distance"/>
+				<parm name="unit" criteria="core.lengthunit;1.0.0"/>
+			</parms>
+			<output criteria="base.number"/>
+		</operation>
+
+		<operation name="convert" >
+			<parms>
+				<parm name="distance" criteria="core.distance"/>
+				<parm name="unit" criteria="core.lengthunit;1.0.0"/>
+			</parms>
+			<output criteria="core.distance"/>
+		</operation>
+
+		<operation name="new" type="new">
+			<parms>
+				<parm name="number" criteria="core.number"/>
+				<parm name="unit" criteria="core.lengthunit;1.0.0"/>
+			</parms>
+			<output criteria="core.distance"/>
+		</operation>
+
+	</operations>
+
+</definition>

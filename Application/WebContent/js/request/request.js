@@ -70,7 +70,7 @@ var nosliwCreateServiceRequestInfoCommon = function(service, handlers, requester
 		}
 		
 		//set status, trigger event, clear result
-		loc_startRequest();
+		loc_initRequest();
 	};
 	
 	/*
@@ -112,7 +112,7 @@ var nosliwCreateServiceRequestInfoCommon = function(service, handlers, requester
 	 *     clear result
 	 *     trigue event
 	 */
-	var loc_startRequest = function(){
+	var loc_initRequest = function(){
 		loc_out.setStatus(NOSLIWCONSTANT.REQUEST_STATUS_INIT);
 		loc_out.setResult();
 		nosliwRequestUtility.triggerEventWithRequest(loc_out.pri_metaData.pri_eventSource, NOSLIWCONSTANT.REQUEST_EVENT_NEW, {}, loc_out);
@@ -258,7 +258,8 @@ var nosliwCreateServiceRequestInfoCommon = function(service, handlers, requester
 			
 			
 			/*
-			 * set processor so that they can do sth before call the handlers 
+			 * set processor so that they can do sth before call the handlers
+			 * we can keep call this method to insert mutiple processor 
 			 */
 			setRequestProcessors : function(processors){
 				

@@ -1,7 +1,9 @@
 
 var nosliwRequestUtility = function(){
 	var loc_out = {
-			
+			/**
+			 * last one in argus should be request info
+			 */
 			getRequestInfoFromFunctionArguments : function(argsArray){
 				return argsArray[argsArray.length-1];
 			},

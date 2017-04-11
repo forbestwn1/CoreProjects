@@ -3,7 +3,7 @@
  * for cases that have uncertain request consequence when request group is created (or next request is depend on previous request result)
  * the item within requests can be two type of value:
  * 		request info object
- * 		function that return request info object
+ * 		or function that return request info object
  * the return value of success handler of each request tells a lot of information about next requestinfo:
  * 		undefined:  	no indication for next  
  * 		request info :	used as next request info

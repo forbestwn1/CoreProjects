@@ -83,3 +83,17 @@ P
  WebContent/js/request/request.js,8\7\87866a01d6b0522569b99200a70afa41a93a6a54
 X
 (WebContent/js/request/requestsequence.js,c\a\ca118625e5ab5c1dd83d63e48bdbdc601f50a523
+[
++WebContent/js/request/requestgrouphandle.js,e\6\e6f5d1a9e239a5c201e403408b058e2d14393e3f
+W
+'WebContent/js/request/requestservice.js,4\c\4c15f4568c9b9cf3dcb2cba9691bdcb08e53da01
+W
+'WebContent/js/request/requestmanager.js,5\2\52e637886fab9752bf6ce9c403b2dc851ecde7f8
+V
+&WebContent/js/request/requestsimple.js,8\9\893e6f0f08c593152045eb20d8c830ad5777f4b5
+S
+#WebContent/js/request/requestset.js,3\a\3ab7f1213dae1252ba52fa0462723ddbc3041230
+T
+$WebContent/js/appmodule/appmodule.js,7\0\70e525442165eb2a3b40a4053ea9c3e12a6e4929
+S
+#WebContent/js/login/loginService.js,c\c\ccb8f64a53e96098ba7628acf1cbaeecfa5facb5

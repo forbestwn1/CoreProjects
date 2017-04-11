@@ -3,12 +3,22 @@
  */
 var nosliwTypedObjectUtility = function(){
 
+	var createTypedObject = function(type){
+		var loc_type = type;
+		
+		var loc_out = {
+			objectId : nosliw.generateId(),
+			getObjectType :function(){  return loc_type; },
+		};
+		return loc_out;
+	};
+	
 	return {
 		/*
 		 * build an object to typed object
 		 */
 		makeTypedObject : function(obj, type){
-			var out = _.extend(obj, nosliwCreateTypedObject(type));
+			var out = _.extend(obj, createTypedObject(type));
 			return out;
 		},
 		
@@ -28,18 +38,4 @@ var nosliwTypedObjectUtility = function(){
 		},
 	};
 }();
-
-
-/*
- * object with type information
- */
-var nosliwCreateTypedObject = function(type){
-	var loc_type = type;
-	
-	var loc_out = {
-		objectId : nosliw.generateId(),
-		getObjectType :function(){  return loc_type; },
-	};
-	return loc_out;
-};
 
