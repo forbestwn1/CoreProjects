@@ -20,6 +20,33 @@
 			<output criteria="core.text"/>
 		</operation>
 	
+		<operation name="new1" typ="new" >
+			<parms>
+				<parm name="aa" criteria="core.text"/>
+				<parm name="bb" criteria="core.text"/>
+			</parms>
+		</operation>
+
+		<operation name="new2" typ="new" >
+			<parms>
+				<parm name="aa" criteria="core.text"/>
+				<parm name="bb" criteria="core.text"/>
+			</parms>
+		</operation>
+	
+		<operation name="convert" typ="convert" >
+			<parms>
+				<parm name="bb" criteria="core.text"/>
+			</parms>
+			<output criteria="core.url;1.0.0"/>
+		</operation>
+	
+		<operation name="convert" typ="convert" >
+			<parms>
+				<parm name="bb" criteria="core.text"/>
+			</parms>
+			<output criteria="core.text;1.0.0"/>
+		</operation>
 	
 	</operations>
 	

@@ -1,5 +1,7 @@
 package com.nosliw.data.core.imp;
 
+import java.util.List;
+
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPConstant;
@@ -25,7 +27,7 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 		this.updateAtomicChildStrValue(NAME, Id);
 		this.updateAtomicChildStrValue(NAME, HAPDataTypeId.buildStringValue(name, version), HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeId.class.getName());
 		this.updateAtomicChildStrValue(INFO, description);
-		this.updateAtomicChildStrValue(PARENTINFO, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeId.class.getName());
+		this.updateAtomicChildStrValue(PARENTSINFO, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, HAPDataTypeId.class.getName());
 		this.updateAtomicChildStrValue(LINKEDVERSION, parent, HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, HAPDataTypeVersion.class.getName());
 	}
 	
@@ -35,26 +37,11 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 
 	
 	
-	public HAPDataTypeId getConntectedDataTypeId(int connectType){
-		HAPDataTypeId out = null;
-		switch(connectType){
-		case HAPConstant.DATATYPE_PATHSEGMENT_LINKED:
-			out = (HAPDataTypeId)this.getLinkedDataTypeId();
-			break;
-		case HAPConstant.DATATYPE_PATHSEGMENT_PARENT:
-			out = (HAPDataTypeId)this.getParentInfo();
-			break;
-		}
-		return out;
-	}
-	
-
-	
 	@Override
 	public HAPInfo getInfo() {	return (HAPInfo)this.getEntityAncestorByPath(INFO); }
 
 	@Override
-	public HAPDataTypeId getParentInfo() {	return (HAPDataTypeId)this.getAtomicValueAncestorByPath(PARENTINFO);	}
+	public List<HAPDataTypeId> getParentsInfo() {	return this.getAtomicAncestorValueArray(PARENTSINFO, HAPDataTypeId.class);	}
 
 	public HAPDataTypeId getLinkedDataTypeId(){
 		if(this.getLinkedVersion()==null)  return null;

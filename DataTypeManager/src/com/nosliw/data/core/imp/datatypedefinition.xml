@@ -20,7 +20,7 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="parentInfo" dataType="object" subDataType="com.nosliw.data.core.HAPDataTypeId" description="parent data type">
+	<property name="parentsInfo" dataType="array" subDataType="com.nosliw.data.core.HAPDataTypeId" description="parent data type">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(20)"/>
 		</dbColumnInfos>

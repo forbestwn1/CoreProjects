@@ -131,8 +131,8 @@ public class HAPConstant {
 
 
 
-		public static final int DATATYPE_PATHSEGMENT_PARENT = 0;
-		public static final int DATATYPE_PATHSEGMENT_LINKED = 1;
+		public static final String DATATYPE_PATHSEGMENT_PARENT = "parent";
+		public static final String DATATYPE_PATHSEGMENT_LINKED = "linked";
 
 
 

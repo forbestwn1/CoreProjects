@@ -365,8 +365,8 @@
 			<definition name="DATATYPE_TYPE_REFERENCE_NORMAL" value="normal"/>
 			<definition name="DATATYPE_TYPE_QUERYENTITY_NORMAL" value="normal"/>
 			<definition type="space"/>
-			<definition name="DATATYPE_PATHSEGMENT_PARENT" value="0" type="int"/>
-			<definition name="DATATYPE_PATHSEGMENT_LINKED" value="1" type="int"/>
+			<definition name="DATATYPE_PATHSEGMENT_PARENT" value="parent"/>
+			<definition name="DATATYPE_PATHSEGMENT_LINKED" value="linked"/>
 			<definition type="space"/>
 			<definition name="UIRESOURCE_TYPE_RESOURCE" value="resource"/>
 			<definition name="UIRESOURCE_TYPE_TAG" value="tag"/>

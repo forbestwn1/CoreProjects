@@ -1,6 +1,5 @@
 package com.nosliw.data.core.imp.runtime.js;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.data.core.runtime.js.HAPResourceDataHelper;
 
@@ -8,13 +7,10 @@ public class HAPResourceDataHelperImp extends HAPStringableValueEntityWithID imp
 
 	public static String _VALUEINFO_NAME;
 	
-	@HAPAttribute
-	public static String SCRIPT = "script";
-
 	public HAPResourceDataHelperImp(String script){
-		this.updateAtomicChildStrValue(SCRIPT, script);
+		this.updateAtomicChildStrValue(VALUE, script);
 	}
 	
 	@Override
-	public String getScript(){  return this.getAtomicAncestorValueString(SCRIPT);  }
+	public String getValue(){  return this.getAtomicAncestorValueString(VALUE);  }
 }

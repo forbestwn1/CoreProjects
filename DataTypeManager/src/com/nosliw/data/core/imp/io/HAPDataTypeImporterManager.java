@@ -11,7 +11,6 @@ import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterXML;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypePicture;
 import com.nosliw.data.core.HAPDataTypeProvider;
@@ -92,22 +91,25 @@ public class HAPDataTypeImporterManager {
 			HAPDataTypePictureImp pic = this.m_dbAccess.getDataTypePicture((HAPDataTypeId)dataType.getName());
 			
 			//operations from parent
-			if(dataType.getParentInfo()!=null){
-				HAPRelationshipImp parentRelationship = pic.getRelationship(dataType.getParentInfo());
-				Map<String, HAPDataTypeOperationImp> parentDataTypeOperations = buildDataTypeOperations(parentRelationship.getTarget());
-				for(String opeartionName : parentDataTypeOperations.keySet()){
-					HAPDataTypeOperationImp dataTypeOp = parentDataTypeOperations.get(opeartionName);
-					HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(HAPRelationshipPathSegment.buildPathSegmentForParent(), (HAPDataTypeId)pic.getSourceDataType().getName());
-					out.put(dataTypeOperation.getName(), dataTypeOperation);
+			List<HAPDataTypeId> parentsId = dataType.getParentsInfo();
+			if(parentsId!=null){
+				for(HAPDataTypeId parentId : parentsId){
+					HAPRelationshipImp parentRelationship = pic.getRelationship(parentId);
+					Map<String, HAPDataTypeOperationImp> parentDataTypeOperations = buildDataTypeOperations(parentRelationship.getTarget());
+					for(String opeartionName : parentDataTypeOperations.keySet()){
+						HAPDataTypeOperationImp dataTypeOp = parentDataTypeOperations.get(opeartionName);
+						HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(new HAPRelationshipPathSegment(parentId), (HAPDataTypeId)pic.getSourceDataType().getName());
+						out.put(dataTypeOperation.getName(), dataTypeOperation);
+					}
 				}
 			}
-
+			
 			if(dataType.getLinkedDataTypeId()!=null){
 				HAPRelationshipImp relationship = pic.getRelationship(dataType.getLinkedDataTypeId());
 				Map<String, HAPDataTypeOperationImp> ataTypeOperations = buildDataTypeOperations(relationship.getTarget());
 				for(String opeartionName : ataTypeOperations.keySet()){
 					HAPDataTypeOperationImp dataTypeOp = ataTypeOperations.get(opeartionName);
-					HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(HAPRelationshipPathSegment.buildPathSegmentForLinked(), (HAPDataTypeId)pic.getSourceDataType().getName());
+					HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(new HAPRelationshipPathSegment(dataType.getLinkedVersion()), (HAPDataTypeId)pic.getSourceDataType().getName());
 					out.put(dataTypeOperation.getName(), dataTypeOperation);
 				}
 			}
@@ -168,22 +170,39 @@ public class HAPDataTypeImporterManager {
 		self.setTarget(dataType);
 		out.addRelationship(self);
 		
-		this.buildDataTypePictureFromConntectedDataType(dataType, out, HAPConstant.DATATYPE_PATHSEGMENT_PARENT);
-		this.buildDataTypePictureFromConntectedDataType(dataType, out, HAPConstant.DATATYPE_PATHSEGMENT_LINKED);
+		this.buildDataTypePictureFromParentsDataType(dataType, out);
+		this.buildDataTypePictureFromLinkedDataType(dataType, out);
 		return out;
 	}
 	
-	private void buildDataTypePictureFromConntectedDataType(HAPDataTypeImp dataType, HAPDataTypePictureImp out, int connectType){
-		HAPDataTypeId connectDataTypeId = dataType.getConntectedDataTypeId(connectType);
-		if(connectDataTypeId!=null){
-			HAPDataTypeImp connectDataType = (HAPDataTypeImp)this.getDataType(connectDataTypeId);
-			HAPDataTypePicture connectDataTypePic = this.getDataTypePicture(connectDataTypeId);
+	private void buildDataTypePictureFromLinkedDataType(HAPDataTypeImp dataType, HAPDataTypePictureImp out){
+		HAPDataTypeId linkedDataTypeId = dataType.getLinkedDataTypeId();
+		if(linkedDataTypeId!=null){
+			HAPDataTypeImp connectDataType = (HAPDataTypeImp)this.getDataType(linkedDataTypeId);
+			HAPDataTypePicture connectDataTypePic = this.getDataTypePicture(linkedDataTypeId);
 			if(connectDataTypePic==null){
-				connectDataTypePic = this.buildDataTypePicture(connectDataTypeId);
+				connectDataTypePic = this.buildDataTypePicture(linkedDataTypeId);
 			}
 			Set<? extends HAPRelationship> connectRelationships = connectDataTypePic.getRelationships();
 			for(HAPRelationship connectRelationship : connectRelationships){
-				out.addRelationship(((HAPRelationshipImp)connectRelationship).extendPathSegmentSource(HAPRelationshipPathSegment.buildPathSegment(connectType), dataType));
+				out.addRelationship(((HAPRelationshipImp)connectRelationship).extendPathSegmentSource(new HAPRelationshipPathSegment(linkedDataTypeId.getVersion()), dataType));
+			}
+		}
+	}
+	
+	private void buildDataTypePictureFromParentsDataType(HAPDataTypeImp dataType, HAPDataTypePictureImp out){
+		List<HAPDataTypeId> parentsDataTypeId = dataType.getParentsInfo();
+		if(parentsDataTypeId!=null){
+			for(HAPDataTypeId parentDataTypeId : parentsDataTypeId){
+				HAPDataTypeImp connectDataType = (HAPDataTypeImp)this.getDataType(parentDataTypeId);
+				HAPDataTypePicture connectDataTypePic = this.getDataTypePicture(parentDataTypeId);
+				if(connectDataTypePic==null){
+					connectDataTypePic = this.buildDataTypePicture(parentDataTypeId);
+				}
+				Set<? extends HAPRelationship> connectRelationships = connectDataTypePic.getRelationships();
+				for(HAPRelationship connectRelationship : connectRelationships){
+					out.addRelationship(((HAPRelationshipImp)connectRelationship).extendPathSegmentSource(new HAPRelationshipPathSegment(parentDataTypeId), dataType));
+				}
 			}
 		}
 	}
@@ -199,9 +218,9 @@ public class HAPDataTypeImporterManager {
 	
 	public static void main(String[] args){
 		HAPDataTypeImporterManager man = new HAPDataTypeImporterManager(new HAPDataTypeManagerImp());
-//		man.loadAllDataType();
-//		man.buildDataTypePictures();
-//		man.buildDataTypeOperations();
+		man.loadAllDataType();
+		man.buildDataTypePictures();
+		man.buildDataTypeOperations();
 		
 		HAPJSImporter jsImporter = new HAPJSImporter(HAPResourceDiscoveryJSImp.getInstance());
 		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");

@@ -16,7 +16,7 @@ public class HAPResourceDataOperationImp extends HAPStringableValueEntityWithID 
 	}
 	
 	@Override
-	public String getScript(){  return this.getAtomicAncestorValueString(VALUE);  }
+	public String getValue(){  return this.getAtomicAncestorValueString(VALUE);  }
 	public void setScript(String script){  this.updateAtomicChildStrValue(VALUE, script);  }
 	
 	@Override

@@ -1,5 +1,7 @@
 package com.nosliw.data.core;
 
+import java.util.List;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializable;
@@ -28,7 +30,7 @@ public interface HAPDataType extends HAPSerializable{
 	public static String NAME = "name";
 
 	@HAPAttribute
-	public static String PARENTINFO = "parentInfo";
+	public static String PARENTSINFO = "parentsInfo";
 
 	@HAPAttribute
 	public static String LINKEDVERSION = "linkedVersion";
@@ -41,7 +43,7 @@ public interface HAPDataType extends HAPSerializable{
 
 	HAPInfo getInfo();
 	
-	HAPDataTypeId getParentInfo();
+	List<HAPDataTypeId> getParentsInfo();
 
 	HAPDataTypeVersion getLinkedVersion();
 	

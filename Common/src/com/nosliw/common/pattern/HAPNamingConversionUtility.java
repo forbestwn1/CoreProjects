@@ -59,11 +59,6 @@ public class HAPNamingConversionUtility {
 	}
 	
 	public static String[] splitTextByComponents(String text, String token){
-		if(text==null){
-			int kkkk = 555;
-			kkkk++;
-		}
-		
 		return text.split(token);
 	}
 

@@ -1,6 +1,9 @@
 package com.nosliw.data.core;
 
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 
 /**
@@ -9,41 +12,23 @@ import com.nosliw.common.utils.HAPConstant;
  */
 public class HAPRelationshipPathSegment extends HAPSerializableImp{
 
-	private static HAPRelationshipPathSegment parent = new HAPRelationshipPathSegment(HAPConstant.DATATYPE_PATHSEGMENT_PARENT);
-	private static HAPRelationshipPathSegment linked = new HAPRelationshipPathSegment(HAPConstant.DATATYPE_PATHSEGMENT_LINKED);
-	
-	private int m_segment;
+	private String m_type;
+	private String m_id;
 	
 	public HAPRelationshipPathSegment(){}
 	
-	public HAPRelationshipPathSegment(int segType){
-		this.m_segment = segType;
+	public HAPRelationshipPathSegment(HAPDataTypeId dataTypeId){
+		this.m_type = HAPConstant.DATATYPE_PATHSEGMENT_PARENT;
+		this.m_id = HAPSerializeManager.getInstance().toStringValue(dataTypeId, HAPSerializationFormat.LITERATE);
 	}
 
-	public static HAPRelationshipPathSegment buildPathSegment(int segType){
-		HAPRelationshipPathSegment out = null;
-		switch(segType){
-		case HAPConstant.DATATYPE_PATHSEGMENT_PARENT:
-			out = parent;
-			break;
-		case HAPConstant.DATATYPE_PATHSEGMENT_LINKED:
-			out = linked;
-			break;
-		}
-		return out;
+	public HAPRelationshipPathSegment(HAPDataTypeVersion dataTypeVersion){
+		this.m_type = HAPConstant.DATATYPE_PATHSEGMENT_LINKED;
+		this.m_id = HAPSerializeManager.getInstance().toStringValue(dataTypeVersion, HAPSerializationFormat.LITERATE);
 	}
-	
-	public static HAPRelationshipPathSegment buildPathSegmentForParent(){
-		return parent;
-	}
-	
-	public static HAPRelationshipPathSegment buildPathSegmentForLinked(){
-		return linked;
-	}
-	
-	public int getSegment(){
-		return this.m_segment;
-	}
+
+	public String getType(){		return this.m_type;	}
+	public String getId(){  return this.m_id; }
 	
 	public boolean equals(Object segment){
 		boolean out = false;
@@ -53,11 +38,16 @@ public class HAPRelationshipPathSegment extends HAPSerializableImp{
 		return out;
 	}
 	
-	protected boolean buildObjectByLiterate(String literateValue){ 
-		this.m_segment = Integer.valueOf(literateValue);
+	@Override
+	protected boolean buildObjectByLiterate(String literateValue){
+		String[] details = HAPNamingConversionUtility.parseDetails(literateValue);
+		this.m_type = details[0];
+		this.m_id = details[1];
 		return true;
 	}
 	
-	protected String buildLiterate(){  return this.m_segment+""; }
-
+	@Override
+	protected String buildLiterate(){  
+		return HAPNamingConversionUtility.cascadeDetail(m_type, m_id);
+	}
 }
