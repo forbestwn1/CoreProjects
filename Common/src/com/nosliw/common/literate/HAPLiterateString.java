@@ -1,9 +1,8 @@
 package com.nosliw.common.literate;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 
@@ -26,5 +25,5 @@ public class HAPLiterateString implements HAPLiterateDef{
 	}
 
 	@Override
-	public String getSubTypeByObject(Object value) {	return null;	}
+	public String getSubTypeByType(Type value) {	return null;	}
 }

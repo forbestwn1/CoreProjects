@@ -1,7 +1,7 @@
 package com.nosliw.common.literate;
 
+import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -35,7 +35,7 @@ public class HAPLiterateObject implements HAPLiterateDef{
 	}
 
 	@Override
-	public String getSubTypeByObject(Object value) {
-		return value.getClass().getName();
+	public String getSubTypeByType(Type value) {
+		return ((Class)value).getName();
 	}
 }

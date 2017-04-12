@@ -1,5 +1,7 @@
 package com.nosliw.common.utils;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +9,32 @@ import java.util.Set;
 
 public class HAPBasicUtility {
 
+	public static String getRawTypeName(Type type){
+		if(type instanceof ParameterizedType){
+			Class cs = (Class)((ParameterizedType)type).getRawType();
+			return cs.getName();
+		}
+		else if(type instanceof Class){
+			return ((Class)type).getName();
+		}
+		return null;
+	}
+	
+	public static String getParameterizedType(Type type){
+		String out = null;
+        if (type instanceof ParameterizedType)
+        {
+            ParameterizedType parameterizedType = (ParameterizedType) type;
+            Type[] actualTypes = parameterizedType.getActualTypeArguments();
+
+            if (actualTypes != null && actualTypes.length == 1)
+            {
+                out = ((Class)actualTypes[0]).getName();
+            }
+        }
+        return out;
+	}
+	
 	public static boolean isEqualMaps(Map m1, Map m2) {
 	   if (m1.size() != m2.size())	      return false;
 	   if (!m1.keySet().equals(m2.keySet()))  return false;

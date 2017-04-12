@@ -220,13 +220,6 @@ public class HAPJSImporter {
 
 	private void saveResourceDependencys(List<HAPJSResourceDependency> dependencys){
 		for(HAPJSResourceDependency dependency : dependencys){
-			{
-				int kkkk = 555;
-				kkkk++;
-				HAPResourceId resourceId = dependency.getResourceId();
-				kkkk++;
-			}
-
 			this.m_dbAccess.saveEntity(dependency);
 		}
 	}

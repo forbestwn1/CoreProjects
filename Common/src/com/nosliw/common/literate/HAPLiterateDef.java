@@ -1,5 +1,6 @@
 package com.nosliw.common.literate;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 public interface HAPLiterateDef{
@@ -12,5 +13,5 @@ public interface HAPLiterateDef{
 	
 	List<Class> getObjectClasses();
 
-	String getSubTypeByObject(Object value);
+	String getSubTypeByType(Type value);
 }

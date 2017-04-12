@@ -135,12 +135,6 @@ public class HAPSqlUtility {
 			List<HAPDBColumnInfo> columnInfos = dbTableInfo.getColumnsInfo();
 			for(int i=0; i<columnInfos.size(); i++){
 				HAPDBColumnInfo columnInfo = columnInfos.get(i);
-
-				if("com.nosliw.data.core.runtime.HAPResourceId".equals(columnInfo.getSubDataType())){
-					int kkkk = 5555;
-					kkkk++;
-				}
-				
 				String getterMethod = columnInfo.getGetter();
 				String getterPath = columnInfo.getGetterPath();
 				HAPStringableValue columnStrableValue = obj.getAncestorByPath(getterPath);

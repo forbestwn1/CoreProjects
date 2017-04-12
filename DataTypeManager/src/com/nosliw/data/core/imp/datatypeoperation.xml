@@ -25,7 +25,7 @@
 	
 	<property name="path" dataType="object" subDataType="com.nosliw.data.core.imp.HAPRelationshipPathImp" description="">
 		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(20)"/>
+			<dbColumnInfo definition="VARCHAR(500)"/>
 		</dbColumnInfos>
 	</property>
 

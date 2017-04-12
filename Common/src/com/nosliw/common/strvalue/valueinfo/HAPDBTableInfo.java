@@ -1,5 +1,6 @@
 package com.nosliw.common.strvalue.valueinfo;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -46,12 +47,6 @@ public class HAPDBTableInfo {
 			columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.COLUMN, property);
 		}
 
-		if("parentsInfo".equals(columnInfo.getColumnName()))
-		{
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		//update property
 		columnInfo.setProperty(HAPNamingConversionUtility.cascadePath(attrPath, property));
 		
@@ -74,8 +69,8 @@ public class HAPDBTableInfo {
 				HAPValueInfo childValueInfo = this.m_valueInfoEntity.getChildByPath(getterPath.getPath());
 				String className = HAPValueInfoUtility.getEntityClassNameFromValueInfo(childValueInfo);
 				
-				Class returnType = Class.forName(className).getMethod(getterPath.getSimpleName()).getReturnType();
-				HAPLiterateType litType = HAPLiterateManager.getInstance().getLiterateTypeByClass(returnType);
+				Type returnType = Class.forName(className).getMethod(getterPath.getSimpleName()).getGenericReturnType();
+				HAPLiterateType litType = HAPLiterateManager.getInstance().getLiterateTypeByType(returnType);
 				columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.DATATYPE, litType.getType());
 				columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.SUBDATATYPE, litType.getSubType());
 			} catch (Exception e) {

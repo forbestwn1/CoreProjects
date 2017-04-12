@@ -53,3 +53,5 @@ g
 7src/com/nosliw/data/datatype/distance/v100/datatype.xml,1\f\1f998dceaee8f3b61a2c7e6b56acc6e8f8f03764
 d
 4src/com/nosliw/data/datatype/array/v100/datatype.xml,2\f\2ff1f5bf728afc42d2be17ac59b58f9d8fa68447
+f
+6src/com/nosliw/data/datatype/url/v100/datatype.out.xml,b\7\b7e53e244263d7bc7853c2f47bbe3792af38386f

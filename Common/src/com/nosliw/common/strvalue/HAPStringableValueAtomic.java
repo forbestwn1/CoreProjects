@@ -166,8 +166,7 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	public Integer getIntegerValue() {		return (Integer)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_INTEGER, null);	}
 	public Float getFloatValue() {		return (Float)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_FLOAT, null);	}
 	public <T> List<T> getListValue(Class<T> subClass){
-		String literateType = HAPLiterateManager.getInstance().getSubLiterateTypeByClass(subClass);
-		return (List<T>)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, literateType);	
+		return (List<T>)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, subClass.getName());	
 	}
 	public <T> T getObjectValue(Class<T> cs){
 		return (T)this.getValue(HAPConstant.STRINGABLE_ATOMICVALUETYPE_OBJECT, cs.getName());

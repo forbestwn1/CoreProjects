@@ -1,5 +1,7 @@
 package com.nosliw.common.literate;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -8,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPLiterateArray  implements HAPLiterateDef{
@@ -73,14 +76,7 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 	}
 
 	@Override
-	public String getSubTypeByObject(Object value) {
-		String out = null;
-		if(value instanceof List){
-			for(Object ele : (List)value){
-				out = ele.getClass().getName();
-				break;
-			}
-		}
-		return out;
+	public String getSubTypeByType(Type valueType) {
+		return HAPBasicUtility.getParameterizedType(valueType);
 	}
 }

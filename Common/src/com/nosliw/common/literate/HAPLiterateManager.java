@@ -1,5 +1,6 @@
 package com.nosliw.common.literate;
 
+import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -12,13 +13,13 @@ public class HAPLiterateManager {
 	private static HAPLiterateManager m_instance;
 	
 	private Map<String, HAPLiterateDef> m_typesByName;
-	private Map<Class, HAPLiterateDef> m_typesByClass;
+	private Map<String, HAPLiterateDef> m_typesByClass;
 	
 	private HAPLiterateDef m_typeObject; 
 	
 	private HAPLiterateManager(){
 		m_typesByName = new LinkedHashMap<String, HAPLiterateDef>();
-		m_typesByClass = new LinkedHashMap<Class, HAPLiterateDef>();
+		m_typesByClass = new LinkedHashMap<String, HAPLiterateDef>();
 		
 		this.registerBasic(new HAPLiterateString());
 		this.registerBasic(new HAPLiterateBoolean());
@@ -95,14 +96,19 @@ public class HAPLiterateManager {
 	}
 	
 	public HAPLiterateType getLiterateType(Object value){
-		HAPLiterateDef literateDef = this.getLiterateDefByObject(value);
-		String subType = literateDef.getSubTypeByObject(value);
+		return this.getLiterateTypeByClass(value.getClass());
+	}
+
+	public HAPLiterateType getLiterateTypeByType(Type type){
+		String rawTypeName = HAPBasicUtility.getRawTypeName(type);
+		HAPLiterateDef literateDef = this.getLiterateDefByClassName(rawTypeName);
+		String subType = literateDef.getSubTypeByType(type);
 		return new HAPLiterateType(literateDef.getName(), subType);
 	}
 	
 	public HAPLiterateType getLiterateTypeByClass(Class cs){
-		HAPLiterateDef literateDef = this.getLiterateDefByClass(cs);
-		String subType = getSubLiterateTypeByClass(cs);
+		HAPLiterateDef literateDef = this.getLiterateDefByClassName(cs.getName());
+		String subType = literateDef.getSubTypeByType(cs);
 		return new HAPLiterateType(literateDef.getName(), subType);
 	}
 	
@@ -111,28 +117,12 @@ public class HAPLiterateManager {
 		else   return m_typesByName.keySet().contains(type);
 	}
 	
-	public String getSubLiterateTypeByClass(Class cs){
-		HAPLiterateDef literateDef = m_typesByClass.get(cs);
-		if(literateDef!=null){
-			return literateDef.getName();
-		}
-		else{
-			return cs.getName();
-		}
-	}
-	
 	private HAPLiterateDef getLiterateDefByObject(Object value){
-		
-		if(value==null){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
-		return this.getLiterateDefByClass(value.getClass());	
+		return this.getLiterateDefByClassName(value.getClass().getName());	
 	}
 
-	private HAPLiterateDef getLiterateDefByClass(Class cs){
-		HAPLiterateDef out = m_typesByClass.get(cs);
+	private HAPLiterateDef getLiterateDefByClassName(String csName){
+		HAPLiterateDef out = m_typesByClass.get(csName);
 		if(out==null)				out = this.m_typeObject;
 		return out;
 	}
@@ -140,7 +130,7 @@ public class HAPLiterateManager {
 	private void registerBasic(HAPLiterateDef typeObj){
 		m_typesByName.put(typeObj.getName(), typeObj);
 		for(Class cs : typeObj.getObjectClasses()){
-			m_typesByClass.put(cs, typeObj);
+			m_typesByClass.put(cs.getName(), typeObj);
 		}
 	}
 }
