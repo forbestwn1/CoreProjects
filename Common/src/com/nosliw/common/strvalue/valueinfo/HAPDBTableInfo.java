@@ -40,11 +40,18 @@ public class HAPDBTableInfo {
 	 * @param entityProperty  
 	 */
 	public void addColumnInfo(HAPDBColumnInfo columnInfo, String attrPath, String property, String relativePath){
+		
 		//if no column name specified, use property name
 		if(HAPBasicUtility.isStringEmpty(columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.COLUMN))){
 			columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.COLUMN, property);
 		}
-	
+
+		if("parentsInfo".equals(columnInfo.getColumnName()))
+		{
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		//update property
 		columnInfo.setProperty(HAPNamingConversionUtility.cascadePath(attrPath, property));
 		

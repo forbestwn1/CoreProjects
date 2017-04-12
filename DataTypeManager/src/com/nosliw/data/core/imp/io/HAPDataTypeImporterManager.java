@@ -25,8 +25,6 @@ import com.nosliw.data.core.imp.HAPDataTypePictureImp;
 import com.nosliw.data.core.imp.HAPOperationImp;
 import com.nosliw.data.core.imp.HAPOperationVarInfoImp;
 import com.nosliw.data.core.imp.HAPRelationshipImp;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceDiscoveryJSImp;
-import com.nosliw.data.core.imp.runtime.js.io.HAPJSImporter;
 
 public class HAPDataTypeImporterManager {
 	
@@ -222,8 +220,8 @@ public class HAPDataTypeImporterManager {
 		man.buildDataTypePictures();
 		man.buildDataTypeOperations();
 		
-		HAPJSImporter jsImporter = new HAPJSImporter(HAPResourceDiscoveryJSImp.getInstance());
-		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");
+//		HAPJSImporter jsImporter = new HAPJSImporter(HAPResourceDiscoveryJSImp.getInstance());
+//		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");
 		
 //		HAPDBAccess.getInstance().close();
 	}
