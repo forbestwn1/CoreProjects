@@ -20,14 +20,14 @@
 			<output criteria="core.text"/>
 		</operation>
 	
-		<operation name="new1" typ="new" >
+		<operation name="new1" type="new" >
 			<parms>
 				<parm name="aa" criteria="core.text"/>
 				<parm name="bb" criteria="core.text"/>
 			</parms>
 		</operation>
 
-		<operation name="new2" typ="new" >
+		<operation name="new2" type="new" >
 			<parms>
 				<parm name="aa" criteria="core.text"/>
 				<parm name="bb" criteria="core.text"/>

@@ -4,12 +4,12 @@ import java.util.List;
 
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataType;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
-import com.nosliw.data.core.imp.io.HAPDataTypeImporterManager;
 
 public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 
@@ -24,20 +24,8 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 	private void init(){
 		this.m_dbAccess = HAPDBAccess.getInstance();
 		
-		HAPValueInfoManager.getInstance().importFromXML(HAPDataTypeManagerImp.class, new String[]{
-				"datatypedefinition.xml",
-				"datatypeid.xml",
-				"datatypeinfo.xml",
-				"operationinfo.xml",
-				"datatypeversion.xml",
-
-				"interfaceoperation.xml",
-				"operation.xml",
-				"operationvar.xml",
-				"datatypeoperation.xml",
-
-				"datatyperelationship.xml"
-		});
+		String fileFolder = HAPFileUtility.getClassFolderPath(this.getClass()); 
+		HAPValueInfoManager.getInstance().importFromFolder(fileFolder, false);
 		
 		HAPSerializeManager.getInstance().registerClassName(HAPDataTypeId.class.getName(), HAPDataTypeId.class.getName());
 	}

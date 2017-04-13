@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPOperationId;
@@ -31,11 +32,8 @@ public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 	private void init(){
 		this.m_dbAccess = HAPDBAccess.getInstance();
 		
-		HAPValueInfoManager.getInstance().importFromXML(HAPResourceDiscoveryJSImp.class, new String[]{
-				"jsoperation.xml",
-				"jsresourcedependency.xml",
-				"jshelper.xml"
-		});
+		String fileFolder = HAPFileUtility.getClassFolderPath(this.getClass()); 
+		HAPValueInfoManager.getInstance().importFromFolder(fileFolder, false);
 	}
 	
 	private HAPResourceDiscoveryJSImp(){

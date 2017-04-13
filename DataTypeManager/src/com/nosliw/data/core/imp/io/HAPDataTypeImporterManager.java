@@ -216,8 +216,8 @@ public class HAPDataTypeImporterManager {
 	
 	public static void main(String[] args){
 		HAPDataTypeImporterManager man = new HAPDataTypeImporterManager(new HAPDataTypeManagerImp());
-		man.loadAllDataType();
-		man.buildDataTypePictures();
+//		man.loadAllDataType();
+//		man.buildDataTypePictures();
 		man.buildDataTypeOperations();
 		
 //		HAPJSImporter jsImporter = new HAPJSImporter(HAPResourceDiscoveryJSImp.getInstance());

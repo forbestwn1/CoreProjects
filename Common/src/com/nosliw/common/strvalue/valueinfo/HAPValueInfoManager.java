@@ -1,5 +1,8 @@
 package com.nosliw.common.strvalue.valueinfo;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -39,8 +42,37 @@ public class HAPValueInfoManager {
 		return m_instance;
 	}
 	
-	public void importFromFolder(String folder){
+	public void importFromFolder(String folderPath, boolean recur){
+		List<File> files = new ArrayList<File>();
+		this.importFromFolder(folderPath, files, recur);
 		
+		List<InputStream> inputStreams = new ArrayList<InputStream>();
+		for(File file : files){
+    		try {
+				InputStream inputStream = new FileInputStream(file);
+				inputStreams.add(inputStream);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		this.importFromXML(inputStreams);
+	}
+	
+	private void importFromFolder(String folderPath, List<File> files, boolean recur){
+		File folder = new File(folderPath);
+		File[] listOfFiles = folder.listFiles();
+	    for (int i = 0; i < listOfFiles.length; i++) {
+	    	File file = listOfFiles[i];
+	    	if (file.isFile()) {
+	    		if(file.getName().startsWith("valueinfo")){
+		    		files.add(file);
+	    		}
+	    	} else if (file.isDirectory()) {
+	    		if(recur){
+		    		this.importFromFolder(file.getPath(), files, recur);
+	    		}
+	    	}
+	    }		
 	}
 	
 	public void importFromXML(List<InputStream> xmlInputStreams){

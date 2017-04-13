@@ -125,6 +125,13 @@ public class HAPFileUtility {
 		return stream;
 	}
 	
+	public static String getClassFolderPath(Class cs){
+		String fileFolder = cs.getResource("").getFile();
+		return fileFolder;
+	}
+	
+
+	
 	public static String buildFullFileName(String location, String fileName, String type){
 		return location+"/"+fileName+"."+type; 
 	}
