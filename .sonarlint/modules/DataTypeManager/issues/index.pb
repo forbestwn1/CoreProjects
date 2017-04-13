@@ -76,3 +76,5 @@ u
 Esrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDataHelperImp.java,b\0\b031057ee7b50b95c4c75141f8ef666ea6dbd617
 d
 4src/com/nosliw/data/core/imp/HAPDataTypeImpLoad.java,9\5\95d197dd5a2ba46c9e1654d22a7b587cb6320cc5
+e
+5src/com/nosliw/data/core/imp/HAPOperationInfoImp.java,b\2\b253cfe998e2a70a1d51a5b9804073e10a31b2db

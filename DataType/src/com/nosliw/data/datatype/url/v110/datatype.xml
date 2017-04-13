@@ -34,20 +34,6 @@
 			</parms>
 		</operation>
 	
-		<operation name="convert" typ="convert" >
-			<parms>
-				<parm name="bb" criteria="core.text"/>
-			</parms>
-			<output criteria="core.url;1.0.0"/>
-		</operation>
-	
-		<operation name="convert" typ="convert" >
-			<parms>
-				<parm name="bb" criteria="core.text"/>
-			</parms>
-			<output criteria="core.text;1.0.0"/>
-		</operation>
-	
 	</operations>
 	
 </definition>

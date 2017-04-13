@@ -39,6 +39,10 @@ public class HAPValueInfoManager {
 		return m_instance;
 	}
 	
+	public void importFromFolder(String folder){
+		
+	}
+	
 	public void importFromXML(List<InputStream> xmlInputStreams){
 		Set<String> valueInfoNames = new HashSet<String>();
 		

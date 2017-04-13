@@ -1,4 +1,4 @@
-<entity name="data.datatypeid111" 
+<entity name="data.datatypeid" 
 		description="data type info" 
 		class="com.nosliw.data.core.HAPDataTypeId">
 
