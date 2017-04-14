@@ -93,7 +93,7 @@ public class HAPDataTypeImporterManager {
 			if(parentsId!=null){
 				for(HAPDataTypeId parentId : parentsId){
 					HAPRelationshipImp parentRelationship = pic.getRelationship(parentId);
-					Map<String, HAPDataTypeOperationImp> parentDataTypeOperations = buildDataTypeOperations(parentRelationship.getTarget());
+					Map<String, HAPDataTypeOperationImp> parentDataTypeOperations = buildDataTypeOperations(parentRelationship.getTargetDataType());
 					for(String opeartionName : parentDataTypeOperations.keySet()){
 						HAPDataTypeOperationImp dataTypeOp = parentDataTypeOperations.get(opeartionName);
 						HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(new HAPRelationshipPathSegment(parentId), (HAPDataTypeId)pic.getSourceDataType().getName());
@@ -104,7 +104,7 @@ public class HAPDataTypeImporterManager {
 			
 			if(dataType.getLinkedDataTypeId()!=null){
 				HAPRelationshipImp relationship = pic.getRelationship(dataType.getLinkedDataTypeId());
-				Map<String, HAPDataTypeOperationImp> ataTypeOperations = buildDataTypeOperations(relationship.getTarget());
+				Map<String, HAPDataTypeOperationImp> ataTypeOperations = buildDataTypeOperations(relationship.getTargetDataType());
 				for(String opeartionName : ataTypeOperations.keySet()){
 					HAPDataTypeOperationImp dataTypeOp = ataTypeOperations.get(opeartionName);
 					HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(new HAPRelationshipPathSegment(dataType.getLinkedVersion()), (HAPDataTypeId)pic.getSourceDataType().getName());
@@ -164,8 +164,9 @@ public class HAPDataTypeImporterManager {
 		HAPDataTypePictureImp out = new HAPDataTypePictureImp(dataType);
 		
 		//self as a relationship as well
-		HAPRelationshipImp self = new HAPRelationshipImp(dataType);
-		self.setTarget(dataType);
+		HAPRelationshipImp self = new HAPRelationshipImp();
+		self.setSourceDataType(dataType);
+		self.setTargetDataType(dataType);
 		out.addRelationship(self);
 		
 		this.buildDataTypePictureFromParentsDataType(dataType, out);
@@ -216,8 +217,8 @@ public class HAPDataTypeImporterManager {
 	
 	public static void main(String[] args){
 		HAPDataTypeImporterManager man = new HAPDataTypeImporterManager(new HAPDataTypeManagerImp());
-//		man.loadAllDataType();
-//		man.buildDataTypePictures();
+		man.loadAllDataType();
+		man.buildDataTypePictures();
 		man.buildDataTypeOperations();
 		
 //		HAPJSImporter jsImporter = new HAPJSImporter(HAPResourceDiscoveryJSImp.getInstance());

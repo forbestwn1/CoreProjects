@@ -17,9 +17,6 @@ public class HAPOperationImp extends HAPStringableValueEntityWithID implements H
 	public static String _VALUEINFO_NAME;
 
 	@HAPAttribute
-	public static String TYPE = "type";
-	
-	@HAPAttribute
 	public static String DATATYPNAME = "dataTypeName";
 	
 	public HAPOperationImp(){

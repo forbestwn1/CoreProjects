@@ -27,7 +27,7 @@ public class HAPDataTypeCriteriaManagerImp implements HAPDataTypeCriteriaManager
 			HAPDataTypePictureImp toPic = this.m_dbAccess.getDataTypePicture(to);
 			Set<HAPRelationship> relationships = (Set<HAPRelationship>)toPic.getRelationships();
 			for(HAPRelationship relationship : relationships){
-				toSet.add(relationship.getTargetDataTypeName());
+				toSet.add(relationship.getTarget());
 			}
 		}
 
@@ -36,7 +36,7 @@ public class HAPDataTypeCriteriaManagerImp implements HAPDataTypeCriteriaManager
 			HAPDataTypeFamilyImp fromFamily = this.m_dbAccess.getDataTypeFamily(from);
 			Set<HAPRelationship> relationships = (Set<HAPRelationship>)fromFamily.getRelationships();
 			for(HAPRelationship relationship : relationships){
-				fromSet.add(relationship.getSourceDataTypeName());
+				fromSet.add(relationship.getSource());
 			}
 		}
 		

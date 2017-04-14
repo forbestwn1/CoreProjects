@@ -15,7 +15,7 @@ public class HAPOperandConverter extends HAPOperandImp{
 	public HAPOperandConverter(HAPRelationship relationship, HAPDataTypeCriteriaManager criteriaMan) {
 		super(HAPConstant.EXPRESSION_OPERAND_CONVERTOR, criteriaMan);
 		this.m_relationship = relationship;
-		this.setDataTypeCriteria(new HAPDataTypeCriteriaElementId(this.m_relationship.getTargetDataTypeName(), this.getDataTypeCriteriaManager()));
+		this.setDataTypeCriteria(new HAPDataTypeCriteriaElementId(this.m_relationship.getTarget(), this.getDataTypeCriteriaManager()));
 	}
 
 	@Override

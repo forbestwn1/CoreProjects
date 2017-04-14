@@ -16,13 +16,13 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="source" type="entity" reference="data.datatypedef" description="">
+	<property name="sourceDataType" type="entity" reference="data.datatypedef" description="">
 		<dbColumnInfos  includeColumn="true">
 		</dbColumnInfos>
 	</property>
 
 		
-	<property name="target" type="entity" reference="data.datatypedef" description="">
+	<property name="targetDataType" type="entity" reference="data.datatypedef" description="">
 		<dbColumnInfos includeColumn="true">
 		</dbColumnInfos>
 	</property>

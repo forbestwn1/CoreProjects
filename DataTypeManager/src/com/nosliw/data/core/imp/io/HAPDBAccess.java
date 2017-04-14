@@ -18,6 +18,7 @@ import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo;
 import com.nosliw.common.strvalue.valueinfo.HAPSqlUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPOperationParmInfo;
@@ -112,11 +113,11 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	}
 	
 	public List<HAPDataTypeOperationImp> getDataTypeOperations(HAPDataTypeId dataTypeId){
-		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB(HAPDataTypeOperationImp._VALUEINFO_NAME, "sourceDataTypeName=?", new Object[]{dataTypeId.getName()});
+		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB(HAPDataTypeOperationImp._VALUEINFO_NAME, "source=?", new Object[]{dataTypeId.getName()});
 	}
 	
 	public List<HAPDataTypeOperationImp> getNormalDataTypeOperations(HAPDataTypeId dataTypeId){
-		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB(HAPDataTypeOperationImp._VALUEINFO_NAME, "type=null && sourceDataTypeName=?", new Object[]{dataTypeId.getName()});
+		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB(HAPDataTypeOperationImp._VALUEINFO_NAME, "type='"+HAPConstant.DATAOPERATION_TYPE_NORMAL+"' && source=?", new Object[]{dataTypeId.getName()});
 	}
 	
 	public HAPDataTypeFamilyImp getDataTypeFamily(HAPDataTypeId dataTypeId){
@@ -125,7 +126,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		try {
 			String valuInfoName = HAPRelationshipImp._VALUEINFO_NAME;
 			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valuInfoName);
-			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "target_fullName=?");
+			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "targetDataType_fullName=?");
 
 			PreparedStatement statement = m_connection.prepareStatement(sql);
 			statement.setString(1, dataTypeId.getFullName());
@@ -150,7 +151,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		try {
 			String valuInfoName = HAPRelationshipImp._VALUEINFO_NAME;
 			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valuInfoName);
-			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "source_fullName=?");
+			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "sourceDataType_fullName=?");
 
 			PreparedStatement statement = m_connection.prepareStatement(sql);
 			statement.setString(1, dataTypeId.getFullName());

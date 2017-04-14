@@ -35,7 +35,7 @@ public class HAPDataTypeFamilyImp implements HAPDataTypeFamily{
 	}
 
 	public void addRelationship(HAPRelationshipImp relationship){
-		relationship.setSource(this.m_targetDataType);
-		this.m_relationships.put(relationship.getSourceDataTypeName(), relationship);
+		relationship.setSourceDataType(this.m_targetDataType);
+		this.m_relationships.put(relationship.getSource(), relationship);
 	}
 }

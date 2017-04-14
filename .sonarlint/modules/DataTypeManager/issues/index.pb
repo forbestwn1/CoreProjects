@@ -52,3 +52,9 @@ d
 4src/com/nosliw/data/core/imp/HAPDataTypeImpLoad.java,9\5\95d197dd5a2ba46c9e1654d22a7b587cb6320cc5
 e
 5src/com/nosliw/data/core/imp/HAPOperationInfoImp.java,b\2\b253cfe998e2a70a1d51a5b9804073e10a31b2db
+q
+Asrc/com/nosliw/data/core/imp/valueinfo.data.datatypeoperation.xml,4\a\4a73e31beb849dc60eae434fa0d8c3e4e6cb4960
+s
+Csrc/com/nosliw/data/core/imp/valueinfo.data.interface.operation.xml,f\e\fe8e10b16a7f2d0f6d7c789c47fb9843d440c8dc
+l
+<src/com/nosliw/data/core/imp/valueinfo.data.relationship.xml,2\e\2e67b5ac7a1c7b6011ca2baf97f24c983d5a30d4

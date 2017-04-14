@@ -20,13 +20,13 @@ public interface HAPRelationship {
 	 * Get target data type that source have relationship with 
 	 * @return
 	 */
-	HAPDataTypeId getTargetDataTypeName();
+	HAPDataTypeId getTarget();
 
 	/**
 	 * Get source data type 
 	 * @return
 	 */
-	HAPDataTypeId getSourceDataTypeName();
+	HAPDataTypeId getSource();
 	
 	
 	/**
