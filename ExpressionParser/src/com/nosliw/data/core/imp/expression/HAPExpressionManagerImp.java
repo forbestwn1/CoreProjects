@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 import com.nosliw.data.core.expression.HAPExpression;
@@ -36,10 +37,9 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	}
 	
 	private void init(){
-		HAPValueInfoManager.getInstance().importFromXML(HAPExpressionManagerImp.class, new String[]{
-				"expression.xml",
-				"referenceinfo.xml"
-		});
+		String fileFolder = HAPFileUtility.getClassFolderPath(this.getClass()); 
+		HAPValueInfoManager.getInstance().importFromFolder(fileFolder, false);
+
 		this.m_expressionInfos = new LinkedHashMap<String, HAPExpressionInfo>();
 	}
 
@@ -165,9 +165,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 			@Override
 			public void postPross(HAPOperand operand, Object data) {
 			}});
-		
 	}
-	
 	
 	protected HAPExpressionParser getExpressionParser(){		return this.m_expressionParser;	}
 	protected HAPDataTypeCriteriaManager getCriteriaManager(){   return this.m_criteriaMan;   }

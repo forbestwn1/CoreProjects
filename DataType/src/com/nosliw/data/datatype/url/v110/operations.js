@@ -67,6 +67,10 @@ dataTypeDefition.operations['url_normal2'] = {
 		}
 	},
 	
+	info : {
+		type : "convertTo"
+	},
+	
 	//defined operation
 	//in operation can access all the required resources by name through context
 	operation : function(parms, context){

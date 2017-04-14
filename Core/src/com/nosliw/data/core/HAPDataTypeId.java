@@ -6,6 +6,7 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPJsonUtility;
 
 /**
  * Data type id to specify the data type
@@ -113,4 +114,10 @@ public class HAPDataTypeId extends HAPSerializableImp{
 		}
 		return out;
 	}
+	
+	@Override
+	public String toString(){
+		return this.toStringValue(HAPSerializationFormat.LITERATE);
+	}
+	
 }

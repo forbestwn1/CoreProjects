@@ -19,6 +19,14 @@
 			</parms>
 			<output criteria="core.text"/>
 		</operation>
+
+			<operation name="url_withBase" >
+			<parms>
+				<parm name="aa" isBase="true"/>
+				<parm name="bb" criteria="core.text"/>
+			</parms>
+			<output criteria="core.text"/>
+		</operation>
 	
 		<operation name="new1" type="new" >
 			<parms>

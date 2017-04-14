@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public class HAPDataUtility {
@@ -18,5 +19,11 @@ public class HAPDataUtility {
 		HAPDataTypeCriteria out = (HAPDataTypeCriteria)HAPSerializeManager.getInstance().buildObject(HAPDataTypeCriteria.class.getName(), jsonObj, HAPSerializationFormat.JSON_FULL); 
 		return out;
 	}
+	
+	public static boolean isNormalDataOpration(HAPOperation operation){
+		String type = operation.getType();
+		return type==null || HAPConstant.DATAOPERATION_TYPE_NORMAL.equals(type);
+	}
+	
 	
 }

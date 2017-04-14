@@ -5,13 +5,23 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataType;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypePicture;
 import com.nosliw.data.core.HAPRelationship;
 
-public class HAPDataTypePictureImp implements HAPDataTypePicture{
+public class HAPDataTypePictureImp extends HAPSerializableImp implements HAPDataTypePicture{
 
+	@HAPAttribute
+	public static String SOURCE = "source";
+
+	@HAPAttribute
+	public static String RELATIONSHIPS = "relationship";
+	
 	private HAPDataTypeImp m_sourceDataType;
 	
 	private Map<HAPDataTypeId, HAPRelationshipImp> m_relationships;
@@ -39,4 +49,22 @@ public class HAPDataTypePictureImp implements HAPDataTypePicture{
 		this.m_relationships.put(relationship.getTarget(), relationship);
 	}
 
+	@Override
+	protected String buildLiterate(){  return this.toStringValue(HAPSerializationFormat.JSON_FULL); }
+
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		this.buildJsonMap(jsonMap, typeJsonMap);
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(SOURCE, this.m_sourceDataType.toStringValue(HAPSerializationFormat.JSON));
+		
+		Map<String, String> relationJsonMap = new LinkedHashMap<String, String>();
+		for(HAPDataTypeId dataTypeId : this.m_relationships.keySet()){
+			relationJsonMap.put(dataTypeId.toStringValue(HAPSerializationFormat.LITERATE), this.m_relationships.get(dataTypeId).toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(RELATIONSHIPS, HAPJsonUtility.buildMapJson(relationJsonMap));
+	}	
 }

@@ -14,6 +14,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypePicture;
 import com.nosliw.data.core.HAPDataTypeProvider;
+import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.HAPRelationshipPathSegment;
@@ -112,12 +113,13 @@ public class HAPDataTypeImporterManager {
 				}
 			}
 
+			//store all datat type operation (normal + new + others)
 			List<HAPDataTypeOperationImp> toSave = new ArrayList<HAPDataTypeOperationImp>();
 			//operations from own
 			List<HAPOperationImp> ownOperations = this.m_dbAccess.getOperationInfosByDataType((HAPDataTypeId)dataType.getName());
 			for(HAPOperationImp ownOperation : ownOperations){
 				HAPDataTypeOperationImp ownDataTypeOperation = new HAPDataTypeOperationImp(ownOperation);
-				if(HAPBasicUtility.isStringEmpty(ownOperation.getType())){
+				if(HAPDataUtility.isNormalDataOpration(ownOperation)){
 					//regular operation
 					out.put(ownDataTypeOperation.getName(), ownDataTypeOperation);
 				}
