@@ -56,7 +56,7 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria discoverVariables(Map<String, HAPDataTypeCriteria> variablesInfo,
+	public HAPDataTypeCriteria discover(Map<String, HAPDataTypeCriteria> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context) {
 		return null;
 	}

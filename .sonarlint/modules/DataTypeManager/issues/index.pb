@@ -58,3 +58,11 @@ s
 Csrc/com/nosliw/data/core/imp/valueinfo.data.interface.operation.xml,f\e\fe8e10b16a7f2d0f6d7c789c47fb9843d440c8dc
 l
 <src/com/nosliw/data/core/imp/valueinfo.data.relationship.xml,2\e\2e67b5ac7a1c7b6011ca2baf97f24c983d5a30d4
+f
+6src/com/nosliw/data/core/imp/HAPDataTypeFamilyImp.java,5\d\5d9280409f7eecebaad67c3a21649907a879ab12
+g
+7src/com/nosliw/data/core/imp/HAPDataTypePictureImp.java,d\a\da5a5fed9232e7d1e0ba83427aa35e5b164824fa
+k
+;src/com/nosliw/data/core/imp/valueinfo.data.datatypedef.xml,5\1\51106f620da096284fc7c05cee4fe9d933284686
+i
+9src/com/nosliw/data/core/imp/valueinfo.data.operation.xml,a\a\aa9c45918ef4f2d7163004b157cbbaf01ab82ddf

@@ -23,16 +23,22 @@ public class HAPOperandConstant extends HAPOperandImp{
 	
 	public HAPOperandConstant(String constantStr, HAPDataTypeCriteriaManager criteriaMan){
 		super(HAPConstant.EXPRESSION_OPERAND_CONSTANT, criteriaMan);
-		this.m_data = HAPDataUtility.buildDataWrapper(constantStr);
-		if(this.m_data==null){
+		HAPData data = HAPDataUtility.buildDataWrapper(constantStr);
+		if(data==null){
 			//not a valid data literate, then it is a constant name
 			this.m_name = constantStr;
+		}
+		else{
+			this.setData(data);
 		}
 	}
 	
 	public String getName(){  return this.m_name;  }
 	
-	public void setData(HAPData data){ this.m_data = data; }
+	public void setData(HAPData data){ 
+		this.m_data = data;
+		this.setDataTypeCriteria(new HAPDataTypeCriteriaElementId(this.m_data.getDataTypeId(), this.getDataTypeCriteriaManager()));
+	}
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -49,12 +55,11 @@ public class HAPOperandConstant extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria discoverVariables(
+	public HAPDataTypeCriteria discover(
 			Map<String, HAPDataTypeCriteria> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessVariablesContext context) {
 		this.validate(this.getDataTypeCriteria(), expectCriteria, context);
-		this.setDataTypeCriteria(new HAPDataTypeCriteriaElementId(this.m_data.getDataTypeId(), this.getDataTypeCriteriaManager()));
 		return this.getDataTypeCriteria();
 	}
 

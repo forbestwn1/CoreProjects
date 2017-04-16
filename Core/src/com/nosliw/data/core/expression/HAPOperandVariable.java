@@ -12,7 +12,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 	
 	protected String m_variableName;
 	
-	protected HAPDataTypeCriteria m_dataTypeCriteria;
+//	protected HAPDataTypeCriteria m_dataTypeCriteria;
 
 	public HAPOperandVariable(String name, HAPDataTypeCriteriaManager criteriaMan){
 		super(HAPConstant.EXPRESSION_OPERAND_VARIABLE, criteriaMan);
@@ -35,13 +35,13 @@ public class HAPOperandVariable extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria discoverVariables(
+	public HAPDataTypeCriteria discover(
 			Map<String, HAPDataTypeCriteria> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessVariablesContext context) {
-		this.m_dataTypeCriteria = this.validate(variablesInfo.get(this.m_variableName), expectCriteria, context);
-		variablesInfo.put(m_variableName, m_dataTypeCriteria);
-		this.setDataTypeCriteria(m_dataTypeCriteria);
+		HAPDataTypeCriteria dataTypeCriteria = this.validate(variablesInfo.get(this.getVariableName()), expectCriteria, context);
+		variablesInfo.put(m_variableName, dataTypeCriteria);
+		this.setDataTypeCriteria(dataTypeCriteria);
 		return this.getDataTypeCriteria();
 	}
 

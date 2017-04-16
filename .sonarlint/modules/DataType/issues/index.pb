@@ -53,3 +53,7 @@ g
 7src/com/nosliw/data/datatype/distance/v100/datatype.xml,1\f\1f998dceaee8f3b61a2c7e6b56acc6e8f8f03764
 d
 4src/com/nosliw/data/datatype/array/v100/datatype.xml,2\f\2ff1f5bf728afc42d2be17ac59b58f9d8fa68447
+n
+>src/com/nosliw/data/datatype/datatype/v100/HAPDataTypeDef.java,8\7\8721540b92304e4243a098c95f11ac54dfa4bc67
+g
+7src/com/nosliw/data/datatype/datatype/v100/datatype.xml,4\3\43b36d3c630c84c587e7f9492b5fd3bab8415a5a

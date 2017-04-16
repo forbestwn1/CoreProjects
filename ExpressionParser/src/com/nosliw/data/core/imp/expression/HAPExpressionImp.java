@@ -61,6 +61,12 @@ public class HAPExpressionImp implements HAPExpression{
 	public void addErrorMessage(String msg){  this.m_errorMsgs.add(msg);  } 
 	public void addErrorMessages(List<String> msgs){  this.m_errorMsgs.addAll(msgs);  } 
 	
+	/**
+	 * Build normalized variable info, then normalize operand according to normalized variables
+	 * It means reducing all the redundant data type for each variable
+	 * When a criteria has some data type that has parent belong to the same criteria, then we consider that data type as redundant
+	 * As we we only need to keep the parent data type only 
+	 */
 	public void buildNormalizedVariablesInfo(){
 		this.m_normalizedVarsInfo = new LinkedHashMap<String, HAPDataTypeCriteria>();
 		for(String varName : this.m_varsInfo.keySet()){
@@ -72,5 +78,6 @@ public class HAPExpressionImp implements HAPExpression{
 				this.m_normalizedVarsInfo.put(varName, null);
 			}
 		}
+		this.getOperand().normalize(m_normalizedVarsInfo);
 	}
 }

@@ -62,20 +62,20 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		
 		HAPProcessVariablesContext context = new HAPProcessVariablesContext();
 		Map<String, HAPDataTypeCriteria> oldVars;
-		//Do discovery util vars not change or fail 
+		//Do discovery until vars not change or fail 
 		do{
 			oldVars = new LinkedHashMap<String, HAPDataTypeCriteria>();
 			oldVars.putAll(expressionVars);
 			
 			context.clear();
-			expression.getOperand().discoverVariables(expressionVars, null, context);
+			expression.getOperand().discover(expressionVars, null, context);
 		}while(!HAPBasicUtility.isEqualMaps(expressionVars, oldVars) && context.isSuccess());
 		
 		if(context.isSuccess()){
 			expression.setVariables(expressionVars);
 			
 			//normalize variable -- for every variable criteria, find root from data type
-			//for operator, build convertor
+			//normalize operator
 			expression.buildNormalizedVariablesInfo();
 		}
 		else{
