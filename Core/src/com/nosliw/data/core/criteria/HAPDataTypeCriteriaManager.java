@@ -9,14 +9,44 @@ import com.nosliw.data.core.HAPRelationship;
 
 public interface HAPDataTypeCriteriaManager {
 
+	/**
+	 * List all data types between from and to
+	 * This means that each data type should be able to convert to "From" and also can be converted from "To"
+	 * @param from
+	 * @param to
+	 * @return
+	 */
 	Set<HAPDataTypeId> getAllDataTypeInRange(HAPDataTypeId from, HAPDataTypeId to);
 	
+	/**
+	 * Build data type criteria based on a set of data type ids
+	 * @param dataTypeIds
+	 * @return
+	 */
 	HAPDataTypeCriteria buildDataTypeCriteria(Set<HAPDataTypeId> dataTypeIds);
 
+	/**
+	 * Do "And" operation between criteria1 and criteria2 
+	 * @param criteria1
+	 * @param criteria2
+	 * @return
+	 */
 	HAPDataTypeCriteria and(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2);
 
+	/**
+	 * Loose criteria so that all the data type that can be converted to this criteria are included
+	 * @param criteria
+	 * @return
+	 */
 	HAPDataTypeCriteria looseCriteria(HAPDataTypeCriteria criteria);
 
+	/**
+	 * Whether criteria1 is compatible with criteria2
+	 * This means that all data type in criteria1 is also part of criteria2
+	 * @param criteria1
+	 * @param criteria2
+	 * @return
+	 */
 	boolean compatibleWith(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2);
 	
 	/**
