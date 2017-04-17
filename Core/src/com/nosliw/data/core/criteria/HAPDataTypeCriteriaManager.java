@@ -54,7 +54,7 @@ public interface HAPDataTypeCriteriaManager {
 	 * @param dataTypeId
 	 * @return
 	 */
-	List<HAPDataTypeId> getRootDataTypeId(HAPDataTypeId dataTypeId);
+	Set<HAPDataTypeId> getRootDataTypeId(HAPDataTypeId dataTypeId);
 	
 	/**
 	 * Find the trunk data type for criteria. Trunk data type is the highest parent data type that is shared by all data type under criteria
