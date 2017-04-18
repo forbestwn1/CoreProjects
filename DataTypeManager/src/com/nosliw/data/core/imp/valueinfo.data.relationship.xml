@@ -27,4 +27,10 @@
 		</dbColumnInfos>
 	</property>
 
+	<property name="targetType" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+
 </entity>

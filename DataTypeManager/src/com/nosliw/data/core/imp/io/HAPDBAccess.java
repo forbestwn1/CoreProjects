@@ -18,6 +18,7 @@ import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo;
 import com.nosliw.common.strvalue.valueinfo.HAPSqlUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperationId;
@@ -117,34 +118,35 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	}
 	
 	public List<HAPDataTypeOperationImp> getNormalDataTypeOperations(HAPDataTypeId dataTypeId){
-		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB(HAPDataTypeOperationImp._VALUEINFO_NAME, "type='"+HAPConstant.DATAOPERATION_TYPE_NORMAL+"' && source=?", new Object[]{dataTypeId.getName()});
+		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB(HAPDataTypeOperationImp._VALUEINFO_NAME, "type='"+HAPConstant.DATAOPERATION_TYPE_NORMAL+"' AND source=?", new Object[]{dataTypeId.getName()});
 	}
 	
 	public HAPDataTypeFamilyImp getDataTypeFamily(HAPDataTypeId dataTypeId){
 		HAPDataTypeFamilyImp out = null;
-		
-		try {
-			String valuInfoName = HAPRelationshipImp._VALUEINFO_NAME;
-			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valuInfoName);
-			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), "targetDataType_fullName=?");
-
-			PreparedStatement statement = m_connection.prepareStatement(sql);
-			statement.setString(1, dataTypeId.getFullName());
-
-			List<Object> results = HAPSqlUtility.queryFromDB(valuInfoName, statement);
-			if(results.size()>0){
-				HAPDataTypeImp targetDataType = this.getDataType(dataTypeId);
-				out = new HAPDataTypeFamilyImp(targetDataType);
-				for(Object result : results){
-					out.addRelationship((HAPRelationshipImp)result);
-				}
+		List<HAPRelationshipImp> relationships = this.getRelationships(dataTypeId, null);
+		if(relationships.size()>0){
+			HAPDataTypeImp targetDataType = this.getDataType(dataTypeId);
+			out = new HAPDataTypeFamilyImp(targetDataType);
+			for(HAPRelationshipImp relationship : relationships){
+				out.addRelationship(relationship);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		return out;
 	}
 
+	public HAPRelationshipImp getRelationship(HAPDataTypeId sourceDataTypeId, HAPDataTypeId targetDataTypeId){
+		return (HAPRelationshipImp)this.queryEntityFromDB(HAPRelationshipImp._VALUEINFO_NAME, "sourceDataType_fullName=? AND targetDataType_fullName=?", new Object[]{sourceDataTypeId.getFullName()});
+	}
+	
+	public List<HAPRelationshipImp> getRelationships(HAPDataTypeId sourceDataTypeId, String targetType){
+		if(HAPBasicUtility.isStringEmpty(targetType)){
+			return (List<HAPRelationshipImp>)this.queryEntitysFromDB(HAPRelationshipImp._VALUEINFO_NAME, "targetDataType_fullName=?", new Object[]{sourceDataTypeId.getFullName()});
+		}
+		else{
+			return (List<HAPRelationshipImp>)this.queryEntitysFromDB(HAPRelationshipImp._VALUEINFO_NAME, "targetDataType_fullName=? AND targetType=?", new Object[]{sourceDataTypeId.getFullName(), targetType});
+		}
+	}
+	
 	public HAPDataTypePictureImp getDataTypePicture(HAPDataTypeId dataTypeId){
 		HAPDataTypePictureImp out = null;
 		

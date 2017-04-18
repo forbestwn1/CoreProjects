@@ -48,6 +48,15 @@ public interface HAPDataTypeCriteriaManager {
 	 * @return
 	 */
 	boolean compatibleWith(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2);
+
+	/**
+	 * Whether dataType1 is compatible with dataType2
+	 * This means that dataType1 can be converted to dataType2
+	 * @param criteria1
+	 * @param criteria2
+	 * @return
+	 */
+	HAPRelationship compatibleWith(HAPDataTypeId dataTypeId1, HAPDataTypeId dataTypeId2);
 	
 	/**
 	 * Find the root data type (all the parent data type which don't have parent data type)
@@ -55,7 +64,14 @@ public interface HAPDataTypeCriteriaManager {
 	 * @return
 	 */
 	Set<HAPDataTypeId> getRootDataTypeId(HAPDataTypeId dataTypeId);
-	
+
+	/**
+	 * Find the root data type relationship (all the parent data type which don't have parent data type)
+	 * @param dataTypeId
+	 * @return
+	 */
+	Set<HAPRelationship> getRootDataTypeRelationship(HAPDataTypeId dataTypeId);
+
 	/**
 	 * Find the trunk data type for criteria. Trunk data type is the highest parent data type that is shared by all data type under criteria
 	 * @param criteria

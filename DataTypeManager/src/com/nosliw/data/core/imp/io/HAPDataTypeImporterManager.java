@@ -11,6 +11,7 @@ import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterXML;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypePicture;
 import com.nosliw.data.core.HAPDataTypeProvider;
@@ -169,6 +170,7 @@ public class HAPDataTypeImporterManager {
 		HAPRelationshipImp self = new HAPRelationshipImp();
 		self.setSourceDataType(dataType);
 		self.setTargetDataType(dataType);
+		self.setTargetType(HAPConstant.DATATYPE_RELATIONSHIPTYPE_SELF);
 		out.addRelationship(self);
 		
 		this.buildDataTypePictureFromParentsDataType(dataType, out);
@@ -185,8 +187,12 @@ public class HAPDataTypeImporterManager {
 				connectDataTypePic = this.buildDataTypePicture(linkedDataTypeId);
 			}
 			Set<? extends HAPRelationship> connectRelationships = connectDataTypePic.getRelationships();
+			boolean isRoot = connectRelationships.size()==0;
 			for(HAPRelationship connectRelationship : connectRelationships){
-				out.addRelationship(((HAPRelationshipImp)connectRelationship).extendPathSegmentSource(new HAPRelationshipPathSegment(linkedDataTypeId.getVersion()), dataType));
+				HAPRelationshipImp relationship = ((HAPRelationshipImp)connectRelationship).extendPathSegmentSource(new HAPRelationshipPathSegment(linkedDataTypeId.getVersion()), dataType);
+				if(isRoot)   relationship.setTargetType(HAPConstant.DATATYPE_RELATIONSHIPTYPE_ROOT);
+				else relationship.setTargetType(HAPConstant.DATATYPE_RELATIONSHIPTYPE_INTERMEDIA);
+				out.addRelationship(relationship);
 			}
 		}
 	}
@@ -201,8 +207,12 @@ public class HAPDataTypeImporterManager {
 					connectDataTypePic = this.buildDataTypePicture(parentDataTypeId);
 				}
 				Set<? extends HAPRelationship> connectRelationships = connectDataTypePic.getRelationships();
+				boolean isRoot = connectRelationships.size()==0;
 				for(HAPRelationship connectRelationship : connectRelationships){
-					out.addRelationship(((HAPRelationshipImp)connectRelationship).extendPathSegmentSource(new HAPRelationshipPathSegment(parentDataTypeId), dataType));
+					HAPRelationshipImp relationship = ((HAPRelationshipImp)connectRelationship).extendPathSegmentSource(new HAPRelationshipPathSegment(parentDataTypeId), dataType);
+					if(isRoot)   relationship.setTargetType(HAPConstant.DATATYPE_RELATIONSHIPTYPE_ROOT);
+					else relationship.setTargetType(HAPConstant.DATATYPE_RELATIONSHIPTYPE_INTERMEDIA);
+					out.addRelationship(relationship);
 				}
 			}
 		}

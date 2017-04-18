@@ -349,6 +349,10 @@
 			<definition name="EXPRESSION_VARIABLE_DATA1" value="data1"/>
 			<definition name="EXPRESSION_VARIABLE_DATA2" value="data2"/>
 			<definition type="space"/>
+			<definition name="DATATYPE_RELATIONSHIPTYPE_SELF" value="self"/>
+			<definition name="DATATYPE_RELATIONSHIPTYPE_ROOT" value="root"/>
+			<definition name="DATATYPE_RELATIONSHIPTYPE_INTERMEDIA" value="intermedia"/>
+			<definition type="space"/>
 			<definition name="DATATYPE_CATEGARY_SIMPLE" value="simple"/>
 			<definition name="DATATYPE_CATEGARY_BLOCK" value="block"/>
 			<definition name="DATATYPE_CATEGARY_CONTAINER" value="container"/>

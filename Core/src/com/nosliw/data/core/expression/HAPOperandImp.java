@@ -59,10 +59,15 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	protected void addChildOperand(HAPOperand child){  this.m_children.add(child); }
 	
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(STATUS, this.getStatus());
 	}
-	
+
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		this.buildJsonMap(jsonMap, typeJsonMap);
+	}
 	/**
 	 * "And" two criteria and create output. If the "And" result is empty, then set error  
 	 * @param criteria

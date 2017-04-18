@@ -113,6 +113,12 @@ public class HAPConstant {
 
 
 
+		public static final String DATATYPE_RELATIONSHIPTYPE_SELF = "self";
+		public static final String DATATYPE_RELATIONSHIPTYPE_ROOT = "root";
+		public static final String DATATYPE_RELATIONSHIPTYPE_INTERMEDIA = "intermedia";
+
+
+
 		public static final String DATATYPE_CATEGARY_SIMPLE = "simple";
 		public static final String DATATYPE_CATEGARY_BLOCK = "block";
 		public static final String DATATYPE_CATEGARY_CONTAINER = "container";
