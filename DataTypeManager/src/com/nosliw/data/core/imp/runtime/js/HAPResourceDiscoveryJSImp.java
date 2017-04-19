@@ -1,9 +1,7 @@
 package com.nosliw.data.core.imp.runtime.js;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -11,6 +9,7 @@ import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.expression.HAPExpression;
+import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.js.HAPResourceIdOperation;
@@ -54,9 +53,8 @@ public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 
 	@Override
 	public List<HAPResourceId> discoverResourceRequirement(HAPExpression expression) {
-		
-		
-		return null;
+		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>(HAPExpressionUtility.discoverResources(expression));
+		return this.discoverResourceDependency(resourceIds);
 	}
 
 	public List<HAPResourceId> discoverResourceDependency(List<HAPResourceId> resourceIds){

@@ -6,7 +6,11 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPOperationId;
+import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.js.HAPResourceDiscoveryJS;
+import com.nosliw.data.core.runtime.js.HAPResourceIdConverter;
+import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
 
 public class HAPExpressionUtility {
 
@@ -20,35 +24,32 @@ public class HAPExpressionUtility {
 		}
 	}
 	
-	static public Set<HAPOperationId> discoverOperations(HAPExpression expression){
-		final Set<HAPOperationId> out = new HashSet<HAPOperationId>();
-		
-		processAllOperand(expression.getOperand(), out, new HAPExpressionTask(){
-			@Override
-			public boolean processOperand(HAPOperand operand, Object data) {
-				if(operand.getType().equals(HAPConstant.EXPRESSION_OPERAND_OPERATION)){
-					HAPOperationId operationId = ((HAPOperandOperation)operand).getOperationId();
-					if(operationId!=null)  out.add(operationId);
-				}
-				return true;
-			}
-
-			@Override
-			public void postPross(HAPOperand operand, Object data) {}
-		});
-		return out;
-	}
-
 	static public Set<HAPResourceId> discoverResources(HAPExpression expression){
 		final Set<HAPResourceId> out = new HashSet<HAPResourceId>();
 		
 		processAllOperand(expression.getOperand(), out, new HAPExpressionTask(){
 			@Override
 			public boolean processOperand(HAPOperand operand, Object data) {
-				if(operand.getType().equals(HAPConstant.EXPRESSION_OPERAND_OPERATION)){
-					HAPOperationId operationId = ((HAPOperandOperation)operand).getOperationId();
-//					if(operationId!=null)  out.add(operationId);
+				switch(operand.getType()){
+				case HAPConstant.EXPRESSION_OPERAND_OPERATION:
+					HAPOperandOperation operationOperand = (HAPOperandOperation)operand;
+					HAPOperationId operationId = operationOperand.getOperationId();
+					//operation as resource
+					if(operationId!=null)	out.add(HAPResourceDiscoveryJS.buildResourceIdFromIdData(operationId, null));
+					break;
+				case HAPConstant.EXPRESSION_OPERAND_REFERENCE:
+					HAPOperandReference referenceOperand = (HAPOperandReference)operand;
+					Set<HAPResourceId> referenceResources = discoverResources(referenceOperand.getExpression());
+					out.addAll(referenceResources);
+					break;
 				}
+
+				//converter as resource
+				for(HAPRelationship converter : operand.getConverters()){
+					List<HAPResourceIdConverter> conerterIds = HAPRuntimeJSUtility.getConverterFromRelationship(converter);
+					out.addAll(conerterIds);
+				}
+				
 				return true;
 			}
 
