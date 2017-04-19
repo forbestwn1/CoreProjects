@@ -237,6 +237,13 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		
 		try {
 			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valueInfoName);
+			
+			if(dbTableInfo==null || dbTableInfo.getTableName()==null){
+				int kkkk = 5555;
+				kkkk++;
+			}
+			
+			
 			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), query);
 
 			PreparedStatement statement = m_connection.prepareStatement(sql);

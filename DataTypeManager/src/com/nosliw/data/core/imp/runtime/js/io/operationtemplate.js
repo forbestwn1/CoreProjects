@@ -1,6 +1,7 @@
 if(nosliw==undefined){
 	var nosliw = function(){
 		var loc_dataTypes = {};
+		
 		var loc_out = {
 			getDataTypeDefinition : function(dataType, version){
 				var out = this.newDataType();
@@ -29,21 +30,33 @@ if(nosliw==undefined){
 				
 				for(var prop in dataTypeDef.operations){
 					if(dataTypeDef.operations.hasOwnProperty(prop)){
-						var operationDef = dataTypeDef.operations[prop];
-						
-						var operation = this.newDataTypeOperation();
-						dataType.operations[prop] = operation;
-
-						//merge requires from local 
-						operation.requires = this.mergeRequires(operation.requires, localRequires);
-						
-						//merge requires from operation definition
-						operation.requires = this.mergeRequires(operation.requires, operationDef.requires);
-						
-						//operation
-						operation.operation = operationDef.operation;
+						dataType.operations[prop] = this.processOperation(dataTypeDef.operations[prop], localRequires);
 					}
 				}
+				
+				//process converter
+				if(dataTypeDef.convertTo!=undefined){
+					dataType.convertTo = this.processOperation(dataTypeDef.convertTo, localRequires);
+				}
+				if(dataTypeDef.convertFrom!=undefined){
+					dataType.convertFrom = this.processOperation(dataTypeDef.convertFrom, localRequires);
+				}
+				
+			},
+			
+			processOperation : function(operationDef, localRequires){
+				var operation = this.newDataTypeOperation();
+
+				//merge requires from local 
+				operation.requires = this.mergeRequires(operation.requires, localRequires);
+				
+				//merge requires from operation definition
+				operation.requires = this.mergeRequires(operation.requires, operationDef.requires);
+				
+				//operation
+				operation.operation = operationDef.operation;
+				
+				return operation;
 			},
 			
 			getDataTypeName : function(dataType, version){

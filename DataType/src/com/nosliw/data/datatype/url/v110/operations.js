@@ -113,6 +113,7 @@ dataTypeDefition.convertTo = {
 		//defined operation
 		//in operation can access all the required resources by name through context
 		operation : function(data, toDataType, context){
+			"conertTo";
 		} 
 };
 
@@ -141,6 +142,7 @@ dataTypeDefition.convertFrom = {
 		//defined operation
 		//in operation can access all the required resources by name through context
 		operation : function(data, toDataType, context){
+			"conertFrom";
 		} 
 };
 

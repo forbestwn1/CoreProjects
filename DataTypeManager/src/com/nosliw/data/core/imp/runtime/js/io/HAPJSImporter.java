@@ -54,6 +54,7 @@ public class HAPJSImporter {
 		this.m_dbAccess.createDBTable(HAPResourceDataOperationImp._VALUEINFO_NAME);
 		this.m_dbAccess.createDBTable(HAPJSResourceDependency._VALUEINFO_NAME);
 		this.m_dbAccess.createDBTable(HAPResourceDataHelperImp._VALUEINFO_NAME);
+		this.m_dbAccess.createDBTable(HAPResourceDataConverterImp._VALUEINFO_NAME);
 	}
 	
 	public void loadFromFolder(String folderPath){
@@ -137,7 +138,7 @@ public class HAPJSImporter {
 			
 			//convert from
 			NativeObject convertFromObjJS = (NativeObject)dataTypeObjJS.get(HAPConstant.DATAOPERATION_TYPE_CONVERTFROM);
-			HAPJSResourceDependency fromDep = this.processOperationObject(convertFromObjJS, dataTypeId, HAPConstant.DATAOPERATION_TYPE_CONVERTTO, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER);
+			HAPJSResourceDependency fromDep = this.processOperationObject(convertFromObjJS, dataTypeId, HAPConstant.DATAOPERATION_TYPE_CONVERTFROM, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER);
 			this.m_dbAccess.saveEntity(fromDep);
 			
         }
@@ -147,10 +148,10 @@ public class HAPJSImporter {
 		//operation
 		Function operationFunJS = (Function)operationObjJS.get("operation");
     	String script = Context.toString(operationFunJS);
-    	String operationId = this.getOperationId(dataTypeId, operationName);
     	
     	switch(resourceType){
     	case HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION:
+        	String operationId = this.getOperationId(dataTypeId, operationName);
     		this.m_dbAccess.saveEntity(new HAPResourceDataOperationImp(script, operationId, dataTypeId, operationName));
     		break;
     	case HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER:
@@ -244,6 +245,12 @@ public class HAPJSImporter {
 	
 	private String getOperationId(HAPDataTypeId dataTypeId, String operationName){
 		HAPOperationImp operation = this.m_dbAccess.getOperationInfoByName(dataTypeId, operationName);
+		
+		if(operation==null){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		return operation.getId();
 	}
 	
