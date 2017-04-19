@@ -69,7 +69,7 @@ public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 
 	private void discoverResourceDependency(HAPResourceId resourceId, List<HAPResourceId> resourceIds){
 		resourceIds.add(resourceId);
-		Set<HAPResourceId> dependencys = this.getResourceDependency(resourceId);
+		List<HAPResourceId> dependencys = this.getResourceDependency(resourceId);
 		for(HAPResourceId dependencyId : dependencys){
 			if(!resourceIds.contains(dependencyId)){
 				this.discoverResourceDependency(resourceId, resourceIds);
@@ -77,7 +77,7 @@ public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 		}
 	}
 	
-	public Set<HAPResourceId> getResourceDependency(HAPResourceId resourceId){
-		return new HashSet(this.m_dbAccess.getJSResourceDependency(resourceId));
+	public List<HAPResourceId> getResourceDependency(HAPResourceId resourceId){
+		return this.m_dbAccess.getJSResourceDependency(resourceId).getDependency();
 	}
 }

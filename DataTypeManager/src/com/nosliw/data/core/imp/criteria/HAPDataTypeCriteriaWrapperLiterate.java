@@ -1,20 +1,13 @@
 package com.nosliw.data.core.imp.criteria;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAnd;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementRange;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 
 public class HAPDataTypeCriteriaWrapperLiterate extends HAPSerializableImp implements HAPDataTypeCriteria{
 

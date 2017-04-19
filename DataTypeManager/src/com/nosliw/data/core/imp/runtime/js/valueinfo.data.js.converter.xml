@@ -1,7 +1,7 @@
 <entity name="data.js.operation"
 		table="nosliw.OPERATIONJS"
 		primaryKeys="id" 
-		class="com.nosliw.data.core.imp.runtime.js.HAPResourceDataOperationImp" 
+		class="com.nosliw.data.core.imp.runtime.js.HAPResourceDataConverterImp" 
 		description="">
 
 	<property name="id" dataType="string" description="">
@@ -16,13 +16,7 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="operationId" dataType="string" description="">
-		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
-		</dbColumnInfos>
-	</property>
-
-	<property name="operationName" dataType="string" description="">
+	<property name="converterType" dataType="string" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
 		</dbColumnInfos>

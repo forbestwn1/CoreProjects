@@ -34,6 +34,7 @@ import com.nosliw.data.core.imp.HAPOperationVarInfoImp;
 import com.nosliw.data.core.imp.HAPRelationshipImp;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataOperationImp;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
+import com.nosliw.data.core.imp.runtime.js.HAPResourceDataConverterImp;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataHelperImp;
 import com.nosliw.data.core.runtime.HAPResourceId;
 
@@ -107,7 +108,9 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		HAPSqlUtility.saveToDB(dataType, m_connection);
 	}
 
-	
+	public HAPResourceDataConverterImp getDataTypeConverter(HAPOperationId operationId){
+		return (HAPResourceDataConverterImp)this.queryEntityFromDB(HAPResourceDataConverterImp._VALUEINFO_NAME, "dataTypeName=? AND converterType=?", new Object[]{operationId.getFullName(), operationId.getOperation()});
+	}
 
 	public HAPResourceDataHelperImp getResourceHelper(String id){
 		return (HAPResourceDataHelperImp)this.queryEntityFromDB(HAPResourceDataHelperImp._VALUEINFO_NAME, "id=?", new Object[]{id});
@@ -172,9 +175,9 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		return out;
 	}
 
-	public List<HAPJSResourceDependency> getJSResourceDependency(HAPResourceId resourceId){
+	public HAPJSResourceDependency getJSResourceDependency(HAPResourceId resourceId){
 		String resourceIdStr = resourceId.toStringValue(HAPSerializationFormat.LITERATE);
-		return this.queryEntitysFromDB(
+		return (HAPJSResourceDependency)this.queryEntityFromDB(
 				HAPJSResourceDependency._VALUEINFO_NAME, 
 				HAPJSResourceDependency.RESOURCEID+"=?",
 				new Object[]{resourceIdStr});

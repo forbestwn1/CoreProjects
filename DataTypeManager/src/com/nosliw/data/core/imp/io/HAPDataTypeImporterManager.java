@@ -27,6 +27,8 @@ import com.nosliw.data.core.imp.HAPDataTypePictureImp;
 import com.nosliw.data.core.imp.HAPOperationImp;
 import com.nosliw.data.core.imp.HAPOperationVarInfoImp;
 import com.nosliw.data.core.imp.HAPRelationshipImp;
+import com.nosliw.data.core.imp.runtime.js.HAPResourceDiscoveryJSImp;
+import com.nosliw.data.core.imp.runtime.js.io.HAPJSImporter;
 
 public class HAPDataTypeImporterManager {
 	
@@ -187,7 +189,7 @@ public class HAPDataTypeImporterManager {
 				connectDataTypePic = this.buildDataTypePicture(linkedDataTypeId);
 			}
 			Set<? extends HAPRelationship> connectRelationships = connectDataTypePic.getRelationships();
-			boolean isRoot = connectRelationships.size()==0;
+			boolean isRoot = connectRelationships.size()==1;
 			for(HAPRelationship connectRelationship : connectRelationships){
 				HAPRelationshipImp relationship = ((HAPRelationshipImp)connectRelationship).extendPathSegmentSource(new HAPRelationshipPathSegment(linkedDataTypeId.getVersion()), dataType);
 				if(isRoot)   relationship.setTargetType(HAPConstant.DATATYPE_RELATIONSHIPTYPE_ROOT);
@@ -207,7 +209,7 @@ public class HAPDataTypeImporterManager {
 					connectDataTypePic = this.buildDataTypePicture(parentDataTypeId);
 				}
 				Set<? extends HAPRelationship> connectRelationships = connectDataTypePic.getRelationships();
-				boolean isRoot = connectRelationships.size()==0;
+				boolean isRoot = connectRelationships.size()==1;
 				for(HAPRelationship connectRelationship : connectRelationships){
 					HAPRelationshipImp relationship = ((HAPRelationshipImp)connectRelationship).extendPathSegmentSource(new HAPRelationshipPathSegment(parentDataTypeId), dataType);
 					if(isRoot)   relationship.setTargetType(HAPConstant.DATATYPE_RELATIONSHIPTYPE_ROOT);
@@ -233,8 +235,8 @@ public class HAPDataTypeImporterManager {
 		man.buildDataTypePictures();
 		man.buildDataTypeOperations();
 		
-//		HAPJSImporter jsImporter = new HAPJSImporter(HAPResourceDiscoveryJSImp.getInstance());
-//		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");
+		HAPJSImporter jsImporter = new HAPJSImporter(HAPResourceDiscoveryJSImp.getInstance());
+		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");
 		
 //		HAPDBAccess.getInstance().close();
 	}

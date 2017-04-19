@@ -46,6 +46,10 @@ public class HAPResourceId extends HAPSerializableImp{
 	}
 	
 	public HAPResourceId(String type, String id, String alias){
+		this.init(type, id, alias);
+	}
+	
+	protected void init(String type, String id, String alias){
 		this.m_type = type;
 		this.setAlias(alias);
 		if(id!=null)		this.setId(id);

@@ -43,7 +43,7 @@ public class HAPRelationshipImp extends HAPStringableValueEntityWithID implement
 	public void setSourceDataType(HAPDataTypeImp source){  this.updateChild(SOURCEDATATYPE, source);  }
 	public void setTargetDataType(HAPDataTypeImp source){  this.updateChild(TARGETDATATYPE, source);  }
 	public void setPath(HAPRelationshipPath path){		this.getPath().setPath(path);	}
-	public void setTargetType(String targetType){   this.updateAtomicChildStrValue(TARGETDATATYPE, targetType);  }
+	public void setTargetType(String targetType){   this.updateAtomicChildStrValue(TARGETTYPE, targetType);  }
 	
 	public HAPRelationshipImp extendPathSegmentSource(HAPRelationshipPathSegment segment, HAPDataTypeImp source){
 		HAPRelationshipImp out = this.clone(HAPRelationshipImp.class);

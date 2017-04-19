@@ -1,14 +1,18 @@
 package com.nosliw.data.core.criteria;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 
 public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
-
+	//general data type
 	private HAPDataTypeId m_from;
 	
+	//more specific data type
 	private HAPDataTypeId m_to;
 
 	public HAPDataTypeCriteriaElementRange(HAPDataTypeId from, HAPDataTypeId to, HAPDataTypeCriteriaManager criteriaMan){
@@ -30,15 +34,15 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 
 	@Override
 	public HAPDataTypeCriteria normalize() {
-		HAPDataTypeId dataTypeId = null;
 		HAPDataTypeCriteria out = null;
 		if(this.m_from!=null){
-			dataTypeId = this.m_from;
+			HAPDataTypeId dataTypeId = this.m_from;
 			out = new HAPDataTypeCriteriaElementId(dataTypeId, this.getDataTypeCriteraManager());
 		}
 		else if(this.m_to!=null){
-			dataTypeId = this.getDataTypeCriteraManager().getRootDataTypeId(m_to);
-			out = new HAPDataTypeCriteriaElementId(dataTypeId, this.getDataTypeCriteraManager());
+			List<HAPDataTypeId> dataTypeIds = new ArrayList(this.getDataTypeCriteraManager().getRootDataTypeId(m_to));
+			if(dataTypeIds.size()==1)		out = new HAPDataTypeCriteriaElementId(dataTypeIds.get(0), this.getDataTypeCriteraManager());
+			else out = new HAPDataTypeCriteriaElementIds(new HashSet(dataTypeIds), this.getDataTypeCriteraManager());
 		}
 		else{
 			out = new HAPDataTypeCriteriaAny();

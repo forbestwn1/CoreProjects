@@ -20,11 +20,30 @@ public interface HAPDataTypeCriteria{
 
 	String getType();
 	
+	/**
+	 * Whether criteria is compatible with this criteria
+	 * @param criteria
+	 * @return
+	 */
 	boolean validate(HAPDataTypeCriteria criteria);
 	
+	/**
+	 * Whether data type meet the criteria 
+	 * @param criteria
+	 * @return
+	 */
 	boolean validate(HAPDataTypeId dataTypeId);
 	
+	/**
+	 * Get all the valid data type ids that is valid for this criteria
+	 * @return
+	 */
 	Set<HAPDataTypeId> getValidDataTypeId();
 
+	/**
+	 * Find the most general criteria that all the data type that meet normalized criteria should also meet original criteria
+	 * either directly or through some converter
+	 * @return
+	 */
 	HAPDataTypeCriteria normalize();
 }

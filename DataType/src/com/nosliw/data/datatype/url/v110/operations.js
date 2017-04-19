@@ -68,7 +68,6 @@ dataTypeDefition.operations['url_normal2'] = {
 	},
 	
 	info : {
-		type : "convertTo"
 	},
 	
 	//defined operation
@@ -87,6 +86,62 @@ dataTypeDefition.operations['url_normal2'] = {
 		
 		context.executeOperation("dataType2", "operation2", parms, context);
 	} 
+};
+
+dataTypeDefition.convertTo = {
+		//define required resources for operation
+		requires:{
+			"operation" : { 
+				op1: "core.text;1.0.0;text_normal1",
+				op2: "core.text;1.0.0;text_normal2",
+			},
+			"datatype" : {
+				text : "core.text;1.0.0"
+			},
+			"library" : {
+				underline : "underscore;1.8.3"
+			},
+			"helper" : {
+				operation : "operationHelper"
+			}
+		},
+		
+		info : {
+			type : "convertTo"
+		},
+		
+		//defined operation
+		//in operation can access all the required resources by name through context
+		operation : function(data, toDataType, context){
+		} 
+};
+
+dataTypeDefition.convertFrom = {
+		//define required resources for operation
+		requires:{
+			"operation" : { 
+				op1: "core.text;1.0.0;text_normal1",
+				op2: "core.text;1.0.0;text_normal2",
+			},
+			"datatype" : {
+				text : "core.text;1.0.0"
+			},
+			"library" : {
+				underline : "underscore;1.8.3"
+			},
+			"helper" : {
+				operation : "operationHelper"
+			}
+		},
+		
+		info : {
+			type : "convertFrom"
+		},
+		
+		//defined operation
+		//in operation can access all the required resources by name through context
+		operation : function(data, toDataType, context){
+		} 
 };
 
 nosliw.addDataTypeDefinition(dataTypeDefition);

@@ -10,7 +10,7 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="script" dataType="string" description="">
+	<property name="value" dataType="string" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(2000) NOT NULL"/>
 		</dbColumnInfos>

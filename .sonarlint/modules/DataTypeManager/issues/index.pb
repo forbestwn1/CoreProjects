@@ -66,3 +66,13 @@ k
 ;src/com/nosliw/data/core/imp/valueinfo.data.datatypedef.xml,5\1\51106f620da096284fc7c05cee4fe9d933284686
 i
 9src/com/nosliw/data/core/imp/valueinfo.data.operation.xml,a\a\aa9c45918ef4f2d7163004b157cbbaf01ab82ddf
+t
+Dsrc/com/nosliw/data/core/imp/runtime/js/valueinfo.data.js.helper.xml,0\2\025883fc6e3820369da281d144f3ece412c3ed03
+w
+Gsrc/com/nosliw/data/core/imp/runtime/js/valueinfo.data.js.operation.xml,7\b\7b25a920921e2e782faa62161cdc035454a81f76
+w
+Gsrc/com/nosliw/data/core/imp/runtime/js/valueinfo.data.js.converter.xml,b\b\bbf074a6ad6db967892e445051b89c3636f5ce62
+z
+Jsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerJSConverter.java,b\b\bb422ba9404192d0fece704df8c97d460e1e8ff3
+x
+Hsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDataConverterImp.java,d\b\dbea1aa0fa2737c6dd5d19d8796bc158fb2292c8
