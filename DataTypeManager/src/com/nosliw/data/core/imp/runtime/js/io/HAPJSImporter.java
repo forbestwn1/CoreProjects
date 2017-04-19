@@ -20,6 +20,7 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeVersion;
 import com.nosliw.data.core.HAPOperationId;
@@ -183,10 +184,10 @@ public class HAPJSImporter {
     	HAPResourceId baseResourceId = null;
     	switch(resourceType){
     	case HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION:
-    		baseResourceId = new HAPResourceIdOperation(new HAPOperationId(dataTypeId, operationName), null);
+    		baseResourceId = HAPResourceDiscoveryJS.buildResourceIdFromIdData(new HAPOperationId(dataTypeId, operationName), null);
     		break;
     	case HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER:
-    		baseResourceId = new HAPResourceIdConverter(new HAPOperationId(dataTypeId, operationName), null);
+    		baseResourceId = HAPResourceDiscoveryJS.buildResourceIdFromIdData(new HAPDataTypeConverter(dataTypeId, operationName), null);
     		break;
     	}
     	

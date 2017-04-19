@@ -20,7 +20,7 @@ public class HAPResourceManagerJSConverter  implements HAPResourceManager{
 		for(HAPResourceId resourceId : resourcesId){
 			HAPResourceIdConverter resourceIdOperation = new HAPResourceIdConverter(resourceId);
 			
-			HAPResourceDataConverterImp converterResource = this.m_dbAccess.getDataTypeConverter(resourceIdOperation.getOperationId());
+			HAPResourceDataConverterImp converterResource = this.m_dbAccess.getDataTypeConverter(resourceIdOperation.getConverter());
 			out.add(new HAPResource(resourceId, converterResource, null));
 		}
 		return out;

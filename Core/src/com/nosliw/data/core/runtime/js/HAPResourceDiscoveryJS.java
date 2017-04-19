@@ -2,6 +2,7 @@ package com.nosliw.data.core.runtime.js;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.runtime.HAPResourceId;
@@ -37,6 +38,9 @@ public abstract class HAPResourceDiscoveryJS  implements HAPResourceDiscovery{
 		HAPResourceId out = null;
 		if(resourceIdData instanceof HAPOperationId){
         	out = new HAPResourceIdOperation((HAPOperationId)resourceIdData, alias);
+		}
+		else if(resourceIdData instanceof HAPDataTypeConverter){
+        	out = new HAPResourceIdConverter((HAPDataTypeConverter)resourceIdData, alias);
 		}
 		else if(resourceIdData instanceof HAPDataTypeId){
         	out = new HAPResourceIdDataType((HAPDataTypeId)resourceIdData, alias);

@@ -20,6 +20,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPSqlUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPOperationParmInfo;
@@ -108,8 +109,8 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		HAPSqlUtility.saveToDB(dataType, m_connection);
 	}
 
-	public HAPResourceDataConverterImp getDataTypeConverter(HAPOperationId operationId){
-		return (HAPResourceDataConverterImp)this.queryEntityFromDB(HAPResourceDataConverterImp._VALUEINFO_NAME, "dataTypeName=? AND converterType=?", new Object[]{operationId.getFullName(), operationId.getOperation()});
+	public HAPResourceDataConverterImp getDataTypeConverter(HAPDataTypeConverter converter){
+		return (HAPResourceDataConverterImp)this.queryEntityFromDB(HAPResourceDataConverterImp._VALUEINFO_NAME, "dataTypeName=? AND converterType=?", new Object[]{converter.getFullName(), converter.getOperation()});
 	}
 
 	public HAPResourceDataHelperImp getResourceHelper(String id){
