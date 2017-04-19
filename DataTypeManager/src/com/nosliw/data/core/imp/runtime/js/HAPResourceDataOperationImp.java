@@ -9,7 +9,7 @@ public class HAPResourceDataOperationImp extends HAPStringableValueEntityWithID 
 	public static String _VALUEINFO_NAME;
 	
 	public HAPResourceDataOperationImp(String script, String operationId, HAPDataTypeId dataTypeName, String operationName){
-		this.setScript(script);
+		this.setValue(script);
 		this.setOperationName(operationName);
 		this.setDataTypeName(dataTypeName);
 		this.setOperationId(operationId);
@@ -17,7 +17,7 @@ public class HAPResourceDataOperationImp extends HAPStringableValueEntityWithID 
 	
 	@Override
 	public String getValue(){  return this.getAtomicAncestorValueString(VALUE);  }
-	public void setScript(String script){  this.updateAtomicChildStrValue(VALUE, script);  }
+	public void setValue(String value){  this.updateAtomicChildStrValue(VALUE, value);  }
 	
 	@Override
 	public String getOperationId(){  return this.getAtomicAncestorValueString(OPERATIONID);  }

@@ -8,6 +8,12 @@ public class HAPResourceDataConverterImp extends HAPStringableValueEntityWithID 
 
 	public static String _VALUEINFO_NAME;
 	
+	public HAPResourceDataConverterImp(String script, HAPDataTypeId dataTypeName, String conerterType){
+		this.setValue(script);
+		this.setConverterType(conerterType);
+		this.setDataTypeName(dataTypeName);
+	}
+	
 	@Override
 	public HAPDataTypeId getDataTypeName() {	return (HAPDataTypeId)this.getAtomicAncestorValueObject(DATATYPENAME, HAPDataTypeId.class);	}
 	public void setDataTypeName(HAPDataTypeId dataTypeName){ this.updateAtomicChildObjectValue(DATATYPENAME, dataTypeName); }
@@ -18,5 +24,5 @@ public class HAPResourceDataConverterImp extends HAPStringableValueEntityWithID 
 
 	@Override
 	public String getValue(){  return this.getAtomicAncestorValueString(VALUE);  }
-	public void setScript(String script){  this.updateAtomicChildStrValue(VALUE, script);  }
+	public void setValue(String value){  this.updateAtomicChildStrValue(VALUE, value);  }
 }
