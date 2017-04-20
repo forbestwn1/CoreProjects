@@ -17,27 +17,18 @@ import com.nosliw.data.core.runtime.js.HAPResourceDiscoveryJS;
 
 public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 
-	private static HAPResourceDiscoveryJSImp m_instance;
-	
 	private HAPDBAccess m_dbAccess;
 	
-	public static HAPResourceDiscoveryJSImp getInstance(){
-		if(m_instance==null){
-			m_instance = new HAPResourceDiscoveryJSImp();
-		}
-		return m_instance;
+	public HAPResourceDiscoveryJSImp(){
+		this.m_dbAccess = HAPDBAccess.getInstance();
+		this.init();
 	}
-	
+
 	private void init(){
 		this.m_dbAccess = HAPDBAccess.getInstance();
 		
 		String fileFolder = HAPFileUtility.getClassFolderPath(this.getClass()); 
 		HAPValueInfoManager.getInstance().importFromFolder(fileFolder, false);
-	}
-	
-	private HAPResourceDiscoveryJSImp(){
-		this.m_dbAccess = HAPDBAccess.getInstance();
-		this.init();
 	}
 	
 	public HAPDBAccess getDBAccess(){		return this.m_dbAccess;	}

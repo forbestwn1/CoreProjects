@@ -30,14 +30,12 @@ import com.nosliw.data.core.imp.runtime.js.HAPResourceDataOperationImp;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataConverterImp;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataHelperImp;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceDiscoveryJSImp;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.js.HAPResourceIdDataType;
 import com.nosliw.data.core.runtime.js.HAPResourceIdHelper;
 import com.nosliw.data.core.runtime.js.HAPResourceIdLibrary;
 import com.nosliw.data.core.runtime.js.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.js.HAPResourceDiscoveryJS;
-import com.nosliw.data.core.runtime.js.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.js.rhino.HAPRhinoUtility;
 
 public class HAPJSImporter {
@@ -46,11 +44,8 @@ public class HAPJSImporter {
 	
 	private String m_operationTemplate = null;
 	
-	private HAPResourceDiscoveryJSImp m_resourceJSMan;
-	
-	public HAPJSImporter(HAPResourceDiscoveryJSImp resourceJSMan){
-		this.m_resourceJSMan = resourceJSMan;
-		this.m_dbAccess = this.m_resourceJSMan.getDBAccess();
+	public HAPJSImporter(){
+		this.m_dbAccess = HAPDBAccess.getInstance();
 		
 		this.m_dbAccess.createDBTable(HAPResourceDataOperationImp._VALUEINFO_NAME);
 		this.m_dbAccess.createDBTable(HAPJSResourceDependency._VALUEINFO_NAME);
@@ -288,7 +283,5 @@ public class HAPJSImporter {
 		}
 		return this.m_operationTemplate;
 	}
-	
-	private HAPResourceDiscoveryJS getResourceManagerJS(){		return this.m_resourceJSMan;	}
 	
 }

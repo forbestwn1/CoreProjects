@@ -44,6 +44,11 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	}
 
 	@Override
+	public void registerExpressionInfo(String name, HAPExpressionInfo expressionInfo){
+		this.m_expressionInfos.put(name, expressionInfo);
+	}
+	
+	@Override
 	public HAPExpressionInfo getExpressionInfo(String name) {		return this.m_expressionInfos.get(name);	}
 
 	@Override
