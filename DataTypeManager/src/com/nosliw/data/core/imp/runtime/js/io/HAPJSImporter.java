@@ -30,12 +30,12 @@ import com.nosliw.data.core.imp.runtime.js.HAPResourceDataOperationImp;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataConverterImp;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataHelperImp;
+import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.js.HAPResourceIdDataType;
-import com.nosliw.data.core.runtime.js.HAPResourceIdHelper;
-import com.nosliw.data.core.runtime.js.HAPResourceIdLibrary;
-import com.nosliw.data.core.runtime.js.HAPResourceDiscoveryJS;
+import com.nosliw.data.core.runtime.js.HAPResourceIdJSHelper;
+import com.nosliw.data.core.runtime.js.HAPResourceIdJSLibrary;
 import com.nosliw.data.core.runtime.js.rhino.HAPRhinoUtility;
 
 public class HAPJSImporter {
@@ -179,10 +179,10 @@ public class HAPJSImporter {
     	HAPResourceId baseResourceId = null;
     	switch(resourceType){
     	case HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION:
-    		baseResourceId = HAPResourceDiscoveryJS.buildResourceIdFromIdData(new HAPOperationId(dataTypeId, operationName), null);
+    		baseResourceId = HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPOperationId(dataTypeId, operationName), null);
     		break;
     	case HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER:
-    		baseResourceId = HAPResourceDiscoveryJS.buildResourceIdFromIdData(new HAPDataTypeConverter(dataTypeId, operationName), null);
+    		baseResourceId = HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPDataTypeConverter(dataTypeId, operationName), null);
     		break;
     	}
     	
@@ -221,19 +221,19 @@ public class HAPJSImporter {
 			String operationIdLiterate = (String)resourceObjJS;
 			out = new HAPResourceIdOperation(operationIdLiterate, alais);
 			break;
-		case HAPConstant.RUNTIME_RESOURCE_TYPE_LIBRARY:
+		case HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY:
 			String libraryIdLiterate = (String)resourceObjJS;
-			out = new HAPResourceIdLibrary(libraryIdLiterate, alais);
+			out = new HAPResourceIdJSLibrary(libraryIdLiterate, alais);
 			break;
 		case HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPE:
 			String dataTypeIdLiterate = (String)resourceObjJS;
 			out = new HAPResourceIdDataType(dataTypeIdLiterate, alais);
 			break;
-		case HAPConstant.RUNTIME_RESOURCE_TYPE_HELPER:
+		case HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER:
 			String helperScript = new HAPRhinoUtility().toJSONString(resourceObjJS); 
 			HAPResourceDataHelperImp helperResource = new HAPResourceDataHelperImp(helperScript);
 			helperResource = (HAPResourceDataHelperImp)this.m_dbAccess.saveEntity(helperResource);
-			out = new HAPResourceIdHelper(helperResource.getId(), alais);
+			out = new HAPResourceIdJSHelper(helperResource.getId(), alais);
 			break;
 		}
 		return out;
@@ -241,12 +241,6 @@ public class HAPJSImporter {
 	
 	private String getOperationId(HAPDataTypeId dataTypeId, String operationName){
 		HAPOperationImp operation = this.m_dbAccess.getOperationInfoByName(dataTypeId, operationName);
-		
-		if(operation==null){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		return operation.getId();
 	}
 	

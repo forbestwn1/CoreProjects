@@ -13,14 +13,14 @@ import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.runtime.HAPResourceData;
 
 @HAPEntityWithAttribute
-public class HAPResourceDataLibrary extends HAPSerializableImp implements HAPResourceData{
+public class HAPResourceDataJSLibrary extends HAPSerializableImp implements HAPResourceData{
 
 	@HAPAttribute
 	public static String URIS = "uris";
 
 	private List<URI> m_uris;
 	
-	public HAPResourceDataLibrary(List<URI> uris){
+	public HAPResourceDataJSLibrary(List<URI> uris){
 		this.m_uris = new ArrayList<URI>();
 		this.m_uris.addAll(uris);
 	}

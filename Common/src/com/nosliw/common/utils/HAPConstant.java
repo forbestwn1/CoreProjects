@@ -392,8 +392,8 @@ public class HAPConstant {
 		public static final String RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION = "operation";
 		public static final String RUNTIME_RESOURCE_TYPE_DATATYPE = "datatype";
 		public static final String RUNTIME_RESOURCE_TYPE_CONVERTER = "converter";
-		public static final String RUNTIME_RESOURCE_TYPE_LIBRARY = "library";
-		public static final String RUNTIME_RESOURCE_TYPE_HELPER = "helper";
+		public static final String RUNTIME_RESOURCE_TYPE_JSLIBRARY = "jslibrary";
+		public static final String RUNTIME_RESOURCE_TYPE_JSHELPER = "jshelper";
 		public static final String RUNTIME_RESOURCE_TYPE_UITAG = "uiTag";
 
 

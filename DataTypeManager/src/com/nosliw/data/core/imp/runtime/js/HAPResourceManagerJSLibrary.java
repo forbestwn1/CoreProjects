@@ -12,8 +12,8 @@ import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManager;
 import com.nosliw.data.core.runtime.js.HAPJSLibraryId;
-import com.nosliw.data.core.runtime.js.HAPResourceDataLibrary;
-import com.nosliw.data.core.runtime.js.HAPResourceIdLibrary;
+import com.nosliw.data.core.runtime.js.HAPResourceDataJSLibrary;
+import com.nosliw.data.core.runtime.js.HAPResourceIdJSLibrary;
 
 public class HAPResourceManagerJSLibrary implements HAPResourceManager{
 
@@ -24,7 +24,7 @@ public class HAPResourceManagerJSLibrary implements HAPResourceManager{
 		List<HAPResource> out = new ArrayList<HAPResource>();
 		
 		for(HAPResourceId resourceId : resourcesId){
-			HAPResourceIdLibrary resourceLibraryId = new HAPResourceIdLibrary(resourceId);
+			HAPResourceIdJSLibrary resourceLibraryId = new HAPResourceIdJSLibrary(resourceId);
 			HAPJSLibraryId libraryId =  resourceLibraryId.getLibraryId();
 
 			List<File> files = this.getLibraryFileName(libraryId);
@@ -32,7 +32,7 @@ public class HAPResourceManagerJSLibrary implements HAPResourceManager{
 			for(File file : files){
 				uris.add(file.toURI());
 			}
-			HAPResourceDataLibrary libraryResourceData = new HAPResourceDataLibrary(uris);
+			HAPResourceDataJSLibrary libraryResourceData = new HAPResourceDataJSLibrary(uris);
 			HAPResource resource = new HAPResource(resourceId, libraryResourceData, null);
 			out.add(resource);
 		}

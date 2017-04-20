@@ -5,22 +5,22 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.runtime.HAPResourceId;
 
-public class HAPResourceIdLibrary extends HAPResourceId{
+public class HAPResourceIdJSLibrary extends HAPResourceId{
 
 	private HAPJSLibraryId m_jsLibraryId; 
 	
-	public HAPResourceIdLibrary(){}
+	public HAPResourceIdJSLibrary(){}
 	
-	public HAPResourceIdLibrary(HAPResourceId resourceId){
+	public HAPResourceIdJSLibrary(HAPResourceId resourceId){
 		this.cloneFrom(resourceId);
 	}
 	
-	public HAPResourceIdLibrary(String idLiterate, String alias) {
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_LIBRARY, idLiterate, alias);
+	public HAPResourceIdJSLibrary(String idLiterate, String alias) {
+		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, idLiterate, alias);
 	}
 
-	public HAPResourceIdLibrary(HAPJSLibraryId libraryId, String alias){
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_LIBRARY, null, alias);
+	public HAPResourceIdJSLibrary(HAPJSLibraryId libraryId, String alias){
+		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, null, alias);
 		this.setLibraryId(libraryId);
 	}
 	
@@ -36,8 +36,8 @@ public class HAPResourceIdLibrary extends HAPResourceId{
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(libraryId, HAPSerializationFormat.LITERATE); 
 	}
 
-	public HAPResourceIdLibrary clone(){
-		HAPResourceIdLibrary out = new HAPResourceIdLibrary();
+	public HAPResourceIdJSLibrary clone(){
+		HAPResourceIdJSLibrary out = new HAPResourceIdJSLibrary();
 		out.cloneFrom(this);
 		return out;
 	}

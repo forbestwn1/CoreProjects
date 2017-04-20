@@ -1,9 +1,9 @@
 package com.nosliw.data.core.imp.runtime.js;
 
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
-import com.nosliw.data.core.runtime.js.HAPResourceDataHelper;
+import com.nosliw.data.core.runtime.js.HAPResourceDataJSHelper;
 
-public class HAPResourceDataHelperImp extends HAPStringableValueEntityWithID implements HAPResourceDataHelper{
+public class HAPResourceDataHelperImp extends HAPStringableValueEntityWithID implements HAPResourceDataJSHelper{
 
 	public static String _VALUEINFO_NAME;
 	

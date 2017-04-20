@@ -23,7 +23,7 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
-public class HAPRuntimeImp implements HAPRuntime{
+public class HAPRuntimeImpJSRhino implements HAPRuntime{
 
 	private HAPResourceDiscovery m_resourceDiscovery;
 	
@@ -35,7 +35,7 @@ public class HAPRuntimeImp implements HAPRuntime{
 	
 	private Map<String, Scriptable> m_taskScope;
 	
-	public HAPRuntimeImp(HAPResourceDiscovery resourceDiscovery, HAPResourceManager resourceMan){
+	public HAPRuntimeImpJSRhino(HAPResourceDiscovery resourceDiscovery, HAPResourceManager resourceMan){
 		this.m_resourceDiscovery = resourceDiscovery;
 		this.m_resourceManager = resourceMan;
 		this.init();
@@ -110,7 +110,6 @@ public class HAPRuntimeImp implements HAPRuntime{
 		
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		//library
-		new 
 		
 		//data type
 		
