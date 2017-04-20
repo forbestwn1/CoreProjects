@@ -1,10 +1,9 @@
-package com.nosliw.data.core.runtime.js;
+package com.nosliw.data.core.runtime;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPOperationId;
-import com.nosliw.data.core.runtime.HAPResourceId;
 
 public class HAPResourceIdOperation extends HAPResourceId{
 

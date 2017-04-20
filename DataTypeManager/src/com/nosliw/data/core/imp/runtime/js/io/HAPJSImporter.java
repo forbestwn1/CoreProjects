@@ -31,10 +31,10 @@ import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataConverterImp;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataHelperImp;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.js.HAPResourceIdDataType;
 import com.nosliw.data.core.runtime.js.HAPResourceIdHelper;
 import com.nosliw.data.core.runtime.js.HAPResourceIdLibrary;
-import com.nosliw.data.core.runtime.js.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.js.HAPResourceDiscoveryJS;
 import com.nosliw.data.core.runtime.js.rhino.HAPRhinoUtility;
 

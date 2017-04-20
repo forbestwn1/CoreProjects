@@ -6,8 +6,8 @@ import java.util.List;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.HAPResourceManager;
-import com.nosliw.data.core.runtime.js.HAPResourceIdOperation;
 
 public class HAPResourceManagerJSOperation implements HAPResourceManager{
 

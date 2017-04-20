@@ -108,9 +108,9 @@ public class HAPRuntimeImp implements HAPRuntime{
 	private Scriptable initEsencialScope(Context context, Scriptable parent){
 		Scriptable out = context.initStandardObjects(null);
 		
-		
+		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		//library
-		
+		new 
 		
 		//data type
 		

@@ -17,7 +17,7 @@ import com.nosliw.data.core.runtime.js.HAPResourceIdLibrary;
 
 public class HAPResourceManagerJSLibrary implements HAPResourceManager{
 
-	private String m_baseFolder;
+	private String m_baseFolder = "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/Application/WebContent/libresources";
 	
 	@Override
 	public List<HAPResource> getResources(List<HAPResourceId> resourcesId) {
@@ -41,7 +41,8 @@ public class HAPResourceManagerJSLibrary implements HAPResourceManager{
 	
 	
 	private List<File> getLibraryFileName(HAPJSLibraryId libraryId){
-		String folder = m_baseFolder + "/" + libraryId.getName() + "/" + libraryId.getVersion();
+		String path = libraryId.getName().replace(".", "/");
+		String folder = m_baseFolder + "/" + path + "/" + libraryId.getVersion();
 		Set<File> files = HAPFileUtility.getAllFiles(folder);
 		List<File> out = new ArrayList<File>(files);
 		Collections.sort(out);

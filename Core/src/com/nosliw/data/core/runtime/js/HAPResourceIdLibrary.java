@@ -19,9 +19,9 @@ public class HAPResourceIdLibrary extends HAPResourceId{
 		super(HAPConstant.RUNTIME_RESOURCE_TYPE_LIBRARY, idLiterate, alias);
 	}
 
-	public HAPResourceIdLibrary(HAPJSLibraryId operationId, String alias){
+	public HAPResourceIdLibrary(HAPJSLibraryId libraryId, String alias){
 		super(HAPConstant.RUNTIME_RESOURCE_TYPE_LIBRARY, null, alias);
-		this.setLibraryId(operationId);
+		this.setLibraryId(libraryId);
 	}
 	
 	@Override

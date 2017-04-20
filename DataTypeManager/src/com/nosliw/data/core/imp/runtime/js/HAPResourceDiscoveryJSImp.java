@@ -12,7 +12,7 @@ import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.runtime.js.HAPResourceIdOperation;
+import com.nosliw.data.core.runtime.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.js.HAPResourceDiscoveryJS;
 
 public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{

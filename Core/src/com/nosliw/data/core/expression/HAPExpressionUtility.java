@@ -8,8 +8,9 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.js.HAPResourceDiscoveryJS;
-import com.nosliw.data.core.runtime.js.HAPResourceIdConverter;
+import com.nosliw.data.core.runtime.js.HAPResourceJSUtility;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
 
 public class HAPExpressionUtility {
@@ -35,7 +36,7 @@ public class HAPExpressionUtility {
 					HAPOperandOperation operationOperand = (HAPOperandOperation)operand;
 					HAPOperationId operationId = operationOperand.getOperationId();
 					//operation as resource
-					if(operationId!=null)	out.add(HAPResourceDiscoveryJS.buildResourceIdFromIdData(operationId, null));
+					if(operationId!=null)	out.add(HAPResourceJSUtility.buildResourceIdFromIdData(operationId, null));
 					break;
 				case HAPConstant.EXPRESSION_OPERAND_REFERENCE:
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand;

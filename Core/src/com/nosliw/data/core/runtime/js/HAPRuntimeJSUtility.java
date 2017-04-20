@@ -10,6 +10,7 @@ import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.HAPRelationshipPathSegment;
+import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 
 public class HAPRuntimeJSUtility {
 
