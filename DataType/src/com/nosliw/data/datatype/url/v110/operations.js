@@ -3,10 +3,10 @@
 //      dependency
 //		each operation (operation name, script, dependency)
 
-var dataTypeDefition = nosliw.getDataTypeDefinition("core.url", "1.1.0");
+var dataTypeDefinition = nosliw.getDataTypeDefinition("core.url", "1.1.0");
 
 //define what this data type globlely requires (operation, datatype, library)
-dataTypeDefition.requires = {
+dataTypeDefinition.requires = {
 	"operation" : { 
 		op: "core.text;1.0.0;text_normal3"
 	},
@@ -27,7 +27,7 @@ dataTypeDefition.requires = {
 };
 
 //define what operations in this page requires (operation, datatype, library)
-dataTypeDefition.localRequires = {
+dataTypeDefinition.localRequires = {
 	"operation" : { 
 		op: "core.text;1.0.0;operation"
 	},
@@ -49,7 +49,7 @@ dataTypeDefition.localRequires = {
 
 
 //define operation
-dataTypeDefition.operations['url_normal2'] = {
+dataTypeDefinition.operations['url_normal2'] = {
 	//define required resources for operation
 	requires:{
 		"operation" : { 
@@ -88,7 +88,7 @@ dataTypeDefition.operations['url_normal2'] = {
 	} 
 };
 
-dataTypeDefition.convertTo = {
+dataTypeDefinition.convertTo = {
 		//define required resources for operation
 		requires:{
 			"operation" : { 
@@ -117,7 +117,7 @@ dataTypeDefition.convertTo = {
 		} 
 };
 
-dataTypeDefition.convertFrom = {
+dataTypeDefinition.convertFrom = {
 		//define required resources for operation
 		requires:{
 			"operation" : { 
@@ -146,5 +146,21 @@ dataTypeDefition.convertFrom = {
 		} 
 };
 
-nosliw.addDataTypeDefinition(dataTypeDefition);
+dataTypeDefinition.fromLiterate = {
+		
+};
+
+dataTypeDefinition.toLiterate = {
+		
+};
+
+dataTypeDefinition.fromJson = {
+		
+};
+
+dataTypeDefinition.toJson = {
+		
+};
+
+nosliw.addDataTypeDefinition(dataTypeDefinition);
 

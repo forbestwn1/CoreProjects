@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -43,6 +44,12 @@ public class HAPJSImporter {
 	private HAPDBAccess m_dbAccess = null;
 	
 	private String m_operationTemplate = null;
+	
+	static Map<String,String> titleToResourceType = new LinkedHashMap<String, String>();
+	static {
+		titleToResourceType.put("library", HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY);
+		titleToResourceType.put("helper", HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER);
+	}
 	
 	public HAPJSImporter(){
 		this.m_dbAccess = HAPDBAccess.getInstance();
@@ -129,18 +136,27 @@ public class HAPJSImporter {
 			
 			//convert to
 			NativeObject convertToObjJS = (NativeObject)dataTypeObjJS.get(HAPConstant.DATAOPERATION_TYPE_CONVERTTO);
-			HAPJSResourceDependency toDep = this.processOperationObject(convertToObjJS, dataTypeId, HAPConstant.DATAOPERATION_TYPE_CONVERTTO, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER);
-			this.m_dbAccess.saveEntity(toDep);
+			if(convertToObjJS!=null){
+				HAPJSResourceDependency toDep = this.processOperationObject(convertToObjJS, dataTypeId, HAPConstant.DATAOPERATION_TYPE_CONVERTTO, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER);
+				this.m_dbAccess.saveEntity(toDep);
+			}
 			
 			//convert from
 			NativeObject convertFromObjJS = (NativeObject)dataTypeObjJS.get(HAPConstant.DATAOPERATION_TYPE_CONVERTFROM);
-			HAPJSResourceDependency fromDep = this.processOperationObject(convertFromObjJS, dataTypeId, HAPConstant.DATAOPERATION_TYPE_CONVERTFROM, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER);
-			this.m_dbAccess.saveEntity(fromDep);
-			
+			if(convertFromObjJS!=null){
+				HAPJSResourceDependency fromDep = this.processOperationObject(convertFromObjJS, dataTypeId, HAPConstant.DATAOPERATION_TYPE_CONVERTFROM, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER);
+				this.m_dbAccess.saveEntity(fromDep);
+			}
         }
     }
 	
 	private HAPJSResourceDependency processOperationObject(NativeObject operationObjJS, HAPDataTypeId dataTypeId, String operationName, Set<HAPResourceId> dataTypeResources, String resourceType){
+		
+		if(operationObjJS==null){
+			int kkkk = 555;
+			kkkk++;
+		}
+		
 		//operation
 		Function operationFunJS = (Function)operationObjJS.get("operation");
     	String script = Context.toString(operationFunJS);
@@ -193,6 +209,12 @@ public class HAPJSImporter {
 	}
 
 	private void addResourceIdToSet(HAPResourceId resourceId, Set<HAPResourceId> resourceIdSet){
+		
+		if(resourceId==null){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		Set<String> alias = resourceId.getAlias();
 		
 		boolean added = false;
@@ -215,8 +237,9 @@ public class HAPJSImporter {
 	}
 	
 	private HAPResourceId processResource(String type, Object resourceObjJS, String alais){
+		String resourceType = getResourceTypeByResourceTitle(type);
 		HAPResourceId out = null;
-		switch(type){
+		switch(resourceType){
 		case HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION:
 			String operationIdLiterate = (String)resourceObjJS;
 			out = new HAPResourceIdOperation(operationIdLiterate, alais);
@@ -241,6 +264,12 @@ public class HAPJSImporter {
 	
 	private String getOperationId(HAPDataTypeId dataTypeId, String operationName){
 		HAPOperationImp operation = this.m_dbAccess.getOperationInfoByName(dataTypeId, operationName);
+		
+		if(operation==null){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		return operation.getId();
 	}
 	
@@ -276,6 +305,14 @@ public class HAPJSImporter {
 			this.m_operationTemplate = HAPFileUtility.readFile(inputStream);
 		}
 		return this.m_operationTemplate;
+	}
+	
+	//Sometimes, the title for particular required resource is not the same as resource name. 
+	//For instance, resource type "jshelper", we use "helper" as title  
+	private String getResourceTypeByResourceTitle(String title){
+		String out = titleToResourceType.get(title);
+		if(out!=null)   return out;
+		else return title;
 	}
 	
 }

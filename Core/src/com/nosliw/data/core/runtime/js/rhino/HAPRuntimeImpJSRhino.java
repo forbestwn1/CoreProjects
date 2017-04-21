@@ -19,11 +19,13 @@ import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPResourceDiscovery;
-import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.runtime.js.HAPJSLibraryId;
+import com.nosliw.data.core.runtime.js.HAPRuntimeImpJS;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
-public class HAPRuntimeImpJSRhino implements HAPRuntime{
+public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 
 	private HAPResourceDiscovery m_resourceDiscovery;
 	
@@ -34,6 +36,8 @@ public class HAPRuntimeImpJSRhino implements HAPRuntime{
 	private Scriptable m_scope;
 	
 	private Map<String, Scriptable> m_taskScope;
+	
+	public HAPRuntimeImpJSRhino(){}
 	
 	public HAPRuntimeImpJSRhino(HAPResourceDiscovery resourceDiscovery, HAPResourceManager resourceMan){
 		this.m_resourceDiscovery = resourceDiscovery;
@@ -110,8 +114,14 @@ public class HAPRuntimeImpJSRhino implements HAPRuntime{
 		
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		//library
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.Underscore", "1.6.0"), null));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.log4jjavascript", "1.0.0"), null));
+		
 		
 		//data type
+		
+		
+		this.loadResources(resourceIds, out, context);
 		
 		return out;
 	}
@@ -170,5 +180,4 @@ public class HAPRuntimeImpJSRhino implements HAPRuntime{
 			this.id = id;
 		}
 	}
-	
 }

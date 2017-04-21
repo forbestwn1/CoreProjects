@@ -24,8 +24,6 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 	private void init(){
 		this.m_dbAccess = HAPDBAccess.getInstance();
 		
-		String fileFolder = HAPFileUtility.getClassFolderPath(this.getClass()); 
-		HAPValueInfoManager.getInstance().importFromFolder(fileFolder, false);
 		
 		HAPSerializeManager.getInstance().registerClassName(HAPDataTypeId.class.getName(), HAPDataTypeId.class.getName());
 	}

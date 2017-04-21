@@ -2,4 +2,18 @@
 	
 	<info description="Data type for integer."/>
 
+	<operations>
+	
+		<operation name="subString" >
+			<parms>
+				<parm name="base" criteria="base.string"/>
+				<parm name="from" criteria="base.integer"/>
+				<parm name="to" criteria="base.integer"/>
+			</parms>
+			<output criteria="base.string"/>
+		</operation>
+
+	</operations>
+
+
 </definition>

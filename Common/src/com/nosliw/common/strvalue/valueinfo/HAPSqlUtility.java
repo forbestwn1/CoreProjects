@@ -27,6 +27,11 @@ import com.nosliw.common.utils.HAPFileUtility;
 public class HAPSqlUtility {
 
 	public static String dropoffTableSql(HAPDBTableInfo tableInfo){
+		if(tableInfo==null){
+			int kkk = 5555;
+			kkk++;
+		}
+		
 		return "DROP TABLE IF EXISTS " + tableInfo.getTableName() + ";";
 	}
 	

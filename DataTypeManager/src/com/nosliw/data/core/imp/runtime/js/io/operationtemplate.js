@@ -1,3 +1,8 @@
+var operationFunction = function(nosliw){
+||operations||
+};
+
+
 if(nosliw==undefined){
 	var nosliw = function(){
 		var loc_dataTypes = {};
@@ -111,5 +116,4 @@ if(nosliw==undefined){
 	}();
 }
 
-||operations||
-
+operationFunction(nosliw);

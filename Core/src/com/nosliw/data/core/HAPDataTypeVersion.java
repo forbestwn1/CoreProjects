@@ -40,12 +40,18 @@ public class HAPDataTypeVersion extends HAPSerializableImp{
 	private String m_name;
 	
 	public HAPDataTypeVersion(){
-		this.m_major = "0";
-		this.m_minor = "0";
+		this.init();
 	}
 	
 	public HAPDataTypeVersion(String literate){
 		this.buildObjectByLiterate(literate);
+	}
+	
+	private void init(){
+		this.m_major = "1";
+		this.m_minor = "0";
+		this.m_revision = "0";
+		this.m_name = null;
 	}
 	
 	public String getName(){	
@@ -65,7 +71,7 @@ public class HAPDataTypeVersion extends HAPSerializableImp{
 
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){
-		this.m_name = literateValue;
+		this.init();
 
 		String[] segs = HAPNamingConversionUtility.parsePaths(literateValue);
 		if(segs.length>=3) this.setRevision(segs[2]);   

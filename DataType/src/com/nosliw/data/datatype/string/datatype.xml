@@ -2,4 +2,24 @@
 	
 	<info description="Data type for string."/>
 
+	<operations>
+	
+		<operation name="subString" >
+			<parms>
+				<parm name="base" criteria="base.string"/>
+				<parm name="from" criteria="base.integer"/>
+				<parm name="to" criteria="base.integer"/>
+			</parms>
+			<output criteria="base.string"/>
+		</operation>
+
+		<operation name="length" >
+			<parms>
+				<parm name="" isBase="true"/>
+			</parms>
+			<output criteria="base.integer"/>
+		</operation>
+
+	</operations>
+
 </definition>
