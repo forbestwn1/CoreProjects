@@ -76,3 +76,9 @@ x
 Hsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDataConverterImp.java,d\b\dbea1aa0fa2737c6dd5d19d8796bc158fb2292c8
 v
 Fsrc/com/nosliw/data/core/imp/runtime/js/rhino/HAPRuntimeRhinoMain.java,8\d\8d442274cc20c0cda0a2b10e1a853dc0c9a6b284
+d
+4src/com/nosliw/data/core/imp/init/HAPModuleInit.java,5\9\5965c738af6b601f6e8992150c738e4f3060a111
+m
+=src/com/nosliw/data/core/imp/runtime/js/rhino/expression.json,7\6\760ffd3c345c0004c906c1b5c7b897b4ff0ea4a2
+s
+Csrc/com/nosliw/data/core/imp/runtime/js/rhino/expression.expression,c\c\cc751290735095cec078daa1e800aee47e302f22

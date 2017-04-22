@@ -2,10 +2,10 @@ package com.nosliw.data.core.expression;
 
 public interface HAPExpressionManager {
 
-	void registerExpressionInfo(String name, HAPExpressionInfo expressionInfo);
+	void registerExpressionInfo(HAPExpressionInfo expressionInfo);
 	
 	HAPExpressionInfo getExpressionInfo(String name);
 	
-	HAPExpression processExpressionInfo(String expressionName);
+	HAPExpression getExpression(String expressionName);
 	
 }

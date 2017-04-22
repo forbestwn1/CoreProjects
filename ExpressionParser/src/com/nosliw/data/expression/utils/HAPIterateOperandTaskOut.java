@@ -1,6 +1,6 @@
 package com.nosliw.data.expression.utils;
 
-import com.nosliw.data1.HAPOperand;
+import com.nosliw.data.core.expression.HAPOperand;
 
 /*
  * operand iterate task method output

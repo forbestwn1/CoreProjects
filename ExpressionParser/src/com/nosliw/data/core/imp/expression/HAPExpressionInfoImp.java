@@ -11,11 +11,14 @@ import com.nosliw.data.core.expression.HAPReferenceInfo;
 
 public class HAPExpressionInfoImp extends HAPStringableValueEntity implements HAPExpressionInfo{
 
+	public static String _VALUEINFO_NAME;
+	
 	public HAPExpressionInfoImp(){	}
 	
 	@Override
 	public String getName() {  return this.getAtomicAncestorValueString(NAME);	}
-
+	public void setName(String name){  this.updateAtomicChildStrValue(NAME, name);  }
+	
 	@Override
 	public String getExpression(){ return this.getAtomicAncestorValueString(EXPRESSION); }
 

@@ -1,8 +1,14 @@
 package com.nosliw.data.core.imp.expression;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
+import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -26,6 +32,8 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 
 	private Map<String, HAPExpressionInfo> m_expressionInfos;
 
+	private Map<String, HAPExpression> m_expressions;
+	
 	private HAPExpressionParser m_expressionParser;
 	
 	private HAPDataTypeCriteriaManager m_criteriaMan;
@@ -41,10 +49,16 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		HAPValueInfoManager.getInstance().importFromFolder(fileFolder, false);
 
 		this.m_expressionInfos = new LinkedHashMap<String, HAPExpressionInfo>();
+		this.m_expressions = new LinkedHashMap<String, HAPExpression>();
 	}
 
 	@Override
-	public void registerExpressionInfo(String name, HAPExpressionInfo expressionInfo){
+	public void registerExpressionInfo(HAPExpressionInfo expressionInfo){
+		String name = expressionInfo.getName();
+		if(HAPBasicUtility.isStringEmpty(name)){
+			name = System.currentTimeMillis()+"";
+			((HAPExpressionInfoImp)expressionInfo).setName(name);
+		}
 		this.m_expressionInfos.put(name, expressionInfo);
 	}
 	
@@ -52,7 +66,30 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	public HAPExpressionInfo getExpressionInfo(String name) {		return this.m_expressionInfos.get(name);	}
 
 	@Override
-	public HAPExpression processExpressionInfo(String expressionName) {
+	public HAPExpression getExpression(String expressionName) {
+		HAPExpression out = this.m_expressions.get(expressionName);
+		if(out==null){
+			out = this.processExpression(expressionName);
+		}
+		return out;
+	}
+
+	public void importExpressionFromFolder(String folder){
+		Set<File> files = HAPFileUtility.getAllFiles(folder);
+		for(File file : files){
+			if(file.getName().endsWith(".expression")){
+				try {
+					InputStream inputStream = new FileInputStream(file);
+			         HAPExpressionInfoImp expressionInfo = (HAPExpressionInfoImp)HAPStringableEntityImporterJSON.parseJsonEntity(inputStream, HAPExpressionInfoImp._VALUEINFO_NAME, HAPValueInfoManager.getInstance());
+			         this.registerExpressionInfo(expressionInfo);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	private HAPExpression processExpression(String expressionName){
 		HAPExpressionImp expression = this.buildExpression(expressionName);
 		
 		//process reference
@@ -86,9 +123,9 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		else{
 			expression.addErrorMessages(context.getMessages());
 		}
+		this.m_expressions.put(expressionName, expression);
 		return expression;
 	}
-
 	
 	private HAPExpressionImp buildExpression(String expressionName){
 		HAPExpressionInfo expressionInfo = getExpressionInfo(expressionName);

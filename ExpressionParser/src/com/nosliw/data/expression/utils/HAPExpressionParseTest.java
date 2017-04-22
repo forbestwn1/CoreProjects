@@ -9,7 +9,6 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.expression.HAPOperand;
-import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionInfoImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionManagerImp;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;

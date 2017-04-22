@@ -11,6 +11,8 @@ import com.nosliw.common.strvalue.HAPStringableValueEntity;
  */
 public class HAPReferenceInfoImp extends HAPStringableValueEntity{
 
+	public static String _VALUEINFO_NAME;
+	
 	private String m_reference;
 	
 	private Map<String, String> m_variableMap;
