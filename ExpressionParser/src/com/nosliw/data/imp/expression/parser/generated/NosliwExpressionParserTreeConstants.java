@@ -4,18 +4,20 @@ package com.nosliw.data.imp.expression.parser.generated;
 public interface NosliwExpressionParserTreeConstants
 {
   public int JJTNAME = 0;
-  public int JJTCONSTANT = 1;
-  public int JJTDATATYPE = 2;
-  public int JJTVARIABLE = 3;
-  public int JJTPARMNAME = 4;
-  public int JJTREFERENCE = 5;
-  public int JJTPARAMETER = 6;
-  public int JJTEXPRESSION = 7;
-  public int JJTEXPRESSION1 = 8;
+  public int JJTDATATYPENAME = 1;
+  public int JJTCONSTANT = 2;
+  public int JJTDATATYPE = 3;
+  public int JJTVARIABLE = 4;
+  public int JJTPARMNAME = 5;
+  public int JJTREFERENCE = 6;
+  public int JJTPARAMETER = 7;
+  public int JJTEXPRESSION = 8;
+  public int JJTEXPRESSION1 = 9;
 
 
   public String[] jjtNodeName = {
     "Name",
+    "DATATYPENAME",
     "CONSTANT",
     "DATATYPE",
     "VARIABLE",
@@ -26,4 +28,4 @@ public interface NosliwExpressionParserTreeConstants
     "EXPRESSION1",
   };
 }
-/* JavaCC - OriginalChecksum=5d01bb0f1b021e3a5dfcbebcefb27bbb (do not edit this line) */
+/* JavaCC - OriginalChecksum=221bd926dc08b9c9043dd74b52dcde9b (do not edit this line) */

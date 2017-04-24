@@ -31,7 +31,7 @@ public class HAPRuntimeRhinoMain {
 		HAPExpressionManagerImp expressionMan = new HAPExpressionManagerImp(new HAPExpressionParserImp(), new HAPDataTypeCriteriaManagerImp());
 		expressionMan.importExpressionFromFolder(HAPFileUtility.getClassFolderPath(HAPRuntimeRhinoMain.class));
 		
-		HAPExpression expression = expressionMan.getExpression("main");
+		HAPExpression expression = expressionMan.getExpression("expression1");
 		
 		HAPRuntimeImpJSRhino runtime = new HAPRuntimeImpJSRhino(new HAPResourceDiscoveryJSImp(), resourceMan);
 		HAPData out = runtime.executeExpression(expression);

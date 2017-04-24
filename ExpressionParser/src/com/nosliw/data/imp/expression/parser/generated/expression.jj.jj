@@ -10,7 +10,7 @@ options {
 
 PARSER_BEGIN(NosliwExpressionParser)
 /* define the package name for parser classes */
-package com.nosliw.data.expression.parser;
+package com.nosliw.data.imp.expression.parser.generated;
 
 public class NosliwExpressionParser/*@bgen(jjtree)*/implements NosliwExpressionParserTreeConstants/*@egen*/ {/*@bgen(jjtree)*/
   protected JJTNosliwExpressionParserState jjtree = new JJTNosliwExpressionParserState();
@@ -36,7 +36,6 @@ TOKEN : { < CONSTANT : (["0"-"9","a"-"z","A"-"Z", "{", "}", "[", "]", "_", "#", 
 /*TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z"])+ > }*/
 
 /*
-
 */
 Token Name():
 {/*@bgen(jjtree) Name */
@@ -63,6 +62,51 @@ Token Name():
         }
 /*@egen*/
 }
+
+/*
+Token DataTypeName():
+{
+	Token t ;
+}
+{
+	t = <NAME>
+	{jjtThis.value = t.image; return t;}
+}
+*/
+
+
+/*
+operation parm
+*/
+SimpleNode DataTypeName()              :
+{/*@bgen(jjtree) DATATYPENAME */
+        SimpleNode jjtn000 = new SimpleNode(JJTDATATYPENAME);
+        boolean jjtc000 = true;
+        jjtree.openNodeScope(jjtn000);
+/*@egen*/
+	String value = "";
+	Token t;
+}
+{/*@bgen(jjtree) DATATYPENAME */
+        try {
+/*@egen*/
+	(
+(t=<CONSTANT> {value=value+t.image;}) (t=<CONSTANT> {value=value+t.image;} | "." {value=value+".";})*
+	)/*@bgen(jjtree)*/
+        {
+          jjtree.closeNodeScope(jjtn000, true);
+          jjtc000 = false;
+        }
+/*@egen*/
+	{jjtn000.value=value;   return jjtn000;}/*@bgen(jjtree)*/
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/
+} 
+
 
 /*
 constant data, any format allowed, json, string literal, ...
@@ -96,24 +140,23 @@ void Constant()          :
 /*
 data type, it is appeared when do data type function call
 */
-void DataType()          :
+SimpleNode DataType()          :
 {/*@bgen(jjtree) DATATYPE */
-        SimpleNode jjtn000 = new SimpleNode(JJTDATATYPE);
-        boolean jjtc000 = true;
-        jjtree.openNodeScope(jjtn000);
+  SimpleNode jjtn000 = new SimpleNode(JJTDATATYPE);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
 /*@egen*/
-	Token t ;
 }
 {/*@bgen(jjtree) DATATYPE */
         try {
 /*@egen*/
-	"!("  t=Name()  ")!"/*@bgen(jjtree)*/
+	"!("  DataTypeName()  ")!"/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
         }
 /*@egen*/
-	{jjtn000.value = t.image;}/*@bgen(jjtree)*/
+	{return jjtn000;}/*@bgen(jjtree)*/
         } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
@@ -261,7 +304,7 @@ SimpleNode Parameter(String index)           :
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);
 /*@egen*/
-	int i = Integer.valueof(index);
+	int i = Integer.valueOf(index);
 }
 {/*@bgen(jjtree) PARAMETER */
         try {

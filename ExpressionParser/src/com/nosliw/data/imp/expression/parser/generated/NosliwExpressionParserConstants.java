@@ -33,6 +33,7 @@ public interface NosliwExpressionParserConstants {
     "\",\"",
     "\":\"",
     "<CONSTANT>",
+    "\".\"",
     "\"&(\"",
     "\")&\"",
     "\"!(\"",
@@ -41,7 +42,6 @@ public interface NosliwExpressionParserConstants {
     "\")?\"",
     "\"<(\"",
     "\")>\"",
-    "\".\"",
   };
 
 }

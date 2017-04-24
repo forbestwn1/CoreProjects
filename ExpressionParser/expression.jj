@@ -9,7 +9,7 @@ options {
 
 PARSER_BEGIN(NosliwExpressionParser)
 /* define the package name for parser classes */
-package com.nosliw.data.expression.parser;
+package com.nosliw.data.imp.expression.parser.generated;
 
 public class NosliwExpressionParser {
 
@@ -32,7 +32,6 @@ TOKEN : { < CONSTANT : (["0"-"9","a"-"z","A"-"Z", "{", "}", "[", "]", "_", "#", 
 /*TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z"])+ > }*/
 
 /*
-
 */
 Token Name():
 {
@@ -42,6 +41,34 @@ Token Name():
 	t = <CONSTANT>
 	{jjtThis.value = t.image; return t;}
 }
+
+/*
+Token DataTypeName():
+{
+	Token t ;
+}
+{
+	t = <NAME>
+	{jjtThis.value = t.image; return t;}
+}
+*/
+
+
+/*
+operation parm
+*/
+SimpleNode DataTypeName() #DATATYPENAME:
+{
+	String value = "";
+	Token t;
+}
+{
+	(
+(t=<CONSTANT> {value=value+t.image;}) (t=<CONSTANT> {value=value+t.image;} | "." {value=value+".";})*
+	)
+	{jjtThis.value=value;   return jjtThis;}
+} 
+
 
 /*
 constant data, any format allowed, json, string literal, ...
@@ -58,13 +85,12 @@ void Constant() #CONSTANT:
 /*
 data type, it is appeared when do data type function call
 */
-void DataType() #DATATYPE:
+SimpleNode DataType() #DATATYPE:
 {
-	Token t ;
 }
 {
-	"!("  t=Name()  ")!"
-	{jjtThis.value = t.image;}
+	"!("  DataTypeName()  ")!"
+	{return jjtThis;}
 }
 
 /*

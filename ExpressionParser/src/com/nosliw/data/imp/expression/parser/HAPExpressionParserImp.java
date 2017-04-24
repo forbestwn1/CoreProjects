@@ -59,7 +59,15 @@ public class HAPExpressionParserImp implements HAPExpressionParser{
 			 operand = new HAPOperandReference(((String)expressionEles.referenceNode.jjtGetValue()), this.getCriteriaManager());
 		  }
 		  else if(expressionEles.dataTypeNode!=null){
-			  String dataTypeInfo = (String)expressionEles.dataTypeNode.jjtGetValue();
+			  String dataTypeInfo = null;
+			  int childNum = expressionEles.dataTypeNode.jjtGetNumChildren();
+			  for(int i=0; i<childNum; i++){
+				  SimpleNode childNode = (SimpleNode)expressionEles.dataTypeNode.jjtGetChild(i);
+				  if(childNode.getId()==NosliwExpressionParser.JJTDATATYPENAME){
+					  dataTypeInfo = (String)childNode.jjtGetValue();
+					  break;
+				  }
+			  }
 			  String operation = (String)expressionEles.nameNode.jjtGetValue();
 			  operand = new HAPOperandOperation(dataTypeInfo, operation, getOperationParms(expressionEles.expressionNodes), this.getCriteriaManager());
 		  }
