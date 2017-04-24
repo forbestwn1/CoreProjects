@@ -7,8 +7,8 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 
 public class HAPOperandAttribute extends HAPOperandImp{
 
@@ -20,8 +20,8 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	
 	private HAPOperand m_base;
 	
-	public HAPOperandAttribute(HAPOperand base, String attribute, HAPDataTypeCriteriaManager criteriaMan){
-		super(HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION, criteriaMan);
+	public HAPOperandAttribute(HAPOperand base, String attribute){
+		super(HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION);
 		this.setBase(base);
 		this.m_attribute = attribute;
 	}
@@ -57,7 +57,8 @@ public class HAPOperandAttribute extends HAPOperandImp{
 
 	@Override
 	public HAPDataTypeCriteria discover(Map<String, HAPDataTypeCriteria> variablesInfo,
-			HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context) {
+			HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context,
+			HAPDataTypeHelper dataTypeHelper) {
 		return null;
 	}
 
@@ -67,5 +68,5 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	}
 	
 	@Override
-	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo){return null;}
+	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo, HAPDataTypeHelper dataTypeHelper){return null;}
 }

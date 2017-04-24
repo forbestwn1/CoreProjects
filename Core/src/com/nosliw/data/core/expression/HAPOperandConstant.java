@@ -6,10 +6,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 
 public class HAPOperandConstant extends HAPOperandImp{
 
@@ -21,8 +21,8 @@ public class HAPOperandConstant extends HAPOperandImp{
 
 	protected String m_name;
 	
-	public HAPOperandConstant(String constantStr, HAPDataTypeCriteriaManager criteriaMan){
-		super(HAPConstant.EXPRESSION_OPERAND_CONSTANT, criteriaMan);
+	public HAPOperandConstant(String constantStr){
+		super(HAPConstant.EXPRESSION_OPERAND_CONSTANT);
 		HAPData data = HAPDataUtility.buildDataWrapper(constantStr);
 		if(data==null){
 			//not a valid data literate, then it is a constant name
@@ -37,7 +37,7 @@ public class HAPOperandConstant extends HAPOperandImp{
 	
 	public void setData(HAPData data){ 
 		this.m_data = data;
-		this.setDataTypeCriteria(new HAPDataTypeCriteriaElementId(this.m_data.getDataTypeId(), this.getDataTypeCriteriaManager()));
+		this.setDataTypeCriteria(new HAPDataTypeCriteriaElementId(this.m_data.getDataTypeId()));
 	}
 	
 	@Override
@@ -58,13 +58,14 @@ public class HAPOperandConstant extends HAPOperandImp{
 	public HAPDataTypeCriteria discover(
 			Map<String, HAPDataTypeCriteria> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
-			HAPProcessVariablesContext context) {
-		this.validate(this.getDataTypeCriteria(), expectCriteria, context);
+			HAPProcessVariablesContext context,
+			HAPDataTypeHelper dataTypeHelper) {
+		this.validate(this.getDataTypeCriteria(), expectCriteria, context, dataTypeHelper);
 		return this.getDataTypeCriteria();
 	}
 
 	@Override
-	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo){
+	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo, HAPDataTypeHelper dataTypeHelper){
 		return this.getDataTypeCriteria();
 	}
 	

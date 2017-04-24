@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 
 /**
@@ -25,25 +26,25 @@ public interface HAPDataTypeCriteria{
 	 * @param criteria
 	 * @return
 	 */
-	boolean validate(HAPDataTypeCriteria criteria);
+	boolean validate(HAPDataTypeCriteria criteria, HAPDataTypeHelper dataTypeHelper);
 	
 	/**
 	 * Whether data type meet the criteria 
 	 * @param criteria
 	 * @return
 	 */
-	boolean validate(HAPDataTypeId dataTypeId);
+	boolean validate(HAPDataTypeId dataTypeId, HAPDataTypeHelper dataTypeHelper);
 	
 	/**
 	 * Get all the valid data type ids that is valid for this criteria
 	 * @return
 	 */
-	Set<HAPDataTypeId> getValidDataTypeId();
+	Set<HAPDataTypeId> getValidDataTypeId(HAPDataTypeHelper dataTypeHelper);
 
 	/**
 	 * Find the most general criteria that all the data type that meet normalized criteria should also meet original criteria
 	 * either directly or through some converter
 	 * @return
 	 */
-	HAPDataTypeCriteria normalize();
+	HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper);
 }

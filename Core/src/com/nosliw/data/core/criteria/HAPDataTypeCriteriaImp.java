@@ -3,37 +3,33 @@ package com.nosliw.data.core.criteria;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 
 public abstract class HAPDataTypeCriteriaImp extends HAPSerializableImp implements HAPDataTypeCriteria{
 
-	private HAPDataTypeCriteriaManager m_dataTypeCriteriaMan;
-	
-	public HAPDataTypeCriteriaImp(HAPDataTypeCriteriaManager criteriaMan){
-		this.m_dataTypeCriteriaMan = criteriaMan;
+	public HAPDataTypeCriteriaImp(){
 	}
 	
 	@Override
-	public boolean validate(HAPDataTypeCriteria criteria) {
-		return this.getValidDataTypeId().containsAll(criteria.getValidDataTypeId());
+	public boolean validate(HAPDataTypeCriteria criteria, HAPDataTypeHelper dataTypeHelper) {
+		return this.getValidDataTypeId(dataTypeHelper).containsAll(criteria.getValidDataTypeId(dataTypeHelper));
 	}
 
 	@Override
-	public boolean validate(HAPDataTypeId dataTypeId) {
-		return this.getValidDataTypeId().contains(dataTypeId);
+	public boolean validate(HAPDataTypeId dataTypeId, HAPDataTypeHelper dataTypeHelper) {
+		return this.getValidDataTypeId(dataTypeHelper).contains(dataTypeId);
 	}
 	
-	protected HAPDataTypeCriteriaManager getDataTypeCriteraManager(){ return this.m_dataTypeCriteriaMan; }
-
 	protected HAPDataTypeCriteria buildCriteriaByIds(Set<HAPDataTypeId> ids){
 		HAPDataTypeCriteria out = null;
 		if(ids.size()==1){
 			for(HAPDataTypeId id : ids){
-				out = new HAPDataTypeCriteriaElementId(id, this.getDataTypeCriteraManager());
+				out = new HAPDataTypeCriteriaElementId(id);
 			}
 		}
 		else{
-			out = new HAPDataTypeCriteriaElementIds(ids, this.getDataTypeCriteraManager());
+			out = new HAPDataTypeCriteriaElementIds(ids);
 		}
 		return out;
 	}

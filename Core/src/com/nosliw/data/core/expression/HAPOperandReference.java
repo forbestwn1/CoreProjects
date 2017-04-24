@@ -3,8 +3,8 @@ package com.nosliw.data.core.expression;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 
 public class HAPOperandReference extends HAPOperandImp{
 
@@ -14,8 +14,8 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	private HAPExpression m_expression;
 	
-	public HAPOperandReference(String expressionName, HAPDataTypeCriteriaManager criteriaMan){
-		super(HAPConstant.EXPRESSION_OPERAND_REFERENCE, criteriaMan);
+	public HAPOperandReference(String expressionName){
+		super(HAPConstant.EXPRESSION_OPERAND_REFERENCE);
 		this.m_expressionName = expressionName;
 	}
 
@@ -45,24 +45,25 @@ public class HAPOperandReference extends HAPOperandImp{
 	public HAPDataTypeCriteria discover(
 			Map<String, HAPDataTypeCriteria> variablesInfo,
 			HAPDataTypeCriteria expectCriteria,
-			HAPProcessVariablesContext context) {
+			HAPProcessVariablesContext context,
+			HAPDataTypeHelper dataTypeHelper) {
 		//expression var info
 		for(String varName : this.m_expression.getVariables().keySet()){
-			HAPDataTypeCriteria criteria = this.getDataTypeCriteriaManager().and(this.m_expression.getVariables().get(varName), variablesInfo.get(varName));
+			HAPDataTypeCriteria criteria = dataTypeHelper.and(this.m_expression.getVariables().get(varName), variablesInfo.get(varName));
 			variablesInfo.put(varName, criteria);
 		}
 		
 		//clear variables info in expression 
 		this.m_expression.getVariables().clear();
 			
-		HAPDataTypeCriteria out = this.m_expression.getOperand().discover(variablesInfo, expectCriteria, context);
+		HAPDataTypeCriteria out = this.m_expression.getOperand().discover(variablesInfo, expectCriteria, context, dataTypeHelper);
 		this.setDataTypeCriteria(out);
 		return out;
 	}
 
 	@Override
-	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo) {
-		HAPDataTypeCriteria out = this.m_expression.getOperand().normalize(variablesInfo);
+	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo, HAPDataTypeHelper dataTypeHelper) {
+		HAPDataTypeCriteria out = this.m_expression.getOperand().normalize(variablesInfo, dataTypeHelper);
 		this.setDataTypeCriteria(out);
 		return out;
 	}

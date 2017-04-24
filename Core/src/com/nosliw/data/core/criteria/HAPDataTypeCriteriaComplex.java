@@ -7,8 +7,7 @@ public abstract class HAPDataTypeCriteriaComplex extends HAPDataTypeCriteriaImp{
 
 	private List<HAPDataTypeCriteria> m_eles;
 	
-	public HAPDataTypeCriteriaComplex(List<HAPDataTypeCriteria> eles, HAPDataTypeCriteriaManager criteriaMan) {
-		super(criteriaMan);
+	public HAPDataTypeCriteriaComplex(List<HAPDataTypeCriteria> eles) {
 		this.m_eles = new ArrayList<HAPDataTypeCriteria>();
 		this.m_eles.addAll(eles);
 	}

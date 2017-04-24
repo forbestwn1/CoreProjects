@@ -3,8 +3,8 @@ package com.nosliw.data.core.expression;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 
 public class HAPOperandVariable extends HAPOperandImp{
 
@@ -14,8 +14,8 @@ public class HAPOperandVariable extends HAPOperandImp{
 	
 //	protected HAPDataTypeCriteria m_dataTypeCriteria;
 
-	public HAPOperandVariable(String name, HAPDataTypeCriteriaManager criteriaMan){
-		super(HAPConstant.EXPRESSION_OPERAND_VARIABLE, criteriaMan);
+	public HAPOperandVariable(String name){
+		super(HAPConstant.EXPRESSION_OPERAND_VARIABLE);
 		this.m_variableName = name;
 	}
 	
@@ -38,15 +38,16 @@ public class HAPOperandVariable extends HAPOperandImp{
 	public HAPDataTypeCriteria discover(
 			Map<String, HAPDataTypeCriteria> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
-			HAPProcessVariablesContext context) {
-		HAPDataTypeCriteria dataTypeCriteria = this.validate(variablesInfo.get(this.getVariableName()), expectCriteria, context);
+			HAPProcessVariablesContext context,
+			HAPDataTypeHelper dataTypeHelper) {
+		HAPDataTypeCriteria dataTypeCriteria = this.validate(variablesInfo.get(this.getVariableName()), expectCriteria, context, dataTypeHelper);
 		variablesInfo.put(m_variableName, dataTypeCriteria);
 		this.setDataTypeCriteria(dataTypeCriteria);
 		return this.getDataTypeCriteria();
 	}
 
 	@Override
-	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo){
+	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo, HAPDataTypeHelper dataTypeHelper){
 		this.setDataTypeCriteria(variablesInfo.get(this.getVariableName()));
 		return this.getDataTypeCriteria();
 	}

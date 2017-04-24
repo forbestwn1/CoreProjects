@@ -13,8 +13,8 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionInfo;
 import com.nosliw.data.core.expression.HAPExpressionManager;
@@ -36,11 +36,11 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	
 	private HAPExpressionParser m_expressionParser;
 	
-	private HAPDataTypeCriteriaManager m_criteriaMan;
+	private HAPDataTypeHelper m_dataTypeHelper;
 	
-	public HAPExpressionManagerImp(HAPExpressionParser expressionParser, HAPDataTypeCriteriaManager criteriaMan){
+	public HAPExpressionManagerImp(HAPExpressionParser expressionParser, HAPDataTypeHelper dataTypeHelper){
 		this.m_expressionParser = expressionParser;
-		this.m_criteriaMan = criteriaMan;
+		this.m_dataTypeHelper = dataTypeHelper;
 		this.init();
 	}
 	
@@ -110,7 +110,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 			oldVars.putAll(expressionVars);
 			
 			context.clear();
-			expression.getOperand().discover(expressionVars, null, context);
+			expression.getOperand().discover(expressionVars, null, context, this.getCriteriaManager());
 		}while(!HAPBasicUtility.isEqualMaps(expressionVars, oldVars) && context.isSuccess());
 		
 		if(context.isSuccess()){
@@ -118,7 +118,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 			
 			//normalize variable -- for every variable criteria, find root from data type
 			//normalize operator
-			expression.buildNormalizedVariablesInfo();
+			expression.buildNormalizedVariablesInfo(this.getCriteriaManager());
 		}
 		else{
 			expression.addErrorMessages(context.getMessages());
@@ -210,5 +210,5 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	}
 	
 	protected HAPExpressionParser getExpressionParser(){		return this.m_expressionParser;	}
-	protected HAPDataTypeCriteriaManager getCriteriaManager(){   return this.m_criteriaMan;   }
+	protected HAPDataTypeHelper getCriteriaManager(){   return this.m_dataTypeHelper;   }
 }

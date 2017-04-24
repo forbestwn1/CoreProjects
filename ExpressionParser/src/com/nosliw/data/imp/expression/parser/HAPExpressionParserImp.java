@@ -7,8 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.data.core.HAPDataTypeManager;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPOperandAttribute;
@@ -25,12 +23,7 @@ import com.nosliw.data.imp.expression.parser.generated.SimpleNode;
  */
 public class HAPExpressionParserImp implements HAPExpressionParser{
 	
-	private HAPDataTypeCriteriaManager m_criteriaMan;
-	private HAPDataTypeManager m_dataTypeMan;
-	
-	public HAPExpressionParserImp(HAPDataTypeCriteriaManager criteriaMan, HAPDataTypeManager dataTypeMan){
-		this.m_criteriaMan = criteriaMan;
-		this.m_dataTypeMan = dataTypeMan;
+	public HAPExpressionParserImp(){
 	}
 	
 	  public HAPOperand parseExpression(String expression){
@@ -55,15 +48,15 @@ public class HAPExpressionParserImp implements HAPExpressionParser{
 		  HAPOperand operand = null;
 		  if(expressionEles.constantNode!=null){
 			//it is a constant operand  
-			 operand = new HAPOperandConstant((String)expressionEles.constantNode.jjtGetValue(), this.getCriteriaManager());
+			 operand = new HAPOperandConstant((String)expressionEles.constantNode.jjtGetValue());
 		  }
 		  else if(expressionEles.variableNode!=null){
 			  //it is a variable operand
-			 operand = new HAPOperandVariable(((String)expressionEles.variableNode.jjtGetValue()), this.getCriteriaManager());
+			 operand = new HAPOperandVariable(((String)expressionEles.variableNode.jjtGetValue()));
 		  }
 		  else if(expressionEles.referenceNode!=null){
 			  //it is a variable operand
-			 operand = new HAPOperandReference(((String)expressionEles.referenceNode.jjtGetValue()), this.getCriteriaManager());
+			 operand = new HAPOperandReference(((String)expressionEles.referenceNode.jjtGetValue()));
 		  }
 		  else if(expressionEles.dataTypeNode!=null){
 			  String dataTypeInfo = null;
@@ -76,7 +69,7 @@ public class HAPExpressionParserImp implements HAPExpressionParser{
 				  }
 			  }
 			  String operation = (String)expressionEles.nameNode.jjtGetValue();
-			  operand = new HAPOperandOperation(dataTypeInfo, operation, getOperationParms(expressionEles.expressionNodes), this.getCriteriaManager(), this.getDataTypeManager());
+			  operand = new HAPOperandOperation(dataTypeInfo, operation, getOperationParms(expressionEles.expressionNodes));
 		  }
 		  
 		  out = processExpression1Node(expressionEles.expression1Node, operand);
@@ -92,11 +85,11 @@ public class HAPExpressionParserImp implements HAPExpressionParser{
 		  HAPOperand operand = null;
 		  if("function".equals(parentNode.jjtGetValue())){
 			  //function call
-			  operand = new HAPOperandOperation(aheadOperand, name, getOperationParms(expressionEles.expressionNodes), getCriteriaManager(), this.getDataTypeManager());
+			  operand = new HAPOperandOperation(aheadOperand, name, getOperationParms(expressionEles.expressionNodes));
 		  }
 		  else{
 			  //path
-			  operand = new HAPOperandAttribute(aheadOperand, name, this.getCriteriaManager());
+			  operand = new HAPOperandAttribute(aheadOperand, name);
 		  }
 		  out = processExpression1Node(expressionEles.expression1Node, operand);
 		  return out;
@@ -184,9 +177,7 @@ public class HAPExpressionParserImp implements HAPExpressionParser{
 		  return false;
 	  } 
 	  
-	  protected HAPDataTypeCriteriaManager getCriteriaManager(){		  return this.m_criteriaMan;	  }
-	  
-	  protected HAPDataTypeManager getDataTypeManager(){  return this.m_dataTypeMan;   }
+//	  protected HAPDataTypeManager getDataTypeManager(){  return this.m_dataTypeMan;   }
 }
 
 class ExpressionElements{

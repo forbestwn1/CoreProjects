@@ -5,30 +5,31 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 
 public class HAPDataTypeCriteriaOr extends HAPDataTypeCriteriaComplex{
 
-	public HAPDataTypeCriteriaOr(List<HAPDataTypeCriteria> eles, HAPDataTypeCriteriaManager criteriaMan){
-		super(eles, criteriaMan);
+	public HAPDataTypeCriteriaOr(List<HAPDataTypeCriteria> eles){
+		super(eles);
 	}
 
 	@Override
 	public String getType() {		return HAPConstant.DATATYPECRITERIA_TYPE_OR;	}
 
 	@Override
-	public Set<HAPDataTypeId> getValidDataTypeId() {
+	public Set<HAPDataTypeId> getValidDataTypeId(HAPDataTypeHelper dataTypeHelper) {
 		Set<HAPDataTypeId> out = new HashSet<HAPDataTypeId>();
 		for(HAPDataTypeCriteria ele : this.getElements()){
-			out.addAll(ele.getValidDataTypeId());
+			out.addAll(ele.getValidDataTypeId(dataTypeHelper));
 		}
 		return out;
 	}
 
 	@Override
-	public HAPDataTypeCriteria normalize() {
-		Set<HAPDataTypeId> ids = this.getValidDataTypeId();
-		Set<HAPDataTypeId> norIds = this.getDataTypeCriteraManager().normalize(ids);
+	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {
+		Set<HAPDataTypeId> ids = this.getValidDataTypeId(dataTypeHelper);
+		Set<HAPDataTypeId> norIds = dataTypeHelper.normalize(ids);
 		return this.buildCriteriaByIds(norIds);
 	}
 }

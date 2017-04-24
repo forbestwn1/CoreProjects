@@ -30,15 +30,15 @@ public class HAPDataTypeCriteriaParser {
 	
 	private static final String ANY = "*";
 	
-	public static String toCriteriaLiterate(HAPDataTypeCriteria criteria, HAPDataTypeCriteriaManagerImp criteriaMan){
+	public static String toCriteriaLiterate(HAPDataTypeCriteria criteria){
 		String out = null;
 		String type = criteria.getType();
 		switch(type){
 		case HAPConstant.DATATYPECRITERIA_TYPE_AND:
-			out = toCriteriaLiterateComplex((HAPDataTypeCriteriaAnd)criteria, START_AND, END_AND, criteriaMan);
+			out = toCriteriaLiterateComplex((HAPDataTypeCriteriaAnd)criteria, START_AND, END_AND);
 			break;
 		case HAPConstant.DATATYPECRITERIA_TYPE_OR:
-			out = toCriteriaLiterateComplex((HAPDataTypeCriteriaOr)criteria, START_OR, END_OR, criteriaMan);
+			out = toCriteriaLiterateComplex((HAPDataTypeCriteriaOr)criteria, START_OR, END_OR);
 			break;
 		case HAPConstant.DATATYPECRITERIA_TYPE_DATATYPEID:
 			HAPDataTypeCriteriaElementId idCriteria = (HAPDataTypeCriteriaElementId)criteria;
@@ -46,7 +46,7 @@ public class HAPDataTypeCriteriaParser {
 			break;
 		case HAPConstant.DATATYPECRITERIA_TYPE_DATATYPEIDS:
 			HAPDataTypeCriteriaElementIds idsCriteria = (HAPDataTypeCriteriaElementIds)criteria;
-			out = toCriteriaLiterate(idsCriteria.toOrCriteria(), criteriaMan);
+			out = toCriteriaLiterate(idsCriteria.toOrCriteria());
 			break;
 		case HAPConstant.DATATYPECRITERIA_TYPE_DATATYPERANGE:
 			HAPDataTypeCriteriaElementRange rangeCriteria = (HAPDataTypeCriteriaElementRange)criteria;
@@ -65,19 +65,19 @@ public class HAPDataTypeCriteriaParser {
 		return out;
 	}
 	
-	private static String toCriteriaLiterateComplex(HAPDataTypeCriteriaComplex complexCriteria, String sepeartorStart, String seperatorEnd, HAPDataTypeCriteriaManagerImp criteriaMan){
+	private static String toCriteriaLiterateComplex(HAPDataTypeCriteriaComplex complexCriteria, String sepeartorStart, String seperatorEnd){
 		StringBuffer andOut = new StringBuffer();
 		List<HAPDataTypeCriteria> andEles = complexCriteria.getElements();
 		andOut.append(START_AND);
 		for(int i=0; i<andEles.size(); i++){
-			andOut.append(toCriteriaLiterate(andEles.get(i), criteriaMan));
+			andOut.append(toCriteriaLiterate(andEles.get(i)));
 			if(i<andEles.size()-1)  andOut.append(SEPERATOR_ELEMENT);
 		}
 		andOut.append(END_AND);
 		return andOut.toString();
 	}
 	
-	public static HAPDataTypeCriteria parseLiterate(String criteriaLiterate, HAPDataTypeCriteriaManagerImp criteriaMan){
+	public static HAPDataTypeCriteria parseLiterate(String criteriaLiterate){
 		HAPDataTypeCriteria out = null;
 		
 		 criteriaLiterate = criteriaLiterate.trim();
@@ -85,16 +85,16 @@ public class HAPDataTypeCriteriaParser {
 			 out = new HAPDataTypeCriteriaAny();
 		 }
 		 else if(criteriaLiterate.startsWith(START_AND)){
-			 out = new HAPDataTypeCriteriaAnd(parseMutiple(criteriaLiterate.substring(START_AND.length(), criteriaLiterate.length()-END_AND.length()), criteriaMan), criteriaMan);
+			 out = new HAPDataTypeCriteriaAnd(parseMutiple(criteriaLiterate.substring(START_AND.length(), criteriaLiterate.length()-END_AND.length())));
 		 }
 		 else if(criteriaLiterate.startsWith(START_OR)){
-			 out = new HAPDataTypeCriteriaAnd(parseMutiple(criteriaLiterate.substring(START_OR.length(), criteriaLiterate.length()-END_OR.length()), criteriaMan), criteriaMan);
+			 out = new HAPDataTypeCriteriaAnd(parseMutiple(criteriaLiterate.substring(START_OR.length(), criteriaLiterate.length()-END_OR.length())));
 		 }
 		 else{
 			 String[] criteriaParts = criteriaLiterate.split(SEPERATOR_RANGE);
 			 if(criteriaParts.length==1){
 				 //id
-				 out = new HAPDataTypeCriteriaElementId((HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), criteriaParts[0], HAPSerializationFormat.LITERATE), criteriaMan);
+				 out = new HAPDataTypeCriteriaElementId((HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), criteriaParts[0], HAPSerializationFormat.LITERATE));
 			 }
 			 else{
 				 //range
@@ -107,19 +107,19 @@ public class HAPDataTypeCriteriaParser {
 				 if(HAPBasicUtility.isStringNotEmpty(criteriaParts[1])){
 					 to = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), criteriaParts[1], HAPSerializationFormat.LITERATE);
 				 }
-				 out = new HAPDataTypeCriteriaElementRange(from, to, criteriaMan);
+				 out = new HAPDataTypeCriteriaElementRange(from, to);
 			 }
 		 }
 		 
 		 return out;
 	}
 	
-	private static List<HAPDataTypeCriteria> parseMutiple(String mutipleLiterate, HAPDataTypeCriteriaManagerImp criteriaMan){
+	private static List<HAPDataTypeCriteria> parseMutiple(String mutipleLiterate){
 		List<HAPDataTypeCriteria> out = new ArrayList<HAPDataTypeCriteria>();
 		String[] literates = mutipleLiterate.split(SEPERATOR_ELEMENT);
 		
 		for(String literate : literates){
-			out.add(parseLiterate(literate, criteriaMan));
+			out.add(parseLiterate(literate));
 		}
 		return out;
 	}

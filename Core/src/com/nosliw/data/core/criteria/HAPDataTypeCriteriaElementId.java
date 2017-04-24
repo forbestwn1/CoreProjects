@@ -4,14 +4,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 
 public class HAPDataTypeCriteriaElementId  extends HAPDataTypeCriteriaImp{
 
 	private HAPDataTypeId m_dataTypeId;
 
-	public HAPDataTypeCriteriaElementId(HAPDataTypeId dataTypeId, HAPDataTypeCriteriaManager criteriaMan){
-		super(criteriaMan);
+	public HAPDataTypeCriteriaElementId(HAPDataTypeId dataTypeId){
 		this.m_dataTypeId = dataTypeId;
 	}
 
@@ -21,13 +21,13 @@ public class HAPDataTypeCriteriaElementId  extends HAPDataTypeCriteriaImp{
 	public String getType() {		return HAPConstant.DATATYPECRITERIA_TYPE_DATATYPEID;	}
 
 	@Override
-	public Set<HAPDataTypeId> getValidDataTypeId(){
+	public Set<HAPDataTypeId> getValidDataTypeId(HAPDataTypeHelper dataTypeHelper){
 		Set<HAPDataTypeId> out = new HashSet<HAPDataTypeId>();
 		out.add(m_dataTypeId);
 		return out;
 	}
 
 	@Override
-	public HAPDataTypeCriteria normalize() {		return this;	}
+	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {		return this;	}
 
 }

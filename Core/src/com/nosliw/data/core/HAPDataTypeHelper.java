@@ -1,13 +1,24 @@
-package com.nosliw.data.core.criteria;
+package com.nosliw.data.core;
 
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPRelationship;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
-public interface HAPDataTypeCriteriaManager {
+/**
+ * This is helper class that provide methods that related with data type and operation information
+ */
+public interface HAPDataTypeHelper {
 
+	/**
+	 * 
+	 * @param dataTypeInfo
+	 * @param name
+	 * @return
+	 */
+	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeId dataTypeInfo, String name);
+
+	
 	/**
 	 * List all data types between from and to
 	 * This means that each data type should be able to convert to "From" and also can be converted from "To"

@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionInfo;
@@ -67,17 +68,17 @@ public class HAPExpressionImp implements HAPExpression{
 	 * When a criteria has some data type that has parent belong to the same criteria, then we consider that data type as redundant
 	 * As we we only need to keep the parent data type only 
 	 */
-	public void buildNormalizedVariablesInfo(){
+	public void buildNormalizedVariablesInfo(HAPDataTypeHelper dataTypeHelper){
 		this.m_normalizedVarsInfo = new LinkedHashMap<String, HAPDataTypeCriteria>();
 		for(String varName : this.m_varsInfo.keySet()){
 			HAPDataTypeCriteria criteria = this.m_varsInfo.get(varName);
 			if(criteria!=null){
-				this.m_normalizedVarsInfo.put(varName, criteria.normalize());
+				this.m_normalizedVarsInfo.put(varName, criteria.normalize(dataTypeHelper));
 			}
 			else{
 				this.m_normalizedVarsInfo.put(varName, null);
 			}
 		}
-		this.getOperand().normalize(m_normalizedVarsInfo);
+		this.getOperand().normalize(m_normalizedVarsInfo, dataTypeHelper);
 	}
 }

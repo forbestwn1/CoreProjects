@@ -1,4 +1,4 @@
-package com.nosliw.data.core.imp.criteria;
+package com.nosliw.data.core.imp;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,21 +10,25 @@ import java.util.Set;
 import com.google.common.collect.Sets;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeFamily;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementIds;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementRange;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaOr;
-import com.nosliw.data.core.imp.HAPDataTypeFamilyImp;
-import com.nosliw.data.core.imp.HAPDataTypePictureImp;
-import com.nosliw.data.core.imp.HAPRelationshipImp;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
 
-public class HAPDataTypeCriteriaManagerImp implements HAPDataTypeCriteriaManager{
+public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 	private HAPDBAccess m_dbAccess;
+	
+	@Override
+	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeId dataTypeInfo, String name) {
+//		return this.m_dbAccess.getOperationInfoByName((HAPDataTypeIdImp)dataTypeInfo, name);
+		return null;
+	}
 	
 	@Override
 	public Set<HAPDataTypeId> getAllDataTypeInRange(HAPDataTypeId from, HAPDataTypeId to) {
@@ -58,8 +62,8 @@ public class HAPDataTypeCriteriaManagerImp implements HAPDataTypeCriteriaManager
 
 	@Override
 	public boolean compatibleWith(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2) {
-		Set<HAPDataTypeId> dataTypeIdSet1 = criteria1.getValidDataTypeId();
-		Set<HAPDataTypeId> dataTypeIdSet2 = criteria2.getValidDataTypeId();
+		Set<HAPDataTypeId> dataTypeIdSet1 = criteria1.getValidDataTypeId(this);
+		Set<HAPDataTypeId> dataTypeIdSet2 = criteria2.getValidDataTypeId(this);
 		return dataTypeIdSet2.containsAll(dataTypeIdSet1);
 	}
 
@@ -70,15 +74,15 @@ public class HAPDataTypeCriteriaManagerImp implements HAPDataTypeCriteriaManager
 	
 	@Override
 	public HAPDataTypeCriteria and(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2) {
-		Set<HAPDataTypeId> dataTypesId1 = criteria1.getValidDataTypeId();
-		Set<HAPDataTypeId> dataTypesId2 = criteria2.getValidDataTypeId();
+		Set<HAPDataTypeId> dataTypesId1 = criteria1.getValidDataTypeId(this);
+		Set<HAPDataTypeId> dataTypesId2 = criteria2.getValidDataTypeId(this);
 		Set<HAPDataTypeId> andDataTypeIds = Sets.intersection(dataTypesId1, dataTypesId2);
 		return this.buildDataTypeCriteria(andDataTypeIds);
 	}
 
 	@Override
 	public HAPDataTypeCriteria buildDataTypeCriteria(Set<HAPDataTypeId> dataTypeIds) {
-		return new HAPDataTypeCriteriaElementIds(dataTypeIds, this);
+		return new HAPDataTypeCriteriaElementIds(dataTypeIds);
 	}
 
 	@Override
@@ -100,7 +104,7 @@ public class HAPDataTypeCriteriaManagerImp implements HAPDataTypeCriteriaManager
 	
 	@Override
 	public HAPDataTypeId getTrunkDataType(HAPDataTypeCriteria criteria) {
-		List<HAPDataTypeId> dataTypeIds = new ArrayList<HAPDataTypeId>(criteria.getValidDataTypeId());
+		List<HAPDataTypeId> dataTypeIds = new ArrayList<HAPDataTypeId>(criteria.getValidDataTypeId(this));
 		HAPDataTypeId firstDataTypeId = dataTypeIds.get(0);
 		HAPDataTypeFamily firstDataTypeFamily = this.m_dbAccess.getDataTypeFamily(firstDataTypeId);
 		
@@ -141,14 +145,14 @@ public class HAPDataTypeCriteriaManagerImp implements HAPDataTypeCriteriaManager
 
 	@Override
 	public HAPDataTypeCriteria looseCriteria(HAPDataTypeCriteria criteria) {
-		Set<HAPDataTypeId> dataTypeIds = criteria.getValidDataTypeId();
+		Set<HAPDataTypeId> dataTypeIds = criteria.getValidDataTypeId(this);
 		Set<HAPDataTypeId> normalizedDataTypeIds = this.normalize(dataTypeIds);
 		
 		List<HAPDataTypeCriteria> criterias = new ArrayList<HAPDataTypeCriteria>();
 		for(HAPDataTypeId normalizedDataTypeId : normalizedDataTypeIds){
-			criterias.add(new HAPDataTypeCriteriaElementRange(normalizedDataTypeId, null, this));
+			criterias.add(new HAPDataTypeCriteriaElementRange(normalizedDataTypeId, null));
 		}
-		return new HAPDataTypeCriteriaOr(criterias, this);
+		return new HAPDataTypeCriteriaOr(criterias);
 	}
 
 	@Override
@@ -177,8 +181,8 @@ public class HAPDataTypeCriteriaManagerImp implements HAPDataTypeCriteriaManager
 
 	@Override
 	public Map<HAPDataTypeId, HAPRelationship> buildConvertor(HAPDataTypeCriteria from, HAPDataTypeCriteria to) {
-		Set<HAPDataTypeId> toDataTypeIds = this.normalize(to.getValidDataTypeId());
-		Set<HAPDataTypeId> fromDataTypeIds = from.getValidDataTypeId();
+		Set<HAPDataTypeId> toDataTypeIds = this.normalize(to.getValidDataTypeId(this));
+		Set<HAPDataTypeId> fromDataTypeIds = from.getValidDataTypeId(this);
 		
 		Map<HAPDataTypeId, HAPRelationship> out = new LinkedHashMap<HAPDataTypeId, HAPRelationship>();
 		for(HAPDataTypeId fromDataTypeId : fromDataTypeIds){

@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
@@ -41,7 +43,8 @@ public interface HAPOperand {
 	 */
 	HAPDataTypeCriteria discover(Map<String, HAPDataTypeCriteria> variablesInfo,
 										HAPDataTypeCriteria expectCriteria,
-										HAPProcessVariablesContext context);
+										HAPProcessVariablesContext context, 
+										HAPDataTypeHelper dataTypeHelper);
 
 	/**
 	 * Normalize operand
@@ -50,7 +53,7 @@ public interface HAPOperand {
 	 * @param variablesInfo
 	 * @return
 	 */
-	HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo);
+	HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo, HAPDataTypeHelper dataTypeHelper);
 	
 	//operand output data type criteria
 	HAPDataTypeCriteria getDataTypeCriteria();

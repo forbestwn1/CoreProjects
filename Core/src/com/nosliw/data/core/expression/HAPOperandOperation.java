@@ -7,6 +7,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.HAPDataTypeOperation;
@@ -16,7 +17,6 @@ import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementRange;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 
 public class HAPOperandOperation extends HAPOperandImp{
 
@@ -43,24 +43,16 @@ public class HAPOperandOperation extends HAPOperandImp{
 
 	private Map<String, Map<HAPDataTypeId, HAPRelationship>> m_convertors;
 	
-	protected HAPDataTypeManager m_dataTypeMan;
-	
-	public HAPOperandOperation(HAPOperand base, String operation, Map<String, HAPOperand> parms, 
-			HAPDataTypeCriteriaManager criteriaMan,
-			HAPDataTypeManager dataTypeMan){
-		super(HAPConstant.EXPRESSION_OPERAND_OPERATION, criteriaMan);
-		this.m_dataTypeMan = dataTypeMan;
+	public HAPOperandOperation(HAPOperand base, String operation, Map<String, HAPOperand> parms){
+		super(HAPConstant.EXPRESSION_OPERAND_OPERATION);
 		this.m_base = base;
 		this.m_operation = operation;
 		this.m_parms = parms;
 		this.m_convertors = new LinkedHashMap<String, Map<HAPDataTypeId, HAPRelationship>>();
 	}
 	
-	public HAPOperandOperation(String dataTypeIdLiterate, String operation, Map<String, HAPOperand> parms, 
-			HAPDataTypeCriteriaManager criteriaMan,
-			HAPDataTypeManager dataTypeMan){
-		super(HAPConstant.EXPRESSION_OPERAND_OPERATION, criteriaMan);
-		this.m_dataTypeMan = dataTypeMan;
+	public HAPOperandOperation(String dataTypeIdLiterate, String operation, Map<String, HAPOperand> parms){
+		super(HAPConstant.EXPRESSION_OPERAND_OPERATION);
 		this.m_dataTypeId = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), dataTypeIdLiterate, HAPSerializationFormat.LITERATE);
 		this.m_operation = operation;
 		this.m_parms = parms;
@@ -121,9 +113,10 @@ public class HAPOperandOperation extends HAPOperandImp{
 	public HAPDataTypeCriteria discover(
 			Map<String, HAPDataTypeCriteria> variables, 
 			HAPDataTypeCriteria expectCriteria,
-			HAPProcessVariablesContext context) {
+			HAPProcessVariablesContext context,
+			HAPDataTypeHelper dataTypeHelper) {
 		//process base first
-		if(this.m_base!=null)			this.m_base.discover(variables, null, context);
+		if(this.m_base!=null)			this.m_base.discover(variables, null, context, dataTypeHelper);
 		
 		//define seperate one, do not work on original one
 		HAPDataTypeId dataTypeId = this.m_dataTypeId;
@@ -132,31 +125,31 @@ public class HAPOperandOperation extends HAPOperandImp{
 		if(dataTypeId==null && this.m_base!=null){
 			//if data type is not determined, then use trunk data type of base data type if it has any
 			HAPDataTypeCriteria baseDataTypeCriteria = this.m_base.getDataTypeCriteria();
-			dataTypeId = this.getDataTypeCriteriaManager().getTrunkDataType(baseDataTypeCriteria);
+			dataTypeId = dataTypeHelper.getTrunkDataType(baseDataTypeCriteria);
 		}
 
 		if(dataTypeId !=null){
 			this.m_dataTypeId = dataTypeId;
 			//discover parms by operation definition
-			HAPDataTypeOperation dataTypeOperation = this.m_dataTypeMan.getOperationInfoByName(dataTypeId, m_operation);
+			HAPDataTypeOperation dataTypeOperation = dataTypeHelper.getOperationInfoByName(dataTypeId, m_operation);
 			Map<String, HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
 			for(String parm: this.m_parms.keySet()){
 				HAPOperand parmDataType = this.m_parms.get(parm);
 				if(parmDataType!=null){
 					HAPDataTypeCriteria parmCriteria = parmsInfo.get(parm).getCriteria();
 					//loose input criteria
-					HAPDataTypeCriteria loosedParmCriteria = this.getDataTypeCriteriaManager().looseCriteria(parmCriteria);
-					loosedParmCriteria = parmDataType.discover(variables, loosedParmCriteria, context);
+					HAPDataTypeCriteria loosedParmCriteria = dataTypeHelper.looseCriteria(parmCriteria);
+					loosedParmCriteria = parmDataType.discover(variables, loosedParmCriteria, context, dataTypeHelper);
 				}
 			}
 			
 			//discover base
 			if(this.m_base!=null){
-				this.m_base.discover(variables, new HAPDataTypeCriteriaElementRange(dataTypeId, null, this.getDataTypeCriteriaManager()), context);
+				this.m_base.discover(variables, new HAPDataTypeCriteriaElementRange(dataTypeId, null), context, dataTypeHelper);
 			}
 			this.setDataTypeCriteria(dataTypeOperation.getOperationInfo().getOutputInfo().getCriteria());
 			//check if output compatible with expect
-			if(!this.getDataTypeCriteriaManager().compatibleWith(this.getDataTypeCriteria(), expectCriteria)){
+			if(!dataTypeHelper.compatibleWith(this.getDataTypeCriteria(), expectCriteria)){
 				context.addMessage("Error");
 			}
 		}
@@ -164,7 +157,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 			//if we don't have operation data type 
 			for(String parm: this.m_parms.keySet()){
 				HAPOperand parmDataType = this.m_parms.get(parm);
-				parmDataType.discover(variables, null, context);
+				parmDataType.discover(variables, null, context, dataTypeHelper);
 			}
 			this.setDataTypeCriteria(null);
 		}
@@ -172,20 +165,20 @@ public class HAPOperandOperation extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo){
+	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo, HAPDataTypeHelper dataTypeHelper){
 
 		if(this.m_dataTypeId !=null){
 			//normalize parms
-			HAPDataTypeOperation dataTypeOperation = this.m_dataTypeMan.getOperationInfoByName(this.m_dataTypeId, m_operation);
+			HAPDataTypeOperation dataTypeOperation = dataTypeHelper.getOperationInfoByName(this.m_dataTypeId, m_operation);
 			Map<String, HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
 			for(String parm: this.m_parms.keySet()){
 				HAPDataTypeCriteria parmDefCriteria = parmsInfo.get(parm).getCriteria();
 				HAPOperand parmDataType = this.m_parms.get(parm);
 				if(parmDataType!=null){
-					HAPDataTypeCriteria normalizedParmCriteria = parmDataType.normalize(variablesInfo);
+					HAPDataTypeCriteria normalizedParmCriteria = parmDataType.normalize(variablesInfo, dataTypeHelper);
 					
 					//figure out the convertor: from normalized to parmDataType
-					Map<HAPDataTypeId, HAPRelationship> relationships = this.getDataTypeCriteriaManager().buildConvertor(normalizedParmCriteria, parmDefCriteria);
+					Map<HAPDataTypeId, HAPRelationship> relationships = dataTypeHelper.buildConvertor(normalizedParmCriteria, parmDefCriteria);
 					this.addConvertors(relationships.values());
 					if(relationships!=null){
 						this.m_convertors.put(parm, relationships);
@@ -195,9 +188,9 @@ public class HAPOperandOperation extends HAPOperandImp{
 
 			//process base
 			if(this.m_base!=null){
-				HAPDataTypeCriteria normalizedParmCriteria = this.m_base.normalize(variablesInfo);
+				HAPDataTypeCriteria normalizedParmCriteria = this.m_base.normalize(variablesInfo, dataTypeHelper);
 				//convertor : from normalized to this.m_dataTypeId
-				this.m_baseConvertors = this.getDataTypeCriteriaManager().buildConvertor(normalizedParmCriteria, new HAPDataTypeCriteriaElementId(this.m_dataTypeId, this.getDataTypeCriteriaManager()));
+				this.m_baseConvertors = dataTypeHelper.buildConvertor(normalizedParmCriteria, new HAPDataTypeCriteriaElementId(this.m_dataTypeId));
 				this.addConvertors(this.m_baseConvertors.values());
 			}
 		}
