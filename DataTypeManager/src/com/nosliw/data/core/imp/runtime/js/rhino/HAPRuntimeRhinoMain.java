@@ -3,7 +3,10 @@ package com.nosliw.data.core.imp.runtime.js.rhino;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataTypeManager;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 import com.nosliw.data.core.expression.HAPExpression;
+import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
 import com.nosliw.data.core.imp.criteria.HAPDataTypeCriteriaManagerImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionManagerImp;
 import com.nosliw.data.core.imp.init.HAPModuleInit;
@@ -28,7 +31,12 @@ public class HAPRuntimeRhinoMain {
 		resourceMan.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, new HAPResourceManagerJSLibrary());
 		resourceMan.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER, new HAPResourceManagerJSHelper());
 		
-		HAPExpressionManagerImp expressionMan = new HAPExpressionManagerImp(new HAPExpressionParserImp(), new HAPDataTypeCriteriaManagerImp());
+		HAPDataTypeManager dataTypeMan = new HAPDataTypeManagerImp();
+		
+		HAPDataTypeCriteriaManager criteriaMan = new HAPDataTypeCriteriaManagerImp();
+		
+		
+		HAPExpressionManagerImp expressionMan = new HAPExpressionManagerImp(new HAPExpressionParserImp(criteriaMan, dataTypeMan), criteriaMan);
 		expressionMan.importExpressionFromFolder(HAPFileUtility.getClassFolderPath(HAPRuntimeRhinoMain.class));
 		
 		HAPExpression expression = expressionMan.getExpression("expression1");

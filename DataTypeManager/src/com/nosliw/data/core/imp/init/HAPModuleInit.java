@@ -15,6 +15,8 @@ public class HAPModuleInit {
 		HAPDBAccess.getInstance();
 		
 		//import all the value infos
+		
+		
 		HAPValueInfoManager.getInstance().importFromFolder(HAPFileUtility.getClassFolderPath(HAPResourceDiscoveryJSImp.class), false);
 		HAPValueInfoManager.getInstance().importFromFolder(HAPFileUtility.getClassFolderPath(HAPDataTypeManagerImp.class), false);
 

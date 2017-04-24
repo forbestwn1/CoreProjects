@@ -17,11 +17,11 @@ public class HAPDataTypeCriteriaWrapperLiterate extends HAPSerializableImp imple
 
 	private HAPDataTypeCriteriaManagerImp m_dataTypeCriteriaMan;
 
+	
 	public HAPDataTypeCriteriaWrapperLiterate(HAPDataTypeCriteriaManagerImp criteriaMan){
 		this.m_dataTypeCriteriaMan = criteriaMan;
 	}
 
-	
 	public String getLiterateValue(){		return this.m_literateValue;	}
 	
 	@Override

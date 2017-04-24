@@ -1,7 +1,7 @@
 {
 	"name" : "expression1",
-	"expression" : "!(basic.string)!.subString()",
-	"expression2" : "!(basic.string)!.subString(base:&(base)&, from:&(from)&, to:&(to)&)",
+	"expression" : "!(basic.string)!.subString(base:&(base)&, from:&(from)&, to:&(to)&)",
+	"expression2" : "!(basic.string)!.subString()",
 	"expression1" : "?(schoolsData)?.each(parm1:?(validHomeExpression)?,parm2:&(constantData2)&,parm3:&(constantData)&,parm4:<(referenceData)>).aaa.bbb",
 	"constants" :{
 		"base":{

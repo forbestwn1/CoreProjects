@@ -14,7 +14,7 @@
 	</property>
 
 	<property name="variables" type="map" key="name" description="">
-		<child dataType="object" subDataType="com.nosliw.data.core.HAPDataTypeCriteria"></child>
+		<child dataType="object" subDataType="com.nosliw.data.core.imp.criteria.HAPDataTypeCriteriaWrapperLiterate"></child>
 	</property>
 
 	<property name="references" type="map" key="name" description="">

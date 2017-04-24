@@ -45,16 +45,22 @@ public class HAPOperandOperation extends HAPOperandImp{
 	
 	protected HAPDataTypeManager m_dataTypeMan;
 	
-	public HAPOperandOperation(HAPOperand base, String operation, Map<String, HAPOperand> parms, HAPDataTypeCriteriaManager criteriaMan){
+	public HAPOperandOperation(HAPOperand base, String operation, Map<String, HAPOperand> parms, 
+			HAPDataTypeCriteriaManager criteriaMan,
+			HAPDataTypeManager dataTypeMan){
 		super(HAPConstant.EXPRESSION_OPERAND_OPERATION, criteriaMan);
+		this.m_dataTypeMan = dataTypeMan;
 		this.m_base = base;
 		this.m_operation = operation;
 		this.m_parms = parms;
 		this.m_convertors = new LinkedHashMap<String, Map<HAPDataTypeId, HAPRelationship>>();
 	}
 	
-	public HAPOperandOperation(String dataTypeIdLiterate, String operation, Map<String, HAPOperand> parms, HAPDataTypeCriteriaManager criteriaMan){
+	public HAPOperandOperation(String dataTypeIdLiterate, String operation, Map<String, HAPOperand> parms, 
+			HAPDataTypeCriteriaManager criteriaMan,
+			HAPDataTypeManager dataTypeMan){
 		super(HAPConstant.EXPRESSION_OPERAND_OPERATION, criteriaMan);
+		this.m_dataTypeMan = dataTypeMan;
 		this.m_dataTypeId = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), dataTypeIdLiterate, HAPSerializationFormat.LITERATE);
 		this.m_operation = operation;
 		this.m_parms = parms;

@@ -3,8 +3,6 @@ package com.nosliw.data.core.imp;
 import java.util.List;
 
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataType;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeManager;

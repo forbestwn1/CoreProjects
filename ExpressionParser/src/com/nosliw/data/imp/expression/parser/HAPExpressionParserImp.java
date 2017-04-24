@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaManager;
 import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.expression.HAPOperand;
@@ -25,6 +26,12 @@ import com.nosliw.data.imp.expression.parser.generated.SimpleNode;
 public class HAPExpressionParserImp implements HAPExpressionParser{
 	
 	private HAPDataTypeCriteriaManager m_criteriaMan;
+	private HAPDataTypeManager m_dataTypeMan;
+	
+	public HAPExpressionParserImp(HAPDataTypeCriteriaManager criteriaMan, HAPDataTypeManager dataTypeMan){
+		this.m_criteriaMan = criteriaMan;
+		this.m_dataTypeMan = dataTypeMan;
+	}
 	
 	  public HAPOperand parseExpression(String expression){
 		  SimpleNode root = null;
@@ -69,7 +76,7 @@ public class HAPExpressionParserImp implements HAPExpressionParser{
 				  }
 			  }
 			  String operation = (String)expressionEles.nameNode.jjtGetValue();
-			  operand = new HAPOperandOperation(dataTypeInfo, operation, getOperationParms(expressionEles.expressionNodes), this.getCriteriaManager());
+			  operand = new HAPOperandOperation(dataTypeInfo, operation, getOperationParms(expressionEles.expressionNodes), this.getCriteriaManager(), this.getDataTypeManager());
 		  }
 		  
 		  out = processExpression1Node(expressionEles.expression1Node, operand);
@@ -85,7 +92,7 @@ public class HAPExpressionParserImp implements HAPExpressionParser{
 		  HAPOperand operand = null;
 		  if("function".equals(parentNode.jjtGetValue())){
 			  //function call
-			  operand = new HAPOperandOperation(aheadOperand, name, getOperationParms(expressionEles.expressionNodes), getCriteriaManager());
+			  operand = new HAPOperandOperation(aheadOperand, name, getOperationParms(expressionEles.expressionNodes), getCriteriaManager(), this.getDataTypeManager());
 		  }
 		  else{
 			  //path
@@ -177,9 +184,9 @@ public class HAPExpressionParserImp implements HAPExpressionParser{
 		  return false;
 	  } 
 	  
-	  protected HAPDataTypeCriteriaManager getCriteriaManager(){
-		  return this.m_criteriaMan;
-	  }
+	  protected HAPDataTypeCriteriaManager getCriteriaManager(){		  return this.m_criteriaMan;	  }
+	  
+	  protected HAPDataTypeManager getDataTypeManager(){  return this.m_dataTypeMan;   }
 }
 
 class ExpressionElements{
