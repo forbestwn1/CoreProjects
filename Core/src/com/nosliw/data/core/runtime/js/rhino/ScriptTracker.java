@@ -1,9 +1,19 @@
 package com.nosliw.data.core.runtime.js.rhino;
 
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.nosliw.common.interpolate.HAPStringTemplateUtil;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.runtime.HAPResource;
+import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.js.HAPResourceDataJSValue;
+import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
 public class ScriptTracker {
 
@@ -27,16 +37,28 @@ public class ScriptTracker {
 	}
 	
 	public void export(){
-		StringBuffer out = new StringBuffer();
+		StringBuffer scriptContent = new StringBuffer();
 		
 		for(String file : this.m_files){
-			out.append("<script src=\""+file+"\"></script>");
+			scriptContent.append("<script src=\""+file+"\"></script>\n");
 		}
-		
+
+		scriptContent.append("\n");
+		scriptContent.append("\n");
+		scriptContent.append("<script>\n");
+
 		for(String script : this.m_scripts){
-			out.append(script);
+			scriptContent.append(script);
+			scriptContent.append("\n");
 		}
 		
-		HAPFileUtility.writeFile(exportPath+"1.script", out.toString());
+		scriptContent.append("\n</script>\n");
+		
+		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+		templateParms.put("script", scriptContent.toString());
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(ScriptTracker.class, "scriptTracker.temp");
+		String out = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
+		
+		HAPFileUtility.writeFile(exportPath+"1.html", out);
 	}
 }

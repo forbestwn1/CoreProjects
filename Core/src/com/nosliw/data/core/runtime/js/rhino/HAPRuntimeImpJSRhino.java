@@ -11,7 +11,6 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
@@ -46,7 +45,6 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	public HAPRuntimeImpJSRhino(HAPResourceDiscovery resourceDiscovery, HAPResourceManager resourceMan){
 		this.m_resourceDiscovery = resourceDiscovery;
 		this.m_resourceManager = resourceMan;
-		this.init();
 	}
 	
 	@Override
@@ -57,6 +55,17 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	@Override
 	public void start(){
 		this.m_sciprtTracker = new ScriptTracker();
+		
+		this.m_context = Context.enter();
+	    try {
+	        this.m_scope = this.initEsencialScope(m_context, null);
+	        
+	        Object wrappedRuntime = Context.javaToJS(this, this.m_scope);
+	        ScriptableObject.putProperty(this.m_scope, "resourceManager", wrappedRuntime);
+	    }
+	    catch(Exception e){
+	    	e.printStackTrace();
+	    }
 	}
 	
 	@Override
@@ -100,19 +109,6 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		return null;
 	}
 
-	private void init(){
-		this.m_context = Context.enter();
-	    try {
-	        this.m_scope = this.initEsencialScope(m_context, null);
-	        
-	        Object wrappedRuntime = Context.javaToJS(this, this.m_scope);
-	        ScriptableObject.putProperty(this.m_scope, "resourceManager", wrappedRuntime);
-	    }
-	    catch(Exception e){
-	    	e.printStackTrace();
-	    }
-	}
-	
 	private String initExecuteExpression(){
 		String out = this.getTaskId();
 		this.m_taskScope.put(out, this.m_scope);

@@ -2,12 +2,12 @@ nowliw.getResourceManager().addResource(
 function(){
 
 	var resource = {
-		type : ||type||,
-		id : ||id||		
+		type : '||type||',
+		id : '||id||'		
 	};
 
 	resource.info = ||info||;
-	resource.value = ||value||;
+	resource.value = '||value||';
 
 	return resource;
 }());
