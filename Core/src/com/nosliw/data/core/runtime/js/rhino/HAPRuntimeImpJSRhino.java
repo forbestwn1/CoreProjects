@@ -33,9 +33,13 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	
 	private Context m_context;
 	
+	//root scope
 	private Scriptable m_scope;
 	
+	//different task have different scope
 	private Map<String, Scriptable> m_taskScope;
+	
+	private ScriptTracker m_sciprtTracker;
 	
 	public HAPRuntimeImpJSRhino(){}
 	
@@ -48,6 +52,16 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	@Override
 	public HAPRuntimeInfo getRuntimeInfo() {
 		return new HAPRuntimeInfo(HAPConstant.RUNTIME_LANGUAGE_JS, HAPConstant.RUNTIME_ENVIRONMENT_RHINO);
+	}
+
+	@Override
+	public void start(){
+		this.m_sciprtTracker = new ScriptTracker();
+	}
+	
+	@Override
+	public void close(){
+		this.m_sciprtTracker.export();
 	}
 
 	/**
@@ -63,6 +77,8 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	
 	@Override
 	public HAPData executeExpression(HAPExpression expression) {
+		
+/*
 		//discover required resources
 		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
 		
@@ -78,8 +94,10 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		
 		//execute expression
 		HAPData out = this.execute(expression, scope, this.m_context);
-		
+
 		return out;
+*/
+		return null;
 	}
 
 	private void init(){
@@ -115,7 +133,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		//library
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.Underscore", "1.6.0"), null));
-		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.log4jjavascript", "1.0.0"), null));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.log4javascript", "1.0.0"), null));
 		
 		
 		//data type
@@ -150,15 +168,16 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	private void loadResources(List<HAPResourceId> resourcesId, Scriptable scope, Context context){
 		List<HAPResource> missedResource = this.getResourceManager().getResources(resourcesId);
 		for(HAPResource resource : missedResource){
-			String resourceScript = HAPRuntimeJSScriptUtility.buildScriptForResource(resource);
-			context.evaluateString(scope, resourceScript, "Resource_"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE), 1, null);
+			String resourceScript = HAPRuntimeJSScriptUtility.buildScriptForResource(resource, this.m_sciprtTracker);
+//			context.evaluateString(scope, resourceScript, "Resource_"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE), 1, null);
+			context.evaluateString(scope, resourceScript, "<cmd>", 1, null);
 		}
 	}
 	
 	private HAPData execute(HAPExpression expression, Scriptable scope, Context context){
 		
 		String script = HAPRuntimeJSScriptUtility.buildScriptForExecuteExpression(expression);
-		NativeObject dataJS = (NativeObject)context.evaluateString(scope, script, "", 1, null);
+		NativeObject dataJS = (NativeObject)context.evaluateString(scope, script, "<cmd>", 1, null);
 		
 		return null;
 	}

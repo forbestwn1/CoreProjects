@@ -19,5 +19,8 @@ public interface HAPRuntime {
 	HAPResourceDiscovery getResourceDiscovery();
 	
 	HAPResourceManager getResourceManager();
+
+	void start();
 	
+	void close();
 }

@@ -42,7 +42,9 @@ public class HAPRuntimeRhinoMain {
 		HAPExpression expression = expressionMan.getExpression("expression1");
 		
 		HAPRuntimeImpJSRhino runtime = new HAPRuntimeImpJSRhino(new HAPResourceDiscoveryJSImp(), resourceMan);
+		runtime.start();
 		HAPData out = runtime.executeExpression(expression);
+		runtime.close();
 		System.out.println(out.toString());
 	}
 }
