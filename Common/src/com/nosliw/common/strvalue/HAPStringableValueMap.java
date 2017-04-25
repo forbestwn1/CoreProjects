@@ -13,7 +13,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 
-public class HAPStringableValueMap<T> extends HAPStringableValueComplex<T>{
+public class HAPStringableValueMap<T> extends HAPStringableValueComplex{
 
 	private Map<String, HAPStringableValue> m_elements;
 	
@@ -105,7 +105,7 @@ public class HAPStringableValueMap<T> extends HAPStringableValueComplex<T>{
 
 	protected void cloneFrom(HAPStringableValueMap<T> map){
 		for(String name : map.m_elements.keySet()){
-			this.m_elements.put(name, (T)map.m_elements.get(name).clone());
+			this.m_elements.put(name, (HAPStringableValue)map.m_elements.get(name).clone());
 		}
 		this.m_isAtomicChild = map.m_isAtomicChild;
 	}

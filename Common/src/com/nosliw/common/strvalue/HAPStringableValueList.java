@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 
-public class HAPStringableValueList<T extends HAPStringableValue> extends HAPStringableValueComplex<T>{
+public class HAPStringableValueList<T> extends HAPStringableValueComplex{
 
 	private List<HAPStringableValue> m_elements;
 	
