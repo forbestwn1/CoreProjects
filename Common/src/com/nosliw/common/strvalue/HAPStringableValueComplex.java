@@ -8,7 +8,7 @@ import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfo;
 import com.nosliw.common.utils.HAPBasicUtility;
 
 public abstract class HAPStringableValueComplex<T extends HAPStringableValue> extends HAPStringableValue{
@@ -16,16 +16,17 @@ public abstract class HAPStringableValueComplex<T extends HAPStringableValue> ex
 	@HAPAttribute
 	public static String ELEMENTS = "elements";
 	
-	public HAPStringableValueComplex(){
-	}
+	public HAPStringableValueComplex(){	}
+
+	public HAPStringableValueComplex(HAPValueInfo valueInfo){ super(valueInfo);	}
 	
-	public abstract Iterator<T> iterate();
+	public abstract Iterator<HAPStringableValue> iterate();
 	
 	public void init(){}
 	
 	@Override
 	public boolean isEmpty(){
-		Iterator<T> iterator = this.iterate();
+		Iterator<HAPStringableValue> iterator = this.iterate();
 		while(iterator.hasNext()){
 			HAPStringableValue value = iterator.next();
 			if(value!=null && !value.isEmpty())  return false;
@@ -35,7 +36,7 @@ public abstract class HAPStringableValueComplex<T extends HAPStringableValue> ex
 	
 	@Override
 	protected HAPInterpolateOutput resolveValueByPattern(Map<String, Object> patternDatas) {
-		Iterator<T> iterator = this.iterate();
+		Iterator<HAPStringableValue> iterator = this.iterate();
 		while(iterator.hasNext()){
 			HAPStringableValue value = iterator.next();
 			value.resolveByPattern(patternDatas);
@@ -46,7 +47,7 @@ public abstract class HAPStringableValueComplex<T extends HAPStringableValue> ex
 	@Override
 	protected HAPInterpolateOutput resolveValueByInterpolateProcessor(
 			Map<HAPInterpolateProcessor, Object> patternDatas) {
-		Iterator<T> iterator = this.iterate();
+		Iterator<HAPStringableValue> iterator = this.iterate();
 		while(iterator.hasNext()){
 			HAPStringableValue value = iterator.next();
 			value.resolveByInterpolateProcessor(patternDatas);
@@ -56,7 +57,7 @@ public abstract class HAPStringableValueComplex<T extends HAPStringableValue> ex
 
 	@Override
 	public boolean isResolved() {
-		Iterator<T> iterator = this.iterate();
+		Iterator<HAPStringableValue> iterator = this.iterate();
 		while(iterator.hasNext()){
 			HAPStringableValue value = iterator.next();
 			if(!value.isResolved())  return false;

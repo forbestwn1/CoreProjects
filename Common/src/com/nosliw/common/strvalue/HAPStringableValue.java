@@ -12,10 +12,23 @@ import com.nosliw.common.interpolate.HAPInterpolateProcessorByConfigureForDoc;
 import com.nosliw.common.resolve.HAPResolvable;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfo;
 
 @HAPEntityWithAttribute(baseName="STRINGABLEVALUE")
 public abstract class HAPStringableValue extends HAPSerializableImp implements HAPResolvable{
 
+	//The value info for this value
+	private HAPValueInfo m_valueInfo;
+	
+	public HAPStringableValue(){}
+	
+	public HAPStringableValue(HAPValueInfo valueInfo){
+		this.m_valueInfo = valueInfo;
+	}
+	
+	public HAPValueInfo getValueInfo(){ return this.m_valueInfo;  }
+	public void setValueInfo(HAPValueInfo valueInfo){  this.m_valueInfo = valueInfo;  }
+	
 	@HAPAttribute
 	public static String STRUCTURE = "structure";
 	

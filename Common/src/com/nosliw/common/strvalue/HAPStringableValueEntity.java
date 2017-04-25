@@ -30,18 +30,16 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	
 	private Map<String, HAPStringableValue> m_childrens;
 
-	private HAPValueInfoEntityable m_entityValueInfo;
-	
 	public HAPStringableValueEntity(){
 		this.m_childrens = new LinkedHashMap<String, HAPStringableValue>();
 	}
 
 	public HAPStringableValueEntity(HAPValueInfoEntityable valueInfo){
-		this();
-		this.m_entityValueInfo = valueInfo;
+		super((HAPValueInfo)valueInfo);
+		this.m_childrens = new LinkedHashMap<String, HAPStringableValue>();
 	}
 	
-	public void setValueInfo(HAPValueInfoEntityable valueInfo){  this.m_entityValueInfo = valueInfo;  }
+	public HAPValueInfoEntityable getValueInfoEntityable(){ return (HAPValueInfoEntityable)this.getValueInfo(); }
 	
 	@Override
 	public Iterator<HAPStringableValue> iterate(){		return this.m_childrens.values().iterator();	}
@@ -90,8 +88,8 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	public HAPStringableValueAtomic updateAtomicChildStrValue(String name, String strValue){
 		String childDataType = null;
 		String childSubDataType = null;
-		if(this.m_entityValueInfo!=null){
-			HAPValueInfo childValueInfo = this.m_entityValueInfo.getPropertyInfo(name);
+		if(this.getValueInfoEntityable()!=null){
+			HAPValueInfo childValueInfo = this.getValueInfoEntityable().getPropertyInfo(name);
 			if(childValueInfo.getValueInfoType().equals(HAPConstant.STRINGABLE_VALUESTRUCTURE_ATOMIC)){
 				HAPValueInfoAtomic childAtomicValueInfo = (HAPValueInfoAtomic)childValueInfo;
 				childDataType = childAtomicValueInfo.getDataType();

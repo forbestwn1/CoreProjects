@@ -5,33 +5,62 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.configure.HAPConfigureImp;
-import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoList;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 
 public class HAPStringableValueList<T extends HAPStringableValue> extends HAPStringableValueComplex<T>{
 
-	private List<T> m_elements;
+	private List<HAPStringableValue> m_elements;
+	
+	private boolean m_isAtomicChild = false;
 	
 	public HAPStringableValueList(){
-		this.m_elements = new ArrayList<T>();
+		this.m_elements = new ArrayList<HAPStringableValue>();
 	}
 
+	public HAPStringableValueList(HAPValueInfoList valueInfoList){
+		super(valueInfoList);
+		this.m_elements = new ArrayList<HAPStringableValue>();
+	}
+	
+	public HAPValueInfoList getValueInfoList(){  return (HAPValueInfoList)this.getValueInfo();  }
+	
 	public int size(){		return this.m_elements.size();	}
-	public T get(int index){  return this.m_elements.get(index); }
+	public HAPStringableValue get(int index){  return this.m_elements.get(index); }
 	
-	public List<T> getListValue(){  return this.m_elements;  }
+	public T getValue(int index){
+		if(this.m_isAtomicChild){
+			return (T)((HAPStringableValueAtomic)this.m_elements.get(index)).getValue();
+		}
+		else{
+			return (T)this.m_elements.get(index);  
+		}
+	}
 	
-	public HAPStringableValue addChild(T element){
+	public List<T> getListValue(){  
+		if(this.m_isAtomicChild){
+			List out = new ArrayList<T>();
+			for(HAPStringableValue value : this.m_elements){
+				out.add((T)((HAPStringableValueAtomic)value).getValue());
+			}
+			return out;
+		}
+		else{
+			return (List<T>)this.m_elements;  
+		}
+	}
+	
+	public HAPStringableValue addChild(HAPStringableValue element){
+		if(element instanceof HAPStringableValueAtomic)   this.m_isAtomicChild = true;
 		this.m_elements.add(element);
 		return element;
 	}
 	
 	@Override
-	public Iterator<T> iterate(){		return this.m_elements.iterator();	}
+	public Iterator<HAPStringableValue> iterate(){		return this.m_elements.iterator();	}
 	
 	@Override
 	public String getStringableStructure(){		return HAPConstant.STRINGABLE_VALUESTRUCTURE_LIST;	}
@@ -62,9 +91,10 @@ public class HAPStringableValueList<T extends HAPStringableValue> extends HAPStr
 	public void clear(){  this.m_elements.clear();  }
 	
 	protected void cloneFrom(HAPStringableValueList<T> list){
-		for(T element : list.m_elements){
-			this.m_elements.add((T)element.clone());
+		for(HAPStringableValue element : list.m_elements){
+			this.m_elements.add((HAPStringableValue)element.clone());
 		}
+		this.m_isAtomicChild = list.m_isAtomicChild;
 	}
 
 	@Override

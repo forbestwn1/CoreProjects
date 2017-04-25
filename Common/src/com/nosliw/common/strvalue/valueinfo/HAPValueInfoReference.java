@@ -103,7 +103,7 @@ public class HAPValueInfoReference extends HAPValueInfo{
 
 				HAPStringableValueList<HAPDBColumnInfo> columns = columnsInfo.getColumns();
 				for(int i=0; i<columns.size(); i++){
-					HAPDBColumnInfo column = columns.get(i);
+					HAPDBColumnInfo column = columns.getValue(i);
 					
 					switch(columnsInfo.getPathType()){
 					case HAPConstant.STRINGALBE_VALUEINFO_COLUMN_ATTRPATH_ABSOLUTE:

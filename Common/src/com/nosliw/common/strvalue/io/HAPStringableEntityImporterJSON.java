@@ -110,6 +110,17 @@ public class HAPStringableEntityImporterJSON {
 				out = parseJsonList(propertyObj, (HAPValueInfoList)propertyInfo, valueInfoMan);
 			}
 			else if(HAPConstant.STRINGALBE_VALUEINFO_MAP.equals(propertyCategary)){
+				{
+					HAPValueInfo childValueInfo = ((HAPValueInfoMap)propertyInfo).getChildValueInfo();
+					if(childValueInfo.getValueInfoType().equals(HAPConstant.STRINGALBE_VALUEINFO_ATOMIC)){
+						HAPValueInfoAtomic aChildValueInfo = (HAPValueInfoAtomic)childValueInfo;
+						if("com.nosliw.data.core.imp.criteria.HAPDataTypeCriteriaWrapperLiterate".equals(aChildValueInfo.getSubDataType())){
+							int kkkk = 555;
+							kkkk++;
+						}
+					}
+				}
+				
 				out = parseJsonMap((JSONObject)propertyObj, (HAPValueInfoMap)propertyInfo, valueInfoMan);
 			}
 			else if(HAPConstant.STRINGALBE_VALUEINFO_ENTITY.equals(propertyCategary)){

@@ -40,7 +40,7 @@ public class HAPValueInfoMap extends HAPValueInfoContainer{
 
 	@Override
 	public HAPStringableValue newValue() {
-		return new HAPStringableValueMap();
+		return new HAPStringableValueMap(this);
 	}
 
 }
