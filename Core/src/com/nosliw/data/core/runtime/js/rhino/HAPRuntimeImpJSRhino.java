@@ -87,10 +87,10 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	@Override
 	public HAPData executeExpression(HAPExpression expression) {
 		
-/*
 		//discover required resources
 		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
 		
+/*		
 		//find which resource is missing
 		List<HAPResourceId> missedResourceId = this.findMissedResources(resourcesId);
 		
@@ -128,8 +128,9 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		//library
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.init", null), null));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.Underscore", "1.6.0"), null));
-		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.log4javascript", "1.0.0"), null));
+//		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.log4javascript", "1.0.0"), null));
 		
 		
 		//data type
@@ -164,9 +165,14 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	private void loadResources(List<HAPResourceId> resourcesId, Scriptable scope, Context context){
 		List<HAPResource> missedResource = this.getResourceManager().getResources(resourcesId);
 		for(HAPResource resource : missedResource){
-			String resourceScript = HAPRuntimeJSScriptUtility.buildScriptForResource(resource, this.m_sciprtTracker);
-//			context.evaluateString(scope, resourceScript, "Resource_"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE), 1, null);
-			context.evaluateString(scope, resourceScript, "<cmd>", 1, null);
+			try{
+				String resourceScript = HAPRuntimeJSScriptUtility.buildScriptForResource(resource, this.m_sciprtTracker);
+//				context.evaluateString(scope, resourceScript, "Resource_"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE), 1, null);
+				context.evaluateString(scope, resourceScript, "<cmd>", 1, null);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 	}
 	

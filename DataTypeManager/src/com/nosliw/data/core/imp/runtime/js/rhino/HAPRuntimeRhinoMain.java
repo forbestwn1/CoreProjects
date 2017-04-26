@@ -1,13 +1,16 @@
 package com.nosliw.data.core.imp.runtime.js.rhino;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
+import com.nosliw.data.core.imp.expression.HAPExpressionImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionManagerImp;
 import com.nosliw.data.core.imp.init.HAPModuleInit;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDiscoveryJSImp;
@@ -39,12 +42,12 @@ public class HAPRuntimeRhinoMain {
 		HAPExpressionManagerImp expressionMan = new HAPExpressionManagerImp(new HAPExpressionParserImp(), dataTypeHelper);
 		expressionMan.importExpressionFromFolder(HAPFileUtility.getClassFolderPath(HAPRuntimeRhinoMain.class));
 		
-		HAPExpression expression = expressionMan.getExpression("expression1");
+		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.getExpression("expression1");
+		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
 		
 		HAPRuntimeImpJSRhino runtime = new HAPRuntimeImpJSRhino(new HAPResourceDiscoveryJSImp(), resourceMan);
 		runtime.start();
 		HAPData out = runtime.executeExpression(expression);
 		runtime.close();
-		System.out.println(out.toString());
 	}
 }

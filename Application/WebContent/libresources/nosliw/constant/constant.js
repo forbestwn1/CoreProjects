@@ -1,7 +1,7 @@
 /**
  * 
  */
-var NOSLIWCONSTANT=
+packageName.NOSLIWCONSTANT=
 {
 	  "SCRIPTOBJECT_VARIABLE_RESOURCEVIEW": "code",
 

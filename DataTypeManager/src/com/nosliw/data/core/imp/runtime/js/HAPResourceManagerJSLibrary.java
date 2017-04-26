@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
@@ -42,7 +43,7 @@ public class HAPResourceManagerJSLibrary implements HAPResourceManager{
 	
 	private List<File> getLibraryFileName(HAPJSLibraryId libraryId){
 		String path = libraryId.getName().replace(".", "/");
-		String folder = m_baseFolder + "/" + path + "/" + libraryId.getVersion();
+		String folder = m_baseFolder + "/" + path + (HAPBasicUtility.isStringEmpty(libraryId.getVersion()) ? "" : "/" + libraryId.getVersion());
 		Set<File> files = HAPFileUtility.getAllFiles(folder);
 		List<File> out = new ArrayList<File>(files);
 		Collections.sort(out);

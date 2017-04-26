@@ -7,13 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.runtime.HAPResource;
-import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.runtime.js.HAPResourceDataJSValue;
-import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
 public class ScriptTracker {
 

@@ -1,5 +1,5 @@
 /*
- * store settring for sync task, (service, command)
+ * store setting for sync task, (service, command)
  */
 var createConfiguresBase = function(baseConfigures){
 	

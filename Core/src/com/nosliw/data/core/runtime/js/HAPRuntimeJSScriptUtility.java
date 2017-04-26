@@ -21,7 +21,16 @@ import com.nosliw.data.core.runtime.js.rhino.ScriptTracker;
 public class HAPRuntimeJSScriptUtility {
 
 	public static String buildScriptForResource(HAPResource resource, ScriptTracker scriptTracker){
+		StringBuffer out = new StringBuffer();
 		
+		//build library script first
+		if(resource.getId().getType().equals(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY)){
+			out.append("\n");
+			out.append(buildScriptForLibrary(resource, scriptTracker));
+			out.append("\n");
+		}
+		
+		//build script for resource data
 		String valueScript = null;
 		if(resource.getResourceData() instanceof HAPResourceDataJSValue){
 			valueScript = ((HAPResourceDataJSValue)resource.getResourceData()).getValue();
@@ -41,23 +50,15 @@ public class HAPRuntimeJSScriptUtility {
 
 		templateParms.put(HAPResourceDataJSValue.VALUE, valueScript);
 
-//		if(HAPBasicUtility.isStringEmpty(valueScript)){
-//			templateParms.put(HAPResourceDataJSValue.VALUE, "undefined");
-//		}
-//		else{
-//			templateParms.put(HAPResourceDataJSValue.VALUE, valueScript);
-//		}
-		
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ResourceScript.temp");
-		String out = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
+		out.append("\n");
+		String resoruceDataScript = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
+		out.append(resoruceDataScript);
+		out.append("\n");
 		
-		scriptTracker.addScript(out);
+		scriptTracker.addScript(resoruceDataScript);
 		
-		if(resource.getId().getType().equals(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY)){
-			out = out + "\n" + buildScriptForLibrary(resource, scriptTracker);
-		}
-		
-		return out;
+		return out.toString();
 	}
 	
 	public static String buildScriptForLibrary(HAPResource resource, ScriptTracker scriptTracker){

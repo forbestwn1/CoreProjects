@@ -1,5 +1,5 @@
 
-nosliwNamingConversionUtility = function(){
+packageName.namingConversionUtility = function(){
 	
 	return {
 		cascadePath : function(path1, path2, normal){

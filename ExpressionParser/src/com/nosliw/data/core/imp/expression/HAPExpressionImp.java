@@ -5,6 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
@@ -14,7 +18,7 @@ import com.nosliw.data.core.expression.HAPOperand;
 /**
  * Parsed expression 
  */
-public class HAPExpressionImp implements HAPExpression{
+public class HAPExpressionImp extends HAPSerializableImp implements HAPExpression{
 
 	// original expressiong
 	private HAPExpressionInfo m_expressionInfo;
@@ -47,7 +51,10 @@ public class HAPExpressionImp implements HAPExpression{
 	public HAPOperand getOperand() {  return this.m_operand;  }
 
 	@Override
-	public Map<String, HAPDataTypeCriteria> getVariables() {		return this.m_varsInfo;	}
+	public Map<String, HAPDataTypeCriteria> getVariables() {
+		if(this.m_normalizedVarsInfo!=null)  return this.m_normalizedVarsInfo;
+		else return this.m_varsInfo;
+	}
 	
 	public void setVariables(Map<String, HAPDataTypeCriteria> vars){
 		this.m_varsInfo.clear();
@@ -80,5 +87,17 @@ public class HAPExpressionImp implements HAPExpression{
 			}
 		}
 		this.getOperand().normalize(m_normalizedVarsInfo, dataTypeHelper);
+	}
+
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		this.buildJsonMap(jsonMap, typeJsonMap);
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(EXPRESSIONINFO, HAPSerializeManager.getInstance().toStringValue(this.m_expressionInfo, HAPSerializationFormat.JSON));
+		jsonMap.put(OPERAND, HAPSerializeManager.getInstance().toStringValue(this.m_operand, HAPSerializationFormat.JSON));
+		jsonMap.put(VARIABLES, HAPJsonUtility.buildJson(this.getVariables(), HAPSerializationFormat.JSON));
+		jsonMap.put(ERRORMSGS, HAPJsonUtility.buildJson(m_errorMsgs, HAPSerializationFormat.JSON));
 	}
 }

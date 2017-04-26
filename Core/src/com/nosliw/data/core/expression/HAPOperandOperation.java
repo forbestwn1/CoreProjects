@@ -9,7 +9,6 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPOperationParmInfo;

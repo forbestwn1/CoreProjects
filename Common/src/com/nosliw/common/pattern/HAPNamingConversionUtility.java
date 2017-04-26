@@ -22,7 +22,7 @@ public class HAPNamingConversionUtility {
 			if(i>=1){
 				out.append(seperator);
 			}
-			out.append(part);
+			if(part!=null)			out.append(part);
 		}
 		return out.toString();
 	}

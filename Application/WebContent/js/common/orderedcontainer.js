@@ -1,7 +1,7 @@
 /**
  * 
  */
-var NosliwOrderedContainer = function(dataWraperArray, childDataType, keyName){
+packageName.OrderedContainer = function(dataWraperArray, childDataType, keyName){
 	this.keyArray = [];
 	this.dataMap = {};
 	this.childDataType = childDataType;

@@ -2,6 +2,7 @@ package com.nosliw.data.core.expression;
 
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 /**
@@ -9,6 +10,18 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
  *  
  */
 public interface HAPExpression {
+
+	@HAPAttribute
+	public static String EXPRESSIONINFO = "expressionInfo";
+
+	@HAPAttribute
+	public static String OPERAND = "operand";
+	
+	@HAPAttribute
+	public static String VARIABLES = "variables";
+	
+	@HAPAttribute
+	public static String ERRORMSGS = "errorMsgs";
 
 	//ExpressionInfo used to define expression
 	HAPExpressionInfo getExpressionInfo();

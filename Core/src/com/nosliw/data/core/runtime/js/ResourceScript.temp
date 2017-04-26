@@ -1,4 +1,4 @@
-nowliw.getResourceManager().addResource(
+nosliw.getResourceManager().addResource(
 function(){
 
 	var resource = {

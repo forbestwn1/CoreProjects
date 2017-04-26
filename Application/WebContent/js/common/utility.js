@@ -1,5 +1,4 @@
-
-nosliwCommonUtility = function(){
+packageName.utility = function(){
 	
 	return {
 		
@@ -55,4 +54,3 @@ nosliwCommonUtility = function(){
 		
 	};
 }();
-
