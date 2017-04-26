@@ -149,7 +149,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 					HAPOperandConstant constantOperand = (HAPOperandConstant)operand;
 					constantOperand.setData(expressionInfo.getConstants().get(constantOperand.getName()));
 				}
-				return false;
+				return true;
 			}
 
 			@Override

@@ -48,6 +48,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 		this.m_operation = operation;
 		this.m_parms = parms;
 		this.m_convertors = new LinkedHashMap<String, Map<HAPDataTypeId, HAPRelationship>>();
+		this.processChildenOperand();
 	}
 	
 	public HAPOperandOperation(String dataTypeIdLiterate, String operation, Map<String, HAPOperand> parms){
@@ -56,6 +57,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 		this.m_operation = operation;
 		this.m_parms = parms;
 		this.m_convertors = new LinkedHashMap<String, Map<HAPDataTypeId, HAPRelationship>>();
+		this.processChildenOperand();
 	}
 
 	public void setBase(HAPOperand base){
@@ -78,6 +80,13 @@ public class HAPOperandOperation extends HAPOperandImp{
 			out = new HAPOperationId(this.m_dataTypeId, this.m_operation);
 		}
 		return out;  
+	}
+	
+	private void processChildenOperand(){
+		if(this.m_base!=null)  this.addChildOperand(m_base);
+		for(String parm : this.m_parms.keySet()){
+			this.addChildOperand(this.m_parms.get(parm));
+		}
 	}
 	
 	@Override

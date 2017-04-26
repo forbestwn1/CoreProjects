@@ -1,6 +1,6 @@
 {
 	"name" : "expression1",
-	"expression" : "!(basic.string)!.subString(base:&(base)&, from:&(from)&, to:&(to)&)",
+	"expression" : "!(basic.string)!.subString(base:&(base)&,from:&(from)&,to:&(to)&)",
 	"constants" :{
 		"base":{
 			"dataTypeId": "basic.string",
