@@ -78,3 +78,7 @@ t
 Dsrc/com/nosliw/data/core/imp/runtime/js/rhino/expression2.expression,e\3\e3322efacf3a764982264cf5719d3ff0c6692d5a
 t
 Dsrc/com/nosliw/data/core/imp/runtime/js/rhino/expression1.expression,2\4\24245b16409380c737e58ea0341e38e27a0b4698
+g
+7src/com/nosliw/data/core/imp/HAPOperationOutputImp.java,9\d\9da652351e77c57ac5b50b8d136e114c0ec08fff
+h
+8src/com/nosliw/data/core/imp/HAPOperationVarInfoImp.java,c\9\c97c7b3e545aab3db57ef3ebd044250ad649919f

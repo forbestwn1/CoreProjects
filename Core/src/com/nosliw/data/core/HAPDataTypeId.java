@@ -41,6 +41,7 @@ public class HAPDataTypeId extends HAPSerializableImp{
 		this.m_name = name;
 		this.m_version = version;
 		this.m_fullName = this.buildLiterate();
+		this.processVersion();
 	}
 
 	public HAPDataTypeId(String fullName){
@@ -70,6 +71,10 @@ public class HAPDataTypeId extends HAPSerializableImp{
 
 	public String getVersionFullName(){   return this.getVersion().getName();  }
 	
+	private void processVersion(){
+		if(this.m_version==null)  this.m_version = new HAPDataTypeVersion();
+	}
+	
 	@Override
 	protected String buildLiterate(){
 		String versionLiterate = null;
@@ -86,6 +91,7 @@ public class HAPDataTypeId extends HAPSerializableImp{
 		if(segs.length>=2){
 			this.m_version = new HAPDataTypeVersion(segs[1]);
 		}
+		this.processVersion();
 		return true;
 	}
 	

@@ -1,17 +1,17 @@
 {
 	"name" : "expression1",
-	"expression" : "!(basic.string)!.subString(base:&(base)&,from:&(from)&,to:&(to)&)",
+	"expression" : "!(base.string)!.subString(base:&(base)&,from:&(from)&,to:&(to)&)",
 	"constants" :{
 		"base":{
-			"dataTypeId": "basic.string",
+			"dataTypeId": "base.string",
 			"value": "This is my world!"
 		},
 		"from":{
-			"dataTypeId": "basic.integer",
+			"dataTypeId": "base.integer",
 			"value": "3"
 		},
 		"to":{
-			"dataTypeId": "basic.integer",
+			"dataTypeId": "base.integer",
 			"value": "7"
 		}
 	},

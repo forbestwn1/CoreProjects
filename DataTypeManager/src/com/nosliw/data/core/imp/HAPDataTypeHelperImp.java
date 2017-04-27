@@ -22,12 +22,11 @@ import com.nosliw.data.core.imp.io.HAPDBAccess;
 
 public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
-	private HAPDBAccess m_dbAccess;
+	private HAPDBAccess m_dbAccess = HAPDBAccess.getInstance();
 	
 	@Override
 	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeId dataTypeInfo, String name) {
-//		return this.m_dbAccess.getOperationInfoByName((HAPDataTypeIdImp)dataTypeInfo, name);
-		return null;
+		return this.m_dbAccess.getDataTypeOperation(dataTypeInfo, name);
 	}
 	
 	@Override

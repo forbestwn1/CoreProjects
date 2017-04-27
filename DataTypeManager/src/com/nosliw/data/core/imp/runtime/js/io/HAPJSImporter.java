@@ -151,11 +151,6 @@ public class HAPJSImporter {
 	
 	private HAPJSResourceDependency processOperationObject(NativeObject operationObjJS, HAPDataTypeId dataTypeId, String operationName, Set<HAPResourceId> dataTypeResources, String resourceType){
 		
-		if(operationObjJS==null){
-			int kkkk = 555;
-			kkkk++;
-		}
-		
 		//operation
 		Function operationFunJS = (Function)operationObjJS.get("operation");
     	String script = Context.toString(operationFunJS);
@@ -208,12 +203,6 @@ public class HAPJSImporter {
 	}
 
 	private void addResourceIdToSet(HAPResourceId resourceId, Set<HAPResourceId> resourceIdSet){
-		
-		if(resourceId==null){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		Set<String> alias = resourceId.getAlias();
 		
 		boolean added = false;
@@ -263,12 +252,6 @@ public class HAPJSImporter {
 	
 	private String getOperationId(HAPDataTypeId dataTypeId, String operationName){
 		HAPOperationImp operation = this.m_dbAccess.getOperationInfoByName(dataTypeId, operationName);
-		
-		if(operation==null){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		return operation.getId();
 	}
 	

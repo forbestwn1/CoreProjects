@@ -39,6 +39,27 @@ public class HAPDataWrapper extends HAPDataImp{
 	}
 
 	@Override
+	protected boolean buildObjectByLiterate(String literateValue){
+		boolean out = false;
+		
+		out = super.buildObjectByLiterate(literateValue);
+		if(out)   this.setWrapperType(HAPSerializationFormat.LITERATE);
+		
+		if(!out){
+			try{
+				JSONObject jsonObj = new JSONObject(literateValue);
+				out = super.buildObjectByJson(jsonObj);
+				if(out)   this.setWrapperType(HAPSerializationFormat.JSON);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+		return out;
+	}
+	
+	@Override
 	Object buildObjectVale(Object value, HAPSerializationFormat format) {
 		if(value!=null) return value.toString();
 		return null;

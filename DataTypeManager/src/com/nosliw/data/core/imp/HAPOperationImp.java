@@ -3,6 +3,7 @@ package com.nosliw.data.core.imp;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.common.strvalue.HAPStringableValueMap;
 import com.nosliw.common.utils.HAPConstant;
@@ -38,9 +39,15 @@ public class HAPOperationImp extends HAPStringableValueEntityWithID implements H
 		Map<String, HAPOperationParmInfo> out = (Map<String, HAPOperationParmInfo>)map.getMapValue();
 		return out;
 	}
+	
+	public void addParmsInfo(String name, HAPOperationParmInfo parmInfo){
+		HAPStringableValueMap map = this.getMapAncestorByPath(PAMRS);
+		map.updateChild(name, (HAPStringableValue)parmInfo);
+	}
 
 	@Override
 	public HAPOperationOutInfo getOutputInfo() {		return (HAPOperationOutInfo)this.getEntityAncestorByPath(OUTPUT);	}
+	public void setOutputInfo(HAPOperationOutInfo outputInfo){	this.updateChild(OUTPUT, (HAPStringableValue)outputInfo);	}
 
 	@Override
 	public String getType() {  return this.getAtomicAncestorValueString(TYPE); }

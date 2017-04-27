@@ -31,6 +31,7 @@ import com.nosliw.data.core.imp.HAPDataTypeImpLoad;
 import com.nosliw.data.core.imp.HAPDataTypeOperationImp;
 import com.nosliw.data.core.imp.HAPDataTypePictureImp;
 import com.nosliw.data.core.imp.HAPOperationImp;
+import com.nosliw.data.core.imp.HAPOperationInfoImp;
 import com.nosliw.data.core.imp.HAPOperationVarInfoImp;
 import com.nosliw.data.core.imp.HAPRelationshipImp;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataOperationImp;
@@ -117,6 +118,15 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		return (HAPResourceDataHelperImp)this.queryEntityFromDB(HAPResourceDataHelperImp._VALUEINFO_NAME, "id=?", new Object[]{id});
 	}
 	
+	public HAPDataTypeOperationImp getDataTypeOperation(HAPDataTypeId dataTypeId, String operationName){
+		HAPDataTypeOperationImp out = (HAPDataTypeOperationImp)this.queryEntityFromDB(HAPDataTypeOperationImp._VALUEINFO_NAME, "source=? AND name=?", new Object[]{dataTypeId.getFullName(), operationName});
+		List<HAPOperationVarInfoImp> parms = (List<HAPOperationVarInfoImp>)this.queryEntitysFromDB(HAPOperationVarInfoImp._VALUEINFO_NAME, "operationId=?", new Object[]{out.getOperationId()});
+		for(HAPOperationVarInfoImp parm : parms){
+			out.addParmsInfo(parm.getName(), parm);
+		}
+		return out;
+	}
+	
 	public List<HAPDataTypeOperationImp> getDataTypeOperations(HAPDataTypeId dataTypeId){
 		return (List<HAPDataTypeOperationImp>)this.queryEntitysFromDB(HAPDataTypeOperationImp._VALUEINFO_NAME, "source=?", new Object[]{dataTypeId.getName()});
 	}
@@ -199,6 +209,10 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	public HAPOperationImp getOperationInfoByName(HAPDataTypeId dataTypeName, String name) {
 		return (HAPOperationImp)this.queryEntityFromDB(HAPOperationImp._VALUEINFO_NAME, "name=? AND dataTypeName=?", new Object[]{name, dataTypeName.getFullName()});
 	}
+
+	public HAPOperationImp getOperationInfoById(String id) {
+		return (HAPOperationImp)this.queryEntityFromDB(HAPOperationImp._VALUEINFO_NAME, "id=?", new Object[]{id});
+	}
 	
 	public List<HAPDataTypeImp> getAllDataTypes(){
 		return this.queryEntitysFromDB(HAPDataTypeImpLoad._VALUEINFO_NAME, "", null);
@@ -238,22 +252,14 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		
 		try {
 			HAPDBTableInfo dbTableInfo = HAPValueInfoManager.getInstance().getDBTableInfo(valueInfoName);
-			
-			if(dbTableInfo==null || dbTableInfo.getTableName()==null){
-				int kkkk = 5555;
-				kkkk++;
-			}
-			
-			
-			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), query);
 
+			String sql = HAPSqlUtility.buildEntityQuerySql(dbTableInfo.getTableName(), query);
 			PreparedStatement statement = m_connection.prepareStatement(sql);
 			if(parms!=null){
 				for(int i=0; i<parms.length; i++){
 					statement.setObject(i+1, parms[i]);
 				}
 			}
-
 			out = HAPSqlUtility.queryFromDB(valueInfoName, statement);
 		} catch (SQLException e) {
 			e.printStackTrace();

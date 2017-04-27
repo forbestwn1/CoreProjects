@@ -56,8 +56,7 @@ public abstract class HAPDataImp extends HAPSerializableImp implements HAPData{
 
 	@Override
 	protected boolean buildObjectByJson(Object json){		
-		this.m_value = this.buildObjectVale(json, HAPSerializationFormat.JSON_FULL);
-		return true;
+		return this.buildObjectByFullJson(json);
 	}
 
 	@Override
