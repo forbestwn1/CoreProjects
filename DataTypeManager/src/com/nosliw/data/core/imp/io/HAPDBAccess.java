@@ -91,10 +91,19 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		Map<String, HAPOperationParmInfo> parms = operation.getParmsInfo();
 		for(String name : parms.keySet()){
 			HAPOperationVarInfoImp parm = (HAPOperationVarInfoImp)parms.get(name);
+			parm.setType(HAPConstant.DATAOPERATION_VAR_TYPE_IN);
 			parm.updateAtomicChildStrValue(HAPOperationVarInfoImp.OPERATIONID, operation.getId());
 			parm.updateAtomicChildObjectValue(HAPOperationVarInfoImp.DATATYPEID, dataType.getName());
 			this.saveEntity(parm);
-		}		
+		}
+		
+		HAPOperationVarInfoImp output = (HAPOperationVarInfoImp)operation.getOutputInfo();
+		if(output!=null){
+			output.setType(HAPConstant.DATAOPERATION_VAR_TYPE_OUT);
+			output.updateAtomicChildStrValue(HAPOperationVarInfoImp.OPERATIONID, operation.getId());
+			output.updateAtomicChildObjectValue(HAPOperationVarInfoImp.DATATYPEID, dataType.getName());
+			this.saveEntity(output);
+		}
 	}
 
 	public void saveDataTypePicture(HAPDataTypePictureImp pic){
@@ -122,7 +131,12 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		HAPDataTypeOperationImp out = (HAPDataTypeOperationImp)this.queryEntityFromDB(HAPDataTypeOperationImp._VALUEINFO_NAME, "source=? AND name=?", new Object[]{dataTypeId.getFullName(), operationName});
 		List<HAPOperationVarInfoImp> parms = (List<HAPOperationVarInfoImp>)this.queryEntitysFromDB(HAPOperationVarInfoImp._VALUEINFO_NAME, "operationId=?", new Object[]{out.getOperationId()});
 		for(HAPOperationVarInfoImp parm : parms){
-			out.addParmsInfo(parm.getName(), parm);
+			if(HAPConstant.DATAOPERATION_VAR_TYPE_IN.equals(parm.getType())){
+				out.addParmsInfo(parm.getName(), parm);
+			}
+			else if(HAPConstant.DATAOPERATION_VAR_TYPE_OUT.equals(parm.getType())){
+				out.setOutputInfo(parm);
+			}
 		}
 		return out;
 	}
@@ -149,7 +163,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	}
 
 	public HAPRelationshipImp getRelationship(HAPDataTypeId sourceDataTypeId, HAPDataTypeId targetDataTypeId){
-		return (HAPRelationshipImp)this.queryEntityFromDB(HAPRelationshipImp._VALUEINFO_NAME, "sourceDataType_fullName=? AND targetDataType_fullName=?", new Object[]{sourceDataTypeId.getFullName()});
+		return (HAPRelationshipImp)this.queryEntityFromDB(HAPRelationshipImp._VALUEINFO_NAME, "sourceDataType_fullName=? AND targetDataType_fullName=?", new Object[]{sourceDataTypeId.getFullName(), targetDataTypeId.getFullName()});
 	}
 	
 	public List<HAPRelationshipImp> getRelationships(HAPDataTypeId sourceDataTypeId, String targetType){

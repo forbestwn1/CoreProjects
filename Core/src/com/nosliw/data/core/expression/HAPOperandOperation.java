@@ -11,6 +11,7 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPOperationId;
+import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -155,7 +156,11 @@ public class HAPOperandOperation extends HAPOperandImp{
 			if(this.m_base!=null){
 				this.m_base.discover(variables, new HAPDataTypeCriteriaElementRange(dataTypeId, null), context, dataTypeHelper);
 			}
-			this.setDataTypeCriteria(dataTypeOperation.getOperationInfo().getOutputInfo().getCriteria());
+			
+			HAPOperationOutInfo outputInfo = dataTypeOperation.getOperationInfo().getOutputInfo();
+			if(outputInfo!=null){
+				this.setDataTypeCriteria(outputInfo.getCriteria());
+			}
 			//check if output compatible with expect
 			if(!dataTypeHelper.compatibleWith(this.getDataTypeCriteria(), expectCriteria)){
 				context.addMessage("Error");

@@ -10,6 +10,12 @@
 		</dbColumnInfos>
 	</property>
 
+	<property name="type" dataType="string" description="">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+
 	<property name="isBase" dataType="boolean" description="" default="false">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(20)"/>
@@ -40,9 +46,9 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="criteria" dataType="object" subDataType="com.nosliw.data.datatype.importer.HAPDataTypeCriteriaWrapperLiterate" description="">
+	<property name="criteria" dataType="object" subDataType="com.nosliw.data.core.imp.criteria.HAPDataTypeCriteriaWrapperLiterate" description="">
 		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(20)"/>
+			<dbColumnInfo definition="VARCHAR(200)"/>
 		</dbColumnInfos>
 	</property>
 

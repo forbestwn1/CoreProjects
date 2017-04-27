@@ -61,9 +61,14 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 	@Override
 	public boolean compatibleWith(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2) {
-		Set<HAPDataTypeId> dataTypeIdSet1 = criteria1.getValidDataTypeId(this);
-		Set<HAPDataTypeId> dataTypeIdSet2 = criteria2.getValidDataTypeId(this);
-		return dataTypeIdSet2.containsAll(dataTypeIdSet1);
+		if(criteria2==null){
+			return criteria1==null;
+		}
+		else{
+			Set<HAPDataTypeId> dataTypeIdSet1 = criteria1.getValidDataTypeId(this);
+			Set<HAPDataTypeId> dataTypeIdSet2 = criteria2.getValidDataTypeId(this);
+			return dataTypeIdSet2.containsAll(dataTypeIdSet1);
+		}
 	}
 
 	@Override
