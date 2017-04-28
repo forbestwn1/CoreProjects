@@ -46,7 +46,7 @@
 		</dbColumnInfos>
 	</property>
 
-	<property name="criteria" dataType="object" subDataType="com.nosliw.data.core.imp.criteria.HAPDataTypeCriteriaWrapperLiterate" description="">
+	<property name="criteria" dataType="object" subDataType="com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate" description="">
 		<dbColumnInfos>
 			<dbColumnInfo definition="VARCHAR(200)"/>
 		</dbColumnInfos>

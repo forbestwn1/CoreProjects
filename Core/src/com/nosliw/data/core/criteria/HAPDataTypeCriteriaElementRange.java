@@ -3,13 +3,24 @@ package com.nosliw.data.core.criteria;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 
 public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
+
+	@HAPAttribute
+	public static String DATATYPEFROM = "dataTypeFrom";
+
+	@HAPAttribute
+	public static String DATATYPETO = "dataTypeTo";
+	
 	//general data type
 	private HAPDataTypeId m_from;
 	
@@ -48,5 +59,12 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 			out = new HAPDataTypeCriteriaAny();
 		}
 		return out;
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(DATATYPEFROM, HAPSerializeManager.getInstance().toStringValue(this.m_from, HAPSerializationFormat.LITERATE));
+		jsonMap.put(DATATYPETO, HAPSerializeManager.getInstance().toStringValue(this.m_to, HAPSerializationFormat.LITERATE));
 	}
 }

@@ -76,6 +76,11 @@ public class HAPDataTypeId extends HAPSerializableImp{
 	}
 	
 	@Override
+	protected String buildFullJson(){ return this.buildLiterate(); }
+	@Override
+	protected String buildJson(){ return this.buildLiterate(); }
+	
+	@Override
 	protected String buildLiterate(){
 		String versionLiterate = null;
 		if(this.m_version!=null){

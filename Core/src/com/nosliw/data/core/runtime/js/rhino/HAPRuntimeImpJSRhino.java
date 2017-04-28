@@ -87,10 +87,10 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	@Override
 	public HAPData executeExpression(HAPExpression expression) {
 		
+		/*		
 		//discover required resources
 		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
 		
-/*		
 		//find which resource is missing
 		List<HAPResourceId> missedResourceId = this.findMissedResources(resourcesId);
 		

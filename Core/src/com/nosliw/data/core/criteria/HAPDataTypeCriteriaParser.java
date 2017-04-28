@@ -1,22 +1,18 @@
-package com.nosliw.data.core.imp.criteria;
+package com.nosliw.data.core.criteria;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UnknownFormatConversionException;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAnd;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaComplex;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementIds;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementRange;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaOr;
 
+/**
+ * Util class to convert between criteria and literate 
+ */
 public class HAPDataTypeCriteriaParser {
 
 	private static final String START_AND = "[[";
@@ -95,6 +91,7 @@ public class HAPDataTypeCriteriaParser {
 			 if(criteriaParts.length==1){
 				 //id
 				 out = new HAPDataTypeCriteriaElementId((HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), criteriaParts[0], HAPSerializationFormat.LITERATE));
+				 if(out==null)   throw new UnknownFormatConversionException(criteriaLiterate);
 			 }
 			 else{
 				 //range
@@ -102,10 +99,12 @@ public class HAPDataTypeCriteriaParser {
 				 HAPDataTypeId to = null;
 				 if(HAPBasicUtility.isStringNotEmpty(criteriaParts[0])){
 					 from = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), criteriaParts[0], HAPSerializationFormat.LITERATE);
+					 if(from==null)   throw new UnknownFormatConversionException(criteriaLiterate);
 				 }
 				 
 				 if(HAPBasicUtility.isStringNotEmpty(criteriaParts[1])){
 					 to = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), criteriaParts[1], HAPSerializationFormat.LITERATE);
+					 if(to==null)   throw new UnknownFormatConversionException(criteriaLiterate);
 				 }
 				 out = new HAPDataTypeCriteriaElementRange(from, to);
 			 }

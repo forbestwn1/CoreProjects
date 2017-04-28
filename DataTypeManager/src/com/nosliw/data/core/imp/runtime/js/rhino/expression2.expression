@@ -1,6 +1,6 @@
 {
 	"name" : "expression2",
-	"expression" : "!(base.string)!.subString(base:&(base)&,from:&(from)&,to:&(to)&)",
+	"expression" : "!(base.string)!.subString(base:&(base)&,from:?(fromVar)?,to:&(to)&)",
 	"constants" :{
 		"base":{
 			"dataTypeId": "base.string",
@@ -16,11 +16,6 @@
 		}
 	},
 	"variables":{
-		"schoolsData":{
-			"criteria" : "schoolData variable criteria"
-		},
-		"validHomeExpression":{
-			"criteria" : "validHomeExpression variable criteria"
-		}
+		"fromVar": "base.integer"
 	}	
 }

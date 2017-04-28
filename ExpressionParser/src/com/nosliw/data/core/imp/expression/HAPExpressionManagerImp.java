@@ -91,11 +91,15 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	
 	private HAPExpression processExpression(String expressionName){
 		HAPExpressionImp expression = this.buildExpression(expressionName);
+
+		System.out.println("***************** Start to process expression : " + expressionName);
 		
 		//process reference
+		System.out.println("******* Process reference");
 		this.processReferences(expression.getOperand(), new LinkedHashMap<String, String>(), expression.getExpressionInfo());
 		
 		//process constant
+		System.out.println("******* Process constant");
 		this.processConstants(expression.getOperand(), expression.getExpressionInfo());
 		
 		//discover variables
@@ -110,7 +114,16 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 			oldVars.putAll(expressionVars);
 			
 			context.clear();
+			System.out.println("******* Discover variables");
 			expression.getOperand().discover(expressionVars, null, context, this.getCriteriaManager());
+			
+			{
+				boolean aaa = !HAPBasicUtility.isEqualMaps(expressionVars, oldVars) && context.isSuccess();
+				int kkkk = 555;
+				kkkk++;
+			}
+			
+			
 		}while(!HAPBasicUtility.isEqualMaps(expressionVars, oldVars) && context.isSuccess());
 		
 		if(context.isSuccess()){
@@ -118,9 +131,11 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 			
 			//normalize variable -- for every variable criteria, find root from data type
 			//normalize operator
+			System.out.println("******* Normalize variable");
 			expression.buildNormalizedVariablesInfo(this.getCriteriaManager());
 		}
 		else{
+			System.out.println("******* Error");
 			expression.addErrorMessages(context.getMessages());
 		}
 		this.m_expressions.put(expressionName, expression);

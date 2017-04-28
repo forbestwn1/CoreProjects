@@ -1,4 +1,4 @@
-package com.nosliw.data.core.imp.criteria;
+package com.nosliw.data.core.criteria;
 
 import java.util.Set;
 
@@ -8,16 +8,19 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
+/**
+ * This class store criteria in the form of Literate 
+ * It is used for reading configuration. 
+ * For instance variable in expression, parm in operation
+ */
 public class HAPDataTypeCriteriaWrapperLiterate extends HAPSerializableImp implements HAPDataTypeCriteria{
 
 	private String m_literateValue;
 	
 	private HAPDataTypeCriteria m_criteria;
 
-	public HAPDataTypeCriteriaWrapperLiterate(){
-	}
+	public HAPDataTypeCriteriaWrapperLiterate(){}
 
 	public String getLiterateValue(){		return this.m_literateValue;	}
 	
@@ -26,17 +29,17 @@ public class HAPDataTypeCriteriaWrapperLiterate extends HAPSerializableImp imple
 
 	@Override
 	public boolean validate(HAPDataTypeCriteria criteria, HAPDataTypeHelper dataTypeHelper) {
-		return this.getCriteria().validate(criteria, dataTypeHelper);
+		return this.getSolidCriteria().validate(criteria, dataTypeHelper);
 	}
 
 	@Override
 	public boolean validate(HAPDataTypeId dataTypeId, HAPDataTypeHelper dataTypeHelper) {
-		return this.getCriteria().validate(dataTypeId, dataTypeHelper);
+		return this.getSolidCriteria().validate(dataTypeId, dataTypeHelper);
 	}
 
 	@Override
 	public Set<HAPDataTypeId> getValidDataTypeId(HAPDataTypeHelper dataTypeHelper) {
-		return this.getCriteria().getValidDataTypeId(dataTypeHelper);
+		return this.getSolidCriteria().getValidDataTypeId(dataTypeHelper);
 	}
 
 	
@@ -56,10 +59,10 @@ public class HAPDataTypeCriteriaWrapperLiterate extends HAPSerializableImp imple
 
 	@Override
 	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {
-		return this.getCriteria().normalize(dataTypeHelper);
+		return this.getSolidCriteria().normalize(dataTypeHelper);
 	}
 
-	private HAPDataTypeCriteria getCriteria(){
+	public HAPDataTypeCriteria getSolidCriteria(){
 		if(this.m_criteria==null){
 			this.m_criteria = HAPDataTypeCriteriaParser.parseLiterate(this.m_literateValue);
 		}

@@ -35,7 +35,6 @@ public class HAPSqlUtility {
 		if(HAPBasicUtility.isStringNotEmpty(query)){
 			out = "SELECT * FROM " + tableName + " WHERE " + query;
 		}
-		System.out.println(out);
 		return out;
 	}
 	

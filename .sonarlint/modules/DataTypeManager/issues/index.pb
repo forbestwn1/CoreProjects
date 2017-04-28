@@ -80,3 +80,5 @@ t
 Dsrc/com/nosliw/data/core/imp/runtime/js/rhino/expression1.expression,2\4\24245b16409380c737e58ea0341e38e27a0b4698
 h
 8src/com/nosliw/data/core/imp/HAPOperationVarInfoImp.java,c\9\c97c7b3e545aab3db57ef3ebd044250ad649919f
+l
+<src/com/nosliw/data/core/imp/valueinfo.data.operationvar.xml,8\f\8fcc1d950a52347dcbff8266288ae768b0fcc0f0

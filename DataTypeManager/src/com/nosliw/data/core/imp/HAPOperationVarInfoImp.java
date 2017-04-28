@@ -5,6 +5,7 @@ import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate;
 
 public class HAPOperationVarInfoImp extends HAPStringableValueEntityWithID implements HAPOperationParmInfo, HAPOperationOutInfo{
 
@@ -19,6 +20,10 @@ public class HAPOperationVarInfoImp extends HAPStringableValueEntityWithID imple
 	@HAPAttribute
 	public static String TYPE = "type";
 	
+	//As when this class is instantiated, the criteria attribute is criteria in literate format which can not use directly
+	//This attribute store the real criteria which can be converted from literate fromat
+	private HAPDataTypeCriteria m_criteria;
+	
 	@Override
 	public String getName() {		return this.getAtomicAncestorValueString(NAME);	}
 
@@ -26,7 +31,13 @@ public class HAPOperationVarInfoImp extends HAPStringableValueEntityWithID imple
 	public String getDescription() {		return this.getAtomicAncestorValueString(DESCRIPTION);  }
 
 	@Override
-	public HAPDataTypeCriteria getCriteria() {		return (HAPDataTypeCriteria)this.getAtomicValueAncestorByPath(CRITERIA);	}
+	public HAPDataTypeCriteria getCriteria() {
+		if(this.m_criteria==null){
+			HAPDataTypeCriteriaWrapperLiterate criteriaLiterate = (HAPDataTypeCriteriaWrapperLiterate)this.getAtomicValueAncestorByPath(CRITERIA);
+			this.m_criteria = criteriaLiterate.getSolidCriteria();
+		}
+		return this.m_criteria;
+	}
 
 	public String getDataTypeId() {		return this.getAtomicAncestorValueString(DATATYPEID);	}
 	public String getOperationId() {		return this.getAtomicAncestorValueString(OPERATIONID);	}

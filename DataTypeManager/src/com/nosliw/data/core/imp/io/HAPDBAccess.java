@@ -247,7 +247,6 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	public void setupDbConnection() {
 		try {
 			Class.forName(this.getConfigureValue("jdbc.driver").getStringContent());
-			System.out.println("Connecting to database...");
 			m_connection = DriverManager.getConnection(this.getConfigureValue("jdbc.url").getStringContent(),
 					this.getConfigureValue("username").getStringContent(),
 					this.getConfigureValue("password").getStringContent());
@@ -274,6 +273,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 					statement.setObject(i+1, parms[i]);
 				}
 			}
+			System.out.println(statement);
 			out = HAPSqlUtility.queryFromDB(valueInfoName, statement);
 		} catch (SQLException e) {
 			e.printStackTrace();
