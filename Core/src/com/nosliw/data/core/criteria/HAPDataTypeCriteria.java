@@ -47,4 +47,5 @@ public interface HAPDataTypeCriteria{
 	 * @return
 	 */
 	HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper);
+
 }

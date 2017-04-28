@@ -9,6 +9,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
@@ -56,7 +57,7 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 			else out = new HAPDataTypeCriteriaElementIds(new HashSet(dataTypeIds));
 		}
 		else{
-			out = new HAPDataTypeCriteriaAny();
+			out = HAPDataTypeCriteriaAny.getCriteria();
 		}
 		return out;
 	}
@@ -66,5 +67,15 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(DATATYPEFROM, HAPSerializeManager.getInstance().toStringValue(this.m_from, HAPSerializationFormat.LITERATE));
 		jsonMap.put(DATATYPETO, HAPSerializeManager.getInstance().toStringValue(this.m_to, HAPSerializationFormat.LITERATE));
+	}
+	
+	@Override
+	public boolean equals(Object obj){
+		boolean out = false;
+		if(obj instanceof HAPDataTypeCriteriaElementRange){
+			HAPDataTypeCriteriaElementRange criteria = (HAPDataTypeCriteriaElementRange)obj;
+			out = HAPBasicUtility.isEquals(this.m_from, criteria.m_from) && HAPBasicUtility.isEquals(this.m_to, criteria.m_to);
+		}
+		return out;
 	}
 }

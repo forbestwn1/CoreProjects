@@ -15,6 +15,8 @@ import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementIds;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementRange;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaOr;
@@ -64,6 +66,9 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		if(criteria2==null){
 			return criteria1==null;
 		}
+		else if(criteria2==HAPDataTypeCriteriaAny.getCriteria()){
+			return true;
+		}
 		else{
 			Set<HAPDataTypeId> dataTypeIdSet1 = criteria1.getValidDataTypeId(this);
 			Set<HAPDataTypeId> dataTypeIdSet2 = criteria2.getValidDataTypeId(this);
@@ -86,7 +91,14 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 	@Override
 	public HAPDataTypeCriteria buildDataTypeCriteria(Set<HAPDataTypeId> dataTypeIds) {
-		return new HAPDataTypeCriteriaElementIds(dataTypeIds);
+		HAPDataTypeCriteria out = null;
+		if(dataTypeIds.size()==1){
+			out = new HAPDataTypeCriteriaElementId(dataTypeIds.iterator().next());
+		}
+		else{
+			out = new HAPDataTypeCriteriaElementIds(dataTypeIds);
+		}
+		return out;
 	}
 
 	@Override
@@ -149,14 +161,24 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 	@Override
 	public HAPDataTypeCriteria looseCriteria(HAPDataTypeCriteria criteria) {
+		HAPDataTypeCriteria out = null;
+		
 		Set<HAPDataTypeId> dataTypeIds = criteria.getValidDataTypeId(this);
 		Set<HAPDataTypeId> normalizedDataTypeIds = this.normalize(dataTypeIds);
 		
-		List<HAPDataTypeCriteria> criterias = new ArrayList<HAPDataTypeCriteria>();
-		for(HAPDataTypeId normalizedDataTypeId : normalizedDataTypeIds){
-			criterias.add(new HAPDataTypeCriteriaElementRange(normalizedDataTypeId, null));
+		if(normalizedDataTypeIds.size()==1){
+			//one element, use range
+			out = new HAPDataTypeCriteriaElementRange(normalizedDataTypeIds.iterator().next(), null);
 		}
-		return new HAPDataTypeCriteriaOr(criterias);
+		else{
+			//multiple, use or
+			List<HAPDataTypeCriteria> criterias = new ArrayList<HAPDataTypeCriteria>();
+			for(HAPDataTypeId normalizedDataTypeId : normalizedDataTypeIds){
+				criterias.add(new HAPDataTypeCriteriaElementRange(normalizedDataTypeId, null));
+			}
+			out = new HAPDataTypeCriteriaOr(criterias);
+		}
+		return out;
 	}
 
 	@Override

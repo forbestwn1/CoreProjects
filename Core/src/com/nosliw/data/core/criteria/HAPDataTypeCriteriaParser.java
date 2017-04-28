@@ -78,7 +78,7 @@ public class HAPDataTypeCriteriaParser {
 		
 		 criteriaLiterate = criteriaLiterate.trim();
 		 if(ANY.equals(criteriaLiterate)){
-			 out = new HAPDataTypeCriteriaAny();
+			 out = HAPDataTypeCriteriaAny.getCriteria();
 		 }
 		 else if(criteriaLiterate.startsWith(START_AND)){
 			 out = new HAPDataTypeCriteriaAnd(parseMutiple(criteriaLiterate.substring(START_AND.length(), criteriaLiterate.length()-END_AND.length())));

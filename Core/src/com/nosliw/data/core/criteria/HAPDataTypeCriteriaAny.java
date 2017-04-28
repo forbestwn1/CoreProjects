@@ -8,7 +8,16 @@ import com.nosliw.data.core.HAPDataTypeId;
 
 public class HAPDataTypeCriteriaAny implements HAPDataTypeCriteria{
 
-	public HAPDataTypeCriteriaAny(){}
+	private static HAPDataTypeCriteriaAny m_instance;
+	
+	private HAPDataTypeCriteriaAny(){}
+	
+	public static HAPDataTypeCriteriaAny getCriteria(){
+		if(m_instance==null){
+			m_instance = new HAPDataTypeCriteriaAny();
+		}
+		return m_instance;
+	}
 	
 	@Override
 	public String getType() {		return HAPConstant.DATATYPECRITERIA_TYPE_ANY;	}
@@ -25,4 +34,8 @@ public class HAPDataTypeCriteriaAny implements HAPDataTypeCriteria{
 	@Override
 	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {		return this;	}
 
+	@Override
+	public boolean equals(Object obj){
+		return obj instanceof HAPDataTypeCriteriaAny;
+	}
 }

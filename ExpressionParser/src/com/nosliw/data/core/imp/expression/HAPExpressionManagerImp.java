@@ -15,6 +15,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionInfo;
 import com.nosliw.data.core.expression.HAPExpressionManager;
@@ -115,15 +116,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 			
 			context.clear();
 			System.out.println("******* Discover variables");
-			expression.getOperand().discover(expressionVars, null, context, this.getCriteriaManager());
-			
-			{
-				boolean aaa = !HAPBasicUtility.isEqualMaps(expressionVars, oldVars) && context.isSuccess();
-				int kkkk = 555;
-				kkkk++;
-			}
-			
-			
+			expression.getOperand().discover(expressionVars, HAPDataTypeCriteriaAny.getCriteria(), context, this.getCriteriaManager());
 		}while(!HAPBasicUtility.isEqualMaps(expressionVars, oldVars) && context.isSuccess());
 		
 		if(context.isSuccess()){
