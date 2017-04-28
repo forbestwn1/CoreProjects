@@ -15,6 +15,7 @@ import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementRange;
 
@@ -125,7 +126,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 			HAPProcessVariablesContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		//process base first
-		if(this.m_base!=null)			this.m_base.discover(variables, null, context, dataTypeHelper);
+		if(this.m_base!=null)			this.m_base.discover(variables, HAPDataTypeCriteriaAny.getCriteria(), context, dataTypeHelper);
 		
 		//define seperate one, do not work on original one
 		HAPDataTypeId dataTypeId = this.m_dataTypeId;

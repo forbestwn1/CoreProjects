@@ -83,10 +83,24 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	
 	@Override
 	public HAPDataTypeCriteria and(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2) {
-		Set<HAPDataTypeId> dataTypesId1 = criteria1.getValidDataTypeId(this);
-		Set<HAPDataTypeId> dataTypesId2 = criteria2.getValidDataTypeId(this);
-		Set<HAPDataTypeId> andDataTypeIds = Sets.intersection(dataTypesId1, dataTypesId2);
-		return this.buildDataTypeCriteria(andDataTypeIds);
+		if(criteria1==null || criteria2==null){
+			return null;
+		}
+		else if(criteria1.equals(HAPDataTypeCriteriaAny.getCriteria()) && criteria2.equals(HAPDataTypeCriteriaAny.getCriteria())){
+			return HAPDataTypeCriteriaAny.getCriteria();
+		}
+		if(criteria1.equals(HAPDataTypeCriteriaAny.getCriteria())){
+			return criteria2;
+		}
+		else if(criteria2.equals(HAPDataTypeCriteriaAny.getCriteria())){
+			return criteria1;
+		}
+		else{
+			Set<HAPDataTypeId> dataTypesId1 = criteria1.getValidDataTypeId(this);
+			Set<HAPDataTypeId> dataTypesId2 = criteria2.getValidDataTypeId(this);
+			Set<HAPDataTypeId> andDataTypeIds = Sets.intersection(dataTypesId1, dataTypesId2);
+			return this.buildDataTypeCriteria(andDataTypeIds);
+		}
 	}
 
 	@Override
