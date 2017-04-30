@@ -1,3 +1,12 @@
+//get/create package
+var packageObj = library.getChildPackage("setting");    
+
+(function(packageObj){
+	//get used node
+	packageObj.require("comm.util.Abcec");
+	packageObj.use("comm.util.Abcec");
+//*******************************************   Start Node Definition  ************************************** 	
+
 /*
  * store setting for sync task, (service, command)
  */
@@ -64,3 +73,10 @@ var createConfigures = function(configures){
 	return loc_out;
 };
 
+
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("createConfiguresBase", createConfiguresBase); 
+packageObj.createNode("createConfigures", createConfigures); 
+
+})(packageObj);

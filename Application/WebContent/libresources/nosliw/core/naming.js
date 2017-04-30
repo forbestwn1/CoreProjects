@@ -1,0 +1,3 @@
+nosliw.getPackage = function(packageName){
+	
+};

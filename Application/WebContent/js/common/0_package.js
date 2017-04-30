@@ -1,1 +1,1 @@
-var packageName = nosliw.getPackage("common");
+var library = nosliw.getPackage("common");
