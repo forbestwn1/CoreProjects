@@ -17,7 +17,10 @@ var nosliw = function(){
 			return packageObj.useNode(nodePathInfo.name);
 		},
 		
-		
+		createNode : function(nodePath, nodeData){
+			var node = this.getNode(nodePath);
+			node.setData(nodeData);
+		}
 	};
 	
 	var createPackage = function(path){
@@ -48,14 +51,14 @@ var nosliw = function(){
 				return nodeObj;
 			},
 			requireNode : function(nodePath){
-				
+				return this.useNode(nodePath);
 			},
 			createNode : function(nodeName, nodeData){
 				var nodeObj = loc_nodes[nodeName];
 				if(nodeObj==undefined){
 					//if node does not exists, create empty one
 					nodeObj = createNode();
-					packageObj[nodePathInfo.name] = nodeObj;
+					loc_nodes[nodeName] = nodeObj;
 				}
 				nodeObj.setData(nodeData);
 				return nodeObj;
@@ -84,7 +87,16 @@ var nosliw = function(){
 	};
 	
 	var parseNodePath = function(nodePath){
-		
+		var path;
+		var name;
+		var index = nodePath.lastIndexOf(".");
+		if(index===-1){
+			name = nodePath;
+		}
+		else{
+			name = nodePath.substring(index+1);
+			path = nodePath.substring(0, index);
+		}
 	}
 	
 	return loc_out;
