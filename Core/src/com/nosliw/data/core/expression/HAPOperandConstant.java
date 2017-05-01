@@ -37,6 +37,12 @@ public class HAPOperandConstant extends HAPOperandImp{
 	
 	public void setData(HAPData data){ 
 		this.m_data = data;
+		
+		if(this.m_data==null){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		this.setDataTypeCriteria(new HAPDataTypeCriteriaElementId(this.m_data.getDataTypeId()));
 	}
 	

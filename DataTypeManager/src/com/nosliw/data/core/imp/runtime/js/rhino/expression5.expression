@@ -1,0 +1,32 @@
+{
+	"name" : "expression5",
+	"expression" : "<(expression6)>.subString(from:?(fromVar)?,to:&(to)&)",
+	"description" : "Variable.method, all constant",
+	"constants" :{
+		"base":{
+			"dataTypeId": "base.string",
+			"value": "This is my world!"
+		},
+		"from":{
+			"dataTypeId": "base.integer",
+			"value": "3"
+		},
+		"to":{
+			"dataTypeId": "base.integer",
+			"value": "7"
+		}
+	},
+	"variables":{
+		"baseVar": "base.string",
+		"fromVar": "base.integer"
+	},
+	"references":{
+		"expression6":{
+			"variablesMap":{
+				"baseVar" : "var1",
+				"fromVar" : "var2",
+				"to" : "var3" 			
+			}
+		}
+	}	
+}

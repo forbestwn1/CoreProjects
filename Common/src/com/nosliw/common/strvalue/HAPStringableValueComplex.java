@@ -121,6 +121,11 @@ public abstract class HAPStringableValueComplex<T extends HAPStringableValue> ex
 	protected HAPStringableValueList getListAncestorByPath(String path){ return (HAPStringableValueList)this.getAncestorByPath(path); }
 	
 	protected HAPStringableValueMap getMapAncestorByPath(String path){ return (HAPStringableValueMap)this.getAncestorByPath(path); }
+	protected Map getMapValueAncestorByPath(String path){
+		HAPStringableValueMap map = (HAPStringableValueMap)this.getAncestorByPath(path);
+		if(map==null)   return null;
+		else return map.getMapValue(); 
+	}
 
 	protected HAPStringableValueAtomic getAtomicAncestorByPath(String path){  return (HAPStringableValueAtomic)this.getAncestorByPath(path); }
 	

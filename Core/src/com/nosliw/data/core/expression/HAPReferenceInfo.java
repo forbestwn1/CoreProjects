@@ -2,6 +2,8 @@ package com.nosliw.data.core.expression;
 
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+
 /**
  * The information used to define reference in expression
  * 		reference : the name of expression
@@ -9,6 +11,13 @@ import java.util.Map;
  */
 public interface HAPReferenceInfo{
 
+	@HAPAttribute
+	public static String REFERENCE = "reference";
+	
+	@HAPAttribute
+	public static String VARIABLEMAP = "variableMap";
+	
+	
 	String getReference();
 	
 	Map<String, String> getVariableMap();

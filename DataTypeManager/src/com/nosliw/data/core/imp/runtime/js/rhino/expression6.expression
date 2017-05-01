@@ -1,0 +1,12 @@
+{
+	"name" : "expression6",
+	"expression" : "?(var1)?.subString(from:?(var2)?,to:&(var3)&)",
+	"description" : "all variables",
+	"constants" :{
+	},
+	"variables":{
+		"var1": "base.string",
+		"var2": "base.integer",
+		"var3": "base.integer"
+	}	
+}

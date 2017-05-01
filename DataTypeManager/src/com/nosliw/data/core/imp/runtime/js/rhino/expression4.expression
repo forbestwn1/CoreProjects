@@ -1,7 +1,7 @@
 {
-	"name" : "expression1",
-	"expression" : "!(base.string)!.subString(base:&(base)&,from:&(from)&,to:&(to)&)",
-	"description" : "DataType.method, all constant",
+	"name" : "expression4",
+	"expression" : "?(baseVar)?.subString(from:?(fromVar)?,to:&(to)&)",
+	"description" : "Variable.method, all constant",
 	"constants" :{
 		"base":{
 			"dataTypeId": "base.string",
@@ -17,5 +17,7 @@
 		}
 	},
 	"variables":{
+		"baseVar": "base.string",
+		"fromVar": "base.integer"
 	}	
 }

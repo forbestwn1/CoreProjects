@@ -137,6 +137,12 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	
 	private HAPExpressionImp buildExpression(String expressionName){
 		HAPExpressionInfo expressionInfo = getExpressionInfo(expressionName);
+		
+		if(expressionInfo==null){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		HAPOperand expressionOperand = this.getExpressionParser().parseExpression(expressionInfo.getExpression());
 		HAPExpressionImp expression = new HAPExpressionImp(expressionInfo, expressionOperand);
 		return expression;
@@ -177,10 +183,21 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 					String referenceName = reference.getExpressionName();
 					HAPReferenceInfo referenceInfo = expressionInfo.getReferences().get(referenceName);
 					
-					HAPExpressionImp refExpression = buildExpression(referenceInfo.getReference());
+					String refExpName = null;
+					Map<String, String> refVarMap = null;
+					if(referenceInfo!=null){
+						refExpName = referenceInfo.getReference();
+						if(refExpName==null)  refExpName = referenceName;
+						refVarMap = referenceInfo.getVariableMap();
+						if(refVarMap==null)   refVarMap = new LinkedHashMap<String, String>();
+					}
+					else{
+						refExpName = referenceName;
+						refVarMap = new LinkedHashMap<String, String>();
+					}
 					
-					Map<String, String> refVarMap = referenceInfo.getVariableMap();
-
+					HAPExpressionImp refExpression = buildExpression(refExpName);
+					
 					//var mapping
 					Map<String, String> childRefVarMap = new LinkedHashMap<String, String>();
 					for(String r : refVarMap.keySet()){

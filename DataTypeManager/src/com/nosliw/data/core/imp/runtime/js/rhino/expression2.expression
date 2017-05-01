@@ -1,6 +1,7 @@
 {
 	"name" : "expression2",
 	"expression" : "!(base.string)!.subString(base:&(base)&,from:?(fromVar)?,to:&(to)&)",
+	"description" : "DataType.method, one variable",
 	"constants" :{
 		"base":{
 			"dataTypeId": "base.string",
