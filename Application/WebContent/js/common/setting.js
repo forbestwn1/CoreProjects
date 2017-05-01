@@ -3,8 +3,9 @@ var packageObj = library.getChildPackage("setting");
 
 (function(packageObj){
 	//get used node
-	packageObj.require("comm.util.Abcec");
-	packageObj.use("comm.util.Abcec");
+	var basicUtilityNode = packageObj.require("common.utility.basicUtility");
+	var makeObjectWithTypeNode = packageObj.require("common.objectwithtype.makeObjectWithType");
+	var getObjectTypeNode = packageObj.require("common.objectwithtype.getObjectType");
 //*******************************************   Start Node Definition  ************************************** 	
 
 /*
@@ -45,7 +46,7 @@ var createConfigures = function(configures){
 		}
 	}
 	else if(_.isObject(configures)){
-		if(nosliwTypedObjectUtility.getObjectType(configures)===NOSLIWCONSTANT.TYPEDOBJECT_TYPE_CONFIGURES){
+		if(getObjectTypeNode.getData()(configures)===NOSLIWCONSTANT.TYPEDOBJECT_TYPE_CONFIGURES){
 			return configures;
 		}
 		else{
@@ -63,12 +64,12 @@ var createConfigures = function(configures){
 		},
 		
 		mergeWith : function(configures){
-			var configuresObj = nosliwCommonUtility.mergeObjects(loc_configures, configures.prv_getConfiguresObject());
+			var configuresObj = basicUtilityNode.getData().mergeObjects(loc_configures, configures.prv_getConfiguresObject());
 			return createConfigures(configuresObj);
 		},
 	};
 	
-	loc_out = nosliwTypedObjectUtility.makeTypedObject(loc_out, NOSLIWCONSTANT.TYPEDOBJECT_TYPE_CONFIGURES);
+	loc_out = makeObjectWithTypeNode.getData()(loc_out, NOSLIWCONSTANT.TYPEDOBJECT_TYPE_CONFIGURES);
 	
 	return loc_out;
 };

@@ -1,7 +1,12 @@
-packageName.utility = function(){
-	
-	return {
-		
+//get/create package
+var packageObj = library.getChildPackage("utility");    
+
+(function(packageObj){
+	//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
+var basicUtility = 
+{
 		/*
 		 * create an value with meaning of empty
 		 */
@@ -52,5 +57,10 @@ packageName.utility = function(){
 			if(_.isString(data) || _.isNumber(data) || _.isBoolean(data))  return true;
 		},
 		
-	};
-}();
+};
+
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("basicUtility", basicUtility); 
+
+})(packageObj);
