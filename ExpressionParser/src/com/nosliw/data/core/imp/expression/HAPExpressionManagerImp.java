@@ -172,11 +172,12 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		});		
 	}
 	
+	// varsMapping  childVar --- parentVar
 	private void processReferences(HAPOperand expressionOperand, Map<String, String> varsMapping, final HAPExpressionInfo expressionInfo) {
 		HAPExpressionUtility.processAllOperand(expressionOperand, varsMapping, new HAPExpressionTask(){
 			@Override
 			public boolean processOperand(HAPOperand operand, Object data) {
-				Map<String, String> varMap = (Map<String, String>)data;
+				Map<String, String> reversedVarMap = (Map<String, String>)data;
 				String opType = operand.getType();
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
 					HAPOperandReference reference = (HAPOperandReference)operand;
@@ -198,30 +199,34 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 					
 					HAPExpressionImp refExpression = buildExpression(refExpName);
 					
-					//var mapping
-					Map<String, String> childRefVarMap = new LinkedHashMap<String, String>();
+					//build childRefVarMap for child reference operand
+					Map<String, String> childRefReversedVarMap = new LinkedHashMap<String, String>();
 					for(String r : refVarMap.keySet()){
-						if(varMap.get(r)!=null)   childRefVarMap.put(r, varMap.get(r));
-						else  childRefVarMap.put(r, refVarMap.get(r));
+						if(reversedVarMap.get(r)!=null)   childRefReversedVarMap.put(refVarMap.get(r), reversedVarMap.get(r));
+						else  childRefReversedVarMap.put(refVarMap.get(r), r);
 					}
-					processReferences(refExpression.getOperand(), childRefVarMap, refExpression.getExpressionInfo());
+					processReferences(refExpression.getOperand(), childRefReversedVarMap, refExpression.getExpressionInfo());
 					
-					//variables mapping in var infos
+					//update variables info in reference expression
+					Map<String, String> reverseRefVarMap = new LinkedHashMap<String, String>();
+					for(String parent : refVarMap.keySet())		reverseRefVarMap.put(refVarMap.get(parent), parent);
+					
 					Map<String, HAPDataTypeCriteria> originalVarInfos = refExpression.getVariables();
-					Map<String, HAPDataTypeCriteria> varInfos = new LinkedHashMap<String, HAPDataTypeCriteria>();
+					Map<String, HAPDataTypeCriteria> updatedVarInfos = new LinkedHashMap<String, HAPDataTypeCriteria>();
 					for(String originalVarName : originalVarInfos.keySet()){
-						String varName = refVarMap.get(originalVarName);
-						if(varName==null)  varName = originalVarName;
-						varInfos.put(varName, originalVarInfos.get(originalVarName));
+						String mappedVarName = reverseRefVarMap.get(originalVarName);
+						if(mappedVarName==null)  mappedVarName = originalVarName;
+						updatedVarInfos.put(mappedVarName, originalVarInfos.get(originalVarName));
 					}
-					refExpression.setVariables(varInfos);
+					refExpression.setVariables(updatedVarInfos);
 					
 					reference.setExpression(refExpression);
 					return false;
 				}
 				else if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
+					//Replace all variable operand's var name to parent name according to mapping
 					HAPOperandVariable variableChild = (HAPOperandVariable)operand;
-					String mappedVarName = varMap.get(variableChild);
+					String mappedVarName = reversedVarMap.get(variableChild.getVariableName());
 					if(mappedVarName!=null){
 						variableChild.setVariableName(mappedVarName);
 					}
