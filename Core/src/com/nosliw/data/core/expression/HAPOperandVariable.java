@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
 
 public class HAPOperandVariable extends HAPOperandImp{
 
@@ -40,7 +41,10 @@ public class HAPOperandVariable extends HAPOperandImp{
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessVariablesContext context,
 			HAPDataTypeHelper dataTypeHelper) {
-		HAPDataTypeCriteria dataTypeCriteria = this.validate(variablesInfo.get(this.getVariableName()), expectCriteria, context, dataTypeHelper);
+		HAPDataTypeCriteria variableDef = variablesInfo.get(this.getVariableName());
+		if(variableDef==null)   variableDef = HAPDataTypeCriteriaAny.getCriteria();
+		
+		HAPDataTypeCriteria dataTypeCriteria = this.validate(variableDef, expectCriteria, context, dataTypeHelper);
 		variablesInfo.put(m_variableName, dataTypeCriteria);
 		this.setDataTypeCriteria(dataTypeCriteria);
 		return this.getDataTypeCriteria();

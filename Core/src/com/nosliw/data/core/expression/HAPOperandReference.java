@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
 
 public class HAPOperandReference extends HAPOperandImp{
 
@@ -49,7 +50,11 @@ public class HAPOperandReference extends HAPOperandImp{
 			HAPDataTypeHelper dataTypeHelper) {
 		//expression var info
 		for(String varName : this.m_expression.getVariables().keySet()){
-			HAPDataTypeCriteria criteria = dataTypeHelper.and(this.m_expression.getVariables().get(varName), variablesInfo.get(varName));
+			HAPDataTypeCriteria referenceVar = this.m_expression.getVariables().get(varName);
+			HAPDataTypeCriteria parentVar = variablesInfo.get(varName);
+			if(parentVar==null)   parentVar = HAPDataTypeCriteriaAny.getCriteria();
+			
+			HAPDataTypeCriteria criteria = dataTypeHelper.and(referenceVar, parentVar);
 			variablesInfo.put(varName, criteria);
 		}
 		

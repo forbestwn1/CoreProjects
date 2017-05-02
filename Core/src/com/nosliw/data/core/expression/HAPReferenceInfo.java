@@ -15,11 +15,11 @@ public interface HAPReferenceInfo{
 	public static String REFERENCE = "reference";
 	
 	@HAPAttribute
-	public static String VARIABLEMAP = "variableMap";
+	public static String VARIABLESMAP = "variablesMap";
 	
 	
 	String getReference();
 	
-	Map<String, String> getVariableMap();
+	Map<String, String> getVariableSMap();
 	
 }

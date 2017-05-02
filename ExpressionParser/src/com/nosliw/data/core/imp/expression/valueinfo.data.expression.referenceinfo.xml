@@ -2,7 +2,7 @@
 		class="com.nosliw.data.core.imp.expression.HAPReferenceInfoImp" 
 		description="">
 		
-	<property name="name" dataType="string" description="">
+	<property name="reference" dataType="string" description="">
 	</property>
 
 	<property name="variablesMap" type="map" key="from" description="">

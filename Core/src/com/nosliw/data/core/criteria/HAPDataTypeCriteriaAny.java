@@ -6,7 +6,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 
-public class HAPDataTypeCriteriaAny implements HAPDataTypeCriteria{
+public class HAPDataTypeCriteriaAny extends HAPDataTypeCriteriaImp{
 
 	private static HAPDataTypeCriteriaAny m_instance;
 	
@@ -29,7 +29,9 @@ public class HAPDataTypeCriteriaAny implements HAPDataTypeCriteria{
 	public boolean validate(HAPDataTypeId dataTypeId, HAPDataTypeHelper dataTypeHelper) {		return true;	}
 
 	@Override
-	public Set<HAPDataTypeId> getValidDataTypeId(HAPDataTypeHelper dataTypeHelper) {		return null;	}
+	public Set<HAPDataTypeId> getValidDataTypeId(HAPDataTypeHelper dataTypeHelper) {		
+		throw new IllegalStateException();	
+	}
 
 	@Override
 	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {		return this;	}

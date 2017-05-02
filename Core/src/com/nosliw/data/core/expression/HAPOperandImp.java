@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
 
 public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOperand{
 
@@ -72,8 +73,8 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	 */
 	protected HAPDataTypeCriteria validate(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context, HAPDataTypeHelper dataTypeHelper){
 		HAPDataTypeCriteria out = null;
-		if(criteria==null){
-			//if var is not defined in context, use expect one
+		if(criteria==HAPDataTypeCriteriaAny.getCriteria()){
+			//if var is any (not defined)
 			out = expectCriteria;
 		}
 		else{

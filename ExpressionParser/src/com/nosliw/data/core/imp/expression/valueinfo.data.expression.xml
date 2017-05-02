@@ -17,7 +17,7 @@
 		<child dataType="object" subDataType="com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate"></child>
 	</property>
 
-	<property name="references" type="map" key="name" description="">
+	<property name="references" type="map" key="reference" description="">
 		<child reference="data.expression.referenceinfo"></child>
 	</property>
 

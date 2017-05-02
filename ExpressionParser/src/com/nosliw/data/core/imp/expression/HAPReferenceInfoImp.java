@@ -14,13 +14,9 @@ public class HAPReferenceInfoImp extends HAPStringableValueEntity implements HAP
 
 	public static String _VALUEINFO_NAME;
 	
-	private String m_reference;
-	
-	private Map<String, String> m_variableMap;
-
 	@Override
 	public String getReference() {		return this.getAtomicAncestorValueString(REFERENCE);	}
 
 	@Override
-	public Map<String, String> getVariableMap() {		return this.getMapValueAncestorByPath(VARIABLEMAP);	}
+	public Map<String, String> getVariableSMap() {		return this.getMapValueAncestorByPath(VARIABLESMAP);	}
 }
