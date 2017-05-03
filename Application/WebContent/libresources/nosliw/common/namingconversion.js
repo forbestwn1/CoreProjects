@@ -1,5 +1,11 @@
+//get/create package
+var packageObj = library.getChildPackage("namingconvension");    
 
-packageName.namingConversionUtility = function(){
+(function(packageObj){
+	//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
+var basicUtility = function(){
 	
 	return {
 		cascadePath : function(path1, path2, normal){
@@ -43,3 +49,8 @@ packageName.namingConversionUtility = function(){
 	};
 }();
 
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("basicUtility", basicUtility); 
+
+})(packageObj);

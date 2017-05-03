@@ -33,10 +33,23 @@ var nosliw = function(){
 		var loc_nodes = {};
 		
 		var loc_package = {
+
+			prv_createNode : function(nodeName, nodeData){
+				var nodeObj = loc_nodes[nodeName];
+				if(nodeObj==undefined){
+					//if node does not exists, create empty one
+					nodeObj = createNode();
+					loc_nodes[nodeName] = nodeObj;
+				}
+				nodeObj.setData(nodeData);
+				return nodeObj;
+			},
+				
 			getPackage : function(path){
 				return createPackage(path);
 			},
 			getChildPackage : function(relativePath){
+				if(relative)
 				return createPackage(loc_path+"."+relativePath);
 			},
 			useNode : function(nodePath){
@@ -53,15 +66,11 @@ var nosliw = function(){
 			requireNode : function(nodePath){
 				return this.useNode(nodePath);
 			},
-			createNode : function(nodeName, nodeData){
-				var nodeObj = loc_nodes[nodeName];
-				if(nodeObj==undefined){
-					//if node does not exists, create empty one
-					nodeObj = createNode();
-					loc_nodes[nodeName] = nodeObj;
-				}
-				nodeObj.setData(nodeData);
-				return nodeObj;
+			createNode : function(nodePath, nodeData){
+				var nodePathInfo = parseNodePath(nodePath);
+				var nodePackage = this.getChildPackage(nodePathInfo.path);
+				var nodeName = nodePathInfo.name;
+				return nodePackage.prv_createNode(nodeName, nodeData);
 			},
 		};
 		loc_packages[path] = loc_package;

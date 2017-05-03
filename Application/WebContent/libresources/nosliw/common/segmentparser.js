@@ -1,7 +1,15 @@
+//get/create package
+var packageObj = library.getChildPackage("segmentparser");    
+
+(function(packageObj){
+	//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
+
 /*
  * parse the path information
  */
-var nosliwCreateSegmentParser = function(path, sep){
+var parseSegment = function(path, sep){
 	
 	var loc_segments = [];
 	var loc_seperator = undefined;
@@ -67,3 +75,9 @@ var nosliwCreateSegmentParser = function(path, sep){
 	
 	return loc_out;
 };
+
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("parseSegment", parseSegment); 
+
+})(packageObj);

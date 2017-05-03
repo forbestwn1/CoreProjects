@@ -1,24 +1,26 @@
+//get/create package
+var packageObj = library.getChildPackage("lifecycle");    
+
+(function(packageObj){
+	//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
 /*
  * utility functions to build lifecycle object
  */
-var nosliwLifecycleUtility = function(){
-
-	return {
-		makeResourceObject : function(obj, name, thisContext){
-			var out = _.extend(obj, nosliwCreateResourceLifecycle(name));
-			if(thisContext!=undefined)   out[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_ATTRIBUTE_THISCONTEXT] = thisContext;
-			return out;
-		},
-	};
-}();
-
-
+var makeObjectWithLifecycle = function(obj, name, thisContext){
+	var out = _.extend(obj, loc_createResourceLifecycle(name, thisContext));
+	return out;
+};
+	
 /**
  * create resource lifecycle object which provide basic lifecycle method and status
- * all the thisContext for life cycle method is either LIFECYCLE_RESOURCE_ATTRIBUTE_THISCONTEXT atribute of this or this
+ * all the thisContext for life cycle method is either loc_thisContext or this
  * the transition of status can be monitored by register event listener, so that when status transition is done, the listener will be informed
  */
-var nosliwCreateResourceLifecycle = function(name){
+var loc_createResourceLifecycle = function(name, thisContext){
+	//this context for lifycycle callback method
+	var loc_thisContext = thisContext;;
 	
 	//name for this lifecycle object, it can be used in logging
 	var loc_name = name;
@@ -35,7 +37,7 @@ var nosliwCreateResourceLifecycle = function(name){
 	 * get this context
 	 */
 	var loc_getThisContext = function(){
-		var that = this[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_ATTRIBUTE_THISCONTEXT];
+		var that = loc_thisContext;
 		if(that==undefined)		that = this;
 		return that;
 	};
@@ -232,4 +234,9 @@ var nosliwCreateResourceLifecycle = function(name){
 	return loc_out;
 };
 
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("makeObjectWithLifecycle", makeObjectWithLifecycle); 
+
+})(packageObj);
 

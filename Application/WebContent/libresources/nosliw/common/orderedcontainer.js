@@ -1,7 +1,30 @@
+//get/create package
+var packageObj = library.getChildPackage("orderedcontainer");    
+
+(function(packageObj){
+	//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
 /**
  * 
  */
-packageName.OrderedContainer = function(dataWraperArray, childDataType, keyName){
+var newOrderedContainerGeneral = function(dataArray, keyName){
+	this.keyArray = [];
+	this.dataMap = {};
+	this.keyName = keyName;
+	
+	if(dataArray!=undefined){
+		for(var index in dataArray){
+			this.addData(dataArray[index]);
+		}
+	}
+};
+	
+	
+/**
+ * 
+ */
+var newOrderedContainer = function(dataWraperArray, childDataType, keyName){
 	this.keyArray = [];
 	this.dataMap = {};
 	this.childDataType = childDataType;
@@ -20,7 +43,9 @@ packageName.OrderedContainer = function(dataWraperArray, childDataType, keyName)
 	}
 };
 
-NosliwOrderedContainer.prototype = {
+OrderedContainer.prototype = prototype;
+
+var prototype = {
 		addData : function(data){
 			if(this.keyName==undefined){
 				var index=0;
@@ -79,7 +104,7 @@ NosliwOrderedContainer.prototype = {
 };
 
 
-function handleDataContainerEachElement(dataContainerWraper, handler){
+var handleDataContainerEachElement = function(dataContainerWraper, handler){
 	if(dataContainerWraper==undefined)   return;
 	var dataContainer = dataContainerWraper.container;
 	var childDataType = dataContainerWraper.childDataType;
@@ -89,6 +114,11 @@ function handleDataContainerEachElement(dataContainerWraper, handler){
 		var contextEle = createContextElement(eleWraper);
     	handler(key, eleWraper, contextEle);
 	}
-	
 }
 
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("OrderedContainer.newEntity", newOrderedContainerGeneral); 
+packageObj.createNode("utils.handleDataContainerEachElement", handleDataContainerEachElement); 
+
+})(packageObj);
