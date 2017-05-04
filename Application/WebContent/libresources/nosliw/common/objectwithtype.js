@@ -17,8 +17,8 @@ var loc_createTypedObject = function(type){
 	loc_out[typeAttrName] = function(){  return loc_type; };
 	return loc_out;
 };
-	
-	
+
+
 /*
  * build an object to typed object
  */
