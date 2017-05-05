@@ -7,6 +7,9 @@ var packageObj = library.getChildPackage("interface");
 
 var interfaceAttributeName = "____Interface";
 
+/**
+ * Append interface object to base object
+ */
 var loc_getInterfaceObject = function(baseObject, createIfNotExist){
 	var interfaceObj = baseObject[interfaceAttributeName];
 	if(interfaceObj==undefined && createIfNotExist===true){
@@ -45,4 +48,3 @@ packageObj.createNode("buildInterface", buildInterface);
 packageObj.createNode("getInterface", getInterface); 
 
 })(packageObj);
-

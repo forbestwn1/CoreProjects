@@ -3,14 +3,17 @@ var packageObj = library.getChildPackage("lifecycle");
 
 (function(packageObj){
 	//get used node
+	var buildInterfaceNode = packageObj.require("common.interface.buildInterface");
+	var getInterfaceNode = packageObj.require("common.interface.getInterfaceNode");
 //*******************************************   Start Node Definition  ************************************** 	
 
+var INTERFACENAME = "lifecycle";
+	
 /*
  * utility functions to build lifecycle object
  */
-var makeObjectWithLifecycle = function(obj, name, thisContext){
-	var out = _.extend(obj, loc_createResourceLifecycle(name, thisContext));
-	return out;
+var makeObjectWithLifecycle = function(baseObject, thisContext){
+	return buildInterfaceNode.getData()(baseObject, INTERFACENAME, loc_createResourceLifecycle(thisContext, lifecycleCallback));
 };
 	
 /**
@@ -18,12 +21,12 @@ var makeObjectWithLifecycle = function(obj, name, thisContext){
  * all the thisContext for life cycle method is either loc_thisContext or this
  * the transition of status can be monitored by register event listener, so that when status transition is done, the listener will be informed
  */
-var loc_createResourceLifecycle = function(name, thisContext){
+var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	//this context for lifycycle callback method
 	var loc_thisContext = thisContext;;
 	
 	//name for this lifecycle object, it can be used in logging
-	var loc_name = name;
+//	var loc_name = name;
 	//status: start with START status
 	var loc_status = NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_START;
 	//wether lifecycle object is under transit
@@ -32,6 +35,9 @@ var loc_createResourceLifecycle = function(name, thisContext){
 	var loc_eventSource = {};
 	//empty object that is used as event listener
 	var loc_eventListener = {};
+	
+	//life cycle call back including all call back method
+	var loc_lifecycleCallback = lifecycleCallback==undefined? {}:lifecycleCallback;
 	
 	/*
 	 * get this context
@@ -62,8 +68,7 @@ var loc_createResourceLifecycle = function(name, thisContext){
 		
 		loc_inTransit = true;
 		var that = loc_getThisContext();
-		var lcObj = this.ovr_getResourceLifecycleObject();
-		var fun = lcObj[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT];
+		var fun = loc_lifecycleCallback[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT];
 		var initResult = true;      
 		if(fun!=undefined)	initResult = fun.apply(that, arguments);
 		//if return false, then waiting until finishInit is called
@@ -79,8 +84,7 @@ var loc_createResourceLifecycle = function(name, thisContext){
 		
 		loc_inTransit = true;
 		var that = loc_getThisContext();
-		var lcObj = this.ovr_getResourceLifecycleObject();
-		var fun = lcObj[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_DEACTIVE];
+		var fun = loc_lifecycleCallback[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_DEACTIVE];
 
 		var initResult = true;      
 		if(fun!=undefined)	initResult = fun.apply(that, arguments);
@@ -94,8 +98,7 @@ var loc_createResourceLifecycle = function(name, thisContext){
 		if(loc_inTransit==true)  return;
 
 		var that = loc_getThisContext();
-		var lcObj = this.ovr_getResourceLifecycleObject();
-		var fun = lcObj[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY];
+		var fun = loc_lifecycleCallback[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY];
 		
 		var initResult = true;      
 		if(fun!=undefined)	initResult = fun.apply(that, arguments);
@@ -109,8 +112,7 @@ var loc_createResourceLifecycle = function(name, thisContext){
 		if(loc_inTransit==true)  return;
 
 		var that = loc_getThisContext();
-		var lcObj = this.ovr_getResourceLifecycleObject();
-		var fun = lcObj[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_SUSPEND];
+		var fun = loc_lifecycleCallback[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_SUSPEND];
 
 		var initResult = true;      
 		if(fun!=undefined)	initResult = fun.apply(that, arguments);
@@ -124,8 +126,7 @@ var loc_createResourceLifecycle = function(name, thisContext){
 		if(loc_inTransit==true)  return;
 
 		var that = loc_getThisContext();
-		var lcObj = this.ovr_getResourceLifecycleObject();
-		var fun = lcObj[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_RESUME];
+		var fun = loc_lifecycleCallback[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_RESUME];
 
 		var initResult = true;      
 		if(fun!=undefined)	initResult = fun.apply(that, arguments);
@@ -214,7 +215,6 @@ var loc_createResourceLifecycle = function(name, thisContext){
 			nosliwEventUtility.unregister(listener);
 		},
 		
-//		ovr_getResourceLifecycleObject : function(){},
 	};
 
 	loc_constructor = function(){
