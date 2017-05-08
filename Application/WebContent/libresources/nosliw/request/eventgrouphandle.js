@@ -1,8 +1,16 @@
+//get/create package
+var packageObj = library.getChildPackage("event");    
+
+(function(packageObj){
+	//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
+
 /**
  * this is object that handler multiple event related with request
  * it wait until request is finished, then it emitt event 
  */
-var nosliwCreateRequestEventGroupHandler = function(eventHandler, registerElementEventFunction, thisContext){
+var createRequestEventGroupHandler = function(eventHandler, registerElementEventFunction, thisContext){
 	
 	//sync task name for remote call 
 	var loc_moduleName = "requestEventGroup";
@@ -111,3 +119,9 @@ var nosliwCreateRequestEventGroupHandler = function(eventHandler, registerElemen
 	return loc_out;
 		
 };
+
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("createRequestEventGroupHandler", createRequestEventGroupHandler); 
+
+})(packageObj);

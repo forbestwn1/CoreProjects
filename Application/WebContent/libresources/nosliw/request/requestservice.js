@@ -1,7 +1,14 @@
+//get/create package
+var packageObj = library.getChildPackage("request");    
+
+(function(packageObj){
+	//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
 /**
  * create request info for atom service
  */
-var nosliwCreateServiceRequestInfoService = function(service, handlers, requester_parent){
+var createServiceRequestInfoService = function(service, handlers, requester_parent){
 	
 	var loc_constructor = function(service, handlers, requester_parent){
 		//dependent service
@@ -81,13 +88,8 @@ var nosliwCreateServiceRequestInfoService = function(service, handlers, requeste
 };
 
 
-/*
- * information about child service
- * child service and parent have the same reqeuster
- * 		requestInfo : 	request infor for child service
- * 		processor: 		do something after child request return
- */
-NosliwDependentServiceRequestInfo = function(requestInfo, processors){
-	this.requestInfo = requestInfo;
-	this.processors = processors;
-};
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("createServiceRequestInfoService", createServiceRequestInfoService); 
+
+})(packageObj);

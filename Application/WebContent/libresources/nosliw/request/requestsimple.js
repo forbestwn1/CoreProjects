@@ -1,7 +1,14 @@
+//get/create package
+var packageObj = library.getChildPackage("request");    
+
+(function(packageObj){
+	//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
 /**
  * 
  */
-var nosliwCreateRequestSimple = function(service, processor, handlers, requester_parent){
+var createServiceRequestInfoSimple = function(service, processor, handlers, requester_parent){
 
 	var loc_processorFun = processor;
 	
@@ -26,3 +33,9 @@ var nosliwCreateRequestSimple = function(service, processor, handlers, requester
 	
 	return loc_out;
 };
+
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("createServiceRequestInfoSimple", createServiceRequestInfoSimple); 
+
+})(packageObj);

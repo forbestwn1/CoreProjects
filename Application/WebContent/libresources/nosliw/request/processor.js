@@ -1,5 +1,11 @@
+//get/create package
+var packageObj = library;    
 
-var nosliwCreateRequestServiceManager = function(){
+(function(packageObj){
+	//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
+var requestServiceProcessor = function(){
 
 	var loc_moduleName = "requestManager";
 	
@@ -84,4 +90,10 @@ var nosliwCreateRequestServiceManager = function(){
 	loc_out = nosliwLifecycleUtility.makeResourceObject(loc_out, loc_moduleName);
 
 	return loc_out;
-};
+}();
+
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("requestServiceProcessor", requestServiceProcessor); 
+
+})(packageObj);

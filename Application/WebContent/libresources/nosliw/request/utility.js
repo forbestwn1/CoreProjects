@@ -1,5 +1,11 @@
+//get/create package
+var packageObj = library;    
 
-var nosliwRequestUtility = function(){
+(function(packageObj){
+	//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
+var utility = function(){
 	var loc_out = {
 			/**
 			 * last one in argus should be request info
@@ -141,3 +147,8 @@ var nosliwRequestUtility = function(){
 	return loc_out;
 }();
 
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("utility", utility); 
+
+})(packageObj);

@@ -1,3 +1,10 @@
+//get/create package
+var packageObj = library.getChildPackage("request");    
+
+(function(packageObj){
+	//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
 /**
  * a group of requests that will be processed one by one
  * for cases that have uncertain request consequence when request group is created (or next request is depend on previous request result)
@@ -9,7 +16,7 @@
  * 		request info :	used as next request info
  * 		array:			used as a array of request info	
  */
-var nosliwCreateRequestSequence = function(service, handlers, requester_parent){
+var createServiceRequestInfoSequence = function(service, handlers, requester_parent){
 
 	var loc_startOutDataName = "startOutDataName";
 	
@@ -178,3 +185,9 @@ var nosliwCreateRequestSequence = function(service, handlers, requester_parent){
 	
 	return loc_out;
 };
+
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("createServiceRequestInfoSequence", createServiceRequestInfoSequence); 
+
+})(packageObj);
