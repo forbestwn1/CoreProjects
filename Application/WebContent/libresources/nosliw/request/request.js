@@ -169,18 +169,6 @@ var nosliwCreateServiceRequestInfoCommon = function(service, handlers, requester
 			setType : function(type){this.pri_type=type;},
 			
 			/*
-			 * make child request in accordance with parent request
-			 */
-			buildChildRequest : function(childRequestInfo){
-				//set dependent request id based on parent request id
-				childRequestInfo.setId(this.getId());
-				//set dependent requester base on parent requester
-				childRequestInfo.setRequester(this.getRequester());
-				
-				childRequestInfo.setParentRequest(this);
-			},
-			
-			/*
 			 * get/set meta data 
 			 */
 			getParms : function(){ return this.pri_metaData.pri_parmData; },
