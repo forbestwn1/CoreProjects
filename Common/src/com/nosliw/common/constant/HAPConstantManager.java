@@ -59,12 +59,40 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 		new HAPClassFilter(){
 			@Override
 			protected void process(Class checkClass, Object data) {
-				Field[] fields = checkClass.getDeclaredFields();
+				
+				if(checkClass.toString().endsWith("HAPOperand")){
+					int kkkkk = 555;
+					kkkkk++;
+				}
+				
+				if(checkClass.getName().endsWith("HAPExpressionImp")){
+					int kkkk = 555;
+					kkkk++;
+				}
+				
+				
+				Field[] fields = null;
+				
+				try{
+					fields =checkClass.getDeclaredFields();
+				}
+				catch(Throwable e){
+					e.printStackTrace();
+					int kkkk = 555;
+					kkkk++;
+				}
+						
 				for(Field field : fields){
 					String fieldName = field.getName();
 					if(field.isAnnotationPresent(HAPAttribute.class)){
 						try {
 							String constantValue = field.get(null).toString();
+							
+							if(checkClass.getName().equals("com.nosliw.data.core.expression.HAPExpression")){
+								int kkkk = 555;
+								kkkk++;
+							}
+
 							String baseName = HAPConstantUtility.getBaseName(checkClass);
 							String constantName = HAPNamingConversionUtility.cascadeNameSegment(baseName, fieldName);
 							HAPConstantInfo constantInfo = HAPConstantInfo.build(constantName, constantValue);

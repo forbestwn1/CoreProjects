@@ -10,7 +10,7 @@ import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeVersion;
 import com.nosliw.data.core.HAPInfo;
 
-@HAPEntityWithAttribute(parent="com.nosliw.data.HAPDataType")
+@HAPEntityWithAttribute(parent="com.nosliw.data.core.HAPDataType")
 public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataType{
 
 	public HAPDataTypeImp(){}

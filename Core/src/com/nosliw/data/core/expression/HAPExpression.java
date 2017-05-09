@@ -3,12 +3,14 @@ package com.nosliw.data.core.expression;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 /**
  * Expression object we get after processing HAPExpressionInfo
  *  
  */
+@HAPEntityWithAttribute(baseName="EXPRESSION")
 public interface HAPExpression {
 
 	@HAPAttribute

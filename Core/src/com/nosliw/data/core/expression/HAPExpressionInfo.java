@@ -3,6 +3,7 @@ package com.nosliw.data.core.expression;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPInfo;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -11,6 +12,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
  * ExpressionInfo is the basic unit to define a expression 
  * All information required when describe a expression
  */
+@HAPEntityWithAttribute(baseName="EXPRESSIONINFO")
 public interface HAPExpressionInfo {
 
 	@HAPAttribute

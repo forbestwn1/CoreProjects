@@ -76,6 +76,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	 * As we we only need to keep the parent data type only 
 	 */
 	public void buildNormalizedVariablesInfo(HAPDataTypeHelper dataTypeHelper){
+		//normalize all variables
 		this.m_normalizedVarsInfo = new LinkedHashMap<String, HAPDataTypeCriteria>();
 		for(String varName : this.m_varsInfo.keySet()){
 			HAPDataTypeCriteria criteria = this.m_varsInfo.get(varName);

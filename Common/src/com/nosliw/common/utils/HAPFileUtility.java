@@ -71,7 +71,14 @@ public class HAPFileUtility {
  
 			// if file doesnt exists, then create it
 			if (!file.exists()) {
-				file.createNewFile();
+				try{
+					file.createNewFile();
+				}
+				catch(Exception e){
+					e.printStackTrace();
+					int kkkk = 555;
+					kkkk++;
+				}
 			}
  
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());

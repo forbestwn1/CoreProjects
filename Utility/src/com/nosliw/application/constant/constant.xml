@@ -111,15 +111,6 @@
 			<definition name="OPERAND_OPERATION_ATTRIBUTE" value="attribute"/>
 			<definition name="OPERAND_PATH_PATH" value="path"/>
 			<definition name="OPERAND_PATH_BASEDATA" value="baseData"/>
-	 		<definition name="EXPRESSION_EXPRESSION" value="expression"/>
-			<definition name="EXPRESSION_OPERAND" value="operand"/>
-			<definition name="EXPRESSION_VARIABLESINFO" value="variablesInfo"/>
-			<definition name="EXPRESSION_CONSTANTS" value="constant"/>
-	 		<definition name="EXPRESSION_SCRIPTRUNNALBE" value="scriptRunnable"/>
-			<definition name="EXPRESSION_ALLDATATYPEINFOS" value="allDataTypeInfos"/>
-	 		<definition name="EXPRESSIONINFO_EXPRESSION" value="expression"/>
-	 		<definition name="EXPRESSIONINFO_CONSTANTS" value="constants"/>
-	 		<definition name="EXPRESSIONINFO_VARIABLESINFO" value="variablesInfo"/>
 			<definition type="space"/>
 			<definition name="ENTITYNAME_ATTRIBUTENAME" value="ENTITYNAME_ATTRIBUTENAME"/>
 		</definitions>

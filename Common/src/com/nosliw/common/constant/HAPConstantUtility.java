@@ -32,10 +32,12 @@ public class HAPConstantUtility {
 			}
 		}
 		else{
+			//get base from parent class first
 			Class superCs = cs.getSuperclass();
 			if(superCs!=null){
 				out = getBaseName(superCs);
 				if(HAPBasicUtility.isStringEmpty(out)){
+					//if not found, then get from interface
 					Class[] infs = cs.getInterfaces();
 					for(Class inf : infs){
 						out = getBaseName(inf);
