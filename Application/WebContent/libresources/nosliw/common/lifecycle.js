@@ -12,8 +12,8 @@ var INTERFACENAME = "lifecycle";
 /*
  * utility functions to build lifecycle object
  */
-var makeObjectWithLifecycle = function(baseObject, thisContext){
-	return buildInterfaceNode.getData()(baseObject, INTERFACENAME, loc_createResourceLifecycle(thisContext, lifecycleCallback));
+var makeObjectWithLifecycle = function(baseObject, lifecycleCallback, thisContext){
+	return buildInterfaceNode.getData()(baseObject, INTERFACENAME, loc_createResourceLifecycle(thisContext==undefined?baseObject:thisContext, lifecycleCallback));
 };
 	
 /**
@@ -23,7 +23,7 @@ var makeObjectWithLifecycle = function(baseObject, thisContext){
  */
 var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	//this context for lifycycle callback method
-	var loc_thisContext = thisContext;;
+	var loc_thisContext = thisContext;
 	
 	//name for this lifecycle object, it can be used in logging
 //	var loc_name = name;
@@ -43,9 +43,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	 * get this context
 	 */
 	var loc_getThisContext = function(){
-		var that = loc_thisContext;
-		if(that==undefined)		that = this;
-		return that;
+		return loc_thisContext;
 	};
 
 	/*

@@ -57,6 +57,9 @@ var basicUtility =
 			if(_.isString(data) || _.isNumber(data) || _.isBoolean(data))  return true;
 		},
 		
+		capitalizeFirstLetter : function(string) {
+		    return string.charAt(0).toUpperCase() + string.slice(1);
+		}		
 };
 
 //*******************************************   End Node Definition  ************************************** 	

@@ -3,6 +3,7 @@ var packageObj = library.getChildPackage("interface");
 
 (function(packageObj){
 	//get used node
+	var basicUtilityNode = packageObj.require("common.utility.basicUtility");
 //*******************************************   Start Node Definition  ************************************** 	
 
 var interfaceAttributeName = "____Interface";
@@ -32,6 +33,9 @@ var buildInterface = function(baseObject, name, newInterfaceObj){
 	newInterfaceObj.getBaseObject = function(){
 		return baseObject;
 	};
+
+	//store interface object as attribute of baseObject
+	baseObject["interfaceObject"+basicUtilityNode.getData().capitalizeFirstLetter(name)] = newInterfaceObj;
 	
 	interfaceObj[name] = newInterfaceObj;
 	return baseObject;
