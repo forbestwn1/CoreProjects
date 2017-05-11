@@ -6,7 +6,9 @@ var packageObj = library.getChildPackage("request");
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
- * create request info for atom service
+ * This type of request is for service that is depend on another service 
+ * Another service would do the most job
+ * Once another service done its job, this service's handler will be called
  */
 var createServiceRequestInfoService = function(service, handlers, requester_parent){
 	

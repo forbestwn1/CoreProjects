@@ -54,6 +54,7 @@ var requestServiceProcessor = function(){
 				}
 				else{
 					nosliwLogging.info(loc_moduleName, requestInfo.getInnerId(), "Finish request by creating remote request info object Id :", remoteTask.requestId);
+					//return the remote task, let the call to decide what to do with remoteTask
 					return remoteTask;
 				}
 			}
