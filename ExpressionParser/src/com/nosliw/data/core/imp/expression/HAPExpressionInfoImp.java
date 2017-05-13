@@ -35,10 +35,10 @@ public class HAPExpressionInfoImp extends HAPStringableValueEntity implements HA
 	public Map<String, HAPData> getConstants(){return this.getMapAncestorByPath(CONSTANTS).getMapValue();}
 
 	@Override
-	public Map<String, HAPDataTypeCriteria> getVariables() {
+	public Map<String, HAPDataTypeCriteria> getVariableCriterias() {
 		if(this.m_variabesWithSolidCriteria == null){
 			this.m_variabesWithSolidCriteria = new LinkedHashMap<String, HAPDataTypeCriteria>(); 
-			Map<String, HAPDataTypeCriteria> vars = this.getMapAncestorByPath(VARIABLES).getMapValue();
+			Map<String, HAPDataTypeCriteria> vars = this.getMapAncestorByPath(VARIABLECRITERIAS).getMapValue();
 			for(String varName : vars.keySet()){
 				m_variabesWithSolidCriteria.put(varName, ((HAPDataTypeCriteriaWrapperLiterate)vars.get(varName)).getSolidCriteria());
 			}

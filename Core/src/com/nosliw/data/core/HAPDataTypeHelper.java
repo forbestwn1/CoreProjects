@@ -1,6 +1,5 @@
 package com.nosliw.data.core;
 
-import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -102,6 +101,6 @@ public interface HAPDataTypeHelper {
 	 * @param to
 	 * @return
 	 */
-	Map<HAPDataTypeId, HAPRelationship> buildConvertor(HAPDataTypeCriteria from, HAPDataTypeCriteria to);
+	HAPConverters buildConvertor(HAPDataTypeCriteria from, HAPDataTypeCriteria to);
 	
 }

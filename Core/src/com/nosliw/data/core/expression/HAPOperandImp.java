@@ -9,6 +9,7 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -64,6 +65,26 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		this.buildJsonMap(jsonMap, typeJsonMap);
 	}
+	
+	/**
+	 * "And" two criteria and create output. If the "And" result is empty, then set error  
+	 * @param criteria
+	 * @param expectCriteria
+	 * @param context
+	 * @return
+	 */
+	protected HAPConverters isConvertable(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context, HAPDataTypeHelper dataTypeHelper){
+		if(expectCriteria==null)   return null;
+		
+		HAPConverters out = dataTypeHelper.buildConvertor(criteria, expectCriteria);
+		if(out==null){
+			//not able to convert, then error
+			context.setFailure("Error");
+		}
+		return out;
+	}
+	
+	
 	/**
 	 * "And" two criteria and create output. If the "And" result is empty, then set error  
 	 * @param criteria

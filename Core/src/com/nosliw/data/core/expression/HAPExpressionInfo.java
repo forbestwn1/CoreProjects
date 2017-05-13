@@ -28,7 +28,7 @@ public interface HAPExpressionInfo {
 	public static String CONSTANTS = "constants";
 	
 	@HAPAttribute
-	public static String VARIABLES = "variables";
+	public static String VARIABLECRITERIAS = "variableCriterias";
 	
 	@HAPAttribute
 	public static String REFERENCES = "references";
@@ -46,7 +46,7 @@ public interface HAPExpressionInfo {
 	Map<String, HAPData> getConstants();
 	
 	//variables definition
-	Map<String, HAPDataTypeCriteria> getVariables();
+	Map<String, HAPDataTypeCriteria> getVariableCriterias();
 	
 	//references definition
 	Map<String, HAPReferenceInfo> getReferences();

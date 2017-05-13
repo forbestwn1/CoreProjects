@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
@@ -36,12 +36,13 @@ public interface HAPOperand {
 	/**
 	 * Try best to process operand in order to discovery
 	 * 		Variables:	narrowest variable criteria
-	 * 		Output data type criteria: 
+	 * 		Converter for the gap between output criteria and expect criteria
+	 * 		Output criteria
 	 * @param variablesInfo  all the variables info in context
 	 * @param expectCriteria expected output criteria for this operand
-	 * @return  output criteria
+	 * @return  converter from output criteria to expect criteria
 	 */
-	HAPDataTypeCriteria discover(Map<String, HAPDataTypeCriteria> variablesInfo,
+	HAPConverters discover(Map<String, HAPVariableInfo> variablesInfo,
 										HAPDataTypeCriteria expectCriteria,
 										HAPProcessVariablesContext context, 
 										HAPDataTypeHelper dataTypeHelper);

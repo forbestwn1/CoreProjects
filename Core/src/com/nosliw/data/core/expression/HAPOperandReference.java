@@ -3,6 +3,7 @@ package com.nosliw.data.core.expression;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
@@ -43,27 +44,28 @@ public class HAPOperandReference extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria discover(
-			Map<String, HAPDataTypeCriteria> variablesInfo,
-			HAPDataTypeCriteria expectCriteria,
+	public HAPConverters discover(
+			Map<String, HAPVariableInfo> variablesInfo,
+			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessVariablesContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		//expression var info
 		for(String varName : this.m_expression.getVariables().keySet()){
-			HAPDataTypeCriteria referenceVar = this.m_expression.getVariables().get(varName);
-			HAPDataTypeCriteria parentVar = variablesInfo.get(varName);
-			if(parentVar==null)   parentVar = HAPDataTypeCriteriaAny.getCriteria();
-			
-			HAPDataTypeCriteria criteria = dataTypeHelper.and(referenceVar, parentVar);
-			variablesInfo.put(varName, criteria);
+			HAPVariableInfo referenceVar = this.m_expression.getVariables().get(varName);
+			HAPVariableInfo parentVar = variablesInfo.get(varName);
+			if(parentVar==null){
+				parentVar = new HAPVariableInfo(referenceVar.getCriteria());
+			}
+			else{
+				HAPDataTypeCriteria criteria = dataTypeHelper.and(referenceVar, parentVar);
+			}
+			variablesInfo.put(varName, parentVar);
 		}
 		
 		//clear variables info in expression 
 		this.m_expression.getVariables().clear();
 			
-		HAPDataTypeCriteria out = this.m_expression.getOperand().discover(variablesInfo, expectCriteria, context, dataTypeHelper);
-		this.setDataTypeCriteria(out);
-		return out;
+		return this.m_expression.getOperand().discover(variablesInfo, expectCriteria, context, dataTypeHelper);
 	}
 
 	@Override

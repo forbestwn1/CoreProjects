@@ -4,7 +4,8 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.HAPConverters;
+import com.nosliw.data.core.HAPDataTypeHelper;
 
 /**
  * Expression object we get after processing HAPExpressionInfo
@@ -32,8 +33,16 @@ public interface HAPExpression {
 	HAPOperand getOperand();
 	
 	//Variables infos
-	Map<String, HAPDataTypeCriteria> getVariables();
+	Map<String, HAPVariableInfo> getVariables();
 
+	//value for each variable, this converter help to convert to variable criteria 
+	Map<String, HAPConverters> getVariableConverters();
+	
 	//error message used to indicate whether the expression is successfully processed
 	String[] getErrorMessages();
+
+	//discover variable infor in expression
+	//
+	void discover(Map<String, HAPVariableInfo> expectVariablesInfo, HAPProcessVariablesContext context,	HAPDataTypeHelper dataTypeHelper);
+	
 }

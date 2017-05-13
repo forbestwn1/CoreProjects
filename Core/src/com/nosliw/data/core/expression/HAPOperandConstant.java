@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataUtility;
@@ -37,7 +38,6 @@ public class HAPOperandConstant extends HAPOperandImp{
 	
 	public void setData(HAPData data){ 
 		this.m_data = data;
-		this.setDataTypeCriteria(new HAPDataTypeCriteriaElementId(this.m_data.getDataTypeId()));
 	}
 	
 	@Override
@@ -55,13 +55,14 @@ public class HAPOperandConstant extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria discover(
-			Map<String, HAPDataTypeCriteria> variablesInfo,
+	public HAPConverters discover(
+			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessVariablesContext context,
 			HAPDataTypeHelper dataTypeHelper) {
-		this.validate(this.getDataTypeCriteria(), expectCriteria, context, dataTypeHelper);
-		return this.getDataTypeCriteria();
+		//set output criteria
+		this.setDataTypeCriteria(new HAPDataTypeCriteriaElementId(this.m_data.getDataTypeId()));
+		return this.isConvertable(this.getDataTypeCriteria(), expectCriteria, context, dataTypeHelper);
 	}
 
 	@Override

@@ -3,15 +3,18 @@ package com.nosliw.data.core.expression;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
 
 public class HAPOperandVariable extends HAPOperandImp{
 
 	public final static String VARIABLENAME = "variableName";
 	
 	protected String m_variableName;
+	
+	//store the expectDataTypeCriteria from last time. So that we may bypass discover if  
+	private HAPDataTypeCriteria m_expectDataTypeCriteria;
 	
 //	protected HAPDataTypeCriteria m_dataTypeCriteria;
 
@@ -36,18 +39,42 @@ public class HAPOperandVariable extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria discover(
-			Map<String, HAPDataTypeCriteria> variablesInfo,
+	public HAPConverters discover(
+			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessVariablesContext context,
 			HAPDataTypeHelper dataTypeHelper) {
-		HAPDataTypeCriteria variableDef = variablesInfo.get(this.getVariableName());
-		if(variableDef==null)   variableDef = HAPDataTypeCriteriaAny.getCriteria();
+		HAPVariableInfo variableInfo = variablesInfo.get(this.getVariableName());
+		if(variableInfo==null){
+			//found a new variable
+			variableInfo = new HAPVariableInfo();
+			variablesInfo.put(m_variableName, variableInfo);
+		}
 		
-		HAPDataTypeCriteria dataTypeCriteria = this.validate(variableDef, expectCriteria, context, dataTypeHelper);
-		variablesInfo.put(m_variableName, dataTypeCriteria);
-		this.setDataTypeCriteria(dataTypeCriteria);
-		return this.getDataTypeCriteria();
+		if(variableInfo.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN)){
+			//if variable info is open, calculate new criteria for this variable
+			if(expectCriteria==null){
+				
+			}
+			else if(variableInfo.getCriteria()==null){
+				variableInfo.setCriteria(expectCriteria);
+			}
+			else{
+				HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.and(dataTypeHelper.looseCriteria(variableInfo.getCriteria()), dataTypeHelper.looseCriteria(expectCriteria));
+				if(adjustedCriteria==null){
+					context.addMessage("error");
+					return null;
+				}
+				else{
+					variableInfo.setCriteria(adjustedCriteria);
+				}
+			}
+		}
+		
+		//set output criteria
+		this.setDataTypeCriteria(variableInfo.getCriteria());
+		//cal converter
+		return this.isConvertable(variableInfo.getCriteria(), expectCriteria, context, dataTypeHelper);
 	}
 
 	@Override

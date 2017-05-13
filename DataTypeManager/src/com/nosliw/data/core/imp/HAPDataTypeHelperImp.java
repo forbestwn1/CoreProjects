@@ -9,6 +9,7 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPDataTypeFamily;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
@@ -220,20 +221,24 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	}
 
 	@Override
-	public Map<HAPDataTypeId, HAPRelationship> buildConvertor(HAPDataTypeCriteria from, HAPDataTypeCriteria to) {
+	public HAPConverters buildConvertor(HAPDataTypeCriteria from, HAPDataTypeCriteria to) {
 		Set<HAPDataTypeId> toDataTypeIds = this.normalize(to.getValidDataTypeId(this));
 		Set<HAPDataTypeId> fromDataTypeIds = from.getValidDataTypeId(this);
 		
-		Map<HAPDataTypeId, HAPRelationship> out = new LinkedHashMap<HAPDataTypeId, HAPRelationship>();
+		HAPConverters out = new HAPConverters();
 		for(HAPDataTypeId fromDataTypeId : fromDataTypeIds){
 			boolean found = false;
 			for(HAPDataTypeId toDataTypeId : toDataTypeIds){
 				HAPRelationship relationship = this.compatibleWith(fromDataTypeId, toDataTypeId);
 				if(relationship!=null){
-					out.put(fromDataTypeId, relationship);
+					out.addItem(fromDataTypeId, relationship);
 					found = true;
 					break;
 				}					
+			}
+			if(found==false){
+				//if one data type cannot convert to any destination, then return null, that mean it fails
+				return null;
 			}
 		}
 		return out;

@@ -7,6 +7,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
@@ -56,8 +57,10 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria discover(Map<String, HAPDataTypeCriteria> variablesInfo,
-			HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context,
+	public HAPConverters discover(
+			Map<String, HAPVariableInfo> variablesInfo,
+			HAPDataTypeCriteria expectCriteria, 
+			HAPProcessVariablesContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		return null;
 	}

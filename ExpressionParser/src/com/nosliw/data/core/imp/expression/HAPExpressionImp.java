@@ -8,12 +8,18 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
+import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionInfo;
 import com.nosliw.data.core.expression.HAPOperand;
+import com.nosliw.data.core.expression.HAPProcessVariablesContext;
+import com.nosliw.data.core.expression.HAPVariableInfo;
 
 /**
  * Parsed expression 
@@ -31,17 +37,22 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	
 	// store all variable information in expression (variable name -- variable data type infor)
 	// for variable that we don't know data type, its value in this map is null
-	private Map<String, HAPDataTypeCriteria> m_varsInfo;
+	private Map<String, HAPVariableInfo> m_varsInfo;
 	
 	//normalized variable information -- variable criteria with root from data type
-	private Map<String, HAPDataTypeCriteria> m_normalizedVarsInfo;
+//	private Map<String, HAPDataTypeCriteria> m_normalizedVarsInfo;
 	
 	public HAPExpressionImp(HAPExpressionInfo expressionInfo, HAPOperand operand){
 		this.m_errorMsgs = new ArrayList<String>();
 		this.m_expressionInfo = expressionInfo;
 		this.m_operand = operand;
-		this.m_varsInfo = new LinkedHashMap<String, HAPDataTypeCriteria>();
-		this.m_varsInfo.putAll(this.m_expressionInfo.getVariables());
+		
+		//build vars info
+		this.m_varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		Map<String, HAPDataTypeCriteria> varCriterias = this.m_expressionInfo.getVariableCriterias();
+		for(String varName : varCriterias.keySet()){
+			this.m_varsInfo.put(varName, new HAPVariableInfo(varCriterias.get(varName)));
+		}
 	}
 	
 	@Override
@@ -51,10 +62,58 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	public HAPOperand getOperand() {  return this.m_operand;  }
 
 	@Override
-	public Map<String, HAPDataTypeCriteria> getVariables() {
+	public Map<String, HAPVariableInfo> getVariables() {
 		if(this.m_normalizedVarsInfo!=null)  return this.m_normalizedVarsInfo;
 		else return this.m_varsInfo;
 	}
+	
+	@Override
+	public Map<String, HAPConverters> getVariableConverters(){
+		
+	}
+	
+	@Override
+	public void discover(Map<String, HAPVariableInfo> expectVariablesInfo, HAPProcessVariablesContext context,	HAPDataTypeHelper dataTypeHelper){
+
+		//expression var info
+		for(String varName : this.getVariables().keySet()){
+			HAPVariableInfo expressionVar = this.getVariables().get(varName);
+			HAPVariableInfo expectVar = expectVariablesInfo.get(varName);
+			if(expectVar==null){
+			}
+			if(expressionVar.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_CLOSE)){
+			}
+			else{
+				HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.and(dataTypeHelper.looseCriteria(expressionVar.getCriteria()), dataTypeHelper.looseCriteria(expectVar.getCriteria()));
+				expressionVar.setCriteria(adjustedCriteria);
+			}
+		}
+		
+		//do discovery
+		Map<String, HAPDataTypeCriteria> expressionVars = new LinkedHashMap<String, HAPDataTypeCriteria>();
+		expressionVars.putAll(expression.getVariables());
+		
+		HAPProcessVariablesContext context = new HAPProcessVariablesContext();
+		Map<String, HAPDataTypeCriteria> oldVars;
+		//Do discovery until vars not change or fail 
+		do{
+			oldVars = new LinkedHashMap<String, HAPDataTypeCriteria>();
+			oldVars.putAll(expressionVars);
+			
+			context.clear();
+			System.out.println("******* Discover variables");
+			expression.getOperand().discover(expressionVars, HAPDataTypeCriteriaAny.getCriteria(), context, this.getCriteriaManager());
+		}while(!HAPBasicUtility.isEqualMaps(expressionVars, oldVars) && context.isSuccess());
+		
+		
+		
+		//merge again, cal converters
+		
+		
+		
+		
+	}
+	
 	
 	public void setVariables(Map<String, HAPDataTypeCriteria> vars){
 		this.m_varsInfo.clear();

@@ -99,6 +99,11 @@ public class HAPConstant {
 
 
 
+		public static final String EXPRESSION_VARIABLE_STATUS_OPEN = "open";
+		public static final String EXPRESSION_VARIABLE_STATUS_CLOSE = "close";
+
+
+
 		public static final String EXPRESSION_OPERAND_STATUS_NEW = "new";
 		public static final String EXPRESSION_OPERAND_STATUS_PROCESSED = "processed";
 		public static final String EXPRESSION_OPERAND_STATUS_INVALID = "invalid";

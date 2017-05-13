@@ -1,4 +1,4 @@
-<entity name="data.expression" 
+<entity name="data.expressioninfo" 
 		class="com.nosliw.data.core.imp.expression.HAPExpressionInfoImp" 
 		description="">
 		
@@ -13,7 +13,7 @@
 		<child dataType="object" subDataType="com.nosliw.data.core.HAPDataWrapper"></child>
 	</property>
 
-	<property name="variables" type="map" key="name" description="">
+	<property name="variableCriterias" type="map" key="name" description="">
 		<child dataType="object" subDataType="com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate"></child>
 	</property>
 
