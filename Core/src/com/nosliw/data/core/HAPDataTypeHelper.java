@@ -42,6 +42,16 @@ public interface HAPDataTypeHelper {
 	 */
 	HAPDataTypeCriteria and(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2);
 
+	
+	/**
+	 * Find criteria that can convert to both criteria
+	 * @param expectCriteria
+	 * @param criteria
+	 * @return
+	 */
+	HAPDataTypeCriteria merge(HAPDataTypeCriteria expectCriteria, HAPDataTypeCriteria criteria);
+	
+	
 	/**
 	 * Loose criteria so that all the data type that can be converted to this criteria are included
 	 * @param criteria

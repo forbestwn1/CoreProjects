@@ -2,9 +2,7 @@ package com.nosliw.data.core.imp;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
@@ -242,5 +240,11 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 			}
 		}
 		return out;
+	}
+
+	@Override
+	public HAPDataTypeCriteria merge(HAPDataTypeCriteria expectCriteria, HAPDataTypeCriteria criteria) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -14,8 +14,6 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionInfo;
 import com.nosliw.data.core.expression.HAPExpressionManager;
@@ -28,6 +26,7 @@ import com.nosliw.data.core.expression.HAPOperandReference;
 import com.nosliw.data.core.expression.HAPOperandVariable;
 import com.nosliw.data.core.expression.HAPProcessVariablesContext;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
+import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPExpressionManagerImp implements HAPExpressionManager{
 
@@ -104,30 +103,11 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		this.processConstants(expression.getOperand(), expression.getExpressionInfo());
 		
 		//discover variables
-		Map<String, HAPDataTypeCriteria> expressionVars = new LinkedHashMap<String, HAPDataTypeCriteria>();
-		expressionVars.putAll(expression.getVariables());
-		
+		Map<String, HAPVariableInfo> expectVariablesInfo = new LinkedHashMap<String, HAPVariableInfo>(); 
 		HAPProcessVariablesContext context = new HAPProcessVariablesContext();
-		Map<String, HAPDataTypeCriteria> oldVars;
-		//Do discovery until vars not change or fail 
-		do{
-			oldVars = new LinkedHashMap<String, HAPDataTypeCriteria>();
-			oldVars.putAll(expressionVars);
-			
-			context.clear();
-			System.out.println("******* Discover variables");
-			expression.getOperand().discover(expressionVars, HAPDataTypeCriteriaAny.getCriteria(), context, this.getCriteriaManager());
-		}while(!HAPBasicUtility.isEqualMaps(expressionVars, oldVars) && context.isSuccess());
+		expression.discover(expectVariablesInfo, null, context, this.getDataTypeHelper());
 		
-		if(context.isSuccess()){
-			expression.setVariables(expressionVars);
-			
-			//normalize variable -- for every variable criteria, find root from data type
-			//normalize operator
-			System.out.println("******* Normalize variable");
-			expression.buildNormalizedVariablesInfo(this.getCriteriaManager());
-		}
-		else{
+		if(!context.isSuccess()){
 			System.out.println("******* Error");
 			expression.addErrorMessages(context.getMessages());
 		}
@@ -205,8 +185,8 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 					Map<String, String> reverseRefVarMap = new LinkedHashMap<String, String>();
 					for(String parent : refVarMap.keySet())		reverseRefVarMap.put(refVarMap.get(parent), parent);
 					
-					Map<String, HAPDataTypeCriteria> originalVarInfos = refExpression.getVariables();
-					Map<String, HAPDataTypeCriteria> updatedVarInfos = new LinkedHashMap<String, HAPDataTypeCriteria>();
+					Map<String, HAPVariableInfo> originalVarInfos = refExpression.getVariables();
+					Map<String, HAPVariableInfo> updatedVarInfos = new LinkedHashMap<String, HAPVariableInfo>();
 					for(String originalVarName : originalVarInfos.keySet()){
 						String mappedVarName = reverseRefVarMap.get(originalVarName);
 						if(mappedVarName==null)  mappedVarName = originalVarName;
@@ -234,5 +214,5 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	}
 	
 	protected HAPExpressionParser getExpressionParser(){		return this.m_expressionParser;	}
-	protected HAPDataTypeHelper getCriteriaManager(){   return this.m_dataTypeHelper;   }
+	protected HAPDataTypeHelper getDataTypeHelper(){   return this.m_dataTypeHelper;   }
 }

@@ -47,15 +47,6 @@ public interface HAPOperand {
 										HAPProcessVariablesContext context, 
 										HAPDataTypeHelper dataTypeHelper);
 
-	/**
-	 * Normalize operand
-	 * 		Output data : change out put data according to variablesInfo
-	 * 		Create convertors 
-	 * @param variablesInfo
-	 * @return
-	 */
-	HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo, HAPDataTypeHelper dataTypeHelper);
-	
 	//operand output data type criteria
 	HAPDataTypeCriteria getDataTypeCriteria();
 	

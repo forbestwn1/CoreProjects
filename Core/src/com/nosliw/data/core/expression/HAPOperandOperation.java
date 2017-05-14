@@ -14,11 +14,8 @@ import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
-import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementRange;
 
 public class HAPOperandOperation extends HAPOperandImp{
 
@@ -50,7 +47,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 		this.m_base = base;
 		this.m_operation = operation;
 		this.m_parms = parms;
-		this.m_parmConvertors = new LinkedHashMap<String, Map<HAPDataTypeId, HAPRelationship>>();
+		this.m_parmConvertors = new LinkedHashMap<String,HAPConverters>();
 		this.processChildenOperand();
 	}
 	
@@ -59,7 +56,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 		this.m_dataTypeId = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), dataTypeIdLiterate, HAPSerializationFormat.LITERATE);
 		this.m_operation = operation;
 		this.m_parms = parms;
-		this.m_parmConvertors = new LinkedHashMap<String, Map<HAPDataTypeId, HAPRelationship>>();
+		this.m_parmConvertors = new LinkedHashMap<String, HAPConverters>();
 		this.processChildenOperand();
 	}
 
@@ -180,38 +177,5 @@ public class HAPOperandOperation extends HAPOperandImp{
 			this.setDataTypeCriteria(null);
 			return null;
 		}
-	}
-
-	@Override
-	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo, HAPDataTypeHelper dataTypeHelper){
-
-		if(this.m_dataTypeId !=null){
-			//normalize parms
-			HAPDataTypeOperation dataTypeOperation = dataTypeHelper.getOperationInfoByName(this.m_dataTypeId, m_operation);
-			Map<String, HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
-			for(String parm: this.m_parms.keySet()){
-				HAPDataTypeCriteria parmDefCriteria = parmsInfo.get(parm).getCriteria();
-				HAPOperand parmDataType = this.m_parms.get(parm);
-				if(parmDataType!=null){
-					HAPDataTypeCriteria normalizedParmCriteria = parmDataType.normalize(variablesInfo, dataTypeHelper);
-					
-					//figure out the convertor: from normalized to parmDataType
-					Map<HAPDataTypeId, HAPRelationship> relationships = dataTypeHelper.buildConvertor(normalizedParmCriteria, parmDefCriteria);
-					this.addConvertors(relationships.values());
-					if(relationships!=null){
-						this.m_convertors.put(parm, relationships);
-					}
-				}
-			}
-
-			//process base
-			if(this.m_base!=null){
-				HAPDataTypeCriteria normalizedParmCriteria = this.m_base.normalize(variablesInfo, dataTypeHelper);
-				//convertor : from normalized to this.m_dataTypeId
-				this.m_baseConvertors = dataTypeHelper.buildConvertor(normalizedParmCriteria, new HAPDataTypeCriteriaElementId(this.m_dataTypeId));
-				this.addConvertors(this.m_baseConvertors.values());
-			}
-		}
-		return this.getDataTypeCriteria();
 	}
 }

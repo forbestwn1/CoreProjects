@@ -13,11 +13,6 @@ public class HAPOperandVariable extends HAPOperandImp{
 	
 	protected String m_variableName;
 	
-	//store the expectDataTypeCriteria from last time. So that we may bypass discover if  
-	private HAPDataTypeCriteria m_expectDataTypeCriteria;
-	
-//	protected HAPDataTypeCriteria m_dataTypeCriteria;
-
 	public HAPOperandVariable(String name){
 		super(HAPConstant.EXPRESSION_OPERAND_VARIABLE);
 		this.m_variableName = name;
@@ -60,7 +55,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 				variableInfo.setCriteria(expectCriteria);
 			}
 			else{
-				HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.and(dataTypeHelper.looseCriteria(variableInfo.getCriteria()), dataTypeHelper.looseCriteria(expectCriteria));
+				HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(variableInfo.getCriteria(), expectCriteria);
 				if(adjustedCriteria==null){
 					context.addMessage("error");
 					return null;
@@ -75,11 +70,5 @@ public class HAPOperandVariable extends HAPOperandImp{
 		this.setDataTypeCriteria(variableInfo.getCriteria());
 		//cal converter
 		return this.isConvertable(variableInfo.getCriteria(), expectCriteria, context, dataTypeHelper);
-	}
-
-	@Override
-	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo, HAPDataTypeHelper dataTypeHelper){
-		this.setDataTypeCriteria(variablesInfo.get(this.getVariableName()));
-		return this.getDataTypeCriteria();
 	}
 }

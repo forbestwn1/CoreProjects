@@ -64,10 +64,4 @@ public class HAPOperandConstant extends HAPOperandImp{
 		this.setDataTypeCriteria(new HAPDataTypeCriteriaElementId(this.m_data.getDataTypeId()));
 		return this.isConvertable(this.getDataTypeCriteria(), expectCriteria, context, dataTypeHelper);
 	}
-
-	@Override
-	public HAPDataTypeCriteria normalize(Map<String, HAPDataTypeCriteria> variablesInfo, HAPDataTypeHelper dataTypeHelper){
-		return this.getDataTypeCriteria();
-	}
-	
 }

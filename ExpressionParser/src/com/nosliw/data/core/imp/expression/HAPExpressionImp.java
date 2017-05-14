@@ -14,7 +14,6 @@ import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionInfo;
 import com.nosliw.data.core.expression.HAPOperand;
@@ -39,8 +38,9 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	// for variable that we don't know data type, its value in this map is null
 	private Map<String, HAPVariableInfo> m_varsInfo;
 	
-	//normalized variable information -- variable criteria with root from data type
-//	private Map<String, HAPDataTypeCriteria> m_normalizedVarsInfo;
+	//store all the converter for every variables in this expression
+	//it convert variable from caller to variable in expression
+	private Map<String, HAPConverters> m_converters;
 	
 	public HAPExpressionImp(HAPExpressionInfo expressionInfo, HAPOperand operand){
 		this.m_errorMsgs = new ArrayList<String>();
@@ -62,20 +62,15 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	public HAPOperand getOperand() {  return this.m_operand;  }
 
 	@Override
-	public Map<String, HAPVariableInfo> getVariables() {
-		if(this.m_normalizedVarsInfo!=null)  return this.m_normalizedVarsInfo;
-		else return this.m_varsInfo;
-	}
+	public Map<String, HAPVariableInfo> getVariables() {		return this.m_varsInfo;	}
 	
 	@Override
-	public Map<String, HAPConverters> getVariableConverters(){
-		
-	}
+	public Map<String, HAPConverters> getVariableConverters(){		return this.m_converters;	}
 	
 	@Override
-	public void discover(Map<String, HAPVariableInfo> expectVariablesInfo, HAPProcessVariablesContext context,	HAPDataTypeHelper dataTypeHelper){
+	public HAPConverters discover(Map<String, HAPVariableInfo> expectVariablesInfo, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context,	HAPDataTypeHelper dataTypeHelper){
 
-		//expression var info
+		//update variables in expression
 		for(String varName : this.getVariables().keySet()){
 			HAPVariableInfo expressionVar = this.getVariables().get(varName);
 			HAPVariableInfo expectVar = expectVariablesInfo.get(varName);
@@ -84,38 +79,51 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 			if(expressionVar.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_CLOSE)){
 			}
 			else{
-				HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.and(dataTypeHelper.looseCriteria(expressionVar.getCriteria()), dataTypeHelper.looseCriteria(expectVar.getCriteria()));
+				HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(expressionVar.getCriteria(), expectVar.getCriteria());
 				expressionVar.setCriteria(adjustedCriteria);
 			}
 		}
 		
 		//do discovery
-		Map<String, HAPDataTypeCriteria> expressionVars = new LinkedHashMap<String, HAPDataTypeCriteria>();
-		expressionVars.putAll(expression.getVariables());
+		Map<String, HAPVariableInfo> expressionVars = new LinkedHashMap<String, HAPVariableInfo>();
+		expressionVars.putAll(this.getVariables());
 		
-		HAPProcessVariablesContext context = new HAPProcessVariablesContext();
-		Map<String, HAPDataTypeCriteria> oldVars;
+		HAPConverters converter = null;
+		Map<String, HAPVariableInfo> oldVars;
 		//Do discovery until vars not change or fail 
 		do{
-			oldVars = new LinkedHashMap<String, HAPDataTypeCriteria>();
+			oldVars = new LinkedHashMap<String, HAPVariableInfo>();
 			oldVars.putAll(expressionVars);
 			
 			context.clear();
-			System.out.println("******* Discover variables");
-			expression.getOperand().discover(expressionVars, HAPDataTypeCriteriaAny.getCriteria(), context, this.getCriteriaManager());
+			converter = this.getOperand().discover(expressionVars, expectCriteria, context, dataTypeHelper);
 		}while(!HAPBasicUtility.isEqualMaps(expressionVars, oldVars) && context.isSuccess());
 		
+		//merge again, cal variable converters, update expect variable
+		for(String varName : this.getVariables().keySet()){
+			HAPVariableInfo expressionVar = this.getVariables().get(varName);
+			HAPVariableInfo expectVar = expectVariablesInfo.get(varName);
+			if(expectVar==null){
+				expectVar = new HAPVariableInfo();
+				expectVar.setCriteria(expressionVar.getCriteria());
+				expectVariablesInfo.put(varName, expectVar);
+			}
+			if(expectVar.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_CLOSE)){
+			}
+			else{
+				expectVar.setCriteria(expressionVar.getCriteria());
+			}
+
+			//cal var converters
+			HAPConverters varConverters = dataTypeHelper.buildConvertor(expectVar.getCriteria(), expressionVar.getCriteria());
+			this.m_converters.put(varName, varConverters);
+		}
 		
-		
-		//merge again, cal converters
-		
-		
-		
-		
+		return converter;
 	}
 	
 	
-	public void setVariables(Map<String, HAPDataTypeCriteria> vars){
+	public void setVariables(Map<String, HAPVariableInfo> vars){
 		this.m_varsInfo.clear();
 		this.m_varsInfo.putAll(vars);
 	}
@@ -128,27 +136,6 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	public void addErrorMessage(String msg){  this.m_errorMsgs.add(msg);  } 
 	public void addErrorMessages(List<String> msgs){  this.m_errorMsgs.addAll(msgs);  } 
 	
-	/**
-	 * Build normalized variable info, then normalize operand according to normalized variables
-	 * It means reducing all the redundant data type for each variable
-	 * When a criteria has some data type that has parent belong to the same criteria, then we consider that data type as redundant
-	 * As we we only need to keep the parent data type only 
-	 */
-	public void buildNormalizedVariablesInfo(HAPDataTypeHelper dataTypeHelper){
-		//normalize all variables
-		this.m_normalizedVarsInfo = new LinkedHashMap<String, HAPDataTypeCriteria>();
-		for(String varName : this.m_varsInfo.keySet()){
-			HAPDataTypeCriteria criteria = this.m_varsInfo.get(varName);
-			if(criteria!=null){
-				this.m_normalizedVarsInfo.put(varName, criteria.normalize(dataTypeHelper));
-			}
-			else{
-				this.m_normalizedVarsInfo.put(varName, null);
-			}
-		}
-		this.getOperand().normalize(m_normalizedVarsInfo, dataTypeHelper);
-	}
-
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		this.buildJsonMap(jsonMap, typeJsonMap);
 	}
