@@ -6,7 +6,7 @@ var packageObj = library.getChildPackage("request");
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
- * 
+ * The request's process is done by a function
  */
 var createServiceRequestInfoSimple = function(service, processor, handlers, requester_parent){
 

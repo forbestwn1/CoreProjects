@@ -2,15 +2,29 @@ package com.nosliw.data.core.expression;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 /**
  * This is variable info for expression 
  */
-public class HAPVariableInfo {
+@HAPEntityWithAttribute(baseName="VARIABLEINFO")
+public class HAPVariableInfo extends HAPSerializableImp{
 
+	@HAPAttribute
+	public static String CRITERIA = "criteria";
+
+	@HAPAttribute
+	public static String STATUS = "status";
+	
 	//use stack to store all the change applied for criteria
 	private List<HAPDataTypeCriteria> m_criteriaStack = new ArrayList<HAPDataTypeCriteria>();
 	
@@ -44,4 +58,31 @@ public class HAPVariableInfo {
 		this.m_criteriaStack.add(criteria);
 	}
 	
+	@Override
+	public boolean equals(Object obj){
+		boolean out = false;
+		if(obj instanceof HAPVariableInfo){
+			HAPVariableInfo varInfo = (HAPVariableInfo)obj;
+			if(HAPBasicUtility.isEquals(m_status, varInfo.m_status) && HAPBasicUtility.isEquals(this.getCriteria(), varInfo.getCriteria())){
+				out = true;
+			}
+		}
+		return out;
+	}
+	
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		this.buildJsonMap(jsonMap, typeJsonMap);
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(STATUS, this.getStatus());
+		if(this.getCriteria()!=null){
+			jsonMap.put(CRITERIA, HAPSerializeManager.getInstance().toStringValue(this.getCriteria(), HAPSerializationFormat.LITERATE));
+		}
+	}
+	
+	@Override
+	public String toString(){		return this.toStringValue(HAPSerializationFormat.JSON);	}
 }

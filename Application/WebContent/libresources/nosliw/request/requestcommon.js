@@ -18,21 +18,23 @@ var createServiceRequestInfoCommon = function(service, handlers, requester_paren
 		var requester = undefined;
 		if(nosliwTypedObjectUtility.getObjectType(requester_parent)==NOSLIWCONSTANT.TYPEDOBJECT_TYPE_REQUEST)		parent = requester_parent;
 		else		requester = requester_parent;
+
+		//who initilize this request
+		loc_out.pri_requester = requester;
+		//set parent request
+		loc_out.setParentRequest(parent);
 		
 		//unique id for this request sequence
 		loc_out.pri_id = nosliw.generateId();
 		//unique id for each request, so that we can trace each request in log
 		loc_out.pri_innerId = nosliw.generateId();
-		//who initilize this request
-		loc_out.pri_requester = requester;
 		//what want to do 
 		loc_out.pri_service = service;
 		//original request handlers
 		if(handlers!=undefined)		loc_out.pri_handlers = handlers;
 		else loc_out.pri_handlers = {};
-		//parent request if this request is child request
-		loc_out.pri_parentRequest = undefined;
-		//store all the information for implement the request
+
+		//store all the information for implement the request (runtime)
 		loc_out.pri_metaData = {
 			//the execute information to process this request directly
 			pri_execute : undefined,
@@ -58,23 +60,20 @@ var createServiceRequestInfoCommon = function(service, handlers, requester_paren
 			pri_eventListeners : [],
 		};
 		
-		//set parent request
-		loc_out.setParentRequest(parent);
-		
 		//construct handlers
 		loc_out.pri_metaData.pri_handlers = {
 			start : loc_constructHandler("start"),
 			success : loc_constructHandler("success"),
 			error : loc_constructHandler("error"),
 			exception : loc_constructHandler("exception"),
-		}
+		};
 		
 		if(loc_out.pri_service!=undefined){
 			//copy all the service data to metaData.data
 			_.each(loc_out.pri_service.parms, function(value, name, list){
 				this[name] = value;
 			}, loc_out.pri_metaData.pri_parmData);
-		}
+		};
 		
 		//set status, trigger event, clear result
 		loc_initRequest();
@@ -90,6 +89,7 @@ var createServiceRequestInfoCommon = function(service, handlers, requester_paren
 				loc_startRequest();
 			}
 			
+			//execute configured handler
 			var handler = loc_out.pri_handlers[type];
 			var out = data;
 			if(handler!=undefined){
@@ -99,6 +99,8 @@ var createServiceRequestInfoCommon = function(service, handlers, requester_paren
 					else out = d;
 				}
 			}
+			
+			//execute configured post process
 			var postProcessors = loc_out.getPostProcessors();
 			for(var i in postProcessors){
 				var postHandler = postProcessors[i][type];

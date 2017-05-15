@@ -34,7 +34,9 @@ public class HAPOperationVarInfoImp extends HAPStringableValueEntityWithID imple
 	public HAPDataTypeCriteria getCriteria() {
 		if(this.m_criteria==null){
 			HAPDataTypeCriteriaWrapperLiterate criteriaLiterate = (HAPDataTypeCriteriaWrapperLiterate)this.getAtomicValueAncestorByPath(CRITERIA);
-			this.m_criteria = criteriaLiterate.getSolidCriteria();
+			if(criteriaLiterate!=null){
+				this.m_criteria = criteriaLiterate.getSolidCriteria();
+			}
 		}
 		return this.m_criteria;
 	}
