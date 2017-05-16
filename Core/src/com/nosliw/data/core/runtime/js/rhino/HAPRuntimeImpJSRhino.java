@@ -95,7 +95,6 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	@Override
 	public HAPData executeExpression(HAPExpression expression) {
 		
-		/*		
 		//discover required resources
 		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
 		
@@ -113,8 +112,6 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		HAPData out = this.execute(expression, scope, this.m_context);
 
 		return out;
-*/
-		return null;
 	}
 
 	private String initExecuteExpression(){

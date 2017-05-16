@@ -2,15 +2,17 @@ package com.nosliw.data.core.expression;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
-import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
+import com.nosliw.data.core.runtime.HAPResourceUtility;
 
 public class HAPExpressionUtility {
 
@@ -26,6 +28,15 @@ public class HAPExpressionUtility {
 	
 	static public Set<HAPResourceId> discoverResources(HAPExpression expression){
 		final Set<HAPResourceId> out = new HashSet<HAPResourceId>();
+		
+		//get converter resource id from var converter in expression 
+		Map<String, HAPConverters> converters = expression.getVariableConverters();
+		for(String varName : converters.keySet()){
+			for(HAPRelationship converter : converters.get(varName).getRelationships()){
+				List<HAPResourceIdConverter> conerterIds = HAPResourceUtility.getConverterResourceIdFromRelationship(converter);
+				out.addAll(conerterIds);
+			}
+		}
 		
 		processAllOperand(expression.getOperand(), out, new HAPExpressionTask(){
 			@Override
@@ -46,7 +57,7 @@ public class HAPExpressionUtility {
 
 				//converter as resource
 				for(HAPRelationship converter : operand.getConverters()){
-					List<HAPResourceIdConverter> conerterIds = HAPRuntimeJSUtility.getConverterFromRelationship(converter);
+					List<HAPResourceIdConverter> conerterIds = HAPResourceUtility.getConverterResourceIdFromRelationship(converter);
 					out.addAll(conerterIds);
 				}
 				

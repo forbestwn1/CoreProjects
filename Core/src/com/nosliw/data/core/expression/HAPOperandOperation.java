@@ -1,7 +1,9 @@
 package com.nosliw.data.core.expression;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
@@ -14,6 +16,7 @@ import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
+import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
 
@@ -87,6 +90,14 @@ public class HAPOperandOperation extends HAPOperandImp{
 		for(String parm : this.m_parms.keySet()){
 			this.addChildOperand(this.m_parms.get(parm));
 		}
+	}
+	
+	@Override
+	public Set<HAPRelationship> getConverters(){
+		Set<HAPRelationship> out = new HashSet<HAPRelationship>();
+		for(String parm : this.m_parmConvertors.keySet())			out.addAll(this.m_parmConvertors.get(parm).getRelationships());
+		if(this.m_baseConvertors!=null)  out.addAll(this.m_baseConvertors.getRelationships());
+		return out;	
 	}
 	
 	@Override

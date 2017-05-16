@@ -1,8 +1,6 @@
 package com.nosliw.data.core.expression;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,18 +23,13 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	
 	private HAPDataTypeCriteria m_outputCriteria;
 	
-	private Set<HAPRelationship> m_convertors;
-	
 	public HAPOperandImp(String type){
 		this.m_type = type;
 		this.m_children = new ArrayList<HAPOperand>();
-		this.m_convertors = new HashSet<HAPRelationship>();
 	}
 	
 	@Override
-	public Set<HAPRelationship> getConverters(){	return this.m_convertors;	}
-	protected void addConvertor(HAPRelationship convertor){  this.m_convertors.add(convertor);  }
-	protected void addConvertors(Collection<HAPRelationship> convertors){  this.m_convertors.addAll(convertors);  }
+	public Set<HAPRelationship> getConverters(){	return null;	}
 	
 	@Override
 	public String getType(){ return this.m_type;  }
