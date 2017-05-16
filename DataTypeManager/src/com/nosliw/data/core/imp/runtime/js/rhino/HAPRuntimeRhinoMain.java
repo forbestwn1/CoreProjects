@@ -42,16 +42,20 @@ public class HAPRuntimeRhinoMain {
 		HAPExpressionManagerImp expressionMan = new HAPExpressionManagerImp(new HAPExpressionParserImp(), dataTypeHelper);
 		expressionMan.importExpressionFromFolder(HAPFileUtility.getClassFolderPath(HAPRuntimeRhinoMain.class));
 		
-//		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.getExpression("expression1");
-//		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.getExpression("expression2");
-//		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.getExpression("expression3");
-//		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.getExpression("expression4");
-		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.getExpression("expression5");
-		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
+		HAPExpressionImp expression1 = (HAPExpressionImp)expressionMan.getExpression("expression1");
+		System.out.println(HAPJsonUtility.formatJson(expression1.toStringValue(HAPSerializationFormat.JSON)));
+		HAPExpressionImp expression2 = (HAPExpressionImp)expressionMan.getExpression("expression2");
+		System.out.println(HAPJsonUtility.formatJson(expression2.toStringValue(HAPSerializationFormat.JSON)));
+		HAPExpressionImp expression3 = (HAPExpressionImp)expressionMan.getExpression("expression3");
+		System.out.println(HAPJsonUtility.formatJson(expression3.toStringValue(HAPSerializationFormat.JSON)));
+		HAPExpressionImp expression4 = (HAPExpressionImp)expressionMan.getExpression("expression4");
+		System.out.println(HAPJsonUtility.formatJson(expression4.toStringValue(HAPSerializationFormat.JSON)));
+		HAPExpressionImp expression5 = (HAPExpressionImp)expressionMan.getExpression("expression5");
+		System.out.println(HAPJsonUtility.formatJson(expression5.toStringValue(HAPSerializationFormat.JSON)));
 		
 		HAPRuntimeImpJSRhino runtime = new HAPRuntimeImpJSRhino(new HAPResourceDiscoveryJSImp(), resourceMan);
 		runtime.start();
-		HAPData out = runtime.executeExpression(expression);
+		HAPData out = runtime.executeExpression(expression1);
 		runtime.close();
 	}
 }

@@ -49,7 +49,7 @@ public interface HAPDataTypeHelper {
 	 * @param criteria
 	 * @return
 	 */
-	HAPDataTypeCriteria merge(HAPDataTypeCriteria expectCriteria, HAPDataTypeCriteria criteria);
+	HAPDataTypeCriteria merge(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2);
 	
 	
 	/**

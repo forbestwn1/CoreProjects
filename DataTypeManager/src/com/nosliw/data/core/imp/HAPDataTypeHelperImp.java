@@ -243,8 +243,63 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	}
 
 	@Override
-	public HAPDataTypeCriteria merge(HAPDataTypeCriteria expectCriteria, HAPDataTypeCriteria criteria) {
-		// TODO Auto-generated method stub
-		return null;
+	public HAPDataTypeCriteria merge(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2) {
+		//find all the leafs
+		List<HAPDataTypeId> dataTypeIds1 = new ArrayList(criteria1.getValidDataTypeId(this));
+		List<HAPDataTypeId> leaves1 = this.getLeafDataTypeIds(dataTypeIds1);
+		
+		List<HAPDataTypeId> dataTypeIds2 = new ArrayList(criteria2.getValidDataTypeId(this));
+		List<HAPDataTypeId> leaves2 = this.getLeafDataTypeIds(dataTypeIds2);
+
+		//two leaves should be the same size
+		if(leaves1.size()!=leaves2.size())   return null;
+		
+		Set<HAPDataTypeId> out = new HashSet<HAPDataTypeId>();
+		for(int i=0; i<leaves1.size(); i++){
+			boolean match = false;
+			for(int j=0; j<leaves2.size(); j++){
+				if(this.compatibleWith(leaves1.get(i), leaves2.get(i))!=null){
+					match = true;
+					out.add(leaves2.get(i));
+					break;
+				}
+				else if(this.compatibleWith(leaves2.get(i), leaves1.get(i))!=null){
+					match = true;
+					out.add(leaves1.get(i));
+					break;
+				}
+			}
+			if(match==false)   return null;
+		}
+		
+		return new HAPDataTypeCriteriaElementIds(out);
 	}
+	
+	
+	private List<HAPDataTypeId> getLeafDataTypeIds(List<HAPDataTypeId> dataTypeIds){
+		List<HAPDataTypeId> out = new ArrayList(dataTypeIds);
+		
+		int i = 0; 
+		while(i<out.size()){
+			int j = i+1;
+			boolean increasI = true;
+			while(j<out.size()){
+				if(this.compatibleWith(out.get(j), out.get(i))!=null){
+					out.remove(j);
+				}
+				else if(this.compatibleWith(out.get(i), out.get(j))!=null){
+					out.remove(i);
+					increasI = false;
+					break;
+				}
+				else{
+					j++;
+				}
+			}
+			if(increasI)  i++;
+		}
+		return out;
+	}
+	
+	
 }
