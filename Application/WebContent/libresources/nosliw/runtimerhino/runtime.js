@@ -3,11 +3,11 @@ var packageObj = library.getChildPackage("runtime");
 
 (function(packageObj){
 	//get used node
-	var makeObjectWithLifecycleNode = packageObj.require("common.lifecycle.makeObjectWithLifecycle");
-	var createIdServiceNode = packageObj.require("common.idservice.createIdService");
-	var createLoggingServiceNode = packageObj.require("common.loggingservice.createLoggingService");
-	var createResourceServiceNode = packageObj.require("common.resourceservice.createResoruceService");
-	var createExpressionServiceNode = packageObj.require("common.resourceservice.createExpressionService");
+	var makeObjectWithLifecycleNode = packageObj.requireNode("common.lifecycle.makeObjectWithLifecycle");
+	var createIdServiceNode = packageObj.requireNode("common.idservice.createIdService");
+	var createLoggingServiceNode = packageObj.requireNode("common.loggingservice.createLoggingService");
+	var createResourceServiceNode = packageObj.requireNode("common.resourceservice.createResoruceService");
+	var createExpressionServiceNode = packageObj.requireNode("common.resourceservice.createExpressionService");
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**

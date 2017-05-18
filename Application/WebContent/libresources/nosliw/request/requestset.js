@@ -8,7 +8,7 @@ var packageObj = library.getChildPackage("request");
 /**
  * 
  */
-var createServiceRequestInfoSequenceSet = function(service, handlers, requester_parent){
+var createServiceRequestInfoSet = function(service, handlers, requester_parent){
 
 	var loc_constructor = function(service, handlers, requester_parent){
 		//all the requests   name -- request

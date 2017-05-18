@@ -1,7 +1,14 @@
+//get/create package
+var packageObj = library;    
+
+(function(packageObj){
+	//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
 /**
  * 
  */
-packageName.NOSLIWCONSTANT=
+var NOSLIWCONSTANT=
 {
 	  "SCRIPTOBJECT_VARIABLE_RESOURCEVIEW": "code",
 
@@ -138,3 +145,8 @@ packageName.NOSLIWCONSTANT=
 	  "UIRESOURCE_FUNCTION_DESTROY" : 	"destroy",
 };
 
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("NOSLIWCONSTANT", NOSLIWCONSTANT); 
+
+})(packageObj);

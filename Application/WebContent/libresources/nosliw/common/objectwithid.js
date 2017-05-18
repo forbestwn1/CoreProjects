@@ -3,8 +3,8 @@ var packageObj = library.getChildPackage("objectWithId");
 
 (function(packageObj){
 	//get used node
-	var buildInterfaceNode = packageObj.require("common.interface.buildInterface");
-	var getInterfaceNode = packageObj.require("common.interface.getInterfaceNode");
+	var buildInterfaceNode = packageObj.requireNode("common.interface.buildInterface");
+	var getInterfaceNode = packageObj.requireNode("common.interface.getInterfaceNode");
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var INTERFACENAME = "id";
@@ -26,7 +26,7 @@ var packageObj = library.getChildPackage("objectWithId");
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("makeObjectWithId", makeObjectWithType); 
-packageObj.createNode("getObjectId", getObjectType); 
+packageObj.createNode("makeObjectWithId", makeObjectWithId); 
+packageObj.createNode("getObjectId", getObjectId); 
 
 })(packageObj);

@@ -3,9 +3,9 @@ var packageObj = library.getChildPackage("setting");
 
 (function(packageObj){
 	//get used node
-	var basicUtilityNode = packageObj.require("common.utility.basicUtility");
-	var makeObjectWithTypeNode = packageObj.require("common.objectwithtype.makeObjectWithType");
-	var getObjectTypeNode = packageObj.require("common.objectwithtype.getObjectType");
+	var basicUtilityNode = packageObj.requireNode("common.utility.basicUtility");
+	var makeObjectWithTypeNode = packageObj.requireNode("common.objectwithtype.makeObjectWithType");
+	var getObjectTypeNode = packageObj.requireNode("common.objectwithtype.getObjectType");
 //*******************************************   Start Node Definition  ************************************** 	
 
 /*

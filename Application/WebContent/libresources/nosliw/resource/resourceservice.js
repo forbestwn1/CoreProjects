@@ -30,6 +30,6 @@ var createResourceService = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createLoggingService", createLoggingService); 
+packageObj.createNode("createResourceService", createResourceService); 
 
 })(packageObj);

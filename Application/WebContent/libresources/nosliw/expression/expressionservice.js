@@ -3,11 +3,6 @@ var packageObj = library;
 
 (function(packageObj){
 	//get used node
-	var makeObjectWithLifecycleNode = packageObj.require("common.lifecycle.makeObjectWithLifecycle");
-	var createIdServiceNode = packageObj.require("common.idservice.createIdService");
-	var createLoggingServiceNode = packageObj.require("common.loggingservice.createLoggingService");
-	var createResourceServiceNode = packageObj.require("common.resourceservice.createResoruceService");
-	var createExpressionServiceNode = packageObj.require("common.resourceservice.createExpressionService");
 //*******************************************   Start Node Definition  ************************************** 	
 
 	

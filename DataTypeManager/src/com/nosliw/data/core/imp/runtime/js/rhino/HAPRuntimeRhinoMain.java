@@ -54,8 +54,15 @@ public class HAPRuntimeRhinoMain {
 		System.out.println(HAPJsonUtility.formatJson(expression5.toStringValue(HAPSerializationFormat.JSON)));
 		
 		HAPRuntimeImpJSRhino runtime = new HAPRuntimeImpJSRhino(new HAPResourceDiscoveryJSImp(), resourceMan);
-		runtime.start();
-		HAPData out = runtime.executeExpression(expression1);
-		runtime.close();
+		try{
+			runtime.start();
+			HAPData out = runtime.executeExpression(expression1);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			runtime.close();
+		}
 	}
 }

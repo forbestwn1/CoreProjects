@@ -1,5 +1,5 @@
-if(nosliw===undefined)    var nosliw = {};
-
+if(nosliw===undefined) 
+{
 var nosliw = function(){
 	
 	var loc_packages = {}; 
@@ -49,7 +49,7 @@ var nosliw = function(){
 				return createPackage(path);
 			},
 			getChildPackage : function(relativePath){
-				if(relative)
+				if(relativePath==undefined)  return this;
 				return createPackage(loc_path+"."+relativePath);
 			},
 			useNode : function(nodePath){
@@ -106,7 +106,12 @@ var nosliw = function(){
 			name = nodePath.substring(index+1);
 			path = nodePath.substring(0, index);
 		}
+		return {
+			name : name,
+			path : path
+		}
 	}
 	
 	return loc_out;
 }();
+}

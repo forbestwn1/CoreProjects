@@ -3,7 +3,7 @@ var packageObj = library.getChildPackage("interface");
 
 (function(packageObj){
 	//get used node
-	var basicUtilityNode = packageObj.require("common.utility.basicUtility");
+	var basicUtilityNode = packageObj.requireNode("common.utility.basicUtility");
 //*******************************************   Start Node Definition  ************************************** 	
 
 var interfaceAttributeName = "____Interface";

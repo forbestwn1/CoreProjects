@@ -3,9 +3,9 @@ var packageObj = library.getChildPackage("objectwithtype");
 
 (function(packageObj){
 	//get used node
-	var basicUtilityNode = packageObj.require("common.utility.basicUtility");
-	var buildInterfaceNode = packageObj.require("common.interface.buildInterface");
-	var getInterfaceNode = packageObj.require("common.interface.getInterfaceNode");
+	var basicUtilityNode = packageObj.requireNode("common.utility.basicUtility");
+	var buildInterfaceNode = packageObj.requireNode("common.interface.buildInterface");
+	var getInterfaceNode = packageObj.requireNode("common.interface.getInterfaceNode");
 //*******************************************   Start Node Definition  ************************************** 	
 
 var INTERFACENAME = "TYPE";

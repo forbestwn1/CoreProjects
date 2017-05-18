@@ -1,1 +1,1 @@
-var packageName = nosliw.getPackage("constant");
+var library = nosliw.getPackage("constant");

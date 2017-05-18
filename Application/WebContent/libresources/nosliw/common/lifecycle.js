@@ -3,8 +3,8 @@ var packageObj = library.getChildPackage("lifecycle");
 
 (function(packageObj){
 	//get used node
-	var buildInterfaceNode = packageObj.require("common.interface.buildInterface");
-	var getInterfaceNode = packageObj.require("common.interface.getInterfaceNode");
+	var buildInterfaceNode = packageObj.requireNode("common.interface.buildInterface");
+	var getInterfaceNode = packageObj.requireNode("common.interface.getInterfaceNode");
 //*******************************************   Start Node Definition  ************************************** 	
 
 var INTERFACENAME = "lifecycle";

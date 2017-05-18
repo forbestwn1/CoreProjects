@@ -43,7 +43,7 @@ var newOrderedContainer = function(dataWraperArray, childDataType, keyName){
 	}
 };
 
-OrderedContainer.prototype = prototype;
+newOrderedContainer.prototype = prototype;
 
 var prototype = {
 		addData : function(data){
