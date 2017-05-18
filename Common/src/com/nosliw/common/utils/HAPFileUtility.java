@@ -121,6 +121,10 @@ public class HAPFileUtility {
 		InputStream stream = c.getResourceAsStream(fileName);
 		return stream;
 	}
+
+	public static String getFileNameOnClassPath(Class c, String fileName){
+		return c.getResource(fileName).getFile();
+	}
 	
 	public static InputStream getInputStreamFromFile(String location, String fileName){
 		InputStream stream = null;

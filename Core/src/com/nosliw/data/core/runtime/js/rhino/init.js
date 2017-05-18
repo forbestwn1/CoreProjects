@@ -1,8 +1,10 @@
 /**
  * 
  */
-var runtimeRhino = nosliw.getNode("runtimerhino.createRuntime").getData()();
+var runtimeRhino = nosliw.getNode("runtime.rhino.createRuntime").getData()();
 
 runtimeRhino.interfaceObjectLifecycle.init();
 
 nosliw.generateId = runtimeRhino.getIdService();
+
+nosliw.runtime = runtimeRhino();

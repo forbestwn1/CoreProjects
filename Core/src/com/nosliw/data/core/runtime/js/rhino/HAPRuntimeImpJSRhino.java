@@ -77,7 +77,9 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	}
 
 	private void executeStartScript(Context context, Scriptable scope){
-		String script = HAPFileUtility.readFile(HAPFileUtility.getInputStreamOnClassPath(this.getClass(), "init.js"));
+		String initJSFile = "init.js";
+		String script = HAPFileUtility.readFile(HAPFileUtility.getInputStreamOnClassPath(this.getClass(), initJSFile));
+		this.m_sciprtTracker.addFile(HAPFileUtility.getFileNameOnClassPath(getClass(), initJSFile));
 		context.evaluateString(scope, script, "<cmd>", 1, null);
 	}
 	

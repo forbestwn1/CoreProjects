@@ -1,13 +1,13 @@
 //get/create package
-var packageObj = library.getChildPackage("runtime");    
+var packageObj = library.getChildPackage("rhino");    
 
-(function(packageObj){
+nosliw.registerModule((function(packageObj){
 	//get used node
-	var makeObjectWithLifecycleNode = packageObj.requireNode("common.lifecycle.makeObjectWithLifecycle");
-	var createIdServiceNode = packageObj.requireNode("common.idservice.createIdService");
-	var createLoggingServiceNode = packageObj.requireNode("common.loggingservice.createLoggingService");
-	var createResourceServiceNode = packageObj.requireNode("common.resourceservice.createResoruceService");
-	var createExpressionServiceNode = packageObj.requireNode("common.resourceservice.createExpressionService");
+	var loc_makeObjectWithLifecycle;
+	var loc_createIdService;
+	var loc_createLoggingService;
+	var loc_createResourceService;
+	var loc_createExpressionService;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -66,4 +66,14 @@ var createRuntime = function(){
 //Register Node by Name
 packageObj.createNode("createRuntime", createRuntime); 
 
-})(packageObj);
+return {
+	start : function(packageObj){
+		loc_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
+		loc_createIdService = packageObj.getNodeData("common.idservice.createIdService");
+		loc_createLoggingService = packageObj.getNodeData("common.loggingservice.createLoggingService");
+		loc_createResourceService = packageObj.getNodeData("common.resourceservice.createResoruceService");
+		loc_createExpressionService = packageObj.getNodeData("common.resourceservice.createExpressionService");
+	}
+}
+
+})(packageObj), packageObj);

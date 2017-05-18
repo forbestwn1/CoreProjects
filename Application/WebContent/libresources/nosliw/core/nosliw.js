@@ -4,7 +4,7 @@ var nosliw = function(){
 	
 	var loc_packages = {}; 
 	
-	
+	var loc_modules = [];
 	
 	var loc_out = {
 		getPackage : function(packageName){
@@ -12,14 +12,29 @@ var nosliw = function(){
 		},
 		
 		getNode : function(nodePath){
-			var nodePathInfo = parseNod(nodePath);
+			var nodePathInfo = parseNodePath(nodePath);
 			var packageObj = createPackage(nodePathInfo.path);
 			return packageObj.useNode(nodePathInfo.name);
+		},
+		
+		getNodeData : function(nodePath){
+			return this.getNode(nodePath).getData();
 		},
 		
 		createNode : function(nodePath, nodeData){
 			var node = this.getNode(nodePath);
 			node.setData(nodeData);
+		},
+		
+		registerModule : function(module, packageObj){
+			loc_modules.push([module, packageObj]);
+		},
+		
+		initModules : function(){
+			for(var i in loc_modules){
+				var module = loc_mouldes[i];
+				module[0].start(module[1]);
+			}
 		}
 	};
 	
@@ -44,8 +59,13 @@ var nosliw = function(){
 				nodeObj.setData(nodeData);
 				return nodeObj;
 			},
-				
+			
+			prv_getNode : function(nodeName){
+				return loc_nodes[nodeName];
+			},
+			
 			getPackage : function(path){
+				if(path===undefined)  return this;
 				return createPackage(path);
 			},
 			getChildPackage : function(relativePath){
@@ -55,16 +75,18 @@ var nosliw = function(){
 			useNode : function(nodePath){
 				var nodePathInfo = parseNodePath(nodePath);
 				var packageObj = this.getPackage(nodePathInfo.path);
-				var nodeObj = packageObj[nodePathInfo.name];
+				var nodeObj = packageObj.prv_getNode(nodePathInfo.name);
 				if(nodeObj==undefined){
 					//if node does not exists, create empty one
-					nodeObj = createNode();
-					packageObj[nodePathInfo.name] = nodeObj;
+					nodeObj = packageObj.prv_createNode(nodePathInfo.name);
 				}
 				return nodeObj;
 			},
 			requireNode : function(nodePath){
 				return this.useNode(nodePath);
+			},
+			getNodeData : function(nodePath){
+				return this.useNode(nodePath).getData();
 			},
 			createNode : function(nodePath, nodeData){
 				var nodePathInfo = parseNodePath(nodePath);
@@ -72,6 +94,7 @@ var nosliw = function(){
 				var nodeName = nodePathInfo.name;
 				return nodePackage.prv_createNode(nodeName, nodeData);
 			},
+			getName : function(){return loc_path;}
 		};
 		loc_packages[path] = loc_package;
 		return loc_package;

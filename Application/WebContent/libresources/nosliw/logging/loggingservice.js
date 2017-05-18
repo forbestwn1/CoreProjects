@@ -11,7 +11,9 @@ var packageObj = library.getChildPackage("loggingservice");
 var createLoggingService = function(){
 
 	var loc_log;
-	if(log4javascript!==undefined)  loc_log = log4javascript.getDefaultLogger();
+	if(log4javascript!==undefined){
+		loc_log = log4javascript.getDefaultLogger();
+	}
 
 	loc_logging = function(arguments){
 		var out = "";
@@ -49,7 +51,7 @@ var createLoggingService = function(){
 	};
 	
 	return loc_out;
-}();
+};
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
