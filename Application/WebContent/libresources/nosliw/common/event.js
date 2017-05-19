@@ -23,7 +23,7 @@ var packageObj = library.getChildPackage("event");
 				 * register listener to source
 				 */
 				registerEvent : function(eventName, listener, handler, thisContext){
-					var listenerEventObj = getEventObject(listener);
+					var listenerEventObj = node_getEventObject(listener);
 					var sourceEventObj = loc_backboneEventObj;
 					var that = thisContext;
 					if(that==undefined)  that = this.getBaseObject();
@@ -48,7 +48,7 @@ var packageObj = library.getChildPackage("event");
 				 * stop listener from listenering any events
 				 */
 				unregister : function(listener){
-					var listenerEventObj = getEventObject(listener);
+					var listenerEventObj = node_getEventObject(listener);
 					listenerEventObj.stopListening(loc_backboneEventObj);
 				},
 				
@@ -77,11 +77,11 @@ var packageObj = library.getChildPackage("event");
 		return buildInterfaceNode.getData()(obj, INTERFACENAME, eventObj);
 	};
 	
-	var getEventObject = function(object){
+	var node_getEventObject = function(object){
 		var eventObj = getInterfaceNode.getData()(object, INTERFACENAME);
 		if(eventObj==undefined){
 			var obj = makeObjectWithEvent(object);
-			eventObj = getEventObject(obj);
+			eventObj = node_getEventObject(obj);
 		}
 	};
 
@@ -94,27 +94,27 @@ var packageObj = library.getChildPackage("event");
  * however, backbone pollute original object by adding many new attribute
  * therefore, we add an attribute to original object, and that attribute is the source and listener object for backbone
  */
-var eventUtility = 
+var node_eventUtility = 
 	{
 		/*
 		 * trigger event on source
 		 */
 		triggerEvent : function(source, eventName, data){
-			getEventObject(source).triggerEvent(eventName, data);
+			node_getEventObject(source).triggerEvent(eventName, data);
 		},
 
 		/*
 		 * register listener to source
 		 */
 		registerEvent : function(listener, source, eventName, handler, thisContext){
-			getEventObject(source).registerEvent(eventName, listener, handler, thisContext);
+			node_getEventObject(source).registerEvent(eventName, listener, handler, thisContext);
 		},
 		
 		/*
 		 * stop listener from listenering any events
 		 */
 		unregister : function(source, listener){
-			getEventObject(source).unregister(listener);
+			node_getEventObject(source).unregister(listener);
 		},
 		
 		unregisterAllListeners : function(source, listeners){
@@ -129,8 +129,8 @@ var eventUtility =
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("getEventObject", getEventObject); 
-packageObj.createNode("eventUtility", eventUtility); 
+packageObj.createNode("getEventObject", node_getEventObject); 
+packageObj.createNode("eventUtility", node_eventUtility); 
 
 var module = {
 		start : function(packageObj){

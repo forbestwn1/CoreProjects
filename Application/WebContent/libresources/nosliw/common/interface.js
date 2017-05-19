@@ -3,7 +3,7 @@ var packageObj = library.getChildPackage("interface");
 
 (function(packageObj){
 	//get used node
-	var loc_basicUtility;
+	var node_basicUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var interfaceAttributeName = "____Interface";
@@ -27,7 +27,7 @@ var loc_getInterfaceObject = function(baseObject, createIfNotExist){
 };
 
 var buildInterface = function(baseObject, name, newInterfaceObj){
-	var interfaceObj = loc_getInterfaceObject(baseObject, true);
+	var interfaceBase = loc_getInterfaceObject(baseObject, true);
 	
 	//add "getBaseObject" method to interfaceObject
 	newInterfaceObj.getBaseObject = function(){
@@ -35,9 +35,15 @@ var buildInterface = function(baseObject, name, newInterfaceObj){
 	};
 
 	//store interface object as attribute of baseObject
-	baseObject["interfaceObject"+basicUtilityNode.getData().capitalizeFirstLetter(name)] = newInterfaceObj;
+	baseObject["interfaceObject"+node_basicUtility.capitalizeFirstLetter(name)] = newInterfaceObj;
 	
-	interfaceObj[name] = newInterfaceObj;
+	interfaceBase[name] = newInterfaceObj;
+	
+	//execute bind callback (bindBaseObject)
+	if(newInterfaceObj.bindBaseObject!=undefined){
+		newInterfaceObj.bindBaseObject(baseObject);
+	}
+	
 	return baseObject;
 };
 
@@ -53,7 +59,7 @@ packageObj.createNode("getInterface", getInterface);
 
 var module = {
 		start : function(packageObj){
-			loc_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
+			node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
 		}
 };
 nosliw.registerModule(module, packageObj);

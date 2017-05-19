@@ -6,6 +6,7 @@ var packageObj = library.getChildPackage("lifecycle");
 	var node_NOSLIWCONSTANT;
 	var node_buildInterface;
 	var node_getInterface;
+	var node_eventUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var INTERFACENAME = "lifecycle";
@@ -207,25 +208,29 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 		getResourceStatus : function(){return loc_status;},
 
 		registerEventListener : function(listener, handler){
-			nosliwEventUtility.registerEvent(listener, loc_eventSource, NOSLIWCONSTANT.EVENT_EVENTNAME_ALL, handler);
+			node_eventUtility.registerEvent(listener, loc_eventSource, node_NOSLIWCONSTANT.EVENT_EVENTNAME_ALL, handler);
 		},
 
 		unregisterEventListener : function(listener){
-			nosliwEventUtility.unregister(listener);
+			node_eventUtility.unregister(listener);
 		},
 		
+		//callback method when this interface is connect to baseObject
+		bindBaseObject : function(baseObject){
+			//listener to status transit event by itself
+			loc_out.registerEventListener(loc_eventListener, function(event, data){
+				//logging ths status transit
+				//only for module with name
+
+				if(baseObject.interfaceObjectName!=null){
+					var name = baseObject.interfaceObjectName.getObjectName();
+					nosliwLogging.info(name, "status transit from " + data.oldStatus + " to " + data.newStatus);
+				}
+			});
+		}
 	};
 
 	loc_constructor = function(){
-		var name = loc_name;
-		if(name!=undefined){
-			//listener to status transit event by itself
-			//only for module with name
-			loc_out.registerEventListener(loc_eventListener, function(event, data){
-				//logging ths status transit
-				nosliwLogging.info(name, "status transit from " + data.oldStatus + " to " + data.newStatus);
-			});
-		}
 	};
 	
 	loc_constructor();
@@ -242,6 +247,7 @@ var module = {
 		node_NOSLIWCONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
 		node_buildInterface = packageObj.getNodeData("common.interface.buildInterface");
 		node_getInterface = packageObj.getNodeData("common.interface.getInterfaceNode");
+		node_eventUtility = packageObj.getNodeData("common.event.eventUtility");
 	}
 };
 nosliw.registerModule(module, packageObj);
