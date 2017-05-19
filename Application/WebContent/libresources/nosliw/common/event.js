@@ -3,6 +3,9 @@ var packageObj = library.getChildPackage("event");
 
 (function(packageObj){
 	//get used node
+	var node_NOSLIWCONSTANT;
+	var node_buildInterface;
+	var node_getInterface;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var INTERFACENAME = "EVENT";
@@ -12,6 +15,10 @@ var packageObj = library.getChildPackage("event");
 		var loc_listeners = [];
 	
 		var out = {
+				pri_getBackboneEventObj : function(){
+					return loc_backboneEventObj;
+				},
+				
 				/*
 				 * trigger event on source
 				 */
@@ -27,21 +34,21 @@ var packageObj = library.getChildPackage("event");
 					var sourceEventObj = loc_backboneEventObj;
 					var that = thisContext;
 					if(that==undefined)  that = this.getBaseObject();
-					if(eventName===undefined)  eventName = NOSLIWCONSTANT.EVENT_EVENTNAME_ALL; 
+					if(eventName===undefined)  eventName = node_NOSLIWCONSTANT.EVENT_EVENTNAME_ALL; 
 					
 					//for event in backbone.js, the parms are different depending on the event type
 					//for "all" event, the first parm is event name
 					//for other event, the first parm is the beginning of data
 					var isAllEvent = false;
-					if(NOSLIWCONSTANT.EVENT_EVENTNAME_ALL===eventName)  isAllEvent = true;
+					if(node_NOSLIWCONSTANT.EVENT_EVENTNAME_ALL===eventName)  isAllEvent = true;
 					
-					listenerEventObj.listenTo(sourceEventObj, eventName, function(event, data){
+					listenerEventObj.pri_getBackboneEventObj().listenTo(sourceEventObj, eventName, function(event, data){
 						//within this method, "this" refer to listenerEventObj
 						//we need to set "this" as source
 						if(isAllEvent===true)	handler.call(that, event, data);
 						else		handler.call(that, eventName, event);
 					});
-					listeners.push(listener);
+					loc_listeners.push(listener);
 				},
 				
 				/*
@@ -74,15 +81,16 @@ var packageObj = library.getChildPackage("event");
 	 */
 	var loc_makeObjectWithEvent = function(obj){
 		var eventObj = loc_createEventObject();
-		return buildInterfaceNode.getData()(obj, INTERFACENAME, eventObj);
+		return node_buildInterface(obj, INTERFACENAME, eventObj);
 	};
 	
 	var node_getEventObject = function(object){
-		var eventObj = getInterfaceNode.getData()(object, INTERFACENAME);
+		var eventObj = node_getInterface(object, INTERFACENAME);
 		if(eventObj==undefined){
-			var obj = makeObjectWithEvent(object);
+			var obj = loc_makeObjectWithEvent(object);
 			eventObj = node_getEventObject(obj);
 		}
+		return eventObj;
 	};
 
 /**
@@ -133,8 +141,11 @@ packageObj.createNode("getEventObject", node_getEventObject);
 packageObj.createNode("eventUtility", node_eventUtility); 
 
 var module = {
-		start : function(packageObj){
-		}
+	start : function(packageObj){
+		node_NOSLIWCONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
+		node_buildInterface = packageObj.getNodeData("common.interface.buildInterface");
+		node_getInterface = packageObj.getNodeData("common.interface.getInterface");
+	}
 };
 nosliw.registerModule(module, packageObj);
 

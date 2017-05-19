@@ -26,7 +26,7 @@ var loc_getInterfaceObject = function(baseObject, createIfNotExist){
 	return interfaceObj;
 };
 
-var buildInterface = function(baseObject, name, newInterfaceObj){
+var node_buildInterface = function(baseObject, name, newInterfaceObj){
 	var interfaceBase = loc_getInterfaceObject(baseObject, true);
 	
 	//add "getBaseObject" method to interfaceObject
@@ -47,15 +47,16 @@ var buildInterface = function(baseObject, name, newInterfaceObj){
 	return baseObject;
 };
 
-var getInterface = function(baseObject, name){
+var node_getInterface = function(baseObject, name){
 	var interfaceObj = loc_getInterfaceObject(baseObject, false);
-	return interfaceObj[name];
+	if(interfaceObj===undefined)  return undefined;
+	else return interfaceObj[name];
 };
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("buildInterface", buildInterface); 
-packageObj.createNode("getInterface", getInterface); 
+packageObj.createNode("buildInterface", node_buildInterface); 
+packageObj.createNode("getInterface", node_getInterface); 
 
 var module = {
 		start : function(packageObj){

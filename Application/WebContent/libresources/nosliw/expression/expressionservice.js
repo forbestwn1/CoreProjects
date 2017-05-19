@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library;    
+var packageObj = library.getChildPackage("expressionservice");    
 
 (function(packageObj){
 	//get used node
@@ -209,7 +209,7 @@ var loc_buildExpressionExecuteRequest = function(expression, variables, handlers
 /**
  * 
  */
-var createExpressionService = function(){
+var node_createExpressionService = function(){
 		
 	var loc_out = {
 			
@@ -227,7 +227,7 @@ var createExpressionService = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createExpressionService", createExpressionService); 
+packageObj.createNode("createExpressionService", node_createExpressionService); 
 
 	var module = {
 		start : function(packageObj){

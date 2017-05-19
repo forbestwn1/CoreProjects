@@ -9,9 +9,13 @@ var packageObj = library.getChildPackage("resourceservice");
  * Create Resource Service
  * Resrouce service manage all the resources
  */
-var createResourceService = function(){
+var node_createResourceService = function(){
 	
 	var loc_out = {
+		
+		addResource(){
+			
+		},	
 			
 		/**
 		 * 
@@ -30,7 +34,7 @@ var createResourceService = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createResourceService", createResourceService); 
+packageObj.createNode("createResourceService", node_createResourceService); 
 
 	var module = {
 		start : function(packageObj){

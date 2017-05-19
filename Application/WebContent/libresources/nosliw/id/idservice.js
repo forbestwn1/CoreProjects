@@ -1,5 +1,6 @@
 //get/create package
-var packageObj = library;    
+var packageObj = library.getChildPackage("idservice");    
+
 
 (function(packageObj){
 	//get used node
@@ -8,7 +9,7 @@ var packageObj = library;
 /**
  * 
  */
-var createIdService = function(){
+var node_createIdService = function(){
 	var loc_id = 0;
 	
 	var loc_out = {
@@ -23,11 +24,11 @@ var createIdService = function(){
 		}
 	};
 	return loc_out;
-}
+};
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createIdService", createIdService); 
+packageObj.createNode("createIdService", node_createIdService); 
 
 	var module = {
 		start : function(packageObj){

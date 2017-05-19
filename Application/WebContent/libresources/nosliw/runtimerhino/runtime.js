@@ -39,7 +39,7 @@ var createRuntime = function(){
 		},
 		
 		getResourceService(){
-			return loc_resoruceService;
+			return loc_resourceService;
 		},
 		
 		getExpressionService(){
@@ -51,10 +51,10 @@ var createRuntime = function(){
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(){
-		loc_idService = createIdServiceNode.getData()();
-		loc_loggingService = createLoggingService.getData()();
-		loc_resourceService = createResourceService.getData()();
-		loc_expressionService = createExpressionService.getData()();
+		loc_idService = node_createIdService();
+		loc_loggingService = node_createLoggingService();
+		loc_resourceService = node_createResourceService();
+		loc_expressionService = node_createExpressionService();
 	};
 	
 	node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
@@ -71,10 +71,10 @@ var module = {
 		start : function(packageObj){
 			node_NOSLIWCONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
 			node_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
-			node_createIdService = packageObj.getNodeData("common.idservice.createIdService");
-			node_createLoggingService = packageObj.getNodeData("common.loggingservice.createLoggingService");
-			node_createResourceService = packageObj.getNodeData("common.resourceservice.createResoruceService");
-			node_createExpressionService = packageObj.getNodeData("common.resourceservice.createExpressionService");
+			node_createIdService = packageObj.getNodeData("service.idservice.createIdService");
+			node_createLoggingService = packageObj.getNodeData("service.loggingservice.createLoggingService");
+			node_createResourceService = packageObj.getNodeData("service.resourceservice.createResourceService");
+			node_createExpressionService = packageObj.getNodeData("service.expressionservice.createExpressionService");
 		}
 };
 nosliw.registerModule(module, packageObj);

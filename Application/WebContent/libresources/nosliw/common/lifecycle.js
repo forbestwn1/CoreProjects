@@ -33,10 +33,11 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	var loc_status = node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_START;
 	//wether lifecycle object is under transit
 	var loc_inTransit = false;	
+
 	//empty object that is used as event source 
-	var loc_eventSource = {};
+//	var loc_eventSource = {};
 	//empty object that is used as event listener
-	var loc_eventListener = {};
+//	var loc_eventListener = {};
 	
 	//life cycle call back including all call back method
 	var loc_lifecycleCallback = lifecycleCallback==undefined? {}:lifecycleCallback;
@@ -53,7 +54,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	 */
 	var loc_finishStatusTransition = function(oldStatus, status){
 		loc_inTransit = false;
-		nosliwEventUtility.triggerEvent(loc_eventSource, node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION, {
+		node_eventUtility.triggerEvent(loc_out.getBaseObject(), node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION, {
 			oldStatus : oldStatus,
 			newStatus : status,
 		});
@@ -208,7 +209,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 		getResourceStatus : function(){return loc_status;},
 
 		registerEventListener : function(listener, handler){
-			node_eventUtility.registerEvent(listener, loc_eventSource, node_NOSLIWCONSTANT.EVENT_EVENTNAME_ALL, handler);
+			node_eventUtility.registerEvent(listener, loc_out.getBaseObject(), node_NOSLIWCONSTANT.EVENT_EVENTNAME_ALL, handler);
 		},
 
 		unregisterEventListener : function(listener){
@@ -218,7 +219,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 		//callback method when this interface is connect to baseObject
 		bindBaseObject : function(baseObject){
 			//listener to status transit event by itself
-			loc_out.registerEventListener(loc_eventListener, function(event, data){
+			loc_out.registerEventListener(baseObject, function(event, data){
 				//logging ths status transit
 				//only for module with name
 
@@ -246,7 +247,7 @@ var module = {
 	start : function(packageObj){
 		node_NOSLIWCONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
 		node_buildInterface = packageObj.getNodeData("common.interface.buildInterface");
-		node_getInterface = packageObj.getNodeData("common.interface.getInterfaceNode");
+		node_getInterface = packageObj.getNodeData("common.interface.getInterface");
 		node_eventUtility = packageObj.getNodeData("common.event.eventUtility");
 	}
 };
