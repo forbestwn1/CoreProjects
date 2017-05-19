@@ -66,4 +66,10 @@ var basicUtility =
 //Register Node by Name
 packageObj.createNode("basicUtility", basicUtility); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);

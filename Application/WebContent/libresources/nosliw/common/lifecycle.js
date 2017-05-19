@@ -3,8 +3,9 @@ var packageObj = library.getChildPackage("lifecycle");
 
 (function(packageObj){
 	//get used node
-	var buildInterfaceNode = packageObj.requireNode("common.interface.buildInterface");
-	var getInterfaceNode = packageObj.requireNode("common.interface.getInterfaceNode");
+	var node_NOSLIWCONSTANT;
+	var node_buildInterface;
+	var node_getInterface;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var INTERFACENAME = "lifecycle";
@@ -13,7 +14,7 @@ var INTERFACENAME = "lifecycle";
  * utility functions to build lifecycle object
  */
 var makeObjectWithLifecycle = function(baseObject, lifecycleCallback, thisContext){
-	return buildInterfaceNode.getData()(baseObject, INTERFACENAME, loc_createResourceLifecycle(thisContext==undefined?baseObject:thisContext, lifecycleCallback));
+	return node_buildInterface(baseObject, INTERFACENAME, loc_createResourceLifecycle(thisContext==undefined?baseObject:thisContext, lifecycleCallback));
 };
 	
 /**
@@ -28,7 +29,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	//name for this lifecycle object, it can be used in logging
 //	var loc_name = name;
 	//status: start with START status
-	var loc_status = NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_START;
+	var loc_status = node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_START;
 	//wether lifecycle object is under transit
 	var loc_inTransit = false;	
 	//empty object that is used as event source 
@@ -51,7 +52,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	 */
 	var loc_finishStatusTransition = function(oldStatus, status){
 		loc_inTransit = false;
-		nosliwEventUtility.triggerEvent(loc_eventSource, NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION, {
+		nosliwEventUtility.triggerEvent(loc_eventSource, node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION, {
 			oldStatus : oldStatus,
 			newStatus : status,
 		});
@@ -60,13 +61,13 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	//method for init event
 	var loc_onResourceInit = function(){
 		//if resource has been inited, then just do nothing
-		if(loc_status!=NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_START)   return;
+		if(loc_status!=node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_START)   return;
 		//if in transit, do nothing
 		if(loc_inTransit==true)  return;
 		
 		loc_inTransit = true;
 		var that = loc_getThisContext();
-		var fun = loc_lifecycleCallback[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT];
+		var fun = loc_lifecycleCallback[node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT];
 		var initResult = true;      
 		if(fun!=undefined)	initResult = fun.apply(that, arguments);
 		//if return false, then waiting until finishInit is called
@@ -76,13 +77,13 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	//method for init event
 	var loc_onResourceDeactive = function(){
 		//if resource is START OR DEAD, then just do nothing
-		if(loc_status==NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_START || loc_status==NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_DEAD)   return;
+		if(loc_status==node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_START || loc_status==node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_DEAD)   return;
 		//if in transit, do nothing
 		if(loc_inTransit==true)  return;
 		
 		loc_inTransit = true;
 		var that = loc_getThisContext();
-		var fun = loc_lifecycleCallback[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_DEACTIVE];
+		var fun = loc_lifecycleCallback[node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_DEACTIVE];
 
 		var initResult = true;      
 		if(fun!=undefined)	initResult = fun.apply(that, arguments);
@@ -92,11 +93,11 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	
 	//method for destroy method
 	var loc_onResourceDestroy = function(){
-		if(loc_status==NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_DEAD)   return;
+		if(loc_status==node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_DEAD)   return;
 		if(loc_inTransit==true)  return;
 
 		var that = loc_getThisContext();
-		var fun = loc_lifecycleCallback[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY];
+		var fun = loc_lifecycleCallback[node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY];
 		
 		var initResult = true;      
 		if(fun!=undefined)	initResult = fun.apply(that, arguments);
@@ -106,11 +107,11 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 
 	//method for suspend method
 	var loc_onResourceSuspend = function(){
-		if(loc_status!=NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_ACTIVE)   return;
+		if(loc_status!=node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_ACTIVE)   return;
 		if(loc_inTransit==true)  return;
 
 		var that = loc_getThisContext();
-		var fun = loc_lifecycleCallback[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_SUSPEND];
+		var fun = loc_lifecycleCallback[node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_SUSPEND];
 
 		var initResult = true;      
 		if(fun!=undefined)	initResult = fun.apply(that, arguments);
@@ -120,11 +121,11 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 
 	//method for resume method
 	var loc_onResourceResume = function(){
-		if(loc_status!=NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_SUSPENDED)   return;
+		if(loc_status!=node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_SUSPENDED)   return;
 		if(loc_inTransit==true)  return;
 
 		var that = loc_getThisContext();
-		var fun = loc_lifecycleCallback[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_RESUME];
+		var fun = loc_lifecycleCallback[node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_RESUME];
 
 		var initResult = true;      
 		if(fun!=undefined)	initResult = fun.apply(that, arguments);
@@ -139,7 +140,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 		
 		finishInit : function(){
 			var oldStatus = loc_status;
-			loc_status = NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_ACTIVE;
+			loc_status = node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_ACTIVE;
 			loc_finishStatusTransition(oldStatus, loc_status);
 		},
 		
@@ -149,7 +150,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 		
 		finishDestroy : function(){
 			var oldStatus = loc_status;
-			loc_status = NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_DEAD;
+			loc_status = node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_DEAD;
 			loc_finishStatusTransition(oldStatus, loc_status);
 		},
 		
@@ -163,11 +164,11 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 					that.unregisterEventListener(listener);
 				}
 				else{
-					if(status==NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_START){
+					if(status==node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_START){
 						that.init();
 					}
-					else if(status==NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_ACTIVE){
-						if(oldStatus==NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_SUSPENDED){
+					else if(status==node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_ACTIVE){
+						if(oldStatus==node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_SUSPENDED){
 							that.suspend();
 						}
 					}
@@ -179,7 +180,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 		
 		finishDeactive : function(){
 			var oldStatus = loc_status;
-			loc_status = NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_START;
+			loc_status = node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_START;
 			loc_finishStatusTransition(oldStatus, loc_status);
 		},
 		
@@ -189,7 +190,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 		
 		finishSuspend : function(){
 			var oldStatus = loc_status;
-			loc_status = NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_SUSPENDED;
+			loc_status = node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_SUSPENDED;
 			loc_finishStatusTransition(oldStatus, loc_status);
 		},
 		
@@ -199,7 +200,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 		
 		finishResume : function(){
 			var oldStatus = loc_status;
-			loc_status = NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_ACTIVE;
+			loc_status = node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_ACTIVE;
 			loc_finishStatusTransition(oldStatus, loc_status);
 		},
 		
@@ -236,5 +237,13 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 //Register Node by Name
 packageObj.createNode("makeObjectWithLifecycle", makeObjectWithLifecycle); 
 
-})(packageObj);
+var module = {
+	start : function(packageObj){
+		node_NOSLIWCONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
+		node_buildInterface = packageObj.getNodeData("common.interface.buildInterface");
+		node_getInterface = packageObj.getNodeData("common.interface.getInterfaceNode");
+	}
+};
+nosliw.registerModule(module, packageObj);
 
+})(packageObj);

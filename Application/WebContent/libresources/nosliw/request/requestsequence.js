@@ -190,4 +190,10 @@ var createServiceRequestInfoSequence = function(service, handlers, requester_par
 //Register Node by Name
 packageObj.createNode("createServiceRequestInfoSequence", createServiceRequestInfoSequence); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);

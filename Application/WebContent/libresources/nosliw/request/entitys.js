@@ -50,4 +50,10 @@ packageObj.createNode("Requester", Requester);
 packageObj.createNode("ServiceRequestExecuteInfo", ServiceRequestExecuteInfo); 
 packageObj.createNode("DependentServiceRequestInfo", DependentServiceRequestInfo); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);

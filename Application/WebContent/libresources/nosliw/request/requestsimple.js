@@ -38,4 +38,10 @@ var createServiceRequestInfoSimple = function(service, processor, handlers, requ
 //Register Node by Name
 packageObj.createNode("createServiceRequestInfoSimple", createServiceRequestInfoSimple); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);

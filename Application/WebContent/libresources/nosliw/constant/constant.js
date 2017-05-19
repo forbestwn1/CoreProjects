@@ -149,4 +149,10 @@ var NOSLIWCONSTANT=
 //Register Node by Name
 packageObj.createNode("NOSLIWCONSTANT", NOSLIWCONSTANT); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);

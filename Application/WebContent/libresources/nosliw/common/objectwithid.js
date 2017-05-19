@@ -3,8 +3,8 @@ var packageObj = library.getChildPackage("objectWithId");
 
 (function(packageObj){
 	//get used node
-	var buildInterfaceNode = packageObj.requireNode("common.interface.buildInterface");
-	var getInterfaceNode = packageObj.requireNode("common.interface.getInterfaceNode");
+	var loc_buildInterface;
+	var loc_getInterface;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var INTERFACENAME = "id";
@@ -25,8 +25,16 @@ var packageObj = library.getChildPackage("objectWithId");
 		
 
 //*******************************************   End Node Definition  ************************************** 	
-//Register Node by Name
-packageObj.createNode("makeObjectWithId", makeObjectWithId); 
-packageObj.createNode("getObjectId", getObjectId); 
+	//Register Node by Name
+	packageObj.createNode("makeObjectWithId", makeObjectWithId); 
+	packageObj.createNode("getObjectId", getObjectId); 
+
+	var module = {
+		start : function(packageObj){
+			loc_buildInterface = packageObj.getNodeData("common.interface.buildInterface");
+			loc_getInterface = packageObj.getNodeData("common.interface.getInterfaceNode");
+		}
+	};
+	nosliw.registerModule(module, packageObj);
 
 })(packageObj);

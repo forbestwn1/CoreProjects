@@ -32,7 +32,7 @@ var nosliw = function(){
 		
 		initModules : function(){
 			for(var i in loc_modules){
-				var module = loc_mouldes[i];
+				var module = loc_modules[i];
 				module[0].start(module[1]);
 			}
 		}

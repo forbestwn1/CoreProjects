@@ -94,4 +94,10 @@ var createServiceRequestInfoService = function(service, handlers, requester_pare
 //Register Node by Name
 packageObj.createNode("createServiceRequestInfoService", createServiceRequestInfoService); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);

@@ -1,6 +1,8 @@
 /**
  * 
  */
+nosliw.initModules();
+
 var runtimeRhino = nosliw.getNode("runtime.rhino.createRuntime").getData()();
 
 runtimeRhino.interfaceObjectLifecycle.init();

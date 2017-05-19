@@ -136,4 +136,10 @@ nosliwCreateRequestSetResult = function(){
 //Register Node by Name
 packageObj.createNode("createServiceRequestInfoSet", createServiceRequestInfoSet); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);

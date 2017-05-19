@@ -3,9 +3,9 @@ var packageObj = library.getChildPackage("setting");
 
 (function(packageObj){
 	//get used node
-	var basicUtilityNode = packageObj.requireNode("common.utility.basicUtility");
-	var makeObjectWithTypeNode = packageObj.requireNode("common.objectwithtype.makeObjectWithType");
-	var getObjectTypeNode = packageObj.requireNode("common.objectwithtype.getObjectType");
+	var loc_basicUtility;
+	var loc_makeObjectWithType;
+	var loc_getObjectType;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /*
@@ -79,5 +79,14 @@ var createConfigures = function(configures){
 //Register Node by Name
 packageObj.createNode("createConfiguresBase", createConfiguresBase); 
 packageObj.createNode("createConfigures", createConfigures); 
+
+	var module = {
+		start : function(packageObj){
+			loc_basicUtilityNode = packageObj.getNodeData("common.utility.basicUtility");
+			loc_makeObjectWithTypeNode = packageObj.getNodeData("common.objectwithtype.makeObjectWithType");
+			loc_getObjectTypeNode = packageObj.getNodeData("common.objectwithtype.getObjectType");
+		}
+	};
+	nosliw.registerModule(module, packageObj);
 
 })(packageObj);

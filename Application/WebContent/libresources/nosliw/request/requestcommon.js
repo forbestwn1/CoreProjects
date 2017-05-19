@@ -347,4 +347,10 @@ var createServiceRequestInfoCommon = function(service, handlers, requester_paren
 //Register Node by Name
 packageObj.createNode("createServiceRequestInfoCommon", createServiceRequestInfoCommon); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);

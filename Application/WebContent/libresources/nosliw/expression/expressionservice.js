@@ -206,9 +206,6 @@ var loc_buildExpressionExecuteRequest = function(expression, variables, handlers
 		
 };
 		
-
-	
-	
 /**
  * 
  */
@@ -232,6 +229,9 @@ var createExpressionService = function(){
 //Register Node by Name
 packageObj.createNode("createExpressionService", createExpressionService); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
 })(packageObj);
-
-

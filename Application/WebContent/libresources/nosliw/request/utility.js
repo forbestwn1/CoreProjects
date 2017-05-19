@@ -151,4 +151,10 @@ var utility = function(){
 //Register Node by Name
 packageObj.createNode("utility", utility); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);

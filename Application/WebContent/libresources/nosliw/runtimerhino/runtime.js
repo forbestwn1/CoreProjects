@@ -1,13 +1,14 @@
 //get/create package
 var packageObj = library.getChildPackage("rhino");    
 
-nosliw.registerModule((function(packageObj){
+(function(packageObj){
 	//get used node
-	var loc_makeObjectWithLifecycle;
-	var loc_createIdService;
-	var loc_createLoggingService;
-	var loc_createResourceService;
-	var loc_createExpressionService;
+	var node_makeObjectWithLifecycle;
+	var node_createIdService;
+	var node_createLoggingService;
+	var node_createResourceService;
+	var node_createExpressionService;
+	var node_NOSLIWCONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -49,14 +50,14 @@ var createRuntime = function(){
 	};
 	
 	var lifecycleCallback = {};
-	lifecycleCallback[NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(){
+	lifecycleCallback[node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(){
 		loc_idService = createIdServiceNode.getData()();
 		loc_loggingService = createLoggingService.getData()();
 		loc_resourceService = createResourceService.getData()();
 		loc_expressionService = createExpressionService.getData()();
 	};
 	
-	makeObjectWithLifecycleNode.getData()(loc_out, lifecycleCallback);
+	node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
 	
 	return loc_out;
 };
@@ -66,14 +67,15 @@ var createRuntime = function(){
 //Register Node by Name
 packageObj.createNode("createRuntime", createRuntime); 
 
-return {
-	start : function(packageObj){
-		loc_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
-		loc_createIdService = packageObj.getNodeData("common.idservice.createIdService");
-		loc_createLoggingService = packageObj.getNodeData("common.loggingservice.createLoggingService");
-		loc_createResourceService = packageObj.getNodeData("common.resourceservice.createResoruceService");
-		loc_createExpressionService = packageObj.getNodeData("common.resourceservice.createExpressionService");
-	}
-}
-
-})(packageObj), packageObj);
+var module = {
+		start : function(packageObj){
+			node_NOSLIWCONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
+			node_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
+			node_createIdService = packageObj.getNodeData("common.idservice.createIdService");
+			node_createLoggingService = packageObj.getNodeData("common.loggingservice.createLoggingService");
+			node_createResourceService = packageObj.getNodeData("common.resourceservice.createResoruceService");
+			node_createExpressionService = packageObj.getNodeData("common.resourceservice.createExpressionService");
+		}
+};
+nosliw.registerModule(module, packageObj);
+})(packageObj);

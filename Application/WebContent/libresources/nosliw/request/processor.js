@@ -97,4 +97,10 @@ var requestServiceProcessor = function(){
 //Register Node by Name
 packageObj.createNode("requestServiceProcessor", requestServiceProcessor); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);

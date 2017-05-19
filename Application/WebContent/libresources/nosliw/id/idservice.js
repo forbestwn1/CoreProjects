@@ -29,6 +29,12 @@ var createIdService = function(){
 //Register Node by Name
 packageObj.createNode("createIdService", createIdService); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);
 
 

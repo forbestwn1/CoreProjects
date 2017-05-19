@@ -57,4 +57,10 @@ var createLoggingService = function(){
 //Register Node by Name
 packageObj.createNode("createLoggingService", createLoggingService); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);

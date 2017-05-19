@@ -121,4 +121,10 @@ var handleDataContainerEachElement = function(dataContainerWraper, handler){
 packageObj.createNode("OrderedContainer.newEntity", newOrderedContainerGeneral); 
 packageObj.createNode("utils.handleDataContainerEachElement", handleDataContainerEachElement); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);

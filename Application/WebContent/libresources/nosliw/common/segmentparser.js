@@ -80,4 +80,10 @@ var parseSegment = function(path, sep){
 //Register Node by Name
 packageObj.createNode("parseSegment", parseSegment); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);

@@ -124,4 +124,10 @@ var createRequestEventGroupHandler = function(eventHandler, registerElementEvent
 //Register Node by Name
 packageObj.createNode("createRequestEventGroupHandler", createRequestEventGroupHandler); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);

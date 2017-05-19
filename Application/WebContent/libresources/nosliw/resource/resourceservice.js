@@ -32,4 +32,10 @@ var createResourceService = function(){
 //Register Node by Name
 packageObj.createNode("createResourceService", createResourceService); 
 
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
 })(packageObj);

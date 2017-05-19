@@ -132,4 +132,10 @@ var eventUtility =
 packageObj.createNode("getEventObject", getEventObject); 
 packageObj.createNode("eventUtility", eventUtility); 
 
+var module = {
+		start : function(packageObj){
+		}
+};
+nosliw.registerModule(module, packageObj);
+
 })(packageObj);
