@@ -7,6 +7,7 @@ var packageObj = library.getChildPackage("lifecycle");
 	var node_buildInterface;
 	var node_getInterface;
 	var node_eventUtility;
+	var node_getObjectName;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var INTERFACENAME = "lifecycle";
@@ -14,7 +15,7 @@ var INTERFACENAME = "lifecycle";
 /*
  * utility functions to build lifecycle object
  */
-var makeObjectWithLifecycle = function(baseObject, lifecycleCallback, thisContext){
+var node_makeObjectWithLifecycle = function(baseObject, lifecycleCallback, thisContext){
 	return node_buildInterface(baseObject, INTERFACENAME, loc_createResourceLifecycle(thisContext==undefined?baseObject:thisContext, lifecycleCallback));
 };
 	
@@ -34,11 +35,6 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	//wether lifecycle object is under transit
 	var loc_inTransit = false;	
 
-	//empty object that is used as event source 
-//	var loc_eventSource = {};
-	//empty object that is used as event listener
-//	var loc_eventListener = {};
-	
 	//life cycle call back including all call back method
 	var loc_lifecycleCallback = lifecycleCallback==undefined? {}:lifecycleCallback;
 	
@@ -223,9 +219,9 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 				//logging ths status transit
 				//only for module with name
 
-				if(baseObject.interfaceObjectName!=null){
-					var name = baseObject.interfaceObjectName.getObjectName();
-					nosliwLogging.info(name, "status transit from " + data.oldStatus + " to " + data.newStatus);
+				var name = node_getObjectName(baseObject); 
+				if(name!=null){
+					nosliw.logging.info(name, "status transit from " + data.oldStatus + " to " + data.newStatus);
 				}
 			});
 		}
@@ -241,7 +237,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("makeObjectWithLifecycle", makeObjectWithLifecycle); 
+packageObj.createNode("makeObjectWithLifecycle", node_makeObjectWithLifecycle); 
 
 var module = {
 	start : function(packageObj){
@@ -249,6 +245,7 @@ var module = {
 		node_buildInterface = packageObj.getNodeData("common.interface.buildInterface");
 		node_getInterface = packageObj.getNodeData("common.interface.getInterface");
 		node_eventUtility = packageObj.getNodeData("common.event.eventUtility");
+		node_getObjectName = packageObj.getNodeData("common.objectwithname.getObjectName");
 	}
 };
 nosliw.registerModule(module, packageObj);

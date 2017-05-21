@@ -97,15 +97,15 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	@Override
 	public HAPData executeExpression(HAPExpression expression) {
 		
+		//init rhino runtime, init scope
+		String taskId = this.initExecuteExpression();
+		Scriptable scope = this.getTaskScope(taskId); 
+		
 		//discover required resources
 		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
 		
 		//find which resource is missing
 		List<HAPResourceId> missedResourceId = this.findMissedResources(resourcesId);
-		
-		//init scope
-		String taskId = this.initExecuteExpression();
-		Scriptable scope = this.getTaskScope(taskId); 
 		
 		//load missed resources
 		this.loadResources(missedResourceId, scope, this.m_context);
@@ -116,6 +116,43 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		return out;
 	}
 
+	private List<HAPResourceId> findMissedResources(List<HAPResourceId> resourcesId){
+		NativeObject nosliwObjJS = (NativeObject)this.m_scope.get("nosliw", this.m_scope);
+		NativeObject resourceManJS = (NativeObject)nosliwObjJS.get("resourceManager");
+		Function findMissingResourcesFunJS = (Function)resourceManJS.get("findMissingResources");
+		
+		List<ResourceIdJS> jsArgs = new ArrayList<ResourceIdJS>();
+		for(HAPResourceId resourceId : resourcesId){
+			jsArgs.add(new ResourceIdJS(resourceId.getType(), resourceId.getId()));
+		}
+		
+		List<HAPResourceId> out = new ArrayList<HAPResourceId>();
+		NativeArray missedArrayJS = (NativeArray)findMissingResourcesFunJS.call(this.m_context, this.m_scope, resourceManJS, new Object[]{jsArgs.toArray(new ResourceIdJS[0])});
+		for(Object o : missedArrayJS.getIds()){
+		    int index = (Integer) o;
+		    Object a = missedArrayJS.get(index);
+		    int missedIndex = Integer.valueOf(a.toString());
+			out.add(resourcesId.get(missedIndex));
+		}
+		return out;
+	}
+	
+	private void loadResources(List<HAPResourceId> resourcesId, Scriptable scope, Context context){
+		List<HAPResource> missedResource = this.getResourceManager().getResources(resourcesId);
+		for(HAPResource resource : missedResource){
+			try{
+				String resourceScript = HAPRuntimeJSScriptUtility.buildScriptForResource(resource, this.m_sciprtTracker);
+//				context.evaluateString(scope, resourceScript, "Resource_"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE), 1, null);
+				context.evaluateString(scope, resourceScript, "<cmd>", 1, null);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	
 	private String initExecuteExpression(){
 		String out = this.getTaskId();
 		this.m_taskScope.put(out, this.m_scope);
@@ -156,41 +193,6 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		this.loadResources(resourceIds, out, context);
 		
 		return out;
-	}
-	
-	private List<HAPResourceId> findMissedResources(List<HAPResourceId> resourcesId){
-		NativeObject nosliwObjJS = (NativeObject)this.m_scope.get("nosliw", this.m_scope);
-		NativeObject resourceManJS = (NativeObject)nosliwObjJS.get("resourceManager");
-		Function findMissingResourcesFunJS = (Function)resourceManJS.get("findMissingResources");
-		
-		List<ResourceIdJS> jsArgs = new ArrayList<ResourceIdJS>();
-		for(HAPResourceId resourceId : resourcesId){
-			jsArgs.add(new ResourceIdJS(resourceId.getType(), resourceId.getId()));
-		}
-		
-		List<HAPResourceId> out = new ArrayList<HAPResourceId>();
-		NativeArray missedArrayJS = (NativeArray)findMissingResourcesFunJS.call(this.m_context, this.m_scope, resourceManJS, new Object[]{jsArgs.toArray(new ResourceIdJS[0])});
-		for(Object o : missedArrayJS.getIds()){
-		    int index = (Integer) o;
-		    Object a = missedArrayJS.get(index);
-		    int missedIndex = Integer.valueOf(a.toString());
-			out.add(resourcesId.get(missedIndex));
-		}
-		return out;
-	}
-	
-	private void loadResources(List<HAPResourceId> resourcesId, Scriptable scope, Context context){
-		List<HAPResource> missedResource = this.getResourceManager().getResources(resourcesId);
-		for(HAPResource resource : missedResource){
-			try{
-				String resourceScript = HAPRuntimeJSScriptUtility.buildScriptForResource(resource, this.m_sciprtTracker);
-//				context.evaluateString(scope, resourceScript, "Resource_"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE), 1, null);
-				context.evaluateString(scope, resourceScript, "<cmd>", 1, null);
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	private HAPData execute(HAPExpression expression, Scriptable scope, Context context){

@@ -15,38 +15,49 @@ var createLoggingService = function(){
 		loc_log = log4javascript.getDefaultLogger();
 	}
 	
-	loc_logging = function(arguments){
+	loc_logging = function(arguments, logLevel){
 		var out = "";
 		for(var i in arguments){
-			out = out + "  " + JSON.stringify(arguments[i]);
+			out = out + " " + JSON.stringify(arguments[i]);
 		}
-		console.log(out);
+		
+		switch(logLevel){
+		case "debug":
+			console.debug(out);
+			break;
+		case "error":
+			console.error(out);
+			break;
+		default:
+			console.log(out);
+			break;
+		}
 	};
 	
 	loc_out = {
 		trace : function(){
 			if(loc_log!=undefined)			loc_log.trace.apply(loc_log, arguments);
-			else   loc_logging(arguments[0]);
+			else   loc_logging(arguments, "trace");
 		},
 		debug : function(){			
 			if(loc_log!=undefined)			loc_log.debug.apply(loc_log, arguments);
-			else   loc_logging(arguments[0]);
+			else   loc_logging(arguments, "debug");
 		},
 		info : function(){			
 			if(loc_log!=undefined)			loc_log.info.apply(loc_log, arguments);
-			else   loc_logging(arguments[0]);
+			else   loc_logging(arguments, "info");
 		},
 		warn : function(){			
 			if(loc_log!=undefined)			loc_log.warn.apply(loc_log, arguments);
-			else   loc_logging(arguments[0]);
+			else   loc_logging(arguments, "warn");
 		},
 		error : function(){			
 			if(loc_log!=undefined)			loc_log.error.apply(loc_log, arguments);
-			else   loc_logging(arguments[0]);
+			else   loc_logging(arguments, "error");
 		},
 		fatal : function(){			
 			if(loc_log!=undefined)			loc_log.fatal.apply(loc_log, arguments);
-			else   loc_logging(arguments[0]);
+			else   loc_logging(arguments, "fatal");
 		},
 	};
 	

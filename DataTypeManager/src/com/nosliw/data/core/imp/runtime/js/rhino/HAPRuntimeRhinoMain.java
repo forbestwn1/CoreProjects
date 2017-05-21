@@ -44,14 +44,14 @@ public class HAPRuntimeRhinoMain {
 		
 		HAPExpressionImp expression1 = (HAPExpressionImp)expressionMan.getExpression("expression1");
 		System.out.println(HAPJsonUtility.formatJson(expression1.toStringValue(HAPSerializationFormat.JSON)));
-		HAPExpressionImp expression2 = (HAPExpressionImp)expressionMan.getExpression("expression2");
-		System.out.println(HAPJsonUtility.formatJson(expression2.toStringValue(HAPSerializationFormat.JSON)));
-		HAPExpressionImp expression3 = (HAPExpressionImp)expressionMan.getExpression("expression3");
-		System.out.println(HAPJsonUtility.formatJson(expression3.toStringValue(HAPSerializationFormat.JSON)));
-		HAPExpressionImp expression4 = (HAPExpressionImp)expressionMan.getExpression("expression4");
-		System.out.println(HAPJsonUtility.formatJson(expression4.toStringValue(HAPSerializationFormat.JSON)));
-		HAPExpressionImp expression5 = (HAPExpressionImp)expressionMan.getExpression("expression5");
-		System.out.println(HAPJsonUtility.formatJson(expression5.toStringValue(HAPSerializationFormat.JSON)));
+//		HAPExpressionImp expression2 = (HAPExpressionImp)expressionMan.getExpression("expression2");
+//		System.out.println(HAPJsonUtility.formatJson(expression2.toStringValue(HAPSerializationFormat.JSON)));
+//		HAPExpressionImp expression3 = (HAPExpressionImp)expressionMan.getExpression("expression3");
+//		System.out.println(HAPJsonUtility.formatJson(expression3.toStringValue(HAPSerializationFormat.JSON)));
+//		HAPExpressionImp expression4 = (HAPExpressionImp)expressionMan.getExpression("expression4");
+//		System.out.println(HAPJsonUtility.formatJson(expression4.toStringValue(HAPSerializationFormat.JSON)));
+//		HAPExpressionImp expression5 = (HAPExpressionImp)expressionMan.getExpression("expression5");
+//		System.out.println(HAPJsonUtility.formatJson(expression5.toStringValue(HAPSerializationFormat.JSON)));
 		
 		HAPRuntimeImpJSRhino runtime = new HAPRuntimeImpJSRhino(new HAPResourceDiscoveryJSImp(), resourceMan);
 		try{

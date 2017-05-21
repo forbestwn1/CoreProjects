@@ -3,22 +3,23 @@ var packageObj = library.getChildPackage("rhino");
 
 (function(packageObj){
 	//get used node
+	var node_makeObjectWithName;
 	var node_makeObjectWithLifecycle;
 	var node_createIdService;
 	var node_createLoggingService;
-	var node_createResourceService;
+	var node_createResourceManager;
 	var node_createExpressionService;
 	var node_NOSLIWCONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
+	var loc_mduleName = "runtime";
+	
 /**
  * 
  */
 var createRuntime = function(){
 	
 	var loc_idService;
-	
-	var loc_loggingService;
 	
 	var loc_resourceService;
 	
@@ -34,11 +35,7 @@ var createRuntime = function(){
 			return loc_idService;
 		},
 		
-		getLoggingService(){
-			return loc_loggingService;
-		},
-		
-		getResourceService(){
+		getResourceManager(){
 			return loc_resourceService;
 		},
 		
@@ -52,12 +49,13 @@ var createRuntime = function(){
 	var lifecycleCallback = {};
 	lifecycleCallback[node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(){
 		loc_idService = node_createIdService();
-		loc_loggingService = node_createLoggingService();
-		loc_resourceService = node_createResourceService();
+		loc_resourceService = node_createResourceManager();
 		loc_expressionService = node_createExpressionService();
+		return true;
 	};
 	
 	node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
+	node_makeObjectWithName(loc_out, loc_mduleName);
 	
 	return loc_out;
 };
@@ -70,10 +68,10 @@ packageObj.createNode("createRuntime", createRuntime);
 var module = {
 		start : function(packageObj){
 			node_NOSLIWCONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
+			node_makeObjectWithName = packageObj.getNodeData("common.objectwithname.makeObjectWithName");
 			node_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
 			node_createIdService = packageObj.getNodeData("service.idservice.createIdService");
-			node_createLoggingService = packageObj.getNodeData("service.loggingservice.createLoggingService");
-			node_createResourceService = packageObj.getNodeData("service.resourceservice.createResourceService");
+			node_createResourceManager = packageObj.getNodeData("service.resourcemanager.createResourceManager");
 			node_createExpressionService = packageObj.getNodeData("service.expressionservice.createExpressionService");
 		}
 };

@@ -7,26 +7,29 @@ var packageObj = library.getChildPackage("resourceservice");
 
 /**
  * Create Resource Service
- * Resrouce service manage all the resources
+ * This service response to request from user
+ * Load resource to resource manager if needed
  */
 var node_createResourceService = function(){
 	
+	var loc_resources = {};
+
+	var loc_getResource = function(resourceId){
+		var typeResources = loc_resources[resourceId.type];
+		if(typeResources==undefined)  return undefined;
+		return typeResources[resourceId.id];
+	}
+	
 	var loc_out = {
 		
-		addResource(){
-			
-		},	
-			
-		/**
-		 * 
-		 */
-		useResource : function(moduleId, resourceId){
+		getGetResourcesRequest : function(resourceIds, handlers, requestInfo){
 			
 		},
 		
-		dismissResource : function(moduleId, resourceId){
+		executeGetResourcesRequest : function(resourceIds, handlers, requestInfo){
 			
-		},
+		}
+			
 	};
 	
 	return loc_out;

@@ -2,6 +2,8 @@ if(nosliw===undefined)
 {
 var nosliw = function(){
 	
+	var loc_moduleName = "nosliw";
+	
 	var loc_packages = {}; 
 	
 	var loc_modules = [];
@@ -31,6 +33,10 @@ var nosliw = function(){
 		},
 		
 		initModules : function(){
+			//set logging object
+			nosliw.logging = loc_out.getNodeData("service.loggingservice.createLoggingService")();
+
+			//execute start callback method of each module 
 			for(var i in loc_modules){
 				var module = loc_modules[i];
 				module[0].start(module[1]);
@@ -86,7 +92,9 @@ var nosliw = function(){
 				return this.useNode(nodePath);
 			},
 			getNodeData : function(nodePath){
-				return this.useNode(nodePath).getData();
+				var out = this.useNode(nodePath).getData();
+				if(out===undefined)  nosliw.logging.error(loc_moduleName, "The node", nodePath, "cannot find by package" + this.getName());  
+				return out;
 			},
 			createNode : function(nodePath, nodeData){
 				var nodePathInfo = parseNodePath(nodePath);
