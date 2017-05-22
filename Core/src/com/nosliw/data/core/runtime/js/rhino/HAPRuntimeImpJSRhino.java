@@ -62,7 +62,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	        this.m_scope = this.initEsencialScope(m_context, null);
 	        
 	        Object wrappedRuntime = Context.javaToJS(this, this.m_scope);
-	        ScriptableObject.putProperty(this.m_scope, "resourceManager", wrappedRuntime);
+	        ScriptableObject.putProperty(this.m_scope, "resourceService", wrappedRuntime);
 	        
 	        this.executeStartScript(this.m_context, this.m_scope);
 	    }
@@ -116,6 +116,10 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		return out;
 	}
 
+	public void loadResources(Object resources, Object callBackFunction){
+		System.out.println("Load resources !!!!!!!!!!!!!!!!!!!!");
+	}
+	
 	private List<HAPResourceId> findMissedResources(List<HAPResourceId> resourcesId){
 		NativeObject nosliwObjJS = (NativeObject)this.m_scope.get("nosliw", this.m_scope);
 		NativeObject resourceManJS = (NativeObject)nosliwObjJS.get("resourceManager");

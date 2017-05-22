@@ -8,6 +8,7 @@ var packageObj = library.getChildPackage("rhino");
 	var node_createIdService;
 	var node_createLoggingService;
 	var node_createResourceManager;
+	var node_createResourceService;
 	var node_createExpressionService;
 	var node_NOSLIWCONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
@@ -36,6 +37,10 @@ var createRuntime = function(){
 		},
 		
 		getResourceManager(){
+			return loc_resourceManager;
+		},
+		
+		getResourceService(){
 			return loc_resourceService;
 		},
 		
@@ -49,7 +54,8 @@ var createRuntime = function(){
 	var lifecycleCallback = {};
 	lifecycleCallback[node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(){
 		loc_idService = node_createIdService();
-		loc_resourceService = node_createResourceManager();
+		loc_resourceManager = node_createResourceManager();
+		loc_resourceService = node_createResourceService(loc_resourceManager);
 		loc_expressionService = node_createExpressionService();
 		return true;
 	};
@@ -72,6 +78,7 @@ var module = {
 			node_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
 			node_createIdService = packageObj.getNodeData("service.idservice.createIdService");
 			node_createResourceManager = packageObj.getNodeData("service.resourcemanager.createResourceManager");
+			node_createResourceService = packageObj.getNodeData("service.resourcemanager.createResourceService");
 			node_createExpressionService = packageObj.getNodeData("service.expressionservice.createExpressionService");
 		}
 };
