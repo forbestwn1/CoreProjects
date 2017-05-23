@@ -7,7 +7,7 @@ public interface HAPResourceManager {
 	/**
 	 * Prepare the actual resource
 	 * @param resources
-	 * @return
+	 * @return a list of resource. here, the position matter as some resources has to be load first
 	 */
 	public List<HAPResource> getResources(List<HAPResourceId> resourcesId);
 

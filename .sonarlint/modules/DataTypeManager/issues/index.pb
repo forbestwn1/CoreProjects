@@ -88,3 +88,7 @@ j
 :src/com/nosliw/data/core/imp/valueinfo.data.datatypeid.xml,6\a\6a81ea01d1fb45889e2f8c82b2ec079ba0ee9a07
 t
 Dsrc/com/nosliw/data/core/imp/runtime/js/rhino/expression6.expression,5\8\581813aa5ebcf99e14f20f6684aa9c7c885e1dc9
+l
+<src/com/nosliw/data/core/imp/valueinfo.data.datatypeinfo.xml,1\6\163c1c02443a9202de9e588c08adf0c37df6321e
+d
+4src/com/nosliw/data/core/imp/HAPDataTypeInfoImp.java,1\a\1ad5e67ff54eb37d6136d67872157252300d2517

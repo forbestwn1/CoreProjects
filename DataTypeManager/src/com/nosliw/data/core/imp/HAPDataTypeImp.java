@@ -3,12 +3,12 @@ package com.nosliw.data.core.imp;
 import java.util.List;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataType;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeVersion;
-import com.nosliw.data.core.HAPInfo;
 
 @HAPEntityWithAttribute(parent="com.nosliw.data.core.HAPDataType")
 public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataType{

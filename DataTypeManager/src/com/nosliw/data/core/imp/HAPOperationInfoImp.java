@@ -1,10 +1,9 @@
 package com.nosliw.data.core.imp;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.strvalue.HAPStringableValueEntity;
-import com.nosliw.data.core.HAPInfo;
+import com.nosliw.common.info.HAPInfoImpStringable;
 
-public class HAPOperationInfoImp  extends HAPStringableValueEntity implements HAPInfo{
+public class HAPOperationInfoImp  extends HAPInfoImpStringable{
 
 	@HAPAttribute
 	public static String DESCRIPTION = "description";

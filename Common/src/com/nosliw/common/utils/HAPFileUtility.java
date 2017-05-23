@@ -66,7 +66,7 @@ public class HAPFileUtility {
 	
 	public static void writeFile(String fileName, String content){
 		try {
-			 
+			fileName = getValidFileName(fileName);
 			File file = new File(fileName);
  
 			// if file doesnt exists, then create it
@@ -76,8 +76,6 @@ public class HAPFileUtility {
 				}
 				catch(Exception e){
 					e.printStackTrace();
-					int kkkk = 555;
-					kkkk++;
 				}
 			}
  
@@ -89,6 +87,30 @@ public class HAPFileUtility {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
+	}
+	
+	private static String getValidFileName(String fileFullName){
+		int index = fileFullName.lastIndexOf("/");
+		if(index==-1)  index = fileFullName.lastIndexOf("\\");
+		
+		String path = null;
+		String fileName = null;
+		if(index==-1)  fileName = fileFullName;
+		else{
+			fileName = fileFullName.substring(index+1);
+			path = fileFullName.substring(0, index+1);
+		}
+		
+		
+//		char[] invalidChars = {'|', '[', ']', ';', ':'};
+		char[] invalidChars = {'|', ':'};
+		for(char invalidChar : invalidChars){
+			fileName = fileName.replace(invalidChar, '_');
+		}
+		String out = "";
+		if(path!=null)  out = out + path;
+		out = out + fileName;
+		return out;
 	}
 	
 	public static String getFileName(File file){

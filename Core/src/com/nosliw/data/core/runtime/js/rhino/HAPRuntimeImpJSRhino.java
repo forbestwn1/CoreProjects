@@ -1,22 +1,27 @@
 package com.nosliw.data.core.runtime.js.rhino;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ContextFactory;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
+import org.mozilla.javascript.tools.debugger.Main;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResourceIdInfo;
 import com.nosliw.data.core.runtime.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPResourceDiscovery;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
@@ -27,6 +32,9 @@ import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
 public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 
+	//info used to library resource that do not need to add to resource manager
+	private static final String ADDTORESOURCEMANAGER = "ADDTORESOURCEMANAGER";
+	
 	private HAPResourceDiscovery m_resourceDiscovery;
 	
 	private HAPResourceManager m_resourceManager;
@@ -57,9 +65,29 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	public void start(){
 		this.m_sciprtTracker = new ScriptTracker();
 		
-		this.m_context = Context.enter();
+		
+		ContextFactory factory = new ContextFactory();
+
+	    Main dbg = new Main("Hello");
+	    dbg.attachTo(factory);
+
+	    this.m_context = factory.enterContext();
+		
+//		this.m_context = Context.enter();
 	    try {
 	        this.m_scope = this.initEsencialScope(m_context, null);
+
+	        System.setIn(dbg.getIn());
+	        System.setOut(dbg.getOut());
+	        System.setErr(dbg.getErr());
+	        
+		    dbg.setBreakOnEnter(true);
+		    dbg.setScope(m_scope);
+		    dbg.setSize(640, 400);
+		    dbg.setVisible(true);
+		    dbg.setExitAction(new ExitOnClose());	    
+		    
+	        
 	        
 	        Object wrappedRuntime = Context.javaToJS(this, this.m_scope);
 	        ScriptableObject.putProperty(this.m_scope, "resourceService", wrappedRuntime);
@@ -71,6 +99,13 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	    }
 	}
 	
+	private static class ExitOnClose implements Runnable {
+	    @Override
+	    public void run() {
+	      System.exit(0);
+	    }
+	  }
+	
 	@Override
 	public void close(){
 		this.m_sciprtTracker.export();
@@ -80,7 +115,8 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		String initJSFile = "init.js";
 		String script = HAPFileUtility.readFile(HAPFileUtility.getInputStreamOnClassPath(this.getClass(), initJSFile));
 		this.m_sciprtTracker.addFile(HAPFileUtility.getFileNameOnClassPath(getClass(), initJSFile));
-		context.evaluateString(scope, script, "<cmd>", 1, null);
+//		context.evaluateString(scope, script, "<cmd>", 1, null);
+		this.loadScript(script, context, scope, "init");
 	}
 	
 	/**
@@ -141,13 +177,12 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		return out;
 	}
 	
-	private void loadResources(List<HAPResourceId> resourcesId, Scriptable scope, Context context){
-		List<HAPResource> missedResource = this.getResourceManager().getResources(resourcesId);
-		for(HAPResource resource : missedResource){
+	private void loadResources(List<HAPResourceIdInfo> resourcesId, Scriptable scope, Context context){
+		List<HAPResource> resources = this.getResourceManager().getResources(resourcesId);
+		for(HAPResource resource : resources){
 			try{
 				String resourceScript = HAPRuntimeJSScriptUtility.buildScriptForResource(resource, this.m_sciprtTracker);
-//				context.evaluateString(scope, resourceScript, "Resource_"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE), 1, null);
-				context.evaluateString(scope, resourceScript, "<cmd>", 1, null);
+				this.loadScript(resourceScript, context, scope, "Resource_"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE));
 			}
 			catch(Exception e){
 				e.printStackTrace();
@@ -174,8 +209,9 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	private Scriptable initEsencialScope(Context context, Scriptable parent){
 		Scriptable out = context.initStandardObjects(null);
 		
-		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
+		List<HAPResourceIdInfo> resourceIdInfos = new ArrayList<HAPResourceIdInfo>();
 		//library
+		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.core", null), null));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.Underscore", "1.6.0"), null));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.Backbone", "1.1.2"), null));
@@ -191,10 +227,15 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtime", null), null));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtimerhino", null), null));
 		
+		for(HAPResourceId resourceId : resourceIds){
+			resourceIdInfos.add(new HAPResourceIdInfo(resourceId).withInfo(ADDTORESOURCEMANAGER, ADDTORESOURCEMANAGER));
+		}
+		
+		
 		//data type
 		
 		
-		this.loadResources(resourceIds, out, context);
+		this.loadResources(resourceIdInfos, out, context);
 		
 		return out;
 	}
@@ -214,6 +255,24 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	public HAPResourceDiscovery getResourceDiscovery() {		return this.m_resourceDiscovery;	}
 	
 	private String getTaskId(){return System.currentTimeMillis()+"";}
+	
+	private int index = 1; 
+	private void loadScript(String script, Context context, Scriptable scope, String name){
+		try{
+			if(name==null)		name = "";
+			String scriptName = new Date().toString() + "_" + index + "_" + name;
+			index++;
+			
+			String folder = "C:/Temp/ScriptExport/scripts/";
+			HAPFileUtility.writeFile(folder+scriptName+".js", script);
+			
+			context.evaluateString(scope, script, scriptName, 1, null);
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 	
 	class ResourceIdJS{
 		public String type;
