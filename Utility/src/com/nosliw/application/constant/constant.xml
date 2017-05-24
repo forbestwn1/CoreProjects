@@ -1,4 +1,4 @@
-<root jsPath="{{projectsPath}}/Application/WebContent/js/generated"
+<root jsPath="{{projectsPath}}/Application/WebContent/js/libresources/nosliw/constant"
 	jsAttributeFile="NOSLIWATCOMMONTRIBUTECONSTANT"
 	jsConstantFile="NOSLIWCOMMONCONSTANT"
 >

@@ -59,18 +59,6 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 		new HAPClassFilter(){
 			@Override
 			protected void process(Class checkClass, Object data) {
-				
-				if(checkClass.toString().endsWith("HAPOperand")){
-					int kkkkk = 555;
-					kkkkk++;
-				}
-				
-				if(checkClass.getName().endsWith("HAPExpressionImp")){
-					int kkkk = 555;
-					kkkk++;
-				}
-				
-				
 				Field[] fields = null;
 				
 				try{
@@ -78,8 +66,6 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 				}
 				catch(Throwable e){
 					e.printStackTrace();
-					int kkkk = 555;
-					kkkk++;
 				}
 						
 				for(Field field : fields){
@@ -87,12 +73,6 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 					if(field.isAnnotationPresent(HAPAttribute.class)){
 						try {
 							String constantValue = field.get(null).toString();
-							
-							if(checkClass.getName().equals("com.nosliw.data.core.expression.HAPExpression")){
-								int kkkk = 555;
-								kkkk++;
-							}
-
 							String baseName = HAPConstantUtility.getBaseName(checkClass);
 							String constantName = HAPNamingConversionUtility.cascadeNameSegment(baseName, fieldName);
 							HAPConstantInfo constantInfo = HAPConstantInfo.build(constantName, constantValue);
@@ -171,10 +151,16 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 		return attrJavaContent;
 	}
 
-	private void writeJS(Map<String, String> valueMap, Map<String, Class<?>> datatypeMap, String fileName){
+	private void writeJS(Map<String, String> valueMap, Map<String, Class<?>> datatypeMap, String moduleName){
 		String jsonContent = HAPJsonUtility.buildMapJson(valueMap, datatypeMap);
-		String content = "var " + fileName + "=\n" + HAPJsonUtility.formatJson(jsonContent) + ";";
-		HAPFileUtility.writeFile(m_jsPath.getStringValue()+"/"+fileName+".js", content);
+		
+		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+		templateParms.put("moduleName", moduleName);
+		templateParms.put("content", jsonContent);
+		
+		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPConstantManager.class, "ConstantJS.temp");
+		String content = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
+		HAPFileUtility.writeFile(m_jsPath.getStringValue()+"/"+moduleName+".js", content);
 	}
 
 	/*

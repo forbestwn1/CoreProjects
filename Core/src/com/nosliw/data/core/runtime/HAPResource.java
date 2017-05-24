@@ -47,6 +47,7 @@ public class HAPResource extends HAPSerializableImp{
 	public HAPResourceId getId(){		return this.m_id;	}
 	
 	public HAPInfo getInfo(){  return this.m_info;  }
+	public void setInfo(HAPInfo info){   this.m_info = info; }
 	
 	public HAPResourceData getResourceData(){  return this.m_resourceData;  }
 	

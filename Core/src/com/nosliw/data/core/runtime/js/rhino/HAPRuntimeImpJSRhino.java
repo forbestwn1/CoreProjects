@@ -14,6 +14,7 @@ import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 import org.mozilla.javascript.tools.debugger.Main;
 
+import com.nosliw.common.info.HAPInfoUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -33,7 +34,7 @@ import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 
 	//info used to library resource that do not need to add to resource manager
-	private static final String ADDTORESOURCEMANAGER = "ADDTORESOURCEMANAGER";
+	public static final String ADDTORESOURCEMANAGER = "ADDTORESOURCEMANAGER";
 	
 	private HAPResourceDiscovery m_resourceDiscovery;
 	
@@ -127,7 +128,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		for(String[] resourceIdArray : resourcesIdArray){
 			resourcesId.add(new HAPResourceId(resourceIdArray[0], resourceIdArray[1], null));
 		}
-		this.loadResources(resourcesId, this.getTaskScope(taskId), m_context);
+//		this.loadResources(resourcesId, this.getTaskScope(taskId), m_context);
 	}
 	
 	@Override
@@ -144,7 +145,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		List<HAPResourceId> missedResourceId = this.findMissedResources(resourcesId);
 		
 		//load missed resources
-		this.loadResources(missedResourceId, scope, this.m_context);
+//		this.loadResources(missedResourceId, scope, this.m_context);
 		
 		//execute expression
 		HAPData out = this.execute(expression, scope, this.m_context);
@@ -177,20 +178,22 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		return out;
 	}
 	
-	private void loadResources(List<HAPResourceIdInfo> resourcesId, Scriptable scope, Context context){
-		List<HAPResource> resources = this.getResourceManager().getResources(resourcesId);
-		for(HAPResource resource : resources){
-			try{
+	private void loadResources(List<HAPResourceIdInfo> resourcesIdInfo, Scriptable scope, Context context){
+		for(HAPResourceIdInfo resourceIdInfo : resourcesIdInfo){
+			List<HAPResourceId> resourcesId = new ArrayList<HAPResourceId>();
+			resourcesId.add(resourceIdInfo.getResourceId());
+			List<HAPResource> resources = this.getResourceManager().getResources(resourcesId);
+			if(resources!=null && resources.size()==1){
+				HAPResource resource = resources.get(0);
+				resource.setInfo(HAPInfoUtility.merge(resource.getInfo(), resourceIdInfo.getInfo()));
 				String resourceScript = HAPRuntimeJSScriptUtility.buildScriptForResource(resource, this.m_sciprtTracker);
 				this.loadScript(resourceScript, context, scope, "Resource_"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE));
 			}
-			catch(Exception e){
-				e.printStackTrace();
+			else{
+				
 			}
 		}
 	}
-	
-	
 	
 	private String initExecuteExpression(){
 		String out = this.getTaskId();

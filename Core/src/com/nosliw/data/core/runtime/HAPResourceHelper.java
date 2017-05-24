@@ -4,14 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPDataTypeConverter;
-import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPOperationId;
-import com.nosliw.data.core.runtime.js.HAPJSLibraryId;
-import com.nosliw.data.core.runtime.js.HAPResourceIdDataType;
-import com.nosliw.data.core.runtime.js.HAPResourceIdJSHelper;
-import com.nosliw.data.core.runtime.js.HAPResourceIdJSLibrary;
 
 public class HAPResourceHelper {
 	private static HAPResourceHelper m_instance;

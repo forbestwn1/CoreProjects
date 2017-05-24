@@ -1,0 +1,25 @@
+//get/create package
+var packageObj = library;    
+
+(function(packageObj){
+	//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
+/**
+ * 
+ */
+var ||moduleName||=
+
+||content||;
+
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("||moduleName||", ||moduleName||); 
+
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
+})(packageObj);

@@ -16,6 +16,7 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpJSRhino;
 import com.nosliw.data.core.runtime.js.rhino.ScriptTracker;
 
 public class HAPRuntimeJSScriptUtility {
@@ -29,6 +30,8 @@ public class HAPRuntimeJSScriptUtility {
 			out.append(buildScriptForLibrary(resource, scriptTracker));
 			out.append("\n");
 		}
+		
+		if(resource.getInfo().getValue(HAPRuntimeImpJSRhino.ADDTORESOURCEMANAGER).equals(HAPRuntimeImpJSRhino.ADDTORESOURCEMANAGER))  return out.toString();
 		
 		//build script for resource data
 		String valueScript = null;

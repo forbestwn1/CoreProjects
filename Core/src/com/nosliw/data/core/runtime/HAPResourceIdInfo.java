@@ -38,8 +38,11 @@ public class HAPResourceIdInfo {
 		return this;
 	}
 	
-	public String getInfo(String name){
-		return this.m_info.getValue(name);
+	public HAPInfo getInfo(){
+		return this.m_info;
 	}
 	
+	public String getInfoValue(String name){
+		return this.m_info.getValue(name);
+	}
 }
