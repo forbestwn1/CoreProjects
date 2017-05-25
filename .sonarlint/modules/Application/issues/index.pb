@@ -1,10 +1,6 @@
 
 b
 2src/com/nosliw/app/utils/HAPAttributeConstant.java,0\3\0307a43539044a8d7bd14b7d70f256edf175966c
-_
-/WebContent/js/generated/NOSLIWCOMMONCONSTANT.js,d\5\d5dd746a8109ca4fe9d588e10fb377dd60c8b938
-h
-8WebContent/js/generated/NOSLIWATCOMMONTRIBUTECONSTANT.js,2\6\26726204436cf1b5cc299b6a2033c476fb847e8b
 \
 ,src/com/nosliw/app/test/HAPInstanceTest.java,b\b\bb8d26abc0c15d4993683cf98e443ff774756267
 p
@@ -137,3 +133,7 @@ n
 >WebContent/libresources/nosliw/runtimerhino/resourceservice.js,5\3\538752ca588d4721a7e482d1ac2128cda9d62038
 j
 :WebContent/libresources/nosliw/resource/resourcemanager.js,d\8\d81b9461b05f03d27e59b6b957e187bc6844c1cf
+x
+HWebContent/libresources/nosliw/constant/NOSLIWATCOMMONTRIBUTECONSTANT.js,d\7\d77c670d8ba0a21e9a52beb2d924f91105f2f189
+o
+?WebContent/libresources/nosliw/constant/NOSLIWCOMMONCONSTANT.js,1\6\16d6de6c9991dd62352ee68a34e474ffc6e90116

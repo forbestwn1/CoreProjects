@@ -82,7 +82,8 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	        System.setOut(dbg.getOut());
 	        System.setErr(dbg.getErr());
 	        
-		    dbg.setBreakOnEnter(true);
+//		    dbg.setBreakOnEnter(true);
+		    dbg.setBreakOnExceptions(true);
 		    dbg.setScope(m_scope);
 		    dbg.setSize(640, 400);
 		    dbg.setVisible(true);

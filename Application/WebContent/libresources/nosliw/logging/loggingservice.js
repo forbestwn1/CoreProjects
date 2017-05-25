@@ -3,61 +3,64 @@ var packageObj = library.getChildPackage("loggingservice");
 
 (function(packageObj){
 	//get used node
+	var node_NOSLIWCOMMONCONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
  * 
  */
 var createLoggingService = function(){
+	var loc_logging;
 
-	var loc_log;
-	if (typeof log4javascript !== 'undefined') {
-		loc_log = log4javascript.getDefaultLogger();
-	}
-	
-	loc_logging = function(arguments, logLevel){
+	var loc_rhinoLogFun = function(){
 		var out = "";
 		for(var i in arguments){
 			out = out + " " + JSON.stringify(arguments[i]);
 		}
-		
-		switch(logLevel){
-		case "debug":
-			console.debug(out);
-			break;
-		case "error":
-			console.error(out);
-			break;
-		default:
-			console.log(out);
-			break;
+//		print(out);
+		java.lang.System.out.println(out)
+	}
+	
+	var loc_getLogging = function(){
+		if(loc_logging==undefined){
+			var runtimeName = nosliw.runtimeName;
+			if(runtimeName==node_NOSLIWCOMMONCONSTANT.RUNTIME_ENVIRONMENT_RHINO){
+				loc_logging = {
+					trace : loc_rhinoLogFun,
+					debug : loc_rhinoLogFun,
+					info : loc_rhinoLogFun,
+					warn : loc_rhinoLogFun,
+					error : loc_rhinoLogFun,
+					fatal : loc_rhinoLogFun
+				};
+			}
+			else{
+				if (typeof log4javascript !== 'undefined') {
+					loc_logging = log4javascript.getDefaultLogger();
+				}
+			}
 		}
-	};
+		return loc_logging;
+	}
 	
 	loc_out = {
 		trace : function(){
-			if(loc_log!=undefined)			loc_log.trace.apply(loc_log, arguments);
-			else   loc_logging(arguments, "trace");
+			loc_getLogging().trace.apply(loc_logging, arguments);
 		},
 		debug : function(){			
-			if(loc_log!=undefined)			loc_log.debug.apply(loc_log, arguments);
-			else   loc_logging(arguments, "debug");
+			loc_getLogging().debug.apply(loc_logging, arguments);
 		},
 		info : function(){			
-			if(loc_log!=undefined)			loc_log.info.apply(loc_log, arguments);
-			else   loc_logging(arguments, "info");
+			loc_getLogging().info.apply(loc_logging, arguments);
 		},
 		warn : function(){			
-			if(loc_log!=undefined)			loc_log.warn.apply(loc_log, arguments);
-			else   loc_logging(arguments, "warn");
+			loc_getLogging().warn.apply(loc_logging, arguments);
 		},
 		error : function(){			
-			if(loc_log!=undefined)			loc_log.error.apply(loc_log, arguments);
-			else   loc_logging(arguments, "error");
+			loc_getLogging().error.apply(loc_logging, arguments);
 		},
 		fatal : function(){			
-			if(loc_log!=undefined)			loc_log.fatal.apply(loc_log, arguments);
-			else   loc_logging(arguments, "fatal");
+			loc_getLogging().fatal.apply(loc_logging, arguments);
 		},
 	};
 	
@@ -70,6 +73,7 @@ packageObj.createNode("createLoggingService", createLoggingService);
 
 	var module = {
 		start : function(packageObj){
+			node_NOSLIWCOMMONCONSTANT = packageObj.getNodeData("constant.NOSLIWCOMMONCONSTANT");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

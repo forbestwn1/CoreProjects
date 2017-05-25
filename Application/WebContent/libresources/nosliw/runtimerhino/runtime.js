@@ -11,6 +11,7 @@ var packageObj = library.getChildPackage("rhino");
 	var node_createResourceService;
 	var node_createExpressionService;
 	var node_NOSLIWCONSTANT;
+	var node_NOSLIWCOMMONCONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -48,8 +49,8 @@ var createRuntime = function(){
 			return loc_expressionService;
 		},
 			
-		getRuntimeName(){
-			return 
+		getName(){
+			return node_NOSLIWCOMMONCONSTANT.RUNTIME_ENVIRONMENT_RHINO;
 		}
 	};
 	
@@ -76,6 +77,7 @@ packageObj.createNode("createRuntime", createRuntime);
 var module = {
 		start : function(packageObj){
 			node_NOSLIWCONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
+			node_NOSLIWCOMMONCONSTANT = packageObj.getNodeData("constant.NOSLIWCOMMONCONSTANT");
 			node_makeObjectWithName = packageObj.getNodeData("common.objectwithname.makeObjectWithName");
 			node_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
 			node_createIdService = packageObj.getNodeData("service.idservice.createIdService");
