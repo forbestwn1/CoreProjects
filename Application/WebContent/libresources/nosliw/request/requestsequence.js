@@ -4,6 +4,7 @@ var packageObj = library.getChildPackage("request");
 (function(packageObj){
 	//get used node
 	var node_createServiceRequestInfoCommon;
+	var node_ServiceRequestExecuteInfo;
 	var node_CONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -183,7 +184,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 	
 	loc_constructor(service, handlers, requester_parent);
 	
-	loc_out.setRequestExecuteInfo(new NosliwServiceRequestExecuteInfo(loc_process, this));
+	loc_out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(loc_process, this));
 	
 	return loc_out;
 };
@@ -195,6 +196,7 @@ packageObj.createNode("createServiceRequestInfoSequence", node_createServiceRequ
 	var module = {
 		start : function(packageObj){
 			node_createServiceRequestInfoCommon = packageObj.getNodeData("request.request.createServiceRequestInfoCommon");
+			node_ServiceRequestExecuteInfo = packageObj.getNodeData("request.entity.ServiceRequestExecuteInfo");
 			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
 		}
 	};

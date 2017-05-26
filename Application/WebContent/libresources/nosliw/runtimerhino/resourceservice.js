@@ -4,6 +4,7 @@ var packageObj = library;
 (function(packageObj){
 	//get used node
 	var node_createServiceRequestInfoSequence;
+	var node_createServiceRequestInfoSimple;
 	var node_requestServiceProcessor;
 //*******************************************   Start Node Definition  ************************************** 	
 	
@@ -69,6 +70,7 @@ packageObj.createNode("createResourceService", node_createResourceService);
 	var module = {
 		start : function(packageObj){
 			node_createServiceRequestInfoSequence = packageObj.getNodeData("request.request.createServiceRequestInfoSequence");
+			node_createServiceRequestInfoSimple = packageObj.getNodeData("request.request.createServiceRequestInfoSimple");
 			node_requestServiceProcessor = packageObj.getNodeData("request.requestServiceProcessor");
 		}
 	};

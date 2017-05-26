@@ -91,7 +91,7 @@ var node_requestServiceProcessor = function(){
 	loc_out = nosliwLifecycleUtility.makeResourceObject(loc_out, loc_moduleName);
 
 	return loc_out;
-};
+}();
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name

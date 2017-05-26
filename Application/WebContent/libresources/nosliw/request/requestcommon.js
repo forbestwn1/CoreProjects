@@ -13,7 +13,7 @@ var packageObj = library.getChildPackage("request");
 /**
  * requester_parent: requester or parent request
  */
-var createServiceRequestInfoCommon = function(service, handlers, requester_parent){
+var node_createServiceRequestInfoCommon = function(service, handlers, requester_parent){
 	
 	var loc_moduleName = "requestInfo";
 	
@@ -350,7 +350,7 @@ var createServiceRequestInfoCommon = function(service, handlers, requester_paren
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createServiceRequestInfoCommon", createServiceRequestInfoCommon); 
+packageObj.createNode("createServiceRequestInfoCommon", node_createServiceRequestInfoCommon); 
 
 	var module = {
 		start : function(packageObj){
