@@ -5,7 +5,7 @@ var packageObj = library;
 	//get used node
 //*******************************************   Start Node Definition  ************************************** 	
 
-var requestServiceProcessor = function(){
+var node_requestServiceProcessor = function(){
 
 	var loc_moduleName = "requestManager";
 	
@@ -95,7 +95,7 @@ var requestServiceProcessor = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("requestServiceProcessor", requestServiceProcessor); 
+packageObj.createNode("requestServiceProcessor", node_requestServiceProcessor); 
 
 	var module = {
 		start : function(packageObj){

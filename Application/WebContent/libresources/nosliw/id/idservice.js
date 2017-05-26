@@ -37,5 +37,3 @@ packageObj.createNode("createIdService", node_createIdService);
 	nosliw.registerModule(module, packageObj);
 
 })(packageObj);
-
-

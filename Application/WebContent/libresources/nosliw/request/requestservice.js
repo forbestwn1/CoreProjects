@@ -3,6 +3,7 @@ var packageObj = library.getChildPackage("request");
 
 (function(packageObj){
 	//get used node
+	var node_CONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -82,7 +83,7 @@ var createServiceRequestInfoService = function(service, handlers, requester_pare
 	loc_out = _.extend(nosliwCreateServiceRequestInfoCommon(service, handlers, requester_parent), loc_out);
 	
 	//request type
-	loc_out.setType(NOSLIWCONSTANT.REQUEST_TYPE_SERVICE);
+	loc_out.setType(var_NOSLIWCONSTANT.REQUEST_TYPE_SERVICE);
 	
 	loc_constructor(service, handlers, requester_parent);
 	
@@ -96,6 +97,7 @@ packageObj.createNode("createServiceRequestInfoService", createServiceRequestInf
 
 	var module = {
 		start : function(packageObj){
+			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

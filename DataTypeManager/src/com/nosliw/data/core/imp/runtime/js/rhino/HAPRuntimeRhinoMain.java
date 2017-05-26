@@ -56,7 +56,10 @@ public class HAPRuntimeRhinoMain {
 		HAPRuntimeImpJSRhino runtime = new HAPRuntimeImpJSRhino(new HAPResourceDiscoveryJSImp(), resourceMan);
 		try{
 			runtime.start();
-			HAPData out = runtime.executeExpression(expression1);
+			
+			runtime.loadScriptFromFile("loadResource1.js", HAPRuntimeRhinoMain.class);
+			
+//			HAPData out = runtime.executeExpression(expression1);
 		}
 		catch(Exception e){
 			e.printStackTrace();

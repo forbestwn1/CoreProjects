@@ -12,6 +12,8 @@ var interfaceAttributeName = "____Interface";
  * Append interface object to base object
  */
 var loc_getInterfaceObject = function(baseObject, createIfNotExist){
+	if(baseObject==undefined)  return undefined;
+	
 	var interfaceObj = baseObject[interfaceAttributeName];
 	if(interfaceObj==undefined && createIfNotExist===true){
 		interfaceObj = {};

@@ -3,15 +3,16 @@ var packageObj = library.getChildPackage("setting");
 
 (function(packageObj){
 	//get used node
-	var loc_basicUtility;
-	var loc_makeObjectWithType;
-	var loc_getObjectType;
+	var node_basicUtility;
+	var node_makeObjectWithType;
+	var node_getObjectType;
+	var node_CONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /*
  * store setting for sync task, (service, command)
  */
-var createConfiguresBase = function(baseConfigures){
+var node_createConfiguresBase = function(baseConfigures){
 	
 	var loc_baseConfigures = createConfigures(baseConfigures);
 	
@@ -34,11 +35,11 @@ var createConfiguresBase = function(baseConfigures){
  * 		string : name1:value1;name2:value2;name3:value3
  * 		object : configure object
  */
-var createConfigures = function(configures){
+var node_createConfigures = function(configures){
 	var loc_configures = {};
 	if(_.isString(configures)){
 		//literal
-		var pairs = configures.split(NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_ELEMENT);
+		var pairs = configures.split(node_NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_ELEMENT);
 		for(var i in pairs){
 			var pair = pairs[i];
 			var segs = pair.split(NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_PART); 
@@ -69,7 +70,7 @@ var createConfigures = function(configures){
 		},
 	};
 	
-	loc_out = makeObjectWithTypeNode.getData()(loc_out, NOSLIWCONSTANT.TYPEDOBJECT_TYPE_CONFIGURES);
+	loc_out = makeObjectWithTypeNode.getData()(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_CONFIGURES);
 	
 	return loc_out;
 };
@@ -77,14 +78,15 @@ var createConfigures = function(configures){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createConfiguresBase", createConfiguresBase); 
-packageObj.createNode("createConfigures", createConfigures); 
+packageObj.createNode("createConfiguresBase", node_createConfiguresBase); 
+packageObj.createNode("createConfigures", node_createConfigures); 
 
 	var module = {
 		start : function(packageObj){
-			loc_basicUtilityNode = packageObj.getNodeData("common.utility.basicUtility");
-			loc_makeObjectWithTypeNode = packageObj.getNodeData("common.objectwithtype.makeObjectWithType");
-			loc_getObjectTypeNode = packageObj.getNodeData("common.objectwithtype.getObjectType");
+			node_basicUtilityNode = packageObj.getNodeData("common.utility.basicUtility");
+			node_makeObjectWithTypeNode = packageObj.getNodeData("common.objectwithtype.makeObjectWithType");
+			node_getObjectTypeNode = packageObj.getNodeData("common.objectwithtype.getObjectType");
+			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

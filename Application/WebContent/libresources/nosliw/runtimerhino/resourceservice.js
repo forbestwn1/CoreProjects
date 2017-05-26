@@ -1,10 +1,11 @@
 //get/create package
-var packageObj = library.getChildPackage("resourceservice");    
+var packageObj = library;    
 
 (function(packageObj){
 	//get used node
+	var node_createServiceRequestInfoSequence;
+	var node_requestServiceProcessor;
 //*******************************************   Start Node Definition  ************************************** 	
-	var loc_createServiceRequestInfoSequence;
 	
 /**
  * Create Resource Service
@@ -52,7 +53,8 @@ var node_createResourceService = function(resourceManager){
 		},
 		
 		executeGetResourcesRequest : function(resourceIds, handlers, requestInfo){
-			
+			var requestInfo = this.getGetResourcesRequest(resourceIds, handlers, requestInfo);
+			node_requestServiceProcessor.processRequest(requestInfo, false);
 		}
 			
 	};
@@ -66,6 +68,8 @@ packageObj.createNode("createResourceService", node_createResourceService);
 
 	var module = {
 		start : function(packageObj){
+			node_createServiceRequestInfoSequence = packageObj.getNodeData("request.request.createServiceRequestInfoSequence");
+			node_requestServiceProcessor = packageObj.getNodeData("request.requestServiceProcessor");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

@@ -6,6 +6,7 @@ var packageObj = library.getChildPackage("objectwithtype");
 	var node_basicUtility;
 	var node_buildInterface;
 	var node_getInterface;
+	var node_CONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var INTERFACENAME = "TYPE";
@@ -13,8 +14,8 @@ var INTERFACENAME = "TYPE";
 /*
  * build an object to typed object
  */
-var makeObjectWithType = function(obj, type){
-	out = buildInterfaceNode.getData()(obj, INTERFACENAME, type);
+var node_makeObjectWithType = function(obj, type){
+	out = node_buildInterface(obj, INTERFACENAME, type);
 	return out;
 };
 
@@ -22,23 +23,24 @@ var makeObjectWithType = function(obj, type){
  * get object's type info
  * if no type info, the use VALUE as type  
  */
-var getObjectType = function(object){
-	var type = getInterfaceNode.getData()(object, INTERFACENAME);
+var node_getObjectType = function(object){
+	var type = node_getInterface(object, INTERFACENAME);
 	if(type!=undefined)  return type;
-	else return NOSLIWCONSTANT.TYPEDOBJECT_TYPE_VALUE;
+	else return node_CONSTANT.TYPEDOBJECT_TYPE_VALUE;
 };
 	
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("makeObjectWithType", makeObjectWithType); 
-packageObj.createNode("getObjectType", getObjectType); 
+packageObj.createNode("makeObjectWithType", node_makeObjectWithType); 
+packageObj.createNode("getObjectType", node_getObjectType); 
 
 	var module = {
 		start : function(packageObj){
 			node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
 			node_buildInterface = packageObj.getNodeData("common.interface.buildInterface");
 			node_getInterface = packageObj.getNodeData("common.interface.getInterface");
+			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

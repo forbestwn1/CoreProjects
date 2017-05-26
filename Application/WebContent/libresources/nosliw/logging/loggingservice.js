@@ -9,22 +9,29 @@ var packageObj = library.getChildPackage("loggingservice");
 /**
  * 
  */
-var createLoggingService = function(){
+var node_createLoggingService = function(){
 	var loc_logging;
 
-	var loc_rhinoLogFun = function(){
+	var loc_buildMessage = function(arguments){
 		var out = "";
 		for(var i in arguments){
 			out = out + " " + JSON.stringify(arguments[i]);
 		}
-//		print(out);
-		java.lang.System.out.println(out)
+		return out;
+	}
+	
+	var loc_rhinoLogFun = function(){
+		java.lang.System.out.println(loc_buildMessage(arguments));
+	}
+
+	var loc_rhinoErrorFun = function(){
+		java.lang.System.err.println(loc_buildMessage(arguments));
 	}
 	
 	var loc_getLogging = function(){
 		if(loc_logging==undefined){
 			var runtimeName = nosliw.runtimeName;
-			if(runtimeName==node_NOSLIWCOMMONCONSTANT.RUNTIME_ENVIRONMENT_RHINO){
+			if(runtimeName=="rhino"){
 				loc_logging = {
 					trace : loc_rhinoLogFun,
 					debug : loc_rhinoLogFun,
@@ -69,7 +76,7 @@ var createLoggingService = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createLoggingService", createLoggingService); 
+packageObj.createNode("createLoggingService", node_createLoggingService); 
 
 	var module = {
 		start : function(packageObj){

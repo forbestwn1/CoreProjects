@@ -36,7 +36,7 @@ import com.nosliw.data.core.runtime.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.js.HAPResourceIdDataType;
 import com.nosliw.data.core.runtime.js.HAPResourceIdJSHelper;
 import com.nosliw.data.core.runtime.js.HAPResourceIdJSLibrary;
-import com.nosliw.data.core.runtime.js.rhino.HAPRhinoUtility;
+import com.nosliw.data.core.runtime.js.rhino.HAPRhinoDataUtility;
 
 public class HAPJSImporter {
 
@@ -241,7 +241,7 @@ public class HAPJSImporter {
 			out = new HAPResourceIdDataType(dataTypeIdLiterate, alais);
 			break;
 		case HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER:
-			String helperScript = new HAPRhinoUtility().toJSONString(resourceObjJS); 
+			String helperScript = new HAPRhinoDataUtility().toJSONString(resourceObjJS); 
 			HAPResourceDataHelperImp helperResource = new HAPResourceDataHelperImp(helperScript);
 			helperResource = (HAPResourceDataHelperImp)this.m_dbAccess.saveEntity(helperResource);
 			out = new HAPResourceIdJSHelper(helperResource.getId(), alais);

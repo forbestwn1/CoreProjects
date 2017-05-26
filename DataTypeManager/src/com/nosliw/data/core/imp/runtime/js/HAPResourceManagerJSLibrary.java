@@ -46,6 +46,7 @@ public class HAPResourceManagerJSLibrary implements HAPResourceManager{
 		String folder = m_baseFolder + "/" + path + (HAPBasicUtility.isStringEmpty(libraryId.getVersion()) ? "" : "/" + libraryId.getVersion());
 		Set<File> files = HAPFileUtility.getAllFiles(folder);
 		List<File> out = new ArrayList<File>(files);
+		//make file sorted by name
 		Collections.sort(out);
 		return out;
 	}

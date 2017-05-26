@@ -3,6 +3,8 @@ var packageObj = library.getChildPackage("request");
 
 (function(packageObj){
 	//get used node
+	var node_createServiceRequestInfoCommon;
+	var node_CONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -16,7 +18,7 @@ var packageObj = library.getChildPackage("request");
  * 		request info :	used as next request info
  * 		array:			used as a array of request info	
  */
-var createServiceRequestInfoSequence = function(service, handlers, requester_parent){
+var node_createServiceRequestInfoSequence = function(service, handlers, requester_parent){
 
 	var loc_startOutDataName = "startOutDataName";
 	
@@ -59,7 +61,7 @@ var createServiceRequestInfoSequence = function(service, handlers, requester_par
 				item = item.call(loc_out, loc_out);
 			}
 
-			if(nosliwTypedObjectUtility.getObjectType(item)==NOSLIWCONSTANT.TYPEDOBJECT_TYPE_REQUEST){
+			if(nosliwTypedObjectUtility.getObjectType(item)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
 				//for request
 				loc_out.pri_requestInfos.push(item);
 			}
@@ -91,7 +93,7 @@ var createServiceRequestInfoSequence = function(service, handlers, requester_par
 				if(data.length==0)  isRequestArray = false;
 				else{
 					for(var i in data){
-						if(!nosliwTypedObjectUtility.getObjectType(data[i])==NOSLIWCONSTANT.TYPEDOBJECT_TYPE_REQUEST){
+						if(!nosliwTypedObjectUtility.getObjectType(data[i])==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
 							isRequestArray = false;
 							break;
 						}
@@ -110,7 +112,7 @@ var createServiceRequestInfoSequence = function(service, handlers, requester_par
 				}
 			}
 			else{
-				if(nosliwTypedObjectUtility.getObjectType(data)==NOSLIWCONSTANT.TYPEDOBJECT_TYPE_REQUEST){
+				if(nosliwTypedObjectUtility.getObjectType(data)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
 					//for request
 					loc_out.pri_requestInfos.push(data);
 				}
@@ -174,10 +176,10 @@ var createServiceRequestInfoSequence = function(service, handlers, requester_par
 		},
 	};
 	
-	loc_out = _.extend(nosliwCreateServiceRequestInfoCommon(service, handlers, requester_parent), loc_out);
+	loc_out = _.extend(node_createServiceRequestInfoCommon(service, handlers, requester_parent), loc_out);
 	
 	//request type
-	loc_out.setType(NOSLIWCONSTANT.REQUEST_TYPE_SEQUENCE);
+	loc_out.setType(node_CONSTANT.REQUEST_TYPE_SEQUENCE);
 	
 	loc_constructor(service, handlers, requester_parent);
 	
@@ -188,10 +190,12 @@ var createServiceRequestInfoSequence = function(service, handlers, requester_par
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createServiceRequestInfoSequence", createServiceRequestInfoSequence); 
+packageObj.createNode("createServiceRequestInfoSequence", node_createServiceRequestInfoSequence); 
 
 	var module = {
 		start : function(packageObj){
+			node_createServiceRequestInfoCommon = packageObj.getNodeData("request.request.createServiceRequestInfoCommon");
+			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

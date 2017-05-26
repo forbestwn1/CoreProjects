@@ -3,6 +3,11 @@ var packageObj = library.getChildPackage("request");
 
 (function(packageObj){
 	//get used node
+	var node_makeObjectWithType;
+	var node_getObjectType;
+	var node_CONSTANT;
+	var node_requestUtility;
+	var node_eventUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -16,7 +21,7 @@ var createServiceRequestInfoCommon = function(service, handlers, requester_paren
 		//parse requester_parent parm to get parent or requester info
 		var parent = undefined;
 		var requester = undefined;
-		if(nosliwTypedObjectUtility.getObjectType(requester_parent)==NOSLIWCONSTANT.TYPEDOBJECT_TYPE_REQUEST)		parent = requester_parent;
+		if(node_getObjectType(requester_parent)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST)		parent = requester_parent;
 		else		requester = requester_parent;
 
 		//who initilize this request
@@ -51,7 +56,7 @@ var createServiceRequestInfoCommon = function(service, handlers, requester_paren
 			//all parms for this request
 			pri_parmData : {},
 			//request status : init, processing, done
-			pri_status : NOSLIWCONSTANT.REQUEST_STATUS_INIT,
+			pri_status : node_CONSTANT.REQUEST_STATUS_INIT,
 			//request process result
 			pri_result : undefined,
 			//event source
@@ -122,9 +127,9 @@ var createServiceRequestInfoCommon = function(service, handlers, requester_paren
 	 *     trigue event
 	 */
 	var loc_initRequest = function(){
-		loc_out.setStatus(NOSLIWCONSTANT.REQUEST_STATUS_INIT);
+		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_INIT);
 		loc_out.setResult();
-		nosliwRequestUtility.triggerEventWithRequest(loc_out.pri_metaData.pri_eventSource, NOSLIWCONSTANT.REQUEST_EVENT_NEW, {}, loc_out);
+		node_requestUtility.triggerEventWithRequest(loc_out.pri_metaData.pri_eventSource, node_CONSTANT.REQUEST_EVENT_NEW, {}, loc_out);
 	};
 	
 	/*
@@ -134,9 +139,9 @@ var createServiceRequestInfoCommon = function(service, handlers, requester_paren
 	 *     trigue event
 	 */
 	var loc_startRequest = function(){
-		loc_out.setStatus(NOSLIWCONSTANT.REQUEST_STATUS_PROCESSING);
+		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_PROCESSING);
 		loc_out.setResult();
-		nosliwRequestUtility.triggerEventWithRequest(loc_out.pri_metaData.pri_eventSource, NOSLIWCONSTANT.REQUEST_EVENT_ACTIVE, {}, loc_out);
+		node_requestUtility.triggerEventWithRequest(loc_out.pri_metaData.pri_eventSource, node_CONSTANT.REQUEST_EVENT_ACTIVE, {}, loc_out);
 	};
 	
 	/*
@@ -146,14 +151,14 @@ var createServiceRequestInfoCommon = function(service, handlers, requester_paren
 	 *     trigue event
 	 */
 	var loc_finishRequest = function(data){
-		loc_out.setStatus(NOSLIWCONSTANT.REQUEST_STATUS_DONE);
+		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_DONE);
 		loc_out.setResult(data);
 		
-		nosliwRequestUtility.triggerEventWithRequest(loc_out.pri_metaData.pri_eventSource, NOSLIWCONSTANT.REQUEST_EVENT_DONE, data, loc_out);
+		node_requestUtility.triggerEventWithRequest(loc_out.pri_metaData.pri_eventSource, node_CONSTANT.REQUEST_EVENT_DONE, data, loc_out);
 
 		//unregister all listeners
 		_.each(loc_out.pri_metaData.pri_eventListeners, function(listener, key, list){
-			nosliwEventUtility.unregister(listener);
+			node_eventUtilty.unregister(listener);
 		}, this);
 	};
 	
@@ -330,7 +335,7 @@ var createServiceRequestInfoCommon = function(service, handlers, requester_paren
 			setResult : function(result){  this.pri_metaData.pri_result = result; },
 			
 			registerEventListener : function(handler){
-				var listener = nosliwRequestUtility.registerEventWithRequest(this.pri_metaData.pri_eventSource, NOSLIWCONSTANT.EVENT_EVENTNAME_ALL, handler, this);
+				var listener = nosliwRequestUtility.registerEventWithRequest(this.pri_metaData.pri_eventSource, node_CONSTANT.EVENT_EVENTNAME_ALL, handler, this);
 				this.pri_metaData.pri_eventListeners.push(listener);
 				return listener;
 			},
@@ -338,7 +343,7 @@ var createServiceRequestInfoCommon = function(service, handlers, requester_paren
 	
 	loc_constructor(service, handlers, requester_parent);
 	
-	loc_out = nosliwTypedObjectUtility.makeTypedObject(loc_out, NOSLIWCONSTANT.TYPEDOBJECT_TYPE_REQUEST);
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST);
 	
 	return loc_out;
 };
@@ -349,6 +354,11 @@ packageObj.createNode("createServiceRequestInfoCommon", createServiceRequestInfo
 
 	var module = {
 		start : function(packageObj){
+			node_makeObjectWithType = packageObj.getNodeData("common.objectwithtype.makeObjectWithType");
+			node_getObjectType = packageObj.getNodeData("common.objectwithtype.getObjectType");
+			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
+			node_requestUtility = packageObj.getNodeData("request.utility");
+			node_eventUtility = packageObj.getNodeData("common.event.utility");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

@@ -12,5 +12,5 @@ nosliw.runtime = runtimeRhino;
 
 runtimeRhino.interfaceObjectLifecycle.init();
 
-nosliw.generateId = runtimeRhino.getIdService();
+nosliw.generateId = runtimeRhino.getIdService().generateId;
 

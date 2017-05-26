@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("rhino");    
+var packageObj = library;    
 
 (function(packageObj){
 	//get used node
@@ -10,7 +10,7 @@ var packageObj = library.getChildPackage("rhino");
 	var node_createResourceManager;
 	var node_createResourceService;
 	var node_createExpressionService;
-	var node_NOSLIWCONSTANT;
+	var node_CONSTANT;
 	var node_NOSLIWCOMMONCONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -24,6 +24,8 @@ var createRuntime = function(){
 	var loc_idService;
 	
 	var loc_resourceService;
+	
+	var loc_resourceManager;
 	
 	var loc_expressionService;
 	
@@ -55,7 +57,7 @@ var createRuntime = function(){
 	};
 	
 	var lifecycleCallback = {};
-	lifecycleCallback[node_NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(){
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(){
 		loc_idService = node_createIdService();
 		loc_resourceManager = node_createResourceManager();
 		loc_resourceService = node_createResourceService(loc_resourceManager);
@@ -76,13 +78,13 @@ packageObj.createNode("createRuntime", createRuntime);
 
 var module = {
 		start : function(packageObj){
-			node_NOSLIWCONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
+			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
 			node_NOSLIWCOMMONCONSTANT = packageObj.getNodeData("constant.NOSLIWCOMMONCONSTANT");
 			node_makeObjectWithName = packageObj.getNodeData("common.objectwithname.makeObjectWithName");
 			node_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
 			node_createIdService = packageObj.getNodeData("service.idservice.createIdService");
 			node_createResourceManager = packageObj.getNodeData("service.resourcemanager.createResourceManager");
-			node_createResourceService = packageObj.getNodeData("service.resourcemanager.createResourceService");
+			node_createResourceService = packageObj.getNodeData("runtime.rhino.createResourceService");
 			node_createExpressionService = packageObj.getNodeData("service.expressionservice.createExpressionService");
 		}
 };

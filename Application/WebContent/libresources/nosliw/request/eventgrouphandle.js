@@ -3,6 +3,8 @@ var packageObj = library.getChildPackage("event");
 
 (function(packageObj){
 	//get used node
+	var node_CONSTANT;
+	var node_eventUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 
@@ -50,7 +52,7 @@ var createRequestEventGroupHandler = function(eventHandler, registerElementEvent
 		var requestInfo = request.getRootRequest();
 		var requestId = requestInfo.getId();
 		var requestStatus = requestInfo.getStatus();
-		if(requestStatus==NOSLIWCONSTANT.REQUEST_STATUS_DONE){
+		if(requestStatus==node_CONSTANT.REQUEST_STATUS_DONE){
 			loc_eventHandler.call(loc_thisContext, requestInfo);
 			delete loc_requesters[requestId];
 		}
@@ -59,7 +61,7 @@ var createRequestEventGroupHandler = function(eventHandler, registerElementEvent
 			if(request==undefined){
 				loc_requesters[requestId] = requestInfo;
 				requestInfo.registerEventListener(function(e, data, req){
-					if(e==NOSLIWCONSTANT.REQUEST_EVENT_DONE){
+					if(e==node_CONSTANT.REQUEST_EVENT_DONE){
 						loc_eventHandler.call(loc_thisContext, requestInfo);
 						delete loc_requesters[requestId];
 					}
@@ -72,7 +74,7 @@ var createRequestEventGroupHandler = function(eventHandler, registerElementEvent
 	loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT"] = function(){};	
 	loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY"] = function(requestInfo){
 		//unregister all listeners
-		nosliwEventUtility.unregisterAllListeners(loc_listeners);
+		node_eventUtilty.unregisterAllListeners(loc_listeners);
 		
 		_.each(loc_elements, function(element, key){
 			element.destroy(requestInfo);
@@ -126,6 +128,8 @@ packageObj.createNode("createRequestEventGroupHandler", createRequestEventGroupH
 
 	var module = {
 		start : function(packageObj){
+			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
+			node_eventUtility = packageObj.getNodeData("common.event.utility");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

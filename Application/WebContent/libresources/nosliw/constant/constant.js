@@ -8,7 +8,7 @@ var packageObj = library;
 /**
  * 
  */
-var NOSLIWCONSTANT=
+var node_CONSTANT=
 {
 	  "SCRIPTOBJECT_VARIABLE_RESOURCEVIEW": "code",
 
@@ -147,7 +147,7 @@ var NOSLIWCONSTANT=
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("NOSLIWCONSTANT", NOSLIWCONSTANT); 
+packageObj.createNode("NOSLIWCONSTANT", node_CONSTANT); 
 
 	var module = {
 		start : function(packageObj){

@@ -16,7 +16,7 @@ import org.mozilla.javascript.NativeObject;
  *  
  */ 
  
-public class HAPRhinoUtility 
+public class HAPRhinoDataUtility 
 { 
     /**
      * Converts a given JavaScript native object and converts it to the relevant JSON string. 

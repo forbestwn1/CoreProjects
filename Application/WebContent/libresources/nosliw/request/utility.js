@@ -3,6 +3,7 @@ var packageObj = library;
 
 (function(packageObj){
 	//get used node
+	var node_eventUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var utility = function(){
@@ -19,7 +20,7 @@ var utility = function(){
 			 */
 			registerEventWithRequest : function(source, eventName, handler, thisContext){
 				var listener = {};
-				nosliwEventUtility.registerEvent(listener, source, eventName, function(event, data){
+				node_eventUtility.registerEvent(listener, source, eventName, function(event, data){
 					handler.call(this, event, data.data, data.requestInfo);
 				}, thisContext);
 				return listener;
@@ -29,7 +30,7 @@ var utility = function(){
 			 * trigger event related with request
 			 */
 			triggerEventWithRequest : function(source, event, data, requestInfo){
-				nosliwEventUtility.triggerEvent(source, event, {
+				node_eventUtility.triggerEvent(source, event, {
 					data : data,
 					requestInfo : requestInfo,
 				});		
@@ -153,6 +154,7 @@ packageObj.createNode("utility", utility);
 
 	var module = {
 		start : function(packageObj){
+			node_eventUtility = packageObj.getNodeData("common.event.utility");
 		}
 	};
 	nosliw.registerModule(module, packageObj);
