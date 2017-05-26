@@ -3,6 +3,7 @@ var packageObj = library.getChildPackage("request");
 
 (function(packageObj){
 	//get used node
+	var node_requestProcessor;
 	var node_ServiceRequestExecuteInfo;
 	var node_createServiceRequestInfoCommon;
 	var node_CONSTANT;
@@ -34,7 +35,7 @@ var createServiceRequestInfoSet = function(service, handlers, requester_parent){
 		
 		var remoteRequests = [];
 		_.each(loc_out.pri_requests, function(childRequestInfo, name, list){
-			var remoteRequest = nosliw.getRequestServiceManager().processRequest(childRequestInfo, false);
+			var remoteRequest = node_requestProcessor.processRequest(childRequestInfo, false);
 			if(remoteRequest!=undefined){
 				if(_.isArray(remoteRequest)){
 					for(var i in remoteRequest){
@@ -141,6 +142,7 @@ packageObj.createNode("createServiceRequestInfoSet", createServiceRequestInfoSet
 
 	var module = {
 		start : function(packageObj){
+			node_requestProcessor = packageObj.getNodeData("request.requestServiceProcessor");
 			node_ServiceRequestExecuteInfo = packageObj.getNodeData("request.entity.ServiceRequestExecuteInfo");
 			node_createServiceRequestInfoCommon = packageObj.getNodeData("request.request.createServiceRequestInfoCommon");
 			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");

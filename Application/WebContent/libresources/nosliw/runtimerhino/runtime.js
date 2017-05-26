@@ -19,7 +19,7 @@ var packageObj = library;
 /**
  * 
  */
-var createRuntime = function(){
+var node_createRuntime = function(){
 	
 	var loc_idService;
 	
@@ -74,7 +74,7 @@ var createRuntime = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createRuntime", createRuntime); 
+packageObj.createNode("createRuntime", node_createRuntime); 
 
 var module = {
 		start : function(packageObj){

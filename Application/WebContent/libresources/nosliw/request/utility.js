@@ -47,7 +47,7 @@ var utility = function(){
 				//since is building remote service task, this request need remote call
 				requestInfo.setIsLocalRequest(false);
 				//create remote request handlers based on service request handlers 
-				var handlers = nosliwRequestUtility.getRemoteServiceTaskHandlersFromRequestHandlers(requestInfo.getHandlers());
+				var handlers = node_requestUtility.getRemoteServiceTaskHandlersFromRequestHandlers(requestInfo.getHandlers());
 				var remoteReq = new NosliwRemoteServiceTask(syncTaskName, new NosliwServiceInfo(requestInfo.getService().command, requestInfo.getParms()), handlers, requestInfo);
 				requestInfo.setRemoteRequest(remoteReq);
 				return remoteReq;

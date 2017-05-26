@@ -8,6 +8,7 @@ var packageObj = library.getChildPackage("request");
 	var node_CONSTANT;
 	var node_requestUtility;
 	var node_eventUtility;
+	var node_requestUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -217,7 +218,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			},
 			
 			executeStartHandler : function(thisContext){
-				nosliwLogging.info(loc_moduleName, this.getInnerId(), "Start handler");
+				nosliw.logging.info(loc_moduleName, this.getInnerId(), "Start handler");
 				var out = undefined;
 				//internal handler
 				var handler = this.getHandlers().start;
@@ -226,8 +227,8 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			},
 			
 			executeSuccessHandler : function(data, thisContext){
-				nosliwLogging.info(loc_moduleName, this.getInnerId(), "Success handler");
-				nosliwLogging.trace(loc_moduleName, this.getInnerId(), "Data ", data);
+				nosliw.logging.info(loc_moduleName, this.getInnerId(), "Success handler");
+				nosliw.logging.trace(loc_moduleName, this.getInnerId(), "Data ", data);
 
 				var out = undefined;
 				//internal handler
@@ -237,8 +238,8 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			},
 			
 			executeErrorHandler : function(serviceData, thisContext){
-				nosliwLogging.error(loc_moduleName, this.getInnerId(), "Error handler");
-				nosliwLogging.trace(loc_moduleName, this.getInnerId(), serviceData);
+				nosliw.logging.error(loc_moduleName, this.getInnerId(), "Error handler");
+				nosliw.logging.trace(loc_moduleName, this.getInnerId(), serviceData);
 
 				var out = undefined;
 				//internal handler
@@ -248,8 +249,8 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			},
 
 			executeExceptionHandler : function(serviceData, thisContext){
-				nosliwLogging.error(loc_moduleName, this.getInnerId(), "Exception handler");
-				nosliwLogging.trace(loc_moduleName, this.getInnerId(), serviceData);
+				nosliw.logging.error(loc_moduleName, this.getInnerId(), "Exception handler");
+				nosliw.logging.trace(loc_moduleName, this.getInnerId(), serviceData);
 
 				var out = undefined;
 				//internal handler
@@ -267,12 +268,12 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 				
 				var handlers = this.getHandlers();
 				var newHandlers = {
-					start : nosliwRequestUtility.createRequestProcessorHandlerFunction(handlers.start, processors.start),
-					success : nosliwRequestUtility.createRequestProcessorHandlerFunction(handlers.success, processors.success),
-					error : nosliwRequestUtility.createRequestProcessorHandlerFunction(handlers.error, processors.error),
-					exception : nosliwRequestUtility.createRequestProcessorHandlerFunction(handlers.exception, processors.exception),
+					start : node_requestUtility.createRequestProcessorHandlerFunction(handlers.start, processors.start),
+					success : node_requestUtility.createRequestProcessorHandlerFunction(handlers.success, processors.success),
+					error : node_requestUtility.createRequestProcessorHandlerFunction(handlers.error, processors.error),
+					exception : node_requestUtility.createRequestProcessorHandlerFunction(handlers.exception, processors.exception),
 				};
-				this.setHandlers(nosliwRequestUtility.mergeHandlers(handlers, newHandlers));
+				this.setHandlers(node_requestUtility.mergeHandlers(handlers, newHandlers));
 			},
 
 			/*
@@ -282,12 +283,12 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			setRequestPostProcessors : function(processors){
 				var handlers = this.getHandlers();
 				var newHandlers = {
-					start : nosliwRequestUtility.createRequestPostProcessorHandlerFunction(handlers.start, processors.start),
-					success : nosliwRequestUtility.createRequestPostProcessorHandlerFunction(handlers.success, processors.success),
-					error : nosliwRequestUtility.createRequestPostProcessorHandlerFunction(handlers.error, processors.error),
-					exception : nosliwRequestUtility.createRequestPostProcessorHandlerFunction(handlers.exception, processors.exception),
+					start : node_requestUtility.createRequestPostProcessorHandlerFunction(handlers.start, processors.start),
+					success : node_requestUtility.createRequestPostProcessorHandlerFunction(handlers.success, processors.success),
+					error : node_requestUtility.createRequestPostProcessorHandlerFunction(handlers.error, processors.error),
+					exception : node_requestUtility.createRequestPostProcessorHandlerFunction(handlers.exception, processors.exception),
 				};
-				this.setHandlers(nosliwRequestUtility.mergeHandlers(handlers, newHandlers));
+				this.setHandlers(node_requestUtility.mergeHandlers(handlers, newHandlers));
 			},
 */
 			
@@ -335,7 +336,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			setResult : function(result){  this.pri_metaData.pri_result = result; },
 			
 			registerEventListener : function(handler){
-				var listener = nosliwRequestUtility.registerEventWithRequest(this.pri_metaData.pri_eventSource, node_CONSTANT.EVENT_EVENTNAME_ALL, handler, this);
+				var listener = node_requestUtility.registerEventWithRequest(this.pri_metaData.pri_eventSource, node_CONSTANT.EVENT_EVENTNAME_ALL, handler, this);
 				this.pri_metaData.pri_eventListeners.push(listener);
 				return listener;
 			},
@@ -359,6 +360,7 @@ packageObj.createNode("createServiceRequestInfoCommon", node_createServiceReques
 			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
 			node_requestUtility = packageObj.getNodeData("request.utility");
 			node_eventUtility = packageObj.getNodeData("common.event.utility");
+			node_requestUtility = packageObj.getNodeData("request.utility");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

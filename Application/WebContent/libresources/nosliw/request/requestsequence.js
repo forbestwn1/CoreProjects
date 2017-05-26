@@ -3,8 +3,10 @@ var packageObj = library.getChildPackage("request");
 
 (function(packageObj){
 	//get used node
+	var node_getObjectType;
 	var node_createServiceRequestInfoCommon;
 	var node_ServiceRequestExecuteInfo;
+	var node_requestProcessor;
 	var node_CONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -62,7 +64,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 				item = item.call(loc_out, loc_out);
 			}
 
-			if(nosliwTypedObjectUtility.getObjectType(item)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
+			if(node_getObjectType(item)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
 				//for request
 				loc_out.pri_requestInfos.push(item);
 			}
@@ -94,7 +96,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 				if(data.length==0)  isRequestArray = false;
 				else{
 					for(var i in data){
-						if(!nosliwTypedObjectUtility.getObjectType(data[i])==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
+						if(!node_getObjectType(data[i])==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
 							isRequestArray = false;
 							break;
 						}
@@ -113,7 +115,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 				}
 			}
 			else{
-				if(nosliwTypedObjectUtility.getObjectType(data)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
+				if(node_getObjectType(data)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
 					//for request
 					loc_out.pri_requestInfos.push(data);
 				}
@@ -158,7 +160,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 			},
 		});
 		
-		nosliw.getRequestServiceManager().processRequest(requestInfo);
+		node_requestProcessor.processRequest(requestInfo);
 	};
 	
 	var loc_process = function(){
@@ -195,8 +197,10 @@ packageObj.createNode("createServiceRequestInfoSequence", node_createServiceRequ
 
 	var module = {
 		start : function(packageObj){
+			node_requestProcessor = packageObj.getNodeData("request.requestServiceProcessor");
 			node_createServiceRequestInfoCommon = packageObj.getNodeData("request.request.createServiceRequestInfoCommon");
 			node_ServiceRequestExecuteInfo = packageObj.getNodeData("request.entity.ServiceRequestExecuteInfo");
+			node_getObjectType = packageObj.getNodeData("common.objectwithtype.getObjectType");
 			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
 		}
 	};

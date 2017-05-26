@@ -18,9 +18,16 @@ var node_createResourceService = function(resourceManager){
 	var loc_resourceManager = resourceManager;
 
 	var loc_getLoadResourceRequest = function(resourceIds, handlers, requestInfo){
-		nosliw.runtime.javaInterface.loadResources(resourceIds, function(){
-			nosliw.logging.info("");
-		});
+		
+		aaaa.loadResources('aa', 'bb');
+		
+//		aaaa.loadResources(resourceIds, function(){
+//			nosliw.logging.info("AAAAAAAAAAAA");
+//		});
+		
+//		nosliw.runtime.javaInterface.loadResources(resourceIds, function(){
+//			nosliw.logging.info("");
+//		});
 	}
 	
 	var loc_out = {

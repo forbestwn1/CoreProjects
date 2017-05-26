@@ -10,6 +10,6 @@
 	var resourceService = nosliw.runtime.getResourceService();
 	resourceService.executeGetResourcesRequest(resourceIds, {
 		success : function(){
-			nosliw.loggine.info("Ha Ha Ha Ha!!!!!");
+			nosliw.logging.info("Ha Ha Ha Ha!!!!!");
 		}
 	}, undefined);

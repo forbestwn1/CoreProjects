@@ -5,6 +5,7 @@ var packageObj = library.getChildPackage("event");
 	//get used node
 	var node_CONSTANT;
 	var node_eventUtility;
+	var node_makeObjectWithLifecycle;
 //*******************************************   Start Node Definition  ************************************** 	
 
 
@@ -12,7 +13,7 @@ var packageObj = library.getChildPackage("event");
  * this is object that handler multiple event related with request
  * it wait until request is finished, then it emitt event 
  */
-var createRequestEventGroupHandler = function(eventHandler, registerElementEventFunction, thisContext){
+var node_createRequestEventGroupHandler = function(eventHandler, registerElementEventFunction, thisContext){
 	
 	//sync task name for remote call 
 	var loc_moduleName = "requestEventGroup";
@@ -116,7 +117,7 @@ var createRequestEventGroupHandler = function(eventHandler, registerElementEvent
 	};
 	
 	//append resource life cycle method to out obj
-	loc_out = nosliwLifecycleUtility.makeResourceObject(loc_out, loc_moduleName);
+	loc_out = node_makeObjectWithLifecycle(loc_out, loc_moduleName);
 	
 	return loc_out;
 		
@@ -124,12 +125,13 @@ var createRequestEventGroupHandler = function(eventHandler, registerElementEvent
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createRequestEventGroupHandler", createRequestEventGroupHandler); 
+packageObj.createNode("createRequestEventGroupHandler", node_createRequestEventGroupHandler); 
 
 	var module = {
 		start : function(packageObj){
 			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
 			node_eventUtility = packageObj.getNodeData("common.event.utility");
+			node_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

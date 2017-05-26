@@ -3,6 +3,7 @@ var packageObj = library.getChildPackage("expressionservice");
 
 (function(packageObj){
 	//get used node
+	var node_requestProcessor;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	
@@ -28,7 +29,7 @@ var loc_executeExpression = function(expression, variables, handlers){
 	executeExpressionRequest.addRequet(executeOperandRequest);
 	
 	//execute task
-	nosliw.getRequestServiceManager().processRequest(executeExpressionRequest, false);
+	node_requestProcessor.processRequest(executeExpressionRequest, false);
 };
 	
 //convert 
@@ -231,6 +232,7 @@ packageObj.createNode("createExpressionService", node_createExpressionService);
 
 	var module = {
 		start : function(packageObj){
+			node_requestProcessor = packageObj.getNodeData("request.requestServiceProcessor");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

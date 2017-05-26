@@ -64,8 +64,41 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	}
 	
 	public void loadResources(Object resources, Object callBackFunction){
-		System.out.println("Load resources !!!!!!!!!!!!!!!!!!!!");
+		System.out.println("Load resources !!!!!!!!!!!!!!!!!!!!" + resources + "  " + callBackFunction);
 	}
+	
+	
+	public static void main(String args[])
+    {
+        Context cx = Context.enter();
+        try {
+            Scriptable scope = cx.initStandardObjects();
+            {
+            // Add a global variable "out" that is a JavaScript reflection
+            // of System.out
+            Object jsOut = Context.javaToJS(System.out, scope);
+            ScriptableObject.putProperty(scope, "out", jsOut);
+
+            String s = "out.println(42)";
+            Object result = cx.evaluateString(scope, s, "<cmd>", 1, null);
+            System.err.println(Context.toString(result));
+            }
+            
+            {
+            Object jsOut = Context.javaToJS(new HAPRuntimeImpJSRhino(null, null), scope);
+            ScriptableObject.putProperty(scope, "runtime", jsOut);
+
+            String s = "runtime.loadResources('aa', 'bb')";
+            Object result = cx.evaluateString(scope, s, "<cmd>", 1, null);
+            System.err.println(Context.toString(result));
+            }
+            
+        } finally {
+            Context.exit();
+        }
+    }
+	
+	
 	
 	/**
 	 * this method is call back method by js 
@@ -256,8 +289,6 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	
 	@Override
 	public void start(){
-        System.out.println("Runtime init start!!!!!!");
-
         this.m_sciprtTracker = new ScriptTracker();
 		
 		ContextFactory factory = new ContextFactory();
@@ -271,6 +302,10 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	    try {
 	        this.m_scope = this.initEsencialScope(m_context, null);
 
+	        Object wrappedRuntime = Context.javaToJS(new HAPRuntimeImpJSRhino(null, null), this.m_scope);
+	        ScriptableObject.putProperty(this.m_scope, "aaaa", wrappedRuntime);
+	        
+	        
 	        System.setIn(dbg.getIn());
 	        System.setOut(dbg.getOut());
 	        System.setErr(dbg.getErr());
@@ -282,15 +317,10 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		    dbg.setVisible(true);
 		    dbg.setExitAction(new ExitOnClose());	    
 		    
-	        
-	        
-	        Object wrappedRuntime = Context.javaToJS(this, this.m_scope);
-	        ScriptableObject.putProperty(this.m_scope, "resourceService", wrappedRuntime);
-	        
 	        this.loadScriptFromFile("init.js", m_context, m_scope, null);
+	     
+//	        global.defineProperty( "resourceService", this, ScriptableObject.CONST );	        
 	        
-	        
-	        System.out.println("Runtime init finish!!!!!!");
 	    }
 	    catch(Exception e){
 	    	e.printStackTrace();
