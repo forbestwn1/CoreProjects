@@ -82,6 +82,7 @@ var node_CONSTANT=
 	  "REQUEST_TYPE_SEQUENCE" : 		"sequence",						//
 	  "REQUEST_TYPE_UITAG" : 			"uiTag",						//
 	  "REQUEST_TYPE_SIMPLE" : 			"simple",						//
+	  "REQUEST_TYPE_EXECUTOR" : 		"executor",						//
 
 	  "REQUEST_TYPE_DATAOPERATION" : 	"dataoperation",			//request type is data operation
 	  "REQUEST_TYPE_WRAPPEROPERATION" : "wrapperoperation",		//request type is operation on wrapper
@@ -147,7 +148,7 @@ var node_CONSTANT=
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("NOSLIWCONSTANT", node_CONSTANT); 
+packageObj.createNode("CONSTANT", node_CONSTANT); 
 
 	var module = {
 		start : function(packageObj){

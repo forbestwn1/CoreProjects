@@ -65,40 +65,12 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	
 	public void loadResources(Object resources, Object callBackFunction){
 		System.out.println("Load resources !!!!!!!!!!!!!!!!!!!!" + resources + "  " + callBackFunction);
+		
+		Function fun = (Function)callBackFunction;
+		System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFf   "+this.m_context.decompileFunction(fun, 4));
+		fun.call(this.m_context, this.m_scope, this.m_scope, new Object[]{"aa", "bb"});
+		
 	}
-	
-	
-	public static void main(String args[])
-    {
-        Context cx = Context.enter();
-        try {
-            Scriptable scope = cx.initStandardObjects();
-            {
-            // Add a global variable "out" that is a JavaScript reflection
-            // of System.out
-            Object jsOut = Context.javaToJS(System.out, scope);
-            ScriptableObject.putProperty(scope, "out", jsOut);
-
-            String s = "out.println(42)";
-            Object result = cx.evaluateString(scope, s, "<cmd>", 1, null);
-            System.err.println(Context.toString(result));
-            }
-            
-            {
-            Object jsOut = Context.javaToJS(new HAPRuntimeImpJSRhino(null, null), scope);
-            ScriptableObject.putProperty(scope, "runtime", jsOut);
-
-            String s = "runtime.loadResources('aa', 'bb')";
-            Object result = cx.evaluateString(scope, s, "<cmd>", 1, null);
-            System.err.println(Context.toString(result));
-            }
-            
-        } finally {
-            Context.exit();
-        }
-    }
-	
-	
 	
 	/**
 	 * this method is call back method by js 
@@ -302,7 +274,8 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	    try {
 	        this.m_scope = this.initEsencialScope(m_context, null);
 
-	        Object wrappedRuntime = Context.javaToJS(new HAPRuntimeImpJSRhino(null, null), this.m_scope);
+//	        Object wrappedRuntime = Context.javaToJS(new HAPRuntimeImpJSRhino(null, null), this.m_scope);
+	        Object wrappedRuntime = Context.javaToJS(this, this.m_scope);
 	        ScriptableObject.putProperty(this.m_scope, "aaaa", wrappedRuntime);
 	        
 	        

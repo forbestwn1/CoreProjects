@@ -47,7 +47,7 @@ var node_createConfigures = function(configures){
 		}
 	}
 	else if(_.isObject(configures)){
-		if(getObjectTypeNode.getData()(configures)===NOSLIWCONSTANT.TYPEDOBJECT_TYPE_CONFIGURES){
+		if(getObjectTypeNode.getData()(configures)===node_CONSTANT.TYPEDOBJECT_TYPE_CONFIGURES){
 			return configures;
 		}
 		else{
@@ -86,7 +86,7 @@ packageObj.createNode("createConfigures", node_createConfigures);
 			node_basicUtilityNode = packageObj.getNodeData("common.utility.basicUtility");
 			node_makeObjectWithTypeNode = packageObj.getNodeData("common.objectwithtype.makeObjectWithType");
 			node_getObjectTypeNode = packageObj.getNodeData("common.objectwithtype.getObjectType");
-			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
+			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

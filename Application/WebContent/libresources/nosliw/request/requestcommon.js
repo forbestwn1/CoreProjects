@@ -357,7 +357,7 @@ packageObj.createNode("createServiceRequestInfoCommon", node_createServiceReques
 		start : function(packageObj){
 			node_makeObjectWithType = packageObj.getNodeData("common.objectwithtype.makeObjectWithType");
 			node_getObjectType = packageObj.getNodeData("common.objectwithtype.getObjectType");
-			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
+			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
 			node_requestUtility = packageObj.getNodeData("request.utility");
 			node_eventUtility = packageObj.getNodeData("common.event.utility");
 			node_requestUtility = packageObj.getNodeData("request.utility");

@@ -73,8 +73,6 @@ b
 2WebContent/libresources/nosliw/common/interface.js,3\d\3dfd443adb57b63f885342be111ffcb4a7146685
 ^
 .WebContent/libresources/nosliw/common/event.js,d\0\d098aeb9e5118c31b0f60365da387c295710ed77
-L
-WebContent/js/temp/entity.js,b\1\b1695df49b1b90620e30e75ae269ca1b98766432
 c
 3WebContent/libresources/nosliw/request/0_package.js,2\9\29401b173f24c7e5e54869dabdbe448da7ef303e
 g
@@ -139,3 +137,9 @@ o
 ?WebContent/libresources/nosliw/constant/NOSLIWCOMMONCONSTANT.js,1\6\16d6de6c9991dd62352ee68a34e474ffc6e90116
 p
 @WebContent/libresources/nosliw/runtimerhino/0_package_runtime.js,d\5\d557e4347f8e834bd77d1d162efbf7bc31d57474
+`
+0WebContent/libresources/nosliw/common/service.js,4\9\49ea121a6249154976b65d1fff15a559fd27aed8
+i
+9WebContent/libresources/nosliw/request/serviceprovider.js,a\5\a544be812a0fa2493c14bb11e23f77fd44a0c7dd
+i
+9WebContent/libresources/nosliw/request/requestexecutor.js,5\3\53c794514d670dc5c41431ea457e29965ff62b9e

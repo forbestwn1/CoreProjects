@@ -86,7 +86,7 @@ var createServiceRequestInfoService = function(service, handlers, requester_pare
 	loc_out = _.extend(node_createServiceRequestInfoCommon(service, handlers, requester_parent), loc_out);
 	
 	//request type
-	loc_out.setType(var_NOSLIWCONSTANT.REQUEST_TYPE_SERVICE);
+	loc_out.setType(node_CONSTANT.REQUEST_TYPE_SERVICE);
 	
 	loc_constructor(service, handlers, requester_parent);
 	
@@ -103,7 +103,7 @@ packageObj.createNode("createServiceRequestInfoService", createServiceRequestInf
 			node_requestProcessor = packageObj.getNodeData("request.requestServiceProcessor");
 			node_ServiceRequestExecuteInfo = packageObj.getNodeData("request.entity.ServiceRequestExecuteInfo");
 			node_createServiceRequestInfoCommon = packageObj.getNodeData("request.request.createServiceRequestInfoCommon");
-			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
+			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

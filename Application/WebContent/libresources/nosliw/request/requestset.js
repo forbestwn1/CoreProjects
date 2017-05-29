@@ -145,7 +145,7 @@ packageObj.createNode("createServiceRequestInfoSet", createServiceRequestInfoSet
 			node_requestProcessor = packageObj.getNodeData("request.requestServiceProcessor");
 			node_ServiceRequestExecuteInfo = packageObj.getNodeData("request.entity.ServiceRequestExecuteInfo");
 			node_createServiceRequestInfoCommon = packageObj.getNodeData("request.request.createServiceRequestInfoCommon");
-			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
+			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

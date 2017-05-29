@@ -142,7 +142,7 @@ packageObj.createNode("utility", node_eventUtility);
 
 var module = {
 	start : function(packageObj){
-		node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
+		node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
 		node_buildInterface = packageObj.getNodeData("common.interface.buildInterface");
 		node_getInterface = packageObj.getNodeData("common.interface.getInterface");
 	}

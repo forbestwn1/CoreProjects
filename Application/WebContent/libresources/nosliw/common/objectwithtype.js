@@ -40,7 +40,7 @@ packageObj.createNode("getObjectType", node_getObjectType);
 			node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
 			node_buildInterface = packageObj.getNodeData("common.interface.buildInterface");
 			node_getInterface = packageObj.getNodeData("common.interface.getInterface");
-			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
+			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

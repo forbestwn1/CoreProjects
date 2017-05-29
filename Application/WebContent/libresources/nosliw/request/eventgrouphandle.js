@@ -129,7 +129,7 @@ packageObj.createNode("createRequestEventGroupHandler", node_createRequestEventG
 
 	var module = {
 		start : function(packageObj){
-			node_CONSTANT = packageObj.getNodeData("constant.NOSLIWCONSTANT");
+			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
 			node_eventUtility = packageObj.getNodeData("common.event.utility");
 			node_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
 		}
