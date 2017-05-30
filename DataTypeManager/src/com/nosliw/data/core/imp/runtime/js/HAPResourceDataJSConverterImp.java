@@ -2,13 +2,13 @@ package com.nosliw.data.core.imp.runtime.js;
 
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.runtime.HAPResourceDataConverter;
+import com.nosliw.data.core.runtime.js.HAPResourceDataJSConverter;
 
-public class HAPResourceDataConverterImp extends HAPStringableValueEntityWithID implements HAPResourceDataConverter{
+public class HAPResourceDataJSConverterImp extends HAPStringableValueEntityWithID implements HAPResourceDataJSConverter{
 
 	public static String _VALUEINFO_NAME;
 	
-	public HAPResourceDataConverterImp(String script, HAPDataTypeId dataTypeName, String conerterType){
+	public HAPResourceDataJSConverterImp(String script, HAPDataTypeId dataTypeName, String conerterType){
 		this.setValue(script);
 		this.setConverterType(conerterType);
 		this.setDataTypeName(dataTypeName);

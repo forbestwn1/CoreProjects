@@ -34,9 +34,9 @@ import com.nosliw.data.core.imp.HAPOperationImp;
 import com.nosliw.data.core.imp.HAPOperationInfoImp;
 import com.nosliw.data.core.imp.HAPOperationVarInfoImp;
 import com.nosliw.data.core.imp.HAPRelationshipImp;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceDataOperationImp;
+import com.nosliw.data.core.imp.runtime.js.HAPResourceDataJSOperationImp;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceDataConverterImp;
+import com.nosliw.data.core.imp.runtime.js.HAPResourceDataJSConverterImp;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataHelperImp;
 import com.nosliw.data.core.runtime.HAPResourceId;
 
@@ -119,8 +119,8 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		HAPSqlUtility.saveToDB(dataType, m_connection);
 	}
 
-	public HAPResourceDataConverterImp getDataTypeConverter(HAPDataTypeConverter converter){
-		return (HAPResourceDataConverterImp)this.queryEntityFromDB(HAPResourceDataConverterImp._VALUEINFO_NAME, "dataTypeName=? AND converterType=?", new Object[]{converter.getFullName(), converter.getOperation()});
+	public HAPResourceDataJSConverterImp getDataTypeConverter(HAPDataTypeConverter converter){
+		return (HAPResourceDataJSConverterImp)this.queryEntityFromDB(HAPResourceDataJSConverterImp._VALUEINFO_NAME, "dataTypeName=? AND converterType=?", new Object[]{converter.getFullName(), converter.getOperation()});
 	}
 
 	public HAPResourceDataHelperImp getResourceHelper(String id){
@@ -208,10 +208,10 @@ public class HAPDBAccess extends HAPConfigurableImp {
 				new Object[]{resourceIdStr});
 	}
 	
-	public HAPResourceDataOperationImp getJSOperation(HAPOperationId operationId){
-		return (HAPResourceDataOperationImp)this.queryEntityFromDB(
-				HAPResourceDataOperationImp._VALUEINFO_NAME, 
-				HAPResourceDataOperationImp.DATATYPENAME+"=? AND +"+HAPResourceDataOperationImp.OPERATIONNAME+"=?",
+	public HAPResourceDataJSOperationImp getJSOperation(HAPOperationId operationId){
+		return (HAPResourceDataJSOperationImp)this.queryEntityFromDB(
+				HAPResourceDataJSOperationImp._VALUEINFO_NAME, 
+				HAPResourceDataJSOperationImp.DATATYPENAME+"=? AND "+HAPResourceDataJSOperationImp.OPERATIONNAME+"=?",
 				new Object[]{operationId.getFullName(), operationId.getOperation()});
 		
 	}

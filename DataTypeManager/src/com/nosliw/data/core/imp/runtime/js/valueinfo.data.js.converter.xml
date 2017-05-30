@@ -1,7 +1,7 @@
 <entity name="data.js.converter"
 		table="nosliw.CONVERTERJS"
 		primaryKeys="id" 
-		class="com.nosliw.data.core.imp.runtime.js.HAPResourceDataConverterImp" 
+		class="com.nosliw.data.core.imp.runtime.js.HAPResourceDataJSConverterImp" 
 		description="">
 
 	<property name="id" dataType="string" description="">

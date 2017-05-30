@@ -1,10 +1,9 @@
-package com.nosliw.data.core.runtime;
+package com.nosliw.data.core.runtime.js;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.runtime.js.HAPResourceDataJSValue;
 
-public interface HAPResourceDataOperation extends HAPResourceDataJSValue{
+public interface HAPResourceDataJSOperation extends HAPResourceDataJSValue{
 
 	@HAPAttribute
 	public static String OPERATIONID = "operationId";

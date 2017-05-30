@@ -95,6 +95,7 @@ var node_createResourceService = function(resourceManager){
 							}
 						}, requestInfo);
 						loadResourceRequest.setData("resources", data.found);
+						return loadResourceRequest;
 					}
 				}
 			}, requestInfo));

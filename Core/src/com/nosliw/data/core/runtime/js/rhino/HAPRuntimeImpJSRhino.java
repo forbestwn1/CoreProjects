@@ -65,11 +65,22 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	
 	public void loadResources(Object resources, Object callBackFunction){
 		System.out.println("Load resources !!!!!!!!!!!!!!!!!!!!" + resources + "  " + callBackFunction);
+
+		List<HAPResourceIdInfo> resourceIds = new ArrayList<HAPResourceIdInfo>();
+		
+		NativeArray resourcesArray = (NativeArray)resources;
+		for(int i=0; i<resourcesArray.size(); i++){
+			NativeObject resourceIdObject = (NativeObject)resourcesArray.get(i);
+			String type = (String)resourceIdObject.get(HAPResourceId.TYPE);
+			String id = (String)resourceIdObject.get(HAPResourceId.ID);
+			resourceIds.add(new HAPResourceIdInfo(new HAPResourceId(type, id, null)));
+		}
+		this.loadResources(resourceIds, m_scope, m_context);
+		
 		
 		Function fun = (Function)callBackFunction;
-		System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFf   "+this.m_context.decompileFunction(fun, 4));
+//		System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFf   "+this.m_context.decompileFunction(fun, 4));
 		fun.call(this.m_context, this.m_scope, this.m_scope, new Object[]{"aa", "bb"});
-		
 	}
 	
 	/**

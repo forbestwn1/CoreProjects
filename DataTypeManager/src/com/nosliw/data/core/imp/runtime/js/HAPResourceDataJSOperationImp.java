@@ -2,13 +2,15 @@ package com.nosliw.data.core.imp.runtime.js;
 
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.runtime.HAPResourceDataOperation;
+import com.nosliw.data.core.runtime.js.HAPResourceDataJSOperation;
 
-public class HAPResourceDataOperationImp extends HAPStringableValueEntityWithID implements HAPResourceDataOperation{
+public class HAPResourceDataJSOperationImp extends HAPStringableValueEntityWithID implements HAPResourceDataJSOperation{
 
 	public static String _VALUEINFO_NAME;
 	
-	public HAPResourceDataOperationImp(String script, String operationId, HAPDataTypeId dataTypeName, String operationName){
+	public HAPResourceDataJSOperationImp(){}
+	
+	public HAPResourceDataJSOperationImp(String script, String operationId, HAPDataTypeId dataTypeName, String operationName){
 		this.setValue(script);
 		this.setOperationName(operationName);
 		this.setDataTypeName(dataTypeName);

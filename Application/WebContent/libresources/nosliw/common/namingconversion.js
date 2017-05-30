@@ -3,6 +3,7 @@ var packageObj = library.getChildPackage("namingconvension");
 
 (function(packageObj){
 	//get used node
+	var node_basicUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var basicUtility = function(){
@@ -22,11 +23,11 @@ var basicUtility = function(){
 			
 			//otherwise, do smart way
 			var out;
-			if(nosliwCommonUtility.isStringEmpty(part1)){
+			if(node_basicUtility.isStringEmpty(part1)){
 				out = part2;
 			}
 			else{
-				if(nosliwCommonUtility.isStringEmpty(part2))  out = part1;
+				if(node_basicUtility.isStringEmpty(part2))  out = part1;
 				else	out = part1 + seperator + part2;
 			}
 			return out;
@@ -55,6 +56,7 @@ packageObj.createNode("basicUtility", basicUtility);
 
 var module = {
 	start : function(packageObj){
+		node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
 	}
 };
 nosliw.registerModule(module, packageObj);

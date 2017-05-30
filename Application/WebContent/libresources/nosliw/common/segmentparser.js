@@ -3,6 +3,8 @@ var packageObj = library.getChildPackage("segmentparser");
 
 (function(packageObj){
 	//get used node
+	var node_basicUtility;
+
 //*******************************************   Start Node Definition  ************************************** 	
 
 
@@ -17,8 +19,8 @@ var parseSegment = function(path, sep){
 	var loc_index = 0;
 
 	var seperator = sep;
-	if(nosliwCommonUtility.isStringEmpty(seperator))   seperator = NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_PATH; 
-	if(nosliwCommonUtility.isStringEmpty(path))  loc_isEmpty = true;
+	if(node_basicUtility.isStringEmpty(seperator))   seperator = NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_PATH; 
+	if(node_basicUtility.isStringEmpty(path))  loc_isEmpty = true;
 	else{
 		loc_seperator = seperator;
 //		if(seperator==".")  seperator="\\.";
@@ -82,6 +84,7 @@ packageObj.createNode("parseSegment", parseSegment);
 
 	var module = {
 		start : function(packageObj){
+			node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

@@ -4,6 +4,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 
 /**
@@ -97,5 +98,10 @@ public class HAPDataTypeVersion extends HAPSerializableImp{
 		out.m_revision = this.m_revision;
 		out.m_name = this.m_name;
 		return out;
+	}
+	
+	@Override
+	public String toString(){
+		return this.toStringValue(HAPSerializationFormat.LITERATE);
 	}
 }

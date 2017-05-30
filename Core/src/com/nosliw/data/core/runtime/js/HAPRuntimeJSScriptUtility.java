@@ -29,7 +29,7 @@ public class HAPRuntimeJSScriptUtility {
 		}
 		
 		StringBuffer script = new StringBuffer();
-		if(resource.getInfo().getValue(HAPRuntimeImpJSRhino.ADDTORESOURCEMANAGER).equals(HAPRuntimeImpJSRhino.ADDTORESOURCEMANAGER))  return out;
+		if(HAPRuntimeImpJSRhino.ADDTORESOURCEMANAGER.equals(resource.getInfo().getValue(HAPRuntimeImpJSRhino.ADDTORESOURCEMANAGER)))  return out;
 		
 		//build script for resource data
 		String valueScript = null;

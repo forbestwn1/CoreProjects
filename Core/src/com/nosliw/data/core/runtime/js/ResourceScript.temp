@@ -1,14 +1,4 @@
-nosliw.runtime.getResourceManager().addResource(
-function(){
-
-	var resource = {
+nosliw.runtime.getResourceManager().addResource({
 		type : '||type||',
 		id : '||id||'		
-	};
-
-	resource.info = ||info||;
-	resource.value = '||value||';
-
-	return resource;
-}());
-
+	}, ||value||, ||info||);

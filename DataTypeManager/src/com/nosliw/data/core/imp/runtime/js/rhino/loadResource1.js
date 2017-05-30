@@ -2,7 +2,7 @@
 	resourceIds.push(
 		{
 			type : "operation",
-			id : "core.url:1.1.0;url_normal2"
+			id : "core.url;1.1.0;url_normal2"
 		}
 	);
 	

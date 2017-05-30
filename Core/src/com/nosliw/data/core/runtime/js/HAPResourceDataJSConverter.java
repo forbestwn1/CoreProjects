@@ -1,10 +1,9 @@
-package com.nosliw.data.core.runtime;
+package com.nosliw.data.core.runtime.js;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.runtime.js.HAPResourceDataJSValue;
 
-public interface HAPResourceDataConverter extends HAPResourceDataJSValue{
+public interface HAPResourceDataJSConverter extends HAPResourceDataJSValue{
 
 	@HAPAttribute
 	public static String DATATYPENAME = "dataTypeName";

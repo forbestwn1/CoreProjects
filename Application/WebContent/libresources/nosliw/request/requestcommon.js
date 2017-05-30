@@ -9,6 +9,7 @@ var packageObj = library.getChildPackage("request");
 	var node_requestUtility;
 	var node_eventUtility;
 	var node_requestUtility;
+	var node_basicUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -101,7 +102,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			if(handler!=undefined){
 				var d = handler.call(loc_out, loc_out, data);
 				if(d!=undefined){
-					if(nosliwCommonUtility.isEmptyValue(d))   out = undefined;  
+					if(node_basicUtility.isEmptyValue(d))   out = undefined;  
 					else out = d;
 				}
 			}
@@ -361,6 +362,7 @@ packageObj.createNode("createServiceRequestInfoCommon", node_createServiceReques
 			node_requestUtility = packageObj.getNodeData("request.utility");
 			node_eventUtility = packageObj.getNodeData("common.event.utility");
 			node_requestUtility = packageObj.getNodeData("request.utility");
+			node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

@@ -40,7 +40,6 @@ public class HAPDataTypeId extends HAPSerializableImp{
 	public HAPDataTypeId(String name, HAPDataTypeVersion version){
 		this.m_name = name;
 		this.m_version = version;
-		this.m_fullName = this.buildLiterate();
 		this.processVersion();
 	}
 
@@ -50,13 +49,23 @@ public class HAPDataTypeId extends HAPSerializableImp{
 	
 	public String getFullName(){
 		if(HAPBasicUtility.isStringEmpty(this.m_fullName)){
-			this.m_fullName = this.buildLiterate();  
+			String versionLiterate = null;
+			if(this.m_version!=null){
+				versionLiterate = this.m_version.toStringValue(HAPSerializationFormat.LITERATE);
+			}
+			this.m_fullName = HAPNamingConversionUtility.cascadeSegments(this.getName(), versionLiterate);
 		}
 		return this.m_fullName;
 	}
 	public void setFullName(String fullName){
-		this.m_fullName = fullName;
-		buildObjectByLiterate(fullName);
+		this.m_fullName = null;
+
+		String[] segs = HAPNamingConversionUtility.parseSegments(fullName);
+		this.m_name = segs[0];
+		if(segs.length>=2){
+			this.m_version = new HAPDataTypeVersion(segs[1]);
+		}
+		this.processVersion();
 	}
 	
 	public String getVersionMajor(){  return this.getVersion().getMajor(); }
@@ -82,21 +91,12 @@ public class HAPDataTypeId extends HAPSerializableImp{
 	
 	@Override
 	protected String buildLiterate(){
-		String versionLiterate = null;
-		if(this.m_version!=null){
-			versionLiterate = this.m_version.toStringValue(HAPSerializationFormat.LITERATE);
-		}
-		return HAPNamingConversionUtility.cascadeSegments(this.getName(), versionLiterate);
+		return this.getFullName();
 	}
 
 	@Override
-	protected boolean buildObjectByLiterate(String literateValue){	
-		String[] segs = HAPNamingConversionUtility.parseSegments(literateValue);
-		this.m_name = segs[0];
-		if(segs.length>=2){
-			this.m_version = new HAPDataTypeVersion(segs[1]);
-		}
-		this.processVersion();
+	protected boolean buildObjectByLiterate(String literateValue){
+		this.setFullName(literateValue);
 		return true;
 	}
 	

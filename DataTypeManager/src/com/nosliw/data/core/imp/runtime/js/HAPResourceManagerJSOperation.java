@@ -20,7 +20,7 @@ public class HAPResourceManagerJSOperation implements HAPResourceManager{
 		for(HAPResourceId resourceId : resourcesId){
 			HAPResourceIdOperation resourceIdOperation = new HAPResourceIdOperation(resourceId);
 			
-			HAPResourceDataOperationImp helperResource = this.m_dbAccess.getJSOperation(resourceIdOperation.getOperationId());
+			HAPResourceDataJSOperationImp helperResource = this.m_dbAccess.getJSOperation(resourceIdOperation.getOperationId());
 			out.add(new HAPResource(resourceId, helperResource, null));
 		}
 		return out;

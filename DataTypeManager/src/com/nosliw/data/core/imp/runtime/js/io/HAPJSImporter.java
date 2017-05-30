@@ -26,9 +26,9 @@ import com.nosliw.data.core.HAPDataTypeVersion;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.imp.HAPOperationImp;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceDataOperationImp;
+import com.nosliw.data.core.imp.runtime.js.HAPResourceDataJSOperationImp;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceDataConverterImp;
+import com.nosliw.data.core.imp.runtime.js.HAPResourceDataJSConverterImp;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataHelperImp;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
@@ -53,10 +53,10 @@ public class HAPJSImporter {
 	public HAPJSImporter(){
 		this.m_dbAccess = HAPDBAccess.getInstance();
 		
-		this.m_dbAccess.createDBTable(HAPResourceDataOperationImp._VALUEINFO_NAME);
+		this.m_dbAccess.createDBTable(HAPResourceDataJSOperationImp._VALUEINFO_NAME);
 		this.m_dbAccess.createDBTable(HAPJSResourceDependency._VALUEINFO_NAME);
 		this.m_dbAccess.createDBTable(HAPResourceDataHelperImp._VALUEINFO_NAME);
-		this.m_dbAccess.createDBTable(HAPResourceDataConverterImp._VALUEINFO_NAME);
+		this.m_dbAccess.createDBTable(HAPResourceDataJSConverterImp._VALUEINFO_NAME);
 	}
 	
 	public void loadFromFolder(String folderPath){
@@ -158,10 +158,10 @@ public class HAPJSImporter {
     	switch(resourceType){
     	case HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION:
         	String operationId = this.getOperationId(dataTypeId, operationName);
-    		this.m_dbAccess.saveEntity(new HAPResourceDataOperationImp(script, operationId, dataTypeId, operationName));
+    		this.m_dbAccess.saveEntity(new HAPResourceDataJSOperationImp(script, operationId, dataTypeId, operationName));
     		break;
     	case HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER:
-    		this.m_dbAccess.saveEntity(new HAPResourceDataConverterImp(script, dataTypeId, operationName));
+    		this.m_dbAccess.saveEntity(new HAPResourceDataJSConverterImp(script, dataTypeId, operationName));
     		break;
     	}
     	
