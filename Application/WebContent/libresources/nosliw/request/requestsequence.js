@@ -96,7 +96,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 				if(data.length==0)  isRequestArray = false;
 				else{
 					for(var i in data){
-						if(!node_getObjectType(data[i])==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
+						if(node_getObjectType(data[i])!=node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
 							isRequestArray = false;
 							break;
 						}

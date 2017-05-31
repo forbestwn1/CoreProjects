@@ -24,21 +24,11 @@ var node_createResourceService = function(resourceManager){
 	
 	var loc_resourceManager = resourceManager;
 
-	/*
-	 * get request service object for Login 
-	 */
-	loc_getRequestServiceGetResources = function(resourceIds){
-		return new node_ServiceInfo("GetResources", {"resourceId":resourceIds}); 
-	};
-	
-	
-	
 	var loc_getLoadResourceRequest = function(resourceIds, handlers, requestInfo){
 		var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("LoadResources", {"resourceId":resourceIds}), function(requestInfo){
 			aaaa.loadResources(resourceIds, function(){
-				nosliw.logging.info("AAAAAAAAAAAA", arguments);
-				
 				var resourceResult = loc_findResources(resourceIds);
+				nosliw.logging.info("Loaded Resources  ", resourceResult);
 				requestInfo.executeSuccessHandler(resourceResult.found);
 			});
 		}, handlers, requestInfo);
@@ -79,7 +69,7 @@ var node_createResourceService = function(resourceManager){
 	var loc_out = {
 		
 		getGetResourcesRequest : function(resourceIds, handlers, requestInfo){
-			var out = node_createServiceRequestInfoSequence(loc_getRequestServiceGetResources(resourceIds), handlers, this.getRequestInfo(requestInfo));
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetResources", {"resourceId":resourceIds}), handlers, this.getRequestInfo(requestInfo));
 			
 			out.addRequest(loc_getFindResourcesRequest(resourceIds, {
 				success : function(requestInfo, data){

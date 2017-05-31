@@ -32,8 +32,6 @@ z
 Jsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerJSOperation.java,f\c\fc3a0c2a47e335ada3a23174296f637bf29d7057
 v
 Fsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDiscoveryJSImp.java,5\2\52439fa6610f1fde2afcf4b2f5f7f6bc03ac24f5
-x
-Hsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDataOperationImp.java,d\e\de63e25afc4ddc995eff4c29c743435238f0d67f
 u
 Esrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDataHelperImp.java,b\0\b031057ee7b50b95c4c75141f8ef666ea6dbd617
 d
@@ -62,8 +60,6 @@ w
 Gsrc/com/nosliw/data/core/imp/runtime/js/valueinfo.data.js.converter.xml,b\b\bbf074a6ad6db967892e445051b89c3636f5ce62
 z
 Jsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerJSConverter.java,b\b\bb422ba9404192d0fece704df8c97d460e1e8ff3
-x
-Hsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDataConverterImp.java,d\b\dbea1aa0fa2737c6dd5d19d8796bc158fb2292c8
 v
 Fsrc/com/nosliw/data/core/imp/runtime/js/rhino/HAPRuntimeRhinoMain.java,8\d\8d442274cc20c0cda0a2b10e1a853dc0c9a6b284
 d
