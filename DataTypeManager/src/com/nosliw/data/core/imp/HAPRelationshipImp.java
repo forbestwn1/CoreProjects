@@ -1,6 +1,10 @@
 package com.nosliw.data.core.imp;
 
+import java.util.Map;
+
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPRelationship;
@@ -15,11 +19,12 @@ public class HAPRelationshipImp extends HAPStringableValueEntityWithID implement
 	public static String SOURCEDATATYPE = "sourceDataType";
 	@HAPAttribute
 	public static String TARGETDATATYPE = "targetDataType";
+	@HAPAttribute
+	public static String PATH = "path";
 	
 	//type of target, for instance, root, self, intermedia
 	@HAPAttribute
 	public static String TARGETTYPE = "targetType";
-	
 	
 	public HAPRelationshipImp(){
 		this.updateAtomicChildObjectValue(PATH, new HAPRelationshipPathImp());
@@ -57,5 +62,18 @@ public class HAPRelationshipImp extends HAPStringableValueEntityWithID implement
 		out.setTargetDataType(target);
 		out.getPath().append(segment);
 		return out;
+	}
+	
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		this.buildJsonMap(jsonMap, typeJsonMap);
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(SOURCEDATATYPE, HAPSerializeManager.getInstance().toStringValue(this.getSourceDataType(), HAPSerializationFormat.LITERATE));
+		jsonMap.put(TARGETDATATYPE, HAPSerializeManager.getInstance().toStringValue(this.getTargetDataType(), HAPSerializationFormat.LITERATE));
+		jsonMap.put(PATH, HAPSerializeManager.getInstance().toStringValue(this.getPath(), HAPSerializationFormat.LITERATE));
+		jsonMap.put(TARGETTYPE, this.getTargetType());
 	}
 }

@@ -1,6 +1,6 @@
 <root jsPath="{{projectsPath}}/Application/WebContent/libresources/nosliw/constant"
-	jsAttributeFile="NOSLIWATCOMMONTRIBUTECONSTANT"
-	jsConstantFile="NOSLIWCOMMONCONSTANT"
+	jsAttributeFile="COMMONTRIBUTECONSTANT"
+	jsConstantFile="COMMONCONSTANT"
 >
 
 	<attributes filepath="{{projectsPath}}/Application/src/com/nosliw/app/utils" 

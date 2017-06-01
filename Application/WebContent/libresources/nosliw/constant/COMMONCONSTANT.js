@@ -8,7 +8,7 @@ var packageObj = library;
 /**
  * 
  */
-var NOSLIWCOMMONCONSTANT=
+var COMMONCONSTANT=
 
 {"SERVICECODE_SUCCESS":200,
 "SERVICECODE_FAILURE":400,
@@ -271,7 +271,7 @@ var NOSLIWCOMMONCONSTANT=
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("NOSLIWCOMMONCONSTANT", NOSLIWCOMMONCONSTANT); 
+packageObj.createNode("COMMONCONSTANT", COMMONCONSTANT); 
 
 	var module = {
 		start : function(packageObj){

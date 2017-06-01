@@ -30,6 +30,10 @@ public interface HAPExpression {
 	@HAPAttribute
 	public static String ERRORMSGS = "errorMsgs";
 
+	@HAPAttribute
+	public static String CONVERTERS = "converters";
+	
+	//during runtime, every expression has a unique id
 	String getId();
 	void setId(String id);
 	

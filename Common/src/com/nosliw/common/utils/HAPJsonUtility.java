@@ -17,6 +17,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 public class HAPJsonUtility {
 	
 	public static String buildJson(List<?> list, HAPSerializationFormat format){
+		if(list==null)  return null;
 		List<String> arrayJson = new ArrayList<String>();
 		for(Object data : list){
 			arrayJson.add(buildObjectJsonValue(data, format));
@@ -25,6 +26,7 @@ public class HAPJsonUtility {
 	}
 
 	public static String buildJson(Object[] list, HAPSerializationFormat format){
+		if(list==null)  return null;
 		List<String> arrayJson = new ArrayList<String>();
 		for(Object data : list){
 			arrayJson.add(buildObjectJsonValue(data, format));
@@ -33,6 +35,7 @@ public class HAPJsonUtility {
 	}
 	
 	public static String buildJson(Set<?> list, HAPSerializationFormat format){
+		if(list==null)  return null;
 		List<String> arrayJson = new ArrayList<String>();
 		for(Object data : list){
 			arrayJson.add(buildObjectJsonValue(data, format));
@@ -41,6 +44,7 @@ public class HAPJsonUtility {
 	}
 
 	public static String buildJson(Map<String, ?> map, HAPSerializationFormat format){
+		if(map==null)  return null;
 		Map<String, String> mapJson = new LinkedHashMap<String, String>();
 		for(String key : map.keySet()){
 			mapJson.put(key, buildObjectJsonValue(map.get(key), format));

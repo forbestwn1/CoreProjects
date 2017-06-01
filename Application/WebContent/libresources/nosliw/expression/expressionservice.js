@@ -4,50 +4,11 @@ var packageObj = library.getChildPackage("expressionservice");
 (function(packageObj){
 	//get used node
 	var node_requestProcessor;
+	var node_buildServiceProvider;
+	var node_COMMONTRIBUTECONSTANT;
+	var node_createServiceRequestInfoSequence;
+	var node_ServiceInfo;
 //*******************************************   Start Node Definition  ************************************** 	
-
-	
-var loc_executeExpression = function(expression, variables, handlers){
-
-	var executeExpressionRequest = createServiceRequestInfoSequence();
-	
-	//convert variables
-	var variablesData = varsData;
-	var convertVarsRequest = loc_buildConvertVarsTask(expression.variables, epression.varConverters, {
-		success : function(varsData, requestInfo){
-			variablesData = varsData;
-		}
-	});
-	executeExpressionRequest.addRequet(convertVarsRequest);
-	
-	//execute operand
-	var executeOperandRequest = loc_buildExecuteOperandRequest(expression.operand, variablesData, {
-		success : function(operandResult, requestInfo){
-			
-		}
-	});
-	executeExpressionRequest.addRequet(executeOperandRequest);
-	
-	//execute task
-	node_requestProcessor.processRequest(executeExpressionRequest, false);
-};
-	
-//convert 
-var loc_buildConvertVarsTask = function(varsData, varsConverter, handlers){
-	//convert variables
-	var contertedVars = {};
-	var varConvertRequest = createServiceRequestInfoSequenceSet();
-	var varConverters = expression.varConverters;
-	_.each(varsData, function(varData, varName, list){
-		var request = loc_buildConvertTask(varData, varsConverter[varName], {
-			success : function(convertedVarData, requestInfo){
-				contertedVars[varName] = convertedVarData;
-			}
-		});
-		varConvertRequest.add(request);
-	}, this);
-	
-};
 
 //convert individual var
 var loc_buildConvertTask = function(data, varConverter, handlers){
@@ -192,57 +153,64 @@ var loc_calVariable = function(requestInfo){
 	return operand.data;
 }
 
-
-
-
-	
-	
-	
-var loc_buildService = function(expression, variables){
-	
-};	
-	
-var loc_buildExpressionExecuteRequest = function(expression, variables, handlers){
-	createServiceRequestInfoSequence(loc_buildService(service, variables), handlers, requester_parent)	
-		
-};
-		
-/**
- * 
- */
 var node_createExpressionService = function(){
+	/**
+	 * Request for execute expression
+	 */
+	var loc_getExecuteExpressionRequest = function(expression, variables, handlers, requester_parent){
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpression", {"expression":expression, "variables":variables}), handlers, requestInfo);
+		
+		//convert variables
+		var convertVarsRequest = loc_getConvertVarsRequest(variables, 
+				expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_CONVERTERS], 
+				{
+					success : function(varsData, requestInfo){
+						out.setData("variables", varsData);
+					}	
+				}, requestInfo);
+		out.addRequet(convertVarsRequest);
+		
+		//execute operand
+		var executeOperandRequest = loc_buildExecuteOperandRequest(expression.operand, out.getData("variables"), {
+			success : function(operandResult, requestInfo){
+				return operandResult;
+			}
+		});
+		out.addRequet(executeOperandRequest);
+		
+		return out;
+	};
+
+	//convert 
+	var loc_getConvertVarsRequest = function(varsData, varsConverter, handlers, requester_parent){
+		//convert variables
+		var contertedVars = {};
+		var varConvertRequest = createServiceRequestInfoSequenceSet();
+		var varConverters = expression.varConverters;
+		_.each(varsData, function(varData, varName, list){
+			var request = loc_buildConvertTask(varData, varsConverter[varName], {
+				success : function(convertedVarData, requestInfo){
+					contertedVars[varName] = convertedVarData;
+				}
+			});
+			varConvertRequest.add(request);
+		}, this);
+		
+	};
+
+
+	
 	var loc_out = {
-		
-		getExecuteExpressionRequest : function(expression, variables, handlers, requestInfo){
-			
-			var out = createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpression", {"expression":expression, "variables":variables}), handlers, this.getRequestInfo(requestInfo));
-			
-			//convert variables
-			var variablesData = varsData;
-			var convertVarsRequest = loc_buildConvertVarsTask(expression.variables, epression.varConverters, {
-				success : function(varsData, requestInfo){
-					variablesData = varsData;
-				}
-			});
-			out.addRequet(convertVarsRequest);
-			
-			//execute operand
-			var executeOperandRequest = loc_buildExecuteOperandRequest(expression.operand, variablesData, {
-				success : function(operandResult, requestInfo){
-					
-				}
-			});
-			out.addRequet(executeOperandRequest);
-			
-			return out;
+		getExecuteExpressionRequest : function(expression, variables, handlers, requester_parent){
+			return loc_getExecuteExpressionRequest(expression, variables, handlers, requester_parent);
 		},
 			
 		executeExecuteExpressionRequest : function(expression, variables, handlers, requestInfo){
 			var requestInfo = this.getExecuteExpressionRequest(resourceIds, handlers, requestInfo);
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		}
-		
 	};
 	
 	loc_out = node_buildServiceProvider(loc_out, "expressionService");
@@ -257,7 +225,11 @@ packageObj.createNode("createExpressionService", node_createExpressionService);
 
 	var module = {
 		start : function(packageObj){
+			node_buildServiceProvider = packageObj.getNodeData("request.buildServiceProvider");
 			node_requestProcessor = packageObj.getNodeData("request.requestServiceProcessor");
+			node_COMMONTRIBUTECONSTANT = packageObj.getNodeData("constant.COMMONTRIBUTECONSTANT");
+			node_createServiceRequestInfoSequence = packageObj.getNodeData("request.request.createServiceRequestInfoSequence");
+			node_ServiceInfo = packageObj.getNodeData("common.service.ServiceInfo");
 		}
 	};
 	nosliw.registerModule(module, packageObj);
