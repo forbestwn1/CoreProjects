@@ -1,6 +1,5 @@
 package com.nosliw.data.core.runtime;
 
-import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
 
 /**
@@ -14,7 +13,7 @@ public interface HAPRuntime {
 
 	HAPRuntimeInfo getRuntimeInfo();
 	
-	HAPData executeExpression(HAPExpression expression);
+	void executeExpression(HAPExpression expression, HAPExpressionResult result);
 	
 	HAPResourceDiscovery getResourceDiscovery();
 	

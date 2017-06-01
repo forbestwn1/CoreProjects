@@ -25,6 +25,9 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
  */
 public class HAPExpressionImp extends HAPSerializableImp implements HAPExpression{
 
+	//id
+	private String m_id;
+	
 	// original expressiong
 	private HAPExpressionInfo m_expressionInfo;
 
@@ -54,6 +57,12 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 			this.m_varsInfo.put(varName, new HAPVariableInfo(varCriterias.get(varName)));
 		}
 	}
+
+	@Override
+	public String getId(){  return this.m_id;  }
+	
+	@Override
+	public void setId(String id){  this.m_id = id;  }
 	
 	@Override
 	public HAPExpressionInfo getExpressionInfo() {		return this.m_expressionInfo;	}

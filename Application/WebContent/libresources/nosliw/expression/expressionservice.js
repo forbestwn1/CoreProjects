@@ -213,14 +213,39 @@ var loc_buildExpressionExecuteRequest = function(expression, variables, handlers
 var node_createExpressionService = function(){
 		
 	var loc_out = {
+		
+		getExecuteExpressionRequest : function(expression, variables, handlers, requestInfo){
 			
-		execute : function(expression, variables, requestInfo){
-			var operand = expression[NOSLIWATCOMMONTRIBUTECONSTANT.EXPRESSION_OPERAND];
-			var variablesInfo = expression[NOSLIWATCOMMONTRIBUTECONSTANT.EXPRESSION_VARIABLES];
+			var out = createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpression", {"expression":expression, "variables":variables}), handlers, this.getRequestInfo(requestInfo));
 			
+			//convert variables
+			var variablesData = varsData;
+			var convertVarsRequest = loc_buildConvertVarsTask(expression.variables, epression.varConverters, {
+				success : function(varsData, requestInfo){
+					variablesData = varsData;
+				}
+			});
+			out.addRequet(convertVarsRequest);
 			
+			//execute operand
+			var executeOperandRequest = loc_buildExecuteOperandRequest(expression.operand, variablesData, {
+				success : function(operandResult, requestInfo){
+					
+				}
+			});
+			out.addRequet(executeOperandRequest);
+			
+			return out;
 		},
+			
+		executeExecuteExpressionRequest : function(expression, variables, handlers, requestInfo){
+			var requestInfo = this.getExecuteExpressionRequest(resourceIds, handlers, requestInfo);
+			node_requestServiceProcessor.processRequest(requestInfo, false);
+		}
+		
 	};
+	
+	loc_out = node_buildServiceProvider(loc_out, "expressionService");
 	
 	return loc_out;
 };

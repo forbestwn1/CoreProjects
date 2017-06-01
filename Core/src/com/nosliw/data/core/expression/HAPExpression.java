@@ -16,6 +16,9 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 public interface HAPExpression {
 
 	@HAPAttribute
+	public static String ID = "id";
+	
+	@HAPAttribute
 	public static String EXPRESSIONINFO = "expressionInfo";
 
 	@HAPAttribute
@@ -27,6 +30,9 @@ public interface HAPExpression {
 	@HAPAttribute
 	public static String ERRORMSGS = "errorMsgs";
 
+	String getId();
+	void setId(String id);
+	
 	//ExpressionInfo used to define expression
 	HAPExpressionInfo getExpressionInfo();
 	

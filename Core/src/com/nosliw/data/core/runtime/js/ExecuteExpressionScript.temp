@@ -1,2 +1,7 @@
-var expression = ||expression||; 
-nowliw.getExpressionExecute().execute(expression);
+nosliw.runtime.getExpressionService().executeExecuteExpressionRequest(||expression||, {}, 
+			{
+				success : function(requestInfo, data){
+					aaaa.returnResult(requestInfo.service.parms.expression.id, JSON.toString(data));
+				}
+			}, 
+			undefined);

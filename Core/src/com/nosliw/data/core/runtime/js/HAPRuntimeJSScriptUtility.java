@@ -14,6 +14,7 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
@@ -75,8 +76,8 @@ public class HAPRuntimeJSScriptUtility {
 
 	public static String buildScriptForExecuteExpression(HAPExpression expression){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("expression", HAPSerializeManager.getInstance().toStringValue(expression, HAPSerializationFormat.JSON));
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ExecuteScript.temp");
+		templateParms.put("expression", HAPJsonUtility.formatJson(HAPSerializeManager.getInstance().toStringValue(expression, HAPSerializationFormat.JSON)));
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ExecuteExpressionScript.temp");
 		String out = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		return out;
 	}

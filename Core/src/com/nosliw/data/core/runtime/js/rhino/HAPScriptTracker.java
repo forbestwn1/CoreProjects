@@ -9,7 +9,7 @@ import java.util.Map;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.utils.HAPFileUtility;
 
-public class ScriptTracker {
+public class HAPScriptTracker {
 
 	private List<String> m_scripts;
 	
@@ -17,7 +17,7 @@ public class ScriptTracker {
 	
 	private String exportPath = "c:/temp/scriptexport/";
 	
-	ScriptTracker(){
+	HAPScriptTracker(){
 		this.m_scripts = new ArrayList<String>();
 		this.m_files = new ArrayList<String>();
 	}
@@ -50,7 +50,7 @@ public class ScriptTracker {
 		
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("script", scriptContent.toString());
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(ScriptTracker.class, "scriptTracker.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPScriptTracker.class, "scriptTracker.temp");
 		String out = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		
 		HAPFileUtility.writeFile(exportPath+"1.html", out);

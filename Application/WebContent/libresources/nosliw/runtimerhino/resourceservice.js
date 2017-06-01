@@ -20,8 +20,6 @@ var packageObj = library;
  */
 var node_createResourceService = function(resourceManager){
 	
-	var loc_moduleName = "resourceService";
-	
 	var loc_resourceManager = resourceManager;
 
 	var loc_getLoadResourceRequest = function(resourceIds, handlers, requestInfo){
@@ -92,14 +90,14 @@ var node_createResourceService = function(resourceManager){
 			return out;
 		},
 		
-		executeGetResourcesRequest : function(resourceIds, handlers, requestInfo){
-			var requestInfo = this.getGetResourcesRequest(resourceIds, handlers, requestInfo);
+		executeGetResourcesRequest : function(resourceIds, handlers, requester_parent){
+			var requestInfo = this.getGetResourcesRequest(resourceIds, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		}
 			
 	};
 	
-	loc_out = node_buildServiceProvider(loc_out, loc_moduleName);
+	loc_out = node_buildServiceProvider(loc_out, "resourceService");
 	
 	return loc_out;
 };	

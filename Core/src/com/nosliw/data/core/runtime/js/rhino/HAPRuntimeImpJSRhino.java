@@ -2,6 +2,7 @@ package com.nosliw.data.core.runtime.js.rhino;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +20,9 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.expression.HAPExpression;
+import com.nosliw.data.core.runtime.HAPExpressionResult;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdInfo;
@@ -32,7 +35,7 @@ import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeImpJS;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
-public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
+public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeCallBack{
 
 	//info used to library resource that do not need to add to resource manager
 	public static final String ADDTORESOURCEMANAGER = "ADDTORESOURCEMANAGER";
@@ -50,19 +53,28 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	private Map<String, Scriptable> m_taskScope;
 	
 	//track all the script loaded to rhino
-	private ScriptTracker m_sciprtTracker;
+	private HAPScriptTracker m_sciprtTracker;
+	
+	//for reate id
+	private int m_idIndex = 0;
+	
+	//store all the expression execution result call back
+	private Map<String, HAPExpressionResult> m_results;
 	
 	public HAPRuntimeImpJSRhino(){}
 	
 	public HAPRuntimeImpJSRhino(HAPResourceDiscovery resourceDiscovery, HAPResourceManager resourceMan){
 		this.m_resourceDiscovery = resourceDiscovery;
 		this.m_resourceManager = resourceMan;
+		this.m_results = new LinkedHashMap<String, HAPExpressionResult>();
+		this.m_taskScope = new LinkedHashMap<String, Scriptable>();
 	}
 
 	public void loadScriptFromFile(String fileName, Class cs){
 		this.loadScriptFromFile(fileName, m_context, m_scope, cs);
 	}
 	
+	@Override
 	public void loadResources(Object resources, Object callBackFunction){
 		System.out.println("Load resources !!!!!!!!!!!!!!!!!!!!" + resources + "  " + callBackFunction);
 
@@ -76,44 +88,43 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 			resourceIds.add(new HAPResourceIdInfo(new HAPResourceId(type, id, null)));
 		}
 		this.loadResources(resourceIds, m_scope, m_context);
-		
-		
-		Function fun = (Function)callBackFunction;
-//		System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFf   "+this.m_context.decompileFunction(fun, 4));
-		fun.call(this.m_context, this.m_scope, this.m_scope, new Object[]{"aa", "bb"});
-	}
-	
-	/**
-	 * this method is call back method by js 
-	 */
-	public void loadResources1(String[][] resourcesIdArray, String taskId){
-		List<HAPResourceId> resourcesId = new ArrayList<HAPResourceId>();
-		for(String[] resourceIdArray : resourcesIdArray){
-			resourcesId.add(new HAPResourceId(resourceIdArray[0], resourceIdArray[1], null));
-		}
-//		this.loadResources(resourcesId, this.getTaskScope(taskId), m_context);
 	}
 	
 	@Override
-	public HAPData executeExpression(HAPExpression expression) {
+	public void returnResult(String expressionId, String result){
+		HAPExpressionResult resultCallBack = this.m_results.remove(expressionId);
+		HAPDataWrapper resultData = new HAPDataWrapper(result); 
+		resultCallBack.result(resultData);
+	}
+	
+	
+	@Override
+	public void executeExpression(HAPExpression expression, HAPExpressionResult result) {
+		//prepare expression id
+		String expressionId = expression.getId();
+		if(HAPBasicUtility.isStringEmpty(expressionId)){
+			expressionId = "Expression" + this.m_idIndex++ + "__" + expression.getExpressionInfo().getName();
+			expression.setId(expressionId);
+		}
+		
 		
 		//init rhino runtime, init scope
 		String taskId = this.initExecuteExpression();
 		Scriptable scope = this.getTaskScope(taskId); 
 		
 		//discover required resources
-		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
+//		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
 		
 		//find which resource is missing
-		List<HAPResourceId> missedResourceId = this.findMissedResources(resourcesId);
+//		List<HAPResourceId> missedResourceId = this.findMissedResources(resourcesId);
 		
 		//load missed resources
 //		this.loadResources(missedResourceId, scope, this.m_context);
 		
 		//execute expression
-		HAPData out = this.execute(expression, scope, this.m_context);
-
-		return out;
+		this.m_results.put(expressionId, result);
+		String script = HAPRuntimeJSScriptUtility.buildScriptForExecuteExpression(expression);
+		this.loadScript(script, m_context, m_scope, expressionId);
 	}
 
 	private List<HAPResourceId> findMissedResources(List<HAPResourceId> resourcesId){
@@ -215,14 +226,6 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 		return out;
 	}
 	
-	private HAPData execute(HAPExpression expression, Scriptable scope, Context context){
-		
-		String script = HAPRuntimeJSScriptUtility.buildScriptForExecuteExpression(expression);
-		NativeObject dataJS = (NativeObject)context.evaluateString(scope, script, "<cmd>", 1, null);
-		
-		return null;
-	}
-
 	@Override
 	public HAPResourceManager getResourceManager() {		return this.m_resourceManager;	}
 
@@ -272,7 +275,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	
 	@Override
 	public void start(){
-        this.m_sciprtTracker = new ScriptTracker();
+        this.m_sciprtTracker = new HAPScriptTracker();
 		
 		ContextFactory factory = new ContextFactory();
 
@@ -294,7 +297,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS{
 	        System.setOut(dbg.getOut());
 	        System.setErr(dbg.getErr());
 	        
-		    dbg.setBreakOnEnter(true);
+//		    dbg.setBreakOnEnter(true);
 		    dbg.setBreakOnExceptions(true);
 		    dbg.setScope(m_scope);
 		    dbg.setSize(800, 600);
