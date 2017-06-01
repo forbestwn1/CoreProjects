@@ -9,10 +9,7 @@ var packageObj = library.getChildPackage("request");
 	var node_CONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
-/**
- * 
- */
-var createServiceRequestInfoSet = function(service, handlers, requester_parent){
+var node_createServiceRequestInfoSet = function(service, handlers, requester_parent){
 
 	var loc_constructor = function(service, handlers, requester_parent){
 		//all the requests   name -- request
@@ -22,7 +19,7 @@ var createServiceRequestInfoSet = function(service, handlers, requester_parent){
 		//number of request processed
 		loc_out.pri_requestNum = 0;
 		//request results (only exception)
-		loc_out.pri_requestResults = nosliwCreateRequestSetResult();
+		loc_out.pri_requestResults = loc_reateRequestSetResult();
 	};
 	
 	/*
@@ -117,7 +114,7 @@ var createServiceRequestInfoSet = function(service, handlers, requester_parent){
 };
 
 
-nosliwCreateRequestSetResult = function(){
+loc_reateRequestSetResult = function(){
 	var loc_results = {};
 	var loc_out = {
 		addResult : function(name, result){
@@ -138,7 +135,7 @@ nosliwCreateRequestSetResult = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createServiceRequestInfoSet", createServiceRequestInfoSet); 
+packageObj.createNode("createServiceRequestInfoSet", node_createServiceRequestInfoSet); 
 
 	var module = {
 		start : function(packageObj){

@@ -8,38 +8,9 @@ var packageObj = library.getChildPackage("expressionservice");
 	var node_COMMONTRIBUTECONSTANT;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
+	var node_createServiceRequestInfoSet;
+	var node_createServiceRequestInfoService;
 //*******************************************   Start Node Definition  ************************************** 	
-
-//convert individual var
-var loc_buildConvertTask = function(data, varConverter, handlers){
-	var dataType = data.dataType;
-	var converter = varConverter[dataType];
-	
-	if(converter==undefined){
-		
-	}
-	else{
-		var out = createServiceRequestInfoService(null, handlers);
-		
-		var converterIds;
-		var resourceTask = resourceManager.createGetResourcesTask(converterIds, {
-			success : function(resources, requestInfo){
-				var input = data;
-				for(var i in converterIds){
-					var converterId = converterIds[i];
-					var resource = resources[converterId];
-					input = resource.data[input];
-				}
-				return input;
-			}
-		});
-		
-		out.setDependentService(resourceTask);
-		return out;
-	}
-	
-	return resourceManager.createGetResourcesTask();
-};
 
 var loc_buildExecuteOperandRequest = function(operand, variables, handlers){
 	var out;
@@ -173,7 +144,7 @@ var node_createExpressionService = function(){
 		out.addRequet(convertVarsRequest);
 		
 		//execute operand
-		var executeOperandRequest = loc_buildExecuteOperandRequest(expression.operand, out.getData("variables"), {
+		var executeOperandRequest = loc_buildExecuteOperandRequest(expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_OPERAND], out.getData("variables"), {
 			success : function(operandResult, requestInfo){
 				return operandResult;
 			}
@@ -183,21 +154,64 @@ var node_createExpressionService = function(){
 		return out;
 	};
 
-	//convert 
+	//convert all vars 
 	var loc_getConvertVarsRequest = function(varsData, varsConverter, handlers, requester_parent){
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		//convert variables
-		var contertedVars = {};
-		var varConvertRequest = createServiceRequestInfoSequenceSet();
-		var varConverters = expression.varConverters;
+		var out = node_createServiceRequestInfoSet();
 		_.each(varsData, function(varData, varName, list){
-			var request = loc_buildConvertTask(varData, varsConverter[varName], {
-				success : function(convertedVarData, requestInfo){
-					contertedVars[varName] = convertedVarData;
-				}
-			});
-			varConvertRequest.add(request);
+			var request = loc_getConvertDataTaskRequest(varData, varsConverter[varName], {}, requestInfo);
+			varConvertRequest.add(varName, request);
 		}, this);
+
 		
+		out.setRequestProcessors({
+			success : function(reqInfo, setResult){
+				var contertedVars = {};
+				var results = setResult.getResults();
+				_.each(results, function(result, varName, list){
+					contertedVars[varName] = result;
+				}, this);
+				return contertedVars;
+			}, 
+		});
+	};
+
+	//convert individual data to targetCriteria
+	var loc_getConvertDataTaskRequest = function(data, converters, targetCriteria, handlers, requester_parent){
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
+
+		var dataType = data[node_COMMONTRIBUTECONSTANT.DATA_DATATYPEID];
+		var converter = converters[dataType];
+		
+		if(converter==undefined){
+			//if converter does not created, then get it
+		}
+		else{
+			//otherwise, use converter
+			var out = node_createServiceRequestInfoService(null, handlers, requestInfo);
+			
+			var converterId = {
+				type : "",
+				id : ""
+			};
+			var resourceTask = nosliw.runtime.getResourceService().createGetResourcesTask([converterId], {
+				success : function(requestInfo, resources){
+					var input = data;
+					for(var i in converterIds){
+						var converterId = converterIds[i];
+						var resource = resources[converterId];
+						input = resource.data[input];
+					}
+					return input;
+				}
+			}, requestInfo);
+			
+			out.setDependentService(resourceTask);
+			return out;
+		}
+		
+		return resourceManager.createGetResourcesTask();
 	};
 
 
@@ -230,6 +244,8 @@ packageObj.createNode("createExpressionService", node_createExpressionService);
 			node_COMMONTRIBUTECONSTANT = packageObj.getNodeData("constant.COMMONTRIBUTECONSTANT");
 			node_createServiceRequestInfoSequence = packageObj.getNodeData("request.request.createServiceRequestInfoSequence");
 			node_ServiceInfo = packageObj.getNodeData("common.service.ServiceInfo");
+			node_createServiceRequestInfoSet = packageObj.getNodeData("request.request.createServiceRequestInfoSet");
+			node_createServiceRequestInfoService = packageObj.getNodeData("request.request.createServiceRequestInfoService");
 		}
 	};
 	nosliw.registerModule(module, packageObj);
