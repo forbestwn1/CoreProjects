@@ -234,6 +234,8 @@ var COMMONTRIBUTECONSTANT=
 "RESOURCEID_ID":"id",
 "RESOURCEID_TYPE":"type",
 "RESOURCEID_ALIAS":"alias",
+"RESOURCEID_DEPENDENCY":"dependency",
+"RESOURCEID_CHILDREN":"children",
 "_ID":"id",
 "_INFO":"info",
 "_NAME":"name",

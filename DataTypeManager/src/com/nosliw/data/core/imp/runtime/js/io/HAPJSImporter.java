@@ -129,7 +129,7 @@ public class HAPJSImporter {
 				String operationName = (String)operationNameKey;
 				NativeObject operationObjJS = (NativeObject)operationsObjJS.get(operationName);
 				
-				HAPJSResourceDependency dep = this.processOperationObject(operationObjJS, dataTypeId, operationName, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION);
+				HAPJSResourceDependency dep = this.processOperationObject(operationObjJS, dataTypeId, operationName, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION);
 				this.m_dbAccess.saveEntity(dep);
 			}
 			
@@ -156,7 +156,7 @@ public class HAPJSImporter {
     	String script = Context.toString(operationFunJS);
     	
     	switch(resourceType){
-    	case HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION:
+    	case HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION:
         	String operationId = this.getOperationId(dataTypeId, operationName);
     		this.m_dbAccess.saveEntity(new HAPResourceDataJSOperationImp(script, operationId, dataTypeId, operationName));
     		break;
@@ -188,7 +188,7 @@ public class HAPJSImporter {
 
     	HAPResourceId baseResourceId = null;
     	switch(resourceType){
-    	case HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION:
+    	case HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION:
     		baseResourceId = HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPOperationId(dataTypeId, operationName), null);
     		break;
     	case HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER:
@@ -228,7 +228,7 @@ public class HAPJSImporter {
 		String resourceType = getResourceTypeByResourceTitle(type);
 		HAPResourceId out = null;
 		switch(resourceType){
-		case HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION:
+		case HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION:
 			String operationIdLiterate = (String)resourceObjJS;
 			out = new HAPResourceIdOperation(operationIdLiterate, alais);
 			break;

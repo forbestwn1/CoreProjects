@@ -30,12 +30,12 @@ public class HAPJSLibraryId  extends HAPSerializableImp{
 	
 	@Override
 	protected String buildLiterate(){
-		return HAPNamingConversionUtility.cascadeSegments(this.m_name, this.m_version);
+		return HAPNamingConversionUtility.cascadeLevel1(this.m_name, this.m_version);
 	}
 
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){	
-		String[] segs = HAPNamingConversionUtility.parseSegments(literateValue);
+		String[] segs = HAPNamingConversionUtility.parseLevel1(literateValue);
 		this.m_name = segs[0];
 		if(segs.length>=2){
 			this.m_version = segs[1];

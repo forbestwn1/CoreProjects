@@ -3,7 +3,6 @@ package com.nosliw.data.core.expression;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
@@ -34,7 +33,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPConverters discover(
+	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessVariablesContext context,

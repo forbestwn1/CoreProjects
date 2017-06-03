@@ -132,16 +132,26 @@ var node_createExpressionService = function(){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpression", {"expression":expression, "variables":variables}), handlers, requestInfo);
+		var variablesInfo = expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_VARIABLES];
 		
 		//convert variables
-		var convertVarsRequest = loc_getConvertVarsRequest(variables, 
-				expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_CONVERTERS], 
-				{
-					success : function(varsData, requestInfo){
-						out.setData("variables", varsData);
-					}	
-				}, requestInfo);
-		out.addRequet(convertVarsRequest);
+		var varsMatchRequest = node_createServiceRequestInfoSet();
+		_.each(variables, function(varData, varName, list){
+			var request = loc_getMatchDataTaskRequest(varData, varsConverter[varName], {}, requestInfo);
+			varsMatchRequest.add(varName, request);
+		}, this);
+
+		varsMatchRequest.setRequestProcessors({
+			success : function(reqInfo, setResult){
+				var matchedVars = {};
+				var results = setResult.getResults();
+				_.each(results, function(result, varName, list){
+					matchedVars[varName] = result;
+				}, this);
+				reqInfo.setData("variables", matchedData);
+			}, 
+		});
+		out.addRequet(varsMatchRequest);
 		
 		//execute operand
 		var executeOperandRequest = loc_buildExecuteOperandRequest(expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_OPERAND], out.getData("variables"), {
@@ -154,31 +164,8 @@ var node_createExpressionService = function(){
 		return out;
 	};
 
-	//convert all vars 
-	var loc_getConvertVarsRequest = function(varsData, varsConverter, handlers, requester_parent){
-		var requestInfo = loc_out.getRequestInfo(requester_parent);
-		//convert variables
-		var out = node_createServiceRequestInfoSet();
-		_.each(varsData, function(varData, varName, list){
-			var request = loc_getConvertDataTaskRequest(varData, varsConverter[varName], {}, requestInfo);
-			varConvertRequest.add(varName, request);
-		}, this);
-
-		
-		out.setRequestProcessors({
-			success : function(reqInfo, setResult){
-				var contertedVars = {};
-				var results = setResult.getResults();
-				_.each(results, function(result, varName, list){
-					contertedVars[varName] = result;
-				}, this);
-				return contertedVars;
-			}, 
-		});
-	};
-
 	//convert individual data to targetCriteria
-	var loc_getConvertDataTaskRequest = function(data, converters, targetCriteria, handlers, requester_parent){
+	var loc_getMatchDataTaskRequest = function(data, converters, targetCriteria, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 
 		var dataType = data[node_COMMONTRIBUTECONSTANT.DATA_DATATYPEID];
@@ -191,10 +178,7 @@ var node_createExpressionService = function(){
 			//otherwise, use converter
 			var out = node_createServiceRequestInfoService(null, handlers, requestInfo);
 			
-			var converterId = {
-				type : "",
-				id : ""
-			};
+			var converterId = new node_ResourceId();
 			var resourceTask = nosliw.runtime.getResourceService().createGetResourcesTask([converterId], {
 				success : function(requestInfo, resources){
 					var input = data;

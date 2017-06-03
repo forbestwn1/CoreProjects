@@ -37,11 +37,11 @@ public class HAPRuntimeInfo extends HAPSerializableImp{
 	public String getEnvironment(){ return this.m_environment;	}
 	
 	@Override
-	protected String buildLiterate(){  return HAPNamingConversionUtility.cascadeSegments(m_language, m_environment); }
+	protected String buildLiterate(){  return HAPNamingConversionUtility.cascadeLevel1(m_language, m_environment); }
 
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){	
-		String[] segs = HAPNamingConversionUtility.parseSegments(literateValue);
+		String[] segs = HAPNamingConversionUtility.parseLevel1(literateValue);
 		this.m_language = segs[0];
 		this.m_environment = segs[1];
 		return true;

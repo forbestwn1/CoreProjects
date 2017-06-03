@@ -39,12 +39,12 @@ public class HAPOperationId extends HAPDataTypeId{
 	
 	@Override
 	protected String buildLiterate(){
-		return HAPNamingConversionUtility.cascadeSegments(super.buildLiterate(), this.getOperation());
+		return HAPNamingConversionUtility.cascadeLevel1(super.buildLiterate(), this.getOperation());
 	}
 
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){	
-		String[] segs = HAPNamingConversionUtility.parseSegments(literateValue);
+		String[] segs = HAPNamingConversionUtility.parseLevel1(literateValue);
 		this.setName(segs[0]);
 		if(segs.length>=2){
 			this.setVersion(segs[1]);

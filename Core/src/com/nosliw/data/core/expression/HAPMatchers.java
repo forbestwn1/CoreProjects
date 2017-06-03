@@ -1,4 +1,4 @@
-package com.nosliw.data.core;
+package com.nosliw.data.core.expression;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -8,12 +8,14 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPRelationship;
 
-public class HAPConverters extends HAPSerializableImp{
+public class HAPMatchers extends HAPSerializableImp{
 
 	private Map<HAPDataTypeId, HAPRelationship> m_convertors = new LinkedHashMap<HAPDataTypeId, HAPRelationship>();
 	
-	public HAPConverters(){
+	public HAPMatchers(){
 	}
 
 	public void addItem(HAPDataTypeId dataTypeId, HAPRelationship relationship){

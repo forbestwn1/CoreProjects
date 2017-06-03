@@ -48,6 +48,10 @@ public class HAPConstant {
 		public static final String SEPERATOR_DETAIL = "|";
 		public static final String SEPERATOR_SURFIX = "_";
 		public static final String SEPERATOR_PREFIX = "_";
+		public static final String SEPERATOR_LEVEL1 = ";";
+		public static final String SEPERATOR_LEVEL2 = "|";
+		public static final String SEPERATOR_LEVEL3 = ":";
+		public static final String SEPERATOR_LEVEL4 = ",";
 		public static final String SEPERATOR_ARRAYSTART = "[";
 		public static final String SEPERATOR_ARRAYEND = "]";
 		public static final String SEPERATOR_VARSTART = "{{";
@@ -394,12 +398,13 @@ public class HAPConstant {
 
 
 
-		public static final String RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION = "operation";
+		public static final String RUNTIME_RESOURCE_TYPE_OPERATION = "operation";
 		public static final String RUNTIME_RESOURCE_TYPE_DATATYPE = "datatype";
 		public static final String RUNTIME_RESOURCE_TYPE_CONVERTER = "converter";
 		public static final String RUNTIME_RESOURCE_TYPE_JSLIBRARY = "jslibrary";
 		public static final String RUNTIME_RESOURCE_TYPE_JSHELPER = "jshelper";
 		public static final String RUNTIME_RESOURCE_TYPE_UITAG = "uiTag";
+		public static final String RUNTIME_RESOURCE_TYPE_MATCHER = "matcher";
 
 
 

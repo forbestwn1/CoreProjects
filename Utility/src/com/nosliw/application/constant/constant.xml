@@ -289,6 +289,10 @@
 			<definition name="SEPERATOR_DETAIL" value="|"/>
 			<definition name="SEPERATOR_SURFIX" value="_"/>
 			<definition name="SEPERATOR_PREFIX" value="_"/>
+			<definition name="SEPERATOR_LEVEL1" value=";"/>
+			<definition name="SEPERATOR_LEVEL2" value="|"/>
+			<definition name="SEPERATOR_LEVEL3" value=":"/>
+			<definition name="SEPERATOR_LEVEL4" value=","/>
 			<definition name="SEPERATOR_ARRAYSTART" value="[" type="string"/>
 			<definition name="SEPERATOR_ARRAYEND" value="]"/>
 			<definition name="SEPERATOR_VARSTART" value="{{" type="string"/>
@@ -572,12 +576,14 @@
 			<definition name="DATAOPERATION_VAR_TYPE_OUT" value="out"/>
 
 			<definition type="space"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION" value="operation"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_OPERATION" value="operation"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATATYPE" value="datatype"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_CONVERTER" value="converter"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_JSLIBRARY" value="jslibrary"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_JSHELPER" value="jshelper"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UITAG" value="uiTag"/>
+
+			<definition name="RUNTIME_RESOURCE_TYPE_MATCHER" value="matcher"/>
 
 			<definition type="space"/>
 			<definition name="RUNTIME_LANGUAGE_JS" value="javascript"/>

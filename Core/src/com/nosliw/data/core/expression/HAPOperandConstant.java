@@ -5,7 +5,6 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataUtility;
@@ -55,7 +54,7 @@ public class HAPOperandConstant extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPConverters discover(
+	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessVariablesContext context,

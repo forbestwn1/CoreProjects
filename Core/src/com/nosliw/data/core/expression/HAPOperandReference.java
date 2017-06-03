@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -36,7 +35,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	@Override
 	public Set<HAPRelationship> getConverters(){
 		Set<HAPRelationship> out = new HashSet<HAPRelationship>();
-		Map<String, HAPConverters> varConverters = this.m_expression.getVariableConverters();
+		Map<String, HAPMatchers> varConverters = this.m_expression.getVariableMatchers();
 		for(String var : varConverters.keySet()){
 			out.addAll(varConverters.get(var).getRelationships());
 		}
@@ -56,7 +55,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPConverters discover(
+	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessVariablesContext context,

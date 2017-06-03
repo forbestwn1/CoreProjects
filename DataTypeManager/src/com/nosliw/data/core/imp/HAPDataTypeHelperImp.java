@@ -7,7 +7,6 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPDataTypeFamily;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
@@ -19,6 +18,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementIds;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementRange;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaOr;
+import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
 
 public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
@@ -219,11 +219,11 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	}
 
 	@Override
-	public HAPConverters buildConvertor(HAPDataTypeCriteria from, HAPDataTypeCriteria to) {
+	public HAPMatchers buildConvertor(HAPDataTypeCriteria from, HAPDataTypeCriteria to) {
 		Set<HAPDataTypeId> toDataTypeIds = this.normalize(to.getValidDataTypeId(this));
 		Set<HAPDataTypeId> fromDataTypeIds = from.getValidDataTypeId(this);
 		
-		HAPConverters out = new HAPConverters();
+		HAPMatchers out = new HAPMatchers();
 		for(HAPDataTypeId fromDataTypeId : fromDataTypeIds){
 			boolean found = false;
 			for(HAPDataTypeId toDataTypeId : toDataTypeIds){

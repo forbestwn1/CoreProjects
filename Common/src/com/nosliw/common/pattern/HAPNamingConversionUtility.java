@@ -78,9 +78,15 @@ public class HAPNamingConversionUtility {
 	}
 	
 	
-	public static String cascadeSegments(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstant.SEPERATOR_SEGMENT);	}
-	public static String[] parseSegments(String eles){		return splitTextByComponents(eles, HAPConstant.SEPERATOR_SEGMENT);	}
+	public static String cascadeLevel1(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstant.SEPERATOR_LEVEL1);	}
+	public static String[] parseLevel1(String eles){		return splitTextByComponents(eles, HAPConstant.SEPERATOR_LEVEL1);	}
 
+	public static String cascadeLevel2(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstant.SEPERATOR_LEVEL2);	}
+	public static String[] parseLevel2(String eles){		return splitTextByComponents(eles, HAPConstant.SEPERATOR_LEVEL2);	}
+	
+	public static String cascadeSegments1(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstant.SEPERATOR_SEGMENT);	}
+	public static String[] parseSegments1(String eles){		return splitTextByComponents(eles, HAPConstant.SEPERATOR_SEGMENT);	}
+	
 	public static String cascadePath(String path1, String path2){		return cascadeElements(path1, path2, HAPConstant.SEPERATOR_PATH);	}
 	public static String cascadePath(String[] paths){		return cascadeElements(paths, HAPConstant.SEPERATOR_PATH);	}
 	public static String[] parsePaths(String paths){		return splitTextByElements(paths, "\\"+HAPConstant.SEPERATOR_PATH);	}

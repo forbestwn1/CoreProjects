@@ -7,7 +7,6 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -66,10 +65,10 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	 * @param context
 	 * @return
 	 */
-	protected HAPConverters isConvertable(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context, HAPDataTypeHelper dataTypeHelper){
+	protected HAPMatchers isConvertable(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context, HAPDataTypeHelper dataTypeHelper){
 		if(expectCriteria==null)   return null;
 		
-		HAPConverters out = dataTypeHelper.buildConvertor(criteria, expectCriteria);
+		HAPMatchers out = dataTypeHelper.buildConvertor(criteria, expectCriteria);
 		if(out==null){
 			//not able to convert, then error
 			context.setFailure("Error");

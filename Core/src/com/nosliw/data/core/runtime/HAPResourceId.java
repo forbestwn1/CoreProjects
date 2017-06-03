@@ -1,5 +1,6 @@
 package com.nosliw.data.core.runtime;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +15,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -32,10 +35,19 @@ public class HAPResourceId extends HAPSerializableImp{
 	
 	@HAPAttribute
 	public static String ALIAS = "alias";
+
+	@HAPAttribute
+	public static String DEPENDENCY = "dependency";
+	
+	@HAPAttribute
+	public static String CHILDREN = "children";
+	
 	
 	protected String m_type;
 	protected String m_id;
 	protected Set<String> m_alias;
+	protected List<HAPResourceId> m_dependency = new ArrayList<HAPResourceId>();
+	protected List<HAPResourceId> m_children = new ArrayList<HAPResourceId>();
 	
 	public HAPResourceId(){
 		this.m_alias = new HashSet<String>();
@@ -60,20 +72,18 @@ public class HAPResourceId extends HAPSerializableImp{
 	public String getType() {  return this.m_type;  }
 
 	public Set<String> getAlias(){  return this.m_alias;  }
-	public void addAlias(String alias){
-		this.m_alias.add(alias);
-	}
-	private void setAlias(String aliasLiterate){
-		this.m_alias = new HashSet<String>((List<String>)HAPLiterateManager.getInstance().stringToValue(aliasLiterate, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING));
-	}
+	public void addAlias(String alias){		this.m_alias.add(alias);	}
+	private void setAlias(String aliasLiterate){		this.m_alias = new HashSet<String>((List<String>)HAPLiterateManager.getInstance().stringToValue(aliasLiterate, HAPConstant.STRINGABLE_ATOMICVALUETYPE_ARRAY, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING));	}
 	
-	public void addAlias(Collection alias){
-		this.m_alias.addAll(alias);
-	}
+	public void addAlias(Collection alias){		this.m_alias.addAll(alias);	}
 	
-	public void removeAlias(String alias){
-		this.m_alias.remove(alias);
-	}
+	public void removeAlias(String alias){		this.m_alias.remove(alias);	}
+
+	public List<HAPResourceId> getDependency(){  return this.m_dependency;  }
+	public void addDependency(HAPResourceId child){  this.m_dependency.add(child); }
+	
+	public List<HAPResourceId> getChildren(){  return this.m_children;  }
+	public void addChild(HAPResourceId child){  this.m_children.add(child);  }
 	
 	protected void setId(String id){  this.m_id = id; }
 	
@@ -82,6 +92,8 @@ public class HAPResourceId extends HAPSerializableImp{
 		jsonMap.put(ID, this.getId());
 		jsonMap.put(TYPE, this.getType());
 		jsonMap.put(ALIAS, HAPJsonUtility.buildArrayJson(this.getAlias().toArray(new String[0])));
+		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.getChildren(), HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(DEPENDENCY, HAPJsonUtility.buildJson(this.getDependency(), HAPSerializationFormat.JSON_FULL));
 	}
 
 	@Override
@@ -94,11 +106,29 @@ public class HAPResourceId extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		this.setId(jsonObj.optString(ID));
 		this.m_type = jsonObj.optString(TYPE);
+		
 		JSONArray alaisArray = jsonObj.optJSONArray(ALIAS);
 		for(int i=0; i<alaisArray.length(); i++){
 			String aliais = alaisArray.optString(i);
 			this.m_alias.add(aliais);
 		}
+
+		JSONArray childrenArray = jsonObj.optJSONArray(CHILDREN);
+		for(int i=0; i<childrenArray.length(); i++){
+			JSONObject jsonChild = childrenArray.optJSONObject(i);
+			HAPResourceId childResourceId = new HAPResourceId();
+			childResourceId.buildObjectByFullJson(jsonChild);
+			this.addChild(childResourceId);
+		}
+
+		JSONArray dependencysArray = jsonObj.optJSONArray(DEPENDENCY);
+		for(int i=0; i<dependencysArray.length(); i++){
+			JSONObject jsonDependency = dependencysArray.optJSONObject(i);
+			HAPResourceId dependencyResourceId = new HAPResourceId();
+			dependencyResourceId.buildObjectByFullJson(jsonDependency);
+			this.addDependency(dependencyResourceId);
+		}
+		
 		return true; 
 	}
 
@@ -146,5 +176,7 @@ public class HAPResourceId extends HAPSerializableImp{
 		this.setId(resourceId.m_id);
 		this.m_type = resourceId.m_type;
 		this.m_alias.addAll(resourceId.m_alias);
+		for(HAPResourceId dependency : resourceId.getDependency())			this.m_dependency.add(dependency.clone());
+		for(HAPResourceId child : resourceId.getChildren())			this.m_children.add(child.clone());
 	}
 }

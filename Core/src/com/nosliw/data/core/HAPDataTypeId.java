@@ -53,14 +53,14 @@ public class HAPDataTypeId extends HAPSerializableImp{
 			if(this.m_version!=null){
 				versionLiterate = this.m_version.toStringValue(HAPSerializationFormat.LITERATE);
 			}
-			this.m_fullName = HAPNamingConversionUtility.cascadeSegments(this.getName(), versionLiterate);
+			this.m_fullName = HAPNamingConversionUtility.cascadeLevel1(this.getName(), versionLiterate);
 		}
 		return this.m_fullName;
 	}
 	public void setFullName(String fullName){
 		this.m_fullName = null;
 
-		String[] segs = HAPNamingConversionUtility.parseSegments(fullName);
+		String[] segs = HAPNamingConversionUtility.parseLevel1(fullName);
 		this.m_name = segs[0];
 		if(segs.length>=2){
 			this.m_version = new HAPDataTypeVersion(segs[1]);
@@ -101,7 +101,7 @@ public class HAPDataTypeId extends HAPSerializableImp{
 	}
 	
 	public static String buildStringValue(String name, String version){
-		return HAPNamingConversionUtility.cascadeSegments(name, version);
+		return HAPNamingConversionUtility.cascadeLevel1(name, version);
 	}
 	
 	public HAPDataTypeId clone(){

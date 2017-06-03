@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
@@ -47,7 +46,7 @@ public interface HAPExpression {
 	Map<String, HAPVariableInfo> getVariables();
 
 	//value for each variable, this converter help to convert to internal variable 
-	Map<String, HAPConverters> getVariableConverters();
+	Map<String, HAPMatchers> getVariableMatchers();
 	
 	//error message used to indicate whether the expression is successfully processed
 	String[] getErrorMessages();
@@ -56,6 +55,6 @@ public interface HAPExpression {
 	//1 discover internal variable
 	//2 discover expect variable
 	//3 build converters between expect variable to internal variable
-	HAPConverters discover(Map<String, HAPVariableInfo> expectVariablesInfo, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context,	HAPDataTypeHelper dataTypeHelper);
+	HAPMatchers discover(Map<String, HAPVariableInfo> expectVariablesInfo, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context,	HAPDataTypeHelper dataTypeHelper);
 	
 }

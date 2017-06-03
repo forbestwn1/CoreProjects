@@ -11,11 +11,11 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
-import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionInfo;
+import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPProcessVariablesContext;
 import com.nosliw.data.core.expression.HAPVariableInfo;
@@ -43,7 +43,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	
 	//store all the converter for every variables in this expression
 	//it convert variable from caller to variable in expression
-	private Map<String, HAPConverters> m_converters;
+	private Map<String, HAPMatchers> m_converters;
 	
 	public HAPExpressionImp(HAPExpressionInfo expressionInfo, HAPOperand operand){
 		this.m_errorMsgs = new ArrayList<String>();
@@ -74,10 +74,10 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	public Map<String, HAPVariableInfo> getVariables() {		return this.m_varsInfo;	}
 	
 	@Override
-	public Map<String, HAPConverters> getVariableConverters(){		return this.m_converters;	}
+	public Map<String, HAPMatchers> getVariableMatchers(){		return this.m_converters;	}
 	
 	@Override
-	public HAPConverters discover(Map<String, HAPVariableInfo> expectVariablesInfo, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context,	HAPDataTypeHelper dataTypeHelper){
+	public HAPMatchers discover(Map<String, HAPVariableInfo> expectVariablesInfo, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context,	HAPDataTypeHelper dataTypeHelper){
 
 		//update variables in expression
 		for(String varName : this.getVariables().keySet()){
@@ -97,7 +97,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		Map<String, HAPVariableInfo> expressionVars = new LinkedHashMap<String, HAPVariableInfo>();
 		expressionVars.putAll(this.getVariables());
 		
-		HAPConverters converter = null;
+		HAPMatchers converter = null;
 		Map<String, HAPVariableInfo> oldVars;
 		//Do discovery until vars not change or fail 
 		do{
@@ -124,7 +124,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 			}
 
 			//cal var converters
-			HAPConverters varConverters = dataTypeHelper.buildConvertor(expectVar.getCriteria(), expressionVar.getCriteria());
+			HAPMatchers varConverters = dataTypeHelper.buildConvertor(expectVar.getCriteria(), expressionVar.getCriteria());
 			this.m_converters.put(varName, varConverters);
 		}
 		

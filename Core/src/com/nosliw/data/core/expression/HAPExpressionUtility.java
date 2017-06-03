@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPConverters;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
@@ -30,7 +29,7 @@ public class HAPExpressionUtility {
 		final Set<HAPResourceId> out = new HashSet<HAPResourceId>();
 		
 		//get converter resource id from var converter in expression 
-		Map<String, HAPConverters> converters = expression.getVariableConverters();
+		Map<String, HAPMatchers> converters = expression.getVariableMatchers();
 		for(String varName : converters.keySet()){
 			for(HAPRelationship converter : converters.get(varName).getRelationships()){
 				List<HAPResourceIdConverter> conerterIds = HAPResourceUtility.getConverterResourceIdFromRelationship(converter);

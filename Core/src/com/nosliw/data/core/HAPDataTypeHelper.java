@@ -3,6 +3,7 @@ package com.nosliw.data.core;
 import java.util.Set;
 
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.expression.HAPMatchers;
 
 /**
  * This is helper class that provide methods that related with data type and operation information
@@ -111,6 +112,6 @@ public interface HAPDataTypeHelper {
 	 * @param to
 	 * @return
 	 */
-	HAPConverters buildConvertor(HAPDataTypeCriteria from, HAPDataTypeCriteria to);
+	HAPMatchers buildConvertor(HAPDataTypeCriteria from, HAPDataTypeCriteria to);
 	
 }

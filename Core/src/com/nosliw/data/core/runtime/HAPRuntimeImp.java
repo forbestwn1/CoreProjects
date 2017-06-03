@@ -8,7 +8,7 @@ public abstract class HAPRuntimeImp implements HAPRuntime{
 
 	public HAPRuntimeImp(){
 		HAPResourceHelper resourceHelper = HAPResourceHelper.getInstance();
-		resourceHelper.registerResourceId(HAPConstant.RUNTIME_RESOURCE_TYPE_DATATYPEOPERATION, HAPResourceIdOperation.class, HAPOperationId.class);
+		resourceHelper.registerResourceId(HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION, HAPResourceIdOperation.class, HAPOperationId.class);
 		resourceHelper.registerResourceId(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, HAPResourceIdConverter.class, HAPDataTypeConverter.class);
 	}
 	
