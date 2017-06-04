@@ -45,7 +45,7 @@ public class HAPExpressionUtility {
 					HAPOperandOperation operationOperand = (HAPOperandOperation)operand;
 					HAPOperationId operationId = operationOperand.getOperationId();
 					//operation as resource
-					if(operationId!=null)	out.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(operationId, null));
+					if(operationId!=null)	out.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(operationId));
 					break;
 				case HAPConstant.EXPRESSION_OPERAND_REFERENCE:
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand;

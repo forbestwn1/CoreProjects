@@ -15,12 +15,12 @@ public class HAPResourceIdMatcher extends HAPResourceId{
 		this.cloneFrom(resourceId);
 	}
 	
-	public HAPResourceIdMatcher(String idLiterate, String alias) {
-		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, idLiterate, alias);
+	public HAPResourceIdMatcher(String idLiterate) {
+		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, idLiterate);
 	}
 
-	public HAPResourceIdMatcher(HAPMatcher matcher, String alias){
-		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, null, alias);
+	public HAPResourceIdMatcher(HAPMatcher matcher){
+		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, null);
 		this.setMatcher(matcher);
 	}
 	

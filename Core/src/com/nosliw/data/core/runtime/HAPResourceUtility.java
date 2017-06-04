@@ -20,7 +20,7 @@ public class HAPResourceUtility {
 		if(segments!=null && segments.size()>=1){
 			HAPDataTypeId baseDataType = relationship.getSource();
 			for(HAPRelationshipPathSegment segment : segments){
-				out.add(new HAPResourceIdConverter(new HAPDataTypeConverter(baseDataType, HAPConstant.DATAOPERATION_TYPE_CONVERTTO), null));
+				out.add(new HAPResourceIdConverter(new HAPDataTypeConverter(baseDataType, HAPConstant.DATAOPERATION_TYPE_CONVERTTO)));
 				
 				String segmentType = segment.getType();
 				switch(segmentType){

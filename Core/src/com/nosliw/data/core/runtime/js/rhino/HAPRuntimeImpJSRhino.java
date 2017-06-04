@@ -25,7 +25,7 @@ import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.runtime.HAPExpressionResult;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPResourceIdInfo;
+import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPResourceDiscovery;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
@@ -78,14 +78,14 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeC
 	public void loadResources(Object resources, Object callBackFunction){
 		System.out.println("Load resources !!!!!!!!!!!!!!!!!!!!" + resources + "  " + callBackFunction);
 
-		List<HAPResourceIdInfo> resourceIds = new ArrayList<HAPResourceIdInfo>();
+		List<HAPResourceInfo> resourceIds = new ArrayList<HAPResourceInfo>();
 		
 		NativeArray resourcesArray = (NativeArray)resources;
 		for(int i=0; i<resourcesArray.size(); i++){
 			NativeObject resourceIdObject = (NativeObject)resourcesArray.get(i);
 			String type = (String)resourceIdObject.get(HAPResourceId.TYPE);
 			String id = (String)resourceIdObject.get(HAPResourceId.ID);
-			resourceIds.add(new HAPResourceIdInfo(new HAPResourceId(type, id, null)));
+			resourceIds.add(new HAPResourceInfo(new HAPResourceId(type, id)));
 		}
 		this.loadResources(resourceIds, m_scope, m_context);
 	}
@@ -148,12 +148,12 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeC
 		return out;
 	}
 	
-	private void loadResources(List<HAPResourceIdInfo> resourcesIdInfo, Scriptable scope, Context context){
+	private void loadResources(List<HAPResourceInfo> resourcesIdInfo, Scriptable scope, Context context){
 		List<HAPJSScriptInfo> scriptsInfo = new ArrayList<HAPJSScriptInfo>();
 		
-		for(HAPResourceIdInfo resourceIdInfo : resourcesIdInfo){
+		for(HAPResourceInfo resourceIdInfo : resourcesIdInfo){
 			List<HAPResourceId> resourcesId = new ArrayList<HAPResourceId>();
-			resourcesId.add(resourceIdInfo.getResourceId());
+			resourcesId.add(resourceIdInfo.getId());
 			List<HAPResource> resources = this.getResourceManager().getResources(resourcesId);
 			if(resources!=null && resources.size()==1){
 				HAPResource resource = resources.get(0);
@@ -196,26 +196,26 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeC
 	private Scriptable initEsencialScope(Context context, Scriptable parent){
 		Scriptable out = context.initStandardObjects(null);
 		
-		List<HAPResourceIdInfo> resourceIdInfos = new ArrayList<HAPResourceIdInfo>();
+		List<HAPResourceInfo> resourceIdInfos = new ArrayList<HAPResourceInfo>();
 		//library
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
-		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.core", null), null));
-		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.Underscore", "1.6.0"), null));
-		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.Backbone", "1.1.2"), null));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.core", null)));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.Underscore", "1.6.0")));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.Backbone", "1.1.2")));
 		
-		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.constant", null), null));
-		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.common", null), null));
-		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.expression", null), null));
-		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.request", null), null));
-		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.id", null), null));
-		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.init", null), null));
-		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.logging", null), null));
-		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.resource", null), null));
-		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtime", null), null));
-		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtimerhino", null), null));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.constant", null)));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.common", null)));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.expression", null)));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.request", null)));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.id", null)));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.init", null)));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.logging", null)));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.resource", null)));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtime", null)));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtimerhino", null)));
 		
 		for(HAPResourceId resourceId : resourceIds){
-			resourceIdInfos.add(new HAPResourceIdInfo(resourceId).withInfo(ADDTORESOURCEMANAGER, ADDTORESOURCEMANAGER));
+			resourceIdInfos.add(new HAPResourceInfo(resourceId).withInfo(ADDTORESOURCEMANAGER, ADDTORESOURCEMANAGER));
 		}
 		
 		//data type

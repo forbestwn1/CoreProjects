@@ -15,12 +15,12 @@ public class HAPResourceIdOperation extends HAPResourceId{
 		this.cloneFrom(resourceId);
 	}
 	
-	public HAPResourceIdOperation(String idLiterate, String alias) {
-		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION, idLiterate, alias);
+	public HAPResourceIdOperation(String idLiterate) {
+		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION, idLiterate);
 	}
 
-	public HAPResourceIdOperation(HAPOperationId operationId, String alias){
-		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION, null, alias);
+	public HAPResourceIdOperation(HAPOperationId operationId){
+		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION, null);
 		this.setOperationId(operationId);
 	}
 	

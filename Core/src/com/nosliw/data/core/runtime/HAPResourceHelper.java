@@ -43,11 +43,11 @@ public class HAPResourceHelper {
 		return resourceId.toStringValue(HAPSerializationFormat.LITERATE);
 	}
 	
-	public HAPResourceId buildResourceIdFromIdData(Object resourceIdData, String alias){
+	public HAPResourceId buildResourceIdFromIdData(Object resourceIdData){
 		HAPResourceId out = null;
 		Class resourceIdClass = this.m_idToResourceId.get(resourceIdData.getClass());
 		try {
-			out = (HAPResourceId)resourceIdClass.getConstructor(resourceIdData.getClass(), String.class).newInstance(resourceIdData, alias);
+			out = (HAPResourceId)resourceIdClass.getConstructor(resourceIdData.getClass()).newInstance(resourceIdData);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

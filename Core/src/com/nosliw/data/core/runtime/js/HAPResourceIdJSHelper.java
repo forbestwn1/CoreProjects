@@ -15,12 +15,12 @@ public class HAPResourceIdJSHelper extends HAPResourceId{
 		this.cloneFrom(resourceId);
 	}
 	
-	public HAPResourceIdJSHelper(String idLiterate, String alias) {
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER, idLiterate, alias);
+	public HAPResourceIdJSHelper(String idLiterate) {
+		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER, idLiterate);
 	}
 
-	public HAPResourceIdJSHelper(HAPJSHelperId helperId, String alias){
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER, null, alias);
+	public HAPResourceIdJSHelper(HAPJSHelperId helperId){
+		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER, null);
 		this.setHelperId(helperId);
 	}
 

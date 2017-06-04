@@ -15,12 +15,12 @@ public class HAPResourceIdConverter extends HAPResourceId{
 		this.cloneFrom(resourceId);
 	}
 	
-	public HAPResourceIdConverter(String idLiterate, String alias) {
-		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, idLiterate, alias);
+	public HAPResourceIdConverter(String idLiterate) {
+		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, idLiterate);
 	}
 
-	public HAPResourceIdConverter(HAPDataTypeConverter dataTypeConverter, String alias){
-		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, null, alias);
+	public HAPResourceIdConverter(HAPDataTypeConverter dataTypeConverter){
+		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, null);
 		this.setConverter(dataTypeConverter);
 	}
 	

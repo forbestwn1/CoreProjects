@@ -90,3 +90,5 @@ d
 4src/com/nosliw/data/core/imp/HAPDataTypeInfoImp.java,1\a\1ad5e67ff54eb37d6136d67872157252300d2517
 n
 >src/com/nosliw/data/core/imp/runtime/js/rhino/loadResource1.js,f\b\fba93e2e94d71dbc8bd7517bd9ebb9d39ec42cca
+Å
+Qsrc/com/nosliw/data/core/imp/runtime/js/valueinfo.data.js.resource.dependency.xml,d\5\d500d44cc71fb87c617d72f965c7c51087c9c0bf

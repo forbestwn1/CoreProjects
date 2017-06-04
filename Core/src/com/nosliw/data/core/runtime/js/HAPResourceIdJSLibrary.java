@@ -15,12 +15,12 @@ public class HAPResourceIdJSLibrary extends HAPResourceId{
 		this.cloneFrom(resourceId);
 	}
 	
-	public HAPResourceIdJSLibrary(String idLiterate, String alias) {
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, idLiterate, alias);
+	public HAPResourceIdJSLibrary(String idLiterate) {
+		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, idLiterate);
 	}
 
-	public HAPResourceIdJSLibrary(HAPJSLibraryId libraryId, String alias){
-		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, null, alias);
+	public HAPResourceIdJSLibrary(HAPJSLibraryId libraryId){
+		super(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, null);
 		this.setLibraryId(libraryId);
 	}
 	
