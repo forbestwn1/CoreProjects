@@ -8,7 +8,7 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 /**
- * Expression object we get after processing HAPExpressionInfo
+ * Expression object we get after processing HAPExpressionDefinition
  *  
  */
 @HAPEntityWithAttribute(baseName="EXPRESSION")
@@ -18,7 +18,7 @@ public interface HAPExpression {
 	public static String ID = "id";
 	
 	@HAPAttribute
-	public static String EXPRESSIONINFO = "expressionInfo";
+	public static String EXPRESSIONDEFINITION = "expressionDefinition";
 
 	@HAPAttribute
 	public static String OPERAND = "operand";
@@ -31,13 +31,16 @@ public interface HAPExpression {
 
 	@HAPAttribute
 	public static String CONVERTERS = "converters";
+
+	@HAPAttribute
+	public static String REFERENCES = "references";
 	
 	//during runtime, every expression has a unique id
 	String getId();
 	void setId(String id);
 	
-	//ExpressionInfo used to define expression
-	HAPExpressionInfo getExpressionInfo();
+	//ExpressionDefinition used to define expression
+	HAPExpressionDefinition getExpressionDefinition();
 	
 	//Operand to represent the expression
 	HAPOperand getOperand();
@@ -47,6 +50,9 @@ public interface HAPExpression {
 
 	//value for each variable, this converter help to convert to internal variable 
 	Map<String, HAPMatchers> getVariableMatchers();
+	
+	//all the referenced expression, it may referenced by referenced in expression
+	Map<String, HAPExpression> getReferences();
 	
 	//error message used to indicate whether the expression is successfully processed
 	String[] getErrorMessages();

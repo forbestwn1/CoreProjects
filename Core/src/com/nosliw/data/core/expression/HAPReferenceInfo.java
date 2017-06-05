@@ -20,6 +20,6 @@ public interface HAPReferenceInfo{
 	
 	String getReference();
 	
-	Map<String, String> getVariableSMap();
+	Map<String, String> getVariablesMap();
 	
 }

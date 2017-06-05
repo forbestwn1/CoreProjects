@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
@@ -14,9 +15,14 @@ import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.expression.HAPExpressionInfo;
+import com.nosliw.data.core.expression.HAPExpressionDefinition;
+import com.nosliw.data.core.expression.HAPExpressionTask;
+import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPOperand;
+import com.nosliw.data.core.expression.HAPOperandConstant;
+import com.nosliw.data.core.expression.HAPOperandReference;
+import com.nosliw.data.core.expression.HAPOperandVariable;
 import com.nosliw.data.core.expression.HAPProcessVariablesContext;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 
@@ -25,34 +31,38 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
  */
 public class HAPExpressionImp extends HAPSerializableImp implements HAPExpression{
 
-	//id
+	// id
 	private String m_id;
 	
 	// original expressiong
-	private HAPExpressionInfo m_expressionInfo;
+	private HAPExpressionDefinition m_expressionDefinition;
 
-	// parsed expression
+	// parsed operand in expression
 	private HAPOperand m_operand;
+
+	//referenced expression
+	private Map<String, HAPExpression> m_references;
 	
-	//mutiple messages
+	// mutiple messages
 	private List<String> m_errorMsgs;
 	
 	// store all variable information in expression (variable name -- variable data type infor)
 	// for variable that we don't know data type, its value in this map is null
 	private Map<String, HAPVariableInfo> m_varsInfo;
 	
-	//store all the converter for every variables in this expression
-	//it convert variable from caller to variable in expression
+	// store all the converter for every variables in this expression
+	// it convert variable from caller to variable in expression
 	private Map<String, HAPMatchers> m_converters;
 	
-	public HAPExpressionImp(HAPExpressionInfo expressionInfo, HAPOperand operand){
+	public HAPExpressionImp(HAPExpressionDefinition expressionDefinition, HAPOperand operand){
+		this.m_references = new LinkedHashMap<String, HAPExpression>();
 		this.m_errorMsgs = new ArrayList<String>();
-		this.m_expressionInfo = expressionInfo;
+		this.m_expressionDefinition = expressionDefinition;
 		this.m_operand = operand;
 		
 		//build vars info
 		this.m_varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		Map<String, HAPDataTypeCriteria> varCriterias = this.m_expressionInfo.getVariableCriterias();
+		Map<String, HAPDataTypeCriteria> varCriterias = this.m_expressionDefinition.getVariableCriterias();
 		for(String varName : varCriterias.keySet()){
 			this.m_varsInfo.put(varName, new HAPVariableInfo(varCriterias.get(varName)));
 		}
@@ -65,7 +75,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	public void setId(String id){  this.m_id = id;  }
 	
 	@Override
-	public HAPExpressionInfo getExpressionInfo() {		return this.m_expressionInfo;	}
+	public HAPExpressionDefinition getExpressionDefinition() {		return this.m_expressionDefinition;	}
 
 	@Override
 	public HAPOperand getOperand() {  return this.m_operand;  }
@@ -75,6 +85,43 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	
 	@Override
 	public Map<String, HAPMatchers> getVariableMatchers(){		return this.m_converters;	}
+	
+	@Override
+	public Map<String, HAPExpression> getReferences() {		return this.m_references;	}
+	
+	public HAPExpression getReference(String referenceName){  return this.m_references.get(referenceName);  }
+	
+	public void addReference(String referenceName, HAPExpressionImp expression){
+		//modify referenced expression
+		String prefix = HAPNamingConversionUtility.cascadePath(this.getId(), referenceName); 
+		
+		//update variable operand
+		HAPExpressionUtility.processAllOperand(expression.getOperand(), prefix, new HAPExpressionTask(){
+			@Override
+			public boolean processOperand(HAPOperand operand, Object data) {
+				String prefix = (String)data;
+				String opType = operand.getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
+					//Replace all variable operand's var name to parent name according to mapping
+					HAPOperandVariable variableChild = (HAPOperandVariable)operand;
+					variableChild.setVariableName(HAPNamingConversionUtility.cascadePath(prefix, variableChild.getVariableName()));
+				}
+				return true;
+			}
+
+			@Override
+			public void postPross(HAPOperand operand, Object data) {
+			}
+		});		
+		
+		//update variable mapping
+		//variable in parent
+		
+		//variable in child
+		expression
+		
+		this.m_references.put(referenceName, expression);   
+	}
 	
 	@Override
 	public HAPMatchers discover(Map<String, HAPVariableInfo> expectVariablesInfo, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context,	HAPDataTypeHelper dataTypeHelper){
@@ -151,10 +198,11 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(EXPRESSIONINFO, HAPSerializeManager.getInstance().toStringValue(this.m_expressionInfo, HAPSerializationFormat.JSON));
+		jsonMap.put(EXPRESSIONDEFINITION, HAPSerializeManager.getInstance().toStringValue(this.m_expressionDefinition, HAPSerializationFormat.JSON));
 		jsonMap.put(OPERAND, HAPSerializeManager.getInstance().toStringValue(this.m_operand, HAPSerializationFormat.JSON));
 		jsonMap.put(VARIABLES, HAPJsonUtility.buildJson(this.getVariables(), HAPSerializationFormat.JSON));
 		jsonMap.put(ERRORMSGS, HAPJsonUtility.buildJson(m_errorMsgs, HAPSerializationFormat.JSON));
 		jsonMap.put(CONVERTERS, HAPJsonUtility.buildJson(this.m_converters, HAPSerializationFormat.JSON));
 	}
+
 }

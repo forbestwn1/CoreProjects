@@ -13,24 +13,24 @@ public class HAPOperandReference extends HAPOperandImp{
 
 	public static final String EXPRESSIONNAME = "expressionName";
 	
-	private String m_expressionName;
+	private String m_expressionReference;
 	
-	private HAPExpression m_expression;
+//	private HAPExpression m_expression;
 	
 	public HAPOperandReference(String expressionName){
 		super(HAPConstant.EXPRESSION_OPERAND_REFERENCE);
-		this.m_expressionName = expressionName;
+		this.m_expressionReference = expressionName;
 	}
 
-	public String getExpressionName(){  return this.m_expressionName;  }
+	public String getExpressionReference(){  return this.m_expressionReference;  }
 	
-	public void setExpression(HAPExpression expression){ 
-		this.m_expression = expression;  
-		if(this.m_expression!=null){
-			this.addChildOperand(this.m_expression.getOperand());
-		}
-	}
-	public HAPExpression getExpression(){  return this.m_expression;  }
+//	public void setExpression(HAPExpression expression){ 
+//		this.m_expression = expression;  
+//		if(this.m_expression!=null){
+//			this.addChildOperand(this.m_expression.getOperand());
+//		}
+//	}
+//	public HAPExpression getExpression(){  return this.m_expression;  }
 	
 	@Override
 	public Set<HAPRelationship> getConverters(){
@@ -45,13 +45,13 @@ public class HAPOperandReference extends HAPOperandImp{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(EXPRESSIONNAME, m_expressionName);
+		jsonMap.put(EXPRESSIONNAME, m_expressionReference);
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(EXPRESSIONNAME, m_expressionName);
+		jsonMap.put(EXPRESSIONNAME, m_expressionReference);
 	}
 
 	@Override

@@ -18,5 +18,5 @@ public class HAPReferenceInfoImp extends HAPStringableValueEntity implements HAP
 	public String getReference() {		return this.getAtomicAncestorValueString(REFERENCE);	}
 
 	@Override
-	public Map<String, String> getVariableSMap() {		return this.getMapValueAncestorByPath(VARIABLESMAP);	}
+	public Map<String, String> getVariablesMap() {		return this.getMapValueAncestorByPath(VARIABLESMAP);	}
 }

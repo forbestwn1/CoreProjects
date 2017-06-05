@@ -8,10 +8,10 @@ import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate;
-import com.nosliw.data.core.expression.HAPExpressionInfo;
+import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
 
-public class HAPExpressionInfoImp extends HAPStringableValueEntity implements HAPExpressionInfo{
+public class HAPExpressionDefinitionImp extends HAPStringableValueEntity implements HAPExpressionDefinition{
 
 	public static String _VALUEINFO_NAME;
 	
@@ -19,7 +19,7 @@ public class HAPExpressionInfoImp extends HAPStringableValueEntity implements HA
 	//This attribute store the real criteria which can be converted from literate fromat
 	Map<String, HAPDataTypeCriteria> m_variabesWithSolidCriteria;
 	
-	public HAPExpressionInfoImp(){	}
+	public HAPExpressionDefinitionImp(){	}
 	
 	@Override
 	public String getName() {  return this.getAtomicAncestorValueString(NAME);	}

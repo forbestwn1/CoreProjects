@@ -103,7 +103,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeC
 		//prepare expression id
 		String expressionId = expression.getId();
 		if(HAPBasicUtility.isStringEmpty(expressionId)){
-			expressionId = "Expression" + this.m_idIndex++ + "__" + expression.getExpressionInfo().getName();
+			expressionId = "Expression" + this.m_idIndex++ + "__" + expression.getExpressionDefinition().getName();
 			expression.setId(expressionId);
 		}
 		

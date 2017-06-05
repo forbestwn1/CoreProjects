@@ -9,11 +9,11 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 /**
- * ExpressionInfo is the basic unit to define a expression 
+ * ExpressionDefinition is the basic unit to define a expression 
  * All information required when describe a expression
  */
-@HAPEntityWithAttribute(baseName="EXPRESSIONINFO")
-public interface HAPExpressionInfo {
+@HAPEntityWithAttribute(baseName="EXPRESSIONDEFINITION")
+public interface HAPExpressionDefinition {
 
 	@HAPAttribute
 	public static String NAME = "name";
@@ -30,6 +30,7 @@ public interface HAPExpressionInfo {
 	@HAPAttribute
 	public static String VARIABLECRITERIAS = "variableCriterias";
 	
+	//all the information for references in expression definition, for instance, variable mapping
 	@HAPAttribute
 	public static String REFERENCES = "references";
 
