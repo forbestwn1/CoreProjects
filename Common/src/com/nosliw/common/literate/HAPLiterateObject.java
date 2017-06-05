@@ -16,9 +16,13 @@ public class HAPLiterateObject implements HAPLiterateDef{
 		HAPSerializable out = null;
 		try {
 			 out = (HAPSerializable)Class.forName(subType).newInstance();
-			 out.buildObject(strValue, HAPSerializationFormat.LITERATE);
 		} catch (Exception e) {
 //			e.printStackTrace();
+		}
+		try {
+			if(out!=null)	 out.buildObject(strValue, HAPSerializationFormat.LITERATE);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return out;
 	}

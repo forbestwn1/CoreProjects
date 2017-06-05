@@ -10,9 +10,9 @@ dataTypeDefinition.requires = {
 	"operation" : { 
 		op: "core.text;1.0.0;text_normal3"
 	},
-	"datatype" : {
-		text : "core.text;1.0.0"
-	},
+//	"datatype1" : {
+//		text : "core.text;1.0.0"
+//	},
 	"library" : {
 		underline : "underscore;1.8.3"
 	},
@@ -31,9 +31,9 @@ dataTypeDefinition.localRequires = {
 	"operation" : { 
 		op: "core.text;1.0.0;operation"
 	},
-	"datatype" : {
-		text : "core.text;1.0.0"
-	},
+//	"datatype1" : {
+//		text : "core.text;1.0.0"
+//	},
 	"library" : {
 		underline : "underscore;1.8.3"
 	},
@@ -56,9 +56,9 @@ dataTypeDefinition.operations['url_normal2'] = {
 			op1: "core.text;1.0.0;text_normal1",
 			op2: "core.text;1.0.0;text_normal2",
 		},
-		"datatype" : {
-			text : "core.text;1.0.0"
-		},
+//		"datatype1" : {
+//			text : "core.text;1.0.0"
+//		},
 		"library" : {
 			underline : "underscore;1.8.3"
 		},
@@ -95,9 +95,9 @@ dataTypeDefinition.convertTo = {
 				op1: "core.text;1.0.0;text_normal1",
 				op2: "core.text;1.0.0;text_normal2",
 			},
-			"datatype" : {
-				text : "core.text;1.0.0"
-			},
+//			"datatype1" : {
+//				text : "core.text;1.0.0"
+//			},
 			"library" : {
 				underline : "underscore;1.8.3"
 			},
@@ -124,9 +124,9 @@ dataTypeDefinition.convertFrom = {
 				op1: "core.text;1.0.0;text_normal1",
 				op2: "core.text;1.0.0;text_normal2",
 			},
-			"datatype" : {
-				text : "core.text;1.0.0"
-			},
+//			"datatype1" : {
+//				text : "core.text;1.0.0"
+//			},
 			"library" : {
 				underline : "underscore;1.8.3"
 			},

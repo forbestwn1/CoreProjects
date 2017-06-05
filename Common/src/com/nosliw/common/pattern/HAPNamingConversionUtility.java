@@ -84,7 +84,7 @@ public class HAPNamingConversionUtility {
 
 	public static String cascadeLevel2(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstant.SEPERATOR_LEVEL2);	}
 	public static String cascadeLevel2(String[] segs){	return cascadeComponents(segs, HAPConstant.SEPERATOR_LEVEL2);	}
-	public static String[] parseLevel2(String eles){		return splitTextByComponents(eles, HAPConstant.SEPERATOR_LEVEL2);	}
+	public static String[] parseLevel2(String eles){		return splitTextByComponents(eles, "\\"+HAPConstant.SEPERATOR_LEVEL2);	}
 	
 	public static String cascadeSegments1(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstant.SEPERATOR_SEGMENT);	}
 	public static String[] parseSegments1(String eles){		return splitTextByComponents(eles, HAPConstant.SEPERATOR_SEGMENT);	}

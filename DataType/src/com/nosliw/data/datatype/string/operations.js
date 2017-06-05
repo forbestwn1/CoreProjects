@@ -36,7 +36,7 @@ dataTypeDefition.operations['length'] = {
 		operation : function(parms, context){
 			
 			var baseData = parms[base];
-			var out = context.buildFromLiterate("base.integer", baseData.data.length);
+//			var out = context.buildFromLiterate("base.integer", baseData.data.length);
 			return out;
 		}, 
 
@@ -45,9 +45,9 @@ dataTypeDefition.operations['length'] = {
 		"operation" : { 
 			op1: "base.integer;new",
 		},
-		"datatype" : {
-			integer : "base.integer"
-		},
+//		"datatype1" : {
+//			integer : "base.integer"
+//		},
 		"helper" : {
 			operation : "operationHelper"
 		}

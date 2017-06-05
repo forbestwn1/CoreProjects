@@ -131,7 +131,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 	public String getClassName(){  return this.getAtomicAncestorValueString(CLASSNAME); }
 	public void setClassName(String name){  this.updateAtomicChildStrValue(CLASSNAME, name); }
 	public String getTable(){  return this.getAtomicAncestorValueString(TABLE);  }
-	public List<String> getPrimaryKeys(){  return this.getAtomicAncestorValueArray(PRIMARYKEYS, String.class);   }
+	public List<String> getPrimaryKeys(){  return this.getAtomicAncestorValueArray(PRIMARYKEYS, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);   }
 	
 	private HAPValueInfoEntity getParentEntityValueInfo(){
 		HAPValueInfoEntity out = null;

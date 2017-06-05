@@ -31,7 +31,13 @@ public class HAPResourceHelper {
 	public HAPResourceId buildResourceIdObject(String literate){
 		HAPResourceId out = new HAPResourceId(literate);
 		try {
-			Class resourceIdClass = this.m_idToResourceId.get(out.getType());
+			Class resourceIdClass = this.m_typeToResourceId.get(out.getType());
+			
+			if(resourceIdClass==null){
+				int kkkk = 5555;
+				kkkk++;
+			}
+			
 			out = (HAPResourceId)resourceIdClass.getConstructor(HAPResourceId.class).newInstance(out);
 		} catch (Exception e) {
 			e.printStackTrace();

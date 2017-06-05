@@ -41,7 +41,7 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	public HAPInfo getInfo() {	return (HAPInfo)this.getEntityAncestorByPath(INFO); }
 
 	@Override
-	public List<HAPDataTypeId> getParentsInfo() {	return this.getAtomicAncestorValueArray(PARENTSINFO, HAPDataTypeId.class);	}
+	public List<HAPDataTypeId> getParentsInfo() {	return this.getAtomicAncestorValueArray(PARENTSINFO, HAPDataTypeId.class.getName());	}
 
 	public HAPDataTypeId getLinkedDataTypeId(){
 		if(this.getLinkedVersion()==null)  return null;

@@ -214,6 +214,13 @@ public class HAPJSImporter {
 				break;
 			}
 			else{
+				if(resourceId==null || resourceId.getId()==null || resourceIdEle==null || resourceIdEle.getId()==null){
+					int kkkk = 5555;
+					kkkk++;
+				}
+				
+				
+				
 				if(resourceId.getId().getType().equals(resourceIdEle.getId().getType())){
 					//if found alias under same type, remove it
 					for(String aliasEle : alias){

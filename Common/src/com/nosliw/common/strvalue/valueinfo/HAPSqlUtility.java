@@ -55,6 +55,14 @@ public class HAPSqlUtility {
 	
 	public static void saveToDB(HAPStringableValueEntity obj, Connection connection){
 		HAPValueInfoEntity valueInfoEntity = HAPValueInfoManager.getInstance().getEntityValueInfoByClass(obj.getClass());
+		
+		if(obj.getClass().getName().contains("HAPJSResourceDependency")){
+			int kkkk = 5555;
+			System.out.println(valueInfoEntity.toString());
+			kkkk++;
+		}
+		
+		
 		saveToDB(obj, valueInfoEntity, connection);
 	}
 

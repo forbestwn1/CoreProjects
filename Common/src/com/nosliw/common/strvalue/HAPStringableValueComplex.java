@@ -102,10 +102,10 @@ public abstract class HAPStringableValueComplex<T extends HAPStringableValue> ex
 		else	return value.getFloatValue();
 	}
 	
-	public <K> List<K> getAtomicAncestorValueArray(String path, Class<K> cs){
+	public <K> List<K> getAtomicAncestorValueArray(String path, String subTypeName){
 		HAPStringableValueAtomic value = this.getAtomicAncestorByPath(path);
 		if(value==null)  return null;
-		else	return value.getListValue(cs);
+		else	return value.getListValue(subTypeName);
 	}
 
 	public <K> K getAtomicAncestorValueObject(String path, Class<K> cs){

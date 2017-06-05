@@ -27,7 +27,7 @@ public class HAPConfigureValueString extends HAPResolvableConfigureItem implemen
 	public Float getFloatValue() {		return this.getStringableValue().getFloatValue();  }
 
 	@Override
-	public <T> List<T> getListValue(Class<T> cs){  	return this.getStringableValue().getListValue(cs); }
+	public <T> List<T> getListValue(Class<T> cs){  	return this.getStringableValue().getListValue(cs.getName()); }
 	
 	public HAPConfigureValueString clone(){
 		HAPConfigureValueString out = new HAPConfigureValueString();
