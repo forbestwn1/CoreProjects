@@ -17,13 +17,6 @@ public abstract class HAPClassFilter {
 		    Set<ClassPath.ClassInfo> classeInfos = classPath.getAllClasses();
 		    //loop all the classes
 			for(ClassPath.ClassInfo classInfo : classeInfos){
-				
-				if(classInfo.getName().equals("com.nosliw.data.core.expression.HAPExpression")){
-					int kkkk = 555;
-					kkkk++;
-				}
-				
-				
 				if(HAPSystemUtility.isHAPClass(classInfo.getName())){
 					//only check nosliw package
 					Class checkClass = classInfo.load();

@@ -43,44 +43,20 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	private boolean m_sovled = false;
 	
 	public HAPStringableValueAtomic(String strValue, String type, String subType, String defaultValue){
-		
-		if("id11111".equals(strValue)){
-			int kkkk  = 5555;
-			kkkk++;
-		}
-		
 		if(strValue!=null)		this.setStringContent(new HAPResolvableString(strValue), type, subType);
 		else	this.setStringContent(new HAPResolvableString(defaultValue), type, subType);
 	}
 
 	public HAPStringableValueAtomic(String strValue, String type, String subType){
 		this(new HAPResolvableString(strValue), type, subType);
-
-		if("id11111".equals(strValue)){
-			int kkkk  = 5555;
-			kkkk++;
-		}
-		
 	}
 
 	public HAPStringableValueAtomic(HAPResolvableString strValue, String type, String subType){
-		if("id11111".equals(strValue)){
-			int kkkk  = 5555;
-			kkkk++;
-		}
-		
-
 		this.setStringContent(strValue, type, subType);
 	}
 	
 	public HAPStringableValueAtomic(String strValue){
 		this(strValue, null, null);
-
-		if("id11111".equals(strValue)){
-			int kkkk  = 5555;
-			kkkk++;
-		}
-		
 	}
 
 	public HAPStringableValueAtomic(){}
@@ -99,15 +75,6 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	}
 	
 	public String getStringContent(){
-		
-		if("id11111".equals(this.m_strValue.toString())){
-			int kkkk  = 5555;
-			kkkk++;
-		}
-
-		
-
-		
 		if(this.m_sovled)			this.buildStringValueByValue();		
 		if(this.m_strValue==null)  return null;
 		else return this.m_strValue.getValue();  
@@ -121,13 +88,6 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 		this.m_strValue = strValue;
 		this.m_type = new HAPLiterateType(type, subType);
 		this.m_sovled = false;
-
-		if("id11111".equals(this.m_strValue.toString())){
-			int kkkk  = 5555;
-			kkkk++;
-		}
-
-		
 	}
 	
 
@@ -147,20 +107,10 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	}
 	
 	public void setValue(Object value){
-		
 		this.m_value = value;
 		this.m_sovled = true;
 		this.buildLiterateTypeByValue();
 		this.buildStringValueByValue();
-
-		if("id11111".equals(this.m_strValue.toString())){
-			int kkkk  = 5555;
-			kkkk++;
-		}
-
-		
-		
-
 	}
 	
 	@Override
@@ -174,24 +124,12 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	public boolean isResolved(){  return this.m_strValue.isResolved();  }
 	
 	public Object getValue(){
-		if("id11111".equals(this.m_strValue.toString())){
-			int kkkk  = 5555;
-			kkkk++;
-		}
-
 		if(this.m_sovled)  return this.m_value;
 		if(this.m_type!=null)  return this.getValue(m_type.getType(), m_type.getSubType());
 		return this.m_strValue;
 	}
 	
 	public Object getValue(String type, String subType){
-		
-		if("id11111".equals(this.m_strValue.toString())){
-			int kkkk  = 5555;
-			kkkk++;
-		}
-
-		
 		Object out = null;
 		HAPLiterateType literateType = new HAPLiterateType(type, subType);
 		if(literateType.equals(this.m_type) && this.m_sovled){
@@ -206,11 +144,6 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	}
 	
 	private Object calValue(HAPLiterateType literateType){
-		if("id11111".equals(this.m_strValue.toString())){
-			int kkkk  = 5555;
-			kkkk++;
-		}
-
 		if(this.m_strValue==null)  return null;
 		else return HAPLiterateManager.getInstance().stringToValue(m_strValue.getValue(), literateType);
 	}
@@ -219,13 +152,7 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 		this.m_sovled = true;
 		this.m_value = value;
 		this.m_type = new HAPLiterateType(type, subType);
-
-		if("id11111".equals(this.m_strValue.toString())){
-			int kkkk  = 5555;
-			kkkk++;
-		}
-
-}
+	}
 	
 	private void unresolved(){
 		this.m_sovled = false;
@@ -265,14 +192,6 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 		this.m_type = stringableValue.m_type;
 		this.m_sovled = stringableValue.m_sovled;
 		this.m_value = HAPLiterateManager.getInstance().clone(stringableValue.m_value);
-		
-		
-		if("id11111".equals(this.m_strValue.toString())){
-			int kkkk  = 5555;
-			kkkk++;
-		}
-
-
 	}
 
 	@Override

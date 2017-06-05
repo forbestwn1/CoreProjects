@@ -91,13 +91,6 @@ public class HAPResourceId extends HAPSerializableImp{
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){	
 		String[] segs = HAPNamingConversionUtility.parseLevel1(literateValue);
-		
-		if(segs.length<=1){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
-		
 		this.m_type = segs[0];
 		this.m_id = segs[1];
 		return true;  
