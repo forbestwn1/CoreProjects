@@ -46,11 +46,22 @@ public class HAPExpressionDefinitionImp extends HAPStringableValueEntity impleme
 		return this.m_variabesWithSolidCriteria;
 	}
 
+	public void setVariableCriterias(Map<String, HAPDataTypeCriteria> varCriterias){
+		this.m_variabesWithSolidCriteria = varCriterias;
+	}
+	
+	
 	@Override
 	public Map<String, HAPReferenceInfo> getReferences() {  return this.getMapAncestorByPath(REFERENCES).getMapValue();  }
 	
 	public HAPExpressionDefinitionImp clone(){
 		HAPExpressionDefinitionImp out = this.clone(HAPExpressionDefinitionImp.class);
+
+		Map<String, HAPDataTypeCriteria> vars = this.getMapAncestorByPath(VARIABLECRITERIAS).getMapValue();
+		
+		for(String varName : vars.keySet()){
+			m_variabesWithSolidCriteria.put(varName, ((HAPDataTypeCriteriaWrapperLiterate)vars.get(varName)).getSolidCriteria());
+		}
 		return out;
 	}
 	

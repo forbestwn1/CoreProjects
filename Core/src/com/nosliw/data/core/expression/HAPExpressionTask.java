@@ -1,8 +1,8 @@
 package com.nosliw.data.core.expression;
 
-public interface HAPExpressionTask {
+public abstract class HAPExpressionTask {
 
-	boolean processOperand(HAPOperand operand, Object data);
+	abstract public boolean processOperand(HAPOperand operand, Object data);
 
-	void postPross(HAPOperand operand, Object data);
+	public void postPross(HAPOperand operand, Object data){}
 }

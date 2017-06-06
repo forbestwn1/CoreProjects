@@ -96,6 +96,8 @@ public class HAPStringableValueMap<T> extends HAPStringableValueComplex{
 
 	public Set<String> getKeys(){  return this.m_elements.keySet(); }
 	
+	public void clear(){		this.m_elements.clear();	}
+	
 	@Override
 	public HAPStringableValue cloneStringableValue() {
 		HAPStringableValueMap<T> out = new HAPStringableValueMap<T>();

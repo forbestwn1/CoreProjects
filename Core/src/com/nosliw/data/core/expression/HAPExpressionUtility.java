@@ -15,6 +15,24 @@ import com.nosliw.data.core.runtime.HAPResourceUtility;
 
 public class HAPExpressionUtility {
 
+	static public Set<String> discoveryVariables(HAPOperand operand){
+		Set<String> out = new HashSet<String>();
+		processAllOperand(operand, out, new HAPExpressionTask(){
+			@Override
+			public boolean processOperand(HAPOperand operand, Object data) {
+				Set<String> vars = (Set<String>)data;
+				switch(operand.getType()){
+				case HAPConstant.EXPRESSION_OPERAND_VARIABLE:
+					HAPOperandVariable varOperand = (HAPOperandVariable)operand;
+					vars.add(varOperand.getVariableName());
+					break;
+				}
+				return true;
+			}
+		});
+		return out;
+	}
+	
 	static public void processAllOperand(HAPOperand operand, Object data, HAPExpressionTask task){
 		if(task.processOperand(operand, data)){
 			List<HAPOperand> children = operand.getChildren();
@@ -62,9 +80,6 @@ public class HAPExpressionUtility {
 				
 				return true;
 			}
-
-			@Override
-			public void postPross(HAPOperand operand, Object data) {}
 		});
 		return out;
 	}
