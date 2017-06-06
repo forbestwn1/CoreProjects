@@ -24,6 +24,7 @@ import com.nosliw.data.core.expression.HAPOperandConstant;
 import com.nosliw.data.core.expression.HAPOperandReference;
 import com.nosliw.data.core.expression.HAPOperandVariable;
 import com.nosliw.data.core.expression.HAPProcessVariablesContext;
+import com.nosliw.data.core.expression.HAPReferenceInfo;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 
 /**
@@ -110,15 +111,26 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 			}
 
 			@Override
-			public void postPross(HAPOperand operand, Object data) {
-			}
+			public void postPross(HAPOperand operand, Object data) {			}
 		});		
 		
 		//update variable mapping
-		//variable in parent
+		//update variables mapping in parent expression
+		HAPReferenceInfoImp refInfo = (HAPReferenceInfoImp)this.getExpressionDefinition().getReferences().get(referenceName);
+		if(refInfo!=null){
+			Map<String, String> varsMap = refInfo.getVariablesMap();
+			for(String varName : varsMap.keySet()){
+				varsMap.put(varName, varsMap.get(HAPNamingConversionUtility.cascadePath(prefix, varName)));
+			}
+		}
 		
 		//variable in child
-		expression
+		Map<String, HAPVariableInfo> varsInfo = expression.getVariables();
+		Map<String, HAPVariableInfo> updatedVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		for(String varName : varsInfo.keySet()){
+			updatedVarsInfo.put(HAPNamingConversionUtility.cascadePath(prefix, varName), varsInfo.get(varName));
+		}
+		expression.setVariables(updatedVarsInfo);
 		
 		this.m_references.put(referenceName, expression);   
 	}

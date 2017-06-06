@@ -48,4 +48,10 @@ public class HAPExpressionDefinitionImp extends HAPStringableValueEntity impleme
 
 	@Override
 	public Map<String, HAPReferenceInfo> getReferences() {  return this.getMapAncestorByPath(REFERENCES).getMapValue();  }
+	
+	public HAPExpressionDefinitionImp clone(){
+		HAPExpressionDefinitionImp out = this.clone(HAPExpressionDefinitionImp.class);
+		return out;
+	}
+	
 }
