@@ -1,6 +1,7 @@
 package com.nosliw.data.core.expression;
 
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -24,7 +25,7 @@ public interface HAPExpression {
 	public static String OPERAND = "operand";
 	
 	@HAPAttribute
-	public static String VARIABLES = "variables";
+	public static String VARIABLEINFOS = "variableInfos";
 	
 	@HAPAttribute
 	public static String ERRORMSGS = "errorMsgs";
@@ -45,8 +46,10 @@ public interface HAPExpression {
 	//Operand to represent the expression
 	HAPOperand getOperand();
 	
+	Set<String> getVariables();
+
 	//Variables infos
-	Map<String, HAPVariableInfo> getVariables();
+	Map<String, HAPVariableInfo> getVariableInfos();
 
 	//value for each variable, this converter help to convert to internal variable 
 	Map<String, HAPMatchers> getVariableMatchers();

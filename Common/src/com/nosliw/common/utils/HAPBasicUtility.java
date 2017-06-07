@@ -3,6 +3,7 @@ package com.nosliw.common.utils;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -145,5 +146,13 @@ public class HAPBasicUtility {
 	public static String upperCaseFirstLetter(String name){
 		if(HAPBasicUtility.isStringEmpty(name))  return name;
 		return name.substring(0, 1).toUpperCase() + name.substring(1);
+	}
+	
+	public static <T, S> Map<S, T> reverseMapping(Map<T, S> mapping){
+		Map<S, T> out = new LinkedHashMap<S, T>();
+		for(T t : mapping.keySet()){
+			out.put(mapping.get(t), t);
+		}
+		return out;
 	}
 }

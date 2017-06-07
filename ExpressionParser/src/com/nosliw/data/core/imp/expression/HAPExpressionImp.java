@@ -1,6 +1,7 @@
 package com.nosliw.data.core.imp.expression;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,7 +91,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	public HAPOperand getOperand() {  return this.m_operand;  }
 
 	@Override
-	public Map<String, HAPVariableInfo> getVariables() {		return this.m_varsInfo;	}
+	public Map<String, HAPVariableInfo> getVariableInfos() {		return this.m_varsInfo;	}
 	
 	@Override
 	public Map<String, HAPMatchers> getVariableMatchers(){		return this.m_converters;	}
@@ -99,6 +100,14 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	public Map<String, HAPExpression> getReferences() {		return this.m_references;	}
 	
 	public HAPExpression getReference(String referenceName){  return this.m_references.get(referenceName);  }
+	
+	@Override
+	public Set<String> getVariables(){
+		Set<String> out = new HashSet<String>();
+		out.addAll(this.m_varsInfo.keySet());
+		for(String referenceName : this.m_references.keySet())		out.addAll(this.m_references.get(referenceName).getVariables());
+		return out;
+	}
 	
 	/**
 	 * Rename variables, including
@@ -143,7 +152,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		}
 		this.m_varsInfo = newVarsInfo;
 		
-		//update variables mapping in reference
+		//update variables mapping in reference info
 		Map<String, HAPReferenceInfo> references = this.getExpressionDefinition().getReferences();
 		for(String refName : references.keySet()){
 			HAPReferenceInfoImp reference = (HAPReferenceInfoImp)references.get(refName);
@@ -156,45 +165,25 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 			}
 			reference.setVariableMap(newVarsMap);
 		}
+		
+		//update variables in referenced expression
+		for(String referenceName : this.m_references.keySet()){
+			((HAPExpressionImp)this.m_references.get(referenceName)).updateVariablesName(varChanges);
+		}
 	}
 	
 	public void addReference(String referenceName, HAPExpressionImp expression){
-		//modify referenced expression
-		String prefix = HAPNamingConversionUtility.cascadePath(this.getId(), referenceName); 
+		//modify variables in referenced expression by add prefix
+		String prefix = HAPExpressionUtility.buildFullVariableName(this.getId(), referenceName); 
+		expression.setId(prefix);
 		
-		//update variable operand
-		HAPExpressionUtility.processAllOperand(expression.getOperand(), prefix, new HAPExpressionTask(){
-			@Override
-			public boolean processOperand(HAPOperand operand, Object data) {
-				String prefix = (String)data;
-				String opType = operand.getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
-					//Replace all variable operand's var name to parent name according to mapping
-					HAPOperandVariable variableChild = (HAPOperandVariable)operand;
-					variableChild.setVariableName(HAPNamingConversionUtility.cascadePath(prefix, variableChild.getVariableName()));
-				}
-				return true;
-			}
-		});		
-		
-		//update variable mapping
-		//update variables mapping in parent expression
-		HAPReferenceInfoImp refInfo = (HAPReferenceInfoImp)this.getExpressionDefinition().getReferences().get(referenceName);
-		if(refInfo!=null){
-			Map<String, String> varsMap = refInfo.getVariablesMap();
-			for(String varName : varsMap.keySet()){
-				varsMap.put(varName, varsMap.get(HAPNamingConversionUtility.cascadePath(prefix, varName)));
-			}
+		Set<String> variables = expression.getVariables();
+		Map<String, String> varMapping = new LinkedHashMap<String, String>();
+		for(String variableName : variables){
+			varMapping.put(variableName, HAPExpressionUtility.buildFullVariableName(prefix, variableName));
 		}
-		
-		//variable in child
-		Map<String, HAPVariableInfo> varsInfo = expression.getVariables();
-		Map<String, HAPVariableInfo> updatedVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		for(String varName : varsInfo.keySet()){
-			updatedVarsInfo.put(HAPNamingConversionUtility.cascadePath(prefix, varName), varsInfo.get(varName));
-		}
-		expression.setVariables(updatedVarsInfo);
-		
+		expression.updateVariablesName(varMapping);
+
 		this.m_references.put(referenceName, expression);   
 	}
 	
@@ -202,8 +191,8 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	public HAPMatchers discover(Map<String, HAPVariableInfo> expectVariablesInfo, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context,	HAPDataTypeHelper dataTypeHelper){
 
 		//update variables in expression
-		for(String varName : this.getVariables().keySet()){
-			HAPVariableInfo expressionVar = this.getVariables().get(varName);
+		for(String varName : this.getVariableInfos().keySet()){
+			HAPVariableInfo expressionVar = this.getVariableInfos().get(varName);
 			HAPVariableInfo expectVar = expectVariablesInfo.get(varName);
 			if(expectVar==null){
 			}
@@ -217,7 +206,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		
 		//do discovery
 		Map<String, HAPVariableInfo> expressionVars = new LinkedHashMap<String, HAPVariableInfo>();
-		expressionVars.putAll(this.getVariables());
+		expressionVars.putAll(this.getVariableInfos());
 		
 		HAPMatchers converter = null;
 		Map<String, HAPVariableInfo> oldVars;
@@ -231,8 +220,8 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		}while(!HAPBasicUtility.isEqualMaps(expressionVars, oldVars) && context.isSuccess());
 		
 		//merge again, cal variable converters, update expect variable
-		for(String varName : this.getVariables().keySet()){
-			HAPVariableInfo expressionVar = this.getVariables().get(varName);
+		for(String varName : this.getVariableInfos().keySet()){
+			HAPVariableInfo expressionVar = this.getVariableInfos().get(varName);
 			HAPVariableInfo expectVar = expectVariablesInfo.get(varName);
 			if(expectVar==null){
 				expectVar = new HAPVariableInfo();
@@ -275,7 +264,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(EXPRESSIONDEFINITION, HAPSerializeManager.getInstance().toStringValue(this.m_expressionDefinition, HAPSerializationFormat.JSON));
 		jsonMap.put(OPERAND, HAPSerializeManager.getInstance().toStringValue(this.m_operand, HAPSerializationFormat.JSON));
-		jsonMap.put(VARIABLES, HAPJsonUtility.buildJson(this.getVariables(), HAPSerializationFormat.JSON));
+		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.getVariableInfos(), HAPSerializationFormat.JSON));
 		jsonMap.put(ERRORMSGS, HAPJsonUtility.buildJson(m_errorMsgs, HAPSerializationFormat.JSON));
 		jsonMap.put(CONVERTERS, HAPJsonUtility.buildJson(this.m_converters, HAPSerializationFormat.JSON));
 	}

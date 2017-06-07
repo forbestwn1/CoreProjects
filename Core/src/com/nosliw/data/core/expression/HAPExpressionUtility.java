@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPRelationship;
@@ -15,6 +16,19 @@ import com.nosliw.data.core.runtime.HAPResourceUtility;
 
 public class HAPExpressionUtility {
 
+	static public String buildFullVariableName(String parent, String name){
+		String out = HAPNamingConversionUtility.cascadePath(parent, name); 
+		return out;
+	}
+	
+	static public String updateVaraible(String parent, String name){
+		String out = name;
+		if(!out.startsWith(name+HAPConstant.SEPERATOR_PATH)){
+			out = buildFullVariableName(parent, name);
+		}
+		return out;
+	}
+	
 	static public Set<String> discoveryVariables(HAPOperand operand){
 		Set<String> out = new HashSet<String>();
 		processAllOperand(operand, out, new HAPExpressionTask(){

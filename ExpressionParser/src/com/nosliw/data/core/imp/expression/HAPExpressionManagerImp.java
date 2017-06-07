@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -59,6 +60,19 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 			name = System.currentTimeMillis()+"";
 			((HAPExpressionDefinitionImp)expressionDefinition).setName(name);
 		}
+		
+		//update mapping variable name in "to" part, 
+		Map<String, HAPReferenceInfo> references = expressionDefinition.getReferences();
+		for(String referenceName : references.keySet()){
+			Map<String, String> oldVarMap = references.get(referenceName).getVariablesMap();
+			Map<String, String> newVarMap = new LinkedHashMap<String, String>();
+			for(String fromVar : oldVarMap.keySet()){
+				String toVar = oldVarMap.get(fromVar);
+				toVar = HAPExpressionUtility.updateVaraible(referenceName, toVar);
+				newVarMap.put(fromVar, toVar);
+			}
+		}
+		
 		this.m_expressionDefinitions.put(name, expressionDefinition);
 	}
 	
@@ -88,7 +102,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 			}
 		}
 	}
-	
+
 	private HAPExpression processExpressionDefinition(String expressionName){
 		System.out.println("***************** Start to process expression : " + expressionName);
 		System.out.println("******* Parse expression");
@@ -96,11 +110,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 
 		//process reference
 		System.out.println("******* Process reference");
-		this.processReference(expression);
-		
-		//process reference, replace the variable name in referenced expression with the name from parent/root
-		System.out.println("******* Process reference variable mapping");
-		this.processReferenceVarMappings(expression, new LinkedHashMap<String, String>());
+		this.processReference(expression, null);
 		
 		//process constant
 		System.out.println("******* Process constant");
@@ -117,49 +127,15 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		}
 		this.m_expressions.put(expressionName, expression);
 		return expression;
-	}
-	
-	//parse expression definition according to its name
-	private HAPExpressionImp parseExpressionDefinition(String expressionName){
-		HAPExpressionDefinitionImp expressionDefinition = (HAPExpressionDefinitionImp)getExpressionDefinition(expressionName);
-		HAPOperand expressionOperand = this.getExpressionParser().parseExpression(expressionDefinition.getExpression());
-		//add cloned definition to expression
-		return new HAPExpressionImp(expressionDefinition.clone(), expressionOperand);
-	}
-
-	/**
-	 * Process reference variable mappings: 
-	 * 		replace variables name in variable operand in reference expression according to mapping
-	 * @param expressionOperand
-	 * @param varsMapping    childVar --- rootParentVar
-	 * @param expressionDefinition
-	 */
-	private void processReferenceVarMappings(final HAPExpressionImp expression, Map<String, String> reversedVarMap) {
-		//update variables' name in expression
-		expression.updateVariablesName(reversedVarMap);
-
-		//process referenced expression
-		Map<String, HAPExpression> references = expression.getReferences();
-		for(String referenceName : references.keySet()){
-			HAPExpressionImp refExpression = (HAPExpressionImp)references.get(referenceName);
-			
-			//build childRefVarMap for child reference operand
-			Map<String, String> childRefReversedVarMap = new LinkedHashMap<String, String>();
-			Map<String, String> refVarMap = expression.getExpressionDefinition().getReferences().get(referenceName).getVariablesMap();   //variable mapping from parent to reference expression
-			for(String r : refVarMap.keySet()){
-				if(reversedVarMap.get(r)!=null)   childRefReversedVarMap.put(refVarMap.get(r), reversedVarMap.get(r));
-				else  childRefReversedVarMap.put(refVarMap.get(r), r);
-			}
-			processReferenceVarMappings(refExpression, childRefReversedVarMap);
-		}
-	}
+	}	
 	
 	/**
-	 * Find all the reference
-	 * Parse referenced expression
-	 * Rename variables by append parent name to variables in referred expression (when add reference to expression) 
+	 * Process all references in expression
+	 * Update variables in expression
+	 * All the operation above also operate on child referenced expression
 	 */
-	private void processReference(final HAPExpressionImp expression){
+	private void processReference(final HAPExpressionImp expression, Map<String, String> varMapping){
+		//process all child references
 		HAPExpressionUtility.processAllOperand(expression.getOperand(), null, new HAPExpressionTask(){
 			@Override
 			public boolean processOperand(HAPOperand operand, Object data) {
@@ -176,18 +152,30 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 						refVarMap = referenceInfo.getVariablesMap();
 					}
 					if(refExpName==null)  refExpName = referenceName;
-					if(refVarMap==null)   refVarMap = new LinkedHashMap<String, String>();
 					
 					if(expression.getReference(refExpName)==null){
 						//if referenced expression has not been processed, parse it
 						HAPExpressionImp refExpression = parseExpressionDefinition(refExpName);
 						expression.addReference(referenceName, refExpression);
-						processReference(refExpression);
+						processReference(refExpression, HAPBasicUtility.reverseMapping(refVarMap));
 					}					
 				}
 				return true;
 			}
 		});		
+		
+		//update variables in current expression
+		if(varMapping!=null){
+			expression.updateVariablesName(varMapping);
+		}
+	}
+	
+	//parse expression definition according to its name
+	private HAPExpressionImp parseExpressionDefinition(String expressionName){
+		HAPExpressionDefinitionImp expressionDefinition = (HAPExpressionDefinitionImp)getExpressionDefinition(expressionName);
+		HAPOperand expressionOperand = this.getExpressionParser().parseExpression(expressionDefinition.getExpression());
+		//add cloned definition to expression
+		return new HAPExpressionImp(expressionDefinition.clone(), expressionOperand);
 	}
 
 	private void processConstants(final HAPExpression expression){
