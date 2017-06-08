@@ -117,9 +117,8 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		this.processConstants(expression);
 		
 		//discover variables
-		Map<String, HAPVariableInfo> expectVariablesInfo = new LinkedHashMap<String, HAPVariableInfo>(); 
 		HAPProcessVariablesContext context = new HAPProcessVariablesContext();
-		expression.discover(expectVariablesInfo, null, context, this.getDataTypeHelper());
+		expression.discover(null, null, context, this.getDataTypeHelper());
 		
 		if(!context.isSuccess()){
 			System.out.println("******* Error");
@@ -141,8 +140,8 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 			public boolean processOperand(HAPOperand operand, Object data) {
 				String opType = operand.getType();
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
-					HAPOperandReference reference = (HAPOperandReference)operand;
-					String referenceName = reference.getExpressionReference();
+					HAPOperandReference referenceOperand = (HAPOperandReference)operand;
+					String referenceName = referenceOperand.getExpressionReference();
 					HAPReferenceInfo referenceInfo = expression.getExpressionDefinition().getReferences().get(referenceName);
 					
 					String refExpName = null;   //referenced expression name, by default, use referenceName as expression name
@@ -153,12 +152,14 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 					}
 					if(refExpName==null)  refExpName = referenceName;
 					
-					if(expression.getReference(refExpName)==null){
+					HAPExpressionImp refExpression = (HAPExpressionImp)expression.getReference(refExpName);
+					if(refExpression==null){
 						//if referenced expression has not been processed, parse it
-						HAPExpressionImp refExpression = parseExpressionDefinition(refExpName);
+						refExpression = parseExpressionDefinition(refExpName);
 						expression.addReference(referenceName, refExpression);
 						processReference(refExpression, HAPBasicUtility.reverseMapping(refVarMap));
-					}					
+					}
+					referenceOperand.setExpression(refExpression);
 				}
 				return true;
 			}
@@ -179,13 +180,14 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	}
 
 	private void processConstants(final HAPExpression expression){
-		HAPExpressionUtility.processAllOperand(expression.getOperand(), null, new HAPExpressionTask(){
+		HAPExpressionUtility.processAllOperand(expression.getOperand(), expression.getExpressionDefinition(), new HAPExpressionTask(){
 			@Override
 			public boolean processOperand(HAPOperand operand, Object data) {
 				String opType = operand.getType();
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
 					HAPOperandConstant constantOperand = (HAPOperandConstant)operand;
-					constantOperand.setData(expression.getExpressionDefinition().getConstants().get(constantOperand.getName()));
+					HAPExpressionDefinition expressionDefinition = (HAPExpressionDefinition)data;
+					constantOperand.setData(expressionDefinition.getConstants().get(constantOperand.getName()));
 				}
 				return true;
 			}

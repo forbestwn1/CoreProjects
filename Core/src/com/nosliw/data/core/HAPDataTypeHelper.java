@@ -112,6 +112,6 @@ public interface HAPDataTypeHelper {
 	 * @param to
 	 * @return
 	 */
-	HAPMatchers buildConvertor(HAPDataTypeCriteria from, HAPDataTypeCriteria to);
+	HAPMatchers buildMatchers(HAPDataTypeCriteria from, HAPDataTypeCriteria to);
 	
 }

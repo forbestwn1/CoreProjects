@@ -34,8 +34,8 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	public String getType(){ return this.m_type;  }
 	
 	@Override
-	public HAPDataTypeCriteria getDataTypeCriteria(){  return this.m_outputCriteria; }
-	protected void setDataTypeCriteria(HAPDataTypeCriteria dataTypeCriteria){  this.m_outputCriteria = dataTypeCriteria; }
+	public HAPDataTypeCriteria getOutputCriteria(){  return this.m_outputCriteria; }
+	protected void setOutputCriteria(HAPDataTypeCriteria dataTypeCriteria){  this.m_outputCriteria = dataTypeCriteria; }
 	
 	@Override
 	public String getStatus(){		return this.m_status;	}
@@ -65,12 +65,12 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	 * @param context
 	 * @return
 	 */
-	protected HAPMatchers isConvertable(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context, HAPDataTypeHelper dataTypeHelper){
+	protected HAPMatchers isMatchable(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context, HAPDataTypeHelper dataTypeHelper){
 		if(expectCriteria==null)   return null;
 		
-		HAPMatchers out = dataTypeHelper.buildConvertor(criteria, expectCriteria);
+		HAPMatchers out = dataTypeHelper.buildMatchers(criteria, expectCriteria);
 		if(out==null){
-			//not able to convert, then error
+			//not able to match, then error
 			context.setFailure("Error");
 		}
 		return out;
@@ -104,7 +104,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	protected void outputCompatible(HAPDataTypeCriteria targetCriteria, HAPProcessVariablesContext context, HAPDataTypeHelper dataTypeHelper){
 		if(targetCriteria != null)
 		{
-			if(!targetCriteria.validate(this.getDataTypeCriteria(), dataTypeHelper))
+			if(!targetCriteria.validate(this.getOutputCriteria(), dataTypeHelper))
 			{
 				this.setStatusInvalid();
 				context.setFailure("Error!!!!");

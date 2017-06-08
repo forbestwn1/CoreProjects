@@ -42,32 +42,31 @@ public class HAPOperandVariable extends HAPOperandImp{
 		if(variableInfo==null){
 			//found a new variable
 			variableInfo = new HAPVariableInfo();
-			variablesInfo.put(m_variableName, variableInfo);
+			variablesInfo.put(this.getVariableName(), variableInfo);
 		}
 		
 		if(variableInfo.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN)){
 			//if variable info is open, calculate new criteria for this variable
-			if(expectCriteria==null){
-				
-			}
-			else if(variableInfo.getCriteria()==null){
-				variableInfo.setCriteria(expectCriteria);
-			}
-			else{
-				HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(variableInfo.getCriteria(), expectCriteria);
-				if(adjustedCriteria==null){
-					context.addMessage("error");
-					return null;
+			if(expectCriteria!=null){
+				if(variableInfo.getCriteria()==null){
+					variableInfo.setCriteria(expectCriteria);
 				}
 				else{
-					variableInfo.setCriteria(adjustedCriteria);
+					HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(variableInfo.getCriteria(), expectCriteria);
+					if(adjustedCriteria==null){
+						context.addMessage("error");
+						return null;
+					}
+					else{
+						variableInfo.setCriteria(adjustedCriteria);
+					}
 				}
 			}
 		}
 		
 		//set output criteria
-		this.setDataTypeCriteria(variableInfo.getCriteria());
+		this.setOutputCriteria(variableInfo.getCriteria());
 		//cal converter
-		return this.isConvertable(variableInfo.getCriteria(), expectCriteria, context, dataTypeHelper);
+		return this.isMatchable(variableInfo.getCriteria(), expectCriteria, context, dataTypeHelper);
 	}
 }

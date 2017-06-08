@@ -15,7 +15,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	private String m_expressionReference;
 	
-//	private HAPExpression m_expression;
+	private HAPExpression m_referencedExpression;
 	
 	public HAPOperandReference(String expressionName){
 		super(HAPConstant.EXPRESSION_OPERAND_REFERENCE);
@@ -24,18 +24,13 @@ public class HAPOperandReference extends HAPOperandImp{
 
 	public String getExpressionReference(){  return this.m_expressionReference;  }
 	
-//	public void setExpression(HAPExpression expression){ 
-//		this.m_expression = expression;  
-//		if(this.m_expression!=null){
-//			this.addChildOperand(this.m_expression.getOperand());
-//		}
-//	}
-//	public HAPExpression getExpression(){  return this.m_expression;  }
+	public void setExpression(HAPExpression expression){ 		this.m_referencedExpression = expression;	}
+	public HAPExpression getExpression(){  return this.m_referencedExpression;  }
 	
 	@Override
 	public Set<HAPRelationship> getConverters(){
 		Set<HAPRelationship> out = new HashSet<HAPRelationship>();
-		Map<String, HAPMatchers> varConverters = this.m_expression.getVariableMatchers();
+		Map<String, HAPMatchers> varConverters = this.m_referencedExpression.getVariableMatchers();
 		for(String var : varConverters.keySet()){
 			out.addAll(varConverters.get(var).getRelationships());
 		}
@@ -61,6 +56,6 @@ public class HAPOperandReference extends HAPOperandImp{
 			HAPProcessVariablesContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		
-		return this.m_expression.discover(variablesInfo, expectCriteria, context, dataTypeHelper);
+		return this.m_referencedExpression.discover(variablesInfo, expectCriteria, context, dataTypeHelper);
 	}
 }

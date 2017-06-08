@@ -219,7 +219,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	}
 
 	@Override
-	public HAPMatchers buildConvertor(HAPDataTypeCriteria from, HAPDataTypeCriteria to) {
+	public HAPMatchers buildMatchers(HAPDataTypeCriteria from, HAPDataTypeCriteria to) {
 		Set<HAPDataTypeId> toDataTypeIds = this.normalize(to.getValidDataTypeId(this));
 		Set<HAPDataTypeId> fromDataTypeIds = from.getValidDataTypeId(this);
 		

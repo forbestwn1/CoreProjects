@@ -47,7 +47,7 @@ public interface HAPOperand {
 										HAPDataTypeHelper dataTypeHelper);
 
 	//operand output data type criteria
-	HAPDataTypeCriteria getDataTypeCriteria();
+	HAPDataTypeCriteria getOutputCriteria();
 	
 	//status of operand: new, processed, failed
 	String getStatus();

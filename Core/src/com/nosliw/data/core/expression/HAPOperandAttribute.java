@@ -65,7 +65,7 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria getDataTypeCriteria() {
+	public HAPDataTypeCriteria getOutputCriteria() {
 		return null;
 	}
 }
