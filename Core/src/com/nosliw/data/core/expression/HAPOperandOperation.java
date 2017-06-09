@@ -9,6 +9,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
+import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeOperation;
@@ -18,6 +19,7 @@ import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
+import com.nosliw.data.core.runtime.HAPResourceUtility;
 
 public class HAPOperandOperation extends HAPOperandImp{
 
@@ -92,10 +94,15 @@ public class HAPOperandOperation extends HAPOperandImp{
 	}
 	
 	@Override
-	public Set<HAPRelationship> getConverters(){
-		Set<HAPRelationship> out = new HashSet<HAPRelationship>();
-		for(String parm : this.m_parmMatchers.keySet())			out.addAll(this.m_parmMatchers.get(parm).getRelationships());
-		if(this.m_baseMatchers!=null)  out.addAll(this.m_baseMatchers.getRelationships());
+	public Set<HAPDataTypeConverter> getConverters(){
+		Set<HAPDataTypeConverter> out = new HashSet<HAPDataTypeConverter>();
+		for(String parm : this.m_parmMatchers.keySet()){
+			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(this.m_parmMatchers.get(parm).getRelationships()));
+		}
+		
+		if(this.m_baseMatchers!=null){
+			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(this.m_baseMatchers.getRelationships()));
+		}
 		return out;	
 	}
 	

@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public interface HAPOperand {
@@ -39,7 +39,7 @@ public interface HAPOperand {
 	 * 		Output criteria
 	 * @param variablesInfo  all the variables info in context
 	 * @param expectCriteria expected output criteria for this operand
-	 * @return  converter from output criteria to expect criteria
+	 * @return  matchers from output criteria to expect criteria
 	 */
 	HAPMatchers discover(Map<String, HAPVariableInfo> variablesInfo,
 										HAPDataTypeCriteria expectCriteria,
@@ -53,5 +53,5 @@ public interface HAPOperand {
 	String getStatus();
 	
 	//get all the convertor required by this operand
-	Set<HAPRelationship> getConverters();  
+	Set<HAPDataTypeConverter> getConverters();  
 }

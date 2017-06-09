@@ -1,25 +1,13 @@
 package com.nosliw.data.core.runtime;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPJsonUtility;
 
 /**
  * Resource Id to identify resource 

@@ -7,8 +7,8 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
 
@@ -28,7 +28,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	}
 	
 	@Override
-	public Set<HAPRelationship> getConverters(){	return null;	}
+	public Set<HAPDataTypeConverter> getConverters(){	return null;	}
 	
 	@Override
 	public String getType(){ return this.m_type;  }

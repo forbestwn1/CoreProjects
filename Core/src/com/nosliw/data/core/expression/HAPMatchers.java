@@ -13,17 +13,17 @@ import com.nosliw.data.core.HAPRelationship;
 
 public class HAPMatchers extends HAPSerializableImp{
 
-	private Map<HAPDataTypeId, HAPRelationship> m_convertors = new LinkedHashMap<HAPDataTypeId, HAPRelationship>();
+	private Map<HAPDataTypeId, HAPRelationship> m_machers = new LinkedHashMap<HAPDataTypeId, HAPRelationship>();
 	
 	public HAPMatchers(){
 	}
 
 	public void addItem(HAPDataTypeId dataTypeId, HAPRelationship relationship){
-		this.m_convertors.put(dataTypeId, relationship);
+		this.m_machers.put(dataTypeId, relationship);
 	}
 
 	public Set<HAPRelationship> getRelationships(){
-		return new HashSet<HAPRelationship>(this.m_convertors.values());
+		return new HashSet<HAPRelationship>(this.m_machers.values());
 	}
 
 	@Override
@@ -33,9 +33,9 @@ public class HAPMatchers extends HAPSerializableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		for(HAPDataTypeId dataTypeId : this.m_convertors.keySet()){
+		for(HAPDataTypeId dataTypeId : this.m_machers.keySet()){
 			jsonMap.put(HAPSerializeManager.getInstance().toStringValue(dataTypeId, HAPSerializationFormat.LITERATE), 
-					HAPSerializeManager.getInstance().toStringValue(this.m_convertors.get(dataTypeId), HAPSerializationFormat.JSON));
+					HAPSerializeManager.getInstance().toStringValue(this.m_machers.get(dataTypeId), HAPSerializationFormat.JSON));
 		}
 	}
 }

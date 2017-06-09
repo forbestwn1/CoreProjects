@@ -5,9 +5,10 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.runtime.HAPResourceUtility;
 
 public class HAPOperandReference extends HAPOperandImp{
 
@@ -28,11 +29,11 @@ public class HAPOperandReference extends HAPOperandImp{
 	public HAPExpression getExpression(){  return this.m_referencedExpression;  }
 	
 	@Override
-	public Set<HAPRelationship> getConverters(){
-		Set<HAPRelationship> out = new HashSet<HAPRelationship>();
+	public Set<HAPDataTypeConverter> getConverters(){
+		Set<HAPDataTypeConverter> out = new HashSet<HAPDataTypeConverter>();
 		Map<String, HAPMatchers> varConverters = this.m_referencedExpression.getVariableMatchers();
 		for(String var : varConverters.keySet()){
-			out.addAll(varConverters.get(var).getRelationships());
+			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(varConverters.get(var).getRelationships()));
 		}
 		return out;	
 	}

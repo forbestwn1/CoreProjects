@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
@@ -58,44 +59,43 @@ public class HAPExpressionUtility {
 	}
 	
 	static public Set<HAPResourceId> discoverResources(HAPExpression expression){
-		final Set<HAPResourceId> out = new HashSet<HAPResourceId>();
+		Set<HAPResourceId> out = new HashSet<HAPResourceId>();
 		
 		//get converter resource id from var converter in expression 
-		Map<String, HAPMatchers> converters = expression.getVariableMatchers();
-		for(String varName : converters.keySet()){
-			for(HAPRelationship converter : converters.get(varName).getRelationships()){
-				List<HAPResourceIdConverter> conerterIds = HAPResourceUtility.getConverterResourceIdFromRelationship(converter);
-				out.addAll(conerterIds);
+		Map<String, HAPMatchers> matchers = expression.getVariableMatchers();
+		for(String varName : matchers.keySet()){
+			Set<HAPDataTypeConverter> converters = HAPResourceUtility.getConverterResourceIdFromRelationship(matchers.get(varName).getRelationships());
+			for(HAPDataTypeConverter converter : converters){
+				out.add(new HAPResourceIdConverter(converter));
 			}
 		}
 		
 		processAllOperand(expression.getOperand(), out, new HAPExpressionTask(){
 			@Override
 			public boolean processOperand(HAPOperand operand, Object data) {
+				Set<HAPResourceId> resourceIds = (Set<HAPResourceId>)data;
 				switch(operand.getType()){
 				case HAPConstant.EXPRESSION_OPERAND_OPERATION:
 					HAPOperandOperation operationOperand = (HAPOperandOperation)operand;
 					HAPOperationId operationId = operationOperand.getOperationId();
 					//operation as resource
-					if(operationId!=null)	out.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(operationId));
+					if(operationId!=null)	resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(operationId));
 					break;
 				case HAPConstant.EXPRESSION_OPERAND_REFERENCE:
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand;
 					Set<HAPResourceId> referenceResources = discoverResources(referenceOperand.getExpression());
-					out.addAll(referenceResources);
+					resourceIds.addAll(referenceResources);
 					break;
 				}
 
 				//converter as resource
-				for(HAPRelationship converter : operand.getConverters()){
-					List<HAPResourceIdConverter> conerterIds = HAPResourceUtility.getConverterResourceIdFromRelationship(converter);
-					out.addAll(conerterIds);
+				for(HAPDataTypeConverter converter : operand.getConverters()){
+					resourceIds.add(new HAPResourceIdConverter(converter));
 				}
 				
 				return true;
 			}
 		});
 		return out;
-	}
-	
+	}	
 }
