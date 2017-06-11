@@ -1,5 +1,7 @@
 package com.nosliw.data.core.runtime;
 
+import java.util.Map;
+
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
 
@@ -11,11 +13,19 @@ public abstract class HAPExpressionTask {
 	
 	private HAPData m_result;
 	
-	public HAPExpressionTask(HAPExpression expression){
+	Map<String, HAPData> m_variablesValue;
+	
+	public HAPExpressionTask(HAPExpression expression, Map<String, HAPData> variablesValue){
 		this.m_expression = expression;
 	}
 	
+	//expression result call back
 	public abstract void setResult(HAPData data);
+	
+	//resource loaded call back
+	public abstract void resourceLoaded();
+	
+	public Map<String, HAPData> getVariablesValue(){  return this.m_variablesValue;  }
 	
 	public HAPData getResult(){ return this.m_result; }
 	

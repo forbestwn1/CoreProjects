@@ -5,3 +5,12 @@ nosliw.runtime.getExpressionService().executeExecuteExpressionRequest(||expressi
 				}
 			}, 
 			undefined);
+
+	var expressionService = nosliw.runtime.getExpressionService();
+	expressionService.executeExecuteExpressionRequest(||expression||, ||variables||, {
+		success : function(requestInfo, data){
+			aaaa.returnResult(||taskId||, JSON.toString(data));
+			nosliw.logging.info("Expression Result : ", data);
+		}
+	}, undefined);
+			

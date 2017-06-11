@@ -19,7 +19,7 @@ import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPExpressionParser;
-import com.nosliw.data.core.expression.HAPExpressionTask;
+import com.nosliw.data.core.expression.HAPOperandTask;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPOperandConstant;
@@ -130,7 +130,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	 */
 	private void processReference(final HAPExpressionImp expression, Map<String, String> varMapping){
 		//process all child references
-		HAPExpressionUtility.processAllOperand(expression.getOperand(), null, new HAPExpressionTask(){
+		HAPExpressionUtility.processAllOperand(expression.getOperand(), null, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperand operand, Object data) {
 				String opType = operand.getType();
@@ -175,7 +175,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	}
 
 	private void processConstants(final HAPExpression expression){
-		HAPExpressionUtility.processAllOperand(expression.getOperand(), expression.getExpressionDefinition(), new HAPExpressionTask(){
+		HAPExpressionUtility.processAllOperand(expression.getOperand(), expression.getExpressionDefinition(), new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperand operand, Object data) {
 				String opType = operand.getType();

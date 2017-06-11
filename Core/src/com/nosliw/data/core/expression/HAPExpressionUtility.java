@@ -32,7 +32,7 @@ public class HAPExpressionUtility {
 	
 	static public Set<String> discoveryVariables(HAPOperand operand){
 		Set<String> out = new HashSet<String>();
-		processAllOperand(operand, out, new HAPExpressionTask(){
+		processAllOperand(operand, out, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperand operand, Object data) {
 				Set<String> vars = (Set<String>)data;
@@ -48,7 +48,7 @@ public class HAPExpressionUtility {
 		return out;
 	}
 	
-	static public void processAllOperand(HAPOperand operand, Object data, HAPExpressionTask task){
+	static public void processAllOperand(HAPOperand operand, Object data, HAPOperandTask task){
 		if(task.processOperand(operand, data)){
 			List<HAPOperand> children = operand.getChildren();
 			for(HAPOperand child : children){
@@ -70,7 +70,7 @@ public class HAPExpressionUtility {
 			}
 		}
 		
-		processAllOperand(expression.getOperand(), out, new HAPExpressionTask(){
+		processAllOperand(expression.getOperand(), out, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperand operand, Object data) {
 				Set<HAPResourceId> resourceIds = (Set<HAPResourceId>)data;

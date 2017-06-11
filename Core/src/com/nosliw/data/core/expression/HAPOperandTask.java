@@ -1,6 +1,6 @@
 package com.nosliw.data.core.expression;
 
-public abstract class HAPExpressionTask {
+public abstract class HAPOperandTask {
 
 	abstract public boolean processOperand(HAPOperand operand, Object data);
 

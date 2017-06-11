@@ -15,7 +15,9 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
+import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
+import com.nosliw.data.core.runtime.HAPExpressionTask;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpJSRhino;
@@ -74,9 +76,10 @@ public class HAPRuntimeJSScriptUtility {
 		return out;
 	}
 
-	public static String buildScriptForExecuteExpression(HAPExpression expression){
+	public static String buildScriptForExecuteExpression(HAPExpressionTask expressionTask){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("expression", HAPJsonUtility.formatJson(HAPSerializeManager.getInstance().toStringValue(expression, HAPSerializationFormat.JSON)));
+		templateParms.put("expression", HAPJsonUtility.formatJson(HAPSerializeManager.getInstance().toStringValue(expressionTask.getExpression(), HAPSerializationFormat.JSON)));
+		templateParms.put("variables", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(expressionTask.getVariablesValue()==null?new LinkedHashMap<String, HAPData>() : expressionTask.getVariablesValue(), HAPSerializationFormat.JSON)));
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ExecuteExpressionScript.temp");
 		String out = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		return out;

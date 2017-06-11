@@ -17,7 +17,7 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.data.core.expression.HAPExpressionTask;
+import com.nosliw.data.core.expression.HAPOperandTask;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPOperand;
@@ -123,7 +123,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	 */
 	public void updateVariablesName(Map<String, String> varChanges){
 		//update variable operand
-		HAPExpressionUtility.processAllOperand(this.getOperand(), varChanges, new HAPExpressionTask(){
+		HAPExpressionUtility.processAllOperand(this.getOperand(), varChanges, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperand operand, Object data) {
 				Map<String, String> nameChanges = (Map<String, String>)data;

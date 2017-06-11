@@ -19,6 +19,7 @@ import com.nosliw.common.info.HAPInfoUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.runtime.HAPExpressionTask;
@@ -57,15 +58,15 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeC
 	//for reate id
 	private int m_idIndex = 0;
 	
-	//store all the expression execution result call back
-	private Map<String, HAPExpressionTask> m_results;
+	//store all the expression execution task
+	private Map<String, HAPExpressionTask> m_expressionTasks;
 	
 	public HAPRuntimeImpJSRhino(){}
 	
 	public HAPRuntimeImpJSRhino(HAPResourceDiscovery resourceDiscovery, HAPResourceManager resourceMan){
 		this.m_resourceDiscovery = resourceDiscovery;
 		this.m_resourceManager = resourceMan;
-		this.m_results = new LinkedHashMap<String, HAPExpressionTask>();
+		this.m_expressionTasks = new LinkedHashMap<String, HAPExpressionTask>();
 		this.m_taskScope = new LinkedHashMap<String, Scriptable>();
 	}
 
@@ -91,7 +92,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeC
 	
 	@Override
 	public void returnResult(String expressionId, String result){
-		HAPExpressionTask resultCallBack = this.m_results.remove(expressionId);
+		HAPExpressionTask resultCallBack = this.m_expressionTasks.remove(expressionId);
 		HAPDataWrapper resultData = new HAPDataWrapper(result); 
 		resultCallBack.setResult(resultData);
 	}
@@ -99,17 +100,23 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeC
 	
 	@Override
 	public void executeExpression(HAPExpressionTask expressionTask) {
-		HAPExpression expression = expressionTask.getExpression();
+		HAPExpressionTaskRhino rhinoExpressionTask = (HAPExpressionTaskRhino)expressionTask;
+		rhinoExpressionTask.setRuntime(this);
+		
+		HAPExpression expression = rhinoExpressionTask.getExpression();
 		
 		//prepare expression id
 		String taskId = "Expression" + "__" + expression.getName() + "__" + this.m_idIndex++;
-		expressionTask.setTaskId(taskId);
+		rhinoExpressionTask.setTaskId(taskId);
+
+		this.m_expressionTasks.put(taskId, rhinoExpressionTask);
 		
 		//init rhino runtime, init scope
 		Scriptable scope = this.initExecuteExpression(taskId);
 		
+		//prepare resources for expression in the runtime
 		//discover required resources
-//		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
+		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
 		
 		//find which resource is missing
 //		List<HAPResourceId> missedResourceId = this.findMissedResources(resourcesId);
@@ -118,11 +125,15 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeC
 //		this.loadResources(missedResourceId, scope, this.m_context);
 		
 		//execute expression
-		this.m_results.put(taskId, expressionTask);
-		String script = HAPRuntimeJSScriptUtility.buildScriptForExecuteExpression(expression);
-		this.loadScript(script, m_context, m_scope, taskId);
+//		String script = HAPRuntimeJSScriptUtility.buildScriptForExecuteExpression(rhinoExpressionTask, variablesValue);
+//		this.loadScript(script, m_context, m_scope, taskId);
 	}
 
+	private void prepareResources(HAPExpression expression){
+		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
+		
+	}
+	
 	private Scriptable initExecuteExpression(String taskId){
 		this.m_taskScope.put(taskId, this.m_scope);
 		return this.m_scope;
@@ -245,6 +256,10 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeC
 		}
 	}
 	
+	public void loadScript(String script, String taskId){
+		this.loadScript(script, m_context, m_scope, taskId);
+	}
+	
 	private void loadScriptFromFile(String fileName, Context context, Scriptable scope, Class cs){
 		String script = HAPFileUtility.readFile(HAPFileUtility.getInputStreamOnClassPath(cs==null?this.getClass():cs, fileName));
 		this.m_sciprtTracker.addFile(HAPFileUtility.getFileNameOnClassPath(cs==null?getClass():cs, fileName));
@@ -316,4 +331,5 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeC
 	      System.exit(0);
 	    }
 	  }
+
 }

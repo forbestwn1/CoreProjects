@@ -91,10 +91,10 @@
 								return out;
 							}, 
 							error : function(){
-								alert('aaaaa');
+								alert('error');
 							},
 							exception : function(){
-								alert('aaaaa');
+								alert('exception');
 							},
 						});
 						

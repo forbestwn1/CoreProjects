@@ -1,0 +1,8 @@
+	var resourceIds = [||resourceIds||];
+	
+	var resourceService = nosliw.runtime.getResourceService();
+	resourceService.executeGetResourcesRequest(resourceIds, {
+		success : function(){
+			aaaa.resourcesLoaded();
+		}
+	}, undefined);
