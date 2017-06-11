@@ -19,10 +19,9 @@ import com.nosliw.common.info.HAPInfoUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.runtime.HAPExpressionResult;
+import com.nosliw.data.core.runtime.HAPExpressionTask;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
@@ -59,14 +58,14 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeC
 	private int m_idIndex = 0;
 	
 	//store all the expression execution result call back
-	private Map<String, HAPExpressionResult> m_results;
+	private Map<String, HAPExpressionTask> m_results;
 	
 	public HAPRuntimeImpJSRhino(){}
 	
 	public HAPRuntimeImpJSRhino(HAPResourceDiscovery resourceDiscovery, HAPResourceManager resourceMan){
 		this.m_resourceDiscovery = resourceDiscovery;
 		this.m_resourceManager = resourceMan;
-		this.m_results = new LinkedHashMap<String, HAPExpressionResult>();
+		this.m_results = new LinkedHashMap<String, HAPExpressionTask>();
 		this.m_taskScope = new LinkedHashMap<String, Scriptable>();
 	}
 
@@ -92,25 +91,22 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeC
 	
 	@Override
 	public void returnResult(String expressionId, String result){
-		HAPExpressionResult resultCallBack = this.m_results.remove(expressionId);
+		HAPExpressionTask resultCallBack = this.m_results.remove(expressionId);
 		HAPDataWrapper resultData = new HAPDataWrapper(result); 
-		resultCallBack.result(resultData);
+		resultCallBack.setResult(resultData);
 	}
 	
 	
 	@Override
-	public void executeExpression(HAPExpression expression, HAPExpressionResult result) {
-		//prepare expression id
-		String expressionId = expression.getId();
-		if(HAPBasicUtility.isStringEmpty(expressionId)){
-			expressionId = "Expression" + this.m_idIndex++ + "__" + expression.getExpressionDefinition().getName();
-			expression.setId(expressionId);
-		}
+	public void executeExpression(HAPExpressionTask expressionTask) {
+		HAPExpression expression = expressionTask.getExpression();
 		
+		//prepare expression id
+		String taskId = "Expression" + "__" + expression.getName() + "__" + this.m_idIndex++;
+		expressionTask.setTaskId(taskId);
 		
 		//init rhino runtime, init scope
-		String taskId = this.initExecuteExpression();
-		Scriptable scope = this.getTaskScope(taskId); 
+		Scriptable scope = this.initExecuteExpression(taskId);
 		
 		//discover required resources
 //		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
@@ -122,11 +118,19 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeC
 //		this.loadResources(missedResourceId, scope, this.m_context);
 		
 		//execute expression
-		this.m_results.put(expressionId, result);
+		this.m_results.put(taskId, expressionTask);
 		String script = HAPRuntimeJSScriptUtility.buildScriptForExecuteExpression(expression);
-		this.loadScript(script, m_context, m_scope, expressionId);
+		this.loadScript(script, m_context, m_scope, taskId);
 	}
 
+	private Scriptable initExecuteExpression(String taskId){
+		this.m_taskScope.put(taskId, this.m_scope);
+		return this.m_scope;
+	}
+	
+	private Scriptable getTaskScope(String taskId){  return this.m_taskScope.get(taskId);  }
+	
+	
 	private List<HAPResourceId> findMissedResources(List<HAPResourceId> resourcesId){
 		NativeObject nosliwObjJS = (NativeObject)this.m_scope.get("nosliw", this.m_scope);
 		NativeObject resourceManJS = (NativeObject)nosliwObjJS.get("resourceManager");
@@ -178,14 +182,6 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeC
 			this.loadScript(scriptInfo.getScript(), context, scope, scriptInfo.getName());
 		}
 	}
-	
-	private String initExecuteExpression(){
-		String out = this.getTaskId();
-		this.m_taskScope.put(out, this.m_scope);
-		return out;
-	}
-	
-	private Scriptable getTaskScope(String taskId){  return this.m_taskScope.get(taskId);  }
 	
 	/**
 	 * Init essencial object, include base, all the library for expression and all basic data type

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
@@ -32,8 +31,8 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
  */
 public class HAPExpressionImp extends HAPSerializableImp implements HAPExpression{
 
-	// id
-	private String m_id;
+	// name
+	private String m_name;
 	
 	// original expression definition
 	private HAPExpressionDefinitionImp m_expressionDefinition;
@@ -49,9 +48,13 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	
 	// store all variable information in expression (variable name -- variable data type infor)
 	// for variable that we don't know data type, its value in this map is null
+	// this variable info inherited from expression definition, so it is for internal 
+	private Map<String, HAPVariableInfo> m_internalVarsInfo;
+
+	//external variables info for expression
 	private Map<String, HAPVariableInfo> m_varsInfo;
 	
-	// store all the matchers for every variables in this expression
+	// store all the matchers from variables info to internal variables info in expression
 	// it convert variable from caller to variable in expression
 	private Map<String, HAPMatchers> m_varsMatchers;
 	
@@ -71,18 +74,18 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		}
 		
 		//build vars info
-		this.m_varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		this.m_internalVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		Map<String, HAPDataTypeCriteria> varCriterias = this.m_expressionDefinition.getVariableCriterias();
 		for(String varName : varCriterias.keySet()){
-			this.m_varsInfo.put(varName, new HAPVariableInfo(varCriterias.get(varName)));
+			this.m_internalVarsInfo.put(varName, new HAPVariableInfo(varCriterias.get(varName)));
 		}
 	}
 
 	@Override
-	public String getId(){  return this.m_id;  }
+	public String getName(){  return this.m_name;  }
 	
 	@Override
-	public void setId(String id){  this.m_id = id;  }
+	public void setName(String name){  this.m_name = name;  }
 	
 	@Override
 	public HAPExpressionDefinition getExpressionDefinition() {		return this.m_expressionDefinition;	}
@@ -104,10 +107,12 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	@Override
 	public Set<String> getVariables(){
 		Set<String> out = new HashSet<String>();
-		out.addAll(this.m_varsInfo.keySet());
+		out.addAll(this.m_internalVarsInfo.keySet());
 		for(String referenceName : this.m_references.keySet())		out.addAll(this.m_references.get(referenceName).getVariables());
 		return out;
 	}
+	
+	
 	
 	/**
 	 * Rename variables, including
@@ -144,13 +149,13 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		
 		//update variable info
 		Map<String, HAPVariableInfo> newVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		for(String oldVarName : this.m_varsInfo.keySet()){
+		for(String oldVarName : this.m_internalVarsInfo.keySet()){
 			String newName = varChanges.get(oldVarName);
 			if(newName==null)  newName = oldVarName;
-			HAPVariableInfo varInfo = this.m_varsInfo.get(oldVarName);
+			HAPVariableInfo varInfo = this.m_internalVarsInfo.get(oldVarName);
 			newVarsInfo.put(newName, varInfo);
 		}
-		this.m_varsInfo = newVarsInfo;
+		this.m_internalVarsInfo = newVarsInfo;
 		
 		//update variables mapping in reference info
 		Map<String, HAPReferenceInfo> references = this.getExpressionDefinition().getReferences();
@@ -174,8 +179,8 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	
 	public void addReference(String referenceName, HAPExpressionImp expression){
 		//modify variables in referenced expression by add prefix
-		String prefix = HAPExpressionUtility.buildFullVariableName(this.getId(), referenceName); 
-		expression.setId(prefix);
+		String prefix = HAPExpressionUtility.buildFullVariableName(this.getName(), referenceName); 
+		expression.setName(prefix);
 		
 		Set<String> variables = expression.getVariables();
 		Map<String, String> varMapping = new LinkedHashMap<String, String>();
@@ -189,17 +194,17 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	
 	@Override
 	public HAPMatchers discover(Map<String, HAPVariableInfo> parentVariablesInfo, HAPDataTypeCriteria expectOutputCriteria, HAPProcessVariablesContext context,	HAPDataTypeHelper dataTypeHelper){
-
+		this.m_varsInfo = parentVariablesInfo;
+		if(this.m_varsInfo==null)   this.m_varsInfo = new LinkedHashMap<String, HAPVariableInfo>();      
+		
 		//update variables info in expression according to parent variable info (parent variable info affect the child variable info)
-		if(parentVariablesInfo!=null){
-			for(String varName : this.getVariableInfos().keySet()){
-				HAPVariableInfo varInfo = this.getVariableInfos().get(varName);
-				HAPVariableInfo parentVarInfo = parentVariablesInfo.get(varName);
-				if(parentVarInfo!=null){
-					if(varInfo.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN)){
-						HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(varInfo.getCriteria(), parentVarInfo.getCriteria());
-						varInfo.setCriteria(adjustedCriteria);
-					}
+		for(String varName : this.getVariableInfos().keySet()){
+			HAPVariableInfo varInfo = this.getVariableInfos().get(varName);
+			HAPVariableInfo parentVarInfo = this.m_varsInfo.get(varName);
+			if(parentVarInfo!=null){
+				if(varInfo.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN)){
+					HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(varInfo.getCriteria(), parentVarInfo.getCriteria());
+					varInfo.setCriteria(adjustedCriteria);
 				}
 			}
 		}
@@ -218,29 +223,27 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 			context.clear();
 			matchers = this.getOperand().discover(varsInfo, expectOutputCriteria, context, dataTypeHelper);
 		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
-		this.m_varsInfo = varsInfo;
+		this.m_internalVarsInfo = varsInfo;
 		
 		//merge back, cal variable matchers, update parent variable
-		if(parentVariablesInfo!=null){
-			for(String varName : this.getVariableInfos().keySet()){
-				HAPVariableInfo varInfo = this.getVariableInfos().get(varName);
-				HAPVariableInfo parentVarInfo = parentVariablesInfo.get(varName);
-				if(parentVarInfo==null){
-					parentVarInfo = new HAPVariableInfo();
-					parentVarInfo.setCriteria(varInfo.getCriteria());
-					parentVariablesInfo.put(varName, parentVarInfo);
-				}
-				else{
-					if(parentVarInfo.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN)){
-						HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(varInfo.getCriteria(), parentVarInfo.getCriteria());
-						parentVarInfo.setCriteria(adjustedCriteria);
-					}
-				}
-
-				//cal var converters
-				HAPMatchers varMatchers = dataTypeHelper.buildMatchers(parentVarInfo.getCriteria(), varInfo.getCriteria());
-				this.m_varsMatchers.put(varName, varMatchers);
+		for(String varName : this.getVariableInfos().keySet()){
+			HAPVariableInfo varInfo = this.getVariableInfos().get(varName);
+			HAPVariableInfo parentVarInfo = this.m_varsInfo.get(varName);
+			if(parentVarInfo==null){
+				parentVarInfo = new HAPVariableInfo();
+				parentVarInfo.setCriteria(varInfo.getCriteria());
+				this.m_varsInfo.put(varName, parentVarInfo);
 			}
+			else{
+				if(parentVarInfo.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN)){
+					HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(varInfo.getCriteria(), parentVarInfo.getCriteria());
+					parentVarInfo.setCriteria(adjustedCriteria);
+				}
+			}
+
+			//cal var converters
+			HAPMatchers varMatchers = dataTypeHelper.buildMatchers(parentVarInfo.getCriteria(), varInfo.getCriteria());
+			this.m_varsMatchers.put(varName, varMatchers);
 		}
 		
 		return matchers;
@@ -248,8 +251,8 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	
 	
 	public void setVariables(Map<String, HAPVariableInfo> vars){
-		this.m_varsInfo.clear();
-		this.m_varsInfo.putAll(vars);
+		this.m_internalVarsInfo.clear();
+		this.m_internalVarsInfo.putAll(vars);
 	}
 	
 	@Override

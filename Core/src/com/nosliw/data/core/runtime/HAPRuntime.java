@@ -1,7 +1,5 @@
 package com.nosliw.data.core.runtime;
 
-import com.nosliw.data.core.expression.HAPExpression;
-
 /**
  * Runtime environment, 
  * Every runtime env is identified by two value: language and environment
@@ -13,7 +11,7 @@ public interface HAPRuntime {
 
 	HAPRuntimeInfo getRuntimeInfo();
 	
-	void executeExpression(HAPExpression expression, HAPExpressionResult result);
+	void executeExpression(HAPExpressionTask result);
 	
 	HAPResourceDiscovery getResourceDiscovery();
 	

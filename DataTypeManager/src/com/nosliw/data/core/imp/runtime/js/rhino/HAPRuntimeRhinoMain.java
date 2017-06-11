@@ -7,7 +7,6 @@ import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeManager;
-import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionImp;
@@ -18,7 +17,7 @@ import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerJSConverter;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerJSHelper;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerJSLibrary;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerJSOperation;
-import com.nosliw.data.core.runtime.HAPExpressionResult;
+import com.nosliw.data.core.runtime.HAPExpressionTask;
 import com.nosliw.data.core.runtime.js.HAPResourceManagerJS;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpJSRhino;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
@@ -43,15 +42,15 @@ public class HAPRuntimeRhinoMain {
 		HAPExpressionManagerImp expressionMan = new HAPExpressionManagerImp(new HAPExpressionParserImp(), dataTypeHelper);
 		expressionMan.importExpressionFromFolder(HAPFileUtility.getClassFolderPath(HAPRuntimeRhinoMain.class));
 		
-		HAPExpressionImp expression1 = (HAPExpressionImp)expressionMan.getExpression("expression1");
+		HAPExpressionImp expression1 = (HAPExpressionImp)expressionMan.processExpression("expression1", null);
 		System.out.println(HAPJsonUtility.formatJson(expression1.toStringValue(HAPSerializationFormat.JSON)));
-//		HAPExpressionImp expression2 = (HAPExpressionImp)expressionMan.getExpression("expression2");
+//		HAPExpressionImp expression2 = (HAPExpressionImp)expressionMan.processExpression("expression2", null);
 //		System.out.println(HAPJsonUtility.formatJson(expression2.toStringValue(HAPSerializationFormat.JSON)));
-//		HAPExpressionImp expression3 = (HAPExpressionImp)expressionMan.getExpression("expression3");
+//		HAPExpressionImp expression3 = (HAPExpressionImp)expressionMan.processExpression("expression3", null);
 //		System.out.println(HAPJsonUtility.formatJson(expression3.toStringValue(HAPSerializationFormat.JSON)));
-//		HAPExpressionImp expression4 = (HAPExpressionImp)expressionMan.getExpression("expression4");
+//		HAPExpressionImp expression4 = (HAPExpressionImp)expressionMan.processExpression("expression4", null);
 //		System.out.println(HAPJsonUtility.formatJson(expression4.toStringValue(HAPSerializationFormat.JSON)));
-//		HAPExpressionImp expression5 = (HAPExpressionImp)expressionMan.getExpression("expression5");
+//		HAPExpressionImp expression5 = (HAPExpressionImp)expressionMan.processExpression("expression5", null);
 //		System.out.println(HAPJsonUtility.formatJson(expression5.toStringValue(HAPSerializationFormat.JSON)));
 		
 		HAPRuntimeImpJSRhino runtime = new HAPRuntimeImpJSRhino(new HAPResourceDiscoveryJSImp(), resourceMan);
@@ -60,9 +59,9 @@ public class HAPRuntimeRhinoMain {
 			
 			runtime.loadScriptFromFile("loadResource1.js", HAPRuntimeRhinoMain.class);
 			
-			runtime.executeExpression(expression1, new HAPExpressionResult(){
+			runtime.executeExpression(new HAPExpressionTask(expression1){
 				@Override
-				public void result(HAPData data) {
+				public void setResult(HAPData data) {
 					System.out.println("Expression Result : " + data);
 				}
 				

@@ -8,13 +8,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
@@ -24,7 +24,6 @@ import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPOperandConstant;
 import com.nosliw.data.core.expression.HAPOperandReference;
-import com.nosliw.data.core.expression.HAPOperandVariable;
 import com.nosliw.data.core.expression.HAPProcessVariablesContext;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
 import com.nosliw.data.core.expression.HAPVariableInfo;
@@ -33,11 +32,11 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 
 	private Map<String, HAPExpressionDefinition> m_expressionDefinitions;
 
-	private Map<String, HAPExpression> m_expressions;
-	
 	private HAPExpressionParser m_expressionParser;
 	
 	private HAPDataTypeHelper m_dataTypeHelper;
+	
+	private int m_idIndex;
 	
 	public HAPExpressionManagerImp(HAPExpressionParser expressionParser, HAPDataTypeHelper dataTypeHelper){
 		this.m_expressionParser = expressionParser;
@@ -48,9 +47,8 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	private void init(){
 		String fileFolder = HAPFileUtility.getClassFolderPath(this.getClass()); 
 		HAPValueInfoManager.getInstance().importFromFolder(fileFolder, false);
-
 		this.m_expressionDefinitions = new LinkedHashMap<String, HAPExpressionDefinition>();
-		this.m_expressions = new LinkedHashMap<String, HAPExpression>();
+		this.m_idIndex = 1;
 	}
 
 	@Override
@@ -80,14 +78,36 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	public HAPExpressionDefinition getExpressionDefinition(String name) {		return this.m_expressionDefinitions.get(name);	}
 
 	@Override
-	public HAPExpression getExpression(String expressionName) {
-		HAPExpression out = this.m_expressions.get(expressionName);
-		if(out==null){
-			out = this.processExpressionDefinition(expressionName);
+	public HAPExpression processExpression(String expressionName, Map<String, HAPDataTypeCriteria> variableCriterias){
+		System.out.println("***************** Start to process expression : " + expressionName);
+		System.out.println("******* Parse expression");
+		HAPExpressionImp expression = this.parseExpressionDefinition(expressionName);
+
+		//set expression name
+		expression.setName(expressionName + this.m_idIndex++);
+		
+		//process reference
+		System.out.println("******* Process reference");
+		this.processReference(expression, null);
+		
+		//process constant
+		System.out.println("******* Process constant");
+		this.processConstants(expression);
+		
+		//discover variables
+		HAPProcessVariablesContext context = new HAPProcessVariablesContext();
+		Map<String, HAPVariableInfo> parentVariableInfos = new LinkedHashMap<String, HAPVariableInfo>();
+		for(String varName : variableCriterias.keySet())		parentVariableInfos.put(varName, new HAPVariableInfo(variableCriterias.get(varName)));
+		expression.discover(parentVariableInfos, null, context, this.getDataTypeHelper());
+		
+		if(!context.isSuccess()){
+			System.out.println("******* Error");
+			expression.addErrorMessages(context.getMessages());
 		}
-		return out;
+		return expression;
 	}
 
+	
 	public void importExpressionFromFolder(String folder){
 		Set<File> files = HAPFileUtility.getAllFiles(folder);
 		for(File file : files){
@@ -103,31 +123,6 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		}
 	}
 
-	private HAPExpression processExpressionDefinition(String expressionName){
-		System.out.println("***************** Start to process expression : " + expressionName);
-		System.out.println("******* Parse expression");
-		HAPExpressionImp expression = this.parseExpressionDefinition(expressionName);
-
-		//process reference
-		System.out.println("******* Process reference");
-		this.processReference(expression, null);
-		
-		//process constant
-		System.out.println("******* Process constant");
-		this.processConstants(expression);
-		
-		//discover variables
-		HAPProcessVariablesContext context = new HAPProcessVariablesContext();
-		expression.discover(null, null, context, this.getDataTypeHelper());
-		
-		if(!context.isSuccess()){
-			System.out.println("******* Error");
-			expression.addErrorMessages(context.getMessages());
-		}
-		this.m_expressions.put(expressionName, expression);
-		return expression;
-	}	
-	
 	/**
 	 * Process all references in expression
 	 * Update variables in expression
