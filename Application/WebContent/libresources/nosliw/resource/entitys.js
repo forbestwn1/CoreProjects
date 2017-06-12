@@ -19,9 +19,8 @@ var node_Resource = function(resourceId, resourceData, info){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("Requester", node_Requester); 
-packageObj.createNode("ServiceRequestExecuteInfo", node_ServiceRequestExecuteInfo); 
-packageObj.createNode("DependentServiceRequestInfo", node_DependentServiceRequestInfo); 
+packageObj.createNode("ResourceId", node_ResourceId); 
+packageObj.createNode("Resource", node_Resource); 
 
 	var module = {
 		start : function(packageObj){

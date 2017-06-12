@@ -97,7 +97,9 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		//discover variables
 		HAPProcessVariablesContext context = new HAPProcessVariablesContext();
 		Map<String, HAPVariableInfo> parentVariableInfos = new LinkedHashMap<String, HAPVariableInfo>();
-		for(String varName : variableCriterias.keySet())		parentVariableInfos.put(varName, new HAPVariableInfo(variableCriterias.get(varName)));
+		if(variableCriterias!=null){
+			for(String varName : variableCriterias.keySet())		parentVariableInfos.put(varName, new HAPVariableInfo(variableCriterias.get(varName)));
+		}
 		expression.discover(parentVariableInfos, null, context, this.getDataTypeHelper());
 		
 		if(!context.isSuccess()){

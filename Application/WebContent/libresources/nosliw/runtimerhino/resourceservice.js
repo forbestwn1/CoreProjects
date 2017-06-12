@@ -11,6 +11,8 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_ServiceInfo;
 	var node_CONSTANT;
+	var node_COMMONCONSTANT;
+	var node_runtimeGateway;
 //*******************************************   Start Node Definition  ************************************** 	
 	
 /**
@@ -24,19 +26,13 @@ var node_createResourceService = function(resourceManager){
 
 	var loc_getLoadResourceRequest = function(resourceIds, handlers, requestInfo){
 		var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("LoadResources", {"resourceId":resourceIds}), function(requestInfo){
-			aaaa.loadResources(resourceIds, function(){
+			node_runtimeGateway.loadResources(resourceIds, function(){
 				var resourceResult = loc_findResources(resourceIds);
 				nosliw.logging.info("Loaded Resources  ", resourceResult);
 				requestInfo.executeSuccessHandler(resourceResult.found);
 			});
 		}, handlers, requestInfo);
 		return out;
-		
-//		aaaa.loadResources('aa', {});
-		
-//		nosliw.runtime.javaInterface.loadResources(resourceIds, function(){
-//			nosliw.logging.info("");
-//		});
 	};
 	
 	var loc_getFindResourcesRequest = function(resourceIds, handlers, requestInfo){
@@ -116,6 +112,9 @@ packageObj.createNode("createResourceService", node_createResourceService);
 			node_requestServiceProcessor = packageObj.getNodeData("request.requestServiceProcessor");
 			node_ServiceInfo = packageObj.getNodeData("common.service.ServiceInfo");
 			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
+			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
+			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
+			node_runtimeGateway = packageObj.getNodeData(node_COMMONCONSTANT.RUNTIME_LANGUAGE_JS_GATEWAY);
 		}
 	};
 	nosliw.registerModule(module, packageObj);

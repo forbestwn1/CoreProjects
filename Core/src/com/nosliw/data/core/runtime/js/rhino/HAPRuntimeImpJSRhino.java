@@ -13,18 +13,15 @@ import org.mozilla.javascript.Function;
 import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
-import org.mozilla.javascript.ScriptableObject;
 import org.mozilla.javascript.tools.debugger.Main;
 
 import com.nosliw.common.info.HAPInfoUtility;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
-import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.runtime.HAPExpressionTask;
@@ -37,7 +34,6 @@ import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPJSLibraryId;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.HAPRuntimeGatewayJS;
 import com.nosliw.data.core.runtime.js.HAPRuntimeImpJS;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
@@ -95,6 +91,8 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 			resourceIds.add(new HAPResourceInfo(new HAPResourceId(type, id)));
 		}
 		this.loadResources(resourceIds, m_scope, m_context);
+		
+		((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{});
 	}
 	
 	//gateway callback method
@@ -133,6 +131,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("resources", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(resourcesId, HAPSerializationFormat.JSON)));
 		templateParms.put("taskId", taskId);
+		templateParms.put("gatewayPath", HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY);
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "LoadResources.temp");
 		String loadResourcesScript = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		this.loadTaskScript(loadResourcesScript, taskId, "loadResources");
@@ -320,21 +319,24 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 //		    dbg.setBreakOnEnter(true);
 		    dbg.setBreakOnExceptions(true);
 		    dbg.setScope(m_scope);
-		    dbg.setSize(800, 600);
+		    dbg.setSize(1200, 800);
 		    dbg.setVisible(true);
 		    dbg.setExitAction(new ExitOnClose());	    
-		    
-	        this.loadScriptFromFile("init.js", m_context, m_scope, null);
 
 //	        Object wrappedRuntime = Context.javaToJS(new HAPRuntimeImpJSRhino(null, null), this.m_scope);
 
 //	        Object wrappedRuntime = Context.javaToJS(this, this.m_scope);
 //	        ScriptableObject.putProperty(this.m_scope, "aaaa", wrappedRuntime);
 	        
+		    //set gateway object
 	        Object wrappedRuntime = Context.javaToJS(this, this.m_scope);
 	        NativeObject nosliwObj = (NativeObject)m_scope.get("nosliw", m_scope);
 	        Function createNodeFun = (Function)nosliwObj.get("createNode");
 	        createNodeFun.call(m_context, this.m_scope, nosliwObj, new Object[]{HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY, wrappedRuntime});
+		    
+		    
+	        this.loadScriptFromFile("init.js", m_context, m_scope, null);
+
 	        
 //	        global.defineProperty( "resourceService", this, ScriptableObject.CONST );	        
 	        
