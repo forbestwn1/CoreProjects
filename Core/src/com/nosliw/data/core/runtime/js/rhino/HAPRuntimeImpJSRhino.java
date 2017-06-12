@@ -2,7 +2,6 @@ package com.nosliw.data.core.runtime.js.rhino;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -186,14 +185,6 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 			if(resources!=null && resources.size()==1){
 				HAPResource resource = resources.get(0);
 				resource.setInfo(HAPInfoUtility.merge(resource.getInfo(), resourceIdInfo.getInfo()));
-
-				if(resource.getId().toString().contains("base.string;1.0.0;subString")){
-					List<HAPJSScriptInfo> aaa = HAPRuntimeJSScriptUtility.buildScriptForResource(resource);
-					int kkkk = 55555;
-					kkkk++;
-				}
-				
-				
 				scriptsInfo.addAll(HAPRuntimeJSScriptUtility.buildScriptForResource(resource));
 			}
 			else{
@@ -211,14 +202,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 				//for file
 				this.m_sciprtTracker.addFile(file);
 			}
-			
-			if(scriptInfo.getScript().contains("id : 'base.string;1.0.0;subString'")){
-				System.out.println(scriptInfo.getScript());
-				int kkkk = 55555;
-				kkkk++;
-			}
-			
-			this.loadScript(scriptInfo.getScript(), context, scope, scriptInfo.getName());
+			HAPRhinoRuntimeUtility.loadScript(scriptInfo.getScript(), context, scope, scriptInfo.getName());
 		}
 	}
 	
@@ -269,29 +253,14 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	
 	private String getTaskId(){return System.currentTimeMillis()+"";}
 	
-	private int index = 1; 
-	private void loadScript(String script, Context context, Scriptable scope, String name){
-		try{
-			String folder = "C:/Temp/ScriptExport/scripts/";
-			String scriptTempFile = folder + new Date().toString() + "_" + index + "_" + name+".js";
-			index++;
-			HAPFileUtility.writeFile(scriptTempFile, script);
-			
-			context.evaluateString(scope, script, name, 1, null);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	
 	public void loadTaskScript(String script, String taskId, String subTaskName){
-		this.loadScript(script, m_context, m_scope, taskId + "__" + subTaskName);
+		HAPRhinoRuntimeUtility.loadScript(script, m_context, m_scope, taskId + "__" + subTaskName);
 	}
 	
 	private void loadScriptFromFile(String fileName, Context context, Scriptable scope, Class cs){
 		String script = HAPFileUtility.readFile(HAPFileUtility.getInputStreamOnClassPath(cs==null?this.getClass():cs, fileName));
 		this.m_sciprtTracker.addFile(HAPFileUtility.getFileNameOnClassPath(cs==null?getClass():cs, fileName));
-		this.loadScript(script, context, scope, fileName);
+		HAPRhinoRuntimeUtility.loadScript(script, context, scope, fileName);
 	}
 	
 	class ResourceIdJS{
