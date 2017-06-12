@@ -9,7 +9,7 @@ nosliw.runtime.getExpressionService().executeExecuteExpressionRequest(||expressi
 	var expressionService = nosliw.runtime.getExpressionService();
 	expressionService.executeExecuteExpressionRequest(||expression||, ||variables||, {
 		success : function(requestInfo, data){
-			aaaa.returnResult(||taskId||, JSON.toString(data));
+			nosliw.getNodeData("||gatewayPath||").expressionExecuteResult(||taskId||, JSON.toString(data));
 			nosliw.logging.info("Expression Result : ", data);
 		}
 	}, undefined);

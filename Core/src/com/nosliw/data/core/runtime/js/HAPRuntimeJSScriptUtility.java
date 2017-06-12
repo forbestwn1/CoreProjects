@@ -52,6 +52,7 @@ public class HAPRuntimeJSScriptUtility {
 			templateParms.put(HAPResource.INFO, infoJson);
 		}
 
+		if(valueScript==null)  valueScript = "undefined";
 		templateParms.put(HAPResourceDataJSValue.VALUE, valueScript);
 
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ResourceScript.temp");
@@ -60,7 +61,7 @@ public class HAPRuntimeJSScriptUtility {
 		script.append(resoruceDataScript);
 		script.append("\n");
 		
-		out.add(HAPJSScriptInfo.buildByScript(script.toString(), resource.getId().toStringValue(HAPSerializationFormat.LITERATE)));
+		out.add(HAPJSScriptInfo.buildByScript(script.toString(), "Resource__"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE)));
 		return out;
 	}
 	
@@ -80,6 +81,8 @@ public class HAPRuntimeJSScriptUtility {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("expression", HAPJsonUtility.formatJson(HAPSerializeManager.getInstance().toStringValue(expressionTask.getExpression(), HAPSerializationFormat.JSON)));
 		templateParms.put("variables", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(expressionTask.getVariablesValue()==null?new LinkedHashMap<String, HAPData>() : expressionTask.getVariablesValue(), HAPSerializationFormat.JSON)));
+		templateParms.put("taskId", expressionTask.getTaskId());
+		templateParms.put("gatewayPath", HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY);
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ExecuteExpressionScript.temp");
 		String out = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		return out;

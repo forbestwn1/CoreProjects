@@ -79,7 +79,7 @@ packageObj.createNode("createRuntime", node_createRuntime);
 var module = {
 		start : function(packageObj){
 			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-			node_NOSLIWCOMMONCONSTANT = packageObj.getNodeData("constant.NOSLIWCOMMONCONSTANT");
+			node_NOSLIWCOMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
 			node_makeObjectWithName = packageObj.getNodeData("common.objectwithname.makeObjectWithName");
 			node_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
 			node_createIdService = packageObj.getNodeData("service.idservice.createIdService");

@@ -1,6 +1,7 @@
 package com.nosliw.data.core.expression;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -28,7 +29,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	}
 	
 	@Override
-	public Set<HAPDataTypeConverter> getConverters(){	return null;	}
+	public Set<HAPDataTypeConverter> getConverters(){	return new HashSet<HAPDataTypeConverter>();	}
 	
 	@Override
 	public String getType(){ return this.m_type;  }

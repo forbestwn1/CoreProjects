@@ -1,8 +1,8 @@
-	var resourceIds = [||resourceIds||];
+	var resourceIds = ||resourceIds||;
 	
 	var resourceService = nosliw.runtime.getResourceService();
 	resourceService.executeGetResourcesRequest(resourceIds, {
 		success : function(){
-			nosliw.getNodeData("||gatewayPath||").resourcesLoaded(||taskId||);
+			nosliw.getNodeData("||gatewayPath||").resourcesLoaded("||taskId||");
 		}
 	}, undefined);

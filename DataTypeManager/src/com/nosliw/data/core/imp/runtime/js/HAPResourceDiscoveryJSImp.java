@@ -62,6 +62,9 @@ public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 	}
 	
 	public List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId){
-		return this.m_dbAccess.getJSResourceDependency(resourceId).getDependency();
+		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+		HAPJSResourceDependency dependency = this.m_dbAccess.getJSResourceDependency(resourceId);
+		if(dependency!=null)  out = dependency.getDependency();
+		return out;
 	}
 }

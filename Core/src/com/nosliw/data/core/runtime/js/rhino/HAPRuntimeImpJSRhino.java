@@ -129,10 +129,10 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		//execute expression after load required resources
 		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("resources", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(resourcesId, HAPSerializationFormat.JSON)));
+		templateParms.put("resourceIds", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(resourcesId, HAPSerializationFormat.JSON)));
 		templateParms.put("taskId", taskId);
 		templateParms.put("gatewayPath", HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY);
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "LoadResources.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeImpJSRhino.class, "LoadResources.temp");
 		String loadResourcesScript = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		this.loadTaskScript(loadResourcesScript, taskId, "loadResources");
 		
@@ -186,6 +186,14 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 			if(resources!=null && resources.size()==1){
 				HAPResource resource = resources.get(0);
 				resource.setInfo(HAPInfoUtility.merge(resource.getInfo(), resourceIdInfo.getInfo()));
+
+				if(resource.getId().toString().contains("base.string;1.0.0;subString")){
+					List<HAPJSScriptInfo> aaa = HAPRuntimeJSScriptUtility.buildScriptForResource(resource);
+					int kkkk = 55555;
+					kkkk++;
+				}
+				
+				
 				scriptsInfo.addAll(HAPRuntimeJSScriptUtility.buildScriptForResource(resource));
 			}
 			else{
@@ -203,6 +211,13 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 				//for file
 				this.m_sciprtTracker.addFile(file);
 			}
+			
+			if(scriptInfo.getScript().contains("id : 'base.string;1.0.0;subString'")){
+				System.out.println(scriptInfo.getScript());
+				int kkkk = 55555;
+				kkkk++;
+			}
+			
 			this.loadScript(scriptInfo.getScript(), context, scope, scriptInfo.getName());
 		}
 	}
@@ -312,9 +327,9 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	    try {
 	        this.m_scope = this.initEsencialScope(m_context, null);
 
-	        System.setIn(dbg.getIn());
-	        System.setOut(dbg.getOut());
-	        System.setErr(dbg.getErr());
+//	        System.setIn(dbg.getIn());
+//	        System.setOut(dbg.getOut());
+//	        System.setErr(dbg.getErr());
 	        
 //		    dbg.setBreakOnEnter(true);
 		    dbg.setBreakOnExceptions(true);

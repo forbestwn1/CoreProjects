@@ -3,7 +3,6 @@ var packageObj = library.getChildPackage("loggingservice");
 
 (function(packageObj){
 	//get used node
-	var node_NOSLIWCOMMONCONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -81,7 +80,6 @@ packageObj.createNode("createLoggingService", node_createLoggingService);
 
 	var module = {
 		start : function(packageObj){
-			node_NOSLIWCOMMONCONSTANT = packageObj.getNodeData("constant.NOSLIWCOMMONCONSTANT");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

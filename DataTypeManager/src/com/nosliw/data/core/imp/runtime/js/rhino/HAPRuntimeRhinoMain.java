@@ -17,7 +17,6 @@ import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerJSConverter;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerJSHelper;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerJSLibrary;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerJSOperation;
-import com.nosliw.data.core.runtime.HAPExpressionTask;
 import com.nosliw.data.core.runtime.js.HAPResourceManagerJS;
 import com.nosliw.data.core.runtime.js.rhino.HAPExpressionTaskRhino;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpJSRhino;
@@ -60,12 +59,12 @@ public class HAPRuntimeRhinoMain {
 			
 			runtime.loadScriptFromFile("loadResource1.js", HAPRuntimeRhinoMain.class);
 			
-//			runtime.executeExpression(new HAPExpressionTaskRhino(expression, null){
-//				@Override
-//				public void setResult(HAPData data) {
-//					System.out.println("Expression Result : " + data);
-//				}
-//			});
+			runtime.executeExpression(new HAPExpressionTaskRhino(expression, null){
+				@Override
+				public void setResult(HAPData data) {
+					System.out.println("Expression Result : " + data);
+				}
+			});
 		}
 		catch(Exception e){
 			e.printStackTrace();

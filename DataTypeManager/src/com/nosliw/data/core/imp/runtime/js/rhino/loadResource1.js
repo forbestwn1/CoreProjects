@@ -6,7 +6,6 @@
 		}
 	);
 	
-	
 	var resourceService = nosliw.runtime.getResourceService();
 	resourceService.executeGetResourcesRequest(resourceIds, {
 		success : function(){

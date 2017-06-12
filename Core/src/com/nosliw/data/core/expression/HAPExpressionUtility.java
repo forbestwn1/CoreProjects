@@ -63,10 +63,12 @@ public class HAPExpressionUtility {
 		
 		//get converter resource id from var converter in expression 
 		Map<String, HAPMatchers> matchers = expression.getVariableMatchers();
-		for(String varName : matchers.keySet()){
-			Set<HAPDataTypeConverter> converters = HAPResourceUtility.getConverterResourceIdFromRelationship(matchers.get(varName).getRelationships());
-			for(HAPDataTypeConverter converter : converters){
-				out.add(new HAPResourceIdConverter(converter));
+		if(matchers!=null){
+			for(String varName : matchers.keySet()){
+				Set<HAPDataTypeConverter> converters = HAPResourceUtility.getConverterResourceIdFromRelationship(matchers.get(varName).getRelationships());
+				for(HAPDataTypeConverter converter : converters){
+					out.add(new HAPResourceIdConverter(converter));
+				}
 			}
 		}
 		

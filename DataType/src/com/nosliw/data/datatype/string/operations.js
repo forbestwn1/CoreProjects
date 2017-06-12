@@ -30,6 +30,14 @@ dataTypeDefition.localRequires = {
 
 
 //define operation
+dataTypeDefition.operations['subString'] = {
+		//defined operation
+		//in operation can access all the required resources by name through context
+		operation : function(parms, context){
+			context.logging.info("Operand Calcualting  ----------------");
+		}};
+
+//define operation
 dataTypeDefition.operations['length'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context
