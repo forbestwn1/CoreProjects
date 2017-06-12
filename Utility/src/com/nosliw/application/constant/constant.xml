@@ -588,6 +588,9 @@
 			<definition type="space"/>
 			<definition name="RUNTIME_LANGUAGE_JS" value="javascript"/>
 			<definition name="RUNTIME_ENVIRONMENT_RHINO" value="rhino"/>
+
+			<definition type="space"/>
+			<definition name="RUNTIME_LANGUAGE_JS_GATEWAY" value="runtime.gateway"/>
 	
 			<definition type="space"/>
 			<definition name="CATEGARY_NAME" value="CATEGARY_NAME"/>

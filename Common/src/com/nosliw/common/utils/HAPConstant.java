@@ -413,6 +413,10 @@ public class HAPConstant {
 
 
 
+		public static final String RUNTIME_LANGUAGE_JS_GATEWAY = "runtime.gateway";
+
+
+
 		public static final String CATEGARY_NAME = "CATEGARY_NAME";
 
 

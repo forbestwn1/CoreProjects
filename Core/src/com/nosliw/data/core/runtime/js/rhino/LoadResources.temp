@@ -3,6 +3,6 @@
 	var resourceService = nosliw.runtime.getResourceService();
 	resourceService.executeGetResourcesRequest(resourceIds, {
 		success : function(){
-			aaaa.resourcesLoaded();
+			aaaa.resourcesLoaded(||taskId||);
 		}
 	}, undefined);

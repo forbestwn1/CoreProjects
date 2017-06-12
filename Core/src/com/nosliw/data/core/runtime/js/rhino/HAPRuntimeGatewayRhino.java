@@ -1,9 +1,8 @@
 package com.nosliw.data.core.runtime.js.rhino;
 
-/**
- * this interface define all the call back method that invoked from runtime env (rhino) 
- */
-public interface HAPRuntimeCallBack {
+import com.nosliw.data.core.runtime.js.HAPRuntimeGatewayJS;
+
+public interface HAPRuntimeGatewayRhino extends HAPRuntimeGatewayJS{
 
 	/**
 	 * Callback method used to request to load resources into runtime env
@@ -17,6 +16,12 @@ public interface HAPRuntimeCallBack {
 	 * @param expressionId: expression id executed
 	 * @param result  the data result
 	 */
-	void returnResult(String expressionId, String result);
+	void expressionExecuteResult(String taskId, String result);
+	
+	/**
+	 * Call back method used when all the resources are loaded, so that can execute expression
+	 * @param taskId
+	 */
+	void resourcesLoaded(String taskId);
 	
 }

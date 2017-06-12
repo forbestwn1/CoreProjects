@@ -22,7 +22,7 @@ public abstract class HAPExpressionTaskRhino extends HAPExpressionTask{
 	public void resourceLoaded() {
 		//after resource loaded, execute expression
 		String script = HAPRuntimeJSScriptUtility.buildScriptForExecuteExpression(this);
-		this.m_rhinoRuntime.loadScript(script, this.getTaskId());
+		this.m_rhinoRuntime.loadTaskScript(script, this.getTaskId(), "execute");
 		
 	}
 
