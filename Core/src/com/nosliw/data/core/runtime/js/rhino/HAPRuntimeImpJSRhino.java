@@ -1,6 +1,5 @@
 package com.nosliw.data.core.runtime.js.rhino;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,15 +14,13 @@ import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.tools.debugger.Main;
 
 import com.nosliw.common.info.HAPInfoUtility;
-import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.runtime.HAPExpressionTask;
+import com.nosliw.data.core.runtime.HAPExecuteExpressionTask;
+import com.nosliw.data.core.runtime.HAPLoadResourcesTask;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
@@ -31,6 +28,7 @@ import com.nosliw.data.core.runtime.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPResourceDiscovery;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSLibraryId;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeImpJS;
@@ -59,20 +57,16 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	//for reate id
 	private int m_idIndex = 0;
 	
-	//store all the expression execution task
-	private Map<String, HAPExpressionTask> m_expressionTasks;
+	//store all the task, for instance, execute expression, load resources
+	private Map<String, HAPRuntimeTask> m_tasks;
 	
 	public HAPRuntimeImpJSRhino(){}
 	
 	public HAPRuntimeImpJSRhino(HAPResourceDiscovery resourceDiscovery, HAPResourceManager resourceMan){
 		this.m_resourceDiscovery = resourceDiscovery;
 		this.m_resourceManager = resourceMan;
-		this.m_expressionTasks = new LinkedHashMap<String, HAPExpressionTask>();
+		this.m_tasks = new LinkedHashMap<String, HAPRuntimeTask>();
 		this.m_taskScope = new LinkedHashMap<String, Scriptable>();
-	}
-
-	public void loadScriptFromFile(String fileName, Class cs){
-		this.loadScriptFromFile(fileName, m_context, m_scope, cs);
 	}
 
 	//gateway callback method
@@ -97,82 +91,57 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	//gateway callback method
 	@Override
 	public void expressionExecuteResult(String taskId, String result){
-		HAPExpressionTask expressionTask = this.m_expressionTasks.remove(taskId);
+		HAPRuntimeTask expressionTask = this.m_tasks.get(taskId);
 		HAPDataWrapper resultData = new HAPDataWrapper(result); 
-		expressionTask.setResult(resultData);
+		expressionTask.success(resultData);
 	}
 	
 	//gatewary callback method
 	@Override
 	public void resourcesLoaded(String taskId){
-		this.m_expressionTasks.get(taskId).resourceLoaded();
+		this.m_tasks.get(taskId).success(null);
 	}
 	
 	@Override
-	public void executeExpression(HAPExpressionTask expressionTask) {
+	public void executeExpressionTask(HAPExecuteExpressionTask expressionTask) {
+		//prepare expression id
+		expressionTask.setId(this.m_idIndex+++"");
+
 		HAPExpressionTaskRhino rhinoExpressionTask = (HAPExpressionTaskRhino)expressionTask;
 		rhinoExpressionTask.setRuntime(this);
 		
-		HAPExpression expression = rhinoExpressionTask.getExpression();
-		
-		//prepare expression id
-		String taskId = "Expression" + "__" + expression.getName() + "__" + this.m_idIndex++;
-		rhinoExpressionTask.setTaskId(taskId);
-
-		this.m_expressionTasks.put(taskId, rhinoExpressionTask);
+		this.m_tasks.put(expressionTask.getTaskId(), expressionTask);
 		
 		//init rhino runtime, init scope
-		Scriptable scope = this.initExecuteExpression(taskId);
+		Scriptable scope = this.initExecuteExpression(expressionTask.getTaskId());
 		
 		//prepare resources for expression in the runtime
 		//execute expression after load required resources
-		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(expression);
-		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("resourceIds", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(resourcesId, HAPSerializationFormat.JSON)));
-		templateParms.put("taskId", taskId);
-		templateParms.put("gatewayPath", HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY);
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeImpJSRhino.class, "LoadResources.temp");
-		String loadResourcesScript = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
-		this.loadTaskScript(loadResourcesScript, taskId, "loadResources");
-		
-		//find which resource is missing
-//		List<HAPResourceId> missedResourceId = this.findMissedResources(resourcesId);
-		
-		//load missed resources
-//		this.loadResources(missedResourceId, scope, this.m_context);
-		
-		//execute expression
-//		String script = HAPRuntimeJSScriptUtility.buildScriptForExecuteExpression(rhinoExpressionTask, variablesValue);
-//		this.loadScript(script, m_context, m_scope, taskId);
+		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(rhinoExpressionTask.getExpression());
+		HAPLoadResourcesTask loadResourcesTask = new HAPLoadResourcesTask(resourcesId){
+			@Override
+			protected void doSuccess() {
+				removeTask(this.getTaskId());
+			}
+		};
+		loadResourcesTask.setId(this.m_idIndex+++"");
+		loadResourcesTask.setParent(expressionTask);
+		this.m_tasks.put(loadResourcesTask.getTaskId(), loadResourcesTask);
+		this.executeLoadResources(loadResourcesTask);
 	}
 
+	public void removeTask(String taskId){
+		this.m_tasks.remove(taskId);
+	}
+	
+	private void executeLoadResources(HAPLoadResourcesTask loadResourcesTask){
+		HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildScriptForLoadResourceTask(loadResourcesTask);
+		this.loadTaskScript(scriptInfo, loadResourcesTask.getTaskId());
+	}
+	
 	private Scriptable initExecuteExpression(String taskId){
 		this.m_taskScope.put(taskId, this.m_scope);
 		return this.m_scope;
-	}
-	
-	private Scriptable getTaskScope(String taskId){  return this.m_taskScope.get(taskId);  }
-	
-	
-	private List<HAPResourceId> findMissedResources(List<HAPResourceId> resourcesId){
-		NativeObject nosliwObjJS = (NativeObject)this.m_scope.get("nosliw", this.m_scope);
-		NativeObject resourceManJS = (NativeObject)nosliwObjJS.get("resourceManager");
-		Function findMissingResourcesFunJS = (Function)resourceManJS.get("findMissingResources");
-		
-		List<ResourceIdJS> jsArgs = new ArrayList<ResourceIdJS>();
-		for(HAPResourceId resourceId : resourcesId){
-			jsArgs.add(new ResourceIdJS(resourceId.getType(), resourceId.getId()));
-		}
-		
-		List<HAPResourceId> out = new ArrayList<HAPResourceId>();
-		NativeArray missedArrayJS = (NativeArray)findMissingResourcesFunJS.call(this.m_context, this.m_scope, resourceManJS, new Object[]{jsArgs.toArray(new ResourceIdJS[0])});
-		for(Object o : missedArrayJS.getIds()){
-		    int index = (Integer) o;
-		    Object a = missedArrayJS.get(index);
-		    int missedIndex = Integer.valueOf(a.toString());
-			out.add(resourcesId.get(missedIndex));
-		}
-		return out;
 	}
 	
 	private void loadResources(List<HAPResourceInfo> resourcesIdInfo, Scriptable scope, Context context){
@@ -192,18 +161,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 			}
 		}
 		
-		for(HAPJSScriptInfo scriptInfo : scriptsInfo){
-			String file = scriptInfo.isFile(); 
-			if(HAPBasicUtility.isStringEmpty(file)){
-				//for script
-				this.m_sciprtTracker.addScript(scriptInfo.getScript());
-			}
-			else{
-				//for file
-				this.m_sciprtTracker.addFile(file);
-			}
-			HAPRhinoRuntimeUtility.loadScript(scriptInfo.getScript(), context, scope, scriptInfo.getName());
-		}
+		for(HAPJSScriptInfo scriptInfo : scriptsInfo)			this.loadScript(scriptInfo, context, scope);
 	}
 	
 	/**
@@ -251,27 +209,25 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	@Override
 	public HAPResourceDiscovery getResourceDiscovery() {		return this.m_resourceDiscovery;	}
 	
-	private String getTaskId(){return System.currentTimeMillis()+"";}
-	
-	public void loadTaskScript(String script, String taskId, String subTaskName){
-		HAPRhinoRuntimeUtility.loadScript(script, m_context, m_scope, taskId + "__" + subTaskName);
-	}
-	
-	private void loadScriptFromFile(String fileName, Context context, Scriptable scope, Class cs){
-		String script = HAPFileUtility.readFile(HAPFileUtility.getInputStreamOnClassPath(cs==null?this.getClass():cs, fileName));
-		this.m_sciprtTracker.addFile(HAPFileUtility.getFileNameOnClassPath(cs==null?getClass():cs, fileName));
-		HAPRhinoRuntimeUtility.loadScript(script, context, scope, fileName);
-	}
-	
-	class ResourceIdJS{
-		public String type;
-		public String id;
-		
-		public ResourceIdJS(String type, String id){
-			this.type = type;
-			this.id = id;
+	private void loadScript(HAPJSScriptInfo scriptInfo, Context context, Scriptable scope){
+		String file = scriptInfo.isFile(); 
+		if(HAPBasicUtility.isStringEmpty(file)){
+			//for script
+			this.m_sciprtTracker.addScript(scriptInfo.getScript());
 		}
+		else{
+			//for file
+			this.m_sciprtTracker.addFile(file);
+		}
+		HAPRhinoRuntimeUtility.loadScript(scriptInfo.getScript(), context, scope, scriptInfo.getName());
 	}
+	
+	public void loadScriptFromFile(String fileName, Class cs, Context context, Scriptable scope){
+		HAPJSScriptInfo scriptInfo = HAPJSScriptInfo.buildByFile(HAPFileUtility.getFileNameOnClassPath(cs, fileName), "File__" + fileName);
+		this.loadScript(scriptInfo, context==null?this.m_context:context, scope==null?this.m_scope:scope);
+	}
+
+	public void loadTaskScript(HAPJSScriptInfo scriptInfo, String taskId){		this.loadScript(scriptInfo, m_context, m_scope);	}
 	
 	@Override
 	public HAPRuntimeInfo getRuntimeInfo() {		return new HAPRuntimeInfo(HAPConstant.RUNTIME_LANGUAGE_JS, HAPConstant.RUNTIME_ENVIRONMENT_RHINO);	}
@@ -305,36 +261,23 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		    dbg.setScope(m_scope);
 		    dbg.setSize(1200, 800);
 		    dbg.setVisible(true);
-		    dbg.setExitAction(new ExitOnClose());	    
+		    dbg.setExitAction(new Runnable(){
+			    @Override
+			    public void run() {
+			      System.exit(0);
+			    }
+			  });	    
 
-//	        Object wrappedRuntime = Context.javaToJS(new HAPRuntimeImpJSRhino(null, null), this.m_scope);
-
-//	        Object wrappedRuntime = Context.javaToJS(this, this.m_scope);
-//	        ScriptableObject.putProperty(this.m_scope, "aaaa", wrappedRuntime);
-	        
 		    //set gateway object
 	        Object wrappedRuntime = Context.javaToJS(this, this.m_scope);
 	        NativeObject nosliwObj = (NativeObject)m_scope.get("nosliw", m_scope);
 	        Function createNodeFun = (Function)nosliwObj.get("createNode");
 	        createNodeFun.call(m_context, this.m_scope, nosliwObj, new Object[]{HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY, wrappedRuntime});
 		    
-		    
-	        this.loadScriptFromFile("init.js", m_context, m_scope, null);
-
-	        
-//	        global.defineProperty( "resourceService", this, ScriptableObject.CONST );	        
-	        
+	        this.loadScriptFromFile("init.js", HAPRuntimeImpJSRhino.class, m_context, m_scope);
 	    }
 	    catch(Exception e){
 	    	e.printStackTrace();
 	    }
 	}
-	
-	private static class ExitOnClose implements Runnable {
-	    @Override
-	    public void run() {
-	      System.exit(0);
-	    }
-	  }
-
 }

@@ -34,5 +34,4 @@ public class HAPRhinoRuntimeUtility {
 	    }
 	    return directory.getAbsolutePath();
 	}
-	
 }

@@ -16,7 +16,7 @@ public interface HAPRuntime {
 
 	HAPRuntimeInfo getRuntimeInfo();
 	
-	void executeExpression(HAPExpressionTask result);
+	void executeExpressionTask(HAPExecuteExpressionTask result);
 	
 	HAPResourceDiscovery getResourceDiscovery();
 	
