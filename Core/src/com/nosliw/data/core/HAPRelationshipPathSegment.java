@@ -40,7 +40,7 @@ public class HAPRelationshipPathSegment extends HAPSerializableImp{
 	
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){
-		String[] details = HAPNamingConversionUtility.parseDetails(literateValue);
+		String[] details = HAPNamingConversionUtility.parseLevel2(literateValue);
 		this.m_type = details[0];
 		this.m_id = details[1];
 		return true;
@@ -48,6 +48,6 @@ public class HAPRelationshipPathSegment extends HAPSerializableImp{
 	
 	@Override
 	protected String buildLiterate(){  
-		return HAPNamingConversionUtility.cascadeDetail(m_type, m_id);
+		return HAPNamingConversionUtility.cascadeLevel2(m_type, m_id);
 	}
 }

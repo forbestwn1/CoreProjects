@@ -6,7 +6,7 @@ var packageObj = library.getChildPackage("namingconvension");
 	var node_basicUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var basicUtility = function(){
+var node_namingConvensionUtility = function(){
 	
 	return {
 		cascadePath : function(path1, path2, normal){
@@ -52,7 +52,7 @@ var basicUtility = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("basicUtility", basicUtility); 
+packageObj.createNode("namingConvensionUtility", node_namingConvensionUtility); 
 
 var module = {
 	start : function(packageObj){

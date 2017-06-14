@@ -31,7 +31,7 @@ public interface HAPExpression {
 	public static String ERRORMSGS = "errorMsgs";
 
 	@HAPAttribute
-	public static String CONVERTERS = "converters";
+	public static String VARIABLESMATCHERS = "variablesMatchers";
 
 	@HAPAttribute
 	public static String REFERENCES = "references";

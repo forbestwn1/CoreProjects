@@ -1,10 +1,12 @@
 package com.nosliw.data.core;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 
 /**
  * This interface describe the related data type
  */
+@HAPEntityWithAttribute(baseName="DATATYPERELATIONSHIP")
 public interface HAPRelationship {
 
 	@HAPAttribute

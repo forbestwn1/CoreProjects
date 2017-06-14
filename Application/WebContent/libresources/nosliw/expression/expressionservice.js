@@ -12,118 +12,6 @@ var packageObj = library.getChildPackage("expressionservice");
 	var node_createServiceRequestInfoService;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_buildExecuteOperandRequest = function(operand, variables, handlers){
-	var out;
-	var operandType = operand.type;
-	switch(operandType){
-	case CONSTANT:
-		out = createServiceRequestInfoService(undefined, loc_calConstant, handlers);
-		break;
-	case VARIABLE: 
-		out = createServiceRequestInfoService(undefined, loc_calVariable, handlers);
-	    break;
-	case OPERATION:
-		out = loc_buildExecuteOperationOperandRequest(operand, variables, handlers);
-		break;
-	case REFERENCE:
-		out = expressionService.buildExecuteExpressionRequest(operand.expression, variables, handlers);
-		break;
-	}
-};
-
-var loc_buildExecuteOperationOperandRequest = function(operationOperand, variables, handlers, requestInfo){
-	var out = createServiceRequestInfoSequence();
-
-	//cal all parms data and base data
-	var parmsOperand = operationOperand.parms;
-	var baseOperand = operationOperand.baseOperand;
-	
-	var parmsData = {};
-	var baseData;
-	
-	var parmsOperandRequest = createServiceRequestInfoSequenceSet(undefined, {
-		success : function(data, requestInfo){
-			
-		}
-	});
-	_.each(parmsOperand, function(parmOperand, parmName, list){
-		var parmOperandRequest = loc_buildExecuteOperandRequest(parmOperand, variables, {
-			success : function(result, requestInfo){
-				parmsData[parmName] = result;
-			}
-		});
-		parmsOperandRequest.add(parmOperandRequest);
-	}, this);
-	
-	var baseOperandRequest = loc_buildExecuteOperandRequest(baseOperand, variables, {
-		success : function(result, requestInfo){
-			baseData = result;
-		}
-	});
-	parmsOperandRequest.add(baseOperandRequest);
-	out.addRequest(parmsOperandRequest);
-	
-	
-	//figure out operation and converter
-	var operationDiscoveryRequest = resourceManager.createOperationDiscoveryRequest(operationName, parms, baseData, {
-		success : function(operationDiscovery){
-			operationOperand.dataTypeId = operationDiscovery.dataTypeId;
-			for(var parmName in operationOperand.parmNames){
-				var parmConverters = operationOperand.parmsConverters[parmName];
-				for(var dataTypeId in parmVerters){
-					operationOperand.parmConverters[parmName][dataTypeId] = parmVerters[dataTypeId];
-				}
-			}
-		}
-	}, requestInfo);
-	out.addRequest(operationDiscoveryRequest);
-	
-	//prepare parm and base data
-	var operationParms = {};
-	var operationBaseData;
-	
-	var parmsConvertRequest = createServiceRequestInfoSequenceSet(undefined, {
-		success : function(data, requestInfo){
-			
-		}
-	});
-	_.each(parmsData, function(parmData, parmName, list){
-		var parmConvertRequest = loc_buildConvertTask(parmData, operationOperand.parmConverters[parmName], {
-			success : function(parmData, requestInfo){
-				operationParms[parmName] = parmData;
-			}
-		});
-		parmsConvertRequest.add(parmOperandRequest);
-	}, this);
-	out.addRequest(parmsConvertRequest);
-	
-	//cal operation
-	var operationRequest = loc_buildExecuteOperationRequest(operationOperand.dataTypeId, operationOperand.operation, operationParms, operationBaseData);
-	out.addRequest(operationRequest);
-	
-	return out;
-}
-
-var loc_buildExecuteOperationRequest = function(dataTypeId, operation, parms, requestInfo){
-	var operationId;
-	var resourceIds;
-	var resourceTask = resourceManager.createGetResourcesTask(resourceIds, {
-		success : function(resources, requestInfo){
-			var operation = resources[operationId];
-			var result = operation.operate(parms);
-			return result
-		}
-	});
-};	
-
-var loc_calConstant = function(requestInfo){
-	return operand.data;
-}
-
-var loc_calVariable = function(requestInfo){
-	return operand.data;
-}
-
 var node_createExpressionService = function(){
 	/**
 	 * Request for execute expression
@@ -135,70 +23,225 @@ var node_createExpressionService = function(){
 		var variablesInfo = expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_VARIABLES];
 		
 		//convert variables
-		var varsMatchRequest = node_createServiceRequestInfoSet();
+		var varsMatchers = expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_VARIABLESMATCHERS];
+		var varsMatchRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatcherVariable", {"variables":variables, "variablesMatchers":varsMatchers}), 
+				{			
+					success : function(reqInfo, setResult){
+						var matchedVars = {};
+						_.each(variables, function(varData, varName, list){
+							var matchedVar = setResult[varName];
+							if(matchedVar==undefined){
+								matchedVar = variables[varName];
+							}
+							matchedVars[varName] = matchedVar;
+						}, this);
+						out.setData("variables", matchedData);
+					}, 
+				}, 
+				out);
 		_.each(variables, function(varData, varName, list){
-			var request = loc_getMatchDataTaskRequest(varData, varsConverter[varName], {}, requestInfo);
+			var request = loc_getMatchDataTaskRequest(varData, varsMatchers[varName], {}, requestInfo);
 			varsMatchRequest.add(varName, request);
 		}, this);
 
-		varsMatchRequest.setRequestProcessors({
-			success : function(reqInfo, setResult){
-				var matchedVars = {};
-				var results = setResult.getResults();
-				_.each(results, function(result, varName, list){
-					matchedVars[varName] = result;
-				}, this);
-				reqInfo.setData("variables", matchedData);
-			}, 
-		});
 		out.addRequet(varsMatchRequest);
 		
 		//execute operand
-		var executeOperandRequest = loc_buildExecuteOperandRequest(expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_OPERAND], out.getData("variables"), {
-			success : function(operandResult, requestInfo){
+		var executeOperandRequest = loc_getExecuteOperandRequest(expression, expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_OPERAND], out.getData("variables"), {
+			success : function(requestInfo, operandResult){
 				return operandResult;
 			}
-		});
+		}, out);
 		out.addRequet(executeOperandRequest);
 		
 		return out;
 	};
 
-	//convert individual data to targetCriteria
-	var loc_getMatchDataTaskRequest = function(data, converters, targetCriteria, handlers, requester_parent){
+	//execute general operand
+	var loc_getExecuteOperandRequest = function(expression, operand, variables, handlers, requester_parent){
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
+
+		var out;
+		var operandType = operand[node_COMMONTRIBUTECONSTANT.OPERAND_TYPE];
+		switch(operandType){
+		case CONSTANT:
+			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteConstantOperand", {"operand":operand, "variables":variables}), 
+					function(requestInfo){  return requestInfo.service.operand[node_COMMONTRIBUTECONSTANT.OPERAND_DATA];  }, 
+					handlers, requestInfo);
+			break;
+		case VARIABLE: 
+			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteVariableOperand", {"operand":operand, "variables":variables}), 
+					function(requestInfo){  return requestInfo.service.variable[requestInfo.service.operand[node_COMMONTRIBUTECONSTANT.OPERAND_NAME]];  }, 
+					handlers, requestInfo);
+			out = node_createServiceRequestInfoService(undefined, loc_calVariable, handlers, requestInfo);
+		    break;
+		case OPERATION:
+			out = loc_getExecuteOperationOperandRequest(operand, variables, handlers, requestInfo);
+			break;
+		case REFERENCE:
+			out = loc_getExecuteExpressionRequest(expression, expression[node_COMMONTRIBUTECONSTANT.OPERAND_REFERENCES][operand[node_COMMONTRIBUTECONSTANT.OPERAND_REFERENCENAME]], variables, handlers, requestInfo);
+			break;
+		}
+	};
+
+	//execute operation operand
+	var loc_getExecuteOperationOperandRequest = function(operationOperand, variables, handlers, requester_parent){
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
+		
+		var out = createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteOperationOperand", {"operationOperand":operationOperand, "variables":variables}), handlers, requestInfo);
+
+		//cal all parms data and base data
+		var parmsOperand = operationOperand.parms;
+		var baseOperand = operationOperand.baseOperand;
+		
+		var parmsData = {};
+		var parmsOperandRequest = createServiceRequestInfoSequenceSet(new node_ServiceInfo("CalOperationParms", {"parms":parmsOperand}), {
+			success : function(requestInfo, setResult){
+				parmsData = setResult;
+			}
+		});
+		_.each(parmsOperand, function(parmOperand, parmName, list){
+			var parmOperandRequest = loc_getExecuteOperandRequest(parmOperand, variables, {}, parmsOperandRequest);
+			parmsOperandRequest.add(parmName, parmOperandRequest);
+		}, this);
+		out.addRequest(parmsOperandRequest);
+		
+		var baseData;
+		var baseOperandRequest = loc_buildExecuteOperandRequest(baseOperand, variables, {
+			success : function(result, requestInfo){
+				baseData = result;
+			}
+		});
+		out.addRequest(baseOperandRequest);
+		
+		//match parms and base
+		var matchedParms;
+		var parmsMatcherRequest = createServiceRequestInfoSequenceSet(new node_ServiceInfo("MatchOperationParms", {"parmsData":parmsData, "matchers":operationOperand.parmMatchers}), {
+			success : function(requestInfo, setResult){
+				matchedParms = setResult;
+			}
+		});
+		_.each(operationOperand.parmsMatchers, function(parmMatchers, parmName, list){
+			var parmMatchRequest = loc_getMatchDataTaskRequest(parmsData[parmName], parmMatchers, {}, parmsMatcherRequest);
+			parmsMatcherRequest.add(parmName, parmMatchRequest);
+		}, this);
+		out.addRequest(parmsMatcherRequest);
+		
+		var matchedBase;
+		var parmMatchRequest = loc_getMatchDataTaskRequest(baseData, operationOperand.baseMatchers, {
+			success : function(requestInfo, data){
+				matchedBase = data;
+			}
+		}, out);
+		out.addRequest(parmMatchRequest);
+		
+		//execute data operation
+		var executeOperationRequest = loc_getExecuteOperationRequest(operationOperand.dataTypeId, operationOperand.operandName, matchedParms, matchedBase, {
+			success : function(requestInfo, data){
+				return data;
+			}
+		}, out);
+		out.addRequest(executeOperationRequest);
+		
+		return out;
+	}
+
+	//execute data operation
+	var loc_getExecuteOperationRequest = function(dataTypeId, operation, parms, handlers, requestInfo){
+		var dataOperationId;
+		var loadResourceRequest = nosliw.getResourceService().getGetResourcesRequest([dataOperationId], {
+			success : function(requestInfo, resources){
+				var dataOperationResource = resources[dataOperationId];
+				var dataOperationFun = dataOperationResource.resourceData;
+				
+				//build operation context
+				var operationContext = {
+					resources : resources,
+					data : {},
+				};
+				var dependencys = dataOperationResource.dependency;
+				_.each(dependencys, function(dependency, index, list){
+					var aliases;
+					var dependencyResource;
+					_.each(aliases, function(alias, index, list){
+						operationContext.data[alias] = dependencyResource.resourceData;
+					}, this);
+				}, this);
+				
+				var converterResult = dataOperationFun.call(base, parms, operationContext);
+				return converterResult;
+			}
+		}, requestInfo);
+		
+		return out;
+	};	
+
+
+	
+	//convert individual data according to matchers
+	var loc_getMatchDataTaskRequest = function(data, matchers, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 
 		var dataType = data[node_COMMONTRIBUTECONSTANT.DATA_DATATYPEID];
-		var converter = converters[dataType];
+		var matcher = matchers[dataType];
 		
 		if(converter==undefined){
 			//if converter does not created, then get it
 		}
 		else{
-			//otherwise, use converter
-			var out = node_createServiceRequestInfoService(null, handlers, requestInfo);
-			
-			var converterId = new node_ResourceId();
-			var resourceTask = nosliw.runtime.getResourceService().createGetResourcesTask([converterId], {
-				success : function(requestInfo, resources){
-					var input = data;
-					for(var i in converterIds){
-						var converterId = converterIds[i];
-						var resource = resources[converterId];
-						input = resource.data[input];
-					}
-					return input;
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("MatchData", {"data":data, "matcher":matcher}), handlers, requestInfo);
+			var matcherSegments = matcher[node_COMMONTRIBUTECONSTANT.DATATYPERELATIONSHIP_PATH];
+			var sourceId = matcher[node_COMMONTRIBUTECONSTANT.DATATYPERELATIONSHIP_SOURCE];
+
+			var converters = [];
+			for(var i=0; i<matcherSegments.length; i++){
+				var sourceId = node_namingConvensionUtility.parseLevel2(matcherSegments[i])[1];
+				var targetId;
+				if(i<matcherSegments.length-1){
+					targetId = node_namingConvensionUtility.parseLevel2(matcherSegments[i+1])[1];
 				}
-			}, requestInfo);
+				else{
+					targetId = matcher[node_COMMONTRIBUTECONSTANT.DATATYPERELATIONSHIP_TARGET];
+				}
+				converters.push({
+					sourceConverter : "converter;"+sourceId+"from",
+					targetId : targetId,
+				});
+			}
 			
-			out.setDependentService(resourceTask);
+			var converterData = data;
+			for(var i=0; i<converters.length; i++){
+				var converterRequest = loc_getExecuteConverterRequest(converterData, converters[i].sourceConverter, converters[i].targetId, {
+					success : function(requestInfo, convertedData){
+						converterData = convertedData;
+					}
+				}, out);
+				out.addRequest(converterRequest);
+			}
+
+			out.setRequestProcessors({
+				success : function(reqInfo, result){
+					return converterData;
+				}, 
+			});
 			return out;
 		}
-		
-		return resourceManager.createGetResourcesTask();
 	};
 
-
+	//execute conterter
+	var loc_getExecuteConverterRequest = function(data, converterId, targetId, handlers, requester_parent){
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
+		var out = node_createServiceRequestInfoService(new node_ServiceInfo("ExecuteConverter", {"converterId":converterId, "targetId":targetId}), handlers, requetInfo);
+		var loadResourceRequest = nosliw.getResourceService().getGetResourcesRequest([converterId], {
+			success : function(requestInfo, resources){
+				var converterFun = resources[converterId].resourceData;
+				var converterResult = converterFun.call(data, targetId);
+				return converterResult;
+			}
+		}, requestInfo);
+		out.setDependentService(loadResourceRequest);
+		return out;
+	}
 	
 	var loc_out = {
 		getExecuteExpressionRequest : function(expression, variables, handlers, requester_parent){
