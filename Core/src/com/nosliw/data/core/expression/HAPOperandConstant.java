@@ -2,6 +2,7 @@ package com.nosliw.data.core.expression;
 
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
@@ -13,8 +14,10 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
 
 public class HAPOperandConstant extends HAPOperandImp{
 
+	@HAPAttribute
 	public final static String NAME = "name"; 
 
+	@HAPAttribute
 	public final static String DATA = "data"; 
 	
 	protected HAPData m_data;

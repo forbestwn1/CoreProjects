@@ -3,13 +3,15 @@ var packageObj = library.getChildPackage("expressionservice");
 
 (function(packageObj){
 	//get used node
-	var node_requestProcessor;
+	var node_requestServiceProcessor;
 	var node_buildServiceProvider;
 	var node_COMMONTRIBUTECONSTANT;
+	var node_COMMONCONSTANT;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
 	var node_createServiceRequestInfoSet;
 	var node_createServiceRequestInfoService;
+	var node_createServiceRequestInfoSimple;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createExpressionService = function(){
@@ -35,7 +37,7 @@ var node_createExpressionService = function(){
 							}
 							matchedVars[varName] = matchedVar;
 						}, this);
-						out.setData("variables", matchedData);
+						out.setData("variables", matchedVars);
 					}, 
 				}, 
 				out);
@@ -44,7 +46,7 @@ var node_createExpressionService = function(){
 			varsMatchRequest.add(varName, request);
 		}, this);
 
-		out.addRequet(varsMatchRequest);
+		out.addRequest(varsMatchRequest);
 		
 		//execute operand
 		var executeOperandRequest = loc_getExecuteOperandRequest(expression, expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_OPERAND], out.getData("variables"), {
@@ -52,7 +54,7 @@ var node_createExpressionService = function(){
 				return operandResult;
 			}
 		}, out);
-		out.addRequet(executeOperandRequest);
+		out.addRequest(executeOperandRequest);
 		
 		return out;
 	};
@@ -64,59 +66,62 @@ var node_createExpressionService = function(){
 		var out;
 		var operandType = operand[node_COMMONTRIBUTECONSTANT.OPERAND_TYPE];
 		switch(operandType){
-		case CONSTANT:
+		case node_COMMONCONSTANT.EXPRESSION_OPERAND_CONSTANT:
 			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteConstantOperand", {"operand":operand, "variables":variables}), 
 					function(requestInfo){  return requestInfo.service.operand[node_COMMONTRIBUTECONSTANT.OPERAND_DATA];  }, 
 					handlers, requestInfo);
 			break;
-		case VARIABLE: 
+		case node_COMMONCONSTANT.EXPRESSION_OPERAND_VARIABLE: 
 			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteVariableOperand", {"operand":operand, "variables":variables}), 
 					function(requestInfo){  return requestInfo.service.variable[requestInfo.service.operand[node_COMMONTRIBUTECONSTANT.OPERAND_NAME]];  }, 
 					handlers, requestInfo);
 			out = node_createServiceRequestInfoService(undefined, loc_calVariable, handlers, requestInfo);
 		    break;
-		case OPERATION:
-			out = loc_getExecuteOperationOperandRequest(operand, variables, handlers, requestInfo);
+		case node_COMMONCONSTANT.EXPRESSION_OPERAND_OPERATION:
+			out = loc_getExecuteOperationOperandRequest(expression, operand, variables, handlers, requestInfo);
 			break;
-		case REFERENCE:
+		case node_COMMONCONSTANT.EXPRESSION_OPERAND_REFERENCE:
 			out = loc_getExecuteExpressionRequest(expression, expression[node_COMMONTRIBUTECONSTANT.OPERAND_REFERENCES][operand[node_COMMONTRIBUTECONSTANT.OPERAND_REFERENCENAME]], variables, handlers, requestInfo);
 			break;
 		}
+		return out;
 	};
 
 	//execute operation operand
-	var loc_getExecuteOperationOperandRequest = function(operationOperand, variables, handlers, requester_parent){
+	var loc_getExecuteOperationOperandRequest = function(expression, operationOperand, variables, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		
-		var out = createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteOperationOperand", {"operationOperand":operationOperand, "variables":variables}), handlers, requestInfo);
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteOperationOperand", {"operationOperand":operationOperand, "variables":variables}), handlers, requestInfo);
 
 		//cal all parms data and base data
-		var parmsOperand = operationOperand.parms;
-		var baseOperand = operationOperand.baseOperand;
-		
+		var parmsOperand = operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_PAMRS];
+		var baseOperand = operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_BASEDATA];
 		var parmsData = {};
-		var parmsOperandRequest = createServiceRequestInfoSequenceSet(new node_ServiceInfo("CalOperationParms", {"parms":parmsOperand}), {
+		var baseData;
+		
+		var parmsOperandRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("CalOperationParms", {"parms":parmsOperand}), {
 			success : function(requestInfo, setResult){
 				parmsData = setResult;
 			}
 		});
 		_.each(parmsOperand, function(parmOperand, parmName, list){
-			var parmOperandRequest = loc_getExecuteOperandRequest(parmOperand, variables, {}, parmsOperandRequest);
-			parmsOperandRequest.add(parmName, parmOperandRequest);
+			var parmOperandRequest = loc_getExecuteOperandRequest(expression, parmOperand, variables, {}, parmsOperandRequest);
+			parmsOperandRequest.addRequest(parmName, parmOperandRequest);
 		}, this);
 		out.addRequest(parmsOperandRequest);
 		
-		var baseData;
-		var baseOperandRequest = loc_buildExecuteOperandRequest(baseOperand, variables, {
-			success : function(result, requestInfo){
-				baseData = result;
-			}
-		});
-		out.addRequest(baseOperandRequest);
+		if(baseOperand!=undefined){
+			var baseOperandRequest = loc_getExecuteOperandRequest(baseOperand, variables, {
+				success : function(result, requestInfo){
+					baseData = result;
+				}
+			});
+			out.addRequest(baseOperandRequest);
+		}
 		
 		//match parms and base
 		var matchedParms;
-		var parmsMatcherRequest = createServiceRequestInfoSequenceSet(new node_ServiceInfo("MatchOperationParms", {"parmsData":parmsData, "matchers":operationOperand.parmMatchers}), {
+		var parmsMatcherRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatchOperationParms", {"parmsData":parmsData, "matchers":operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_MATCHERSPARMS]}), {
 			success : function(requestInfo, setResult){
 				matchedParms = setResult;
 			}
@@ -128,15 +133,17 @@ var node_createExpressionService = function(){
 		out.addRequest(parmsMatcherRequest);
 		
 		var matchedBase;
-		var parmMatchRequest = loc_getMatchDataTaskRequest(baseData, operationOperand.baseMatchers, {
-			success : function(requestInfo, data){
-				matchedBase = data;
-			}
-		}, out);
-		out.addRequest(parmMatchRequest);
+		if(baseData!=undefined){
+			var parmMatchRequest = loc_getMatchDataTaskRequest(baseData, operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_MATCHERSBASE], {
+				success : function(requestInfo, data){
+					matchedBase = data;
+				}
+			}, out);
+			out.addRequest(parmMatchRequest);
+		}
 		
 		//execute data operation
-		var executeOperationRequest = loc_getExecuteOperationRequest(operationOperand.dataTypeId, operationOperand.operandName, matchedParms, matchedBase, {
+		var executeOperationRequest = loc_getExecuteOperationRequest(operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_DATATYPEID], operationOperand.operandName, matchedParms, matchedBase, {
 			success : function(requestInfo, data){
 				return data;
 			}
@@ -149,7 +156,7 @@ var node_createExpressionService = function(){
 	//execute data operation
 	var loc_getExecuteOperationRequest = function(dataTypeId, operation, parms, handlers, requestInfo){
 		var dataOperationId;
-		var loadResourceRequest = nosliw.getResourceService().getGetResourcesRequest([dataOperationId], {
+		var loadResourceRequest = nosliw.runtime.getResourceService().getGetResourcesRequest([dataOperationId], {
 			success : function(requestInfo, resources){
 				var dataOperationResource = resources[dataOperationId];
 				var dataOperationFun = dataOperationResource.resourceData;
@@ -249,7 +256,7 @@ var node_createExpressionService = function(){
 		},
 			
 		executeExecuteExpressionRequest : function(expression, variables, handlers, requestInfo){
-			var requestInfo = this.getExecuteExpressionRequest(resourceIds, handlers, requestInfo);
+			var requestInfo = this.getExecuteExpressionRequest(expression, variables, handlers, requestInfo);
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		}
 	};
@@ -267,12 +274,14 @@ packageObj.createNode("createExpressionService", node_createExpressionService);
 	var module = {
 		start : function(packageObj){
 			node_buildServiceProvider = packageObj.getNodeData("request.buildServiceProvider");
-			node_requestProcessor = packageObj.getNodeData("request.requestServiceProcessor");
+			node_requestServiceProcessor = packageObj.getNodeData("request.requestServiceProcessor");
+			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
 			node_COMMONTRIBUTECONSTANT = packageObj.getNodeData("constant.COMMONTRIBUTECONSTANT");
 			node_createServiceRequestInfoSequence = packageObj.getNodeData("request.request.createServiceRequestInfoSequence");
 			node_ServiceInfo = packageObj.getNodeData("common.service.ServiceInfo");
 			node_createServiceRequestInfoSet = packageObj.getNodeData("request.request.createServiceRequestInfoSet");
 			node_createServiceRequestInfoService = packageObj.getNodeData("request.request.createServiceRequestInfoService");
+			node_createServiceRequestInfoSimple = packageObj.getNodeData("request.request.createServiceRequestInfoSimple");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

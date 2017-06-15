@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
@@ -12,7 +13,8 @@ import com.nosliw.data.core.runtime.HAPResourceUtility;
 
 public class HAPOperandReference extends HAPOperandImp{
 
-	public static final String EXPRESSIONNAME = "expressionName";
+	@HAPAttribute
+	public static final String REFERENCENAME = "referenceName";
 	
 	private String m_expressionReference;
 	
@@ -41,13 +43,13 @@ public class HAPOperandReference extends HAPOperandImp{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(EXPRESSIONNAME, m_expressionReference);
+		jsonMap.put(REFERENCENAME, m_expressionReference);
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(EXPRESSIONNAME, m_expressionReference);
+		jsonMap.put(REFERENCENAME, m_expressionReference);
 	}
 
 	@Override

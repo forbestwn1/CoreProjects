@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
@@ -16,21 +17,30 @@ import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
-import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
 
 public class HAPOperandOperation extends HAPOperandImp{
 
-	public static final String DATATYPE = "dataType";
+	@HAPAttribute
+	public static final String DATATYPEID = "dataTypeId";
 	
-	public static final String BASEDATA = "baseData";
-	
+	@HAPAttribute
 	public static final String OPERATION = "operation";
 	
+	@HAPAttribute
+	public static final String BASE = "base";
+
+	@HAPAttribute
+	public static final String MATCHERSBASE = "matchersBase";
+
+	@HAPAttribute
 	public static final String PARMS = "parms";
 	
+	@HAPAttribute
+	public static final String MATCHERSPARMS = "matchersParms";
+
 	//the data type operation defined on
 	protected HAPDataTypeId m_dataTypeId;
 	
@@ -44,7 +54,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 	//operation parms
 	protected Map<String, HAPOperand> m_parms;
 
-	private Map<String, HAPMatchers> m_parmMatchers;
+	private Map<String, HAPMatchers> m_parmsMatchers;
 	
 	public HAPOperandOperation(HAPOperand base, String operation, Map<String, HAPOperand> parms){
 		super(HAPConstant.EXPRESSION_OPERAND_OPERATION);
@@ -96,8 +106,8 @@ public class HAPOperandOperation extends HAPOperandImp{
 	@Override
 	public Set<HAPDataTypeConverter> getConverters(){
 		Set<HAPDataTypeConverter> out = new HashSet<HAPDataTypeConverter>();
-		for(String parm : this.m_parmMatchers.keySet()){
-			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(this.m_parmMatchers.get(parm).getRelationships()));
+		for(String parm : this.m_parmsMatchers.keySet()){
+			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(this.m_parmsMatchers.get(parm).getRelationships()));
 		}
 		
 		if(this.m_baseMatchers!=null){
@@ -108,34 +118,23 @@ public class HAPOperandOperation extends HAPOperandImp{
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(OPERATION, this.m_operation);
-		jsonMap.put(DATATYPE, HAPSerializeManager.getInstance().toStringValue(this.m_dataTypeId, HAPSerializationFormat.LITERATE));
-		jsonMap.put(BASEDATA, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON_FULL));
-		
-		Map<String, String> parmsJsonMap = new LinkedHashMap<String, String>();
-		for(String parmName : this.m_parms.keySet()){
-			parmsJsonMap.put(parmName, HAPSerializeManager.getInstance().toStringValue(this.m_parms.get(parmName), HAPSerializationFormat.JSON_FULL));
-		}
-		jsonMap.put(PARMS, HAPJsonUtility.buildMapJson(parmsJsonMap));
+		this.buildJsonMap(jsonMap, typeJsonMap);
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(OPERATION, this.m_operation);
-		jsonMap.put(DATATYPE, HAPSerializeManager.getInstance().toStringValue(this.m_dataTypeId, HAPSerializationFormat.LITERATE));
-		jsonMap.put(BASEDATA, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON));
+		jsonMap.put(DATATYPEID, HAPSerializeManager.getInstance().toStringValue(this.m_dataTypeId, HAPSerializationFormat.LITERATE));
+		jsonMap.put(BASE, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON));
+		jsonMap.put(MATCHERSBASE, HAPSerializeManager.getInstance().toStringValue(this.m_baseMatchers, HAPSerializationFormat.JSON));
 		
-		Map<String, String> parmsJsonMap = new LinkedHashMap<String, String>();
-		for(String parmName : this.m_parms.keySet()){
-			parmsJsonMap.put(parmName, HAPSerializeManager.getInstance().toStringValue(this.m_parms.get(parmName), HAPSerializationFormat.JSON));
-		}
-		jsonMap.put(PARMS, HAPJsonUtility.buildMapJson(parmsJsonMap));
+		jsonMap.put(PARMS, HAPJsonUtility.buildJson(this.m_parms, HAPSerializationFormat.JSON));
+		jsonMap.put(MATCHERSPARMS, HAPJsonUtility.buildJson(this.m_parmsMatchers, HAPSerializationFormat.JSON));
 	}
 
 	private void resetMatchers(){
-		this.m_parmMatchers = new LinkedHashMap<String,HAPMatchers>();
+		this.m_parmsMatchers = new LinkedHashMap<String,HAPMatchers>();
 		this.m_baseMatchers = null;
 	}
 	
@@ -173,7 +172,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 					//loose input criteria
 					HAPMatchers converter = parmDataType.discover(variablesInfo, parmCriteria, context, dataTypeHelper);
 					if(converter!=null){
-						this.m_parmMatchers.put(parm, converter);
+						this.m_parmsMatchers.put(parm, converter);
 					}
 				}
 			}

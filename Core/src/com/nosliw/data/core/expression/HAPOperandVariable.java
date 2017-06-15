@@ -2,12 +2,14 @@ package com.nosliw.data.core.expression;
 
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public class HAPOperandVariable extends HAPOperandImp{
 
+	@HAPAttribute
 	public final static String VARIABLENAME = "variableName";
 	
 	protected String m_variableName;
