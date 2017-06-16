@@ -62,7 +62,7 @@ public class HAPRuntimeRhinoMain {
 			runtime.executeExpressionTask(new HAPExpressionTaskRhino(expression, null){
 				@Override
 				public void doSuccess() {
-					System.out.println("Expression Result : " + this.getResult());
+					System.out.println("Expression Result : " + getResult());
 				}
 			});
 		}

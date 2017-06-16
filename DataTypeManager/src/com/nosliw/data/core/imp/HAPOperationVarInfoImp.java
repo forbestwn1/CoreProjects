@@ -27,6 +27,8 @@ public class HAPOperationVarInfoImp extends HAPStringableValueEntityWithID imple
 	@Override
 	public String getName() {		return this.getAtomicAncestorValueString(NAME);	}
 
+	public void setName(String name){  this.updateAtomicChildStrValue(NAME, name);  }
+	
 	@Override
 	public String getDescription() {		return this.getAtomicAncestorValueString(DESCRIPTION);  }
 
@@ -41,6 +43,8 @@ public class HAPOperationVarInfoImp extends HAPStringableValueEntityWithID imple
 		return this.m_criteria;
 	}
 
+	public void setCriteria(HAPDataTypeCriteria criteria){  this.m_criteria = criteria;  }
+	
 	public String getDataTypeId() {		return this.getAtomicAncestorValueString(DATATYPEID);	}
 	public String getOperationId() {		return this.getAtomicAncestorValueString(OPERATIONID);	}
 	public String getType() {		return this.getAtomicAncestorValueString(TYPE);	}

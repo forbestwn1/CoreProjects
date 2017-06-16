@@ -310,6 +310,8 @@
 			<definition name="DATAOPERATION_COMPARE" value="compare"/>
 			<definition name="DATAOPERATION_PARSELITERAL" value="parseLiteral"/>
 			<definition type="space"/>
+			<definition name="DATAOPERATION_PARM_BASENAME" value="ABCDEFGHIJKLMN"/>
+			<definition type="space"/>
 			<definition name="DATAOPERATION_TYPE_NORMAL" value="normal" description="Called by user, inheritable, normal operation"/>
 			<definition name="DATAOPERATION_TYPE_NEW" value="new" description="Call by user, not inheritable, build data"/>
 			<definition name="DATAOPERATION_TYPE_CONVERTTO" value="convertTo" description="Called by system, not inheritable, convert to different data type"/>

@@ -15,7 +15,7 @@
 
 		<operation name="length" >
 			<parms>
-				<parm name="" isBase="true"/>
+				<parm isBase="true"/>
 			</parms>
 			<output criteria="base.integer"/>
 		</operation>

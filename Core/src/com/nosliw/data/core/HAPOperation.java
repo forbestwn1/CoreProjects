@@ -1,6 +1,6 @@
 package com.nosliw.data.core;
 
-import java.util.Map;
+import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -39,7 +39,7 @@ public interface HAPOperation {
 	
 	HAPInfo getInfo();
 	
-	Map<String, HAPOperationParmInfo> getParmsInfo();
+	List<HAPOperationParmInfo> getParmsInfo();
 	
 	HAPOperationOutInfo getOutputInfo();
 	

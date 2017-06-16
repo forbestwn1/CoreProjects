@@ -2,6 +2,7 @@ package com.nosliw.data.core.expression;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -153,7 +154,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 		//define seperate one, do not work on original one
 		HAPDataTypeId dataTypeId = this.m_dataTypeId;
 		
-		//try to get operation data type
+		//try to get operation data type according to base 
 		if(dataTypeId==null && this.m_base!=null){
 			//if data type is not determined, then use trunk data type of base data type if it has any
 			HAPDataTypeCriteria baseDataTypeCriteria = this.m_base.getOutputCriteria();
@@ -164,7 +165,13 @@ public class HAPOperandOperation extends HAPOperandImp{
 			this.m_dataTypeId = dataTypeId;
 			//discover parms by operation definition
 			HAPDataTypeOperation dataTypeOperation = dataTypeHelper.getOperationInfoByName(dataTypeId, m_operation);
-			Map<String, HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
+			List<HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
+			for(HAPOperationParmInfo parmInfo : parmsInfo){
+				
+				
+				
+			}
+			
 			for(String parm: this.m_parms.keySet()){
 				HAPOperand parmDataType = this.m_parms.get(parm);
 				if(parmDataType!=null){

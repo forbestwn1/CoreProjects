@@ -73,6 +73,10 @@ public class HAPConstant {
 
 
 
+		public static final String DATAOPERATION_PARM_BASENAME = "ABCDEFGHIJKLMN";
+
+
+
 		public static final String DATAOPERATION_TYPE_NORMAL = "normal";
 		public static final String DATAOPERATION_TYPE_NEW = "new";
 		public static final String DATAOPERATION_TYPE_CONVERTTO = "convertTo";

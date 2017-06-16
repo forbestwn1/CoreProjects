@@ -17,8 +17,10 @@ import com.nosliw.data.core.HAPDataTypePicture;
 import com.nosliw.data.core.HAPDataTypeProvider;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.HAPOperation;
+import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.HAPRelationshipPathSegment;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
 import com.nosliw.data.core.imp.HAPDataTypeImp;
 import com.nosliw.data.core.imp.HAPDataTypeImpLoad;
 import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
@@ -161,7 +163,23 @@ public class HAPDataTypeImporterManager {
 		}
 		
 		for(HAPOperation op : ops){
-			m_dbAccess.saveOperation((HAPOperationImp)op, dataType);
+			//set default value if missing
+			HAPOperationImp opImp = (HAPOperationImp)op;
+			List<HAPOperationParmInfo> parmsInfo = opImp.getParmsInfo();
+			for(HAPOperationParmInfo p : parmsInfo){
+				HAPOperationVarInfoImp parmInfo = (HAPOperationVarInfoImp)p;
+				//set default name for base parm if no name is provided
+				if(parmInfo.getIsBase() && HAPBasicUtility.isStringEmpty(parmInfo.getName())){
+					parmInfo.setName(HAPConstant.DATAOPERATION_PARM_BASENAME);
+				}
+				
+				//set default criteria as current data type
+				if(parmInfo.getCriteria()==null){
+					parmInfo.setCriteria(new HAPDataTypeCriteriaElementId(dataType.getName()));
+				}
+			}
+			
+			m_dbAccess.saveOperation(opImp, dataType);
 		}
 	}
 

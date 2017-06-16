@@ -21,7 +21,7 @@
 
 	<property name="output" reference="data.operationvar" description=""/>
 
-	<property name="parms" type="map" key="name" description="" elementTag="parm">
+	<property name="parms" type="list" description="" elementTag="parm">
 		<child reference="data.operationvar"/>
 	</property>
 

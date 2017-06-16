@@ -88,9 +88,9 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		operation.updateAtomicChildObjectValue(HAPOperationImp.DATATYPNAME, dataType.getName());
 		this.saveEntity(operation);
 		
-		Map<String, HAPOperationParmInfo> parms = operation.getParmsInfo();
-		for(String name : parms.keySet()){
-			HAPOperationVarInfoImp parm = (HAPOperationVarInfoImp)parms.get(name);
+		List<HAPOperationParmInfo> parms = operation.getParmsInfo();
+		for(HAPOperationParmInfo p : parms){
+			HAPOperationVarInfoImp parm = (HAPOperationVarInfoImp)p;
 			parm.setType(HAPConstant.DATAOPERATION_VAR_TYPE_IN);
 			parm.updateAtomicChildStrValue(HAPOperationVarInfoImp.OPERATIONID, operation.getId());
 			parm.updateAtomicChildObjectValue(HAPOperationVarInfoImp.DATATYPEID, dataType.getName());
