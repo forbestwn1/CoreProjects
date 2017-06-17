@@ -25,7 +25,8 @@ var node_createResourceManager = function(){
 		/**
 		 * Add resource to resourc manager 
 		 */
-		addResource : function(resourceId, resourceData, info){
+		addResource : function(resourceInfo, resourceData, info){
+			var resourceId = resourceInfo.id;
 			var typeResources = loc_resources[resourceId.type];
 			if(typeResources==undefined){
 				typeResources = {};

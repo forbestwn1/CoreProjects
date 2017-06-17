@@ -96,7 +96,7 @@
 
 
 	<attributes filepath="{{projectsPath}}/ExpressionParser/src/com/nosliw/data/expression/utils" 
-				packagename="com.nosliw.expression.utils" 
+				packagename="com.nosliw.data.expression.utils" 
 				classname="HAPAttributeConstant" >
 		<definitions>
 			<definition name="OPERAND_TYPE" value="type"/>

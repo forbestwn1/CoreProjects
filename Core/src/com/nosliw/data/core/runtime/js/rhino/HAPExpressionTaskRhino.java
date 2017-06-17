@@ -20,7 +20,7 @@ public abstract class HAPExpressionTaskRhino extends HAPExecuteExpressionTask{
 	@Override
 	protected void childSuccess(HAPRuntimeTask childTask){	
 		//after resource loaded, execute expression
-		HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildScriptForExecuteExpressionTask(this);
+		HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForExecuteExpressionTask(this);
 		this.m_rhinoRuntime.loadTaskScript(scriptInfo, this.getTaskId());
 		this.m_rhinoRuntime.removeTask(this.getTaskId());
 	}

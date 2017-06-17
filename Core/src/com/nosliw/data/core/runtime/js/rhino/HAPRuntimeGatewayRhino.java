@@ -10,6 +10,7 @@ public interface HAPRuntimeGatewayRhino extends HAPRuntimeGatewayJS{
 	 * @param callBackFunction
 	 */
 	void loadResources(Object resources, Object callBackFunction);
+
 	
 	/**
 	 * Callback method used to return expression result to runtime env

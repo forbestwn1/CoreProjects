@@ -4,13 +4,13 @@ import java.util.List;
 
 public abstract class HAPLoadResourcesTask extends HAPRuntimeTask{
 
-	private List<HAPResourceId> m_resourcesId;
+	private List<HAPResourceInfo> m_resourcesInfo;
 	
-	public HAPLoadResourcesTask(List<HAPResourceId> resourcesId){
-		this.m_resourcesId = resourcesId;
+	public HAPLoadResourcesTask(List<HAPResourceInfo> resourcesInfo){
+		this.m_resourcesInfo = resourcesInfo;
 	}
 	
-	public List<HAPResourceId> getResourcesId(){		return this.m_resourcesId;	}
+	public List<HAPResourceInfo> getResourcesInfo(){		return this.m_resourcesInfo;	}
 	
 	@Override
 	public String getTaskType(){  return "LoadResources"; }

@@ -92,3 +92,5 @@ n
 >src/com/nosliw/data/core/imp/runtime/js/rhino/loadResource1.js,f\b\fba93e2e94d71dbc8bd7517bd9ebb9d39ec42cca
 Å
 Qsrc/com/nosliw/data/core/imp/runtime/js/valueinfo.data.js.resource.dependency.xml,d\5\d500d44cc71fb87c617d72f965c7c51087c9c0bf
+m
+=src/com/nosliw/data/core/imp/valueinfo.data.operationinfo.xml,9\b\9b3152dc1c9218dbd11992f05ecef4a7fda1e087

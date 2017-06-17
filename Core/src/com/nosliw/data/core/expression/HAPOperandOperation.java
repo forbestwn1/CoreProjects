@@ -19,7 +19,6 @@ import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
 
 public class HAPOperandOperation extends HAPOperandImp{
@@ -30,11 +29,8 @@ public class HAPOperandOperation extends HAPOperandImp{
 	@HAPAttribute
 	public static final String OPERATION = "operation";
 	
-	@HAPAttribute
-	public static final String BASE = "base";
-
-	@HAPAttribute
-	public static final String MATCHERSBASE = "matchersBase";
+//	@HAPAttribute
+//	public static final String BASE = "base";
 
 	@HAPAttribute
 	public static final String PARMS = "parms";
@@ -127,8 +123,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(OPERATION, this.m_operation);
 		jsonMap.put(DATATYPEID, HAPSerializeManager.getInstance().toStringValue(this.m_dataTypeId, HAPSerializationFormat.LITERATE));
-		jsonMap.put(BASE, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON));
-		jsonMap.put(MATCHERSBASE, HAPSerializeManager.getInstance().toStringValue(this.m_baseMatchers, HAPSerializationFormat.JSON));
+//		jsonMap.put(BASE, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON));
 		
 		jsonMap.put(PARMS, HAPJsonUtility.buildJson(this.m_parms, HAPSerializationFormat.JSON));
 		jsonMap.put(MATCHERSPARMS, HAPJsonUtility.buildJson(this.m_parmsMatchers, HAPSerializationFormat.JSON));
@@ -167,26 +162,16 @@ public class HAPOperandOperation extends HAPOperandImp{
 			HAPDataTypeOperation dataTypeOperation = dataTypeHelper.getOperationInfoByName(dataTypeId, m_operation);
 			List<HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
 			for(HAPOperationParmInfo parmInfo : parmsInfo){
-				
-				
-				
-			}
-			
-			for(String parm: this.m_parms.keySet()){
-				HAPOperand parmDataType = this.m_parms.get(parm);
-				if(parmDataType!=null){
-					HAPDataTypeCriteria parmCriteria = parmsInfo.get(parm).getCriteria();
-					//loose input criteria
-					HAPMatchers converter = parmDataType.discover(variablesInfo, parmCriteria, context, dataTypeHelper);
-					if(converter!=null){
-						this.m_parmsMatchers.put(parm, converter);
-					}
+				HAPOperand parmOperand = this.m_parms.get(parmInfo.getName());
+				if(parmOperand==null && parmInfo.getIsBase() && this.m_base!=null){
+					//if parmInfo is base parm and is located in base
+					parmOperand = this.m_base;
+					this.m_parms.put(parmInfo.getName(), parmOperand);
 				}
-			}
-			
-			//discover base
-			if(this.m_base!=null){
-				this.m_baseMatchers = this.m_base.discover(variablesInfo, new HAPDataTypeCriteriaElementId(dataTypeId), context, dataTypeHelper);
+				HAPMatchers matchers = parmOperand.discover(variablesInfo, parmInfo.getCriteria(), context, dataTypeHelper);
+				if(matchers!=null){
+					this.m_parmsMatchers.put(parmInfo.getName(), matchers);
+				}
 			}
 			
 			HAPOperationOutInfo outputInfo = dataTypeOperation.getOperationInfo().getOutputInfo();

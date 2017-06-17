@@ -77,7 +77,7 @@ public class HAPRuntimeJSScriptUtility {
 		return out;
 	}
 
-	public static HAPJSScriptInfo buildScriptForExecuteExpressionTask(HAPExecuteExpressionTask executeExpressionTask){
+	public static HAPJSScriptInfo buildRequestScriptForExecuteExpressionTask(HAPExecuteExpressionTask executeExpressionTask){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("expression", HAPJsonUtility.formatJson(HAPSerializeManager.getInstance().toStringValue(executeExpressionTask.getExpression(), HAPSerializationFormat.JSON)));
 		templateParms.put("variables", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(executeExpressionTask.getVariablesValue()==null?new LinkedHashMap<String, HAPData>() : executeExpressionTask.getVariablesValue(), HAPSerializationFormat.JSON)));
@@ -89,11 +89,11 @@ public class HAPRuntimeJSScriptUtility {
 		return out;
 	}
 	
-	public static HAPJSScriptInfo buildScriptForLoadResourceTask(HAPLoadResourcesTask loadResourcesTask){
+	public static HAPJSScriptInfo buildRequestScriptForLoadResourceTask(HAPLoadResourcesTask loadResourcesTask){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("resourceIds", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(loadResourcesTask.getResourcesId(), HAPSerializationFormat.JSON)));
 		templateParms.put("taskId", loadResourcesTask.getTaskId());
 		templateParms.put("gatewayPath", HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY);
+		templateParms.put("resourceIds", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(loadResourcesTask.getResourcesInfo(), HAPSerializationFormat.JSON)));
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "LoadResources.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, loadResourcesTask.getTaskId());

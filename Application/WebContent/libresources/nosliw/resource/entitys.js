@@ -10,8 +10,8 @@ var node_ResourceId = function(type, id){
 	this.id = id;
 };	
 	
-var node_Resource = function(resourceId, resourceData, info){
-	this.resourceId = resourceId;
+var node_Resource = function(resourceInfo, resourceData, info){
+	this.resourceInfo = resourceInfo;
 	this.resourceData = resourceData;
 	this.info = info;
 }

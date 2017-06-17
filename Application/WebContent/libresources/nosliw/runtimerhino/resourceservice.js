@@ -61,7 +61,15 @@ var node_createResourceService = function(resourceManager){
 	}
 	
 	var loc_out = {
-		
+
+		getDiscoverAndGetResourcesRequest : function(resourceIds, handlers, requestInfo){
+				
+		},
+			
+		getDiscoverResourcesRequest : function(resourceIds, handlers, requestInfo){
+			
+		},
+			
 		getGetResourcesRequest : function(resourceIds, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetResources", {"resourceId":resourceIds}), handlers, this.getRequestInfo(requestInfo));
 			

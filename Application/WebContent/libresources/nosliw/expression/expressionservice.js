@@ -3,6 +3,7 @@ var packageObj = library.getChildPackage("expressionservice");
 
 (function(packageObj){
 	//get used node
+	var node_resourceUtility;
 	var node_requestServiceProcessor;
 	var node_buildServiceProvider;
 	var node_COMMONTRIBUTECONSTANT;
@@ -154,8 +155,11 @@ var node_createExpressionService = function(){
 	}
 
 	//execute data operation
-	var loc_getExecuteOperationRequest = function(dataTypeId, operation, parms, handlers, requestInfo){
-		var dataOperationId;
+	var loc_getExecuteOperationRequest = function(dataTypeId, operation, parms, handlers, requester_parent){
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
+		var out = createServiceRequestInfoService(new node_ServiceInfo("ExecuteOperation", {"dataType":dataTypeId, "operation":operation, "parms":parms}), handlers, requestInfo);
+		
+		var dataOperationId = node_resourceUtility.createOperationResourceId(dataTypeId, operation);
 		var loadResourceRequest = nosliw.runtime.getResourceService().getGetResourcesRequest([dataOperationId], {
 			success : function(requestInfo, resources){
 				var dataOperationResource = resources[dataOperationId];
@@ -179,7 +183,8 @@ var node_createExpressionService = function(){
 				return converterResult;
 			}
 		}, requestInfo);
-		
+
+		out.setDependentService(loadResourceRequest);
 		return out;
 	};	
 
@@ -273,6 +278,7 @@ packageObj.createNode("createExpressionService", node_createExpressionService);
 
 	var module = {
 		start : function(packageObj){
+			node_resourceUtility = packageObj.getNodeData("untime.rhino.utility.resourceUtility");
 			node_buildServiceProvider = packageObj.getNodeData("request.buildServiceProvider");
 			node_requestServiceProcessor = packageObj.getNodeData("request.requestServiceProcessor");
 			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");

@@ -21,13 +21,20 @@ public interface HAPResourceDiscovery {
 	 * @param dataOpInfo
 	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
 	 */
-	List<HAPResourceId> discoverResourceRequirement(HAPDataTypeId dataTypeInfo, HAPOperation dataOpInfo);
+	List<HAPResourceInfo> discoverResourceRequirement(HAPDataTypeId dataTypeInfo, HAPOperation dataOpInfo);
 
 	/**
 	 * Discover resources required for expression 
 	 * @param expression
 	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
 	 */
-	List<HAPResourceId> discoverResourceRequirement(HAPExpression expression);
+	List<HAPResourceInfo> discoverResourceRequirement(HAPExpression expression);
 
+	/**
+	 * Discover resource information (dependency)
+	 * @param resourceIds
+	 * @return
+	 */
+	List<HAPResourceInfo> discoverResource(List<HAPResourceId> resourceIds);
+	
 }

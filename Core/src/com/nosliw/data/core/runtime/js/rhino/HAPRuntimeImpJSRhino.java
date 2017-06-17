@@ -18,7 +18,6 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataWrapper;
-import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.runtime.HAPExecuteExpressionTask;
 import com.nosliw.data.core.runtime.HAPLoadResourcesTask;
 import com.nosliw.data.core.runtime.HAPResource;
@@ -115,9 +114,9 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		//init rhino runtime, init scope
 		Scriptable scope = this.initExecuteExpression(expressionTask.getTaskId());
 		
-		//prepare resources for expression in the runtime
+		//prepare resources for expression in the runtime (resource and dependency)
 		//execute expression after load required resources
-		List<HAPResourceId> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(rhinoExpressionTask.getExpression());
+		List<HAPResourceInfo> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(rhinoExpressionTask.getExpression());
 		HAPLoadResourcesTask loadResourcesTask = new HAPLoadResourcesTask(resourcesId){
 			@Override
 			protected void doSuccess() {
@@ -135,7 +134,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	}
 	
 	private void executeLoadResources(HAPLoadResourcesTask loadResourcesTask){
-		HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildScriptForLoadResourceTask(loadResourcesTask);
+		HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForLoadResourceTask(loadResourcesTask);
 		this.loadTaskScript(scriptInfo, loadResourcesTask.getTaskId());
 	}
 	
