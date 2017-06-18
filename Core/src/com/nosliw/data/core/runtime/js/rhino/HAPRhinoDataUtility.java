@@ -9,7 +9,8 @@ import org.mozilla.javascript.Function;
 import org.mozilla.javascript.IdScriptableObject; 
 import org.mozilla.javascript.NativeArray; 
 import org.mozilla.javascript.NativeJavaObject; 
-import org.mozilla.javascript.NativeObject; 
+import org.mozilla.javascript.NativeObject;
+import org.mozilla.javascript.ScriptableObject; 
  
 /**
  * Collection of JSON Utility methods. 
@@ -47,20 +48,18 @@ public class HAPRhinoDataUtility
      * @param  jsonString       a valid json string 
      * @return NativeObject     the created native JS object that represents the JSON object 
      */ 
-    public static NativeObject toObject(String jsonString) 
+    public static ScriptableObject toScriptableObject(String jsonString) 
     { 
-        // TODO deal with json array stirngs 
-         
         // Parse JSON string 
     	try { 
-         JSONObject jsonObject = (JSONObject) JSONSerializer.toJSON(jsonString); 
+    		JSON json = JSONSerializer.toJSON(jsonString); 
          
-  // Create native object  
-  return toObject(jsonObject); 
- } catch(Exception e){ 
-  e.printStackTrace(); 
- } 
- return null; 
+    		// Create native object  
+    		return toRhinoScriptableObject(json); 
+    	} catch(Exception e){ 
+    		e.printStackTrace(); 
+    	} 
+    	return null; 
     } 
      
     /**
@@ -79,19 +78,48 @@ public class HAPRhinoDataUtility
         { 
             String key = (String)keys.next(); 
             Object value = jsonObject.get(key); 
-            if (value instanceof JSONObject) 
+            if (value instanceof JSON) 
             { 
-                object.put(key, object, toObject((JSONObject)value)); 
+                object.put(key, object, toRhinoScriptableObject((JSON)value)); 
             } 
             else 
             { 
                 object.put(key, object, value); 
             } 
-        } 
+        }  
          
         return object; 
     } 
      
+    
+    public static NativeArray toArray(JSONArray jsonArray){
+    	int length = jsonArray.size();
+    	NativeArray array = new NativeArray(length);
+    	for(int i=0; i<length; i++){
+    		Object value = jsonArray.get(i);
+            if (value instanceof JSON) 
+            { 
+                array.add(toRhinoScriptableObject((JSON)value)); 
+            } 
+            else 
+            { 
+                array.add(value); 
+            } 
+    	}
+    	return array;
+    }
+    
+    public static ScriptableObject toRhinoScriptableObject(JSON json){
+    	ScriptableObject out = null;
+    	if(json instanceof JSONObject){
+    		out = toObject((JSONObject)json);
+    	}
+    	else if(json instanceof JSONArray){
+    		out = toArray((JSONArray)json);
+    	}
+    	return out;
+    }
+    
     /**
      * Build a JSON string for a native object 
      *  

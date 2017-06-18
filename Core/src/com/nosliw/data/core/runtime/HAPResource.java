@@ -1,8 +1,6 @@
 package com.nosliw.data.core.runtime;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -36,8 +34,6 @@ public class HAPResource extends HAPSerializableImp{
 	
 	private HAPInfo m_info;
 	
-	private Set<HAPResourceId> m_dependency = new HashSet<HAPResourceId>();
-	
 	public HAPResource(HAPResourceId id, HAPResourceData resourceData, HAPInfo info){
 		this.m_id = id;
 		this.m_resourceData = resourceData;
@@ -50,9 +46,6 @@ public class HAPResource extends HAPSerializableImp{
 	public void setInfo(HAPInfo info){   this.m_info = info; }
 	
 	public HAPResourceData getResourceData(){  return this.m_resourceData;  }
-	
-	public Set<HAPResourceId> getDependentResources(){  return this.m_dependency;  }
-	public void addDependendcy(HAPResourceId resourceId){  this.m_dependency.add(resourceId); }
 	
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ID, HAPSerializeManager.getInstance().toStringValue(this.m_id, HAPSerializationFormat.JSON));

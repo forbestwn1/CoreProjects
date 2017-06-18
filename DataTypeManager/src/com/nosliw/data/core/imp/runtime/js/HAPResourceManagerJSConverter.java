@@ -16,14 +16,17 @@ public class HAPResourceManagerJSConverter  implements HAPResourceManager{
 	@Override
 	public List<HAPResource> getResources(List<HAPResourceId> resourcesId) {
 		List<HAPResource> out = new ArrayList<HAPResource>();
-		
 		for(HAPResourceId resourceId : resourcesId){
-			HAPResourceIdConverter resourceIdOperation = new HAPResourceIdConverter(resourceId);
-			
-			HAPResourceDataJSConverterImp converterResource = this.m_dbAccess.getDataTypeConverter(resourceIdOperation.getConverter());
-			out.add(new HAPResource(resourceId, converterResource, null));
+			out.add(this.getResource(resourceId));
 		}
 		return out;
+	}
+
+	@Override
+	public HAPResource getResource(HAPResourceId resourceId) {
+		HAPResourceIdConverter resourceIdOperation = new HAPResourceIdConverter(resourceId);
+		HAPResourceDataJSConverterImp converterResource = this.m_dbAccess.getDataTypeConverter(resourceIdOperation.getConverter());
+		return new HAPResource(resourceId, converterResource, null);
 	}
 
 }

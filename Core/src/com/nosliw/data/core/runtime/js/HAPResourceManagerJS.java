@@ -18,6 +18,13 @@ public class HAPResourceManagerJS implements HAPResourceManager{
 	}
 	
 	@Override
+	public HAPResource getResource(HAPResourceId resourceId) {
+		HAPResourceManager resourceMan = this.getResourceManager(resourceId.getType());
+		HAPResource resource = resourceMan.getResource(resourceId);
+		return resource;
+	}
+	
+	@Override
 	public List<HAPResource> getResources(List<HAPResourceId> resourcesId) {
 		List<HAPResource> out = new ArrayList<HAPResource>();
 		
@@ -45,4 +52,5 @@ public class HAPResourceManagerJS implements HAPResourceManager{
 	private HAPResourceManager getResourceManager(String resourceType){
 		return this.m_resourceMans.get(resourceType);
 	}
+
 }

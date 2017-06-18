@@ -15,12 +15,16 @@ public class HAPResourceManagerJSHelper implements HAPResourceManager{
 	@Override
 	public List<HAPResource> getResources(List<HAPResourceId> resourcesId) {
 		List<HAPResource> out = new ArrayList<HAPResource>();
-		
 		for(HAPResourceId resourceId : resourcesId){
-			HAPResourceDataHelperImp helperResource = this.m_dbAccess.getResourceHelper(resourceId.getId());
-			out.add(new HAPResource(resourceId, helperResource, null));
+			out.add(this.getResource(resourceId));
 		}
 		return out;
+	}
+
+	@Override
+	public HAPResource getResource(HAPResourceId resourceId) {
+		HAPResourceDataHelperImp helperResource = this.m_dbAccess.getResourceHelper(resourceId.getId());
+		return new HAPResource(resourceId, helperResource, null);
 	}
 
 }

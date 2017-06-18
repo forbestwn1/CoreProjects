@@ -14,9 +14,11 @@ import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.tools.debugger.Main;
 
 import com.nosliw.common.info.HAPInfoUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.runtime.HAPExecuteExpressionTask;
 import com.nosliw.data.core.runtime.HAPLoadResourcesTask;
@@ -68,6 +70,41 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		this.m_taskScope = new LinkedHashMap<String, Scriptable>();
 	}
 
+	public void descoverResources(Object objResourceIds, Object callBackFunction){
+		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
+		NativeArray resourcesArray = (NativeArray)objResourceIds;
+		for(int i=0; i<resourcesArray.size(); i++){
+			NativeObject resourceIdObject = (NativeObject)resourcesArray.get(i);
+			String type = (String)resourceIdObject.get(HAPResourceId.TYPE);
+			String id = (String)resourceIdObject.get(HAPResourceId.ID);
+			resourceIds.add(new HAPResourceId(type, id));
+		}
+		
+		List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
+		((Function)callBackFunction).call(this.m_context, this.m_scope, null, 
+				new Object[]{HAPRhinoDataUtility.toScriptableObject(HAPJsonUtility.buildJson(resourceInfos, HAPSerializationFormat.JSON))});
+	}
+	
+	public void discoverAndLoadResources(Object resources, Object callBackFunction){
+		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
+		
+		NativeArray resourcesArray = (NativeArray)resources;
+		for(int i=0; i<resourcesArray.size(); i++){
+			NativeObject resourceIdObject = (NativeObject)resourcesArray.get(i);
+			String type = (String)resourceIdObject.get(HAPResourceId.TYPE);
+			String id = (String)resourceIdObject.get(HAPResourceId.ID);
+			resourceIds.add(new HAPResourceId(type, id));
+		}
+		//discovery
+		List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
+		//load resources
+		this.loadResources(resourceInfos, m_scope, m_context);
+		
+		//callback with resourceInfos
+		((Function)callBackFunction).call(this.m_context, this.m_scope, null, 
+				new Object[]{HAPRhinoDataUtility.toScriptableObject(HAPJsonUtility.buildJson(resourceInfos, HAPSerializationFormat.JSON))});
+	}
+	
 	//gateway callback method
 	@Override
 	public void loadResources(Object resources, Object callBackFunction){
@@ -144,7 +181,20 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	}
 	
 	private void loadResources(List<HAPResourceInfo> resourcesIdInfo, Scriptable scope, Context context){
+		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
+		for(HAPResourceInfo resourceIdInfo : resourcesIdInfo){ resourceIds.add(resourceIdInfo.getId());  }
+		List<HAPResource> resources = this.getResourceManager().getResources(resourceIds);
+
+		Map<HAPResourceId, HAPResourceInfo> resourcesInfo = new LinkedHashMap<HAPResourceId, HAPResourceInfo>();
+		for(HAPResourceInfo resourceIdInfo : resourcesIdInfo){ resourcesInfo.put(resourceIdInfo.getId(), resourceIdInfo);  }
+		
 		List<HAPJSScriptInfo> scriptsInfo = new ArrayList<HAPJSScriptInfo>();
+		for(HAPResource resource : resources){
+			resource.setInfo(HAPInfoUtility.merge(resource.getInfo(), resourceIdInfo.getInfo()));
+			scriptsInfo.addAll(HAPRuntimeJSScriptUtility.buildScriptForResource(resource));
+		}
+		
+		
 		
 		for(HAPResourceInfo resourceIdInfo : resourcesIdInfo){
 			List<HAPResourceId> resourcesId = new ArrayList<HAPResourceId>();
@@ -154,9 +204,6 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 				HAPResource resource = resources.get(0);
 				resource.setInfo(HAPInfoUtility.merge(resource.getInfo(), resourceIdInfo.getInfo()));
 				scriptsInfo.addAll(HAPRuntimeJSScriptUtility.buildScriptForResource(resource));
-			}
-			else{
-				
 			}
 		}
 		

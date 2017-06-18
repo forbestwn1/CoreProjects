@@ -16,14 +16,16 @@ public class HAPResourceManagerJSOperation implements HAPResourceManager{
 	@Override
 	public List<HAPResource> getResources(List<HAPResourceId> resourcesId) {
 		List<HAPResource> out = new ArrayList<HAPResource>();
-		
 		for(HAPResourceId resourceId : resourcesId){
-			HAPResourceIdOperation resourceIdOperation = new HAPResourceIdOperation(resourceId);
-			
-			HAPResourceDataJSOperationImp helperResource = this.m_dbAccess.getJSOperation(resourceIdOperation.getOperationId());
-			out.add(new HAPResource(resourceId, helperResource, null));
+			out.add(this.getResource(resourceId));
 		}
 		return out;
 	}
 
+	@Override
+	public HAPResource getResource(HAPResourceId resourceId) {
+		HAPResourceIdOperation resourceIdOperation = new HAPResourceIdOperation(resourceId);
+		HAPResourceDataJSOperationImp helperResource = this.m_dbAccess.getJSOperation(resourceIdOperation.getOperationId());
+		return new HAPResource(resourceId, helperResource, null);
+	}
 }

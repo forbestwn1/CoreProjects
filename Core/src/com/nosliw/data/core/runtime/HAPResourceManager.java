@@ -11,4 +11,6 @@ public interface HAPResourceManager {
 	 */
 	public List<HAPResource> getResources(List<HAPResourceId> resourcesId);
 
+	public HAPResource getResource(HAPResourceId resourceId);
+	
 }

@@ -25,17 +25,7 @@ public class HAPResourceManagerJSLibrary implements HAPResourceManager{
 		List<HAPResource> out = new ArrayList<HAPResource>();
 		
 		for(HAPResourceId resourceId : resourcesId){
-			HAPResourceIdJSLibrary resourceLibraryId = new HAPResourceIdJSLibrary(resourceId);
-			HAPJSLibraryId libraryId =  resourceLibraryId.getLibraryId();
-
-			List<File> files = this.getLibraryFileName(libraryId);
-			List<URI> uris = new ArrayList<URI>();
-			for(File file : files){
-				uris.add(file.toURI());
-			}
-			HAPResourceDataJSLibrary libraryResourceData = new HAPResourceDataJSLibrary(uris);
-			HAPResource resource = new HAPResource(resourceId, libraryResourceData, null);
-			out.add(resource);
+			out.add(this.getResource(resourceId));
 		}
 		return out;
 	}
@@ -49,5 +39,21 @@ public class HAPResourceManagerJSLibrary implements HAPResourceManager{
 		//make file sorted by name
 		Collections.sort(out);
 		return out;
+	}
+
+
+	@Override
+	public HAPResource getResource(HAPResourceId resourceId) {
+		HAPResourceIdJSLibrary resourceLibraryId = new HAPResourceIdJSLibrary(resourceId);
+		HAPJSLibraryId libraryId =  resourceLibraryId.getLibraryId();
+
+		List<File> files = this.getLibraryFileName(libraryId);
+		List<URI> uris = new ArrayList<URI>();
+		for(File file : files){
+			uris.add(file.toURI());
+		}
+		HAPResourceDataJSLibrary libraryResourceData = new HAPResourceDataJSLibrary(uris);
+		HAPResource resource = new HAPResource(resourceId, libraryResourceData, null);
+		return resource;
 	}
 }

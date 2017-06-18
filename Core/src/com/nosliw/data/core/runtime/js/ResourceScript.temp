@@ -1,4 +1,1 @@
-nosliw.runtime.getResourceManager().addResource({
-		type : '||type||',
-		id : '||id||'		
-	}, ||value||, ||info||);
+nosliw.runtime.getResourceManager().addResource(||resourceInfo||, ||value||, ||info||);
