@@ -13,6 +13,7 @@ var packageObj = library;
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
 	var node_runtimeGateway;
+	var node_resourceUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 	
 /**
@@ -59,19 +60,100 @@ var node_createResourceService = function(resourceManager){
 			missed : missingResourceIds
 		};
 	}
+
+	var loc_getFindDsicoveredResourcesRequest = function(resourceIds, handlers, requestInfo){
+		var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("FindDiscoveredResources", {"resourceId":resourceIds}), function(requestInfo){
+			var result = {
+				found : {},
+				missed : []
+			};
+			loc_findDiscoveredResources(resourceIds, result);
+			return result;
+		}, handlers, requestInfo);
+		return out;
+	};
+	
+	var loc_findDiscoveredResources = function(resourceIds, result){
+		var foundResources = result.found;
+		var missedResourceIds = result.missed;
+		
+		_.each(resourceIds, function(resourceId, index, list){
+			var resource = loc_resourceManager.useResource(resourceId);
+			if(resource!=undefined){
+				node_resourceUtility.buildResourceTree(foundResources, resource);
+				
+				var childrenResourceIds = []; 
+				
+				var resourceInfo = resource.resourceInfo;
+				_.each(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_DEPENDENCY], function(child, index, list){
+					childrenResourceIds.push(child[node_COMMONTRIBUTECONSTANT.RESOURCEDEPENDENT_ID]);
+				}, this);
+
+				_.each(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_CHILDREN], function(child, index, list){
+					childrenResourceIds.push(child[node_COMMONTRIBUTECONSTANT.RESOURCEDEPENDENT_ID]);
+				}, this);
+				
+				loc_findDiscoveredResources(childrenResourceIds, result);
+			}
+			else{
+				missingResourceIds.push(resourceId);
+			}
+		});
+	}
+	
+	var loc_getDiscoverResourcesRequest = function(resourceIds, handlers, requestInfo){
+		var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("DiscoverResources", {"resourceId":resourceIds}), function(requestInfo){
+			node_runtimeGateway.discoverResources(resourceIds, function(resourceInfos){
+				requestInfo.executeSuccessHandler(resourceInfos);
+			});
+		}, handlers, requestInfo);
+		return out;
+	}
 	
 	var loc_out = {
 
 		getDiscoverAndGetResourcesRequest : function(resourceIds, handlers, requestInfo){
-				
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetResources", {"resourceId":resourceIds}), handlers, loc_out.getRequestInfo(requester_parent));
+
+			out.addRequest(loc_getFindDsicoveredResourcesRequest(resourceIds, {
+				success : function(requestInfo, data){
+					var missedResourceIds = data.missed;
+					var foundResoruceIds = data.found;
+					if(missedResourceIds.length==0){
+						//all found
+						return data.found;
+					}
+					else{
+						//need load resource
+						var discoverResourcesRequest = loc_getDiscoverResourcesRequest(data.missed, {
+							success : function(requestInfo, resourceInfos){
+
+								var loadResourceRequest = loc_getLoadResourceRequest(data.missed, {
+									success : function(requestInfo, data){
+										return requestInfo.getData("resources").concat(data);
+									}
+								}, requestInfo);
+								loadResourceRequest.setData("resources", data.found);
+								return loadResourceRequest;
+								
+								
+								
+								return requestInfo.getData("resources").concat(data);
+							}
+						}, requestInfo);
+						return discoverResourcesRequest;
+					}
+				}
+			}, out));
+			return out;
 		},
 			
 		getDiscoverResourcesRequest : function(resourceIds, handlers, requestInfo){
 			
 		},
 			
-		getGetResourcesRequest : function(resourceIds, handlers, requestInfo){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetResources", {"resourceId":resourceIds}), handlers, this.getRequestInfo(requestInfo));
+		getGetResourcesRequest : function(resourceIds, handlers, requester_parent){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetResources", {"resourceId":resourceIds}), handlers, loc_out.getRequestInfo(requester_parent));
 			
 			out.addRequest(loc_getFindResourcesRequest(resourceIds, {
 				success : function(requestInfo, data){
@@ -90,7 +172,7 @@ var node_createResourceService = function(resourceManager){
 						return loadResourceRequest;
 					}
 				}
-			}, requestInfo));
+			}, out));
 			return out;
 		},
 		
@@ -120,9 +202,9 @@ packageObj.createNode("createResourceService", node_createResourceService);
 			node_requestServiceProcessor = packageObj.getNodeData("request.requestServiceProcessor");
 			node_ServiceInfo = packageObj.getNodeData("common.service.ServiceInfo");
 			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
 			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
 			node_runtimeGateway = packageObj.getNodeData(node_COMMONCONSTANT.RUNTIME_LANGUAGE_JS_GATEWAY);
+			node_resourceUtility = packageObj.getNodeData("resource.resourceUtility");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

@@ -3,6 +3,8 @@ var packageObj = library.getChildPackage("resourcemanager");
 
 (function(packageObj){
 	//get used node
+	var node_Resource;
+	var node_resourceUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -15,10 +17,8 @@ var node_createResourceManager = function(){
 	var loc_resources = {};
 
 	var loc_getResource = function(resourceId){
-		var typeResources = loc_resources[resourceId.type];
-		if(typeResources==undefined)  return undefined;
-		return typeResources[resourceId.id];
-	}
+		return node_resourceUtility.getResourceFromTree(loc_resources, resourceId);
+	};
 	
 	var loc_out = {
 		
@@ -26,16 +26,8 @@ var node_createResourceManager = function(){
 		 * Add resource to resourc manager 
 		 */
 		addResource : function(resourceInfo, resourceData, info){
-			var resourceId = resourceInfo.id;
-			var typeResources = loc_resources[resourceId.type];
-			if(typeResources==undefined){
-				typeResources = {};
-				loc_resources[resourceId.type] = typeResources;
-			}
-			typeResources[resourceId.id] = {
-				data : resourceData,	
-				info : info,
-			};
+			var resource = new node_Resource(resourceInfo, resourceData, info);
+			node_resourceUtility.buildResourceTree(loc_resources, resource);
 		},	
 	
 		/**
@@ -63,6 +55,8 @@ packageObj.createNode("createResourceManager", node_createResourceManager);
 
 	var module = {
 		start : function(packageObj){
+			node_Resource = packageObj.getNodeData("resource.entity.Resource");
+			node_resourceUtility = packageObj.getNodeData("resource.resourceUtility");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -24,6 +25,7 @@ import com.nosliw.common.utils.HAPJsonUtility;
  *  Except: 	
  *  	resource data
  */
+@HAPEntityWithAttribute
 public class HAPResourceInfo extends HAPSerializableImp{
 
 	@HAPAttribute
@@ -72,10 +74,10 @@ public class HAPResourceInfo extends HAPSerializableImp{
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(ID, this.m_resourceId.toStringValue(HAPSerializationFormat.LITERATE));
-		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.getChildren(), HAPSerializationFormat.JSON_FULL));
-		jsonMap.put(DEPENDENCY, HAPJsonUtility.buildJson(this.getDependency(), HAPSerializationFormat.JSON_FULL));
-		jsonMap.put(INFO, HAPSerializeManager.getInstance().toStringValue(this.m_info, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(ID, this.m_resourceId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.getChildren(), HAPSerializationFormat.JSON));
+		jsonMap.put(DEPENDENCY, HAPJsonUtility.buildJson(this.getDependency(), HAPSerializationFormat.JSON));
+		jsonMap.put(INFO, HAPSerializeManager.getInstance().toStringValue(this.m_info, HAPSerializationFormat.JSON));
 	}
 
 	@Override

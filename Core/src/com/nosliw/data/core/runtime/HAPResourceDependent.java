@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -23,6 +24,7 @@ import com.nosliw.common.utils.HAPJsonUtility;
  * This class is for resource that other resource have dependent on it
  * It has alias so that it can be refered by resource through alias 
  */
+@HAPEntityWithAttribute
 public class HAPResourceDependent extends HAPSerializableImp{
 
 	//alias is used when one resource A depend on another resource B
@@ -62,7 +64,7 @@ public class HAPResourceDependent extends HAPSerializableImp{
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(ID, this.m_id.toStringValue(HAPSerializationFormat.LITERATE));
+		jsonMap.put(ID, this.m_id.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ALIAS, HAPJsonUtility.buildArrayJson(this.getAlias().toArray(new String[0])));
 	}
 

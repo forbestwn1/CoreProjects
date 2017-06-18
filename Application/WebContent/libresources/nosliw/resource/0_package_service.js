@@ -1,1 +1,1 @@
-var library = nosliw.getPackage("service");
+var library = nosliw.getPackage("resource");
