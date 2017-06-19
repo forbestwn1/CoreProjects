@@ -91,7 +91,8 @@ public class HAPResourceInfo extends HAPSerializableImp{
 	@Override
 	protected boolean buildObjectByFullJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_resourceId = HAPResourceHelper.getInstance().buildResourceIdObject(jsonObj.optString(ID));
+		this.m_resourceId = new HAPResourceId();
+		this.m_resourceId.buildObject(jsonObj.optJSONObject(ID), HAPSerializationFormat.JSON);
 		
 		JSONArray childrenArray = jsonObj.optJSONArray(CHILDREN);
 		for(int i=0; i<childrenArray.length(); i++){

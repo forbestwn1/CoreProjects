@@ -25,44 +25,9 @@ var node_createResourceService = function(resourceManager){
 	
 	var loc_resourceManager = resourceManager;
 
-	var loc_getLoadResourceRequest = function(resourceIds, handlers, requestInfo){
-		var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("LoadResources", {"resourceId":resourceIds}), function(requestInfo){
-			node_runtimeGateway.loadResources(resourceIds, function(){
-				var resourceResult = loc_findResources(resourceIds);
-				nosliw.logging.info("Loaded Resources  ", resourceResult);
-				requestInfo.executeSuccessHandler(resourceResult.found);
-			});
-		}, handlers, requestInfo);
-		return out;
-	};
-	
-	var loc_getFindResourcesRequest = function(resourceIds, handlers, requestInfo){
-		var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("FindResources", {"resourceId":resourceIds}), function(requestInfo){
-			return loc_findResources(resourceIds);
-		}, handlers, requestInfo);
-		return out;
-	};
-
-	var loc_findResources = function(resourceIds){
-		var resources = [];
-		var missingResourceIds = [];
-		_.each(resourceIds, function(resourceId, index, list){
-			var resource = loc_resourceManager.useResource(resourceId);
-			if(resource!=undefined){
-				resources.push(resource);
-			}
-			else{
-				missingResourceIds.push(resourceId);
-			}
-		});
-		return {
-			found : resources,
-			missed : missingResourceIds
-		};
-	}
-
-	var loc_getFindDsicoveredResourcesRequest = function(resourceIds, handlers, requestInfo){
-		var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("FindDiscoveredResources", {"resourceId":resourceIds}), function(requestInfo){
+	var loc_getFindDsicoveredResourcesRequest = function(resourceIds, handlers, requester_parent){
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
+		var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("FindDiscoveredResources", {"resourcesId":resourceIds}), function(requestInfo){
 			var result = {
 				found : {},
 				missed : []
@@ -73,6 +38,7 @@ var node_createResourceService = function(resourceManager){
 		return out;
 	};
 	
+	//find all the resources by id and related resources
 	var loc_findDiscoveredResources = function(resourceIds, result){
 		var foundResources = result.found;
 		var missedResourceIds = result.missed;
@@ -80,67 +46,72 @@ var node_createResourceService = function(resourceManager){
 		_.each(resourceIds, function(resourceId, index, list){
 			var resource = loc_resourceManager.useResource(resourceId);
 			if(resource!=undefined){
+				//resource exist
 				node_resourceUtility.buildResourceTree(foundResources, resource);
-				
-				var childrenResourceIds = []; 
-				
+
+				//discover related resources (dependency and children)
+				var relatedResourceIds = []; 
 				var resourceInfo = resource.resourceInfo;
 				_.each(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_DEPENDENCY], function(child, index, list){
-					childrenResourceIds.push(child[node_COMMONTRIBUTECONSTANT.RESOURCEDEPENDENT_ID]);
+					relatedResourceIds.push(child[node_COMMONTRIBUTECONSTANT.RESOURCEDEPENDENT_ID]);
 				}, this);
 
 				_.each(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_CHILDREN], function(child, index, list){
-					childrenResourceIds.push(child[node_COMMONTRIBUTECONSTANT.RESOURCEDEPENDENT_ID]);
+					relatedResourceIds.push(child[node_COMMONTRIBUTECONSTANT.RESOURCEDEPENDENT_ID]);
 				}, this);
 				
-				loc_findDiscoveredResources(childrenResourceIds, result);
+				loc_findDiscoveredResources(relatedResourceIds, result);
 			}
 			else{
 				missingResourceIds.push(resourceId);
 			}
 		});
 	}
-	
-	var loc_getDiscoverResourcesRequest = function(resourceIds, handlers, requestInfo){
-		var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("DiscoverResources", {"resourceId":resourceIds}), function(requestInfo){
-			node_runtimeGateway.discoverResources(resourceIds, function(resourceInfos){
-				requestInfo.executeSuccessHandler(resourceInfos);
+
+	//load resources for runtime
+	var loc_getLoadResourcesRequest = function(resourceInfos, handlers, requester_parent){
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
+		var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("LoadResources", {"resourcesInfo":resourceInfos}), function(requestInfo){
+			node_runtimeGateway.loadResources(resourceInfos, function(){
+				out.executeSuccessHandler();
 			});
 		}, handlers, requestInfo);
 		return out;
+		
 	}
 	
 	var loc_out = {
 
-		getDiscoverAndGetResourcesRequest : function(resourceIds, handlers, requestInfo){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetResources", {"resourceId":resourceIds}), handlers, loc_out.getRequestInfo(requester_parent));
+		getGetResourcesRequest : function(resourceIds, handlers, requester_parent){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetResources", {"resourcesId":resourceIds}), handlers, loc_out.getRequestInfo(requester_parent));
 
+			//find missing resources
 			out.addRequest(loc_getFindDsicoveredResourcesRequest(resourceIds, {
 				success : function(requestInfo, data){
 					var missedResourceIds = data.missed;
-					var foundResoruceIds = data.found;
+					var foundResoruces = data.found;
 					if(missedResourceIds.length==0){
 						//all found
-						return data.found;
+						return foundResoruces;
 					}
 					else{
 						//need load resource
-						var discoverResourcesRequest = loc_getDiscoverResourcesRequest(data.missed, {
+						//do discovery first
+						var discoverResourcesRequest = loc_out.getDiscoverResourcesRequest(missedResourceIds, {
 							success : function(requestInfo, resourceInfos){
-
-								var loadResourceRequest = loc_getLoadResourceRequest(data.missed, {
-									success : function(requestInfo, data){
-										return requestInfo.getData("resources").concat(data);
+								//after discovery, load resources
+								var loadResourceRequest = loc_getLoadResourcesRequest(resourceInfos, {
+									success : function(requestInfo){
+										_.each(resoruceInfos, function(resourceInfo, index, list){
+											var resource = loc_resourceManager.useResource(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_ID]);
+											node_resourceUtility.buildResourceTree(foundResources, resource);
+										}, this);
+										return foundResources;
 									}
-								}, requestInfo);
-								loadResourceRequest.setData("resources", data.found);
+								}, null);
 								return loadResourceRequest;
-								
-								
-								
-								return requestInfo.getData("resources").concat(data);
 							}
-						}, requestInfo);
+						}, null);
 						return discoverResourcesRequest;
 					}
 				}
@@ -148,38 +119,22 @@ var node_createResourceService = function(resourceManager){
 			return out;
 		},
 			
-		getDiscoverResourcesRequest : function(resourceIds, handlers, requestInfo){
-			
-		},
-			
-		getGetResourcesRequest : function(resourceIds, handlers, requester_parent){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetResources", {"resourceId":resourceIds}), handlers, loc_out.getRequestInfo(requester_parent));
-			
-			out.addRequest(loc_getFindResourcesRequest(resourceIds, {
-				success : function(requestInfo, data){
-					if(data.missed.length==0){
-						//all found
-						return data.found;
-					}
-					else{
-						//need load resource
-						var loadResourceRequest = loc_getLoadResourceRequest(data.missed, {
-							success : function(requestInfo, data){
-								return requestInfo.getData("resources").concat(data);
-							}
-						}, requestInfo);
-						loadResourceRequest.setData("resources", data.found);
-						return loadResourceRequest;
-					}
-				}
-			}, out));
-			return out;
-		},
-		
 		executeGetResourcesRequest : function(resourceIds, handlers, requester_parent){
 			var requestInfo = this.getGetResourcesRequest(resourceIds, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo, false);
-		}
+		},
+			
+
+		getDiscoverResourcesRequest : function(resourceIds, handlers, requester_parent){
+			var requestInfo = loc_out.getRequestInfo(requester_parent);
+			
+			var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("DiscoverResources", {"resourcesId":resourceIds}), function(requestInfo){
+				node_runtimeGateway.descoverResources(resourceIds, function(resourcesInfo){
+					requestInfo.executeSuccessHandler(resourcesInfo);
+				});
+			}, handlers, requestInfo);
+			return out;
+		},
 			
 	};
 	
