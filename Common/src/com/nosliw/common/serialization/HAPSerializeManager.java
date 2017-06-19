@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.literate.HAPLiterateManager;
+import com.nosliw.common.utils.HAPJsonUtility;
 
 /**
  * Manager class to do serialzation job 
@@ -41,16 +42,19 @@ public class HAPSerializeManager {
 	
 	public String toStringValue(Object obj, HAPSerializationFormat format){
 		if(obj == null)   return null;
-		if(format==HAPSerializationFormat.LITERATE){
-			return HAPLiterateManager.getInstance().valueToString(obj);
+
+		if(obj instanceof HAPSerializable){
+			return ((HAPSerializable)obj).toStringValue(format);
 		}
-		else{
-			if(obj instanceof HAPSerializable){
-				return ((HAPSerializable)obj).toStringValue(format);
-			}
-			else{
-				return obj.toString();
-			}
+
+		switch(format){
+		case LITERATE:
+			return HAPLiterateManager.getInstance().valueToString(obj);
+		case JSON:
+		case JSON_FULL:
+			return HAPJsonUtility.buildJson(obj, format);
+		default:
+			return obj.toString();
 		}
 	}
 	

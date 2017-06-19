@@ -10,7 +10,10 @@ import org.mozilla.javascript.IdScriptableObject;
 import org.mozilla.javascript.NativeArray; 
 import org.mozilla.javascript.NativeJavaObject; 
 import org.mozilla.javascript.NativeObject;
-import org.mozilla.javascript.ScriptableObject; 
+import org.mozilla.javascript.ScriptableObject;
+
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager; 
  
 /**
  * Collection of JSON Utility methods. 
@@ -38,20 +41,20 @@ public class HAPRhinoDataUtility
         {  
            return nativeObjectToJSONString((NativeObject)object); 
         } 
- return null; 
-         
+    	return null; 
     } 
      
     /**
-     * Takes a JSON string and converts it to a native java script object 
+     * Takes a java object and converts it to a native java script object 
      *  
      * @param  jsonString       a valid json string 
      * @return NativeObject     the created native JS object that represents the JSON object 
      */ 
-    public static ScriptableObject toScriptableObject(String jsonString) 
+    public static ScriptableObject toScriptableObject(Object obj) 
     { 
         // Parse JSON string 
     	try { 
+    		String jsonString = HAPSerializeManager.getInstance().toStringValue(obj, HAPSerializationFormat.JSON);
     		JSON json = JSONSerializer.toJSON(jsonString); 
          
     		// Create native object  
@@ -62,13 +65,24 @@ public class HAPRhinoDataUtility
     	return null; 
     } 
      
+    private static ScriptableObject toRhinoScriptableObject(JSON json){
+    	ScriptableObject out = null;
+    	if(json instanceof JSONObject){
+    		out = toObject((JSONObject)json);
+    	}
+    	else if(json instanceof JSONArray){
+    		out = toArray((JSONArray)json);
+    	}
+    	return out;
+    }
+    
     /**
      * Takes a JSON object and converts it to a native JS object. 
      *  
      * @param jsonObject        the json object 
      * @return NativeObject     the created native object 
      */ 
-    public static NativeObject toObject(JSONObject jsonObject) 
+    private static NativeObject toObject(JSONObject jsonObject) 
     { 
         // Create native object  
         NativeObject object = new NativeObject(); 
@@ -92,7 +106,7 @@ public class HAPRhinoDataUtility
     } 
      
     
-    public static NativeArray toArray(JSONArray jsonArray){
+    private static NativeArray toArray(JSONArray jsonArray){
     	int length = jsonArray.size();
     	NativeArray array = new NativeArray(length);
     	for(int i=0; i<length; i++){
@@ -107,17 +121,6 @@ public class HAPRhinoDataUtility
             } 
     	}
     	return array;
-    }
-    
-    public static ScriptableObject toRhinoScriptableObject(JSON json){
-    	ScriptableObject out = null;
-    	if(json instanceof JSONObject){
-    		out = toObject((JSONObject)json);
-    	}
-    	else if(json instanceof JSONArray){
-    		out = toArray((JSONArray)json);
-    	}
-    	return out;
     }
     
     /**

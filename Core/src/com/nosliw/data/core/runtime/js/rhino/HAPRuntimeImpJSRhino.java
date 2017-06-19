@@ -13,12 +13,9 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.tools.debugger.Main;
 
-import com.nosliw.common.info.HAPInfoUtility;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.runtime.HAPExecuteExpressionTask;
 import com.nosliw.data.core.runtime.HAPLoadResourcesTask;
@@ -70,57 +67,33 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		this.m_taskScope = new LinkedHashMap<String, Scriptable>();
 	}
 
+	//gateway callback method
+	@Override
 	public void descoverResources(Object objResourceIds, Object callBackFunction){
-		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
-		NativeArray resourcesArray = (NativeArray)objResourceIds;
-		for(int i=0; i<resourcesArray.size(); i++){
-			NativeObject resourceIdObject = (NativeObject)resourcesArray.get(i);
-			String type = (String)resourceIdObject.get(HAPResourceId.TYPE);
-			String id = (String)resourceIdObject.get(HAPResourceId.ID);
-			resourceIds.add(new HAPResourceId(type, id));
-		}
-		
+		List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds); 
 		List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
-		((Function)callBackFunction).call(this.m_context, this.m_scope, null, 
-				new Object[]{HAPRhinoDataUtility.toScriptableObject(HAPJsonUtility.buildJson(resourceInfos, HAPSerializationFormat.JSON))});
-	}
-	
-	public void discoverAndLoadResources(Object resources, Object callBackFunction){
-		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
-		
-		NativeArray resourcesArray = (NativeArray)resources;
-		for(int i=0; i<resourcesArray.size(); i++){
-			NativeObject resourceIdObject = (NativeObject)resourcesArray.get(i);
-			String type = (String)resourceIdObject.get(HAPResourceId.TYPE);
-			String id = (String)resourceIdObject.get(HAPResourceId.ID);
-			resourceIds.add(new HAPResourceId(type, id));
-		}
-		//discovery
-		List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
-		//load resources
-		this.loadResources(resourceInfos, m_scope, m_context);
-		
-		//callback with resourceInfos
-		((Function)callBackFunction).call(this.m_context, this.m_scope, null, 
-				new Object[]{HAPRhinoDataUtility.toScriptableObject(HAPJsonUtility.buildJson(resourceInfos, HAPSerializationFormat.JSON))});
+		((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toScriptableObject(resourceInfos)});
 	}
 	
 	//gateway callback method
 	@Override
-	public void loadResources(Object resources, Object callBackFunction){
-		System.out.println("Load resources !!!!!!!!!!!!!!!!!!!!" + resources + "  " + callBackFunction);
-
-		List<HAPResourceInfo> resourceIds = new ArrayList<HAPResourceInfo>();
+	public void discoverAndLoadResources(Object objResourceIds, Object callBackFunction){
+		List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds);
+		//discovery
+		List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
+		//load resources to rhino runtime
+		this.loadResources(resourceInfos, m_scope, m_context);
 		
-		NativeArray resourcesArray = (NativeArray)resources;
-		for(int i=0; i<resourcesArray.size(); i++){
-			NativeObject resourceIdObject = (NativeObject)resourcesArray.get(i);
-			String type = (String)resourceIdObject.get(HAPResourceId.TYPE);
-			String id = (String)resourceIdObject.get(HAPResourceId.ID);
-			resourceIds.add(new HAPResourceInfo(new HAPResourceId(type, id)));
-		}
-		this.loadResources(resourceIds, m_scope, m_context);
-		
+		//callback with resourceInfos
+		((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toScriptableObject(resourceInfos)});
+	}
+	
+	//gateway callback method
+	@Override
+	public void loadResources(Object objResourcesInfo, Object callBackFunction){
+		List<HAPResourceInfo> resourcesInfo = HAPRhinoRuntimeUtility.rhinoResourcesInfoToResourcesInfo((NativeArray)objResourcesInfo);
+		//load resources to rhino runtime
+		this.loadResources(resourcesInfo, m_scope, m_context);
 		((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{});
 	}
 	
@@ -180,31 +153,22 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		return this.m_scope;
 	}
 	
+	//Load all resources into rhino runtime, no discovery
 	private void loadResources(List<HAPResourceInfo> resourcesIdInfo, Scriptable scope, Context context){
+		//Get all resource data
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		for(HAPResourceInfo resourceIdInfo : resourcesIdInfo){ resourceIds.add(resourceIdInfo.getId());  }
 		List<HAPResource> resources = this.getResourceManager().getResources(resourceIds);
 
+		//organize resource infos
 		Map<HAPResourceId, HAPResourceInfo> resourcesInfo = new LinkedHashMap<HAPResourceId, HAPResourceInfo>();
-		for(HAPResourceInfo resourceIdInfo : resourcesIdInfo){ resourcesInfo.put(resourceIdInfo.getId(), resourceIdInfo);  }
+		for(HAPResourceInfo resourceInfo : resourcesIdInfo){ resourcesInfo.put(resourceInfo.getId(), resourceInfo);  }
 		
+		//Load all resources to rhino runtime
 		List<HAPJSScriptInfo> scriptsInfo = new ArrayList<HAPJSScriptInfo>();
 		for(HAPResource resource : resources){
-			resource.setInfo(HAPInfoUtility.merge(resource.getInfo(), resourceIdInfo.getInfo()));
-			scriptsInfo.addAll(HAPRuntimeJSScriptUtility.buildScriptForResource(resource));
-		}
-		
-		
-		
-		for(HAPResourceInfo resourceIdInfo : resourcesIdInfo){
-			List<HAPResourceId> resourcesId = new ArrayList<HAPResourceId>();
-			resourcesId.add(resourceIdInfo.getId());
-			List<HAPResource> resources = this.getResourceManager().getResources(resourcesId);
-			if(resources!=null && resources.size()==1){
-				HAPResource resource = resources.get(0);
-				resource.setInfo(HAPInfoUtility.merge(resource.getInfo(), resourceIdInfo.getInfo()));
-				scriptsInfo.addAll(HAPRuntimeJSScriptUtility.buildScriptForResource(resource));
-			}
+			HAPResourceInfo resourceInfo = resourcesInfo.get(resource.getId());
+			scriptsInfo.addAll(HAPRuntimeJSScriptUtility.buildScriptForResource(resourceInfo, resource));
 		}
 		
 		for(HAPJSScriptInfo scriptInfo : scriptsInfo)			this.loadScript(scriptInfo, context, scope);
@@ -237,12 +201,12 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtime", null)));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtimerhino", null)));
 		
+		//data type
+		
+
 		for(HAPResourceId resourceId : resourceIds){
 			resourceIdInfos.add(new HAPResourceInfo(resourceId).withInfo(ADDTORESOURCEMANAGER, ADDTORESOURCEMANAGER));
 		}
-		
-		//data type
-		
 		
 		this.loadResources(resourceIdInfos, out, context);
 		

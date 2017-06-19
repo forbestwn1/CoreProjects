@@ -16,42 +16,41 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 
 public class HAPJsonUtility {
 	
-	public static String buildJson(List<?> list, HAPSerializationFormat format){
-		if(list==null)  return null;
-		List<String> arrayJson = new ArrayList<String>();
-		for(Object data : list){
-			arrayJson.add(buildObjectJsonValue(data, format));
+	public static String buildJson(Object o, HAPSerializationFormat format){
+		if(o==null)   return null;
+		String out = null;
+		if(o instanceof HAPSerializable){
+			out = ((HAPSerializable) o).toStringValue(format);
 		}
-		return buildArrayJson(arrayJson.toArray(new String[0]));
-	}
-
-	public static String buildJson(Object[] list, HAPSerializationFormat format){
-		if(list==null)  return null;
-		List<String> arrayJson = new ArrayList<String>();
-		for(Object data : list){
-			arrayJson.add(buildObjectJsonValue(data, format));
+		else if(o instanceof List){
+			List<String> arrayJson = new ArrayList<String>();
+			for(Object data : (List)o)		arrayJson.add(buildJson(data, format));
+			out = buildArrayJson(arrayJson.toArray(new String[0]));
 		}
-		return buildArrayJson(arrayJson.toArray(new String[0]));
+		else if(o instanceof Set){
+			List<String> arrayJson = new ArrayList<String>();
+			for(Object data : (Set)o)		arrayJson.add(buildJson(data, format));
+			out = buildArrayJson(arrayJson.toArray(new String[0]));
+		}
+		else if(o instanceof Object[]){
+			List<String> arrayJson = new ArrayList<String>();
+			for(Object data : (Object[])o)		arrayJson.add(buildJson(data, format));
+			out = buildArrayJson(arrayJson.toArray(new String[0]));
+		}
+		else if(o instanceof Map){
+			Map<String, String> mapJson = new LinkedHashMap<String, String>();
+			Map<String, ?> mapValue = (Map)o;
+			for(String key : mapValue.keySet()){
+				mapJson.put(key, buildJson(mapValue.get(key), format));
+			}
+			out = buildMapJson(mapJson);
+		}
+		else{
+			out = o + "";
+		}
+		return out;
 	}
 	
-	public static String buildJson(Set<?> list, HAPSerializationFormat format){
-		if(list==null)  return null;
-		List<String> arrayJson = new ArrayList<String>();
-		for(Object data : list){
-			arrayJson.add(buildObjectJsonValue(data, format));
-		}
-		return buildArrayJson(arrayJson.toArray(new String[0]));
-	}
-
-	public static String buildJson(Map<String, ?> map, HAPSerializationFormat format){
-		if(map==null)  return null;
-		Map<String, String> mapJson = new LinkedHashMap<String, String>();
-		for(String key : map.keySet()){
-			mapJson.put(key, buildObjectJsonValue(map.get(key), format));
-		}
-		return buildMapJson(mapJson);
-	}
-
 	public static String buildMapJson(Map<String, String> jsonMap){
 		return buildMapJson(jsonMap, null);
 	}
@@ -121,21 +120,6 @@ public class HAPJsonUtility {
 		return out;
 	}
 
-	private static String buildObjectJsonValue(Object o, HAPSerializationFormat format){
-		if(o==null)   return null;
-		String out = null;
-		if(o instanceof HAPSerializable){
-			out = ((HAPSerializable) o).toStringValue(format);
-		}
-		else if(o instanceof String[]){
-			out = buildArrayJson((String[])o);
-		}
-		else{
-			out = o + "";
-		}
-		return out;
-	}
-	
 	private static String buildAttributeJson(String attr, String value, boolean lastOne, Class<?> type){
 		StringBuffer out = new StringBuffer();
 		

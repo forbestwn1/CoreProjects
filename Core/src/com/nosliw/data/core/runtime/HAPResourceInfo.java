@@ -86,6 +86,9 @@ public class HAPResourceInfo extends HAPSerializableImp{
 	}
 
 	@Override
+	protected boolean buildObjectByJson(Object json){		return this.buildObjectByFullJson(json);	}
+
+	@Override
 	protected boolean buildObjectByFullJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_resourceId = HAPResourceHelper.getInstance().buildResourceIdObject(jsonObj.optString(ID));

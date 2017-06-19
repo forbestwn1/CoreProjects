@@ -20,11 +20,12 @@ import com.nosliw.data.core.runtime.HAPExecuteExpressionTask;
 import com.nosliw.data.core.runtime.HAPLoadResourcesTask;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpJSRhino;
 
 public class HAPRuntimeJSScriptUtility {
 
-	public static List<HAPJSScriptInfo> buildScriptForResource(HAPResource resource){
+	public static List<HAPJSScriptInfo> buildScriptForResource(HAPResourceInfo resourceInfo, HAPResource resource){
 		List<HAPJSScriptInfo> out = new ArrayList<HAPJSScriptInfo>();
 		//build library script info first
 		if(resource.getId().getType().equals(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY)){
@@ -32,7 +33,7 @@ public class HAPRuntimeJSScriptUtility {
 		}
 		
 		StringBuffer script = new StringBuffer();
-		if(HAPRuntimeImpJSRhino.ADDTORESOURCEMANAGER.equals(resource.getInfo().getValue(HAPRuntimeImpJSRhino.ADDTORESOURCEMANAGER)))  return out;
+		if(HAPRuntimeImpJSRhino.ADDTORESOURCEMANAGER.equals(resourceInfo.getInfo().getValue(HAPRuntimeImpJSRhino.ADDTORESOURCEMANAGER)))  return out;
 		
 		//build script for resource data
 		String valueScript = null;
@@ -41,8 +42,7 @@ public class HAPRuntimeJSScriptUtility {
 		}
 		
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put(HAPResourceId.ID, resource.getId().getId());
-		templateParms.put(HAPResourceId.TYPE, resource.getId().getType());
+		templateParms.put("resourceInfo", resourceInfo.toStringValue(HAPSerializationFormat.JSON));
 		
 		String infoJson = HAPSerializeManager.getInstance().toStringValue(resource.getInfo(), HAPSerializationFormat.JSON);
 		if(HAPBasicUtility.isStringEmpty(infoJson)){
