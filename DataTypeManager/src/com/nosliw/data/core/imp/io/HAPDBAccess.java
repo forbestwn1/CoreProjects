@@ -132,7 +132,7 @@ public class HAPDBAccess extends HAPConfigurableImp {
 		List<HAPOperationVarInfoImp> parms = (List<HAPOperationVarInfoImp>)this.queryEntitysFromDB(HAPOperationVarInfoImp._VALUEINFO_NAME, "operationId=?", new Object[]{out.getOperationId()});
 		for(HAPOperationVarInfoImp parm : parms){
 			if(HAPConstant.DATAOPERATION_VAR_TYPE_IN.equals(parm.getType())){
-				out.addParmsInfo(parm.getName(), parm);
+				out.addParmsInfo(parm);
 			}
 			else if(HAPConstant.DATAOPERATION_VAR_TYPE_OUT.equals(parm.getType())){
 				out.setOutputInfo(parm);

@@ -83,7 +83,7 @@ var module = {
 			node_makeObjectWithName = packageObj.getNodeData("common.objectwithname.makeObjectWithName");
 			node_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
 			node_createIdService = packageObj.getNodeData("service.idservice.createIdService");
-			node_createResourceManager = packageObj.getNodeData("service.resourcemanager.createResourceManager");
+			node_createResourceManager = packageObj.getNodeData("resource.resourcemanager.createResourceManager");
 			node_createResourceService = packageObj.getNodeData("runtime.rhino.createResourceService");
 			node_createExpressionService = packageObj.getNodeData("service.expressionservice.createExpressionService");
 		}

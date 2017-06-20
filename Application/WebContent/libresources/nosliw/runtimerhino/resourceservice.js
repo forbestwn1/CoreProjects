@@ -63,7 +63,7 @@ var node_createResourceService = function(resourceManager){
 				loc_findDiscoveredResources(relatedResourceIds, result);
 			}
 			else{
-				missingResourceIds.push(resourceId);
+				missedResourceIds.push(resourceId);
 			}
 		});
 	}

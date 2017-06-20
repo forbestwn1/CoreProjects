@@ -41,9 +41,9 @@ public class HAPOperationImp extends HAPStringableValueEntityWithID implements H
 		return (List<HAPOperationParmInfo>)list.getListValue();
 	}
 	
-	public void addParmsInfo(String name, HAPOperationParmInfo parmInfo){
-		HAPStringableValueMap map = this.getMapAncestorByPath(PAMRS);
-		map.updateChild(name, (HAPStringableValue)parmInfo);
+	public void addParmsInfo(HAPOperationParmInfo parmInfo){
+		HAPStringableValueList list = this.getListAncestorByPath(PAMRS);
+		list.addChild((HAPStringableValue)parmInfo);
 	}
 
 	@Override

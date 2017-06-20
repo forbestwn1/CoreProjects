@@ -1,9 +1,10 @@
 package com.nosliw.data.core.runtime.js.rhino;
 
-import net.sf.json.*;
-
 import java.util.Iterator;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.IdScriptableObject; 
@@ -55,8 +56,15 @@ public class HAPRhinoDataUtility
         // Parse JSON string 
     	try { 
     		String jsonString = HAPSerializeManager.getInstance().toStringValue(obj, HAPSerializationFormat.JSON);
-    		JSON json = JSONSerializer.toJSON(jsonString); 
-         
+    		Object json = null;
+
+    		try{json = new JSONObject(jsonString);}catch(Exception e){}
+
+    		if(json==null){
+        		try{json = new JSONArray(jsonString);}catch(Exception e){}
+    		}
+    		if(json==null)  json = jsonString;
+    		
     		// Create native object  
     		return toRhinoScriptableObject(json); 
     	} catch(Exception e){ 
@@ -65,7 +73,7 @@ public class HAPRhinoDataUtility
     	return null; 
     } 
      
-    private static ScriptableObject toRhinoScriptableObject(JSON json){
+    private static ScriptableObject toRhinoScriptableObject(Object json) throws JSONException{
     	ScriptableObject out = null;
     	if(json instanceof JSONObject){
     		out = toObject((JSONObject)json);
@@ -81,8 +89,9 @@ public class HAPRhinoDataUtility
      *  
      * @param jsonObject        the json object 
      * @return NativeObject     the created native object 
+     * @throws JSONException 
      */ 
-    private static NativeObject toObject(JSONObject jsonObject) 
+    private static NativeObject toObject(JSONObject jsonObject) throws JSONException 
     { 
         // Create native object  
         NativeObject object = new NativeObject(); 
@@ -92,9 +101,9 @@ public class HAPRhinoDataUtility
         { 
             String key = (String)keys.next(); 
             Object value = jsonObject.get(key); 
-            if (value instanceof JSON) 
+            if (value instanceof JSONObject || value instanceof JSONArray) 
             { 
-                object.put(key, object, toRhinoScriptableObject((JSON)value)); 
+                object.put(key, object, toRhinoScriptableObject(value)); 
             } 
             else 
             { 
@@ -106,18 +115,18 @@ public class HAPRhinoDataUtility
     } 
      
     
-    private static NativeArray toArray(JSONArray jsonArray){
-    	int length = jsonArray.size();
+    private static NativeArray toArray(JSONArray jsonArray) throws JSONException{
+    	int length = jsonArray.length();
     	NativeArray array = new NativeArray(length);
     	for(int i=0; i<length; i++){
     		Object value = jsonArray.get(i);
-            if (value instanceof JSON) 
+            if (value instanceof JSONObject || value instanceof JSONArray) 
             { 
-                array.add(toRhinoScriptableObject((JSON)value)); 
+                array.put(i, array, toRhinoScriptableObject(value)); 
             } 
             else 
             { 
-                array.add(value); 
+                array.put(i, array, value); 
             } 
     	}
     	return array;
@@ -131,17 +140,23 @@ public class HAPRhinoDataUtility
      */ 
     private static String nativeObjectToJSONString(NativeObject nativeObject) 
     { 
- JSONObject json = new JSONObject(); 
+    	try{
+        	JSONObject json = new JSONObject(); 
+            
+            Object[] ids = nativeObject.getIds(); 
+            for (Object id : ids) 
+            { 
+                String key = id.toString(); 
+                Object value = nativeObject.get(key, nativeObject); 
+                json.put(key, valueToJSONString(value)); 
+            } 
          
-        Object[] ids = nativeObject.getIds(); 
-        for (Object id : ids) 
-        { 
-            String key = id.toString(); 
-            Object value = nativeObject.get(key, nativeObject); 
-            json.put(key, valueToJSONString(value)); 
-        } 
-     
-     return json.toString();  
+            return json.toString();  
+    	}
+    	catch(Exception e){
+    		e.printStackTrace();
+    		return null;
+    	}
     } 
      
     /**
@@ -151,32 +166,37 @@ public class HAPRhinoDataUtility
      */ 
     private static String nativeArrayToJSONString(NativeArray nativeArray) 
     { 
- 
-        Object[] propIds = nativeArray.getIds(); 
-        if (isArray(propIds) == true) 
-        {       
-            JSONArray jsonArray = new JSONArray(); 
-     for (int i=0; i<propIds.length; i++) 
-            { 
-                Object propId = propIds[i]; 
-                if (propId instanceof Integer) 
+    	try{
+            Object[] propIds = nativeArray.getIds(); 
+            if (isArray(propIds) == true) 
+            {       
+                JSONArray jsonArray = new JSONArray(); 
+                for (int i=0; i<propIds.length; i++) 
                 { 
-                    Object value = nativeArray.get((Integer)propId, nativeArray); 
-                    jsonArray.add(valueToJSONString(value)); 
+                    Object propId = propIds[i]; 
+                    if (propId instanceof Integer) 
+                    { 
+                        Object value = nativeArray.get((Integer)propId, nativeArray); 
+                        jsonArray.put(valueToJSONString(value)); 
+                    } 
                 } 
+                return jsonArray.toString(); 
             } 
-     return jsonArray.toString(); 
-        } 
-        else 
-        { 
-         JSONObject json = new JSONObject(); 
-            for (Object propId : propIds) 
+            else 
             { 
-                Object value = nativeArray.get(propId.toString(), nativeArray); 
-                json.put(propId.toString(), valueToJSONString(value)); 
-            } 
-     return json.toString(); 
-        } 
+            	JSONObject json = new JSONObject(); 
+                for (Object propId : propIds) 
+                { 
+                    Object value = nativeArray.get(propId.toString(), nativeArray); 
+                    json.put(propId.toString(), valueToJSONString(value)); 
+                } 
+                return json.toString();
+            }
+    	}
+    	catch(Exception e){
+    		e.printStackTrace();
+    		return null;
+    	}
     } 
      
     /**
@@ -205,52 +225,60 @@ public class HAPRhinoDataUtility
      * @param value 
      */ 
     private static String valueToJSONString(Object value) 
-    { 
- JSONObject json = new JSONObject(); 
-        if (value instanceof IdScriptableObject && 
-            ((IdScriptableObject)value).getClassName().equals("Date") == true) 
-        { 
-            // Get the UTC values of the date 
-            Object year = NativeObject.callMethod((IdScriptableObject)value, "getUTCFullYear", null); 
-            Object month = NativeObject.callMethod((IdScriptableObject)value, "getUTCMonth", null); 
-            Object date = NativeObject.callMethod((IdScriptableObject)value, "getUTCDate", null); 
-            Object hours = NativeObject.callMethod((IdScriptableObject)value, "getUTCHours", null); 
-            Object minutes = NativeObject.callMethod((IdScriptableObject)value, "getUTCMinutes", null); 
-            Object seconds = NativeObject.callMethod((IdScriptableObject)value, "getUTCSeconds", null); 
-            Object milliSeconds = NativeObject.callMethod((IdScriptableObject)value, "getUTCMilliseconds", null); 
-             
-            // Build the JSON object to represent the UTC date 
-            json.put("zone","UTC"); 
-     json.put("year",year); 
-     json.put("month",month); 
-     json.put("date",date); 
-     json.put("hours",hours); 
-     json.put("minutes",minutes); 
-     json.put("seconds",seconds); 
-     json.put("milliseconds",milliSeconds); 
-     return json.toString(); 
-        } 
-        else if (value instanceof NativeJavaObject) 
-        { 
-            Object javaValue = Context.jsToJava(value, Object.class); 
-            return javaValue.toString(); 
-        } 
-        else if (value instanceof NativeArray) 
-        { 
-            // Output the native array 
-            return nativeArrayToJSONString((NativeArray)value); 
-        } 
-        else if (value instanceof NativeObject) 
-        { 
-            // Output the native object 
-            return nativeObjectToJSONString((NativeObject)value); 
-        } 
-        else if( value instanceof Function){
-        	return Context.toString(value);
-        }
-        else 
-        { 
-           return value.toString();  
-        } 
+    {
+    	try{
+    		 JSONObject json = new JSONObject(); 
+    	        if (value instanceof IdScriptableObject && 
+    	            ((IdScriptableObject)value).getClassName().equals("Date") == true) 
+    	        { 
+    	            // Get the UTC values of the date 
+    	            Object year = NativeObject.callMethod((IdScriptableObject)value, "getUTCFullYear", null); 
+    	            Object month = NativeObject.callMethod((IdScriptableObject)value, "getUTCMonth", null); 
+    	            Object date = NativeObject.callMethod((IdScriptableObject)value, "getUTCDate", null); 
+    	            Object hours = NativeObject.callMethod((IdScriptableObject)value, "getUTCHours", null); 
+    	            Object minutes = NativeObject.callMethod((IdScriptableObject)value, "getUTCMinutes", null); 
+    	            Object seconds = NativeObject.callMethod((IdScriptableObject)value, "getUTCSeconds", null); 
+    	            Object milliSeconds = NativeObject.callMethod((IdScriptableObject)value, "getUTCMilliseconds", null); 
+    	             
+    	            // Build the JSON object to represent the UTC date 
+    	            
+    	            json.put("zone","UTC"); 
+    	     json.put("year",year); 
+    	     json.put("month",month); 
+    	     json.put("date",date); 
+    	     json.put("hours",hours); 
+    	     json.put("minutes",minutes); 
+    	     json.put("seconds",seconds); 
+    	     json.put("milliseconds",milliSeconds); 
+    	     return json.toString(); 
+    	        } 
+    	        else if (value instanceof NativeJavaObject) 
+    	        { 
+    	            Object javaValue = Context.jsToJava(value, Object.class); 
+    	            return javaValue.toString(); 
+    	        } 
+    	        else if (value instanceof NativeArray) 
+    	        { 
+    	            // Output the native array 
+    	            return nativeArrayToJSONString((NativeArray)value); 
+    	        } 
+    	        else if (value instanceof NativeObject) 
+    	        { 
+    	            // Output the native object 
+    	            return nativeObjectToJSONString((NativeObject)value); 
+    	        } 
+    	        else if( value instanceof Function){
+    	        	return Context.toString(value);
+    	        }
+    	        else 
+    	        { 
+    	           return value.toString();  
+    	        } 
+    	}
+    	catch(Exception e){
+    		e.printStackTrace();
+    		return null;
+    	}
+    	
     }     
 }

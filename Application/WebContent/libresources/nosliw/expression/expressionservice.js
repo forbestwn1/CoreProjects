@@ -278,7 +278,7 @@ packageObj.createNode("createExpressionService", node_createExpressionService);
 
 	var module = {
 		start : function(packageObj){
-			node_resourceUtility = packageObj.getNodeData("untime.rhino.utility.resourceUtility");
+			node_resourceUtility = packageObj.getNodeData("runtime.rhino.utility.resourceUtility");
 			node_buildServiceProvider = packageObj.getNodeData("request.buildServiceProvider");
 			node_requestServiceProcessor = packageObj.getNodeData("request.requestServiceProcessor");
 			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");

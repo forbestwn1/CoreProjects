@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.NativeObject;
@@ -14,8 +15,6 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 
-import net.sf.json.JSONSerializer;
-
 public class HAPRhinoRuntimeUtility {
 
 	private static int index = 1;
@@ -25,11 +24,16 @@ public class HAPRhinoRuntimeUtility {
 	public static List<HAPResourceInfo> rhinoResourcesInfoToResourcesInfo(NativeArray rhinoResourceInfoArray){
 		List<HAPResourceInfo> out = new ArrayList<HAPResourceInfo>();
 		for(int i=0; i<rhinoResourceInfoArray.size(); i++){
-			NativeObject resourceInfoObject = (NativeObject)rhinoResourceInfoArray.get(i);
-			String jsonString = resourceInfoObject.toString();
-			HAPResourceInfo resourceInfo = new HAPResourceInfo();
-			resourceInfo.buildObject(JSONSerializer.toJSON(jsonString), HAPSerializationFormat.JSON);
-			out.add(resourceInfo);
+			try{
+				NativeObject resourceInfoObject = (NativeObject)rhinoResourceInfoArray.get(i);
+				String jsonString = HAPRhinoDataUtility.toJSONString(resourceInfoObject);
+				HAPResourceInfo resourceInfo = new HAPResourceInfo();
+				resourceInfo.buildObject(new JSONObject(jsonString), HAPSerializationFormat.JSON);
+				out.add(resourceInfo);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 		return out;
 	}
@@ -38,10 +42,17 @@ public class HAPRhinoRuntimeUtility {
 	public static List<HAPResourceId> rhinoResourcesIdToResourcesId(NativeArray rhinoResourceIdArray){
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		for(int i=0; i<rhinoResourceIdArray.size(); i++){
-			NativeObject resourceIdObject = (NativeObject)rhinoResourceIdArray.get(i);
-			String type = (String)resourceIdObject.get(HAPResourceId.TYPE);
-			String id = (String)resourceIdObject.get(HAPResourceId.ID);
-			resourceIds.add(new HAPResourceId(type, id));
+			try{
+				NativeObject resourceIdObject = (NativeObject)rhinoResourceIdArray.get(i);
+				String jsonString = HAPRhinoDataUtility.toJSONString(resourceIdObject);
+
+				HAPResourceId resourceId = new HAPResourceId();
+				resourceId.buildObject(new JSONObject(jsonString), HAPSerializationFormat.JSON);
+				resourceIds.add(resourceId);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 		return resourceIds;
 	}

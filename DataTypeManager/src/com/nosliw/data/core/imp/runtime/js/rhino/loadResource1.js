@@ -8,9 +8,8 @@
 	
 	var resourceService = nosliw.runtime.getResourceService();
 	resourceService.executeGetResourcesRequest(resourceIds, {
-		success : function(){
+		success : function(requestInfo, resources){
 			var resourceManager = nosliw.runtime.getResourceManager();
-			var resource = resourceManager.useResource(resourceIds[0]);
-			nosliw.logging.info("Get resource : ", resource);
+			nosliw.logging.info("Get resource : ", resources);
 		}
 	}, undefined);
