@@ -41,14 +41,14 @@ var node_createResourceService = function(resourceManager){
 	
 	//find all the resources by id and related resources
 	var loc_findDiscoveredResources = function(resourceIds, result){
-		var foundResources = result.found;
+		var foundResourcesTree = result.found;
 		var missedResourceIds = result.missed;
 		
 		_.each(resourceIds, function(resourceId, index, list){
 			var resource = loc_resourceManager.useResource(resourceId);
 			if(resource!=undefined){
 				//resource exist
-				node_resourceUtility.buildResourceTree(foundResources, resource);
+				node_resourceUtility.buildResourceTree(foundResourcesTree, resource);
 
 				//discover related resources (dependency and children)
 				var relatedResourceIds = []; 
@@ -90,10 +90,10 @@ var node_createResourceService = function(resourceManager){
 			out.addRequest(loc_getFindDsicoveredResourcesRequest(resourceIds, {
 				success : function(requestInfo, data){
 					var missedResourceIds = data.missed;
-					var foundResources = data.found;
+					var foundResourcesTree = data.found;
 					if(missedResourceIds.length==0){
 						//all found
-						return foundResources;
+						return foundResourcesTree;
 					}
 					else{
 						//need load resource
@@ -105,9 +105,9 @@ var node_createResourceService = function(resourceManager){
 									success : function(requestInfo){
 										_.each(resourceInfos, function(resourceInfo, index, list){
 											var resource = loc_resourceManager.useResource(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_ID]);
-											node_resourceUtility.buildResourceTree(foundResources, resource);
+											node_resourceUtility.buildResourceTree(foundResourcesTree, resource);
 										}, this);
-										return foundResources;
+										return foundResourcesTree;
 									}
 								}, null);
 								return loadResourceRequest;
@@ -136,7 +136,12 @@ var node_createResourceService = function(resourceManager){
 			}, handlers, requestInfo);
 			return out;
 		},
-			
+
+		executeGetDiscoverResourcesRequest : function(resourceIds, handlers, requester_parent){
+			var requestInfo = this.getDiscoverResourcesRequest(resourceIds, handlers, requester_parent);
+			node_requestServiceProcessor.processRequest(requestInfo, false);
+		},
+		
 	};
 	
 	loc_out = node_buildServiceProvider(loc_out, "resourceService");
