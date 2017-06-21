@@ -2,8 +2,13 @@
 	resourceIds.push(
 		{
 			type : "operation",
-			id : "core.url;1.1.0;url_normal2"
+			id : "core.url;1.1.0;url_normal3"
 		}
+//		{
+//			type : "operation",
+//			id : "base.string;1.0.0;subString"
+//		}
+
 	);
 	
 	var resourceService = nosliw.runtime.getResourceService();

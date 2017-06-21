@@ -73,12 +73,18 @@ public class HAPResourceId extends HAPSerializableImp{
 	
 	@Override
 	protected String buildLiterate(){
-		return HAPNamingConversionUtility.cascadeLevel1(new String[]{this.getType(), this.getId()});
+		return HAPNamingConversionUtility.cascadeLevel2(new String[]{this.getType(), this.getId()});
 	}
 	
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){	
-		String[] segs = HAPNamingConversionUtility.parseLevel1(literateValue);
+		String[] segs = HAPNamingConversionUtility.parseLevel2(literateValue);
+		
+		if(segs.length==1){
+			int kkkkk = 555;
+			kkkkk++;
+		}
+		
 		this.m_type = segs[0];
 		this.m_id = segs[1];
 		return true;  

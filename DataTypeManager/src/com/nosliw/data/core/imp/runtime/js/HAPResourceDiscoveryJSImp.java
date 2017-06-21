@@ -60,8 +60,8 @@ public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 		List<HAPResourceDependent> dependencys = this.getResourceDependency(resourceId);
 		for(HAPResourceDependent dependency : dependencys){
 			resourceInfo.addDependency(dependency);
-			if(!resourceInfos.contains(dependency)){
-				this.discoverResource(resourceId, resourceInfos);
+			if(!resourceInfos.contains(dependency.getId())){
+				this.discoverResource(dependency.getId(), resourceInfos);
 			}
 		}
 	}

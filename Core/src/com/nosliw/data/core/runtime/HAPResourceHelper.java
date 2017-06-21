@@ -3,6 +3,8 @@ package com.nosliw.data.core.runtime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 public class HAPResourceHelper {
@@ -27,7 +29,21 @@ public class HAPResourceHelper {
 		this.m_typeToResourceId.put(resourceType, resourceIdClass);
 		this.m_idToResourceId.put(dataIdClass, resourceIdClass);
 	}
-	
+
+	public HAPResourceId buildResourceIdObject(JSONObject jsonObj){
+		String type = jsonObj.optString(HAPResourceId.TYPE);
+		String id = jsonObj.optString(HAPResourceId.ID);
+		
+		HAPResourceId out = new HAPResourceId(type, id);
+		try {
+			Class resourceIdClass = this.m_typeToResourceId.get(out.getType());
+			out = (HAPResourceId)resourceIdClass.getConstructor(HAPResourceId.class).newInstance(out);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
+
 	public HAPResourceId buildResourceIdObject(String literate){
 		HAPResourceId out = new HAPResourceId(literate);
 		try {

@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
+	var node_COMMONTRIBUTECONSTANT;
 	var node_runtimeGateway;
 	var node_resourceUtility;
 //*******************************************   Start Node Definition  ************************************** 	
@@ -89,10 +90,10 @@ var node_createResourceService = function(resourceManager){
 			out.addRequest(loc_getFindDsicoveredResourcesRequest(resourceIds, {
 				success : function(requestInfo, data){
 					var missedResourceIds = data.missed;
-					var foundResoruces = data.found;
+					var foundResources = data.found;
 					if(missedResourceIds.length==0){
 						//all found
-						return foundResoruces;
+						return foundResources;
 					}
 					else{
 						//need load resource
@@ -102,7 +103,7 @@ var node_createResourceService = function(resourceManager){
 								//after discovery, load resources
 								var loadResourceRequest = loc_getLoadResourcesRequest(resourceInfos, {
 									success : function(requestInfo){
-										_.each(resoruceInfos, function(resourceInfo, index, list){
+										_.each(resourceInfos, function(resourceInfo, index, list){
 											var resource = loc_resourceManager.useResource(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_ID]);
 											node_resourceUtility.buildResourceTree(foundResources, resource);
 										}, this);
@@ -158,6 +159,7 @@ packageObj.createNode("createResourceService", node_createResourceService);
 			node_ServiceInfo = packageObj.getNodeData("common.service.ServiceInfo");
 			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
 			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
+			node_COMMONTRIBUTECONSTANT = packageObj.getNodeData("constant.COMMONTRIBUTECONSTANT");
 			node_runtimeGateway = packageObj.getNodeData(node_COMMONCONSTANT.RUNTIME_LANGUAGE_JS_GATEWAY);
 			node_resourceUtility = packageObj.getNodeData("resource.resourceUtility");
 		}

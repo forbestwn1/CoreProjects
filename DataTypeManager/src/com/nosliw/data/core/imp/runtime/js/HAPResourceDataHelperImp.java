@@ -7,6 +7,8 @@ public class HAPResourceDataHelperImp extends HAPStringableValueEntityWithID imp
 
 	public static String _VALUEINFO_NAME;
 	
+	public HAPResourceDataHelperImp(){}
+	
 	public HAPResourceDataHelperImp(String script){
 		this.updateAtomicChildStrValue(VALUE, script);
 	}

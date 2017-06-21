@@ -76,7 +76,7 @@ public class HAPResourceDependent extends HAPSerializableImp{
 	@Override
 	protected boolean buildObjectByFullJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_id = HAPResourceHelper.getInstance().buildResourceIdObject(jsonObj.optString(ID));
+		this.m_id = HAPResourceHelper.getInstance().buildResourceIdObject(jsonObj.optJSONObject(ID));
 		
 		JSONArray alaisArray = jsonObj.optJSONArray(ALIAS);
 		for(int i=0; i<alaisArray.length(); i++){
@@ -90,12 +90,12 @@ public class HAPResourceDependent extends HAPSerializableImp{
 	protected String buildLiterate(){
 		String aliasLiterate = HAPLiterateManager.getInstance().valueToString(this.m_alias);
 		String idLiterate = HAPSerializeManager.getInstance().toStringValue(this.m_id, HAPSerializationFormat.LITERATE);
-		return HAPNamingConversionUtility.cascadeLevel2(new String[]{idLiterate, aliasLiterate});
+		return HAPNamingConversionUtility.cascadeLevel3(new String[]{idLiterate, aliasLiterate});
 	}
 	
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){	
-		String[] segs = HAPNamingConversionUtility.parseLevel2(literateValue);
+		String[] segs = HAPNamingConversionUtility.parseLevel3(literateValue);
 		this.m_id = HAPResourceHelper.getInstance().buildResourceIdObject(segs[0]);
 		if(segs.length>=2)   this.setAlias(segs[1]);
 		return true;  

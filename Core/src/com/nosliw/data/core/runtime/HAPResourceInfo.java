@@ -124,4 +124,13 @@ public class HAPResourceInfo extends HAPSerializableImp{
 		for(HAPResourceDependent child : resourceInfo.getChildren())			this.m_children.add(child.clone());
 	}
 	
+	public boolean equals(Object obj){
+		boolean out = false;
+		if(obj instanceof HAPResourceInfo){
+			HAPResourceInfo resourceInfo = (HAPResourceInfo)obj;
+			out = this.getId().equals(resourceInfo.getId());
+		}
+		return out;
+	}
+	
 }

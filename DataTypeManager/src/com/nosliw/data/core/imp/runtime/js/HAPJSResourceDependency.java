@@ -17,6 +17,8 @@ public class HAPJSResourceDependency  extends HAPStringableValueEntityWithID{
 	@HAPAttribute
 	public static String DEPENDENCY = "dependency";
 	
+	public HAPJSResourceDependency(){}
+	
 	public HAPJSResourceDependency(HAPResourceId resourceId,List<HAPResourceDependent> dependency){
 		this.setResourceId(resourceId);
 		this.setDependency(dependency);

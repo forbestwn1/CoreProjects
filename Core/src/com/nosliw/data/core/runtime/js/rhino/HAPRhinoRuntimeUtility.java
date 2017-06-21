@@ -21,12 +21,12 @@ public class HAPRhinoRuntimeUtility {
 	
 	private static String scriptTempFolder = "C:/Temp/ScriptExport/scripts/" + System.currentTimeMillis() + "/";
 
-	public static List<HAPResourceInfo> rhinoResourcesInfoToResourcesInfo(NativeArray rhinoResourceInfoArray){
+	public static List<HAPResourceInfo> rhinoResourcesInfoToResourcesInfo(NativeArray rhinoResourceInfoArray, Context context, Scriptable scope){
 		List<HAPResourceInfo> out = new ArrayList<HAPResourceInfo>();
 		for(int i=0; i<rhinoResourceInfoArray.size(); i++){
 			try{
 				NativeObject resourceInfoObject = (NativeObject)rhinoResourceInfoArray.get(i);
-				String jsonString = HAPRhinoDataUtility.toJSONString(resourceInfoObject);
+				String jsonString = HAPRhinoDataUtility.toJSONStringValue(resourceInfoObject, context, scope);
 				HAPResourceInfo resourceInfo = new HAPResourceInfo();
 				resourceInfo.buildObject(new JSONObject(jsonString), HAPSerializationFormat.JSON);
 				out.add(resourceInfo);
@@ -39,12 +39,12 @@ public class HAPRhinoRuntimeUtility {
 	}
 	
 	//convert rhino resource id array to HAPResourceId array
-	public static List<HAPResourceId> rhinoResourcesIdToResourcesId(NativeArray rhinoResourceIdArray){
+	public static List<HAPResourceId> rhinoResourcesIdToResourcesId(NativeArray rhinoResourceIdArray, Context context, Scriptable scope){
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		for(int i=0; i<rhinoResourceIdArray.size(); i++){
 			try{
 				NativeObject resourceIdObject = (NativeObject)rhinoResourceIdArray.get(i);
-				String jsonString = HAPRhinoDataUtility.toJSONString(resourceIdObject);
+				String jsonString = HAPRhinoDataUtility.toJSONStringValue(resourceIdObject, context, scope);
 
 				HAPResourceId resourceId = new HAPResourceId();
 				resourceId.buildObject(new JSONObject(jsonString), HAPSerializationFormat.JSON);

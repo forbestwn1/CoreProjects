@@ -8,9 +8,11 @@ import org.json.JSONObject;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.IdScriptableObject; 
-import org.mozilla.javascript.NativeArray; 
+import org.mozilla.javascript.NativeArray;
+import org.mozilla.javascript.NativeJSON;
 import org.mozilla.javascript.NativeJavaObject; 
 import org.mozilla.javascript.NativeObject;
+import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -23,6 +25,69 @@ import com.nosliw.common.serialization.HAPSerializeManager;
  
 public class HAPRhinoDataUtility 
 { 
+    /**
+     * Takes a java object and converts it to a native java script object 
+     *  
+     * @param  jsonString       a valid json string 
+     * @return NativeObject     the created native JS object that represents the JSON object 
+     */ 
+    public static ScriptableObject toRhinoScriptableObjectFromObject(Object obj) 
+    { 
+        // Parse JSON string 
+    	try { 
+    		String jsonString = HAPSerializeManager.getInstance().toStringValue(obj, HAPSerializationFormat.JSON);
+    		Object json = null;
+
+    		try{json = new JSONObject(jsonString);}catch(Exception e){}
+
+    		if(json==null){
+        		try{json = new JSONArray(jsonString);}catch(Exception e){}
+    		}
+    		if(json==null)  json = jsonString;
+    		
+    		// Create native object
+    		return toSciptableObjectFromJson(json);
+    	} catch(Exception e){ 
+    		e.printStackTrace(); 
+    	} 
+    	return null;
+    } 
+     
+    private static ScriptableObject toSciptableObjectFromJson(Object json) throws JSONException{
+		ScriptableObject out = null;
+    	if(json instanceof JSONObject){
+    		JSONObject jsonObject = (JSONObject)json;
+            NativeObject object = new NativeObject(); 
+            Iterator<String> keys = jsonObject.keys(); 
+            while (keys.hasNext()) 
+            { 
+                String key = (String)keys.next(); 
+                Object value = jsonObject.get(key); 
+                if (value instanceof JSONObject || value instanceof JSONArray)                object.put(key, object, toSciptableObjectFromJson(value)); 
+                else            object.put(key, object, value); 
+            }  
+            return object;
+    	}
+    	else if(json instanceof JSONArray){
+    		JSONArray jsonArray = (JSONArray)json;
+        	int length = jsonArray.length();
+        	NativeArray array = new NativeArray(length);
+        	for(int i=0; i<length; i++){
+        		Object value = jsonArray.get(i);
+                if (value instanceof JSONObject || value instanceof JSONArray)            array.put(i, array, toSciptableObjectFromJson(value)); 
+                else           array.put(i, array, value); 
+        	}
+        	return array;
+    	}
+    	return out;
+    }
+    
+    public static String toJSONStringValue(Object object, Context context, Scriptable scope){
+    	String json = (String)NativeJSON.stringify(context, scope, object, null, null);
+    	return json;
+    }
+	
+	
     /**
      * Converts a given JavaScript native object and converts it to the relevant JSON string. 
      *  
@@ -45,93 +110,6 @@ public class HAPRhinoDataUtility
     	return null; 
     } 
      
-    /**
-     * Takes a java object and converts it to a native java script object 
-     *  
-     * @param  jsonString       a valid json string 
-     * @return NativeObject     the created native JS object that represents the JSON object 
-     */ 
-    public static ScriptableObject toScriptableObject(Object obj) 
-    { 
-        // Parse JSON string 
-    	try { 
-    		String jsonString = HAPSerializeManager.getInstance().toStringValue(obj, HAPSerializationFormat.JSON);
-    		Object json = null;
-
-    		try{json = new JSONObject(jsonString);}catch(Exception e){}
-
-    		if(json==null){
-        		try{json = new JSONArray(jsonString);}catch(Exception e){}
-    		}
-    		if(json==null)  json = jsonString;
-    		
-    		// Create native object  
-    		return toRhinoScriptableObject(json); 
-    	} catch(Exception e){ 
-    		e.printStackTrace(); 
-    	} 
-    	return null; 
-    } 
-     
-    private static ScriptableObject toRhinoScriptableObject(Object json) throws JSONException{
-    	ScriptableObject out = null;
-    	if(json instanceof JSONObject){
-    		out = toObject((JSONObject)json);
-    	}
-    	else if(json instanceof JSONArray){
-    		out = toArray((JSONArray)json);
-    	}
-    	return out;
-    }
-    
-    /**
-     * Takes a JSON object and converts it to a native JS object. 
-     *  
-     * @param jsonObject        the json object 
-     * @return NativeObject     the created native object 
-     * @throws JSONException 
-     */ 
-    private static NativeObject toObject(JSONObject jsonObject) throws JSONException 
-    { 
-        // Create native object  
-        NativeObject object = new NativeObject(); 
-         
-        Iterator<String> keys = jsonObject.keys(); 
-        while (keys.hasNext()) 
-        { 
-            String key = (String)keys.next(); 
-            Object value = jsonObject.get(key); 
-            if (value instanceof JSONObject || value instanceof JSONArray) 
-            { 
-                object.put(key, object, toRhinoScriptableObject(value)); 
-            } 
-            else 
-            { 
-                object.put(key, object, value); 
-            } 
-        }  
-         
-        return object; 
-    } 
-     
-    
-    private static NativeArray toArray(JSONArray jsonArray) throws JSONException{
-    	int length = jsonArray.length();
-    	NativeArray array = new NativeArray(length);
-    	for(int i=0; i<length; i++){
-    		Object value = jsonArray.get(i);
-            if (value instanceof JSONObject || value instanceof JSONArray) 
-            { 
-                array.put(i, array, toRhinoScriptableObject(value)); 
-            } 
-            else 
-            { 
-                array.put(i, array, value); 
-            } 
-    	}
-    	return array;
-    }
-    
     /**
      * Build a JSON string for a native object 
      *  

@@ -70,28 +70,28 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	//gateway callback method
 	@Override
 	public void descoverResources(Object objResourceIds, Object callBackFunction){
-		List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds); 
+		List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds, this.m_context, this.m_scope); 
 		List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
-		((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toScriptableObject(resourceInfos)});
+		((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(resourceInfos)});
 	}
 	
 	//gateway callback method
 	@Override
 	public void discoverAndLoadResources(Object objResourceIds, Object callBackFunction){
-		List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds);
+		List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds, this.m_context, this.m_scope);
 		//discovery
 		List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
 		//load resources to rhino runtime
 		this.loadResources(resourceInfos, m_scope, m_context);
 		
 		//callback with resourceInfos
-		((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toScriptableObject(resourceInfos)});
+		((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(resourceInfos)});
 	}
 	
 	//gateway callback method
 	@Override
 	public void loadResources(Object objResourcesInfo, Object callBackFunction){
-		List<HAPResourceInfo> resourcesInfo = HAPRhinoRuntimeUtility.rhinoResourcesInfoToResourcesInfo((NativeArray)objResourcesInfo);
+		List<HAPResourceInfo> resourcesInfo = HAPRhinoRuntimeUtility.rhinoResourcesInfoToResourcesInfo((NativeArray)objResourcesInfo, this.m_context, this.m_scope);
 		//load resources to rhino runtime
 		this.loadResources(resourcesInfo, m_scope, m_context);
 		((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{});
