@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("expressionservice");    
+var packageObj = library.getChildPackage("service");    
 
 (function(packageObj){
 	//get used node
@@ -154,41 +154,6 @@ var node_createExpressionService = function(){
 		return out;
 	}
 
-	//execute data operation
-	var loc_getExecuteOperationRequest = function(dataTypeId, operation, parms, handlers, requester_parent){
-		var requestInfo = loc_out.getRequestInfo(requester_parent);
-		var out = createServiceRequestInfoService(new node_ServiceInfo("ExecuteOperation", {"dataType":dataTypeId, "operation":operation, "parms":parms}), handlers, requestInfo);
-		
-		var dataOperationId = node_resourceUtility.createOperationResourceId(dataTypeId, operation);
-		var loadResourceRequest = nosliw.runtime.getResourceService().getGetResourcesRequest([dataOperationId], {
-			success : function(requestInfo, resources){
-				var dataOperationResource = resources[dataOperationId];
-				var dataOperationFun = dataOperationResource.resourceData;
-				
-				//build operation context
-				var operationContext = {
-					resources : resources,
-					data : {},
-				};
-				var dependencys = dataOperationResource.dependency;
-				_.each(dependencys, function(dependency, index, list){
-					var aliases;
-					var dependencyResource;
-					_.each(aliases, function(alias, index, list){
-						operationContext.data[alias] = dependencyResource.resourceData;
-					}, this);
-				}, this);
-				
-				var converterResult = dataOperationFun.call(base, parms, operationContext);
-				return converterResult;
-			}
-		}, requestInfo);
-
-		out.setDependentService(loadResourceRequest);
-		return out;
-	};	
-
-
 	
 	//convert individual data according to matchers
 	var loc_getMatchDataTaskRequest = function(data, matchers, handlers, requester_parent){
@@ -253,15 +218,62 @@ var node_createExpressionService = function(){
 		}, requestInfo);
 		out.setDependentService(loadResourceRequest);
 		return out;
-	}
+	};
+	
+	//execute data operation
+	var loc_getExecuteOperationRequest = function(dataTypeId, operation, parms, handlers, requester_parent){
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
+		var out = createServiceRequestInfoService(new node_ServiceInfo("ExecuteOperation", {"dataType":dataTypeId, "operation":operation, "parms":parms}), handlers, requestInfo);
+		
+		var dataOperationId = node_resourceUtility.createOperationResourceId(dataTypeId, operation);
+		var loadResourceRequest = nosliw.runtime.getResourceService().getGetResourcesRequest([dataOperationId], {
+			success : function(requestInfo, resources){
+				var dataOperationResource = resources[dataOperationId];
+				var dataOperationFun = dataOperationResource.resourceData;
+				
+				//build operation context
+				var operationContext = {
+					resources : resources,
+					data : {},
+				};
+				var dependencys = dataOperationResource.dependency;
+				_.each(dependencys, function(dependency, index, list){
+					var aliases;
+					var dependencyResource;
+					_.each(aliases, function(alias, index, list){
+						operationContext.data[alias] = dependencyResource.resourceData;
+					}, this);
+				}, this);
+				
+				var converterResult = dataOperationFun.call(base, parms, operationContext);
+				return converterResult;
+			}
+		}, requestInfo);
+
+		out.setDependentService(loadResourceRequest);
+		return out;
+	};	
+
+
+	
 	
 	var loc_out = {
+		getExecuteOperationRequest : function(dataTypeId, operation, parmsArray, handlers, requester_parent){
+			return loc_getExecuteOperationRequest(dataTypeId, operation, parmsArray, handlers, requester_parent);
+		},
+			
+		executeExecuteOperationRequest : function(dataTypeId, operation, parmsArray, handlers, requester_parent){
+			var requestInfo = this.getExecuteOperationRequest(dataTypeId, operation, parmsArray, handlers, requester_parent);
+			node_requestServiceProcessor.processRequest(requestInfo, false);
+		},
+
+		
 		getExecuteExpressionRequest : function(expression, variables, handlers, requester_parent){
 			return loc_getExecuteExpressionRequest(expression, variables, handlers, requester_parent);
 		},
 			
-		executeExecuteExpressionRequest : function(expression, variables, handlers, requestInfo){
-			var requestInfo = this.getExecuteExpressionRequest(expression, variables, handlers, requestInfo);
+		executeExecuteExpressionRequest : function(expression, variables, handlers, requester_parent){
+			var requestInfo = this.getExecuteExpressionRequest(expression, variables, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		}
 	};

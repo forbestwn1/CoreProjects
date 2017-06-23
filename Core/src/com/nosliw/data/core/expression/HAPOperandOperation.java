@@ -29,9 +29,6 @@ public class HAPOperandOperation extends HAPOperandImp{
 	@HAPAttribute
 	public static final String OPERATION = "operation";
 	
-//	@HAPAttribute
-//	public static final String BASE = "base";
-
 	@HAPAttribute
 	public static final String PARMS = "parms";
 	
@@ -43,7 +40,6 @@ public class HAPOperandOperation extends HAPOperandImp{
 	
 	//base data
 	protected HAPOperand m_base;
-	private HAPMatchers m_baseMatchers;
 
 	//operation name
 	protected String m_operation;
@@ -106,10 +102,6 @@ public class HAPOperandOperation extends HAPOperandImp{
 		for(String parm : this.m_parmsMatchers.keySet()){
 			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(this.m_parmsMatchers.get(parm).getRelationships()));
 		}
-		
-		if(this.m_baseMatchers!=null){
-			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(this.m_baseMatchers.getRelationships()));
-		}
 		return out;	
 	}
 	
@@ -131,7 +123,6 @@ public class HAPOperandOperation extends HAPOperandImp{
 
 	private void resetMatchers(){
 		this.m_parmsMatchers = new LinkedHashMap<String,HAPMatchers>();
-		this.m_baseMatchers = null;
 	}
 	
 	@Override
@@ -167,6 +158,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 					//if parmInfo is base parm and is located in base
 					parmOperand = this.m_base;
 					this.m_parms.put(parmInfo.getName(), parmOperand);
+					this.m_base = null;
 				}
 				HAPMatchers matchers = parmOperand.discover(variablesInfo, parmInfo.getCriteria(), context, dataTypeHelper);
 				if(matchers!=null){

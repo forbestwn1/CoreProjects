@@ -18,3 +18,12 @@
 			nosliw.logging.info("Get resource : ", resourcesTree);
 		}
 	}, undefined);
+
+	
+	var expressionService = nosliw.runtime.getExpressionService();
+	expressionService.executeExecuteOperationRequest("base.string;1.0.0", "subString", {}, {
+		success : function(requestInfo, data){
+			nosliw.logging.info("Operation Result : ", data);
+		}
+	}, undefined)
+	

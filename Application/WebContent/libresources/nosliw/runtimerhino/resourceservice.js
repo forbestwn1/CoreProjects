@@ -73,7 +73,7 @@ var node_createResourceService = function(resourceManager){
 	var loc_getLoadResourcesRequest = function(resourceInfos, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("LoadResources", {"resourcesInfo":resourceInfos}), function(requestInfo){
-			node_runtimeGateway.loadResources(resourceInfos, function(){
+			node_runtimeGateway.requestLoadResources(resourceInfos, function(){
 				out.executeSuccessHandler();
 			});
 		}, handlers, requestInfo);
@@ -130,7 +130,7 @@ var node_createResourceService = function(resourceManager){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			
 			var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("DiscoverResources", {"resourcesId":resourceIds}), function(requestInfo){
-				node_runtimeGateway.descoverResources(resourceIds, function(resourcesInfo){
+				node_runtimeGateway.requestDiscoverResources(resourceIds, function(resourcesInfo){
 					requestInfo.executeSuccessHandler(resourcesInfo);
 				});
 			}, handlers, requestInfo);

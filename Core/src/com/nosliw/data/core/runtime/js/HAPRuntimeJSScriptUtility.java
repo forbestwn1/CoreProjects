@@ -19,7 +19,6 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.runtime.HAPExecuteExpressionTask;
 import com.nosliw.data.core.runtime.HAPLoadResourcesTask;
 import com.nosliw.data.core.runtime.HAPResource;
-import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpJSRhino;
 
