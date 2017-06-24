@@ -2,13 +2,15 @@
 var packageObj = library.getChildPackage("entity");    
 
 (function(packageObj){
-//get used node
+	//get used node
+	var node_COMMONCONSTANT;
+	var node_resourceUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_Parm = function(value, name, isBase){
 	this.value = value;
 	this.name = name;
-	this.isBase = isBase==undefined?false:isBase
+	this.isBase = isBase==undefined?false:isBase;
 };	
 	
 var node_Parms = function(parmsArray){
@@ -34,18 +36,33 @@ node_Parms.prototype = {
 };
 
 var node_OperationContext = function(resourcesTree, aliases){
-
+	this.pri_resourcesTree = resourcesTree;
+	this.pri_aliases = aliases;
 }
+
+node_OperationContext.prototype = {
+	getResourceById : function(resourceId){
+		return node_resourceUtility.getResourceFromTree(this.pri_resourcesTree);
+	},
 	
+	getResourceByName : function(alias){
+		var resourceId = this.pri_aliases[alias];
+		return this.getResourceById(resourceId);
+	}
+
+};
+
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("Requester", node_Requester); 
-packageObj.createNode("ServiceRequestExecuteInfo", node_ServiceRequestExecuteInfo); 
-packageObj.createNode("DependentServiceRequestInfo", node_DependentServiceRequestInfo); 
+packageObj.createNode("Parm", node_Parm); 
+packageObj.createNode("Parms", node_Parms); 
+packageObj.createNode("OperationContext", node_OperationContext); 
 
 	var module = {
 		start : function(packageObj){
+			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
+			node_resourceUtility = packageObj.getNodeData("resource.resourceUtility");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

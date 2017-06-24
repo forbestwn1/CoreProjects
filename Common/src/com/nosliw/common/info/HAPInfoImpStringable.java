@@ -7,10 +7,10 @@ import com.nosliw.common.strvalue.HAPStringableValueEntity;
 public class HAPInfoImpStringable extends HAPStringableValueEntity implements HAPInfo{
 
 	@Override
-	public String getValue(String name) {		return this.getAtomicAncestorValueString(name);	}
+	public Object getValue(String name) {		return this.getAtomicAncestorValue(name);	}
 
 	@Override
-	public void setValue(String name, String value) {  this.updateAtomicChildStrValue(name, value);  }
+	public void setValue(String name, Object value) {  this.updateAtomicChildObjectValue(name, value);  }
 
 	@Override
 	public Set<String> getNames() {  return this.getProperties(); }

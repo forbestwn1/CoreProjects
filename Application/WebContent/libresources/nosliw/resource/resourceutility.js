@@ -27,7 +27,13 @@ var node_resourceUtility =
 			var typeResources = tree[type];
 			if(typeResources==undefined)  return undefined;
 			return typeResources[id];
-		}
+		},
+		
+		createOperationResourceId : function(dataTypeId, operation){
+			
+		},
+		
+		build
 		
 };
 

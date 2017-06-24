@@ -252,7 +252,7 @@ public class HAPJSImporter {
 	}
 	
 	private String getOperationId(HAPDataTypeId dataTypeId, String operationName){
-		HAPOperationImp operation = this.m_dbAccess.getOperationInfoByName(dataTypeId, operationName);
+		HAPOperationImp operation = this.m_dbAccess.getOperationBasicInfoByName(dataTypeId, operationName);
 		return operation.getId();
 	}
 	

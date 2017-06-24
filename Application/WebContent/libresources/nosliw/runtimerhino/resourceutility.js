@@ -8,9 +8,6 @@ var packageObj = library.getChildPackage("utility");
 var node_resourceUtility = 
 {
 		
-		createOperationResourceId : function(dataTypeId, operation){
-			
-		}
 		
 };
 

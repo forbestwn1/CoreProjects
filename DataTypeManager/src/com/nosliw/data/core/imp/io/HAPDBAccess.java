@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.configure.HAPConfigurableImp;
@@ -31,7 +30,6 @@ import com.nosliw.data.core.imp.HAPDataTypeImpLoad;
 import com.nosliw.data.core.imp.HAPDataTypeOperationImp;
 import com.nosliw.data.core.imp.HAPDataTypePictureImp;
 import com.nosliw.data.core.imp.HAPOperationImp;
-import com.nosliw.data.core.imp.HAPOperationInfoImp;
 import com.nosliw.data.core.imp.HAPOperationVarInfoImp;
 import com.nosliw.data.core.imp.HAPRelationshipImp;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataJSOperationImp;
@@ -219,12 +217,28 @@ public class HAPDBAccess extends HAPConfigurableImp {
 	public List<HAPOperationImp> getOperationInfosByDataType(HAPDataTypeId dataTypeName){
 		return (List<HAPOperationImp>)this.queryEntitysFromDB(HAPOperationImp._VALUEINFO_NAME, "dataTypeName=?", new Object[]{dataTypeName.getFullName()});
 	}
-	
+
 	public HAPOperationImp getOperationInfoByName(HAPDataTypeId dataTypeName, String name) {
+		HAPOperationImp operationInfo = this.getOperationBasicInfoByName(dataTypeName, name);
+
+		List<HAPOperationVarInfoImp> parms = (List<HAPOperationVarInfoImp>)this.queryEntitysFromDB(HAPOperationVarInfoImp._VALUEINFO_NAME, "operationId=?", new Object[]{operationInfo.getId()});
+		for(HAPOperationVarInfoImp parm : parms){
+			if(HAPConstant.DATAOPERATION_VAR_TYPE_IN.equals(parm.getType())){
+				operationInfo.addParmsInfo(parm);
+			}
+			else if(HAPConstant.DATAOPERATION_VAR_TYPE_OUT.equals(parm.getType())){
+				operationInfo.setOutputInfo(parm);
+			}
+		}
+		return operationInfo;
+	}
+	
+	
+	public HAPOperationImp getOperationBasicInfoByName(HAPDataTypeId dataTypeName, String name) {
 		return (HAPOperationImp)this.queryEntityFromDB(HAPOperationImp._VALUEINFO_NAME, "name=? AND dataTypeName=?", new Object[]{name, dataTypeName.getFullName()});
 	}
 
-	public HAPOperationImp getOperationInfoById(String id) {
+	public HAPOperationImp getOperationBasicInfoById(String id) {
 		return (HAPOperationImp)this.queryEntityFromDB(HAPOperationImp._VALUEINFO_NAME, "id=?", new Object[]{id});
 	}
 	

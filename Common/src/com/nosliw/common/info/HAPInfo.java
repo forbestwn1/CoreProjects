@@ -10,9 +10,9 @@ import com.nosliw.common.serialization.HAPSerializable;
  */
 public interface HAPInfo extends HAPSerializable{
 
-	String getValue(String name);
+	Object getValue(String name);
 	
-	void setValue(String name, String value);
+	void setValue(String name, Object value);
 
 	Set<String> getNames();
 	

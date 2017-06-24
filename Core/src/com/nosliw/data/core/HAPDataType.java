@@ -21,7 +21,7 @@ import com.nosliw.common.serialization.HAPSerializable;
  * For instance, how to build new data, converting between data type, validating the data, serialize and deserialize 
  */
 
-@HAPEntityWithAttribute(baseName="DATATYPE")
+@HAPEntityWithAttribute
 public interface HAPDataType extends HAPSerializable{
 
 	@HAPAttribute

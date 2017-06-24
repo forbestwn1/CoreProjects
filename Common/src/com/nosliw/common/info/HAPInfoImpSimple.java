@@ -5,22 +5,26 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.utils.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 
 public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 
-	private Map<String, String> m_values = new LinkedHashMap<String, String>();
+	private Map<String, Object> m_values = new LinkedHashMap<String, Object>();
 	
 	@Override
-	public String getValue(String name) {		return this.m_values.get(name);	}
+	public Object getValue(String name) {		return this.m_values.get(name);	}
 
 	@Override
-	public void setValue(String name, String value) {		this.m_values.put(name, value);	}
+	public void setValue(String name, Object value) {		this.m_values.put(name, value);	}
 
 	@Override
 	public Set<String> getNames() {   return this.m_values.keySet();  }
 
 	@Override
-	protected String buildFullJson(){ return HAPJsonUtility.buildMapJson(m_values); }
+	protected String buildFullJson(){	return HAPSerializeManager.getInstance().toStringValue(m_values, HAPSerializationFormat.JSON_FULL);	}
 
+	@Override
+	protected String buildJson(){	return HAPSerializeManager.getInstance().toStringValue(m_values, HAPSerializationFormat.JSON);	}
+	
 }

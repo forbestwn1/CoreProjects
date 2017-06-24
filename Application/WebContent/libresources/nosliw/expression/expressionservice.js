@@ -13,6 +13,9 @@ var packageObj = library.getChildPackage("service");
 	var node_createServiceRequestInfoSet;
 	var node_createServiceRequestInfoService;
 	var node_createServiceRequestInfoSimple;
+	var node_OperationContext;
+	var node_Parm;
+	var node_Parms;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createExpressionService = function(){
@@ -227,15 +230,12 @@ var node_createExpressionService = function(){
 		
 		var dataOperationId = node_resourceUtility.createOperationResourceId(dataTypeId, operation);
 		var loadResourceRequest = nosliw.runtime.getResourceService().getGetResourcesRequest([dataOperationId], {
-			success : function(requestInfo, resources){
-				var dataOperationResource = resources[dataOperationId];
+			success : function(requestInfo, resourcesTree){
+				var dataOperationResource = resourceUtility.getResourceFromTree(resourcesTree, dataOperationId);
 				var dataOperationFun = dataOperationResource.resourceData;
 				
 				//build operation context
-				var operationContext = {
-					resources : resources,
-					data : {},
-				};
+				var operationContext = new node_OperationContext(resourcesTree, dataOperationResource.resourceInfo.); 
 				var dependencys = dataOperationResource.dependency;
 				_.each(dependencys, function(dependency, index, list){
 					var aliases;
@@ -245,8 +245,8 @@ var node_createExpressionService = function(){
 					}, this);
 				}, this);
 				
-				var converterResult = dataOperationFun.call(base, parms, operationContext);
-				return converterResult;
+				var operationResult = dataOperationFun.call(parms, operationContext);
+				return operationResult;
 			}
 		}, requestInfo);
 
@@ -290,7 +290,7 @@ packageObj.createNode("createExpressionService", node_createExpressionService);
 
 	var module = {
 		start : function(packageObj){
-			node_resourceUtility = packageObj.getNodeData("runtime.rhino.utility.resourceUtility");
+			node_resourceUtility = packageObj.getNodeData("resource.resourceUtility");
 			node_buildServiceProvider = packageObj.getNodeData("request.buildServiceProvider");
 			node_requestServiceProcessor = packageObj.getNodeData("request.requestServiceProcessor");
 			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
@@ -300,6 +300,9 @@ packageObj.createNode("createExpressionService", node_createExpressionService);
 			node_createServiceRequestInfoSet = packageObj.getNodeData("request.request.createServiceRequestInfoSet");
 			node_createServiceRequestInfoService = packageObj.getNodeData("request.request.createServiceRequestInfoService");
 			node_createServiceRequestInfoSimple = packageObj.getNodeData("request.request.createServiceRequestInfoSimple");
+			node_OperationContext = packageObj.getNodeData("expression.entity.OperationContext");
+			node_Parm = packageObj.getNodeData("expression.entity.Parm");
+			node_Parms = packageObj.getNodeData("expression.entity.Parms");
 		}
 	};
 	nosliw.registerModule(module, packageObj);
