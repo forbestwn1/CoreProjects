@@ -1,6 +1,7 @@
 package com.nosliw.data.core.runtime;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -77,10 +78,13 @@ public class HAPResourceInfo extends HAPSerializableImp{
 		jsonMap.put(ID, this.m_resourceId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.getChildren(), HAPSerializationFormat.JSON));
 
-		jsonMap.put(DEPENDENCY, HAPJsonUtility.buildJson(this.getDependency(), HAPSerializationFormat.JSON));
-		
-		
-		
+		Map<String, String> dependencyJsonMap = new LinkedHashMap<String, String>();
+		for(HAPResourceDependent dep : this.m_dependency){
+			for(String alias : dep.getAlias()){
+				dependencyJsonMap.put(alias, dep.getId().toStringValue(HAPSerializationFormat.JSON));
+			}
+		}
+		jsonMap.put(DEPENDENCY, HAPJsonUtility.buildMapJson(dependencyJsonMap));
 		
 		jsonMap.put(INFO, HAPSerializeManager.getInstance().toStringValue(this.m_info, HAPSerializationFormat.JSON));
 	}

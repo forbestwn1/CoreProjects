@@ -30,11 +30,11 @@ var node_resourceUtility =
 		},
 		
 		createOperationResourceId : function(dataTypeId, operation){
-			
+			var out = {};
+			out[node_COMMONTRIBUTECONSTANT.RESOURCEID_ID] = node_namingConvensionUtility.cascadeLevel1(dataTypeId, opeartion); 
+			out[node_COMMONTRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT[RUNTIME_RESOURCE_TYPE_OPERATION]; 
+			return out;
 		},
-		
-		build
-		
 };
 
 //*******************************************   End Node Definition  ************************************** 	

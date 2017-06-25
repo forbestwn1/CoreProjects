@@ -3,6 +3,7 @@ package com.nosliw.data.core.imp.runtime.js;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.data.core.HAPOperation;
@@ -15,6 +16,7 @@ import com.nosliw.data.core.runtime.HAPResourceManager;
 @HAPEntityWithAttribute
 public class HAPResourceManagerJSOperation implements HAPResourceManager{
 
+	@HAPAttribute
 	public static final String INFO_OPERATIONINFO = "operationInfo";
 	
 	private HAPDBAccess m_dbAccess = HAPDBAccess.getInstance();

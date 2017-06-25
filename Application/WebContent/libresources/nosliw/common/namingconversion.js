@@ -9,6 +9,10 @@ var packageObj = library.getChildPackage("namingconvension");
 var node_namingConvensionUtility = function(){
 	
 	return {
+		cascadeLevel1 : function(seg1, seg22, normal){
+			return this.cascadeParts(path1, path2, NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_LEVEL1, normal);
+		},
+
 		cascadePath : function(path1, path2, normal){
 			return this.cascadeParts(path1, path2, NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_PATH, normal);
 		},

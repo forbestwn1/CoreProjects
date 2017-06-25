@@ -233,16 +233,17 @@ var node_createExpressionService = function(){
 			success : function(requestInfo, resourcesTree){
 				var dataOperationResource = resourceUtility.getResourceFromTree(resourcesTree, dataOperationId);
 				var dataOperationFun = dataOperationResource.resourceData;
+				var dataOperationInfo = dataOperationResource[node_COMMONTRIBUTECONSTANT.RESOURCE_INFO][node_COMMONTRIBUTECONSTANT.RESOURCEMANAGERJSOPERATION_INFO_OPERATIONINFO];
 				
 				//build operation context
-				var operationContext = new node_OperationContext(resourcesTree, dataOperationResource.resourceInfo.); 
-				var dependencys = dataOperationResource.dependency;
-				_.each(dependencys, function(dependency, index, list){
-					var aliases;
-					var dependencyResource;
-					_.each(aliases, function(alias, index, list){
-						operationContext.data[alias] = dependencyResource.resourceData;
-					}, this);
+				var operationContext = new node_OperationContext(resourcesTree, dataOperationResource[node_COMMONTRIBUTECONSTANT.RESOURCE_INFO]);
+				
+				var parmsDefinitions = dataOperationInfo[node_COMMONTRIBUTECONSTANT.OPERATION_PARMS];
+				_.each(parms, function(parm, index, list){
+					var parmDefinition = parmsDefinitions[parm];
+					if(parmDefinition[node_COMMONTRIBUTECONSTANT.DATAOPERATIONPARMINFO_ISBASE]=="true"){
+						parm.isBase = true;
+					}
 				}, this);
 				
 				var operationResult = dataOperationFun.call(parms, operationContext);

@@ -267,7 +267,8 @@ var COMMONTRIBUTECONSTANT=
 "STRINGABLEVALUE_PATH":"path",
 "STRINGABLEVALUE_TARGETTYPE":"targetType",
 "STRINGABLEVALUE_RESOURCEID":"resourceId",
-"STRINGABLEVALUE_DEPENDENCY":"dependency"
+"STRINGABLEVALUE_DEPENDENCY":"dependency",
+"RESOURCEMANAGERJSOPERATION_INFO_OPERATIONINFO":"operationInfo"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

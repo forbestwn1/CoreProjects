@@ -11,13 +11,13 @@
 
 	);
 	
-	var resourceService = nosliw.runtime.getResourceService();
-	resourceService.executeGetResourcesRequest(resourceIds, {
-		success : function(requestInfo, resourcesTree){
-			var resourceManager = nosliw.runtime.getResourceManager();
-			nosliw.logging.info("Get resource : ", resourcesTree);
-		}
-	}, undefined);
+//	var resourceService = nosliw.runtime.getResourceService();
+//	resourceService.executeGetResourcesRequest(resourceIds, {
+//		success : function(requestInfo, resourcesTree){
+//			var resourceManager = nosliw.runtime.getResourceManager();
+//			nosliw.logging.info("Get resource : ", resourcesTree);
+//		}
+//	}, undefined);
 
 	
 	var expressionService = nosliw.runtime.getExpressionService();
