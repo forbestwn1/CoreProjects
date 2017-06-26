@@ -14,8 +14,9 @@ var packageObj = library.getChildPackage("service");
 	var node_createServiceRequestInfoService;
 	var node_createServiceRequestInfoSimple;
 	var node_OperationContext;
-	var node_Parm;
-	var node_Parms;
+	var node_OperationParm;
+	var node_OperationParms;
+	var node_DependentServiceRequestInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createExpressionService = function(){
@@ -224,34 +225,41 @@ var node_createExpressionService = function(){
 	};
 	
 	//execute data operation
-	var loc_getExecuteOperationRequest = function(dataTypeId, operation, parms, handlers, requester_parent){
+	var loc_getExecuteOperationRequest = function(dataTypeId, operation, parmArray, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
-		var out = createServiceRequestInfoService(new node_ServiceInfo("ExecuteOperation", {"dataType":dataTypeId, "operation":operation, "parms":parms}), handlers, requestInfo);
+		var out = node_createServiceRequestInfoService(new node_ServiceInfo("ExecuteOperation", {"dataType":dataTypeId, "operation":operation, "parms":parmArray}), handlers, requestInfo);
 		
 		var dataOperationId = node_resourceUtility.createOperationResourceId(dataTypeId, operation);
-		var loadResourceRequest = nosliw.runtime.getResourceService().getGetResourcesRequest([dataOperationId], {
+		var loadResourceRequest = nosliw.runtime.getResourceService().getGetResourcesRequest([dataOperationId]);
+
+		var resourceRequestDependency = new node_DependentServiceRequestInfo(loadResourceRequest, {
 			success : function(requestInfo, resourcesTree){
-				var dataOperationResource = resourceUtility.getResourceFromTree(resourcesTree, dataOperationId);
+				var dataOperationResource = node_resourceUtility.getResourceFromTree(resourcesTree, dataOperationId);
 				var dataOperationFun = dataOperationResource.resourceData;
 				var dataOperationInfo = dataOperationResource[node_COMMONTRIBUTECONSTANT.RESOURCE_INFO][node_COMMONTRIBUTECONSTANT.RESOURCEMANAGERJSOPERATION_INFO_OPERATIONINFO];
 				
 				//build operation context
 				var operationContext = new node_OperationContext(resourcesTree, dataOperationResource[node_COMMONTRIBUTECONSTANT.RESOURCE_INFO]);
 				
+				var baseData;
+				var operationParmArray = [];
 				var parmsDefinitions = dataOperationInfo[node_COMMONTRIBUTECONSTANT.OPERATION_PARMS];
-				_.each(parms, function(parm, index, list){
+				_.each(parmArray, function(parm, index, list){
 					var parmDefinition = parmsDefinitions[parm];
+					var isBase = false;
 					if(parmDefinition[node_COMMONTRIBUTECONSTANT.DATAOPERATIONPARMINFO_ISBASE]=="true"){
-						parm.isBase = true;
+						isBase = true;
+						baseData = parm.value;
 					}
+					operationParmArray.push(new node_OperationParm(parm.name, parm.value, isBase));
 				}, this);
 				
-				var operationResult = dataOperationFun.call(parms, operationContext);
+				var operationResult = dataOperationFun.call(baseData, new node_OperationParms(operationParmArray), operationContext);
 				return operationResult;
 			}
-		}, requestInfo);
-
-		out.setDependentService(loadResourceRequest);
+		});
+		
+		out.setDependentService(resourceRequestDependency);
 		return out;
 	};	
 
@@ -302,8 +310,9 @@ packageObj.createNode("createExpressionService", node_createExpressionService);
 			node_createServiceRequestInfoService = packageObj.getNodeData("request.request.createServiceRequestInfoService");
 			node_createServiceRequestInfoSimple = packageObj.getNodeData("request.request.createServiceRequestInfoSimple");
 			node_OperationContext = packageObj.getNodeData("expression.entity.OperationContext");
-			node_Parm = packageObj.getNodeData("expression.entity.Parm");
-			node_Parms = packageObj.getNodeData("expression.entity.Parms");
+			node_OperationParm = packageObj.getNodeData("expression.entity.OperationParm");
+			node_OperationParms = packageObj.getNodeData("expression.entity.OperationParms");
+			node_DependentServiceRequestInfo = packageObj.getNodeData("request.request.entity.DependentServiceRequestInfo");  
 		}
 	};
 	nosliw.registerModule(module, packageObj);

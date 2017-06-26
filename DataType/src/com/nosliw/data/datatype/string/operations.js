@@ -12,7 +12,7 @@ dataTypeDefition.requires = {
 //define what operations in this page requires (operation, datatype, library)
 dataTypeDefition.localRequires = {
 	"operation" : { 
-		op: "core.text;1.0.0;operation"
+//		op: "core.text;1.0.0;operation"
 	},
 	"datatype" : {
 	},

@@ -33,22 +33,11 @@ node_ServiceRequestExecuteInfo.prototype = {
 	},
 };
 
-/*
- * information about child service
- * child service and parent have the same reqeuster
- * 		requestInfo : 	request infor for child service
- * 		processor: 		do something after child request return
- */
-node_DependentServiceRequestInfo = function(requestInfo, processors){
-	this.requestInfo = requestInfo;
-	this.processors = processors;
-};
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
 packageObj.createNode("Requester", node_Requester); 
 packageObj.createNode("ServiceRequestExecuteInfo", node_ServiceRequestExecuteInfo); 
-packageObj.createNode("DependentServiceRequestInfo", node_DependentServiceRequestInfo); 
 
 	var module = {
 		start : function(packageObj){

@@ -14,7 +14,7 @@ var packageObj = library.getChildPackage("request");
  * Another service would do the most job
  * Once another service done its job, this service's handler will be called
  */
-var createServiceRequestInfoService = function(service, handlers, requester_parent){
+var node_createServiceRequestInfoService = function(service, handlers, requester_parent){
 	
 	var loc_constructor = function(service, handlers, requester_parent){
 		//dependent service
@@ -93,10 +93,22 @@ var createServiceRequestInfoService = function(service, handlers, requester_pare
 	return loc_out;
 };
 
+/*
+ * information about child service
+ * child service and parent have the same reqeuster
+ * 		requestInfo : 	request infor for child service
+ * 		processor: 		do something after child request return
+ */
+var node_DependentServiceRequestInfo = function(requestInfo, processors){
+	this.requestInfo = requestInfo;
+	this.processors = processors;
+};
+
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createServiceRequestInfoService", createServiceRequestInfoService); 
+packageObj.createNode("createServiceRequestInfoService", node_createServiceRequestInfoService); 
+packageObj.createNode("entity.DependentServiceRequestInfo", node_DependentServiceRequestInfo); 
 
 	var module = {
 		start : function(packageObj){

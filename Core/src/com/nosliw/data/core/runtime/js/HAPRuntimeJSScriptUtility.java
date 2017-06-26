@@ -71,7 +71,7 @@ public class HAPRuntimeJSScriptUtility {
 		List<URI> uris = resourceLibrary.getURIs();
 		for(URI uri : uris){
 			File file = new File(uri);
-			out.add(HAPJSScriptInfo.buildByFile(file.toString(), "Library__" + file.getName()));
+			out.add(HAPJSScriptInfo.buildByFile(file.toString(), "Library__" + resource.getId().getId() + "__" + file.getName()));
 		}
 		return out;
 	}

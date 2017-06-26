@@ -85,7 +85,7 @@ var module = {
 			node_createIdService = packageObj.getNodeData("service.idservice.createIdService");
 			node_createResourceManager = packageObj.getNodeData("resource.resourcemanager.createResourceManager");
 			node_createResourceService = packageObj.getNodeData("runtime.rhino.createResourceService");
-			node_createExpressionService = packageObj.getNodeData("service.expressionservice.createExpressionService");
+			node_createExpressionService = packageObj.getNodeData("expression.service.createExpressionService");
 		}
 };
 nosliw.registerModule(module, packageObj);

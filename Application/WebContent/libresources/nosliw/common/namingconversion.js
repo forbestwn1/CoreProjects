@@ -4,21 +4,23 @@ var packageObj = library.getChildPackage("namingconvension");
 (function(packageObj){
 	//get used node
 	var node_basicUtility;
+	var node_COMMONCONSTANT;
+	
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_namingConvensionUtility = function(){
 	
 	return {
-		cascadeLevel1 : function(seg1, seg22, normal){
-			return this.cascadeParts(path1, path2, NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_LEVEL1, normal);
+		cascadeLevel1 : function(seg1, seg2, normal){
+			return this.cascadeParts(seg1, seg2, node_COMMONCONSTANT.SEPERATOR_LEVEL1, normal);
 		},
 
 		cascadePath : function(path1, path2, normal){
-			return this.cascadeParts(path1, path2, NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_PATH, normal);
+			return this.cascadeParts(path1, path2, node_COMMONCONSTANT.SEPERATOR_PATH, normal);
 		},
 
 		cascadePart : function(part1, part2, normal){
-			return this.cascadeParts(part1, part2, NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_PART, normal);
+			return this.cascadeParts(part1, part2, node_COMMONCONSTANT.SEPERATOR_PART, normal);
 		},
 		
 		cascadeParts : function(part1, part2, seperator, normal){
@@ -41,14 +43,14 @@ var node_namingConvensionUtility = function(){
 		 * get all sub path from full path
 		 */
 		parsePathInfos : function(fullPath){
-			return fullPath.split(NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_PATH);
+			return fullPath.split(node_COMMONCONSTANT.SEPERATOR_PATH);
 		},
 		
 		/*
 		 * get all sub path from full path
 		 */
 		parseDetailInfos : function(details){
-			return details.split(NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_DETAIL);
+			return details.split(node_COMMONCONSTANT.SEPERATOR_DETAIL);
 		},
 		
 	};
@@ -61,6 +63,7 @@ packageObj.createNode("namingConvensionUtility", node_namingConvensionUtility);
 var module = {
 	start : function(packageObj){
 		node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
+		node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
 	}
 };
 nosliw.registerModule(module, packageObj);

@@ -4,7 +4,8 @@ var packageObj = library;
 (function(packageObj){
 	//get used node
 	var node_COMMONTRIBUTECONSTANT;
-	var node_Resource;
+	var node_COMMONCONSTANT;
+	var node_namingConvensionUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_resourceUtility = 
@@ -31,8 +32,8 @@ var node_resourceUtility =
 		
 		createOperationResourceId : function(dataTypeId, operation){
 			var out = {};
-			out[node_COMMONTRIBUTECONSTANT.RESOURCEID_ID] = node_namingConvensionUtility.cascadeLevel1(dataTypeId, opeartion); 
-			out[node_COMMONTRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT[RUNTIME_RESOURCE_TYPE_OPERATION]; 
+			out[node_COMMONTRIBUTECONSTANT.RESOURCEID_ID] = node_namingConvensionUtility.cascadeLevel1(dataTypeId, operation); 
+			out[node_COMMONTRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_OPERATION; 
 			return out;
 		},
 };
@@ -44,7 +45,8 @@ packageObj.createNode("resourceUtility", node_resourceUtility);
 	var module = {
 		start : function(packageObj){
 			node_COMMONTRIBUTECONSTANT = packageObj.getNodeData("constant.COMMONTRIBUTECONSTANT");
-			node_Resource = packageObj.getNodeData("resource.entity.Resource");
+			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
+			node_namingConvensionUtility = packageObj.getNodeData("common.namingconvension.namingConvensionUtility"); 
 		}
 	};
 	nosliw.registerModule(module, packageObj);

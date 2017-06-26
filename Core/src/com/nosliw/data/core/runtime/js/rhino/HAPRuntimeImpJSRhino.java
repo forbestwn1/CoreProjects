@@ -70,31 +70,46 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	//gateway callback method
 	@Override
 	public void requestDiscoverResources(Object objResourceIds, Object callBackFunction){
-		List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds, this.m_context, this.m_scope); 
-		List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
-		((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(resourceInfos)});
+		try{
+			List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds, this.m_context, this.m_scope); 
+			List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
+			((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(resourceInfos)});
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	//gateway callback method
 	@Override
 	public void requestDiscoverAndLoadResources(Object objResourceIds, Object callBackFunction){
-		List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds, this.m_context, this.m_scope);
-		//discovery
-		List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
-		//load resources to rhino runtime
-		this.loadResources(resourceInfos, m_scope, m_context);
-		
-		//callback with resourceInfos
-		((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(resourceInfos)});
+		try{
+			List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds, this.m_context, this.m_scope);
+			//discovery
+			List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
+			//load resources to rhino runtime
+			this.loadResources(resourceInfos, m_scope, m_context);
+			
+			//callback with resourceInfos
+			((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(resourceInfos)});
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	//gateway callback method
 	@Override
 	public void requestLoadResources(Object objResourcesInfo, Object callBackFunction){
-		List<HAPResourceInfo> resourcesInfo = HAPRhinoRuntimeUtility.rhinoResourcesInfoToResourcesInfo((NativeArray)objResourcesInfo, this.m_context, this.m_scope);
-		//load resources to rhino runtime
-		this.loadResources(resourcesInfo, m_scope, m_context);
-		((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{});
+		try{
+			List<HAPResourceInfo> resourcesInfo = HAPRhinoRuntimeUtility.rhinoResourcesInfoToResourcesInfo((NativeArray)objResourcesInfo, this.m_context, this.m_scope);
+			//load resources to rhino runtime
+			this.loadResources(resourcesInfo, m_scope, m_context);
+			((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{});
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	//gateway callback method

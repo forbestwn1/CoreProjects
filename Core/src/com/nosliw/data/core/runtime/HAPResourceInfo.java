@@ -1,11 +1,13 @@
 package com.nosliw.data.core.runtime;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -68,7 +70,13 @@ public class HAPResourceInfo extends HAPSerializableImp{
 	public Object getInfoValue(String name){		return this.m_info.getValue(name);	}
 	
 	public List<HAPResourceDependent> getDependency(){  return this.m_dependency;  }
-	public void addDependency(HAPResourceDependent child){  this.m_dependency.add(child); }
+	public void addDependency(HAPResourceDependent child){
+		if(child==null){
+			int kkkk = 555;
+			kkkk++;
+		}
+		this.m_dependency.add(child); 
+	}
 	
 	public List<HAPResourceDependent> getChildren(){  return this.m_children;  }
 	public void addChild(HAPResourceDependent child){  this.m_children.add(child);  }
@@ -80,6 +88,11 @@ public class HAPResourceInfo extends HAPSerializableImp{
 
 		Map<String, String> dependencyJsonMap = new LinkedHashMap<String, String>();
 		for(HAPResourceDependent dep : this.m_dependency){
+			if(dep==null || dep.getAlias()==null){
+				int kkkk = 5555;
+				kkkk++;
+			}
+			
 			for(String alias : dep.getAlias()){
 				dependencyJsonMap.put(alias, dep.getId().toStringValue(HAPSerializationFormat.JSON));
 			}
@@ -111,12 +124,29 @@ public class HAPResourceInfo extends HAPSerializableImp{
 			this.addChild(childResourceId);
 		}
 
-		JSONArray dependencysArray = jsonObj.optJSONArray(DEPENDENCY);
-		for(int i=0; i<dependencysArray.length(); i++){
-			JSONObject jsonDependency = dependencysArray.optJSONObject(i);
-			HAPResourceDependent dependencyResourceId = new HAPResourceDependent();
-			dependencyResourceId.buildObject(jsonDependency, HAPSerializationFormat.JSON_FULL);
-			this.addDependency(dependencyResourceId);
+		Map<String, HAPResourceDependent> dependencyByResourceId = new LinkedHashMap<String, HAPResourceDependent>();
+		JSONObject dependencysObj = jsonObj.optJSONObject(DEPENDENCY);
+		if(dependencysObj!=null){
+			Iterator it = dependencysObj.keys();
+			while(it.hasNext()){
+				try {
+					String alias = (String)it.next();
+
+					HAPResourceId resourceId = new HAPResourceId();
+					resourceId.buildObject(dependencysObj.getJSONObject(alias), HAPSerializationFormat.JSON);
+					String resourceIdStr = resourceId.toStringValue(HAPSerializationFormat.JSON);
+					
+					HAPResourceDependent dependency = dependencyByResourceId.get(resourceIdStr);
+					if(dependency==null){
+						dependency = new HAPResourceDependent(resourceId);
+						dependencyByResourceId.put(resourceIdStr, dependency);
+						this.addDependency(dependency);
+					}
+					dependency.addAlias(alias);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return true; 
 	}
@@ -129,7 +159,7 @@ public class HAPResourceInfo extends HAPSerializableImp{
 	
 	protected void cloneFrom(HAPResourceInfo resourceInfo){
 		this.m_resourceId = resourceInfo.getId().clone();
-		for(HAPResourceDependent dependency : resourceInfo.getDependency())			this.m_dependency.add(dependency.clone());
+		for(HAPResourceDependent dependency : resourceInfo.getDependency())			this.addDependency(dependency.clone());
 		for(HAPResourceDependent child : resourceInfo.getChildren())			this.m_children.add(child.clone());
 	}
 	
