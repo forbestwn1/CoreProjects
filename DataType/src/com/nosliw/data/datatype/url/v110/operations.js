@@ -63,7 +63,7 @@ dataTypeDefinition.operations['url_normal2'] = {
 			underline : "underscore;1.8.3"
 		},
 		"helper" : {
-			operation : "operationHelper"
+//			operation : "operationHelper"
 		}
 	},
 	
@@ -118,7 +118,7 @@ dataTypeDefinition.convertTo = {
 				underline : "underscore;1.8.3"
 			},
 			"helper" : {
-				operation : "operationHelper"
+//				operation : "operationHelper"
 			}
 		},
 		
@@ -147,7 +147,7 @@ dataTypeDefinition.convertFrom = {
 				underline : "underscore;1.8.3"
 			},
 			"helper" : {
-				operation : "operationHelper"
+//				operation : "operationHelper"
 			}
 		},
 		

@@ -70,13 +70,7 @@ public class HAPResourceInfo extends HAPSerializableImp{
 	public Object getInfoValue(String name){		return this.m_info.getValue(name);	}
 	
 	public List<HAPResourceDependent> getDependency(){  return this.m_dependency;  }
-	public void addDependency(HAPResourceDependent child){
-		if(child==null){
-			int kkkk = 555;
-			kkkk++;
-		}
-		this.m_dependency.add(child); 
-	}
+	public void addDependency(HAPResourceDependent child){		this.m_dependency.add(child);	}
 	
 	public List<HAPResourceDependent> getChildren(){  return this.m_children;  }
 	public void addChild(HAPResourceDependent child){  this.m_children.add(child);  }
@@ -88,11 +82,6 @@ public class HAPResourceInfo extends HAPSerializableImp{
 
 		Map<String, String> dependencyJsonMap = new LinkedHashMap<String, String>();
 		for(HAPResourceDependent dep : this.m_dependency){
-			if(dep==null || dep.getAlias()==null){
-				int kkkk = 5555;
-				kkkk++;
-			}
-			
 			for(String alias : dep.getAlias()){
 				dependencyJsonMap.put(alias, dep.getId().toStringValue(HAPSerializationFormat.JSON));
 			}

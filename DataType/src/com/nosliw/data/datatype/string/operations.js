@@ -20,10 +20,15 @@ dataTypeDefition.localRequires = {
 	},
 	"helper" : {
 		globalHelper : {
+			a : 123,
+			b : "bb",
 			c : "cc",
 			d : function(parm1){
-				parm1 = parm1 + "fff";
-			}
+				return parm1 = parm1 + "fff";
+			},
+			e : [1, 2, 3, 4],
+			f : true,
+			h : [true, false, true]
 		}
 	}
 };
@@ -38,6 +43,7 @@ dataTypeDefition.operations['subString'] = {
 			var from = parms.getParm("from").value;
 			var to = parms.getParm("to").value;
 			var outStr = this.value.substring(from, to);
+			outStr = context.getResourceDataByName("globalHelper").d(outStr);
 			return {
 				dataTypeId : "base.string;1.0.0",
 				var : outStr,
@@ -65,7 +71,7 @@ dataTypeDefition.operations['length'] = {
 //			integer : "base.integer"
 //		},
 		"helper" : {
-			operation : "operationHelper"
+//			operation : "operationHelper"
 		}
 	},
 	

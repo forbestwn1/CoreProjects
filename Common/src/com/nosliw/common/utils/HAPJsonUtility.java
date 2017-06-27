@@ -79,15 +79,26 @@ public class HAPJsonUtility {
 	}
 
 	public static String buildArrayJson(String[] jsons){
+		return buildArrayJson(jsons, null);
+	}
+	
+	public static String buildArrayJson(String[] jsons, Class eleType){
 		StringBuffer out = new StringBuffer();
 		int i = 0;
 		out.append("[");
 		for(String json : jsons){
 			if(json!=null){
 				if(i>0)  out.append(",");
-				if(json.indexOf("{")==-1)  out.append("\"");
-				out.append(json);
-				if(json.indexOf("{")==-1)  out.append("\"");
+				
+				if(eleType==Boolean.class || eleType==Integer.class || eleType==Double.class){
+					out.append(json);
+				}
+				else{
+					if(json.indexOf("{")==-1)  out.append("\"");
+					out.append(json);
+					if(json.indexOf("{")==-1)  out.append("\"");
+				}
+				
 				i++;
 			}
 		}
@@ -127,7 +138,11 @@ public class HAPJsonUtility {
 		
 		if(value==null) return null; //out.append("\"" + attr+ "\""+": undefined" + lastString);
 		
-		if(String.class==type){
+		if(type!=null && HAPJsonTypeUnchange.class.isAssignableFrom(type)){
+			//treat the value as it is
+			out.append("\"" + attr+ "\""+":" + value + ""+lastString);
+		}
+		else if(String.class==type){
 			out.append("\"" + attr+ "\""+":\"" + value + "\""+lastString);
 		}
 		else if(Integer.class==type){

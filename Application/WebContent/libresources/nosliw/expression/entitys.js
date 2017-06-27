@@ -43,7 +43,7 @@ var node_OperationContext = function(resourcesTree, aliases){
 
 node_OperationContext.prototype = {
 	getResourceById : function(resourceId){
-		return node_resourceUtility.getResourceFromTree(this.pri_resourcesTree);
+		return node_resourceUtility.getResourceFromTree(this.pri_resourcesTree, resourceId);
 	},
 	
 	getResourceByName : function(alias){
@@ -51,6 +51,10 @@ node_OperationContext.prototype = {
 		return this.getResourceById(resourceId);
 	},
 
+	getResourceDataByName : function(alias){
+		var resourceId = this.pri_aliases[alias];
+		return this.getResourceById(resourceId).resourceData;
+	},
 };
 
 

@@ -1,6 +1,10 @@
 package com.nosliw.data.core.runtime.js.rhino;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,7 +20,9 @@ import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager; 
+import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPJsonTypeUnchange;
+import com.nosliw.common.utils.HAPJsonUtility; 
  
 /**
  * Collection of JSON Utility methods. 
@@ -94,20 +100,33 @@ public class HAPRhinoDataUtility
      * @param object            JavaScript object 
      * @return String           JSON       
      */ 
-    public static String toJSONString(Object object) 
+    public static Object toJson(Object object) 
     { 
+    	Object out = null;
     	if(object instanceof String){
-    		return object.toString();
+    		out = object.toString();
+    	}
+    	else if(object instanceof Integer){
+    		out = object;
+    	}
+    	else if(object instanceof Boolean){
+    		out = object;
+    	}
+    	else if(object instanceof Double){
+    		out = object;
     	}
     	else if (object instanceof NativeArray) 
         { 
-            return nativeArrayToJSONString((NativeArray)object); 
+            out = nativeArrayToJSONString((NativeArray)object); 
         } 
         else if (object instanceof NativeObject) 
         {  
-           return nativeObjectToJSONString((NativeObject)object); 
-        } 
-    	return null; 
+            out = nativeObjectToJSONString((NativeObject)object); 
+        }
+        else if(object instanceof Function){
+        	out = new HAPFunctionType(Context.toString(object));
+        }
+    	return out; 
     } 
      
     /**
@@ -119,17 +138,20 @@ public class HAPRhinoDataUtility
     private static String nativeObjectToJSONString(NativeObject nativeObject) 
     { 
     	try{
-        	JSONObject json = new JSONObject(); 
-            
+        	Map<String, String> mapJson = new LinkedHashMap<String, String>();
+        	Map<String, Class<?>> mapTypeJson = new LinkedHashMap<String, Class<?>>();
+        	
             Object[] ids = nativeObject.getIds(); 
             for (Object id : ids) 
             { 
                 String key = id.toString(); 
-                Object value = nativeObject.get(key, nativeObject); 
-                json.put(key, valueToJSONString(value)); 
+                Object value = nativeObject.get(key, nativeObject);
+                Object json = toJson(value);
+                mapJson.put(key, json+"");
+                mapTypeJson.put(key, json.getClass()); 
             } 
          
-            return json.toString();  
+            return HAPJsonUtility.buildMapJson(mapJson, mapTypeJson);  
     	}
     	catch(Exception e){
     		e.printStackTrace();
@@ -147,28 +169,35 @@ public class HAPRhinoDataUtility
     	try{
             Object[] propIds = nativeArray.getIds(); 
             if (isArray(propIds) == true) 
-            {       
-                JSONArray jsonArray = new JSONArray(); 
+            {
+            	List<String> jsonArray = new ArrayList<String>();
+            	Class typeClass = null;
                 for (int i=0; i<propIds.length; i++) 
                 { 
                     Object propId = propIds[i]; 
                     if (propId instanceof Integer) 
                     { 
-                        Object value = nativeArray.get((Integer)propId, nativeArray); 
-                        jsonArray.put(valueToJSONString(value)); 
+                        Object value = nativeArray.get((Integer)propId, nativeArray);
+                        Object json = toJson(value);
+                        jsonArray.add(json+"");
+                        if(typeClass==null)  typeClass = json.getClass();
                     } 
                 } 
-                return jsonArray.toString(); 
+                return HAPJsonUtility.buildArrayJson(jsonArray.toArray(new String[0]), typeClass);
             } 
             else 
             { 
-            	JSONObject json = new JSONObject(); 
+            	Map<String, String> mapJson = new LinkedHashMap<String, String>();
+            	Map<String, Class<?>> mapTypeJson = new LinkedHashMap<String, Class<?>>();
                 for (Object propId : propIds) 
                 { 
-                    Object value = nativeArray.get(propId.toString(), nativeArray); 
-                    json.put(propId.toString(), valueToJSONString(value)); 
+                	String key = propId.toString();
+                    Object value = nativeArray.get(key, nativeArray);
+                    Object json = toJson(value);
+                    mapJson.put(key, json+"");
+                    mapTypeJson.put(key, json.getClass()); 
                 } 
-                return json.toString();
+                return HAPJsonUtility.buildMapJson(mapJson, mapTypeJson);  
             }
     	}
     	catch(Exception e){
@@ -257,6 +286,12 @@ public class HAPRhinoDataUtility
     		e.printStackTrace();
     		return null;
     	}
-    	
     }     
+
+}
+//class for storing js function string
+class HAPFunctionType implements HAPJsonTypeUnchange{
+	private String m_content;
+	public HAPFunctionType(String str){    		this.m_content = str;    	}
+	public String toString(){  return this.m_content;  }
 }

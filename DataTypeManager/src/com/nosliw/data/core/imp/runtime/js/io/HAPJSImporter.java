@@ -242,7 +242,7 @@ public class HAPJSImporter {
 			resourceId = new HAPResourceIdDataType(dataTypeIdLiterate);
 			break;
 		case HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER:
-			String helperScript = new HAPRhinoDataUtility().toJSONString(resourceObjJS); 
+			String helperScript = new HAPRhinoDataUtility().toJson(resourceObjJS)+""; 
 			HAPResourceDataHelperImp helperResource = new HAPResourceDataHelperImp(helperScript);
 			helperResource = (HAPResourceDataHelperImp)this.m_dbAccess.saveEntity(helperResource);
 			resourceId = new HAPResourceIdJSHelper(helperResource.getId());
