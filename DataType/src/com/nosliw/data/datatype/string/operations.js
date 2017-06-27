@@ -35,7 +35,15 @@ dataTypeDefition.operations['subString'] = {
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
 			context.logging.info("Operand Calcualting  ----------------");
-		}};
+			var from = parms.getParm("from").value;
+			var to = parms.getParm("to").value;
+			var outStr = this.value.subString(from, to);
+			return {
+				dataTypeId : "base.string;1.0.0",
+				var : outStr,
+			}
+		},
+};
 
 //define operation
 dataTypeDefition.operations['length'] = {

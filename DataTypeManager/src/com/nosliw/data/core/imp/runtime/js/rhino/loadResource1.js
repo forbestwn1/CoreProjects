@@ -21,7 +21,34 @@
 
 	
 	var expressionService = nosliw.runtime.getExpressionService();
-	expressionService.executeExecuteOperationRequest("base.string;1.0.0", "subString", {}, {
+	var parms = [];
+	var parm1 = {
+		name : "base",
+		value : {
+			dataTypeId : "base.string;1.0.0",
+			value : "Hello World"
+		} 
+	};
+	var parm2 = {
+		name : "from",
+		value : {
+			dataTypeId : "base.integer;1.0.0",
+			value : 1
+		} 
+	};
+	var parm3 = {
+		name : "to",
+		value : {
+			dataTypeId : "base.integer;1.0.0",
+			value : 5
+		} 
+	};
+	parms.push(parm1);
+	parms.push(parm2);
+	parms.push(parm3);
+	
+	
+	expressionService.executeExecuteOperationRequest("base.string;1.0.0", "subString", parms, {
 		success : function(requestInfo, data){
 			nosliw.logging.info("Operation Result : ", data);
 		}

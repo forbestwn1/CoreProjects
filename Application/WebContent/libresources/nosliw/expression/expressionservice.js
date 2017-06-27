@@ -239,13 +239,13 @@ var node_createExpressionService = function(){
 				var dataOperationInfo = dataOperationResource[node_COMMONTRIBUTECONSTANT.RESOURCE_INFO][node_COMMONTRIBUTECONSTANT.RESOURCEMANAGERJSOPERATION_INFO_OPERATIONINFO];
 				
 				//build operation context
-				var operationContext = new node_OperationContext(resourcesTree, dataOperationResource[node_COMMONTRIBUTECONSTANT.RESOURCE_INFO]);
+				var operationContext = new node_OperationContext(resourcesTree, dataOperationResource.resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_DEPENDENCY]);
 				
 				var baseData;
 				var operationParmArray = [];
-				var parmsDefinitions = dataOperationInfo[node_COMMONTRIBUTECONSTANT.OPERATION_PARMS];
+				var parmsDefinitions = dataOperationInfo[node_COMMONTRIBUTECONSTANT.DATAOPERATIONINFO_PAMRS];
 				_.each(parmArray, function(parm, index, list){
-					var parmDefinition = parmsDefinitions[parm];
+					var parmDefinition = parmsDefinitions[parm.name];
 					var isBase = false;
 					if(parmDefinition[node_COMMONTRIBUTECONSTANT.DATAOPERATIONPARMINFO_ISBASE]=="true"){
 						isBase = true;
