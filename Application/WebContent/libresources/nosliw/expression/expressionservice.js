@@ -247,11 +247,14 @@ var node_createExpressionService = function(){
 				_.each(parmArray, function(parm, index, list){
 					var parmDefinition = parmsDefinitions[parm.name];
 					var isBase = false;
+					
+					nosliw.logging.info(parmDefinition[node_COMMONTRIBUTECONSTANT.DATAOPERATIONPARMINFO_ISBASE]);
+					
 					if(parmDefinition[node_COMMONTRIBUTECONSTANT.DATAOPERATIONPARMINFO_ISBASE]=="true"){
 						isBase = true;
 						baseData = parm.value;
 					}
-					operationParmArray.push(new node_OperationParm(parm.name, parm.value, isBase));
+					operationParmArray.push(new node_OperationParm(parm.value, parm.name, isBase));
 				}, this);
 				
 				var operationResult = dataOperationFun.call(baseData, new node_OperationParms(operationParmArray), operationContext);

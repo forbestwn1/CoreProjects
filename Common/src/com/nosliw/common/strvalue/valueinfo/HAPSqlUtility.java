@@ -155,7 +155,7 @@ public class HAPSqlUtility {
 					}
 				}
 				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_BOOLEAN.equals(dataType)){
-					statement.setBoolean(i+1, (Boolean)columnValue);
+					statement.setString(i+1, columnValue+"");
 				}
 				else if(HAPConstant.STRINGABLE_ATOMICVALUETYPE_FLOAT.equals(dataType)){
 					statement.setFloat(i+1, (Float)columnValue);

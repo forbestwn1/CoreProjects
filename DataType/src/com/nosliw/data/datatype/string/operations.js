@@ -37,7 +37,7 @@ dataTypeDefition.operations['subString'] = {
 			context.logging.info("Operand Calcualting  ----------------");
 			var from = parms.getParm("from").value;
 			var to = parms.getParm("to").value;
-			var outStr = this.value.subString(from, to);
+			var outStr = this.value.substring(from, to);
 			return {
 				dataTypeId : "base.string;1.0.0",
 				var : outStr,

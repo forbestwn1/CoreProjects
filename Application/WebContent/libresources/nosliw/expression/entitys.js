@@ -27,7 +27,7 @@ var node_OperationParms = function(parmsArray){
 node_OperationParms.prototype = {
 	getParm : function(name){
 		if(name===undefined)  return this.getBase();
-		else return this.pri_parmsMap[this.name];
+		else return this.pri_parmsMap[name];
 	},
 	
 	getBase : function(){
