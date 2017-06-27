@@ -20,7 +20,7 @@ var node_OperationParms = function(parmsArray){
 		var parmName = parm.name;
 		if(parmName==undefined)		parmName = node_COMMONCONSTANT.DATAOPERATION_PARM_BASENAME;
 		this.pri_parmsMap[parmName] = parm.value;
-		if(isBase===true)   this.baseParm = parmName;
+		if(parm.isBase===true)   this.baseParm = parmName;
 	}, this);
 };
 
