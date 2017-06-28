@@ -4,13 +4,12 @@
 
 	<operations>
 	
-		<operation name="subString" >
+		<operation name="add" >
 			<parms>
-				<parm name="base" criteria="base.string"/>
-				<parm name="from" criteria="base.integer"/>
-				<parm name="to" criteria="base.integer"/>
+				<parm name="parm1" criteria="base.integer"/>
+				<parm name="parm2" criteria="base.integer"/>
 			</parms>
-			<output criteria="base.string"/>
+			<output criteria="base.integer"/>
 		</operation>
 
 	</operations>

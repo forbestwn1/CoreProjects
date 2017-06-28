@@ -23,7 +23,6 @@
 	var expressionService = nosliw.runtime.getExpressionService();
 	var parms = [];
 	var parm1 = {
-		name : "base",
 		value : {
 			dataTypeId : "base.string;1.0.0",
 			value : "Hello World"

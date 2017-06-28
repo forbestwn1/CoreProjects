@@ -40,13 +40,28 @@ dataTypeDefition.operations['subString'] = {
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
 			context.logging.info("Operand Calcualting  ----------------");
+			
+			var to = context.operation("base.integer;1.0.0", "add", [{name:"parm1", value:parms.getParm("from")}, {name:"parm2", value:parms.getParm("to")}]).value;
+			
 			var from = parms.getParm("from").value;
-			var to = parms.getParm("to").value;
+//			var to = parms.getParm("to").value;
 			var outStr = this.value.substring(from, to);
 			outStr = context.getResourceDataByName("globalHelper").d(outStr);
 			return {
 				dataTypeId : "base.string;1.0.0",
-				var : outStr,
+				value : outStr,
+			}
+		},
+
+		requires:{
+			"operation" : { 
+				op1: "base.integer;1.0.0;add",
+			},
+//			"datatype1" : {
+//				integer : "base.integer"
+//			},
+			"helper" : {
+//				operation : "operationHelper"
 			}
 		},
 };

@@ -6,7 +6,7 @@
 	
 		<operation name="subString" >
 			<parms>
-				<parm name="base" criteria="base.string" isBase="true"/>
+				<parm nacriteria="base.string" isBase="true"/>
 				<parm name="from" criteria="base.integer"/>
 				<parm name="to" criteria="base.integer"/>
 			</parms>

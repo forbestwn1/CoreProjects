@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
@@ -18,10 +19,15 @@ import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
 
+@HAPEntityWithAttribute(parent="com.nosliw.data.core.HAPOperation")
 public class HAPOperationImp extends HAPStringableValueEntityWithID implements HAPOperation{
 
 	public static String _VALUEINFO_NAME;
 
+	//store baseParm name
+	@HAPAttribute
+	public static String BASEPARM = "baseParm";
+	
 	@HAPAttribute
 	public static String DATATYPNAME = "dataTypeName";
 	
@@ -63,9 +69,14 @@ public class HAPOperationImp extends HAPStringableValueEntityWithID implements H
 		jsonMap.put(OUTPUT, HAPSerializeManager.getInstance().toStringValue(this.getOutputInfo(), HAPSerializationFormat.JSON));
 		jsonMap.put(INFO, HAPSerializeManager.getInstance().toStringValue(this.getInfo(), HAPSerializationFormat.JSON));
 		
+		String baseParm = null;
 		Map<String, String> parmsMapJson = new LinkedHashMap<String, String>();
-		for(HAPOperationParmInfo parmInfo : this.getParmsInfo())		parmsMapJson.put(parmInfo.getName(), HAPSerializeManager.getInstance().toStringValue(parmInfo, HAPSerializationFormat.JSON));
+		for(HAPOperationParmInfo parmInfo : this.getParmsInfo()){
+			parmsMapJson.put(parmInfo.getName(), HAPSerializeManager.getInstance().toStringValue(parmInfo, HAPSerializationFormat.JSON));
+			if(parmInfo.getIsBase())   baseParm = parmInfo.getName();
+		}
 		jsonMap.put(PAMRS, HAPJsonUtility.buildMapJson(parmsMapJson));
+		jsonMap.put(BASEPARM, baseParm);
 	}
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){		this.buildFullJsonMap(jsonMap, typeJsonMap);	}	

@@ -5,6 +5,7 @@ var packageObj = library.getChildPackage("entity");
 	//get used node
 	var node_COMMONCONSTANT;
 	var node_resourceUtility;
+	var node_expressionUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_OperationParm = function(value, name, isBase){
@@ -55,6 +56,10 @@ node_OperationContext.prototype = {
 		var resourceId = this.pri_aliases[alias];
 		return this.getResourceById(resourceId).resourceData;
 	},
+	
+	operation : function(dataTypeId, operation, parmArray){
+		return node_expressionUtility.executeOperation(dataTypeId, operation, parmArray, this.pri_resourcesTree);
+	},
 };
 
 
@@ -68,6 +73,7 @@ packageObj.createNode("OperationContext", node_OperationContext);
 		start : function(packageObj){
 			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
 			node_resourceUtility = packageObj.getNodeData("resource.resourceUtility");
+			node_expressionUtility = packageObj.getNodeData("expression.expressionUtility");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

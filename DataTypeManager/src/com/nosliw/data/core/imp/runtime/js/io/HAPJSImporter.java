@@ -76,7 +76,7 @@ public class HAPJSImporter {
 	    			try {
 	    				Context cx = Context.enter();
 	    		        Scriptable scope = cx.initStandardObjects(null);
-						this.importFromFile(cx, scope, new FileInputStream(file));
+						this.importFromFile(cx, scope, new FileInputStream(file), file.getAbsolutePath());
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}
@@ -91,9 +91,9 @@ public class HAPJSImporter {
 	    }		
 	}
 	
-	private void importFromFile(Context cx, Scriptable scope, InputStream inputStream){
+	private void importFromFile(Context cx, Scriptable scope, InputStream inputStream, String name){
         String content = this.getOperationDefinition(inputStream);
-        cx.evaluateString(scope, content, "<cmd>", 1, null);
+        cx.evaluateString(scope, content, name, 1, null);
         Object obj = scope.get("nosliw", scope);
         
         NativeObject nosliwObjJS = (NativeObject)obj;

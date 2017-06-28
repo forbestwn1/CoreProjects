@@ -17,6 +17,7 @@ var packageObj = library.getChildPackage("service");
 	var node_OperationParm;
 	var node_OperationParms;
 	var node_DependentServiceRequestInfo;
+	var node_expressionUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createExpressionService = function(){
@@ -234,31 +235,7 @@ var node_createExpressionService = function(){
 
 		var resourceRequestDependency = new node_DependentServiceRequestInfo(loadResourceRequest, {
 			success : function(requestInfo, resourcesTree){
-				var dataOperationResource = node_resourceUtility.getResourceFromTree(resourcesTree, dataOperationId);
-				var dataOperationFun = dataOperationResource.resourceData;
-				var dataOperationInfo = dataOperationResource[node_COMMONTRIBUTECONSTANT.RESOURCE_INFO][node_COMMONTRIBUTECONSTANT.RESOURCEMANAGERJSOPERATION_INFO_OPERATIONINFO];
-				
-				//build operation context
-				var operationContext = new node_OperationContext(resourcesTree, dataOperationResource.resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_DEPENDENCY]);
-				
-				var baseData;
-				var operationParmArray = [];
-				var parmsDefinitions = dataOperationInfo[node_COMMONTRIBUTECONSTANT.DATAOPERATIONINFO_PAMRS];
-				_.each(parmArray, function(parm, index, list){
-					var parmDefinition = parmsDefinitions[parm.name];
-					var isBase = false;
-					
-					nosliw.logging.info(parmDefinition[node_COMMONTRIBUTECONSTANT.DATAOPERATIONPARMINFO_ISBASE]);
-					
-					if(parmDefinition[node_COMMONTRIBUTECONSTANT.DATAOPERATIONPARMINFO_ISBASE]=="true"){
-						isBase = true;
-						baseData = parm.value;
-					}
-					operationParmArray.push(new node_OperationParm(parm.value, parm.name, isBase));
-				}, this);
-				
-				var operationResult = dataOperationFun.call(baseData, new node_OperationParms(operationParmArray), operationContext);
-				return operationResult;
+				return node_expressionUtility.executeOperation(dataTypeId, operation, parmArray, resourcesTree);
 			}
 		});
 		
@@ -316,6 +293,7 @@ packageObj.createNode("createExpressionService", node_createExpressionService);
 			node_OperationParm = packageObj.getNodeData("expression.entity.OperationParm");
 			node_OperationParms = packageObj.getNodeData("expression.entity.OperationParms");
 			node_DependentServiceRequestInfo = packageObj.getNodeData("request.request.entity.DependentServiceRequestInfo");  
+			node_expressionUtility = packageObj.getNodeData("expression.expressionUtility");
 		}
 	};
 	nosliw.registerModule(module, packageObj);
