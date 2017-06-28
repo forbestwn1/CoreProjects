@@ -1,6 +1,6 @@
 {
 	"name" : "expression1",
-	"expression" : "!(base.string)!.subString(base:&(base)&,from:&(from)&,to:&(to)&)",
+	"expression" : "!(base.string)!.subString(&(base)&,from:&(from)&,to:&(to)&)",
 	"description" : "DataType.method, all constant",
 	"constants" :{
 		"base":{

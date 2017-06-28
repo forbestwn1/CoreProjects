@@ -59,3 +59,5 @@ g
 7src/com/nosliw/data/datatype/datatype/v100/datatype.xml,4\3\43b36d3c630c84c587e7f9492b5fd3bab8415a5a
 a
 1src/com/nosliw/data/datatype/string/operations.js,f\8\f81b6dd874ea067e9dd68a84367a09945f5241d8
+b
+2src/com/nosliw/data/datatype/integer/operations.js,b\1\b12bf2dd2683a39c710c09bc3adc411d8cd59704

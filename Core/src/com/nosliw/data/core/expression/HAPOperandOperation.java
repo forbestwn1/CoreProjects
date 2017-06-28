@@ -9,6 +9,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataTypeConverter;
@@ -45,24 +46,31 @@ public class HAPOperandOperation extends HAPOperandImp{
 	protected String m_operation;
 	
 	//operation parms
-	protected Map<String, HAPOperand> m_parms;
+	protected Map<String, HAPOperand> m_parms = new LinkedHashMap<String, HAPOperand>();
 
 	private Map<String, HAPMatchers> m_parmsMatchers;
 	
-	public HAPOperandOperation(HAPOperand base, String operation, Map<String, HAPOperand> parms){
+	public HAPOperandOperation(HAPOperand base, String operation, List<HAPOperationParm> parms){
 		super(HAPConstant.EXPRESSION_OPERAND_OPERATION);
 		this.m_base = base;
 		this.m_operation = operation;
-		this.m_parms = parms;
+
+		for(HAPOperationParm opParm : parms)		this.m_parms.put(opParm.getName(), opParm.getOperand());
+
 		this.resetMatchers();
 		this.processChildenOperand();
 	}
 	
-	public HAPOperandOperation(String dataTypeIdLiterate, String operation, Map<String, HAPOperand> parms){
+	public HAPOperandOperation(String dataTypeIdLiterate, String operation, List<HAPOperationParm> parms){
 		super(HAPConstant.EXPRESSION_OPERAND_OPERATION);
 		this.m_dataTypeId = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), dataTypeIdLiterate, HAPSerializationFormat.LITERATE);
 		this.m_operation = operation;
-		this.m_parms = parms;
+		
+		for(HAPOperationParm opParm : parms){
+			if(HAPBasicUtility.isStringEmpty(opParm.getName()))			this.m_base = opParm.getOperand();
+			else			this.m_parms.put(opParm.getName(), opParm.getOperand());
+		}
+		
 		this.resetMatchers();
 		this.processChildenOperand();
 	}

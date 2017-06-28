@@ -3,9 +3,7 @@ package com.nosliw.data.imp.expression.parser;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.expression.HAPOperand;
@@ -14,6 +12,7 @@ import com.nosliw.data.core.expression.HAPOperandConstant;
 import com.nosliw.data.core.expression.HAPOperandOperation;
 import com.nosliw.data.core.expression.HAPOperandReference;
 import com.nosliw.data.core.expression.HAPOperandVariable;
+import com.nosliw.data.core.expression.HAPOperationParm;
 import com.nosliw.data.imp.expression.parser.generated.NosliwExpressionParser;
 import com.nosliw.data.imp.expression.parser.generated.SimpleNode;
 
@@ -95,11 +94,11 @@ public class HAPExpressionParserImp implements HAPExpressionParser{
 		  return out;
 	  }
 
-	  private Map<String, HAPOperand> getOperationParms(List<Parm> expressionParms){
-		  Map<String, HAPOperand> out = new LinkedHashMap<String, HAPOperand>();
+	  private List<HAPOperationParm> getOperationParms(List<Parm> expressionParms){
+		  List<HAPOperationParm> out = new ArrayList<HAPOperationParm>();
 		  for(Parm parm : expressionParms){
 			  HAPOperand op = processExpressionNode(parm.valuNode);
-			  out.put(parm.name, op);
+			  out.add(new HAPOperationParm(parm.name, op));
 		  }
 		  return out;
 	  }
