@@ -47,9 +47,9 @@
 	parms.push(parm3);
 	
 	
-	expressionService.executeExecuteOperationRequest("base.string;1.0.0", "subString", parms, {
-		success : function(requestInfo, data){
-			nosliw.logging.info("Operation Result : ", data);
-		}
-	}, undefined)
+//	expressionService.executeExecuteOperationRequest("base.string;1.0.0", "subString", parms, {
+//		success : function(requestInfo, data){
+//			nosliw.logging.info("Operation Result : ", data);
+//		}
+//	}, undefined);
 	

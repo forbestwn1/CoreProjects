@@ -7,6 +7,7 @@ var packageObj = library;
 	var node_requestUtility;
 	var node_createServiceRequestInfoSequence;
 	var node_createServiceRequestInfoSimple;
+	var node_createServiceRequestInfoService;
 	var node_createServiceRequestInfoExecutor;
 	var node_requestServiceProcessor;
 	var node_ServiceInfo;
@@ -15,6 +16,7 @@ var packageObj = library;
 	var node_COMMONTRIBUTECONSTANT;
 	var node_runtimeGateway;
 	var node_resourceUtility;
+	var node_DependentServiceRequestInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 	
 /**
@@ -82,7 +84,49 @@ var node_createResourceService = function(resourceManager){
 	}
 	
 	var loc_out = {
-
+			
+		getLoadResourcesRequest : function(resourcesInfo, handlers, requester_parent){
+			var serviceInfo = new node_ServiceInfo("LoadResources", {"resourcesInfo":resourcesInfo});
+			
+			//look for resources in resource manager
+			var resourceTree = {};
+			var resourceInfos = [];
+			_.each(resourcesInfo, function(resourceInfo, index, list){
+				var resource = loc_resourceManager.useResource(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_ID]);
+				if(resource!=undefined)			node_resourceUtility.buildResourceTree(resourceTree, resource);
+				else		resourceInfos.push(resourceInfo);
+			}, this);
+			
+			var out;
+			if(resourceInfos.length==0){
+				//all exists
+				 out = node_createServiceRequestInfoSimple(serviceInfo, function(){ return resourceTree; }, handlers, loc_out.getRequestInfo(requester_parent));
+			}
+			else{
+				out = node_createServiceRequestInfoService(serviceInfo, handlers, loc_out.getRequestInfo(requester_parent));
+				
+				//load some
+				var loadResourceRequest = loc_getLoadResourcesRequest(resourceInfos, {}, null);
+				
+				out.setDependentService(new node_DependentServiceRequestInfo(loadResourceRequest, {
+					success : function(requestInfo){
+						_.each(resourceInfos, function(resourceInfo, index, list){
+							var resource = loc_resourceManager.useResource(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_ID]);
+							node_resourceUtility.buildResourceTree(resourceTree, resource);
+						}, this);
+						return resourceTree;
+					}}));
+			}
+			return out;
+		},
+			
+			
+		executeLoadResourcesRequest : function(resourcesInfo, handlers, requester_parent){
+			var requestInfo = this.getLoadResourcesRequest(resourcesInfo, handlers, requester_parent);
+			node_requestServiceProcessor.processRequest(requestInfo, false);
+		},
+			
+		
 		getGetResourcesRequest : function(resourceIds, handlers, requester_parent){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetResources", {"resourcesId":resourceIds}), handlers, loc_out.getRequestInfo(requester_parent));
 
@@ -159,6 +203,7 @@ packageObj.createNode("createResourceService", node_createResourceService);
 			node_buildServiceProvider = packageObj.getNodeData("request.buildServiceProvider");
 			node_createServiceRequestInfoSequence = packageObj.getNodeData("request.request.createServiceRequestInfoSequence");
 			node_createServiceRequestInfoSimple = packageObj.getNodeData("request.request.createServiceRequestInfoSimple");
+			node_createServiceRequestInfoService = packageObj.getNodeData("request.request.createServiceRequestInfoService");
 			node_createServiceRequestInfoExecutor = packageObj.getNodeData("request.request.createServiceRequestInfoExecutor");
 			node_requestServiceProcessor = packageObj.getNodeData("request.requestServiceProcessor");
 			node_ServiceInfo = packageObj.getNodeData("common.service.ServiceInfo");
@@ -167,6 +212,7 @@ packageObj.createNode("createResourceService", node_createResourceService);
 			node_COMMONTRIBUTECONSTANT = packageObj.getNodeData("constant.COMMONTRIBUTECONSTANT");
 			node_runtimeGateway = packageObj.getNodeData(node_COMMONCONSTANT.RUNTIME_LANGUAGE_JS_GATEWAY);
 			node_resourceUtility = packageObj.getNodeData("resource.resourceUtility");
+			node_DependentServiceRequestInfo = packageObj.getNodeData("request.request.entity.DependentServiceRequestInfo");  
 		}
 	};
 	nosliw.registerModule(module, packageObj);

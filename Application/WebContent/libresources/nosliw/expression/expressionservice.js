@@ -46,9 +46,9 @@ var node_createExpressionService = function(){
 						out.setData("variables", matchedVars);
 					}, 
 				}, 
-				out);
+				null);
 		_.each(variables, function(varData, varName, list){
-			var request = loc_getMatchDataTaskRequest(varData, varsMatchers[varName], {}, requestInfo);
+			var request = loc_getMatchDataTaskRequest(varData, varsMatchers[varName], {}, null);
 			varsMatchRequest.add(varName, request);
 		}, this);
 
@@ -59,7 +59,7 @@ var node_createExpressionService = function(){
 			success : function(requestInfo, operandResult){
 				return operandResult;
 			}
-		}, out);
+		}, null);
 		out.addRequest(executeOperandRequest);
 		
 		return out;
@@ -101,9 +101,7 @@ var node_createExpressionService = function(){
 
 		//cal all parms data and base data
 		var parmsOperand = operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_PAMRS];
-		var baseOperand = operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_BASEDATA];
 		var parmsData = {};
-		var baseData;
 		
 		var parmsOperandRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("CalOperationParms", {"parms":parmsOperand}), {
 			success : function(requestInfo, setResult){
@@ -111,24 +109,19 @@ var node_createExpressionService = function(){
 			}
 		});
 		_.each(parmsOperand, function(parmOperand, parmName, list){
-			var parmOperandRequest = loc_getExecuteOperandRequest(expression, parmOperand, variables, {}, parmsOperandRequest);
+			var parmOperandRequest = loc_getExecuteOperandRequest(expression, parmOperand, variables, {});
 			parmsOperandRequest.addRequest(parmName, parmOperandRequest);
 		}, this);
 		out.addRequest(parmsOperandRequest);
 		
-		if(baseOperand!=undefined){
-			var baseOperandRequest = loc_getExecuteOperandRequest(baseOperand, variables, {
-				success : function(result, requestInfo){
-					baseData = result;
-				}
-			});
-			out.addRequest(baseOperandRequest);
-		}
-		
 		//match parms and base
-		var matchedParms;
+		var matchedParms = [];
 		var parmsMatcherRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatchOperationParms", {"parmsData":parmsData, "matchers":operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_MATCHERSPARMS]}), {
 			success : function(requestInfo, setResult){
+				_.each(setResult, function(parmValue, parmName, list){
+					matchedParms.push(new node_OperationParm(parmName, parmValue));
+				}, this);
+				
 				matchedParms = setResult;
 			}
 		});
@@ -138,22 +131,12 @@ var node_createExpressionService = function(){
 		}, this);
 		out.addRequest(parmsMatcherRequest);
 		
-		var matchedBase;
-		if(baseData!=undefined){
-			var parmMatchRequest = loc_getMatchDataTaskRequest(baseData, operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_MATCHERSBASE], {
-				success : function(requestInfo, data){
-					matchedBase = data;
-				}
-			}, out);
-			out.addRequest(parmMatchRequest);
-		}
-		
 		//execute data operation
-		var executeOperationRequest = loc_getExecuteOperationRequest(operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_DATATYPEID], operationOperand.operandName, matchedParms, matchedBase, {
+		var executeOperationRequest = loc_getExecuteOperationRequest(operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_DATATYPEID], operationOperand.operandName, matchedParms, {
 			success : function(requestInfo, data){
 				return data;
 			}
-		}, out);
+		});
 		out.addRequest(executeOperationRequest);
 		
 		return out;

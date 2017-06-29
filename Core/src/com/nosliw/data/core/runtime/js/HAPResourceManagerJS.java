@@ -42,6 +42,13 @@ public class HAPResourceManagerJS implements HAPResourceManager{
 
 		for(String resourceType : sortedResourcesId.keySet()){
 			HAPResourceManager resourceMan = this.getResourceManager(resourceType);
+			
+			if(sortedResourcesId==null || resourceMan==null || sortedResourcesId.get(resourceType)==null){
+				int kkkk = 5555;
+				kkkk++;
+			}
+			
+			
 			List<HAPResource> reosurces = resourceMan.getResources(sortedResourcesId.get(resourceType));
 			out.addAll(reosurces);
 		}

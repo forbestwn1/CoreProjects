@@ -61,6 +61,12 @@ public abstract class HAPDataImp extends HAPSerializableImp implements HAPData{
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		
+		if(this.m_dataTypeId==null){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		jsonMap.put(DATATYPEID, this.m_dataTypeId.toStringValue(HAPSerializationFormat.LITERATE));
 		this.buildJsonMap(jsonMap, typeJsonMap);
 	}

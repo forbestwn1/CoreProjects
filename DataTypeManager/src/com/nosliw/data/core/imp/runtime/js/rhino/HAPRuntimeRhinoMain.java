@@ -59,12 +59,12 @@ public class HAPRuntimeRhinoMain {
 			
 			runtime.loadScriptFromFile("loadResource1.js", HAPRuntimeRhinoMain.class, null, null);
 			
-//			runtime.executeExpressionTask(new HAPExpressionTaskRhino(expression, null){
-//				@Override
-//				public void doSuccess() {
-//					System.out.println("Expression Result : " + getResult());
-//				}
-//			});
+			runtime.executeExpressionTask(new HAPExpressionTaskRhino(expression, null){
+				@Override
+				public void doSuccess() {
+					System.out.println("Expression Result : " + getResult());
+				}
+			});
 		}
 		catch(Exception e){
 			e.printStackTrace();

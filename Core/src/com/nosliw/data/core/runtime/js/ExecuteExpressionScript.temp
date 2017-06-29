@@ -2,7 +2,7 @@
 	expressionService.executeExecuteExpressionRequest(||expression||, ||variables||, {
 		success : function(requestInfo, data){
 			nosliw.logging.info("Expression Result : ", JSON.toString(data));
-			nosliw.getNodeData("||gatewayPath||").expressionExecuteResult("||taskId||", JSON.toString(data));
+			nosliw.getNodeData("||gatewayPath||").notifyExpressionExecuteResult("||taskId||", JSON.toString(data));
 		}
 	}, undefined);
 			
