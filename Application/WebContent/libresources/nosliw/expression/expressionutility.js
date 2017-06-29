@@ -14,9 +14,8 @@ var packageObj = library;
 
 var node_expressionUtility = 
 {
-		executeOperation : function(dataTypeId, operation, parmArray, resourcesTree){
-			var dataOperationId = node_resourceUtility.createOperationResourceId(dataTypeId, operation);
-			var dataOperationResource = node_resourceUtility.getResourceFromTree(resourcesTree, dataOperationId);
+		executeOperationResource : function(resourceId, parmArray, resourcesTree){
+			var dataOperationResource = node_resourceUtility.getResourceFromTree(resourcesTree, resourceId);
 			var dataOperationFun = dataOperationResource.resourceData;
 			var dataOperationInfo = dataOperationResource[node_COMMONTRIBUTECONSTANT.RESOURCE_INFO][node_COMMONTRIBUTECONSTANT.RESOURCEMANAGERJSOPERATION_INFO_OPERATIONINFO];
 			
@@ -46,7 +45,20 @@ var node_expressionUtility =
 			
 			var operationResult = dataOperationFun.call(baseData, new node_OperationParms(operationParmArray), operationContext);
 			return operationResult;
+		},
+
+		executeConvertToResource : function(resourceId, data, targetDataTypeId, resourcesTree){
+			var dataOperationResource = node_resourceUtility.getResourceFromTree(resourcesTree, resourceId);
+			var dataOperationFun = dataOperationResource.resourceData;
+			
+			//build operation context
+			var operationContext = new node_OperationContext(resourcesTree, dataOperationResource.resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_DEPENDENCY]);
+			
+			//data is "this" in operation function
+			var result = dataOperationFun.call(data, data, targetDataTypeId, operationContext);
+			return result;
 		}
+
 };
 
 //*******************************************   End Node Definition  ************************************** 	

@@ -36,6 +36,13 @@ var node_resourceUtility =
 			out[node_COMMONTRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_OPERATION; 
 			return out;
 		},
+
+		createConverterToResourceId : function(dataTypeId){
+			var out = {};
+			out[node_COMMONTRIBUTECONSTANT.RESOURCEID_ID] = node_namingConvensionUtility.cascadeLevel1(dataTypeId, node_COMMONCONSTANT.DATAOPERATION_TYPE_CONVERTTO); 
+			out[node_COMMONTRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONVERTER; 
+			return out;
+		},
 };
 
 //*******************************************   End Node Definition  ************************************** 	

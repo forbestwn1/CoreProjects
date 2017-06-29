@@ -5,7 +5,7 @@ var packageObj = library.getChildPackage("utility");
 	//get used node
 //*******************************************   Start Node Definition  ************************************** 	
 
-var basicUtility = 
+var node_basicUtility = 
 {
 		/*
 		 * create an value with meaning of empty
@@ -59,12 +59,22 @@ var basicUtility =
 		
 		capitalizeFirstLetter : function(string) {
 		    return string.charAt(0).toUpperCase() + string.slice(1);
-		}		
+		},
+		
+		isEmptyObject :function (obj) {
+			if(obj==undefined)  return true;
+			for(var prop in obj) {
+			    if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+			    	return false;
+				}
+			}
+			return true;
+		}
 };
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("basicUtility", basicUtility); 
+packageObj.createNode("basicUtility", node_basicUtility); 
 
 	var module = {
 		start : function(packageObj){

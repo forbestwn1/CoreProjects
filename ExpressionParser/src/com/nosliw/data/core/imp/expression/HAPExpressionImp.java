@@ -198,8 +198,8 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		if(this.m_varsInfo==null)   this.m_varsInfo = new LinkedHashMap<String, HAPVariableInfo>();      
 		
 		//update variables info in expression according to parent variable info (parent variable info affect the child variable info)
-		for(String varName : this.getVariableInfos().keySet()){
-			HAPVariableInfo varInfo = this.getVariableInfos().get(varName);
+		for(String varName : this.m_internalVarsInfo.keySet()){
+			HAPVariableInfo varInfo = this.m_internalVarsInfo.get(varName);
 			HAPVariableInfo parentVarInfo = this.m_varsInfo.get(varName);
 			if(parentVarInfo!=null){
 				if(varInfo.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN)){
@@ -211,7 +211,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		
 		//do discovery on operand
 		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		varsInfo.putAll(this.getVariableInfos());
+		varsInfo.putAll(this.m_internalVarsInfo);
 		
 		HAPMatchers matchers = null;
 		Map<String, HAPVariableInfo> oldVarsInfo;
@@ -226,8 +226,8 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		this.m_internalVarsInfo = varsInfo;
 		
 		//merge back, cal variable matchers, update parent variable
-		for(String varName : this.getVariableInfos().keySet()){
-			HAPVariableInfo varInfo = this.getVariableInfos().get(varName);
+		for(String varName : this.m_internalVarsInfo.keySet()){
+			HAPVariableInfo varInfo = this.m_internalVarsInfo.get(varName);
 			HAPVariableInfo parentVarInfo = this.m_varsInfo.get(varName);
 			if(parentVarInfo==null){
 				parentVarInfo = new HAPVariableInfo();
