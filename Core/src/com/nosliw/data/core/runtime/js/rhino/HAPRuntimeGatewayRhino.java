@@ -31,7 +31,7 @@ public interface HAPRuntimeGatewayRhino extends HAPRuntimeGatewayJS{
 	 * @param expressionId: expression id executed
 	 * @param result  the data result
 	 */
-	void notifyExpressionExecuteResult(String taskId, String result);
+	void notifyExpressionExecuteResult(String taskId, Object result);
 	
 	/**
 	 * Call back method used when all the resources are loaded, so that can execute expression

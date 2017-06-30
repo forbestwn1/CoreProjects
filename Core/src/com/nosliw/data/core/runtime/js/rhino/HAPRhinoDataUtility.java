@@ -9,6 +9,7 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mozilla.javascript.ConsString;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.IdScriptableObject; 
@@ -106,6 +107,9 @@ public class HAPRhinoDataUtility
     	if(object instanceof String){
     		out = object.toString();
     	}
+    	else if(object instanceof ConsString){
+    		out = object.toString();
+    	}
     	else if(object instanceof Integer){
     		out = object;
     	}
@@ -148,7 +152,7 @@ public class HAPRhinoDataUtility
                 Object value = nativeObject.get(key, nativeObject);
                 Object json = toJson(value);
                 mapJson.put(key, json+"");
-                mapTypeJson.put(key, json.getClass()); 
+                if(!(json instanceof String))      mapTypeJson.put(key, json.getClass()); 
             } 
          
             return HAPJsonUtility.buildMapJson(mapJson, mapTypeJson);  

@@ -121,7 +121,7 @@ var node_createExpressionService = function(){
 						//build parms for operation
 						var operationParms = [];
 						_.each(parmsData, function(parmData, parmName, list){
-							operationParms.push(new node_OperationParm(parmName, parmData));
+							operationParms.push(new node_OperationParm(parmData, parmName));
 						}, this);
 
 						//execute data operation

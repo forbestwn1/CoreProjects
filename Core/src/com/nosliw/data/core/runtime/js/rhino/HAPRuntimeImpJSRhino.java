@@ -71,7 +71,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	@Override
 	public void requestDiscoverResources(Object objResourceIds, Object callBackFunction){
 		try{
-			List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds, this.m_context, this.m_scope); 
+			List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds); 
 			List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
 			((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(resourceInfos)});
 		}
@@ -84,7 +84,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	@Override
 	public void requestDiscoverAndLoadResources(Object objResourceIds, Object callBackFunction){
 		try{
-			List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds, this.m_context, this.m_scope);
+			List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds);
 			//discovery
 			List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
 			//load resources to rhino runtime
@@ -102,7 +102,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	@Override
 	public void requestLoadResources(Object objResourcesInfo, Object callBackFunction){
 		try{
-			List<HAPResourceInfo> resourcesInfo = HAPRhinoRuntimeUtility.rhinoResourcesInfoToResourcesInfo((NativeArray)objResourcesInfo, this.m_context, this.m_scope);
+			List<HAPResourceInfo> resourcesInfo = HAPRhinoRuntimeUtility.rhinoResourcesInfoToResourcesInfo((NativeArray)objResourcesInfo);
 			//load resources to rhino runtime
 			this.loadResources(resourcesInfo, m_scope, m_context);
 			((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{});
@@ -114,9 +114,10 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	
 	//gateway callback method
 	@Override
-	public void notifyExpressionExecuteResult(String taskId, String result){
+	public void notifyExpressionExecuteResult(String taskId, Object result){
 		HAPRuntimeTask expressionTask = this.m_tasks.get(taskId);
-		HAPDataWrapper resultData = new HAPDataWrapper(result); 
+		String resultStr = (String)HAPRhinoDataUtility.toJson(result);
+		HAPDataWrapper resultData = new HAPDataWrapper(resultStr); 
 		expressionTask.success(resultData);
 	}
 	
@@ -281,7 +282,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 //	        System.setOut(dbg.getOut());
 //	        System.setErr(dbg.getErr());
 	        
-		    dbg.setBreakOnEnter(true);
+//		    dbg.setBreakOnEnter(true);
 		    dbg.setBreakOnExceptions(true);
 		    dbg.setScope(m_scope);
 		    dbg.setSize(1200, 800);

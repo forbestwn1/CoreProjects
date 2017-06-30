@@ -58,7 +58,8 @@ node_OperationContext.prototype = {
 	},
 	
 	operation : function(dataTypeId, operation, parmArray){
-		return node_expressionUtility.executeOperation(dataTypeId, operation, parmArray, this.pri_resourcesTree);
+		var dataOperationResourceId = node_resourceUtility.createOperationResourceId(dataTypeId, operation);
+		return node_expressionUtility.executeOperationResource(dataOperationResourceId, parmArray, this.pri_resourcesTree);
 	},
 };
 

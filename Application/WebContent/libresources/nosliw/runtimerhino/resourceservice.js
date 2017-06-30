@@ -55,12 +55,12 @@ var node_createResourceService = function(resourceManager){
 				//discover related resources (dependency and children)
 				var relatedResourceIds = []; 
 				var resourceInfo = resource.resourceInfo;
-				_.each(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_DEPENDENCY], function(child, index, list){
-					relatedResourceIds.push(child[node_COMMONTRIBUTECONSTANT.RESOURCEDEPENDENT_ID]);
+				_.each(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_DEPENDENCY], function(childResourceId, alias, list){
+					relatedResourceIds.push(childResourceId);
 				}, this);
 
-				_.each(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_CHILDREN], function(child, index, list){
-					relatedResourceIds.push(child[node_COMMONTRIBUTECONSTANT.RESOURCEDEPENDENT_ID]);
+				_.each(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_CHILDREN], function(childResourceId, alias, list){
+					relatedResourceIds.push(childResourceId);
 				}, this);
 				
 				loc_findDiscoveredResources(relatedResourceIds, result);
