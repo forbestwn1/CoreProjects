@@ -1,5 +1,8 @@
 package com.nosliw.data.core.imp.runtime.js.rhino;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -7,6 +10,7 @@ import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeManager;
+import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionImp;
@@ -42,10 +46,10 @@ public class HAPRuntimeRhinoMain {
 		HAPExpressionManagerImp expressionMan = new HAPExpressionManagerImp(new HAPExpressionParserImp(), dataTypeHelper);
 		expressionMan.importExpressionFromFolder(HAPFileUtility.getClassFolderPath(HAPRuntimeRhinoMain.class));
 		
-		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression1", null);
+//		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression1", null);
+//		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
+		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression2", null);
 		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
-//		HAPExpressionImp expression2 = (HAPExpressionImp)expressionMan.processExpression("expression2", null);
-//		System.out.println(HAPJsonUtility.formatJson(expression2.toStringValue(HAPSerializationFormat.JSON)));
 //		HAPExpressionImp expression3 = (HAPExpressionImp)expressionMan.processExpression("expression3", null);
 //		System.out.println(HAPJsonUtility.formatJson(expression3.toStringValue(HAPSerializationFormat.JSON)));
 //		HAPExpressionImp expression4 = (HAPExpressionImp)expressionMan.processExpression("expression4", null);
@@ -59,7 +63,11 @@ public class HAPRuntimeRhinoMain {
 			
 			runtime.loadScriptFromFile("loadResource1.js", HAPRuntimeRhinoMain.class, null, null);
 			
-			runtime.executeExpressionTask(new HAPExpressionTaskRhino(expression, null){
+			HAPDataWrapper fromData = new HAPDataWrapper("{dataTypeId:\"base.integer;1.0.0\", data:2}");
+			Map<String, HAPData> varData = new LinkedHashMap<String, HAPData>();
+			varData.put("fromVar", fromData);
+			
+			runtime.executeExpressionTask(new HAPExpressionTaskRhino(expression, varData){
 				@Override
 				public void doSuccess() {
 					Object result = getResult();

@@ -99,7 +99,7 @@ public class HAPDataWrapper extends HAPDataImp{
 			}
 			else if(token.equals("#")){
 				//literate
-				this.buildObjectByLiterate(text);
+				this.buildObjectByLiterate(text.substring(1));
 				this.setWrapperType(HAPSerializationFormat.LITERATE);
 				return true;
 			}

@@ -60,7 +60,7 @@ public class HAPExpressionDefinitionImp extends HAPStringableValueEntity impleme
 		Map<String, HAPDataTypeCriteria> vars = this.getMapAncestorByPath(VARIABLECRITERIAS).getMapValue();
 		
 		for(String varName : vars.keySet()){
-			m_variabesWithSolidCriteria.put(varName, ((HAPDataTypeCriteriaWrapperLiterate)vars.get(varName)).getSolidCriteria());
+			getVariableCriterias().put(varName, ((HAPDataTypeCriteriaWrapperLiterate)vars.get(varName)).getSolidCriteria());
 		}
 		return out;
 	}

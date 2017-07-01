@@ -16,7 +16,7 @@
 			"value": "7"
 		}
 	},
-	"variables":{
+	"variableCriterias":{
 		"baseVar": "base.string",
 		"fromVar": "base.integer",
 		"toVar": "base.integer"

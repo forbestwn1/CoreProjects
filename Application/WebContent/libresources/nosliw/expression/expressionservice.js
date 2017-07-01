@@ -29,40 +29,43 @@ var node_createExpressionService = function(){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpression", {"expression":expression, "variables":variables}), handlers, requestInfo);
+		out.setData("variables", variables);
 		var variablesInfo = expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS];
-		if(!node_basicUtility.isEmptyObject(variablesInfo)){
-			//if have variables, convert variables
+			
+		//if have variables, convert variables
 			var varsMatchers = expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_VARIABLESMATCHERS];
 			var varsMatchRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatcherVariable", {"variables":variables, "variablesMatchers":varsMatchers}), 
 					{			
 						success : function(reqInfo, setResult){
 							var matchedVars = {};
 							_.each(variables, function(varData, varName, list){
-								var matchedVar = setResult[varName];
+								var matchedVar = setResult.getResult(varName);
 								if(matchedVar==undefined){
 									matchedVar = variables[varName];
 								}
 								matchedVars[varName] = matchedVar;
 							}, this);
 							out.setData("variables", matchedVars);
+							
+							//execute operand
+							var executeOperandRequest = loc_getExecuteOperandRequest(expression, expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_OPERAND], out.getData("variables"), {
+								success : function(requestInfo, operandResult){
+									return operandResult;
+								}
+							}, null);
+							return executeOperandRequest;
 						}, 
 					}, 
 					null);
 			_.each(variables, function(varData, varName, list){
-				var request = loc_getMatchDataTaskRequest(varData, varsMatchers[varName], {}, null);
-				varsMatchRequest.add(varName, request);
+				var varMatchers = varsMatchers[varName];
+				if(varMatchers!=undefined){
+					var request = loc_getMatchDataTaskRequest(varData, varMatchers, {}, null);
+					varsMatchRequest.addRequest(varName, request);
+				}
 			}, this);
 
 			out.addRequest(varsMatchRequest);
-		}
-		
-		//execute operand
-		var executeOperandRequest = loc_getExecuteOperandRequest(expression, expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_OPERAND], out.getData("variables"), {
-			success : function(requestInfo, operandResult){
-				return operandResult;
-			}
-		}, null);
-		out.addRequest(executeOperandRequest);
 		
 		return out;
 	};
@@ -76,14 +79,18 @@ var node_createExpressionService = function(){
 		switch(operandType){
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_CONSTANT:
 			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteConstantOperand", {"operand":operand, "variables":variables}), 
-					function(requestInfo){  return requestInfo.getService().parms.operand[node_COMMONTRIBUTECONSTANT.OPERAND_DATA];  }, 
+					function(requestInfo){  
+						return requestInfo.getService().parms.operand[node_COMMONTRIBUTECONSTANT.OPERAND_DATA];  
+					}, 
 					handlers, requestInfo);
 			break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_VARIABLE: 
 			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteVariableOperand", {"operand":operand, "variables":variables}), 
-					function(requestInfo){  return requestInfo.service.variable[requestInfo.service.operand[node_COMMONTRIBUTECONSTANT.OPERAND_NAME]];  }, 
+					function(requestInfo){  
+						var varName = requestInfo.getService().parms.operand[node_COMMONTRIBUTECONSTANT.OPERAND_VARIABLENAME];
+						return requestInfo.getService().parms.variables[varName];  
+					}, 
 					handlers, requestInfo);
-			out = node_createServiceRequestInfoService(undefined, loc_calVariable, handlers, requestInfo);
 		    break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_OPERATION:
 			out = loc_getExecuteOperationOperandRequest(expression, operand, variables, handlers, requestInfo);
@@ -154,7 +161,7 @@ var node_createExpressionService = function(){
 	var loc_getMatchDataTaskRequest = function(data, matchers, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 
-		var service = new node_ServiceInfo("MatchData", {"data":data, "matcher":matcher});
+		var service = new node_ServiceInfo("MatchData", {"data":data, "matcher":matchers});
 		
 		var dataTypeId = data[node_COMMONTRIBUTECONSTANT.DATA_DATATYPEID];
 		var matcher = matchers[dataTypeId];

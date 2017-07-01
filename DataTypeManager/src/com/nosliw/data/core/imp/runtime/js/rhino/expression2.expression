@@ -1,6 +1,6 @@
 {
 	"name" : "expression2",
-	"expression" : "!(base.string)!.subString(base:&(base)&,from:?(fromVar)?,to:&(to)&)",
+	"expression" : "!(base.string)!.subString(&(base)&,from:?(fromVar)?,to:&(to)&)",
 	"description" : "DataType.method, one variable",
 	"constants" :{
 		"base":{
@@ -16,7 +16,7 @@
 			"value": "7"
 		}
 	},
-	"variables":{
+	"variableCriterias":{
 		"fromVar": "base.integer"
 	}	
 }

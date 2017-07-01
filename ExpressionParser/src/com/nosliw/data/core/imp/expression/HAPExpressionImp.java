@@ -63,6 +63,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		this.m_errorMsgs = new ArrayList<String>();
 		this.m_expressionDefinition = expressionDefinition;
 		this.m_operand = operand;
+		this.m_varsMatchers = new LinkedHashMap<String, HAPMatchers>();
 		
 		//find all variables, build default var criteria
 		Set<String> varsName = HAPExpressionUtility.discoveryVariables(this.m_operand);

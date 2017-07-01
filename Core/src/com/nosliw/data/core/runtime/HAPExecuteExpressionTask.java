@@ -13,6 +13,7 @@ public abstract class HAPExecuteExpressionTask extends HAPRuntimeTask{
 	
 	public HAPExecuteExpressionTask(HAPExpression expression, Map<String, HAPData> variablesValue){
 		this.m_expression = expression;
+		this.m_variablesValue = variablesValue; 
 	}
 	
 	public Map<String, HAPData> getVariablesValue(){  return this.m_variablesValue;  }
