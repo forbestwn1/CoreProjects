@@ -1,6 +1,6 @@
 {
 	"name" : "expression6",
-	"expression" : "?(var1)?.subString(from:?(var2)?,to:?(var3)?)",
+	"expression" : "!(base.string)!.subString(?(var1)?,from:?(var2)?,to:?(var3)?)",
 	"description" : "all variables",
 	"constants" :{
 	},

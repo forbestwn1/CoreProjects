@@ -2,6 +2,7 @@ package com.nosliw.data.core.criteria;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,7 +32,12 @@ public class HAPDataTypeCriteriaElementIds extends HAPDataTypeCriteriaImp{
 	public Set<HAPDataTypeId> getValidDataTypeId(HAPDataTypeHelper dataTypeHelper) {		return this.m_ids;	}
 
 	public HAPDataTypeCriteriaOr toOrCriteria(){
-		HAPDataTypeCriteriaOr out = new HAPDataTypeCriteriaOr(new ArrayList(this.m_ids));
+		List<HAPDataTypeCriteria> criterias = new ArrayList<HAPDataTypeCriteria>();
+		for(HAPDataTypeId id : this.m_ids){
+			criterias.add(new HAPDataTypeCriteriaElementId(id));
+		}
+		
+		HAPDataTypeCriteriaOr out = new HAPDataTypeCriteriaOr(criterias);
 		return out;
 	}
 

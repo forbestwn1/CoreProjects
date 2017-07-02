@@ -83,8 +83,8 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		System.out.println("******* Parse expression");
 		HAPExpressionImp expression = this.parseExpressionDefinition(expressionName);
 
-		//set expression name
-		expression.setName(expressionName + this.m_idIndex++);
+		//set expression name, every expression instance has a unique name
+		expression.setName(expressionName + "_no" + this.m_idIndex++);
 		
 		//process reference
 		System.out.println("******* Process reference");
@@ -142,7 +142,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 					HAPReferenceInfo referenceInfo = expression.getExpressionDefinition().getReferences().get(referenceName);
 					
 					String refExpName = null;   //referenced expression name, by default, use referenceName as expression name
-					Map<String, String> refVarMap = null;   //variable mapping from parent to reference expression
+					Map<String, String> refVarMap = new LinkedHashMap<String, String>();   //variable mapping from parent to reference expression
 					if(referenceInfo!=null){
 						refExpName = referenceInfo.getReference();
 						refVarMap = referenceInfo.getVariablesMap();
