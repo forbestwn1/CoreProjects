@@ -31,7 +31,10 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
  */
 public class HAPExpressionImp extends HAPSerializableImp implements HAPExpression{
 
-	// name
+	//unique in system
+	private String m_id;
+	
+	// name (unique within expression, used to name sub expression)
 	private String m_name;
 	
 	// original expression definition
@@ -90,10 +93,25 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	}
 	
 	@Override
+	public String getId() {		return this.m_id;	}
+
+	@Override
+	public void setId(String id) {		this.m_id = id;	}
+	
+	@Override
 	public String getName(){  return this.m_name;  }
 	
 	@Override
-	public void setName(String name){  this.m_name = name;  }
+	public void setName(String name){  
+		this.m_name = name;  
+	
+		Set<String> variables = this.getVariables();
+		Map<String, String> varMapping = new LinkedHashMap<String, String>();
+		for(String variableName : variables){
+			varMapping.put(variableName, HAPExpressionUtility.buildFullVariableName(name, variableName));
+		}
+		this.updateVariablesName(varMapping);
+	}
 	
 	@Override
 	public HAPExpressionDefinition getExpressionDefinition() {		return this.m_expressionDefinition;	}
@@ -119,8 +137,6 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		for(String referenceName : this.m_references.keySet())		out.addAll(this.m_references.get(referenceName).getVariables());
 		return out;
 	}
-	
-	
 	
 	/**
 	 * Rename variables, including
@@ -191,15 +207,6 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		//modify variables in referenced expression by add prefix
 		String prefix = HAPExpressionUtility.buildFullVariableName(this.getName(), referenceName); 
 		expression.setName(prefix);
-		
-		Set<String> variables = expression.getVariables();
-		Map<String, String> varMapping = new LinkedHashMap<String, String>();
-		for(String variableName : variables){
-			varMapping.put(variableName, HAPExpressionUtility.buildFullVariableName(prefix, variableName));
-		}
-		expression.updateVariablesName(varMapping);
-
-		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
 
 		this.m_references.put(referenceName, expression);   
 	}
@@ -276,6 +283,8 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(ID, this.getId());
+		jsonMap.put(NAME, this.getName());
 		jsonMap.put(EXPRESSIONDEFINITION, HAPSerializeManager.getInstance().toStringValue(this.m_expressionDefinition, HAPSerializationFormat.JSON));
 		jsonMap.put(OPERAND, HAPSerializeManager.getInstance().toStringValue(this.m_operand, HAPSerializationFormat.JSON));
 		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.getVariableInfos(), HAPSerializationFormat.JSON));
@@ -283,5 +292,4 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		jsonMap.put(VARIABLESMATCHERS, HAPJsonUtility.buildJson(this.m_varsMatchers, HAPSerializationFormat.JSON));
 		jsonMap.put(REFERENCES, HAPJsonUtility.buildJson(this.m_references, HAPSerializationFormat.JSON));
 	}
-
 }

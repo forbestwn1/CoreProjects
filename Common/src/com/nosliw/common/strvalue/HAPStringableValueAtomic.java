@@ -86,7 +86,7 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	}
 	private void setStringContent(HAPResolvableString strValue, String type, String subType){
 		this.m_strValue = strValue;
-		this.m_type = new HAPLiterateType(type, subType);
+		if(type!=null)		this.m_type = new HAPLiterateType(type, subType);
 		this.m_sovled = false;
 	}
 	

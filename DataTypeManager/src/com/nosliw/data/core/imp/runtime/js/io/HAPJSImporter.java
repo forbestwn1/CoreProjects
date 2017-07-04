@@ -196,9 +196,6 @@ public class HAPJSImporter {
     		baseResourceId = HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPDataTypeConverter(dataTypeId, operationName));
     		break;
     	}
-    	
-    	System.out.println(baseResourceId.toStringValue(HAPSerializationFormat.LITERATE));
-    	
     	HAPJSResourceDependency dep = new HAPJSResourceDependency(baseResourceId, new ArrayList(operationResources));
 		return dep;
 	}

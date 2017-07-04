@@ -68,9 +68,6 @@ public class HAPPatternXmlResourceUtility {
 	        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 	        DOMSource source = new DOMSource(doc);
 	        transformer.transform(source, outStream);
-
-	        System.out.println("\nXML DOM Created Successfully..");
-		
 		}
 		catch(Exception e){
 			e.printStackTrace();

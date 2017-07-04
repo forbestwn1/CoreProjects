@@ -16,6 +16,9 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 public interface HAPExpression {
 
 	@HAPAttribute
+	public static String ID = "id";
+	
+	@HAPAttribute
 	public static String NAME = "name";
 	
 	@HAPAttribute
@@ -35,6 +38,9 @@ public interface HAPExpression {
 
 	@HAPAttribute
 	public static String REFERENCES = "references";
+	
+	String getId();
+	void setId(String id);
 	
 	//after expression definition parsed, every expression has a unique id
 	String getName();

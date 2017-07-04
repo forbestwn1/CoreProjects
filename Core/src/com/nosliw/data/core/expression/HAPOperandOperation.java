@@ -32,6 +32,9 @@ public class HAPOperandOperation extends HAPOperandImp{
 	
 	@HAPAttribute
 	public static final String PARMS = "parms";
+
+	@HAPAttribute
+	public static final String BASE = "base";
 	
 	@HAPAttribute
 	public static final String MATCHERSPARMS = "matchersParms";
@@ -123,7 +126,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(OPERATION, this.m_operation);
 		jsonMap.put(DATATYPEID, HAPSerializeManager.getInstance().toStringValue(this.m_dataTypeId, HAPSerializationFormat.LITERATE));
-//		jsonMap.put(BASE, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON));
+		if(this.m_base!=null)	jsonMap.put(BASE, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON));
 		
 		jsonMap.put(PARMS, HAPJsonUtility.buildJson(this.m_parms, HAPSerializationFormat.JSON));
 		jsonMap.put(MATCHERSPARMS, HAPJsonUtility.buildJson(this.m_parmsMatchers, HAPSerializationFormat.JSON));

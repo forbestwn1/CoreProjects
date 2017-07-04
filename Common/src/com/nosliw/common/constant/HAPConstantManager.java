@@ -145,7 +145,6 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 		String attrJavaContent = HAPStringTemplateUtil.getStringValue(javaTemplateStream, attrJavaTemplateParms);
 		
 		String outputFilePath = group.getFilePath()+"/"+group.getClassName()+".java";
-		System.out.println(outputFilePath);
 		HAPFileUtility.writeFile(outputFilePath, attrJavaContent);
 		
 		return attrJavaContent;
