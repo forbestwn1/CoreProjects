@@ -27,7 +27,7 @@ public class HAPRelationshipImp extends HAPStringableValueEntityWithID implement
 	public static String TARGETTYPE = "targetType";
 	
 	public HAPRelationshipImp(){
-		this.updateAtomicChildObjectValue(PATH, new HAPRelationshipPathImp());
+		this.updateAtomicChildObjectValue(PATH, new HAPRelationshipPath());
 	}
 	
 	@Override
@@ -37,7 +37,7 @@ public class HAPRelationshipImp extends HAPStringableValueEntityWithID implement
 	public HAPDataTypeId getSource(){	return this.getSourceDataType().getName();	}
 
 	@Override
-	public HAPRelationshipPath getPath() {		return (HAPRelationshipPathImp)this.getAtomicAncestorValueObject(PATH, HAPRelationshipPathImp.class);	}
+	public HAPRelationshipPath getPath() {		return (HAPRelationshipPath)this.getAtomicAncestorValueObject(PATH, HAPRelationshipPath.class);	}
 
 	public String getTargetType(){  return this.getAtomicAncestorValueString(TARGETTYPE);  }
 	

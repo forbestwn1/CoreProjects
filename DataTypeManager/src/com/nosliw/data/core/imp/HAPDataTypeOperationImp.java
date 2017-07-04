@@ -42,7 +42,7 @@ public class HAPDataTypeOperationImp extends HAPOperationImp implements HAPRelat
 		}
 		else{
 			this.setSource(targetOperation.getDataTypeName());
-			this.updateAtomicChildObjectValue(PATH, new HAPRelationshipPathImp());
+			this.updateAtomicChildObjectValue(PATH, new HAPRelationshipPath());
 		}
 	}
 	
@@ -58,7 +58,7 @@ public class HAPDataTypeOperationImp extends HAPOperationImp implements HAPRelat
 	@Override
 	public HAPDataTypeId getSource(){   return (HAPDataTypeId)this.getAtomicAncestorValueObject(SOURCE, HAPDataTypeId.class);  }
 	@Override
-	public HAPRelationshipPath getPath() {		return (HAPRelationshipPathImp)this.getAtomicAncestorValueObject(PATH, HAPRelationshipPathImp.class);	}
+	public HAPRelationshipPath getPath() {		return (HAPRelationshipPath)this.getAtomicAncestorValueObject(PATH, HAPRelationshipPath.class);	}
 
 	public void setTarget(HAPDataTypeId dataTypeName){ this.updateAtomicChildObjectValue(TARGET, dataTypeName); }
 	

@@ -19,6 +19,7 @@ var packageObj = library.getChildPackage("service");
 	var node_OperationParms;
 	var node_DependentServiceRequestInfo;
 	var node_expressionUtility;
+	var node_namingConvensionUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createExpressionService = function(){
@@ -201,7 +202,7 @@ var node_createExpressionService = function(){
 				
 				var converterData = data;
 				for(var i=0; i<converters.length; i++){
-					var converterRequest = loc_getExecuteConverterRequest(converterData, converters[i].sourceConverter, converters[i].targetId, {
+					var converterRequest = loc_getExecuteConverterToRequest(converterData, converters[i].sourceConverter, converters[i].targetId, {
 						success : function(requestInfo, convertedData){
 							converterData = convertedData;
 						}
@@ -307,6 +308,7 @@ packageObj.createNode("createExpressionService", node_createExpressionService);
 			node_OperationParms = packageObj.getNodeData("expression.entity.OperationParms");
 			node_DependentServiceRequestInfo = packageObj.getNodeData("request.request.entity.DependentServiceRequestInfo");  
 			node_expressionUtility = packageObj.getNodeData("expression.expressionUtility");
+			node_namingConvensionUtility = packageObj.getNodeData("common.namingconvension.namingConvensionUtility");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

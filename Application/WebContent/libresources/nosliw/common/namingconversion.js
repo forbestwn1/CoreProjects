@@ -39,6 +39,14 @@ var node_namingConvensionUtility = function(){
 			return out;
 		},
 
+		parseLevel1 : function(fullPath){
+			return fullPath.split(node_COMMONCONSTANT.SEPERATOR_LEVEL1);
+		},
+
+		parseLevel2 : function(fullPath){
+			return fullPath.split(node_COMMONCONSTANT.SEPERATOR_LEVEL2);
+		},
+
 		/*
 		 * get all sub path from full path
 		 */

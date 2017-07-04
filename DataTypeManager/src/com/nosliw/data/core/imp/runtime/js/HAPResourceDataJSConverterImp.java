@@ -8,6 +8,8 @@ public class HAPResourceDataJSConverterImp extends HAPStringableValueEntityWithI
 
 	public static String _VALUEINFO_NAME;
 	
+	public HAPResourceDataJSConverterImp(){}
+	
 	public HAPResourceDataJSConverterImp(String script, HAPDataTypeId dataTypeName, String conerterType){
 		this.setValue(script);
 		this.setConverterType(conerterType);
