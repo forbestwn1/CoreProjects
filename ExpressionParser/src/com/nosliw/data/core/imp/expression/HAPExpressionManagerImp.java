@@ -8,11 +8,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
@@ -20,6 +22,7 @@ import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.expression.HAPOperandTask;
+import com.nosliw.data.core.expression.HAPOperandVariable;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPOperandConstant;
@@ -86,9 +89,14 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		//set expression name, every expression instance has a unique name
 		expression.setName(expressionName + "_no" + this.m_idIndex++);
 		
+		//discover variables
+		this.discoverVariables(expression);
+		
 		//process reference
 		System.out.println("******* Process reference");
 		this.processReference(expression, null);
+		
+		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
 		
 		//process constant
 		System.out.println("******* Process constant");
@@ -125,6 +133,26 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		}
 	}
 
+	private void discoverVariables(HAPExpressionImp expression){
+		//process all child references
+		HAPExpressionUtility.processAllOperand(expression.getOperand(), expression, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperand operand, Object data) {
+				String opType = operand.getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
+					HAPOperandVariable variableOperand = (HAPOperandVariable)operand;
+					HAPExpressionImp expression = (HAPExpressionImp)data;
+					Map<String, HAPVariableInfo> varsInfo = expression.getLocalVarsInfo();
+					if(varsInfo.get(variableOperand.getVariableName())==null){
+						varsInfo.put(variableOperand.getVariableName(), null);
+					}
+				}
+				return true;
+			}
+		});		
+	}
+
+	
 	/**
 	 * Process all references in expression
 	 * Update variables in expression
@@ -153,6 +181,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 					if(refExpression==null){
 						//if referenced expression has not been processed, parse it
 						refExpression = parseExpressionDefinition(refExpName);
+						discoverVariables(refExpression);
 						expression.addReference(referenceName, refExpression);
 						processReference(refExpression, HAPBasicUtility.reverseMapping(refVarMap));
 					}

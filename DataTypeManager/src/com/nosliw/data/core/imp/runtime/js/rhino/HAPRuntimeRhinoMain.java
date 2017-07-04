@@ -54,7 +54,7 @@ public class HAPRuntimeRhinoMain {
 //		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
 
 		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression5", null);
-		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
+//		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
 		
 		
 //		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression4", null);

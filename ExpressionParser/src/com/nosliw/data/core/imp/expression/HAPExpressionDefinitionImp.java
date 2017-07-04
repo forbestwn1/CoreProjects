@@ -4,7 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate;
@@ -64,5 +66,15 @@ public class HAPExpressionDefinitionImp extends HAPStringableValueEntity impleme
 		}
 		return out;
 	}
-	
+
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		this.buildJsonMap(jsonMap, typeJsonMap);
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(VARIABLECRITERIAS, HAPJsonUtility.buildJson(m_variabesWithSolidCriteria, HAPSerializationFormat.JSON));
+	}
 }

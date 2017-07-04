@@ -49,7 +49,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	// store all variable information in expression (variable name -- variable data type infor)
 	// for variable that we don't know data type, its value in this map is null
 	// this variable info inherited from expression definition, so it is for internal 
-	private Map<String, HAPVariableInfo> m_internalVarsInfo;
+	private Map<String, HAPVariableInfo> m_localVarsInfo;
 
 	//external variables info for expression
 	private Map<String, HAPVariableInfo> m_varsInfo;
@@ -75,13 +75,20 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		}
 		
 		//build vars info
-		this.m_internalVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		this.m_localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		Map<String, HAPDataTypeCriteria> varCriterias = this.m_expressionDefinition.getVariableCriterias();
 		for(String varName : varCriterias.keySet()){
-			this.m_internalVarsInfo.put(varName, new HAPVariableInfo(varCriterias.get(varName)));
+			this.m_localVarsInfo.put(varName, new HAPVariableInfo(varCriterias.get(varName)));
 		}
 	}
 
+	public Map<String, HAPVariableInfo> getLocalVarsInfo(){  return this.m_localVarsInfo;  }
+	
+	public void setLocalVarsInfo(Map<String, HAPVariableInfo> vars){
+		this.m_localVarsInfo.clear();
+		this.m_localVarsInfo.putAll(vars);
+	}
+	
 	@Override
 	public String getName(){  return this.m_name;  }
 	
@@ -108,7 +115,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	@Override
 	public Set<String> getVariables(){
 		Set<String> out = new HashSet<String>();
-		out.addAll(this.m_internalVarsInfo.keySet());
+		out.addAll(this.m_localVarsInfo.keySet());
 		for(String referenceName : this.m_references.keySet())		out.addAll(this.m_references.get(referenceName).getVariables());
 		return out;
 	}
@@ -150,13 +157,13 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		
 		//update variable info
 		Map<String, HAPVariableInfo> newVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		for(String oldVarName : this.m_internalVarsInfo.keySet()){
+		for(String oldVarName : this.m_localVarsInfo.keySet()){
 			String newName = varChanges.get(oldVarName);
 			if(newName==null)  newName = oldVarName;
-			HAPVariableInfo varInfo = this.m_internalVarsInfo.get(oldVarName);
+			HAPVariableInfo varInfo = this.m_localVarsInfo.get(oldVarName);
 			newVarsInfo.put(newName, varInfo);
 		}
-		this.m_internalVarsInfo = newVarsInfo;
+		this.m_localVarsInfo = newVarsInfo;
 		
 		//update variables mapping in reference info
 		Map<String, HAPReferenceInfo> references = this.getExpressionDefinition().getReferences();
@@ -165,9 +172,11 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 			Map<String, String> newVarsMap = new LinkedHashMap<String, String>();
 			Map<String, String> oldVarsMap = reference.getVariablesMap();
 			for(String oldVarName : oldVarsMap.keySet()){
-				String newName = varChanges.get(oldVarName);
-				if(newName==null)  newName = oldVarName;
-				newVarsMap.put(newName, oldVarsMap.get(oldVarName));
+				String newNameFrom = varChanges.get(oldVarName);
+				if(newNameFrom==null)  newNameFrom = oldVarName;
+				String newNameTo = varChanges.get(oldVarsMap.get(oldVarName));
+				if(newNameTo==null)  newNameTo = oldVarsMap.get(oldVarName);
+				newVarsMap.put(newNameFrom, newNameTo);
 			}
 			reference.setVariableMap(newVarsMap);
 		}
@@ -190,6 +199,8 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		}
 		expression.updateVariablesName(varMapping);
 
+		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
+
 		this.m_references.put(referenceName, expression);   
 	}
 	
@@ -199,8 +210,8 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		if(this.m_varsInfo==null)   this.m_varsInfo = new LinkedHashMap<String, HAPVariableInfo>();      
 		
 		//update variables info in expression according to parent variable info (parent variable info affect the child variable info)
-		for(String varName : this.m_internalVarsInfo.keySet()){
-			HAPVariableInfo varInfo = this.m_internalVarsInfo.get(varName);
+		for(String varName : this.m_localVarsInfo.keySet()){
+			HAPVariableInfo varInfo = this.m_localVarsInfo.get(varName);
 			HAPVariableInfo parentVarInfo = this.m_varsInfo.get(varName);
 			if(parentVarInfo!=null){
 				if(varInfo.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN)){
@@ -212,7 +223,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		
 		//do discovery on operand
 		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		varsInfo.putAll(this.m_internalVarsInfo);
+		varsInfo.putAll(this.m_localVarsInfo);
 		
 		HAPMatchers matchers = null;
 		Map<String, HAPVariableInfo> oldVarsInfo;
@@ -224,11 +235,11 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 			context.clear();
 			matchers = this.getOperand().discover(varsInfo, expectOutputCriteria, context, dataTypeHelper);
 		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
-		this.m_internalVarsInfo = varsInfo;
+		this.m_localVarsInfo = varsInfo;
 		
 		//merge back, cal variable matchers, update parent variable
-		for(String varName : this.m_internalVarsInfo.keySet()){
-			HAPVariableInfo varInfo = this.m_internalVarsInfo.get(varName);
+		for(String varName : this.m_localVarsInfo.keySet()){
+			HAPVariableInfo varInfo = this.m_localVarsInfo.get(varName);
 			HAPVariableInfo parentVarInfo = this.m_varsInfo.get(varName);
 			if(parentVarInfo==null){
 				parentVarInfo = new HAPVariableInfo();
@@ -250,11 +261,6 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		return matchers;
 	}
 	
-	
-	public void setVariables(Map<String, HAPVariableInfo> vars){
-		this.m_internalVarsInfo.clear();
-		this.m_internalVarsInfo.putAll(vars);
-	}
 	
 	@Override
 	public String[] getErrorMessages() {

@@ -25,9 +25,9 @@
 	"references":{
 		"expression6":{
 			"variablesMap":{
-				"baseVar" : "var1",
-				"fromVar" : "var2",
-				"toVar" : "var3" 			
+				"baseVar" : "expression6.var1",
+				"fromVar" : "expression6.var2",
+				"toVar" : "expression6.var3" 			
 			}
 		}
 	}	
