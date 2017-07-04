@@ -1,9 +1,16 @@
 package com.nosliw.data.core.imp;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPOperation;
+import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.HAPRelationshipPath;
 import com.nosliw.data.core.HAPRelationshipPathSegment;
@@ -63,7 +70,17 @@ public class HAPDataTypeOperationImp extends HAPOperationImp implements HAPRelat
 	public HAPDataTypeOperationImp extendPathSegment(HAPRelationshipPathSegment segment, HAPDataTypeId sourceId){
 		HAPDataTypeOperationImp out = this.clone(HAPDataTypeOperationImp.class);
 		out.getPath().insert(segment);
-		out.setTarget(sourceId);
+		out.setSource(sourceId);
 		return out;
 	}
+	
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
+		
+		jsonMap.put(TARGET, HAPSerializeManager.getInstance().toStringValue(this.getTarget(), HAPSerializationFormat.LITERATE));
+		jsonMap.put(SOURCE, HAPSerializeManager.getInstance().toStringValue(this.getSource(), HAPSerializationFormat.LITERATE));
+		jsonMap.put(PATH, HAPSerializeManager.getInstance().toStringValue(this.getPath(), HAPSerializationFormat.LITERATE));
+	}
+
 }

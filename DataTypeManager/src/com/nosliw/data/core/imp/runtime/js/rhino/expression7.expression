@@ -1,0 +1,23 @@
+{
+	"name" : "expression7",
+	"expression" : "?(baseVarUrl)?.subString(from:?(fromVar)?,to:&(to)&)",
+	"description" : "converter",
+	"constants" :{
+		"base":{
+			"dataTypeId": "base.string",
+			"value": "This is my world!"
+		},
+		"from":{
+			"dataTypeId": "base.integer",
+			"value": "3"
+		},
+		"to":{
+			"dataTypeId": "base.integer",
+			"value": "7"
+		}
+	},
+	"variableCriterias":{
+		"baseVarUrl": "core.url",
+		"fromVar": "base.integer"
+	}	
+}

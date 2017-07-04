@@ -39,7 +39,7 @@ dataTypeDefition.operations['subString'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
-			context.logging.info("Operand Calcualting  ----------------");
+			context.logging.info("Operand Calcualting [subString]  ----------------");
 			
 //			var to = context.operation("base.integer;1.0.0", "add", [{name:"parm1", value:parms.getParm("from")}, {name:"parm2", value:parms.getParm("to")}]).value;
 			

@@ -159,9 +159,10 @@ public class HAPOperandOperation extends HAPOperandImp{
 		}
 
 		if(dataTypeId !=null){
-			this.m_dataTypeId = dataTypeId;
 			//discover parms by operation definition
 			HAPDataTypeOperation dataTypeOperation = dataTypeHelper.getOperationInfoByName(dataTypeId, m_operation);
+			this.m_dataTypeId = dataTypeOperation.getTargetDataType().getTarget();
+			
 			List<HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
 			for(HAPOperationParmInfo parmInfo : parmsInfo){
 				HAPOperand parmOperand = this.m_parms.get(parmInfo.getName());

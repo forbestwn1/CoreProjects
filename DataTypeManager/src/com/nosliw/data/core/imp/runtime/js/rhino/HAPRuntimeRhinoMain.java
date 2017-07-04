@@ -53,12 +53,15 @@ public class HAPRuntimeRhinoMain {
 //		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression3", null);
 //		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
 
-		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression5", null);
-		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
+//		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression5", null);
+//		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
 		
 		
 //		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression4", null);
 //		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
+
+		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression7", null);
+		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
 		
 		HAPRuntimeImpJSRhino runtime = new HAPRuntimeImpJSRhino(new HAPResourceDiscoveryJSImp(), resourceMan);
 		try{
@@ -67,12 +70,14 @@ public class HAPRuntimeRhinoMain {
 			runtime.loadScriptFromFile("loadResource1.js", HAPRuntimeRhinoMain.class, null, null);
 			
 			HAPDataWrapper baseData = new HAPDataWrapper("{dataTypeId:\"base.string;1.0.0\", value:\"This is my world!\"}");
+			HAPDataWrapper baseDataUrl = new HAPDataWrapper("{dataTypeId:\"core.url;1.0.0\", value:\"This is my world!\"}");
 			HAPDataWrapper fromData = new HAPDataWrapper("{dataTypeId:\"base.integer;1.0.0\", value:2}");
 			HAPDataWrapper toData = new HAPDataWrapper("{dataTypeId:\"base.integer;1.0.0\", value:7}");
 			Map<String, HAPData> varData = new LinkedHashMap<String, HAPData>();
 			varData.put("fromVar", fromData);
 			varData.put("toVar", toData);
 			varData.put("baseVar", baseData);
+			varData.put("baseVarUrl", baseDataUrl);
 			
 			runtime.executeExpressionTask(new HAPExpressionTaskRhino(expression, varData){
 				@Override
