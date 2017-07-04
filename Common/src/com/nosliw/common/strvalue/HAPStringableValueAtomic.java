@@ -126,7 +126,7 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	public Object getValue(){
 		if(this.m_sovled)  return this.m_value;
 		if(this.m_type!=null)  return this.getValue(m_type.getType(), m_type.getSubType());
-		return this.m_strValue;
+		return this.m_strValue.toString();
 	}
 	
 	public Object getValue(String type, String subType){

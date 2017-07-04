@@ -96,8 +96,6 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		System.out.println("******* Process reference");
 		this.processReference(expression, null);
 		
-		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
-		
 		//process constant
 		System.out.println("******* Process constant");
 		this.processConstants(expression);

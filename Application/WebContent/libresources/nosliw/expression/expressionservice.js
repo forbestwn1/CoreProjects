@@ -96,7 +96,7 @@ var node_createExpressionService = function(){
 			out = loc_getExecuteOperationOperandRequest(expression, operand, variables, handlers, requestInfo);
 			break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_REFERENCE:
-			out = loc_getExecuteExpressionRequest(expression, expression[node_COMMONTRIBUTECONSTANT.OPERAND_REFERENCES][operand[node_COMMONTRIBUTECONSTANT.OPERAND_REFERENCENAME]], variables, handlers, requestInfo);
+			out = loc_getExecuteExpressionRequest(expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_REFERENCES][operand[node_COMMONTRIBUTECONSTANT.OPERAND_REFERENCENAME]], variables, handlers, requestInfo);
 			break;
 		}
 		return out;
