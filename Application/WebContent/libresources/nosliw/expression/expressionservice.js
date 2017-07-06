@@ -184,25 +184,28 @@ var node_createExpressionService = function(){
 				out = node_createServiceRequestInfoSequence(service, handlers, requestInfo);
 				var matcherSegments = matcher[node_COMMONTRIBUTECONSTANT.DATATYPERELATIONSHIP_PATH];
 
-				var converters = [];
+				var targets = [];
+				var sourceId = matcher[node_COMMONTRIBUTECONSTANT.DATATYPERELATIONSHIP_SOURCE];
+				var targetId;
 				for(var i=0; i<matcherSegments.length; i++){
-					var sourceId = node_namingConvensionUtility.parseLevel2(matcherSegments[i])[1];
-					var targetId;
-					if(i<matcherSegments.length-1){
-						targetId = node_namingConvensionUtility.parseLevel2(matcherSegments[i+1])[1];
-					}
-					else{
-						targetId = matcher[node_COMMONTRIBUTECONSTANT.DATATYPERELATIONSHIP_TARGET];
-					}
-					converters.push({
-						sourceConverter : "converter;"+sourceId+"from",
-						targetId : targetId,
-					});
+					targetId = node_namingConvensionUtility.parseLevel2(matcherSegments[i])[1];
+//					if(i<matcherSegments.length-1){
+//						targetId = node_namingConvensionUtility.parseLevel2(matcherSegments[i+1])[1];
+//					}
+//					else{
+//						targetId = matcher[node_COMMONTRIBUTECONSTANT.DATATYPERELATIONSHIP_TARGET];
+//					}
+//					converters.push({
+//						sourceConverter : node_resourceUtility.createConverterToResourceId(sourceId), 
+//						targetId : targetId,
+//					});
+					targets.push(targetId);
+					sourceId = targetId;
 				}
 				
 				var converterData = data;
-				for(var i=0; i<converters.length; i++){
-					var converterRequest = loc_getExecuteConverterToRequest(converterData, converters[i].sourceConverter, converters[i].targetId, {
+				for(var i=0; i<targets.length; i++){
+					var converterRequest = loc_getExecuteConverterToRequest(converterData, targets[i], {
 						success : function(requestInfo, convertedData){
 							converterData = convertedData;
 						}

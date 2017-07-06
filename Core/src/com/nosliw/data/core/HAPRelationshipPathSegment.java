@@ -11,8 +11,9 @@ import com.nosliw.common.utils.HAPConstant;
  * There are only two type of segment: parent and linked  
  */
 public class HAPRelationshipPathSegment extends HAPSerializableImp{
-
+	//type of segment (parent or link)
 	private String m_type;
+	//target data type Id
 	private String m_id;
 	
 	public HAPRelationshipPathSegment(){}

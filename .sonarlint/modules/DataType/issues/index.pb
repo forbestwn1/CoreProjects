@@ -61,3 +61,7 @@ a
 1src/com/nosliw/data/datatype/string/operations.js,f\8\f81b6dd874ea067e9dd68a84367a09945f5241d8
 b
 2src/com/nosliw/data/datatype/integer/operations.js,b\1\b12bf2dd2683a39c710c09bc3adc411d8cd59704
+i
+9src/com/nosliw/data/datatype/url/v100/HAPDataTypeDef.java,f\a\fa132fd20f906f94f10e5e7b6ed2ea97e5735e83
+c
+3src/com/nosliw/data/datatype/url/v100/operations.js,c\5\c522efe28595b4562fd7bad5d70d82a78e6ac425

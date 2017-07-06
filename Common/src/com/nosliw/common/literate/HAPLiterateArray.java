@@ -43,7 +43,9 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 		
 		String[] elesArray = HAPNamingConversionUtility.parseElements(arrayStr);
 		for(String eleStr : elesArray){
-			out.add(HAPLiterateManager.getInstance().stringToValue(eleStr, type, type1));
+			String a = eleStr;
+			if(a.startsWith("\""))  a = eleStr.substring(1, a.length()-1);
+			out.add(HAPLiterateManager.getInstance().stringToValue(a, type, type1));
 		}
 		return out;  
 	}
@@ -57,7 +59,7 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 		Iterator it = collectionValue.iterator();
 		while(it.hasNext()){
 			Object eleObj = it.next();
-			elesStr.add(HAPLiterateManager.getInstance().valueToString(eleObj));
+			elesStr.add("\""+HAPLiterateManager.getInstance().valueToString(eleObj)+"\"");
 		}
 		
 		arrayStr.append(HAPNamingConversionUtility.cascadeElementArray(elesStr.toArray(new String[0])));
