@@ -4,20 +4,20 @@
 	"description" : "converter",
 	"constants" :{
 		"base":{
-			"dataTypeId": "base.string",
+			"dataTypeId": "test.string",
 			"value": "This is my world!"
 		},
 		"from":{
-			"dataTypeId": "base.integer",
+			"dataTypeId": "test.integer",
 			"value": "3"
 		},
 		"to":{
-			"dataTypeId": "base.integer",
+			"dataTypeId": "test.integer",
 			"value": "7"
 		}
 	},
 	"variableCriterias":{
-		"baseVarUrl": "core.url",
-		"fromVar": "base.integer"
+		"baseVarUrl": "test.url",
+		"fromVar": "test.integer"
 	}	
 }

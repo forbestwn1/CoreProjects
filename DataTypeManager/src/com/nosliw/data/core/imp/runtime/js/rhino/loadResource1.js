@@ -2,11 +2,11 @@
 	resourceIds.push(
 		{
 			type : "operation",
-			id : "core.url;1.1.0;url_normal3"
+			id : "test.url;1.1.0;url_normal3"
 		}
 //		{
 //			type : "operation",
-//			id : "base.string;1.0.0;subString"
+//			id : "test.string;1.0.0;subString"
 //		}
 
 	);
@@ -24,21 +24,21 @@
 	var parms = [];
 	var parm1 = {
 		value : {
-			dataTypeId : "base.string;1.0.0",
+			dataTypeId : "test.string;1.0.0",
 			value : "Hello World"
 		} 
 	};
 	var parm2 = {
 		name : "from",
 		value : {
-			dataTypeId : "base.integer;1.0.0",
+			dataTypeId : "test.integer;1.0.0",
 			value : 1
 		} 
 	};
 	var parm3 = {
 		name : "to",
 		value : {
-			dataTypeId : "base.integer;1.0.0",
+			dataTypeId : "test.integer;1.0.0",
 			value : 5
 		} 
 	};
@@ -47,7 +47,7 @@
 	parms.push(parm3);
 	
 	
-//	expressionService.executeExecuteOperationRequest("base.string;1.0.0", "subString", parms, {
+//	expressionService.executeExecuteOperationRequest("test.string;1.0.0", "subString", parms, {
 //		success : function(requestInfo, data){
 //			nosliw.logging.info("Operation Result : ", data);
 //		}

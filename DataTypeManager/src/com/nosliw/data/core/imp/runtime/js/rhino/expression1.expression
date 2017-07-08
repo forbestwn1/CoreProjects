@@ -1,18 +1,18 @@
 {
 	"name" : "expression1",
-	"expression" : "!(base.string)!.subString(&(base)&,from:&(from)&,to:&(to)&)",
+	"expression" : "!(test.string)!.subString(&(base)&,from:&(from)&,to:&(to)&)",
 	"description" : "DataType.method, all constant",
 	"constants" :{
 		"base":{
-			"dataTypeId": "base.string",
+			"dataTypeId": "test.string",
 			"value": "This is my world!"
 		},
 		"from":{
-			"dataTypeId": "base.integer",
+			"dataTypeId": "test.integer",
 			"value": "3"
 		},
 		"to":{
-			"dataTypeId": "base.integer",
+			"dataTypeId": "test.integer",
 			"value": "7"
 		}
 	},

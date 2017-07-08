@@ -1,11 +1,11 @@
 /**
  * 
  */
-nosliw.runtimeName = "rhino";
+nosliw.runtimeName = "browser";
 
 nosliw.initModules();
 
-var runtimeRhino = nosliw.getNodeData("runtime.rhino.createRuntime")();
+var runtimeRhino = nosliw.getNodeData("runtime.createRuntime")(nosliw.runtimeName);
 
 nosliw.runtime = runtimeRhino;
 

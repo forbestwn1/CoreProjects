@@ -4,20 +4,20 @@
 	"description" : "Variable.method, all constant",
 	"constants" :{
 		"base":{
-			"dataTypeId": "base.string",
+			"dataTypeId": "test.string",
 			"value": "This is my world!"
 		},
 		"from":{
-			"dataTypeId": "base.integer",
+			"dataTypeId": "test.integer",
 			"value": "3"
 		},
 		"to":{
-			"dataTypeId": "base.integer",
+			"dataTypeId": "test.integer",
 			"value": "7"
 		}
 	},
 	"variableCriterias":{
-		"baseVar": "base.string",
-		"fromVar": "base.integer"
+		"baseVar": "test.string",
+		"fromVar": "test.integer"
 	}	
 }

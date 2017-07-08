@@ -189,16 +189,6 @@ var node_createExpressionService = function(){
 				var targetId;
 				for(var i=0; i<matcherSegments.length; i++){
 					targetId = node_namingConvensionUtility.parseLevel2(matcherSegments[i])[1];
-//					if(i<matcherSegments.length-1){
-//						targetId = node_namingConvensionUtility.parseLevel2(matcherSegments[i+1])[1];
-//					}
-//					else{
-//						targetId = matcher[node_COMMONTRIBUTECONSTANT.DATATYPERELATIONSHIP_TARGET];
-//					}
-//					converters.push({
-//						sourceConverter : node_resourceUtility.createConverterToResourceId(sourceId), 
-//						targetId : targetId,
-//					});
 					targets.push(targetId);
 					sourceId = targetId;
 				}

@@ -69,10 +69,10 @@ public class HAPRuntimeRhinoMain {
 			
 			runtime.loadScriptFromFile("loadResource1.js", HAPRuntimeRhinoMain.class, null, null);
 			
-			HAPDataWrapper baseData = new HAPDataWrapper("{dataTypeId:\"base.string;1.0.0\", value:\"This is my world!\"}");
-			HAPDataWrapper baseDataUrl = new HAPDataWrapper("{dataTypeId:\"core.url;1.0.0\", value:\"This is my world!\"}");
-			HAPDataWrapper fromData = new HAPDataWrapper("{dataTypeId:\"base.integer;1.0.0\", value:2}");
-			HAPDataWrapper toData = new HAPDataWrapper("{dataTypeId:\"base.integer;1.0.0\", value:7}");
+			HAPDataWrapper baseData = new HAPDataWrapper("{dataTypeId:\"test.string;1.0.0\", value:\"This is my world!\"}");
+			HAPDataWrapper baseDataUrl = new HAPDataWrapper("{dataTypeId:\"test.url;1.0.0\", value:\"This is my world!\"}");
+			HAPDataWrapper fromData = new HAPDataWrapper("{dataTypeId:\"test.integer;1.0.0\", value:2}");
+			HAPDataWrapper toData = new HAPDataWrapper("{dataTypeId:\"test.integer;1.0.0\", value:7}");
 			Map<String, HAPData> varData = new LinkedHashMap<String, HAPData>();
 			varData.put("fromVar", fromData);
 			varData.put("toVar", toData);

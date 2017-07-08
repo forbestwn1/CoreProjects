@@ -1,12 +1,12 @@
 {
 	"name" : "expression6",
-	"expression" : "!(base.string)!.subString(?(var1)?,from:?(var2)?,to:?(var3)?)",
+	"expression" : "!(test.string)!.subString(?(var1)?,from:?(var2)?,to:?(var3)?)",
 	"description" : "all variables",
 	"constants" :{
 	},
 	"variableCriterias":{
-		"var1": "base.string",
-		"var2": "base.integer",
-		"var3": "base.integer"
+		"var1": "test.string",
+		"var2": "test.integer",
+		"var3": "test.integer"
 	}	
 }

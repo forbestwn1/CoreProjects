@@ -11,7 +11,8 @@ var packageObj = library;
 	var node_createResourceService;
 	var node_createExpressionService;
 	var node_CONSTANT;
-	var node_NOSLIWCOMMONCONSTANT;
+	var node_COMMONCONSTANT;
+	var node_runtimeGateway;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -19,7 +20,9 @@ var packageObj = library;
 /**
  * 
  */
-var node_createRuntime = function(){
+var node_createRuntime = function(name){
+	
+	var loc_name = name;
 	
 	var loc_idService;
 	
@@ -52,8 +55,14 @@ var node_createRuntime = function(){
 		},
 			
 		getName(){
-			return node_NOSLIWCOMMONCONSTANT.RUNTIME_ENVIRONMENT_RHINO;
+			return loc_name;
+		},
+		
+		getGateway(){
+			return node_runtimeGateway;
 		}
+		
+		
 	};
 	
 	var lifecycleCallback = {};
@@ -79,13 +88,14 @@ packageObj.createNode("createRuntime", node_createRuntime);
 var module = {
 		start : function(packageObj){
 			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-			node_NOSLIWCOMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
+			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
 			node_makeObjectWithName = packageObj.getNodeData("common.objectwithname.makeObjectWithName");
 			node_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
 			node_createIdService = packageObj.getNodeData("service.idservice.createIdService");
 			node_createResourceManager = packageObj.getNodeData("resource.resourcemanager.createResourceManager");
-			node_createResourceService = packageObj.getNodeData("runtime.rhino.createResourceService");
 			node_createExpressionService = packageObj.getNodeData("expression.service.createExpressionService");
+			node_createResourceService = packageObj.getNodeData("runtime.createResourceService");
+			node_runtimeGateway = packageObj.getNodeData(node_COMMONCONSTANT.RUNTIME_LANGUAGE_JS_GATEWAY);
 		}
 };
 nosliw.registerModule(module, packageObj);

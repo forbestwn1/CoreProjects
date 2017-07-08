@@ -14,7 +14,6 @@ var packageObj = library;
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
 	var node_COMMONTRIBUTECONSTANT;
-	var node_runtimeGateway;
 	var node_resourceUtility;
 	var node_DependentServiceRequestInfo;
 //*******************************************   Start Node Definition  ************************************** 	
@@ -75,7 +74,7 @@ var node_createResourceService = function(resourceManager){
 	var loc_getLoadResourcesRequest = function(resourceInfos, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("LoadResources", {"resourcesInfo":resourceInfos}), function(requestInfo){
-			node_runtimeGateway.requestLoadResources(resourceInfos, function(){
+			nosliw.runtime.getGateway().requestLoadResources(resourceInfos, function(){
 				out.executeSuccessHandler();
 			});
 		}, handlers, requestInfo);
@@ -174,7 +173,7 @@ var node_createResourceService = function(resourceManager){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			
 			var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("DiscoverResources", {"resourcesId":resourceIds}), function(requestInfo){
-				node_runtimeGateway.requestDiscoverResources(resourceIds, function(resourcesInfo){
+				nosliw.runtime.getGateway().requestDiscoverResources(resourceIds, function(resourcesInfo){
 					requestInfo.executeSuccessHandler(resourcesInfo);
 				});
 			}, handlers, requestInfo);
@@ -210,7 +209,6 @@ packageObj.createNode("createResourceService", node_createResourceService);
 			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
 			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
 			node_COMMONTRIBUTECONSTANT = packageObj.getNodeData("constant.COMMONTRIBUTECONSTANT");
-			node_runtimeGateway = packageObj.getNodeData(node_COMMONCONSTANT.RUNTIME_LANGUAGE_JS_GATEWAY);
 			node_resourceUtility = packageObj.getNodeData("resource.resourceUtility");
 			node_DependentServiceRequestInfo = packageObj.getNodeData("request.request.entity.DependentServiceRequestInfo");  
 		}

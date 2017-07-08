@@ -1,0 +1,19 @@
+<operations>
+
+	<operation name="host1" >
+		<parms>
+			<parm name="aa1" criteria="test.text"/>
+			<parm name="bb1" criteria="test.text"/>
+		</parms>
+		<output criteria="test.text"/>
+	</operation>
+
+	<operation name="host2" >
+		<parms>
+			<parm name="aa2" criteria="test.text"/>
+			<parm name="bb2" criteria="test.text"/>
+		</parms>
+		<output criteria="test.text"/>
+	</operation>
+
+</operations>

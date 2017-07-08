@@ -1,0 +1,25 @@
+<definition name="test.string;1.0.0">
+	
+	<info description="Data type for string."/>
+
+	<operations>
+	
+		<operation name="subString" >
+			<parms>
+				<parm nacriteria="test.string" isBase="true"/>
+				<parm name="from" criteria="test.integer"/>
+				<parm name="to" criteria="test.integer"/>
+			</parms>
+			<output criteria="test.string"/>
+		</operation>
+
+		<operation name="length" >
+			<parms>
+				<parm isBase="true"/>
+			</parms>
+			<output criteria="test.integer"/>
+		</operation>
+
+	</operations>
+
+</definition>

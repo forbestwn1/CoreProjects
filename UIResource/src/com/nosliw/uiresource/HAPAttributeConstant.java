@@ -9,7 +9,7 @@ public class HAPAttributeConstant {
 
 
 
-		public static final String CONTEXTVARIABLE_NAME = "name";
+		public static final String CONTEXTVARIABLE_NAME = "null";
 		public static final String CONTEXTVARIABLE_PATH = "path";
 
 

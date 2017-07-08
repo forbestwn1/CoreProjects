@@ -1,26 +1,26 @@
 {
 	"name" : "expression5",
-	"expression" : "!(base.string)!.subString(<(expression6)>,from:?(fromVar)?,to:?(toVar)?)",
+	"expression" : "!(test.string)!.subString(<(expression6)>,from:?(fromVar)?,to:?(toVar)?)",
 	
 	"description" : "Variable.method, all constant",
 	"constants" :{
 		"base":{
-			"dataTypeId": "base.string",
+			"dataTypeId": "test.string",
 			"value": "This is my world!"
 		},
 		"from":{
-			"dataTypeId": "base.integer",
+			"dataTypeId": "test.integer",
 			"value": "3"
 		},
 		"to":{
-			"dataTypeId": "base.integer",
+			"dataTypeId": "test.integer",
 			"value": "7"
 		}
 	},
 	"variableCriterias":{
-		"baseVar": "base.string",
-		"fromVar": "base.integer",
-		"toVar": "base.integer"
+		"baseVar": "test.string",
+		"fromVar": "test.integer",
+		"toVar": "test.integer"
 	},
 	"references":{
 		"expression6":{

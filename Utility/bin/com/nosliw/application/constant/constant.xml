@@ -52,7 +52,7 @@
 			<definition name="UIRESOURCECONTEXTINFO_TYPE" value="type"/>
 			<definition name="UIRESOURCECONTEXTINFO_CONFIGURE" value="configure"/>
 			<definition type="space"/>
-			<definition name="CONTEXTVARIABLE_NAME" value="name"/>
+			<definition name="CONTEXTVARIABLE_NAME" valuRUNTIME_ENVIRONMENT_RHINOe="name"/>
 			<definition name="CONTEXTVARIABLE_PATH" value="path"/>
 			<definition type="space"/>
 			<definition name="DATABINDING_NAME" value="name"/>
@@ -590,6 +590,7 @@
 			<definition type="space"/>
 			<definition name="RUNTIME_LANGUAGE_JS" value="javascript"/>
 			<definition name="RUNTIME_ENVIRONMENT_RHINO" value="rhino"/>
+			<definition name="RUNTIME_ENVIRONMENT_BROWSER" value="browser"/>
 
 			<definition type="space"/>
 			<definition name="RUNTIME_LANGUAGE_JS_GATEWAY" value="runtime.gateway"/>

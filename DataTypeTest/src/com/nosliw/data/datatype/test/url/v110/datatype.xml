@@ -1,0 +1,47 @@
+<definition name="test.url;1.1.0" linkedVersion="1.0.0" description="description">
+	
+	<info description="test.url;1.1.0 description"/>
+	
+	<operations>
+	
+		<operation name="url_normal2" >
+			<parms>
+				<parm name="aa" criteria="test.text"/>
+				<parm name="bb" criteria="test.text"/>
+			</parms>
+			<output criteria="test.text"/>
+		</operation>
+
+		<operation name="url_normal3" >
+			<parms>
+				<parm name="aa" criteria="test.text"/>
+				<parm name="bb" criteria="test.text"/>
+			</parms>
+			<output criteria="test.text"/>
+		</operation>
+
+			<operation name="url_withBase" >
+			<parms>
+				<parm name="aa" isBase="true"/>
+				<parm name="bb" criteria="test.text"/>
+			</parms>
+			<output criteria="test.text"/>
+		</operation>
+	
+		<operation name="new1" type="new" >
+			<parms>
+				<parm name="aa" criteria="test.text"/>
+				<parm name="bb" criteria="test.text"/>
+			</parms>
+		</operation>
+
+		<operation name="new2" type="new" >
+			<parms>
+				<parm name="aa" criteria="test.text"/>
+				<parm name="bb" criteria="test.text"/>
+			</parms>
+		</operation>
+	
+	</operations>
+	
+</definition>
