@@ -1,15 +1,20 @@
 package com.nosliw.data.core.expression;
 
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public interface HAPExpressionManager {
 
-	void registerExpressionDefinition(HAPExpressionDefinition expressionDefinition);
+	Set<String> getExpressionDefinitionSuites();
 	
-	HAPExpressionDefinition getExpressionDefinition(String name);
+	HAPExpressionDefinitionSuite getExpressionDefinitionSuite(String suiteName);
 	
-	HAPExpression processExpression(String expressionName, Map<String, HAPDataTypeCriteria> variableCriterias);
+	void addExpressionDefinitionSuite(HAPExpressionDefinitionSuite expressionDefinitionSuite);
+	
+	HAPExpressionDefinition getExpressionDefinition(String suite, String name);
+	
+	HAPExpression processExpression(String suite, String expressionName, Map<String, HAPDataTypeCriteria> variableCriterias);
 	
 }

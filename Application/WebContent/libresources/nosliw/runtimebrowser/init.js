@@ -1,16 +1,26 @@
-/**
- * 
- */
-nosliw.runtimeName = "browser";
-
-nosliw.initModules();
-
-var runtimeRhino = nosliw.getNodeData("runtime.createRuntime")(nosliw.runtimeName);
-
-nosliw.runtime = runtimeRhino;
 
 
-runtimeRhino.interfaceObjectLifecycle.init();
+//
+var resources = [];
+resources.push("");
 
-nosliw.generateId = runtimeRhino.getIdService().generateId;
+gateway.requestLoadResources(resources, function(){
+	  nosliw.createNode(nosliw.getNodeData("constant.COMMONCONSTANT").RUNTIME_LANGUAGE_JS_GATEWAY, gateway);  
+
+	  
+	  nosliw.runtimeName = "browser";
+
+	  nosliw.initModules();
+
+	  var runtimeRhino = nosliw.getNodeData("runtime.createRuntime")(nosliw.runtimeName);
+
+	  nosliw.runtime = runtimeRhino;
+
+
+	  runtimeRhino.interfaceObjectLifecycle.init();
+
+	  nosliw.generateId = runtimeRhino.getIdService().generateId;
+});
+
+
 

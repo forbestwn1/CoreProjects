@@ -1,0 +1,17 @@
+<definition name="core.array;1.0.0">
+	
+	<info description="container for list of data"/>
+
+	<operations>
+	
+		<operation name="process" >
+			<parms>
+				<parm criteria="test.array" isBase="true"/>
+				<parm name="expression" criteria="test.expression"/>
+			</parms>
+			<output criteria="test.array"/>
+		</operation>
+
+	</operations>
+
+</definition>

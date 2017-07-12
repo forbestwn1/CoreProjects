@@ -1,0 +1,17 @@
+<entity name="data.expressiondefinitionsuite" 
+		class="com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp" 
+		description="">
+		
+	<property name="name" dataType="string" description=""/>
+
+	<property name="variablesData" type="map" key="name" description="">
+		<child dataType="object" subDataType="com.nosliw.data.core.HAPDataWrapper"></child>
+	</property>
+
+	<property name="expressionDefinitions" type="map" key="name" description="">
+		<child reference="data.expressiondefinition"/>
+	</property>
+
+	<property name="result" dataType="object" subDataType="com.nosliw.data.core.HAPDataWrapper" description=""/>
+
+</entity>

@@ -79,4 +79,17 @@ public abstract class HAPDataImp extends HAPSerializableImp implements HAPData{
 		return HAPNamingConversionUtility.cascadeDetail(this.m_dataTypeId.toStringValue(HAPSerializationFormat.LITERATE), this.toStringValueValue(HAPSerializationFormat.LITERATE));
 	}
 	
+	@Override
+	public boolean equals(Object obj){
+		boolean out = false;
+		if(obj instanceof HAPDataImp){
+			HAPDataImp data = (HAPDataImp)obj;
+			if(HAPBasicUtility.isEquals(data.getDataTypeId(), this.getDataTypeId())){
+				if(HAPBasicUtility.isEquals(data.getValue(), this.getValue())){
+					out = true;
+				}
+			}
+		}
+		return out;
+	}
 }

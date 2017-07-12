@@ -1,21 +1,29 @@
 {
-	"name" : "expression1",
-	"expression" : "!(test.string)!.subString(&(base)&,from:&(from)&,to:&(to)&)",
-	"description" : "DataType.method, all constant",
-	"constants" :{
-		"base":{
-			"dataTypeId": "test.string",
-			"value": "This is my world!"
-		},
-		"from":{
-			"dataTypeId": "test.integer",
-			"value": "3"
-		},
-		"to":{
-			"dataTypeId": "test.integer",
-			"value": "7"
+	"name": "expression1",
+	"expressionDefinitions": {
+		"main": {
+			"expression": "!(test.string)!.subString(&(base)&,from:&(from)&,to:&(to)&)",
+			"description": "DataType.method, all constant",
+			"constants": {
+				"base": {
+					"dataTypeId": "test.string",
+					"value": "This is my world!"
+				},
+				"from": {
+					"dataTypeId": "test.integer",
+					"value": "3"
+				},
+				"to": {
+					"dataTypeId": "test.integer",
+					"value": "7"
+				}
+			},
+			"variableCriterias": {}
 		}
 	},
-	"variableCriterias":{
-	}	
+	"result" : {
+		"dataTypeId": "test.string;1.0.0",
+ 		"value": "s isfff",
+		"wapperType": "JSON"
+	}
 }

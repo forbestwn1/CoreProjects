@@ -1,5 +1,4 @@
-nosliw.createNode(nosliw.getNodeData("constant.COMMONCONSTANT").RUNTIME_LANGUAGE_JS_GATEWAY,  
-{
+var gateway = {
 		/**
 		 * Callback method used to request to discover resources into runtime env
 		 * @param objResourcesInfo: a list of resource id 
@@ -24,7 +23,18 @@ nosliw.createNode(nosliw.getNodeData("constant.COMMONCONSTANT").RUNTIME_LANGUAGE
 		 * @param callBackFunction (nothing)
 		 */
 		requestLoadResources : function(objResourcesInfo, callBackFunction){
-			
+			var scriptType = requestInfo.getParmData('type');
+			var scriptInfo = encodeURI(requestInfo.getParmData('info'));
+
+			var url = "http://localhost:8080/Application/loadResource?resources="+resources;
+
+			  var script = document.createElement('script');
+			  script.setAttribute('src', url);
+			  script.setAttribute('type', 'text/javascript');
+
+			  script.onload = callBackFunction;
+			  script.onreadystatechange = callBackFunction;
+			  document.getElementsByTagName("head")[0].appendChild(script);
 		},
 		
 		/**
@@ -43,6 +53,4 @@ nosliw.createNode(nosliw.getNodeData("constant.COMMONCONSTANT").RUNTIME_LANGUAGE
 		notifyResourcesLoaded : function(taskId){
 			
 		}
-}
-);
-
+};
