@@ -1,58 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-	<welcome-file-list>
-    	<welcome-file>main.html</welcome-file>
-  	</welcome-file-list>
-  	
-	<servlet>
-    	<servlet-name>init</servlet-name>
-    	<servlet-class>com.nosliw.app.servlet.HAPInitServlet</servlet-class>
-    	<load-on-startup>1</load-on-startup>
-	</servlet>
- 
-
-    <servlet-mapping>
-        <servlet-name>loginservlet</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>loginservlet</servlet-name>
-        <servlet-class>com.nosliw.app.servlet.HAPLoginServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>serviceservlet</servlet-name>
-        <url-pattern>/service</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>serviceservlet</servlet-name>
-        <servlet-class>com.nosliw.app.servlet.HAPServiceServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>loadscript</servlet-name>
-        <url-pattern>/loadScript</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>loadscript</servlet-name>
-        <servlet-class>com.nosliw.app.servlet.HAPLoadScriptServlet</servlet-class>
-    </servlet>
-
-
-
-
-    <servlet-mapping>
-        <servlet-name>restartservlet</servlet-name>
-        <url-pattern>/restart</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>restartservlet</servlet-name>
-        <servlet-class>com.test.business.servlet.RestartServlet</servlet-class>
-    </servlet>
-
-
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <welcome-file-list>
+    <welcome-file>main.html</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>init</servlet-name>
+    <servlet-class>com.nosliw.app.servlet.HAPInitServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>loginservlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>loginservlet</servlet-name>
+    <servlet-class>com.nosliw.app.servlet.HAPLoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>serviceservlet</servlet-name>
+    <url-pattern>/service</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>serviceservlet</servlet-name>
+    <servlet-class>com.nosliw.app.servlet.HAPServiceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>loadscript</servlet-name>
+    <url-pattern>/loadScript</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>loadscript</servlet-name>
+    <servlet-class>com.nosliw.app.servlet.HAPLoadScriptServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>restartservlet</servlet-name>
+    <url-pattern>/restart</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>restartservlet</servlet-name>
+    <servlet-class>com.test.business.servlet.RestartServlet</servlet-class>
+  </servlet>
 </web-app>

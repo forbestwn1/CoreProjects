@@ -1,4 +1,48 @@
 var gateway = {
+		
+		requestLoadLibraryResources : function(resourceIds, callBackFunction){
+			
+			$.ajax({
+				url : "loadLibraryResources",
+				type : "POST",
+				dataType: "json",
+				data : resourceIds,
+				async : true,
+				success : function(result, status){
+					var fileNumber = 0;
+					for (var resourceId in result) {
+					    if (result.hasOwnProperty(resourceId)) {
+					    	fileNumber = fileNumber + result[resourceId].length;
+					    }
+					}
+					
+					var count = 0;
+					for (var resourceId in result) {
+					    if (result.hasOwnProperty(resourceId)) {
+					    	var files = result[resourceId];
+					    	for(var i in files){
+								var url = files[i];
+								var script = document.createElement('script');
+								script.setAttribute('src', url);
+								script.setAttribute('type', 'text/javascript');
+
+//								script.onload = callBackFunction;
+								script.onreadystatechange = function(){
+									count++;
+									if(count==fileNumber){
+										callBackFunction.invoke();
+									}
+								};
+								document.getElementsByTagName("head")[0].appendChild(script);
+					    	}
+					    }
+					}
+				},
+				error: function(obj, textStatus, errorThrown){
+				},
+			});
+		},
+
 		/**
 		 * Callback method used to request to discover resources into runtime env
 		 * @param objResourcesInfo: a list of resource id 
@@ -22,7 +66,7 @@ var gateway = {
 		 * @param objResourcesInfo: a list of resource info 
 		 * @param callBackFunction (nothing)
 		 */
-		requestLoadResources : function(objResourcesInfo, callBackFunction){
+		requestLoadResources : function(resourcesInfo, callBackFunction){
 			var scriptType = requestInfo.getParmData('type');
 			var scriptInfo = encodeURI(requestInfo.getParmData('info'));
 
@@ -37,20 +81,4 @@ var gateway = {
 			  document.getElementsByTagName("head")[0].appendChild(script);
 		},
 		
-		/**
-		 * Callback method used to return expression result to runtime env
-		 * @param expressionId: expression id executed
-		 * @param result  the data result
-		 */
-		notifyExpressionExecuteResult : function(taskId, result){
-			
-		},
-		
-		/**
-		 * Call back method used when all the resources are loaded, so that can execute expression
-		 * @param taskId
-		 */
-		notifyResourcesLoaded : function(taskId){
-			
-		}
 };

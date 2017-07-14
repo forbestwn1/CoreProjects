@@ -36,6 +36,7 @@ public class HAPApplicationInstance{
 	private HAPLogger m_logger;
 	
 	private HAPApplicationInstance(HAPConfigure configure){
+/*		
 		if(configure!=null){
 			//if input is not null, use it as configure
 			this.m_configure = configure;
@@ -66,6 +67,7 @@ public class HAPApplicationInstance{
 															this.getEntityDefinitionManager(),
 															this.getQueryDefinitionManager(),
 															this.getOptionsDefinitionManager());
+*/															
 	}
 	
 	public void init() {}

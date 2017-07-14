@@ -1,23 +1,47 @@
 {
-	"name" : "expression7",
-	"expression" : "?(baseVarUrl)?.subString(from:?(fromVar)?,to:&(to)&)",
-	"description" : "converter",
-	"constants" :{
-		"base":{
-			"dataTypeId": "test.string",
-			"value": "This is my world!"
-		},
-		"from":{
-			"dataTypeId": "test.integer",
-			"value": "3"
-		},
-		"to":{
-			"dataTypeId": "test.integer",
-			"value": "7"
+	"name": "expression7",
+	"expressionDefinitions": {
+		"main": {
+			"expression": "?(baseListVar)?.process(expression:&(expression)&)",
+			"description": "converter",
+			"constants": {
+				"expression": {
+					"dataTypeId": "test.expression",
+					"value": "?(baseVarUrl)?.subString(from:?(fromVar)?,to:&(to)&)"
+				}
+			},
+			"variableCriterias": {
+				"baseListVar": "test.list",
+			}
 		}
 	},
-	"variableCriterias":{
-		"baseVarUrl": "test.url",
-		"fromVar": "test.integer"
-	}	
+	"variablesData": {
+		"baseListVar": {
+			"dataTypeId": "test.list",
+			"value": [
+				{
+					"dataTypeId": "test.string;1.0.0",
+					"value": "1234567890abcdefgh",
+				},
+				{
+					"dataTypeId": "test.string;1.0.0",
+					"value": "abcedfghijk1234567890",
+				}
+			] 
+		},
+	},
+	"result": {
+		"dataTypeId": "test.list;1.0.0",
+		"value": [
+			{
+				"dataTypeId": "test.string;1.0.0",
+				"value": "1234567890abcdefgh",
+			},
+			{
+				"dataTypeId": "test.string;1.0.0",
+				"value": "abcedfghijk1234567890",
+			}
+		] 
+		"wapperType": "JSON"
+	}
 }
