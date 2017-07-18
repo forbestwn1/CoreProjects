@@ -8,7 +8,6 @@
 		<project>DataTypeLibrary</project>
 		<project>ExpressionParser</project>
 		<project>UIResource</project>
-		<project>Common</project>
 		<project>DataDefinition</project>
 		<project>Core</project>
 		<project>DataTypeManager</project>

@@ -7,6 +7,7 @@
 		<operation name="process" >
 			<parms>
 				<parm criteria="test.array" isBase="true"/>
+				<parm name="varmap" criteria="test.map"/>
 				<parm name="expression" criteria="test.expression"/>
 			</parms>
 			<output criteria="test.array"/>

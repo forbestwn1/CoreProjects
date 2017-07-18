@@ -3,13 +3,6 @@
 	<name>Application</name>
 	<comment></comment>
 	<projects>
-		<project>MangoPersistent</project>
-		<project>Entity</project>
-		<project>UIResource</project>
-		<project>DataDefinition</project>
-		<project>ExpressionParser</project>
-		<project>DataTypeLibrary</project>
-		<project>Common</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

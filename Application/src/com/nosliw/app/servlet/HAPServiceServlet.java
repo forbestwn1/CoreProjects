@@ -35,7 +35,7 @@ public class HAPServiceServlet extends HttpServlet{
 		this.doGet(request, response);
 	}
 	
-	public void doGet (HttpServletRequest request,
+	public void doGet (HttpServletRequest request1,
 			HttpServletResponse response)
 			throws ServletException, IOException {
 		try{

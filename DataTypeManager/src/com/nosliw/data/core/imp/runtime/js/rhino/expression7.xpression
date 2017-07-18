@@ -2,12 +2,15 @@
 	"name": "expression7",
 	"expressionDefinitions": {
 		"main": {
-			"expression": "?(baseListVar)?.process(expression:&(expression)&)",
-			"description": "converter",
+			"expression": "?(baseListVar)?.process(expression:&(expression)&,varmap:&(varmap)&)",
+			"description": "complex data type",
 			"constants": {
 				"expression": {
 					"dataTypeId": "test.expression",
 					"value": "?(baseVarUrl)?.subString(from:?(fromVar)?,to:&(to)&)"
+				},
+				"varmap" : {
+				
 				}
 			},
 			"variableCriterias": {
