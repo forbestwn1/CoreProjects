@@ -10,11 +10,11 @@
 					"value": "?(baseVarUrl)?.subString(from:?(fromVar)?,to:&(to)&)"
 				},
 				"varmap" : {
-				
+					"baseListVar.element" : "baseVarUrl" 
 				}
 			},
 			"variableCriterias": {
-				"baseListVar": "test.list",
+				"baseListVar": "test.list[element:test.string]",
 			}
 		}
 	},

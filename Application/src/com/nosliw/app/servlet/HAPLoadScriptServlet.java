@@ -11,12 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.app.instance.HAPApplicationInstance;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data1.HAPDataTypeInfo;
 
 public class HAPLoadScriptServlet extends HttpServlet{
-
+/*
 	private static final long serialVersionUID = -1271587803602002035L;
 
 	public void doPost (HttpServletRequest request,
@@ -73,4 +71,5 @@ public class HAPLoadScriptServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 	}
+*/	
 }

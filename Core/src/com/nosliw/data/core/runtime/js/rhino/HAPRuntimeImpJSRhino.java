@@ -153,6 +153,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		//prepare resources for expression in the runtime (resource and dependency)
 		//execute expression after load required resources
 		List<HAPResourceInfo> resourcesId = this.getResourceDiscovery().discoverResourceRequirement(rhinoExpressionTask.getExpression());
+		resourcesId = new ArrayList<HAPResourceInfo>();
 		HAPLoadResourcesTask loadResourcesTask = new HAPLoadResourcesTask(resourcesId){
 			@Override
 			protected void doSuccess() {
@@ -224,6 +225,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.logging", null)));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.resource", null)));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtime", null)));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtimerhino", null)));
 		
 		//data type
 		
@@ -311,7 +313,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		    
 			//library
 			List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
-			resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtimerhino", null)));
+			resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtimerhinoinit", null)));
 
 			List<HAPResourceInfo> resourceIdInfos = new ArrayList<HAPResourceInfo>();
 			for(HAPResourceId resourceId : resourceIds)			resourceIdInfos.add(new HAPResourceInfo(resourceId).withInfo(ADDTORESOURCEMANAGER, ADDTORESOURCEMANAGER));

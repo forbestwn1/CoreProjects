@@ -54,7 +54,7 @@ public class HAPRuntimeJSScriptUtility {
 		if(valueScript==null)  valueScript = "undefined";
 		templateParms.put(HAPResourceDataJSValue.VALUE, valueScript);
 
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ResourceScript.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ImportResource.temp");
 		script.append("\n");
 		String resoruceDataScript = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		script.append(resoruceDataScript);

@@ -50,7 +50,7 @@ public class HAPFileLogger implements HAPLogger{
 
 	private String getLoggerPath(){
 		if(HAPBasicUtility.isStringEmpty(this.m_logPath)){
-			this.m_logPath = this.m_configure.getStringValue("path");
+			this.m_logPath = this.m_configure.getConfigureValue("path").getStringValue();
 		}
 		return this.m_logPath;
 	}

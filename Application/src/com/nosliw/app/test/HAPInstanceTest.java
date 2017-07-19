@@ -1,27 +1,17 @@
 package com.nosliw.app.test;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
 
-import com.nosliw.app.instance.HAPApplicationInstance;
-import com.nosliw.data.HAPData;
-import com.nosliw.data.expression1.HAPExpression;
-import com.nosliw.data.expression1.HAPExpressionInfo;
-import com.nosliw.data.expression1.HAPExpressionParser;
-import com.nosliw.data1.HAPDataTypeManager;
-import com.nosliw.data1.HAPOperand;
-import com.nosliw.uiresource.HAPUIResource;
 
 public class HAPInstanceTest {
 
 	public static void main(String[] args) {
 
-		HAPApplicationInstance instance = HAPApplicationInstance.getApplicationInstantce();
+//		HAPApplicationInstance instance = HAPApplicationInstance.getApplicationInstantce();
 //		HAPDataTypeManager dataTypeMan = instance.getDataTypeManager();
 		
 //		System.out.println(instance.getEntityDefinitionManager().toString());
 
-		System.out.println(instance.getDataTypeManager().toString());
+//		System.out.println(instance.getDataTypeManager().toString());
 		
 		
 //		String str = "!(integer:simple)!.largerThan(?(bb)?, :(cc):)";

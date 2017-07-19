@@ -1,7 +1,15 @@
+//get/create package
+var packageObj = library;    
+
+(function(packageObj){
+	//get used node
+	var node_eventUtility;
+//*******************************************   Start Node Definition  ************************************** 	
+
 /**
  * 
  */
-var nosliwRemoteServiceErrorUtility = function(){
+var node_errorUtility = function(){
 	return {
 		/*
 		 * exception service data for suspended reason
@@ -25,3 +33,15 @@ var nosliwRemoteServiceErrorUtility = function(){
 		},
 	};
 }();
+
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("errorUtility", node_errorUtility); 
+
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
+})(packageObj);

@@ -15,19 +15,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.app.instance.HAPApplicationInstance;
-import com.nosliw.app.utils.HAPAttributeConstant;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.js.HAPResourceDataJSLibrary;
 import com.nosliw.data.core.runtime.js.HAPResourceIdJSLibrary;
 import com.nosliw.data.core.runtime.js.broswer.HAPRuntimeImpJSBroswer;
-import com.nosliw.data1.HAPDataTypeInfo;
 
 public class HAPBrowserGatewayServlet  extends HttpServlet{
 
+	private static final long serialVersionUID = -5596373369377828141L;
 	public final static String REQUEST_LOADLIBRARYRESOURCES = "requestLoadLibraryResources";
 
 	
@@ -37,6 +36,45 @@ public class HAPBrowserGatewayServlet  extends HttpServlet{
 		this.doGet(request, response);
 	}
 	
+	public void doGet (HttpServletRequest request,
+			HttpServletResponse response)
+			throws ServletException, IOException {
+		HAPServiceData serviceData = null;
+		
+		try{
+			HAPRequestInfo requestInfo = this.getRequestInfo(request);
+			String content = null;
+			
+			switch(requestInfo.getCommand()){
+			case REQUEST_LOADLIBRARYRESOURCES:
+				JSONArray libraryIdsArray = (JSONArray)requestInfo.getData();
+				List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
+				for(int i=0; i<libraryIdsArray.length(); i++){
+					resourceIds.add(new HAPResourceIdJSLibrary(libraryIdsArray.getString(i)));
+				}
+				List<HAPResource> resources = this.getRuntime().getResourceManager().getResources(resourceIds);
+				List<String> fileNames = new ArrayList<String>();
+				for(HAPResource resource : resources){
+					List<URI> uris = ((HAPResourceDataJSLibrary)resource.getResourceData()).getURIs();
+					for(URI uri : uris){
+						fileNames.add(this.getLibraryPath(uri.toString()));
+					}
+				}
+				serviceData = HAPServiceData.createSuccessData(fileNames);
+				content = serviceData.toStringValue(HAPSerializationFormat.LITERATE);
+				break;
+			}
+			
+			response.setContentType("text/javascript");
+		    PrintWriter writer = response.getWriter();
+		    writer.println(content);		
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+
 	private HAPRequestInfo getRequestInfo(HttpServletRequest request){
 		HAPRequestInfo out = null;
 		
@@ -54,51 +92,12 @@ public class HAPBrowserGatewayServlet  extends HttpServlet{
 		return out;
 	}
 
-	private HAPRuntimeImpJSBroswer getRuntime(){
-		
-	}
+	private HAPRuntimeImpJSBroswer getRuntime(){		return (HAPRuntimeImpJSBroswer)this.getServletContext().getAttribute("runtime");  }
 	
 	private String getLibraryPath(String fileName){
-		
+		String keyword = "WebContent";
+		return fileName.substring(fileName.indexOf(keyword)+keyword.length()+1);
 	}
 	
-	public void doGet (HttpServletRequest request,
-			HttpServletResponse response)
-			throws ServletException, IOException {
-		String content = null;
-		
-		try{
-			HAPRequestInfo requestInfo = this.getRequestInfo(request);
-			
-			switch(requestInfo.getCommand()){
-			case REQUEST_LOADLIBRARYRESOURCES:
-				JSONArray libraryIdsArray = (JSONArray)requestInfo.getData();
-				List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
-				for(int i=0; i<libraryIdsArray.length(); i++){
-					resourceIds.add(new HAPResourceIdJSLibrary(libraryIdsArray.getString(i)));
-				}
-				List<HAPResource> resources = this.getRuntime().getResourceManager().getResources(resourceIds);
-				List<String> fileNames = new ArrayList<String>();
-				for(HAPResource resource : resources){
-					HAPResourceDataJSLibrary aa;
-					List<URI> uris = ((HAPResourceDataJSLibrary)resource.getResourceData()).getURIs();
-					for(URI uri : uris){
-						fileNames.add(this.getLibraryPath(uri.toString()));
-					}
-				}
-				content = HAPJsonUtility.buildArrayJson(fileNames.toArray(new String[0]));
-				break;
-				
-			
-			}
-			
-			response.setContentType("text/javascript");
-		    PrintWriter writer = response.getWriter();
-		    writer.println(content);		
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	
+
 }

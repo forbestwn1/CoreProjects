@@ -4,13 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.configure.HAPConfigure;
-import com.nosliw.common.configure.HAPConfigureImp;
-import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataTypeManager;
 
 public class HAPUIResourceManager extends HAPSerializableImp{
@@ -27,10 +21,10 @@ public class HAPUIResourceManager extends HAPSerializableImp{
 		this.m_dataTypeMan = dataTypeMan;
 		this.m_uiResource = new LinkedHashMap<String, HAPUIResource>();
 		this.m_uiResourceScripts = new LinkedHashMap<String, String>();
-		this.createDefaultConfiguration();
+//		this.createDefaultConfiguration();
 		this.m_setting = setting;
 	}
-
+/*
 	private void createDefaultConfiguration(){
 		this.m_setting = new HAPConfigureImp();
 	}
@@ -49,9 +43,7 @@ public class HAPUIResourceManager extends HAPSerializableImp{
 		return this.m_uiResource.values().toArray(new HAPUIResource[0]);
 	}
 
-	/*
-	 * return the script string (an json structure containing block and expression) for ui resource
-	 */
+	//return the script string (an json structure containing block and expression) for ui resource
 	public String getUIResourceScript(String name){
 		String out = this.m_uiResourceScripts.get(name);
 		if(out==null){
@@ -67,9 +59,7 @@ public class HAPUIResourceManager extends HAPSerializableImp{
 		return out;
 	}
 	
-	/*
-	 * get temporate file location
-	 */
+	//get temporate file location
 	public String getTempFileLocation(){
 		String scriptLocation = this.m_setting.getStringValue(HAPConstant.UIRESOURCEMAN_SETTINGNAME_SCRIPTLOCATION);
 		return scriptLocation;
@@ -87,5 +77,5 @@ public class HAPUIResourceManager extends HAPSerializableImp{
 
 	protected HAPDataTypeManager getDataTypeManager(){	return this.m_dataTypeMan;	}
 	protected HAPConfigure getConfiguration(){ return this.m_setting; }
-	
+	*/
 }

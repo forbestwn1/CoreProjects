@@ -285,7 +285,7 @@ packageObj.createNode("createExpressionService", node_createExpressionService);
 
 	var module = {
 		start : function(packageObj){
-			node_resourceUtility = packageObj.getNodeData("resource.resourceUtility");
+			node_resourceUtility = packageObj.getNodeData("resource.utility");
 			node_buildServiceProvider = packageObj.getNodeData("request.buildServiceProvider");
 			node_requestServiceProcessor = packageObj.getNodeData("request.requestServiceProcessor");
 			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
@@ -300,7 +300,7 @@ packageObj.createNode("createExpressionService", node_createExpressionService);
 			node_OperationParm = packageObj.getNodeData("expression.entity.OperationParm");
 			node_OperationParms = packageObj.getNodeData("expression.entity.OperationParms");
 			node_DependentServiceRequestInfo = packageObj.getNodeData("request.request.entity.DependentServiceRequestInfo");  
-			node_expressionUtility = packageObj.getNodeData("expression.expressionUtility");
+			node_expressionUtility = packageObj.getNodeData("expression.utility");
 			node_namingConvensionUtility = packageObj.getNodeData("common.namingconvension.namingConvensionUtility");
 		}
 	};

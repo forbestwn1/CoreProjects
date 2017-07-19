@@ -15,8 +15,8 @@ public class HAPApplicationUtility {
 	static public List<String> getFileNames(HAPConfigure filePathConfigure){
 		List<String> out = new ArrayList<String>();
 		
-		String path = filePathConfigure.getStringValue("path");
-		String[] fileNames = filePathConfigure.getArrayValue("files");
+		String path = filePathConfigure.getConfigureValue("path").getStringValue();
+		List<String> fileNames = filePathConfigure.getConfigureValue("files").getListValue(String.class);
 		for(String fileName : fileNames){
 			out.add(HAPFileUtility.buildFullFileName(path, fileName));
 		}
@@ -29,8 +29,8 @@ public class HAPApplicationUtility {
 	static public List<InputStream> getFileInputStreams(HAPConfigure filePathConfigure){
 		List<InputStream> out = new ArrayList<InputStream>();
 		
-		String path = filePathConfigure.getStringValue("path");
-		String[] fileNames = filePathConfigure.getArrayValue("files");
+		String path = filePathConfigure.getConfigureValue("path").getStringValue();
+		List<String> fileNames = filePathConfigure.getConfigureValue("files").getListValue(String.class);
 		for(String fileName : fileNames){
 			out.add(HAPFileUtility.getInputStreamFromFile(path, fileName));
 		}

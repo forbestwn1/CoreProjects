@@ -1,7 +1,15 @@
+//get/create package
+var packageObj = library;    
+
+(function(packageObj){
+//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
+
 /**
  * 
  */
-var nosliwRemoteServiceUtility = function(){
+var node_utility = function(){
 	
 	return {
 		createRemoteServiceConfigures : function(service, command){
@@ -71,3 +79,15 @@ var nosliwRemoteServiceUtility = function(){
 		
 	};
 }();
+
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("utility", node_utility); 
+
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
+})(packageObj);

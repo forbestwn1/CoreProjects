@@ -1,3 +1,11 @@
+//get/create package
+var packageObj = library;    
+
+(function(packageObj){
+//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
+
 /*
  * handle all the remote service
  *  	network detection
@@ -13,7 +21,7 @@
  *  	suspend:	exeption handler will be called
  *  	others:   	ignored 
  */
-var nosliwCreateRemoteServiceManager = function(){
+var node_createRemoteServiceManager = function(){
 	var loc_moduleName = "remoteService";
 
 	//store all sync tasks by name
@@ -173,3 +181,15 @@ var nosliwCreateRemoteServiceManager = function(){
 
 	return loc_out;
 };
+
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("createRemoteServiceManager", node_createRemoteServiceManager); 
+
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
+})(packageObj);

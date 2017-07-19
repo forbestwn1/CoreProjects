@@ -1,8 +1,15 @@
+//get/create package
+var packageObj = library.getChildPackage("entity");    
+
+(function(packageObj){
+//get used node
+//*******************************************   Start Node Definition  ************************************** 	
+
+
 /**
  * 
  */
-
-var nosliwCreateRemoteSyncTask = function(name, remoteServiceMan, setting){
+var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 	var loc_moduleName = "syncTask";
 	
 	//reference to remote service manager obj
@@ -197,3 +204,16 @@ var nosliwCreateRemoteSyncTask = function(name, remoteServiceMan, setting){
 	
 	return loc_out;
 };
+
+//*******************************************   End Node Definition  ************************************** 	
+//Register Node by Name
+packageObj.createNode("createRemoteSyncTask", node_createRemoteSyncTask); 
+
+	var module = {
+		start : function(packageObj){
+		}
+	};
+	nosliw.registerModule(module, packageObj);
+
+})(packageObj);
+

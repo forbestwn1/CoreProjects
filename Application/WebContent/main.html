@@ -4,8 +4,9 @@
         <meta charset="utf-8" />
         <title>Nosliw Go Go !!</title>
 
-        <script src="libresources/runtimebrowser/gateway.js"></script>
-        <script src="libresources/runtimebrowser/init.js"></script>
+        <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
+        <script src="libresources/nosliw/runtimebrowser/gateway.js"></script>
+        <script src="libresources/nosliw/runtimebrowser/init.js"></script>
 
         
 </head>
@@ -20,180 +21,9 @@
 
 <script>
 	
-	$(function () {
-		
-		nosliw.start();
-		
-		aaaa = nosliwCreateWraper(
-			{
-				a:{
-					aa: nosliwCreateData(11, new NosliwDataTypeInfo("simple", "integer")),
-					ab: nosliwCreateData(12, new NosliwDataTypeInfo("simple", "integer")),
-				},
-				b:{
-					aa: nosliwCreateData(21, new NosliwDataTypeInfo("simple", "integer")),
-					ab: nosliwCreateData(22, new NosliwDataTypeInfo("simple", "integer")),
-				},
-			}
-		);		
-		
-		nosliw.registerEventListener({}, function(event, transitStatus){
-			if(transitStatus.newStatus==NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_ACTIVE){
-
-				var expression = 
-				
-				{
-						
-						"expression":"?(cc)?.largerThan(?(dd)?).not()",
-							"operand":{"type":"3",
-							"scriptRunnable":"false",
-							"operation":"not",
-							"parameters":[],
-							"baseData":{"type":"3",
-							"scriptRunnable":"false",
-							"operation":"largerThan",
-							"parameters":[{"type":"2",
-							"scriptRunnable":"true",
-							"varName":"dd"
-							}],
-							"baseData":{"type":"2",
-							"scriptRunnable":"true",
-							"varName":"cc"
-							}
-							}
-							},
-							"scriptRunnable":false,
-							"variablesInfo":{"cc":"null",
-							"dd":"null"
-							},
-							"constant":{
-								cc : nosliwCreateData(8, new NosliwDataTypeInfo("simple", "integer")),
-								dd : nosliwCreateData(3, new NosliwDataTypeInfo("simple", "integer")),
-							},
-							"allDataTypeInfos":[]
-												
-						
-				};
-				
-				
-				
-				
-/*				
-				var expressionObj = nosliwCreateExpression(expression);
-				expressionObj.init();
-				
-				expressionObj.registerEventListener({}, function(event, transitStatus){
-					if(transitStatus.newStatus==NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_ACTIVE){
-						expressionObj.requestExecuteExpression({
-							success : function(requestInfo, data){
-								alert(data.value);
-							},
-						});
-					}
-				});
-*/
-
-				
-/*				
-				var parms = [];
-				parms.push({
-					dataTypeInfo : new NosliwDataTypeInfo("simple", "integer"), 
-					value : 8,
-				});
-				parms.push({
-					dataTypeInfo : new NosliwDataTypeInfo("simple", "integer"), 
-					value : 6,
-				});
-				nosliw.getDataTypeManager().requestExecuteDataOperation(new NosliwDataTypeInfo("simple", "integer"), "largerThan", parms, {
-					success : function(requestInfo, data){
-//						alert(data);
-					},
-					error : function(requestInfo, serviceData){
-						alert("bbbbbbb");
-					},
-					exception : function(requestInfo, serviceData){
-						alert("bbbbbbb");
-					},
-					
-				});
-*/
-
-				
-/*				
-				var requestArray = [];
-				requestArray.push(new NosliwDataTypeInfo("simple", "string"));
-				requestArray.push(new NosliwDataTypeInfo("simple", "integer"));
-				nosliw.getDataTypeManager().requestGetDataTypes(requestArray, {
-					success : function(requestInfo, dataTypeArray){
-						alert("bbbbbbb");
-					}
-				});
-*/				
-				
-/*				
-				nosliw.getUIResourceManager().requestGetUIResource('test', {
-					success : function(requestInfo, resourceView){
-					}
-				});
-*/
-
-
-
-				var parentReq = nosliwCreateRequestSequence({}, {
-					success : function(requestInfo, data){
-//						alert('aaaaaa');
-					}
-				});
-
-				var req1 = nosliw.getUIResourceManager().getRequestInfoCreateUIResourceView('test', {
-					success : function(requestInfo, resourceView){
-//						nosliwLogging.info(resourceView);
-//						$("#testDiv").append(resourceView.getViews());	
-						resourceView.appendTo($("#testDiv"));
-						
-						var wrapers = {
-							key : aaaa, 
-							
-						};
-						resourceView.updateContext(wrapers, req1);
-						
-					},
-					fail : function(requestInfo, serviceData){
-						
-					},
-					exception : function(requestInfo, serviceData){
-						
-					}
-				});
-				
-				parentReq.addRequest(req1);
-				
-				nosliw.getRequestServiceManager().processRequest(parentReq);
-			}
-			
-		});
-		
- 	});	
-	
-	
-	var bbbb = function(){
-		var parentReq1 = nosliwCreateRequestSequence({}, {
-			success : function(requestInfo, data){
-//				alert('aaaaaa');
-			}
-		});
-
-		aaaa.requestDataOperation({
-			command:NOSLIWCONSTANT.WRAPPER_OPERATION_SET,
-			parms : {
-				data : nosliwCreateData(20, new NosliwDataTypeInfo("simple", "integer")),
-				path : "a.aa",
-			},
-		}, parentReq1);
-		
-		nosliw.getRequestServiceManager().processRequest(parentReq1);
-		
-	};
+	document.addEventListener("runtime.start", function(e) {
+	  console.log(e.detail); // Prints "Example of an event"
+	});
 	
 	
 </script>

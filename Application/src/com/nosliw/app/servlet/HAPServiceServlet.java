@@ -13,20 +13,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.app.instance.HAPApplicationClientContext;
-import com.nosliw.app.instance.HAPApplicationInstance;
-import com.nosliw.app.service.HAPJsonService;
-import com.nosliw.app.service.HAPRequestInfo;
-import com.nosliw.app.service.HAPServiceInfo;
 import com.nosliw.app.utils.HAPApplicationErrorUtility;
 import com.nosliw.app.utils.HAPAttributeConstant;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
-import com.nosliw.entity.dataaccess.HAPClientContext;
 
 public class HAPServiceServlet extends HttpServlet{
 
+	/*
 	private static final long serialVersionUID = 6885333428614821237L;
 	
 	public void doPost (HttpServletRequest request,
@@ -100,9 +95,7 @@ public class HAPServiceServlet extends HttpServlet{
 		return out;
 	}
 	
-	/*
-	 * process one request object
-	 */
+	// process one request object
 	private HAPServiceData processRequest(JSONObject req, HAPApplicationClientContext clientContext) throws Exception{
 		HAPServiceData out = null;
 		String reqType = req.getString(HAPAttributeConstant.REQUEST_TYPE);
@@ -155,4 +148,5 @@ public class HAPServiceServlet extends HttpServlet{
 		System.out.println("*********************** End Service ************************");
 		return serviceData;
 	}
+	*/
 }

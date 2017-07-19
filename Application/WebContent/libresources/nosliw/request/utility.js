@@ -6,7 +6,7 @@ var packageObj = library;
 	var node_eventUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var utility = function(){
+var node_utility = function(){
 	var loc_out = {
 			/**
 			 * last one in argus should be request info
@@ -150,7 +150,7 @@ var utility = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("utility", utility); 
+packageObj.createNode("utility", node_utility); 
 
 	var module = {
 		start : function(packageObj){

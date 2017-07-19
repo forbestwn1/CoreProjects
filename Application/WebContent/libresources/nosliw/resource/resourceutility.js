@@ -8,7 +8,7 @@ var packageObj = library;
 	var node_namingConvensionUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_resourceUtility = 
+var node_utility = 
 {
 		buildResourceTree : function(tree, resource){
 			var resourceId = resource.resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_ID];
@@ -47,7 +47,7 @@ var node_resourceUtility =
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("resourceUtility", node_resourceUtility); 
+packageObj.createNode("utility", node_utility); 
 
 	var module = {
 		start : function(packageObj){

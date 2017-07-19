@@ -12,7 +12,7 @@ var packageObj = library;
 	var node_OperationParms;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_expressionUtility = 
+var node_utility = 
 {
 		executeOperationResource : function(resourceId, parmArray, resourcesTree){
 			var dataOperationResource = node_resourceUtility.getResourceFromTree(resourcesTree, resourceId);
@@ -63,14 +63,14 @@ var node_expressionUtility =
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("expressionUtility", node_expressionUtility); 
+packageObj.createNode("utility", node_utility); 
 
 	var module = {
 		start : function(packageObj){
 			node_COMMONTRIBUTECONSTANT = packageObj.getNodeData("constant.COMMONTRIBUTECONSTANT");
 			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
 			node_namingConvensionUtility = packageObj.getNodeData("common.namingconvension.namingConvensionUtility"); 
-			node_resourceUtility = packageObj.getNodeData("resource.resourceUtility");
+			node_resourceUtility = packageObj.getNodeData("resource.utility");
 			node_OperationContext = packageObj.getNodeData("expression.entity.OperationContext");
 			node_OperationParm = packageObj.getNodeData("expression.entity.OperationParm");
 			node_OperationParms = packageObj.getNodeData("expression.entity.OperationParms");

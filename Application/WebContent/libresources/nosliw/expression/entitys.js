@@ -73,8 +73,8 @@ packageObj.createNode("OperationContext", node_OperationContext);
 	var module = {
 		start : function(packageObj){
 			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
-			node_resourceUtility = packageObj.getNodeData("resource.resourceUtility");
-			node_expressionUtility = packageObj.getNodeData("expression.expressionUtility");
+			node_resourceUtility = packageObj.getNodeData("resource.utility");
+			node_expressionUtility = packageObj.getNodeData("expression.utility");
 		}
 	};
 	nosliw.registerModule(module, packageObj);

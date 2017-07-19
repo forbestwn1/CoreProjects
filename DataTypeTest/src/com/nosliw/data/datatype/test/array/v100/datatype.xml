@@ -10,7 +10,7 @@
 				<parm name="varmap" criteria="test.map"/>
 				<parm name="expression" criteria="test.expression"/>
 			</parms>
-			<output criteria="test.array"/>
+			<output criteria="test.array[expression.out]"/>
 		</operation>
 
 	</operations>

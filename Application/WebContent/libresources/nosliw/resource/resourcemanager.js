@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("resourcemanager");    
+var packageObj = library;    
 
 (function(packageObj){
 	//get used node
@@ -56,7 +56,7 @@ packageObj.createNode("createResourceManager", node_createResourceManager);
 	var module = {
 		start : function(packageObj){
 			node_Resource = packageObj.getNodeData("resource.entity.Resource");
-			node_resourceUtility = packageObj.getNodeData("resource.resourceUtility");
+			node_resourceUtility = packageObj.getNodeData("resource.utility");
 		}
 	};
 	nosliw.registerModule(module, packageObj);
