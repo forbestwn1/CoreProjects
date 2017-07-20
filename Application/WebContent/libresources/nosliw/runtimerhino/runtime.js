@@ -79,7 +79,7 @@ var node_createRuntime = function(name){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createRuntime", node_createRuntime); 
+packageObj.createChildNode("createRuntime", node_createRuntime); 
 
 var module = {
 		start : function(packageObj){

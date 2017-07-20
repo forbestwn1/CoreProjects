@@ -20,7 +20,7 @@ var node_gateway = function(){
 		 * @param callBackFunction (discovered resource info)
 		 */
 		requestDiscoverResources : function(objResourceIds, callBackFunction){
-			nosliw.runtime.getRemoteService().
+//			nosliw.runtime.getRemoteService().
 		},
 		
 		/**
@@ -57,7 +57,7 @@ var node_gateway = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("gateway", node_gateway); 
+packageObj.createChildNode("gateway", node_gateway); 
 
 	var module = {
 		start : function(packageObj){

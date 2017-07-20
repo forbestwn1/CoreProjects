@@ -125,7 +125,7 @@ var node_createRequestEventGroupHandler = function(eventHandler, registerElement
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createRequestEventGroupHandler", node_createRequestEventGroupHandler); 
+packageObj.createChildNode("createRequestEventGroupHandler", node_createRequestEventGroupHandler); 
 
 	var module = {
 		start : function(packageObj){

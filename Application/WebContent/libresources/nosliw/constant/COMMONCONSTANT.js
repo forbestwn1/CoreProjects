@@ -279,7 +279,7 @@ var COMMONCONSTANT=
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("COMMONCONSTANT", COMMONCONSTANT); 
+packageObj.createChildNode("COMMONCONSTANT", COMMONCONSTANT); 
 
 	var module = {
 		start : function(packageObj){

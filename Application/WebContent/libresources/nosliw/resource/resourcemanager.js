@@ -51,7 +51,7 @@ var node_createResourceManager = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createResourceManager", node_createResourceManager); 
+packageObj.createChildNode("createResourceManager", node_createResourceManager); 
 
 	var module = {
 		start : function(packageObj){

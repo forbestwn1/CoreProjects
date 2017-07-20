@@ -36,7 +36,7 @@ var node_errorUtility = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("errorUtility", node_errorUtility); 
+packageObj.createChildNode("errorUtility", node_errorUtility); 
 
 	var module = {
 		start : function(packageObj){

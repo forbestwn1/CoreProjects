@@ -137,8 +137,8 @@ var node_eventUtility =
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("getEventObject", node_getEventObject); 
-packageObj.createNode("utility", node_eventUtility); 
+packageObj.createChildNode("getEventObject", node_getEventObject); 
+packageObj.createChildNode("utility", node_eventUtility); 
 
 var module = {
 	start : function(packageObj){

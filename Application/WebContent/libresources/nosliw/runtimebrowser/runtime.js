@@ -85,7 +85,7 @@ var node_createRuntime = function(name){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createRuntime", node_createRuntime); 
+packageObj.createChildNode("createRuntime", node_createRuntime); 
 
 var module = {
 		start : function(packageObj){
@@ -94,11 +94,12 @@ var module = {
 			node_makeObjectWithName = packageObj.getNodeData("common.objectwithname.makeObjectWithName");
 			node_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
 			node_createIdService = packageObj.getNodeData("service.idservice.createIdService");
-			node_createResourceManager = packageObj.getNodeData("resource.resourcemanager.createResourceManager");
+			node_createResourceManager = packageObj.getNodeData("resource.createResourceManager");
 			node_createExpressionService = packageObj.getNodeData("expression.service.createExpressionService");
-			node_createResourceService = packageObj.getNodeData("runtime.createResourceService");
-			node_runtimeGateway = packageObj.getNodeData(node_COMMONCONSTANT.RUNTIME_LANGUAGE_JS_GATEWAY);
+			node_createResourceService = packageObj.getNodeData("resource.createResourceService");
 			node_createRemoteService = packageObj.getNodeData("remote.createRemoteService");
+			
+			node_runtimeGateway = packageObj.getNodeData(node_COMMONCONSTANT.RUNTIME_LANGUAGE_JS_GATEWAY);
 		}
 };
 nosliw.registerModule(module, packageObj);

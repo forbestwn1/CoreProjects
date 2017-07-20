@@ -32,7 +32,7 @@ var node_buildServiceProvider = function(object, moduleName){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("buildServiceProvider", node_buildServiceProvider); 
+packageObj.createChildNode("buildServiceProvider", node_buildServiceProvider); 
 
 var module = {
 		start : function(packageObj){

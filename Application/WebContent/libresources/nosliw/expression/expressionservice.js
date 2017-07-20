@@ -281,11 +281,13 @@ var node_createExpressionService = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createExpressionService", node_createExpressionService); 
+packageObj.createChildNode("createExpressionService", node_createExpressionService); 
+
+	nosliw.registerNodeEvent("resource.utility", nosliw.NODEEVENT_SETDATA, function(){node_resourceUtility = this.getData()})
 
 	var module = {
 		start : function(packageObj){
-			node_resourceUtility = packageObj.getNodeData("resource.utility");
+//			node_resourceUtility = packageObj.getNodeData("resource.utility");
 			node_buildServiceProvider = packageObj.getNodeData("request.buildServiceProvider");
 			node_requestServiceProcessor = packageObj.getNodeData("request.requestServiceProcessor");
 			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");

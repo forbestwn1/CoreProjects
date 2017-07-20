@@ -148,7 +148,7 @@ var node_CONSTANT=
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("CONSTANT", node_CONSTANT); 
+packageObj.createChildNode("CONSTANT", node_CONSTANT); 
 
 	var module = {
 		start : function(packageObj){

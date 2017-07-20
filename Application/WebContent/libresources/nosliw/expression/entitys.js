@@ -66,9 +66,9 @@ node_OperationContext.prototype = {
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("OperationParm", node_OperationParm); 
-packageObj.createNode("OperationParms", node_OperationParms); 
-packageObj.createNode("OperationContext", node_OperationContext); 
+packageObj.createChildNode("OperationParm", node_OperationParm); 
+packageObj.createChildNode("OperationParms", node_OperationParms); 
+packageObj.createChildNode("OperationContext", node_OperationContext); 
 
 	var module = {
 		start : function(packageObj){

@@ -66,7 +66,7 @@ var node_namingConvensionUtility = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("namingConvensionUtility", node_namingConvensionUtility); 
+packageObj.createChildNode("namingConvensionUtility", node_namingConvensionUtility); 
 
 var module = {
 	start : function(packageObj){

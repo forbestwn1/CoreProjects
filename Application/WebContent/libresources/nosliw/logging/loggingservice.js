@@ -76,7 +76,7 @@ var node_createLoggingService = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createLoggingService", node_createLoggingService); 
+packageObj.createChildNode("createLoggingService", node_createLoggingService); 
 
 	var module = {
 		start : function(packageObj){

@@ -82,7 +82,7 @@ var node_utility = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("utility", node_utility); 
+packageObj.createChildNode("utility", node_utility); 
 
 	var module = {
 		start : function(packageObj){

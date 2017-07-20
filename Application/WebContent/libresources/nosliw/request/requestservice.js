@@ -107,8 +107,8 @@ var node_DependentServiceRequestInfo = function(requestInfo, processors){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createServiceRequestInfoService", node_createServiceRequestInfoService); 
-packageObj.createNode("entity.DependentServiceRequestInfo", node_DependentServiceRequestInfo); 
+packageObj.createChildNode("createServiceRequestInfoService", node_createServiceRequestInfoService); 
+packageObj.createChildNode("entity.DependentServiceRequestInfo", node_DependentServiceRequestInfo); 
 
 	var module = {
 		start : function(packageObj){

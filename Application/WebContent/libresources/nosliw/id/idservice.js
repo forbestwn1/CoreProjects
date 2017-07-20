@@ -28,7 +28,7 @@ var node_createIdService = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createIdService", node_createIdService); 
+packageObj.createChildNode("createIdService", node_createIdService); 
 
 	var module = {
 		start : function(packageObj){

@@ -78,8 +78,8 @@ var node_createConfigures = function(configures){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createConfiguresBase", node_createConfiguresBase); 
-packageObj.createNode("createConfigures", node_createConfigures); 
+packageObj.createChildNode("createConfiguresBase", node_createConfiguresBase); 
+packageObj.createChildNode("createConfigures", node_createConfigures); 
 
 	var module = {
 		start : function(packageObj){

@@ -352,7 +352,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createServiceRequestInfoCommon", node_createServiceRequestInfoCommon); 
+packageObj.createChildNode("createServiceRequestInfoCommon", node_createServiceRequestInfoCommon); 
 
 	var module = {
 		start : function(packageObj){

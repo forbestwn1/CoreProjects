@@ -4,7 +4,7 @@ var nosliw = function(){
 	
 	var loc_moduleName = "nosliw";
 	
-	var loc_packages = {}; 
+	var loc_nodes = {}; 
 	
 	var loc_modules = [];
 	
@@ -14,9 +14,7 @@ var nosliw = function(){
 		},
 		
 		getNode : function(nodePath){
-			var nodePathInfo = parseNodePath(nodePath);
-			var packageObj = createPackage(nodePathInfo.path);
-			return packageObj.useNode(nodePathInfo.name);
+			return this.getPackage(nodePath).useNode();
 		},
 		
 		getNodeData : function(nodePath){
@@ -28,13 +26,14 @@ var nosliw = function(){
 			node.setData(nodeData);
 		},
 		
-		//callBackFunction(nodeName, eventName, nodeValue)
+		//callBackFunction(eventName, nodeName), this : node
 		registerNodeEvent : function(nodeName, eventName, callBackFunction){
-			
+			var node = this.getNode(nodeName);
+			node.on(eventName, callBackFunction, node);
 		},
 		
 		triggerNodeEvent : function(nodeName, eventName){
-			
+			this.getNode(nodeName).trigger(eventName, nodeName, eventName);
 		},
 		
 		registerModule : function(module, packageObj){
@@ -54,77 +53,80 @@ var nosliw = function(){
 	};
 	
 	var createPackage = function(path){
-		//check if the package exists or not
-		var packageObj = loc_packages[path];
-		//if so, use the existing one
-		if(packageObj!=undefined)  return packageObj;
 		
-		var loc_path = path;
-		var loc_nodes = {};
+		var loc_path = path; 
 		
 		var loc_package = {
 
-			prv_createNode : function(nodeName, nodeData){
-				var nodeObj = loc_nodes[nodeName];
-				if(nodeObj==undefined){
-					//if node does not exists, create empty one
-					nodeObj = createNode();
-					loc_nodes[nodeName] = nodeObj;
-				}
-				nodeObj.setData(nodeData);
-				return nodeObj;
-			},
-			
-			prv_getNode : function(nodeName){
-				return loc_nodes[nodeName];
-			},
-			
-			getPackage : function(path){
-				if(path===undefined)  return this;
-				return createPackage(path);
-			},
-			getChildPackage : function(relativePath){
-				if(relativePath==undefined)  return this;
-				return createPackage(loc_path+"."+relativePath);
-			},
-			useNode : function(nodePath){
-				var nodePathInfo = parseNodePath(nodePath);
-				var packageObj = this.getPackage(nodePathInfo.path);
-				var nodeObj = packageObj.prv_getNode(nodePathInfo.name);
-				if(nodeObj==undefined){
-					//if node does not exists, create empty one
-					nodeObj = packageObj.prv_createNode(nodePathInfo.name);
-				}
-				return nodeObj;
-			},
-			requireNode : function(nodePath){
-				return this.useNode(nodePath);
-			},
-			getNodeData : function(nodePath){
-				var out = this.useNode(nodePath).getData();
-				if(out===undefined)  nosliw.logging.error(loc_moduleName, "The node", nodePath, "cannot find by package" + this.getName());  
-				return out;
-			},
-			createNode : function(nodePath, nodeData){
-				var nodePathInfo = parseNodePath(nodePath);
-				var nodePackage = this.getChildPackage(nodePathInfo.path);
-				var nodeName = nodePathInfo.name;
-				return nodePackage.prv_createNode(nodeName, nodeData);
-			},
-			getName : function(){return loc_path;}
-		};
-		loc_packages[path] = loc_package;
-		//every package is a event source
-		_.extend(loc_package, Backbone.Events);
-		return loc_package;
+				prv_useNode : function(){
+					var node = loc_nodes[this.getName()];
+					if(node==undefined){
+						//if node does not exists, create empty one
+						node = createNode(this.getName());
+						loc_nodes[this.getName()] = node;
+					}
+					return node;
+				},
+				
+				prv_setNodeData : function(nodeData){
+					var node = this.prv_useNode();
+					node.setData(nodeData);
+					return node;
+				},
+				
+				getPackage : function(path){
+					if(path===undefined)  return this;
+					return createPackage(path);
+				},
+				getChildPackage : function(relativePath){
+					if(relativePath==undefined)  return this;
+					return createPackage(loc_path+"."+relativePath);
+				},
+				useNode : function(path){
+					var childPackage = this.getPackage(path);
+					return childPackage.prv_useNode();
+				},
+				useChildNode : function(relativePath){
+					var childPackage = this.getChildPackage(relativePath);
+					return childPackage.prv_useNode();
+				},
+				setNodeData : function(path, nodeData){
+					return this.getPackage(path).prv_setNodeData(nodeData);
+				},
+				setChildNodeData : function(path, nodeData){
+					return this.getChildPackage(path).prv_setNodeData(nodeData);
+				},
+				createNode : function(path, nodeData){
+					var nodePackage = this.getPackage(path);
+					return nodePackage.prv_setNodeData(nodeData);
+				},
+				createChildNode : function(relativePath, nodeData){
+					var nodePackage = this.getChildPackage(relativePath);
+					return nodePackage.prv_setNodeData(nodeData);
+				},
+				getNodeData : function(path){
+					var out = this.useNode(path).getData();
+					if(out===undefined)  nosliw.logging.error(loc_moduleName, "The node", path, "cannot find by package : " + this.getName());  
+					return out;
+				},
+				getChildNodeData : function(relativePath){
+					var out = this.useChildNode(relativePath).getData();
+					if(out===undefined)  nosliw.logging.error(loc_moduleName, "The node", relativePath, "cannot find by package : " + this.getName());  
+					return out;
+				},
+				getName : function(){return loc_path;}
+			};
+			return loc_package;
+		
 	};
 	
 	//Create node, node is wrapper of data
 	//Sometimes, node is created, but data will set later
 	//It happens during build dependency. 
 	//A module require another module make required node build, but at that time, the module data does not create yet
-	var createNode = function(){
+	var createNode = function(packageName){
 		var loc_data;
+		var loc_packageName = packageName;
 		
 		var loc_node = {
 			getData : function(){
@@ -132,6 +134,10 @@ var nosliw = function(){
 			},
 			setData : function(data){
 				loc_data = data;
+				nosliw.triggerNodeEvent(this.getPackageName(), loc_out.NODEEVENT_SETDATA);
+			},
+			getPackageName : function(){
+				return loc_packageName;
 			}
 		}
 		//every node is a event source
@@ -139,22 +145,7 @@ var nosliw = function(){
 		return loc_node;
 	};
 	
-	var parseNodePath = function(nodePath){
-		var path;
-		var name;
-		var index = nodePath.lastIndexOf(".");
-		if(index===-1){
-			name = nodePath;
-		}
-		else{
-			name = nodePath.substring(index+1);
-			path = nodePath.substring(0, index);
-		}
-		return {
-			name : name,
-			path : path
-		}
-	}
+	loc_out.NODEEVENT_SETDATA = "setData";
 	
 	return loc_out;
 }();

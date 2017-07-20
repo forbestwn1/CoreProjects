@@ -19,8 +19,8 @@ var node_Resource = function(resourceInfo, resourceData, info){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("ResourceId", node_ResourceId); 
-packageObj.createNode("Resource", node_Resource); 
+packageObj.createChildNode("ResourceId", node_ResourceId); 
+packageObj.createChildNode("Resource", node_Resource); 
 
 	var module = {
 		start : function(packageObj){

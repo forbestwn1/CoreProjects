@@ -99,10 +99,10 @@ node_RemoteServiceGroupTask.prototype = {
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("RemoteServiceSetting", node_RemoteServiceSetting); 
-packageObj.createNode("RemoteServiceRequest", node_RemoteServiceRequest); 
-packageObj.createNode("RemoteServiceTask", node_RemoteServiceTask); 
-packageObj.createNode("RemoteServiceGroupTask", node_RemoteServiceGroupTask); 
+packageObj.createChildNode("RemoteServiceSetting", node_RemoteServiceSetting); 
+packageObj.createChildNode("RemoteServiceRequest", node_RemoteServiceRequest); 
+packageObj.createChildNode("RemoteServiceTask", node_RemoteServiceTask); 
+packageObj.createChildNode("RemoteServiceGroupTask", node_RemoteServiceGroupTask); 
 
 	var module = {
 		start : function(packageObj){

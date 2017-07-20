@@ -39,7 +39,7 @@ var node_createServiceRequestInfoSimple = function(service, processor, handlers,
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createServiceRequestInfoSimple", node_createServiceRequestInfoSimple); 
+packageObj.createChildNode("createServiceRequestInfoSimple", node_createServiceRequestInfoSimple); 
 
 	var module = {
 		start : function(packageObj){

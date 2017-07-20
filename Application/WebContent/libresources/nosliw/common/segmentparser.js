@@ -80,7 +80,7 @@ var parseSegment = function(path, sep){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("parseSegment", parseSegment); 
+packageObj.createChildNode("parseSegment", parseSegment); 
 
 	var module = {
 		start : function(packageObj){

@@ -57,8 +57,8 @@ var node_getInterface = function(baseObject, name){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("buildInterface", node_buildInterface); 
-packageObj.createNode("getInterface", node_getInterface); 
+packageObj.createChildNode("buildInterface", node_buildInterface); 
+packageObj.createChildNode("getInterface", node_getInterface); 
 
 var module = {
 		start : function(packageObj){

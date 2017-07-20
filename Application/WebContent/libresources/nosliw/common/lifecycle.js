@@ -237,7 +237,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("makeObjectWithLifecycle", node_makeObjectWithLifecycle); 
+packageObj.createChildNode("makeObjectWithLifecycle", node_makeObjectWithLifecycle); 
 
 var module = {
 	start : function(packageObj){

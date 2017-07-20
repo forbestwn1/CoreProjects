@@ -118,8 +118,8 @@ var handleDataContainerEachElement = function(dataContainerWraper, handler){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("OrderedContainer.newEntity", newOrderedContainerGeneral); 
-packageObj.createNode("utils.handleDataContainerEachElement", handleDataContainerEachElement); 
+packageObj.createChildNode("OrderedContainer.newEntity", newOrderedContainerGeneral); 
+packageObj.createChildNode("utils.handleDataContainerEachElement", handleDataContainerEachElement); 
 
 	var module = {
 		start : function(packageObj){

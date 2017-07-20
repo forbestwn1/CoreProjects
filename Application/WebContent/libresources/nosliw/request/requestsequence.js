@@ -193,7 +193,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createServiceRequestInfoSequence", node_createServiceRequestInfoSequence); 
+packageObj.createChildNode("createServiceRequestInfoSequence", node_createServiceRequestInfoSequence); 
 
 	var module = {
 		start : function(packageObj){

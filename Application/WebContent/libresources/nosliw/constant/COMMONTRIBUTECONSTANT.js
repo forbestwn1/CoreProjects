@@ -280,7 +280,7 @@ var COMMONTRIBUTECONSTANT=
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("COMMONTRIBUTECONSTANT", COMMONTRIBUTECONSTANT); 
+packageObj.createChildNode("COMMONTRIBUTECONSTANT", COMMONTRIBUTECONSTANT); 
 
 	var module = {
 		start : function(packageObj){

@@ -74,7 +74,7 @@ var node_basicUtility =
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("basicUtility", node_basicUtility); 
+packageObj.createChildNode("basicUtility", node_basicUtility); 
 
 	var module = {
 		start : function(packageObj){

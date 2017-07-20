@@ -37,8 +37,8 @@ var node_createServiceParms = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("ServiceInfo", node_ServiceInfo); 
-packageObj.createNode("createServiceParms", node_createServiceParms); 
+packageObj.createChildNode("ServiceInfo", node_ServiceInfo); 
+packageObj.createChildNode("createServiceParms", node_createServiceParms); 
 
 var module = {
 		start : function(packageObj){

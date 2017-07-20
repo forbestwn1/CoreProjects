@@ -26,8 +26,8 @@ var packageObj = library.getChildPackage("objectWithId");
 
 //*******************************************   End Node Definition  ************************************** 	
 	//Register Node by Name
-	packageObj.createNode("makeObjectWithId", makeObjectWithId); 
-	packageObj.createNode("getObjectId", getObjectId); 
+	packageObj.createChildNode("makeObjectWithId", makeObjectWithId); 
+	packageObj.createChildNode("getObjectId", getObjectId); 
 
 	var module = {
 		start : function(packageObj){

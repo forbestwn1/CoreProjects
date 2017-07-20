@@ -31,7 +31,7 @@ var node_createServiceRequestInfoExecutor = function(service, executor, handlers
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createServiceRequestInfoExecutor", node_createServiceRequestInfoExecutor); 
+packageObj.createChildNode("createServiceRequestInfoExecutor", node_createServiceRequestInfoExecutor); 
 
 	var module = {
 		start : function(packageObj){

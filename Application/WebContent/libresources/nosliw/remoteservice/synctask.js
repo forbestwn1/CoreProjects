@@ -207,7 +207,7 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createRemoteSyncTask", node_createRemoteSyncTask); 
+packageObj.createChildNode("createRemoteSyncTask", node_createRemoteSyncTask); 
 
 	var module = {
 		start : function(packageObj){

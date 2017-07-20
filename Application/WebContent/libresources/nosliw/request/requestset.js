@@ -135,7 +135,7 @@ loc_reateRequestSetResult = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createServiceRequestInfoSet", node_createServiceRequestInfoSet); 
+packageObj.createChildNode("createServiceRequestInfoSet", node_createServiceRequestInfoSet); 
 
 	var module = {
 		start : function(packageObj){

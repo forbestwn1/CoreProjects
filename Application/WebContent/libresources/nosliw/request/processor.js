@@ -78,7 +78,7 @@ var node_requestServiceProcessor = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("requestServiceProcessor", node_requestServiceProcessor); 
+packageObj.createChildNode("requestServiceProcessor", node_requestServiceProcessor); 
 
 	var module = {
 		start : function(packageObj){

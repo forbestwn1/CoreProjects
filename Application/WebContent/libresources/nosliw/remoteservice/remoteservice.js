@@ -184,7 +184,7 @@ var node_createRemoteService = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createRemoteService", node_createRemoteService); 
+packageObj.createChildNode("createRemoteService", node_createRemoteService); 
 
 	var module = {
 		start : function(packageObj){

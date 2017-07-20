@@ -70,7 +70,7 @@ var requestLoadLibraryResources = function(resourceIds, callBackFunction){
 
 requestLoadLibraryResources(libResources, function(){
 	
-	  nosliw.createNode(nosliw.getNodeData("constant.COMMONCONSTANT").RUNTIME_LANGUAGE_JS_GATEWAY, gateway);  
+//	  nosliw.createNode(nosliw.getNodeData("constant.COMMONCONSTANT").RUNTIME_LANGUAGE_JS_GATEWAY, gateway);  
 
 	  
 	  nosliw.runtimeName = "browser";

@@ -32,8 +32,8 @@ var node_getObjectType = function(object){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("makeObjectWithType", node_makeObjectWithType); 
-packageObj.createNode("getObjectType", node_getObjectType); 
+packageObj.createChildNode("makeObjectWithType", node_makeObjectWithType); 
+packageObj.createChildNode("getObjectType", node_getObjectType); 
 
 	var module = {
 		start : function(packageObj){
