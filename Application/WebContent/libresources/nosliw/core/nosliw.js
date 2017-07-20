@@ -28,6 +28,15 @@ var nosliw = function(){
 			node.setData(nodeData);
 		},
 		
+		//callBackFunction(nodeName, eventName, nodeValue)
+		registerNodeEvent : function(nodeName, eventName, callBackFunction){
+			
+		},
+		
+		triggerNodeEvent : function(nodeName, eventName){
+			
+		},
+		
 		registerModule : function(module, packageObj){
 			loc_modules.push([module, packageObj]);
 		},
@@ -105,6 +114,8 @@ var nosliw = function(){
 			getName : function(){return loc_path;}
 		};
 		loc_packages[path] = loc_package;
+		//every package is a event source
+		_.extend(loc_package, Backbone.Events);
 		return loc_package;
 	};
 	
@@ -123,6 +134,8 @@ var nosliw = function(){
 				loc_data = data;
 			}
 		}
+		//every node is a event source
+		_.extend(loc_node, Backbone.Events);
 		return loc_node;
 	};
 	

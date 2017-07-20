@@ -1,1 +1,1 @@
-var library = nosliw.getPackage("runtime.rhino");
+var library = nosliw.getPackage("runtime");

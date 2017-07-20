@@ -1,1 +1,1 @@
-var library = nosliw.getPackage("runtime.browser");
+var library = nosliw.getPackage("runtime");

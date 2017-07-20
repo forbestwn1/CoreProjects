@@ -13,6 +13,7 @@ var packageObj = library;
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
 	var node_runtimeGateway;
+	var node_createRemoteService;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -31,6 +32,8 @@ var node_createRuntime = function(name){
 	var loc_resourceManager;
 	
 	var loc_expressionService;
+	
+	var loc_remoteService;
 	
 	var loc_out = {
 		
@@ -56,9 +59,11 @@ var node_createRuntime = function(name){
 		
 		getGateway(){
 			return node_runtimeGateway;
+		},
+		
+		getRemoteService(){
+			return loc_remoteService;
 		}
-		
-		
 	};
 	
 	var lifecycleCallback = {};
@@ -67,6 +72,7 @@ var node_createRuntime = function(name){
 		loc_resourceManager = node_createResourceManager();
 		loc_resourceService = node_createResourceService(loc_resourceManager);
 		loc_expressionService = node_createExpressionService();
+		loc_remoteService = node_createRemoteService();
 		return true;
 	};
 	
@@ -92,6 +98,7 @@ var module = {
 			node_createExpressionService = packageObj.getNodeData("expression.service.createExpressionService");
 			node_createResourceService = packageObj.getNodeData("runtime.createResourceService");
 			node_runtimeGateway = packageObj.getNodeData(node_COMMONCONSTANT.RUNTIME_LANGUAGE_JS_GATEWAY);
+			node_createRemoteService = packageObj.getNodeData("remote.createRemoteService");
 		}
 };
 nosliw.registerModule(module, packageObj);

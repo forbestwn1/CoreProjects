@@ -5,7 +5,7 @@ nosliw.runtimeName = "rhino";
 
 nosliw.initModules();
 
-var runtimeRhino = nosliw.getNodeData("runtime.rhino.createRuntime")(nosliw.runtimeName);
+var runtimeRhino = nosliw.getNodeData("runtime.createRuntime")(nosliw.runtimeName);
 
 nosliw.runtime = runtimeRhino;
 

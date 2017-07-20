@@ -14,7 +14,7 @@ var packageObj = library.getChildPackage("setting");
  */
 var node_createConfiguresBase = function(baseConfigures){
 	
-	var loc_baseConfigures = createConfigures(baseConfigures);
+	var loc_baseConfigures = node_createConfigures(baseConfigures);
 	
 	var loc_out = {
 			createConfigures : function(configures){

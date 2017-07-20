@@ -21,7 +21,7 @@ var packageObj = library;
  *  	suspend:	exeption handler will be called
  *  	others:   	ignored 
  */
-var node_createRemoteServiceManager = function(){
+var node_createRemoteService = function(){
 	var loc_moduleName = "remoteService";
 
 	//store all sync tasks by name
@@ -184,7 +184,7 @@ var node_createRemoteServiceManager = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("createRemoteServiceManager", node_createRemoteServiceManager); 
+packageObj.createNode("createRemoteService", node_createRemoteService); 
 
 	var module = {
 		start : function(packageObj){
