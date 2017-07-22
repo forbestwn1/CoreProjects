@@ -4,7 +4,11 @@
         <meta charset="utf-8" />
         <title>Nosliw Go Go !!</title>
 
+        <script src="libresources/external/Underscore/1.6.0/underscore.js"></script>
+        <script src="libresources/external/Backbone/1.1.2/backbone.js"></script>
         <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
+        <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
+        <script src="libresources/nosliw/core/nosliw.js"></script>
         <script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
 
         
@@ -20,10 +24,15 @@
 
 <script>
 	
+	nosliw.registerNodeEvent("runtime", "active", function(eventName, nodeName){
+		nosliw.logging.info(nodeName + "    " + eventName );
+	});
+
+	/*
 	document.addEventListener("runtime.start", function(e) {
 	  console.log(e.detail); // Prints "Example of an event"
 	});
-	
+	*/
 	
 </script>
 </html>

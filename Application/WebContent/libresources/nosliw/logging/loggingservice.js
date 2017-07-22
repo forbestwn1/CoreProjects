@@ -3,6 +3,7 @@ var packageObj = library.getChildPackage("loggingservice");
 
 (function(packageObj){
 	//get used node
+	var node_runtimeName;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -30,8 +31,7 @@ var node_createLoggingService = function(){
 	
 	var loc_getLogging = function(){
 		if(loc_logging==undefined){
-			var runtimeName = nosliw.runtimeName;
-			if(runtimeName=="rhino"){
+			if(node_runtimeName=="rhino"){
 				loc_logging = {
 					trace : loc_rhinoLogFun,
 					debug : loc_rhinoLogFun,
@@ -78,10 +78,6 @@ var node_createLoggingService = function(){
 //Register Node by Name
 packageObj.createChildNode("createLoggingService", node_createLoggingService); 
 
-	var module = {
-		start : function(packageObj){
-		}
-	};
-	nosliw.registerModule(module, packageObj);
+nosliw.registerSetNodeDataEvent("runtime.name", function(){node_runtimeName = this.getData();});
 
 })(packageObj);

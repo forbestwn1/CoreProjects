@@ -73,6 +73,16 @@ var node_createRuntime = function(name){
 		loc_resourceService = node_createResourceService(loc_resourceManager);
 		loc_expressionService = node_createExpressionService();
 		loc_remoteService = node_createRemoteService();
+
+		//set sortcut for object
+		 nosliw.runtime = loc_out;
+		 nosliw.generateId = loc_out.getIdService().generateId;
+		 
+		 //create node for runtime object
+		 nosliw.createNode("runtime", loc_out);
+		 
+		 nosliw.triggerNodeEvent("runtime", "active");
+
 		return true;
 	};
 	

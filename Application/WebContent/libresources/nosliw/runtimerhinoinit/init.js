@@ -1,16 +1,14 @@
-/**
- * 
- */
-nosliw.runtimeName = "rhino";
+//set runtime name first
+nosliw.createNode("runtime.name", "rhino");
 
-nosliw.initModules();
+nosliw.registerNodeEvent("runtime.createRuntime", nosliw.NODEEVENT_SETDATA, function(){
+	
+	  nosliw.initModules();
 
-var runtimeRhino = nosliw.getNodeData("runtime.createRuntime")(nosliw.runtimeName);
+	  var runtime = nosliw.getNodeData("runtime.createRuntime")("rhino");
+	  runtime.interfaceObjectLifecycle.init();
 
-nosliw.runtime = runtimeRhino;
+	  nosliw.generateId = runtime.getIdService().generateId;
 
-
-runtimeRhino.interfaceObjectLifecycle.init();
-
-nosliw.generateId = runtimeRhino.getIdService().generateId;
+});
 

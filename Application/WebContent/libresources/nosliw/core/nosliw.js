@@ -31,6 +31,15 @@ var nosliw = function(){
 			var node = this.getNode(nodeName);
 			node.on(eventName, callBackFunction, node);
 		},
+
+		registerSetNodeDataEvent : function(nodeName, callBackFunction){
+			var node = this.getNode(nodeName);
+			var nodeData = node.getData();
+			if(nodeData!=undefined){
+				callBackFunction.call(node, this.NODEEVENT_SETDATA, nodeName);
+			}
+			this.registerNodeEvent(nodeName, this.NODEEVENT_SETDATA, callBackFunction)
+		},
 		
 		triggerNodeEvent : function(nodeName, eventName){
 			this.getNode(nodeName).trigger(eventName, nodeName, eventName);
@@ -41,8 +50,6 @@ var nosliw = function(){
 		},
 		
 		initModules : function(){
-			//set logging object
-			nosliw.logging = loc_out.getNodeData("service.loggingservice.createLoggingService")();
 
 			//execute start callback method of each module 
 			for(var i in loc_modules){
@@ -146,6 +153,9 @@ var nosliw = function(){
 	};
 	
 	loc_out.NODEEVENT_SETDATA = "setData";
+	
+	//set logging object
+	loc_out.registerSetNodeDataEvent("service.loggingservice.createLoggingService", function(){	nosliw.logging = this.getData()();	});
 	
 	return loc_out;
 }();

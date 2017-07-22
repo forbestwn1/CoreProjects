@@ -283,28 +283,22 @@ var node_createExpressionService = function(){
 //Register Node by Name
 packageObj.createChildNode("createExpressionService", node_createExpressionService); 
 
-	nosliw.registerNodeEvent("resource.utility", nosliw.NODEEVENT_SETDATA, function(){node_resourceUtility = this.getData()})
+	nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
+	nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
+	nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+	nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+	nosliw.registerSetNodeDataEvent("constant.COMMONTRIBUTECONSTANT", function(){node_COMMONTRIBUTECONSTANT = this.getData();});
+	nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+	nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+	nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+	nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
+	nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService", function(){node_createServiceRequestInfoService = this.getData();});
+	nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
+	nosliw.registerSetNodeDataEvent("expression.entity.OperationContext", function(){node_OperationContext = this.getData();});
+	nosliw.registerSetNodeDataEvent("expression.entity.OperationParm", function(){node_OperationParm = this.getData();});
+	nosliw.registerSetNodeDataEvent("expression.entity.OperationParms", function(){node_OperationParms = this.getData();});
+	nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
+	nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
+	nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 
-	var module = {
-		start : function(packageObj){
-//			node_resourceUtility = packageObj.getNodeData("resource.utility");
-			node_buildServiceProvider = packageObj.getNodeData("request.buildServiceProvider");
-			node_requestServiceProcessor = packageObj.getNodeData("request.requestServiceProcessor");
-			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
-			node_COMMONTRIBUTECONSTANT = packageObj.getNodeData("constant.COMMONTRIBUTECONSTANT");
-			node_createServiceRequestInfoSequence = packageObj.getNodeData("request.request.createServiceRequestInfoSequence");
-			node_ServiceInfo = packageObj.getNodeData("common.service.ServiceInfo");
-			node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
-			node_createServiceRequestInfoSet = packageObj.getNodeData("request.request.createServiceRequestInfoSet");
-			node_createServiceRequestInfoService = packageObj.getNodeData("request.request.createServiceRequestInfoService");
-			node_createServiceRequestInfoSimple = packageObj.getNodeData("request.request.createServiceRequestInfoSimple");
-			node_OperationContext = packageObj.getNodeData("expression.entity.OperationContext");
-			node_OperationParm = packageObj.getNodeData("expression.entity.OperationParm");
-			node_OperationParms = packageObj.getNodeData("expression.entity.OperationParms");
-			node_DependentServiceRequestInfo = packageObj.getNodeData("request.request.entity.DependentServiceRequestInfo");  
-			node_expressionUtility = packageObj.getNodeData("expression.utility");
-			node_namingConvensionUtility = packageObj.getNodeData("common.namingconvension.namingConvensionUtility");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 })(packageObj);

@@ -67,6 +67,16 @@ var node_createRuntime = function(name){
 		loc_resourceManager = node_createResourceManager();
 		loc_resourceService = node_createResourceService(loc_resourceManager);
 		loc_expressionService = node_createExpressionService();
+		
+		//set sortcut for object
+		 nosliw.runtime = loc_out;
+		 nosliw.generateId = loc_out.getIdService().generateId;
+		 
+		 //create node for runtime object
+		 nosliw.createNode("runtime", loc_out);
+		 
+		 nosliw.triggerNodeEvent("runtime", "active");
+		
 		return true;
 	};
 	
@@ -78,8 +88,6 @@ var node_createRuntime = function(name){
 
 
 //*******************************************   End Node Definition  ************************************** 	
-//Register Node by Name
-packageObj.createChildNode("createRuntime", node_createRuntime); 
 
 var module = {
 		start : function(packageObj){
@@ -91,8 +99,12 @@ var module = {
 			node_createResourceManager = packageObj.getNodeData("resource.createResourceManager");
 			node_createExpressionService = packageObj.getNodeData("expression.service.createExpressionService");
 			node_createResourceService = packageObj.getNodeData("resource.createResourceService");
-			node_runtimeGateway = packageObj.getNodeData(node_COMMONCONSTANT.RUNTIME_LANGUAGE_JS_GATEWAY);
+			node_runtimeGateway = packageObj.getNodeData("runtime.gateway");
 		}
 };
 nosliw.registerModule(module, packageObj);
+
+//Register Node by Name
+packageObj.createChildNode("createRuntime", node_createRuntime); 
+
 })(packageObj);
