@@ -70,15 +70,9 @@ nosliw.createNode("runtime.name", "browser");
 
 requestLoadLibraryResources(libResources, function(){
 	
-//	  nosliw.createNode(nosliw.getNodeData("constant.COMMONCONSTANT").RUNTIME_LANGUAGE_JS_GATEWAY, gateway);  
-
-
 	  nosliw.initModules();
 
 	  var runtime = nosliw.getNodeData("runtime.createRuntime")(nosliw.runtimeName);
 	  runtime.interfaceObjectLifecycle.init();
 
-//	  var event = new CustomEvent("runtime.start", { "detail": "Example of an event" });
-//	  document.dispatchEvent(event);
-	  
 });

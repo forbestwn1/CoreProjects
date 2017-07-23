@@ -18,7 +18,7 @@ var node_createConfiguresBase = function(baseConfigures){
 	
 	var loc_out = {
 			createConfigures : function(configures){
-				return loc_baseConfigures.mergeWith(createConfigures(configures));
+				return loc_baseConfigures.mergeWith(node_createConfigures(configures));
 			},
 			
 			getBaseConfigures : function(){
@@ -65,12 +65,12 @@ var node_createConfigures = function(configures){
 		},
 		
 		mergeWith : function(configures){
-			var configuresObj = basicUtilityNode.getData().mergeObjects(loc_configures, configures.prv_getConfiguresObject());
-			return createConfigures(configuresObj);
+			var configuresObj = node_basicUtility.mergeObjects(loc_configures, configures.prv_getConfiguresObject());
+			return node_createConfigures(configuresObj);
 		},
 	};
 	
-	loc_out = node_makeObjectWithTypeNode(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_CONFIGURES);
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_CONFIGURES);
 	
 	return loc_out;
 };
@@ -83,9 +83,9 @@ packageObj.createChildNode("createConfigures", node_createConfigures);
 
 	var module = {
 		start : function(packageObj){
-			node_basicUtilityNode = packageObj.getNodeData("common.utility.basicUtility");
+			node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
 			node_getObjectType = packageObj.getNodeData("common.objectwithtype.getObjectType");
-			node_makeObjectWithTypeNode = packageObj.getNodeData("common.objectwithtype.makeObjectWithType");
+			node_makeObjectWithType = packageObj.getNodeData("common.objectwithtype.makeObjectWithType");
 			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
 		}
 	};

@@ -196,8 +196,6 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", function(){node_makeObjectWithName = this.getData();});
 
 
-
-
 //Register Node by Name
 packageObj.createChildNode("createRemoteService", node_createRemoteService); 
 

@@ -8,7 +8,5 @@ nosliw.registerNodeEvent("runtime.createRuntime", nosliw.NODEEVENT_SETDATA, func
 	  var runtime = nosliw.getNodeData("runtime.createRuntime")("rhino");
 	  runtime.interfaceObjectLifecycle.init();
 
-//	  nosliw.generateId = runtime.getIdService().generateId;
-
 });
 

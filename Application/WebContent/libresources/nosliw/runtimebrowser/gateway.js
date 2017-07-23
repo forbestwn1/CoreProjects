@@ -56,14 +56,13 @@ var node_gateway = function(){
 	
 
 //*******************************************   End Node Definition  ************************************** 	
-//Register Node by Name
-packageObj.createChildNode("gateway", node_gateway); 
+nosliw.registerSetNodeDataEvent("runtime", function(){
+	nosliw.runtime.getRemoteService().registerSyncTaskConfigure("gateway");
+});
 
-	var module = {
-		start : function(packageObj){
-			
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 
+	
+	//Register Node by Name
+	packageObj.createChildNode("gateway", node_gateway); 
+	
 })(packageObj);
