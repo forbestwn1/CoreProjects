@@ -29,7 +29,14 @@ var nosliw = function(){
 		//callBackFunction(eventName, nodeName), this : node
 		registerNodeEvent : function(nodeName, eventName, callBackFunction){
 			var node = this.getNode(nodeName);
-			node.on(eventName, callBackFunction, node);
+			if(eventName=="all"){
+				node.on(eventName, function(eventName, eventName, nodeName){
+					callBackFunction.call(node, event, nodeName);
+				}, node);
+			}
+			else{
+				node.on(eventName, callBackFunction, node);
+			}
 		},
 
 		registerSetNodeDataEvent : function(nodeName, callBackFunction){
@@ -42,7 +49,7 @@ var nosliw = function(){
 		},
 		
 		triggerNodeEvent : function(nodeName, eventName){
-			this.getNode(nodeName).trigger(eventName, nodeName, eventName);
+			this.getNode(nodeName).trigger(eventName, eventName, nodeName);
 		},
 		
 		registerModule : function(module, packageObj){

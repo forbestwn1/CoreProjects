@@ -3,6 +3,11 @@ var packageObj = library;
 
 (function(packageObj){
 //get used node
+var node_createConfiguresBase;
+var node_remoteServiceUtility;
+var node_COMMONCONSTANT;
+var node_CONSTANT;
+var node_makeObjectWithLifecycle;
 //*******************************************   Start Node Definition  ************************************** 	
 
 
@@ -34,7 +39,7 @@ var node_createRemoteService = function(){
 	var loc_timerProcessor = undefined;
 	
 	//create default configure object for sync task  
-	var loc_syncTaskDefaultConfigure = createConfiguresBase(nosliwRemoteServiceUtility.createRemoteServiceConfigures(NOSLIWCOMMONCONSTANT.CONS_SERVICENAME_SERVICE, NOSLIWCOMMONCONSTANT.CONS_SERVICECOMMAND_GROUPREQUEST));
+	var loc_syncTaskDefaultConfigure = node_createConfiguresBase(node_remoteServiceUtility.createRemoteServiceConfigures(node_COMMONCONSTANT.CONS_SERVICENAME_SERVICE, node_COMMONCONSTANT.CONS_SERVICECOMMAND_GROUPREQUEST));
 	
 	//predefined sync task configure, so that we don't need to create it everytime, just get it by name
 	var loc_syncTaskConfigures = {};
@@ -119,21 +124,6 @@ var node_createRemoteService = function(){
 		}		
 	};
 	
-	var loc_resourceLifecycleObj = {};
-	loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT"] = function(){
-//		loc_timerProcessor = setInterval(loc_timerProcess, 3000);
-	};
-	loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_SUSPEND"] = function(){
-	};
-	loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_RESUME"] = function(){
-	};
-	loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY"] = function(){
-		clearInterval(loc_timerProcessor);
-	};
-	loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_DEACTIVE"] = function(){
-	};
-	
-	
 	var loc_out = {
 		ovr_getResourceLifecycleObject : function(){	return loc_resourceLifecycleObj;	},
 
@@ -176,20 +166,39 @@ var node_createRemoteService = function(){
 		removeServiceTask : function(id){},
 	};
 	
+	var lifecycleCallback = {};
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(){
+//		loc_timerProcessor = setInterval(loc_timerProcess, 3000);
+	};
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_SUSPEND] = function(){
+	};
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_RESUME] = function(){
+	};
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
+		clearInterval(loc_timerProcessor);
+	};
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DEACTIVE] = function(){
+	};
+	
 	//append resource life cycle method to out obj
-	loc_out = nosliwLifecycleUtility.makeResourceObject(loc_out, loc_moduleName);
+	node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
+	node_makeObjectWithName(loc_out, loc_moduleName);
 
 	return loc_out;
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+nosliw.registerSetNodeDataEvent("common.setting.createConfiguresBase", function(){node_createConfiguresBase = this.getData();});
+nosliw.registerSetNodeDataEvent("remote.utility", function(){node_remoteServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", function(){node_makeObjectWithName = this.getData();});
+
+
+
+
 //Register Node by Name
 packageObj.createChildNode("createRemoteService", node_createRemoteService); 
-
-	var module = {
-		start : function(packageObj){
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 
 })(packageObj);

@@ -47,7 +47,7 @@ var node_createConfigures = function(configures){
 		}
 	}
 	else if(_.isObject(configures)){
-		if(getObjectTypeNode.getData()(configures)===node_CONSTANT.TYPEDOBJECT_TYPE_CONFIGURES){
+		if(node_getObjectType(configures)===node_CONSTANT.TYPEDOBJECT_TYPE_CONFIGURES){
 			return configures;
 		}
 		else{
@@ -70,7 +70,7 @@ var node_createConfigures = function(configures){
 		},
 	};
 	
-	loc_out = makeObjectWithTypeNode.getData()(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_CONFIGURES);
+	loc_out = node_makeObjectWithTypeNode(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_CONFIGURES);
 	
 	return loc_out;
 };
@@ -78,14 +78,14 @@ var node_createConfigures = function(configures){
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createChildNode("createConfiguresBase", node_createConfiguresBase); 
+packageObj.createChildNode("createConfiguresBase", node_createConfiguresBase);  
 packageObj.createChildNode("createConfigures", node_createConfigures); 
 
 	var module = {
 		start : function(packageObj){
 			node_basicUtilityNode = packageObj.getNodeData("common.utility.basicUtility");
+			node_getObjectType = packageObj.getNodeData("common.objectwithtype.getObjectType");
 			node_makeObjectWithTypeNode = packageObj.getNodeData("common.objectwithtype.makeObjectWithType");
-			node_getObjectTypeNode = packageObj.getNodeData("common.objectwithtype.getObjectType");
 			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
 		}
 	};

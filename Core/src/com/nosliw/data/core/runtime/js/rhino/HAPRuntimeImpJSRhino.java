@@ -207,7 +207,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	 * @param parent
 	 * @return
 	 */
-	private Scriptable initEsencialScope(Context context, Scriptable parent){
+	private Scriptable init(Context context, Scriptable parent){
 		Scriptable out = context.initStandardObjects(null);
 		
 		//library
@@ -223,7 +223,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		}
 		this.loadResources(resourceIdInfos, out, context);
 		
-		
+		//set gateway
         Object wrappedRuntime = Context.javaToJS(this, out);
         NativeObject nosliwObj = (NativeObject)out.get("nosliw", out);
         Function createNodeFun = (Function)nosliwObj.get("createNode");
@@ -301,13 +301,13 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		
 //		this.m_context = Context.enter();
 	    try {
-	        this.m_scope = this.initEsencialScope(m_context, null);
+	        this.m_scope = this.init(m_context, null);
 
 //	        System.setIn(dbg.getIn());
 //	        System.setOut(dbg.getOut());
 //	        System.setErr(dbg.getErr());
 	        
-		    dbg.setBreakOnEnter(true);
+//		    dbg.setBreakOnEnter(true);
 		    dbg.setBreakOnExceptions(true);
 		    dbg.setScope(m_scope);
 		    dbg.setSize(1200, 800);
