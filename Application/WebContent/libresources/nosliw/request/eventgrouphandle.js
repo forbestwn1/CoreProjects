@@ -124,16 +124,14 @@ var node_createRequestEventGroupHandler = function(eventHandler, registerElement
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
+
+
 //Register Node by Name
 packageObj.createChildNode("createRequestEventGroupHandler", node_createRequestEventGroupHandler); 
-
-	var module = {
-		start : function(packageObj){
-			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-			node_eventUtility = packageObj.getNodeData("common.event.utility");
-			node_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 
 })(packageObj);

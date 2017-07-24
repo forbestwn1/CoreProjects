@@ -351,20 +351,18 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+
+
 //Register Node by Name
 packageObj.createChildNode("createServiceRequestInfoCommon", node_createServiceRequestInfoCommon); 
-
-	var module = {
-		start : function(packageObj){
-			node_makeObjectWithType = packageObj.getNodeData("common.objectwithtype.makeObjectWithType");
-			node_getObjectType = packageObj.getNodeData("common.objectwithtype.getObjectType");
-			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-			node_requestUtility = packageObj.getNodeData("request.utility");
-			node_eventUtility = packageObj.getNodeData("common.event.utility");
-			node_requestUtility = packageObj.getNodeData("request.utility");
-			node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 
 })(packageObj);

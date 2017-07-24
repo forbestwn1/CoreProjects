@@ -27,13 +27,10 @@ var node_createIdService = function(){
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+
 //Register Node by Name
 packageObj.createChildNode("createIdService", node_createIdService); 
-
-	var module = {
-		start : function(packageObj){
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 
 })(packageObj);

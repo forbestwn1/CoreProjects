@@ -278,13 +278,10 @@ var COMMONCONSTANT=
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+
 //Register Node by Name
 packageObj.createChildNode("COMMONCONSTANT", COMMONCONSTANT); 
-
-	var module = {
-		start : function(packageObj){
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 
 })(packageObj);

@@ -65,18 +65,16 @@ node_OperationContext.prototype = {
 
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
+
+
 //Register Node by Name
 packageObj.createChildNode("OperationParm", node_OperationParm); 
 packageObj.createChildNode("OperationParms", node_OperationParms); 
 packageObj.createChildNode("OperationContext", node_OperationContext); 
-
-	var module = {
-		start : function(packageObj){
-			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
-			node_resourceUtility = packageObj.getNodeData("resource.utility");
-			node_expressionUtility = packageObj.getNodeData("expression.utility");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 
 })(packageObj);

@@ -79,14 +79,11 @@ var parseSegment = function(path, sep){
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+
 //Register Node by Name
 packageObj.createChildNode("parseSegment", parseSegment); 
-
-	var module = {
-		start : function(packageObj){
-			node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
-
+	
 })(packageObj);

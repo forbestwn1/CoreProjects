@@ -31,15 +31,13 @@ var node_buildServiceProvider = function(object, moduleName){
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("request.entity.Requester", function(){node_Requester = this.getData();});
+
+
 //Register Node by Name
 packageObj.createChildNode("buildServiceProvider", node_buildServiceProvider); 
-
-var module = {
-		start : function(packageObj){
-			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-			node_Requester = packageObj.getNodeData("request.entity.Requester");
-		}
-};
-nosliw.registerModule(module, packageObj);
 
 })(packageObj);

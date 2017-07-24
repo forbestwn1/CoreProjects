@@ -36,14 +36,11 @@ var node_createServiceParms = function(){
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+
 //Register Node by Name
 packageObj.createChildNode("ServiceInfo", node_ServiceInfo); 
 packageObj.createChildNode("createServiceParms", node_createServiceParms); 
-
-var module = {
-		start : function(packageObj){
-		}
-};
-nosliw.registerModule(module, packageObj);
 
 })(packageObj);

@@ -65,14 +65,11 @@ var node_namingConvensionUtility = function(){
 }();
 
 //*******************************************   End Node Definition  ************************************** 	
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+
 //Register Node by Name
 packageObj.createChildNode("namingConvensionUtility", node_namingConvensionUtility); 
 
-var module = {
-	start : function(packageObj){
-		node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
-		node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
-	}
-};
-nosliw.registerModule(module, packageObj);
 })(packageObj);

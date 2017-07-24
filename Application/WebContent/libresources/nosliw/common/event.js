@@ -102,7 +102,7 @@ var packageObj = library.getChildPackage("event");
  * however, backbone pollute original object by adding many new attribute
  * therefore, we add an attribute to original object, and that attribute is the source and listener object for backbone
  */
-var node_eventUtility = 
+var node_utility = 
 	{
 		/*
 		 * trigger event on source
@@ -136,17 +136,13 @@ var node_eventUtility =
 
 
 //*******************************************   End Node Definition  ************************************** 	
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
+
 //Register Node by Name
 packageObj.createChildNode("getEventObject", node_getEventObject); 
-packageObj.createChildNode("utility", node_eventUtility); 
-
-var module = {
-	start : function(packageObj){
-		node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-		node_buildInterface = packageObj.getNodeData("common.interface.buildInterface");
-		node_getInterface = packageObj.getNodeData("common.interface.getInterface");
-	}
-};
-nosliw.registerModule(module, packageObj);
+packageObj.createChildNode("utility", node_utility); 
 
 })(packageObj);

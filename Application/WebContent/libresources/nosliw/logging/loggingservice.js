@@ -75,9 +75,11 @@ var node_createLoggingService = function(){
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("runtime.name", function(){node_runtimeName = this.getData();});
+
 //Register Node by Name
 packageObj.createChildNode("createLoggingService", node_createLoggingService); 
-
-nosliw.registerSetNodeDataEvent("runtime.name", function(){node_runtimeName = this.getData();});
 
 })(packageObj);

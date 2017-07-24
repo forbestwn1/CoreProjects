@@ -206,14 +206,12 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+
+
 //Register Node by Name
 packageObj.createChildNode("createRemoteSyncTask", node_createRemoteSyncTask); 
-
-	var module = {
-		start : function(packageObj){
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 
 })(packageObj);
 

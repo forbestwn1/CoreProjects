@@ -187,17 +187,18 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		for(HAPResourceInfo resourceIdInfo : resourcesIdInfo){ resourceIds.add(resourceIdInfo.getId());  }
 		List<HAPResource> resources = this.getResourceManager().getResources(resourceIds);
 
-		//organize resource infos
+		//organize resource infos by id
 		Map<HAPResourceId, HAPResourceInfo> resourcesInfo = new LinkedHashMap<HAPResourceId, HAPResourceInfo>();
 		for(HAPResourceInfo resourceInfo : resourcesIdInfo){ resourcesInfo.put(resourceInfo.getId(), resourceInfo);  }
-		
-		//Load all resources to rhino runtime
+
+		//build scripts info
 		List<HAPJSScriptInfo> scriptsInfo = new ArrayList<HAPJSScriptInfo>();
 		for(HAPResource resource : resources){
 			HAPResourceInfo resourceInfo = resourcesInfo.get(resource.getId());
 			scriptsInfo.addAll(HAPRuntimeJSScriptUtility.buildScriptForResource(resourceInfo, resource));
 		}
 		
+		//Load all resources to rhino runtime
 		for(HAPJSScriptInfo scriptInfo : scriptsInfo){  this.loadScript(scriptInfo, context, scope);  }
 	}
 	

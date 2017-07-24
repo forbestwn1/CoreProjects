@@ -62,20 +62,17 @@ var node_utility =
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONTRIBUTECONSTANT", function(){node_COMMONTRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("expression.entity.OperationContext", function(){node_OperationContext = this.getData();});
+nosliw.registerSetNodeDataEvent("expression.entity.OperationParm", function(){node_OperationParm = this.getData();});
+nosliw.registerSetNodeDataEvent("expression.entity.OperationParms", function(){node_OperationParms = this.getData();});
+
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 
-
-	var module = {
-		start : function(packageObj){
-			node_COMMONTRIBUTECONSTANT = packageObj.getNodeData("constant.COMMONTRIBUTECONSTANT");
-			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
-			node_namingConvensionUtility = packageObj.getNodeData("common.namingconvension.namingConvensionUtility"); 
-			node_resourceUtility = packageObj.getNodeData("resource.utility");
-			node_OperationContext = packageObj.getNodeData("expression.entity.OperationContext");
-			node_OperationParm = packageObj.getNodeData("expression.entity.OperationParm");
-			node_OperationParms = packageObj.getNodeData("expression.entity.OperationParms");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 
 })(packageObj);

@@ -3,6 +3,7 @@ var packageObj = library;
 
 (function(packageObj){
 //get used node
+var node_createConfigures;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	
@@ -56,13 +57,23 @@ var node_gateway = function(){
 	
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("common.setting.createConfigures", function(){node_createConfigures = this.getData();});
+
 nosliw.registerSetNodeDataEvent("runtime", function(){
+	node_createConfigures({
+		url : "gateway",
+		dataTye : "script",
+		contentType: "application/json; charset=utf-8"
+	});
+	
+	
 	nosliw.runtime.getRemoteService().registerSyncTaskConfigure("gateway");
 });
 
-
 	
-	//Register Node by Name
-	packageObj.createChildNode("gateway", node_gateway); 
+//Register Node by Name
+packageObj.createChildNode("gateway", node_gateway); 
 	
 })(packageObj);

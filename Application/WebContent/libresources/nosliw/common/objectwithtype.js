@@ -31,19 +31,16 @@ var node_getObjectType = function(object){
 	
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+
 //Register Node by Name
 packageObj.createChildNode("makeObjectWithType", node_makeObjectWithType); 
 packageObj.createChildNode("getObjectType", node_getObjectType); 
-
-	var module = {
-		start : function(packageObj){
-			node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
-			node_buildInterface = packageObj.getNodeData("common.interface.buildInterface");
-			node_getInterface = packageObj.getNodeData("common.interface.getInterface");
-			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 
 })(packageObj);
 

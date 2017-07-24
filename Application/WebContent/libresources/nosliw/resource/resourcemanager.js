@@ -50,15 +50,12 @@ var node_createResourceManager = function(){
 };	
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("resource.entity.Resource", function(){node_Resource = this.getData();});
+nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
+
 //Register Node by Name
 packageObj.createChildNode("createResourceManager", node_createResourceManager); 
-
-	var module = {
-		start : function(packageObj){
-			node_Resource = packageObj.getNodeData("resource.entity.Resource");
-			node_resourceUtility = packageObj.getNodeData("resource.utility");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 
 })(packageObj);

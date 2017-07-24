@@ -147,13 +147,10 @@ var node_CONSTANT=
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+
 //Register Node by Name
 packageObj.createChildNode("CONSTANT", node_CONSTANT); 
-
-	var module = {
-		start : function(packageObj){
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 
 })(packageObj);

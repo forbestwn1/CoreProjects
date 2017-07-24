@@ -77,18 +77,15 @@ var node_createConfigures = function(configures){
 
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+
 //Register Node by Name
 packageObj.createChildNode("createConfiguresBase", node_createConfiguresBase);  
 packageObj.createChildNode("createConfigures", node_createConfigures); 
-
-	var module = {
-		start : function(packageObj){
-			node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
-			node_getObjectType = packageObj.getNodeData("common.objectwithtype.getObjectType");
-			node_makeObjectWithType = packageObj.getNodeData("common.objectwithtype.makeObjectWithType");
-			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
-
+	
 })(packageObj);

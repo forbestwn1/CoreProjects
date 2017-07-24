@@ -77,13 +77,10 @@ var node_requestServiceProcessor = function(){
 }();
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+
 //Register Node by Name
 packageObj.createChildNode("requestServiceProcessor", node_requestServiceProcessor); 
-
-	var module = {
-		start : function(packageObj){
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 
 })(packageObj);

@@ -188,6 +188,8 @@ var node_createRemoteService = function(){
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
 nosliw.registerSetNodeDataEvent("common.setting.createConfiguresBase", function(){node_createConfiguresBase = this.getData();});
 nosliw.registerSetNodeDataEvent("remote.utility", function(){node_remoteServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});

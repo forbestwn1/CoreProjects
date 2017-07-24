@@ -73,13 +73,11 @@ var node_basicUtility =
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+
+
 //Register Node by Name
 packageObj.createChildNode("basicUtility", node_basicUtility); 
-
-	var module = {
-		start : function(packageObj){
-		}
-	};
-	nosliw.registerModule(module, packageObj);
-
+	
 })(packageObj);

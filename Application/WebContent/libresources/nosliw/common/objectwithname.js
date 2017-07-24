@@ -25,16 +25,13 @@ var packageObj = library.getChildPackage("objectwithname");
 		
 
 //*******************************************   End Node Definition  ************************************** 	
-	//Register Node by Name
-	packageObj.createChildNode("makeObjectWithName", node_makeObjectWithName); 
-	packageObj.createChildNode("getObjectName", node_getObjectName); 
 
-	var module = {
-		start : function(packageObj){
-			node_buildInterface = packageObj.getNodeData("common.interface.buildInterface");
-			node_getInterface = packageObj.getNodeData("common.interface.getInterface");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
+	
+//Register Node by Name
+packageObj.createChildNode("makeObjectWithName", node_makeObjectWithName); 
+packageObj.createChildNode("getObjectName", node_getObjectName); 
 
 })(packageObj);

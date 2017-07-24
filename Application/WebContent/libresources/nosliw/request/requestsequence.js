@@ -192,18 +192,16 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon", function(){node_createServiceRequestInfoCommon = this.getData();});
+nosliw.registerSetNodeDataEvent("request.entity.ServiceRequestExecuteInfo", function(){node_ServiceRequestExecuteInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+
+
 //Register Node by Name
 packageObj.createChildNode("createServiceRequestInfoSequence", node_createServiceRequestInfoSequence); 
-
-	var module = {
-		start : function(packageObj){
-			node_requestProcessor = packageObj.getNodeData("request.requestServiceProcessor");
-			node_createServiceRequestInfoCommon = packageObj.getNodeData("request.request.createServiceRequestInfoCommon");
-			node_ServiceRequestExecuteInfo = packageObj.getNodeData("request.entity.ServiceRequestExecuteInfo");
-			node_getObjectType = packageObj.getNodeData("common.objectwithtype.getObjectType");
-			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 
 })(packageObj);

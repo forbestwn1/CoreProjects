@@ -89,20 +89,17 @@ var node_createRuntime = function(name){
 
 //*******************************************   End Node Definition  ************************************** 	
 
-var module = {
-		start : function(packageObj){
-			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
-			node_makeObjectWithName = packageObj.getNodeData("common.objectwithname.makeObjectWithName");
-			node_makeObjectWithLifecycle = packageObj.getNodeData("common.lifecycle.makeObjectWithLifecycle");
-			node_createIdService = packageObj.getNodeData("service.idservice.createIdService");
-			node_createResourceManager = packageObj.getNodeData("resource.createResourceManager");
-			node_createExpressionService = packageObj.getNodeData("expression.service.createExpressionService");
-			node_createResourceService = packageObj.getNodeData("resource.createResourceService");
-			node_runtimeGateway = packageObj.getNodeData("runtime.gateway");
-		}
-};
-nosliw.registerModule(module, packageObj);
+//populate dependency node data
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", function(){node_makeObjectWithName = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("service.idservice.createIdService", function(){node_createIdService = this.getData();});
+nosliw.registerSetNodeDataEvent("resource.createResourceManager", function(){node_createResourceManager = this.getData();});
+nosliw.registerSetNodeDataEvent("expression.service.createExpressionService", function(){node_createExpressionService = this.getData();});
+nosliw.registerSetNodeDataEvent("resource.createResourceService", function(){node_createResourceService = this.getData();});
+nosliw.registerSetNodeDataEvent("runtime.gateway", function(){node_runtimeGateway = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 
