@@ -1,6 +1,5 @@
 package com.nosliw.data.core.imp.runtime.js;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -8,6 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.imp.io.HAPDBAccess;
+import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
@@ -22,10 +22,12 @@ public class HAPResourceManagerJSOperation implements HAPResourceManager{
 	private HAPDBAccess m_dbAccess = HAPDBAccess.getInstance();
 	
 	@Override
-	public List<HAPResource> getResources(List<HAPResourceId> resourcesId) {
-		List<HAPResource> out = new ArrayList<HAPResource>();
+	public HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId) {
+		HAPLoadResourceResponse out = new HAPLoadResourceResponse();
 		for(HAPResourceId resourceId : resourcesId){
-			out.add(this.getResource(resourceId));
+			HAPResource resource = this.getResource(resourceId);
+			if(resource!=null)  out.addLoadedResource(resource);
+			else out.addFaildResourceId(resourceId);
 		}
 		return out;
 	}
@@ -33,12 +35,13 @@ public class HAPResourceManagerJSOperation implements HAPResourceManager{
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId) {
 		HAPResourceIdOperation resourceIdOperation = new HAPResourceIdOperation(resourceId);
-		HAPResourceDataJSOperationImp helperResource = this.m_dbAccess.getJSOperation(resourceIdOperation.getOperationId());
+		HAPResourceDataJSOperationImp operationResource = this.m_dbAccess.getJSOperation(resourceIdOperation.getOperationId());
+		if(operationResource==null)  return null;
 		
 		HAPOperation operationInfo = this.m_dbAccess.getOperationInfoByName(resourceIdOperation.getOperationId(), resourceIdOperation.getOperationId().getOperation());
 		HAPInfoImpSimple info = new HAPInfoImpSimple(); 
 		info.setValue(INFO_OPERATIONINFO, operationInfo);
 		
-		return new HAPResource(resourceId, helperResource, info);
+		return new HAPResource(resourceId, operationResource, info);
 	}
 }

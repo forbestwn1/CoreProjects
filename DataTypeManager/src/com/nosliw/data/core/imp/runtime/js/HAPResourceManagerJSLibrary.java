@@ -9,6 +9,7 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManager;
@@ -21,11 +22,13 @@ public class HAPResourceManagerJSLibrary implements HAPResourceManager{
 	private String m_baseFolder = "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/Application/WebContent/libresources";
 	
 	@Override
-	public List<HAPResource> getResources(List<HAPResourceId> resourcesId) {
-		List<HAPResource> out = new ArrayList<HAPResource>();
+	public HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId) {
+		HAPLoadResourceResponse out = new HAPLoadResourceResponse();
 		
 		for(HAPResourceId resourceId : resourcesId){
-			out.add(this.getResource(resourceId));
+			HAPResource resource = this.getResource(resourceId);
+			if(resource!=null)  out.addLoadedResource(resource);
+			else out.addFaildResourceId(resourceId);
 		}
 		return out;
 	}
@@ -48,6 +51,8 @@ public class HAPResourceManagerJSLibrary implements HAPResourceManager{
 		HAPJSLibraryId libraryId =  resourceLibraryId.getLibraryId();
 
 		List<File> files = this.getLibraryFileName(libraryId);
+		if(files==null || files.size()==0)   return null;
+		
 		List<URI> uris = new ArrayList<URI>();
 		for(File file : files){
 			uris.add(file.toURI());

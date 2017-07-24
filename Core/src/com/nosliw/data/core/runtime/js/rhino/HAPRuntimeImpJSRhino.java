@@ -18,6 +18,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.runtime.HAPExecuteExpressionTask;
+import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
 import com.nosliw.data.core.runtime.HAPLoadResourcesTask;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
@@ -181,25 +182,38 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	}
 	
 	//Load all resources into rhino runtime, no discovery
-	private void loadResources(List<HAPResourceInfo> resourcesIdInfo, Scriptable scope, Context context){
+	//if all success : load script, return null
+	//if any fail : not load any script, return response
+	private HAPLoadResourceResponse loadResources(List<HAPResourceInfo> resourcesIdInfo, Scriptable scope, Context context){
 		//Get all resource data
-		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
-		for(HAPResourceInfo resourceIdInfo : resourcesIdInfo){ resourceIds.add(resourceIdInfo.getId());  }
-		List<HAPResource> resources = this.getResourceManager().getResources(resourceIds);
-
 		//organize resource infos by id
 		Map<HAPResourceId, HAPResourceInfo> resourcesInfo = new LinkedHashMap<HAPResourceId, HAPResourceInfo>();
-		for(HAPResourceInfo resourceInfo : resourcesIdInfo){ resourcesInfo.put(resourceInfo.getId(), resourceInfo);  }
-
-		//build scripts info
-		List<HAPJSScriptInfo> scriptsInfo = new ArrayList<HAPJSScriptInfo>();
-		for(HAPResource resource : resources){
-			HAPResourceInfo resourceInfo = resourcesInfo.get(resource.getId());
-			scriptsInfo.addAll(HAPRuntimeJSScriptUtility.buildScriptForResource(resourceInfo, resource));
+		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
+		for(HAPResourceInfo resourceInfo : resourcesIdInfo){ 
+			resourceIds.add(resourceInfo.getId());  
+			resourcesInfo.put(resourceInfo.getId(), resourceInfo);  
 		}
-		
-		//Load all resources to rhino runtime
-		for(HAPJSScriptInfo scriptInfo : scriptsInfo){  this.loadScript(scriptInfo, context, scope);  }
+
+		//Retrieve resources
+		HAPLoadResourceResponse loadResourceResponse = this.getResourceManager().getResources(resourceIds);
+
+		if(loadResourceResponse.getFailedResourcesId().size()==0){
+			//if all loaded, build script, return null
+			//build scripts info
+			List<HAPJSScriptInfo> scriptsInfo = new ArrayList<HAPJSScriptInfo>();
+			for(HAPResource resource : loadResourceResponse.getLoadedResources()){
+				HAPResourceInfo resourceInfo = resourcesInfo.get(resource.getId());
+				scriptsInfo.addAll(HAPRuntimeJSScriptUtility.buildScriptForResource(resourceInfo, resource));
+			}
+			
+			//Load all resources to rhino runtime
+			for(HAPJSScriptInfo scriptInfo : scriptsInfo){  this.loadScript(scriptInfo, context, scope);  }
+			return null;
+		}
+		else{
+			//if some resources fail to load, then do not build script, just return response back
+			return loadResourceResponse;
+		}
 	}
 	
 	/**
@@ -308,7 +322,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 //	        System.setOut(dbg.getOut());
 //	        System.setErr(dbg.getErr());
 	        
-//		    dbg.setBreakOnEnter(true);
+		    dbg.setBreakOnEnter(true);
 		    dbg.setBreakOnExceptions(true);
 		    dbg.setScope(m_scope);
 		    dbg.setSize(1200, 800);

@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManager;
@@ -25,10 +26,8 @@ public class HAPResourceManagerJS implements HAPResourceManager{
 	}
 	
 	@Override
-	public List<HAPResource> getResources(List<HAPResourceId> resourcesId) {
-		List<HAPResource> out = new ArrayList<HAPResource>();
-		
-		//sort out resource by type
+	public HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId) {
+		//sort out resource by type, so that we can do bulk load resources for one type  
 		Map<String, List<HAPResourceId>> sortedResourcesId = new LinkedHashMap<String, List<HAPResourceId>>();
 		for(HAPResourceId resourceId : resourcesId){
 			String type = resourceId.getType();
@@ -40,12 +39,25 @@ public class HAPResourceManagerJS implements HAPResourceManager{
 			typedResourcesId.add(resourceId);
 		}
 
+		//load all resources according to type
+		Map<String, HAPLoadResourceResponse> resourceResponses = new LinkedHashMap<String, HAPLoadResourceResponse>();
 		for(String resourceType : sortedResourcesId.keySet()){
 			HAPResourceManager resourceMan = this.getResourceManager(resourceType);
-			List<HAPResource> reosurces = resourceMan.getResources(sortedResourcesId.get(resourceType));
-			out.addAll(reosurces);
+			resourceResponses.put(resourceType, resourceMan.getResources(sortedResourcesId.get(resourceType)));
 		}
-		
+
+		//merge all the response for different type, make sure the response follow the same squence as input
+		HAPLoadResourceResponse out = new HAPLoadResourceResponse();
+		for(HAPResourceId resourceId : resourcesId){
+			HAPLoadResourceResponse resourceResponse = resourceResponses.get(resourceId.getType());
+			HAPResource resource = resourceResponse.getLoadedResource(resourceId);
+			if(resource!=null){
+				out.addLoadedResource(resource);
+			}
+			else{
+				out.addFaildResourceId(resourceId);
+			}
+		}
 		return out;
 	}
 	
