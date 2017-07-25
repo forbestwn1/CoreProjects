@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPAttributeConstant;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 
@@ -19,8 +20,18 @@ import com.nosliw.common.utils.HAPJsonUtility;
  * 		if result code less or equal than SERVICECODE_SUCCESS, we consider the operation success
  * 		if result code more or eqal than SERVICECODE_FAIL, we consier the operation fail
  */
+@HAPEntityWithAttribute
 public class HAPServiceData extends HAPSerializableImp{
 
+	@HAPAttribute
+	public static final String SERVICEDATA_CODE = "code";
+	@HAPAttribute
+	public static final String SERVICEDATA_MESSAGE = "message";
+	@HAPAttribute
+	public static final String SERVICEDATA_DATA = "data";
+	@HAPAttribute
+	public static final String SERVICEDATA_METADATA = "metaData";
+	
 	//result code
 	private int m_code = HAPConstant.SERVICECODE_SUCCESS;
 	//result message
@@ -75,11 +86,11 @@ public class HAPServiceData extends HAPSerializableImp{
 		Map<String, Class<?>> jsonTypeMap = new LinkedHashMap<String, Class<?>>();
 		
 		//code
-		jsonMap.put(HAPAttributeConstant.SERVICEDATA_CODE, String.valueOf(this.getCode()));
-		jsonTypeMap.put(HAPAttributeConstant.SERVICEDATA_CODE, Integer.class);
+		jsonMap.put(SERVICEDATA_CODE, String.valueOf(this.getCode()));
+		jsonTypeMap.put(SERVICEDATA_CODE, Integer.class);
 		
 		//message
-		jsonMap.put(HAPAttributeConstant.SERVICEDATA_MESSAGE, this.getMessage());
+		jsonMap.put(SERVICEDATA_MESSAGE, this.getMessage());
 
 		//data
 		Object data = this.getData();
@@ -104,10 +115,10 @@ public class HAPServiceData extends HAPSerializableImp{
 				dataString = HAPJsonUtility.buildJson((Object[])data, format);
 			}
 		}
-		jsonMap.put(HAPAttributeConstant.SERVICEDATA_DATA, dataString);
+		jsonMap.put(SERVICEDATA_DATA, dataString);
 		
 		//parms
-		jsonMap.put(HAPAttributeConstant.SERVICEDATA_METADATA, HAPJsonUtility.buildMapJson(this.m_metaDatas));
+		jsonMap.put(SERVICEDATA_METADATA, HAPJsonUtility.buildMapJson(this.m_metaDatas));
 		
 		return HAPJsonUtility.buildMapJson(jsonMap, jsonTypeMap);
 	}

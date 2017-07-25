@@ -10,6 +10,7 @@ var packageObj = library.getChildPackage("request");
 	var node_eventUtility;
 	var node_requestUtility;
 	var node_basicUtility;
+	var node_errorUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -211,6 +212,22 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 				this.pri_metaData.pri_postProcessors.push(processor); 
 			},
 			
+			exectueHandlerByServiceData : function(serviceData, thisContext){
+				var resultStatus = node_errorUtility.getServiceDataStatus(serviceData);
+				switch(resultStatus){
+				case node_CONSTANT.REMOTESERVICE_RESULT_SUCCESS:
+					return this.executeSuccessHandler(serviceData.data, thisContext);
+					break;
+				case node_CONSTANT.REMOTESERVICE_RESULT_EXCEPTION:
+					return this.executeErrorHandler(serviceData, thisContext);
+					break;
+				case node_CONSTANT.REMOTESERVICE_RESULT_ERROR:
+					return this.executeExceptionHandler(serviceData, thisContext);
+					break;
+				}
+				
+			},
+			
 			executeHandler : function(type, thisContext, data){
 				if(type=="start")		return this.executeStartHandler(thisContext);
 				if(type=="success")		return this.executeSuccessHandler(data, thisContext);
@@ -360,6 +377,7 @@ nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtilit
 nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
 
 
 //Register Node by Name

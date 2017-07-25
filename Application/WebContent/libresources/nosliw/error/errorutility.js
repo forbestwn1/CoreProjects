@@ -1,23 +1,29 @@
-/**
- * 
- */
-var nosliwErrorUtility = function(){
+//get/create package
+var packageObj = library;    
+
+(function(packageObj){
+	//get used node
+	var node_CONSTANT;
+	var node_COMMONCONSTANT;
+//*******************************************   Start Node Definition  ************************************** 	
+
+var node_utility = function(){
 	var loc_out = {
 		
 			isSuccess : function(serviceData){
 				if(serviceData==undefined)  return true;
-				if(NOSLIWCOMMONCONSTANT.CONS_SERVICECODE_FAILURE > serviceData.code)  return true;
+				if(node_COMMONCONSTANT.SERVICECODE_FAILURE > serviceData.code)  return true;
 				else return false;
 			},
 		
 			isFail : function(serviceData){
-				if(nosliwErrorUtility.isSuccess(serviceData))  return false;
+				if(this.isSuccess(serviceData))  return false;
 				else return true;
 			},
 
 			createSuccessServiceData : function(){
 				var serviceData = {
-					code : 	NOSLIWCOMMONCONSTANT.CONS_SERVICECODE_FAILURE,
+					code : 	node_COMMONCONSTANT.SERVICECODE_FAILURE,
 					message : "",
 					data : {
 					},
@@ -27,7 +33,7 @@ var nosliwErrorUtility = function(){
 
 			createErrorServiceData : function(){
 				var serviceData = {
-					code : 	NOSLIWCOMMONCONSTANT.CONS_SERVICECODE_FAILURE,
+					code : 	node_COMMONCONSTANT.SERVICECODE_FAILURE,
 					message : "",
 					data : {
 					},
@@ -39,21 +45,30 @@ var nosliwErrorUtility = function(){
 			 * get result status from serviceData: success, exception, error
 			 */
 			getServiceDataStatus : function(serviceData){
-				if(nosliwErrorUtility.isSuccess(serviceData)){
-					return NOSLIWCONSTANT.REMOTESERVICE_RESULT_SUCCESS;
+				if(this.isSuccess(serviceData)){
+					return node_CONSTANT.REMOTESERVICE_RESULT_SUCCESS;
 				}
 				else{
 					var code = serviceData.code;
-					if(code>=NOSLIWCOMMONCONSTANT.CONS_SERVICECODE_EXCEPTION){
-						return NOSLIWCONSTANT.REMOTESERVICE_RESULT_EXCEPTION;
+					if(code>=node_COMMONCONSTANT.SERVICECODE_EXCEPTION){
+						return node_CONSTANT.REMOTESERVICE_RESULT_EXCEPTION;
 					}
 					else{
-						return NOSLIWCONSTANT.REMOTESERVICE_RESULT_ERROR;
+						return node_CONSTANT.REMOTESERVICE_RESULT_ERROR;
 					}
 				}
 			},
-			
 	};
 	return loc_out;
 }();
 
+//*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+
+//Register Node by Name
+packageObj.createChildNode("utility", node_utility); 
+
+})(packageObj);

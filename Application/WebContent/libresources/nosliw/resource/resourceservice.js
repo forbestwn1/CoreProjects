@@ -75,7 +75,7 @@ var node_createResourceService = function(resourceManager){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("LoadResources", {"resourcesInfo":resourceInfos}), function(requestInfo){
 			nosliw.runtime.getGateway().requestLoadResources(resourceInfos, function(serviceData){
-				out.executeSuccessHandler();
+				out.exectueHandlerByServiceData(serviceData, requestInfo);
 			});
 		}, handlers, requestInfo);
 		return out;
@@ -173,8 +173,8 @@ var node_createResourceService = function(resourceManager){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			
 			var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("DiscoverResources", {"resourcesId":resourceIds}), function(requestInfo){
-				nosliw.runtime.getGateway().requestDiscoverResources(resourceIds, function(resourcesInfo){
-					requestInfo.executeSuccessHandler(resourcesInfo);
+				nosliw.runtime.getGateway().requestDiscoverResources(resourceIds, function(serviceData){
+					out.exectueHandlerByServiceData(serviceData);
 				});
 			}, handlers, requestInfo);
 			return out;

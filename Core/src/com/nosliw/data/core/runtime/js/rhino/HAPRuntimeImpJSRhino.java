@@ -13,6 +13,7 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.tools.debugger.Main;
 
+import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -74,7 +75,8 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		try{
 			List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds); 
 			List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
-			((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(resourceInfos)});
+			HAPServiceData serviceData = HAPServiceData.createSuccessData(resourceInfos);
+			((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(serviceData)});
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -89,10 +91,18 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 			//discovery
 			List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
 			//load resources to rhino runtime
-			this.loadResources(resourceInfos, m_scope, m_context);
+			HAPLoadResourceResponse response = this.loadResources(resourceInfos, m_scope, m_context);
+
+			HAPServiceData serviceData = null;
+			if(response.isSuccess()){
+				serviceData = HAPServiceData.createSuccessData(resourceInfos);
+			}
+			else{
+				serviceData = HAPServiceData.createFailureData(response.getFailedResourcesId(), "");
+			}
 			
 			//callback with resourceInfos
-			((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(resourceInfos)});
+			((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(serviceData)});
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -105,8 +115,15 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		try{
 			List<HAPResourceInfo> resourcesInfo = HAPRhinoRuntimeUtility.rhinoResourcesInfoToResourcesInfo((NativeArray)objResourcesInfo);
 			//load resources to rhino runtime
-			this.loadResources(resourcesInfo, m_scope, m_context);
-			((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{});
+			HAPLoadResourceResponse response = this.loadResources(resourcesInfo, m_scope, m_context);
+			HAPServiceData serviceData = null;
+			if(response==null){
+				serviceData = HAPServiceData.createSuccessData();
+			}
+			else{
+				serviceData = HAPServiceData.createFailureData(response.getFailedResourcesId(), "");
+			}
+			((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(serviceData)});
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -249,6 +266,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.constant", null)));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.logging", null)));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.common", null)));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.error", null)));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.expression", null)));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.request", null)));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.id", null)));

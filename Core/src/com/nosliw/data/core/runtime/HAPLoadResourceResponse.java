@@ -34,4 +34,6 @@ public class HAPLoadResourceResponse {
 	public List<HAPResourceId> getFailedResourcesId(){ return this.m_failed; }
 	
 	public List<HAPResource> getLoadedResources(){  return this.m_loaded;  }
+	
+	public boolean isSuccess(){		return this.m_failed==null || this.m_failed.size()==0;	}
 }
