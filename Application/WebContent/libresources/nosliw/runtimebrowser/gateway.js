@@ -39,18 +39,31 @@ var node_gateway = function(){
 		 * @param callBackFunction (nothing)
 		 */
 		requestLoadResources : function(resourcesInfo, callBackFunction){
-			var scriptType = requestInfo.getParmData('type');
-			var scriptInfo = encodeURI(requestInfo.getParmData('info'));
-
-			var url = "http://localhost:8080/Application/loadResource?resources="+resources;
-
-			  var script = document.createElement('script');
-			  script.setAttribute('src', url);
-			  script.setAttribute('type', 'text/javascript');
-
-			  script.onload = callBackFunction;
-			  script.onreadystatechange = callBackFunction;
-			  document.getElementsByTagName("head")[0].appendChild(script);
+			
+			var remoteServiceTask = new node_RemoteServiceTask("gateway", service, {
+				success : function(data){
+					_.each(data, function(resourceLoaded){
+						var resourceInfo = resourceLoaded.resourceInfo;
+						var resource = resourceLoaded.resource;
+						switch(resource.type)
+						{
+						case library:
+							break
+						default : 
+							break;
+						}
+					}, this);
+				},
+				error : function(){
+					
+				},
+				exception : function(){
+					
+				}
+			}, requestInfo, setting);
+			
+			nosliw.runtime.getRemoteService().addServiceTask(remoteServiceTask);
+			
 		},
 	};
 }();	
@@ -61,13 +74,11 @@ var node_gateway = function(){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("common.setting.createConfigures", function(){node_createConfigures = this.getData();});
 
-nosliw.registerSetNodeDataEvent("runtime", function(){
+nosliw.registerSetNodeDataEvent("gateway", function(){
 	node_createConfigures({
 		url : "gateway",
-		dataTye : "script",
 		contentType: "application/json; charset=utf-8"
 	});
-	
 	
 	nosliw.runtime.getRemoteService().registerSyncTaskConfigure("gateway");
 });

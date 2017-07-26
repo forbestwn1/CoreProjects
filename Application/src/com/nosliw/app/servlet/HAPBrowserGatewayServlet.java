@@ -17,7 +17,6 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.js.HAPResourceDataJSLibrary;
@@ -52,7 +51,7 @@ public class HAPBrowserGatewayServlet  extends HttpServlet{
 				for(int i=0; i<libraryIdsArray.length(); i++){
 					resourceIds.add(new HAPResourceIdJSLibrary(libraryIdsArray.getString(i)));
 				}
-				List<HAPResource> resources = this.getRuntime().getResourceManager().getResources(resourceIds);
+				List<HAPResource> resources = this.getRuntime().getResourceManager().getResources(resourceIds).getLoadedResources();
 				List<String> fileNames = new ArrayList<String>();
 				for(HAPResource resource : resources){
 					List<URI> uris = ((HAPResourceDataJSLibrary)resource.getResourceData()).getURIs();
