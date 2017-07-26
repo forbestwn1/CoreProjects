@@ -23,7 +23,6 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 
 	private static final long serialVersionUID = 3449216679929442927L;
 
-	
 	@HAPAttribute
 	public static final String REQUEST_LOADRESOURCES = "requestLoadResources";
 	@HAPAttribute

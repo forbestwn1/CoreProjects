@@ -74,9 +74,20 @@ var node_createResourceService = function(resourceManager){
 	var loc_getLoadResourcesRequest = function(resourceInfos, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("LoadResources", {"resourcesInfo":resourceInfos}), function(requestInfo){
-			nosliw.runtime.getGateway().requestLoadResources(resourceInfos, function(serviceData){
-				out.exectueHandlerByServiceData(serviceData, requestInfo);
-			});
+			nosliw.runtime.getGateway().requestLoadResources(resourceInfos, 
+				{
+					success : function(requestInfo, resourceInfos){
+						out.executeSuccessHandler();
+					},
+					error : function(requestInfo, serviceData){
+						out.executeErrorHandler(serviceData);
+					},
+					exception : function(requestInfo, serviceData){
+						out.executeExceptionHandler(serviceData);
+					}
+				}
+			
+			);
 		}, handlers, requestInfo);
 		return out;
 		
@@ -173,9 +184,16 @@ var node_createResourceService = function(resourceManager){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			
 			var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("DiscoverResources", {"resourcesId":resourceIds}), function(requestInfo){
-				nosliw.runtime.getGateway().requestDiscoverResources(resourceIds, function(serviceData){
-					out.exectueHandlerByServiceData(serviceData);
-				});
+				nosliw.runtime.getGateway().requestDiscoverResources(resourceIds, 
+					{
+						success : function(requestInfo, resourceInfos){
+							out.executeSuccessHandler(resourceInfos);
+						},
+						exception : function(requestInfo, serviceData){
+							
+						}
+					}
+				);
 			}, handlers, requestInfo);
 			return out;
 		},

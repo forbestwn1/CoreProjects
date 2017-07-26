@@ -25,7 +25,7 @@ var requestLoadLibraryResources = function(resourceIds, callBackFunction){
 	};
 	
 	$.ajax({
-		url : "gateway",
+		url : "loadlib",
 		type : "POST",
 		dataType: "json",
 		contentType: "application/json; charset=utf-8",

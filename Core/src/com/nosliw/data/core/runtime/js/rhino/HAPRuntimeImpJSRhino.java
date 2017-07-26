@@ -71,12 +71,12 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 
 	//gateway callback method
 	@Override
-	public void requestDiscoverResources(Object objResourceIds, Object callBackFunction){
+	public void requestDiscoverResources(Object objResourceIds, Object handlers){
 		try{
 			List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds); 
 			List<HAPResourceInfo> resourceInfos = this.getResourceDiscovery().discoverResource(resourceIds);
 			HAPServiceData serviceData = HAPServiceData.createSuccessData(resourceInfos);
-			((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(serviceData)});
+			HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_context, m_scope);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -85,7 +85,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	
 	//gateway callback method
 	@Override
-	public void requestDiscoverAndLoadResources(Object objResourceIds, Object callBackFunction){
+	public void requestDiscoverAndLoadResources(Object objResourceIds, Object handlers){
 		try{
 			List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds);
 			//discovery
@@ -102,7 +102,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 			}
 			
 			//callback with resourceInfos
-			((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(serviceData)});
+			HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_context, m_scope);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -111,7 +111,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	
 	//gateway callback method
 	@Override
-	public void requestLoadResources(Object objResourcesInfo, Object callBackFunction){
+	public void requestLoadResources(Object objResourcesInfo, Object handlers){
 		try{
 			List<HAPResourceInfo> resourcesInfo = HAPRhinoRuntimeUtility.rhinoResourcesInfoToResourcesInfo((NativeArray)objResourcesInfo);
 			//load resources to rhino runtime
@@ -123,7 +123,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 			else{
 				serviceData = HAPServiceData.createFailureData(response.getFailedResourcesId(), "");
 			}
-			((Function)callBackFunction).call(this.m_context, this.m_scope, null, new Object[]{HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(serviceData)});
+			HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_context, m_scope);
 		}
 		catch(Exception e){
 			e.printStackTrace();

@@ -26,6 +26,17 @@
 	
 	nosliw.registerNodeEvent("runtime", "active", function(eventName, nodeName){
 		nosliw.logging.info(nodeName + "    " + eventName );
+		
+		var resourceUtility = nosliw.getNodeData("resource.utility");
+		var resourceIds = [resourceUtility.createOperationResourceId("test.string;1.0.0", "subString")];
+		var handlers = {
+			success : function(resourceInfos){
+				console.log(JSON.stringify(resourceInfos));
+			}
+		};
+		
+		nosliw.runtime.getGateway().requestDiscoverResources(resourceIds, handlers);
+		
 	});
 
 	/*

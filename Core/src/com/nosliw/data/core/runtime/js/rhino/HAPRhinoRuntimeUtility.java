@@ -6,10 +6,12 @@ import java.util.List;
 
 import org.json.JSONObject;
 import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Function;
 import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
+import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.runtime.HAPResourceId;
@@ -21,6 +23,18 @@ public class HAPRhinoRuntimeUtility {
 	
 	private static String scriptTempFolder = "C:/Temp/ScriptExport/scripts/" + System.currentTimeMillis() + "/";
 
+	public static void invokeGatewayHandlers(HAPServiceData serviceData, Object handlers, Context context, Scriptable scope){
+		NativeObject handlersObj = (NativeObject)handlers;
+		if(serviceData.isSuccess()){
+			Function successFun = (Function)handlersObj.get("success");
+			successFun.call(context, scope, null, new Object[]{null, HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(serviceData.getData())});
+		}
+		else{
+			Function errorFun = (Function)handlersObj.get("error");
+			errorFun.call(context, scope, null, new Object[]{null, HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(serviceData)});
+		}
+	}
+	
 	public static List<HAPResourceInfo> rhinoResourcesInfoToResourcesInfo(NativeArray rhinoResourceInfoArray){
 		List<HAPResourceInfo> out = new ArrayList<HAPResourceInfo>();
 		for(int i=0; i<rhinoResourceInfoArray.size(); i++){

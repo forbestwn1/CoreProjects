@@ -15,8 +15,18 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>gatewayservlet</servlet-name>
+    <url-pattern>/loadlib</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>gateway1servlet</servlet-name>
+    <servlet-class>com.nosliw.app.servlet.HAPGatewayServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>gateway1servlet</servlet-name>
     <url-pattern>/gateway</url-pattern>
   </servlet-mapping>
+
 
   <servlet-mapping>
     <servlet-name>loginservlet</servlet-name>

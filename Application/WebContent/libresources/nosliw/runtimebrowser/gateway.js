@@ -20,8 +20,24 @@ var node_gateway = function(){
 		 * @param objResourcesInfo: a list of resource id 
 		 * @param callBackFunction (discovered resource info)
 		 */
-		requestDiscoverResources : function(objResourceIds, callBackFunction){
-//			nosliw.runtime.getRemoteService().
+		requestDiscoverResources : function(objResourceIds, handlers){
+			var parms = node_createServiceParms();
+			parms.addParm("resourceIds", objResourceIds);
+			var service = node_ServiceInfo("requestDiscoverResources", parms);
+			
+			var remoteServiceTask = new node_RemoteServiceTask("gateway", service, {
+				success : function(request, resourceInfos){
+					handlers.success.call(request, resourceInfos);
+				},
+				error : function(){
+					
+				},
+				exception : function(){
+					
+				}
+			}, undefined, undefined);
+			
+			nosliw.runtime.getRemoteService().addServiceTask(remoteServiceTask);
 		},
 		
 		/**
@@ -29,7 +45,7 @@ var node_gateway = function(){
 		 * @param objResourcesInfo: a list of resource id 
 		 * @param callBackFunction (discovered and loaded resource info)
 		 */
-		requestDiscoverAndLoadResources : function(objResourceIds, callBackFunction){
+		requestDiscoverAndLoadResources : function(objResourceIds, handlers){
 			
 		},
 		
@@ -38,7 +54,7 @@ var node_gateway = function(){
 		 * @param objResourcesInfo: a list of resource info 
 		 * @param callBackFunction (nothing)
 		 */
-		requestLoadResources : function(resourcesInfo, callBackFunction){
+		requestLoadResources : function(resourcesInfo, handlers){
 			
 			var remoteServiceTask = new node_RemoteServiceTask("gateway", service, {
 				success : function(data){
