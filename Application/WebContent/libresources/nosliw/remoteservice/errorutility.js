@@ -17,7 +17,7 @@ var node_errorUtility = function(){
 		 */
 		createRemoteServiceSuspendedServiceData : function(reason){
 			return new node_ServiceData(
-					node_COMMONCONSTANT.CONS_ERRORCODE_REMOTESERVICE_SUSPEND, 
+					node_COMMONCONSTANT.ERRORCODE_REMOTESERVICE_SUSPEND, 
 					'No service call allowed this time, please try later!!',
 					reason); 
 		},
@@ -27,7 +27,7 @@ var node_errorUtility = function(){
 		 */
 		createRemoteServiceExceptionServiceData : function(obj, textStatus, errorThrown){
 			var serviceData = new node_ServiceData(
-					node_COMMONCONSTANT.CONS_ERRORCODE_REMOTESERVICE_EXCEPTION,
+					node_COMMONCONSTANT.ERRORCODE_REMOTESERVICE_EXCEPTION,
 				textStatus+'-'+errorThrown
 			);
 			return serviceData;

@@ -3,12 +3,8 @@ package com.nosliw.app.utils;
 public class HAPAttributeConstant {
 
 
-
-
-
-
-
-
+		public static final String SERVICE_COMMAND = "command";
+		public static final String SERVICE_PARMS = "parms";
 
 
 

@@ -4,7 +4,7 @@ var packageObj = library;
 (function(packageObj){
 //get used node
 var node_COMMONCONSTANT;
-var node_COMMONTRIBUTECONSTANT;
+var node_COMMONATRIBUTECONSTANT;
 var node_createConfigures;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -13,8 +13,8 @@ var node_utility = function(){
 	return {
 		createRemoteServiceConfigures : function(service, command){
 			var configuresObj = {};
-			configuresObj[node_COMMONTRIBUTECONSTANT.ATTR_SERVLETPARMS_COMMAND] = command;
-			configuresObj[node_COMMONTRIBUTECONSTANT.ATTR_SERVLETPARMS_SERVICE] = service;
+			configuresObj[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND] = command;
+			configuresObj[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_SERVICE] = service;
 			return node_createConfigures(configuresObj);
 		},
 		
@@ -83,7 +83,7 @@ var node_utility = function(){
 
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("constant.COMMONTRIBUTECONSTANT", function(){node_COMMONTRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.setting.createConfigures", function(){node_createConfigures = this.getData();});
 
 

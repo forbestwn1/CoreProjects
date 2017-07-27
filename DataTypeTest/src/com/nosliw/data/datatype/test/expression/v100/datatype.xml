@@ -1,7 +1,8 @@
-<definition name="core.array;1.0.0">
+<definition name="test.expression;1.0.0">
 	
 	<info description="container for list of data"/>
 
+<!-- 
 	<operations>
 	
 		<operation name="process" >
@@ -13,5 +14,6 @@
 		</operation>
 
 	</operations>
+ -->
 
 </definition>

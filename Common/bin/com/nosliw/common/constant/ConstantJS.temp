@@ -14,12 +14,6 @@ var ||moduleName||=
 
 //*******************************************   End Node Definition  ************************************** 	
 //Register Node by Name
-packageObj.createNode("||moduleName||", ||moduleName||); 
-
-	var module = {
-		start : function(packageObj){
-		}
-	};
-	nosliw.registerModule(module, packageObj);
+packageObj.createChildNode("||moduleName||", ||moduleName||); 
 
 })(packageObj);

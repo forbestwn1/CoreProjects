@@ -4,7 +4,6 @@ var packageObj = library;
 (function(packageObj){
 //get used node
 var node_createConfigures;
-var node_createServiceParms;
 var node_ServiceInfo;
 var node_RemoteServiceTask;
 //*******************************************   Start Node Definition  ************************************** 	
@@ -24,9 +23,10 @@ var node_gateway = function(){
 		 * @param callBackFunction (discovered resource info)
 		 */
 		requestDiscoverResources : function(objResourceIds, handlers){
-			var parms = node_createServiceParms();
-			parms.addParm("resourceIds", objResourceIds);
-			var service = node_ServiceInfo("requestDiscoverResources", parms);
+			var parms = {
+				"resourceIds" : objResourceIds
+			}; 
+			var service = new node_ServiceInfo("requestDiscoverResources", parms);
 			
 			var remoteServiceTask = new node_RemoteServiceTask("gateway", service, {
 				success : function(request, resourceInfos){
@@ -92,14 +92,13 @@ var node_gateway = function(){
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("common.setting.createConfigures", function(){node_createConfigures = this.getData();});
-nosliw.registerSetNodeDataEvent("common.service.createServiceParms", function(){node_createServiceParms = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("remote.entity.RemoteServiceTask", function(){node_RemoteServiceTask = this.getData();});
 
 
 nosliw.registerSetNodeDataEvent("runtime", function(){
 	var configure = node_createConfigures({
-		url : "gateway",
+		service : "gateway",
 		contentType: "application/json; charset=utf-8"
 	});
 	

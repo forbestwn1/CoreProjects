@@ -3,7 +3,7 @@ var packageObj = library.getChildPackage("entity");
 
 (function(packageObj){
 //get used node
-var node_COMMONTRIBUTECONSTANT;
+var node_COMMONATRIBUTECONSTANT;
 var node_COMMONCONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -23,7 +23,7 @@ var node_RemoteServiceRequest = function(serviceTask){
 	this.children = [];
 	this.requestId = serviceTask.requestId;
 	
-	if(this.type==node_COMMONCONSTANT.CONS_REMOTESERVICE_TASKTYPE_GROUP){
+	if(this.type==node_COMMONCONSTANT.REMOTESERVICE_TASKTYPE_GROUP){
 		for(var i in serviceTask.children){
 			this.children.push(new node_RemoteServiceRequest(serviceTask.children[i]));
 		}
@@ -34,7 +34,7 @@ var node_RemoteServiceRequest = function(serviceTask){
  * single request object
  */
 var node_RemoteServiceTask = function(syncName, service, handlers, requestInfo, setting){
-	this[node_COMMONTRIBUTECONSTANT.ATTR_REQUEST_TYPE] = node_COMMONCONSTANT.CONS_REMOTESERVICE_TASKTYPE_NORMAL;
+	this[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_REQUEST_TYPE] = node_COMMONCONSTANT.REMOTESERVICE_TASKTYPE_NORMAL;
 	this.syncName = syncName;
 	this.requestInfo = requestInfo;
 	this.service = service;
@@ -64,7 +64,7 @@ node_RemoteServiceTask.prototype = {
  * 
  */
 var node_RemoteServiceGroupTask = function(syncName, handlers, requestInfo, setting){
-	this[node_COMMONTRIBUTECONSTANT.ATTR_REQUEST_TYPE] = node_COMMONCONSTANT.CONS_REMOTESERVICE_TASKTYPE_GROUP;
+	this[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_REQUEST_TYPE] = node_COMMONCONSTANT.REMOTESERVICE_TASKTYPE_GROUP;
 	this.syncName = syncName;
 	this.requestInfo = requestInfo;
 	this.setting = setting;
@@ -102,7 +102,7 @@ node_RemoteServiceGroupTask.prototype = {
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
-nosliw.registerSetNodeDataEvent("constant.COMMONTRIBUTECONSTANT", function(){node_COMMONTRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 
 //Register Node by Name

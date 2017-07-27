@@ -12,22 +12,22 @@ var nosliwCreateExpression = function(expression, contextVariablesArray, context
 	var loc_requester = new NosliwRequester(NOSLIWCONSTANT.REQUESTER_TYPE_SERVICE, loc_moduleName); 
 	
 	//original expression
-	 var loc_expression = expression[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_EXPRESSION_EXPRESSION];
+	 var loc_expression = expression[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_EXPRESSION_EXPRESSION];
 	 //operand object
-	 var loc_operand = expression[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_EXPRESSION_OPERAND];
+	 var loc_operand = expression[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_EXPRESSION_OPERAND];
 	 //variable information map: variable data type info
-	 var loc_variablesInfo = expression[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_EXPRESSION_VARIABLESINFO];
+	 var loc_variablesInfo = expression[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_EXPRESSION_VARIABLESINFO];
 	 //if this script is runnable
-	 var loc_isScriptRunnable = expression[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_EXPRESSION_SCRIPTRUNNALBE];
+	 var loc_isScriptRunnable = expression[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_EXPRESSION_SCRIPTRUNNALBE];
 	 
 	 //constant data in expression
 	 var loc_constants = {};
-	 _.each(expression[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_EXPRESSION_CONSTANTS], function(constant, name, list){
+	 _.each(expression[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_EXPRESSION_CONSTANTS], function(constant, name, list){
 		 loc_constants[name] = nosliwCreateData(constant.value, constant.dataTypeInfo);
 	 }, this);
 		 
 	 //all data type related with this expression
-	 var loc_allRelatedDataTypeInfos = expression[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_EXPRESSION_ALLDATATYPEINFOS];
+	 var loc_allRelatedDataTypeInfos = expression[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_EXPRESSION_ALLDATATYPEINFOS];
 	 
 	 //store all related data types
 	 var loc_allRelatedDataTypes = {};
@@ -83,9 +83,9 @@ var nosliwCreateExpression = function(expression, contextVariablesArray, context
 		
 		var executeOperandReqInfo = undefined;
 		
-		var operandType = operand[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_OPERAND_TYPE];
+		var operandType = operand[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_OPERAND_TYPE];
 		if(operandType==NOSLIWCOMMONCONSTANT.CONS_EXPRESSION_OPERAND_CONSTANT){
-			var object = operand[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_OPERAND_CONSTANT_DATA];
+			var object = operand[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_OPERAND_CONSTANT_DATA];
 			var out = nosliwObjectEntityUtility.getObjectEntityData();
 			executeOperandReqInfo = nosliwCreateServiceRequestInfoService(service, handlers, requester_parent);
 			executeOperandReqInfo.setRequestExecuteInfo(new NosliwServiceRequestExecuteInfo(function(requestInfo){
@@ -93,7 +93,7 @@ var nosliwCreateExpression = function(expression, contextVariablesArray, context
 			}, this));
 		}
 		else if(operandType==NOSLIWCOMMONCONSTANT.CONS_EXPRESSION_OPERAND_VARIABLE){
-			var varName = operand[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_OPERAND_VARIABLE_VARNAME];
+			var varName = operand[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_OPERAND_VARIABLE_VARNAME];
 			var out = loc_getVariableData(varName);
 			//if cannot find, then use empty data
 			if(out==undefined)  out = nosliwDataUtility.createEmptyData();
@@ -105,9 +105,9 @@ var nosliwCreateExpression = function(expression, contextVariablesArray, context
 		else if(operandType==NOSLIWCOMMONCONSTANT.CONS_EXPRESSION_OPERAND_DATAOPERATION ||
 				operandType==NOSLIWCOMMONCONSTANT.CONS_EXPRESSION_OPERAND_DATATYPEOPERATION ||
 				operandType==NOSLIWCOMMONCONSTANT.CONS_EXPRESSION_OPERAND_NEWOPERATION){
-			var operation = operand[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_OPERAND_OPERATION_OPERATION];
-			var baseOperand = operand[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_OPERAND_DATAOPERATION_BASEDATA];
-			var baseDataTypeInfo = operand[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_OPERAND_OPERATION_BASEDATATYPEINFO];
+			var operation = operand[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_OPERAND_OPERATION_OPERATION];
+			var baseOperand = operand[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_OPERAND_DATAOPERATION_BASEDATA];
+			var baseDataTypeInfo = operand[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_OPERAND_OPERATION_BASEDATATYPEINFO];
 
 			executeOperandReqInfo = nosliwCreateRequestSequence(service, handlers, requester_parent);
 			
@@ -141,7 +141,7 @@ var nosliwCreateExpression = function(expression, contextVariablesArray, context
 				parmsRequest.addRequest("baseData", baseDataRequest);
 			}
 
-			var parmsOperand = operand[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_OPERAND_OPERATION_PARAMETERS];
+			var parmsOperand = operand[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_OPERAND_OPERATION_PARAMETERS];
 			for(var i=0; i<parmsOperand.length; i++){
 				var parmRequest = loc_getRequestInfoExecuteOperand(parmsOperand[i], {});
 				parmsRequest.addRequest("parm"+i, parmRequest);
@@ -164,12 +164,12 @@ var nosliwCreateExpression = function(expression, contextVariablesArray, context
 			});
 		}
 		else if(operandType==NOSLIWCOMMONCONSTANT.CONS_EXPRESSION_OPERAND_PATHOPERATION){
-			var path = operand[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_OPERAND_PATH_PATH];
-			var baseOperand = operand[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_OPERAND_PATH_BASEDATA];
-			var baseOperandType = baseOperand[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_OPERAND_TYPE];
+			var path = operand[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_OPERAND_PATH_PATH];
+			var baseOperand = operand[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_OPERAND_PATH_BASEDATA];
+			var baseOperandType = baseOperand[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_OPERAND_TYPE];
 			if(baseOperandType==NOSLIWCOMMONCONSTANT.CONS_EXPRESSION_OPERAND_VARIABLE){
 				//can convert to context variable
-				var contextVarName = nosliwCreateContextVariable(baseOperand[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_OPERAND_VARIABLE_VARNAME], path).key;
+				var contextVarName = nosliwCreateContextVariable(baseOperand[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_OPERAND_VARIABLE_VARNAME], path).key;
 				var out = loc_getVariableData(contextVarName);
 				//if cannot find, then use empty data
 				if(out==undefined)  out = nosliwDataUtility.createEmptyData();

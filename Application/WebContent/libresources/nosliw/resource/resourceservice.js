@@ -13,7 +13,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
-	var node_COMMONTRIBUTECONSTANT;
+	var node_COMMONATRIBUTECONSTANT;
 	var node_resourceUtility;
 	var node_DependentServiceRequestInfo;
 //*******************************************   Start Node Definition  ************************************** 	
@@ -54,11 +54,11 @@ var node_createResourceService = function(resourceManager){
 				//discover related resources (dependency and children)
 				var relatedResourceIds = []; 
 				var resourceInfo = resource.resourceInfo;
-				_.each(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_DEPENDENCY], function(childResourceId, alias, list){
+				_.each(resourceInfo[node_COMMONATRIBUTECONSTANT.RESOURCEINFO_DEPENDENCY], function(childResourceId, alias, list){
 					relatedResourceIds.push(childResourceId);
 				}, this);
 
-				_.each(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_CHILDREN], function(childResourceId, alias, list){
+				_.each(resourceInfo[node_COMMONATRIBUTECONSTANT.RESOURCEINFO_CHILDREN], function(childResourceId, alias, list){
 					relatedResourceIds.push(childResourceId);
 				}, this);
 				
@@ -102,7 +102,7 @@ var node_createResourceService = function(resourceManager){
 			var resourceTree = {};
 			var resourceInfos = [];
 			_.each(resourcesInfo, function(resourceInfo, index, list){
-				var resource = loc_resourceManager.useResource(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_ID]);
+				var resource = loc_resourceManager.useResource(resourceInfo[node_COMMONATRIBUTECONSTANT.RESOURCEINFO_ID]);
 				if(resource!=undefined)			node_resourceUtility.buildResourceTree(resourceTree, resource);
 				else		resourceInfos.push(resourceInfo);
 			}, this);
@@ -121,7 +121,7 @@ var node_createResourceService = function(resourceManager){
 				out.setDependentService(new node_DependentServiceRequestInfo(loadResourceRequest, {
 					success : function(requestInfo){
 						_.each(resourceInfos, function(resourceInfo, index, list){
-							var resource = loc_resourceManager.useResource(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_ID]);
+							var resource = loc_resourceManager.useResource(resourceInfo[node_COMMONATRIBUTECONSTANT.RESOURCEINFO_ID]);
 							node_resourceUtility.buildResourceTree(resourceTree, resource);
 						}, this);
 						return resourceTree;
@@ -158,7 +158,7 @@ var node_createResourceService = function(resourceManager){
 								var loadResourceRequest = loc_getLoadResourcesRequest(resourceInfos, {
 									success : function(requestInfo){
 										_.each(resourceInfos, function(resourceInfo, index, list){
-											var resource = loc_resourceManager.useResource(resourceInfo[node_COMMONTRIBUTECONSTANT.RESOURCEINFO_ID]);
+											var resource = loc_resourceManager.useResource(resourceInfo[node_COMMONATRIBUTECONSTANT.RESOURCEINFO_ID]);
 											node_resourceUtility.buildResourceTree(foundResourcesTree, resource);
 										}, this);
 										return foundResourcesTree;
@@ -229,7 +229,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("constant.COMMONTRIBUTECONSTANT", function(){node_COMMONTRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 

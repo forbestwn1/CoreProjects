@@ -24,7 +24,7 @@ var nosliwCreateUIResourceManager = function(){
 	 */
 	var loc_getRequestServiceGetUIResource = function(name){
 		var parms = {};
-		parms[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_REQUEST_GETUIRESOURCE_NAME] = name;
+		parms[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_REQUEST_GETUIRESOURCE_NAME] = name;
 		return new NosliwServiceInfo(NOSLIWCOMMONCONSTANT.CONS_REMOTESERVICE_GETUIRESOURCE, parms); 
 	};
 	
@@ -88,7 +88,7 @@ var nosliwCreateUIResourceManager = function(){
 				uiResourceReqInfo.addRequest(function(parentRequest){
 					var absentTagNamesArray = [];
 					var uiResource = parentRequest.getData("uiResource");
-					var uiTagNamesArray = uiResource[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCE_UITAGLIBS];
+					var uiTagNamesArray = uiResource[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_UITAGLIBS];
 					for(var i in uiTagNamesArray){
 						var tagName = uiTagNamesArray[i];
 						var tagFacFun = nosliw.getUITagManager().getUITagFactoryFunction(tagName);

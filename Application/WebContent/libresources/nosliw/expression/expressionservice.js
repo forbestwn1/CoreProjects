@@ -6,7 +6,7 @@ var packageObj = library.getChildPackage("service");
 	var node_resourceUtility;
 	var node_requestServiceProcessor;
 	var node_buildServiceProvider;
-	var node_COMMONTRIBUTECONSTANT;
+	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
@@ -31,10 +31,10 @@ var node_createExpressionService = function(){
 		
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpression", {"expression":expression, "variables":variables}), handlers, requestInfo);
 		out.setData("variables", variables);
-		var variablesInfo = expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS];
+		var variablesInfo = expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS];
 			
 		//if have variables, convert variables
-			var varsMatchers = expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_VARIABLESMATCHERS];
+			var varsMatchers = expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLESMATCHERS];
 			var varsMatchRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatcherVariable", {"variables":variables, "variablesMatchers":varsMatchers}), 
 					{			
 						success : function(reqInfo, setResult){
@@ -49,7 +49,7 @@ var node_createExpressionService = function(){
 							out.setData("variables", matchedVars);
 							
 							//execute operand
-							var executeOperandRequest = loc_getExecuteOperandRequest(expression, expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_OPERAND], out.getData("variables"), {
+							var executeOperandRequest = loc_getExecuteOperandRequest(expression, expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_OPERAND], out.getData("variables"), {
 								success : function(requestInfo, operandResult){
 									return operandResult;
 								}
@@ -76,19 +76,19 @@ var node_createExpressionService = function(){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 
 		var out;
-		var operandType = operand[node_COMMONTRIBUTECONSTANT.OPERAND_TYPE];
+		var operandType = operand[node_COMMONATRIBUTECONSTANT.OPERAND_TYPE];
 		switch(operandType){
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_CONSTANT:
 			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteConstantOperand", {"operand":operand, "variables":variables}), 
 					function(requestInfo){  
-						return requestInfo.getService().parms.operand[node_COMMONTRIBUTECONSTANT.OPERAND_DATA];  
+						return requestInfo.getService().parms.operand[node_COMMONATRIBUTECONSTANT.OPERAND_DATA];  
 					}, 
 					handlers, requestInfo);
 			break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_VARIABLE: 
 			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteVariableOperand", {"operand":operand, "variables":variables}), 
 					function(requestInfo){  
-						var varName = requestInfo.getService().parms.operand[node_COMMONTRIBUTECONSTANT.OPERAND_VARIABLENAME];
+						var varName = requestInfo.getService().parms.operand[node_COMMONATRIBUTECONSTANT.OPERAND_VARIABLENAME];
 						return requestInfo.getService().parms.variables[varName];  
 					}, 
 					handlers, requestInfo);
@@ -97,7 +97,7 @@ var node_createExpressionService = function(){
 			out = loc_getExecuteOperationOperandRequest(expression, operand, variables, handlers, requestInfo);
 			break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_REFERENCE:
-			out = loc_getExecuteExpressionRequest(expression[node_COMMONTRIBUTECONSTANT.EXPRESSION_REFERENCES][operand[node_COMMONTRIBUTECONSTANT.OPERAND_REFERENCENAME]], variables, handlers, requestInfo);
+			out = loc_getExecuteExpressionRequest(expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_REFERENCES][operand[node_COMMONATRIBUTECONSTANT.OPERAND_REFERENCENAME]], variables, handlers, requestInfo);
 			break;
 		}
 		return out;
@@ -110,14 +110,14 @@ var node_createExpressionService = function(){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteOperationOperand", {"operationOperand":operationOperand, "variables":variables}), handlers, requestInfo);
 
 		//cal all parms
-		var parmsOperand = operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_PARMS];
+		var parmsOperand = operationOperand[node_COMMONATRIBUTECONSTANT.OPERAND_PARMS];
 		var parmsOperandRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("CalOperationParms", {"parms":parmsOperand}), {
 			success : function(requestInfo, setResult){
 				var parmsData = setResult.getResults();
 				out.setData("parmsData", parmsData);
 				
 				//match parms and base
-				var parmsMatcherRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatchOperationParms", {"parmsData":parmsData, "matchers":operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_MATCHERSPARMS]}), {
+				var parmsMatcherRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatchOperationParms", {"parmsData":parmsData, "matchers":operationOperand[node_COMMONATRIBUTECONSTANT.OPERAND_MATCHERSPARMS]}), {
 					success : function(requestInfo, parmMatchResult){
 						var parmsData = out.getData("parmsData");
 						var parmMatchedData = parmMatchResult.getResults();
@@ -133,7 +133,7 @@ var node_createExpressionService = function(){
 						}, this);
 
 						//execute data operation
-						var executeOperationRequest = loc_getExecuteOperationRequest(operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_DATATYPEID], operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_OPERATION], operationParms, {
+						var executeOperationRequest = loc_getExecuteOperationRequest(operationOperand[node_COMMONATRIBUTECONSTANT.OPERAND_DATATYPEID], operationOperand[node_COMMONATRIBUTECONSTANT.OPERAND_OPERATION], operationParms, {
 							success : function(requestInfo, data){
 								return data;
 							}
@@ -141,7 +141,7 @@ var node_createExpressionService = function(){
 						return executeOperationRequest;
 					}
 				});
-				_.each(operationOperand[node_COMMONTRIBUTECONSTANT.OPERAND_MATCHERSPARMS], function(parmMatchers, parmName, list){
+				_.each(operationOperand[node_COMMONATRIBUTECONSTANT.OPERAND_MATCHERSPARMS], function(parmMatchers, parmName, list){
 					var parmMatchRequest = loc_getMatchDataTaskRequest(parmsData[parmName], parmMatchers, {});
 					parmsMatcherRequest.addRequest(parmName, parmMatchRequest);
 				}, this);
@@ -164,7 +164,7 @@ var node_createExpressionService = function(){
 
 		var service = new node_ServiceInfo("MatchData", {"data":data, "matcher":matchers});
 		
-		var dataTypeId = data[node_COMMONTRIBUTECONSTANT.DATA_DATATYPEID];
+		var dataTypeId = data[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID];
 		var matcher = matchers[dataTypeId];
 		
 		var out;
@@ -172,8 +172,8 @@ var node_createExpressionService = function(){
 			//if converter does not created, then get it
 		}
 		else{
-			var sourceDataTypeId = matcher[node_COMMONTRIBUTECONSTANT.DATATYPERELATIONSHIP_SOURCE];
-			var targetDataTypeId = matcher[node_COMMONTRIBUTECONSTANT.DATATYPERELATIONSHIP_TARGET];
+			var sourceDataTypeId = matcher[node_COMMONATRIBUTECONSTANT.DATATYPERELATIONSHIP_SOURCE];
+			var targetDataTypeId = matcher[node_COMMONATRIBUTECONSTANT.DATATYPERELATIONSHIP_TARGET];
 			if(sourceDataTypeId==targetDataTypeId){
 				//no need to convert
 				out = node_createServiceRequestInfoSimple(service, function(requestInfo){
@@ -182,10 +182,10 @@ var node_createExpressionService = function(){
 			}
 			else{
 				out = node_createServiceRequestInfoSequence(service, handlers, requestInfo);
-				var matcherSegments = matcher[node_COMMONTRIBUTECONSTANT.DATATYPERELATIONSHIP_PATH];
+				var matcherSegments = matcher[node_COMMONATRIBUTECONSTANT.DATATYPERELATIONSHIP_PATH];
 
 				var targets = [];
-				var sourceId = matcher[node_COMMONTRIBUTECONSTANT.DATATYPERELATIONSHIP_SOURCE];
+				var sourceId = matcher[node_COMMONATRIBUTECONSTANT.DATATYPERELATIONSHIP_SOURCE];
 				var targetId;
 				for(var i=0; i<matcherSegments.length; i++){
 					targetId = node_namingConvensionUtility.parseLevel2(matcherSegments[i])[1];
@@ -218,7 +218,7 @@ var node_createExpressionService = function(){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		var out = node_createServiceRequestInfoService(new node_ServiceInfo("ExecuteConverter", {"data":data, "targetDataTypeId":targetDataTypeId}), handlers, requestInfo);
 		
-		var converterResourceId = node_resourceUtility.createConverterToResourceId(data[node_COMMONTRIBUTECONSTANT.DATA_DATATYPEID]);
+		var converterResourceId = node_resourceUtility.createConverterToResourceId(data[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID]);
 		var getResourceRequest = nosliw.runtime.getResourceService().getGetResourcesRequest([converterResourceId]);
 		
 		var resourceRequestDependency = new node_DependentServiceRequestInfo(getResourceRequest, {
@@ -286,7 +286,7 @@ nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtil
 nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("constant.COMMONTRIBUTECONSTANT", function(){node_COMMONTRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});

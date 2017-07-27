@@ -1,5 +1,5 @@
 <root jsPath="{{projectsPath}}/Application/WebContent/libresources/nosliw/constant"
-	jsAttributeFile="COMMONTRIBUTECONSTANT"
+	jsAttributeFile="COMMONATRIBUTECONSTANT"
 	jsConstantFile="COMMONCONSTANT"
 >
 
@@ -7,16 +7,6 @@
 				packagename="com.nosliw.app.utils" 
 				classname="HAPAttributeConstant" >
 		<definitions>
-			<definition name="SERVLETPARMS_COMMAND" value="command"/>
-			<definition name="SERVLETPARMS_SERVICE" value="service"/>
-			<definition name="SERVLETPARMS_CLIENTID" value="clientId"/>
-			<definition name="SERVLETPARMS_PARMS" value="parms"/>
-			<definition type="space"/>
-			<definition name="REQUEST_TYPE" value="type"/>
-			<definition name="REQUEST_SERVICE" value="service"/>
-			<definition name="REQUEST_MODE" value="mode"/>
-			<definition name="REQUEST_CHILDREN" value="children"/>
-			<definition type="space"/>
 			<definition name="SERVICE_COMMAND" value="command"/>
 			<definition name="SERVICE_PARMS" value="parms"/>
 			<definition type="space"/>

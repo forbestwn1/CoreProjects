@@ -18,29 +18,11 @@ var node_ServiceInfo = function(command, parms){
 };
 
 
-var node_createServiceParms = function(){
-	var loc_parmsObj = {};
-	
-	var loc_out = {
-		addParm : function(name, value){
-			loc_parmsObj[name] = value;
-			return this;
-		},
-		
-		getParmObj : function(){
-			return loc_parmsObj;
-		},
-	};
-	
-	return loc_out;
-};
-
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
 
 //Register Node by Name
 packageObj.createChildNode("ServiceInfo", node_ServiceInfo); 
-packageObj.createChildNode("createServiceParms", node_createServiceParms); 
 
 })(packageObj);

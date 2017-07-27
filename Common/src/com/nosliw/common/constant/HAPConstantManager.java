@@ -151,7 +151,7 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 	}
 
 	private void writeJS(Map<String, String> valueMap, Map<String, Class<?>> datatypeMap, String moduleName){
-		String jsonContent = HAPJsonUtility.buildMapJson(valueMap, datatypeMap);
+		String jsonContent = HAPJsonUtility.formatJson(HAPJsonUtility.buildMapJson(valueMap, datatypeMap));
 		
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("moduleName", moduleName);

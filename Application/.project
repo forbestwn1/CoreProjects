@@ -5,11 +5,9 @@
 	<projects>
 		<project>DataTypeManager</project>
 		<project>ExpressionParser</project>
-		<project>UIResource</project>
 		<project>DataTypeTest</project>
 		<project>Common</project>
 		<project>Core</project>
-		<project>DataType</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

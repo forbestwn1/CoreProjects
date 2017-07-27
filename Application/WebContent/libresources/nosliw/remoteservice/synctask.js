@@ -3,7 +3,7 @@ var packageObj = library.getChildPackage("entity");
 
 (function(packageObj){
 //get used node
-var node_COMMONTRIBUTECONSTANT;
+var node_COMMONATRIBUTECONSTANT;
 var node_COMMONCONSTANT;
 var node_CONSTANT;
 var node_remoteServiceErrorUtility;
@@ -49,12 +49,12 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 			serviceTaskRequests.push(loc_syncTasks[i].getRemoteServiceRequest());
 		}
 		var serviceRequests = {};
-//		serviceRequests[node_COMMONTRIBUTECONSTANT.ATTR_SERVLETPARMS_CLIENTID] = nosliw.getClientId();
-		serviceRequests[node_COMMONTRIBUTECONSTANT.ATTR_SERVLETPARMS_COMMAND] = loc_setting.getConfigure(node_COMMONTRIBUTECONSTANT.ATTR_SERVLETPARMS_COMMAND);
-		serviceRequests[node_COMMONTRIBUTECONSTANT.ATTR_SERVLETPARMS_PARMS] = JSON.stringify(serviceTaskRequests);
+//		serviceRequests[node_COMMONATRIBUTECONSTANT.SERVLETPARMS_CLIENTID] = nosliw.getClientId();
+		serviceRequests[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND] = loc_setting.getConfigure(node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND);
+		serviceRequests[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_PARMS] = JSON.stringify(serviceTaskRequests);
 	
 		$.ajax({
-			url : loc_setting.getConfigure(node_COMMONTRIBUTECONSTANT.ATTR_SERVLETPARMS_SERVICE),
+			url : loc_setting.getConfigure(node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_SERVICE),
 			type : "POST",
 			dataType: "json",
 			data : serviceRequests,
@@ -70,7 +70,7 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 						var task = loc_syncTasks[j];
 						var taskType = task.type;
 
-						if(taskType==NOSLIWCOMMONCONSTANT.CONS_REMOTESERVICE_TASKTYPE_GROUP){
+						if(taskType==node_COMMONCONSTANT.REMOTESERVICE_TASKTYPE_GROUP){
 							//for group task, handle child task first
 							for(var k in task.children)		loc_handleServiceResult(task.children[k], serviceData.data[k]);
 						}
@@ -177,7 +177,7 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 		 */
 		addTask : function(task){	
 			loc_syncTaskQueue.push(task);	
-			nosliw.logging.info(loc_moduleName,  task.requestId, "New remote task is added to sync task: ", JSON.stringify(task.service));
+			nosliw.logging.info(loc_moduleName,  task.requestId, "New remote task is added to sync task: ", task.service.command, ":", JSON.stringify(task.service.parms));
 			this.logSyncTask();
 		},
 		
@@ -214,7 +214,7 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
-nosliw.registerSetNodeDataEvent("constant.COMMONTRIBUTECONSTANT", function(){node_COMMONTRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("remote.errorUtility", function(){node_remoteServiceErrorUtility = this.getData();});

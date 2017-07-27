@@ -60,21 +60,21 @@ var nosliwCreateUIResourceView = function(uiResource, id, parent, contextElement
 	 */
 	var loc_initElementEvent = function(eleEvent){
 		//get element for this event
-		var ele = loc_out.prv_getLocalElementByUIId(loc_out.prv_getUpdateUIId(eleEvent[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_ELEMENTEVENT_UIID]));
+		var ele = loc_out.prv_getLocalElementByUIId(loc_out.prv_getUpdateUIId(eleEvent[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_UIID]));
 		var subEle = ele;
 		//if have sel attribute set, then find sub element according to sel
-		var selection = eleEvent[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_ELEMENTEVENT_SELECTION];
+		var selection = eleEvent[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_SELECTION];
 		if(!nosliwCommonUtility.isStringEmpty(selection))		subEle = ele.find(selection);
 
 		//register event
 		var eventValue = eleEvent;
-		var eventName = eleEvent[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_ELEMENTEVENT_EVENT];
+		var eventName = eleEvent[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_EVENT];
 		subEle.bind(eventName, function(event){
 			var info = {
 				event : event, 
 				element : subEle,
 			};
-			loc_scriptObject.callEventFunction(eventValue[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_ELEMENTEVENT_FUNCTION], undefined, info);
+			loc_scriptObject.callEventFunction(eventValue[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_FUNCTION], undefined, info);
 		});
 		
 		return {
@@ -87,8 +87,8 @@ var nosliwCreateUIResourceView = function(uiResource, id, parent, contextElement
 	 * init ui tag event object
 	 */
 	var loc_initTagEvent = function(tagEvent){
-		var tag = loc_uiTags[loc_out.prv_getUpdateUIId(tagEvent[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_ELEMENTEVENT_UIID])];
-		var eventName = tagEvent[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_ELEMENTEVENT_EVENT];
+		var tag = loc_uiTags[loc_out.prv_getUpdateUIId(tagEvent[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_UIID])];
+		var eventName = tagEvent[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_EVENT];
 		
 		var listener = tag.registerEvent(eventName, function(event, data, requestInfo){
 			var info = {
@@ -96,7 +96,7 @@ var nosliwCreateUIResourceView = function(uiResource, id, parent, contextElement
 				tag : tag,
 				requestInfo: requestInfo,
 			};
-			loc_scriptObject.callEventFunction(tagEvent[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_ELEMENTEVENT_FUNCTION], data, info);
+			loc_scriptObject.callEventFunction(tagEvent[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_FUNCTION], data, info);
 		});
 		
 		return {
@@ -136,12 +136,12 @@ var nosliwCreateUIResourceView = function(uiResource, id, parent, contextElement
 		loc_context = nosliwUIResourceUtility.buildUIResourceContext(loc_uiResource, contextElementInfoArray);
 		
 		//create script object
-		loc_scriptObject=  nosliwCreateUIResourceScriptObject(loc_uiResource[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCE_SCRIPTFACTORYNAME], loc_out);
+		loc_scriptObject=  nosliwCreateUIResourceScriptObject(loc_uiResource[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_SCRIPTFACTORYNAME], loc_out);
 		
 		//wrap html by start and end element
 		var resourceStartId = "-resource-start";
 		var resourceEndId = "-resource-end";
-		var html = nosliwUIResourceUtility.createPlaceHolderWithId(resourceStartId) + _.unescape(loc_uiResource[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCE_HTML]) + nosliwUIResourceUtility.createPlaceHolderWithId(resourceEndId);
+		var html = nosliwUIResourceUtility.createPlaceHolderWithId(resourceStartId) + _.unescape(loc_uiResource[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_HTML]) + nosliwUIResourceUtility.createPlaceHolderWithId(resourceEndId);
 		
 		//update all uiid within html by adding space name to uiid
 		html = nosliwUIResourceUtility.updateHtmlUIId(html, loc_idNameSpace);
@@ -158,39 +158,39 @@ var nosliwCreateUIResourceView = function(uiResource, id, parent, contextElement
 		loc_endEle = loc_parentView.find("["+NOSLIWCOMMONCONSTANT.CONS_UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_out.prv_getUpdateUIId(resourceEndId)+"']");
 		
 		//init attributes of ui resource
-		_.each(loc_uiResource[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCE_ATTRIBUTES], function(value, key, list){
+		_.each(loc_uiResource[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_ATTRIBUTES], function(value, key, list){
 			loc_attributes[key] = value;			return list;
 		});
 		
 		//init expression content
-		_.each(loc_uiResource[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCE_EXPRESSIONCONTENTS], function(expressionContent, key, list){
+		_.each(loc_uiResource[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_EXPRESSIONCONTENTS], function(expressionContent, key, list){
 			loc_expressionContents.push(nosliwCreateUIResourceExpressionContent(expressionContent, "text", loc_out, requestInfo));
 		});
 
 		//init normal expression attribute
-		_.each(loc_uiResource[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCE_EXPRESSIONATTRIBUTES], function(expressionAttr, key, list){
+		_.each(loc_uiResource[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_EXPRESSIONATTRIBUTES], function(expressionAttr, key, list){
 			loc_expressionContents.push(nosliwCreateUIResourceExpressionContent(expressionAttr, "attribute", loc_out, requestInfo));
 		});
 
 		//init customer tags
-		_.each(loc_uiResource[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCE_UITAGS], function(uiTag, tagUiId, list){
-			var uiTagId = loc_out.prv_getUpdateUIId(uiTag[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCE_ID]);
+		_.each(loc_uiResource[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_UITAGS], function(uiTag, tagUiId, list){
+			var uiTagId = loc_out.prv_getUpdateUIId(uiTag[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_ID]);
 			var uiTagObj = nosliw.getUITagManager().createUITagObject(uiTagId, uiTag, loc_out);
 			loc_uiTags[uiTagId] =  uiTagObj;
 		});
 
 		//init customer tag expression attribute
-		_.each(loc_uiResource[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCE_EXPRESSIONTAGATTRIBUTES], function(expressionTagAttr, key, list){
+		_.each(loc_uiResource[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_EXPRESSIONTAGATTRIBUTES], function(expressionTagAttr, key, list){
 			loc_expressionContents.push(nosliwCreateUIResourceExpressionContent(expressionTagAttr, "tagAttribute", loc_out, requestInfo));
 		});
 		
 		//init element event
-		_.each(loc_uiResource[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCE_ELEMENTEVENTS], function(eleEvent, key, list){
+		_.each(loc_uiResource[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_ELEMENTEVENTS], function(eleEvent, key, list){
 			loc_elementEvents.push(loc_initElementEvent(eleEvent));
 		});
 
 		//init customer tag event
-		_.each(loc_uiResource[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCE_TAGEVENTS], function(tagEvent, key, list){
+		_.each(loc_uiResource[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_TAGEVENTS], function(tagEvent, key, list){
 			loc_tagEvents.push(loc_initTagEvent(tagEvent));
 		});
 		

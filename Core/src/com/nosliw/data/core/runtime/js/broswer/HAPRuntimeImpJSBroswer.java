@@ -7,7 +7,7 @@ import com.nosliw.data.core.runtime.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeImpJS;
 
-public class HAPRuntimeImpJSBroswer extends HAPRuntimeImpJS{
+public abstract class HAPRuntimeImpJSBroswer extends HAPRuntimeImpJS{
 
 	private HAPResourceDiscovery m_resourceDiscovery;
 	
@@ -34,17 +34,4 @@ public class HAPRuntimeImpJSBroswer extends HAPRuntimeImpJS{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void start() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void close() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

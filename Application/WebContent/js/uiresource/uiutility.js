@@ -18,7 +18,7 @@ var nosliwUIResourceUtility = function(){
 			var contextElementsInf = [];
 			
 			//get element info from resource definition
-			var resourceAttrs = uiResource[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCE_ATTRIBUTES];
+			var resourceAttrs = uiResource[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_ATTRIBUTES];
 			if(resourceAttrs!=undefined){
 				var contextStr = resourceAttrs.contexts;
 				var contextSegs = nosliwCreateSegmentParser(contextStr, NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_ELEMENT);

@@ -6,7 +6,7 @@
 	var nosliwCreateUIResourceExpressionContent = function(expressionContent, type, uiResourceView, requestInfo){
 		var loc_uiResourceView = uiResourceView;
 		//ui id for content
-		var loc_uiId = loc_uiResourceView.prv_getUpdateUIId(expressionContent[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIEXPRESSIONCONTENT_UIID]);
+		var loc_uiId = loc_uiResourceView.prv_getUpdateUIId(expressionContent[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIEXPRESSIONCONTENT_UIID]);
 		//element
 		var loc_ele = loc_uiResourceView.prv_getLocalElementByUIId(loc_uiId);
 		//type: text, attribute, tagAttribute
@@ -19,7 +19,7 @@
 		var loc_listeners = [];
 		
 		//attribute, for tag attribute only
-		var loc_attribute = expressionContent[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIEXPRESSIONCONTENT_ATTRIBUTE];
+		var loc_attribute = expressionContent[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIEXPRESSIONCONTENT_ATTRIBUTE];
 		
 		var loc_update = function(result){
 			if(loc_type=="text"){
@@ -39,7 +39,7 @@
 		loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT"] = function(expressionContent, type, uiResourceView, requestInfo){
 			loc_eventSource = nosliwCreateRequestEventSource();
 			
-			loc_uiExpressionElements = expressionContent[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIEXPRESSIONCONTENT_UIEXPRESSIONELEMENTS];
+			loc_uiExpressionElements = expressionContent[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIEXPRESSIONCONTENT_UIEXPRESSIONELEMENTS];
 			
 			//create group which contain all expressions
 			loc_expressionGroup = nosliwCreateRequestEventGroupHandler(
@@ -54,7 +54,7 @@
 						for(var eleIndex in loc_uiExpressionElements){
 							var uiExpressionElement = loc_uiExpressionElements[eleIndex];
 							if(!_.isString(uiExpressionElement)){
-								var expressionUnitsArray = uiExpressionElement[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCEEXPRESSION_EXPRESSIONUNITS];
+								var expressionUnitsArray = uiExpressionElement[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCEEXPRESSION_EXPRESSIONUNITS];
 								for(var unitIndex in expressionUnitsArray){
 									var element = loc_expressionGroup.getElement(""+eleIndex+"_"+unitIndex);
 									expressionGroupExecuteRequest.addRequest(""+eleIndex+"_"+unitIndex, element.getRequestInfoExecuteExpression({}));
@@ -73,14 +73,14 @@
 								for(var eleIndex in loc_uiExpressionElements){
 									var uiExpressionElement = loc_uiExpressionElements[eleIndex];
 									if(!_.isString(uiExpressionElement)){
-										var expressionUnitsArray = uiExpressionElement[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCEEXPRESSION_EXPRESSIONUNITS];
+										var expressionUnitsArray = uiExpressionElement[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCEEXPRESSION_EXPRESSIONUNITS];
 										var expressionResults = [];
 										for(var unitIndex in expressionUnitsArray){
 											var result = results.getResult(""+eleIndex+"_"+unitIndex);
 											if(result==undefined)  result = nosliwCreateData();
 											expressionResults.push(result);
 										}								
-										var expressionFunName = uiExpressionElement[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCEEXPRESSION_EXPRESSIONID];
+										var expressionFunName = uiExpressionElement[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCEEXPRESSION_EXPRESSIONID];
 										out = out + loc_uiResourceView.prv_getScriptObject().executeUIExpression(expressionFunName, expressionResults);
 									}
 									else{
@@ -112,12 +112,12 @@
 				var uiExpressionElement = loc_uiExpressionElements[p];
 				if(!_.isString(uiExpressionElement)){
 					var context = loc_uiResourceView.getContext();
-					var expressionUnitsArray = uiExpressionElement[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCEEXPRESSION_EXPRESSIONUNITS];
+					var expressionUnitsArray = uiExpressionElement[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCEEXPRESSION_EXPRESSIONUNITS];
 					for(var i in expressionUnitsArray){
-						var expression = expressionUnitsArray[i][NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCEEXPRESSION_EXPRESSIONOBJECT];
+						var expression = expressionUnitsArray[i][NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCEEXPRESSION_EXPRESSIONOBJECT];
 						
 						var contextVariablesArray = [];
-						var contextVars = expressionUnitsArray[i][NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCEEXPRESSION_CONTEXTVARIABLES];
+						var contextVars = expressionUnitsArray[i][NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCEEXPRESSION_CONTEXTVARIABLES];
 						for(var j in contextVars){
 							var contextVar = contextVars[j];
 							if(context.getContextElement(contextVar.name)!=undefined){

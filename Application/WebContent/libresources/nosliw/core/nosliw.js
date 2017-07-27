@@ -57,7 +57,6 @@ var nosliw = function(){
 		},
 		
 		initModules : function(){
-
 			//execute start callback method of each module 
 			for(var i in loc_modules){
 				var module = loc_modules[i];

@@ -20,14 +20,14 @@ var nosliwCreateEntityDefinitionManager = function(){
 	
 	var loc_getRequestServiceGetEntityDefinitionsByNames = function(entityNamesArray){
 		return new NosliwServiceInfo(NOSLIWCOMMONCONSTANT.CONS_REMOTESERVICE_GETALLENTITYDEFINITIONS, 
-				createParms().addParm(NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_REQUEST_GETENTITYDEFINITIONBYNAMES_NAMES,entityNamesArray).getParmObj());
+				createParms().addParm(NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_REQUEST_GETENTITYDEFINITIONBYNAMES_NAMES,entityNamesArray).getParmObj());
 	};
 	
 	/*
 	 * execute method : getEntityDefinitionByNames
 	 */
 	var loc_requestInfoGetEntityDefinitionByNames = function(requestInfo){
-		var requestArray = requestInfo.getParmData(NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_REQUEST_GETENTITYDEFINITIONBYNAMES_NAMES);
+		var requestArray = requestInfo.getParmData(NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_REQUEST_GETENTITYDEFINITIONBYNAMES_NAMES);
 
 		//find which data type is existing, which data type is new that need remote request
 		var newArray = [];
@@ -52,7 +52,7 @@ var nosliwCreateEntityDefinitionManager = function(){
 					return existingEntityDefs;
 				}, 
 			});
-			requestInfo.setParmData(NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_REQUEST_GETENTITYDEFINITIONBYNAMES_NAMES, newArray);
+			requestInfo.setParmData(NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_REQUEST_GETENTITYDEFINITIONBYNAMES_NAMES, newArray);
 			var remoteTask = nosliwRequestUtility.getRemoteServiceTask(loc_moduleName, requestInfo);
 			return remoteTask;
 		}

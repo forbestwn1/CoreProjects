@@ -56,9 +56,9 @@ var nosliwCreateUITagCommonObject = function(id, uiTag, uiResourceView, requestI
 	
 	loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT"] = function(id, uiTag, uiResourceView, requestInfo){
 		//init data bindings
-		_.each(loc_uiTag[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_UIRESOURCE_DATABINDINGS], function(dataBinding, name, list){
-			var contextVar = dataBinding[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_DATABINDING_VARIABLE];
-			loc_out.prv_addDataBinding(dataBinding[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_CONTEXTVARIABLE_NAME], nosliwCreateContextVariable(contextVar[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_CONTEXTVARIABLE_NAME], contextVar[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_CONTEXTVARIABLE_PATH]));
+		_.each(loc_uiTag[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_DATABINDINGS], function(dataBinding, name, list){
+			var contextVar = dataBinding[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_DATABINDING_VARIABLE];
+			loc_out.prv_addDataBinding(dataBinding[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_CONTEXTVARIABLE_NAME], nosliwCreateContextVariable(contextVar[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_CONTEXTVARIABLE_NAME], contextVar[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_CONTEXTVARIABLE_PATH]));
 		});
 		
 		//init all attributes value

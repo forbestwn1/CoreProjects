@@ -41,7 +41,7 @@ var node_createRemoteService = function(){
 	var loc_timerProcessor = undefined;
 	
 	//create default configure object for sync task  
-	var loc_syncTaskDefaultConfigure = node_createConfiguresBase(node_remoteServiceUtility.createRemoteServiceConfigures(node_COMMONCONSTANT.CONS_SERVICENAME_SERVICE, node_COMMONCONSTANT.CONS_SERVICECOMMAND_GROUPREQUEST));
+	var loc_syncTaskDefaultConfigure = node_createConfiguresBase(node_remoteServiceUtility.createRemoteServiceConfigures(node_COMMONCONSTANT.SERVICENAME_SERVICE, node_COMMONCONSTANT.SERVICECOMMAND_GROUPREQUEST));
 	
 	//predefined sync task configure, so that we don't need to create it everytime, just get it by name
 	var loc_syncTaskConfigures = {};
@@ -84,7 +84,7 @@ var node_createRemoteService = function(){
 	 */
 	function loc_getConfigureName(syncName){
 		var out = syncName;
-		var index = syncName.indexOf(node_COMMONCONSTANT.CONS_SEPERATOR_PART);
+		var index = syncName.indexOf(node_COMMONCONSTANT.SEPERATOR_PART);
 		if(index!=-1){
 			out = syncName.subString(index+1);
 		}
