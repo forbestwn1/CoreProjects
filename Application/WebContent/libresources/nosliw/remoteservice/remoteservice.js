@@ -5,6 +5,8 @@ var packageObj = library;
 //get used node
 var node_createConfiguresBase;
 var node_remoteServiceUtility;
+var node_RemoteServiceTask;
+var node_createRemoteSyncTask;
 var node_COMMONCONSTANT;
 var node_CONSTANT;
 var node_makeObjectWithLifecycle;
@@ -62,7 +64,7 @@ var node_createRemoteService = function(){
 				syncTaksConfigure = loc_syncTaskDefaultConfigure.getBaseConfigures();
 			}
 			
-			syncTasks = nosliwCreateRemoteSyncTask(syncName, loc_out, syncTaksConfigure);
+			syncTasks = node_createRemoteSyncTask(syncName, loc_out, syncTaksConfigure);
 			loc_tasks[syncName] = syncTasks;
 		}
 		syncTasks.addTask(serviceTask);
@@ -82,7 +84,7 @@ var node_createRemoteService = function(){
 	 */
 	function loc_getConfigureName(syncName){
 		var out = syncName;
-		var index = syncName.indexOf(NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_PART);
+		var index = syncName.indexOf(node_COMMONCONSTANT.CONS_SEPERATOR_PART);
 		if(index!=-1){
 			out = syncName.subString(index+1);
 		}
@@ -139,8 +141,8 @@ var node_createRemoteService = function(){
 		 * add a service task or array of service task
 		 */
 		addServiceTask : function(serviceTask){
-			var status = this.getResourceStatus();
-			if(status==NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_ACTIVE){
+			var status = this.interfaceObjectLifecycle.getResourceStatus();
+			if(status==node_CONSTANT.LIFECYCLE_RESOURCE_STATUS_ACTIVE){
 				//if in active status, then process them
 				if(_.isArray(serviceTask)==true){
 					for(var i in serviceTask){
@@ -154,7 +156,7 @@ var node_createRemoteService = function(){
 				//process all tasks (sync and async)
 				loc_processTasks();
 			}
-			else if(status==NOSLIWCONSTANT.LIFECYCLE_RESOURCE_STATUS_SUSPENDED){
+			else if(status==node_CONSTANT.LIFECYCLE_RESOURCE_STATUS_SUSPENDED){
 				//if in suspend status, not accept any service task
 				//inform outsider through exception handler
 				var serviceData = nosliwRemoteServiceErrorUtility.createRemoteServiceSuspendedServiceData(loc_suspendReason);
@@ -192,6 +194,8 @@ var node_createRemoteService = function(){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("common.setting.createConfiguresBase", function(){node_createConfiguresBase = this.getData();});
 nosliw.registerSetNodeDataEvent("remote.utility", function(){node_remoteServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("remote.entity.RemoteServiceTask", function(){node_RemoteServiceTask = this.getData();});
+nosliw.registerSetNodeDataEvent("remote.entity.createRemoteSyncTask", function(){node_createRemoteSyncTask = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});

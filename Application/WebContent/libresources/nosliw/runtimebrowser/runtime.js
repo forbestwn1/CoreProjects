@@ -73,6 +73,7 @@ var node_createRuntime = function(name){
 		loc_resourceService = node_createResourceService(loc_resourceManager);
 		loc_expressionService = node_createExpressionService();
 		loc_remoteService = node_createRemoteService();
+		loc_remoteService.interfaceObjectLifecycle.init();
 
 		//set sortcut for object
 		 nosliw.runtime = loc_out;

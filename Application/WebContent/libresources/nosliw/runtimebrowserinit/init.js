@@ -10,9 +10,9 @@ var libResources = [
 	"nosliw.expression",
 	"nosliw.request",
 	"nosliw.id",
-	"nosliw.init",
 	"nosliw.resource",
 	"nosliw.remoteservice",
+	"nosliw.error",
 	"nosliw.runtime",
 	"nosliw.runtimebrowser"
 ];
@@ -69,9 +69,6 @@ var requestLoadLibraryResources = function(resourceIds, callBackFunction){
 nosliw.createNode("runtime.name", "browser");
 
 requestLoadLibraryResources(libResources, function(){
-	
-	  nosliw.initModules();
-
 	  var runtime = nosliw.getNodeData("runtime.createRuntime")(nosliw.runtimeName);
 	  runtime.interfaceObjectLifecycle.init();
 

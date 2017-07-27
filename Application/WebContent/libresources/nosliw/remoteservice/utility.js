@@ -8,10 +8,6 @@ var node_COMMONTRIBUTECONSTANT;
 var node_createConfigures;
 //*******************************************   Start Node Definition  ************************************** 	
 
-
-/**
- * 
- */
 var node_utility = function(){
 	
 	return {
@@ -56,7 +52,7 @@ var node_utility = function(){
 		 * check if a service task is a group task
 		 */
 		isGroupServiceTask : function(serviceTask){
-			if(serviceTask.type==NOSLIWCONSTANT.REMOTESERVICE_TASKTYPE_GROUP)  return true;
+			if(serviceTask.type==node_CONSTANT.REMOTESERVICE_TASKTYPE_GROUP)  return true;
 			return false;
 		},
 		
@@ -72,7 +68,7 @@ var node_utility = function(){
 			for(var i in tasks){
 				var task = tasks[i];
 				handler.call(task, task);
-				if(nosliwRemoteServiceUtility.isGroupServiceTask(task)){
+				if(this.isGroupServiceTask(task)){
 					for(var j in task.children){
 						handleServiceTask(task.children[j], handler);
 					}
@@ -85,6 +81,7 @@ var node_utility = function(){
 
 //*******************************************   End Node Definition  ************************************** 	
 
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONTRIBUTECONSTANT", function(){node_COMMONTRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.setting.createConfigures", function(){node_createConfigures = this.getData();});

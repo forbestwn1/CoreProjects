@@ -4,6 +4,9 @@ var packageObj = library;
 (function(packageObj){
 //get used node
 var node_createConfigures;
+var node_createServiceParms;
+var node_ServiceInfo;
+var node_RemoteServiceTask;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	
@@ -89,14 +92,18 @@ var node_gateway = function(){
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("common.setting.createConfigures", function(){node_createConfigures = this.getData();});
+nosliw.registerSetNodeDataEvent("common.service.createServiceParms", function(){node_createServiceParms = this.getData();});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("remote.entity.RemoteServiceTask", function(){node_RemoteServiceTask = this.getData();});
 
-nosliw.registerSetNodeDataEvent("gateway", function(){
-	node_createConfigures({
+
+nosliw.registerSetNodeDataEvent("runtime", function(){
+	var configure = node_createConfigures({
 		url : "gateway",
 		contentType: "application/json; charset=utf-8"
 	});
 	
-	nosliw.runtime.getRemoteService().registerSyncTaskConfigure("gateway");
+	nosliw.runtime.getRemoteService().registerSyncTaskConfigure("gateway", configure);
 });
 
 	

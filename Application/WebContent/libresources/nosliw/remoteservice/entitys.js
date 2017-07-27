@@ -3,6 +3,8 @@ var packageObj = library.getChildPackage("entity");
 
 (function(packageObj){
 //get used node
+var node_COMMONTRIBUTECONSTANT;
+var node_COMMONCONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /*
@@ -21,9 +23,9 @@ var node_RemoteServiceRequest = function(serviceTask){
 	this.children = [];
 	this.requestId = serviceTask.requestId;
 	
-	if(this.type==NOSLIWCOMMONCONSTANT.CONS_REMOTESERVICE_TASKTYPE_GROUP){
+	if(this.type==node_COMMONCONSTANT.CONS_REMOTESERVICE_TASKTYPE_GROUP){
 		for(var i in serviceTask.children){
-			this.children.push(new NosliwRemoteServiceRequest(serviceTask.children[i]));
+			this.children.push(new node_RemoteServiceRequest(serviceTask.children[i]));
 		}
 	}
 };
@@ -32,7 +34,7 @@ var node_RemoteServiceRequest = function(serviceTask){
  * single request object
  */
 var node_RemoteServiceTask = function(syncName, service, handlers, requestInfo, setting){
-	this[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_REQUEST_TYPE] = NOSLIWCOMMONCONSTANT.CONS_REMOTESERVICE_TASKTYPE_NORMAL;
+	this[node_COMMONTRIBUTECONSTANT.ATTR_REQUEST_TYPE] = node_COMMONCONSTANT.CONS_REMOTESERVICE_TASKTYPE_NORMAL;
 	this.syncName = syncName;
 	this.requestInfo = requestInfo;
 	this.service = service;
@@ -43,7 +45,7 @@ var node_RemoteServiceTask = function(syncName, service, handlers, requestInfo, 
 	this.requestId = nosliw.generateId();
 	
 	//used for ajax request
-	this.remoteRequest = new NosliwRemoteServiceRequest(this); 
+	this.remoteRequest = new node_RemoteServiceRequest(this); 
 };
 
 node_RemoteServiceTask.prototype = {
@@ -62,7 +64,7 @@ node_RemoteServiceTask.prototype = {
  * 
  */
 var node_RemoteServiceGroupTask = function(syncName, handlers, requestInfo, setting){
-	this[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_REQUEST_TYPE] = NOSLIWCOMMONCONSTANT.CONS_REMOTESERVICE_TASKTYPE_GROUP;
+	this[node_COMMONTRIBUTECONSTANT.ATTR_REQUEST_TYPE] = node_COMMONCONSTANT.CONS_REMOTESERVICE_TASKTYPE_GROUP;
 	this.syncName = syncName;
 	this.requestInfo = requestInfo;
 	this.setting = setting;
@@ -74,7 +76,7 @@ var node_RemoteServiceGroupTask = function(syncName, handlers, requestInfo, sett
 	this.requestId = nosliw.generateId();
 
 	//used for ajax request
-	this.remoteRequest = new NosliwRemoteServiceRequest(this); 
+	this.remoteRequest = new node_RemoteServiceRequest(this); 
 };
 
 node_RemoteServiceGroupTask.prototype = {
@@ -98,17 +100,16 @@ node_RemoteServiceGroupTask.prototype = {
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.COMMONTRIBUTECONSTANT", function(){node_COMMONTRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+
 //Register Node by Name
 packageObj.createChildNode("RemoteServiceSetting", node_RemoteServiceSetting); 
 packageObj.createChildNode("RemoteServiceRequest", node_RemoteServiceRequest); 
 packageObj.createChildNode("RemoteServiceTask", node_RemoteServiceTask); 
 packageObj.createChildNode("RemoteServiceGroupTask", node_RemoteServiceGroupTask); 
-
-	var module = {
-		start : function(packageObj){
-		}
-	};
-	nosliw.registerModule(module, packageObj);
 
 })(packageObj);
 
