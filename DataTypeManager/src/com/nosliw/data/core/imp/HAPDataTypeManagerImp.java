@@ -3,32 +3,31 @@ package com.nosliw.data.core.imp;
 import java.util.List;
 
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.strvalue.valueinfo.HAPDBAccess;
 import com.nosliw.data.core.HAPDataType;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeManager;
 import com.nosliw.data.core.HAPDataTypeOperation;
-import com.nosliw.data.core.imp.io.HAPDBAccess;
 
 public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 
-	private HAPDBAccess m_dbAccess;
+	private HAPDataAccessDataType m_dataAccess;
 
-	public HAPDataTypeManagerImp(){
+	public HAPDataTypeManagerImp(HAPDataAccessDataType dataAccess){
 		init();
+		this.m_dataAccess = dataAccess;
 	}
 	
-	public HAPDBAccess getDBAccess(){		return this.m_dbAccess;	}
+	public HAPDBAccess getDBAccess(){		return this.m_dataAccess;	}
 	
 	private void init(){
-		this.m_dbAccess = HAPDBAccess.getInstance();
-		
 		
 		HAPSerializeManager.getInstance().registerClassName(HAPDataTypeId.class.getName(), HAPDataTypeId.class.getName());
 	}
 	
 	@Override
 	public HAPDataType getDataType(HAPDataTypeId dataTypeInfo) {
-		return this.m_dbAccess.getDataType(dataTypeInfo);
+		return this.m_dataAccess.getDataType(dataTypeInfo);
 	}
 
 	@Override
@@ -149,12 +148,12 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 */	
 	
 	
-	public static void main(String[] args){
-		HAPDataTypeManagerImp man = new HAPDataTypeManagerImp();
-		HAPDataTypeImp dataType = (HAPDataTypeImp)man.getDataType(new HAPDataTypeId("core.url;1.0.0"));
-		System.out.println(dataType.toString());
-		
-		man.getOperationInfoByName(new HAPDataTypeId("core.url;1.0.0"), "host");
-	}
+//	public static void main(String[] args){
+//		HAPDataTypeManagerImp man = new HAPDataTypeManagerImp();
+//		HAPDataTypeImp dataType = (HAPDataTypeImp)man.getDataType(new HAPDataTypeId("core.url;1.0.0"));
+//		System.out.println(dataType.toString());
+//		
+//		man.getOperationInfoByName(new HAPDataTypeId("core.url;1.0.0"), "host");
+//	}
 	
 }

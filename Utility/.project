@@ -11,6 +11,9 @@
 		<project>DataDefinition</project>
 		<project>Core</project>
 		<project>DataTypeManager</project>
+		<project>Application</project>
+		<project>DataTypeTest</project>
+		<project>DataType</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

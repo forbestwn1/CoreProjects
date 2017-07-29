@@ -2,7 +2,6 @@ package com.nosliw.data.core.imp.runtime.js;
 
 import java.util.List;
 
-import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
@@ -11,7 +10,11 @@ import com.nosliw.data.core.runtime.HAPResourceManager;
 
 public class HAPResourceManagerJSConverter  implements HAPResourceManager{
 
-	private HAPDBAccess m_dbAccess = HAPDBAccess.getInstance();
+	private HAPDataAccessRuntimeJS m_dataAccess = null;
+	
+	public HAPResourceManagerJSConverter(HAPDataAccessRuntimeJS dataAccess){
+		this.m_dataAccess = dataAccess;
+	}
 	
 	@Override
 	public HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId) {
@@ -27,7 +30,7 @@ public class HAPResourceManagerJSConverter  implements HAPResourceManager{
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId) {
 		HAPResourceIdConverter resourceIdOperation = new HAPResourceIdConverter(resourceId);
-		HAPResourceDataJSConverterImp converterResource = this.m_dbAccess.getDataTypeConverter(resourceIdOperation.getConverter());
+		HAPResourceDataJSConverterImp converterResource = this.m_dataAccess.getDataTypeConverter(resourceIdOperation.getConverter());
 		if(converterResource!=null)		return new HAPResource(resourceId, converterResource, null);
 		else return null;
 	}

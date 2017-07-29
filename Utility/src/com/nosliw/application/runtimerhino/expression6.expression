@@ -1,0 +1,42 @@
+{
+	"name": "expression6",
+	"expressionDefinitions": {
+		"main": {
+			"expression": "?(baseVarUrl)?.subString(from:?(fromVar)?,to:&(to)&)",
+			"description": "converter",
+			"constants": {
+				"base": {
+					"dataTypeId": "test.string",
+					"value": "This is my world!"
+				},
+				"from": {
+					"dataTypeId": "test.integer",
+					"value": "3"
+				},
+				"to": {
+					"dataTypeId": "test.integer",
+					"value": "7"
+				}
+			},
+			"variableCriterias": {
+				"baseVarUrl": "test.url",
+				"fromVar": "test.integer"
+			}
+		}
+	},
+	"variablesData": {
+		"fromVar": {
+			"dataTypeId": "test.integer",
+			"value": "3"
+		},
+		"baseVarUrl": {
+			"dataTypeId": "test.url",
+			"value": "This is my world!"
+		}
+	},
+	"result": {
+		"dataTypeId": "test.string;1.0.0",
+		"value": "p:Thfff",
+		"wapperType": "JSON"
+	}
+}

@@ -7,7 +7,6 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
-import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDiscoveryJSImp;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerJSConverter;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerJSHelper;

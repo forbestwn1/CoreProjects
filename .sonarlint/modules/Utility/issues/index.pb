@@ -9,3 +9,9 @@ e
 5src/com/nosliw/application/constant/ConstantJava.temp,d\f\dfc9236ecb2809b3c81ff21822d85c8bdf2c842b
 l
 <src/com/nosliw/application/constant/HAPJSConstantVerify.java,f\1\f1702a80ed9189cbec06285739d81ae434509528
+g
+7src/com/nosliw/application/test/HAPTestApplication.java,b\0\b0b559d29563e98847ddbf40a86dedca1efe5c3f
+g
+7src/com/nosliw/application/runtimejs/HAPJSImporter.java,8\4\8407af92e332f004003c1c2bc01c3bcc9f9a93d1
+l
+<src/com/nosliw/application/datatype/HAPDataTypeImporter.java,b\2\b2870470c9a851c228022e89c28c3b5cf2315799

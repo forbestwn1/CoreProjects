@@ -63,6 +63,12 @@ public class HAPResourceHelper {
 		HAPResourceId out = null;
 		Class resourceIdClass = this.m_idToResourceId.get(resourceIdData.getClass());
 		try {
+			if(resourceIdClass==null || resourceIdData==null){
+				int kkkk = 5555;
+				kkkk++;
+			}
+			
+			
 			out = (HAPResourceId)resourceIdClass.getConstructor(resourceIdData.getClass()).newInstance(resourceIdData);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.imp.runtime.js.io;
+package com.nosliw.application.loader.runtimejs;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,17 +17,19 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeVersion;
 import com.nosliw.data.core.HAPOperationId;
+import com.nosliw.data.core.imp.HAPDataAccessDataType;
 import com.nosliw.data.core.imp.HAPOperationImp;
-import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataJSOperationImp;
+import com.nosliw.data.core.imp.runtime.js.HAPDataAccessRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
+import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataJSConverterImp;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDataHelperImp;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
@@ -41,7 +43,8 @@ import com.nosliw.data.core.runtime.js.rhino.HAPRhinoDataUtility;
 
 public class HAPJSImporter {
 
-	private HAPDBAccess m_dbAccess = null;
+	private HAPDataAccessRuntimeJS m_jsRuntimeDataAccess = null;
+	private HAPDataAccessDataType m_dataTypeDataAccess = null;
 	
 	private String m_operationTemplate = null;
 	
@@ -51,13 +54,14 @@ public class HAPJSImporter {
 		titleToResourceType.put("helper", HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER);
 	}
 	
-	public HAPJSImporter(){
-		this.m_dbAccess = HAPDBAccess.getInstance();
+	public HAPJSImporter(HAPDataAccessRuntimeJS runtimeDataAccess, HAPDataAccessDataType dataTypeDataAccess){
+		this.m_jsRuntimeDataAccess = runtimeDataAccess;
+		this.m_dataTypeDataAccess = dataTypeDataAccess;
 		
-		this.m_dbAccess.createDBTable(HAPResourceDataJSOperationImp._VALUEINFO_NAME);
-		this.m_dbAccess.createDBTable(HAPJSResourceDependency._VALUEINFO_NAME);
-		this.m_dbAccess.createDBTable(HAPResourceDataHelperImp._VALUEINFO_NAME);
-		this.m_dbAccess.createDBTable(HAPResourceDataJSConverterImp._VALUEINFO_NAME);
+		this.m_jsRuntimeDataAccess.createDBTable(HAPResourceDataJSOperationImp._VALUEINFO_NAME);
+		this.m_jsRuntimeDataAccess.createDBTable(HAPJSResourceDependency._VALUEINFO_NAME);
+		this.m_jsRuntimeDataAccess.createDBTable(HAPResourceDataHelperImp._VALUEINFO_NAME);
+		this.m_jsRuntimeDataAccess.createDBTable(HAPResourceDataJSConverterImp._VALUEINFO_NAME);
 	}
 	
 	public void loadFromFolder(String folderPath){
@@ -131,21 +135,21 @@ public class HAPJSImporter {
 				NativeObject operationObjJS = (NativeObject)operationsObjJS.get(operationName);
 				
 				HAPJSResourceDependency dep = this.processOperationObject(operationObjJS, dataTypeId, operationName, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION);
-				this.m_dbAccess.saveEntity(dep);
+				this.m_jsRuntimeDataAccess.saveEntity(dep);
 			}
 			
 			//convert to
 			NativeObject convertToObjJS = (NativeObject)dataTypeObjJS.get(HAPConstant.DATAOPERATION_TYPE_CONVERTTO);
 			if(convertToObjJS!=null){
 				HAPJSResourceDependency toDep = this.processOperationObject(convertToObjJS, dataTypeId, HAPConstant.DATAOPERATION_TYPE_CONVERTTO, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER);
-				this.m_dbAccess.saveEntity(toDep);
+				this.m_jsRuntimeDataAccess.saveEntity(toDep);
 			}
 			
 			//convert from
 			NativeObject convertFromObjJS = (NativeObject)dataTypeObjJS.get(HAPConstant.DATAOPERATION_TYPE_CONVERTFROM);
 			if(convertFromObjJS!=null){
 				HAPJSResourceDependency fromDep = this.processOperationObject(convertFromObjJS, dataTypeId, HAPConstant.DATAOPERATION_TYPE_CONVERTFROM, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER);
-				this.m_dbAccess.saveEntity(fromDep);
+				this.m_jsRuntimeDataAccess.saveEntity(fromDep);
 			}
         }
     }
@@ -159,10 +163,10 @@ public class HAPJSImporter {
     	switch(resourceType){
     	case HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION:
         	String operationId = this.getOperationId(dataTypeId, operationName);
-    		this.m_dbAccess.saveEntity(new HAPResourceDataJSOperationImp(script, operationId, dataTypeId, operationName));
+    		this.m_jsRuntimeDataAccess.saveEntity(new HAPResourceDataJSOperationImp(script, operationId, dataTypeId, operationName));
     		break;
     	case HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER:
-    		this.m_dbAccess.saveEntity(new HAPResourceDataJSConverterImp(script, dataTypeId, operationName));
+    		this.m_jsRuntimeDataAccess.saveEntity(new HAPResourceDataJSConverterImp(script, dataTypeId, operationName));
     		break;
     	}
     	
@@ -241,7 +245,7 @@ public class HAPJSImporter {
 		case HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER:
 			String helperScript = new HAPRhinoDataUtility().toJson(resourceObjJS)+""; 
 			HAPResourceDataHelperImp helperResource = new HAPResourceDataHelperImp(helperScript);
-			helperResource = (HAPResourceDataHelperImp)this.m_dbAccess.saveEntity(helperResource);
+			helperResource = (HAPResourceDataHelperImp)this.m_jsRuntimeDataAccess.saveEntity(helperResource);
 			resourceId = new HAPResourceIdJSHelper(helperResource.getId());
 			break;
 		}
@@ -249,7 +253,7 @@ public class HAPJSImporter {
 	}
 	
 	private String getOperationId(HAPDataTypeId dataTypeId, String operationName){
-		HAPOperationImp operation = this.m_dbAccess.getOperationBasicInfoByName(dataTypeId, operationName);
+		HAPOperationImp operation = this.m_dataTypeDataAccess.getOperationBasicInfoByName(dataTypeId, operationName);
 		return operation.getId();
 	}
 	
@@ -293,6 +297,17 @@ public class HAPJSImporter {
 		String out = titleToResourceType.get(title);
 		if(out!=null)   return out;
 		else return title;
+	}
+	
+	public static void main(String[] args){
+
+		HAPModuleRuntimeJS runtimeJSModule = new HAPModuleRuntimeJS().init(HAPValueInfoManager.getInstance());;
+
+		HAPJSImporter jsImporter = new HAPJSImporter(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
+		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");
+		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataTypeTest");
+
+//		HAPDBAccess.getInstance().close();
 	}
 	
 }

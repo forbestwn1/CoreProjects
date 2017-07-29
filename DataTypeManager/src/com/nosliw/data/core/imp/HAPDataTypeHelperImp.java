@@ -19,15 +19,18 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementIds;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementRange;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaOr;
 import com.nosliw.data.core.expression.HAPMatchers;
-import com.nosliw.data.core.imp.io.HAPDBAccess;
 
 public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
-	private HAPDBAccess m_dbAccess = HAPDBAccess.getInstance();
+	private HAPDataAccessDataType m_dataAccess = null;
+	
+	public HAPDataTypeHelperImp(HAPDataAccessDataType dataAccess){
+		this.m_dataAccess = dataAccess;
+	}
 	
 	@Override
 	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeId dataTypeInfo, String name) {
-		return this.m_dbAccess.getDataTypeOperation(dataTypeInfo, name);
+		return this.m_dataAccess.getDataTypeOperation(dataTypeInfo, name);
 	}
 	
 	@Override
@@ -38,7 +41,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		
 		if(to!=null){
 			toSet = new HashSet<HAPDataTypeId>();
-			HAPDataTypePictureImp toPic = this.m_dbAccess.getDataTypePicture(to);
+			HAPDataTypePictureImp toPic = this.m_dataAccess.getDataTypePicture(to);
 			Set<HAPRelationship> relationships = (Set<HAPRelationship>)toPic.getRelationships();
 			for(HAPRelationship relationship : relationships){
 				toSet.add(relationship.getTarget());
@@ -47,7 +50,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 		if(from!=null){
 			fromSet = new HashSet<HAPDataTypeId>();
-			HAPDataTypeFamilyImp fromFamily = this.m_dbAccess.getDataTypeFamily(from);
+			HAPDataTypeFamilyImp fromFamily = this.m_dataAccess.getDataTypeFamily(from);
 			Set<HAPRelationship> relationships = (Set<HAPRelationship>)fromFamily.getRelationships();
 			for(HAPRelationship relationship : relationships){
 				fromSet.add(relationship.getSource());
@@ -77,7 +80,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 	@Override
 	public HAPRelationship compatibleWith(HAPDataTypeId dataTypeId1, HAPDataTypeId dataTypeId2){
-		return this.m_dbAccess.getRelationship(dataTypeId1, dataTypeId2);
+		return this.m_dataAccess.getRelationship(dataTypeId1, dataTypeId2);
 	}
 	
 	@Override
@@ -126,7 +129,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 	@Override
 	public Set<HAPRelationship> getRootDataTypeRelationship(HAPDataTypeId dataTypeId){
-		List<HAPRelationshipImp> rootRelationships = this.m_dbAccess.getRelationships(dataTypeId, HAPConstant.DATATYPE_RELATIONSHIPTYPE_ROOT);
+		List<HAPRelationshipImp> rootRelationships = this.m_dataAccess.getRelationships(dataTypeId, HAPConstant.DATATYPE_RELATIONSHIPTYPE_ROOT);
 		return new HashSet<HAPRelationship>(rootRelationships);
 	}
 	
@@ -135,7 +138,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	public HAPDataTypeId getTrunkDataType(HAPDataTypeCriteria criteria) {
 		List<HAPDataTypeId> dataTypeIds = new ArrayList<HAPDataTypeId>(criteria.getValidDataTypeId(this));
 		HAPDataTypeId firstDataTypeId = dataTypeIds.get(0);
-		HAPDataTypeFamily firstDataTypeFamily = this.m_dbAccess.getDataTypeFamily(firstDataTypeId);
+		HAPDataTypeFamily firstDataTypeFamily = this.m_dataAccess.getDataTypeFamily(firstDataTypeId);
 		
 		List<HAPRelationship> candidates = new ArrayList<HAPRelationship>();
 		

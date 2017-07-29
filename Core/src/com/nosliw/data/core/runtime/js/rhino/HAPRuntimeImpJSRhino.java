@@ -60,8 +60,6 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	//store all the task, for instance, execute expression, load resources
 	private Map<String, HAPRuntimeTask> m_tasks;
 	
-	public HAPRuntimeImpJSRhino(){}
-	
 	public HAPRuntimeImpJSRhino(HAPResourceDiscovery resourceDiscovery, HAPResourceManager resourceMan){
 		this.m_resourceDiscovery = resourceDiscovery;
 		this.m_resourceManager = resourceMan;

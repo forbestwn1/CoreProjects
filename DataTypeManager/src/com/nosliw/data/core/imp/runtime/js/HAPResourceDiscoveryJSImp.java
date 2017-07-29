@@ -8,7 +8,6 @@ import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
-import com.nosliw.data.core.imp.io.HAPDBAccess;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
@@ -17,17 +16,17 @@ import com.nosliw.data.core.runtime.js.HAPResourceDiscoveryJS;
 
 public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 
-	private HAPDBAccess m_dbAccess;
+	private HAPDataAccessRuntimeJS m_dataAccess;
 	
-	public HAPResourceDiscoveryJSImp(){
-		this.m_dbAccess = HAPDBAccess.getInstance();
+	public HAPResourceDiscoveryJSImp(HAPDataAccessRuntimeJS dataAccess){
+		this.m_dataAccess = dataAccess;
 		this.init();
 	}
 
 	private void init(){
 	}
 	
-	public HAPDBAccess getDBAccess(){		return this.m_dbAccess;	}
+//	public HAPDBAccess getDBAccess(){		return this.m_dataAccess;	}
 	
 	@Override
 	public List<HAPResourceInfo> discoverResourceRequirement(HAPDataTypeId dataTypeId, HAPOperation dataOpInfo) {
@@ -68,7 +67,7 @@ public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 	
 	public List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId){
 		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
-		HAPJSResourceDependency dependency = this.m_dbAccess.getJSResourceDependency(resourceId);
+		HAPJSResourceDependency dependency = this.m_dataAccess.getJSResourceDependency(resourceId);
 		if(dependency!=null)  out = dependency.getDependency();
 		return out;
 	}

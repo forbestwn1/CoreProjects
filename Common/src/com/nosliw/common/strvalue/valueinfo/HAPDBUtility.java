@@ -24,7 +24,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 
-public class HAPSqlUtility {
+public class HAPDBUtility {
 
 	public static String dropoffTableSql(HAPDBTableInfo tableInfo){
 		return "DROP TABLE IF EXISTS " + tableInfo.getTableName() + ";";
@@ -39,8 +39,8 @@ public class HAPSqlUtility {
 	}
 	
 	public static void createDBTable(HAPDBTableInfo tableInfo, Connection connection){
-		String dropoffSql = HAPSqlUtility.dropoffTableSql(tableInfo);
-		String createSql = HAPSqlUtility.createTableSql(tableInfo);
+		String dropoffSql = HAPDBUtility.dropoffTableSql(tableInfo);
+		String createSql = HAPDBUtility.createTableSql(tableInfo);
 		
 		Statement stmt = null;
 		try {

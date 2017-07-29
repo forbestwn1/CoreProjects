@@ -1,4 +1,4 @@
-package com.nosliw.data.core.imp.io;
+package com.nosliw.application.loader.datatype;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,6 +10,7 @@ import java.util.Set;
 import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterXML;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
@@ -21,33 +22,28 @@ import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.HAPRelationshipPathSegment;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
+import com.nosliw.data.core.imp.HAPDataAccessDataType;
 import com.nosliw.data.core.imp.HAPDataTypeImp;
 import com.nosliw.data.core.imp.HAPDataTypeImpLoad;
-import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
 import com.nosliw.data.core.imp.HAPDataTypeOperationImp;
 import com.nosliw.data.core.imp.HAPDataTypePictureImp;
+import com.nosliw.data.core.imp.HAPModuleDataType;
 import com.nosliw.data.core.imp.HAPOperationImp;
 import com.nosliw.data.core.imp.HAPOperationVarInfoImp;
 import com.nosliw.data.core.imp.HAPRelationshipImp;
-import com.nosliw.data.core.imp.init.HAPModuleInit;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceDiscoveryJSImp;
-import com.nosliw.data.core.imp.runtime.js.io.HAPJSImporter;
 
-public class HAPDataTypeImporterManager {
+public class HAPDataTypeImporter {
 	
-	private HAPDBAccess m_dbAccess; 
+	private HAPDataAccessDataType m_dataAccess; 
 	
-	private HAPDataTypeManagerImp m_dataTypeManager;
-	
-	public HAPDataTypeImporterManager(HAPDataTypeManagerImp dataTypeMan){
-		this.m_dataTypeManager = dataTypeMan;
-		this.m_dbAccess = this.m_dataTypeManager.getDBAccess();
+	public HAPDataTypeImporter(HAPDataAccessDataType dataAccess){
+		this.m_dataAccess = dataAccess;
 	}
 	
 	public void loadAllDataType(){
-		this.m_dbAccess.createDBTable(HAPDataTypeImpLoad._VALUEINFO_NAME);
-		this.m_dbAccess.createDBTable(HAPOperationImp._VALUEINFO_NAME);
-		this.m_dbAccess.createDBTable(HAPOperationVarInfoImp._VALUEINFO_NAME);
+		this.m_dataAccess.createDBTable(HAPDataTypeImpLoad._VALUEINFO_NAME);
+		this.m_dataAccess.createDBTable(HAPOperationImp._VALUEINFO_NAME);
+		this.m_dataAccess.createDBTable(HAPOperationVarInfoImp._VALUEINFO_NAME);
 		
 		new HAPClassFilter(){
 			@Override
@@ -69,19 +65,19 @@ public class HAPDataTypeImporterManager {
 	}
 
 	public void buildDataTypePictures(){
-		this.m_dbAccess.createDBTable(HAPRelationshipImp._VALUEINFO_NAME);
+		this.m_dataAccess.createDBTable(HAPRelationshipImp._VALUEINFO_NAME);
 		
-		List<HAPDataTypeImp> dataTypes = this.m_dbAccess.getAllDataTypes();
+		List<HAPDataTypeImp> dataTypes = this.m_dataAccess.getAllDataTypes();
 		for(HAPDataTypeImp dataType : dataTypes){
 			HAPDataTypePictureImp dataTypePic = this.buildDataTypePicture((HAPDataTypeId)dataType.getName());
-			this.m_dbAccess.saveDataTypePicture(dataTypePic);
+			this.m_dataAccess.saveDataTypePicture(dataTypePic);
 		}
 	}
 	
 	public void buildDataTypeOperations(){
-		this.m_dbAccess.createDBTable(HAPDataTypeOperationImp._VALUEINFO_NAME);
+		this.m_dataAccess.createDBTable(HAPDataTypeOperationImp._VALUEINFO_NAME);
 
-		List<HAPDataTypeImp> dataTypes = this.m_dbAccess.getAllDataTypes();
+		List<HAPDataTypeImp> dataTypes = this.m_dataAccess.getAllDataTypes();
 		for(HAPDataTypeImp dataType : dataTypes){
 			this.buildDataTypeOperations(dataType);
 		}
@@ -90,10 +86,10 @@ public class HAPDataTypeImporterManager {
 	private Map<String, HAPDataTypeOperationImp> buildDataTypeOperations(HAPDataTypeImp dataType){
 		Map<String, HAPDataTypeOperationImp> out = new LinkedHashMap<String, HAPDataTypeOperationImp>();
 		
-		List<HAPDataTypeOperationImp> currentDataTypeOperations = this.m_dbAccess.getNormalDataTypeOperations(dataType.getName());
+		List<HAPDataTypeOperationImp> currentDataTypeOperations = this.m_dataAccess.getNormalDataTypeOperations(dataType.getName());
 		if(currentDataTypeOperations.size()==0){
 			//not build yet
-			HAPDataTypePictureImp pic = this.m_dbAccess.getDataTypePicture((HAPDataTypeId)dataType.getName());
+			HAPDataTypePictureImp pic = this.m_dataAccess.getDataTypePicture((HAPDataTypeId)dataType.getName());
 			
 			//operations from parent
 			List<HAPDataTypeId> parentsId = dataType.getParentsInfo();
@@ -122,7 +118,7 @@ public class HAPDataTypeImporterManager {
 			//store all datat type operation (normal + new + others)
 			List<HAPDataTypeOperationImp> toSave = new ArrayList<HAPDataTypeOperationImp>();
 			//operations from own
-			List<HAPOperationImp> ownOperations = this.m_dbAccess.getOperationInfosByDataType((HAPDataTypeId)dataType.getName());
+			List<HAPOperationImp> ownOperations = this.m_dataAccess.getOperationInfosByDataType((HAPDataTypeId)dataType.getName());
 			for(HAPOperationImp ownOperation : ownOperations){
 				HAPDataTypeOperationImp ownDataTypeOperation = new HAPDataTypeOperationImp(ownOperation);
 				if(HAPDataUtility.isNormalDataOpration(ownOperation)){
@@ -135,7 +131,7 @@ public class HAPDataTypeImporterManager {
 			}
 
 			toSave.addAll(out.values());
-			this.m_dbAccess.saveDataTypeOperation(toSave);
+			this.m_dataAccess.saveDataTypeOperation(toSave);
 		}
 		else{
 			for(HAPDataTypeOperationImp op : currentDataTypeOperations){
@@ -151,7 +147,7 @@ public class HAPDataTypeImporterManager {
 		InputStream dataTypeStream = cls.getResourceAsStream("datatype.xml");
 		HAPDataTypeImpLoad dataType = (HAPDataTypeImpLoad)HAPStringableEntityImporterXML.readRootEntity(dataTypeStream, HAPDataTypeImpLoad._VALUEINFO_NAME);
 		dataType.resolveByConfigure(null);
-		m_dbAccess.saveDataType(dataType);
+		m_dataAccess.saveDataType(dataType);
 
 		List<HAPOperation> ops = dataType.getDataOperationInfos();
 		InputStream opsStream = cls.getResourceAsStream("operations.xml");
@@ -179,7 +175,7 @@ public class HAPDataTypeImporterManager {
 				}
 			}
 			
-			m_dbAccess.saveOperation(opImp, dataType);
+			m_dataAccess.saveOperation(opImp, dataType);
 		}
 	}
 
@@ -240,27 +236,22 @@ public class HAPDataTypeImporterManager {
 	}
 	
 	private HAPDataTypePicture getDataTypePicture(HAPDataTypeId dataTypeId){
-		return this.m_dbAccess.getDataTypePicture(dataTypeId);
+		return this.m_dataAccess.getDataTypePicture(dataTypeId);
 	}
 	
 	private HAPDataTypeImp getDataType(HAPDataTypeId dataTypeId) {
-		return this.m_dbAccess.getDataType(dataTypeId);
+		return this.m_dataAccess.getDataType(dataTypeId);
 	}
 	
 	
 	public static void main(String[] args){
-		HAPModuleInit.init();
+
+		HAPModuleDataType dataTypeModule = new HAPModuleDataType().init(HAPValueInfoManager.getInstance());;
 		
-		HAPDataTypeImporterManager man = new HAPDataTypeImporterManager(new HAPDataTypeManagerImp());
-		man.loadAllDataType();
-		man.buildDataTypePictures();
-		man.buildDataTypeOperations();
-		
-		new HAPResourceDiscoveryJSImp();
-		
-		HAPJSImporter jsImporter = new HAPJSImporter();
-		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataType");
-		jsImporter.loadFromFolder("C:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\DataTypeTest");
+		HAPDataTypeImporter dataTypeImporter = new HAPDataTypeImporter(dataTypeModule.getDataAccess());
+		dataTypeImporter.loadAllDataType();
+		dataTypeImporter.buildDataTypePictures();
+		dataTypeImporter.buildDataTypeOperations();
 		
 //		HAPDBAccess.getInstance().close();
 	}
