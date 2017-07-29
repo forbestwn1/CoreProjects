@@ -60,7 +60,7 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 			data : serviceRequests,
 			async : true,
 			success : function(serviceDataResult, status){
-				if(nosliwErrorUtility.isSuccess(serviceDataResult)==true){
+				if(node_errorUtility.isSuccess(serviceDataResult)==true){
 					nosliw.logging.info(loc_moduleName, loc_name, "Success remote processing");
 					
 					var serviceDatas = serviceDataResult.data;

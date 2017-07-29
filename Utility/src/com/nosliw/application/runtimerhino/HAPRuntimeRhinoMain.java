@@ -20,14 +20,19 @@ import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 public class HAPRuntimeRhinoMain {
 
 	private static void executeSuite(String suiteName, HAPExpressionManagerImp expressionMan, HAPModuleRuntimeJS runtimeJSModule){
+		//new runtime
 		HAPRuntimeImpJSRhino runtime = new HAPRuntimeImpJSRhinoImp(runtimeJSModule);
+
+		//runtim init
+		runtime.start();
+
 		try{
+			//parse to build expression object
 			final HAPExpressionDefinitionSuiteImp suite = (HAPExpressionDefinitionSuiteImp)expressionMan.getExpressionDefinitionSuite(suiteName);
 			HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression(suiteName, "main", null);
 			Map<String, HAPData> varData = suite.getVariableData();
 			
-			runtime.start();
-
+			//execute expression
 			runtime.executeExpressionTask(new HAPExpressionTaskRhino(expression, varData){
 				@Override
 				public void doSuccess() {
@@ -51,17 +56,21 @@ public class HAPRuntimeRhinoMain {
 			e.printStackTrace();
 		}
 		finally{
+			//shut down runtime
 			runtime.close();
 		}
 		
 	}
 	
 	public static void main(String[] args){
+		
+		//module init
 		HAPModuleRuntimeJS runtimeJSModule = new HAPModuleRuntimeJS().init(HAPValueInfoManager.getInstance());;
 		
+		//import expression definition
 		HAPDataTypeHelper dataTypeHelper = new HAPDataTypeHelperImp(runtimeJSModule.getDataTypeDataAccess());
 		HAPExpressionManagerImp expressionMan = new HAPExpressionManagerImp(new HAPExpressionParserImp(), dataTypeHelper);
-		expressionMan.importExpressionFromFolder(HAPFileUtility.getClassFolderPath(HAPRuntimeRhinoMain.class));
+		expressionMan.importExpressionFromFolder(HAPFileUtility.getClassFolderName(HAPRuntimeRhinoMain.class));
 
 		executeSuite("expression6", expressionMan, runtimeJSModule);
 		

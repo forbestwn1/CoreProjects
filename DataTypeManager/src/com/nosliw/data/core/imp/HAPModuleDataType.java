@@ -11,7 +11,7 @@ public class HAPModuleDataType {
 	
 	public HAPModuleDataType init(HAPValueInfoManager valueInfoManager){
 		//value info
-		valueInfoManager.importFromFolder(HAPFileUtility.getClassFolderPath(HAPDataAccessDataType.class), false);
+		valueInfoManager.importFromClassFolder(this.getClass());
 
 		this.m_dataAccess = new HAPDataAccessDataType(valueInfoManager, HAPDBSource.getDefaultDBSource());
 		

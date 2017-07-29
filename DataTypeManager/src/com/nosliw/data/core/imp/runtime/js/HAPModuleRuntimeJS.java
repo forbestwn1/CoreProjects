@@ -2,7 +2,6 @@ package com.nosliw.data.core.imp.runtime.js;
 
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.imp.HAPDataAccessDataType;
@@ -27,7 +26,7 @@ public class HAPModuleRuntimeJS {
 		m_dataTypeModule.init(valueInfoManager);
 
 		//value info
-		HAPValueInfoManager.getInstance().importFromFolder(HAPFileUtility.getClassFolderPath(HAPResourceDiscoveryJSImp.class), false);
+		valueInfoManager.importFromClassFolder(this.getClass());
 
 		//register resource type
 		HAPResourceHelper resourceHelper = HAPResourceHelper.getInstance();

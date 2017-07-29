@@ -39,10 +39,6 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	//info used to library resource that do not need to add to resource manager
 	public static final String ADDTORESOURCEMANAGER = "ADDTORESOURCEMANAGER";
 	
-	private HAPResourceDiscovery m_resourceDiscovery;
-	
-	private HAPResourceManager m_resourceManager;
-	
 	private Context m_context;
 	
 	//root scope
@@ -61,8 +57,7 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 	private Map<String, HAPRuntimeTask> m_tasks;
 	
 	public HAPRuntimeImpJSRhino(HAPResourceDiscovery resourceDiscovery, HAPResourceManager resourceMan){
-		this.m_resourceDiscovery = resourceDiscovery;
-		this.m_resourceManager = resourceMan;
+		super(resourceDiscovery, resourceMan);
 		this.m_tasks = new LinkedHashMap<String, HAPRuntimeTask>();
 		this.m_taskScope = new LinkedHashMap<String, Scriptable>();
 	}
@@ -283,12 +278,6 @@ public class HAPRuntimeImpJSRhino extends HAPRuntimeImpJS implements HAPRuntimeG
 
 		return out;
 	}
-	
-	@Override
-	public HAPResourceManager getResourceManager() {		return this.m_resourceManager;	}
-
-	@Override
-	public HAPResourceDiscovery getResourceDiscovery() {		return this.m_resourceDiscovery;	}
 	
 	private void loadScript(HAPJSScriptInfo scriptInfo, Context context, Scriptable scope){
 		String file = scriptInfo.isFile(); 

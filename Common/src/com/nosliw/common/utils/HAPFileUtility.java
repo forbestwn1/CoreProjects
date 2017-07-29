@@ -10,8 +10,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class HAPFileUtility {
 	
@@ -158,7 +171,67 @@ public class HAPFileUtility {
 		return stream;
 	}
 	
-	public static String getClassFolderPath(Class cs){
+	public static Path getClassFolderPath(Class cs){
+		Path out = null;
+		try{
+			URI uri = cs.getResource("").toURI();
+	        System.out.println("Starting from: " + uri);
+		    try (FileSystem fileSystem = (uri.getScheme().equals("jar") ? FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap()) : null)) {
+		    	out = Paths.get(uri);
+		    }
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return out;
+	}
+	
+	public static String getClassFolderName(Class cs){
+		/*
+		try{
+			{
+		     URI uri = cs.getResource("").toURI();
+		        System.out.println("Starting from: " + uri);
+		        try (FileSystem fileSystem = (uri.getScheme().equals("jar") ? FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap()) : null)) {
+		            Path myPath = Paths.get(uri);
+		            Files.walkFileTree(myPath, new SimpleFileVisitor<Path>() { 
+		                @Override
+		                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+		                	if(file.toString().endsWith("xml")){
+			                    System.out.println(file);
+			                    BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8);
+			                    System.out.println(reader.readLine());
+			                    System.out.println(reader.readLine());
+			                    System.out.println(reader.readLine());
+			                    System.out.println(reader.readLine());
+		                	}
+		                    return FileVisitResult.CONTINUE;
+		                }
+		            });
+		        }
+			}
+			
+			
+		        {
+	       URI uri = cs.getResource("").toURI();
+	        Path myPath;
+	        if (uri.getScheme().equals("jar")) {
+	            FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap());
+	            myPath = fileSystem.getPath("");
+	        } else {
+	            myPath = Paths.get(uri);
+	        }
+	        Stream<Path> walk = Files.walk(myPath, 1);
+	        for (Iterator<Path> it = walk.iterator(); it.hasNext();){
+	            System.out.println(it.next());
+	        }
+		        }
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		*/
+		
 		String fileFolder = cs.getResource("").getFile();
 		return fileFolder;
 	}

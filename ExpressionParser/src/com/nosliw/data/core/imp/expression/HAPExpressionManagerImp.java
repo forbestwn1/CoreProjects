@@ -49,7 +49,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	}
 	
 	private void init(){
-		String fileFolder = HAPFileUtility.getClassFolderPath(this.getClass()); 
+		String fileFolder = HAPFileUtility.getClassFolderName(this.getClass()); 
 		HAPValueInfoManager.getInstance().importFromFolder(fileFolder, false);
 		this.m_expressionDefinitionSuites = new LinkedHashMap<String, HAPExpressionDefinitionSuiteImp>();
 		this.m_idIndex = 1;

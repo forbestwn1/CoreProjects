@@ -5,7 +5,6 @@
 	<projects>
 		<project>DataTypeManager</project>
 		<project>ExpressionParser</project>
-		<project>DataTypeTest</project>
 		<project>Common</project>
 		<project>Core</project>
 	</projects>

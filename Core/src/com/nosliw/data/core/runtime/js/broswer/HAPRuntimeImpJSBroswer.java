@@ -9,29 +9,27 @@ import com.nosliw.data.core.runtime.js.HAPRuntimeImpJS;
 
 public abstract class HAPRuntimeImpJSBroswer extends HAPRuntimeImpJS{
 
-	private HAPResourceDiscovery m_resourceDiscovery;
-	
-	private HAPResourceManager m_resourceManager;
-
 	public HAPRuntimeImpJSBroswer(HAPResourceDiscovery resourceDiscovery, HAPResourceManager resourceMan){
-		this.m_resourceDiscovery = resourceDiscovery;
-		this.m_resourceManager = resourceMan;
+		super(resourceDiscovery, resourceMan);
 	}
 
-	
 	@Override
 	public HAPRuntimeInfo getRuntimeInfo() {		return new HAPRuntimeInfo(HAPConstant.RUNTIME_LANGUAGE_JS, HAPConstant.RUNTIME_ENVIRONMENT_BROWSER);	}
 
 	@Override
-	public HAPResourceManager getResourceManager() {		return this.m_resourceManager;	}
-
-	@Override
-	public HAPResourceDiscovery getResourceDiscovery() {		return this.m_resourceDiscovery;	}
-
+	public void executeExpressionTask(HAPExecuteExpressionTask result) {
+		throw new RuntimeException();
+	}
 	
 	@Override
-	public void executeExpressionTask(HAPExecuteExpressionTask result) {
-		// TODO Auto-generated method stub
+	public void start() {
 		
 	}
+
+
+	@Override
+	public void close() {
+		
+	}
+
 }

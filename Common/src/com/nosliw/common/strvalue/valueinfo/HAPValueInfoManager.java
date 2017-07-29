@@ -1,11 +1,24 @@
 package com.nosliw.common.strvalue.valueinfo;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -40,6 +53,29 @@ public class HAPValueInfoManager {
 			m_instance.loadValueInfos();
 		}
 		return m_instance;
+	}
+	
+	public void importFromClassFolder(Class cs){
+		try{
+			URI uri = cs.getResource("").toURI();
+		    try (FileSystem fileSystem = (uri.getScheme().equals("jar") ? FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap()) : null)) {
+		    	Path path = Paths.get(uri);
+				List<InputStream> inputStreams = new ArrayList<InputStream>();
+				Files.walkFileTree(path, new HashSet(), 1, new SimpleFileVisitor<Path>() { 
+		            @Override
+		            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+		            	if(file.getFileName().toString().startsWith("valueinfo")){
+		            		inputStreams.add(Files.newInputStream(file));
+		            	}
+		                return FileVisitResult.CONTINUE;
+		            }
+		        });
+				this.importFromXML(inputStreams);
+		    }
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	public void importFromFolder(String folderPath, boolean recur){
