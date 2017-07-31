@@ -39,7 +39,7 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 	 * 		service : url service
 	 * 		command : command to use
 	 */
-	function loc_syncRemoteCall(){
+	var loc_syncRemoteCall = function(){
 		//set flag so that no new processing allowed before this function is finished
 		loc_syncReady = false;
 		
@@ -48,17 +48,13 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 		for(var i in loc_syncTasks){
 			serviceTaskRequests.push(loc_syncTasks[i].getRemoteServiceRequest());
 		}
-		var serviceRequests = {};
-//		serviceRequests[node_COMMONATRIBUTECONSTANT.SERVLETPARMS_CLIENTID] = nosliw.getClientId();
-		serviceRequests[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND] = loc_setting.getConfigure(node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND);
-		serviceRequests[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_PARMS] = JSON.stringify(serviceTaskRequests);
+		var remoteRequestData = {};
+//		remoteRequestData[node_COMMONATRIBUTECONSTANT.SERVLETPARMS_CLIENTID] = nosliw.getClientId();
+		remoteRequestData[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND] = loc_setting.getConfigure(node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND);
+		remoteRequestData[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_PARMS] = JSON.stringify(serviceTaskRequests);
 	
-		$.ajax({
-			url : loc_setting.getConfigure(node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_SERVICE),
-			type : "POST",
-			dataType: "json",
-			data : serviceRequests,
-			async : true,
+		var aaaa = _.extend({
+			data : remoteRequestData,
 			success : function(serviceDataResult, status){
 				if(node_errorUtility.isSuccess(serviceDataResult)==true){
 					nosliw.logging.info(loc_moduleName, loc_name, "Success remote processing");
@@ -110,15 +106,72 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 				//finish processing, so that ready to process again
 				loc_syncReady = true;
 			},
-		});
-	};
+		}, loc_setting.getConfiguresObject());
+		
+		var kkk;
+		
+		$.ajax(_.extend({
+			data : remoteRequestData,
+			success : function(serviceDataResult, status){
+				if(node_errorUtility.isSuccess(serviceDataResult)==true){
+					nosliw.logging.info(loc_moduleName, loc_name, "Success remote processing");
+					
+					var serviceDatas = serviceDataResult.data;
+					//processed normally
+					for(var j in serviceDatas){
+						var serviceData = serviceDatas[j];
+						var task = loc_syncTasks[j];
+						var taskType = task.type;
 
+						if(taskType==node_COMMONCONSTANT.REMOTESERVICE_TASKTYPE_GROUP){
+							//for group task, handle child task first
+							for(var k in task.children)		loc_handleServiceResult(task.children[k], serviceData.data[k]);
+						}
+						//handle task
+						loc_handleServiceResult(task, serviceData);
+					}
+					//empty synTasks
+					loc_syncTasks = [];
+				}
+				else{
+					nosliw.logging.error(loc_moduleName, loc_name, "System error when processing tasks in snycTask :", serviceDataResult);
+					loc_processSyncRequestSystemError(serviceDataResult);
+				}
+				
+				//clear tasks
+				loc_syncTasks = [];
+				//ready to process new task
+				loc_syncReady = true;
+				//process sync task again
+				loc_processTasks();
+			},
+			error: function(obj, textStatus, errorThrown){
+				nosliw.logging.error(loc_moduleName, loc_name, "Exception when processing tasks in snycTask ", textStatus, errorThrown);
+
+				//when ajax error happened, which may be caused by network error, server is down or server internal error
+				//remote service manager is put into suspend status
+				//the service request is not removed
+				var serviceData = node_remoteServiceErrorUtility.createRemoteServiceExceptionServiceData(obj, textStatus, errorThrown); 
+				
+				node_remoteServiceUtility.handleServiceTask(loc_syncTasks, function(serviceTask){
+					loc_handleServiceResult(serviceTask, serviceData);
+					serviceTask.status = node_CONSTANT.REMOTESERVICE_SERVICESTATUS_FAIL;
+				});
+				
+				//suspend the system
+				loc_remoteServiceMan.interfaceObjectLifecycle.suspend();
+				//finish processing, so that ready to process again
+				loc_syncReady = true;
+			},
+		}, loc_setting.getConfiguresObject()));
+	};
+	
 	/*
 	 * process the system error (invalid client id, ...) 
 	 */
 	var loc_processSyncRequestSystemError = function(serviceData){
 		
-	}
+	};
 	
 	/*
 	 * call the responding handler according to service data

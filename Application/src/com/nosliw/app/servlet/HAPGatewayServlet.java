@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.json.JSONArray;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -16,6 +17,8 @@ import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceDiscovered;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
+import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
+import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 import com.nosliw.data.core.runtime.js.broswer.HAPRuntimeImpJSBroswer;
 
 @HAPEntityWithAttribute
@@ -43,15 +46,44 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 		switch(command){
 		case REQUEST_LOADRESOURCES:
 		{
+			//parpare data
 			JSONArray resourceInfosArray = (JSONArray)parms.get(REQUEST_LOADRESOURCES_RESOURCEINFOS);
 			List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
+			Map<HAPResourceId, HAPResourceInfo> resourcesInfo = new LinkedHashMap<HAPResourceId, HAPResourceInfo>();
 			for(int i=0; i<resourceInfosArray.length(); i++){
 				HAPResourceInfo resourceInfo = new HAPResourceInfo();
 				resourceInfo.buildObject(resourceInfosArray.opt(i), HAPSerializationFormat.JSON);
 				resourceIds.add(resourceInfo.getId());
+				resourcesInfo.put(resourceInfo.getId(), resourceInfo);  
 			}
+			//load resources
 			HAPLoadResourceResponse loadResourceResponse = this.getRuntime().getResourceManager().getResources(resourceIds);
-			if(loadResourceResponse.isSuccess())	out = HAPServiceData.createSuccessData(loadResourceResponse.getLoadedResources());
+			if(loadResourceResponse.isSuccess()){
+				//build script info according to resoruces
+				List<HAPJSScriptInfo> scriptsInfo = new ArrayList<HAPJSScriptInfo>();
+				for(HAPResource resource : loadResourceResponse.getLoadedResources()){
+					HAPResourceInfo resourceInfo = resourcesInfo.get(resource.getId());
+					scriptsInfo.addAll(HAPRuntimeJSScriptUtility.buildScriptForResource(resourceInfo, resource));
+				}
+				
+				//build response data
+				List<HAPJSScriptInfo> outScriptInfos = new ArrayList<HAPJSScriptInfo>(); 
+				HAPJSScriptInfo runnableScript = HAPJSScriptInfo.buildByScript("", "");
+				for(HAPJSScriptInfo scriptInfo : scriptsInfo){
+					String fileName = scriptInfo.isFile();
+					if(scriptInfo!=null){
+						
+					}
+					else{
+						//put all script into one 
+						String escaptedScript = StringEscapeUtils.escapeJavaScript(scriptInfo.getScript());
+						runnableScript.appendScript(scriptInfo.getScript());
+					}
+				}
+				outScriptInfos.add(runnableScript);
+				
+				out = HAPServiceData.createSuccessData(outScriptInfos);
+			}
 			else	out = HAPServiceData.createFailureData(loadResourceResponse.getFailedResourcesId(), "");
 			break;
 		}	

@@ -1,11 +1,26 @@
 package com.nosliw.data.core.runtime.js;
 
+import java.util.Map;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPFileUtility;
 
 /**
  * Store information related with script  
  */
-public class HAPJSScriptInfo {
+@HAPEntityWithAttribute
+public class HAPJSScriptInfo extends HAPSerializableImp{
+
+	@HAPAttribute
+	public static String NAME = "name";
+
+	@HAPAttribute
+	public static String FILE = "file";
+
+	@HAPAttribute
+	public static String SCRIPT = "script";
 
 	//name for the script, it is very useful when work with rhino, so that you can locate your code quickly during debuging
 	private String m_name;
@@ -14,10 +29,14 @@ public class HAPJSScriptInfo {
 	private String m_file;
 	
 	//script
-	private String m_script;
+	private StringBuffer m_script;
 	
 	public String isFile(){
 		return this.m_file;
+	}
+	
+	public void setFile(String file){
+		this.m_file = file;
 	}
 	
 	public String getName(){
@@ -26,10 +45,12 @@ public class HAPJSScriptInfo {
 	
 	public String getScript(){
 		if(this.m_file!=null){
-			this.m_script = HAPFileUtility.readFile(m_file);
+			this.m_script = new StringBuffer().append(HAPFileUtility.readFile(m_file));
 		}
-		return this.m_script;
+		return this.m_script.toString();
 	}
+	
+	public void appendScript(String script){		this.m_script.append(script);	}
 	
 	public static HAPJSScriptInfo buildByFile(String fileName, String name){
 		HAPJSScriptInfo out = new HAPJSScriptInfo();
@@ -40,8 +61,17 @@ public class HAPJSScriptInfo {
 
 	public static HAPJSScriptInfo buildByScript(String script, String name){
 		HAPJSScriptInfo out = new HAPJSScriptInfo();
-		out.m_script = script;
+		out.m_script = new StringBuffer().append(script);
 		out.m_name = name;
 		return out;
 	}
+
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(NAME, this.m_name);
+		jsonMap.put(SCRIPT, this.m_script.toString());
+		jsonMap.put(FILE, this.m_file);
+	}
+
+
 }

@@ -27,8 +27,6 @@ public abstract class HAPServiceServlet  extends HttpServlet{
 	@HAPAttribute
 	public static final String SERVLETPARMS_COMMAND = "command";
 	@HAPAttribute
-	public static final String SERVLETPARMS_SERVICE = "service";
-	@HAPAttribute
 	public static final String SERVLETPARMS_CLIENTID = "clientId";
 	@HAPAttribute
 	public static final String SERVLETPARMS_PARMS = "parms";

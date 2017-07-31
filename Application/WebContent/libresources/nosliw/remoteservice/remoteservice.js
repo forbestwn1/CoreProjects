@@ -9,6 +9,7 @@ var node_RemoteServiceTask;
 var node_createRemoteSyncTask;
 var node_COMMONCONSTANT;
 var node_CONSTANT;
+var node_COMMONATRIBUTECONSTANT;
 var node_makeObjectWithLifecycle;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -40,11 +41,20 @@ var node_createRemoteService = function(){
 	//a timed processor that triggered every 3 second
 	var loc_timerProcessor = undefined;
 	
-	//create default configure object for sync task  
-	var loc_syncTaskDefaultConfigure = node_createConfiguresBase(node_remoteServiceUtility.createRemoteServiceConfigures(node_COMMONCONSTANT.SERVICENAME_SERVICE, node_COMMONCONSTANT.SERVICECOMMAND_GROUPREQUEST));
-	
 	//predefined sync task configure, so that we don't need to create it everytime, just get it by name
 	var loc_syncTaskConfigures = {};
+
+	//default setting / base setting for synTask
+	var loc_syncTaskBaseConfigure = function(){
+		var setting = {
+			type : "POST",
+			dataType: "json",
+			async : true,
+		};
+		setting[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND] = node_COMMONCONSTANT.SERVICECOMMAND_GROUPREQUEST;
+		return node_createConfiguresBase(setting);
+	}();
+
 	
 	/*
 	 * add one service task to system
@@ -61,7 +71,7 @@ var node_createRemoteService = function(){
 			var configureName = loc_getConfigureName(syncName);
 			var syncTaksConfigure = loc_getSyncTaskConfiguresByName(configureName);
 			if(syncTaksConfigure==undefined){
-				syncTaksConfigure = loc_syncTaskDefaultConfigure.getBaseConfigures();
+				syncTaksConfigure = loc_syncTaskBaseConfigure.getBaseConfigures();
 			}
 			
 			syncTasks = node_createRemoteSyncTask(syncName, loc_out, syncTaksConfigure);
@@ -133,7 +143,7 @@ var node_createRemoteService = function(){
 		 * register predefined sync task configure
 		 */
 		registerSyncTaskConfigure : function(name, configure){
-			var newConfigure = loc_syncTaskDefaultConfigure.createConfigures(configure);
+			var newConfigure = loc_syncTaskBaseConfigure.createConfigures(configure);
 			loc_syncTaskConfigures[name] = newConfigure;
 		},
 		
@@ -198,6 +208,7 @@ nosliw.registerSetNodeDataEvent("remote.entity.RemoteServiceTask", function(){no
 nosliw.registerSetNodeDataEvent("remote.entity.createRemoteSyncTask", function(){node_createRemoteSyncTask = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", function(){node_makeObjectWithName = this.getData();});
 

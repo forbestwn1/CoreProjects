@@ -88,3 +88,7 @@ o
 ?src/com/nosliw/data/core/imp/runtime/js/HAPModuleRuntimeJS.java,1\c\1c3e8ed84ecf0efc91936598f47ec0576f4f466f
 z
 Jsrc/com/nosliw/data/core/imp/runtime/js/rhino/HAPRuntimeImpJSRhinoImp.java,f\5\f5cca0af12e1c958e7876acaf1ff8717a3941d8f
+t
+Dsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerJSImp.java,c\6\c6f353c914497dafc3efcdea49e8efcaea698a12
+z
+Jsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDataJSOperationImp.java,8\c\8c5da3711ed627d6736a6dc8549ade0384913a4b

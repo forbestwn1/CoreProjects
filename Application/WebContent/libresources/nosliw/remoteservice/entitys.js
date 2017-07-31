@@ -18,11 +18,16 @@ var node_RemoteServiceSetting = function(mode){
  * remote service request object (for ajax)
  */
 var node_RemoteServiceRequest = function(serviceTask){
+	//type of request: group or normal
 	this.type = serviceTask.type;
+	//service : command and parms
 	this.service = serviceTask.service;
+	//children request for group request
 	this.children = [];
+	//unique id within nosliw client
 	this.requestId = serviceTask.requestId;
 	
+	//build children request for group request
 	if(this.type==node_COMMONCONSTANT.REMOTESERVICE_TASKTYPE_GROUP){
 		for(var i in serviceTask.children){
 			this.children.push(new node_RemoteServiceRequest(serviceTask.children[i]));
@@ -31,17 +36,23 @@ var node_RemoteServiceRequest = function(serviceTask){
 };
 
 /*
- * single request object
+ * remote request object --- normal
  */
 var node_RemoteServiceTask = function(syncName, service, handlers, requestInfo, setting){
+	//normal task
 	this[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_REQUEST_TYPE] = node_COMMONCONSTANT.REMOTESERVICE_TASKTYPE_NORMAL;
+	//sync task name, different sync name have different configuration
 	this.syncName = syncName;
+	//parent requestInfo
 	this.requestInfo = requestInfo;
+	//service : command and parms
 	this.service = service;
+	//
 	this.setting = setting;
+	//handlers
 	this.handlers = handlers;
-	this.infos = {
-	};
+	this.infos = {};
+	//unique id within nosliw client
 	this.requestId = nosliw.generateId();
 	
 	//used for ajax request
@@ -49,10 +60,6 @@ var node_RemoteServiceTask = function(syncName, service, handlers, requestInfo, 
 };
 
 node_RemoteServiceTask.prototype = {
-	setServiceParm : function(name, value){
-		this.service[name]=value;
-	},
-	
 	getRemoteServiceRequest : function(){
 		return this.remoteRequest;
 	},
@@ -64,15 +71,21 @@ node_RemoteServiceTask.prototype = {
  * 
  */
 var node_RemoteServiceGroupTask = function(syncName, handlers, requestInfo, setting){
+	//task type : group
 	this[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_REQUEST_TYPE] = node_COMMONCONSTANT.REMOTESERVICE_TASKTYPE_GROUP;
+	//sync task name, different sync name have different configuration
 	this.syncName = syncName;
+	//parent requestInfo
 	this.requestInfo = requestInfo;
+	//
 	this.setting = setting;
+	//children remote service task
 	this.children = [];
+	//handlers
 	this.handlers = handlers;
 	this.metaData = {};
-	this.infos = {
-	};
+	this.infos = {	};
+	//unique id within nosliw client
 	this.requestId = nosliw.generateId();
 
 	//used for ajax request
@@ -81,7 +94,8 @@ var node_RemoteServiceGroupTask = function(syncName, handlers, requestInfo, sett
 
 node_RemoteServiceGroupTask.prototype = {
 	addTask : function(task){
-		task.type = NOSLIWCOMMONCONSTANT.CONS_REMOTESERVICE_TASKTYPE_GROUPCHILD;
+		//mark task as group child
+		task.type = node_COMMONCONSTANT.CONS_REMOTESERVICE_TASKTYPE_GROUPCHILD;
 		this.children.push(task);
 		this.remoteRequest.children.push(task.getRemoteServiceRequest());
 	},

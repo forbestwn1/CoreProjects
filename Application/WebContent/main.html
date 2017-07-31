@@ -26,24 +26,25 @@
 	
 	nosliw.registerNodeEvent("runtime", "active", function(eventName, nodeName){
 		nosliw.logging.info(nodeName + "    " + eventName );
-		
+
 		var resourceUtility = nosliw.getNodeData("resource.utility");
-		var resourceIds = [resourceUtility.createOperationResourceId("test.string;1.0.0", "subString")];
-		var handlers = {
-			success : function(resourceInfos){
-				console.log(JSON.stringify(resourceInfos));
-			}
-		};
-		
-		nosliw.runtime.getGateway().requestDiscoverResources(resourceIds, handlers);
+		//discovery resources
+		nosliw.runtime.getGateway().requestDiscoverResources(
+				[resourceUtility.createOperationResourceId("test.string;1.0.0", "subString")], 
+				{
+					success : function(request, resourceInfos){
+						console.log(JSON.stringify(resourceInfos));
+						
+						nosliw.runtime.getGateway().requestLoadResources(resourceInfos, {
+							success : function(request, resources){
+								
+							}
+						});
+					}
+				}
+		);
 		
 	});
 
-	/*
-	document.addEventListener("runtime.start", function(e) {
-	  console.log(e.detail); // Prints "Example of an event"
-	});
-	*/
-	
 </script>
 </html>

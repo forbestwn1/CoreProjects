@@ -56,7 +56,7 @@ var node_createConfigures = function(configures){
 	}
 	
 	var loc_out = {
-		prv_getConfiguresObject : function(){
+		getConfiguresObject : function(){
 			return loc_configures;
 		},
 			
@@ -65,7 +65,7 @@ var node_createConfigures = function(configures){
 		},
 		
 		mergeWith : function(configures){
-			var configuresObj = node_basicUtility.mergeObjects(loc_configures, configures.prv_getConfiguresObject());
+			var configuresObj = node_basicUtility.mergeObjects(loc_configures, configures.getConfiguresObject());
 			return node_createConfigures(configuresObj);
 		},
 	};
