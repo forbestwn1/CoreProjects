@@ -17,7 +17,7 @@ public class HAPScriptTracker {
 	
 	private String exportPath = "c:/temp/scriptexport/";
 	
-	HAPScriptTracker(){
+	public HAPScriptTracker(){
 		this.m_scripts = new ArrayList<String>();
 		this.m_files = new ArrayList<String>();
 	}

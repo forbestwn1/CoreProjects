@@ -10,27 +10,46 @@ var node_COMMONCONSTANT;
 var node_COMMONATRIBUTECONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
+var loc_configureName = "gateway";
+
+var node_createGateway = function(){
 	
-var node_gateway = function(){
 	
+	var out = {};
 	
-	return {
-		getExpression : function(suite, name){
+		out[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_GETEXPRESSIONS] = function(expressionsRequest, handlers){
+			var parms = {};
+			parms[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_GETEXPRESSIONS_EXPRESSIONS] = expressionsRequest; 
 			
-		},
+			var service = new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_GETEXPRESSIONS, parms);
+			
+			var remoteServiceTask = new node_RemoteServiceTask(loc_configureName, service, {
+				success : function(request, expressionResponses){
+					handlers.success.call(request, request, expressionResponses);
+				},
+				error : function(){
+					
+				},
+				exception : function(){
+					
+				}
+			}, undefined, undefined);
+			
+			nosliw.runtime.getRemoteService().addServiceTask(remoteServiceTask);
+		};
 		
 		/**
 		 * Callback method used to request to discover resources into runtime env
 		 * @param objResourcesInfo: a list of resource id 
 		 * @param callBackFunction (discovered resource info)
 		 */
-		requestDiscoverResources : function(objResourceIds, handlers){
+		out[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_DISCOVERRESOURCES] = function(resourceIds, handlers){
 			var parms = {};
-			parms[node_COMMONATRIBUTECONSTANT.GATEWAYSERVLET_REQUEST_DISCOVERRESOURCES_RESOURCEIDS] = objResourceIds; 
+			parms[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_DISCOVERRESOURCES_RESOURCEIDS] = resourceIds; 
 			
-			var service = new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.GATEWAYSERVLET_REQUEST_DISCOVERRESOURCES, parms);
+			var service = new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_DISCOVERRESOURCES, parms);
 			
-			var remoteServiceTask = new node_RemoteServiceTask("gateway", service, {
+			var remoteServiceTask = new node_RemoteServiceTask(loc_configureName, service, {
 				success : function(request, resourceInfos){
 					handlers.success.call(request, request, resourceInfos);
 				},
@@ -43,30 +62,30 @@ var node_gateway = function(){
 			}, undefined, undefined);
 			
 			nosliw.runtime.getRemoteService().addServiceTask(remoteServiceTask);
-		},
+		};
 		
 		/**
 		 * Callback method used to request to discover resources and load into runtime env
 		 * @param objResourcesInfo: a list of resource id 
 		 * @param callBackFunction (discovered and loaded resource info)
 		 */
-		requestDiscoverAndLoadResources : function(objResourceIds, handlers){
+		out[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_DISCOVERANDLOADRESOURCES] = function(resourceIds, handlers){
 			
-		},
+		};
 		
 		/**
 		 * Callback method used to request to load resources into runtime env
 		 * @param objResourcesInfo: a list of resource info 
 		 * @param callBackFunction (nothing)
 		 */
-		requestLoadResources : function(resourcesInfo, handlers){
+		out[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES] = function(resourcesInfo, handlers){
 
 			var parms = {};
-			parms[node_COMMONATRIBUTECONSTANT.GATEWAYSERVLET_REQUEST_LOADRESOURCES_RESOURCEINFOS] = resourcesInfo; 
+			parms[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES_RESOURCEINFOS] = resourcesInfo; 
 			
-			var service = new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.GATEWAYSERVLET_REQUEST_LOADRESOURCES, parms);
+			var service = new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES, parms);
 			
-			var remoteServiceTask = new node_RemoteServiceTask("gateway", service, {
+			var remoteServiceTask = new node_RemoteServiceTask(loc_configureName, service, {
 				success : function(request, scriptInfos){
 					
 					_.each(scriptInfos, function(scriptInfo, i, list){
@@ -79,7 +98,7 @@ var node_gateway = function(){
 						}
 					});
 					
-					handlers.success.call(request, request, resourceInfos);
+					handlers.success.call(request, request, scriptInfos);
 				},
 				error : function(){
 					
@@ -90,35 +109,10 @@ var node_gateway = function(){
 			}, undefined, undefined);
 			
 			nosliw.runtime.getRemoteService().addServiceTask(remoteServiceTask);
-			
-			
-			var remoteServiceTask = new node_RemoteServiceTask("gateway", service, {
-				success : function(data){
-					_.each(data, function(resourceLoaded){
-						var resourceInfo = resourceLoaded.resourceInfo;
-						var resource = resourceLoaded.resource;
-						switch(resource.type)
-						{
-						case library:
-							break
-						default : 
-							break;
-						}
-					}, this);
-				},
-				error : function(){
-					
-				},
-				exception : function(){
-					
-				}
-			}, requestInfo, setting);
-			
-			nosliw.runtime.getRemoteService().addServiceTask(remoteServiceTask);
-			
-		},
-	};
-}();	
+		};
+		
+		return out;
+};	
 	
 
 //*******************************************   End Node Definition  ************************************** 	
@@ -133,15 +127,15 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 
 nosliw.registerSetNodeDataEvent("runtime", function(){
 	var configure = node_createConfigures({
-		url : "gateway",
+		url : loc_configureName,
 //		contentType: "application/json; charset=utf-8"
 	});
 	
-	nosliw.runtime.getRemoteService().registerSyncTaskConfigure("gateway", configure);
+	nosliw.runtime.getRemoteService().registerSyncTaskConfigure(loc_configureName, configure);
 });
 
 	
 //Register Node by Name
-packageObj.createChildNode("gateway", node_gateway); 
+packageObj.createChildNode("createGateway", node_createGateway); 
 
 })(packageObj);

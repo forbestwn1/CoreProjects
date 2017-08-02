@@ -5,14 +5,11 @@ import java.util.Map;
 
 public class HAPRuntimeManager {
 
-	Map<HAPRuntimeInfo, HAPRuntime> m_runtimes = new LinkedHashMap<HAPRuntimeInfo, HAPRuntime>();
+	Map<HAPRuntimeInfo, HAPRuntimeEnvironment> m_runtimes = new LinkedHashMap<HAPRuntimeInfo, HAPRuntimeEnvironment>();
 	
-	public HAPRuntime getRuntime(HAPRuntimeInfo runtimeInfo){
+	public HAPRuntimeEnvironment getRuntime(HAPRuntimeInfo runtimeInfo){
 		return this.m_runtimes.get(runtimeInfo);
 	}
 
-	public void registerRuntime(HAPRuntime runtime){
-		this.m_runtimes.put(runtime.getRuntimeInfo(), runtime);
-	}
 	
 }

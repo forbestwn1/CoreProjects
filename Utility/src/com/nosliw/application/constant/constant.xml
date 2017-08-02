@@ -7,9 +7,6 @@
 				packagename="com.nosliw.app.utils" 
 				classname="HAPAttributeConstant" >
 		<definitions>
-			<definition name="SERVICE_COMMAND" value="command"/>
-			<definition name="SERVICE_PARMS" value="parms"/>
-			<definition type="space"/>
 			<definition name="REQUEST_GETUIRESOURCE_NAME" value="name"/>
 			<definition type="space"/>
 			<definition name="REQUEST_GETENTITYDEFINITIONBYNAMES_NAMES" value="names"/>

@@ -3,10 +3,12 @@ package com.nosliw.app.servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
+import com.nosliw.application.runtimerhino.HAPRuntimeRhinoMain;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.imp.expression.HAPExpressionManagerImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
-import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeImpJSBroswerImp;
-import com.nosliw.data.core.runtime.js.broswer.HAPRuntimeImpJSBroswer;
+import com.nosliw.data.core.imp.runtime.js.HAPRuntimeEnvironmentImpJS;
 
 public class HAPInitServlet  extends HttpServlet{
 
@@ -18,10 +20,12 @@ public class HAPInitServlet  extends HttpServlet{
 			HAPModuleRuntimeJS runtimeJSModule = new HAPModuleRuntimeJS().init(HAPValueInfoManager.getInstance());;
 
 			//create runtime
-			HAPRuntimeImpJSBroswer runtime = new HAPRuntimeImpJSBroswerImp(runtimeJSModule);
-			runtime.start();
-			
+			HAPRuntimeEnvironmentImpJS runtimeEnvironment = new HAPRuntimeEnvironmentImpJS(runtimeJSModule);
+
+			HAPExpressionManagerImp expressionMan = (HAPExpressionManagerImp)runtimeEnvironment.getExpressionManager();
+			expressionMan.importFromClassFolder(HAPRuntimeRhinoMain.class);
+
 			//set runtime object to context
-			this.getServletContext().setAttribute("runtime", runtime);
+			this.getServletContext().setAttribute("runtime", runtimeEnvironment);
 	   }
 }

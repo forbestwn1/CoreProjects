@@ -1,23 +1,11 @@
 package com.nosliw.data.core.runtime.js.rhino;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.runtime.js.HAPRuntimeGatewayJS;
 
 @HAPEntityWithAttribute
 public interface HAPRuntimeGatewayRhino extends HAPRuntimeGatewayJS{
 
-	@HAPAttribute
-	public static String REQUEST_DISCOVERRESOURCES = "requestDiscoverResources";
-
-	@HAPAttribute
-	public static String REQUEST_DISCOVERANDLOADRESOURCES = "requestDiscoverAndLoadResources";
-	
-	@HAPAttribute
-	public static String REQUEST_LOADRESOURCES = "requestLoadResources";
-	
-	
-	
 	/**
 	 * Callback method used to request to discover resources into runtime env
 	 * @param objResourcesInfo: a list of resource id 

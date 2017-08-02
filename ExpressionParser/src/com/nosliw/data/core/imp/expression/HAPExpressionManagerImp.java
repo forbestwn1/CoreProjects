@@ -3,18 +3,30 @@ package com.nosliw.data.core.imp.expression;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
@@ -49,8 +61,8 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	}
 	
 	private void init(){
-		String fileFolder = HAPFileUtility.getClassFolderName(this.getClass()); 
-		HAPValueInfoManager.getInstance().importFromFolder(fileFolder, false);
+		HAPValueInfoManager.getInstance().importFromClassFolder(this.getClass());
+		
 		this.m_expressionDefinitionSuites = new LinkedHashMap<String, HAPExpressionDefinitionSuiteImp>();
 		this.m_idIndex = 1;
 	}
@@ -123,6 +135,28 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 					e.printStackTrace();
 				}
 			}
+		}
+	}
+
+	public void importFromClassFolder(Class cs){
+		try{
+			URI uri = cs.getResource("").toURI();
+		    try (FileSystem fileSystem = (uri.getScheme().equals("jar") ? FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap()) : null)) {
+		    	Path path = Paths.get(uri);
+				Files.walkFileTree(path, new HashSet(), 1, new SimpleFileVisitor<Path>() { 
+		            @Override
+		            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+		            	if(file.getFileName().toString().endsWith(".expression")){
+					         HAPExpressionDefinitionSuiteImp expressionDefinitionSuite = (HAPExpressionDefinitionSuiteImp)HAPStringableEntityImporterJSON.parseJsonEntity(Files.newInputStream(file), HAPExpressionDefinitionSuiteImp._VALUEINFO_NAME, HAPValueInfoManager.getInstance());
+					         addExpressionDefinitionSuite(expressionDefinitionSuite);
+		            	}
+		                return FileVisitResult.CONTINUE;
+		            }
+		        });
+		    }
+		}
+		catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 

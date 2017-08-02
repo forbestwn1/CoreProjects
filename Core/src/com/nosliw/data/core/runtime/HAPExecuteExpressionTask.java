@@ -2,11 +2,21 @@ package com.nosliw.data.core.runtime;
 
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
 
+@HAPEntityWithAttribute
 public abstract class HAPExecuteExpressionTask extends HAPRuntimeTask{
 
+	@HAPAttribute
+	public static String EXPRESSION = "expression";
+
+	@HAPAttribute
+	public static String VARIABLESVALUE = "variablesValue";
+
+	
 	private HAPExpression m_expression;
 	
 	Map<String, HAPData> m_variablesValue;

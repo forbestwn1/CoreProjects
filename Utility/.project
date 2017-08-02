@@ -6,14 +6,8 @@
 		<project>Entity</project>
 		<project>MangoPersistent</project>
 		<project>DataTypeLibrary</project>
-		<project>ExpressionParser</project>
 		<project>UIResource</project>
 		<project>DataDefinition</project>
-		<project>Core</project>
-		<project>DataTypeManager</project>
-		<project>Application</project>
-		<project>DataTypeTest</project>
-		<project>DataType</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

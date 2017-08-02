@@ -17,11 +17,11 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.imp.runtime.js.HAPRuntimeEnvironmentImpJS;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.js.HAPResourceDataJSLibrary;
 import com.nosliw.data.core.runtime.js.HAPResourceIdJSLibrary;
-import com.nosliw.data.core.runtime.js.broswer.HAPRuntimeImpJSBroswer;
 
 public class HAPBrowserGatewayServlet  extends HttpServlet{
 
@@ -51,7 +51,7 @@ public class HAPBrowserGatewayServlet  extends HttpServlet{
 				for(int i=0; i<libraryIdsArray.length(); i++){
 					resourceIds.add(new HAPResourceIdJSLibrary(libraryIdsArray.getString(i)));
 				}
-				List<HAPResource> resources = this.getRuntime().getResourceManager().getResources(resourceIds).getLoadedResources();
+				List<HAPResource> resources = this.getRuntimeEnvironment().getResourceManager().getResources(resourceIds).getLoadedResources();
 				List<String> fileNames = new ArrayList<String>();
 				for(HAPResource resource : resources){
 					List<URI> uris = ((HAPResourceDataJSLibrary)resource.getResourceData()).getURIs();
@@ -91,12 +91,11 @@ public class HAPBrowserGatewayServlet  extends HttpServlet{
 		return out;
 	}
 
-	private HAPRuntimeImpJSBroswer getRuntime(){		return (HAPRuntimeImpJSBroswer)this.getServletContext().getAttribute("runtime");  }
+	private HAPRuntimeEnvironmentImpJS getRuntimeEnvironment(){		return (HAPRuntimeEnvironmentImpJS)this.getServletContext().getAttribute("runtime");  }
+
 	
 	private String getLibraryPath(String fileName){
 		String keyword = "WebContent";
 		return fileName.substring(fileName.indexOf(keyword)+keyword.length()+1);
 	}
-	
-
 }

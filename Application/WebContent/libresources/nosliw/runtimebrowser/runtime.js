@@ -12,7 +12,7 @@ var packageObj = library;
 	var node_createExpressionService;
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
-	var node_runtimeGateway;
+	var node_createRuntimeGateway;
 	var node_createRemoteService;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -34,6 +34,8 @@ var node_createRuntime = function(name){
 	var loc_expressionService;
 	
 	var loc_remoteService;
+	
+	var loc_runtimeGateway;
 	
 	var loc_out = {
 		
@@ -58,7 +60,7 @@ var node_createRuntime = function(name){
 		},
 		
 		getGateway(){
-			return node_runtimeGateway;
+			return loc_runtimeGateway;
 		},
 		
 		getRemoteService(){
@@ -74,13 +76,15 @@ var node_createRuntime = function(name){
 		loc_expressionService = node_createExpressionService();
 		loc_remoteService = node_createRemoteService();
 		loc_remoteService.interfaceObjectLifecycle.init();
-
+		loc_runtimeGateway = node_createRuntimeGateway();
+		
 		//set sortcut for object
 		 nosliw.runtime = loc_out;
 		 nosliw.generateId = loc_out.getIdService().generateId;
 		 
 		 //create node for runtime object
 		 nosliw.createNode("runtime", loc_out);
+		 nosliw.createNode("runtime.gateway", loc_runtimeGateway);
 		 
 		 nosliw.triggerNodeEvent("runtime", "active");
 
@@ -106,7 +110,7 @@ nosliw.registerSetNodeDataEvent("resource.createResourceManager", function(){nod
 nosliw.registerSetNodeDataEvent("expression.service.createExpressionService", function(){node_createExpressionService = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.createResourceService", function(){node_createResourceService = this.getData();});
 nosliw.registerSetNodeDataEvent("remote.createRemoteService", function(){node_createRemoteService = this.getData();});
-nosliw.registerSetNodeDataEvent("runtime.gateway", function(){node_runtimeGateway = this.getData();});
+nosliw.registerSetNodeDataEvent("runtime.createGateway", function(){node_createRuntimeGateway = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

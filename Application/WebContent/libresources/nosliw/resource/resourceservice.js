@@ -74,7 +74,7 @@ var node_createResourceService = function(resourceManager){
 	var loc_getLoadResourcesRequest = function(resourceInfos, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("LoadResources", {"resourcesInfo":resourceInfos}), function(requestInfo){
-			nosliw.runtime.getGateway().requestLoadResources(resourceInfos, 
+			nosliw.runtime.getGateway()[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES](resourceInfos, 
 				{
 					success : function(requestInfo, resourceInfos){
 						out.executeSuccessHandler();
@@ -184,7 +184,7 @@ var node_createResourceService = function(resourceManager){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			
 			var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("DiscoverResources", {"resourcesId":resourceIds}), function(requestInfo){
-				nosliw.runtime.getGateway().requestDiscoverResources(resourceIds, 
+				nosliw.runtime.getGateway()[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_DISCOVERRESOURCES](resourceIds, 
 					{
 						success : function(requestInfo, resourceInfos){
 							out.executeSuccessHandler(resourceInfos);

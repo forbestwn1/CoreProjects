@@ -11,7 +11,7 @@ import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
 public abstract class HAPExpressionTaskRhino extends HAPExecuteExpressionTask{
 
-	private HAPRuntimeImpJSRhino m_rhinoRuntime;
+	private HAPRuntimeImpRhino m_rhinoRuntime;
 	
 	public HAPExpressionTaskRhino(HAPExpression expression, Map<String, HAPData> variablesValue) {
 		super(expression, variablesValue);
@@ -26,7 +26,7 @@ public abstract class HAPExpressionTaskRhino extends HAPExecuteExpressionTask{
 	}
 
 	
-	public void setRuntime(HAPRuntimeImpJSRhino runtime){
+	public void setRuntime(HAPRuntimeImpRhino runtime){
 		this.m_rhinoRuntime = runtime;
 	}
 }

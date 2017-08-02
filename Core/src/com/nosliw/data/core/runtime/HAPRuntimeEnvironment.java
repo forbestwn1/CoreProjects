@@ -1,23 +1,21 @@
 package com.nosliw.data.core.runtime;
 
+import com.nosliw.data.core.expression.HAPExpressionManager;
+
 /**
  * Runtime environment, 
  * Every runtime env is identified by two value: language and environment
  * Runtime provide components:
- * 		executor
+ * 		resource discovery
  * 		resource manager  
+ * 		expression manager
  */
-public interface HAPRuntime {
+public interface HAPRuntimeEnvironment {
 
-	HAPRuntimeInfo getRuntimeInfo();
-	
-	void executeExpressionTask(HAPExecuteExpressionTask result);
+	HAPExpressionManager getExpressionManager();
 	
 	HAPResourceDiscovery getResourceDiscovery();
 	
 	HAPResourceManager getResourceManager();
 
-	void start();
-	
-	void close();
 }

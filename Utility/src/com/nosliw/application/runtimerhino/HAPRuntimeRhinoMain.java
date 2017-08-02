@@ -5,31 +5,29 @@ import java.util.Map;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataWrapper;
-import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionManagerImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
-import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeImpJSRhinoImp;
+import com.nosliw.data.core.imp.runtime.js.HAPRuntimeEnvironmentImpJS;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.rhino.HAPExpressionTaskRhino;
-import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpJSRhino;
-import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
+import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 
 public class HAPRuntimeRhinoMain {
 
-	private static void executeSuite(String suiteName, HAPExpressionManagerImp expressionMan, HAPModuleRuntimeJS runtimeJSModule){
+	private static void executeSuite(String suiteName, HAPRuntimeEnvironment runtimeEnvironment){
 		//new runtime
-		HAPRuntimeImpJSRhino runtime = new HAPRuntimeImpJSRhinoImp(runtimeJSModule);
+		HAPRuntimeImpRhino runtime = new HAPRuntimeImpRhino(runtimeEnvironment);
 
 		//runtim init
 		runtime.start();
 
 		try{
 			//parse to build expression object
-			final HAPExpressionDefinitionSuiteImp suite = (HAPExpressionDefinitionSuiteImp)expressionMan.getExpressionDefinitionSuite(suiteName);
-			HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression(suiteName, "main", null);
+			final HAPExpressionDefinitionSuiteImp suite = (HAPExpressionDefinitionSuiteImp)runtimeEnvironment.getExpressionManager().getExpressionDefinitionSuite(suiteName);
+			HAPExpressionImp expression = (HAPExpressionImp)runtimeEnvironment.getExpressionManager().processExpression(suiteName, "main", null);
 			Map<String, HAPData> varData = suite.getVariableData();
 			
 			//execute expression
@@ -67,12 +65,12 @@ public class HAPRuntimeRhinoMain {
 		//module init
 		HAPModuleRuntimeJS runtimeJSModule = new HAPModuleRuntimeJS().init(HAPValueInfoManager.getInstance());;
 		
-		//import expression definition
-		HAPDataTypeHelper dataTypeHelper = new HAPDataTypeHelperImp(runtimeJSModule.getDataTypeDataAccess());
-		HAPExpressionManagerImp expressionMan = new HAPExpressionManagerImp(new HAPExpressionParserImp(), dataTypeHelper);
+		HAPRuntimeEnvironmentImpJS runtimeEnvironment = new HAPRuntimeEnvironmentImpJS(runtimeJSModule);
+		
+		HAPExpressionManagerImp expressionMan = (HAPExpressionManagerImp)runtimeEnvironment.getExpressionManager();
 		expressionMan.importExpressionFromFolder(HAPFileUtility.getClassFolderName(HAPRuntimeRhinoMain.class));
-
-		executeSuite("expression6", expressionMan, runtimeJSModule);
+		
+		executeSuite("expression6", runtimeEnvironment);
 		
 		for(String suiteName : expressionMan.getExpressionDefinitionSuites()){
 //			executeSuite(suiteName, expressionMan, dataTypeMan, resourceMan);

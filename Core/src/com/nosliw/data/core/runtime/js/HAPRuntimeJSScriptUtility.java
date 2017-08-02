@@ -20,7 +20,7 @@ import com.nosliw.data.core.runtime.HAPExecuteExpressionTask;
 import com.nosliw.data.core.runtime.HAPLoadResourcesTask;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
-import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpJSRhino;
+import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 
 public class HAPRuntimeJSScriptUtility {
 
@@ -32,7 +32,7 @@ public class HAPRuntimeJSScriptUtility {
 		}
 		
 		StringBuffer script = new StringBuffer();
-		if(HAPRuntimeImpJSRhino.ADDTORESOURCEMANAGER.equals(resourceInfo.getInfo().getValue(HAPRuntimeImpJSRhino.ADDTORESOURCEMANAGER)))  return out;
+		if(HAPRuntimeImpRhino.ADDTORESOURCEMANAGER.equals(resourceInfo.getInfo().getValue(HAPRuntimeImpRhino.ADDTORESOURCEMANAGER)))  return out;
 		
 		//build script for resource data
 		String valueScript = null;
