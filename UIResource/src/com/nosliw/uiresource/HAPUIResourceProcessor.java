@@ -549,9 +549,7 @@ public class HAPUIResourceProcessor {
 	
 	
 
-	private String createId(){
-		return String.valueOf(++this.m_idIndex);
-	}
+	private String createId(){		return String.valueOf(++this.m_idIndex);	}
 	
 	protected HAPDataTypeManager getDataTypeManager(){ return this.m_dataTypeMan; }
 	protected HAPUIResourceManager getUIResourceManager(){ return this.m_uiResourceMan;}

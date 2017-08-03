@@ -18,13 +18,13 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataWrapper;
-import com.nosliw.data.core.runtime.HAPExecuteExpressionTask;
 import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
-import com.nosliw.data.core.runtime.HAPLoadResourcesTask;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
+import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
+import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
@@ -32,7 +32,7 @@ import com.nosliw.data.core.runtime.js.HAPJSLibraryId;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
-public class HAPRuntimeImpRhino  implements HAPRuntimeGatewayRhino{
+public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 
 	//info used to library resource that do not need to add to resource manager
 	public static final String ADDTORESOURCEMANAGER = "ADDTORESOURCEMANAGER";
@@ -147,45 +147,29 @@ public class HAPRuntimeImpRhino  implements HAPRuntimeGatewayRhino{
 			e.printStackTrace();
 		}
 	}
-	
-	public void executeExpressionTask(HAPExecuteExpressionTask expressionTask) {
+
+	@Override
+	public void executeTask(HAPRuntimeTask task){
 		//prepare expression id
-		expressionTask.setId(this.m_idIndex+++"");
+		task.setId(this.m_idIndex+++"");
 
-		HAPExpressionTaskRhino rhinoExpressionTask = (HAPExpressionTaskRhino)expressionTask;
-		rhinoExpressionTask.setRuntime(this);
-		
-		this.m_tasks.put(expressionTask.getTaskId(), expressionTask);
-		
-		//init rhino runtime, init scope
-		Scriptable scope = this.initExecuteExpression(expressionTask.getTaskId());
-		
-		//prepare resources for expression in the runtime (resource and dependency)
-		//execute expression after load required resources
-		List<HAPResourceInfo> resourcesId = this.getRuntimeEnvironment().getResourceDiscovery().discoverResourceRequirement(rhinoExpressionTask.getExpression());
-		resourcesId = new ArrayList<HAPResourceInfo>();
-		HAPLoadResourcesTask loadResourcesTask = new HAPLoadResourcesTask(resourcesId){
+		this.m_tasks.put(task.getTaskId(), task);
+
+		task.registerListener(new HAPRunTaskEventListener(){
 			@Override
-			protected void doSuccess() {
-				removeTask(this.getTaskId());
-			}
-		};
-		loadResourcesTask.setId(this.m_idIndex+++"");
-		loadResourcesTask.setParent(expressionTask);
-		this.m_tasks.put(loadResourcesTask.getTaskId(), loadResourcesTask);
-		this.executeLoadResources(loadResourcesTask);
+			public void success(HAPRuntimeTask task) {	m_tasks.remove(task.getTaskId());	}});
+		
+		HAPRuntimeTask newTask = task.execute(this);
+		if(newTask!=null){
+			this.executeTask(newTask);
+		}
 	}
-
-	public void removeTask(String taskId){
+	
+	public void finishTask(String taskId){
 		this.m_tasks.remove(taskId);
 	}
 	
-	private void executeLoadResources(HAPLoadResourcesTask loadResourcesTask){
-		HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForLoadResourceTask(loadResourcesTask);
-		this.loadTaskScript(scriptInfo, loadResourcesTask.getTaskId());
-	}
-	
-	private Scriptable initExecuteExpression(String taskId){
+	public Scriptable initExecuteExpression(String taskId){
 		this.m_taskScope.put(taskId, this.m_scope);
 		return this.m_scope;
 	}
@@ -300,10 +284,12 @@ public class HAPRuntimeImpRhino  implements HAPRuntimeGatewayRhino{
 	
 	public HAPRuntimeInfo getRuntimeInfo() {		return new HAPRuntimeInfo(HAPConstant.RUNTIME_LANGUAGE_JS, HAPConstant.RUNTIME_ENVIRONMENT_RHINO);	}
 
+	@Override
 	public void close(){
 		this.m_sciprtTracker.export();
 	}
 	
+	@Override
 	public void start(){
         this.m_sciprtTracker = new HAPScriptTracker();
 		

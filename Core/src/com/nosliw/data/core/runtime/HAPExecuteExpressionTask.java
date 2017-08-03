@@ -10,6 +10,8 @@ import com.nosliw.data.core.expression.HAPExpression;
 @HAPEntityWithAttribute
 public abstract class HAPExecuteExpressionTask extends HAPRuntimeTask{
 
+	final public static String TASK = "ExecuteExpression"; 
+	
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
 
@@ -33,5 +35,6 @@ public abstract class HAPExecuteExpressionTask extends HAPRuntimeTask{
 	public HAPData getExpressionDataResult(){ return (HAPData)this.getResult(); }
 
 	@Override
-	public String getTaskType(){  return "ExecuteExpression"; }
+	public String getTaskType(){  return TASK; }
+
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 public abstract class HAPLoadResourcesTask extends HAPRuntimeTask{
 
+	final public static String TASK = "LoadResources"; 
+
 	private List<HAPResourceInfo> m_resourcesInfo;
 	
 	public HAPLoadResourcesTask(List<HAPResourceInfo> resourcesInfo){
@@ -13,6 +15,6 @@ public abstract class HAPLoadResourcesTask extends HAPRuntimeTask{
 	public List<HAPResourceInfo> getResourcesInfo(){		return this.m_resourcesInfo;	}
 	
 	@Override
-	public String getTaskType(){  return "LoadResources"; }
+	public String getTaskType(){  return TASK; }
 
 }

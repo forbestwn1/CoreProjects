@@ -17,6 +17,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Utility"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DataTypeTest"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

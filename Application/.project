@@ -7,7 +7,7 @@
 		<project>ExpressionParser</project>
 		<project>Common</project>
 		<project>Core</project>
-		<project>Utility</project>
+		<project>DataTypeTest</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

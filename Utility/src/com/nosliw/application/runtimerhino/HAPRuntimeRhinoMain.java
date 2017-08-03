@@ -14,6 +14,7 @@ import com.nosliw.data.core.imp.runtime.js.HAPRuntimeEnvironmentImpJS;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.rhino.HAPExpressionTaskRhino;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
+import com.nosliw.data.expression.test.HAPExpressionTest;
 
 public class HAPRuntimeRhinoMain {
 
@@ -31,7 +32,7 @@ public class HAPRuntimeRhinoMain {
 			Map<String, HAPData> varData = suite.getVariableData();
 			
 			//execute expression
-			runtime.executeExpressionTask(new HAPExpressionTaskRhino(expression, varData){
+			runtime.executeTask(new HAPExpressionTaskRhino(expression, varData){
 				@Override
 				public void doSuccess() {
 					try{
@@ -68,7 +69,7 @@ public class HAPRuntimeRhinoMain {
 		HAPRuntimeEnvironmentImpJS runtimeEnvironment = new HAPRuntimeEnvironmentImpJS(runtimeJSModule);
 		
 		HAPExpressionManagerImp expressionMan = (HAPExpressionManagerImp)runtimeEnvironment.getExpressionManager();
-		expressionMan.importExpressionFromFolder(HAPFileUtility.getClassFolderName(HAPRuntimeRhinoMain.class));
+		expressionMan.importExpressionFromFolder(HAPFileUtility.getClassFolderName(HAPExpressionTest.class));
 		
 		executeSuite("expression6", runtimeEnvironment);
 		
