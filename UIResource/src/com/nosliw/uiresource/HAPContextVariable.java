@@ -1,22 +1,26 @@
 package com.nosliw.uiresource;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPJsonUtility;
 
 /*
  * store variable information based on 
  * 		context name
  * 		path
  */
+@HAPEntityWithAttribute
 public class HAPContextVariable extends HAPSerializableImp{
 
+	@HAPAttribute
+	public static final String NAME = "name";
+	@HAPAttribute
+	public static final String PATH = "path";
+	
 	//context name
 	private String m_name;
 	//value path
@@ -53,8 +57,8 @@ public class HAPContextVariable extends HAPSerializableImp{
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(HAPAttributeConstant.CONTEXTVARIABLE_NAME, this.m_name);
-		jsonMap.put(HAPAttributeConstant.CONTEXTVARIABLE_PATH, this.m_path);
+		jsonMap.put(NAME, this.m_name);
+		jsonMap.put(PATH, this.m_path);
 	}
 
 }

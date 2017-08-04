@@ -20,6 +20,6 @@ public class HAPUIExpressionAttribute extends HAPUIExpressionContent{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(HAPAttributeConstant.UIEXPRESSIONCONTENT_ATTRIBUTE, this.m_attribute);
+		jsonMap.put(ATTRIBUTE, this.m_attribute);
 	}
 }

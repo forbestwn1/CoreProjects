@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -13,7 +15,15 @@ import com.nosliw.data.core.HAPDataTypeManager;
 /*
  * class that 
  */
+@HAPEntityWithAttribute
 public class HAPUIExpressionContent extends HAPSerializableImp{
+
+	@HAPAttribute
+	public static final String UIID = "uiId";
+	@HAPAttribute
+	public static final String UIEXPRESSIONELEMENTS = "uiExpressionElements";
+	@HAPAttribute
+	public static final String ATTRIBUTE = "attribute";
 
 	private String m_uiId;
 	
@@ -46,7 +56,7 @@ public class HAPUIExpressionContent extends HAPSerializableImp{
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(HAPAttributeConstant.UIEXPRESSIONCONTENT_UIID, this.m_uiId);
-		jsonMap.put(HAPAttributeConstant.UIEXPRESSIONCONTENT_UIEXPRESSIONELEMENTS, HAPJsonUtility.buildJson(this.m_contentElements, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(UIID, this.m_uiId);
+		jsonMap.put(UIEXPRESSIONELEMENTS, HAPJsonUtility.buildJson(this.m_contentElements, HAPSerializationFormat.JSON_FULL));
 	}
 }

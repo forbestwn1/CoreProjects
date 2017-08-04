@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -17,14 +19,24 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeManager;
-import com.nosliw.data.expression1.HAPExpression;
-import com.nosliw.data.expression1.HAPExpressionInfo;
 
 /*
  * class for ui resource expression
  * ui resource is combination of js expression and data expression
  */
+@HAPEntityWithAttribute
 public class HAPUIResourceExpression extends HAPSerializableImp{
+
+	@HAPAttribute
+	public static final String EXPRESSIONID = "expressionId";
+	@HAPAttribute
+	public static final String FUNCTIONSCRIPT = "functionScript";
+	@HAPAttribute
+	public static final String EXPRESSIONUNITS = "expressionUnits";
+	@HAPAttribute
+	public static final String CONTEXTVARIABLES = "contextVariables";
+	@HAPAttribute
+	public static final String EXPRESSIONOBJECT = "expressionObject";
 
 	//original expression
 	private String m_expression;
@@ -87,14 +99,14 @@ public class HAPUIResourceExpression extends HAPSerializableImp{
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(HAPAttributeConstant.UIRESOURCEEXPRESSION_EXPRESSIONID, this.m_expressionId);
-		jsonMap.put(HAPAttributeConstant.UIRESOURCEEXPRESSION_EXPRESSIONUNITS, HAPJsonUtility.buildJson(m_expressionUnits, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(EXPRESSIONID, this.m_expressionId);
+		jsonMap.put(EXPRESSIONUNITS, HAPJsonUtility.buildJson(m_expressionUnits, HAPSerializationFormat.JSON_FULL));
 
 		
 //don't need create functin script here,   		
-//		jsonMap.put(HAPAttributeConstant.UIRESOURCEEXPRESSION_FUNCTIONSCRIPT, this.m_functionScript);
+//		jsonMap.put(FUNCTIONSCRIPT, this.m_functionScript);
 		
-//		jsonMap.put(HAPAttributeConstant.UIRESOURCEEXPRESSION_VARIABLES, HAPJsonUtility.getSetObjectJson(m_variables));
+//		jsonMap.put(VARIABLES, HAPJsonUtility.getSetObjectJson(m_variables));
 		
 	}
 }
@@ -126,7 +138,7 @@ class HAPUIResourceExpressionUnit extends HAPSerializableImp{
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(HAPAttributeConstant.UIRESOURCEEXPRESSION_EXPRESSIONOBJECT, this.m_expression.toStringValue(HAPSerializationFormat.JSON_FULL));
-		jsonMap.put(HAPAttributeConstant.UIRESOURCEEXPRESSION_CONTEXTVARIABLES, HAPJsonUtility.buildJson(m_contextVariables, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(HAPUIResourceExpression.EXPRESSIONOBJECT, this.m_expression.toStringValue(HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(HAPUIResourceExpression.CONTEXTVARIABLES, HAPJsonUtility.buildJson(m_contextVariables, HAPSerializationFormat.JSON_FULL));
 	}
 }

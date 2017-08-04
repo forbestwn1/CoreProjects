@@ -18,5 +18,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/DataTypeTest"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/UIResource"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

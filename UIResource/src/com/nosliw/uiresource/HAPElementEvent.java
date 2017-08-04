@@ -2,6 +2,8 @@ package com.nosliw.uiresource;
 
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
@@ -9,7 +11,18 @@ import com.nosliw.common.utils.HAPSegmentParser;
 /*
  * store 
  */
+@HAPEntityWithAttribute
 public class HAPElementEvent extends HAPSerializableImp{
+
+	@HAPAttribute
+	public static final String UIID = "uiId";
+	@HAPAttribute
+	public static final String EVENT = "event";
+	@HAPAttribute
+	public static final String FUNCTION = "function";
+	@HAPAttribute
+	public static final String SELECTION = "selection";
+	
 	//ui id that this event apply to
 	private String m_uiId;
 
@@ -32,10 +45,10 @@ public class HAPElementEvent extends HAPSerializableImp{
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(HAPAttributeConstant.ELEMENTEVENT_UIID, this.m_uiId);
-		jsonMap.put(HAPAttributeConstant.ELEMENTEVENT_EVENT, this.m_event);
-		jsonMap.put(HAPAttributeConstant.ELEMENTEVENT_FUNCTION, this.m_function);
-		jsonMap.put(HAPAttributeConstant.ELEMENTEVENT_SELECTION, this.m_selection);
+		jsonMap.put(UIID, this.m_uiId);
+		jsonMap.put(EVENT, this.m_event);
+		jsonMap.put(FUNCTION, this.m_function);
+		jsonMap.put(SELECTION, this.m_selection);
 	}
 	
 }

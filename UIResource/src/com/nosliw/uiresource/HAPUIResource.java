@@ -26,7 +26,7 @@ public class HAPUIResource extends HAPUIResourceBasic{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_UITAGLIBS, HAPJsonUtility.buildJson(this.m_uiTagLibs, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(UITAGLIBS, HAPJsonUtility.buildJson(this.m_uiTagLibs, HAPSerializationFormat.JSON_FULL));
 	}
 		
 	@Override

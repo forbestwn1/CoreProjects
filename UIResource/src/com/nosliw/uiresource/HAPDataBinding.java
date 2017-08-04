@@ -2,13 +2,21 @@ package com.nosliw.uiresource;
 
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 /*
  * store data binding information
  */
+@HAPEntityWithAttribute
 public class HAPDataBinding extends HAPSerializableImp{
+
+	@HAPAttribute
+	public static final String NAME = "name";
+	@HAPAttribute
+	public static final String VARIABLE = "variable";
 
 	//name of data binding
 	private String m_name;
@@ -26,7 +34,7 @@ public class HAPDataBinding extends HAPSerializableImp{
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(HAPAttributeConstant.DATABINDING_VARIABLE, this.m_variable.toStringValue(HAPSerializationFormat.JSON_FULL));
-		jsonMap.put(HAPAttributeConstant.CONTEXTVARIABLE_NAME, this.m_name);
+		jsonMap.put(VARIABLE, this.m_variable.toStringValue(HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(NAME, this.m_name);
 	}
 }

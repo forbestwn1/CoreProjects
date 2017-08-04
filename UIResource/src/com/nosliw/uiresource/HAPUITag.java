@@ -39,13 +39,13 @@ public class HAPUITag extends HAPUIResourceBasic{
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
 		
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_TAGNAME, this.m_tagName);
+		jsonMap.put(TAGNAME, this.m_tagName);
 		
 		Map<String, String> dataBindingJsons = new LinkedHashMap<String, String>();
 		for(String name : this.m_dataBindings.keySet()){
 			HAPDataBinding dataBinding = this.m_dataBindings.get(name);
 			dataBindingJsons.put(name, dataBinding.toStringValue(HAPSerializationFormat.JSON_FULL));
 		}
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_DATABINDINGS, HAPJsonUtility.buildMapJson(dataBindingJsons));
+		jsonMap.put(DATABINDINGS, HAPJsonUtility.buildMapJson(dataBindingJsons));
 	}
 }

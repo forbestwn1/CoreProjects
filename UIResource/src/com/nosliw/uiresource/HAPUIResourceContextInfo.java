@@ -3,6 +3,8 @@ package com.nosliw.uiresource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -10,8 +12,16 @@ import com.nosliw.common.utils.HAPJsonUtility;
 /*
  * class for input data info
  */
+@HAPEntityWithAttribute
 public class HAPUIResourceContextInfo extends HAPSerializableImp{
 
+	@HAPAttribute
+	public static final String NAME = "name";
+	@HAPAttribute
+	public static final String TYPE = "type";
+	@HAPAttribute
+	public static final String CONFIGURE = "configure";
+	
 	//name of the context input data
 	private String m_name;
 	
@@ -33,9 +43,9 @@ public class HAPUIResourceContextInfo extends HAPSerializableImp{
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(HAPAttributeConstant.UIRESOURCECONTEXTINFO_NAME, this.m_name);
-		jsonMap.put(HAPAttributeConstant.UIRESOURCECONTEXTINFO_TYPE, this.m_type);
-		jsonMap.put(HAPAttributeConstant.UIRESOURCECONTEXTINFO_CONFIGURE, HAPJsonUtility.buildMapJson(new LinkedHashMap<String, String>()));
+		jsonMap.put(NAME, this.m_name);
+		jsonMap.put(TYPE, this.m_type);
+		jsonMap.put(CONFIGURE, HAPJsonUtility.buildMapJson(new LinkedHashMap<String, String>()));
 	}
 	
 	@Override

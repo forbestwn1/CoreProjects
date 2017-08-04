@@ -10,6 +10,8 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -21,8 +23,43 @@ import com.nosliw.data.core.HAPData;
  * it contains all the information within its domain
  * 		that means, for ui resource instance, it does not contains infor within customer tag
  */
+@HAPEntityWithAttribute(baseName="UIRESOURCE")
 public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 
+	@HAPAttribute
+	public static final String ID = "id";
+	@HAPAttribute
+	public static final String TYPE = "type";
+	@HAPAttribute
+	public static final String CONTEXTINFOS = "contextInfos";
+	@HAPAttribute
+	public static final String EXPRESSIONCONTENTS = "expressionContents";
+	@HAPAttribute
+	public static final String EXPRESSIONATTRIBUTES = "expressionAttributes";
+	@HAPAttribute
+	public static final String EXPRESSIONTAGATTRIBUTES = "expressionTagAttributes";
+	@HAPAttribute
+	public static final String ELEMENTEVENTS = "elementEvents";
+	@HAPAttribute
+	public static final String TAGEVENTS = "tagEvents";
+	@HAPAttribute
+	public static final String UITAGS = "uiTags";
+	@HAPAttribute
+	public static final String ATTRIBUTES = "attributes";
+	@HAPAttribute
+	public static final String HTML = "html";
+	@HAPAttribute
+	public static final String SCRIPTFACTORYNAME = "scriptFactoryName";
+	@HAPAttribute
+	public static final String TAGNAME = "tagName";
+	@HAPAttribute
+	public static final String DATABINDINGS = "dataBindings";
+	@HAPAttribute
+	public static final String UITAGLIBS = "uiTagLibs";
+	@HAPAttribute
+	public static final String CONSTANT = "constant";
+
+	
 	//for tag, it is tag id within resource
 	//for resource, it is resource name
 	private String m_id;
@@ -85,46 +122,46 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_ID, this.m_id);
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_TYPE, String.valueOf(this.getType()));
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_CONTEXTINFOS, HAPJsonUtility.buildJson(m_contextInfos, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(ID, this.m_id);
+		jsonMap.put(TYPE, String.valueOf(this.getType()));
+		jsonMap.put(CONTEXTINFOS, HAPJsonUtility.buildJson(m_contextInfos, HAPSerializationFormat.JSON_FULL));
 
 		List<String> expressionContentJsons = new ArrayList<String>();
 		for(HAPUIExpressionContent expressionContent : this.m_expressionContents)  expressionContentJsons.add(expressionContent.toStringValue(HAPSerializationFormat.JSON_FULL));
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_EXPRESSIONCONTENTS, HAPJsonUtility.buildArrayJson(expressionContentJsons.toArray(new String[0])));
+		jsonMap.put(EXPRESSIONCONTENTS, HAPJsonUtility.buildArrayJson(expressionContentJsons.toArray(new String[0])));
 		
 		List<String> expressionAttributeJsons = new ArrayList<String>();
 		for(HAPUIExpressionAttribute expressionAttr : this.m_expressionAttributes)  expressionAttributeJsons.add(expressionAttr.toStringValue(HAPSerializationFormat.JSON_FULL));
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_EXPRESSIONATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionAttributeJsons.toArray(new String[0])));
+		jsonMap.put(EXPRESSIONATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionAttributeJsons.toArray(new String[0])));
 
 		List<String> expressionTagAttributeJsons = new ArrayList<String>();
 		for(HAPUIExpressionAttribute expressionTagAttr : this.m_expressionTagAttributes)  expressionTagAttributeJsons.add(expressionTagAttr.toStringValue(HAPSerializationFormat.JSON_FULL));
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_EXPRESSIONTAGATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionTagAttributeJsons.toArray(new String[0])));
+		jsonMap.put(EXPRESSIONTAGATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionTagAttributeJsons.toArray(new String[0])));
 
 		List<String> eleEventsJsons = new ArrayList<String>();
 		for(HAPElementEvent elementEvent : this.m_elementEvents)  eleEventsJsons.add(elementEvent.toStringValue(HAPSerializationFormat.JSON_FULL));
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_ELEMENTEVENTS, HAPJsonUtility.buildArrayJson(eleEventsJsons.toArray(new String[0])));
+		jsonMap.put(ELEMENTEVENTS, HAPJsonUtility.buildArrayJson(eleEventsJsons.toArray(new String[0])));
 		
 		List<String> tagEvents = new ArrayList<String>();
 		for(HAPElementEvent tagEvent : m_tagEvents)		tagEvents.add(tagEvent.toStringValue(HAPSerializationFormat.JSON_FULL));
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_TAGEVENTS, HAPJsonUtility.buildArrayJson(tagEvents.toArray(new String[0])));
+		jsonMap.put(TAGEVENTS, HAPJsonUtility.buildArrayJson(tagEvents.toArray(new String[0])));
 		
 		Map<String, String> uiTagJsons = new LinkedHashMap<String, String>();
 		for(String uiId : this.m_uiTags.keySet())	uiTagJsons.put(uiId, this.m_uiTags.get(uiId).toStringValue(HAPSerializationFormat.JSON_FULL));
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_UITAGS, HAPJsonUtility.buildMapJson(uiTagJsons));
+		jsonMap.put(UITAGS, HAPJsonUtility.buildMapJson(uiTagJsons));
 		
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_ATTRIBUTES, HAPJsonUtility.buildMapJson(this.m_attributes));
+		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildMapJson(this.m_attributes));
 		
 		String htmlContent = StringEscapeUtils.escapeHtml4(this.getContent());
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_HTML, htmlContent);
+		jsonMap.put(HTML, htmlContent);
 		
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_SCRIPTFACTORYNAME, this.m_scriptFactoryName);
+		jsonMap.put(SCRIPTFACTORYNAME, this.m_scriptFactoryName);
 
 		Map<String, String> constantsJsons = new LinkedHashMap<String, String>();
 		for(String name : this.m_constants.keySet()){
 			constantsJsons.put(name, this.m_constants.get(name).toStringValue(HAPSerializationFormat.JSON_FULL));
 		}
-		jsonMap.put(HAPAttributeConstant.UIRESOURCE_CONSTANT, HAPJsonUtility.buildMapJson(constantsJsons));
+		jsonMap.put(CONSTANT, HAPJsonUtility.buildMapJson(constantsJsons));
 	
 	}
 	

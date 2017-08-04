@@ -2,7 +2,6 @@
 	
 	<info description="container for list of data"/>
 
-<!-- 
 	<operations>
 	
 		<operation name="process" >
@@ -11,10 +10,9 @@
 				<parm name="varmap" criteria="test.map"/>
 				<parm name="expression" criteria="test.expression"/>
 			</parms>
-			<output criteria="test.array[expression.out]"/>
+			<output criteria="test.array[test.expression.output(expression, base.element)]"/>
 		</operation>
 
 	</operations>
- -->
 
 </definition>
