@@ -18,11 +18,11 @@ public class HAPDataTypeCriteriaElementIds extends HAPDataTypeCriteriaImp{
 	@HAPAttribute
 	public static String DATATYPEIDS = "dataTypeids";
 
-	private Set<HAPDataTypeId> m_ids;
+	private Set<HAPDataTypeCriteriaElementId> m_idCriterias;
 	
-	public HAPDataTypeCriteriaElementIds(Set<HAPDataTypeId> eles){
-		this.m_ids = new HashSet<HAPDataTypeId>();
-		this.m_ids.addAll(eles);
+	public HAPDataTypeCriteriaElementIds(Set<HAPDataTypeCriteriaElementId> eles){
+		this.m_idCriterias = new HashSet<HAPDataTypeCriteriaElementId>();
+		this.m_idCriterias.addAll(eles);
 	}
 	
 	@Override

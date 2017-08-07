@@ -19,11 +19,22 @@ public class HAPDataTypeCriteriaElementId  extends HAPDataTypeCriteriaImp{
 	
 	private HAPDataTypeId m_dataTypeId;
 
+	private Set<HAPDataTypeCriteria> m_elementDataTypeCriteria;
+	
 	public HAPDataTypeCriteriaElementId(HAPDataTypeId dataTypeId){
 		this.m_dataTypeId = dataTypeId;
 	}
 
 	public HAPDataTypeId getDataTypeId(){  return this.m_dataTypeId;  }
+	
+	/**
+	 * For some complex datatype (array, map), we need to describe the data type for child element
+	 * For instance, we need data type criteria for element in array, attribute in map 
+	 * In order to validate on data type or data type criteria, both parent and children data type criteria have to meet
+	 * @return
+	 */
+	public Set<HAPDataTypeCriteria> getChildrenElementDataTypeCriteria(){	return this.m_elementDataTypeCriteria;	}
+	
 	
 	@Override
 	public String getType() {		return HAPConstant.DATATYPECRITERIA_TYPE_DATATYPEID;	}

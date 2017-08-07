@@ -28,6 +28,8 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 	//more specific data type
 	private HAPDataTypeId m_to;
 
+	private Set<HAPDataTypeCriteria> m_elementDataTypeCriteria;
+	
 	public HAPDataTypeCriteriaElementRange(HAPDataTypeId from, HAPDataTypeId to){
 		this.m_from = from;
 		this.m_to = to;
