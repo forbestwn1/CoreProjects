@@ -19,10 +19,15 @@ public class HAPDataTypeCriteriaElementIds extends HAPDataTypeCriteriaImp{
 	public static String DATATYPEIDS = "dataTypeids";
 
 	private Set<HAPDataTypeCriteriaElementId> m_idCriterias;
+	private Set<HAPDataTypeId> m_ids;
 	
 	public HAPDataTypeCriteriaElementIds(Set<HAPDataTypeCriteriaElementId> eles){
 		this.m_idCriterias = new HashSet<HAPDataTypeCriteriaElementId>();
+		this.m_ids = new HashSet<HAPDataTypeId>();
 		this.m_idCriterias.addAll(eles);
+		for(HAPDataTypeCriteriaElementId criteria : eles){
+			this.m_ids.add(criteria.getDataTypeId());
+		}
 	}
 	
 	@Override
@@ -33,8 +38,8 @@ public class HAPDataTypeCriteriaElementIds extends HAPDataTypeCriteriaImp{
 
 	public HAPDataTypeCriteriaOr toOrCriteria(){
 		List<HAPDataTypeCriteria> criterias = new ArrayList<HAPDataTypeCriteria>();
-		for(HAPDataTypeId id : this.m_ids){
-			criterias.add(new HAPDataTypeCriteriaElementId(id));
+		for(HAPDataTypeCriteriaElementId id : this.m_idCriterias){
+			criterias.add(id);
 		}
 		
 		HAPDataTypeCriteriaOr out = new HAPDataTypeCriteriaOr(criterias);

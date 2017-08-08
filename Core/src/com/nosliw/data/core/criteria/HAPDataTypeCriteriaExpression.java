@@ -6,12 +6,12 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 
 /**
- * Criteria that reference to another criteria
+ * The criteria that is the result of a expression
+ * It is used when define operation output criteria, when operation output criteria depends on operation input 
+ *
  */
-public class HAPDataTypeCriteriaReference implements HAPDataTypeCriteria{
+public class HAPDataTypeCriteriaExpression implements HAPDataTypeCriteria{
 
-	private String m_reference;
-	
 	@Override
 	public String getType() {
 		// TODO Auto-generated method stub

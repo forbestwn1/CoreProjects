@@ -28,11 +28,12 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 	//more specific data type
 	private HAPDataTypeId m_to;
 
-	private Set<HAPDataTypeCriteria> m_elementDataTypeCriteria;
+	private Map<String, HAPDataTypeCriteria> m_elementDataTypeCriteria;
 	
-	public HAPDataTypeCriteriaElementRange(HAPDataTypeId from, HAPDataTypeId to){
+	public HAPDataTypeCriteriaElementRange(HAPDataTypeId from, HAPDataTypeId to, Map<String, HAPDataTypeCriteria> elementDataTypeCriteria){
 		this.m_from = from;
 		this.m_to = to;
+		this.m_elementDataTypeCriteria = elementDataTypeCriteria;
 	}
 	
 	public HAPDataTypeId getFromDataTypeId(){  return this.m_from;  }
@@ -51,11 +52,11 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 		HAPDataTypeCriteria out = null;
 		if(this.m_from!=null){
 			HAPDataTypeId dataTypeId = this.m_from;
-			out = new HAPDataTypeCriteriaElementId(dataTypeId);
+			out = new HAPDataTypeCriteriaElementId(dataTypeId, this.m_elementDataTypeCriteria);
 		}
 		else if(this.m_to!=null){
 			List<HAPDataTypeId> dataTypeIds = new ArrayList(dataTypeHelper.getRootDataTypeId(m_to));
-			if(dataTypeIds.size()==1)		out = new HAPDataTypeCriteriaElementId(dataTypeIds.get(0));
+			if(dataTypeIds.size()==1)		out = new HAPDataTypeCriteriaElementId(dataTypeIds.get(0), this.m_elementDataTypeCriteria);
 			else out = new HAPDataTypeCriteriaElementIds(new HashSet(dataTypeIds));
 		}
 		else{

@@ -19,10 +19,11 @@ public class HAPDataTypeCriteriaElementId  extends HAPDataTypeCriteriaImp{
 	
 	private HAPDataTypeId m_dataTypeId;
 
-	private Set<HAPDataTypeCriteria> m_elementDataTypeCriteria;
+	private Map<String, HAPDataTypeCriteria> m_elementDataTypeCriteria;
 	
-	public HAPDataTypeCriteriaElementId(HAPDataTypeId dataTypeId){
+	public HAPDataTypeCriteriaElementId(HAPDataTypeId dataTypeId, Map<String, HAPDataTypeCriteria> elementDataTypeCriteria){
 		this.m_dataTypeId = dataTypeId;
+		this.m_elementDataTypeCriteria = elementDataTypeCriteria;
 	}
 
 	public HAPDataTypeId getDataTypeId(){  return this.m_dataTypeId;  }
@@ -33,7 +34,7 @@ public class HAPDataTypeCriteriaElementId  extends HAPDataTypeCriteriaImp{
 	 * In order to validate on data type or data type criteria, both parent and children data type criteria have to meet
 	 * @return
 	 */
-	public Set<HAPDataTypeCriteria> getChildrenElementDataTypeCriteria(){	return this.m_elementDataTypeCriteria;	}
+	public Map<String, HAPDataTypeCriteria> getChildrenElementDataTypeCriteria(){	return this.m_elementDataTypeCriteria;	}
 	
 	
 	@Override

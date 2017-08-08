@@ -3,7 +3,7 @@ options {
 	/*create static method */
 	STATIC = false ;
 	/* the location for parser classes */
-	OUTPUT_DIRECTORY = "c:/Temp/JCCTree";
+	OUTPUT_DIRECTORY = "c:/Temp/JCCTree/expression";
 /*	"/Users/pro/Desktop/WebToApp/CoreProject/Projects/ExpressionParser/src/com/nosliw/data/expression/parser";*/
 }
 
@@ -30,6 +30,14 @@ TOKEN : { < COMMAR : "," > }
 TOKEN : { < COLON : ":" > }
 TOKEN : { < CONSTANT : (["0"-"9","a"-"z","A"-"Z", "{", "}", "[", "]", "_", "#", " ", "\t", "\n", "\r", "'"])+ > }
 /*TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z"])+ > }*/
+TOKEN : { < OPEN_CONSTANT : "&(" > }
+TOKEN : { < CLOSE_CONSTANT : ")&" > }
+TOKEN : { < OPEN_DATATYPE : "!(" > }
+TOKEN : { < CLOSE_DATATYPE : ")!" > }
+TOKEN : { < OPEN_VARIABLE : "?(" > }
+TOKEN : { < CLOSE_VARIABLE : ")?" > }
+TOKEN : { < OPEN_REFERENCE : "<(" > }
+TOKEN : { < CLOSE_REFERENCE : ")>" > }
 
 /*
 */
@@ -78,7 +86,7 @@ void Constant() #CONSTANT:
 	Token t ;
 }
 {
-	"&("  t=<CONSTANT>  ")&"
+	<OPEN_CONSTANT>  t=<CONSTANT>  <CLOSE_CONSTANT>
 	{jjtThis.value = t.image;}
 }
 
@@ -89,7 +97,7 @@ SimpleNode DataType() #DATATYPE:
 {
 }
 {
-	"!("  DataTypeName()  ")!"
+	<OPEN_DATATYPE>  DataTypeName()  <CLOSE_DATATYPE>
 	{return jjtThis;}
 }
 
@@ -101,7 +109,7 @@ void Variable() #VARIABLE:
 	Token t ;
 }
 {
-	"?("	t=Name()  ")?"
+	<OPEN_VARIABLE>	t=Name()  <CLOSE_VARIABLE>
 	{jjtThis.value = t.image;}
 }
 
@@ -126,7 +134,7 @@ void Reference() #REFERENCE:
 	Token t ;
 }
 {
-	"<("	t=Name()  ")>"
+	<OPEN_REFERENCE>	t=Name()  <CLOSE_REFERENCE>
 	{jjtThis.value = t.image;}
 }
 
