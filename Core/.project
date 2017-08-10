@@ -3,6 +3,7 @@
 	<name>Core</name>
 	<comment></comment>
 	<projects>
+		<project>CriteriaParser</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

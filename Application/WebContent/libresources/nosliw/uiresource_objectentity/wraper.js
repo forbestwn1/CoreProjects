@@ -47,6 +47,7 @@ var nosliwCreateWraper = function(data, path, request){
 	
 	var dataType = nosliwTypedObjectUtility.getObjectType(data);
 	if(dataType==NOSLIWCONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
+		//
 		wrapperType = data.getWrapperType();
 	}
 	else{

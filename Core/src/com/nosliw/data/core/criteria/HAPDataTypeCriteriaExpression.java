@@ -12,6 +12,12 @@ import com.nosliw.data.core.HAPDataTypeId;
  */
 public class HAPDataTypeCriteriaExpression implements HAPDataTypeCriteria{
 
+	private String m_expression;
+	
+	public HAPDataTypeCriteriaExpression(String expression){
+		this.m_expression = expression;
+	}
+	
 	@Override
 	public String getType() {
 		// TODO Auto-generated method stub

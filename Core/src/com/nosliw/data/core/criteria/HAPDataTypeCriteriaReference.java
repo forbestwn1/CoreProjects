@@ -12,6 +12,10 @@ public class HAPDataTypeCriteriaReference implements HAPDataTypeCriteria{
 
 	private String m_reference;
 	
+	public HAPDataTypeCriteriaReference(String reference){
+		this.m_reference = reference;
+	}
+	
 	@Override
 	public String getType() {
 		// TODO Auto-generated method stub

@@ -29,29 +29,31 @@ TOKEN : { < START_IDS : "#||" > }
 TOKEN : { < END_IDS : "||#" > }
 TOKEN : { < START_RANGE : "?||" > }
 TOKEN : { < END_RANGE : "||?" > }
-TOKEN : { < START_OR : "|||" > }
-TOKEN : { < END_OR : "||}" > }
+TOKEN : { < START_OR : "^||" > }
+TOKEN : { < END_OR : "||^" > }
 TOKEN : { < START_AND : "&||" > }
 TOKEN : { < END_AND : "||&" > }
-TOKEN : { < START_ELEMENT : "{" > }
-TOKEN : { < END_ELEMENT : "}" > }
+TOKEN : { < START_ELEMENT : "{||" > }
+TOKEN : { < END_ELEMENT : "||}" > }
 
 
 TOKEN : { < COMMAR : "," > }
-TOKEN : { < ALL : "*" > }
+TOKEN : { < ASSIGNMENT : ":" > }
+TOKEN : { < RANGE : "-" > }
+TOKEN : { < ANY : "*" > }
 TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z", ".", "_", ";", "\t", "\n", "\r"])+ > }
 TOKEN : { < EXPRESSION : (["0"-"9","a"-"z","A"-"Z", "(", ")", "<", ">", "&", "!", "?", "{", "}", "[", "]", "_", "#", "'"])+ > }
 
 
-void allCriteria() #ALLCRITERIA:
+void anyCriteria() #ANYCRITERIA:
 {
 }
 {
-	<ALL>
+	<ANY>
 	{}
 }
 
-Token referenceCriteria() #ALLCRITERIA:
+Token referenceCriteria() #REFERENCECRITERIA:
 {
 	Token t ;
 }
@@ -60,7 +62,7 @@ Token referenceCriteria() #ALLCRITERIA:
 	{jjtThis.value = t.image; return t;}
 }
 
-Token expressionCriteria() #ALLCRITERIA:
+Token expressionCriteria() #EXPRESSIONCRITERIA:
 {
 	Token t ;
 }
@@ -69,12 +71,13 @@ Token expressionCriteria() #ALLCRITERIA:
 	{jjtThis.value = t.image; return t;}
 }
 
-void idCriteria() #IDCRITERIA:
+SimpleNode idCriteria() #IDCRITERIA:
 {
+	Token t ;
 }
 {
-	<NAME>[childElementsCriteria()]
-	{}
+	t = <NAME>(childElementsCriteria())*
+	{jjtThis.value = t.image; return jjtThis;}
 }
 
 void idsCriteria() #IDSCRITERIA:
@@ -85,27 +88,32 @@ void idsCriteria() #IDSCRITERIA:
 	{}
 }
 
-void rangeCriteria() #IDCRITERIA:
+void rangeCriteria() #RANGECRITERIA:
 {
+	Token from = null;
+	Token to = null;
 }
 {
-	(<START_RANGE>(<NAME>)*"-"(<NAME>)*(childElementsCriteria())*<END_RANGE>)
-	{}
-}
-
-void childElementCriteria(int index) #CHILDELEMENTCRITERIA:
-{
-}
-{
-	<NAME>":"Criteria(index)	
+	(<START_RANGE>(from=<NAME>)*<RANGE>(to=<NAME>)*(childElementsCriteria())*<END_RANGE>)
+	{jjtThis.value = new String[]{from==null?null:from.image, to==null?null:to.image};                    }
 }
 
-void childElementsCriteria() #CHILDELEMENTCRITERIA:
+SimpleNode childElementCriteria(int index) #CHILDELEMENTCRITERIA:
+{
+	Token t ;
+}
+{
+	t=<NAME><ASSIGNMENT>Criteria(index)	
+	{jjtThis.value = t.image; return jjtThis;}
+}
+
+SimpleNode childElementsCriteria() #CHILDELEMENTSCRITERIA:
 {
 	int i = 0;
 }
 {
-	<START_ELEMENT> (childElementCriteria(i){i++;})*  <END_ELEMENT>	
+	<START_ELEMENT> [(childElementCriteria(i){i++;})(<COMMAR>childElementCriteria(i){i++;})*]  <END_ELEMENT>
+	{return jjtThis;}	
 }
 
 SimpleNode orCriteria() #ORCRITERIA:
@@ -150,7 +158,7 @@ SimpleNode Criteria(int index) #CRITERIA:
 		|
 		andCriteria ()
 		|
-		allCriteria ()
+		anyCriteria ()
 	)
 	{jjtThis.value=index+"";   return jjtThis;}
 }

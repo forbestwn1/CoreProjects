@@ -66,6 +66,33 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 	}
 
 	@Override
+	protected String buildLiterate(){
+		StringBuffer out = new StringBuffer();
+		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.START_RANGE));
+		if(this.m_from!=null)		out.append(HAPSerializeManager.getInstance().toStringValue(this.m_from, HAPSerializationFormat.LITERATE));
+		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.RANGE));
+		if(this.m_to!=null)		out.append(HAPSerializeManager.getInstance().toStringValue(this.m_to, HAPSerializationFormat.LITERATE));
+		
+		if(this.m_elementDataTypeCriteria!=null && !this.m_elementDataTypeCriteria.isEmpty()){
+			out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.START_ELEMENT));
+
+			int i = 0;
+			for(String name : this.m_elementDataTypeCriteria.keySet()){
+				if(i!=0)   out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.COMMAR));
+				out.append(name);
+				out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.ASSIGNMENT));
+				out.append(HAPSerializeManager.getInstance().toStringValue(this.m_elementDataTypeCriteria.get(name), HAPSerializationFormat.LITERATE));
+				i++;
+			}
+			
+			out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_ELEMENT));
+		}
+		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_RANGE));
+		
+		return out.toString(); 
+	}
+	
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(DATATYPEFROM, HAPSerializeManager.getInstance().toStringValue(this.m_from, HAPSerializationFormat.LITERATE));
@@ -77,7 +104,10 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 		boolean out = false;
 		if(obj instanceof HAPDataTypeCriteriaElementRange){
 			HAPDataTypeCriteriaElementRange criteria = (HAPDataTypeCriteriaElementRange)obj;
-			out = HAPBasicUtility.isEquals(this.m_from, criteria.m_from) && HAPBasicUtility.isEquals(this.m_to, criteria.m_to);
+			boolean out1 = HAPBasicUtility.isEquals(this.m_from, criteria.m_from) && HAPBasicUtility.isEquals(this.m_to, criteria.m_to);
+			if(out1){
+				out = HAPBasicUtility.isEqualMaps(this.m_elementDataTypeCriteria, criteria.m_elementDataTypeCriteria);
+			}
 		}
 		return out;
 	}

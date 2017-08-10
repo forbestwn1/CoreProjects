@@ -44,13 +44,11 @@ public interface HAPCriteriaParserGeneratedConstants {
   /** RegularExpression Id. */
   int ASSIGNMENT = 16;
   /** RegularExpression Id. */
-  int RANGE = 17;
+  int ALL = 17;
   /** RegularExpression Id. */
-  int ANY = 18;
+  int NAME = 18;
   /** RegularExpression Id. */
-  int NAME = 19;
-  /** RegularExpression Id. */
-  int EXPRESSION = 20;
+  int EXPRESSION = 19;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -66,18 +64,18 @@ public interface HAPCriteriaParserGeneratedConstants {
     "\"||#\"",
     "\"?||\"",
     "\"||?\"",
-    "\"^||\"",
-    "\"||^\"",
+    "\"|||\"",
+    "\"||}\"",
     "\"&||\"",
     "\"||&\"",
-    "\"{||\"",
-    "\"||}\"",
+    "\"{\"",
+    "\"}\"",
     "\",\"",
     "\":\"",
-    "\"-\"",
     "\"*\"",
     "<NAME>",
     "<EXPRESSION>",
+    "\"-\"",
   };
 
 }

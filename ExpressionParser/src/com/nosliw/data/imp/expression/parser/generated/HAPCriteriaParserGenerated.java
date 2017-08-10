@@ -11,12 +11,12 @@ public class HAPCriteriaParserGenerated/*@bgen(jjtree)*/implements HAPCriteriaPa
                 root.dump("");
   }
 
-  final public void anyCriteria() throws ParseException {/*@bgen(jjtree) ANYCRITERIA */
-  SimpleNode jjtn000 = new SimpleNode(JJTANYCRITERIA);
+  final public void allCriteria() throws ParseException {/*@bgen(jjtree) ALLCRITERIA */
+  SimpleNode jjtn000 = new SimpleNode(JJTALLCRITERIA);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
-      jj_consume_token(ANY);
+      jj_consume_token(ALL);
 jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
 
@@ -27,8 +27,8 @@ if (jjtc000) {
     }
   }
 
-  final public Token referenceCriteria() throws ParseException {/*@bgen(jjtree) REFERENCECRITERIA */
-        SimpleNode jjtn000 = new SimpleNode(JJTREFERENCECRITERIA);
+  final public Token referenceCriteria() throws ParseException {/*@bgen(jjtree) ALLCRITERIA */
+        SimpleNode jjtn000 = new SimpleNode(JJTALLCRITERIA);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t ;
     try {
@@ -46,8 +46,8 @@ if (jjtc000) {
     throw new Error("Missing return statement in function");
   }
 
-  final public Token expressionCriteria() throws ParseException {/*@bgen(jjtree) EXPRESSIONCRITERIA */
-        SimpleNode jjtn000 = new SimpleNode(JJTEXPRESSIONCRITERIA);
+  final public Token expressionCriteria() throws ParseException {/*@bgen(jjtree) ALLCRITERIA */
+        SimpleNode jjtn000 = new SimpleNode(JJTALLCRITERIA);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t ;
     try {
@@ -155,11 +155,10 @@ if (jjtc000) {
     }
   }
 
-  final public void rangeCriteria() throws ParseException {/*@bgen(jjtree) RANGECRITERIA */
-        SimpleNode jjtn000 = new SimpleNode(JJTRANGECRITERIA);
-        boolean jjtc000 = true;
-        jjtree.openNodeScope(jjtn000);Token from = null;
-        Token to = null;
+  final public void rangeCriteria() throws ParseException {/*@bgen(jjtree) IDCRITERIA */
+  SimpleNode jjtn000 = new SimpleNode(JJTIDCRITERIA);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
     try {
       jj_consume_token(START_RANGE);
       label_3:
@@ -173,9 +172,9 @@ if (jjtc000) {
           jj_la1[2] = jj_gen;
           break label_3;
         }
-        from = jj_consume_token(NAME);
+        jj_consume_token(NAME);
       }
-      jj_consume_token(RANGE);
+      jj_consume_token(20);
       label_4:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -187,7 +186,7 @@ if (jjtc000) {
           jj_la1[3] = jj_gen;
           break label_4;
         }
-        to = jj_consume_token(NAME);
+        jj_consume_token(NAME);
       }
       label_5:
       while (true) {
@@ -205,7 +204,7 @@ if (jjtc000) {
       jj_consume_token(END_RANGE);
 jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
-jjtn000.value = new String[]{from==null?null:from.image, to==null?null:to.image};
+
     } catch (Throwable jjte000) {
 if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
@@ -449,8 +448,8 @@ if (jjtc000) {
         andCriteria();
         break;
         }
-      case ANY:{
-        anyCriteria();
+      case ALL:{
+        allCriteria();
         break;
         }
       default:
@@ -498,7 +497,7 @@ if (jjtc000) {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x2000,0x8000,0x80000,0x80000,0x2000,0x8000,0x80000,0x8000,0x8000,0xc0aaa,};
+      jj_la1_0 = new int[] {0x2000,0x8000,0x40000,0x40000,0x2000,0x8000,0x40000,0x8000,0x8000,0x60aaa,};
    }
 
   /** Constructor with InputStream. */

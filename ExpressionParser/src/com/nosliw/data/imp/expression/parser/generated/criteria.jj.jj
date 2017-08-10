@@ -33,33 +33,32 @@ TOKEN : { < START_IDS : "#||" > }
 TOKEN : { < END_IDS : "||#" > }
 TOKEN : { < START_RANGE : "?||" > }
 TOKEN : { < END_RANGE : "||?" > }
-TOKEN : { < START_OR : "^||" > }
-TOKEN : { < END_OR : "||^" > }
+TOKEN : { < START_OR : "|||" > }
+TOKEN : { < END_OR : "||}" > }
 TOKEN : { < START_AND : "&||" > }
 TOKEN : { < END_AND : "||&" > }
-TOKEN : { < START_ELEMENT : "{||" > }
-TOKEN : { < END_ELEMENT : "||}" > }
+TOKEN : { < START_ELEMENT : "{" > }
+TOKEN : { < END_ELEMENT : "}" > }
 
 
 TOKEN : { < COMMAR : "," > }
 TOKEN : { < ASSIGNMENT : ":" > }
-TOKEN : { < RANGE : "-" > }
-TOKEN : { < ANY : "*" > }
+TOKEN : { < ALL : "*" > }
 TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z", ".", "_", ";", "\t", "\n", "\r"])+ > }
 TOKEN : { < EXPRESSION : (["0"-"9","a"-"z","A"-"Z", "(", ")", "<", ">", "&", "!", "?", "{", "}", "[", "]", "_", "#", "'"])+ > }
 
 
-void anyCriteria()             :
-{/*@bgen(jjtree) ANYCRITERIA */
-  SimpleNode jjtn000 = new SimpleNode(JJTANYCRITERIA);
+void allCriteria()             :
+{/*@bgen(jjtree) ALLCRITERIA */
+  SimpleNode jjtn000 = new SimpleNode(JJTALLCRITERIA);
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
 /*@egen*/
 }
-{/*@bgen(jjtree) ANYCRITERIA */
+{/*@bgen(jjtree) ALLCRITERIA */
         try {
 /*@egen*/
-	<ANY>/*@bgen(jjtree)*/
+	<ALL>/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
@@ -74,15 +73,15 @@ void anyCriteria()             :
 /*@egen*/
 }
 
-Token referenceCriteria()                   :
-{/*@bgen(jjtree) REFERENCECRITERIA */
-        SimpleNode jjtn000 = new SimpleNode(JJTREFERENCECRITERIA);
+Token referenceCriteria()             :
+{/*@bgen(jjtree) ALLCRITERIA */
+        SimpleNode jjtn000 = new SimpleNode(JJTALLCRITERIA);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);
 /*@egen*/
 	Token t ;
 }
-{/*@bgen(jjtree) REFERENCECRITERIA */
+{/*@bgen(jjtree) ALLCRITERIA */
         try {
 /*@egen*/
 	<START_REFERENCE> t=<NAME> <END_REFERENCE>/*@bgen(jjtree)*/
@@ -100,15 +99,15 @@ Token referenceCriteria()                   :
 /*@egen*/
 }
 
-Token expressionCriteria()                    :
-{/*@bgen(jjtree) EXPRESSIONCRITERIA */
-        SimpleNode jjtn000 = new SimpleNode(JJTEXPRESSIONCRITERIA);
+Token expressionCriteria()             :
+{/*@bgen(jjtree) ALLCRITERIA */
+        SimpleNode jjtn000 = new SimpleNode(JJTALLCRITERIA);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);
 /*@egen*/
 	Token t ;
 }
-{/*@bgen(jjtree) EXPRESSIONCRITERIA */
+{/*@bgen(jjtree) ALLCRITERIA */
         try {
 /*@egen*/
 	<START_EXPRESSION> t=<EXPRESSION> <START_EXPRESSION>/*@bgen(jjtree)*/
@@ -205,25 +204,23 @@ void idsCriteria()             :
 /*@egen*/
 }
 
-void rangeCriteria()               :
-{/*@bgen(jjtree) RANGECRITERIA */
-        SimpleNode jjtn000 = new SimpleNode(JJTRANGECRITERIA);
-        boolean jjtc000 = true;
-        jjtree.openNodeScope(jjtn000);
+void rangeCriteria()            :
+{/*@bgen(jjtree) IDCRITERIA */
+  SimpleNode jjtn000 = new SimpleNode(JJTIDCRITERIA);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
 /*@egen*/
-	Token from = null;
-	Token to = null;
 }
-{/*@bgen(jjtree) RANGECRITERIA */
+{/*@bgen(jjtree) IDCRITERIA */
         try {
 /*@egen*/
-	(<START_RANGE>(from=<NAME>)*<RANGE>(to=<NAME>)*(childElementsCriteria())*<END_RANGE>)/*@bgen(jjtree)*/
+	(<START_RANGE>(<NAME>)*"-"(<NAME>)*(childElementsCriteria())*<END_RANGE>)/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
         }
 /*@egen*/
-	{jjtn000.value = new String[]{from==null?null:from.image, to==null?null:to.image};                    }/*@bgen(jjtree)*/
+	{}/*@bgen(jjtree)*/
         } catch (Throwable jjte000) {
           if (jjtc000) {
             jjtree.clearNodeScope(jjtn000);
@@ -436,7 +433,7 @@ SimpleNode Criteria(int index)          :
 		|
 		andCriteria ()
 		|
-		anyCriteria ()
+		allCriteria ()
 	)/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
