@@ -4,7 +4,7 @@ options {
 	/*create static method */
 	STATIC = false ;
 	/* the location for parser classes */
-	OUTPUT_DIRECTORY = "c:/Temp/JCCTree";
+	OUTPUT_DIRECTORY = "c:/Temp/JCCTree/expression";
 /*	"/Users/pro/Desktop/WebToApp/CoreProject/Projects/ExpressionParser/src/com/nosliw/data/expression/parser";*/
 }
 
@@ -34,6 +34,14 @@ TOKEN : { < COMMAR : "," > }
 TOKEN : { < COLON : ":" > }
 TOKEN : { < CONSTANT : (["0"-"9","a"-"z","A"-"Z", "{", "}", "[", "]", "_", "#", " ", "\t", "\n", "\r", "'"])+ > }
 /*TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z"])+ > }*/
+TOKEN : { < OPEN_CONSTANT : "&(" > }
+TOKEN : { < CLOSE_CONSTANT : ")&" > }
+TOKEN : { < OPEN_DATATYPE : "!(" > }
+TOKEN : { < CLOSE_DATATYPE : ")!" > }
+TOKEN : { < OPEN_VARIABLE : "?(" > }
+TOKEN : { < CLOSE_VARIABLE : ")?" > }
+TOKEN : { < OPEN_REFERENCE : "<(" > }
+TOKEN : { < CLOSE_REFERENCE : ")>" > }
 
 /*
 */
@@ -122,7 +130,7 @@ void Constant()          :
 {/*@bgen(jjtree) CONSTANT */
         try {
 /*@egen*/
-	"&("  t=<CONSTANT>  ")&"/*@bgen(jjtree)*/
+	<OPEN_CONSTANT>  t=<CONSTANT>  <CLOSE_CONSTANT>/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
@@ -150,7 +158,7 @@ SimpleNode DataType()          :
 {/*@bgen(jjtree) DATATYPE */
         try {
 /*@egen*/
-	"!("  DataTypeName()  ")!"/*@bgen(jjtree)*/
+	<OPEN_DATATYPE>  DataTypeName()  <CLOSE_DATATYPE>/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
@@ -193,7 +201,7 @@ void Variable()          :
 {/*@bgen(jjtree) VARIABLE */
         try {
 /*@egen*/
-	"?("	t=Name()  ")?"/*@bgen(jjtree)*/
+	<OPEN_VARIABLE>	t=Name()  <CLOSE_VARIABLE>/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
@@ -266,7 +274,7 @@ void Reference()           :
 {/*@bgen(jjtree) REFERENCE */
         try {
 /*@egen*/
-	"<("	t=Name()  ")>"/*@bgen(jjtree)*/
+	<OPEN_REFERENCE>	t=Name()  <CLOSE_REFERENCE>/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;

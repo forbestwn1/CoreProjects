@@ -32,9 +32,16 @@ public class HAPDataTypeCriteriaAny extends HAPDataTypeCriteriaImp{
 	public Set<HAPDataTypeId> getValidDataTypeId(HAPDataTypeHelper dataTypeHelper) {		
 		throw new IllegalStateException();	
 	}
+	@Override
+	public Set<HAPDataTypeCriteriaId> getValidDataTypeCriteriaId(HAPDataTypeHelper dataTypeHelper) {
+		throw new IllegalStateException();	
+	}
+
+//	@Override
+//	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {		return this;	}
 
 	@Override
-	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {		return this;	}
+	protected String buildLiterate(){		return HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.ANY);	}
 
 	@Override
 	public boolean equals(Object obj){

@@ -21,28 +21,70 @@ public class HAPCriteriaParserGenerated {
 PARSER_END(HAPCriteriaParserGenerated)
 
 
-TOKEN : { < START_REFERENCE : "<||" > }
-TOKEN : { < END_REFERENCE : "||>" > }
 TOKEN : { < START_EXPRESSION : "@||" > }
 TOKEN : { < END_EXPRESSION : "||@" > }
 TOKEN : { < START_IDS : "#||" > }
 TOKEN : { < END_IDS : "||#" > }
-TOKEN : { < START_RANGE : "?||" > }
-TOKEN : { < END_RANGE : "||?" > }
 TOKEN : { < START_OR : "^||" > }
 TOKEN : { < END_OR : "||^" > }
-TOKEN : { < START_AND : "&||" > }
-TOKEN : { < END_AND : "||&" > }
-TOKEN : { < START_ELEMENT : "{||" > }
-TOKEN : { < END_ELEMENT : "||}" > }
+
+TOKEN : { < START_SUBCRITERIA_OPEN : "%||" > }
+TOKEN : { < END_SUBCRITERIA_OPEN : "||%" > }
+
+TOKEN : { < START_SUBCRITERIA_CLOSE : "%%||" > }
+TOKEN : { < END_SUBCRITERIA_CLOSE : "||%%" > }
+
+TOKEN : { < START_REFERENCE : "~||" > }
+TOKEN : { < END_REFERENCE : "||~" > }
+
+TOKEN : { < START_RANGE : "`||" > }
+TOKEN : { < END_RANGE : "||`" > }
+
+
+TOKEN : { < START_AND : "-||" > }
+TOKEN : { < END_AND : "||-" > }
 
 
 TOKEN : { < COMMAR : "," > }
 TOKEN : { < ASSIGNMENT : ":" > }
 TOKEN : { < RANGE : "-" > }
 TOKEN : { < ANY : "*" > }
-TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z", ".", "_", ";", "\t", "\n", "\r"])+ > }
-TOKEN : { < EXPRESSION : (["0"-"9","a"-"z","A"-"Z", "(", ")", "<", ">", "&", "!", "?", "{", "}", "[", "]", "_", "#", "'"])+ > }
+/*TOKEN : { < NAME1 : (["0"-"9","a"-"z","A"-"Z", ".", "_", ";", "\t", "\n", "\r"])+ > }*/
+TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z", "(", ")", "<", ">", "&", "!", "?", "{", "}", "[", "]", "_", "#", "'", ";", "."])+ > }
+
+<DEFAULT, IN_REGEX>
+TOKEN:
+{
+	< STRING_LITERAL:
+		"\"" (<DOUBLE_STRING_CHARACTERS>)? "\""  | "'" (<SINGLE_STRING_CHARACTERS>)? "'"
+	>	 : IN_REGEX
+|
+	< #DOUBLE_STRING_CHARACTERS: (<DOUBLE_STRING_CHARACTER>)* >
+|
+	< #SINGLE_STRING_CHARACTERS: (<SINGLE_STRING_CHARACTER>)* >
+|
+	< #DOUBLE_STRING_CHARACTER:
+		(~["\"","\\","\n","\r","\u2028","\u2029"])* 
+	>
+|
+	< #SINGLE_STRING_CHARACTER:
+		(~["'","\\","\n","\r","\u2028","\u2029"]) 
+	> 
+|
+	< #CHARACTER_ESCAPE_SEQUENCE:
+		<SINGLE_ESCAPE_CHARACTER> | <NON_ESCAPE_CHARACTER>
+	>
+|
+	< #SINGLE_ESCAPE_CHARACTER: ["'" , "\"" , "\\" , "b" , "f" , "n" , "r" , "t" , "v"] >
+|
+	< #NON_ESCAPE_CHARACTER: 
+		~["\n","\r","\u2028","\u2029"]
+	| 
+		~["'" , "\"" , "\\" , "b" , "f" , "n" , "r" , "t" , "v", "x", "u"]
+	| 
+		~["0"-"9"]
+	>
+}
 
 
 void anyCriteria() #ANYCRITERIA:
@@ -67,7 +109,7 @@ Token expressionCriteria() #EXPRESSIONCRITERIA:
 	Token t ;
 }
 {
-	<START_EXPRESSION> t=<EXPRESSION> <START_EXPRESSION>
+	<START_EXPRESSION> t=<NAME><END_EXPRESSION>
 	{jjtThis.value = t.image; return t;}
 }
 
@@ -76,7 +118,7 @@ SimpleNode idCriteria() #IDCRITERIA:
 	Token t ;
 }
 {
-	t = <NAME>(childElementsCriteria())*
+	t = <NAME>(subCriteriaGroup())*
 	{jjtThis.value = t.image; return jjtThis;}
 }
 
@@ -94,11 +136,11 @@ void rangeCriteria() #RANGECRITERIA:
 	Token to = null;
 }
 {
-	(<START_RANGE>(from=<NAME>)*<RANGE>(to=<NAME>)*(childElementsCriteria())*<END_RANGE>)
+	(<START_RANGE>(from=<NAME>)*<RANGE>(to=<NAME>)*(subCriteriaGroup())*<END_RANGE>)
 	{jjtThis.value = new String[]{from==null?null:from.image, to==null?null:to.image};                    }
 }
 
-SimpleNode childElementCriteria(int index) #CHILDELEMENTCRITERIA:
+SimpleNode subCriteria(int index) #SUBCRITERIA:
 {
 	Token t ;
 }
@@ -107,12 +149,16 @@ SimpleNode childElementCriteria(int index) #CHILDELEMENTCRITERIA:
 	{jjtThis.value = t.image; return jjtThis;}
 }
 
-SimpleNode childElementsCriteria() #CHILDELEMENTSCRITERIA:
+SimpleNode subCriteriaGroup() #SUBCRITERIAGROUP:
 {
 	int i = 0;
 }
 {
-	<START_ELEMENT> [(childElementCriteria(i){i++;})(<COMMAR>childElementCriteria(i){i++;})*]  <END_ELEMENT>
+	(
+		(<START_SUBCRITERIA_OPEN> [(subCriteria(i){i++;})(<COMMAR>subCriteria(i){i++;})*]  <END_SUBCRITERIA_OPEN>{jjtThis.value=true;})
+		|
+		(<START_SUBCRITERIA_CLOSE> [(subCriteria(i){i++;})(<COMMAR>subCriteria(i){i++;})*]  <END_SUBCRITERIA_CLOSE>{jjtThis.value=false;})
+	)
 	{return jjtThis;}	
 }
 

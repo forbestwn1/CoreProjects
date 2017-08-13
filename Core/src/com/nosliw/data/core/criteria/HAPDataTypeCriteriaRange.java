@@ -14,7 +14,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 
-public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
+public class HAPDataTypeCriteriaRange extends HAPDataTypeCriteriaImp{
 
 	@HAPAttribute
 	public static String DATATYPEFROM = "dataTypeFrom";
@@ -28,12 +28,12 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 	//more specific data type
 	private HAPDataTypeId m_to;
 
-	private Map<String, HAPDataTypeCriteria> m_elementDataTypeCriteria;
+	private HAPDataTypeSubCriteriaGroup m_subCriteriaGroup;
 	
-	public HAPDataTypeCriteriaElementRange(HAPDataTypeId from, HAPDataTypeId to, Map<String, HAPDataTypeCriteria> elementDataTypeCriteria){
+	public HAPDataTypeCriteriaRange(HAPDataTypeId from, HAPDataTypeId to, HAPDataTypeSubCriteriaGroup subCriteriaGroup){
 		this.m_from = from;
 		this.m_to = to;
-		this.m_elementDataTypeCriteria = elementDataTypeCriteria;
+		this.m_subCriteriaGroup = subCriteriaGroup;
 	}
 	
 	public HAPDataTypeId getFromDataTypeId(){  return this.m_from;  }
@@ -47,23 +47,23 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 		return dataTypeHelper.getAllDataTypeInRange(m_from, m_to);
 	}
 
-	@Override
-	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {
-		HAPDataTypeCriteria out = null;
-		if(this.m_from!=null){
-			HAPDataTypeId dataTypeId = this.m_from;
-			out = new HAPDataTypeCriteriaElementId(dataTypeId, this.m_elementDataTypeCriteria);
-		}
-		else if(this.m_to!=null){
-			List<HAPDataTypeId> dataTypeIds = new ArrayList(dataTypeHelper.getRootDataTypeId(m_to));
-			if(dataTypeIds.size()==1)		out = new HAPDataTypeCriteriaElementId(dataTypeIds.get(0), this.m_elementDataTypeCriteria);
-			else out = new HAPDataTypeCriteriaElementIds(new HashSet(dataTypeIds));
-		}
-		else{
-			out = HAPDataTypeCriteriaAny.getCriteria();
-		}
-		return out;
-	}
+//	@Override
+//	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {
+//		HAPDataTypeCriteria out = null;
+//		if(this.m_from!=null){
+//			HAPDataTypeId dataTypeId = this.m_from;
+//			out = new HAPDataTypeCriteriaElementId(dataTypeId, this.m_elementDataTypeCriteria);
+//		}
+//		else if(this.m_to!=null){
+//			List<HAPDataTypeId> dataTypeIds = new ArrayList(dataTypeHelper.getRootDataTypeId(m_to));
+//			if(dataTypeIds.size()==1)		out = new HAPDataTypeCriteriaElementId(dataTypeIds.get(0), this.m_elementDataTypeCriteria);
+//			else out = new HAPDataTypeCriteriaElementIds(new HashSet(dataTypeIds));
+//		}
+//		else{
+//			out = HAPDataTypeCriteriaAny.getCriteria();
+//		}
+//		return out;
+//	}
 
 	@Override
 	protected String buildLiterate(){
@@ -72,23 +72,9 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 		if(this.m_from!=null)		out.append(HAPSerializeManager.getInstance().toStringValue(this.m_from, HAPSerializationFormat.LITERATE));
 		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.RANGE));
 		if(this.m_to!=null)		out.append(HAPSerializeManager.getInstance().toStringValue(this.m_to, HAPSerializationFormat.LITERATE));
-		
-		if(this.m_elementDataTypeCriteria!=null && !this.m_elementDataTypeCriteria.isEmpty()){
-			out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.START_ELEMENT));
-
-			int i = 0;
-			for(String name : this.m_elementDataTypeCriteria.keySet()){
-				if(i!=0)   out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.COMMAR));
-				out.append(name);
-				out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.ASSIGNMENT));
-				out.append(HAPSerializeManager.getInstance().toStringValue(this.m_elementDataTypeCriteria.get(name), HAPSerializationFormat.LITERATE));
-				i++;
-			}
-			
-			out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_ELEMENT));
+		if(this.m_subCriteriaGroup!=null){
+			out.append(HAPSerializeManager.getInstance().toStringValue(m_subCriteriaGroup, HAPSerializationFormat.LITERATE));
 		}
-		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_RANGE));
-		
 		return out.toString(); 
 	}
 	
@@ -102,11 +88,11 @@ public class HAPDataTypeCriteriaElementRange extends HAPDataTypeCriteriaImp{
 	@Override
 	public boolean equals(Object obj){
 		boolean out = false;
-		if(obj instanceof HAPDataTypeCriteriaElementRange){
-			HAPDataTypeCriteriaElementRange criteria = (HAPDataTypeCriteriaElementRange)obj;
+		if(obj instanceof HAPDataTypeCriteriaRange){
+			HAPDataTypeCriteriaRange criteria = (HAPDataTypeCriteriaRange)obj;
 			boolean out1 = HAPBasicUtility.isEquals(this.m_from, criteria.m_from) && HAPBasicUtility.isEquals(this.m_to, criteria.m_to);
 			if(out1){
-				out = HAPBasicUtility.isEqualMaps(this.m_elementDataTypeCriteria, criteria.m_elementDataTypeCriteria);
+				out = HAPBasicUtility.isEquals(this.m_subCriteriaGroup, criteria.m_subCriteriaGroup);
 			}
 		}
 		return out;

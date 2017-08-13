@@ -57,10 +57,10 @@ public class HAPDataTypeCriteriaWrapperLiterate extends HAPSerializableImp imple
 		return this.m_literateValue;
 	}
 
-	@Override
-	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {
-		return this.getSolidCriteria().normalize(dataTypeHelper);
-	}
+//	@Override
+//	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {
+//		return this.getSolidCriteria().normalize(dataTypeHelper);
+//	}
 
 	public HAPDataTypeCriteria getSolidCriteria(){
 		if(this.m_criteria==null){

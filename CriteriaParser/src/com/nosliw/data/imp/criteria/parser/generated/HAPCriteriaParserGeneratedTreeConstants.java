@@ -9,8 +9,8 @@ public interface HAPCriteriaParserGeneratedTreeConstants
   public int JJTIDCRITERIA = 3;
   public int JJTIDSCRITERIA = 4;
   public int JJTRANGECRITERIA = 5;
-  public int JJTCHILDELEMENTCRITERIA = 6;
-  public int JJTCHILDELEMENTSCRITERIA = 7;
+  public int JJTSUBCRITERIA = 6;
+  public int JJTSUBCRITERIAGROUP = 7;
   public int JJTORCRITERIA = 8;
   public int JJTANDCRITERIA = 9;
   public int JJTCRITERIA = 10;
@@ -23,11 +23,11 @@ public interface HAPCriteriaParserGeneratedTreeConstants
     "IDCRITERIA",
     "IDSCRITERIA",
     "RANGECRITERIA",
-    "CHILDELEMENTCRITERIA",
-    "CHILDELEMENTSCRITERIA",
+    "SUBCRITERIA",
+    "SUBCRITERIAGROUP",
     "ORCRITERIA",
     "ANDCRITERIA",
     "CRITERIA",
   };
 }
-/* JavaCC - OriginalChecksum=b3308d9fc9a38b3fb3d3f8e44432d6cb (do not edit this line) */
+/* JavaCC - OriginalChecksum=d6f6d7d954a94d62d0bc9af8b10b5e9f (do not edit this line) */

@@ -14,9 +14,9 @@ import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementIds;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementRange;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaId;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaIds;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaRange;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaOr;
 import com.nosliw.data.core.expression.HAPMatchers;
 
@@ -109,10 +109,10 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	public HAPDataTypeCriteria buildDataTypeCriteria(Set<HAPDataTypeId> dataTypeIds) {
 		HAPDataTypeCriteria out = null;
 		if(dataTypeIds.size()==1){
-			out = new HAPDataTypeCriteriaElementId(dataTypeIds.iterator().next());
+			out = new HAPDataTypeCriteriaId(dataTypeIds.iterator().next());
 		}
 		else{
-			out = new HAPDataTypeCriteriaElementIds(dataTypeIds);
+			out = new HAPDataTypeCriteriaIds(dataTypeIds);
 		}
 		return out;
 	}
@@ -184,13 +184,13 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		
 		if(normalizedDataTypeIds.size()==1){
 			//one element, use range
-			out = new HAPDataTypeCriteriaElementRange(normalizedDataTypeIds.iterator().next(), null);
+			out = new HAPDataTypeCriteriaRange(normalizedDataTypeIds.iterator().next(), null);
 		}
 		else{
 			//multiple, use or
 			List<HAPDataTypeCriteria> criterias = new ArrayList<HAPDataTypeCriteria>();
 			for(HAPDataTypeId normalizedDataTypeId : normalizedDataTypeIds){
-				criterias.add(new HAPDataTypeCriteriaElementRange(normalizedDataTypeId, null));
+				criterias.add(new HAPDataTypeCriteriaRange(normalizedDataTypeId, null));
 			}
 			out = new HAPDataTypeCriteriaOr(criterias);
 		}
@@ -275,7 +275,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 			if(match==false)   return null;
 		}
 		
-		return new HAPDataTypeCriteriaElementIds(out);
+		return new HAPDataTypeCriteriaIds(out);
 	}
 	
 	

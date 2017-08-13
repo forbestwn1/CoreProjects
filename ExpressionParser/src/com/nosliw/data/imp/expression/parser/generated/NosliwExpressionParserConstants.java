@@ -21,6 +21,22 @@ public interface NosliwExpressionParserConstants {
   int COLON = 4;
   /** RegularExpression Id. */
   int CONSTANT = 5;
+  /** RegularExpression Id. */
+  int OPEN_CONSTANT = 6;
+  /** RegularExpression Id. */
+  int CLOSE_CONSTANT = 7;
+  /** RegularExpression Id. */
+  int OPEN_DATATYPE = 8;
+  /** RegularExpression Id. */
+  int CLOSE_DATATYPE = 9;
+  /** RegularExpression Id. */
+  int OPEN_VARIABLE = 10;
+  /** RegularExpression Id. */
+  int CLOSE_VARIABLE = 11;
+  /** RegularExpression Id. */
+  int OPEN_REFERENCE = 12;
+  /** RegularExpression Id. */
+  int CLOSE_REFERENCE = 13;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -33,7 +49,6 @@ public interface NosliwExpressionParserConstants {
     "\",\"",
     "\":\"",
     "<CONSTANT>",
-    "\".\"",
     "\"&(\"",
     "\")&\"",
     "\"!(\"",
@@ -42,6 +57,7 @@ public interface NosliwExpressionParserConstants {
     "\")?\"",
     "\"<(\"",
     "\")>\"",
+    "\".\"",
   };
 
 }

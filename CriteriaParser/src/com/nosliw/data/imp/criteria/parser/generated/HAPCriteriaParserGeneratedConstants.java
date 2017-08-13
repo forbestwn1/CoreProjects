@@ -12,72 +12,101 @@ public interface HAPCriteriaParserGeneratedConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int START_REFERENCE = 1;
+  int START_EXPRESSION = 1;
   /** RegularExpression Id. */
-  int END_REFERENCE = 2;
+  int END_EXPRESSION = 2;
   /** RegularExpression Id. */
-  int START_EXPRESSION = 3;
+  int START_IDS = 3;
   /** RegularExpression Id. */
-  int END_EXPRESSION = 4;
+  int END_IDS = 4;
   /** RegularExpression Id. */
-  int START_IDS = 5;
+  int START_OR = 5;
   /** RegularExpression Id. */
-  int END_IDS = 6;
+  int END_OR = 6;
   /** RegularExpression Id. */
-  int START_RANGE = 7;
+  int START_SUBCRITERIA_OPEN = 7;
   /** RegularExpression Id. */
-  int END_RANGE = 8;
+  int END_SUBCRITERIA_OPEN = 8;
   /** RegularExpression Id. */
-  int START_OR = 9;
+  int START_SUBCRITERIA_CLOSE = 9;
   /** RegularExpression Id. */
-  int END_OR = 10;
+  int END_SUBCRITERIA_CLOSE = 10;
   /** RegularExpression Id. */
-  int START_AND = 11;
+  int START_REFERENCE = 11;
   /** RegularExpression Id. */
-  int END_AND = 12;
+  int END_REFERENCE = 12;
   /** RegularExpression Id. */
-  int START_ELEMENT = 13;
+  int START_RANGE = 13;
   /** RegularExpression Id. */
-  int END_ELEMENT = 14;
+  int END_RANGE = 14;
   /** RegularExpression Id. */
-  int COMMAR = 15;
+  int START_AND = 15;
   /** RegularExpression Id. */
-  int ASSIGNMENT = 16;
+  int END_AND = 16;
   /** RegularExpression Id. */
-  int RANGE = 17;
+  int COMMAR = 17;
   /** RegularExpression Id. */
-  int ANY = 18;
+  int ASSIGNMENT = 18;
   /** RegularExpression Id. */
-  int NAME = 19;
+  int RANGE = 19;
   /** RegularExpression Id. */
-  int EXPRESSION = 20;
+  int ANY = 20;
+  /** RegularExpression Id. */
+  int NAME = 21;
+  /** RegularExpression Id. */
+  int STRING_LITERAL = 22;
+  /** RegularExpression Id. */
+  int DOUBLE_STRING_CHARACTERS = 23;
+  /** RegularExpression Id. */
+  int SINGLE_STRING_CHARACTERS = 24;
+  /** RegularExpression Id. */
+  int DOUBLE_STRING_CHARACTER = 25;
+  /** RegularExpression Id. */
+  int SINGLE_STRING_CHARACTER = 26;
+  /** RegularExpression Id. */
+  int CHARACTER_ESCAPE_SEQUENCE = 27;
+  /** RegularExpression Id. */
+  int SINGLE_ESCAPE_CHARACTER = 28;
+  /** RegularExpression Id. */
+  int NON_ESCAPE_CHARACTER = 29;
 
   /** Lexical state. */
   int DEFAULT = 0;
+  /** Lexical state. */
+  int IN_REGEX = 1;
 
   /** Literal token values. */
   String[] tokenImage = {
     "<EOF>",
-    "\"<||\"",
-    "\"||>\"",
     "\"@||\"",
     "\"||@\"",
     "\"#||\"",
     "\"||#\"",
-    "\"?||\"",
-    "\"||?\"",
     "\"^||\"",
     "\"||^\"",
-    "\"&||\"",
-    "\"||&\"",
-    "\"{||\"",
-    "\"||}\"",
+    "\"%||\"",
+    "\"||%\"",
+    "\"%%||\"",
+    "\"||%%\"",
+    "\"~||\"",
+    "\"||~\"",
+    "\"`||\"",
+    "\"||`\"",
+    "\"-||\"",
+    "\"||-\"",
     "\",\"",
     "\":\"",
     "\"-\"",
     "\"*\"",
     "<NAME>",
-    "<EXPRESSION>",
+    "<STRING_LITERAL>",
+    "<DOUBLE_STRING_CHARACTERS>",
+    "<SINGLE_STRING_CHARACTERS>",
+    "<DOUBLE_STRING_CHARACTER>",
+    "<SINGLE_STRING_CHARACTER>",
+    "<CHARACTER_ESCAPE_SEQUENCE>",
+    "<SINGLE_ESCAPE_CHARACTER>",
+    "<NON_ESCAPE_CHARACTER>",
   };
 
 }

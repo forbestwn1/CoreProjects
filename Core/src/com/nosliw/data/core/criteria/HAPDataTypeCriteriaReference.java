@@ -8,7 +8,7 @@ import com.nosliw.data.core.HAPDataTypeId;
 /**
  * Criteria that reference to another criteria
  */
-public class HAPDataTypeCriteriaReference implements HAPDataTypeCriteria{
+public class HAPDataTypeCriteriaReference extends HAPDataTypeCriteriaImp{
 
 	private String m_reference;
 	
@@ -41,7 +41,16 @@ public class HAPDataTypeCriteriaReference implements HAPDataTypeCriteria{
 	}
 
 	@Override
-	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {
+	protected String buildLiterate(){
+		StringBuffer out = new StringBuffer();
+		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.START_REFERENCE));
+		out.append(this.m_reference);
+		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_REFERENCE));
+		return out.toString(); 
+	}
+
+	@Override
+	public Set<HAPDataTypeCriteriaId> getValidDataTypeCriteriaId(HAPDataTypeHelper dataTypeHelper) {
 		// TODO Auto-generated method stub
 		return null;
 	}

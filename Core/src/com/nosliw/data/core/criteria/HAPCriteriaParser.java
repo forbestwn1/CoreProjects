@@ -120,46 +120,58 @@ public class HAPCriteriaParser implements HAPCriteriaParserGeneratedConstants{
 		  return new HAPDataTypeCriteriaOr(children);
 	  }
 	  
-	  private HAPDataTypeCriteriaElementRange processCriteriaNodeRange(SimpleNode idsNode){
+	  private HAPDataTypeCriteriaRange processCriteriaNodeRange(SimpleNode idsNode){
 		  String[] allIds = (String[])idsNode.jjtGetValue();
 		  HAPDataTypeId from = allIds[0]==null?null:new HAPDataTypeId(allIds[0]);
 		  HAPDataTypeId to = allIds[1]==null?null:new HAPDataTypeId(allIds[1]);
-		  SimpleNode childElementsNode = this.getChildNodeByType(idsNode, HAPCriteriaParserGenerated.JJTCHILDELEMENTSCRITERIA);
-		  Map<String, HAPDataTypeCriteria> elementsCriteria = null;
-		  if(childElementsNode!=null){
-			  elementsCriteria = this.processChildElementsNode(childElementsNode);
+		  SimpleNode subCriteriaGroupNode = this.getChildNodeByType(idsNode, HAPCriteriaParserGenerated.JJTSUBCRITERIAGROUP);
+		  HAPDataTypeSubCriteriaGroup subCriteriaGroup = null;
+		  if(subCriteriaGroupNode!=null){
+			  subCriteriaGroup = this.processSubCriteriaGroupNode(subCriteriaGroupNode);
 		  }
-		  return new HAPDataTypeCriteriaElementRange(from, to, elementsCriteria);
+		  return new HAPDataTypeCriteriaRange(from, to, subCriteriaGroup);
 	  }
 	  
-	  private HAPDataTypeCriteriaElementIds processCriteriaNodeIds(SimpleNode idsNode){
+	  private HAPDataTypeCriteriaIds processCriteriaNodeIds(SimpleNode idsNode){
 		  List<SimpleNode> idsCriteriaNode = this.getChildrenNodeByType(idsNode, HAPCriteriaParserGenerated.JJTIDCRITERIA);
-		  Set<HAPDataTypeCriteriaElementId> childrenCriteria = new HashSet<HAPDataTypeCriteriaElementId>();
+		  Set<HAPDataTypeCriteriaId> childrenCriteria = new HashSet<HAPDataTypeCriteriaId>();
 		  for(SimpleNode idCriteriaNode : idsCriteriaNode){
 			  childrenCriteria.add(this.processCriteriaNodeId(idCriteriaNode));
 		  }
-		  return new HAPDataTypeCriteriaElementIds(childrenCriteria);
+		  return new HAPDataTypeCriteriaIds(childrenCriteria);
 	  }
 	  
-	  private HAPDataTypeCriteriaElementId processCriteriaNodeId(SimpleNode idNode){
+	  private HAPDataTypeCriteriaId processCriteriaNodeId(SimpleNode idNode){
 		  String dataTypeIdStr = (String)idNode.jjtGetValue();
-		  SimpleNode childElementsNode = getChildNodeByType(idNode, HAPCriteriaParserGenerated.JJTCHILDELEMENTSCRITERIA);
-		  Map<String, HAPDataTypeCriteria> elementsCriteria = null;
-		  if(childElementsNode!=null){
-			  elementsCriteria = this.processChildElementsNode(childElementsNode);
+		  SimpleNode subCriteriaGroupNode = getChildNodeByType(idNode, HAPCriteriaParserGenerated.JJTSUBCRITERIAGROUP);
+		  HAPDataTypeSubCriteriaGroup subCriteriaGroup = null;
+		  if(subCriteriaGroupNode!=null){
+			  subCriteriaGroup = this.processSubCriteriaGroupNode(subCriteriaGroupNode);
 		  }
-		  return new HAPDataTypeCriteriaElementId(new HAPDataTypeId(dataTypeIdStr), elementsCriteria);
+		  return new HAPDataTypeCriteriaId(new HAPDataTypeId(dataTypeIdStr), subCriteriaGroup);
 	  }
 	
-	  private Map<String, HAPDataTypeCriteria> processChildElementsNode(SimpleNode elesNode){
-		  Map<String, HAPDataTypeCriteria> out = new LinkedHashMap<String, HAPDataTypeCriteria>();
-		  for(int i=0; i<elesNode.jjtGetNumChildren(); i++){
-			  SimpleNode eleNode = (SimpleNode)elesNode.jjtGetChild(i);
-			  String name = (String)eleNode.jjtGetValue();
-			  SimpleNode criteriaNode = this.getChildNodeByType(eleNode, HAPCriteriaParserGenerated.JJTCRITERIA);
+	  private HAPDataTypeSubCriteriaGroup processSubCriteriaGroupNode(SimpleNode subCriteriaGroupNode){
+		  boolean isOpen = (Boolean)subCriteriaGroupNode.jjtGetValue();
+		  
+		  List<SimpleNode> subCriteriaNodes = this.getChildrenNodeByType(subCriteriaGroupNode, HAPCriteriaParserGenerated.JJTSUBCRITERIA);
+		  Map<String, HAPDataTypeCriteria> criterias = new LinkedHashMap<String, HAPDataTypeCriteria>();
+		  for(SimpleNode subCriteriaNode : subCriteriaNodes){
+			  String name = (String)subCriteriaNode.jjtGetValue();
+			  SimpleNode criteriaNode = this.getChildNodeByType(subCriteriaNode, HAPCriteriaParserGenerated.JJTCRITERIA);
 			  HAPDataTypeCriteria criteria = this.processCriteriaNode(criteriaNode);
-			  out.put(name, criteria);
+			  criterias.put(name, criteria);
 		  }
+		  HAPDataTypeSubCriteriaGroupImp out = new HAPDataTypeSubCriteriaGroupImp(isOpen, criterias);
+		  
+//		  Map<String, HAPDataTypeCriteria> out = new LinkedHashMap<String, HAPDataTypeCriteria>();
+//		  for(int i=0; i<subCriteriaGroupNode.jjtGetNumChildren(); i++){
+//			  SimpleNode eleNode = (SimpleNode)subCriteriaGroupNode.jjtGetChild(i);
+//			  String name = (String)eleNode.jjtGetValue();
+//			  SimpleNode criteriaNode = this.getChildNodeByType(eleNode, HAPCriteriaParserGenerated.JJTCRITERIA);
+//			  HAPDataTypeCriteria criteria = this.processCriteriaNode(criteriaNode);
+//			  out.put(name, criteria);
+//		  }
 		  return out;
 	  }
 	  

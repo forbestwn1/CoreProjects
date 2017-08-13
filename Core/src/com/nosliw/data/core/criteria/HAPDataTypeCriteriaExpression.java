@@ -10,7 +10,7 @@ import com.nosliw.data.core.HAPDataTypeId;
  * It is used when define operation output criteria, when operation output criteria depends on operation input 
  *
  */
-public class HAPDataTypeCriteriaExpression implements HAPDataTypeCriteria{
+public class HAPDataTypeCriteriaExpression extends HAPDataTypeCriteriaImp{
 
 	private String m_expression;
 	
@@ -43,7 +43,16 @@ public class HAPDataTypeCriteriaExpression implements HAPDataTypeCriteria{
 	}
 
 	@Override
-	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {
+	protected String buildLiterate(){
+		StringBuffer out = new StringBuffer();
+		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.START_EXPRESSION));
+		out.append(this.m_expression);
+		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_EXPRESSION));
+		return out.toString(); 
+	}
+
+	@Override
+	public Set<HAPDataTypeCriteriaId> getValidDataTypeCriteriaId(HAPDataTypeHelper dataTypeHelper) {
 		// TODO Auto-generated method stub
 		return null;
 	}

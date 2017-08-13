@@ -11,8 +11,6 @@ public class NosliwExpressionParser/*@bgen(jjtree)*/implements NosliwExpressionP
                 root.dump("");
   }
 
-/*TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z"])+ > }*/
-
 /*
 */
   final public Token Name() throws ParseException {/*@bgen(jjtree) Name */
@@ -59,7 +57,7 @@ value=value+t.image;
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case CONSTANT:
-        case 6:{
+        case 14:{
           ;
           break;
           }
@@ -73,8 +71,8 @@ value=value+t.image;
 value=value+t.image;
           break;
           }
-        case 6:{
-          jj_consume_token(6);
+        case 14:{
+          jj_consume_token(14);
 value=value+".";
           break;
           }
@@ -103,9 +101,9 @@ constant data, any format allowed, json, string literal, ...
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t ;
     try {
-      jj_consume_token(7);
+      jj_consume_token(OPEN_CONSTANT);
       t = jj_consume_token(CONSTANT);
-      jj_consume_token(8);
+      jj_consume_token(CLOSE_CONSTANT);
 jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
 jjtn000.value = t.image;
@@ -124,9 +122,9 @@ data type, it is appeared when do data type function call
   boolean jjtc000 = true;
   jjtree.openNodeScope(jjtn000);
     try {
-      jj_consume_token(9);
+      jj_consume_token(OPEN_DATATYPE);
       DataTypeName();
-      jj_consume_token(10);
+      jj_consume_token(CLOSE_DATATYPE);
 jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
 {if ("" != null) return jjtn000;}
@@ -160,9 +158,9 @@ variable in expression.
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t ;
     try {
-      jj_consume_token(11);
+      jj_consume_token(OPEN_VARIABLE);
       t = Name();
-      jj_consume_token(12);
+      jj_consume_token(CLOSE_VARIABLE);
 jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
 jjtn000.value = t.image;
@@ -214,9 +212,9 @@ reference in expression.
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);Token t ;
     try {
-      jj_consume_token(13);
+      jj_consume_token(OPEN_REFERENCE);
       t = Name();
-      jj_consume_token(14);
+      jj_consume_token(CLOSE_REFERENCE);
 jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
 jjtn000.value = t.image;
@@ -256,10 +254,10 @@ operation parm
         Expression(String.valueOf(i));
         break;
         }
-      case 7:
-      case 9:
-      case 11:
-      case 13:{
+      case OPEN_CONSTANT:
+      case OPEN_DATATYPE:
+      case OPEN_VARIABLE:
+      case OPEN_REFERENCE:{
         Expression(String.valueOf(i));
         break;
         }
@@ -302,32 +300,32 @@ represent any expression
         jjtree.openNodeScope(jjtn000);int i = 0;
     try {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case 11:{
+      case OPEN_VARIABLE:{
         Variable();
         Expression1();
         break;
         }
-      case 7:{
+      case OPEN_CONSTANT:{
         Constant();
         Expression1();
         break;
         }
-      case 13:{
+      case OPEN_REFERENCE:{
         Reference();
         Expression1();
         break;
         }
-      case 9:{
+      case OPEN_DATATYPE:{
         DataType();
-        jj_consume_token(6);
+        jj_consume_token(14);
         Name();
         jj_consume_token(OPEN_PAR);
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case CONSTANT:
-        case 7:
-        case 9:
-        case 11:
-        case 13:{
+        case OPEN_CONSTANT:
+        case OPEN_DATATYPE:
+        case OPEN_VARIABLE:
+        case OPEN_REFERENCE:{
           Parameter(String.valueOf(i));
 i++;
           label_2:
@@ -394,18 +392,18 @@ it is create to avoid left recursion.
         jjtree.openNodeScope(jjtn000);int i = 0;
     try {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case 6:{
-        jj_consume_token(6);
+      case 14:{
+        jj_consume_token(14);
         Name();
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case OPEN_PAR:{
           jj_consume_token(OPEN_PAR);
           switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
           case CONSTANT:
-          case 7:
-          case 9:
-          case 11:
-          case 13:{
+          case OPEN_CONSTANT:
+          case OPEN_DATATYPE:
+          case OPEN_VARIABLE:
+          case OPEN_REFERENCE:{
             Parameter(String.valueOf(i));
 i++;
             label_3:
@@ -484,7 +482,7 @@ if (jjtc000) {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x60,0x60,0x2aa0,0x8,0x2aa0,0x2a80,0x8,0x2aa0,0x2,0x40,};
+      jj_la1_0 = new int[] {0x4020,0x4020,0x1560,0x8,0x1560,0x1540,0x8,0x1560,0x2,0x4000,};
    }
 
   /** Constructor with InputStream. */

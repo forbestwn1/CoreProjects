@@ -37,15 +37,15 @@ public class HAPDataTypeCriteriaParser {
 			out = toCriteriaLiterateComplex((HAPDataTypeCriteriaOr)criteria, START_OR, END_OR);
 			break;
 		case HAPConstant.DATATYPECRITERIA_TYPE_DATATYPEID:
-			HAPDataTypeCriteriaElementId idCriteria = (HAPDataTypeCriteriaElementId)criteria;
+			HAPDataTypeCriteriaId idCriteria = (HAPDataTypeCriteriaId)criteria;
 			out = HAPSerializeManager.getInstance().toStringValue(idCriteria.getDataTypeId(), HAPSerializationFormat.LITERATE); 
 			break;
 		case HAPConstant.DATATYPECRITERIA_TYPE_DATATYPEIDS:
-			HAPDataTypeCriteriaElementIds idsCriteria = (HAPDataTypeCriteriaElementIds)criteria;
+			HAPDataTypeCriteriaIds idsCriteria = (HAPDataTypeCriteriaIds)criteria;
 			out = toCriteriaLiterate(idsCriteria.toOrCriteria());
 			break;
 		case HAPConstant.DATATYPECRITERIA_TYPE_DATATYPERANGE:
-			HAPDataTypeCriteriaElementRange rangeCriteria = (HAPDataTypeCriteriaElementRange)criteria;
+			HAPDataTypeCriteriaRange rangeCriteria = (HAPDataTypeCriteriaRange)criteria;
 			out =  HAPSerializeManager.getInstance().toStringValue(rangeCriteria.getFromDataTypeId(), HAPSerializationFormat.LITERATE)
 					+ SEPERATOR_RANGE 
 					+ HAPSerializeManager.getInstance().toStringValue(rangeCriteria.getToDataTypeId(), HAPSerializationFormat.LITERATE);
@@ -90,7 +90,7 @@ public class HAPDataTypeCriteriaParser {
 			 String[] criteriaParts = criteriaLiterate.split(SEPERATOR_RANGE);
 			 if(criteriaParts.length==1){
 				 //id
-				 out = new HAPDataTypeCriteriaElementId((HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), criteriaParts[0], HAPSerializationFormat.LITERATE));
+				 out = new HAPDataTypeCriteriaId((HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), criteriaParts[0], HAPSerializationFormat.LITERATE));
 				 if(out==null)   throw new UnknownFormatConversionException(criteriaLiterate);
 			 }
 			 else{
@@ -106,7 +106,7 @@ public class HAPDataTypeCriteriaParser {
 					 to = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), criteriaParts[1], HAPSerializationFormat.LITERATE);
 					 if(to==null)   throw new UnknownFormatConversionException(criteriaLiterate);
 				 }
-				 out = new HAPDataTypeCriteriaElementRange(from, to);
+				 out = new HAPDataTypeCriteriaRange(from, to);
 			 }
 		 }
 		 

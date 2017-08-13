@@ -21,7 +21,7 @@ import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.HAPRelationshipPathSegment;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaElementId;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.imp.HAPDataAccessDataType;
 import com.nosliw.data.core.imp.HAPDataTypeImp;
 import com.nosliw.data.core.imp.HAPDataTypeImpLoad;
@@ -171,7 +171,7 @@ public class HAPDataTypeImporter {
 				
 				//set default criteria as current data type
 				if(parmInfo.getCriteria()==null){
-					parmInfo.setCriteria(new HAPDataTypeCriteriaElementId(dataType.getName()));
+					parmInfo.setCriteria(new HAPDataTypeCriteriaId(dataType.getName()));
 				}
 			}
 			

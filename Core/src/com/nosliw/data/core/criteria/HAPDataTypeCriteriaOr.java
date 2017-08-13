@@ -28,12 +28,12 @@ public class HAPDataTypeCriteriaOr extends HAPDataTypeCriteriaComplex{
 		return out;
 	}
 
-	@Override
-	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {
-		Set<HAPDataTypeId> ids = this.getValidDataTypeId(dataTypeHelper);
-		Set<HAPDataTypeId> norIds = dataTypeHelper.normalize(ids);
-		return this.buildCriteriaByIds(norIds);
-	}
+//	@Override
+//	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {
+//		Set<HAPDataTypeId> ids = this.getValidDataTypeId(dataTypeHelper);
+//		Set<HAPDataTypeId> norIds = dataTypeHelper.normalize(ids);
+//		return this.buildCriteriaByIds(norIds);
+//	}
 	
 	@Override
 	protected String buildLiterate(){

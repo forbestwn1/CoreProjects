@@ -12,7 +12,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 
-public class HAPDataTypeCriteriaElementId  extends HAPDataTypeCriteriaImp{
+public class HAPDataTypeCriteriaId  extends HAPDataTypeCriteriaImp{
 
 	@HAPAttribute
 	public static String DATATYPEID = "dataTypeId";
@@ -22,11 +22,11 @@ public class HAPDataTypeCriteriaElementId  extends HAPDataTypeCriteriaImp{
 	
 	private HAPDataTypeId m_dataTypeId;
 
-	private Map<String, HAPDataTypeCriteria> m_elementDataTypeCriteria;
+	private HAPDataTypeSubCriteriaGroup m_subCriteriaGroup;
 	
-	public HAPDataTypeCriteriaElementId(HAPDataTypeId dataTypeId, Map<String, HAPDataTypeCriteria> elementDataTypeCriteria){
+	public HAPDataTypeCriteriaId(HAPDataTypeId dataTypeId, HAPDataTypeSubCriteriaGroup subCriteria){
 		this.m_dataTypeId = dataTypeId;
-		this.m_elementDataTypeCriteria = elementDataTypeCriteria;
+		this.m_subCriteriaGroup = subCriteria;
 	}
 
 	public HAPDataTypeId getDataTypeId(){  return this.m_dataTypeId;  }
@@ -37,7 +37,7 @@ public class HAPDataTypeCriteriaElementId  extends HAPDataTypeCriteriaImp{
 	 * In order to validate on data type or data type criteria, both parent and children data type criteria have to meet
 	 * @return
 	 */
-	public Map<String, HAPDataTypeCriteria> getChildrenElementDataTypeCriteria(){	return this.m_elementDataTypeCriteria;	}
+	public HAPDataTypeSubCriteriaGroup getSubCriteria(){	return this.m_subCriteriaGroup;	}
 	
 	
 	@Override
@@ -51,13 +51,20 @@ public class HAPDataTypeCriteriaElementId  extends HAPDataTypeCriteriaImp{
 	}
 
 	@Override
-	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {		return this;	}
+	public Set<HAPDataTypeCriteriaId> getValidDataTypeCriteriaId(HAPDataTypeHelper dataTypeHelper){
+		Set<HAPDataTypeCriteriaId> out = new HashSet<HAPDataTypeCriteriaId>();
+		out.add(this);
+		return out;
+	}
+
+//	@Override
+//	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {		return this;	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(DATATYPEID, HAPSerializeManager.getInstance().toStringValue(m_dataTypeId, HAPSerializationFormat.LITERATE));
-		jsonMap.put(ELEMENTDATATYPECRITERIA, HAPSerializeManager.getInstance().toStringValue(m_elementDataTypeCriteria, HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENTDATATYPECRITERIA, HAPSerializeManager.getInstance().toStringValue(m_subCriteriaGroup, HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -65,21 +72,9 @@ public class HAPDataTypeCriteriaElementId  extends HAPDataTypeCriteriaImp{
 		StringBuffer out = new StringBuffer();
 		out.append(HAPSerializeManager.getInstance().toStringValue(m_dataTypeId, HAPSerializationFormat.LITERATE));
 		
-		if(this.m_elementDataTypeCriteria!=null && !this.m_elementDataTypeCriteria.isEmpty()){
-			out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.START_ELEMENT));
-
-			int i = 0;
-			for(String name : this.m_elementDataTypeCriteria.keySet()){
-				if(i!=0)   out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.COMMAR));
-				out.append(name);
-				out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.ASSIGNMENT));
-				out.append(HAPSerializeManager.getInstance().toStringValue(this.m_elementDataTypeCriteria.get(name), HAPSerializationFormat.LITERATE));
-				i++;
-			}
-			
-			out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_ELEMENT));
+		if(this.m_subCriteriaGroup!=null){
+			out.append(HAPSerializeManager.getInstance().toStringValue(m_subCriteriaGroup, HAPSerializationFormat.LITERATE));
 		}
-		
 		return out.toString(); 
 	}
 
@@ -87,11 +82,11 @@ public class HAPDataTypeCriteriaElementId  extends HAPDataTypeCriteriaImp{
 	@Override
 	public boolean equals(Object obj){
 		boolean out = false;
-		if(obj instanceof HAPDataTypeCriteriaElementId){
-			HAPDataTypeCriteriaElementId criteria = (HAPDataTypeCriteriaElementId)obj;
+		if(obj instanceof HAPDataTypeCriteriaId){
+			HAPDataTypeCriteriaId criteria = (HAPDataTypeCriteriaId)obj;
 			boolean out1 = HAPBasicUtility.isEquals(this.m_dataTypeId, criteria.m_dataTypeId);
 			if(out1){
-				out = HAPBasicUtility.isEqualMaps(this.m_elementDataTypeCriteria, criteria.m_elementDataTypeCriteria);
+				out = HAPBasicUtility.isEquals(this.m_subCriteriaGroup, criteria.m_subCriteriaGroup);
 			}
 		}
 		return out;

@@ -41,11 +41,14 @@ public interface HAPDataTypeCriteria{
 	 */
 	Set<HAPDataTypeId> getValidDataTypeId(HAPDataTypeHelper dataTypeHelper);
 
+	Set<HAPDataTypeCriteriaId> getValidDataTypeCriteriaId(HAPDataTypeHelper dataTypeHelper);
+
+	
 	/**
 	 * Find the most general criteria that all the data type that meet normalized criteria should also meet original criteria
 	 * either directly or through some converter
 	 * @return
 	 */
-	HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper);
+//	HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper);
 
 }

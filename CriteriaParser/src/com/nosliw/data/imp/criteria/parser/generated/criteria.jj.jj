@@ -25,28 +25,70 @@ public class HAPCriteriaParserGenerated/*@bgen(jjtree)*/implements HAPCriteriaPa
 PARSER_END(HAPCriteriaParserGenerated)
 
 
-TOKEN : { < START_REFERENCE : "<||" > }
-TOKEN : { < END_REFERENCE : "||>" > }
 TOKEN : { < START_EXPRESSION : "@||" > }
 TOKEN : { < END_EXPRESSION : "||@" > }
 TOKEN : { < START_IDS : "#||" > }
 TOKEN : { < END_IDS : "||#" > }
-TOKEN : { < START_RANGE : "?||" > }
-TOKEN : { < END_RANGE : "||?" > }
 TOKEN : { < START_OR : "^||" > }
 TOKEN : { < END_OR : "||^" > }
-TOKEN : { < START_AND : "&||" > }
-TOKEN : { < END_AND : "||&" > }
-TOKEN : { < START_ELEMENT : "{||" > }
-TOKEN : { < END_ELEMENT : "||}" > }
+
+TOKEN : { < START_SUBCRITERIA_OPEN : "%||" > }
+TOKEN : { < END_SUBCRITERIA_OPEN : "||%" > }
+
+TOKEN : { < START_SUBCRITERIA_CLOSE : "%%||" > }
+TOKEN : { < END_SUBCRITERIA_CLOSE : "||%%" > }
+
+TOKEN : { < START_REFERENCE : "~||" > }
+TOKEN : { < END_REFERENCE : "||~" > }
+
+TOKEN : { < START_RANGE : "`||" > }
+TOKEN : { < END_RANGE : "||`" > }
+
+
+TOKEN : { < START_AND : "-||" > }
+TOKEN : { < END_AND : "||-" > }
 
 
 TOKEN : { < COMMAR : "," > }
 TOKEN : { < ASSIGNMENT : ":" > }
 TOKEN : { < RANGE : "-" > }
 TOKEN : { < ANY : "*" > }
-TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z", ".", "_", ";", "\t", "\n", "\r"])+ > }
-TOKEN : { < EXPRESSION : (["0"-"9","a"-"z","A"-"Z", "(", ")", "<", ">", "&", "!", "?", "{", "}", "[", "]", "_", "#", "'"])+ > }
+/*TOKEN : { < NAME1 : (["0"-"9","a"-"z","A"-"Z", ".", "_", ";", "\t", "\n", "\r"])+ > }*/
+TOKEN : { < NAME : (["0"-"9","a"-"z","A"-"Z", "(", ")", "<", ">", "&", "!", "?", "{", "}", "[", "]", "_", "#", "'", ";", "."])+ > }
+
+<DEFAULT, IN_REGEX>
+TOKEN:
+{
+	< STRING_LITERAL:
+		"\"" (<DOUBLE_STRING_CHARACTERS>)? "\""  | "'" (<SINGLE_STRING_CHARACTERS>)? "'"
+	>	 : IN_REGEX
+|
+	< #DOUBLE_STRING_CHARACTERS: (<DOUBLE_STRING_CHARACTER>)* >
+|
+	< #SINGLE_STRING_CHARACTERS: (<SINGLE_STRING_CHARACTER>)* >
+|
+	< #DOUBLE_STRING_CHARACTER:
+		(~["\"","\\","\n","\r","\u2028","\u2029"])* 
+	>
+|
+	< #SINGLE_STRING_CHARACTER:
+		(~["'","\\","\n","\r","\u2028","\u2029"]) 
+	> 
+|
+	< #CHARACTER_ESCAPE_SEQUENCE:
+		<SINGLE_ESCAPE_CHARACTER> | <NON_ESCAPE_CHARACTER>
+	>
+|
+	< #SINGLE_ESCAPE_CHARACTER: ["'" , "\"" , "\\" , "b" , "f" , "n" , "r" , "t" , "v"] >
+|
+	< #NON_ESCAPE_CHARACTER: 
+		~["\n","\r","\u2028","\u2029"]
+	| 
+		~["'" , "\"" , "\\" , "b" , "f" , "n" , "r" , "t" , "v", "x", "u"]
+	| 
+		~["0"-"9"]
+	>
+}
 
 
 void anyCriteria()             :
@@ -111,7 +153,7 @@ Token expressionCriteria()                    :
 {/*@bgen(jjtree) EXPRESSIONCRITERIA */
         try {
 /*@egen*/
-	<START_EXPRESSION> t=<EXPRESSION> <START_EXPRESSION>/*@bgen(jjtree)*/
+	<START_EXPRESSION> t=<NAME><END_EXPRESSION>/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
@@ -137,7 +179,7 @@ SimpleNode idCriteria()            :
 {/*@bgen(jjtree) IDCRITERIA */
         try {
 /*@egen*/
-	t = <NAME>(childElementsCriteria())*/*@bgen(jjtree)*/
+	t = <NAME>(subCriteriaGroup())*/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
@@ -217,7 +259,7 @@ void rangeCriteria()               :
 {/*@bgen(jjtree) RANGECRITERIA */
         try {
 /*@egen*/
-	(<START_RANGE>(from=<NAME>)*<RANGE>(to=<NAME>)*(childElementsCriteria())*<END_RANGE>)/*@bgen(jjtree)*/
+	(<START_RANGE>(from=<NAME>)*<RANGE>(to=<NAME>)*(subCriteriaGroup())*<END_RANGE>)/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
@@ -246,15 +288,15 @@ void rangeCriteria()               :
 /*@egen*/
 }
 
-SimpleNode childElementCriteria(int index)                      :
-{/*@bgen(jjtree) CHILDELEMENTCRITERIA */
-        SimpleNode jjtn000 = new SimpleNode(JJTCHILDELEMENTCRITERIA);
+SimpleNode subCriteria(int index)             :
+{/*@bgen(jjtree) SUBCRITERIA */
+        SimpleNode jjtn000 = new SimpleNode(JJTSUBCRITERIA);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);
 /*@egen*/
 	Token t ;
 }
-{/*@bgen(jjtree) CHILDELEMENTCRITERIA */
+{/*@bgen(jjtree) SUBCRITERIA */
         try {
 /*@egen*/
 	t=<NAME><ASSIGNMENT>Criteria(index)/*@bgen(jjtree)*/
@@ -286,18 +328,22 @@ SimpleNode childElementCriteria(int index)                      :
 /*@egen*/
 }
 
-SimpleNode childElementsCriteria()                       :
-{/*@bgen(jjtree) CHILDELEMENTSCRITERIA */
-        SimpleNode jjtn000 = new SimpleNode(JJTCHILDELEMENTSCRITERIA);
+SimpleNode subCriteriaGroup()                  :
+{/*@bgen(jjtree) SUBCRITERIAGROUP */
+        SimpleNode jjtn000 = new SimpleNode(JJTSUBCRITERIAGROUP);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);
 /*@egen*/
 	int i = 0;
 }
-{/*@bgen(jjtree) CHILDELEMENTSCRITERIA */
+{/*@bgen(jjtree) SUBCRITERIAGROUP */
         try {
 /*@egen*/
-	<START_ELEMENT> [(childElementCriteria(i){i++;})(<COMMAR>childElementCriteria(i){i++;})*]  <END_ELEMENT>/*@bgen(jjtree)*/
+	(
+		(<START_SUBCRITERIA_OPEN> [(subCriteria(i){i++;})(<COMMAR>subCriteria(i){i++;})*]  <END_SUBCRITERIA_OPEN>{jjtn000.value=true;})
+		|
+		(<START_SUBCRITERIA_CLOSE> [(subCriteria(i){i++;})(<COMMAR>subCriteria(i){i++;})*]  <END_SUBCRITERIA_CLOSE>{jjtn000.value=false;})
+	)/*@bgen(jjtree)*/
         {
           jjtree.closeNodeScope(jjtn000, true);
           jjtc000 = false;
