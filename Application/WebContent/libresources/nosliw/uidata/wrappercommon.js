@@ -1,7 +1,15 @@
+//get/create package
+var packageObj = library.getChildPackage("wrapper");    
+
+(function(packageObj){
+//get used node
+var node_makeObjectWithType;
+	
+//*******************************************   Start Node Definition  ************************************** 	
 /**
  * 
  */
-var nosliwCreateWraperCommon = function(data, path, request){
+var node_createWraperCommon = function(data, path, request){
 	//sync task name for remote call 
 	var loc_moduleName = "wrapper";
 
@@ -202,3 +210,12 @@ var nosliwCreateWraperCommon = function(data, path, request){
 	return loc_out;
 };
 
+//*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+
+
+//Register Node by Name
+packageObj.createChildNode("createWraperCommon", node_createWraperCommon); 
+
+})(packageObj);

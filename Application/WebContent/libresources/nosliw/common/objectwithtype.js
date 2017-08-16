@@ -15,8 +15,7 @@ var INTERFACENAME = "TYPE";
  * build an object to typed object
  */
 var node_makeObjectWithType = function(obj, type){
-	out = node_buildInterface(obj, INTERFACENAME, type);
-	return out;
+	return node_buildInterface(obj, INTERFACENAME, type);
 };
 
 /*
