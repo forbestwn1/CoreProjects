@@ -47,6 +47,16 @@ public class HAPDataTypeCriteriaRange extends HAPDataTypeCriteriaImp{
 		return dataTypeHelper.getAllDataTypeInRange(m_from, m_to);
 	}
 
+	@Override
+	public Set<HAPDataTypeCriteriaId> getValidDataTypeCriteriaId(HAPDataTypeHelper dataTypeHelper) {
+		Set<HAPDataTypeId> dataTypeIds = this.getValidDataTypeId(dataTypeHelper);
+		Set<HAPDataTypeCriteriaId> out = new HashSet<HAPDataTypeCriteriaId>();
+		for(HAPDataTypeId dataTypeId : dataTypeIds){
+			out.add(new HAPDataTypeCriteriaId(dataTypeId, this.m_subCriteriaGroup));
+		}
+		return out;
+	}
+
 //	@Override
 //	public HAPDataTypeCriteria normalize(HAPDataTypeHelper dataTypeHelper) {
 //		HAPDataTypeCriteria out = null;
@@ -97,4 +107,5 @@ public class HAPDataTypeCriteriaRange extends HAPDataTypeCriteriaImp{
 		}
 		return out;
 	}
+
 }

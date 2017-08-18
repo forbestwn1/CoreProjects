@@ -10,7 +10,7 @@ var packageObj = library.getChildPackage("event");
 
 	var INTERFACENAME = "EVENT";
 
-	var loc_createEventObject = function(){
+	var node_createEventObject = function(){
 		var loc_backboneEventObj = _.extend({}, Backbone.Events);
 		var loc_listeners = [];
 	
@@ -21,16 +21,18 @@ var packageObj = library.getChildPackage("event");
 				
 				/*
 				 * trigger event on source
+				 * eventName : event name
+				 * parms : can be any multiple value to transfer to handler 
 				 */
-				triggerEvent : function(eventName, data){
-					loc_backboneEventObj.trigger(eventName, data);
+				triggerEvent : function(eventName){
+					loc_backboneEventObj.trigger(eventName, arguments);
 				},
 
 				/*
 				 * register listener to source
 				 */
-				registerEvent : function(eventName, listener, handler, thisContext){
-					var listenerEventObj = node_getEventObject(listener);
+				registerListener : function(eventName, listener, handler, thisContext){
+					var listenerEventObj = node_getEventInterface(listener);
 					var sourceEventObj = loc_backboneEventObj;
 					var that = thisContext;
 					if(that==undefined)  that = this.getBaseObject();
@@ -45,8 +47,16 @@ var packageObj = library.getChildPackage("event");
 					listenerEventObj.pri_getBackboneEventObj().listenTo(sourceEventObj, eventName, function(event, data){
 						//within this method, "this" refer to listenerEventObj
 						//we need to set "this" as source
-						if(isAllEvent===true)	handler.call(that, event, data);
-						else		handler.call(that, eventName, event);
+						var parms;
+						if(isAllEvent===true){
+							parms = data;
+							parms[0] = event;
+						}
+						else{
+							parms = event;
+							parms[0] = eventName;
+						}
+						handler.apply(that, parms);
 					});
 					loc_listeners.push(listener);
 				},
@@ -55,7 +65,7 @@ var packageObj = library.getChildPackage("event");
 				 * stop listener from listenering any events
 				 */
 				unregister : function(listener){
-					var listenerEventObj = node_getEventObject(listener);
+					var listenerEventObj = node_getEventInterface(listener).pri_getBackboneEventObj();
 					listenerEventObj.stopListening(loc_backboneEventObj);
 				},
 				
@@ -68,6 +78,9 @@ var packageObj = library.getChildPackage("event");
 				},
 				
 				clearup : function(){
+					//stop listening to other 
+					this.pri_getBackboneEventObj().stopListening();
+					//unregister all listeners
 					this.unregisterAllListeners(loc_listeners);
 					loc_listeners = [];
 				}
@@ -80,15 +93,15 @@ var packageObj = library.getChildPackage("event");
 	 * build an object with event obj
 	 */
 	var loc_makeObjectWithEvent = function(obj){
-		var eventObj = loc_createEventObject();
+		var eventObj = node_createEventObject();
 		return node_buildInterface(obj, INTERFACENAME, eventObj);
 	};
 	
-	var node_getEventObject = function(object){
+	var node_getEventInterface = function(object){
 		var eventObj = node_getInterface(object, INTERFACENAME);
 		if(eventObj==undefined){
 			var obj = loc_makeObjectWithEvent(object);
-			eventObj = node_getEventObject(obj);
+			eventObj = node_getEventInterface(obj);
 		}
 		return eventObj;
 	};
@@ -108,21 +121,21 @@ var node_utility =
 		 * trigger event on source
 		 */
 		triggerEvent : function(source, eventName, data){
-			node_getEventObject(source).triggerEvent(eventName, data);
+			node_getEventInterface(source).triggerEvent(eventName, data);
 		},
 
 		/*
 		 * register listener to source
 		 */
-		registerEvent : function(listener, source, eventName, handler, thisContext){
-			node_getEventObject(source).registerEvent(eventName, listener, handler, thisContext);
+		registerListener : function(listener, source, eventName, handler, thisContext){
+			node_getEventInterface(source).registerListener(eventName, listener, handler, thisContext);
 		},
 		
 		/*
 		 * stop listener from listenering any events
 		 */
 		unregister : function(source, listener){
-			node_getEventObject(source).unregister(listener);
+			node_getEventInterface(source).unregister(listener);
 		},
 		
 		unregisterAllListeners : function(source, listeners){
@@ -142,7 +155,8 @@ nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){no
 nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("getEventObject", node_getEventObject); 
+packageObj.createChildNode("createEventObject", node_createEventObject); 
+packageObj.createChildNode("getEventInterface", node_getEventInterface); 
 packageObj.createChildNode("utility", node_utility); 
 
 })(packageObj);

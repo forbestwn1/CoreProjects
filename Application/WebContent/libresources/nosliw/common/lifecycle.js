@@ -19,6 +19,11 @@ var node_makeObjectWithLifecycle = function(baseObject, lifecycleCallback, thisC
 	return node_buildInterface(baseObject, INTERFACENAME, loc_createResourceLifecycle(thisContext==undefined?baseObject:thisContext, lifecycleCallback));
 };
 	
+var node_getLifecycleInterface = function(baseObject){
+	return node_getInterface(baseObject, INTERFACENAME);
+};
+
+
 /**
  * create resource lifecycle object which provide basic lifecycle method and status
  * all the thisContext for life cycle method is either loc_thisContext or this
@@ -244,6 +249,7 @@ nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUti
 nosliw.registerSetNodeDataEvent("common.objectwithname.getObjectName", function(){node_getObjectName = this.getData();});
 
 //Register Node by Name
+packageObj.createChildNode("getLifecycleInterface", node_getLifecycleInterface); 
 packageObj.createChildNode("makeObjectWithLifecycle", node_makeObjectWithLifecycle); 
 
 })(packageObj);

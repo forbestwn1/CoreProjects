@@ -29,42 +29,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	}
 	
 	@Override
-	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeId dataTypeInfo, String name) {
-		return this.m_dataAccess.getDataTypeOperation(dataTypeInfo, name);
-	}
-	
-	@Override
-	public Set<HAPDataTypeId> getAllDataTypeInRange(HAPDataTypeId from, HAPDataTypeId to) {
-		Set<HAPDataTypeId> out = null;
-		Set<HAPDataTypeId> toSet = null;
-		Set<HAPDataTypeId> fromSet = null;
-		
-		if(to!=null){
-			toSet = new HashSet<HAPDataTypeId>();
-			HAPDataTypePictureImp toPic = this.m_dataAccess.getDataTypePicture(to);
-			Set<HAPRelationship> relationships = (Set<HAPRelationship>)toPic.getRelationships();
-			for(HAPRelationship relationship : relationships){
-				toSet.add(relationship.getTarget());
-			}
-		}
-
-		if(from!=null){
-			fromSet = new HashSet<HAPDataTypeId>();
-			HAPDataTypeFamilyImp fromFamily = this.m_dataAccess.getDataTypeFamily(from);
-			Set<HAPRelationship> relationships = (Set<HAPRelationship>)fromFamily.getRelationships();
-			for(HAPRelationship relationship : relationships){
-				fromSet.add(relationship.getSource());
-			}
-		}
-		
-		if(to==null)  out = fromSet;
-		else if(from==null)  out = toSet;
-		else out = Sets.intersection(fromSet, toSet);
-		return out;
-	}
-
-	@Override
-	public boolean compatibleWith(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2) {
+	public boolean convertable(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2) {
 		if(criteria2==null){
 			return criteria1==null;
 		}
@@ -78,11 +43,6 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		}
 	}
 
-	@Override
-	public HAPRelationship compatibleWith(HAPDataTypeId dataTypeId1, HAPDataTypeId dataTypeId2){
-		return this.m_dataAccess.getRelationship(dataTypeId1, dataTypeId2);
-	}
-	
 	@Override
 	public HAPDataTypeCriteria and(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2) {
 		if(criteria1==null || criteria2==null){
@@ -147,7 +107,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 			boolean isCandidate = true;
 			for(int i=1; i<dataTypeIds.size(); i++){
 				HAPDataTypeId otherDataTypeId = dataTypeIds.get(i);
-				if(this.compatibleWith(otherDataTypeId, firstRelationship.getTarget())==null){
+				if(this.convertable(otherDataTypeId, firstRelationship.getTarget())==null){
 					isCandidate = false;
 					break;
 				}
@@ -161,10 +121,10 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 			HAPDataTypeId out = candidates.get(0).getTarget();
 			for(int i=1; i<candidates.size(); i++){
 				HAPDataTypeId candidateTarget = candidates.get(i).getTarget();
-				if(this.compatibleWith(out, candidateTarget)!=null){
+				if(this.convertable(out, candidateTarget)!=null){
 					
 				}
-				else if(this.compatibleWith(candidateTarget, out)!=null){
+				else if(this.convertable(candidateTarget, out)!=null){
 					out = candidateTarget;
 				}
 				else{
@@ -208,10 +168,10 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 			Set<HAPDataTypeId> removes = new HashSet<HAPDataTypeId>();
 			for(int i=0; i< dataTypeIds.size()-1; i++){
 				for(int j=i+1; j<dataTypeIds.size(); j++){
-					if(this.compatibleWith(dataTypeIds.get(i), dataTypeIds.get(j))!=null){
+					if(this.convertable(dataTypeIds.get(i), dataTypeIds.get(j))!=null){
 						removes.add(dataTypeIds.get(i));
 					}
-					else if(this.compatibleWith(dataTypeIds.get(j), dataTypeIds.get(i))!=null){
+					else if(this.convertable(dataTypeIds.get(j), dataTypeIds.get(i))!=null){
 						removes.add(dataTypeIds.get(j));
 					}
 				}
@@ -230,7 +190,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		for(HAPDataTypeId fromDataTypeId : fromDataTypeIds){
 			boolean found = false;
 			for(HAPDataTypeId toDataTypeId : toDataTypeIds){
-				HAPRelationship relationship = this.compatibleWith(fromDataTypeId, toDataTypeId);
+				HAPRelationship relationship = this.convertable(fromDataTypeId, toDataTypeId);
 				if(relationship!=null){
 					out.addItem(fromDataTypeId, relationship);
 					found = true;
@@ -247,38 +207,83 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 	@Override
 	public HAPDataTypeCriteria merge(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2) {
-		//find all the leafs
-		List<HAPDataTypeId> dataTypeIds1 = new ArrayList(criteria1.getValidDataTypeId(this));
-		List<HAPDataTypeId> leaves1 = this.getLeafDataTypeIds(dataTypeIds1);
 		
-		List<HAPDataTypeId> dataTypeIds2 = new ArrayList(criteria2.getValidDataTypeId(this));
-		List<HAPDataTypeId> leaves2 = this.getLeafDataTypeIds(dataTypeIds2);
+		List<HAPDataTypeCriteriaId> criterias1 = new ArrayList(criteria1.getValidDataTypeCriteriaId(this));
+		List<HAPDataTypeCriteriaId> leaves1 = this.getLeafCriteriaIds(criterias1);
+		
+		List<HAPDataTypeCriteriaId> criterias2 = new ArrayList(criteria2.getValidDataTypeCriteriaId(this));
+		List<HAPDataTypeCriteriaId> leaves2 = this.getLeafCriteriaIds(criterias2);
 
-		//two leaves should be the same size
-		if(leaves1.size()!=leaves2.size())   return null;
-		
-		Set<HAPDataTypeId> out = new HashSet<HAPDataTypeId>();
+		Set<HAPDataTypeCriteriaId> out = new HashSet<HAPDataTypeCriteriaId>();
 		for(int i=0; i<leaves1.size(); i++){
-			boolean match = false;
 			for(int j=0; j<leaves2.size(); j++){
-				if(this.compatibleWith(leaves1.get(i), leaves2.get(i))!=null){
-					match = true;
+				if(this.convertableIdCriteria(leaves1.get(i), leaves2.get(i))){
 					out.add(leaves2.get(i));
 					break;
 				}
-				else if(this.compatibleWith(leaves2.get(i), leaves1.get(i))!=null){
-					match = true;
+				else if(this.convertableIdCriteria(leaves2.get(i), leaves1.get(i))){
 					out.add(leaves1.get(i));
 					break;
 				}
 			}
-			if(match==false)   return null;
 		}
+		if(out.size()==0)   return null;
+		else	return new HAPDataTypeCriteriaIds(out);
+	}
+
+	
+	@Override
+	public boolean convertableIdCriteria(HAPDataTypeCriteriaId sourceCriteria, HAPDataTypeCriteriaId targetCriteria){
 		
-		return new HAPDataTypeCriteriaIds(out);
+	}
+
+	
+	
+	@Override
+	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeId dataTypeInfo, String name) {
+		return this.m_dataAccess.getDataTypeOperation(dataTypeInfo, name);
 	}
 	
+	@Override
+	public Set<HAPDataTypeId> getAllDataTypeInRange(HAPDataTypeId from, HAPDataTypeId to) {
+		Set<HAPDataTypeId> out = null;
+		Set<HAPDataTypeId> toSet = null;
+		Set<HAPDataTypeId> fromSet = null;
+		
+		if(to!=null){
+			toSet = new HashSet<HAPDataTypeId>();
+			HAPDataTypePictureImp toPic = this.m_dataAccess.getDataTypePicture(to);
+			Set<HAPRelationship> relationships = (Set<HAPRelationship>)toPic.getRelationships();
+			for(HAPRelationship relationship : relationships){
+				toSet.add(relationship.getTarget());
+			}
+		}
+
+		if(from!=null){
+			fromSet = new HashSet<HAPDataTypeId>();
+			HAPDataTypeFamilyImp fromFamily = this.m_dataAccess.getDataTypeFamily(from);
+			Set<HAPRelationship> relationships = (Set<HAPRelationship>)fromFamily.getRelationships();
+			for(HAPRelationship relationship : relationships){
+				fromSet.add(relationship.getSource());
+			}
+		}
+		
+		if(to==null)  out = fromSet;
+		else if(from==null)  out = toSet;
+		else out = Sets.intersection(fromSet, toSet);
+		return out;
+	}
+
+	@Override
+	public HAPRelationship convertable(HAPDataTypeId sourceDataTypeId, HAPDataTypeId targetDataTypeId){
+		return this.m_dataAccess.getRelationship(sourceDataTypeId, targetDataTypeId);
+	}
 	
+	/**
+	 * From a set of data type ids, find all the data type ids that :
+	 * 	1. they are not convertable to each other
+	 *  2. they are able to conver to all the original data types
+	 */
 	private List<HAPDataTypeId> getLeafDataTypeIds(List<HAPDataTypeId> dataTypeIds){
 		List<HAPDataTypeId> out = new ArrayList(dataTypeIds);
 		
@@ -287,13 +292,13 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 			int j = i+1;
 			boolean increasI = true;
 			while(j<out.size()){
-				if(this.compatibleWith(out.get(j), out.get(i))!=null){
-					out.remove(j);
-				}
-				else if(this.compatibleWith(out.get(i), out.get(j))!=null){
+				if(this.convertable(out.get(j), out.get(i))!=null){
 					out.remove(i);
 					increasI = false;
 					break;
+				}
+				else if(this.convertable(out.get(i), out.get(j))!=null){
+					out.remove(j);
 				}
 				else{
 					j++;
@@ -303,6 +308,30 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		}
 		return out;
 	}
-	
-	
+
+	private List<HAPDataTypeCriteriaId> getLeafCriteriaIds(List<HAPDataTypeCriteriaId> criteriaIds){
+		List<HAPDataTypeCriteriaId> out = new ArrayList(criteriaIds);
+		
+		int i = 0; 
+		while(i<out.size()){
+			int j = i+1;
+			boolean increasI = true;
+			while(j<out.size()){
+				if(this.convertableIdCriteria(out.get(j), out.get(i))){
+					out.remove(i);
+					increasI = false;
+					break;
+				}
+				else if(this.convertableIdCriteria(out.get(i), out.get(j))){
+					out.remove(j);
+				}
+				else{
+					j++;
+				}
+			}
+			if(increasI)  i++;
+		}
+		return out;
+	}
+
 }

@@ -3,7 +3,12 @@ var packageObj = library.getChildPackage("wrapper");
 
 (function(packageObj){
 //get used node
+var node_CONSTANT;
+var node_createEventObject;
+var node_makeObjectWithLifecycle;
+var node_getLifecycleInterface;
 var node_makeObjectWithType;
+var node_makeObjectWithId;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 /**
@@ -23,13 +28,13 @@ var node_createWraperCommon = function(data, path, request){
 	};
 	
 	var loc_resourceLifecycleObj = {};
-	loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY"] = function(requestInfo){
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
 		//for delete event, it means itself and all children should be destroy
 		loc_invalidateData();
 		//forward the event
 		loc_out.pri_trigueDataOperationEvent(NOSLIWCONSTANT.WRAPPER_EVENT_DELETE, "", {}, requestInfo);
 		//clear up event source
-		loc_out.pri_dataOperationEventSource.clearup();
+		loc_out.pri_dataOperationEventObject.clearup();
 		
 		//unregister listeners
 		nosliwEventUtility.unregisterAllListeners(loc_out.pri_allListeners);
@@ -39,7 +44,7 @@ var node_createWraperCommon = function(data, path, request){
 		loc_out.pri_path = undefined;
 	};
 	
-	loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT"] = function(obj, path, request){
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(obj, path, request){
 		
 		//if true, this wrapper is based on root data, otherwise, this wrapper is based on parent wrapper, 
 		loc_out.pri_dataBased = true;
@@ -54,7 +59,7 @@ var node_createWraperCommon = function(data, path, request){
 		loc_out.pri_allListeners = [];
 		
 		//event and listener for data operation event
-		loc_out.pri_dataOperationEventSource = nosliwCreateWrapperOperationEventSource();
+		loc_out.pri_dataOperationEventObject = node_createEventObject();
 
 		//calculated: the data this wrapper represented
 		loc_out.pri_validData = false;
@@ -143,7 +148,7 @@ var node_createWraperCommon = function(data, path, request){
 				this.pri_trigueDataOperationEvent(NOSLIWCONSTANT.WRAPPER_EVENT_FORWARD, "", eData, requestInfo);
 			},
 			
-			pri_trigueDataOperationEvent : function(event, path, eventData, requestInfo){this.pri_dataOperationEventSource.triggerEvent(event, path, eventData, requestInfo);},
+			pri_trigueDataOperationEvent : function(event, path, operationValue, requestInfo){this.pri_dataOperationEventObject.triggerEvent(event, path, operationValue, requestInfo);},
 
 			ovr_getResourceLifecycleObject : function(){	return loc_resourceLifecycleObj;	},
 			
@@ -186,8 +191,11 @@ var node_createWraperCommon = function(data, path, request){
 				return this.getRootWrapper().getData();
 			},
 
-			registerDataOperationEvent : function(handler, thisContext){
-				return this.pri_dataOperationEventSource.registerEventHandler(handler, thisContext);
+			/*
+			 * handler : function (event, path, operationValue, requestInfo)
+			 */
+			registerDataOperationEvent : function(listenerEventObj, handler, thisContext){
+				return this.pri_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);
 			},
 
 			createChildWrapper : function(path, request){		return nosliwCreateWraper(this, path, request);		},
@@ -199,13 +207,13 @@ var node_createWraperCommon = function(data, path, request){
 	};
 	
 	//append resource life cycle method to out obj
-	loc_out = nosliwLifecycleUtility.makeResourceObject(loc_out, loc_moduleName);
+	loc_out = node_makeObjectWithLifecycle(loc_out, loc_resourceLifecycleObj, loc_out);
 	
-	loc_out = nosliwTypedObjectUtility.makeTypedObject(loc_out, NOSLIWCONSTANT.TYPEDOBJECT_TYPE_WRAPPER);
+	loc_out = node_makeObjectWithType.makeTypedObject(loc_out, NOSLIWCONSTANT.TYPEDOBJECT_TYPE_WRAPPER);
 	
-	loc_out = nosliwObjectWithIdUtility.makeObjectWithId(loc_out);
+	loc_out = node_makeObjectWithId(loc_out, nosliw.generateId());
 	
-	loc_out.init(data, path, request);
+	node_getLifecycleInterface(loc_out).init(data, path, request);
 	
 	return loc_out;
 };
@@ -213,6 +221,12 @@ var node_createWraperCommon = function(data, path, request){
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithid.makeObjectWithId", function(){node_makeObjectWithId = this.getData();});
 
 
 //Register Node by Name

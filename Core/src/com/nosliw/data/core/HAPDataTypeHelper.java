@@ -3,6 +3,7 @@ package com.nosliw.data.core;
 import java.util.Set;
 
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.expression.HAPMatchers;
 
 /**
@@ -61,22 +62,24 @@ public interface HAPDataTypeHelper {
 	HAPDataTypeCriteria looseCriteria(HAPDataTypeCriteria criteria);
 
 	/**
-	 * Whether criteria1 is compatible with criteria2
+	 * Whether source criteria is convertable to target criteria
 	 * This means that all data type in criteria1 is also part of criteria2
 	 * @param criteria1
 	 * @param criteria2
 	 * @return
 	 */
-	boolean compatibleWith(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2);
+	boolean convertable(HAPDataTypeCriteria sourceCriteria, HAPDataTypeCriteria targetCriteria);
 
 	/**
-	 * Whether dataType1 is compatible with dataType2
+	 * Whether source dataType is convertable to target dataType
 	 * This means that dataType1 can be converted to dataType2
 	 * @param criteria1
 	 * @param criteria2
 	 * @return
 	 */
-	HAPRelationship compatibleWith(HAPDataTypeId dataTypeId1, HAPDataTypeId dataTypeId2);
+	HAPRelationship convertable(HAPDataTypeId sourceDataTypeId, HAPDataTypeId targetDataTypeId);
+	
+	boolean convertableIdCriteria(HAPDataTypeCriteriaId sourceCriteria, HAPDataTypeCriteriaId targetCriteria);
 	
 	/**
 	 * Find the root data type (all the parent data type which don't have parent data type)

@@ -184,7 +184,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 				this.setOutputCriteria(outputInfo.getCriteria());
 			}
 			//check if output compatible with expect
-			if(!dataTypeHelper.compatibleWith(this.getOutputCriteria(), expectCriteria)){
+			if(!dataTypeHelper.convertable(this.getOutputCriteria(), expectCriteria)){
 				context.addMessage("Error");
 			}
 			return this.isMatchable(outputInfo.getCriteria(), expectCriteria, context, dataTypeHelper);

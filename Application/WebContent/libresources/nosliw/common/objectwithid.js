@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("objectWithId");    
+var packageObj = library.getChildPackage("objectwithid");    
 
 (function(packageObj){
 	//get used node
