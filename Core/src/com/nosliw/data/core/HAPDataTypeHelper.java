@@ -34,7 +34,7 @@ public interface HAPDataTypeHelper {
 	 * @param dataTypeIds
 	 * @return
 	 */
-	HAPDataTypeCriteria buildDataTypeCriteria(Set<HAPDataTypeId> dataTypeIds);
+	HAPDataTypeCriteria buildDataTypeCriteria(Set<HAPDataTypeCriteriaId> dataTypeIds);
 
 	/**
 	 * Do "And" operation between criteria1 and criteria2 
@@ -79,6 +79,12 @@ public interface HAPDataTypeHelper {
 	 */
 	HAPRelationship convertable(HAPDataTypeId sourceDataTypeId, HAPDataTypeId targetDataTypeId);
 	
+	/**
+	 * 
+	 * @param sourceCriteria
+	 * @param targetCriteria
+	 * @return
+	 */
 	boolean convertableIdCriteria(HAPDataTypeCriteriaId sourceCriteria, HAPDataTypeCriteriaId targetCriteria);
 	
 	/**

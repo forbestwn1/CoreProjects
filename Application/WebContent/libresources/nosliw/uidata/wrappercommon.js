@@ -8,7 +8,11 @@ var node_createEventObject;
 var node_makeObjectWithLifecycle;
 var node_getLifecycleInterface;
 var node_makeObjectWithType;
+var node_getObjectType;
 var node_makeObjectWithId;
+var node_basicUtility;
+var node_dataUtility;
+var node_wrapperFactory;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 /**
@@ -28,22 +32,6 @@ var node_createWraperCommon = function(data, path, request){
 	};
 	
 	var loc_resourceLifecycleObj = {};
-	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
-		//for delete event, it means itself and all children should be destroy
-		loc_invalidateData();
-		//forward the event
-		loc_out.pri_trigueDataOperationEvent(NOSLIWCONSTANT.WRAPPER_EVENT_DELETE, "", {}, requestInfo);
-		//clear up event source
-		loc_out.pri_dataOperationEventObject.clearup();
-		
-		//unregister listeners
-		nosliwEventUtility.unregisterAllListeners(loc_out.pri_allListeners);
-		
-		loc_out.pri_parent = undefined;
-		loc_out.pri_rootData = undefined;
-		loc_out.pri_path = undefined;
-	};
-	
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(obj, path, request){
 		
 		//if true, this wrapper is based on root data, otherwise, this wrapper is based on parent wrapper, 
@@ -53,10 +41,7 @@ var node_createWraperCommon = function(data, path, request){
 		//parent wrapper used when wraper based
 		loc_out.pri_parent = undefined;
 		//the path from basis (data or wraper) to current data
-		loc_out.pri_path = nosliwCommonUtility.emptyStringIfUndefined(path);
-		
-		//all listeners that listen to others 
-		loc_out.pri_allListeners = [];
+		loc_out.pri_path = node_basicUtility.emptyStringIfUndefined(path);
 		
 		//event and listener for data operation event
 		loc_out.pri_dataOperationEventObject = node_createEventObject();
@@ -66,50 +51,51 @@ var node_createWraperCommon = function(data, path, request){
 		loc_out.pri_object = undefined;
 		
 		//whether data based or wrapper based
-		if(nosliwTypedObjectUtility.getObjectType(obj)==NOSLIWCONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
+		if(node_getObjectType(obj)==node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
 			//wrapper based
 			loc_out.pri_parent = obj;
 			loc_out.pri_dataBased = false;
 		}
 		else{
 			//data based
-			loc_out.pri_rootData = nosliwDataUtility.createDataByObject(obj);
+			loc_out.pri_rootData = node_dataUtility.createDataByObject(obj);
 			loc_out.pri_dataBased = true;
 		}
 		
 		if(loc_out.pri_dataBased==false){
 			//if parent based, then listen to parent's event
-			var listener = loc_out.pri_parent.registerDataOperationEvent(function(event, path, eventData, requestInfo){
+			loc_out.pri_parent.registerDataOperationEvent(function(event, path, opValue, requestInfo){
 				
-				if(event==NOSLIWCONSTANT.WRAPPER_EVENT_FORWARD){
-					event = eventData.event;
-					path = eventData.path;
-					eventData = eventData.eventData;
+				if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD){
+					//for forward event, expand it
+					event = opValue.event;
+					path = opValue.path;
+					opValue = opValue.operationValue;
 				}
 				
-				if(event==NOSLIWCONSTANT.WRAPPER_EVENT_CHANGE){
+				if(event==node_CONSTANT.WRAPPER_EVENT_CHANGE){
 					//for change event from parent, just make data invalid & forward the event, 
 					loc_invalidateData(requestInfo);
-					loc_out.pri_trigueDataOperationEvent(NOSLIWCONSTANT.WRAPPER_EVENT_CHANGE, "", {}, requestInfo);
+					loc_out.pri_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, "", {}, requestInfo);
 				}
 				else{
 					var k = -1;
 					if(loc_out.pri_path==path){
 						//event happens on this wrapper, trigue the same
 						//inform the change of wrapper
-						if(event==NOSLIWCONSTANT.WRAPPER_EVENT_DELETE){
+						if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
 							loc_out.destroy();
 						}
 						else{
 							loc_invalidateData(requestInfo);
-							loc_out.pri_trigueDataOperationEvent(event, "", eventData, requestInfo);
+							loc_out.pri_trigueDataOperationEvent(event, "", opValue, requestInfo);
 						}
 					}
-					else if(loc_out.pri_path.startsWith(path+".") || nosliwCommonUtility.isStringEmpty(path)){
+					else if(loc_out.pri_path.startsWith(path+".") || node_basicUtility.isStringEmpty(path)){
 						//something happens in the middle between parent and this
-						if(event==NOSLIWCONSTANT.WRAPPER_EVENT_SET){
+						if(event==node_CONSTANT.WRAPPER_EVENT_SET){
 							loc_invalidateData(requestInfo);
-							loc_out.pri_trigueDataOperationEvent(NOSLIWCONSTANT.WRAPPER_EVENT_CHANGE, "", {}, requestInfo);
+							loc_out.pri_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, "", {}, requestInfo);
 						}
 						else if(event==NOSLIWCONSTANT.WRAPPER_EVENT_DELETE){
 							loc_out.destroy();
@@ -117,21 +103,33 @@ var node_createWraperCommon = function(data, path, request){
 					}
 					else if(path.startsWith(loc_out.pri_path+".")){
 						//something happens beyond this, just forward the event with rest path, only set event
-						loc_out.pri_triggerForwardEvent(event, path.substring(loc_out.pri_path.length+1), eventData, requestInfo);
+						loc_out.pri_triggerForwardEvent(event, path.substring(loc_out.pri_path.length+1), opValue, requestInfo);
 					}
-					else if(nosliwCommonUtility.isStringEmpty(loc_out.pri_path)){
+					else if(node_basicUtility.isStringEmpty(loc_out.pri_path)){
 						//something happens beyond this, just forward the event with rest path, only set event
-						loc_out.pri_triggerForwardEvent(event, path, eventData, requestInfo);
+						loc_out.pri_triggerForwardEvent(event, path, opValue, requestInfo);
 					}
 					else{
 						//not on right path, do nothing
 					}
 				}
 			}, this);
-			loc_out.pri_allListeners.push(listener);
 		}
 	};
 
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
+		//for delete event, it means itself and all children should be destroy
+		loc_invalidateData();
+		//forward the event
+		loc_out.pri_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_DELETE, "", {}, requestInfo);
+		//clear up event source
+		loc_out.pri_dataOperationEventObject.clearup();
+		
+		loc_out.pri_parent = undefined;
+		loc_out.pri_rootData = undefined;
+		loc_out.pri_path = undefined;
+	};
+	
 	
 	var loc_out = {
 			pri_getPath : function(){  return this.pri_path;  },
@@ -139,19 +137,17 @@ var node_createWraperCommon = function(data, path, request){
 			pri_getRootData : function(){  return this.pri_rootData; },
 			pri_isDataBased : function(){  return this.pri_dataBased; },
 			pri_setObject : function(object){ this.pri_object = object;},
-			pri_triggerForwardEvent : function(event, path, eventData, requestInfo){
+			pri_triggerForwardEvent : function(event, path, opValue, requestInfo){
 				var eData = {
 						event : event, 
 						path : path, 
-						eventData : eventData,
+						operationValue : opValue,
 				};
-				this.pri_trigueDataOperationEvent(NOSLIWCONSTANT.WRAPPER_EVENT_FORWARD, "", eData, requestInfo);
+				this.pri_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_FORWARD, "", eData, requestInfo);
 			},
 			
 			pri_trigueDataOperationEvent : function(event, path, operationValue, requestInfo){this.pri_dataOperationEventObject.triggerEvent(event, path, operationValue, requestInfo);},
 
-			ovr_getResourceLifecycleObject : function(){	return loc_resourceLifecycleObj;	},
-			
 			ovr_calObject : function(){},
 			
 			isDataBased : function(){  return this.pri_dataBased; },
@@ -164,7 +160,7 @@ var node_createWraperCommon = function(data, path, request){
 				}
 				else{
 					var object = this.getObject();
-					return nosliwDataUtility.createDataByObject(object);
+					return node_dataUtility.createDataByObject(object);
 				}
 			},
 			
@@ -179,7 +175,7 @@ var node_createWraperCommon = function(data, path, request){
 
 			getFullPath : function(){
 				if(loc_out.pri_dataBased==true)   return loc_out.pri_path;
-				return nosliwCommonUtility.cascadePath(loc_out.pri_parent.getFullPath(), loc_out.pri_path);
+				return node_basicUtility.cascadePath(loc_out.pri_parent.getFullPath(), loc_out.pri_path);
 			},
 			
 			getRootWrapper : function(){
@@ -194,11 +190,15 @@ var node_createWraperCommon = function(data, path, request){
 			/*
 			 * handler : function (event, path, operationValue, requestInfo)
 			 */
-			registerDataOperationEvent : function(listenerEventObj, handler, thisContext){
-				return this.pri_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);
+			registerDataOperationListener : function(listenerEventObj, handler, thisContext){
+				this.pri_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);
 			},
 
-			createChildWrapper : function(path, request){		return nosliwCreateWraper(this, path, request);		},
+			unregisterDataOperationListener : function(listenerEventObj){
+				this.pri_dataOperationEventObject.unregister(listenerEventObj);
+			},
+			
+			createChildWrapper : function(path, request){		return wrapperFactory.createWrapper(this, path, request);		},
 
 			getWrapperType : function(){},
 			getChildData : function(path){},
@@ -226,7 +226,11 @@ nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){nod
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithid.makeObjectWithId", function(){node_makeObjectWithId = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 
 
 //Register Node by Name

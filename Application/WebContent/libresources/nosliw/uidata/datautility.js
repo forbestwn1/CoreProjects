@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("data.utility");    
+var packageObj = library.getChildPackage("data");    
 
 (function(packageObj){
 //get used node
@@ -9,7 +9,7 @@ var node_makeObjectWithType;
 /**
  * 
  */
-node_utility = function(){
+var node_utility = function(){
 	
 	return {
 		/*

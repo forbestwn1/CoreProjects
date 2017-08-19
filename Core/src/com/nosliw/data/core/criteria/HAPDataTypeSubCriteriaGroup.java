@@ -22,8 +22,14 @@ public interface HAPDataTypeSubCriteriaGroup {
 	 * Get all name for sub criteria
 	 * @return 
 	 * 		null or empty: no names
-	 * 		element "*" : all possible name 
 	 */
 	Set<String> getSubCriteriaNames();
+	
+	/**
+	 * Whether open for other name
+	 * @return
+	 */
+	boolean isOpen();
+
 	
 }
