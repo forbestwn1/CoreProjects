@@ -1,44 +1,66 @@
 package com.nosliw.data.core.expression;
 
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPRelationship;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 /**
- * Store information about how to match one data type to some criteria 
+ * Store matcher information (match from one data type to another data type)
+ * 		source data type id
+ * 		relationship
+ * 		sub matchers by name
  */
+@HAPEntityWithAttribute
 public class HAPMatcher extends HAPSerializableImp{
 
-	private HAPDataTypeCriteria m_targetCriteria;
+	@HAPAttribute
+	public static String DATATYPEID = "dataTypeId";
+
+	@HAPAttribute
+	public static String RELATIONSHIP = "relationship";
 	
-	private HAPDataTypeId m_sourceDataTypeId;
+	@HAPAttribute
+	public static String SUBMATCHERS = "subMatchers";
+	
+	private HAPDataTypeId m_dataTypeId;
 	
 	private HAPRelationship m_relationship;
 	
-	public HAPMatcher(String literate){
-		this.buildObjectByLiterate(literate);
+	private Map<String, HAPMatcher> m_subMatchers = new LinkedHashMap<String, HAPMatcher>();
+	
+	public HAPMatcher(HAPDataTypeId dataTypeId, HAPRelationship relationship){
+		this.m_relationship = relationship;
 	}
 	
-	public HAPMatcher(HAPDataTypeCriteria targetCriteria, HAPDataTypeId sourceDataTypeId){
-		this.m_sourceDataTypeId = sourceDataTypeId;
-		this.m_targetCriteria = targetCriteria;
-	}
+	public HAPDataTypeId getDataTypeId(){   return this.m_dataTypeId;  }
 	
-	public HAPDataTypeCriteria getTargetCriteria(){  return this.m_targetCriteria;  }
-	
-	public HAPDataTypeId getSourceDataTypeId(){  return this.m_sourceDataTypeId;   }
-
 	public HAPRelationship getRelationship(){  return this.m_relationship;  }
 	
-	@Override
-	protected String buildLiterate(){
-		return null;
-	}
-
-	@Override
-	protected boolean buildObjectByLiterate(String literateValue){	
-		return true;
+	public Set<HAPRelationship> discoverRelationship(){
+		Set<HAPRelationship> out = new HashSet<HAPRelationship>();
+		out.add(this.m_relationship);
+		for(String name : this.m_subMatchers.keySet()){
+			out.addAll(this.m_subMatchers.get(name).discoverRelationship());
+		}
+		return out;
 	}
 	
+	public void addSubMatchers(String name, HAPMatcher matcher){
+		this.m_subMatchers.put(name, matcher);
+	}
+
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(DATATYPEID, HAPSerializeManager.getInstance().toStringValue(this.m_dataTypeId, HAPSerializationFormat.LITERATE));
+		jsonMap.put(RELATIONSHIP, HAPSerializeManager.getInstance().toStringValue(this.m_relationship, HAPSerializationFormat.JSON));
+		jsonMap.put(SUBMATCHERS, HAPSerializeManager.getInstance().toStringValue(this.m_subMatchers, HAPSerializationFormat.JSON));
+	}
 }

@@ -3,11 +3,11 @@ package com.nosliw.data.core.runtime;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.expression.HAPMatcher;
+import com.nosliw.data.core.expression.HAPMatcher1;
 
 public class HAPResourceIdMatcher extends HAPResourceId{
 
-	private HAPMatcher m_matcher;
+	private HAPMatcher1 m_matcher;
 	
 	public HAPResourceIdMatcher(){}
 
@@ -19,7 +19,7 @@ public class HAPResourceIdMatcher extends HAPResourceId{
 		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, idLiterate);
 	}
 
-	public HAPResourceIdMatcher(HAPMatcher matcher){
+	public HAPResourceIdMatcher(HAPMatcher1 matcher){
 		this.init(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, null);
 		this.setMatcher(matcher);
 	}
@@ -27,11 +27,11 @@ public class HAPResourceIdMatcher extends HAPResourceId{
 	@Override
 	protected void setId(String id){
 		super.setId(id);
-		this.m_matcher = new HAPMatcher(id);
+		this.m_matcher = new HAPMatcher1(id);
 	}
 
-	public HAPMatcher getMatcher(){  return this.m_matcher;	}
-	protected void setMatcher(HAPMatcher matcher){
+	public HAPMatcher1 getMatcher(){  return this.m_matcher;	}
+	protected void setMatcher(HAPMatcher1 matcher){
 		this.m_matcher = matcher;
 		this.m_id = HAPSerializeManager.getInstance().toStringValue(this.m_matcher, HAPSerializationFormat.LITERATE); 
 	}

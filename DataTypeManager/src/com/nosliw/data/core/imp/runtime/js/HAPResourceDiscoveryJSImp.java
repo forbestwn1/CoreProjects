@@ -26,8 +26,6 @@ public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 	private void init(){
 	}
 	
-//	public HAPDBAccess getDBAccess(){		return this.m_dataAccess;	}
-	
 	@Override
 	public List<HAPResourceInfo> discoverResourceRequirement(HAPDataTypeId dataTypeId, HAPOperation dataOpInfo) {
 		HAPOperationId operationId = new HAPOperationId(dataTypeId, dataOpInfo.getName());

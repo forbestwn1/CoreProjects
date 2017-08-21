@@ -32,11 +32,6 @@ public class HAPRelationshipImp extends HAPStringableValueEntityWithID implement
 	
 	@Override
 	public HAPDataTypeId getTarget() {		
-		if(this.getTargetDataType()==null){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		return this.getTargetDataType().getName();	
 	}
 	
@@ -80,15 +75,6 @@ public class HAPRelationshipImp extends HAPStringableValueEntityWithID implement
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(SOURCE, HAPSerializeManager.getInstance().toStringValue(this.getSource(), HAPSerializationFormat.LITERATE));
 		jsonMap.put(TARGET, HAPSerializeManager.getInstance().toStringValue(this.getTarget(), HAPSerializationFormat.LITERATE));
-		
-		
-		if(this.getPath()!=null && this.getPath().getSegments()!=null && this.getPath().getSegments().size()>=1)
-		{
-			int kkkkk = 5555;
-			String out = HAPSerializeManager.getInstance().toStringValue(this.getPath(), HAPSerializationFormat.LITERATE);
-			kkkkk++;
-		}
-		
 		jsonMap.put(PATH, HAPSerializeManager.getInstance().toStringValue(this.getPath(), HAPSerializationFormat.LITERATE));
 		jsonMap.put(TARGETTYPE, this.getTargetType());
 	}

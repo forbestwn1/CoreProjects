@@ -66,10 +66,10 @@ public interface HAPExpression {
 	//error message used to indicate whether the expression is successfully processed
 	String[] getErrorMessages();
 
-	//discover variable infor in expression:
+	//discover variable criteria / matchs in expression:
 	//1 discover internal variable
 	//2 discover expect variable
 	//3 build converters between expect variable to internal variable
-	HAPMatchers discover(Map<String, HAPVariableInfo> expectVariablesInfo, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context,	HAPDataTypeHelper dataTypeHelper);
+	HAPMatchers discover(Map<String, HAPVariableInfo> parentVariablesInfo, HAPDataTypeCriteria expectOutputCriteria, HAPProcessVariablesContext context,	HAPDataTypeHelper dataTypeHelper);
 	
 }

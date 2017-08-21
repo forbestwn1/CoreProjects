@@ -1,4 +1,21 @@
-function nosliwCreateObjectWraper(){
+//get/create package
+var packageObj = library.getChildPackage("wrapper.object");    
+
+(function(packageObj){
+//get used node
+var node_CONSTANT;
+var node_createEventObject;
+var node_makeObjectWithLifecycle;
+var node_getLifecycleInterface;
+var node_makeObjectWithType;
+var node_getObjectType;
+var node_makeObjectWithId;
+var node_basicUtility;
+var node_dataUtility;
+var node_wrapperFactory;
+	
+//*******************************************   Start Node Definition  ************************************** 	
+var node_createWraperObject = function(){
 	
 	var loc_getOperationObject = function(obj){
 		var opObject = obj;
@@ -102,3 +119,28 @@ function nosliwCreateObjectWraper(){
 	
 	return loc_out;
 };
+
+//*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithid.makeObjectWithId", function(){node_makeObjectWithId = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
+
+nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
+	//register wrapper faction
+	this.getData().registerWrapperFactoryByDataType("", node_createWraperObject);
+});
+
+
+//Register Node by Name
+packageObj.createChildNode("node_createWraperObject", node_createWraperObject); 
+
+})(packageObj);

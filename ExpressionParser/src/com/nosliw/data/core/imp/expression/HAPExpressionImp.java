@@ -51,10 +51,13 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	
 	// store all variable information in expression (variable name -- variable data type infor)
 	// for variable that we don't know data type, its value in this map is null
-	// this variable info inherited from expression definition, so it is for internal 
+	// this variable info initially inherited from expression definition
+	// and affected by variable definition in parent and operand discovery 
+	// it is for internal use during processing
 	private Map<String, HAPVariableInfo> m_localVarsInfo;
 
-	//external variables info for expression
+	// external variables info for expression
+	// it is what this expression required for input
 	private Map<String, HAPVariableInfo> m_varsInfo;
 	
 	// store all the matchers from variables info to internal variables info in expression
@@ -234,7 +237,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		
 		HAPMatchers matchers = null;
 		Map<String, HAPVariableInfo> oldVarsInfo;
-		//Do discovery until vars not change or fail 
+		//Do discovery until local vars definition not change or fail 
 		do{
 			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 			oldVarsInfo.putAll(varsInfo);

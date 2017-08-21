@@ -13,17 +13,25 @@ import com.nosliw.data.core.HAPRelationship;
 
 public class HAPMatchers extends HAPSerializableImp{
 
-	private Map<HAPDataTypeId, HAPRelationship> m_machers = new LinkedHashMap<HAPDataTypeId, HAPRelationship>();
+	private Map<HAPDataTypeId, HAPMatcher> m_matchers;
 	
 	public HAPMatchers(){
+		this.m_matchers = new LinkedHashMap<HAPDataTypeId, HAPMatcher>();
 	}
 
-	public void addItem(HAPDataTypeId dataTypeId, HAPRelationship relationship){
-		this.m_machers.put(dataTypeId, relationship);
+	public void addMatcher(HAPMatcher matcher){
+		this.m_matchers.put(matcher.getDataTypeId(), matcher);
 	}
-
+	
+	/**
+	 * Get all relationships invovled in this matchers 
+	 */
 	public Set<HAPRelationship> getRelationships(){
-		return new HashSet<HAPRelationship>(this.m_machers.values());
+		Set<HAPRelationship> out = new HashSet<HAPRelationship>();
+		for(HAPDataTypeId dataTypeId : this.m_matchers.keySet()){
+			out.addAll(this.m_matchers.get(dataTypeId).discoverRelationship());
+		}
+		return out;
 	}
 
 	@Override
@@ -33,9 +41,10 @@ public class HAPMatchers extends HAPSerializableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		for(HAPDataTypeId dataTypeId : this.m_machers.keySet()){
-			jsonMap.put(HAPSerializeManager.getInstance().toStringValue(dataTypeId, HAPSerializationFormat.LITERATE), 
-					HAPSerializeManager.getInstance().toStringValue(this.m_machers.get(dataTypeId), HAPSerializationFormat.JSON));
+		for(HAPDataTypeId dataTypeId : this.m_matchers.keySet()){
+			HAPMatcher matcher = this.m_matchers.get(dataTypeId);
+			jsonMap.put(HAPSerializeManager.getInstance().toStringValue(dataTypeId, HAPSerializationFormat.LITERATE),
+					HAPSerializeManager.getInstance().toStringValue(matcher, HAPSerializationFormat.JSON));
 		}
 	}
 }

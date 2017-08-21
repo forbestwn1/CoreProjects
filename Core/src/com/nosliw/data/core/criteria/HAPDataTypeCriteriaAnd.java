@@ -55,4 +55,9 @@ public class HAPDataTypeCriteriaAnd extends HAPDataTypeCriteriaComplex{
 		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_AND));
 		return out.toString(); 
 	}
+
+	@Override
+	public Set<HAPDataTypeCriteriaId> getValidDataTypeCriteriaId(HAPDataTypeHelper dataTypeHelper) {
+		return null;
+	}
 }

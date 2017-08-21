@@ -94,8 +94,8 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		//set expression name, every expression instance has a unique name
 		expression.setId(expressionName + "_no" + this.m_idIndex++);
 		
-		//discover variables
-		this.discoverVariables(expression);
+		//find local variables in expression
+		this.discoverLocalVariables(expression);
 		
 		//process reference
 		System.out.println("******* Process reference");
@@ -105,7 +105,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		System.out.println("******* Process constant");
 		this.processConstants(expression);
 		
-		//discover variables
+		//discover variables criteria / matchs in expression
 		HAPProcessVariablesContext context = new HAPProcessVariablesContext();
 		Map<String, HAPVariableInfo> parentVariableInfos = new LinkedHashMap<String, HAPVariableInfo>();
 		if(variableCriterias!=null){
@@ -158,8 +158,11 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		}
 	}
 
-	private void discoverVariables(HAPExpressionImp expression){
-		//process all child references
+	/**
+	 * Find all local variables in expression, and update localVariableInfor attribute
+	 * @param expression
+	 */
+	private void discoverLocalVariables(HAPExpressionImp expression){
 		HAPExpressionUtility.processAllOperand(expression.getOperand(), expression, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperand operand, Object data) {
@@ -202,7 +205,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 					if(refExpression==null){
 						//if referenced expression has not been processed, parse it
 						refExpression = parseExpressionDefinition(suite, refExpName);
-						discoverVariables(refExpression);
+						discoverLocalVariables(refExpression);
 						expression.addReference(referenceName, refExpression);
 						
 						Map<String, String> refVarMap = new LinkedHashMap<String, String>();   //variable mapping from parent to reference expression
