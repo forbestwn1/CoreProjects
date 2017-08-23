@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaId;
+import com.nosliw.data.core.expression.HAPMatcher;
 import com.nosliw.data.core.expression.HAPMatchers;
 
 /**
@@ -12,12 +13,17 @@ import com.nosliw.data.core.expression.HAPMatchers;
 public interface HAPDataTypeHelper {
 
 	/**
+	 * Figure out data type criteria id (data type, sub data type) according to data
+	 */
+	HAPDataTypeCriteriaId getDataTypeIdCriteriaByData(HAPData data);
+	
+	/**
 	 * 
 	 * @param dataTypeInfo
 	 * @param name
 	 * @return
 	 */
-	public HAPDataTypeOperation getOperationInfoByName(HAPDataTypeId dataTypeInfo, String name);
+	HAPDataTypeOperation getOperationInfoByName(HAPDataTypeId dataTypeInfo, String name);
 
 	
 	/**
@@ -68,7 +74,7 @@ public interface HAPDataTypeHelper {
 	 * @param criteria2
 	 * @return
 	 */
-	boolean convertable(HAPDataTypeCriteria sourceCriteria, HAPDataTypeCriteria targetCriteria);
+	HAPMatchers convertable(HAPDataTypeCriteria sourceCriteria, HAPDataTypeCriteria targetCriteria);
 
 	/**
 	 * Whether source dataType is convertable to target dataType
@@ -85,7 +91,7 @@ public interface HAPDataTypeHelper {
 	 * @param targetCriteria
 	 * @return
 	 */
-	boolean convertableIdCriteria(HAPDataTypeCriteriaId sourceCriteria, HAPDataTypeCriteriaId targetCriteria);
+	HAPMatcher convertableIdCriteria(HAPDataTypeCriteriaId sourceCriteria, HAPDataTypeCriteriaId targetCriteria);
 	
 	/**
 	 * Find the root data type (all the parent data type which don't have parent data type)
@@ -114,6 +120,8 @@ public interface HAPDataTypeHelper {
 	 * @return
 	 */
 	Set<HAPDataTypeId> normalize(Set<HAPDataTypeId> dataTypeIds);
+
+	Set<HAPDataTypeCriteriaId> normalizeCriteria(Set<HAPDataTypeCriteriaId> dataTypeCriteriaIds);
 	
 	/**
 	 * Build all possible relationship in order to convert the data type from "from" criteria to "to" criteria  

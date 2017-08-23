@@ -35,7 +35,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		Set<HAPDataTypeConverter> out = new HashSet<HAPDataTypeConverter>();
 		Map<String, HAPMatchers> varConverters = this.m_referencedExpression.getVariableMatchers();
 		for(String var : varConverters.keySet()){
-			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(varConverters.get(var).getRelationships()));
+			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(varConverters.get(var).discoverRelationships()));
 		}
 		return out;	
 	}

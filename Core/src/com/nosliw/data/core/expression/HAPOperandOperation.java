@@ -111,7 +111,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 	public Set<HAPDataTypeConverter> getConverters(){
 		Set<HAPDataTypeConverter> out = new HashSet<HAPDataTypeConverter>();
 		for(String parm : this.m_parmsMatchers.keySet()){
-			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(this.m_parmsMatchers.get(parm).getRelationships()));
+			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(this.m_parmsMatchers.get(parm).discoverRelationships()));
 		}
 		return out;	
 	}
@@ -184,7 +184,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 				this.setOutputCriteria(outputInfo.getCriteria());
 			}
 			//check if output compatible with expect
-			if(!dataTypeHelper.convertable(this.getOutputCriteria(), expectCriteria)){
+			if(dataTypeHelper.convertable(this.getOutputCriteria(), expectCriteria)==null){
 				context.addMessage("Error");
 			}
 			return this.isMatchable(outputInfo.getCriteria(), expectCriteria, context, dataTypeHelper);

@@ -58,6 +58,16 @@ public class HAPDataTypeCriteriaAnd extends HAPDataTypeCriteriaComplex{
 
 	@Override
 	public Set<HAPDataTypeCriteriaId> getValidDataTypeCriteriaId(HAPDataTypeHelper dataTypeHelper) {
-		return null;
+		List<HAPDataTypeCriteria> elements = this.getElements();
+		HAPDataTypeCriteria out = null;
+		for(int i=0; i<elements.size(); i++){
+			if(out==null){
+				out = elements.get(i);
+			}
+			else{
+				out = dataTypeHelper.and(out, elements.get(i));
+			}
+		}
+		return out.getValidDataTypeCriteriaId(dataTypeHelper);
 	}
 }

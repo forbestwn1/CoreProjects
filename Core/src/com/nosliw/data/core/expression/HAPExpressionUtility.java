@@ -64,7 +64,7 @@ public class HAPExpressionUtility {
 		Map<String, HAPMatchers> matchers = expression.getVariableMatchers();
 		if(matchers!=null){
 			for(String varName : matchers.keySet()){
-				Set<HAPDataTypeConverter> converters = HAPResourceUtility.getConverterResourceIdFromRelationship(matchers.get(varName).getRelationships());
+				Set<HAPDataTypeConverter> converters = HAPResourceUtility.getConverterResourceIdFromRelationship(matchers.get(varName).discoverRelationships());
 				for(HAPDataTypeConverter converter : converters){
 					out.add(new HAPResourceIdConverter(converter));
 				}

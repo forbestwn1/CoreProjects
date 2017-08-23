@@ -26,10 +26,10 @@ public class HAPMatchers extends HAPSerializableImp{
 	/**
 	 * Get all relationships invovled in this matchers 
 	 */
-	public Set<HAPRelationship> getRelationships(){
+	public Set<HAPRelationship> discoverRelationships(){
 		Set<HAPRelationship> out = new HashSet<HAPRelationship>();
 		for(HAPDataTypeId dataTypeId : this.m_matchers.keySet()){
-			out.addAll(this.m_matchers.get(dataTypeId).discoverRelationship());
+			out.addAll(this.m_matchers.get(dataTypeId).discoverRelationships());
 		}
 		return out;
 	}

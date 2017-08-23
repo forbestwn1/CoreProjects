@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeFamily;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
@@ -16,9 +17,8 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaIds;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaRange;
 import com.nosliw.data.core.criteria.HAPDataTypeSubCriteriaGroup;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaOr;
+import com.nosliw.data.core.expression.HAPMatcher;
 import com.nosliw.data.core.expression.HAPMatchers;
 
 public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
@@ -74,21 +74,21 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	public HAPDataTypeCriteria looseCriteria(HAPDataTypeCriteria criteria) {
 		HAPDataTypeCriteria out = null;
 		
-		Set<HAPDataTypeId> dataTypeIds = criteria.getValidDataTypeId(this);
-		Set<HAPDataTypeId> normalizedDataTypeIds = this.normalize(dataTypeIds);
-		
-		if(normalizedDataTypeIds.size()==1){
-			//one element, use range
-			out = new HAPDataTypeCriteriaRange(normalizedDataTypeIds.iterator().next(), null);
-		}
-		else{
-			//multiple, use or
-			List<HAPDataTypeCriteria> criterias = new ArrayList<HAPDataTypeCriteria>();
-			for(HAPDataTypeId normalizedDataTypeId : normalizedDataTypeIds){
-				criterias.add(new HAPDataTypeCriteriaRange(normalizedDataTypeId, null));
-			}
-			out = new HAPDataTypeCriteriaOr(criterias);
-		}
+//		Set<HAPDataTypeId> dataTypeIds = criteria.getValidDataTypeId(this);
+//		Set<HAPDataTypeId> normalizedDataTypeIds = this.normalize(dataTypeIds);
+//		
+//		if(normalizedDataTypeIds.size()==1){
+//			//one element, use range
+//			out = new HAPDataTypeCriteriaRange(normalizedDataTypeIds.iterator().next(), null);
+//		}
+//		else{
+//			//multiple, use or
+//			List<HAPDataTypeCriteria> criterias = new ArrayList<HAPDataTypeCriteria>();
+//			for(HAPDataTypeId normalizedDataTypeId : normalizedDataTypeIds){
+//				criterias.add(new HAPDataTypeCriteriaRange(normalizedDataTypeId, null));
+//			}
+//			out = new HAPDataTypeCriteriaOr(criterias);
+//		}
 		return out;
 	}
 
@@ -117,28 +117,65 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	}
 
 	@Override
-	public HAPMatchers buildMatchers(HAPDataTypeCriteria from, HAPDataTypeCriteria to) {
-		Set<HAPDataTypeId> toDataTypeIds = this.normalize(to.getValidDataTypeId(this));
-		Set<HAPDataTypeId> fromDataTypeIds = from.getValidDataTypeId(this);
-		
-		HAPMatchers out = new HAPMatchers();
-		for(HAPDataTypeId fromDataTypeId : fromDataTypeIds){
-			boolean found = false;
-			for(HAPDataTypeId toDataTypeId : toDataTypeIds){
-				HAPRelationship relationship = this.convertable(fromDataTypeId, toDataTypeId);
-				if(relationship!=null){
-					out.addItem(fromDataTypeId, relationship);
-					found = true;
-					break;
-				}					
+	public Set<HAPDataTypeCriteriaId> normalizeCriteria(Set<HAPDataTypeCriteriaId> dataTypeCriteriaIds1){
+		List<HAPDataTypeCriteriaId> dataTypeCriteriaIds = new ArrayList<HAPDataTypeCriteriaId>(dataTypeCriteriaIds1);
+		Set<HAPDataTypeCriteriaId> out = new HashSet<HAPDataTypeCriteriaId>();
+		if(dataTypeCriteriaIds.size()==0){}
+		else if(dataTypeCriteriaIds.size()==1)  out.add(dataTypeCriteriaIds.get(0));
+		else{
+			out.addAll(dataTypeCriteriaIds1);
+			Set<HAPDataTypeCriteriaId> removes = new HashSet<HAPDataTypeCriteriaId>();
+			for(int i=0; i< dataTypeCriteriaIds.size()-1; i++){
+				for(int j=i+1; j<dataTypeCriteriaIds.size(); j++){
+					if(this.convertable(dataTypeCriteriaIds.get(i), dataTypeCriteriaIds.get(j))!=null){
+						removes.add(dataTypeCriteriaIds.get(i));
+					}
+					else if(this.convertable(dataTypeCriteriaIds.get(j), dataTypeCriteriaIds.get(i))!=null){
+						removes.add(dataTypeCriteriaIds.get(j));
+					}
+				}
 			}
-			if(found==false){
-				//if one data type cannot convert to any destination, then return null, that mean it fails
-				return null;
-			}
+			out.removeAll(removes);
 		}
 		return out;
 	}
+
+	@Override
+	public HAPMatchers buildMatchers(HAPDataTypeCriteria from, HAPDataTypeCriteria to){
+		return this.convertable(from, to);
+	}
+
+	
+	@Override
+	public HAPMatchers convertable(HAPDataTypeCriteria sourceCriteria, HAPDataTypeCriteria targetCriteria) {
+		if(targetCriteria==null){
+			if(sourceCriteria==null)  return new HAPMatchers();
+			else return null; 
+		}
+		else if(targetCriteria==HAPDataTypeCriteriaAny.getCriteria()){
+			return new HAPMatchers();
+		}
+		else{
+			HAPMatchers out = new HAPMatchers();
+			Set<HAPDataTypeCriteriaId> sourceIdCriteriaSet = sourceCriteria.getValidDataTypeCriteriaId(this);
+			Set<HAPDataTypeCriteriaId> targetIdCriteriaSet = this.normalizeCriteria(targetCriteria.getValidDataTypeCriteriaId(this));
+			
+			for(HAPDataTypeCriteriaId sourceIdCriteria : sourceIdCriteriaSet){
+				boolean match = false;
+				for(HAPDataTypeCriteriaId targetIdCriteria : targetIdCriteriaSet){
+					HAPMatcher matcher = this.convertableIdCriteria(sourceIdCriteria, targetIdCriteria);
+					if(matcher!=null){
+						match = true;
+						out.addMatcher(matcher);
+						break;
+					}
+				}
+				if(!match)  return null;
+			}
+			return out;
+		}
+	}
+
 
 	
 	@Override
@@ -176,32 +213,6 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	}
 
 	@Override
-	public boolean convertable(HAPDataTypeCriteria sourceCriteria, HAPDataTypeCriteria targetCriteria) {
-		if(targetCriteria==null){
-			return sourceCriteria==null;
-		}
-		else if(targetCriteria==HAPDataTypeCriteriaAny.getCriteria()){
-			return true;
-		}
-		else{
-			Set<HAPDataTypeCriteriaId> sourceIdCriteriaSet = sourceCriteria.getValidDataTypeCriteriaId(this);
-			Set<HAPDataTypeCriteriaId> targetIdCriteriaSet = targetCriteria.getValidDataTypeCriteriaId(this);
-			
-			List<HAPDataTypeCriteriaId> sourceLeaveIdCriterias = this.getLeafCriteriaIds(new ArrayList(sourceIdCriteriaSet));
-			List<HAPDataTypeCriteriaId> targetLeaveIdCriterias = this.getLeafCriteriaIds(new ArrayList(targetIdCriteriaSet));
-			
-			for(HAPDataTypeCriteriaId sourceLeaveIdCriteria : sourceLeaveIdCriterias){
-				for(HAPDataTypeCriteriaId targetLeaveIdCriteria : targetLeaveIdCriterias){
-					if(!this.convertableIdCriteria(sourceLeaveIdCriteria, targetLeaveIdCriteria)){
-						return false;
-					}
-				}
-			}
-			return true;
-		}
-	}
-
-	@Override
 	public HAPDataTypeCriteria merge(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2) {
 		
 		List<HAPDataTypeCriteriaId> criterias1 = new ArrayList(criteria1.getValidDataTypeCriteriaId(this));
@@ -213,11 +224,11 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		Set<HAPDataTypeCriteriaId> out = new HashSet<HAPDataTypeCriteriaId>();
 		for(int i=0; i<leaves1.size(); i++){
 			for(int j=0; j<leaves2.size(); j++){
-				if(this.convertableIdCriteria(leaves1.get(i), leaves2.get(i))){
+				if(this.convertableIdCriteria(leaves1.get(i), leaves2.get(i))!=null){
 					out.add(leaves2.get(i));
 					break;
 				}
-				else if(this.convertableIdCriteria(leaves2.get(i), leaves1.get(i))){
+				else if(this.convertableIdCriteria(leaves2.get(i), leaves1.get(i))!=null){
 					out.add(leaves1.get(i));
 					break;
 				}
@@ -229,38 +240,41 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 	
 	@Override
-	public boolean convertableIdCriteria(HAPDataTypeCriteriaId sourceIdCriteria, HAPDataTypeCriteriaId targetIdCriteria){
-		boolean out = true;
-		if(this.convertable(sourceIdCriteria.getDataTypeId(), targetIdCriteria.getDataTypeId())!=null){
+	public HAPMatcher convertableIdCriteria(HAPDataTypeCriteriaId sourceIdCriteria, HAPDataTypeCriteriaId targetIdCriteria){
+		HAPMatcher out = null;
+		HAPRelationship relationship = this.convertable(sourceIdCriteria.getDataTypeId(), targetIdCriteria.getDataTypeId());
+		if(relationship!=null){
+			out = new HAPMatcher(sourceIdCriteria.getDataTypeId(), relationship);
+
 			HAPDataTypeSubCriteriaGroup sourceSubCriterias = sourceIdCriteria.getSubCriteria();
 			HAPDataTypeSubCriteriaGroup targetSubCriterias = targetIdCriteria.getSubCriteria();
 			
 			Set<String> targetSubNames = targetSubCriterias.getSubCriteriaNames();
 			for(String targetSubName : targetSubNames){
+				HAPMatchers matchers = null;
 				HAPDataTypeCriteria targetSubCriteria = targetSubCriterias.getSubCriteria(targetSubName);
 				HAPDataTypeCriteria sourceSubCriteria = sourceSubCriterias.getSubCriteria(targetSubName);
 				if(sourceSubCriteria==null){
 					//no sub criteria by same name in source, fail
-					out = false;
-					break;
+					return null;
 				}
 				else if(targetSubCriteria==HAPDataTypeCriteriaAny.getCriteria()){
-					
-				}
-				else if(sourceSubCriteria==HAPDataTypeCriteriaAny.getCriteria()){
-					out = false;
-					break;
-				}
-				else{
-					if(!this.convertable(sourceSubCriteria, targetSubCriteria)){
-						out = false;
-						break;
+					matchers = this.buildMatchers(sourceSubCriteria, targetSubCriteria);
+					if(matchers!=null){
+						out.addSubMatchers(targetSubName, matchers);
 					}
 				}
+				else if(sourceSubCriteria==HAPDataTypeCriteriaAny.getCriteria()){
+					return null;
+				}
+				else{
+					matchers = this.buildMatchers(sourceSubCriteria, targetSubCriteria);
+					if(matchers!=null){
+						out.addSubMatchers(targetSubName, matchers);
+					}
+				}
+				if(matchers==null)  return null;
 			}
-		}
-		else{
-			out = false;
 		}
 		return out;
 	}
@@ -276,12 +290,12 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 			int j = i+1;
 			boolean increasI = true;
 			while(j<out.size()){
-				if(this.convertableIdCriteria(out.get(j), out.get(i))){
+				if(this.convertableIdCriteria(out.get(j), out.get(i))!=null){
 					out.remove(i);
 					increasI = false;
 					break;
 				}
-				else if(this.convertableIdCriteria(out.get(i), out.get(j))){
+				else if(this.convertableIdCriteria(out.get(i), out.get(j))!=null){
 					out.remove(j);
 				}
 				else{
@@ -378,6 +392,11 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 			if(increasI)  i++;
 		}
 		return out;
+	}
+
+	@Override
+	public HAPDataTypeCriteriaId getDataTypeIdCriteriaByData(HAPData data) {
+		throw new NullPointerException();
 	}
 
 

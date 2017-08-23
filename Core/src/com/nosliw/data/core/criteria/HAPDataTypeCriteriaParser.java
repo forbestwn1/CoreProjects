@@ -14,7 +14,7 @@ import com.nosliw.data.core.HAPDataTypeId;
  * Util class to convert between criteria and literate 
  */
 public class HAPDataTypeCriteriaParser {
-
+/*
 	private static final String START_AND = "[[";
 	private static final String END_AND = "]]";
 
@@ -122,4 +122,5 @@ public class HAPDataTypeCriteriaParser {
 		}
 		return out;
 	}
+*/	
 }

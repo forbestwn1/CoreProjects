@@ -48,4 +48,14 @@ public class HAPDataTypeCriteriaOr extends HAPDataTypeCriteriaComplex{
 		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_OR));
 		return out.toString(); 
 	}
+
+	@Override
+	public Set<HAPDataTypeCriteriaId> getValidDataTypeCriteriaId(HAPDataTypeHelper dataTypeHelper) {
+		List<HAPDataTypeCriteria> elements = this.getElements();
+		Set<HAPDataTypeCriteriaId> out = new HashSet<HAPDataTypeCriteriaId>();
+		for(int i=0; i<elements.size(); i++){
+			out.addAll(elements.get(i).getValidDataTypeCriteriaId(dataTypeHelper));
+		}
+		return out;
+	}
 }

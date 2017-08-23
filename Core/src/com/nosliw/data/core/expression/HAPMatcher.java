@@ -35,7 +35,7 @@ public class HAPMatcher extends HAPSerializableImp{
 	
 	private HAPRelationship m_relationship;
 	
-	private Map<String, HAPMatcher> m_subMatchers = new LinkedHashMap<String, HAPMatcher>();
+	private Map<String, HAPMatchers> m_subMatchers = new LinkedHashMap<String, HAPMatchers>();
 	
 	public HAPMatcher(HAPDataTypeId dataTypeId, HAPRelationship relationship){
 		this.m_relationship = relationship;
@@ -45,16 +45,16 @@ public class HAPMatcher extends HAPSerializableImp{
 	
 	public HAPRelationship getRelationship(){  return this.m_relationship;  }
 	
-	public Set<HAPRelationship> discoverRelationship(){
+	public Set<HAPRelationship> discoverRelationships(){
 		Set<HAPRelationship> out = new HashSet<HAPRelationship>();
 		out.add(this.m_relationship);
 		for(String name : this.m_subMatchers.keySet()){
-			out.addAll(this.m_subMatchers.get(name).discoverRelationship());
+			out.addAll(this.m_subMatchers.get(name).discoverRelationships());
 		}
 		return out;
 	}
 	
-	public void addSubMatchers(String name, HAPMatcher matcher){
+	public void addSubMatchers(String name, HAPMatchers matcher){
 		this.m_subMatchers.put(name, matcher);
 	}
 

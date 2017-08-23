@@ -40,7 +40,6 @@ public class HAPOperandConstant extends HAPOperandImp{
 	
 	public void setData(HAPData data){ 
 		this.m_data = data;
-		this.setOutputCriteria(new HAPDataTypeCriteriaId(this.m_data.getDataTypeId()));
 	}
 	
 	@Override
@@ -64,6 +63,10 @@ public class HAPOperandConstant extends HAPOperandImp{
 			HAPProcessVariablesContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		//set output criteria
+		if(this.getOutputCriteria()==null){
+			HAPDataTypeCriteriaId criteria = dataTypeHelper.getDataTypeIdCriteriaByData(m_data);
+			this.setOutputCriteria(criteria);
+		}
 		return this.isMatchable(this.getOutputCriteria(), expectCriteria, context, dataTypeHelper);
 	}
 }
