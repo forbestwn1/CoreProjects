@@ -210,7 +210,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 		getResourceStatus : function(){return loc_status;},
 
 		registerEventListener : function(listener, handler){
-			node_eventUtility.registerEvent(listener, loc_out.getBaseObject(), node_CONSTANT.EVENT_EVENTNAME_ALL, handler);
+			node_eventUtility.registerListener(listener, loc_out.getBaseObject(), node_CONSTANT.EVENT_EVENTNAME_ALL, handler);
 		},
 
 		unregisterEventListener : function(listener){

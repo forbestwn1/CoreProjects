@@ -172,8 +172,9 @@ var node_createExpressionService = function(){
 			//if converter does not created, then get it
 		}
 		else{
-			var sourceDataTypeId = matcher[node_COMMONATRIBUTECONSTANT.DATATYPERELATIONSHIP_SOURCE];
-			var targetDataTypeId = matcher[node_COMMONATRIBUTECONSTANT.DATATYPERELATIONSHIP_TARGET];
+			var relationship = matcher[node_COMMONATRIBUTECONSTANT.MATCHER_RELATIONSHIP];
+			var sourceDataTypeId = relationship[node_COMMONATRIBUTECONSTANT.DATATYPERELATIONSHIP_SOURCE];
+			var targetDataTypeId = relationship[node_COMMONATRIBUTECONSTANT.DATATYPERELATIONSHIP_TARGET];
 			if(sourceDataTypeId==targetDataTypeId){
 				//no need to convert
 				out = node_createServiceRequestInfoSimple(service, function(requestInfo){
@@ -182,10 +183,10 @@ var node_createExpressionService = function(){
 			}
 			else{
 				out = node_createServiceRequestInfoSequence(service, handlers, requestInfo);
-				var matcherSegments = matcher[node_COMMONATRIBUTECONSTANT.DATATYPERELATIONSHIP_PATH];
+				var matcherSegments = relationship[node_COMMONATRIBUTECONSTANT.DATATYPERELATIONSHIP_PATH];
 
 				var targets = [];
-				var sourceId = matcher[node_COMMONATRIBUTECONSTANT.DATATYPERELATIONSHIP_SOURCE];
+				var sourceId = relationship[node_COMMONATRIBUTECONSTANT.DATATYPERELATIONSHIP_SOURCE];
 				var targetId;
 				for(var i=0; i<matcherSegments.length; i++){
 					targetId = node_namingConvensionUtility.parseLevel2(matcherSegments[i])[1];

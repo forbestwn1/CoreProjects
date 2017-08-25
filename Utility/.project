@@ -8,6 +8,7 @@
 		<project>DataTypeLibrary</project>
 		<project>UIResource</project>
 		<project>DataDefinition</project>
+		<project>Core</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

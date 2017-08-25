@@ -14,7 +14,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/Application"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/UIResource"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Application"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

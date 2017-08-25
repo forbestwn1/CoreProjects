@@ -248,32 +248,34 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 			HAPDataTypeSubCriteriaGroup sourceSubCriterias = sourceIdCriteria.getSubCriteria();
 			HAPDataTypeSubCriteriaGroup targetSubCriterias = targetIdCriteria.getSubCriteria();
-			
-			Set<String> targetSubNames = targetSubCriterias.getSubCriteriaNames();
-			for(String targetSubName : targetSubNames){
-				HAPMatchers matchers = null;
-				HAPDataTypeCriteria targetSubCriteria = targetSubCriterias.getSubCriteria(targetSubName);
-				HAPDataTypeCriteria sourceSubCriteria = sourceSubCriterias.getSubCriteria(targetSubName);
-				if(sourceSubCriteria==null){
-					//no sub criteria by same name in source, fail
-					return null;
-				}
-				else if(targetSubCriteria==HAPDataTypeCriteriaAny.getCriteria()){
-					matchers = this.buildMatchers(sourceSubCriteria, targetSubCriteria);
-					if(matchers!=null){
-						out.addSubMatchers(targetSubName, matchers);
+
+			if(targetSubCriterias!=null){
+				Set<String> targetSubNames = targetSubCriterias.getSubCriteriaNames();
+				for(String targetSubName : targetSubNames){
+					HAPMatchers matchers = null;
+					HAPDataTypeCriteria targetSubCriteria = targetSubCriterias.getSubCriteria(targetSubName);
+					HAPDataTypeCriteria sourceSubCriteria = sourceSubCriterias.getSubCriteria(targetSubName);
+					if(sourceSubCriteria==null){
+						//no sub criteria by same name in source, fail
+						return null;
 					}
-				}
-				else if(sourceSubCriteria==HAPDataTypeCriteriaAny.getCriteria()){
-					return null;
-				}
-				else{
-					matchers = this.buildMatchers(sourceSubCriteria, targetSubCriteria);
-					if(matchers!=null){
-						out.addSubMatchers(targetSubName, matchers);
+					else if(targetSubCriteria==HAPDataTypeCriteriaAny.getCriteria()){
+						matchers = this.buildMatchers(sourceSubCriteria, targetSubCriteria);
+						if(matchers!=null){
+							out.addSubMatchers(targetSubName, matchers);
+						}
 					}
+					else if(sourceSubCriteria==HAPDataTypeCriteriaAny.getCriteria()){
+						return null;
+					}
+					else{
+						matchers = this.buildMatchers(sourceSubCriteria, targetSubCriteria);
+						if(matchers!=null){
+							out.addSubMatchers(targetSubName, matchers);
+						}
+					}
+					if(matchers==null)  return null;
 				}
-				if(matchers==null)  return null;
 			}
 		}
 		return out;
@@ -396,7 +398,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 	@Override
 	public HAPDataTypeCriteriaId getDataTypeIdCriteriaByData(HAPData data) {
-		throw new NullPointerException();
+		return new HAPDataTypeCriteriaId(data.getDataTypeId(), null);
 	}
 
 

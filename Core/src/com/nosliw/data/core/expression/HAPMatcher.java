@@ -38,6 +38,7 @@ public class HAPMatcher extends HAPSerializableImp{
 	private Map<String, HAPMatchers> m_subMatchers = new LinkedHashMap<String, HAPMatchers>();
 	
 	public HAPMatcher(HAPDataTypeId dataTypeId, HAPRelationship relationship){
+		this.m_dataTypeId = dataTypeId;
 		this.m_relationship = relationship;
 	}
 	

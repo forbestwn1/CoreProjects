@@ -117,6 +117,10 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 			System.out.println("******* Error");
 			expression.addErrorMessages(context.getMessages());
 		}
+		else{
+			System.out.println(expression);
+			System.out.println("******* End");
+		}
 		return expression;
 	}
 

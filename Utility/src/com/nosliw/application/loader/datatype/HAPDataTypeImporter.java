@@ -171,7 +171,7 @@ public class HAPDataTypeImporter {
 				
 				//set default criteria as current data type
 				if(parmInfo.getCriteria()==null){
-					parmInfo.setCriteria(new HAPDataTypeCriteriaId(dataType.getName()));
+					parmInfo.setCriteria(new HAPDataTypeCriteriaId(dataType.getName(), null));
 				}
 			}
 			

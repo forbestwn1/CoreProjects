@@ -59,6 +59,7 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 		new HAPClassFilter(){
 			@Override
 			protected void process(Class checkClass, Object data) {
+				
 				Field[] fields = null;
 				
 				try{
