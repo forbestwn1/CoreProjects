@@ -30,7 +30,11 @@ var node_CONSTANT=
 
 	  //wrapper type
 	  "WRAPPER_TYPE_OBJECT" : "object",
+	  "WRAPPER_TYPE_DATA" : "data",
 	  "WRAPPER_TYPE_ENTITY" : "entity",
+
+	  "DATA_TYPE_OBJECT" : "object",
+	  "DATA_TYPE_DATA" : "data",
 	  
 	  
 	  //wrapper variable events

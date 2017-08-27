@@ -3,7 +3,8 @@ var packageObj = library.getChildPackage("wrapper");
 
 (function(packageObj){
 //get used node
-	
+var node_CONSTANT;
+var node_getObjectType;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_wrapperFactory = function(){
@@ -15,10 +16,13 @@ var node_wrapperFactory = function(){
 		/*
 		 * Register wrapper factory by data type,
 		 * Different type of data have different wrapper implementation
+		 * One wrapper type may support different data type
 		 * For instance: object, data
 		 */	
-		registerWrapperFactoryByDataType : function(dataType, factoryFun){
-			loc_factoryFuns[dataType] = factoryFun;
+		registerWrapperFactoryByDataType : function(dataTypeIds, factoryFun){
+			_.each(dataTypeIds, function(dataTypeId, index){
+				loc_factoryFuns[dataTypeId] = factoryFun;
+			});
 		},
 		
 		/*
@@ -30,19 +34,18 @@ var node_wrapperFactory = function(){
 			
 			var dataType = undefined;
 			
-			var entityType = nosliwTypedObjectUtility.getObjectType(data);
-			if(entityType==NOSLIWCONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
-				//
+			var entityType = node_getObjectType(data);
+			if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
 				dataType = data.getDataType();
 			}
-			else{
-				if(dataType==NOSLIWCONSTANT.TYPEDOBJECT_TYPE_VALUE){
-					dataType = NOSLIWCONSTANT.WRAPPER_TYPE_OBJECT;
-				}
+			else if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_DATA){
+				dataType = data.dataTypeInfo;
+			}
+			else if(dataType==node_CONSTANT.TYPEDOBJECT_TYPE_VALUE){
+				dataType = node_CONSTANT.DATA_TYPE_OBJECT;
 			}
 			
-			var wrapper = undefined;
-			wrapper = loc_factoryFuns[dataType].call();
+			var wrapper = loc_factoryFuns[dataType].call();
 			
 			var out = _.extend(nosliwCreateWraperCommon(data, path, request), wrapper);
 			
@@ -64,6 +67,8 @@ var node_wrapperFactory = function(){
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 
 //Register Node by Name

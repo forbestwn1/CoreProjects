@@ -1,7 +1,11 @@
-/**
- * 
- */
-nosliwObjectUtility = function(){
+//get/create package
+var packageObj = library.getChildPackage("wrapper.object");    
+
+(function(packageObj){
+//get used node
+	
+//*******************************************   Start Node Definition  ************************************** 	
+node_utility = function(){
 	
 	return {
 		//object data type
@@ -78,3 +82,12 @@ nosliwObjectUtility = function(){
 		},
 	};	
 }();
+
+//*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+
+//Register Node by Name
+packageObj.createChildNode("utility", node_utility); 
+
+})(packageObj);

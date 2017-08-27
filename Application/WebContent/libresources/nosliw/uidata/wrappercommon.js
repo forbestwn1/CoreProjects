@@ -27,8 +27,8 @@ var node_createWraperCommon = function(data, path, request){
 	 * also trigue event to inform that data need to be updated
 	 */
 	var loc_invalidateData = function(requestInfo){
-		loc_out.pri_validData = false;
-		loc_out.pri_object = undefined;
+		loc_out.pri_validValue = false;
+		loc_out.pri_value = undefined;
 	};
 	
 	var loc_resourceLifecycleObj = {};
@@ -46,9 +46,9 @@ var node_createWraperCommon = function(data, path, request){
 		//event and listener for data operation event
 		loc_out.pri_dataOperationEventObject = node_createEventObject();
 
-		//calculated: the data this wrapper represented
-		loc_out.pri_validData = false;
-		loc_out.pri_object = undefined;
+		//calculated: the value this wrapper represented
+		loc_out.pri_validValue = false;
+		loc_out.pri_value = undefined;
 		
 		//whether data based or wrapper based
 		if(node_getObjectType(obj)==node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
@@ -136,7 +136,7 @@ var node_createWraperCommon = function(data, path, request){
 			pri_getParent : function(){  return this.pri_parent; },
 			pri_getRootData : function(){  return this.pri_rootData; },
 			pri_isDataBased : function(){  return this.pri_dataBased; },
-			pri_setObject : function(object){ this.pri_object = object;},
+			pri_setValue : function(value){ this.pri_value = value;},
 			pri_triggerForwardEvent : function(event, path, opValue, requestInfo){
 				var eData = {
 						event : event, 
@@ -148,30 +148,25 @@ var node_createWraperCommon = function(data, path, request){
 			
 			pri_trigueDataOperationEvent : function(event, path, operationValue, requestInfo){this.pri_dataOperationEventObject.triggerEvent(event, path, operationValue, requestInfo);},
 
-			ovr_calObject : function(){},
+			ovr_calValue : function(){},
 			
 			isDataBased : function(){  return this.pri_dataBased; },
 			
 			getPath : function(){ return this.pri_path;  },
 			
 			getData : function(){
-				if(this.pri_isDataBased()==true){
-					return this.pri_rootData;
-				}
-				else{
-					var object = this.getObject();
-					return node_dataUtility.createDataByObject(object);
-				}
+				var value = this.getValue();
+				return node_dataUtility.createDataByValue(object, value);
 			},
 			
-			getObject : function(){
-				if(this.pri_validData==false){
-					this.ovr_calObject();
+			getValue : function(){
+				if(this.pri_validValue==false){
+					this.ovr_calValue();
 				}
-				return this.pri_object;
+				return this.pri_value;
 			},
 			
-			getDataType : function(){ return this.getData().dataTypeInfo; },
+			getDataType : function(){ return this.getRootData().dataTypeInfo; },
 
 			getFullPath : function(){
 				if(loc_out.pri_dataBased==true)   return loc_out.pri_path;
@@ -184,7 +179,7 @@ var node_createWraperCommon = function(data, path, request){
 			},
 			
 			getRootData : function(){
-				return this.getRootWrapper().getData();
+				return this.getRootWrapper().pri_getRootData();
 			},
 
 			/*
