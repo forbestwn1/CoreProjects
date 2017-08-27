@@ -71,10 +71,10 @@ public class HAPRuntimeRhinoMain {
 		HAPExpressionManagerImp expressionMan = (HAPExpressionManagerImp)runtimeEnvironment.getExpressionManager();
 		expressionMan.importExpressionFromFolder(HAPFileUtility.getClassFolderName(HAPExpressionTest.class));
 		
-		executeSuite("expression6", runtimeEnvironment);
+//		executeSuite("expression6", runtimeEnvironment);
 		
 		for(String suiteName : expressionMan.getExpressionDefinitionSuites()){
-//			executeSuite(suiteName, expressionMan, dataTypeMan, resourceMan);
+			executeSuite(suiteName, runtimeEnvironment);
 		}
 		
 		

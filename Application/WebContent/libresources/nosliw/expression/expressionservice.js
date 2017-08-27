@@ -214,6 +214,54 @@ var node_createExpressionService = function(){
 		}
 	};
 
+	//convert data according to sub matchers
+	var loc_getSubMatchDataTaskRequest = function(data, submatchers, handlers, requester_parent){
+
+		//get all subNames involved in match
+		var subNames = [];
+		_.each(submatchers, function(submatcher, name){subNames.push(name)});
+
+		var subDatas = {};
+		
+		//get all sub data
+		var getSubDatasRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("GetSubDatas", {"data":data, "subNames":subNames}), {
+			success : function(requestInfo, subDatasResult){
+				subDatas = subDatasResult.getResults();
+			}
+		});
+		
+		_.each(subNames, function(name){
+			getSubDatasRequest.addRequest(name, loc_out.getExecuteOperationRequest(dataTypeId, operation, parmsArray, handlers, requester_parent));
+		});
+
+		//convert all sub data
+		var getSubDatasRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatchSubDatas", {"data":subDatas, "subNames":subNames}), {
+			success : function(requestInfo, subDatasResult){
+				subDatas = subDatasResult.getResults();
+			}
+		});
+		
+		_.each(subNames, function(name){
+			setSubDatasRequest.addRequest(name, loc_getMatchDataTaskRequest(subDatas[name], submatchers[name], handlers, requester_parent));
+		});
+		
+		//set all sub data
+		var setSubDatasRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("SetSubDatas", {"subDatas":subDatas, "subNames":subNames}), {
+			success : function(requestInfo, subValuesResult){
+			}
+		});
+			
+		_.each(subNames, function(name){
+			setSubDatasRequest.addRequest(name, loc_out.getExecuteOperationRequest(dataTypeId, operation, parmsArray, handlers, requester_parent));
+		});
+			
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SubMatchers", {"data":data, "submatchers":submatchers}, handlers, requestInfo);
+		out.addRequest(getSubDatasRequest);
+		out.addRequest(convertSubDatasRequest);
+		out.addRequest(setSubDatasRequest);
+		return out;
+	};
+	
 	//execute conterter
 	var loc_getExecuteConverterToRequest = function(data, targetDataTypeId, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);

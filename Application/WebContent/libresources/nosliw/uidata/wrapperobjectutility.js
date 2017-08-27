@@ -3,14 +3,13 @@ var packageObj = library.getChildPackage("wrapper.object");
 
 (function(packageObj){
 //get used node
+var node_CONSTANT;
+var node_basicUtility;
+var node_parseSegment;
 	
 //*******************************************   Start Node Definition  ************************************** 	
-node_utility = function(){
+var node_utility = {
 	
-	return {
-		//object data type
-		dataTypeInfo : 	new NosliwDataTypeInfo(NOSLIWCOMMONCONSTANT.CONS_DATATYPE_CATEGARY_OBJECT),
-
 		/*
 		 * get attribute value according to the path
 		 */
@@ -47,7 +46,7 @@ node_utility = function(){
 			var baseObj = obj;
 			var attribute = prop;
 			
-			if(nosliwCommonUtility.isStringEmpty(prop)){
+			if(node_basicUtility.isStringEmpty(prop)){
 				baseObj = obj;
 			}
 			else if(prop.indexOf('.')==-1){
@@ -55,7 +54,7 @@ node_utility = function(){
 				attribute = prop;
 			}
 			else{
-				var segs = nosliwCreateSegmentParser(prop);
+				var segs = node_parseSegment(prop);
 				var size = segs.getSegmentSize();
 				for(var i=0; i<size-1; i++){
 					var attr = segs.next();
@@ -69,23 +68,25 @@ node_utility = function(){
 				attribute = segs.next();
 			}
 			
-			if(command==NOSLIWCONSTANT.WRAPPER_OPERATION_SET){
+			if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
 				baseObj[attribute] = data;
 			}
-			else if(command==NOSLIWCONSTANT.WRAPPER_OPERATION_ADDELEMENT){
+			else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
 				if(baseObj[attribute]==undefined)  baseObj[attribute] = {};
 				baseObj[attribute][data.index]=data.data;
 			}
-			else if(command==NOSLIWCONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
+			else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
 				delete baseObj[attribute][data];
 			}			
 		},
-	};	
-}();
+};
 
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.segmentparser.parseSegment", function(){node_parseSegment = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 
