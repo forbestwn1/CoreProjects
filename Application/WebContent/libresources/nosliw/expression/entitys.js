@@ -8,6 +8,11 @@ var packageObj = library.getChildPackage("entity");
 	var node_expressionUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_Data = function(dataTypeId, value){
+	this.dataTypeId = dataTypeId;
+	this.value = value;
+};	
+	
 var node_OperationParm = function(value, name, isBase){
 	this.value = value;
 	this.name = name;
@@ -73,6 +78,7 @@ nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expression
 
 
 //Register Node by Name
+packageObj.createChildNode("Data", node_Data); 
 packageObj.createChildNode("OperationParm", node_OperationParm); 
 packageObj.createChildNode("OperationParms", node_OperationParms); 
 packageObj.createChildNode("OperationContext", node_OperationContext); 

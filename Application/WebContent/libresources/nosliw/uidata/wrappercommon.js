@@ -64,7 +64,7 @@ var node_createWraperCommon = function(data, path, request){
 		
 		if(loc_out.pri_dataBased==false){
 			//if parent based, then listen to parent's event
-			loc_out.pri_parent.registerDataOperationEvent(function(event, path, opValue, requestInfo){
+			loc_out.pri_parent.registerDataOperationEvent(this.pri_dataOperationEventObject, function(event, path, opValue, requestInfo){
 				
 				if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD){
 					//for forward event, expand it

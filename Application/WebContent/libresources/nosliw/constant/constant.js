@@ -125,6 +125,7 @@ var node_CONSTANT=
 	  "CONTEXT_TYPE_SERVICE" : "service",					//service
 	  
 	  //type for different object
+	  "TYPEDOBJECT_TYPE_EVENTOBJECT" : 			100, 
 	  "TYPEDOBJECT_TYPE_VALUE" : 				0, 
 	  "TYPEDOBJECT_TYPE_DATA" : 				1, 
 	  "TYPEDOBJECT_TYPE_WRAPPER" :				2, 

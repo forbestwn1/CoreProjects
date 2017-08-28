@@ -6,6 +6,8 @@ var packageObj = library.getChildPackage("event");
 	var node_CONSTANT;
 	var node_buildInterface;
 	var node_getInterface;
+	var node_makeObjectWithType;
+	var node_getObjectType;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var INTERFACENAME = "EVENT";
@@ -30,10 +32,9 @@ var packageObj = library.getChildPackage("event");
 
 				/*
 				 * register listener to source
+				 * 		listener : event object
 				 */
 				registerListener : function(eventName, listener, handler, thisContext){
-					var listenerEventObj = node_getEventInterface(listener);
-					var sourceEventObj = loc_backboneEventObj;
 					var that = thisContext;
 					if(that==undefined)  that = this.getBaseObject();
 					if(eventName===undefined)  eventName = node_CONSTANT.EVENT_EVENTNAME_ALL; 
@@ -44,7 +45,7 @@ var packageObj = library.getChildPackage("event");
 					var isAllEvent = false;
 					if(node_CONSTANT.EVENT_EVENTNAME_ALL===eventName)  isAllEvent = true;
 					
-					listenerEventObj.pri_getBackboneEventObj().listenTo(sourceEventObj, eventName, function(event, data){
+					listener.pri_getBackboneEventObj().listenTo(loc_backboneEventObj, eventName, function(event, data){
 						//within this method, "this" refer to listenerEventObj
 						//we need to set "this" as source
 						var parms;
@@ -65,8 +66,7 @@ var packageObj = library.getChildPackage("event");
 				 * stop listener from listenering any events
 				 */
 				unregister : function(listener){
-					var listenerEventObj = node_getEventInterface(listener).pri_getBackboneEventObj();
-					listenerEventObj.stopListening(loc_backboneEventObj);
+					listener.pri_getBackboneEventObj().stopListening(loc_backboneEventObj);
 				},
 				
 				unregisterAllListeners : function(listeners){
@@ -86,6 +86,7 @@ var packageObj = library.getChildPackage("event");
 				}
 		};
 		
+		out = node_makeObjectWithType(out, node_CONSTANT.TYPEDOBJECT_TYPE_EVENTOBJECT);
 		return out;
 	};
 	
@@ -118,24 +119,48 @@ var packageObj = library.getChildPackage("event");
 var node_utility = 
 	{
 		/*
+		 * get event object from value
+		 * if value is event object, then return value
+		 * if value contains event object interface, then get interface object and return it
+		 * if value not contains event object interface, then build event object interface, and return it 
+		 */
+		getEventObject : function(value){
+			var out;
+			if(node_getObjectType(value)==node_CONSTANT.TYPEDOBJECT_TYPE_EVENTOBJECT){
+				out = value;
+			}
+			else{
+				out = node_getEventInterface(value);
+			}
+			return out;
+		},
+	
+		/*
 		 * trigger event on source
 		 */
 		triggerEvent : function(source, eventName, data){
-			node_getEventInterface(source).triggerEvent(eventName, data);
+			var parms = [];
+			for(var i=1; i<arguments.length; i++){
+				parms.push(arguments[i]);
+			}
+			var eventObject = this.getEventObject(source);
+			eventObject.triggerEvent.apply(eventObject, parms);
 		},
 
 		/*
 		 * register listener to source
 		 */
 		registerListener : function(listener, source, eventName, handler, thisContext){
-			node_getEventInterface(source).registerListener(eventName, listener, handler, thisContext);
+			var listenerEventObject = this.getEventObject(listener);
+			var sourceEventObject = this.getEventObject(source);
+			sourceEventObject.registerListener(eventName, listenerEventObject, handler, thisContext);
 		},
 		
 		/*
 		 * stop listener from listenering any events
 		 */
 		unregister : function(source, listener){
-			node_getEventInterface(source).unregister(listener);
+			this.getEventObject(source).unregister(this.getEventObject(listener));
 		},
 		
 		unregisterAllListeners : function(source, listeners){
@@ -153,6 +178,8 @@ var node_utility =
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createEventObject", node_createEventObject); 

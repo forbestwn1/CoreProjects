@@ -19,6 +19,7 @@ var packageObj = library.getChildPackage("service");
 	var node_OperationParms;
 	var node_DependentServiceRequestInfo;
 	var node_expressionUtility;
+	var node_dataUtility;
 	var node_namingConvensionUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -173,13 +174,26 @@ var node_createExpressionService = function(){
 		}
 		else{
 			var relationship = matcher[node_COMMONATRIBUTECONSTANT.MATCHER_RELATIONSHIP];
+			var subMatchers = matcher[node_COMMONATRIBUTECONSTANT.MATCHER_SUBMATCHERS];
 			var sourceDataTypeId = relationship[node_COMMONATRIBUTECONSTANT.DATATYPERELATIONSHIP_SOURCE];
 			var targetDataTypeId = relationship[node_COMMONATRIBUTECONSTANT.DATATYPERELATIONSHIP_TARGET];
+			
 			if(sourceDataTypeId==targetDataTypeId){
-				//no need to convert
-				out = node_createServiceRequestInfoSimple(service, function(requestInfo){
-					return requestInfo.getService().parms.data;
-				}, handlers, requestInfo);
+				if(node_basicUtility.isEmptyObject(subMatchers)==true){
+					//no need to convert
+					out = node_createServiceRequestInfoSimple(service, function(requestInfo){
+						return requestInfo.getService().parms.data;
+					}, handlers, requestInfo);
+				}
+				else{
+					out = node_createServiceRequestInfoService(service, handlers, requestInfo);
+					var resourceRequestDependency = new node_DependentServiceRequestInfo(loc_getSubMatchDataTaskRequest(data, subMatchers), {
+						success : function(requestInfo, convertedSubData){
+							return convertedSubData;
+						}
+					});
+					out.setDependentService(resourceRequestDependency);
+				}
 			}
 			else{
 				out = node_createServiceRequestInfoSequence(service, handlers, requestInfo);
@@ -204,6 +218,15 @@ var node_createExpressionService = function(){
 					out.addRequest(converterRequest);
 				}
 
+				//convert sub data
+				if(node_basicUtility.isEmptyObject(subMatchers)==true){
+					out.addRequest(loc_getSubMatchDataTaskRequest(converterData, subMatchers, {
+						success : function(requestInfo, convertedData){
+							converterData = convertedData;
+						}
+					}));
+				}
+				
 				out.setRequestProcessors({
 					success : function(reqInfo, result){
 						return converterData;
@@ -216,6 +239,7 @@ var node_createExpressionService = function(){
 
 	//convert data according to sub matchers
 	var loc_getSubMatchDataTaskRequest = function(data, submatchers, handlers, requester_parent){
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
 
 		//get all subNames involved in match
 		var subNames = [];
@@ -231,18 +255,20 @@ var node_createExpressionService = function(){
 		});
 		
 		_.each(subNames, function(name){
-			getSubDatasRequest.addRequest(name, loc_out.getExecuteOperationRequest(dataTypeId, operation, parmsArray, handlers, requester_parent));
+			//get each sub data request
+			getSubDatasRequest.addRequest(name, loc_out.getExecuteOperationRequest(data[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID], "getSubData", [{"name":node_dataUtility.createStringData("name")}], {}));
 		});
 
 		//convert all sub data
-		var getSubDatasRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatchSubDatas", {"data":subDatas, "subNames":subNames}), {
+		var convertSubDatasRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatchSubDatas", {"data":subDatas, "subNames":subNames}), {
 			success : function(requestInfo, subDatasResult){
 				subDatas = subDatasResult.getResults();
 			}
 		});
 		
+		//convert each sub data
 		_.each(subNames, function(name){
-			setSubDatasRequest.addRequest(name, loc_getMatchDataTaskRequest(subDatas[name], submatchers[name], handlers, requester_parent));
+			convertSubDatasRequest.addRequest(name, loc_getMatchDataTaskRequest(subDatas[name], submatchers[name], {}));
 		});
 		
 		//set all sub data
@@ -252,10 +278,10 @@ var node_createExpressionService = function(){
 		});
 			
 		_.each(subNames, function(name){
-			setSubDatasRequest.addRequest(name, loc_out.getExecuteOperationRequest(dataTypeId, operation, parmsArray, handlers, requester_parent));
+			setSubDatasRequest.addRequest(name, loc_out.getExecuteOperationRequest(data[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID], "setSubData", [{"name":node_dataUtility.createStringData("name")}, {"data":subDatas[name]}], {}));
 		});
 			
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SubMatchers", {"data":data, "submatchers":submatchers}, handlers, requestInfo);
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SubMatchers", {"data":data, "submatchers":submatchers}), handlers, requestInfo);
 		out.addRequest(getSubDatasRequest);
 		out.addRequest(convertSubDatasRequest);
 		out.addRequest(setSubDatasRequest);
@@ -347,6 +373,7 @@ nosliw.registerSetNodeDataEvent("expression.entity.OperationParm", function(){no
 nosliw.registerSetNodeDataEvent("expression.entity.OperationParms", function(){node_OperationParms = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("expression.dataUtility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 
 //Register Node by Name

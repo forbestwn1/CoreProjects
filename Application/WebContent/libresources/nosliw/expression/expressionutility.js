@@ -57,6 +57,10 @@ var node_utility =
 			//data is "this" in operation function
 			var result = dataOperationFun.call(data, data, targetDataTypeId, operationContext);
 			return result;
+		},
+		
+		getExecuteGetSubDataRequest : function(data, name, handler, requester_parent){
+			getSubDatasRequest.addRequest(name, loc_out.getExecuteOperationRequest(data[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID], "getSubData", parmsArray, {}));
 		}
 
 };
