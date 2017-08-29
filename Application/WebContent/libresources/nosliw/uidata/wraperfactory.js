@@ -5,6 +5,8 @@ var packageObj = library.getChildPackage("wrapper");
 //get used node
 var node_CONSTANT;
 var node_getObjectType;
+var node_createWraperCommon;
+var node_getObjectId;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_wrapperFactory = function(){
@@ -44,16 +46,19 @@ var node_wrapperFactory = function(){
 			else if(dataType==node_CONSTANT.TYPEDOBJECT_TYPE_VALUE){
 				dataType = node_CONSTANT.DATA_TYPE_OBJECT;
 			}
+			else{
+				dataType = node_CONSTANT.DATA_TYPE_OBJECT;
+			}
 			
 			var wrapper = loc_factoryFuns[dataType].call();
 			
-			var out = _.extend(nosliwCreateWraperCommon(data, path, request), wrapper);
+			var out = _.extend(node_createWraperCommon(data, path, request), wrapper);
 			
 			if(out.pri_isDataBased()){
-				nosliwLogging.debug("create wrapper", out.getObjectId(), "dataBased", out.pri_getPath(), out.pri_getRootData());
+				nosliw.logging.debug("create wrapper", node_getObjectId(out), "dataBased", JSON.stringify(out.pri_getPath()), JSON.stringify(out.pri_getRootData()));
 			}
 			else{
-				nosliwLogging.debug("create wrapper", out.getObjectId(), "parentBased", out.pri_getPath(), out.pri_getParent().getObjectId());
+				nosliw.logging.debug("create wrapper", node_getObjectId(out), "parentBased", out.pri_getPath(), node_getObjectId(out.pri_getParent()));
 			}
 			
 			return out;
@@ -69,6 +74,8 @@ var node_wrapperFactory = function(){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.wrapper.createWraperCommon", function(){node_createWraperCommon = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithid.getObjectId", function(){node_getObjectId = this.getData();});
 
 
 //Register Node by Name

@@ -3,6 +3,7 @@
 	<name>DataTypeManager</name>
 	<comment></comment>
 	<projects>
+		<project>CriteriaParser</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

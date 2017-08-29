@@ -23,5 +23,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CriteriaParser"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

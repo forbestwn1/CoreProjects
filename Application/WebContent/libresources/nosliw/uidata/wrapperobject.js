@@ -135,7 +135,7 @@ nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtili
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.wrapper.object.utility", function(){node_objectWrapperUtility = this.getData();});
 
-nosliw.registerSetNodeDataEvent("uidata.wrapper.object.wrapperFactory", function(){
+nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
 	//register wrapper faction
 	this.getData().registerWrapperFactoryByDataType([node_CONSTANT.DATA_TYPE_OBJECT], node_createWraperObject);
 });

@@ -11,10 +11,11 @@ var libResources = [
 	"nosliw.request",
 	"nosliw.id",
 	"nosliw.resource",
+	"nosliw.uidata",
 	"nosliw.remoteservice",
 	"nosliw.error",
 	"nosliw.runtime",
-	"nosliw.runtimebrowser"
+	"nosliw.runtimebrowser",
 ];
 
 

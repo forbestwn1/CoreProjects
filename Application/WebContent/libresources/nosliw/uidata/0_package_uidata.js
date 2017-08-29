@@ -36,4 +36,8 @@ var library = nosliw.getPackage("uidata");
  * 				AFTERUPDATE
  * 				UPDATE
  * 
+ * contextVariable: 
+ * 			not a real variable
+ * 			name + path to describe the variable
+ * 
  */

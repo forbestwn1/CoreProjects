@@ -6,11 +6,11 @@
 	
 		<operation name="process" >
 			<parms>
-				<parm criteria="test.array" isBase="true"/>
+				<parm name="base" criteria="test.array" isBase="true"/>
 				<parm name="varmap" criteria="test.map"/>
 				<parm name="expression" criteria="test.expression"/>
 			</parms>
-			<output criteria="test.array[test.expression.output(expression, base.element)]"/>
+			<output criteria="test.array%||element:@||!(test.expression)!.outputCriteria(&amp;(expression)&amp;;;&amp;(parms)&amp;)||@||%"/>
 		</operation>
 
 	</operations>

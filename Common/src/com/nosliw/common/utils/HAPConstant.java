@@ -91,6 +91,8 @@ public class HAPConstant {
 		public static final String DATATYPECRITERIA_TYPE_DATATYPERANGE = "dataTypeRange";
 		public static final String DATATYPECRITERIA_TYPE_AND = "and";
 		public static final String DATATYPECRITERIA_TYPE_OR = "or";
+		public static final String DATATYPECRITERIA_TYPE_EXPRESSION = "expression";
+		public static final String DATATYPECRITERIA_TYPE_REFERENCE = "reference";
 		public static final String DATATYPECRITERIA_TYPE_LITERATE = "literate";
 
 

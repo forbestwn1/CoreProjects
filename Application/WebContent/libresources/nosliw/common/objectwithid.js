@@ -13,14 +13,14 @@ var packageObj = library.getChildPackage("objectwithid");
 	 * build an object have id info
 	 */
 	var node_makeObjectWithId = function(obj, id){
-		return buildInterfaceNode.getData()(obj, INTERFACENAME, id);
+		return node_buildInterface(obj, INTERFACENAME, id);
 	};
 
 	/*
 	 * get object's id info
 	 */
 	var node_getObjectId = function(object){
-		return getInterfaceNode.getData()(object, INTERFACENAME);
+		return node_getInterface(object, INTERFACENAME);
 	};
 		
 

@@ -8,6 +8,7 @@
 		<project>Common</project>
 		<project>Core</project>
 		<project>DataTypeTest</project>
+		<project>CriteriaParser</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -1,4 +1,4 @@
-package com.nosliw.application.runtimerhino;
+package com.nosliw.test.runtimerhino;
 
 import java.util.Map;
 

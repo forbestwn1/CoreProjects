@@ -64,7 +64,7 @@ var node_createWraperCommon = function(data, path, request){
 		
 		if(loc_out.pri_dataBased==false){
 			//if parent based, then listen to parent's event
-			loc_out.pri_parent.registerDataOperationEvent(this.pri_dataOperationEventObject, function(event, path, opValue, requestInfo){
+			loc_out.pri_parent.registerDataOperationListener(this.pri_dataOperationEventObject, function(event, path, opValue, requestInfo){
 				
 				if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD){
 					//for forward event, expand it
@@ -204,7 +204,7 @@ var node_createWraperCommon = function(data, path, request){
 	//append resource life cycle method to out obj
 	loc_out = node_makeObjectWithLifecycle(loc_out, loc_resourceLifecycleObj, loc_out);
 	
-	loc_out = node_makeObjectWithType.makeTypedObject(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER);
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER);
 	
 	loc_out = node_makeObjectWithId(loc_out, nosliw.generateId());
 	

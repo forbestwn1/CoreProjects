@@ -85,6 +85,7 @@ public class HAPDataTypeCriteriaRange extends HAPDataTypeCriteriaImp{
 		if(this.m_subCriteriaGroup!=null){
 			out.append(HAPSerializeManager.getInstance().toStringValue(m_subCriteriaGroup, HAPSerializationFormat.LITERATE));
 		}
+		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.END_RANGE));
 		return out.toString(); 
 	}
 	

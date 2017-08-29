@@ -1,14 +1,11 @@
-package com.nosliw.data.core.criteria;
+package com.nosliw.test.criteria;
 
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.data.imp.criteria.parser.generated.HAPCriteriaParserGenerated;
+import com.nosliw.data.core.criteria.HAPCriteriaParser;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.imp.criteria.parser.generated.ParseException;
-import com.nosliw.data.imp.criteria.parser.generated.SimpleNode;
 
 public class HAPCriteriaParserTest {
 
@@ -23,15 +20,21 @@ public class HAPCriteriaParserTest {
 				"^||abc.abc;1.0.0%||a:cde;1.2.3,b:dfe;1.0.0||%,abc.abc;1.0.0%||a:cde;1.2.3,b:dfe;1.0.0||%||^",
 				"*",
 				"~||abcdrfg||~",
-				"@||(abcdrfg||@"
+				"@||(abcdrfg||@",
+				"test.array;1.0.0%||element:@||!(test.expression)!.outputCriteria(&(expression)&;;&(parms)&)||@||%"
 		};
 
 		for(String criteriaStr : criteriasStr){
 			HAPDataTypeCriteria criteria = HAPCriteriaParser.getInstance().parseCriteria(criteriaStr);
 			String criteriaLiterate = HAPSerializeManager.getInstance().toStringValue(criteria, HAPSerializationFormat.LITERATE);
-			System.out.println(criteriaLiterate);
-			if(!criteriaLiterate.equals(criteriaStr)){
-				throw new IllegalStateException();
+			if(criteriaLiterate.equals(criteriaStr)){
+				System.out.println(criteriaLiterate);
+			}
+			else{
+				System.out.println();
+				System.out.println("Expected :" + criteriaStr);
+				System.out.println("But got  :" + criteriaLiterate);
+				System.out.println();
 			}
 		}
 		

@@ -2,6 +2,7 @@ package com.nosliw.data.core.criteria;
 
 import java.util.Set;
 
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 
@@ -15,14 +16,11 @@ public class HAPDataTypeCriteriaExpression extends HAPDataTypeCriteriaImp{
 	private String m_expression;
 	
 	public HAPDataTypeCriteriaExpression(String expression){
-		this.m_expression = expression;
+		this.m_expression = expression.replaceAll(";;", ",");
 	}
 	
 	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public String getType() {		return HAPConstant.DATATYPECRITERIA_TYPE_EXPRESSION;	}
 
 	@Override
 	public boolean validate(HAPDataTypeCriteria criteria, HAPDataTypeHelper dataTypeHelper) {

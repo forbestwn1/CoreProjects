@@ -2,6 +2,7 @@ package com.nosliw.data.core.criteria;
 
 import java.util.Set;
 
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 
@@ -17,10 +18,7 @@ public class HAPDataTypeCriteriaReference extends HAPDataTypeCriteriaImp{
 	}
 	
 	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public String getType() {		return HAPConstant.DATATYPECRITERIA_TYPE_REFERENCE;	}
 
 	@Override
 	public boolean validate(HAPDataTypeCriteria criteria, HAPDataTypeHelper dataTypeHelper) {

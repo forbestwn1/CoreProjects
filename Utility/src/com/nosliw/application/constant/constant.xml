@@ -238,6 +238,8 @@
 			<definition name="DATATYPECRITERIA_TYPE_DATATYPERANGE" value="dataTypeRange"/>
 			<definition name="DATATYPECRITERIA_TYPE_AND" value="and"/>
 			<definition name="DATATYPECRITERIA_TYPE_OR" value="or"/>
+			<definition name="DATATYPECRITERIA_TYPE_EXPRESSION" value="expression"/>
+			<definition name="DATATYPECRITERIA_TYPE_REFERENCE" value="reference"/>
 			<definition name="DATATYPECRITERIA_TYPE_LITERATE" value="literate"/>
 			<definition type="space"/>
 			<definition name="EXPRESSION_OPERAND_CONSTANT" value="constant"/>
