@@ -204,7 +204,7 @@ var node_createWraperCommon = function(data, path, request){
 	//append resource life cycle method to out obj
 	loc_out = node_makeObjectWithLifecycle(loc_out, loc_resourceLifecycleObj, loc_out);
 	
-	loc_out = node_makeObjectWithType.makeTypedObject(loc_out, NOSLIWCONSTANT.TYPEDOBJECT_TYPE_WRAPPER);
+	loc_out = node_makeObjectWithType.makeTypedObject(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER);
 	
 	loc_out = node_makeObjectWithId(loc_out, nosliw.generateId());
 	

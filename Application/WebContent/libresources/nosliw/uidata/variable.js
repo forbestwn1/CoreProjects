@@ -13,10 +13,7 @@ var node_eventUtility;
 var node_requestUtility;
 var node_wrapperFactory;
 var node_basicUtility;
-
-
 var node_createEventObject;
-var node_dataUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 /**
@@ -217,11 +214,7 @@ nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUti
 nosliw.registerSetNodeDataEvent("common.request.utility", function(){node_requestUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
-
-
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
-
 
 //Register Node by Name
 packageObj.createChildNode("createWrapperVariable", node_createWrapperVariable); 
