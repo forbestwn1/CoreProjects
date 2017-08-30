@@ -81,7 +81,13 @@ var node_createWraperObject = function(){
 				if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
 					var opValue = loc_getOperationObject(serviceData.data);
 					//change value
-					node_objectWrapperUtility.operateObject(rootValue, opPath, node_CONSTANT.WRAPPER_OPERATION_SET, opValue);
+					if(_.isObject(rootValue)){
+						node_objectWrapperUtility.operateObject(rootValue, opPath, node_CONSTANT.WRAPPER_OPERATION_SET, opValue);
+					}
+					else{
+						this.getRootData().value = opValue;
+						this.getRootWrapper().pri_invalidateData(request);
+					}
 					//trigue event
 					this.pri_triggerOperationEvent(node_CONSTANT.WRAPPER_EVENT_SET, path, opValue, request);
 				}

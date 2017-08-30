@@ -2,21 +2,55 @@
 	"name": "expression7",
 	"expressionDefinitions": {
 		"main": {
-			"expression": "?(baseListVar)?.process(expression:&(expression)&,varmap:&(varmap)&)",
+			"expression": "?(baseListVar)?.process(expression:&(expression)&,element:&(element)&)",
 			"description": "complex data type",
 			"constants": {
+				"element": {
+					"dataTypeId": "test.string",
+					"value": "eleName"
+				},
 				"expression": {
 					"dataTypeId": "test.expression",
-					"value": "?(baseVarUrl)?.subString(from:?(fromVar)?,to:&(to)&)"
+					"value": {
+						"expression": "!(test.string)!.subString(?(eleName)?,from:&(from)&,to:&(to)&)",
+						"description": "DataType.method, all constant",
+						"constants": {
+							"from": {
+								"dataTypeId": "test.integer",
+								"value": "3"
+							},
+							"to": {
+								"dataTypeId": "test.integer",
+								"value": "7"
+							}
+						},
+						"variableCriterias": {
+						}
+					}
 				},
-				"varmap" : {
-					"baseListVar.element" : "baseVarUrl" 
+			},
+			"variableCriterias": {
+				"baseListVar": "test.list%||element:test.string||%",
+			}
+		},
+		"processElement": {
+			"expression": "!(test.string)!.subString(?(baseVar)?,from:&(from)&,to:&(to)&)",
+			"description": "DataType.method, all constant",
+			"constants": {
+				"from": {
+					"dataTypeId": "test.integer",
+					"value": "3"
+				},
+				"to": {
+					"dataTypeId": "test.integer",
+					"value": "7"
 				}
 			},
 			"variableCriterias": {
-				"baseListVar": "test.list[element:test.string]",
+				"baseVar": "test.string",
 			}
 		}
+		
 	},
 	"variablesData": {
 		"baseListVar": {

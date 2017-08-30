@@ -46,6 +46,10 @@
 							this.dataOperate(operationsDef[i]);
 						}
 					},
+					
+					printWrapper : function(name){
+						 nosliw.logging.debug("Wrapper value: ", name, JSON.stringify(loc_wrappers[name].getValue()));
+					}
 				 };
 				 
 				 return out;
@@ -112,13 +116,27 @@
 //			 ["leaf4", "leaf3", "string"],
 			 ["leaf5", "root1", "object"],
 			 ["leaf6", "leaf5", "string"],
-//			 ["leaf7", "root1", "object.string"],
+			 ["leaf7", "root1", "object.string"],
+
+			 ["root2", "hello world", "", true],
+			 ["leaf21", "root2", ""],
 		 ];
 		 
 		 var wrappersTree = buildWrapperTree(treeDefinition);
 
-		 wrappersTree.dataOperate(["leaf5", node_CONSTANT.WRAPPER_OPERATION_SET, {path:"string", data:"new data"}]);
+//		 wrappersTree.dataOperate(["leaf5", node_CONSTANT.WRAPPER_OPERATION_SET, {path:"string", data:"new data"}]);
+//		 wrappersTree.printWrapper("root1");
+//		 wrappersTree.printWrapper("leaf6");
+//		 wrappersTree.printWrapper("leaf7");
+//		 
+//		 wrappersTree.dataOperate(["leaf5", node_CONSTANT.WRAPPER_OPERATION_SET, {path:"string", data:"new data11111"}]);
+//		 wrappersTree.printWrapper("root1");
+//		 wrappersTree.printWrapper("leaf6");
+//		 wrappersTree.printWrapper("leaf7");
+
 		 
-		 
+		 wrappersTree.dataOperate(["leaf21", node_CONSTANT.WRAPPER_OPERATION_SET, {path:"", data:"new data11111"}]);
+		 wrappersTree.printWrapper("root2");
+		 wrappersTree.printWrapper("leaf21");
 		 
 	});

@@ -148,6 +148,8 @@ var node_createWraperCommon = function(data, path, request){
 				this.pri_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_FORWARD, "", eData, requestInfo);
 			},
 			
+			pri_invalidateData : function(requestInfo){loc_invalidateData(requestInfo);},
+			
 			pri_trigueDataOperationEvent : function(event, path, operationValue, requestInfo){this.pri_dataOperationEventObject.triggerEvent(event, path, operationValue, requestInfo);},
 
 			ovr_calValue : function(){},
