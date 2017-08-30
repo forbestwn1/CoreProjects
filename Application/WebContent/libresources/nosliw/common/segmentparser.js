@@ -4,6 +4,7 @@ var packageObj = library.getChildPackage("segmentparser");
 (function(packageObj){
 	//get used node
 	var node_basicUtility;
+	var node_COMMONCONSTANT;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -19,7 +20,7 @@ var parseSegment = function(path, sep){
 	var loc_index = 0;
 
 	var seperator = sep;
-	if(node_basicUtility.isStringEmpty(seperator))   seperator = NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_PATH; 
+	if(node_basicUtility.isStringEmpty(seperator))   seperator = node_COMMONCONSTANT.SEPERATOR_PATH; 
 	if(node_basicUtility.isStringEmpty(path))  loc_isEmpty = true;
 	else{
 		loc_seperator = seperator;
@@ -82,6 +83,7 @@ var parseSegment = function(path, sep){
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("parseSegment", parseSegment); 

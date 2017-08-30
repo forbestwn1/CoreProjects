@@ -77,7 +77,7 @@ var node_createWraperObject = function(){
 				var rootValue = this.getRootData().value;
 				var fullPath = node_namingConvensionUtility.cascadePath(this.getFullPath(), path);
 
-				var opPath = node_namingConvensionUtility.cascadePath("value", fullPath);
+				var opPath = fullPath;   //node_namingConvensionUtility.cascadePath("value", fullPath);
 				if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
 					var opValue = loc_getOperationObject(serviceData.data);
 					//change value
