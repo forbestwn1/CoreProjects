@@ -13,6 +13,8 @@ var node_makeObjectWithId;
 var node_basicUtility;
 var node_dataUtility;
 var node_wrapperFactory;
+var node_namingConvensionUtility;
+
 	
 //*******************************************   Start Node Definition  ************************************** 	
 /**
@@ -97,7 +99,7 @@ var node_createWraperCommon = function(data, path, request){
 							loc_invalidateData(requestInfo);
 							loc_out.pri_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, "", {}, requestInfo);
 						}
-						else if(event==NOSLIWCONSTANT.WRAPPER_EVENT_DELETE){
+						else if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
 							loc_out.destroy();
 						}
 					}
@@ -170,7 +172,7 @@ var node_createWraperCommon = function(data, path, request){
 
 			getFullPath : function(){
 				if(loc_out.pri_dataBased==true)   return loc_out.pri_path;
-				return node_basicUtility.cascadePath(loc_out.pri_parent.getFullPath(), loc_out.pri_path);
+				return node_namingConvensionUtility.cascadePath(loc_out.pri_parent.getFullPath(), loc_out.pri_path);
 			},
 			
 			getRootWrapper : function(){
@@ -226,6 +228,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithid.makeObjectWithId", function
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
+nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 
 
 //Register Node by Name

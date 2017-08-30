@@ -23,8 +23,8 @@
 					 }
 					 //listen to event from wrapper
 					 wrapper.registerDataOperationListener(loc_eventObject, function(event, path, operationValue, requestInfo){
-						  nosliw.logging.debug("Event : ", event, path, JSON.stringify(operationValue));
-					 }, this);
+						  nosliw.logging.debug("Event : ", name, event, path, JSON.stringify(operationValue));
+					 }, name);
 					 loc_wrappers[name] = wrapper;
 					 nosliw.logging.debug("Wrapper created: ", name, JSON.stringify(wrapper.getValue()));
 				 });
@@ -63,7 +63,9 @@
 					 int : 12345,
 					 boolean : true,
 					 object : {
-						 
+						 string : "6 string value",
+						 int : 12345,
+						 boolean : true,
 					 },
 					 array : [
 						 {
@@ -104,15 +106,18 @@
 
 		 var treeDefinition = [
 			 ["root1", objectData, "object", true],
-			 ["leaf1", "root1", "string"],
-			 ["leaf2", "root1", "array.0"],
-			 ["leaf3", "leaf2", ""],
-			 ["leaf4", "leaf3", "string"],
+//			 ["leaf1", "root1", "string"],
+//			 ["leaf2", "root1", "array.0"],
+//			 ["leaf3", "leaf2", ""],
+//			 ["leaf4", "leaf3", "string"],
+			 ["leaf5", "root1", "object"],
+			 ["leaf6", "leaf5", "string"],
+//			 ["leaf7", "root1", "object.string"],
 		 ];
 		 
 		 var wrappersTree = buildWrapperTree(treeDefinition);
 
-		 wrappersTree.dataOperate(["leaf1", node_CONSTANT.WRAPPER_OPERATION_SET, {path:"string", data:"new data"}]);
+		 wrappersTree.dataOperate(["leaf5", node_CONSTANT.WRAPPER_OPERATION_SET, {path:"string", data:"new data"}]);
 		 
 		 
 		 
