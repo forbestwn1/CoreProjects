@@ -36,7 +36,9 @@ var packageObj = library.getChildPackage("event");
 				 */
 				registerListener : function(eventName, listener, handler, thisContext){
 					var that = thisContext;
-					if(that==undefined)  that = this.getBaseObject();
+					if(that==undefined){
+						if(this.getBaseObject!=null)   that = this.getBaseObject();
+					}
 					if(eventName===undefined)  eventName = node_CONSTANT.EVENT_EVENTNAME_ALL; 
 					
 					//for event in backbone.js, the parms are different depending on the event type

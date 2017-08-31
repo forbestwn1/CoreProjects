@@ -14,12 +14,14 @@ var node_requestUtility;
 var node_wrapperFactory;
 var node_basicUtility;
 var node_createEventObject;
-	
+var node_requestUtility;
+
 //*******************************************   Start Node Definition  ************************************** 	
 /**
  * two input model : 
  * 		1. parent variable + path from parent + requestInfo
  * 		2. wrapper + requestInfo
+ *      3. data + path + requestInfo
  */
 var node_createWrapperVariable = function(data1, data2, data3){
 	
@@ -32,10 +34,11 @@ var node_createWrapperVariable = function(data1, data2, data3){
 		if(loc_out.prv_wrapper==undefined)   return;
 
 		//unregister listener from wrapper
-		loc_out.prv_wrapper.unregisterDataOperationListener(prv_dataOperationEventObject);
+		loc_out.prv_wrapper.unregisterDataOperationListener(loc_out.prv_dataOperationEventObject);
 		
 		//destroy wrapper
 		loc_out.prv_wrapper.destroy(requestInfo);
+
 		loc_out.prv_wrapper = undefined;
 	};
 	
@@ -66,7 +69,7 @@ var node_createWrapperVariable = function(data1, data2, data3){
 	//listen to wrapper event
 	var loc_registerWrapperDataOperationEvent = function(){
 		if(loc_out.prv_wrapper==undefined)  return;
-		var listener = loc_out.prv_wrapper.registerDataOperationListener(loc_out.prv_dataOperationEventObject, function(event, path, data, requestInfo){
+		loc_out.prv_wrapper.registerDataOperationListener(loc_out.prv_dataOperationEventObject, function(event, path, data, requestInfo){
 			//ignore forward event
 			if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD)  return;
 			//inform the operation
@@ -95,12 +98,12 @@ var node_createWrapperVariable = function(data1, data2, data3){
 			//for variable having parent variable
 			loc_out.prv_parent = data1;
 			loc_out.prv_path = node_basicUtility.emptyStringIfUndefined(data2);
-			loc_out.prv_wrapper = node_wrapperFactory.createWraper(loc_out.prv_parent.getWrapper(), loc_out.prv_path);
+			loc_out.prv_wrapper = node_wrapperFactory.createWrapper(loc_out.prv_parent.getWrapper(), loc_out.prv_path);
 			loc_out.prv_parent.registerLifecycleEventListener(loc_out.prv_lifecycleEventObject, function(event, data, requestInfo){
 				switch(event){
 				case node_CONSTANT.WRAPPERVARIABLE_EVENT_SETWRAPPER:
 					//create new wrapper based on wrapper in parent and path
-					var newWrapper = node_wrapperFactory.createWraper(loc_out.prv_parent.getWrapper(), loc_out.prv_path);
+					var newWrapper = node_wrapperFactory.createWrapper(loc_out.prv_parent.getWrapper(), loc_out.prv_path);
 					loc_setWrapper(newWrapper, requestInfo);
 					break;
 				case node_CONSTANT.WRAPPERVARIABLE_EVENT_CLEARUP:
@@ -153,6 +156,11 @@ var node_createWrapperVariable = function(data1, data2, data3){
 				this.prv_lifecycleEventObject.triggerEvent(node_CONSTANT.WRAPPERVARIABLE_EVENT_CLEARUP, {}, requestInfo);
 			},
 			
+			getValue : function(){
+				if(this.prv_wrapper==undefined)   return undefined;
+				else return this.prv_wrapper.getValue();
+			},
+
 			/*
 			 * get data object within this variable
 			 */
@@ -169,12 +177,12 @@ var node_createWrapperVariable = function(data1, data2, data3){
 			/*
 			 * register handler for operation event
 			 */
-			registerDataChangeEventListener : function(handler, thisContext){return this.prv_dataOperationEventObject.registerEventHandler(handler, thisContext);		},
-			
+			registerDataChangeEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
+
 			/*
 			 * register handler for event of communication between parent and child variables
 			 */
-			registerLifecycleEventListener : function(handler, thisContext){return this.prv_lifecycleEventObject.registerEventHandler(handler, thisContext);	},
+			registerLifecycleEventListener : function(listenerEventObj, handler, thisContext){return this.prv_lifecycleEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);	},
 			
 			/*
 			 * request to do data operation
@@ -193,10 +201,10 @@ var node_createWrapperVariable = function(data1, data2, data3){
 	};
 	
 	loc_out = node_makeObjectWithLifecycle(loc_out, loc_resourceLifecycleObj, loc_out);
-	loc_out = node_makeObjectWithType.makeTypedObject(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE);
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE);
 	loc_out = node_makeObjectWithId(loc_out, nosliw.generateId());
 	
-	loc_out.init(data1, data2, data3);
+	node_getLifecycleInterface(loc_out).init(data1, data2, data3);
 	
 	return loc_out;
 };
@@ -215,6 +223,7 @@ nosliw.registerSetNodeDataEvent("common.request.utility", function(){node_reques
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createWrapperVariable", node_createWrapperVariable); 

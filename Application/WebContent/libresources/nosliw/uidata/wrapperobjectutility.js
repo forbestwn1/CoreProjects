@@ -72,8 +72,17 @@ var node_utility = {
 				baseObj[attribute] = data;
 			}
 			else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
+				//if container does not exist, then create a map
 				if(baseObj[attribute]==undefined)  baseObj[attribute] = {};
-				baseObj[attribute][data.index]=data.data;
+				if(data.index!=undefined){
+					baseObj[attribute][data.index]=data.data;
+				}
+				else{
+					//if index is not specified, for array, just append it
+					if(_.isArray(baseObj[attribute])){
+						baseObj[attribute].push(data.data);
+					}
+				}
 			}
 			else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
 				delete baseObj[attribute][data];

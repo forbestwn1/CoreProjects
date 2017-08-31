@@ -8,7 +8,6 @@ var packageObj = library.getChildPackage("request");
 	var node_CONSTANT;
 	var node_requestUtility;
 	var node_eventUtility;
-	var node_requestUtility;
 	var node_basicUtility;
 	var node_errorUtility;
 //*******************************************   Start Node Definition  ************************************** 	
@@ -375,7 +374,6 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
 

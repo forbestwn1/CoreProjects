@@ -85,8 +85,8 @@ var node_createWraperCommon = function(data, path, request){
 					if(loc_out.pri_path==path){
 						//event happens on this wrapper, trigue the same
 						//inform the change of wrapper
-						if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
-							loc_out.destroy();
+						if(event==node_CONSTANT.WRAPPER_EVENT_DESTROY){
+							loc_out.destroy(requestInfo);
 						}
 						else{
 							loc_invalidateData(requestInfo);
@@ -99,8 +99,8 @@ var node_createWraperCommon = function(data, path, request){
 							loc_invalidateData(requestInfo);
 							loc_out.pri_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, "", {}, requestInfo);
 						}
-						else if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
-							loc_out.destroy();
+						else if(event==node_CONSTANT.WRAPPER_EVENT_DESTROY){
+							loc_out.destroy(requestInfo);
 						}
 					}
 					else if(path.startsWith(loc_out.pri_path+".")){
@@ -123,7 +123,7 @@ var node_createWraperCommon = function(data, path, request){
 		//for delete event, it means itself and all children should be destroy
 		loc_invalidateData();
 		//forward the event
-		loc_out.pri_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_DELETE, "", {}, requestInfo);
+		loc_out.pri_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_DESTROY, "", {}, requestInfo);
 		//clear up event source
 		loc_out.pri_dataOperationEventObject.clearup();
 		
@@ -199,6 +199,8 @@ var node_createWraperCommon = function(data, path, request){
 			
 			createChildWrapper : function(path, request){		return wrapperFactory.createWrapper(this, path, request);		},
 
+			destroy(requestInfo){node_getLifecycleInterface(loc_out).destroy(requestInfo);},
+			
 			getWrapperType : function(){},
 			getChildData : function(path){},
 			requestDataOperation : function(service, request){},

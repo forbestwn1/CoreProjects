@@ -15,13 +15,12 @@ var node_CONSTANT=
 	  "EVENT_EVENTNAME_ALL": "all",
 	  
 	  //wrapper event
-	  "WRAPPER_EVENT_CHANGE" : "EVENT_WRAPPER_CHANGE",					//any change
-	  "WRAPPER_EVENT_SET" : "EVENT_WRAPPER_SET",					
-	  "WRAPPER_EVENT_ADDELEMENT" : "EVENT_WRAPPER_ADDELEMENT",
-	  "WRAPPER_EVENT_DELETEELEMENT" : "EVENT_WRAPPER_DELETEELEMENT",
-	  "WRAPPER_EVENT_DELETE" : "EVENT_WRAPPER_DELETE",
-	  "WRAPPER_EVENT_FORWARD" : "EVENT_WRAPPER_FORWARD",
-	  "WRAPPER_EVENT_DESTROY" : "EVENT_WRAPPER_DESTROY",
+	  "WRAPPER_EVENT_SET" : "EVENT_WRAPPER_SET",                        //the value get set					
+	  "WRAPPER_EVENT_ADDELEMENT" : "EVENT_WRAPPER_ADDELEMENT",          //element is added to container
+	  "WRAPPER_EVENT_DESTROYELEMENT" : "EVENT_WRAPPER_DELETEELEMENT",    //element is removed from container
+	  "WRAPPER_EVENT_FORWARD" : "EVENT_WRAPPER_FORWARD",				//forward original event information to child
+	  "WRAPPER_EVENT_CHANGE" : "EVENT_WRAPPER_CHANGE",					//indicate something changes, need to update data 
+	  "WRAPPER_EVENT_DESTROY" : "EVENT_WRAPPER_DESTROY",                //indicate that the wrapper is destroyed (the wrapper is not valid any more), it is like a lifecycle event
 	  
 	  //operation on wrapper
 	  "WRAPPER_OPERATION_SET" : "WRAPPER_OPERATION_SET",

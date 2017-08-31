@@ -14,7 +14,7 @@ function(){
 		    	
 		    	var eleVariable = eleResourceView.getContext().getContextElementVariable(loc_elementName);
 		    	eleVariable.registerDataChangeEvent(function(event, path, data, requestInfo){
-					if(event==NOSLIWCONSTANT.WRAPPER_EVENT_DELETE){
+					if(event==NOSLIWCONSTANT.WRAPPER_EVENT_DESTROY){
 						var view = loc_childResourceViews[key1];
 						view.destroy();
 						delete loc_childResourceViews[key1];

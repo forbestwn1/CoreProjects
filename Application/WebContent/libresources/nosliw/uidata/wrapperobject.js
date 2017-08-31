@@ -107,7 +107,7 @@ var node_createWraperObject = function(){
 					var index = serviceData.index; 
 					node_objectWrapperUtility.operateObject(rootValue, opPath, node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, index);
 					//trigue event
-					this.pri_triggerOperationEvent(node_CONSTANT.WRAPPER_EVENT_DELETE, node_namingConvensionUtility.cascadePath(path, index), {}, request);
+					this.pri_triggerOperationEvent(node_CONSTANT.WRAPPER_EVENT_DESTROY, node_namingConvensionUtility.cascadePath(path, index), {}, request);
 				}
 			},
 
