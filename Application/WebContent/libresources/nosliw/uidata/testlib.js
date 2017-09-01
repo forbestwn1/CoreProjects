@@ -4,6 +4,9 @@ var packageObj = library.getChildPackage("test");
 (function(packageObj){
 //get used node
 var node_wrapperFactory;
+var node_createContextElementInfo;
+var node_createContext;
+var node_createContextVariable;
 var node_ServiceInfo;
 var node_CONSTANT;
 var node_createEventObject;
@@ -11,24 +14,54 @@ var node_createWrapperVariable;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_buildVariableTree = function(treeDefinition){
-	 var loc_eventObject = node_createEventObject();
-	 var loc_variables = {};
-	 _.each(treeDefinition, function(nodeDef, index){
-		 var name = nodeDef[0];
-		 var data_parent = nodeDef[1];
-		 var path = nodeDef[2];
-		 var variable;
-		 if(nodeDef[3]!=undefined){
-			 //data base
-			  var wrapper = node_wrapperFactory.createWrapper(data_parent, path);
-			  variable = node_createWrapperVariable(wrapper);
-		 }
-		 else{
-			 //relative
-			  variable = node_createWrapperVariable(loc_variables[data_parent], path);
-		 }
+var node_buildContext = function(contextsDefinition){
+	
+	var loc_contexts = {};
+	_.each(contextsDefinition, function(contextDefintion){
+		var contextName = contextDefintion[0];
+		var elementInfosArray = [];
+		for(var i=1; i<contextDefintion.length; i++){
+			var contextElementInfo;
+			var contextEleDefinition = contextDefintion[i];
+			var contextElementName = contextEleDefinition[0];
+			if(contextEleDefinition[3]!=undefined){
+				contextElementInfo = node_createContextElementInfo(contextElementName, contextEleDefinition[1], contextEleDefinition[2]);
+			}
+			else{
+				contextElementInfo = node_createContextElementInfo(contextElementName, loc_contexts[contextEleDefinition[1]], contextEleDefinition[2]);
+			}
+			elementInfosArray.push(contextElementInfo);
+			var context = node_createContext(elementInfosArray);
+			loc_contexts[contextName] = context;
+		}
+	});
+	
+	var loc_out = {
+		
+		getContext : function(name){  return loc_contexts[name];  },
+		
+		
+		
+	};
+	
+	return loc_out;
+};
 
+var node_buildVariableTree = function(variablesDefinition, contexts){
+	 var loc_contexts = contexts; 
+	 var loc_variables = {};
+	 var loc_eventObject = node_createEventObject();
+	 _.each(variablesDefinition, function(variableDef, index){
+		 var variableName = variableDef[0];
+		 var contextName = variableDef[1];
+		 var contextEleName = variableDef[2];
+		 var path = variableDef[3];
+		 
+		 var context = loc_contexts.getContext(contextName);
+		 var contextVariable = node_createContextVariable(contextEleName, path);
+		 var variable = context.createVariable(contextVariable);
+		 loc_variables[variableName] = variable;
+		 
 		 //listen to event from variable
 		 variable.registerDataChangeEventListener(loc_eventObject, function(event, path, operationValue, requestInfo){
 			  nosliw.logging.debug("Event Data Operation : ", name, event, path, JSON.stringify(operationValue));
@@ -38,12 +71,13 @@ var node_buildVariableTree = function(treeDefinition){
 			  nosliw.logging.debug("Event Lifecycle : ", name, event, JSON.stringify(data));
 		 }, name);
 		 
-		 loc_variables[name] = variable;
 		 nosliw.logging.debug("Variable created: ", name, JSON.stringify(variable.getValue()));
 	 });
 	 
 	 var out = {
-			 
+			
+		getContext : function(name){  return loc_contexts[name];  },
+		
 		getValue : function(name){
 			return this.getVariable(name).getValue();
 		},
@@ -81,6 +115,9 @@ var node_buildVariableTree = function(treeDefinition){
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_createContext = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextVariable", function(){node_createContextVariable = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
@@ -88,5 +125,6 @@ nosliw.registerSetNodeDataEvent("uidata.variable.createWrapperVariable", functio
 
 //Register Node by Name
 packageObj.createChildNode("buildVariableTree", node_buildVariableTree); 
+packageObj.createChildNode("buildContext", node_buildContext); 
 
 })(packageObj);

@@ -11,6 +11,8 @@ var node_createEventObject;
 var node_eventUtility;
 var node_createContextElement;
 var node_createWrapperVariable;
+var node_makeObjectWithLifecycle;
+var node_getLifecycleInterface;
 //*******************************************   Start Node Definition  ************************************** 	
 /*
  * elementInfosArray : an array of element info describing context element
@@ -116,7 +118,7 @@ var node_createContext = function(elementInfosArray, request){
 	//append resource life cycle method to out obj
 	loc_out = node_makeObjectWithLifecycle(loc_out, loc_resourceLifecycleObj, loc_out);
 	
-	loc_out = node_makeObjectWithType.makeTypedObject(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_CONTEXT);
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_CONTEXT);
 	
 	node_getLifecycleInterface(loc_out).init(elementInfosArray, request);
 	
@@ -134,6 +136,8 @@ nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){nod
 nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContextElement", function(){node_createContextElement = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.createWrapperVariable", function(){node_createWrapperVariable = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createContext", node_createContext); 

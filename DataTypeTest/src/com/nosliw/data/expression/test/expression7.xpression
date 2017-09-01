@@ -2,7 +2,7 @@
 	"name": "expression7",
 	"expressionDefinitions": {
 		"main": {
-			"expression": "?(baseListVar)?.process(expression:&(expression)&,element:&(element)&)",
+			"expression": "?(baseListVar)?.process(expression:&(expression)&,elementVariableName:&(element)&)",
 			"description": "complex data type",
 			"constants": {
 				"element": {

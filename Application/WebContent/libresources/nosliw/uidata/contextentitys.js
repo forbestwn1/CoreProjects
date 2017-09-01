@@ -3,6 +3,7 @@ var packageObj = library.getChildPackage("context");
 
 (function(packageObj){
 //get used node
+var node_wrapperFactory;
 var node_basicUtility;
 var node_namingConvensionUtility;
 var node_CONSTANT;
@@ -54,7 +55,7 @@ var node_createContextVariable = function(n, p){
 		key : node_namingConvensionUtility.cascadePath(name, path),
 	};
 	
-	loc_out = node_makeTypedObject(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_CONTEXTVARIABLE);
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_CONTEXTVARIABLE);
 	
 	return loc_out;
 };
@@ -63,22 +64,28 @@ var node_createContextVariable = function(n, p){
 /*
  * object to describe context element info, two models:
  * 		1. name + parent context + parent context contextVariable
- * 		2. name + info + wrapper
+ * 		2. name + wrapper + info
+ * 		3. name + data/value + path + info
  */
-var node_createContextElementInfo = function(name, data1, data2){
+var node_createContextElementInfo = function(name, data1, data2, data3){
 	var loc_out = {
 		name : name,
 	};
-	var type = nosliwTypedObjectUtility.getObjectType(data1);
+	var type = node_getObjectType(data1);
 	if(type==node_CONSTANT.TYPEDOBJECT_TYPE_CONTEXT){
 		//input is context + context variable
 		loc_out.context = data1;
 		loc_out.contextVariable = node_createContextVariable(data2);
 	}
+	else if(type==node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
+		//input is wrapper
+		loc_out.wrapper = data1;
+		loc_out.info = data2;
+	}
 	else{
-		//
-		loc_out.info = data1;
-		loc_out.wrapper = data2;
+		//input is data/value
+		loc_out.wrapper = node_wrapperFactory.createWrapper(data1, data2);
+		loc_out.info = data3;
 	}
 	return loc_out;
 };
@@ -112,6 +119,7 @@ var node_createContextElement = function(elementInfo, requestInfo){
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});

@@ -122,7 +122,7 @@ var node_createWrapperVariable = function(data1, data2, data3){
 		}
 		else{
 			//for object
-			loc_out.prv_wrapper = node_wrapperFactory.createWraper(data1, data2, requestInfo);
+			loc_out.prv_wrapper = node_wrapperFactory.createWrapper(data1, data2, requestInfo);
 		}
 		if(loc_out.prv_wrapper!=undefined){
 			loc_registerWrapperDataOperationEvent();
