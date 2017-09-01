@@ -6,6 +6,8 @@ var packageObj = library.getChildPackage("event");
 	var node_CONSTANT;
 	var node_eventUtility;
 	var node_makeObjectWithLifecycle;
+	var node_createEventObject;
+	var node_requestUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 
@@ -13,19 +15,16 @@ var packageObj = library.getChildPackage("event");
  * this is object that handler multiple event related with request
  * it wait until request is finished, then it emitt event 
  */
-var node_createRequestEventGroupHandler = function(eventHandler, registerElementEventFunction, thisContext){
+var node_createRequestEventGroupHandler = function(eventHandler, thisContext){
 	
 	//sync task name for remote call 
 	var loc_moduleName = "requestEventGroup";
 	
+	var loc_eventObject = node_createEventObject();
+
 	//how to handle 
 	var loc_eventHandler = eventHandler;
-	//function provided that used to register element event, this function should return listener object or array
-	var loc_registerElementEventFunction = registerElementEventFunction;
 	var loc_thisContext = thisContext;
-	
-	//all listeners for events from elements
-	var loc_listeners = [];
 	
 	//all elements
 	var loc_elements = {};
@@ -42,7 +41,7 @@ var node_createRequestEventGroupHandler = function(eventHandler, registerElement
 	 * 		or requestInfo trigger done event
 	 */
 	var loc_processEvent = function(){
-		request = arguments[arguments.length-1];
+		request = node_requestUtility.getRequestInfoFromFunctionArguments(arguments);
 		if(request==undefined){
 			//no request
 			loc_eventHandler.call(loc_thisContext);
@@ -61,7 +60,7 @@ var node_createRequestEventGroupHandler = function(eventHandler, registerElement
 			var request = loc_requesters[requestId];
 			if(request==undefined){
 				loc_requesters[requestId] = requestInfo;
-				requestInfo.registerEventListener(function(e, data, req){
+				requestInfo.registerEventListener(loc_eventObject, function(e, data, req){
 					if(e==node_CONSTANT.REQUEST_EVENT_DONE){
 						loc_eventHandler.call(loc_thisContext, requestInfo);
 						delete loc_requesters[requestId];
@@ -72,25 +71,17 @@ var node_createRequestEventGroupHandler = function(eventHandler, registerElement
 	};
 	
 	var loc_resourceLifecycleObj = {};
-	loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT"] = function(){};	
-	loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY"] = function(requestInfo){
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(){};	
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
 		//unregister all listeners
-		node_eventUtilty.unregisterAllListeners(loc_listeners);
-		
-		_.each(loc_elements, function(element, key){
-			element.destroy(requestInfo);
-		});
+		loc_eventObject.clearup();
 		
 		loc_eventHandler = undefined; 
-		loc_registerElementEventFunction = undefined;
 		loc_thisContext = undefined;
-		loc_listeners = [];
 		loc_requesters = {};
 	};
 	
 	var loc_out = {
-		ovr_getResourceLifecycleObject : function(){	return loc_resourceLifecycleObj;	},
-			
 		/*
 		 * add an element to group
 		 */
@@ -98,12 +89,7 @@ var node_createRequestEventGroupHandler = function(eventHandler, registerElement
 			if(name==undefined)  name = loc_size+"";
 			loc_elements[name] = element;
 			//register element to event
-			var listener = loc_registerElementEventFunction.call(this, element, loc_processEvent);
-			//save listener
-			if(_.isFunction(listener)){
-				for(var i in listener)  loc_listeners.push(listener[i]);
-			}
-			else  loc_listeners.push(listener);
+			node_eventUtility.registerListener(loc_eventObject, element, undefined, loc_processEvent, this);
 			loc_size++;
 		},
 		
@@ -129,6 +115,8 @@ var node_createRequestEventGroupHandler = function(eventHandler, registerElement
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
 
 
 //Register Node by Name

@@ -71,7 +71,8 @@ var node_createWrapperVariable = function(data1, data2, data3){
 		if(loc_out.prv_wrapper==undefined)  return;
 		loc_out.prv_wrapper.registerDataOperationListener(loc_out.prv_dataOperationEventObject, function(event, path, data, requestInfo){
 			//ignore forward event
-			if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD)  return;
+			//we should not ignore forward event, as forward event also indicate that something get changed on child, in that case, the data also get changed
+//			if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD)  return;
 			//inform the operation
 			loc_out.prv_dataOperationEventObject.triggerEvent(event, path, data, requestInfo);
 		});
@@ -178,11 +179,13 @@ var node_createWrapperVariable = function(data1, data2, data3){
 			 * register handler for operation event
 			 */
 			registerDataChangeEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
-
+			getDataChangeEventObject : function(){   return this.prv_dataOperationEventObject;   },
+			
 			/*
 			 * register handler for event of communication between parent and child variables
 			 */
 			registerLifecycleEventListener : function(listenerEventObj, handler, thisContext){return this.prv_lifecycleEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);	},
+			getLifecycleEventObject : function(){   return this.prv_lifecycleEventObject;   },
 			
 			/*
 			 * request to do data operation

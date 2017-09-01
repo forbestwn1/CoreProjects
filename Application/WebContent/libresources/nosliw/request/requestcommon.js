@@ -61,10 +61,8 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			pri_status : node_CONSTANT.REQUEST_STATUS_INIT,
 			//request process result
 			pri_result : undefined,
-			//event source
-			pri_eventSource : {},
-			//event listeners
-			pri_eventListeners : [],
+			//event object
+			pri_eventObject : node_createEventObject(),
 		};
 		
 		//construct handlers
@@ -131,7 +129,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 	var loc_initRequest = function(){
 		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_INIT);
 		loc_out.setResult();
-		node_requestUtility.triggerEventWithRequest(loc_out.pri_metaData.pri_eventSource, node_CONSTANT.REQUEST_EVENT_NEW, {}, loc_out);
+		this.pri_metaData.eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_NEW, {}, loc_out);
 	};
 	
 	/*
@@ -143,7 +141,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 	var loc_startRequest = function(){
 		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_PROCESSING);
 		loc_out.setResult();
-		node_requestUtility.triggerEventWithRequest(loc_out.pri_metaData.pri_eventSource, node_CONSTANT.REQUEST_EVENT_ACTIVE, {}, loc_out);
+		this.pri_metaData.eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_ACTIVE, {}, loc_out);
 	};
 	
 	/*
@@ -156,12 +154,10 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_DONE);
 		loc_out.setResult(data);
 		
-		node_requestUtility.triggerEventWithRequest(loc_out.pri_metaData.pri_eventSource, node_CONSTANT.REQUEST_EVENT_DONE, data, loc_out);
+		this.pri_metaData.eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_DONE, {}, loc_out);
 
 		//unregister all listeners
-		_.each(loc_out.pri_metaData.pri_eventListeners, function(listener, key, list){
-			node_eventUtilty.unregister(listener);
-		}, this);
+		this.pri_metaData.eventObject.clearup();
 	};
 	
 	var loc_out = {
@@ -352,10 +348,8 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			getResult : function(){  return this.pri_metaData.pri_result; },
 			setResult : function(result){  this.pri_metaData.pri_result = result; },
 			
-			registerEventListener : function(handler){
-				var listener = node_requestUtility.registerEventWithRequest(this.pri_metaData.pri_eventSource, node_CONSTANT.EVENT_EVENTNAME_ALL, handler, this);
-				this.pri_metaData.pri_eventListeners.push(listener);
-				return listener;
+			registerEventListener : function(listener, handler, thisContext){
+				node_eventUtility.registerListener(listener, this.pri_metaData.eventObject, undefined, handler, thisContext)
 			},
 	};
 	

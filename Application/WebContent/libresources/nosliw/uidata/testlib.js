@@ -17,6 +17,8 @@ var node_createWrapperVariable;
 var node_buildContext = function(contextsDefinition){
 	
 	var loc_contexts = {};
+	var loc_eventObject = node_createEventObject();
+
 	_.each(contextsDefinition, function(contextDefintion){
 		var contextName = contextDefintion[0];
 		var elementInfosArray = [];
@@ -31,9 +33,13 @@ var node_buildContext = function(contextsDefinition){
 				contextElementInfo = node_createContextElementInfo(contextElementName, loc_contexts[contextEleDefinition[1]], contextEleDefinition[2]);
 			}
 			elementInfosArray.push(contextElementInfo);
-			var context = node_createContext(elementInfosArray);
-			loc_contexts[contextName] = context;
 		}
+		var context = node_createContext(elementInfosArray);
+		loc_contexts[contextName] = context;
+		
+		context.registerContextListener(loc_eventObject, function(event, context, requestInfo){
+			  nosliw.logging.debug("Context Event : ", contextName, event);
+		}, this);
 	});
 	
 	var loc_out = {
@@ -64,11 +70,11 @@ var node_buildVariableTree = function(variablesDefinition, contexts){
 		 
 		 //listen to event from variable
 		 variable.registerDataChangeEventListener(loc_eventObject, function(event, path, operationValue, requestInfo){
-			  nosliw.logging.debug("Event Data Operation : ", name, event, path, JSON.stringify(operationValue));
+			  nosliw.logging.debug("Variable Event Data Operation : ", name, event, path, JSON.stringify(operationValue));
 		 }, name);
 
 		 variable.registerLifecycleEventListener(loc_eventObject, function(event, data, requestInfo){
-			  nosliw.logging.debug("Event Lifecycle : ", name, event, JSON.stringify(data));
+			  nosliw.logging.debug("Variable Event Lifecycle : ", name, event, JSON.stringify(data));
 		 }, name);
 		 
 		 nosliw.logging.debug("Variable created: ", name, JSON.stringify(variable.getValue()));

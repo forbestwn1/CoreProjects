@@ -2,6 +2,8 @@
 
 		var node_buildVariableTree = nosliw.getNodeData("uidata.test.buildVariableTree");
 		var node_buildContext = nosliw.getNodeData("uidata.test.buildContext");
+		var node_createContextVariablesGroup = nosliw.getNodeData("uidata.context.createContextVariablesGroup");
+		var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
 		
 		  var objectData1 = {
 				 string : "string value",
@@ -69,7 +71,8 @@
 			];
 		  
 		 var contexts = node_buildContext(contextDefinition);
-			 
+			
+		 
 		 var variablesDefinition = [
 			 ["leaf1", "context1", "root1", "string"],
 			 ["leaf2", "context1", "root1", "array.0"],
@@ -88,6 +91,12 @@
 		 variablesTree.printVariable("leaf8");
 		 variablesTree.printVariable("leaf9");
 
+		 var contextVars = [];
+		 contextVars.push(node_createContextVariable("root1", "array"));
+		 node_createContextVariablesGroup(contexts.getContext("context1"), contextVars, function(event){
+			  nosliw.logging.debug("Variable Group Event : ");
+		 });
+		 
 		 
 		 variablesTree.dataOperate(["leaf8", node_CONSTANT.WRAPPER_OPERATION_SET, {path:"0.string", data:"new data"}]);
 		 variablesTree.printVariable("leaf2");
