@@ -11,7 +11,5 @@ l
 <src/com/nosliw/application/constant/HAPJSConstantVerify.java,f\1\f1702a80ed9189cbec06285739d81ae434509528
 g
 7src/com/nosliw/application/test/HAPTestApplication.java,b\0\b0b559d29563e98847ddbf40a86dedca1efe5c3f
-p
-@src/com/nosliw/application/runtimerhino/HAPRuntimeRhinoMain.java,9\0\90cf4ce972d1fa58c2b9c362553c7e5dc78d1303
 s
 Csrc/com/nosliw/application/loader/datatype/HAPDataTypeImporter.java,2\f\2f1fa745887fbbd3dc949c13bb69bd755885322d
