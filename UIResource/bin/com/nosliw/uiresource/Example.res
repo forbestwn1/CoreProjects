@@ -8,6 +8,12 @@
 		<%= #|?(key)?.a.aa|#.value%>   
 
 		<br><br>
+		Constant value:<br>
+		{{hh.a}}
+		<%={{hh.b}}[1]%>
+
+
+		<br><br>
 		Attribute Expression in stardand tag:<br>
 		<span  style="color:<%=#|?(key)?.a.aa|#.value=='4165628566'?'blue':'red'%>">Phone Number : </span>
 		
@@ -150,8 +156,7 @@
 	<contexts>
 	{
 		<!-- This part can be used to define context (variable)
-				it describle possible value (data type and criteria) for each context element and its default value
-				   
+				it describle data type criteria for each context element and its default value
 		-->
 		buiness : {
 			a : {
@@ -166,6 +171,15 @@
 		}
 	}
 	</contexts>
+	
+	<expressions>
+	{
+		<!-- This part can be used to define expressions
+		-->
+		
+	
+	}
+	</expressions>
 	
 </html>
 

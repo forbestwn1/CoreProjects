@@ -13,6 +13,11 @@ public class HAPUIExpressionAttribute extends HAPUIExpressionContent{
 		super(uiId, contentElements, dataTypeMan);
 		this.m_attribute = attr;
 	}
+
+	public HAPUIExpressionAttribute(String uiId, String attr, String content, HAPDataTypeManager dataTypeMan){
+		super(uiId, content, dataTypeMan);
+		this.m_attribute = attr;
+	}
 	
 	public void setAttribute(String attr){this.m_attribute=attr;}
 	public String getAttribute(){return this.m_attribute;}

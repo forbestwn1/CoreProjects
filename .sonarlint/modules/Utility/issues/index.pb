@@ -13,3 +13,5 @@ g
 7src/com/nosliw/application/test/HAPTestApplication.java,b\0\b0b559d29563e98847ddbf40a86dedca1efe5c3f
 s
 Csrc/com/nosliw/application/loader/datatype/HAPDataTypeImporter.java,2\f\2f1fa745887fbbd3dc949c13bb69bd755885322d
+g
+7src/com/nosliw/test/criteria/HAPCriteriaParserTest.java,9\e\9e1940e7f74cd2dbbdf85c65e6fb45288c699611
