@@ -67,6 +67,8 @@ public class HAPUIResourceProcessor {
 		this.processScriptBlocks(bodyEle, m_resource);
 		//process constant block
 		this.processConstantBlocks(bodyEle, m_resource);
+		//process context block
+		
 		
 		//process body tag's attribute
 		processAttribute(bodyEle, m_resource);

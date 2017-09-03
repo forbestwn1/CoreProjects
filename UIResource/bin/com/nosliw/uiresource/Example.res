@@ -122,10 +122,16 @@
 	
 	<constants>
 	{
-		<!-- This part can be used to define:
-			 constant : 
-			 expression : expression in body can reference this expression by name
+		<!-- This part can be used to define constants: js objects that can be calculated out during compilation of the ui resource file
+			 it can be defined in any form:
+			 	js value
+			 	ui expression
+			 since every constant is basically a js value, so it can be used anywhere that need js value 
 		-->
+			hh : {
+				a : "heloop",
+				b : [1, 2, 3]
+			},
 			aaaa : ":(#string:simple:  constantValue  ):",
 			bbbb : ":(#boolean:simple:false):",
 			cccc : ":({
@@ -140,5 +146,26 @@
 			ffff : ":(#string:simple:11223344):",
 	}
 	</constant>
+	
+	<contexts>
+	{
+		<!-- This part can be used to define context (variable)
+				it describle possible value (data type and criteria) for each context element and its default value
+				   
+		-->
+		buiness : {
+			a : {
+				criteria: {
+					aa : "abc.abc;1.0.0%||a:cde;1.1.1,b:dfe;1.0.0||%",
+					bb : "test.array;1.0.0%||element:@||!(test.expression)!.outputCriteria(&(expression)&;;&(parms)&)||@||%"
+				},
+				default: {
+				
+				}
+			}
+		}
+	}
+	</contexts>
+	
 </html>
 
