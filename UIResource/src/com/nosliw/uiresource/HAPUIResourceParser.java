@@ -21,18 +21,23 @@ import org.jsoup.select.Elements;
 
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
+import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeManager;
+import com.nosliw.data.core.criteria.HAPCriteriaParser;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.expression.HAPExpressionDefinition;
 
 /*
  * This is a utility class that process ui resource file and create ui resource object
  * the id index start with 1 every processing start so that for same ui resource, we would get same result
  */
-public class HAPUIResourceProcessor {
+public class HAPUIResourceParser {
 	//for creating ui id
 	private int m_idIndex;
 	//configuration object
@@ -40,12 +45,10 @@ public class HAPUIResourceProcessor {
 	//current ui resource 
 	private HAPUIResource m_resource = null;
 	
-	private HAPDataTypeManager m_dataTypeMan;
-	private HAPUIResourceManager m_uiResourceMan;
+	private HAPValueInfoManager m_valueInfoMan;
+	private HAPCriteriaParser m_criteriaParser;
 	
-	public HAPUIResourceProcessor(HAPConfigure setting, HAPDataTypeManager dataTypeMan, HAPUIResourceManager uiResourceMan){
-		this.m_uiResourceMan = uiResourceMan;
-		this.m_dataTypeMan = dataTypeMan;
+	public HAPUIResourceParser(HAPConfigure setting){
 		this.m_idIndex = 1;
 		this.m_setting = setting;
 	}
@@ -85,7 +88,7 @@ public class HAPUIResourceProcessor {
 		parseDescendantTags(bodyEle, m_resource);
 		
 		//add span structure around all pain text
-		HAPUIResourceUtility.addSpanToText(bodyEle);
+		HAPUIResourceParserUtility.addSpanToText(bodyEle);
 
 		m_resource.postRead();
 		
@@ -94,7 +97,7 @@ public class HAPUIResourceProcessor {
 
 		//get all decedant tags
 		Set<HAPUITag> tags = new HashSet<HAPUITag>();
-		HAPUIResourceUtility.getAllChildTags(m_resource, tags);
+		HAPUIResourceParserUtility.getAllChildTags(m_resource, tags);
 		for(HAPUITag tag : tags)  this.m_resource.addUITagLib(tag.getTagName());
 		
 		//create script file for this ui resource
@@ -104,11 +107,66 @@ public class HAPUIResourceProcessor {
 	}
 
 	private void parseChildContextBlocks(Element ele, HAPUIResourceBasic resource){
+		List<Element> removes = new ArrayList<Element>();
+		Elements contextEles = ele.getElementsByTag(HAPConstant.UIRESOURCE_TAG_CONTEXT);
+		for(int i=0; i<contextEles.size(); i++){
+			try {
+				String content = contextEles.get(i).html();
+				JSONObject defsJson = new JSONObject(content);
+				Iterator<String> defNames = defsJson.keys();
+				while(defNames.hasNext()){
+					String eleName = defNames.next();
+					JSONObject eleDefJson = defsJson.optJSONObject(eleName);
+					HAPContextElement contextEle = new HAPContextElement();
+
+					Object d = eleDefJson.opt(HAPContextElement.DEFAULT);
+					if(d!=null)		contextEle.setDefault(d.toString());
+
+					Object criteriasObj = eleDefJson.opt(HAPContextElement.CRITERIAS);
+					Map<String, HAPDataTypeCriteria> criterias = new LinkedHashMap<String, HAPDataTypeCriteria>();
+					this.parseContextElementCriterias("", criteriasObj, criterias);
+					for(String path : criterias.keySet()){
+						contextEle.addCriteria(path, criterias.get(path));
+					}
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
+			removes.add(contextEles.get(i));
+		}
+		//remove script ele from doc
+		for(Element remove : removes)	remove.remove();
+	}
 	
+	private void parseContextElementCriterias(String path, Object criteriasObj, Map<String, HAPDataTypeCriteria> criterias){
+		
 	}
 	
 	private void parseChildExpressionBlocks(Element ele, HAPUIResourceBasic resource){
-		
+		List<Element> removes = new ArrayList<Element>();
+
+		Elements expressionEles = ele.getElementsByTag(HAPConstant.UIRESOURCE_TAG_EXPRESSIONS);
+		for(int i=0; i<expressionEles.size(); i++){
+			try {
+				String content = expressionEles.get(i).html();
+				JSONObject defsJson = new JSONObject(content);
+				Iterator<String> defNames = defsJson.keys();
+				while(defNames.hasNext()){
+					String defName = defNames.next();
+					
+					JSONObject expDefJson = defsJson.optJSONObject(defName);
+					HAPExpressionDefinition expressionDef = (HAPExpressionDefinition)HAPStringableEntityImporterJSON.parseJsonEntity(expDefJson, "data.expressiondefinition", this.m_valueInfoMan);
+					resource.addExpressionDefinition(expressionDef);
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
+			removes.add(expressionEles.get(i));
+		}
+		//remove script ele from doc
+		for(Element remove : removes)	remove.remove();
 	}
 	
 	/*
@@ -186,7 +244,7 @@ public class HAPUIResourceProcessor {
 		}
 		
 		//save the content to file, file location is from configuration
-		HAPFileUtility.writeFile(HAPUIResourceUtility.getUIResourceScriptFileName(resource.getId(), this.getUIResourceManager()), scriptContent.toString());
+		HAPFileUtility.writeFile(HAPUIResourceParserUtility.getUIResourceScriptFileName(resource.getId(), this.getUIResourceManager()), scriptContent.toString());
 	}
 	
 	/*
@@ -222,19 +280,19 @@ public class HAPUIResourceProcessor {
 		for(HAPUIExpressionContent content : resource.getExpressionContents()){
 			Set<HAPUIResourceExpression> exps = content.getUIExpressions();
 			for(HAPUIResourceExpression exp : exps){
-				expressionScript.append(HAPUIResourceUtility.createExpressionScript(exp));
+				expressionScript.append(HAPUIResourceParserUtility.createExpressionScript(exp));
 			}
 		}
 		for(HAPUIExpressionAttribute attr : resource.getExpressionAttributes()){
 			Set<HAPUIResourceExpression> exps = attr.getUIExpressions();
 			for(HAPUIResourceExpression exp : exps){
-				expressionScript.append(HAPUIResourceUtility.createExpressionScript(exp));
+				expressionScript.append(HAPUIResourceParserUtility.createExpressionScript(exp));
 			}
 		}
 		for(HAPUIExpressionAttribute attr : resource.getExpressionTagAttributes()){
 			Set<HAPUIResourceExpression> exps = attr.getUIExpressions();
 			for(HAPUIResourceExpression exp : exps){
-				expressionScript.append(HAPUIResourceUtility.createExpressionScript(exp));
+				expressionScript.append(HAPUIResourceParserUtility.createExpressionScript(exp));
 			}
 		}
 		parms.put("uiexpression", expressionScript.toString());
@@ -270,19 +328,19 @@ public class HAPUIResourceProcessor {
 		for(Element e : eles){
 			//for each child element
 			String tag = e.tagName();
-			if(HAPUIResourceUtility.isCustomTag(e)==null){
+			if(HAPUIResourceParserUtility.isCustomTag(e)==null){
 				//for none custom tag
 				Attributes attrs = e.attributes();
 				boolean dataKeyAttr = false;
 				for(Attribute attr : attrs){
 					//check if there is any data key attribute, if so, then this tag should be costom tag
 					//here we cannot just check key attribute as some regular tag may have key attribute for instance "event"
-					dataKeyAttr = HAPUIResourceUtility.isDataKeyAttribute(attr.getKey());
+					dataKeyAttr = HAPUIResourceParserUtility.isDataKeyAttribute(attr.getKey());
 					if(dataKeyAttr)	break;
 				}
 				if(dataKeyAttr){
 					//if have data key attribute, then change the standard tag name to default custome tag name
-					tag = HAPUIResourceUtility.makeCustomTagName(tag);
+					tag = HAPUIResourceParserUtility.makeCustomTagName(tag);
 					e.tagName(tag);
 				}
 			}
@@ -322,7 +380,7 @@ public class HAPUIResourceProcessor {
 		List<Element> removes = new ArrayList<Element>();
 		Elements eles = ele.children();
 		for(Element e : eles){
-			if(HAPBasicUtility.isStringEmpty(HAPUIResourceUtility.getUIId(e))){
+			if(HAPBasicUtility.isStringEmpty(HAPUIResourceParserUtility.getUIId(e))){
 				//if tag have no ui id, then create ui id for it
 				createUIId(e, resource);
 			}
@@ -357,7 +415,7 @@ public class HAPUIResourceProcessor {
 	 * 		  false : this element should not be removed after processiong
 	 */
 	private boolean parseTag(Element ele, HAPUIResourceBasic resource){
-		String customTag = HAPUIResourceUtility.isCustomTag(ele);
+		String customTag = HAPUIResourceParserUtility.isCustomTag(ele);
 		if(customTag!=null){
 			//process custome tag
 			parseCustomTag(customTag, ele, resource);
@@ -380,7 +438,7 @@ public class HAPUIResourceProcessor {
 	 * process customer tag
 	 */
 	private void parseCustomTag(String tagName, Element ele, HAPUIResourceBasic resource){
-		String uiId = HAPUIResourceUtility.getUIId(ele); 
+		String uiId = HAPUIResourceParserUtility.getUIId(ele); 
 		
 		HAPUITag uiTag = new HAPUITag(tagName, uiId);
 
@@ -414,7 +472,7 @@ public class HAPUIResourceProcessor {
 		parseChildExpressionContent(ele, uiTag);
 		parseDescendantTags(ele, uiTag);
 		
-		HAPUIResourceUtility.addSpanToText(ele);
+		HAPUIResourceParserUtility.addSpanToText(ele);
 		
 		uiTag.postRead();
 		
@@ -441,7 +499,7 @@ public class HAPUIResourceProcessor {
 		for(Attribute eleAttr : eleAttrs){
 			String eleAttrValue = eleAttr.getValue();
 			String eleAttrName = eleAttr.getKey();
-			String keyAttrName = HAPUIResourceUtility.isKeyAttribute(eleAttrName);
+			String keyAttrName = HAPUIResourceParserUtility.isKeyAttribute(eleAttrName);
 			
 			if(keyAttrName!=null){
 				if(keyAttrName.startsWith(HAPConstant.UIRESOURCE_ATTRIBUTE_DATABINDING)){
@@ -458,14 +516,14 @@ public class HAPUIResourceProcessor {
 	 * process element's attribute that have expression value 
 	 */
 	private void parseExpressionAttribute(Element ele, HAPUIResourceBasic resource, boolean isCustomerTag){
-		String uiId = HAPUIResourceUtility.getUIId(ele); 
+		String uiId = HAPUIResourceParserUtility.getUIId(ele); 
 		
 		//read attributes
 		Attributes eleAttrs = ele.attributes();
 		for(Attribute eleAttr : eleAttrs){
 			String eleAttrKey = eleAttr.getKey();
 			//replace express attribute value with; create ExpressEle object
-			String uiExpression = HAPUIResourceUtility.isExpressionAttribute(eleAttr);
+			String uiExpression = HAPUIResourceParserUtility.isExpressionAttribute(eleAttr);
 			if(uiExpression!=null){
 				//handle expression attribute
 				HAPUIExpressionAttribute eAttr = new HAPUIExpressionAttribute(uiId, eleAttrKey, uiExpression, this.getDataTypeManager());
@@ -482,12 +540,12 @@ public class HAPUIResourceProcessor {
 	 * isCustomertag : whether this element is a customer tag
 	 */
 	private void parseKeyAttribute(Element ele, HAPUIResourceBasic resource, boolean isCustomerTag){
-		String uiId = HAPUIResourceUtility.getUIId(ele); 
+		String uiId = HAPUIResourceParserUtility.getUIId(ele); 
 		Attributes eleAttrs = ele.attributes();
 		for(Attribute eleAttr : eleAttrs){
 			String eleAttrValue = eleAttr.getValue();
 			String eleAttrName = eleAttr.getKey();
-			String keyAttrName = HAPUIResourceUtility.isKeyAttribute(eleAttrName);
+			String keyAttrName = HAPUIResourceParserUtility.isKeyAttribute(eleAttrName);
 			
 			if(keyAttrName!=null){
 				if(keyAttrName.contains(HAPConstant.UIRESOURCE_ATTRIBUTE_EVENT)){
@@ -531,10 +589,5 @@ public class HAPUIResourceProcessor {
 		resource.addJSBlock(jsBlock);
 	}
 	
-	
-
 	private String createId(){		return String.valueOf(++this.m_idIndex);	}
-	
-	protected HAPDataTypeManager getDataTypeManager(){ return this.m_dataTypeMan; }
-	protected HAPUIResourceManager getUIResourceManager(){ return this.m_uiResourceMan;}
 }

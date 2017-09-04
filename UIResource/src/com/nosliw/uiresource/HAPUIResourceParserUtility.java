@@ -16,7 +16,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 
-public class HAPUIResourceUtility {
+public class HAPUIResourceParserUtility {
 
 	/*
 	 * script file name to store all the script infor for uiresource

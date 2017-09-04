@@ -379,8 +379,10 @@
 			<definition name="UIRESOURCE_ATTRIBUTE_EVENT" value="event"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_DATABINDING" value="data"/>
 			<definition name="UIRESOURCE_TAG_PLACEHOLDER" value="nosliw"/>
-			<definition name="UIRESOURCE_TAG_SCRIPT" value="script"/>
-			<definition name="UIRESOURCE_TAG_CONSTANT" value="constants"/>
+			<definition name="UIRESOURCE_TAG_SCRIPTS" value="script"/>
+			<definition name="UIRESOURCE_TAG_CONSTANTS" value="constants"/>
+			<definition name="UIRESOURCE_TAG_EXPRESSIONS" value="expressions"/>
+			<definition name="UIRESOURCE_TAG_CONTEXT" value="context"/>
 			<definition name="UIRESOURCE_CUSTOMTAG_TAG_PREFIX" value="nosliw-"/>
 			<definition name="UIRESOURCE_CUSTOMTAG_KEYATTRIBUTE_PREFIX" value="nosliw-"/>
 			<definition name="UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX" value="-tag-start"/>

@@ -16,6 +16,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.expression.HAPExpressionDefinition;
 
 /*
  * ui resource basic class for both ui resource and custom tag
@@ -188,6 +189,10 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	public Set<HAPUIExpressionAttribute> getExpressionAttributes(){return this.m_expressionAttributes;}
 	public Set<HAPUIExpressionAttribute> getExpressionTagAttributes(){return this.m_expressionTagAttributes;}
 
+	public void addExpressionDefinition(HAPExpressionDefinition expressionDef){
+		
+	}
+	
 	/*
 	 * process attributes
 	 */

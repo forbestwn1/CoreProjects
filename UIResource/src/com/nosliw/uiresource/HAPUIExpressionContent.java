@@ -83,7 +83,7 @@ public class HAPUIExpressionContent extends HAPSerializableImp{
 				//start with expression
 				int expEnd = content.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE);
 				int expStart = index + HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_OPEN.length();
-				out.add(new HAPUIResourceExpression(content.substring(expStart, expEnd), HAPUIResourceUtility.buildExpressionFunctionName(this.createId()), constants, dataTypeMan));
+				out.add(new HAPUIResourceExpression(content.substring(expStart, expEnd), HAPUIResourceParserUtility.buildExpressionFunctionName(this.createId()), constants, dataTypeMan));
 				content = content.substring(expEnd + HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE.length());
 			}
 		}
