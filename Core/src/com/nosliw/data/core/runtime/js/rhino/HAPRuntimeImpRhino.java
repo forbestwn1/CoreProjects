@@ -17,7 +17,9 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
+import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
@@ -62,6 +64,46 @@ public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 		this.m_taskScope = new LinkedHashMap<String, Scriptable>();
 	}
 	
+	/**
+	 * Register object by name to rhino runtime, so that all the js (for instance operation implementation) can use it to implement something
+	 * @param name
+	 * @param gateWayPoint
+	 */
+	public void registerGatewayPoint(String name, Object gateWayPoint){
+		
+	}
+	
+	public void unregisterGatewayPoint(String name){
+		
+	}
+	
+	
+	@Override
+	public HAPData executeExpression(HAPExpression expression, Map<String, HAPData> varData) {
+		//init rhino runtime, init scope
+		Scriptable scope = rhinoRuntime.initExecuteExpression(this.getTaskId());
+		
+		//prepare resources for expression in the runtime (resource and dependency)
+		//execute expression after load required resources
+		List<HAPResourceInfo> resourcesId = this.getRuntimeEnvironment().getResourceDiscovery().discoverResourceRequirement(expression);
+		HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForLoadResourceTask(this);
+		rhinoRuntime.loadTaskScript(scriptInfo, this.getTaskId());
+		
+		
+		
+		HAPExpressionTaskRhino that = this;
+		HAPRuntimeTask loadResourcesTask = new HAPLoadResourcesTaskRhino(resourcesId);
+		loadResourcesTask.registerListener(new HAPRunTaskEventListener(){
+			@Override
+			public void success(HAPRuntimeTask task) {
+				//after resource loaded, execute expression
+				HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForExecuteExpressionTask(that);
+				rhinoRuntime.loadTaskScript(scriptInfo, getTaskId());
+			}});
+		
+		return loadResourcesTask;
+	}
+
 	//gateway callback method
 	@Override
 	public void requestDiscoverResources(Object objResourceIds, Object handlers){
@@ -327,4 +369,5 @@ public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 	}
 	
 	protected HAPRuntimeEnvironment getRuntimeEnvironment(){  return this.m_runtimeEnvironment;  }
+
 }
