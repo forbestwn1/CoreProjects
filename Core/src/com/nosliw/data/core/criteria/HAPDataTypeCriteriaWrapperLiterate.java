@@ -1,5 +1,6 @@
 package com.nosliw.data.core.criteria;
 
+import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -72,6 +73,11 @@ public class HAPDataTypeCriteriaWrapperLiterate extends HAPSerializableImp imple
 	@Override
 	public Set<HAPDataTypeCriteriaId> getValidDataTypeCriteriaId(HAPDataTypeHelper dataTypeHelper) {
 		return this.getSolidCriteria().getValidDataTypeCriteriaId(dataTypeHelper);
+	}
+
+	@Override
+	public List<HAPDataTypeCriteria> getChildren() {
+		return this.getSolidCriteria().getChildren();
 	}
 	
 }

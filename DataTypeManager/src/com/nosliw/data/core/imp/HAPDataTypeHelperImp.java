@@ -3,6 +3,7 @@ package com.nosliw.data.core.imp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
@@ -15,18 +16,22 @@ import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaExpression;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaIds;
 import com.nosliw.data.core.criteria.HAPDataTypeSubCriteriaGroup;
 import com.nosliw.data.core.expression.HAPMatcher;
 import com.nosliw.data.core.expression.HAPMatchers;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 	private HAPDataAccessDataType m_dataAccess = null;
+	private HAPRuntimeEnvironment m_runtimeEnv;
 	
-	public HAPDataTypeHelperImp(HAPDataAccessDataType dataAccess){
+	public HAPDataTypeHelperImp(HAPRuntimeEnvironment runtimeEnv, HAPDataAccessDataType dataAccess){
 		this.m_dataAccess = dataAccess;
+		this.m_runtimeEnv = runtimeEnv;
 	}
 	
 	@Override
@@ -401,5 +406,25 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		return new HAPDataTypeCriteriaId(data.getDataTypeId(), null);
 	}
 
+	@Override
+	public void processExpressionCriteria(HAPDataTypeCriteria criteria, Map<String, HAPData> parms) {
+		Set<HAPDataTypeCriteriaExpression> expCriterias = new HashSet<HAPDataTypeCriteriaExpression>();
+		this.discoverExpressionCriteria(criteria, expCriterias);
+		for(HAPDataTypeCriteriaExpression expCriteria : expCriterias){
+			String expressionStr = expCriteria.getExpression();
+		}
+	}
 
+	private void discoverExpressionCriteria(HAPDataTypeCriteria criteria, Set<HAPDataTypeCriteriaExpression> expCriterias){
+		if(criteria.getType().equals(HAPConstant.DATATYPECRITERIA_TYPE_EXPRESSION)){
+			expCriterias.add((HAPDataTypeCriteriaExpression)criteria);
+		}
+		else{
+			List<HAPDataTypeCriteria> children = criteria.getChildren();
+			for(HAPDataTypeCriteria child : children){
+				this.discoverExpressionCriteria(child, expCriterias);
+			}
+		}
+	}
+	
 }

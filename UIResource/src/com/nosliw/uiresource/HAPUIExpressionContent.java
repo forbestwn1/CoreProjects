@@ -30,23 +30,16 @@ public class HAPUIExpressionContent extends HAPSerializableImp{
 	public static final String ATTRIBUTE = "attribute";
 
 	private String m_uiId;
+
+	private String m_content;
 	
 	//a list element for content, 
 	//two types of elements in this list: string and uiExpression
 	private List<Object> m_contentElements;
 	
-	private HAPDataTypeManager m_dataTypeMan;
-
-	public  HAPUIExpressionContent(String uiId, List<Object> contentElements, HAPDataTypeManager dataTypeMan){
-		this.m_dataTypeMan = dataTypeMan;
+	public  HAPUIExpressionContent(String uiId, String content){
 		this.m_uiId = uiId;
-		this.m_contentElements = contentElements;
-	}
-
-	public  HAPUIExpressionContent(String uiId, String content, HAPDataTypeManager dataTypeMan){
-		this.m_dataTypeMan = dataTypeMan;
-		this.m_uiId = uiId;
-		this.m_contentElements = contentElements;
+		this.m_content = content;
 	}
 	
 	public String getUiId(){return this.m_uiId;}
@@ -83,7 +76,7 @@ public class HAPUIExpressionContent extends HAPSerializableImp{
 				//start with expression
 				int expEnd = content.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE);
 				int expStart = index + HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_OPEN.length();
-				out.add(new HAPUIResourceExpression(content.substring(expStart, expEnd), HAPUIResourceParserUtility.buildExpressionFunctionName(this.createId()), constants, dataTypeMan));
+//				out.add(new HAPUIResourceExpression(content.substring(expStart, expEnd), HAPUIResourceParserUtility.buildExpressionFunctionName(this.createId()), constants, dataTypeMan));
 				content = content.substring(expEnd + HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE.length());
 			}
 		}
@@ -91,10 +84,6 @@ public class HAPUIExpressionContent extends HAPSerializableImp{
 		return out;
 	}
 	
-
-	
-	protected HAPDataTypeManager getDataTypeManager(){ return this.m_dataTypeMan; }
-
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(UIID, this.m_uiId);

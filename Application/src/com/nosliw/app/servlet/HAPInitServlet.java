@@ -15,11 +15,8 @@ public class HAPInitServlet  extends HttpServlet{
 
 	public void init() throws ServletException
 	   {
-			//module init
-			HAPModuleRuntimeJS runtimeJSModule = new HAPModuleRuntimeJS().init(HAPValueInfoManager.getInstance());;
-
 			//create runtime
-			HAPRuntimeEnvironmentImpJS runtimeEnvironment = new HAPRuntimeEnvironmentImpJS(runtimeJSModule);
+			HAPRuntimeEnvironmentImpJS runtimeEnvironment = new HAPRuntimeEnvironmentImpJS();
 
 			HAPExpressionManagerImp expressionMan = (HAPExpressionManagerImp)runtimeEnvironment.getExpressionManager();
 			expressionMan.importFromClassFolder(HAPExpressionTest.class);

@@ -1,0 +1,16 @@
+<definition name="test.parm;1.0.0">
+	
+	<info description="container for list of data"/>
+
+	<operations>
+	
+		<operation name="getValue" >
+			<parms>
+				<parm name="base" criteria="test.parm" isBase="true"/>
+			</parms>
+			<output criteria="*"/>
+		</operation>
+
+	</operations>
+
+</definition>

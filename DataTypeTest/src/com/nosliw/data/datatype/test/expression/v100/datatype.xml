@@ -1,19 +1,17 @@
 <definition name="test.expression;1.0.0">
 	
-	<info description="container for list of data"/>
+	<info description="container for expression"/>
 
-<!-- 
 	<operations>
 	
-		<operation name="process" >
+		<operation name="outputCriteria" >
 			<parms>
-				<parm criteria="test.array" isBase="true"/>
-				<parm name="expression" criteria="test.expression"/>
+				<parm name="expression" criteria="test.expression" isBase="true"/>
+				<parm name="parms" criteria="test.map"/>
 			</parms>
-			<output criteria="test.array"/>
+			<output criteria="test.criteria"/>
 		</operation>
 
 	</operations>
- -->
 
 </definition>

@@ -89,7 +89,7 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	private List<HAPJSBlock> m_jsBlocks;
 	
 	//a set of named data that can be used as constants
-	private Map<String, HAPData> m_constants;
+	private Map<String, HAPConstantDef> m_constants;
 	
 	//all the customer tag within the domain
 	private Map<String, HAPUITag> m_uiTags; 
@@ -111,7 +111,7 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 		this.m_elementEvents = new HashSet<HAPElementEvent>();
 		this.m_tagEvents = new HashSet<HAPElementEvent>();
 		this.m_attributes = new LinkedHashMap<String, String>();
-		this.m_constants = new LinkedHashMap<String, HAPData>();
+		this.m_constants = new LinkedHashMap<String, HAPConstantDef>();
 	}
 	
 	abstract public String getType(); 
@@ -180,8 +180,8 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	public void addTagEvent(HAPElementEvent event){this.m_tagEvents.add(event);}
 	public void addJSBlock(HAPJSBlock jsBlock){this.m_jsBlocks.add(jsBlock);}
 	public void setScriptFactoryName(String name){this.m_scriptFactoryName=name;}
-	public void addConstant(String name, HAPData data){this.m_constants.put(name, data);}
-	public Map<String, HAPData> getConstants(){return this.m_constants;}
+	public void addConstant(String name, HAPConstantDef data){this.m_constants.put(name, data);}
+	public Map<String, HAPConstantDef> getConstants(){return this.m_constants;}
 	
 	public List<HAPJSBlock> getJSBlocks(){return this.m_jsBlocks;}
 	public Collection<HAPUITag> getUITags(){return this.m_uiTags.values();} 

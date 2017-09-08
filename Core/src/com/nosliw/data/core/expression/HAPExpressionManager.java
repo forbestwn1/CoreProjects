@@ -16,5 +16,7 @@ public interface HAPExpressionManager {
 	HAPExpressionDefinition getExpressionDefinition(String suite, String name);
 	
 	HAPExpression processExpression(String suite, String expressionName, Map<String, HAPDataTypeCriteria> variableCriterias);
+
+	HAPExpression processExpression(HAPExpressionDefinition expressionDefinition, Map<String, HAPDataTypeCriteria> variableCriterias);
 	
 }

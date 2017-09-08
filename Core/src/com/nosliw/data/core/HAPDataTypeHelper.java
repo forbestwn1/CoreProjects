@@ -1,5 +1,6 @@
 package com.nosliw.data.core;
 
+import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -130,5 +131,12 @@ public interface HAPDataTypeHelper {
 	 * @return
 	 */
 	HAPMatchers buildMatchers(HAPDataTypeCriteria from, HAPDataTypeCriteria to);
+	
+	/**
+	 * Process all expression in criteria in order to figure out solid criteria for each expression criteria
+	 * @param criteria
+	 * @param parms parms used in expression 
+	 */
+	void processExpressionCriteria(HAPDataTypeCriteria criteria, Map<String, HAPData> parms);
 	
 }

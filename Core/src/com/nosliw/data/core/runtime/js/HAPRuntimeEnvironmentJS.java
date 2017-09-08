@@ -13,6 +13,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPExpressionManager m_expressionManager;
 	
+	public HAPRuntimeEnvironmentJS(){}
+	
 	public HAPRuntimeEnvironmentJS(HAPResourceDiscovery resourceDiscovery, HAPResourceManager resourceMan, HAPExpressionManager expressionManager){
 		super();
 		this.m_resourceDiscovery = resourceDiscovery;
@@ -29,4 +31,6 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	@Override
 	public HAPExpressionManager getExpressionManager(){  return this.m_expressionManager;  }
 
+	
+	
 }

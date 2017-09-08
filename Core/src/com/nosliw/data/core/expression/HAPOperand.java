@@ -27,7 +27,10 @@ public interface HAPOperand {
 
 	@HAPAttribute
 	public static final String CONVERTERS = "converters"; 
-	
+
+	@HAPAttribute
+	public static final String OUTPUTCRITERIA = "outputCriteria"; 
+
 	//type of operand
 	String getType();
 

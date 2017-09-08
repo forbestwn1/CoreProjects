@@ -15,3 +15,5 @@ s
 Csrc/com/nosliw/application/loader/datatype/HAPDataTypeImporter.java,2\f\2f1fa745887fbbd3dc949c13bb69bd755885322d
 g
 7src/com/nosliw/test/criteria/HAPCriteriaParserTest.java,9\e\9e1940e7f74cd2dbbdf85c65e6fb45288c699611
+i
+9src/com/nosliw/test/runtimerhino/HAPRuntimeRhinoMain.java,2\1\211a3051d7716a3ae56772433faf50dd79da17b3

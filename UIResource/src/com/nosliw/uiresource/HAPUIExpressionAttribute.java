@@ -1,6 +1,5 @@
 package com.nosliw.uiresource;
 
-import java.util.List;
 import java.util.Map;
 
 import com.nosliw.data.core.HAPDataTypeManager;
@@ -9,13 +8,8 @@ public class HAPUIExpressionAttribute extends HAPUIExpressionContent{
 	//attribute name
 	private String m_attribute;
 
-	public HAPUIExpressionAttribute(String uiId, String attr, List<Object> contentElements, HAPDataTypeManager dataTypeMan){
-		super(uiId, contentElements, dataTypeMan);
-		this.m_attribute = attr;
-	}
-
-	public HAPUIExpressionAttribute(String uiId, String attr, String content, HAPDataTypeManager dataTypeMan){
-		super(uiId, content, dataTypeMan);
+	public HAPUIExpressionAttribute(String uiId, String attr, String content){
+		super(uiId, content);
 		this.m_attribute = attr;
 	}
 	

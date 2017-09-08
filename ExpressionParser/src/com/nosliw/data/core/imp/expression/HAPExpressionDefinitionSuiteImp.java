@@ -34,9 +34,20 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 
 	@Override
 	public HAPExpressionDefinition getExpressionDefinition(String name) {
-		return this.getExpressionDefinitions().get(name);
+		return this.getAllExpressionDefinitions().get(name);
 	}
 
+	@Override
+	public Map<String, HAPExpressionDefinition> getAllExpressionDefinitions(){
+		if(this.m_expressionDefinitions==null){
+			this.m_expressionDefinitions = this.getMapValueAncestorByPath(EXPRESSIONDEFINITIONS);
+			for(String name : this.m_expressionDefinitions.keySet()){
+				this.processExpressionDefinition(this.m_expressionDefinitions.get(name));
+			}
+		}
+		return this.m_expressionDefinitions;
+	}
+	
 	public HAPDataWrapper getResult(){		return (HAPDataWrapper)this.getAtomicAncestorValue(RESULT);	}
 	
 	public Map<String, HAPData> getVariableData() {
@@ -70,19 +81,8 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 		
 	}
 
-	
-	private Map<String, HAPExpressionDefinition> getExpressionDefinitions(){
-		if(this.m_expressionDefinitions==null){
-			this.m_expressionDefinitions = this.getMapValueAncestorByPath(EXPRESSIONDEFINITIONS);
-			for(String name : this.m_expressionDefinitions.keySet()){
-				this.processExpressionDefinition(this.m_expressionDefinitions.get(name));
-			}
-		}
-		return this.m_expressionDefinitions;
-	}
-	
 	public void merge(HAPExpressionDefinitionSuiteImp suite){
-		this.getExpressionDefinitions().putAll(suite.getExpressionDefinitions());
+		this.getAllExpressionDefinitions().putAll(suite.getAllExpressionDefinitions());
 		this.getVariableData().putAll(suite.getVariableData());
 	}
 }

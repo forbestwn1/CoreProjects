@@ -1,5 +1,7 @@
 package com.nosliw.data.core.expression;
 
+import java.util.Map;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 
@@ -15,5 +17,6 @@ public interface HAPExpressionDefinitionSuite {
 	String getName();
 	
 	HAPExpressionDefinition getExpressionDefinition(String name);
-	
+
+	Map<String, HAPExpressionDefinition> getAllExpressionDefinitions();
 }

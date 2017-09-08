@@ -1,5 +1,6 @@
 package com.nosliw.data.core.criteria;
 
+import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -18,6 +19,9 @@ public interface HAPDataTypeCriteria{
 
 	@HAPAttribute
 	public static String TYPE = "type";
+
+	@HAPAttribute
+	public static String CHILDREN = "children";
 
 	String getType();
 	
@@ -43,6 +47,11 @@ public interface HAPDataTypeCriteria{
 
 	Set<HAPDataTypeCriteriaId> getValidDataTypeCriteriaId(HAPDataTypeHelper dataTypeHelper);
 
+	/**
+	 * Get all children criteria
+	 * @return
+	 */
+	List<HAPDataTypeCriteria> getChildren();
 	
 	/**
 	 * Find the most general criteria that all the data type that meet normalized criteria should also meet original criteria

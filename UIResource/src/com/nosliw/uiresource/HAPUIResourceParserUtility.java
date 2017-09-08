@@ -19,13 +19,6 @@ import com.nosliw.common.utils.HAPFileUtility;
 public class HAPUIResourceParserUtility {
 
 	/*
-	 * script file name to store all the script infor for uiresource
-	 */
-	public static String getUIResourceScriptFileName(String resourceName, HAPUIResourceManager uiResourceMan){
-		return HAPFileUtility.buildFullFileName(uiResourceMan.getTempFileLocation(), resourceName, "js");
-	}
-	
-	/*
 	 * build expression function name based on id
 	 */
 	public static String buildExpressionFunctionName(String id){
@@ -149,12 +142,4 @@ public class HAPUIResourceParserUtility {
 		}
 	}
 	
-	/*
-	 * create script for expression
-	 */
-	public static String createExpressionScript(HAPUIResourceExpression expression){
-		String name = expression.getExpressionId();
-		String script = expression.getFunctionScript();
-		return name + ":" + script + ",";
-	}
 }

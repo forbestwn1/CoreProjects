@@ -22,7 +22,7 @@ public class HAPDataTypeCriteriaOr extends HAPDataTypeCriteriaComplex{
 	@Override
 	public Set<HAPDataTypeId> getValidDataTypeId(HAPDataTypeHelper dataTypeHelper) {
 		Set<HAPDataTypeId> out = new HashSet<HAPDataTypeId>();
-		for(HAPDataTypeCriteria ele : this.getElements()){
+		for(HAPDataTypeCriteria ele : this.getChildren()){
 			out.addAll(ele.getValidDataTypeId(dataTypeHelper));
 		}
 		return out;
@@ -40,7 +40,7 @@ public class HAPDataTypeCriteriaOr extends HAPDataTypeCriteriaComplex{
 		StringBuffer out = new StringBuffer();
 		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.START_OR));
 		int i = 0;
-		for(HAPDataTypeCriteria childCriteria : this.getElements()){
+		for(HAPDataTypeCriteria childCriteria : this.getChildren()){
 			if(i!=0)   out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.COMMAR));
 			out.append(HAPSerializeManager.getInstance().toStringValue(childCriteria, HAPSerializationFormat.LITERATE));
 			i++;
@@ -51,7 +51,7 @@ public class HAPDataTypeCriteriaOr extends HAPDataTypeCriteriaComplex{
 
 	@Override
 	public Set<HAPDataTypeCriteriaId> getValidDataTypeCriteriaId(HAPDataTypeHelper dataTypeHelper) {
-		List<HAPDataTypeCriteria> elements = this.getElements();
+		List<HAPDataTypeCriteria> elements = this.getChildren();
 		Set<HAPDataTypeCriteriaId> out = new HashSet<HAPDataTypeCriteriaId>();
 		for(int i=0; i<elements.size(); i++){
 			out.addAll(elements.get(i).getValidDataTypeCriteriaId(dataTypeHelper));

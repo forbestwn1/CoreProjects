@@ -18,4 +18,5 @@ public interface HAPRuntimeEnvironment {
 	
 	HAPResourceManager getResourceManager();
 
+	HAPRuntime getRuntime();
 }

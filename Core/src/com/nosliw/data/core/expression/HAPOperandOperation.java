@@ -12,10 +12,13 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
+import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataImp;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeOperation;
+import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
@@ -181,6 +184,16 @@ public class HAPOperandOperation extends HAPOperandImp{
 			
 			HAPOperationOutInfo outputInfo = dataTypeOperation.getOperationInfo().getOutputInfo();
 			if(outputInfo!=null){
+				//for criteria containing expression, execute expression here, using parmName : parmOperand for each parm for expression
+				Map<String, HAPData> expressionParms = new LinkedHashMap<String, HAPData>();
+				for(HAPOperationParmInfo parmInfo : parmsInfo){
+					String parmName = parmInfo.getName();
+					HAPOperand parmOperand = this.m_parms.get(parmName);
+					HAPData expressionParmData = new HAPDataWrapper(new HAPDataTypeId("test.parm"), parmOperand); 
+					expressionParms.put(parmName, expressionParmData);
+				}
+				
+				dataTypeHelper.processExpressionCriteria(outputInfo.getCriteria(), expressionParms);
 				this.setOutputCriteria(outputInfo.getCriteria());
 			}
 			//check if output compatible with expect

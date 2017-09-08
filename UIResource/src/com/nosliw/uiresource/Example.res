@@ -126,14 +126,14 @@
 	</script>
 	
 	
-	<constants>
-	{
 		<!-- This part can be used to define constants: js objects that can be calculated out during compilation of the ui resource file
 			 it can be defined in any form:
 			 	js value
 			 	ui expression
 			 since every constant is basically a js value, so it can be used anywhere that need js value 
 		-->
+	<constants>
+	{
 			hh : {
 				a : "heloop",
 				b : [1, 2, 3]
@@ -151,16 +151,17 @@
 			eeee : "!(integer:simple)!.new(:(#string:simple:8):)",
 			ffff : ":(#string:simple:11223344):",
 	}
-	</constant>
+	</constants>
 	
-	<contexts>
-	{
 		<!-- This part can be used to define context (variable)
 				it describle data type criteria for each context element and its default value
 		-->
-		buiness : {
+	<contexts>
+	{
+		business : {
 			a : {
-				criteria: {
+				criteria: "",
+				children: {
 					aa : "abc.abc;1.0.0%||a:cde;1.1.1,b:dfe;1.0.0||%",
 					bb : "test.array;1.0.0%||element:@||!(test.expression)!.outputCriteria(&(expression)&;;&(parms)&)||@||%"
 				},
@@ -172,10 +173,10 @@
 	}
 	</contexts>
 	
-	<expressions>
-	{
 		<!-- This part can be used to define expressions
 		-->
+	<expressions>
+	{
 		
 	
 	}

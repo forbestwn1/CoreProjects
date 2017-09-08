@@ -27,6 +27,10 @@ public class HAPDataWrapper extends HAPDataImp{
 	public HAPDataWrapper(String strValue){
 		this.buildDataObject(strValue, null);
 	}
+
+	public HAPDataWrapper(HAPDataTypeId dataTypeId, Object value){
+		super(dataTypeId, value);
+	}
 	
 	public String getWrapperType(){		return this.m_wrapperType.name();	}
 	private void setWrapperType(HAPSerializationFormat wrapperType){ this.m_wrapperType = wrapperType;  }

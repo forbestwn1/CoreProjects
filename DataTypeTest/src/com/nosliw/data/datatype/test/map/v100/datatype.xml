@@ -1,0 +1,24 @@
+<definition name="test.map;1.0.0">
+	
+	<info description="container for list of data"/>
+
+	<operations>
+	
+		<operation name="put" >
+			<parms>
+				<parm name="base" criteria="test.map" isBase="true"/>
+				<parm name="name" criteria="test.string"/>
+				<parm name="value" criteria="test.expression"/>
+			</parms>
+			<output criteria="test.map"/>
+		</operation>
+
+		<operation name="new" >
+			<parms>
+			</parms>
+			<output criteria=""/>
+		</operation>
+
+	</operations>
+
+</definition>

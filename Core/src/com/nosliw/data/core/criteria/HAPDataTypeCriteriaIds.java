@@ -10,7 +10,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 
@@ -19,13 +18,11 @@ public class HAPDataTypeCriteriaIds extends HAPDataTypeCriteriaImp{
 	@HAPAttribute
 	public static String IDSCRITERIA = "idsCriteria";
 
-	private Set<HAPDataTypeCriteriaId> m_idCriterias;
 	private Set<HAPDataTypeId> m_ids;
 	
 	public HAPDataTypeCriteriaIds(Set<HAPDataTypeCriteriaId> eles){
-		this.m_idCriterias = new HashSet<HAPDataTypeCriteriaId>();
 		this.m_ids = new HashSet<HAPDataTypeId>();
-		this.m_idCriterias.addAll(eles);
+		this.addChildren(new ArrayList(eles));
 		for(HAPDataTypeCriteriaId criteria : eles){
 			this.m_ids.add(criteria.getDataTypeId());
 		}
@@ -38,14 +35,13 @@ public class HAPDataTypeCriteriaIds extends HAPDataTypeCriteriaImp{
 	public Set<HAPDataTypeId> getValidDataTypeId(HAPDataTypeHelper dataTypeHelper) {		return this.m_ids;	}
 
 	@Override
-	public Set<HAPDataTypeCriteriaId> getValidDataTypeCriteriaId(HAPDataTypeHelper dataTypeHelper) {		return this.m_idCriterias;	}
+	public Set<HAPDataTypeCriteriaId> getValidDataTypeCriteriaId(HAPDataTypeHelper dataTypeHelper) {		return new HashSet(this.getChildren());	}
 
 	public HAPDataTypeCriteriaOr toOrCriteria(){
 		List<HAPDataTypeCriteria> criterias = new ArrayList<HAPDataTypeCriteria>();
-		for(HAPDataTypeCriteriaId id : this.m_idCriterias){
+		for(HAPDataTypeCriteria id : this.getChildren()){
 			criterias.add(id);
 		}
-		
 		HAPDataTypeCriteriaOr out = new HAPDataTypeCriteriaOr(criterias);
 		return out;
 	}
@@ -59,7 +55,6 @@ public class HAPDataTypeCriteriaIds extends HAPDataTypeCriteriaImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(IDSCRITERIA, HAPJsonUtility.buildJson(this.m_idCriterias, HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -67,7 +62,7 @@ public class HAPDataTypeCriteriaIds extends HAPDataTypeCriteriaImp{
 		StringBuffer out = new StringBuffer();
 		out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.START_IDS));
 		int i = 0;
-		for(HAPDataTypeCriteriaId idCriteria : this.m_idCriterias){
+		for(HAPDataTypeCriteria idCriteria : this.getChildren()){
 			if(i!=0)   out.append(HAPCriteriaParser.getInstance().getToken(HAPCriteriaParser.COMMAR));
 			out.append(HAPSerializeManager.getInstance().toStringValue(idCriteria, HAPSerializationFormat.LITERATE));
 			i++;
