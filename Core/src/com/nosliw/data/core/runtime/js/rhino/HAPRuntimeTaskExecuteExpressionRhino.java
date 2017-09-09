@@ -1,0 +1,66 @@
+package com.nosliw.data.core.runtime.js.rhino;
+
+import java.util.List;
+import java.util.Map;
+
+import org.mozilla.javascript.Scriptable;
+
+import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.expression.HAPExpression;
+import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
+import com.nosliw.data.core.runtime.HAPResourceInfo;
+import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
+import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.runtime.HAPRuntimeTask;
+import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
+import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
+
+public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteExpression{
+
+	public HAPRuntimeTaskExecuteExpressionRhino(HAPExpression expression, Map<String, HAPData> variablesValue) {
+		super(expression, variablesValue);
+	}
+
+	@Override
+	public HAPRuntimeTask execute(HAPRuntime runtime){
+		try{
+			HAPRuntimeImpRhino rhinoRuntime = (HAPRuntimeImpRhino)runtime;
+			
+			//init rhino runtime, init scope
+			Scriptable scope = rhinoRuntime.initExecuteExpression(this.getTaskId());
+			
+			//prepare resources for expression in the runtime (resource and dependency)
+			//execute expression after load required resources
+			List<HAPResourceInfo> resourcesId = rhinoRuntime.getRuntimeEnvironment().getResourceDiscovery().discoverResourceRequirement(this.getExpression());
+			
+			HAPRuntimeTaskExecuteExpressionRhino that = this;
+			HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
+			loadResourcesTask.registerListener(new HAPRunTaskEventListener(){
+				@Override
+				public void finish(HAPRuntimeTask task) {
+					HAPServiceData resourceTaskResult = task.getResult();
+					if(resourceTaskResult.isSuccess()){
+						//after resource loaded, execute expression
+						try{
+							HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForExecuteExpressionTask(that);
+							rhinoRuntime.loadTaskScript(scriptInfo, getTaskId());
+						}
+						catch(Exception e){
+							that.finish(HAPServiceData.createFailureData(e, ""));
+						}
+					}
+					else{
+						that.finish(resourceTaskResult);
+					}
+				}});
+			
+			return loadResourcesTask;
+		}
+		catch(Exception e){
+			this.finish(HAPServiceData.createFailureData(e, ""));
+			e.printStackTrace();
+		}
+		return null;
+	}
+}

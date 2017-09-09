@@ -13,6 +13,7 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.tools.debugger.Main;
 
+import com.google.common.util.concurrent.SettableFuture;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -79,29 +80,9 @@ public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 	
 	
 	@Override
-	public HAPData executeExpression(HAPExpression expression, Map<String, HAPData> varData) {
-		//init rhino runtime, init scope
-		Scriptable scope = rhinoRuntime.initExecuteExpression(this.getTaskId());
-		
-		//prepare resources for expression in the runtime (resource and dependency)
-		//execute expression after load required resources
-		List<HAPResourceInfo> resourcesId = this.getRuntimeEnvironment().getResourceDiscovery().discoverResourceRequirement(expression);
-		HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForLoadResourceTask(this);
-		rhinoRuntime.loadTaskScript(scriptInfo, this.getTaskId());
-		
-		
-		
-		HAPExpressionTaskRhino that = this;
-		HAPRuntimeTask loadResourcesTask = new HAPLoadResourcesTaskRhino(resourcesId);
-		loadResourcesTask.registerListener(new HAPRunTaskEventListener(){
-			@Override
-			public void success(HAPRuntimeTask task) {
-				//after resource loaded, execute expression
-				HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForExecuteExpressionTask(that);
-				rhinoRuntime.loadTaskScript(scriptInfo, getTaskId());
-			}});
-		
-		return loadResourcesTask;
+	public HAPServiceData executeExpression(HAPExpression expression, Map<String, HAPData> varData) {
+		HAPRuntimeTask task = new HAPRuntimeTaskExecuteExpressionRhino(expression, varData);
+		return this.executeTaskSync(task);
 	}
 
 	//gateway callback method
@@ -168,13 +149,14 @@ public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 	//gateway callback method
 	@Override
 	public void notifyExpressionExecuteResult(String taskId, Object result){
+		HAPRuntimeTask expressionTask = this.m_tasks.get(taskId);
 		try{
-			HAPRuntimeTask expressionTask = this.m_tasks.get(taskId);
 			String resultStr = (String)HAPRhinoDataUtility.toJson(result);
 			HAPDataWrapper resultData = new HAPDataWrapper(resultStr); 
-			expressionTask.success(resultData);
+			expressionTask.finish(HAPServiceData.createSuccessData(resultData));
 		}
 		catch(Exception e){
+			expressionTask.finish(HAPServiceData.createFailureData(e, ""));
 			e.printStackTrace();
 		}
 	}
@@ -182,11 +164,13 @@ public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 	//gatewary callback method
 	@Override
 	public void notifyResourcesLoaded(String taskId){
+		HAPRuntimeTask expressionTask = this.m_tasks.get(taskId);
 		try{
-			this.m_tasks.get(taskId).success(null);
+			expressionTask.finish(HAPServiceData.createSuccessData());
 		}
 		catch(Exception e){
 			e.printStackTrace();
+			expressionTask.finish(HAPServiceData.createFailureData(e, ""));
 		}
 	}
 
@@ -199,14 +183,45 @@ public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 
 		task.registerListener(new HAPRunTaskEventListener(){
 			@Override
-			public void success(HAPRuntimeTask task) {	m_tasks.remove(task.getTaskId());	}});
+			public void finish(HAPRuntimeTask task) {	m_tasks.remove(task.getTaskId());	}}
+		);
 		
-		HAPRuntimeTask newTask = task.execute(this);
-		if(newTask!=null){
-			this.executeTask(newTask);
-		}
+//		HAPRuntimeTask newTask = task.execute(this);
+//		if(newTask!=null){
+//			this.executeTask(newTask);
+//		}
+
+		//create a new thread to execute task
+		HAPRuntime that = this;
+		new Thread(new Runnable() {
+	        @Override
+	        public void run() {
+	    		HAPRuntimeTask newTask = task.execute(that);
+	    		//if execute reaturn a task, it means that it depend on the task
+	    		if(newTask!=null){
+	    			executeTask(newTask);
+	    		}
+	        }
+	    }).start();
 	}
-	
+
+	@Override
+	public HAPServiceData executeTaskSync(HAPRuntimeTask task){
+		try {
+		    final SettableFuture<HAPServiceData> future = SettableFuture.create();
+			task.registerListener(new HAPRunTaskEventListener(){
+				@Override
+				public void finish(HAPRuntimeTask task) {	
+		            future.set(task.getResult());
+				}});
+			executeTask(task);
+			return future.get();
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    	return HAPServiceData.createFailureData(e, "");
+	    }
+	}
+
 	public void finishTask(String taskId){
 		this.m_tasks.remove(taskId);
 	}

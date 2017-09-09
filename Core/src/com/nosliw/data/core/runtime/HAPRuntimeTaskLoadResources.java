@@ -2,13 +2,13 @@ package com.nosliw.data.core.runtime;
 
 import java.util.List;
 
-public abstract class HAPLoadResourcesTask extends HAPRuntimeTask{
+public abstract class HAPRuntimeTaskLoadResources extends HAPRuntimeTask{
 
 	final public static String TASK = "LoadResources"; 
 
 	private List<HAPResourceInfo> m_resourcesInfo;
 	
-	public HAPLoadResourcesTask(List<HAPResourceInfo> resourcesInfo){
+	public HAPRuntimeTaskLoadResources(List<HAPResourceInfo> resourcesInfo){
 		this.m_resourcesInfo = resourcesInfo;
 	}
 	

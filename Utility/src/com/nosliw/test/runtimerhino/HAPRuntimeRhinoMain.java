@@ -2,17 +2,18 @@ package com.nosliw.test.runtimerhino;
 
 import java.util.Map;
 
-import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionManagerImp;
-import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.HAPRuntimeEnvironmentImpJS;
+import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.runtime.js.rhino.HAPExpressionTaskRhino;
+import com.nosliw.data.core.runtime.HAPRuntimeTask;
+import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskExecuteExpressionRhino;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.expression.test.HAPExpressionTest;
 
@@ -20,10 +21,7 @@ public class HAPRuntimeRhinoMain {
 
 	private static void executeSuite(String suiteName, HAPRuntimeEnvironment runtimeEnvironment){
 		//new runtime
-		HAPRuntimeImpRhino runtime = new HAPRuntimeImpRhino(runtimeEnvironment);
-
-		//runtim init
-		runtime.start();
+		HAPRuntimeImpRhino runtime = (HAPRuntimeImpRhino)runtimeEnvironment.getRuntime();
 
 		try{
 			//parse to build expression object
@@ -32,9 +30,36 @@ public class HAPRuntimeRhinoMain {
 			Map<String, HAPData> varData = suite.getVariableData();
 			
 			//execute expression
-			runtime.executeTask(new HAPExpressionTaskRhino(expression, varData){
+			HAPRuntimeTask task = new HAPRuntimeTaskExecuteExpressionRhino(expression, varData);
+			task.registerListener(new HAPRunTaskEventListener(){
 				@Override
-				public void doSuccess() {
+				public void finish(HAPRuntimeTask task){
+					try{
+						HAPServiceData serviceData = task.getResult();
+						if(serviceData.isSuccess()){
+							Object result = serviceData.getData();
+							HAPDataWrapper exprectResult = suite.getResult();
+							System.out.println("Expression Result : " + result);
+							if(result.equals(exprectResult)){
+							}
+							else{
+								throw new Exception();
+							}
+						}
+						else{
+							throw new Exception();
+						}
+					}
+					catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+			});
+			
+			
+			runtime.executeTask(new HAPRuntimeTaskExecuteExpressionRhino(expression, varData){
+				@Override
+				public void doFinish() {
 					try{
 						Object result = getResult();
 						HAPDataWrapper exprectResult = suite.getResult();
@@ -66,14 +91,17 @@ public class HAPRuntimeRhinoMain {
 		//module init
 		HAPRuntimeEnvironmentImpJS runtimeEnvironment = new HAPRuntimeEnvironmentImpJS();
 		
+		//start runtime
+		runtimeEnvironment.getRuntime().start();
+		
 		HAPExpressionManagerImp expressionMan = (HAPExpressionManagerImp)runtimeEnvironment.getExpressionManager();
 		expressionMan.importExpressionFromFolder(HAPFileUtility.getClassFolderName(HAPExpressionTest.class));
 		
-//		executeSuite("expression6", runtimeEnvironment);
+		executeSuite("expression1", runtimeEnvironment);
 		
-		for(String suiteName : expressionMan.getExpressionDefinitionSuites()){
-			executeSuite(suiteName, runtimeEnvironment);
-		}
+//		for(String suiteName : expressionMan.getExpressionDefinitionSuites()){
+//			executeSuite(suiteName, runtimeEnvironment);
+//		}
 		
 		
 //		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression1", null);

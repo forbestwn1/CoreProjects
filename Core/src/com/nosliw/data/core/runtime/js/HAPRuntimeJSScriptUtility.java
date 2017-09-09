@@ -16,8 +16,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.runtime.HAPExecuteExpressionTask;
-import com.nosliw.data.core.runtime.HAPLoadResourcesTask;
+import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
+import com.nosliw.data.core.runtime.HAPRuntimeTaskLoadResources;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
@@ -76,7 +76,7 @@ public class HAPRuntimeJSScriptUtility {
 		return out;
 	}
 
-	public static HAPJSScriptInfo buildRequestScriptForExecuteExpressionTask(HAPExecuteExpressionTask executeExpressionTask){
+	public static HAPJSScriptInfo buildRequestScriptForExecuteExpressionTask(HAPRuntimeTaskExecuteExpression executeExpressionTask){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("expression", HAPJsonUtility.formatJson(HAPSerializeManager.getInstance().toStringValue(executeExpressionTask.getExpression(), HAPSerializationFormat.JSON)));
 		templateParms.put("variables", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(executeExpressionTask.getVariablesValue()==null?new LinkedHashMap<String, HAPData>() : executeExpressionTask.getVariablesValue(), HAPSerializationFormat.JSON)));
@@ -88,7 +88,7 @@ public class HAPRuntimeJSScriptUtility {
 		return out;
 	}
 	
-	public static HAPJSScriptInfo buildRequestScriptForLoadResourceTask(HAPLoadResourcesTask loadResourcesTask){
+	public static HAPJSScriptInfo buildRequestScriptForLoadResourceTask(HAPRuntimeTaskLoadResources loadResourcesTask){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("taskId", loadResourcesTask.getTaskId());
 		templateParms.put("gatewayPath", HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY);

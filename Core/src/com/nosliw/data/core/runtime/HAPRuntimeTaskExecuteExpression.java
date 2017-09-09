@@ -8,7 +8,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
 
 @HAPEntityWithAttribute
-public abstract class HAPExecuteExpressionTask extends HAPRuntimeTask{
+public abstract class HAPRuntimeTaskExecuteExpression extends HAPRuntimeTask{
 
 	final public static String TASK = "ExecuteExpression"; 
 	
@@ -23,7 +23,7 @@ public abstract class HAPExecuteExpressionTask extends HAPRuntimeTask{
 	
 	Map<String, HAPData> m_variablesValue;
 	
-	public HAPExecuteExpressionTask(HAPExpression expression, Map<String, HAPData> variablesValue){
+	public HAPRuntimeTaskExecuteExpression(HAPExpression expression, Map<String, HAPData> variablesValue){
 		this.m_expression = expression;
 		this.m_variablesValue = variablesValue; 
 	}

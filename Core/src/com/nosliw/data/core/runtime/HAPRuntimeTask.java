@@ -3,11 +3,14 @@ package com.nosliw.data.core.runtime;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.nosliw.common.exception.HAPServiceData;
+
 public abstract class HAPRuntimeTask {
 
 	private String m_id;
 	
-	private Object m_result;
+	//result
+	private HAPServiceData m_result;
 	
 	private Set<HAPRunTaskEventListener> m_eventListeners;
 	
@@ -19,7 +22,7 @@ public abstract class HAPRuntimeTask {
 	public void registerListener(HAPRunTaskEventListener listener){  this.m_eventListeners.add(listener);  }
 	public void trigueSuccessEvent(){
 		for(HAPRunTaskEventListener listener : this.m_eventListeners){
-			listener.success(this);
+			listener.finish(this);
 		}
 	}
 
@@ -28,18 +31,18 @@ public abstract class HAPRuntimeTask {
 	public String getTaskId(){	return "Task__" + this.getTaskType() + "__" + this.m_id;	}
 	
 	//result
-	public void setResult(Object result){ this.m_result = result;  }
-	public Object getResult(){  return this.m_result;   }
+	public void setResult(HAPServiceData result){ this.m_result = result;  }
+	public HAPServiceData getResult(){  return this.m_result;   }
 
 	//success
-	public void success(Object data){
+	public void finish(HAPServiceData data){
 		this.setResult(data);
-		this.doSuccess();
+		this.doFinish();
 		this.trigueSuccessEvent();
 	}
-	
+
 	//override method
-	protected void doSuccess(){}
+	protected void doFinish(){}
 	abstract public String getTaskType();
 	abstract public HAPRuntimeTask execute(HAPRuntime runtime);
 }
