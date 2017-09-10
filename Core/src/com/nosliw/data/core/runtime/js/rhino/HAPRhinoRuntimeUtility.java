@@ -23,15 +23,20 @@ public class HAPRhinoRuntimeUtility {
 	
 	private static String scriptTempFolder = "C:/Temp/ScriptExport/scripts/" + System.currentTimeMillis() + "/";
 
-	public static void invokeGatewayHandlers(HAPServiceData serviceData, Object handlers, Context context, Scriptable scope){
-		NativeObject handlersObj = (NativeObject)handlers;
-		if(serviceData.isSuccess()){
-			Function successFun = (Function)handlersObj.get("success");
-			successFun.call(context, scope, null, new Object[]{null, HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(serviceData.getData())});
+	public static void invokeGatewayHandlers(HAPServiceData serviceData, Object handlers, Scriptable scope){
+		try{
+			NativeObject handlersObj = (NativeObject)handlers;
+			if(serviceData.isSuccess()){
+				Function successFun = (Function)handlersObj.get("success");
+				successFun.call(Context.enter(), scope, null, new Object[]{null, HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(serviceData.getData())});
+			}
+			else{
+				Function errorFun = (Function)handlersObj.get("error");
+				errorFun.call(Context.enter(), scope, null, new Object[]{null, HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(serviceData)});
+			}
 		}
-		else{
-			Function errorFun = (Function)handlersObj.get("error");
-			errorFun.call(context, scope, null, new Object[]{null, HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(serviceData)});
+		finally{
+			Context.exit();
 		}
 	}
 	
@@ -72,16 +77,19 @@ public class HAPRhinoRuntimeUtility {
 		return resourceIds;
 	}
 	
-	public static void loadScript(String script, Context context, Scriptable scope, String name){
+	public static void loadScript(String script, Scriptable scope, String name){
 		try{
 			String folder = getScriptTempFolder();
 			String scriptTempFile = folder + "/" + String.format("%03d", index++) + "_" + name+".js";
 			HAPFileUtility.writeFile(scriptTempFile, script);
 			
-			context.evaluateString(scope, script, name, 1, null);
+			Context.enter().evaluateString(scope, script, name, 1, null);
 		}
 		catch(Exception e){
 			e.printStackTrace();
+		}
+		finally{
+			Context.exit();
 		}
 	}
 	

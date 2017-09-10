@@ -10,6 +10,7 @@ var packageObj = library.getChildPackage("request");
 	var node_eventUtility;
 	var node_basicUtility;
 	var node_errorUtility;
+	var node_createEventObject;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -129,7 +130,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 	var loc_initRequest = function(){
 		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_INIT);
 		loc_out.setResult();
-		this.pri_metaData.eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_NEW, {}, loc_out);
+		loc_out.pri_metaData.pri_eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_NEW, {}, loc_out);
 	};
 	
 	/*
@@ -141,7 +142,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 	var loc_startRequest = function(){
 		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_PROCESSING);
 		loc_out.setResult();
-		this.pri_metaData.eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_ACTIVE, {}, loc_out);
+		loc_out.pri_metaData.pri_eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_ACTIVE, {}, loc_out);
 	};
 	
 	/*
@@ -154,10 +155,10 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_DONE);
 		loc_out.setResult(data);
 		
-		this.pri_metaData.eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_DONE, {}, loc_out);
+		loc_out.pri_metaData.pri_eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_DONE, {}, loc_out);
 
 		//unregister all listeners
-		this.pri_metaData.eventObject.clearup();
+		loc_out.pri_metaData.pri_eventObject.clearup();
 	};
 	
 	var loc_out = {
@@ -349,7 +350,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			setResult : function(result){  this.pri_metaData.pri_result = result; },
 			
 			registerEventListener : function(listener, handler, thisContext){
-				node_eventUtility.registerListener(listener, this.pri_metaData.eventObject, undefined, handler, thisContext)
+				node_eventUtility.registerListener(listener, this.pri_metaData.pri_eventObject, undefined, handler, thisContext)
 			},
 	};
 	
@@ -370,6 +371,7 @@ nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtilit
 nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 
 
 //Register Node by Name

@@ -55,26 +55,8 @@ public class HAPRuntimeRhinoMain {
 					}
 				}
 			});
-			
-			
-			runtime.executeTask(new HAPRuntimeTaskExecuteExpressionRhino(expression, varData){
-				@Override
-				public void doFinish() {
-					try{
-						Object result = getResult();
-						HAPDataWrapper exprectResult = suite.getResult();
-						System.out.println("Expression Result : " + result);
-						if(result.equals(exprectResult)){
-						}
-						else{
-							throw new Exception();
-						}
-					}
-					catch(Exception e){
-						e.printStackTrace();
-					}
-				}
-			});
+
+			runtime.executeTask(task);
 		}
 		catch(Exception e){
 			e.printStackTrace();
