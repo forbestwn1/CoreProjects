@@ -3,8 +3,6 @@ package com.nosliw.data.core.runtime.js.rhino;
 import java.util.List;
 import java.util.Map;
 
-import org.mozilla.javascript.Scriptable;
-
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
@@ -27,34 +25,12 @@ public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteE
 		try{
 			HAPRuntimeImpRhino rhinoRuntime = (HAPRuntimeImpRhino)runtime;
 			
-			//init rhino runtime, init scope
-			Scriptable scope = rhinoRuntime.initExecuteExpression(this.getTaskId());
-			
 			//prepare resources for expression in the runtime (resource and dependency)
 			//execute expression after load required resources
 			List<HAPResourceInfo> resourcesId = rhinoRuntime.getRuntimeEnvironment().getResourceDiscovery().discoverResourceRequirement(this.getExpression());
 			
-			HAPRuntimeTaskExecuteExpressionRhino that = this;
 			HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
-			loadResourcesTask.registerListener(new HAPRunTaskEventListener(){
-				@Override
-				public void finish(HAPRuntimeTask task) {
-					HAPServiceData resourceTaskResult = task.getResult();
-					if(resourceTaskResult.isSuccess()){
-						//after resource loaded, execute expression
-						try{
-							HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForExecuteExpressionTask(that);
-							rhinoRuntime.loadTaskScript(scriptInfo, getTaskId());
-						}
-						catch(Exception e){
-							that.finish(HAPServiceData.createFailureData(e, ""));
-						}
-					}
-					else{
-						that.finish(resourceTaskResult);
-					}
-				}});
-			
+			loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));
 			return loadResourcesTask;
 		}
 		catch(Exception e){
@@ -63,4 +39,34 @@ public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteE
 		}
 		return null;
 	}
+	
+	class HAPRunTaskEventListenerInner implements HAPRunTaskEventListener{
+		private HAPRuntimeTaskExecuteExpressionRhino m_parent;
+		private HAPRuntimeImpRhino m_runtime;
+		
+		public HAPRunTaskEventListenerInner(HAPRuntimeTaskExecuteExpressionRhino parent, HAPRuntimeImpRhino runtime){
+			this.m_parent = parent;
+			this.m_runtime = runtime;
+		}
+		
+		@Override
+		public void finish(HAPRuntimeTask task) {
+			HAPServiceData resourceTaskResult = task.getResult();
+			if(resourceTaskResult.isSuccess()){
+				//after resource loaded, execute expression
+				try{
+					HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForExecuteExpressionTask(this.m_parent);
+					this.m_runtime.loadTaskScript(scriptInfo, m_parent.getTaskId());
+				}
+				catch(Exception e){
+					this.m_parent.finish(HAPServiceData.createFailureData(e, ""));
+				}
+			}
+			else{
+				this.m_parent.finish(resourceTaskResult);
+			}
+		}
+		
+	}
+	
 }

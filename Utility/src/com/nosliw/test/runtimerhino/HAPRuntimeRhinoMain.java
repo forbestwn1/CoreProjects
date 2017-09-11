@@ -30,8 +30,8 @@ public class HAPRuntimeRhinoMain {
 			Map<String, HAPData> varData = suite.getVariableData();
 			
 			//execute expression
-			HAPRuntimeTask task = new HAPRuntimeTaskExecuteExpressionRhino(expression, varData);
-			task.registerListener(new HAPRunTaskEventListener(){
+			HAPRuntimeTask task1 = new HAPRuntimeTaskExecuteExpressionRhino(expression, varData);
+			task1.registerListener(new HAPRunTaskEventListener(){
 				@Override
 				public void finish(HAPRuntimeTask task){
 					try{
@@ -56,7 +56,11 @@ public class HAPRuntimeRhinoMain {
 				}
 			});
 
-			runtime.executeTask(task);
+			runtime.executeTask(task1);
+			
+//			HAPRuntimeTask task2 = new HAPRuntimeTaskExecuteExpressionRhino(expression, varData);
+//			Object result = runtime.executeTaskSync(task2).getData();
+//			System.out.println("Expression Result : " + result);
 		}
 		catch(Exception e){
 			e.printStackTrace();

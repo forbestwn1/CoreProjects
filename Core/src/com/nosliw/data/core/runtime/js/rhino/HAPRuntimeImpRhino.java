@@ -8,7 +8,6 @@ import java.util.Map;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ContextFactory;
 import org.mozilla.javascript.Function;
-import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.tools.debugger.Main;
@@ -19,7 +18,6 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
 import com.nosliw.data.core.runtime.HAPResource;
@@ -35,16 +33,13 @@ import com.nosliw.data.core.runtime.js.HAPJSLibraryId;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
-public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
+public class HAPRuntimeImpRhino implements HAPRuntime{
 
 	//info used to library resource that do not need to add to resource manager
 	public static final String ADDTORESOURCEMANAGER = "ADDTORESOURCEMANAGER";
 	
 	//root scope
 	private Scriptable m_scope;
-	
-	//different task have different scope
-	private Map<String, Scriptable> m_taskScope;
 	
 	//track all the script loaded to rhino
 	private HAPScriptTracker m_sciprtTracker;
@@ -60,7 +55,6 @@ public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 	public HAPRuntimeImpRhino(HAPRuntimeEnvironment runtimeEnvironment){
 		this.m_runtimeEnvironment = runtimeEnvironment;
 		this.m_tasks = new LinkedHashMap<String, HAPRuntimeTask>();
-		this.m_taskScope = new LinkedHashMap<String, Scriptable>();
 	}
 	
 	/**
@@ -69,7 +63,18 @@ public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 	 * @param gateWayPoint
 	 */
 	public void registerGatewayPoint(String name, Object gateWayPoint){
-		
+		try{
+	        Object wrappedObject = Context.javaToJS(gateWayPoint, this.m_scope);
+	        NativeObject nosliwObj = (NativeObject)this.m_scope.get("nosliw", m_scope);
+	        Function createNodeFun = (Function)nosliwObj.get("createNode");
+	        createNodeFun.call(Context.enter(), m_scope, nosliwObj, new Object[]{name, wrappedObject});
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			Context.exit();
+		}
 	}
 	
 	public void unregisterGatewayPoint(String name){
@@ -81,95 +86,6 @@ public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 	public HAPServiceData executeExpression(HAPExpression expression, Map<String, HAPData> varData) {
 		HAPRuntimeTask task = new HAPRuntimeTaskExecuteExpressionRhino(expression, varData);
 		return this.executeTaskSync(task);
-	}
-
-	//gateway callback method
-	@Override
-	public void requestDiscoverResources(Object objResourceIds, Object handlers){
-		try{
-			List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds); 
-			List<HAPResourceInfo> resourceInfos = this.getRuntimeEnvironment().getResourceDiscovery().discoverResource(resourceIds);
-			HAPServiceData serviceData = HAPServiceData.createSuccessData(resourceInfos);
-			HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_scope);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	
-	//gateway callback method
-	@Override
-	public void requestDiscoverAndLoadResources(Object objResourceIds, Object handlers){
-		try{
-			List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds);
-			//discovery
-			List<HAPResourceInfo> resourceInfos = this.getRuntimeEnvironment().getResourceDiscovery().discoverResource(resourceIds);
-			//load resources to rhino runtime
-			HAPLoadResourceResponse response = this.loadResources(resourceInfos, m_scope);
-
-			HAPServiceData serviceData = null;
-			if(response.isSuccess()){
-				serviceData = HAPServiceData.createSuccessData(resourceInfos);
-			}
-			else{
-				serviceData = HAPServiceData.createFailureData(response.getFailedResourcesId(), "");
-			}
-			
-			//callback with resourceInfos
-			HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_scope);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	
-	//gateway callback method
-	@Override
-	public void requestLoadResources(Object objResourcesInfo, Object handlers){
-		try{
-			List<HAPResourceInfo> resourcesInfo = HAPRhinoRuntimeUtility.rhinoResourcesInfoToResourcesInfo((NativeArray)objResourcesInfo);
-			//load resources to rhino runtime
-			HAPLoadResourceResponse response = this.loadResources(resourcesInfo, m_scope);
-			HAPServiceData serviceData = null;
-			if(response==null){
-				serviceData = HAPServiceData.createSuccessData();
-			}
-			else{
-				serviceData = HAPServiceData.createFailureData(response.getFailedResourcesId(), "");
-			}
-			HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_scope);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	
-	//gateway callback method
-	@Override
-	public void notifyExpressionExecuteResult(String taskId, Object result){
-		HAPRuntimeTask expressionTask = this.m_tasks.get(taskId);
-		try{
-			String resultStr = (String)HAPRhinoDataUtility.toJson(result);
-			HAPDataWrapper resultData = new HAPDataWrapper(resultStr); 
-			expressionTask.finish(HAPServiceData.createSuccessData(resultData));
-		}
-		catch(Exception e){
-			expressionTask.finish(HAPServiceData.createFailureData(e, ""));
-			e.printStackTrace();
-		}
-	}
-	
-	//gatewary callback method
-	@Override
-	public void notifyResourcesLoaded(String taskId){
-		HAPRuntimeTask expressionTask = this.m_tasks.get(taskId);
-		try{
-			expressionTask.finish(HAPServiceData.createSuccessData());
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			expressionTask.finish(HAPServiceData.createFailureData(e, ""));
-		}
 	}
 
 	@Override
@@ -184,25 +100,29 @@ public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 			public void finish(HAPRuntimeTask task) {	m_tasks.remove(task.getTaskId());	}}
 		);
 		
-//		HAPRuntimeTask newTask = task.execute(this);
-//		if(newTask!=null){
-//			this.executeTask(newTask);
-//		}
-
 		//create a new thread to execute task
-		HAPRuntime that = this;
-		new Thread(new Runnable() {
-	        @Override
-	        public void run() {
-	    		HAPRuntimeTask newTask = task.execute(that);
-	    		//if execute reaturn a task, it means that it depend on the task
-	    		if(newTask!=null){
-	    			executeTask(newTask);
-	    		}
-	        }
-	    }).start();
+		new HAPRunnalbeInner(task, this).start();
 	}
 
+	class HAPRunnalbeInner extends Thread{
+		private HAPRuntimeTask m_task;
+		private HAPRuntime m_runtime;
+		
+		public HAPRunnalbeInner(HAPRuntimeTask task, HAPRuntime runtime){
+			this.m_task = task;
+			this.m_runtime = runtime;
+		}
+		
+        @Override
+        public void run() {
+    		HAPRuntimeTask newTask = m_task.execute(this.m_runtime);
+    		//if execute reaturn a task, it means that it depend on the task
+    		if(newTask!=null){
+    			executeTask(newTask);
+    		}
+        }
+	}
+	
 	@Override
 	public HAPServiceData executeTaskSync(HAPRuntimeTask task){
 		try {
@@ -220,19 +140,16 @@ public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 	    }
 	}
 
-	public void finishTask(String taskId){
+	public void finishTask(String taskId, HAPServiceData taskServiceData){
+		HAPRuntimeTask task = this.m_tasks.get(taskId);
+		task.finish(taskServiceData);
 		this.m_tasks.remove(taskId);
-	}
-	
-	public Scriptable initExecuteExpression(String taskId){
-		this.m_taskScope.put(taskId, this.m_scope);
-		return this.m_scope;
 	}
 	
 	//Load all resources into rhino runtime, no discovery
 	//if all success : load script, return null
 	//if any fail : not load any script, return response
-	private HAPLoadResourceResponse loadResources(List<HAPResourceInfo> resourcesIdInfo, Scriptable scope){
+	public HAPLoadResourceResponse loadResources(List<HAPResourceInfo> resourcesIdInfo, Scriptable scope){
 		//Get all resource data
 		//organize resource infos by id
 		Map<HAPResourceId, HAPResourceInfo> resourcesInfo = new LinkedHashMap<HAPResourceId, HAPResourceInfo>();
@@ -271,7 +188,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 	 * @return
 	 */
 	private Scriptable init(Context context, Scriptable parent){
-		Scriptable out = context.initStandardObjects(null);
+		this.m_scope = context.initStandardObjects(null);
 		
 		//library
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
@@ -284,15 +201,8 @@ public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 		for(HAPResourceId resourceId : resourceIds){
 			resourceIdInfos.add(new HAPResourceInfo(resourceId).withInfo(ADDTORESOURCEMANAGER, ADDTORESOURCEMANAGER));
 		}
-		this.loadResources(resourceIdInfos, out);
+		this.loadResources(resourceIdInfos, m_scope);
 		
-		//set gateway
-        Object wrappedRuntime = Context.javaToJS(this, out);
-        NativeObject nosliwObj = (NativeObject)out.get("nosliw", out);
-        Function createNodeFun = (Function)nosliwObj.get("createNode");
-        createNodeFun.call(context, out, nosliwObj, new Object[]{HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY, wrappedRuntime});
-
-        
 		resourceIds = new ArrayList<HAPResourceId>();
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.constant", null)));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.logging", null)));
@@ -309,12 +219,14 @@ public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 		for(HAPResourceId resourceId : resourceIds){
 			resourceIdInfos.add(new HAPResourceInfo(resourceId).withInfo(ADDTORESOURCEMANAGER, ADDTORESOURCEMANAGER));
 		}
-		this.loadResources(resourceIdInfos, out);
+		this.loadResources(resourceIdInfos, m_scope);
 		
 		//data type
 		
-
-		return out;
+		//set gateway
+		this.registerGatewayPoint(HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY, new HAPRuntimeGatewayRhinoImp(this.getRuntimeEnvironment(), this, m_scope));
+		
+		return m_scope;
 	}
 	
 	private void loadScript(HAPJSScriptInfo scriptInfo, Scriptable scope){
@@ -357,7 +269,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime, HAPRuntimeGatewayRhino{
 		
 //		this.m_context = Context.enter();
 	    try {
-	        this.m_scope = this.init(context, null);
+	        this.init(context, null);
 
 //	        System.setIn(dbg.getIn());
 //	        System.setOut(dbg.getOut());
