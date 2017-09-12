@@ -11,7 +11,6 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeManager;
@@ -22,12 +21,13 @@ import com.nosliw.data.core.HAPDataTypeManager;
 @HAPEntityWithAttribute
 public class HAPUIExpressionContent extends HAPSerializableImp{
 
+	public static final String EXPRESSION_TOKEN_OPEN = "#|";
+	public static final String EXPRESSION_TOKEN_CLOSE = "|#";
+	
 	@HAPAttribute
 	public static final String UIID = "uiId";
 	@HAPAttribute
 	public static final String UIEXPRESSIONELEMENTS = "uiExpressionElements";
-	@HAPAttribute
-	public static final String ATTRIBUTE = "attribute";
 
 	private String m_uiId;
 
@@ -36,6 +36,8 @@ public class HAPUIExpressionContent extends HAPSerializableImp{
 	//a list element for content, 
 	//two types of elements in this list: string and uiExpression
 	private List<Object> m_contentElements;
+	
+	
 	
 	public  HAPUIExpressionContent(String uiId, String content){
 		this.m_uiId = uiId;
@@ -61,7 +63,7 @@ public class HAPUIExpressionContent extends HAPSerializableImp{
 	private List<Object> getExpressionContentElements(String content, Map<String, HAPData> constants1, HAPDataTypeManager dataTypeMan){
 		List<Object> out = new ArrayList<Object>();
 		while(HAPBasicUtility.isStringNotEmpty(content)){
-			int index = content.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_OPEN);
+			int index = content.indexOf(UIEXPRESSION_TOKEN_OPEN);
 			if(index==-1){
 				//no expression
 				out.add(content);
@@ -74,10 +76,10 @@ public class HAPUIExpressionContent extends HAPSerializableImp{
 			}
 			else{
 				//start with expression
-				int expEnd = content.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE);
-				int expStart = index + HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_OPEN.length();
+				int expEnd = content.indexOf(UIEXPRESSION_TOKEN_CLOSE);
+				int expStart = index + UIEXPRESSION_TOKEN_OPEN.length();
 //				out.add(new HAPUIResourceExpression(content.substring(expStart, expEnd), HAPUIResourceParserUtility.buildExpressionFunctionName(this.createId()), constants, dataTypeMan));
-				content = content.substring(expEnd + HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE.length());
+				content = content.substring(expEnd + UIEXPRESSION_TOKEN_CLOSE.length());
 			}
 		}
 				

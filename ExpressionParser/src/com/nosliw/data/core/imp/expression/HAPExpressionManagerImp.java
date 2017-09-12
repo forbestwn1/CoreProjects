@@ -82,7 +82,6 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		return expression;
 	}
 
-
 	@Override
 	public HAPExpression processExpression(HAPExpressionDefinition expressionDefinition, Map<String, HAPDataTypeCriteria> variableCriterias) {
 		String id = ""+this.m_idIndex++;

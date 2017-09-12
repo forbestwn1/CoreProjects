@@ -29,7 +29,7 @@ public abstract class HAPDataTypeCriteriaAbstract extends HAPDataTypeCriteriaImp
 		return this.getSoldCriteria().getValidDataTypeCriteriaId(dataTypeHelper);
 	}
 
-	protected void setSolidCriteria(HAPDataTypeCriteria criteria){
+	public void setSolidCriteria(HAPDataTypeCriteria criteria){
 		this.m_solidCriteria = criteria;
 	}
 	

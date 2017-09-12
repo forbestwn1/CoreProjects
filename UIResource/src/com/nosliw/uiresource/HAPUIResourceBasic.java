@@ -116,6 +116,17 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	
 	abstract public String getType(); 
 	
+	
+	
+	protected void processConstants(){
+		
+	}
+	
+	protected void processExpressions(){
+		
+	}
+	
+	
 	@Override
 	public String toString(){
 		return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));

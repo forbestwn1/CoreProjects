@@ -389,10 +389,6 @@
 			<definition name="UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX" value="-tag-end"/>
 			<definition name="UIRESOURCE_SCRIPTBLOCK_TOKEN_OPEN" value="{" skip="js"/>
 			<definition name="UIRESOURCE_SCRIPTBLOCK_TOKEN_CLOSE" value="}" skip="js"/>
-			<definition name="UIRESOURCE_UIEXPRESSION_TOKEN_OPEN" value="&lt;%="/>
-			<definition name="UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE" value="%&gt;"/>
-			<definition name="UIRESOURCE_EXPRESSION_TOKEN_OPEN" value="#|"/>
-			<definition name="UIRESOURCE_EXPRESSION_TOKEN_CLOSE" value="|#"/>
 			<definition name="UIRESOURCE_FUNCTION_EXCECUTEEXPRESSION" value="excecuteExpression"/>
 			<definition name="UIRESOURCE_UIEXPRESSIONFUNCTION_PREFIX" value="expression"/>
 			<definition type="space"/>

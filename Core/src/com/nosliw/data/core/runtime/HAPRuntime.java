@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.expression.HAPExpression;
 
 public interface HAPRuntime {
 
@@ -15,7 +14,8 @@ public interface HAPRuntime {
 	HAPServiceData executeTaskSync(HAPRuntimeTask task);
 
 	//sync request
-	public HAPServiceData executeExpression(HAPExpression expression, Map<String, HAPData> varData);
+	//individual expression execute
+	public HAPServiceData executeExpressionSync(String expressionStr, Map<String, HAPData> parmsData);
 	
 	void close();
 	

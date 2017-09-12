@@ -36,6 +36,10 @@ import com.nosliw.data.core.expression.HAPExpressionDefinition;
  * the id index start with 1 every processing start so that for same ui resource, we would get same result
  */
 public class HAPUIResourceParser {
+
+	public static final String UIEXPRESSION_TOKEN_OPEN = "<%=";
+	public static final String UIEXPRESSION_TOKEN_CLOSE = "%>";
+
 	//for creating ui id
 	private int m_idIndex;
 	//configuration object
@@ -354,7 +358,7 @@ public class HAPUIResourceParser {
 		parseKeyAttribute(ele, resource, true);
 
 		//process data binding attribute
-		processUITagDataBindingAttribute(ele, uiTag);
+		parseUITagDataBindingAttribute(ele, uiTag);
 		
 		//process elements's attribute that have expression value 
 		parseExpressionAttribute(ele, resource, true);
@@ -393,7 +397,7 @@ public class HAPUIResourceParser {
 	/*
 	 * process data binding attribute within customer tag
 	 */
-	private void processUITagDataBindingAttribute(Element ele, HAPUITag resource){
+	private void parseUITagDataBindingAttribute(Element ele, HAPUITag resource){
 		Attributes eleAttrs = ele.attributes();
 		for(Attribute eleAttr : eleAttrs){
 			String eleAttrValue = eleAttr.getValue();

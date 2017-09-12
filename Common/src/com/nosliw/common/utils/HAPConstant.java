@@ -276,10 +276,6 @@ public class HAPConstant {
 		public static final String UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX = "-tag-end";
 		public static final String UIRESOURCE_SCRIPTBLOCK_TOKEN_OPEN = "{";
 		public static final String UIRESOURCE_SCRIPTBLOCK_TOKEN_CLOSE = "}";
-		public static final String UIRESOURCE_UIEXPRESSION_TOKEN_OPEN = "<%=";
-		public static final String UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE = "%>";
-		public static final String UIRESOURCE_EXPRESSION_TOKEN_OPEN = "#|";
-		public static final String UIRESOURCE_EXPRESSION_TOKEN_CLOSE = "|#";
 		public static final String UIRESOURCE_FUNCTION_EXCECUTEEXPRESSION = "excecuteExpression";
 		public static final String UIRESOURCE_UIEXPRESSIONFUNCTION_PREFIX = "expression";
 

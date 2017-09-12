@@ -2,9 +2,13 @@ package com.nosliw.uiresource;
 
 import java.util.Map;
 
-import com.nosliw.data.core.HAPDataTypeManager;
+import com.nosliw.common.constant.HAPAttribute;
 
 public class HAPUIExpressionAttribute extends HAPUIExpressionContent{
+
+	@HAPAttribute
+	public static final String ATTRIBUTE = "attribute";
+
 	//attribute name
 	private String m_attribute;
 

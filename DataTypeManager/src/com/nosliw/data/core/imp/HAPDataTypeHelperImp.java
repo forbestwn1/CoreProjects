@@ -14,12 +14,14 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPRelationship;
+import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaExpression;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaIds;
 import com.nosliw.data.core.criteria.HAPDataTypeSubCriteriaGroup;
+import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPMatcher;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -412,6 +414,10 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		this.discoverExpressionCriteria(criteria, expCriterias);
 		for(HAPDataTypeCriteriaExpression expCriteria : expCriterias){
 			String expressionStr = expCriteria.getExpression();
+			HAPData expressionResult = (HAPData)this.m_runtimeEnv.getRuntime().executeExpressionSync(expressionStr, parms).getData();
+			String criteriaStr = expressionResult.getValue().toString();
+			HAPDataTypeCriteria solidCriteria = HAPCriteriaParser.getInstance().parseCriteria(criteriaStr);
+			expCriteria.setSolidCriteria(solidCriteria);
 		}
 	}
 
