@@ -1,0 +1,17 @@
+<definition name="test.dataTypeCriteria;1.0.0">
+	
+	<info description="container for list of data"/>
+
+	<operations>
+	
+		<operation name="getChild" >
+			<parms>
+				<parm name="base" criteria="test.dataTypeCriteria" isBase="true"/>
+				<parm name="childName" criteria="test.string"/>
+			</parms>
+			<output criteria="test.dataTypeCriteria"/>
+		</operation>
+
+	</operations>
+
+</definition>

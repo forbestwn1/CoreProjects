@@ -15,8 +15,8 @@ public class HAPDataTypeCriteriaExpression extends HAPDataTypeCriteriaAbstract{
 	
 	public HAPDataTypeCriteriaExpression(String expression){
 		//escape    
-		this.m_expression = expression.replaceAll(";;;", ":");
-		this.m_expression = m_expression.replaceAll(";;", ",");
+		this.m_expression = expression.replaceAll(";:;", ":");
+		this.m_expression = m_expression.replaceAll(";,;", ",");
 	}
 	
 	@Override

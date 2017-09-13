@@ -11,6 +11,13 @@
 			<output criteria="*"/>
 		</operation>
 
+		<operation name="getCriteria" >
+			<parms>
+				<parm name="base" criteria="test.parm" isBase="true"/>
+			</parms>
+			<output criteria="test.dataTypeCriteria"/>
+		</operation>
+
 	</operations>
 
 </definition>
