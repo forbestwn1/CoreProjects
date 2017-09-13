@@ -2,6 +2,7 @@ package com.nosliw.data.core.expression;
 
 import java.util.Map;
 
+import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public interface HAPExpressionDefinitionProcessor {
@@ -18,6 +19,12 @@ public interface HAPExpressionDefinitionProcessor {
 	 * @param variableCriterias   variable criterias that need to respect during discovery
 	 * @return
 	 */
-	HAPExpression processExpressionDefinition(String id, HAPExpressionDefinition expDef, Map<String, HAPExpressionDefinition> contextExpressionDefinitions, Map<String, HAPDataTypeCriteria> variableCriterias);
+	HAPExpression processExpressionDefinition(
+			String id, 
+			HAPExpressionDefinition expDef, 
+			Map<String, HAPExpressionDefinition> contextExpressionDefinitions, 
+			Map<String, HAPData> contextConstants,
+			Map<String, HAPDataTypeCriteria> variableCriterias
+	);
 
 }

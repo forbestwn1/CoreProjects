@@ -21,7 +21,7 @@ public class HAPCriteriaParserTest {
 				"*",
 				"~||abcdrfg||~",
 				"@||(abcdrfg||@",
-				"test.array;1.0.0%||element:@||!(test.expression)!.outputCriteria(&(expression)&;;&(parms)&)||@||%"
+				"test.array;1.0.0%||element:@||!(test.expression)!.outputCriteria(expression;;;&(expression)&;;parm;;;&(parms)&)||@||%"
 		};
 
 		for(String criteriaStr : criteriasStr){

@@ -38,7 +38,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	private String m_name;
 	
 	// original expression definition
-	private HAPExpressionDefinitionImp m_expressionDefinition;
+	private HAPExpressionDefinitionImpStr m_expressionDefinition;
 
 	// parsed operand in expression
 	private HAPOperand m_operand;
@@ -64,7 +64,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	// it convert variable from caller to variable in expression
 	private Map<String, HAPMatchers> m_varsMatchers;
 	
-	public HAPExpressionImp(HAPExpressionDefinitionImp expressionDefinition, HAPOperand operand){
+	public HAPExpressionImp(HAPExpressionDefinitionImpStr expressionDefinition, HAPOperand operand){
 		this.m_references = new LinkedHashMap<String, HAPExpression>();
 		this.m_errorMsgs = new ArrayList<String>();
 		this.m_expressionDefinition = expressionDefinition;
@@ -172,7 +172,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 			if(newName==null)  newName = oldName;
 			newVarsDef.put(newName, oldVarsDef.get(oldName));
 		}
-		((HAPExpressionDefinitionImp)this.getExpressionDefinition()).setVariableCriterias(newVarsDef);
+		((HAPExpressionDefinitionImpStr)this.getExpressionDefinition()).setVariableCriterias(newVarsDef);
 		
 		//update variable info
 		Map<String, HAPVariableInfo> newVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();

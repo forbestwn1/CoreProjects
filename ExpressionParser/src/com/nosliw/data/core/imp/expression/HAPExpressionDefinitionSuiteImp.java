@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.interpolate.HAPInterpolateOutput;
+import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPData;
@@ -27,7 +29,7 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 
 	Map<String, HAPExpressionDefinition> m_expressionDefinitions;
 
-	Map<String, HAPData> m_variablesData;
+//	Map<String, HAPData> m_variablesData;
 	
 	@Override
 	public String getName() {  return this.getAtomicAncestorValueString(NAME);	}
@@ -37,6 +39,12 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 		return this.getAllExpressionDefinitions().get(name);
 	}
 
+	@Override
+	public Map<String, HAPData> getConstants() {
+		Map<String, HAPData> constants = this.getMapValueAncestorByPath(CONSTANTS); 
+		return constants;
+	}
+	
 	@Override
 	public Map<String, HAPExpressionDefinition> getAllExpressionDefinitions(){
 		if(this.m_expressionDefinitions==null){
@@ -64,7 +72,7 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 		String name = expressionDefinition.getName();
 		if(HAPBasicUtility.isStringEmpty(name)){
 			name = System.currentTimeMillis()+"";
-			((HAPExpressionDefinitionImp)expressionDefinition).setName(name);
+			((HAPExpressionDefinitionImpStr)expressionDefinition).setName(name);
 		}
 		
 		//process reference variable: update mapping variable name in "to" part by adding reference name 
@@ -85,4 +93,5 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 		this.getAllExpressionDefinitions().putAll(suite.getAllExpressionDefinitions());
 		this.getVariableData().putAll(suite.getVariableData());
 	}
+
 }

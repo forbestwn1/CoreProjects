@@ -14,7 +14,9 @@ public class HAPDataTypeCriteriaExpression extends HAPDataTypeCriteriaAbstract{
 	private HAPDataTypeCriteria m_realCriteria;
 	
 	public HAPDataTypeCriteriaExpression(String expression){
-		this.m_expression = expression.replaceAll(";;", ",");
+		//escape    
+		this.m_expression = expression.replaceAll(";;;", ":");
+		this.m_expression = m_expression.replaceAll(";;", ",");
 	}
 	
 	@Override

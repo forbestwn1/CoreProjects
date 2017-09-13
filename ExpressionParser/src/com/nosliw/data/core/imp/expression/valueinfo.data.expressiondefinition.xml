@@ -1,5 +1,5 @@
 <entity name="data.expressiondefinition" 
-		class="com.nosliw.data.core.imp.expression.HAPExpressionDefinitionImp" 
+		class="com.nosliw.data.core.imp.expression.HAPExpressionDefinitionImpStr" 
 		description="">
 		
 	<property name="name" dataType="string" description=""/>

@@ -13,7 +13,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
 
-public class HAPExpressionDefinitionImp extends HAPStringableValueEntity implements HAPExpressionDefinition{
+public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity implements HAPExpressionDefinition{
 
 	public static String _VALUEINFO_NAME;
 	
@@ -21,7 +21,7 @@ public class HAPExpressionDefinitionImp extends HAPStringableValueEntity impleme
 	//This attribute store the real criteria which can be converted from literate fromat
 	Map<String, HAPDataTypeCriteria> m_variabesWithSolidCriteria;
 	
-	public HAPExpressionDefinitionImp(){	}
+	public HAPExpressionDefinitionImpStr(){	}
 	
 	@Override
 	public String getName() {  return this.getAtomicAncestorValueString(NAME);	}
@@ -56,8 +56,8 @@ public class HAPExpressionDefinitionImp extends HAPStringableValueEntity impleme
 	@Override
 	public Map<String, HAPReferenceInfo> getReferences() {  return this.getMapAncestorByPath(REFERENCES).getMapValue();  }
 	
-	public HAPExpressionDefinitionImp clone(){
-		HAPExpressionDefinitionImp out = this.clone(HAPExpressionDefinitionImp.class);
+	public HAPExpressionDefinitionImpStr clone(){
+		HAPExpressionDefinitionImpStr out = this.clone(HAPExpressionDefinitionImpStr.class);
 
 		Map<String, HAPDataTypeCriteria> vars = this.getMapAncestorByPath(VARIABLECRITERIAS).getMapValue();
 		

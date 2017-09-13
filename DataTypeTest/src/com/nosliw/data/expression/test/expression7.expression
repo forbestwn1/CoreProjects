@@ -30,31 +30,13 @@
 				},
 			},
 			"variableCriterias": {
-				"baseListVar": "test.list%||element:test.string||%",
+				"baseListVar": "test.array%||element:test.string||%",
 			}
 		},
-		"processElement": {
-			"expression": "!(test.string)!.subString(?(baseVar)?,from:&(from)&,to:&(to)&)",
-			"description": "DataType.method, all constant",
-			"constants": {
-				"from": {
-					"dataTypeId": "test.integer",
-					"value": "3"
-				},
-				"to": {
-					"dataTypeId": "test.integer",
-					"value": "7"
-				}
-			},
-			"variableCriterias": {
-				"baseVar": "test.string",
-			}
-		}
-		
 	},
 	"variablesData": {
 		"baseListVar": {
-			"dataTypeId": "test.list",
+			"dataTypeId": "test.array",
 			"value": [
 				{
 					"dataTypeId": "test.string;1.0.0",
@@ -68,7 +50,7 @@
 		},
 	},
 	"result": {
-		"dataTypeId": "test.list;1.0.0",
+		"dataTypeId": "test.array;1.0.0",
 		"value": [
 			{
 				"dataTypeId": "test.string;1.0.0",
