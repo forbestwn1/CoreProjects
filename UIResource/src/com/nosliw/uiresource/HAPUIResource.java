@@ -46,7 +46,7 @@ public class HAPUIResource extends HAPUIResourceBasic{
 				String varName = varSegs.next();
 				String varType = varSegs.next();
 				HAPUIResourceContextInfo contextEleInfo = new HAPUIResourceContextInfo(varName, varType);
-				this.addContextInfo(contextEleInfo);
+				this.addContextElement(contextEleInfo);
 			}
 		}
 	}

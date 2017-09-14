@@ -25,11 +25,26 @@ public class HAPDataWrapper extends HAPDataImp{
 	public HAPDataWrapper(){}
 	
 	public HAPDataWrapper(String strValue){
+		
+		if(strValue.contains("expression")){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		this.buildDataObject(strValue, null);
 	}
 
 	public HAPDataWrapper(HAPDataTypeId dataTypeId, Object value){
 		super(dataTypeId, value);
+
+		if(dataTypeId.toString().contains("expression")){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		if(value.toString().contains("expression")){
+			int kkkk = 5555;
+			kkkk++;
+		}
 	}
 	
 	public String getWrapperType(){		return this.m_wrapperType.name();	}

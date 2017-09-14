@@ -40,6 +40,9 @@ public class HAPUIResourceParser {
 	public static final String UIEXPRESSION_TOKEN_OPEN = "<%=";
 	public static final String UIEXPRESSION_TOKEN_CLOSE = "%>";
 
+	public static final String CUSTOMTAG_PREFIX = "nosliw-";
+
+	
 	//for creating ui id
 	private int m_idIndex;
 	//configuration object
@@ -114,7 +117,7 @@ public class HAPUIResourceParser {
 
 	private void parseChildContextBlocks(Element ele, HAPUIResourceBasic resource){
 		List<Element> removes = new ArrayList<Element>();
-		Elements contextEles = ele.getElementsByTag(HAPConstant.UIRESOURCE_TAG_CONTEXT);
+		Elements contextEles = ele.getElementsByTag(HAPUIResourceBasic.CONTEXT);
 		for(int i=0; i<contextEles.size(); i++){
 			try {
 				String content = contextEles.get(i).html();
@@ -123,7 +126,7 @@ public class HAPUIResourceParser {
 				while(defNames.hasNext()){
 					String eleName = defNames.next();
 					JSONObject eleDefJson = defsJson.optJSONObject(eleName);
-					HAPContextElement contextEle = new HAPContextElement();
+					HAPContextElement contextEle = new HAPContextElement(eleName);
 
 					Object d = eleDefJson.opt(HAPContextElement.DEFAULT);
 					if(d!=null)		contextEle.setDefault(d.toString());
@@ -140,6 +143,7 @@ public class HAPUIResourceParser {
 							contextEle.addChild(path, criterias.get(path));
 						}
 					}
+					resource.addContextElement(contextEle);
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -168,7 +172,7 @@ public class HAPUIResourceParser {
 	private void parseChildExpressionBlocks(Element ele, HAPUIResourceBasic resource){
 		List<Element> removes = new ArrayList<Element>();
 
-		Elements expressionEles = ele.getElementsByTag(HAPConstant.UIRESOURCE_TAG_EXPRESSIONS);
+		Elements expressionEles = ele.getElementsByTag(HAPUIResourceBasic.EXPRESSIONS);
 		for(int i=0; i<expressionEles.size(); i++){
 			try {
 				String content = expressionEles.get(i).html();
@@ -197,7 +201,7 @@ public class HAPUIResourceParser {
 	private void parseChildConstantBlocks(Element ele, HAPUIResourceBasic resource){
 		List<Element> removes = new ArrayList<Element>();
 		
-		Elements constantEles = ele.getElementsByTag(HAPConstant.UIRESOURCE_TAG_CONSTANTS);
+		Elements constantEles = ele.getElementsByTag(HAPUIResourceBasic.CONSTANTS);
 		for(int i=0; i<constantEles.size(); i++){
 			try {
 				String content = constantEles.get(i).html();
@@ -228,8 +232,8 @@ public class HAPUIResourceParser {
 		for(int i=0; i<childEles.size(); i++){
 			Element childEle = childEles.get(i);
 			String childTagName = childEle.tag().getName();
-			if(HAPConstant.UIRESOURCE_TAG_SCRIPTS.equals(childTagName)){
-				HAPJSBlock jsBlock = new HAPJSBlock(ele.html());
+			if(HAPUIResourceBasic.SCRIPTS.equals(childTagName)){
+				HAPScript jsBlock = new HAPScript(ele.html());
 				resource.addJSBlock(jsBlock);
 				removes.add(childEle);
 			}
@@ -274,16 +278,16 @@ public class HAPUIResourceParser {
 		List<TextNode> textNodes = ele.textNodes();
 		for(TextNode textNode : textNodes){
 			String text = textNode.text();
-			int start = text.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_OPEN);
+			int start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
 			while(start != -1){
-				int expEnd = text.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE, start);
-				int end = expEnd + HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE.length();
+				int expEnd = text.indexOf(UIEXPRESSION_TOKEN_CLOSE, start);
+				int end = expEnd + UIEXPRESSION_TOKEN_CLOSE.length();
 				String uiExpression = text.substring(start, end);
 				String textId = this.createId();
 				text=text.substring(0, start) + "<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+textId+"></span>" + text.substring(end);
 				HAPUIExpressionContent expressionContent = new HAPUIExpressionContent(textId, uiExpression);
 				resource.addExpressionContent(expressionContent);
-				start = text.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_OPEN);
+				start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
 			}
 			
 			textNode.after(text);
@@ -429,7 +433,7 @@ public class HAPUIResourceParser {
 			String uiExpression = HAPUIResourceParserUtility.isExpressionAttribute(eleAttr);
 			if(uiExpression!=null){
 				//handle expression attribute
-				HAPUIExpressionAttribute eAttr = new HAPUIExpressionAttribute(uiId, eleAttrKey, uiExpression);
+				HAPUIExpressionAttribute eAttr = new HAPUIExpressionAttribute(eleAttrKey, uiId, uiExpression);
 				if(isCustomerTag)  resource.addExpressionTagAttribute(eAttr);
 				else  resource.addExpressionAttribute(eAttr);
 				ele.attr(eleAttrKey, "");

@@ -12,7 +12,7 @@
 	<property name="name" dataType="object" subDataType="com.nosliw.data.core.HAPDataTypeId" description="data type info">
 		<dbColumnInfos pathType="propertyAsPath">
 			<dbColumnInfo column="fullName" definition="VARCHAR(100) NOT NULL" getter="getFullName" setter="setFullName"/>
-			<dbColumnInfo column="name" definition="VARCHAR(20) NOT NULL" setter="no"/>
+			<dbColumnInfo column="name" definition="VARCHAR(100) NOT NULL" setter="no"/>
 			<dbColumnInfo column="versionFullName" definition="VARCHAR(20) NOT NULL" setter="no"/>
 			<dbColumnInfo column="versionMajor" definition="INT" setter="no"/>
 			<dbColumnInfo column="versionMinor" definition="INT" setter="no"/>

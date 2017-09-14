@@ -15,7 +15,6 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPJsonUtility;
-import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 
 /*
@@ -32,7 +31,7 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String TYPE = "type";
 	@HAPAttribute
-	public static final String CONTEXTINFOS = "contextInfos";
+	public static final String CONTEXT = "context";
 	@HAPAttribute
 	public static final String EXPRESSIONCONTENTS = "expressionContents";
 	@HAPAttribute
@@ -58,7 +57,11 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String UITAGLIBS = "uiTagLibs";
 	@HAPAttribute
-	public static final String CONSTANT = "constant";
+	public static final String CONSTANTS = "constants";
+	@HAPAttribute
+	public static final String SCRIPTS = "scripts";
+	@HAPAttribute
+	public static final String EXPRESSIONS = "expressions";
 
 	
 	//for tag, it is tag id within resource
@@ -66,7 +69,7 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	private String m_id;
 	
 	//input data context information
-	private Map<String, HAPUIResourceContextInfo> m_contextInfos;
+	private Map<String, HAPContextElement> m_context;
 	
 	//all the expressions within content under this domain
 	private Set<HAPUIExpressionContent> m_expressionContents;
@@ -86,7 +89,7 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	private Map<String, String> m_attributes;
 	
 	//all java script blocks within this domain
-	private List<HAPJSBlock> m_jsBlocks;
+	private List<HAPScript> m_scripts;
 	
 	//a set of named data that can be used as constants
 	private Map<String, HAPConstantDef> m_constants;
@@ -100,18 +103,21 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	//the script factory name for creating script object for ui resource view
 	private String m_scriptFactoryName;
 	
+	private Map<String, HAPExpressionDefinition> m_expressionDefinitions;
+	
 	public HAPUIResourceBasic(String id){
 		this.m_id = id;
-		this.m_contextInfos = new LinkedHashMap<String, HAPUIResourceContextInfo>();
+		this.m_context = new LinkedHashMap<String, HAPContextElement>();
 		this.m_expressionAttributes = new HashSet<HAPUIExpressionAttribute>();
 		this.m_expressionTagAttributes = new HashSet<HAPUIExpressionAttribute>();
 		this.m_expressionContents = new HashSet<HAPUIExpressionContent>();
 		this.m_uiTags = new LinkedHashMap<String, HAPUITag>();
-		this.m_jsBlocks = new ArrayList<HAPJSBlock>();
+		this.m_scripts = new ArrayList<HAPScript>();
 		this.m_elementEvents = new HashSet<HAPElementEvent>();
 		this.m_tagEvents = new HashSet<HAPElementEvent>();
 		this.m_attributes = new LinkedHashMap<String, String>();
 		this.m_constants = new LinkedHashMap<String, HAPConstantDef>();
+		this.m_expressionDefinitions = new LinkedHashMap<String, HAPExpressionDefinition>();
 	}
 	
 	abstract public String getType(); 
@@ -136,7 +142,7 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(TYPE, String.valueOf(this.getType()));
-		jsonMap.put(CONTEXTINFOS, HAPJsonUtility.buildJson(m_contextInfos, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(m_context, HAPSerializationFormat.JSON_FULL));
 
 		List<String> expressionContentJsons = new ArrayList<String>();
 		for(HAPUIExpressionContent expressionContent : this.m_expressionContents)  expressionContentJsons.add(expressionContent.toStringValue(HAPSerializationFormat.JSON_FULL));
@@ -173,7 +179,7 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 		for(String name : this.m_constants.keySet()){
 			constantsJsons.put(name, this.m_constants.get(name).toStringValue(HAPSerializationFormat.JSON_FULL));
 		}
-		jsonMap.put(CONSTANT, HAPJsonUtility.buildMapJson(constantsJsons));
+		jsonMap.put(CONSTANTS, HAPJsonUtility.buildMapJson(constantsJsons));
 	
 	}
 	
@@ -182,27 +188,25 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	public String getContent(){return this.m_content;}
 	public void setContent(String content){	this.m_content = content;	}
 	
-	public void addContextInfo(HAPUIResourceContextInfo contextInfo){this.m_contextInfos.put(contextInfo.getName(), contextInfo);	}
+	public void addContextElement(HAPContextElement contextElement){this.m_context.put(contextElement.getName(), contextElement);	}
 	public void addExpressionAttribute(HAPUIExpressionAttribute eAttr){	this.m_expressionAttributes.add(eAttr);	}
 	public void addExpressionTagAttribute(HAPUIExpressionAttribute eAttr){	this.m_expressionTagAttributes.add(eAttr);	}
 	public void addExpressionContent(HAPUIExpressionContent expressionContent){	this.m_expressionContents.add(expressionContent);	}
 	public void addUITag(HAPUITag uiTag){	this.m_uiTags.put(uiTag.getId(), uiTag);	}
 	public void addElementEvent(HAPElementEvent event){this.m_elementEvents.add(event);}
 	public void addTagEvent(HAPElementEvent event){this.m_tagEvents.add(event);}
-	public void addJSBlock(HAPJSBlock jsBlock){this.m_jsBlocks.add(jsBlock);}
+	public void addJSBlock(HAPScript jsBlock){this.m_scripts.add(jsBlock);}
 	public void setScriptFactoryName(String name){this.m_scriptFactoryName=name;}
 	public void addConstant(String name, HAPConstantDef data){this.m_constants.put(name, data);}
 	public Map<String, HAPConstantDef> getConstants(){return this.m_constants;}
 	
-	public List<HAPJSBlock> getJSBlocks(){return this.m_jsBlocks;}
+	public List<HAPScript> getJSBlocks(){return this.m_scripts;}
 	public Collection<HAPUITag> getUITags(){return this.m_uiTags.values();} 
 	public Set<HAPUIExpressionContent> getExpressionContents(){return this.m_expressionContents;}
 	public Set<HAPUIExpressionAttribute> getExpressionAttributes(){return this.m_expressionAttributes;}
 	public Set<HAPUIExpressionAttribute> getExpressionTagAttributes(){return this.m_expressionTagAttributes;}
 
-	public void addExpressionDefinition(HAPExpressionDefinition expressionDef){
-		
-	}
+	public void addExpressionDefinition(HAPExpressionDefinition expressionDef){		this.m_expressionDefinitions.put(expressionDef.getName(), expressionDef);	}
 	
 	/*
 	 * process attributes

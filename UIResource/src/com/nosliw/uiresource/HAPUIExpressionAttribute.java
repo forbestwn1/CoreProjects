@@ -12,7 +12,7 @@ public class HAPUIExpressionAttribute extends HAPUIExpressionContent{
 	//attribute name
 	private String m_attribute;
 
-	public HAPUIExpressionAttribute(String uiId, String attr, String content){
+	public HAPUIExpressionAttribute(String attr, String uiId, String content){
 		super(uiId, content);
 		this.m_attribute = attr;
 	}

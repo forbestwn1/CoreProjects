@@ -29,7 +29,7 @@ public class HAPUIResourceParserUtility {
 	 * build custom tag name based on tag basic name
 	 */
 	public static String makeCustomTagName(String tag){
-		return HAPNamingConversionUtility.createKeyword(tag, HAPConstant.UIRESOURCE_CUSTOMTAG_TAG_PREFIX);
+		return HAPNamingConversionUtility.createKeyword(tag, HAPUIResourceParser.CUSTOMTAG_PREFIX);
 	}
 	
 	/*
@@ -39,7 +39,7 @@ public class HAPUIResourceParserUtility {
 	 */
 	public static String isCustomTag(Element ele){
 		String tagName = ele.tagName();
-		return HAPNamingConversionUtility.getKeyword(tagName, HAPConstant.UIRESOURCE_CUSTOMTAG_TAG_PREFIX);
+		return HAPNamingConversionUtility.getKeyword(tagName, HAPUIResourceParser.CUSTOMTAG_PREFIX);
 	}
 	
 	/*
@@ -48,17 +48,17 @@ public class HAPUIResourceParserUtility {
 	 * else return null
 	 */
 	public static String isExpressionAttribute(Attribute attr){
+		String out = null;
 		String value = attr.getValue();
-		int start = value.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_OPEN);
+		int start = value.indexOf(HAPUIResourceParser.UIEXPRESSION_TOKEN_OPEN);
 		if(start!=-1) {
-			return value;
-//			int expEnd = value.indexOf(HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_CLOSE, start);
-//			if(expEnd!=-1){
-//				int expStart = start + HAPConstant.UIRESOURCE_UIEXPRESSION_TOKEN_OPEN.length();
-//				out = value.substring(expStart, expEnd);
-//			}
+			int expEnd = value.indexOf(HAPUIResourceParser.UIEXPRESSION_TOKEN_CLOSE, start);
+			if(expEnd!=-1){
+				int expStart = start + HAPUIResourceParser.UIEXPRESSION_TOKEN_OPEN.length();
+				out = value.substring(expStart, expEnd);
+			}
 		}
-		return null;
+		return out;
 	}
 	
 	public static boolean isDataKeyAttribute(String attribute){

@@ -156,7 +156,7 @@
 		<!-- This part can be used to define context (variable)
 				it describle data type criteria for each context element and its default value
 		-->
-	<contexts>
+	<context>
 	{
 		business : {
 			a : {

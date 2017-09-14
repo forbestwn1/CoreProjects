@@ -10,7 +10,7 @@
 				<parm name="elementVariableName" criteria="test.string"/>
 				<parm name="expression" criteria="test.expression"/>
 			</parms>
-			<output criteria="test.array%||element:@||!(test.expression)!.outputCriteria(expression;:;&amp;(expression)&amp;.getValue();,;parms;:;!(test.map)!.new().put(name;:;&amp;(elementVariableName)&amp;.getValue();,;value;:;&amp;(base)&amp;.getCriteria().getChild(#test.string;element)))||@||%"/>
+			<output criteria="test.array%||element:@||!(test.expression)!.outputCriteria(expression;;;&amp;(expression)&amp;.getValue();;parms;;;!(test.map)!.new().put(name;;;&amp;(elementVariableName)&amp;.getValue();;value;;;&amp;(base)&amp;.getCriteria().getChild(#test.string;element)))||@||%"/>
 		</operation>
 
 	</operations>

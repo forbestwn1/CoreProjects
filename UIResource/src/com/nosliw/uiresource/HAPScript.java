@@ -5,12 +5,12 @@ package com.nosliw.uiresource;
  * it may contain declaration, function definition, or any valid javascript 
  */
 
-public class HAPJSBlock {
+public class HAPScript {
 
 	//javascript content
 	private String m_jsBlock;
 	
-	public HAPJSBlock(String js){
+	public HAPScript(String js){
 		this.m_jsBlock = js;
 	}
 	
