@@ -11,7 +11,7 @@ public class HAPDataUtility {
 
 	public static HAPDataWrapper buildDataWrapper(String strValue){
 		HAPDataWrapper wrapper = new HAPDataWrapper();
-		if(wrapper.buildDataObject(strValue, null))  return wrapper;
+		if(wrapper.buildObjectByLiterate(strValue))  return wrapper;
 		return null;
 	}
 

@@ -12,7 +12,9 @@ import com.nosliw.common.utils.HAPBasicUtility;
 
 public abstract class HAPDataImp extends HAPSerializableImp implements HAPData{
 
+	//data type
 	protected HAPDataTypeId m_dataTypeId;
+	//any object that can represent data value (json, literate)
 	protected Object m_value;
 	
 	public HAPDataImp(){}
@@ -61,19 +63,16 @@ public abstract class HAPDataImp extends HAPSerializableImp implements HAPData{
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(DATATYPEID, this.m_dataTypeId.toStringValue(HAPSerializationFormat.LITERATE));
 		this.buildJsonMap(jsonMap, typeJsonMap);
 	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(DATATYPEID, this.m_dataTypeId.toStringValue(HAPSerializationFormat.LITERATE));
 		jsonMap.put(VALUE, this.toStringValueValue(HAPSerializationFormat.JSON));
 	}
 
 	
-	@Override
-	protected String buildJson(){ return this.toStringValue(HAPSerializationFormat.JSON_FULL); }
-
 	@Override
 	protected String buildLiterate(){
 		return HAPNamingConversionUtility.cascadeDetail(this.m_dataTypeId.toStringValue(HAPSerializationFormat.LITERATE), this.toStringValueValue(HAPSerializationFormat.LITERATE));

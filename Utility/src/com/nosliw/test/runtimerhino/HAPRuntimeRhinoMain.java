@@ -6,6 +6,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
+import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionManagerImp;
@@ -82,6 +83,9 @@ public class HAPRuntimeRhinoMain {
 		
 		HAPExpressionManagerImp expressionMan = (HAPExpressionManagerImp)runtimeEnvironment.getExpressionManager();
 		expressionMan.importExpressionFromFolder(HAPFileUtility.getClassFolderName(HAPExpressionTest.class));
+		
+//		HAPExpressionDefinition expDef = expressionMan.getExpressionDefinitionSuite("expression7").getExpressionDefinition("main");
+//		System.out.println(expDef);
 		
 		executeSuite("expression7", runtimeEnvironment);
 		

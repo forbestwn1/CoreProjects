@@ -71,7 +71,7 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 			expression.addErrorMessages(context.getMessages());
 		}
 		else{
-//			System.out.println(expression);
+			System.out.println(expression.getExpressionDefinition());
 			System.out.println("******* End");
 		}
 		return expression;

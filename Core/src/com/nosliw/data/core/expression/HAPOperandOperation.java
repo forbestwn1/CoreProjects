@@ -176,11 +176,6 @@ public class HAPOperandOperation extends HAPOperandImp{
 					this.m_base = null;
 				}
 				
-				if(parmOperand==null || variablesInfo==null || parmInfo==null){
-					int kkkk = 5555;
-					kkkk++;
-				}
-				
 				HAPMatchers matchers = parmOperand.discover(variablesInfo, parmInfo.getCriteria(), context, dataTypeHelper);
 				if(matchers!=null){
 					this.m_parmsMatchers.put(parmInfo.getName(), matchers);

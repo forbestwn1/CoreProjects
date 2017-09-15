@@ -17,3 +17,7 @@ g
 7src/com/nosliw/test/criteria/HAPCriteriaParserTest.java,9\e\9e1940e7f74cd2dbbdf85c65e6fb45288c699611
 i
 9src/com/nosliw/test/runtimerhino/HAPRuntimeRhinoMain.java,2\1\211a3051d7716a3ae56772433faf50dd79da17b3
+c
+3src/com/nosliw/test/criteria/HAPCriteriaEscape.java,1\e\1ee93f9a4b678b84b271ce2811bc214a3acebf01
+e
+5src/com/nosliw/test/criteria/HAPCriteriaDeescape.java,a\3\a3828828ba1a68d00866c53d899307411bfa3153
