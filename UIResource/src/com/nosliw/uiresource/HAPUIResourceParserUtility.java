@@ -18,6 +18,30 @@ import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPUIResourceParserUtility {
 
+	public static final String UIEXPRESSION_TOKEN_OPEN = "<%=";
+	public static final String UIEXPRESSION_TOKEN_CLOSE = "%>";
+	
+	public static List<Object> parseUIException(String text, HAPUIResourceIdGenerator idGenerator){
+		List<Object> out = new ArrayList<Object>();
+		int start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
+		while(start != -1){
+			if(start>0)   out.add(text.substring(0, start));
+			int expEnd = text.indexOf(UIEXPRESSION_TOKEN_CLOSE, start);
+			int end = expEnd + UIEXPRESSION_TOKEN_CLOSE.length();
+			String expression = text.substring(start, end);
+			String uiId = idGenerator.createId();
+			HAPUIExpression uiExpression = new HAPUIExpression(uiId, expression);
+			out.add(uiExpression);
+			//keep searching the rest
+			text=text.substring(end);
+			start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
+		}
+		if(!HAPBasicUtility.isStringEmpty(text)){
+			out.add(text);
+		}
+		return out;
+	}
+	
 	/*
 	 * build expression function name based on id
 	 */

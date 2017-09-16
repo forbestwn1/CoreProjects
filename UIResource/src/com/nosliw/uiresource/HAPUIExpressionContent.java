@@ -11,6 +11,10 @@ public class HAPUIExpressionContent extends HAPSerializableImp{
 
 	private HAPUIExpression m_uiExpression;
 	
+	public HAPUIExpressionContent(HAPUIExpression uiExpression){
+		this.m_uiExpression = uiExpression;
+	}
+	
 	public  HAPUIExpressionContent(String uiId, String content){
 		this.m_uiExpression = new HAPUIExpression(uiId, content);
 	}

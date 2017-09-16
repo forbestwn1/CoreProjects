@@ -325,9 +325,28 @@ var node_createExpressionService = function(){
 	};	
 
 
-	
+	var loc_getExecuteScriptExpressionRequest = function(script, expressions, variables, handlers, requester_parent){
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
+		//calculate multiple expression
+		var executeMultipleExpressionRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("ExecuteMultipleExpression", {"expressions":expressions, "variables":variables}), {});
+		_.each(expressions, function(expression, name){
+			executeMultipleExpressionRequest.addRequest(name, loc_getExecuteExpressionRequest(expression, variables, {}));
+		});
+
+		var executeScriptExpressionRequest = node_createServiceRequestInfoService(new node_ServiceInfo("ExecuteScriptExpression", {"script":script, "expressions":expressions, "variables":variables}), handlers, requestInfo);
+		var requestDependency = new node_DependentServiceRequestInfo(executeMultipleExpressionRequest, {
+			success : function(requestInfo, expressionsResult){
+				var expressionsData = expressionsResult.getResults();
+				return script.call(undefined, expressionsData);
+			}
+		});
+		executeScriptExpressionRequest.setDependentService(requestDependency);
+
+		return executeScriptExpressionRequest;
+	};
 	
 	var loc_out = {
+		
 		getExecuteOperationRequest : function(dataTypeId, operation, parmsArray, handlers, requester_parent){
 			return loc_getExecuteOperationRequest(dataTypeId, operation, parmsArray, handlers, requester_parent);
 		},
@@ -337,7 +356,6 @@ var node_createExpressionService = function(){
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},
 
-		
 		getExecuteExpressionRequest : function(expression, variables, handlers, requester_parent){
 			return loc_getExecuteExpressionRequest(expression, variables, handlers, requester_parent);
 		},
@@ -345,7 +363,18 @@ var node_createExpressionService = function(){
 		executeExecuteExpressionRequest : function(expression, variables, handlers, requester_parent){
 			var requestInfo = this.getExecuteExpressionRequest(expression, variables, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo, false);
-		}
+		},
+
+		/**
+		 * Execute script expression
+		 * 		script : function with parameter map (name : expression result)
+		 * 		expressions : map (name : expression)
+		 * 		variables : variables for expression
+		 */
+		getExecuteScriptExpressionRequest : function(script, expressions, variables, handlers, requester_parent){
+			return loc_getExecuteScriptExpressionRequest(script, expressions, variables, handlers, requester_parent);
+		},
+	
 	};
 	
 	loc_out = node_buildServiceProvider(loc_out, "expressionService");

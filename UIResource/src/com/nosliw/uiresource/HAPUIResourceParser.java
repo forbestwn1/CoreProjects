@@ -37,14 +37,10 @@ import com.nosliw.data.core.expression.HAPExpressionDefinition;
  */
 public class HAPUIResourceParser {
 
-	public static final String UIEXPRESSION_TOKEN_OPEN = "<%=";
-	public static final String UIEXPRESSION_TOKEN_CLOSE = "%>";
-
 	public static final String CUSTOMTAG_PREFIX = "nosliw-";
-
 	
 	//for creating ui id
-	private int m_idIndex;
+	private HAPUIResourceIdGenerator m_idGenerator;
 	//configuration object
 	private HAPConfigure m_setting;
 	//current ui resource 
@@ -54,7 +50,7 @@ public class HAPUIResourceParser {
 	private HAPCriteriaParser m_criteriaParser;
 	
 	public HAPUIResourceParser(HAPConfigure setting){
-		this.m_idIndex = 1;
+		this.m_idGenerator = new HAPUIResourceIdGenerator(1);
 		this.m_setting = setting;
 	}
 	
@@ -278,19 +274,21 @@ public class HAPUIResourceParser {
 		List<TextNode> textNodes = ele.textNodes();
 		for(TextNode textNode : textNodes){
 			String text = textNode.text();
-			int start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
-			while(start != -1){
-				int expEnd = text.indexOf(UIEXPRESSION_TOKEN_CLOSE, start);
-				int end = expEnd + UIEXPRESSION_TOKEN_CLOSE.length();
-				String uiExpression = text.substring(start, end);
-				String textId = this.createId();
-				text=text.substring(0, start) + "<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+textId+"></span>" + text.substring(end);
-				HAPUIExpressionContent expressionContent = new HAPUIExpressionContent(textId, uiExpression);
-				resource.addExpressionContent(expressionContent);
-				start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
+			List<Object> segments = HAPUIResourceParserUtility.parseUIException(text, this.m_idGenerator);
+			StringBuffer newText = new StringBuffer();
+			for(Object segment : segments){
+				if(segment instanceof String){
+					newText.append((String)segment);
+				}
+				else if(segment instanceof HAPUIExpression){
+					HAPUIExpression uiExpression = (HAPUIExpression)segment;
+					newText.append("<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+uiExpression.getId()+"></span>");
+					HAPUIExpressionContent expressionContent = new HAPUIExpressionContent(uiExpression);
+					resource.addExpressionContent(expressionContent);
+				}
 			}
 			
-			textNode.after(text);
+			textNode.after(newText.toString());
 			textNode.remove();
 		}
 	}
@@ -482,10 +480,9 @@ public class HAPUIResourceParser {
 	 * create ui id attribute for element
 	 */
 	private String createUIId(Element ele, HAPUIResourceBasic resource){
-		String id = this.createId();
+		String id = this.m_idGenerator.createId();
 		ele.attr(HAPConstant.UIRESOURCE_ATTRIBUTE_UIID, id);
 		return id;
 	}
 	
-	private String createId(){		return String.valueOf(++this.m_idIndex);	}
 }

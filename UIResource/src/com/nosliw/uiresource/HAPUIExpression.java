@@ -36,6 +36,8 @@ public class HAPUIExpression {
 		this.process();
 	}
 	
+	public String getId(){  return this.m_uiId;  }
+	
 	private void process(){
 		String content = this.m_content;
 		int i = 0;
