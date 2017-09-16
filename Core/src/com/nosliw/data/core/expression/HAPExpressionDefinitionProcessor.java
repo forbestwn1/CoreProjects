@@ -27,4 +27,12 @@ public interface HAPExpressionDefinitionProcessor {
 			Map<String, HAPDataTypeCriteria> variableCriterias
 	);
 
+	/**
+	 * parse expression to build operand
+	 * @param expression
+	 * @return
+	 */
+	HAPOperand parseExpression(String expression);
+
+	
 }

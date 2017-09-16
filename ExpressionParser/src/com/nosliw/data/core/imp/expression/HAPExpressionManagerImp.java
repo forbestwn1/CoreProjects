@@ -1,28 +1,11 @@
 package com.nosliw.data.core.imp.expression;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
@@ -30,6 +13,7 @@ import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionDefinitionSuite;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPExpressionParser;
+import com.nosliw.data.core.expression.HAPOperand;
 
 public class HAPExpressionManagerImp implements HAPExpressionManager{
 
@@ -62,6 +46,15 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	
 	@Override
 	public void addExpressionDefinitionSuite(HAPExpressionDefinitionSuite expressionDefinitionSuite){
+		//parse expression in suite
+        Map<String, HAPExpressionDefinition> expDefs = expressionDefinitionSuite.getAllExpressionDefinitions();
+        for(String name : expDefs.keySet()){
+        	HAPExpressionDefinition expDef = expDefs.get(name);
+        	HAPOperand operand = this.m_expressionProcessor.parseExpression(expDef.getExpression());
+        	expDef.setOperand(operand);
+        }
+
+        //add to expression manager
 		HAPExpressionDefinitionSuiteImp suite = (HAPExpressionDefinitionSuiteImp)this.getExpressionDefinitionSuite(expressionDefinitionSuite.getName());
 		if(suite==null){
 			this.m_expressionDefinitionSuites.put(expressionDefinitionSuite.getName(), (HAPExpressionDefinitionSuiteImp)expressionDefinitionSuite);
@@ -90,40 +83,10 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		return expression;
 	}
 
-	public void importExpressionFromFolder(String folder){
-		Set<File> files = HAPFileUtility.getAllFiles(folder);
-		for(File file : files){
-			if(file.getName().endsWith(".expression")){
-				try {
-					InputStream inputStream = new FileInputStream(file);
-			         HAPExpressionDefinitionSuiteImp expressionDefinitionSuite = (HAPExpressionDefinitionSuiteImp)HAPStringableEntityImporterJSON.parseJsonEntity(inputStream, HAPExpressionDefinitionSuiteImp._VALUEINFO_NAME, HAPValueInfoManager.getInstance());
-			         this.addExpressionDefinitionSuite(expressionDefinitionSuite);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	public void importFromClassFolder(Class cs){
-		try{
-			URI uri = cs.getResource("").toURI();
-		    try (FileSystem fileSystem = (uri.getScheme().equals("jar") ? FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap()) : null)) {
-		    	Path path = Paths.get(uri);
-				Files.walkFileTree(path, new HashSet(), 1, new SimpleFileVisitor<Path>() { 
-		            @Override
-		            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-		            	if(file.getFileName().toString().endsWith(".expression")){
-					         HAPExpressionDefinitionSuiteImp expressionDefinitionSuite = (HAPExpressionDefinitionSuiteImp)HAPStringableEntityImporterJSON.parseJsonEntity(Files.newInputStream(file), HAPExpressionDefinitionSuiteImp._VALUEINFO_NAME, HAPValueInfoManager.getInstance());
-					         addExpressionDefinitionSuite(expressionDefinitionSuite);
-		            	}
-		                return FileVisitResult.CONTINUE;
-		            }
-		        });
-		    }
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
+	@Override
+	public HAPExpressionDefinition newExpressionDefinition(String expression, String name,
+			Map<String, HAPData> constants, Map<String, HAPDataTypeCriteria> variableCriterias) {
+		HAPExpressionDefinition expDefinition = new HAPExpressionDefinitionSimple(expression, null, constants, null, null, null);
+		return expDefinition;
 	}
 }

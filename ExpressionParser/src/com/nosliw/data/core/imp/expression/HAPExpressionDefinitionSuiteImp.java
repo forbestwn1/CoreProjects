@@ -72,7 +72,7 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 		String name = expressionDefinition.getName();
 		if(HAPBasicUtility.isStringEmpty(name)){
 			name = System.currentTimeMillis()+"";
-			((HAPExpressionDefinitionImpStr)expressionDefinition).setName(name);
+			expressionDefinition.setName(name);
 		}
 		
 		//process reference variable: update mapping variable name in "to" part by adding reference name 

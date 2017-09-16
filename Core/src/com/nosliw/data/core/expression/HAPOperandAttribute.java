@@ -20,6 +20,8 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	
 	private HAPOperand m_base;
 	
+	private HAPOperandAttribute(){}
+	
 	public HAPOperandAttribute(HAPOperand base, String attribute){
 		super(HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION);
 		this.setBase(base);
@@ -67,5 +69,18 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	@Override
 	public HAPDataTypeCriteria getOutputCriteria() {
 		return null;
+	}
+
+	@Override
+	public HAPOperand cloneOperand() {
+		HAPOperandAttribute out = new HAPOperandAttribute();
+		this.cloneTo(out);
+		return out;
+	}
+	
+	protected void cloneTo(HAPOperandAttribute operand){
+		super.cloneTo(operand);
+		operand.m_attribute = this.m_attribute;
+		if(this.m_base!=null)	operand.m_base = this.m_base.cloneOperand();
 	}
 }

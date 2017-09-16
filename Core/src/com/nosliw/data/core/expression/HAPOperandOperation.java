@@ -55,6 +55,8 @@ public class HAPOperandOperation extends HAPOperandImp{
 
 	private Map<String, HAPMatchers> m_parmsMatchers;
 	
+	private HAPOperandOperation(){this.resetMatchers();}
+	
 	public HAPOperandOperation(HAPOperand base, String operation, List<HAPOperationParm> parms){
 		super(HAPConstant.EXPRESSION_OPERAND_OPERATION);
 		this.m_base = base;
@@ -209,6 +211,27 @@ public class HAPOperandOperation extends HAPOperandImp{
 			}
 			this.setOutputCriteria(null);
 			return null;
+		}
+	}
+	
+	@Override
+	public HAPOperand cloneOperand() {
+		HAPOperandOperation out = new HAPOperandOperation();
+		this.cloneTo(out);
+		return out;
+	}
+	
+	protected void cloneTo(HAPOperandOperation operand){
+		super.cloneTo(operand);
+		operand.m_dataTypeId = this.m_dataTypeId;
+		
+		if(this.m_base!=null)		operand.m_base = this.m_base.cloneOperand();
+
+		operand.m_operation = this.m_operation;
+		
+		operand.m_parms = new LinkedHashMap<String, HAPOperand>();
+		for(String name : this.m_parms.keySet()){
+			operand.m_parms.put(name, this.m_parms.get(name).cloneOperand());
 		}
 	}
 }

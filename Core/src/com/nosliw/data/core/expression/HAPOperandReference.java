@@ -19,6 +19,8 @@ public class HAPOperandReference extends HAPOperandImp{
 	private String m_expressionReference;
 	
 	private HAPExpression m_referencedExpression;
+
+	private HAPOperandReference(){}
 	
 	public HAPOperandReference(String expressionName){
 		super(HAPConstant.EXPRESSION_OPERAND_REFERENCE);
@@ -61,4 +63,17 @@ public class HAPOperandReference extends HAPOperandImp{
 		
 		return this.m_referencedExpression.discover(variablesInfo, expectCriteria, context, dataTypeHelper);
 	}
+	
+	@Override
+	public HAPOperand cloneOperand() {
+		HAPOperandReference out = new HAPOperandReference();
+		this.cloneTo(out);
+		return out;
+	}
+	
+	protected void cloneTo(HAPOperandReference operand){
+		super.cloneTo(operand);
+		operand.m_expressionReference = this.m_expressionReference;
+	}
+
 }

@@ -3,9 +3,7 @@ package com.nosliw.app.servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.data.core.imp.expression.HAPExpressionManagerImp;
-import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
+import com.nosliw.data.core.imp.expression.HAPExpressionImporter;
 import com.nosliw.data.core.imp.runtime.js.HAPRuntimeEnvironmentImpJS;
 import com.nosliw.data.expression.test.HAPExpressionTest;
 
@@ -18,8 +16,7 @@ public class HAPInitServlet  extends HttpServlet{
 			//create runtime
 			HAPRuntimeEnvironmentImpJS runtimeEnvironment = new HAPRuntimeEnvironmentImpJS();
 
-			HAPExpressionManagerImp expressionMan = (HAPExpressionManagerImp)runtimeEnvironment.getExpressionManager();
-			expressionMan.importFromClassFolder(HAPExpressionTest.class);
+			HAPExpressionImporter.importExpressionSuiteFromClassFolder(HAPExpressionTest.class, runtimeEnvironment.getExpressionManager());
 
 			//set runtime object to context
 			this.getServletContext().setAttribute("runtime", runtimeEnvironment);

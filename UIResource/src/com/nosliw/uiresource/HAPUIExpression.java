@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.core.expression.HAPExpressionDefinitionSimple;
+import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSimple;
 
 /**
  * Represent ui expression

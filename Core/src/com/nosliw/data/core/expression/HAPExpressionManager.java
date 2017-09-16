@@ -3,6 +3,7 @@ package com.nosliw.data.core.expression;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public interface HAPExpressionManager {
@@ -18,5 +19,8 @@ public interface HAPExpressionManager {
 	HAPExpression processExpression(String suite, String expressionName, Map<String, HAPDataTypeCriteria> variableCriterias);
 
 	HAPExpression processExpression(HAPExpressionDefinition expressionDefinition, Map<String, HAPDataTypeCriteria> variableCriterias);
+
+	//create a simple expression definition
+	HAPExpressionDefinition newExpressionDefinition(String expression, String name, Map<String, HAPData> constants, Map<String, HAPDataTypeCriteria> variableCriterias); 
 	
 }

@@ -24,6 +24,8 @@ public class HAPOperandConstant extends HAPOperandImp{
 
 	protected String m_name;
 	
+	private HAPOperandConstant(){}
+	
 	public HAPOperandConstant(String constantStr){
 		super(HAPConstant.EXPRESSION_OPERAND_CONSTANT);
 		HAPData data = HAPDataUtility.buildDataWrapper(constantStr);
@@ -68,5 +70,18 @@ public class HAPOperandConstant extends HAPOperandImp{
 			this.setOutputCriteria(criteria);
 		}
 		return this.isMatchable(this.getOutputCriteria(), expectCriteria, context, dataTypeHelper);
+	}
+	
+	@Override
+	public HAPOperand cloneOperand() {
+		HAPOperandConstant out = new HAPOperandConstant();
+		this.cloneTo(out);
+		return out;
+	}
+	
+	protected void cloneTo(HAPOperandConstant operand){
+		super.cloneTo(operand);
+		operand.m_name = this.m_name;
+		operand.m_data = this.m_data;
 	}
 }

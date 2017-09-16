@@ -14,6 +14,8 @@ public class HAPOperandVariable extends HAPOperandImp{
 	
 	protected String m_variableName;
 	
+	private HAPOperandVariable(){}
+	
 	public HAPOperandVariable(String name){
 		super(HAPConstant.EXPRESSION_OPERAND_VARIABLE);
 		this.m_variableName = name;
@@ -71,4 +73,17 @@ public class HAPOperandVariable extends HAPOperandImp{
 		//cal converter
 		return this.isMatchable(variableInfo.getCriteria(), expectCriteria, context, dataTypeHelper);
 	}
+	
+	@Override
+	public HAPOperand cloneOperand() {
+		HAPOperandVariable out = new HAPOperandVariable();
+		this.cloneTo(out);
+		return out;
+	}
+	
+	protected void cloneTo(HAPOperandVariable operand){
+		super.cloneTo(operand);
+		operand.m_variableName = this.m_variableName;
+	}
+	
 }

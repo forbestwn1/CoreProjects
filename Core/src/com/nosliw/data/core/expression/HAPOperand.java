@@ -59,4 +59,6 @@ public interface HAPOperand {
 	
 	//get all the convertor required by this operand
 	Set<HAPDataTypeConverter> getConverters();  
+	
+	HAPOperand cloneOperand();
 }

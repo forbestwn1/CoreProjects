@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.interpolate.HAPInterpolateOutput;
+import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -11,6 +13,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
+import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
 
 public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity implements HAPExpressionDefinition{
@@ -21,10 +24,18 @@ public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity impl
 	//This attribute store the real criteria which can be converted from literate fromat
 	Map<String, HAPDataTypeCriteria> m_variabesWithSolidCriteria;
 	
+	private HAPOperand m_operand;
+	
 	public HAPExpressionDefinitionImpStr(){	}
 	
 	@Override
+	public HAPOperand getOperand() {  return this.m_operand;  }
+	@Override
+	public void setOperand(HAPOperand operand){  this.m_operand = operand;   }
+	
+	@Override
 	public String getName() {  return this.getAtomicAncestorValueString(NAME);	}
+	@Override
 	public void setName(String name){  this.updateAtomicChildStrValue(NAME, name);  }
 	
 	@Override
@@ -56,7 +67,7 @@ public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity impl
 	@Override
 	public Map<String, HAPReferenceInfo> getReferences() {  return this.getMapAncestorByPath(REFERENCES).getMapValue();  }
 	
-	public HAPExpressionDefinitionImpStr clone(){
+	public HAPExpressionDefinition cloneExpressionDefinition(){
 		HAPExpressionDefinitionImpStr out = this.clone(HAPExpressionDefinitionImpStr.class);
 
 		Map<String, HAPDataTypeCriteria> vars = this.getMapAncestorByPath(VARIABLECRITERIAS).getMapValue();
@@ -77,4 +88,5 @@ public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity impl
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VARIABLECRITERIAS, HAPJsonUtility.buildJson(m_variabesWithSolidCriteria, HAPSerializationFormat.JSON));
 	}
+
 }

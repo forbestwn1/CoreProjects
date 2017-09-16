@@ -25,6 +25,9 @@ public interface HAPExpressionDefinition {
 	public static String EXPRESSION = "expression";
 
 	@HAPAttribute
+	public static String OPERAND = "operand";
+
+	@HAPAttribute
 	public static String CONSTANTS = "constants";
 	
 	@HAPAttribute
@@ -36,6 +39,7 @@ public interface HAPExpressionDefinition {
 
 	//expression name, should be unique
 	String getName();
+	void setName(String name);
 	
 	//related information, for instance, description, 
 	HAPInfo getInfo();
@@ -43,12 +47,19 @@ public interface HAPExpressionDefinition {
 	//expression as string
 	String getExpression();
 	
+	//the operand after parsing the expression
+	HAPOperand getOperand();
+	void setOperand(HAPOperand operand);
+	
 	//constants definition
 	Map<String, HAPData> getConstants();
 	
 	//variables definition
 	Map<String, HAPDataTypeCriteria> getVariableCriterias();
+	void setVariableCriterias(Map<String, HAPDataTypeCriteria> varCriterias);
 	
 	//references definition
 	Map<String, HAPReferenceInfo> getReferences();
+	
+	HAPExpressionDefinition cloneExpressionDefinition();
 }

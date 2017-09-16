@@ -47,4 +47,12 @@ public class HAPMatchers extends HAPSerializableImp{
 					HAPSerializeManager.getInstance().toStringValue(matcher, HAPSerializationFormat.JSON));
 		}
 	}
+	
+	public HAPMatchers cloneMatchers(){
+		HAPMatchers out = new HAPMatchers();
+		for(HAPDataTypeId dataTypeId : this.m_matchers.keySet()){
+			out.addMatcher(this.m_matchers.get(dataTypeId));
+		}
+		return out;
+	}
 }

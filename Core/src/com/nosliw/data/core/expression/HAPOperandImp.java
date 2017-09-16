@@ -25,6 +25,8 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	
 	private HAPDataTypeCriteria m_outputCriteria;
 	
+	protected HAPOperandImp(){}
+	
 	public HAPOperandImp(String type){
 		this.m_type = type;
 		this.m_children = new ArrayList<HAPOperand>();
@@ -114,5 +116,9 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 				context.setFailure("Error!!!!");
 			}
 		}
+	}
+	
+	protected void cloneTo(HAPOperandImp operand){
+		
 	}
 }
