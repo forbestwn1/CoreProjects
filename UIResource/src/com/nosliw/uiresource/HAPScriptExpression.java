@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSimple;
+import com.nosliw.data.core.expression.HAPExpressionDefinition;
+import com.nosliw.data.core.expression.HAPExpressionManager;
 
 /**
  * Represent ui expression
@@ -15,7 +16,7 @@ import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSimple;
  * 		tag attribute
  * 		constant definition
  */
-public class HAPUIExpression {
+public class HAPScriptExpression {
 
 	public static final String EXPRESSION_TOKEN_OPEN = "#|";
 	public static final String EXPRESSION_TOKEN_CLOSE = "|#";
@@ -24,12 +25,15 @@ public class HAPUIExpression {
 	
 	private String m_content;
 
+	private HAPExpressionManager m_expressionManager;
+	
 	//store all elements in ui expression:
 	//     	js expression:  string
 	//		data expression : expression definition
 	private List<Object> m_elements;
 	
-	public HAPUIExpression(String uiId, String content){
+	public HAPScriptExpression(String uiId, String content, HAPExpressionManager expressionMan){
+		this.m_expressionManager = expressionMan;
 		this.m_uiId = uiId;
 		this.m_content = content;
 		this.m_elements = new ArrayList<Object>();
@@ -37,6 +41,8 @@ public class HAPUIExpression {
 	}
 	
 	public String getId(){  return this.m_uiId;  }
+	
+	public List<Object> getElements(){  return this.m_elements;   }
 	
 	private void process(){
 		String content = this.m_content;
@@ -61,7 +67,7 @@ public class HAPUIExpression {
 				String expressionStr = content.substring(expStart, expEnd);
 				content = content.substring(expEnd + EXPRESSION_TOKEN_CLOSE.length());
 				//build expression definition
-				HAPExpressionDefinitionSimple expressionDefinition = new HAPExpressionDefinitionSimple(expressionStr, this.m_uiId+"_"+i, null, null, null, null);
+				HAPExpressionDefinition expressionDefinition = this.m_expressionManager.newExpressionDefinition(expressionStr, this.m_uiId+"_"+i, null, null); 
 				this.m_elements.add(expressionDefinition);
 			}
 			i++;

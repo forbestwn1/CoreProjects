@@ -9,14 +9,14 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 @HAPEntityWithAttribute
 public class HAPUIExpressionContent extends HAPSerializableImp{
 
-	private HAPUIExpression m_uiExpression;
+	private HAPScriptExpression m_uiExpression;
 	
-	public HAPUIExpressionContent(HAPUIExpression uiExpression){
+	public HAPUIExpressionContent(HAPScriptExpression uiExpression){
 		this.m_uiExpression = uiExpression;
 	}
 	
 	public  HAPUIExpressionContent(String uiId, String content){
-		this.m_uiExpression = new HAPUIExpression(uiId, content);
+		this.m_uiExpression = new HAPScriptExpression(uiId, content);
 	}
 	
 }

@@ -47,6 +47,31 @@ public class HAPExpressionUtility {
 		return out;
 	}
 	
+	/**
+	 * Find all the unsolved constants names: constants that only provide name
+	 * @param operand
+	 * @return
+	 */
+	static public Set<String> discoveryUnsolvedConstants(HAPOperand operand){
+		Set<String> out = new HashSet<String>();
+		processAllOperand(operand, out, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperand operand, Object data) {
+				Set<String> vars = (Set<String>)data;
+				switch(operand.getType()){
+				case HAPConstant.EXPRESSION_OPERAND_CONSTANT:
+					HAPOperandConstant constantOperand = (HAPOperandConstant)operand;
+					if(constantOperand.getData()==null){
+						vars.add(constantOperand.getName());
+					}
+					break;
+				}
+				return true;
+			}
+		});
+		return out;
+	}
+	
 	static public void processAllOperand(HAPOperand operand, Object data, HAPOperandTask task){
 		if(task.processOperand(operand, data)){
 			List<HAPOperand> children = operand.getChildren();

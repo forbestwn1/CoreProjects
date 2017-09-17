@@ -31,7 +31,6 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 	//any object that can represent data value (json, literate)
 	protected Object m_value;
 
-	
 	private HAPSerializationFormat m_valueFormat;
 	
 	public HAPDataWrapper(){
@@ -145,5 +144,19 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 	protected String buildLiterate(){
 		return this.toStringValue(HAPSerializationFormat.JSON);
 //		return TOKEN_LITERATE + HAPNamingConversionUtility.cascadeDetail(this.m_dataTypeId.toStringValue(HAPSerializationFormat.LITERATE), this.m_value+"");
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		boolean out = false;
+		if(o instanceof HAPData){
+			HAPData data = (HAPData)o;
+			if(this.getDataTypeId().equals(data.getDataTypeId())){
+				if(this.getValue().equals(data.getValue())){
+					out = true;
+				}
+			}
+		}
+		return out;
 	}
 }

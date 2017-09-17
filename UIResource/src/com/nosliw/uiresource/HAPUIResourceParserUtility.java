@@ -15,13 +15,24 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.expression.HAPExpressionManager;
 
 public class HAPUIResourceParserUtility {
 
 	public static final String UIEXPRESSION_TOKEN_OPEN = "<%=";
 	public static final String UIEXPRESSION_TOKEN_CLOSE = "%>";
 	
-	public static List<Object> parseUIException(String text, HAPUIResourceIdGenerator idGenerator){
+	/**
+	 * parse text to build ui expression list
+	 * @param text
+	 * @param idGenerator
+	 * @param expressionMan
+	 * @return a list of text and ui expression object
+	 */
+	public static List<Object> parseUIExpression(
+			String text, 
+			HAPUIResourceIdGenerator idGenerator, 
+			HAPExpressionManager expressionMan){
 		List<Object> out = new ArrayList<Object>();
 		int start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
 		while(start != -1){
@@ -30,7 +41,7 @@ public class HAPUIResourceParserUtility {
 			int end = expEnd + UIEXPRESSION_TOKEN_CLOSE.length();
 			String expression = text.substring(start, end);
 			String uiId = idGenerator.createId();
-			HAPUIExpression uiExpression = new HAPUIExpression(uiId, expression);
+			HAPScriptExpression uiExpression = new HAPScriptExpression(uiId, expression, expressionMan);
 			out.add(uiExpression);
 			//keep searching the rest
 			text=text.substring(end);

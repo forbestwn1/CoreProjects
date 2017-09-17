@@ -30,6 +30,7 @@ import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
+import com.nosliw.data.core.expression.HAPExpressionManager;
 
 /*
  * This is a utility class that process ui resource file and create ui resource object
@@ -48,15 +49,17 @@ public class HAPUIResourceParser {
 	
 	private HAPValueInfoManager m_valueInfoMan;
 	private HAPCriteriaParser m_criteriaParser;
+	private HAPExpressionManager m_expressionManager;
 	
-	public HAPUIResourceParser(HAPConfigure setting){
+	public HAPUIResourceParser(HAPConfigure setting, HAPExpressionManager expressionMan){
 		this.m_idGenerator = new HAPUIResourceIdGenerator(1);
 		this.m_setting = setting;
+		this.m_expressionManager = expressionMan;
 	}
 	
 	public static void main(String[] argues) throws Exception{
 		String file = HAPFileUtility.getFileNameOnClassPath(HAPUIResourceParser.class, "Example.res");
-		HAPUIResourceParser parser = new HAPUIResourceParser(null);
+		HAPUIResourceParser parser = new HAPUIResourceParser(null, null);
 		HAPUIResource uiResource = parser.processFile(file);
 		System.out.println(uiResource.toString());
 	}
@@ -274,14 +277,14 @@ public class HAPUIResourceParser {
 		List<TextNode> textNodes = ele.textNodes();
 		for(TextNode textNode : textNodes){
 			String text = textNode.text();
-			List<Object> segments = HAPUIResourceParserUtility.parseUIException(text, this.m_idGenerator);
+			List<Object> segments = HAPUIResourceParserUtility.parseUIExpression(text, this.m_idGenerator, this.m_expressionManager);
 			StringBuffer newText = new StringBuffer();
 			for(Object segment : segments){
 				if(segment instanceof String){
 					newText.append((String)segment);
 				}
-				else if(segment instanceof HAPUIExpression){
-					HAPUIExpression uiExpression = (HAPUIExpression)segment;
+				else if(segment instanceof HAPScriptExpression){
+					HAPScriptExpression uiExpression = (HAPScriptExpression)segment;
 					newText.append("<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+uiExpression.getId()+"></span>");
 					HAPUIExpressionContent expressionContent = new HAPUIExpressionContent(uiExpression);
 					resource.addExpressionContent(expressionContent);
