@@ -1,7 +1,9 @@
 package com.nosliw.data.core.imp.runtime.js;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperation;
@@ -23,8 +25,7 @@ public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 		this.init();
 	}
 
-	private void init(){
-	}
+	private void init(){}
 	
 	@Override
 	public List<HAPResourceInfo> discoverResourceRequirement(HAPDataTypeId dataTypeId, HAPOperation dataOpInfo) {
@@ -36,30 +37,38 @@ public class HAPResourceDiscoveryJSImp extends HAPResourceDiscoveryJS{
 	}
 
 	@Override
-	public List<HAPResourceInfo> discoverResourceRequirement(HAPExpression expression) {
-		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>(HAPExpressionUtility.discoverResources(expression));
-		return this.discoverResource(resourceIds);
+	public List<HAPResourceInfo> discoverResourceRequirement(List<HAPExpression> expressions) {
+		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
+		for(HAPExpression expression : expressions){
+			resourceIds.addAll(HAPExpressionUtility.discoverResources(expression));
+		}
+		return this.discoverResource(new ArrayList<HAPResourceId>(resourceIds));
 	}
 
 	@Override
 	public List<HAPResourceInfo> discoverResource(List<HAPResourceId> resourceIds){
 		List<HAPResourceInfo> out = new ArrayList<HAPResourceInfo>();
+		Set<HAPResourceId> exisitingResources = new HashSet<HAPResourceId>();
 		for(HAPResourceId resourceId : resourceIds){
-			this.discoverResource(resourceId, out);
+			this.discoverResource(resourceId, out, exisitingResources);
 		}
 		return out;
 	}
 
-	private void discoverResource(HAPResourceId resourceId, List<HAPResourceInfo> resourceInfos){
-		HAPResourceInfo resourceInfo = new HAPResourceInfo(resourceId);
-		resourceInfos.add(resourceInfo);
-		
-		List<HAPResourceDependent> dependencys = this.getResourceDependency(resourceId);
-		for(HAPResourceDependent dependency : dependencys){
-			resourceInfo.addDependency(dependency);
-			if(!resourceInfos.contains(dependency.getId())){
-				this.discoverResource(dependency.getId(), resourceInfos);
+	private void discoverResource(HAPResourceId resourceId, List<HAPResourceInfo> resourceInfos, Set<HAPResourceId> exisitingResources){
+		if(!exisitingResources.contains(resourceId)){
+			HAPResourceInfo resourceInfo = new HAPResourceInfo(resourceId);
+			exisitingResources.add(resourceId);
+			//add dependency first
+			List<HAPResourceDependent> dependencys = this.getResourceDependency(resourceId);
+			for(HAPResourceDependent dependency : dependencys){
+				resourceInfo.addDependency(dependency);
+				if(!resourceInfos.contains(dependency.getId())){
+					this.discoverResource(dependency.getId(), resourceInfos, exisitingResources);
+				}
 			}
+			//then add itself
+			resourceInfos.add(resourceInfo);
 		}
 	}
 	

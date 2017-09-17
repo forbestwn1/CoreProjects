@@ -77,9 +77,9 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	}
 
 	@Override
-	public HAPExpression processExpression(HAPExpressionDefinition expressionDefinition, Map<String, HAPDataTypeCriteria> variableCriterias) {
+	public HAPExpression processExpression(HAPExpressionDefinition expressionDefinition, Map<String, HAPData> contextConstants, Map<String, HAPDataTypeCriteria> variableCriterias) {
 		String id = ""+this.m_idIndex++;
-		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(id, expressionDefinition, null, null, variableCriterias);
+		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(id, expressionDefinition, null, contextConstants, variableCriterias);
 		return expression;
 	}
 

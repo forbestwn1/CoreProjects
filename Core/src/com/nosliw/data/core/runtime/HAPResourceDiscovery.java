@@ -28,7 +28,7 @@ public interface HAPResourceDiscovery {
 	 * @param expression
 	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
 	 */
-	List<HAPResourceInfo> discoverResourceRequirement(HAPExpression expression);
+	List<HAPResourceInfo> discoverResourceRequirement(List<HAPExpression> expression);
 
 	/**
 	 * Discover resource information (dependency)

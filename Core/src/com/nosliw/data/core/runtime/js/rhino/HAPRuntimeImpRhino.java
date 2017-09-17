@@ -88,7 +88,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		//new expression definition
 		HAPExpressionDefinition expDefinition = this.getRuntimeEnvironment().getExpressionManager().newExpressionDefinition(expressionStr, null, parmsData, null); 
 		//build expression obj
-		HAPExpression expression = this.getRuntimeEnvironment().getExpressionManager().processExpression(expDefinition, null);
+		HAPExpression expression = this.getRuntimeEnvironment().getExpressionManager().processExpression(expDefinition, null, null);
 		//execute task
 		HAPRuntimeTask task = new HAPRuntimeTaskExecuteExpressionRhino(expression, parmsData);
 		return this.executeTaskSync(task);
@@ -302,6 +302,6 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	    }
 	}
 	
-	protected HAPRuntimeEnvironment getRuntimeEnvironment(){  return this.m_runtimeEnvironment;  }
+	public HAPRuntimeEnvironment getRuntimeEnvironment(){  return this.m_runtimeEnvironment;  }
 
 }

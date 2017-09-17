@@ -2,8 +2,12 @@ package com.nosliw.uiresource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 
@@ -32,19 +36,38 @@ public class HAPScriptExpression {
 	//		data expression : expression definition
 	private List<Object> m_elements;
 	
+	//string - expression
+	private List<Object> m_processedElements;
+	
 	public HAPScriptExpression(String uiId, String content, HAPExpressionManager expressionMan){
 		this.m_expressionManager = expressionMan;
 		this.m_uiId = uiId;
 		this.m_content = content;
 		this.m_elements = new ArrayList<Object>();
-		this.process();
+		this.init();
 	}
 	
 	public String getId(){  return this.m_uiId;  }
 	
 	public List<Object> getElements(){  return this.m_elements;   }
 	
-	private void process(){
+	public List<Object> getProcessedElements(){ return this.m_processedElements; }
+	
+	public void process(Map<String, HAPData> contextConstants, Map<String, HAPDataTypeCriteria> variableCriterias){
+		this.m_processedElements = new ArrayList<Object>();
+		for(Object ele : this.m_elements){
+			if(ele instanceof HAPExpressionDefinition){
+				HAPExpressionDefinition expDef = (HAPExpressionDefinition)ele;
+				HAPExpression expression = this.m_expressionManager.processExpression(expDef, contextConstants, variableCriterias);
+				this.m_processedElements.add(expression);
+			}
+			else{
+				this.m_processedElements.add(ele.toString());
+			}
+		}
+	}
+	
+	private void init(){
 		String content = this.m_content;
 		int i = 0;
 		while(HAPBasicUtility.isStringNotEmpty(content)){

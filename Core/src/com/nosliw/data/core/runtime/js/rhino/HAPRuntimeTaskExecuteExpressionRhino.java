@@ -1,5 +1,6 @@
 package com.nosliw.data.core.runtime.js.rhino;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,9 @@ public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteE
 			
 			//prepare resources for expression in the runtime (resource and dependency)
 			//execute expression after load required resources
-			List<HAPResourceInfo> resourcesId = rhinoRuntime.getRuntimeEnvironment().getResourceDiscovery().discoverResourceRequirement(this.getExpression());
+			List<HAPExpression> expressions = new ArrayList<HAPExpression>();
+			expressions.add(this.getExpression());
+			List<HAPResourceInfo> resourcesId = rhinoRuntime.getRuntimeEnvironment().getResourceDiscovery().discoverResourceRequirement(expressions);
 			
 			HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
 			loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));
@@ -66,7 +69,5 @@ public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteE
 				this.m_parent.finish(resourceTaskResult);
 			}
 		}
-		
 	}
-	
 }
