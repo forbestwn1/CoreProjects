@@ -53,6 +53,7 @@ public class HAPUIResourceParser {
 		this.m_idGenerator = idGenerator;
 		this.m_setting = setting;
 		this.m_expressionManager = expressionMan;
+		this.m_criteriaParser = HAPCriteriaParser.getInstance();
 	}
 	
 	public HAPUIResource getUIResource(){return this.m_resource;}
@@ -125,7 +126,7 @@ public class HAPUIResourceParser {
 					if(d!=null)		contextEle.setDefault(d.toString());
 
 					String criteria = eleDefJson.optString(HAPContextElement.CRITERIA);
-					if(criteria!=null){
+					if(!HAPBasicUtility.isStringEmpty(criteria)){
 						contextEle.setCriteria(this.m_criteriaParser.parseCriteria(criteria));
 					}
 					else{
@@ -197,7 +198,7 @@ public class HAPUIResourceParser {
 		Elements constantEles = ele.getElementsByTag(HAPUIResourceBasic.CONSTANTS);
 		for(int i=0; i<constantEles.size(); i++){
 			try {
-				String content = constantEles.get(i).html();
+				String content = constantEles.get(i).text();
 				JSONObject defsJson = new JSONObject(content);
 				Iterator<String> defNames = defsJson.keys();
 				while(defNames.hasNext()){

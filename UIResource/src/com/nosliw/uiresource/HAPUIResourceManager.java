@@ -16,7 +16,7 @@ public class HAPUIResourceManager {
 		this.m_runtime = runtime;
 	}
 	
-	public void processUIResource(String file){
+	public HAPUIResource processUIResource(String file){
 		HAPUIResourceIdGenerator idGengerator = new HAPUIResourceIdGenerator(1);
 		HAPUIResourceParser uiResourceParser = new HAPUIResourceParser(null, this.m_expressionMan, idGengerator);
 		HAPUIResource uiResource = uiResourceParser.parseFile(file);
@@ -26,8 +26,6 @@ public class HAPUIResourceManager {
 			HAPConstantDef constantDef = constantDefs.get(name);
 			constantDef.process(constantDefs, idGengerator, m_expressionMan, this.m_runtime);
 		}
-		
+		return uiResource;
 	}
-	
-	
 }

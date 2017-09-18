@@ -131,15 +131,12 @@
 			 	js value
 			 	ui expression
 			 since every constant is basically a js value, so it can be used anywhere that need js value 
-		-->
-	<constants>
-	{
+
 			hh : {
 				a : "heloop",
 				b : [1, 2, 3]
 			},
 			aaaa : ":(#string:simple:  constantValue  ):",
-			bbbb : ":(#boolean:simple:false):",
 			cccc : ":({
 	    		dataTypeInfo:{
 	    			categary : 'simple',
@@ -150,6 +147,11 @@
 			dddd : ":(#integer:simple:8):",
 			eeee : "!(integer:simple)!.new(:(#string:simple:8):)",
 			ffff : ":(#string:simple:11223344):",
+
+			 -->
+	<constants>
+	{
+			bbbb : "<%=5+6+7%>",
 	}
 	</constants>
 	
@@ -159,19 +161,24 @@
 	<context>
 	{
 		business : {
-			a : {
-				criteria: "",
-				children: {
+			children: {
+				a : {
 					aa : "abc.abc;1.0.0%||a:cde;1.1.1,b:dfe;1.0.0||%",
 					bb : "test.array;1.0.0%||element:@||!(test.expression)!.outputCriteria(&(expression)&;;&(parms)&)||@||%"
-				},
-				default: {
-				
 				}
+			},
+			default: {
+				
 			}
-		}
+		},
+		b : {
+			criteria: "*",
+			default: {
+			
+			}
+		}		
 	}
-	</contexts>
+	</context>
 	
 		<!-- This part can be used to define expressions
 		-->

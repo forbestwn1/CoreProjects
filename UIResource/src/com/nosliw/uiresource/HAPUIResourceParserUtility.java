@@ -14,7 +14,6 @@ import org.jsoup.select.Elements;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 
 public class HAPUIResourceParserUtility {
@@ -41,7 +40,7 @@ public class HAPUIResourceParserUtility {
 			if(start>0)   out.add(text.substring(0, start));
 			int expEnd = text.indexOf(UIEXPRESSION_TOKEN_CLOSE, start);
 			int end = expEnd + UIEXPRESSION_TOKEN_CLOSE.length();
-			String expression = text.substring(start, end);
+			String expression = text.substring(start+UIEXPRESSION_TOKEN_OPEN.length(), expEnd);
 			String uiId = idGenerator.createId();
 			HAPScriptExpression uiExpression = new HAPScriptExpression(uiId, expression, expressionMan);
 			out.add(uiExpression);

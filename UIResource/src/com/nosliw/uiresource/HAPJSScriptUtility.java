@@ -42,7 +42,7 @@ public class HAPJSScriptUtility {
 		templateParms.put("taskId", task.getTaskId());
 		templateParms.put("gatewayPath", HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY);
 
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ExecuteScriptExpressionScript.temp");
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPJSScriptUtility.class, "ExecuteScriptExpressionScript.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
 		return out;

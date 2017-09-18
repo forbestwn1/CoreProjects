@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -19,7 +20,15 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 
 @HAPEntityWithAttribute
 public class HAPConstantDef extends HAPSerializableImp{
+	@HAPAttribute
+	public static String LITERATE = "literate";
 
+	@HAPAttribute
+	public static String PROCESSED = "processed";
+	
+	@HAPAttribute
+	public static String VALUE = "value";
+	
 	private String m_literate;
 	
 	private Object m_value;
@@ -93,5 +102,13 @@ public class HAPConstantDef extends HAPSerializableImp{
 	
 	private HAPData getDataValue(){
 		return new HAPDataWrapper(this.m_value.toString());
+	}
+
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(LITERATE, this.m_literate);
+		jsonMap.put(PROCESSED, this.m_isProcessed+"");
+		typeJsonMap.put(PROCESSED, Boolean.class);
+		jsonMap.put(VALUE, this.m_value.toString());
 	}
 }

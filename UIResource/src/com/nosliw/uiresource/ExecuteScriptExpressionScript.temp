@@ -1,5 +1,5 @@
 	var expressionService = nosliw.runtime.getExpressionService();
-	expressionService.executeExecuteScriptExpressionRequest(function(expressionData){||functionScript||}, ||expressions||, ||variables||, {
+	expressionService.executeExecuteScriptExpressionRequest(function(expressionData){return ||functionScript||;}, ||expressions||, ||variables||, {
 		success : function(requestInfo, result){
 			nosliw.getNodeData("||gatewayPath||").notifyScriptExpressionExecuteResult("||taskId||", result);
 		}
