@@ -45,8 +45,8 @@ public class HAPUIResource extends HAPUIResourceBasic{
 				HAPSegmentParser varSegs = new HAPSegmentParser(varInfo, HAPConstant.SEPERATOR_DETAIL);
 				String varName = varSegs.next();
 				String varType = varSegs.next();
-				HAPUIResourceContextInfo contextEleInfo = new HAPUIResourceContextInfo(varName, varType);
-				this.addContextElement(contextEleInfo);
+//				HAPUIResourceContextInfo contextEleInfo = new HAPUIResourceContextInfo(varName, varType);
+//				this.addContextElement(contextEleInfo);
 			}
 		}
 	}

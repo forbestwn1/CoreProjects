@@ -38,8 +38,6 @@ import com.nosliw.data.core.expression.HAPExpressionManager;
  */
 public class HAPUIResourceParser {
 
-	public static final String CUSTOMTAG_PREFIX = "nosliw-";
-	
 	//for creating ui id
 	private HAPUIResourceIdGenerator m_idGenerator;
 	//configuration object
@@ -51,66 +49,62 @@ public class HAPUIResourceParser {
 	private HAPCriteriaParser m_criteriaParser;
 	private HAPExpressionManager m_expressionManager;
 	
-	public HAPUIResourceParser(HAPConfigure setting, HAPExpressionManager expressionMan){
-		this.m_idGenerator = new HAPUIResourceIdGenerator(1);
+	public HAPUIResourceParser(HAPConfigure setting, HAPExpressionManager expressionMan, HAPUIResourceIdGenerator idGenerator){
+		this.m_idGenerator = idGenerator;
 		this.m_setting = setting;
 		this.m_expressionManager = expressionMan;
 	}
 	
-	public static void main(String[] argues) throws Exception{
-		String file = HAPFileUtility.getFileNameOnClassPath(HAPUIResourceParser.class, "Example.res");
-		HAPUIResourceParser parser = new HAPUIResourceParser(null, null);
-		HAPUIResource uiResource = parser.processFile(file);
-		System.out.println(uiResource.toString());
-	}
-	
 	public HAPUIResource getUIResource(){return this.m_resource;}
 	
-	public HAPUIResource processFile(String fileName) throws Exception{
-		
-		File input = new File(fileName);
-		//use file name as ui resource name
-		String resourceName = HAPFileUtility.getFileName(input);
-		
-		m_resource = new HAPUIResource(resourceName);
+	public HAPUIResource parseFile(String fileName){
+		try{
+			File input = new File(fileName);
+			//use file name as ui resource name
+			String resourceName = HAPFileUtility.getFileName(input);
+			
+			m_resource = new HAPUIResource(resourceName);
 
-		Document doc = Jsoup.parse(input, "UTF-8");
-		Element bodyEle = doc.body();
+			Document doc = Jsoup.parse(input, "UTF-8");
+			Element bodyEle = doc.body();
 
-		//process script block
-		this.parseChildScriptBlocks(bodyEle, m_resource);
-		//process constant block
-		this.parseChildConstantBlocks(bodyEle, m_resource);
-		//process context block
-		this.parseChildContextBlocks(bodyEle, m_resource);
-		//process expression block
-		this.parseChildExpressionBlocks(bodyEle, m_resource);
-		
-		//process body tag's attribute
-		parseCurrentAttribute(bodyEle, m_resource);
+			//process script block
+			this.parseChildScriptBlocks(bodyEle, m_resource);
+			//process constant block
+			this.parseChildConstantBlocks(bodyEle, m_resource);
+			//process context block
+			this.parseChildContextBlocks(bodyEle, m_resource);
+			//process expression block
+			this.parseChildExpressionBlocks(bodyEle, m_resource);
+			
+			//process body tag's attribute
+			parseCurrentAttribute(bodyEle, m_resource);
 
-		//convert all standard child tags that have data key attribute to default custom tag
-		adjustDescendantTagAccordToDataBinding(bodyEle);
-		
-		//process expressions within text content
-		parseChildExpressionContent(bodyEle, m_resource);
-		
-		//process all descendant tags under body element
-		parseDescendantTags(bodyEle, m_resource);
-		
-		//add span structure around all pain text
-		HAPUIResourceParserUtility.addSpanToText(bodyEle);
+			//convert all standard child tags that have data key attribute to default custom tag
+			adjustDescendantTagAccordToDataBinding(bodyEle);
+			
+			//process expressions within text content
+			parseChildExpressionContent(bodyEle, m_resource);
+			
+			//process all descendant tags under body element
+			parseDescendantTags(bodyEle, m_resource);
+			
+			//add span structure around all pain text
+			HAPUIResourceParserUtility.addSpanToText(bodyEle);
 
-		m_resource.postRead();
-		
-		//set html content after processing
-		m_resource.setContent(bodyEle.html());
+			m_resource.postRead();
+			
+			//set html content after processing
+			m_resource.setContent(bodyEle.html());
 
-		//get all decedant tags, for load resource purpose
-		Set<HAPUITag> tags = new HashSet<HAPUITag>();
-		HAPUIResourceParserUtility.getAllChildTags(m_resource, tags);
-		for(HAPUITag tag : tags)  this.m_resource.addUITagLib(tag.getTagName());
-		
+			//get all decedant tags, for load resource purpose
+			Set<HAPUITag> tags = new HashSet<HAPUITag>();
+			HAPUIResourceParserUtility.getAllChildTags(m_resource, tags);
+			for(HAPUITag tag : tags)  this.m_resource.addUITagLib(tag.getTagName());
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		return m_resource;
 	}
 

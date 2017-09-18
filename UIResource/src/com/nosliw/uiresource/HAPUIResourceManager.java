@@ -1,81 +1,33 @@
 package com.nosliw.uiresource;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.configure.HAPConfigure;
-import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.HAPDataTypeManager;
+import com.nosliw.data.core.expression.HAPExpressionManager;
+import com.nosliw.data.core.runtime.HAPRuntime;
 
-public class HAPUIResourceManager extends HAPSerializableImp{
+public class HAPUIResourceManager {
 
-	private Map<String, HAPUIResource> m_uiResource;
+	private HAPExpressionManager m_expressionMan; 
 	
-	private Map<String, String> m_uiResourceScripts;
+	private HAPRuntime m_runtime;
 	
-	private HAPConfigure m_setting;
-	
-	private HAPDataTypeManager m_dataTypeMan;
-	
-	public HAPUIResourceManager(HAPConfigure setting, HAPDataTypeManager dataTypeMan) {
-		this.m_dataTypeMan = dataTypeMan;
-		this.m_uiResource = new LinkedHashMap<String, HAPUIResource>();
-		this.m_uiResourceScripts = new LinkedHashMap<String, String>();
-//		this.createDefaultConfiguration();
-		this.m_setting = setting;
-	}
-/*
-	private void createDefaultConfiguration(){
-		this.m_setting = new HAPConfigureImp();
+	public HAPUIResourceManager(HAPExpressionManager expressionMan, HAPRuntime runtime){
+		this.m_expressionMan = expressionMan;
+		this.m_runtime = runtime;
 	}
 	
-	public void addUIResource(HAPUIResource resource){
-		String name = resource.getId();
-		this.m_uiResource.put(name, resource);
-		this.m_uiResourceScripts.put(name, this.readUIResourceScript(name));
-	}
-	
-	public HAPUIResource getUIResource(String name){
-		return this.m_uiResource.get(name);
-	}
-	
-	public HAPUIResource[] getAllUIResource(){
-		return this.m_uiResource.values().toArray(new HAPUIResource[0]);
-	}
-
-	//return the script string (an json structure containing block and expression) for ui resource
-	public String getUIResourceScript(String name){
-		String out = this.m_uiResourceScripts.get(name);
-		if(out==null){
-			out = this.readUIResourceScript(name);
-			this.m_uiResourceScripts.put(name, out);
-		}
-		return out;
-	}
-	
-	public String readUIResourceScript(String name){
-		String fileName = HAPUIResourceUtility.getUIResourceScriptFileName(name, this); 
-		String out = HAPFileUtility.readFile(fileName);
-		return out;
-	}
-	
-	//get temporate file location
-	public String getTempFileLocation(){
-		String scriptLocation = this.m_setting.getStringValue(HAPConstant.UIRESOURCEMAN_SETTINGNAME_SCRIPTLOCATION);
-		return scriptLocation;
-	}
-	
-	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		for(String name : this.m_uiResource.keySet()){
-			jsonMap.put(name, this.m_uiResource.get(name).toStringValue(HAPSerializationFormat.JSON_FULL));
-		}
-	}
+	public void processUIResource(String file){
+		HAPUIResourceIdGenerator idGengerator = new HAPUIResourceIdGenerator(1);
+		HAPUIResourceParser uiResourceParser = new HAPUIResourceParser(null, this.m_expressionMan, idGengerator);
+		HAPUIResource uiResource = uiResourceParser.parseFile(file);
 		
-	@Override
-	public String toString(){ return this.toStringValue(HAPSerializationFormat.JSON); }
-
-	protected HAPDataTypeManager getDataTypeManager(){	return this.m_dataTypeMan;	}
-	protected HAPConfigure getConfiguration(){ return this.m_setting; }
-	*/
+		Map<String, HAPConstantDef> constantDefs = uiResource.getConstants();
+		for(String name : constantDefs.keySet()){
+			HAPConstantDef constantDef = constantDefs.get(name);
+			constantDef.process(constantDefs, idGengerator, m_expressionMan, this.m_runtime);
+		}
+		
+	}
+	
+	
 }

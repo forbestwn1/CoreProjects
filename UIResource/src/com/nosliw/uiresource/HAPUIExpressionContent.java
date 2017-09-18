@@ -16,7 +16,7 @@ public class HAPUIExpressionContent extends HAPSerializableImp{
 	}
 	
 	public  HAPUIExpressionContent(String uiId, String content){
-		this.m_uiExpression = new HAPScriptExpression(uiId, content);
+//		this.m_uiExpression = new HAPScriptExpression(uiId, content);
 	}
 	
 }
