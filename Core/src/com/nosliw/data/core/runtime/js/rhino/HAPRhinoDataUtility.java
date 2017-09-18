@@ -104,32 +104,37 @@ public class HAPRhinoDataUtility
     public static Object toJson(Object object) 
     { 
     	Object out = null;
-    	if(object instanceof String){
-    		out = object.toString();
+    	try{
+        	if(object instanceof String){
+        		out = object.toString();
+        	}
+        	else if(object instanceof ConsString){
+        		out = object.toString();
+        	}
+        	else if(object instanceof Integer){
+        		out = object;
+        	}
+        	else if(object instanceof Boolean){
+        		out = object;
+        	}
+        	else if(object instanceof Double){
+        		out = object;
+        	}
+        	else if (object instanceof NativeArray) 
+            { 
+                out = new JSONArray(nativeArrayToJSONString((NativeArray)object)); 
+            } 
+            else if (object instanceof NativeObject) 
+            {  
+                out = new JSONObject(nativeObjectToJSONString((NativeObject)object)); 
+            }
+            else if(object instanceof Function){
+            	out = new HAPFunctionType(Context.toString(object));
+            }
     	}
-    	else if(object instanceof ConsString){
-    		out = object.toString();
+    	catch(Exception e){
+    		e.printStackTrace();
     	}
-    	else if(object instanceof Integer){
-    		out = object;
-    	}
-    	else if(object instanceof Boolean){
-    		out = object;
-    	}
-    	else if(object instanceof Double){
-    		out = object;
-    	}
-    	else if (object instanceof NativeArray) 
-        { 
-            out = nativeArrayToJSONString((NativeArray)object); 
-        } 
-        else if (object instanceof NativeObject) 
-        {  
-            out = nativeObjectToJSONString((NativeObject)object); 
-        }
-        else if(object instanceof Function){
-        	out = new HAPFunctionType(Context.toString(object));
-        }
     	return out; 
     } 
      

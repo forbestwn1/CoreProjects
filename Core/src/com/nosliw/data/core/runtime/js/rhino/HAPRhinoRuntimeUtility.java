@@ -45,10 +45,10 @@ public class HAPRhinoRuntimeUtility {
 		for(int i=0; i<rhinoResourceInfoArray.size(); i++){
 			try{
 				NativeObject resourceInfoObject = (NativeObject)rhinoResourceInfoArray.get(i);
-				String jsonString = (String)HAPRhinoDataUtility.toJson(resourceInfoObject);
+				JSONObject jsonObj = (JSONObject)HAPRhinoDataUtility.toJson(resourceInfoObject);
 				
 				HAPResourceInfo resourceInfo = new HAPResourceInfo();
-				resourceInfo.buildObject(new JSONObject(jsonString), HAPSerializationFormat.JSON);
+				resourceInfo.buildObject(jsonObj, HAPSerializationFormat.JSON);
 				out.add(resourceInfo);
 			}
 			catch(Exception e){

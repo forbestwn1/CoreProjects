@@ -9,7 +9,6 @@ import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionImporter;
-import com.nosliw.data.core.imp.expression.HAPExpressionManagerImp;
 import com.nosliw.data.core.imp.runtime.js.HAPRuntimeEnvironmentImpJS;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -27,7 +26,7 @@ public class HAPRuntimeRhinoMain {
 		try{
 			//parse to build expression object
 			final HAPExpressionDefinitionSuiteImp suite = (HAPExpressionDefinitionSuiteImp)runtimeEnvironment.getExpressionManager().getExpressionDefinitionSuite(suiteName);
-			HAPExpressionImp expression = (HAPExpressionImp)runtimeEnvironment.getExpressionManager().processExpression(suiteName, "main", null);
+			HAPExpressionImp expression = (HAPExpressionImp)runtimeEnvironment.getExpressionManager().processExpression(null, suiteName, "main", null);
 			Map<String, HAPData> varData = suite.getVariableData();
 			
 			//execute expression

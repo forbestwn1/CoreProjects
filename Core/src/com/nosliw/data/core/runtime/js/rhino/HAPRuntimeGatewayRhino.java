@@ -29,10 +29,18 @@ public interface HAPRuntimeGatewayRhino extends HAPRuntimeGatewayJS{
 	
 	/**
 	 * Callback method used to return expression result to runtime env
-	 * @param expressionId: expression id executed
+	 * @param taskId
 	 * @param result  the data result
 	 */
 	void notifyExpressionExecuteResult(String taskId, Object result);
+	
+	/**
+	 * Callback method used to return script expression result to runtime env
+	 * @param taskId
+	 * @param result  the data result
+	 */
+	void notifyScriptExpressionExecuteResult(String taskId, Object result);
+
 	
 	/**
 	 * Call back method used when all the resources are loaded, so that can execute expression

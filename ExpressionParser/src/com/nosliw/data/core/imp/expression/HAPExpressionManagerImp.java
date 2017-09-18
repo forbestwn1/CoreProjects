@@ -68,18 +68,20 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	public HAPExpressionDefinition getExpressionDefinition(String suite, String name) {		return this.getExpressionDefinitionSuite(suite).getExpressionDefinition(name);	}
 
 	@Override
-	public HAPExpression processExpression(String suiteName, String expressionName, Map<String, HAPDataTypeCriteria> variableCriterias){
-		String id = expressionName + "_no" + this.m_idIndex++;
+	public HAPExpression processExpression(String id, String suiteName, String expressionName, Map<String, HAPDataTypeCriteria> variableCriterias){
+		String expId = id;
+		if(expId==null) expId = expressionName + "_no" + this.m_idIndex++;
 		HAPExpressionDefinitionSuite suite = this.getExpressionDefinitionSuite(suiteName);
 		HAPExpressionDefinition expDef = suite.getExpressionDefinition(expressionName); 
-		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(id, expDef, suite.getAllExpressionDefinitions(), suite.getConstants(), variableCriterias);
+		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(expId, expDef, suite.getAllExpressionDefinitions(), suite.getConstants(), variableCriterias);
 		return expression;
 	}
 
 	@Override
-	public HAPExpression processExpression(HAPExpressionDefinition expressionDefinition, Map<String, HAPData> contextConstants, Map<String, HAPDataTypeCriteria> variableCriterias) {
-		String id = ""+this.m_idIndex++;
-		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(id, expressionDefinition, null, contextConstants, variableCriterias);
+	public HAPExpression processExpression(String id, HAPExpressionDefinition expressionDefinition, Map<String, HAPData> contextConstants, Map<String, HAPDataTypeCriteria> variableCriterias) {
+		String expId = id;
+		if(expId==null) expId = ""+this.m_idIndex++;
+		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(expId, expressionDefinition, null, contextConstants, variableCriterias);
 		return expression;
 	}
 

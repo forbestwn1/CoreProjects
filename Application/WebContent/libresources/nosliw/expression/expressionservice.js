@@ -375,6 +375,10 @@ var node_createExpressionService = function(){
 			return loc_getExecuteScriptExpressionRequest(script, expressions, variables, handlers, requester_parent);
 		},
 	
+		executeExecuteScriptExpressionRequest : function(script, expressions, variables, handlers, requester_parent){
+			var requestInfo = this.executeExecuteScriptExpressionRequest(script, expressions, variables, handlers, requester_parent);
+			node_requestServiceProcessor.processRequest(requestInfo, false);
+		},
 	};
 	
 	loc_out = node_buildServiceProvider(loc_out, "expressionService");

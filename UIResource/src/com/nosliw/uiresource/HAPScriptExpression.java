@@ -58,7 +58,7 @@ public class HAPScriptExpression {
 		for(Object ele : this.m_elements){
 			if(ele instanceof HAPExpressionDefinition){
 				HAPExpressionDefinition expDef = (HAPExpressionDefinition)ele;
-				HAPExpression expression = this.m_expressionManager.processExpression(expDef, contextConstants, variableCriterias);
+				HAPExpression expression = this.m_expressionManager.processExpression(expDef.getName(), expDef, contextConstants, variableCriterias);
 				this.m_processedElements.add(expression);
 			}
 			else{

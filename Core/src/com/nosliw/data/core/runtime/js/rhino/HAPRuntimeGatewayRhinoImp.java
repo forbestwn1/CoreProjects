@@ -93,7 +93,7 @@ public class HAPRuntimeGatewayRhinoImp implements HAPRuntimeGatewayRhino{
 	public void notifyExpressionExecuteResult(String taskId, Object result){
 		HAPServiceData taskServiceData;
 		try{
-			String resultStr = (String)HAPRhinoDataUtility.toJson(result);
+			String resultStr = HAPRhinoDataUtility.toJson(result).toString();
 			HAPDataWrapper resultData = new HAPDataWrapper(resultStr); 
 			taskServiceData = HAPServiceData.createSuccessData(resultData);
 		}
@@ -103,6 +103,22 @@ public class HAPRuntimeGatewayRhinoImp implements HAPRuntimeGatewayRhino{
 		}
 		this.m_runtime.finishTask(taskId, taskServiceData);
 	}
+
+	//gateway callback method
+	@Override
+	public void notifyScriptExpressionExecuteResult(String taskId, Object result){
+		HAPServiceData taskServiceData;
+		try{
+			Object resultObj = HAPRhinoDataUtility.toJson(result);
+			taskServiceData = HAPServiceData.createSuccessData(resultObj);
+		}
+		catch(Exception e){
+			taskServiceData = HAPServiceData.createFailureData(e, "");
+			e.printStackTrace();
+		}
+		this.m_runtime.finishTask(taskId, taskServiceData);
+	}
+
 	
 	//gatewary callback method
 	@Override
