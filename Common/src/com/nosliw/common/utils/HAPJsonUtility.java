@@ -9,6 +9,7 @@ import java.util.Set;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -145,6 +146,9 @@ public class HAPJsonUtility {
 		else if(String.class==type){
 			out.append("\"" + attr+ "\""+":\"" + value + "\""+lastString);
 		}
+		else if(Double.class==type){
+			out.append("\"" + attr+ "\""+":" + value + ""+lastString);
+		}
 		else if(Integer.class==type){
 			out.append("\"" + attr+ "\""+":" + value + ""+lastString);
 		}
@@ -155,6 +159,9 @@ public class HAPJsonUtility {
 			out.append("\"" + attr+ "\""+":" + value + lastString);
 		}
 		else if(isArray(value)){
+			out.append("\"" + attr+ "\""+":" + value + lastString);
+		}
+		else if(JsonObject.class==type){
 			out.append("\"" + attr+ "\""+":" + value + lastString);
 		}
 		else{

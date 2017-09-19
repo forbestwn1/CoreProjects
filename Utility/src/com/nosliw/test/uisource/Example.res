@@ -148,11 +148,21 @@
 			eeee : "!(integer:simple)!.new(:(#string:simple:8):)",
 			ffff : ":(#string:simple:11223344):",
 
+			aaaa : "<%=#|&(cccc)&.subString(from:&(#test##integer___3)&,to:&(#test##integer___7)&)|#%>",
+			cccc : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>",
+
 			 -->
 	<constants>
 	{
-			bbbb : "<%=5+6+7%>",
-			aaaa : "<%=#|&(#test##string___Thisismyworldabcdef)&.length()|#%>",
+			aaaa : "<%=5+6+7%>",
+			bbbb : "<%=(5+6+7)>5%>",
+			cccc : {
+						a : 12345,
+						b : true,
+						c : "good",
+						d : "<%=5+6+7%>"
+					},
+			dddd : "<%=#|&(cccc)&|#.a+6%>",
 	}
 	</constants>
 	

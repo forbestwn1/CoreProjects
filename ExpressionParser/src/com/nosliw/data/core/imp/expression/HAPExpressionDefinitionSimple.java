@@ -38,8 +38,11 @@ public class HAPExpressionDefinitionSimple implements HAPExpressionDefinition{
 		this.m_expression = expression;
 		this.m_name = name;
 		this.m_constants = constants;
+		if(this.m_constants==null)  this.m_constants = new LinkedHashMap<String, HAPData>();
 		this.m_variableCriterias = variableCriterias;
+		if(this.m_variableCriterias==null)  this.m_variableCriterias = new LinkedHashMap<String, HAPDataTypeCriteria>();
 		this.m_references = references;
+		if(this.m_references==null)   this.m_references = new LinkedHashMap<String, HAPReferenceInfo>();
 		this.m_info = info;
 	}
 	

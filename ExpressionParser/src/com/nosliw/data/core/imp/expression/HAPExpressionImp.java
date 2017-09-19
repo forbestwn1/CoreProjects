@@ -83,8 +83,10 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		//build vars info
 		this.m_localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		Map<String, HAPDataTypeCriteria> varCriterias = this.m_expressionDefinition.getVariableCriterias();
-		for(String varName : varCriterias.keySet()){
-			this.m_localVarsInfo.put(varName, new HAPVariableInfo(varCriterias.get(varName)));
+		if(varCriterias!=null){
+			for(String varName : varCriterias.keySet()){
+				this.m_localVarsInfo.put(varName, new HAPVariableInfo(varCriterias.get(varName)));
+			}
 		}
 	}
 

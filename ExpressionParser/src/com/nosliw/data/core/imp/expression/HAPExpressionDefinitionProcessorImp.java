@@ -163,16 +163,17 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 		//process preference info in definition to add reference name to mapped variable name
 		HAPExpressionDefinition expDef = out.getExpressionDefinition();
 		Map<String, HAPReferenceInfo> expReferences = expDef.getReferences();
-		for(String ref : expReferences.keySet()){
-			HAPReferenceInfoImp refInfo = (HAPReferenceInfoImp)expReferences.get(ref);
-			Map<String, String> newVarMapping = new LinkedHashMap<String, String>();
-			Map<String, String> varMapping = refInfo.getVariablesMap();
-			for(String varName : varMapping.keySet()){
-				newVarMapping.put(varName, HAPExpressionUtility.buildFullVariableName(ref, varMapping.get(varName)));
+		if(expReferences!=null){
+			for(String ref : expReferences.keySet()){
+				HAPReferenceInfoImp refInfo = (HAPReferenceInfoImp)expReferences.get(ref);
+				Map<String, String> newVarMapping = new LinkedHashMap<String, String>();
+				Map<String, String> varMapping = refInfo.getVariablesMap();
+				for(String varName : varMapping.keySet()){
+					newVarMapping.put(varName, HAPExpressionUtility.buildFullVariableName(ref, varMapping.get(varName)));
+				}
+				refInfo.setVariableMap(newVarMapping);
 			}
-			refInfo.setVariableMap(newVarMapping);
 		}
-		
 		return out;
 	}
 

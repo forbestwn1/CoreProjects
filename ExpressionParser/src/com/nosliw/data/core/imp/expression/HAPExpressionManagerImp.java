@@ -89,6 +89,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	public HAPExpressionDefinition newExpressionDefinition(String expression, String name,
 			Map<String, HAPData> constants, Map<String, HAPDataTypeCriteria> variableCriterias) {
 		HAPExpressionDefinition expDefinition = new HAPExpressionDefinitionSimple(expression, null, constants, null, null, null);
+		expDefinition.setOperand(this.m_expressionProcessor.parseExpression(expression));
 		return expDefinition;
 	}
 }

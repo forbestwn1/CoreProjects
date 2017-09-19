@@ -1,10 +1,14 @@
 package com.nosliw.uiresource;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -29,14 +33,14 @@ public class HAPConstantDef extends HAPSerializableImp{
 	@HAPAttribute
 	public static String VALUE = "value";
 	
-	private String m_literate;
+	private Object m_definitionObj;
 	
 	private Object m_value;
 	
 	private boolean m_isProcessed = false;
 	
-	public HAPConstantDef(String literate){
-		this.m_literate = literate;
+	public HAPConstantDef(Object defObj){
+		this.m_definitionObj = defObj;
 	}
 
 	/**
@@ -58,47 +62,139 @@ public class HAPConstantDef extends HAPSerializableImp{
 			HAPExpressionManager expressionMan, 
 			HAPRuntime runtime){
 		if(!this.processed()){
-			StringBuffer value = new StringBuffer();
-			List<Object> segments = HAPUIResourceParserUtility.parseUIExpression(this.m_literate, idGenerator, expressionMan);
-			for(Object segment : segments){
-				if(segment instanceof HAPScriptExpression){
-					HAPScriptExpression sciptExpression = (HAPScriptExpression)segment;
-					//find all required constants names in script expressions
-					Set<String> constantNames = new HashSet<String>();
-					List<Object> uiExpEles = sciptExpression.getElements();
-					for(Object uiExpEle : uiExpEles){
-						if(uiExpEle instanceof HAPExpressionDefinition){
-							HAPExpressionDefinition expDef = (HAPExpressionDefinition)uiExpEle;
-							HAPOperand expOperand = expDef.getOperand();
-							constantNames.addAll(HAPExpressionUtility.discoveryUnsolvedConstants(expOperand));
-						}
-					}
-					
-					//build parms
-					Map<String, HAPData> parms = new LinkedHashMap<String, HAPData>();
-					for(String constantName : constantNames){
-						HAPConstantDef constantDef = constantDefs.get(constantName);
-						constantDef.process(constantDefs, idGenerator, expressionMan, runtime);
-						HAPData parm = constantDef.getDataValue();
-						parms.put(constantName, parm);
-					}
-					
-					//process script scriptExpression
-					sciptExpression.process(parms, null);
-					
-					//execute script expression
-					HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(sciptExpression, null);
-					HAPServiceData serviceData = runtime.executeTaskSync(task);
-					value.append(serviceData.getData().toString());
-				}
-				else{
-					value.append(segment.toString());
-				}
-			}
-			this.m_value = value.toString();
+			Object data = this.processJsonNode(m_definitionObj, constantDefs, idGenerator, expressionMan, runtime);
+			if(data==null)	this.m_value = this.m_definitionObj;
+			else		this.m_value = data;
 			this.m_isProcessed = true;
 		}
 	}
+	
+	/**
+	 * Process any json node
+	 * @param node
+	 * @param constantDefs
+	 * @param idGenerator
+	 * @param expressionMan
+	 * @param runtime
+	 * @return
+	 */
+	private Object processJsonNode(
+			Object node,
+			Map<String, HAPConstantDef> constantDefs,
+			HAPUIResourceIdGenerator idGenerator, 
+			HAPExpressionManager expressionMan, 
+			HAPRuntime runtime){
+		Object out = null;
+		try{
+			if(node instanceof JSONObject){
+				JSONObject jsonObj = (JSONObject)node;
+				Iterator<String> keys = jsonObj.keys();
+				Map<String, Object> leafDatas = new LinkedHashMap<String, Object>();
+				while(keys.hasNext()){
+					String key = keys.next();
+					Object childNode = jsonObj.get(key);
+					Object data = this.processJsonNode(childNode, constantDefs, idGenerator, expressionMan, runtime);
+					if(data!=null)   leafDatas.put(key, data);
+				}
+				for(String key : leafDatas.keySet()){
+					jsonObj.remove(key);
+					jsonObj.put(key, leafDatas.get(key));
+				}
+			}
+			else if(node instanceof JSONArray){
+				JSONArray jsonArray = (JSONArray)node;
+				for(int i=0; i<jsonArray.length(); i++){
+					Object childNode = jsonArray.get(i);
+					Object data = this.processJsonNode(childNode, constantDefs, idGenerator, expressionMan, runtime);
+					if(data!=null)   jsonArray.put(i, data);
+				}
+			}
+			else{
+				out = this.processLeaf(node, constantDefs, idGenerator, expressionMan, runtime);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return out;
+	}
+	
+	/**
+	 * Process leaf node only, as script expression can only defined in leaf node 
+	 * @param leafData
+	 * @param constantDefs
+	 * @param idGenerator
+	 * @param expressionMan
+	 * @param runtime
+	 * @return
+	 */
+	private Object processLeaf(
+			Object leafData,
+			Map<String, HAPConstantDef> constantDefs,
+			HAPUIResourceIdGenerator idGenerator, 
+			HAPExpressionManager expressionMan, 
+			HAPRuntime runtime){
+		
+		StringBuffer valueStr = new StringBuffer();
+		Object valueObj = null;
+		List<Object> segments = HAPUIResourceParserUtility.parseUIExpression(leafData.toString(), idGenerator, expressionMan);
+		for(Object segment : segments){
+			if(segment instanceof HAPScriptExpression){
+				HAPScriptExpression sciptExpression = (HAPScriptExpression)segment;
+				//find all required constants names in script expressions
+				Set<String> constantNames = new HashSet<String>();
+				List<Object> uiExpEles = sciptExpression.getElements();
+				for(Object uiExpEle : uiExpEles){
+					if(uiExpEle instanceof HAPExpressionDefinition){
+						HAPExpressionDefinition expDef = (HAPExpressionDefinition)uiExpEle;
+						HAPOperand expOperand = expDef.getOperand();
+						constantNames.addAll(HAPExpressionUtility.discoveryUnsolvedConstants(expOperand));
+					}
+				}
+				
+				//build parms
+				Map<String, HAPData> parms = new LinkedHashMap<String, HAPData>();
+				for(String constantName : constantNames){
+					HAPConstantDef constantDef = constantDefs.get(constantName);
+					constantDef.process(constantDefs, idGenerator, expressionMan, runtime);
+					HAPData parm = constantDef.getDataValue();
+					parms.put(constantName, parm);
+				}
+				
+				//process script scriptExpression
+				sciptExpression.process(parms, null);
+				
+				//execute script expression
+				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(sciptExpression, null);
+				HAPServiceData serviceData = runtime.executeTaskSync(task);
+				
+				if(segments.size()>1){
+					//if have more than one segment, use the string value of result of script expression
+					valueStr.append(serviceData.getData().toString());
+				}
+				else{
+					//if have only one script expression, then use its object value
+					valueObj = serviceData.getData();
+				}
+			}
+			else{
+				valueStr.append(segment.toString());
+			}
+		}
+		
+		if(valueObj!=null){
+			//if only have one js expression
+			return valueObj;
+		}
+		else if(segments.size()==1){
+			//if no js expression, use the original one
+			return leafData;
+		}
+		else{
+			return valueStr.toString();
+		}
+	}
+	
 	
 	private HAPData getDataValue(){
 		return new HAPDataWrapper(this.m_value.toString());
@@ -106,9 +202,10 @@ public class HAPConstantDef extends HAPSerializableImp{
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(LITERATE, this.m_literate);
+		jsonMap.put(LITERATE, this.m_definitionObj.toString());
 		jsonMap.put(PROCESSED, this.m_isProcessed+"");
 		typeJsonMap.put(PROCESSED, Boolean.class);
 		jsonMap.put(VALUE, this.m_value.toString());
+		typeJsonMap.put(VALUE, this.m_value.getClass());
 	}
 }
