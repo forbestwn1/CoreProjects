@@ -376,7 +376,7 @@ var node_createExpressionService = function(){
 		},
 	
 		executeExecuteScriptExpressionRequest : function(script, expressions, variables, handlers, requester_parent){
-			var requestInfo = this.executeExecuteScriptExpressionRequest(script, expressions, variables, handlers, requester_parent);
+			var requestInfo = this.getExecuteScriptExpressionRequest(script, expressions, variables, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},
 	};

@@ -266,7 +266,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	public void start(){
         this.m_sciprtTracker = new HAPScriptTracker();
 		
-		ContextFactory factory = new ContextFactory();
+		ContextFactory factory = ContextFactory.getGlobal(); 
 
 	    Main dbg = new Main("Hello");
 	    dbg.attachTo(factory);

@@ -19,10 +19,15 @@ public class HAPRuntimeTaskLoadResourcesRhino extends HAPRuntimeTaskLoadResource
 	@Override
 	public HAPRuntimeTask execute(HAPRuntime runtime) {
 		try{
-			HAPRuntimeImpRhino rhinoRuntime = (HAPRuntimeImpRhino)runtime;
-			
-			HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForLoadResourceTask(this);
-			rhinoRuntime.loadTaskScript(scriptInfo, this.getTaskId());
+			if(this.getResourcesInfo()==null || this.getResourcesInfo().isEmpty()){
+				//if no resource required
+				this.finish(HAPServiceData.createSuccessData());
+			}
+			else{
+				HAPRuntimeImpRhino rhinoRuntime = (HAPRuntimeImpRhino)runtime;
+				HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForLoadResourceTask(this);
+				rhinoRuntime.loadTaskScript(scriptInfo, this.getTaskId());
+			}
 		}
 		catch(Exception e){
 			this.finish(HAPServiceData.createFailureData(e, ""));
