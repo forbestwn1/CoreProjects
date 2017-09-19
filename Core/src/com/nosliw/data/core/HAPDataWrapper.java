@@ -25,6 +25,8 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 
 	public final static String TOKEN_LITERATE = "#";
 	public final static String TOKEN_JSON = "{";
+
+	public final static String SEPERATOR_DATATYPE = "___";
 	
 	//data type
 	protected HAPDataTypeId m_dataTypeId;
@@ -67,6 +69,12 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 	 */
 	@Override
 	public boolean buildObjectByLiterate(String text){
+		if(text.contains("sismyworldabc")){
+			int kkkk = 555;
+			kkkk++;
+		}
+		
+		
 		try {
 			if(text==null)  return false;
 			
@@ -84,7 +92,7 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 				//it is not case for json structure 
 				this.setValueFormat(HAPSerializationFormat.LITERATE);
 				//parse literate to get data type and value parts
-				String[] parts = HAPNamingConversionUtility.parseDetails(text.substring(1));
+				String[] parts = HAPNamingConversionUtility.splitTextByComponents(text.substring(TOKEN_LITERATE.length()), SEPERATOR_DATATYPE);
 				if(parts.length<2)   return false;
 				this.m_dataTypeId = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), parts[0], HAPSerializationFormat.LITERATE);
 				this.m_value = parts[1];

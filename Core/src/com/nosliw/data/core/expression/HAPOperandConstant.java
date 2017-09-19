@@ -43,6 +43,12 @@ public class HAPOperandConstant extends HAPOperandImp{
 	public HAPData getData(){  return this.m_data;  }
 	
 	public void setData(HAPData data){ 
+		
+		if(this.m_name==null){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		this.m_data = data;
 	}
 	

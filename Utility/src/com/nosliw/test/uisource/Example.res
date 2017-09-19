@@ -152,6 +152,7 @@
 	<constants>
 	{
 			bbbb : "<%=5+6+7%>",
+			aaaa : "<%=#|&(#test##string___Thisismyworldabcdef)&.length()|#%>",
 	}
 	</constants>
 	

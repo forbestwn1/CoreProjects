@@ -13,6 +13,7 @@ import com.nosliw.data.core.expression.HAPOperandOperation;
 import com.nosliw.data.core.expression.HAPOperandReference;
 import com.nosliw.data.core.expression.HAPOperandVariable;
 import com.nosliw.data.core.expression.HAPOperationParm;
+import com.nosliw.data.core.imp.expression.HAPExpressionEscape;
 import com.nosliw.data.imp.expression.parser.generated.NosliwExpressionParser;
 import com.nosliw.data.imp.expression.parser.generated.SimpleNode;
 
@@ -47,7 +48,7 @@ public class HAPExpressionParserImp implements HAPExpressionParser{
 		  HAPOperand operand = null;
 		  if(expressionEles.constantNode!=null){
 			//it is a constant operand  
-			 operand = new HAPOperandConstant((String)expressionEles.constantNode.jjtGetValue());
+			 operand = new HAPOperandConstant(HAPExpressionEscape.deescape((String)expressionEles.constantNode.jjtGetValue()));
 		  }
 		  else if(expressionEles.variableNode!=null){
 			  //it is a variable operand

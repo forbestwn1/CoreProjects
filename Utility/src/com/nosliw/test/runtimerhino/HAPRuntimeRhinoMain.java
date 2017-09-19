@@ -58,9 +58,9 @@ public class HAPRuntimeRhinoMain {
 
 			runtime.executeTask(task1);
 			
-			HAPRuntimeTask task2 = new HAPRuntimeTaskExecuteExpressionRhino(expression, varData);
-			Object result = runtime.executeTaskSync(task2).getData();
-			System.out.println("Expression Result : " + result);
+//			HAPRuntimeTask task2 = new HAPRuntimeTaskExecuteExpressionRhino(expression, varData);
+//			Object result = runtime.executeTaskSync(task2).getData();
+//			System.out.println("Expression Result : " + result);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -82,7 +82,7 @@ public class HAPRuntimeRhinoMain {
 		
 		HAPExpressionImporter.importExpressionSuiteFromFolder(HAPFileUtility.getClassFolderName(HAPExpressionTest.class), runtimeEnvironment.getExpressionManager());
 		
-		executeSuite("expression1", runtimeEnvironment);
+		executeSuite("expression0", runtimeEnvironment);
 		
 //		for(String suiteName : expressionMan.getExpressionDefinitionSuites()){
 //			executeSuite(suiteName, runtimeEnvironment);

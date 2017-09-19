@@ -183,14 +183,16 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 				String opType = operand.getType();
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
 					HAPOperandConstant constantOperand = (HAPOperandConstant)operand;
-					HAPExpressionDefinition expressionDefinition = (HAPExpressionDefinition)data;
-					String constantName = constantOperand.getName();
-					HAPData constantData = expressionDefinition.getConstants().get(constantName);
-					if(constantData==null){
-						//if not found within expression definition, try to find from context
-						constantData = contextConstants.get(constantName);
+					if(constantOperand.getData()==null){
+						HAPExpressionDefinition expressionDefinition = (HAPExpressionDefinition)data;
+						String constantName = constantOperand.getName();
+						HAPData constantData = expressionDefinition.getConstants().get(constantName);
+						if(constantData==null){
+							//if not found within expression definition, try to find from context
+							constantData = contextConstants.get(constantName);
+						}
+						constantOperand.setData(constantData);
 					}
-					constantOperand.setData(constantData);
 				}
 				return true;
 			}
