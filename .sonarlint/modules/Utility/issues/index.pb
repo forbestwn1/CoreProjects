@@ -21,8 +21,6 @@ c
 3src/com/nosliw/test/criteria/HAPCriteriaEscape.java,1\e\1ee93f9a4b678b84b271ce2811bc214a3acebf01
 e
 5src/com/nosliw/test/criteria/HAPCriteriaDeescape.java,a\3\a3828828ba1a68d00866c53d899307411bfa3153
-`
-0src/com/nosliw/test/uisource/UIResourceTest.java,a\b\ab4b377c0dcd76deb90f90c25b1b5d5278b525fb
 X
 (src/com/nosliw/test/uisource/Example.res,d\2\d2c5b0446e8d7fe44dd6849b4159cefc4c6854d8
 k

@@ -36,18 +36,16 @@ public class HAPUIResourceManager {
 	}
 	
 	public HAPUIResource processUIResource(String resourceName, Map<String, HAPDataTypeCriteria> expectedCriteria){
-		
-		
-		
-		HAPUIResourceParser uiResourceParser = this.getUIResourceParser();
-		HAPUIResource uiResource = uiResourceParser.parseFile(file);
-		
-		Map<String, HAPConstantDef> constantDefs = uiResource.getConstants();
-		for(String name : constantDefs.keySet()){
-			HAPConstantDef constantDef = constantDefs.get(name);
-			constantDef.process(constantDefs, idGengerator, m_expressionMan, this.m_runtime);
-		}
-		return uiResource;
+//		HAPUIResourceParser uiResourceParser = this.getUIResourceParser();
+//		HAPUIResource uiResource = uiResourceParser.parseFile(file);
+//		
+//		Map<String, HAPConstantDef> constantDefs = uiResource.getConstants();
+//		for(String name : constantDefs.keySet()){
+//			HAPConstantDef constantDef = constantDefs.get(name);
+//			constantDef.process(constantDefs, idGengerator, m_expressionMan, this.m_runtime);
+//		}
+//		return uiResource;
+		return null;
 	}
 	
 	private HAPUIResourceParser getUIResourceParser(){

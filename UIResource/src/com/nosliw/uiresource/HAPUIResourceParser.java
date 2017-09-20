@@ -82,25 +82,25 @@ public class HAPUIResourceParser {
 			Element bodyEle = doc.body();
 
 			//parse script block
-			this.parseChildScriptBlocks(bodyEle, m_resource);
+			this.parseChildScriptBlocks(bodyEle, resource);
 			//parse constant block
-			this.parseChildConstantBlocks(bodyEle, m_resource);
+			this.parseChildConstantBlocks(bodyEle, resource);
 			//parse context block
-			this.parseChildContextBlocks(bodyEle, m_resource);
+			this.parseChildContextBlocks(bodyEle, resource);
 			//parse expression block
-			this.parseChildExpressionBlocks(bodyEle, m_resource);
+			this.parseChildExpressionBlocks(bodyEle, resource);
 			
 			//parse body tag's attribute
-			parseCurrentAttribute(bodyEle, m_resource);
+			parseCurrentAttribute(bodyEle, resource);
 
 			//convert all standard child tags that have data key attribute to default custom tag
 			adjustDescendantTagAccordToDataBinding(bodyEle);
 			
 			//parse expressions within text content
-			parseChildScriptExpressionInContent(bodyEle, m_resource);
+			parseChildScriptExpressionInContent(bodyEle, resource);
 			
 			//parse all descendant tags under body element
-			parseDescendantTags(bodyEle, m_resource);
+			parseDescendantTags(bodyEle, resource);
 			
 			//add span structure around all pain text
 			HAPUIResourceParserUtility.addSpanToText(bodyEle);
@@ -112,9 +112,8 @@ public class HAPUIResourceParser {
 
 			//get all decedant tags, for load resource purpose
 			Set<HAPUITag> tags = new HashSet<HAPUITag>();
-			HAPUIResourceParserUtility.getAllChildTags(m_resource, tags);
-			for(HAPUITag tag : tags)  this.m_resource.addUITagLib(tag.getTagName());
-		
+			HAPUIResourceParserUtility.getAllChildTags(resource, tags);
+			for(HAPUITag tag : tags)  resource.addUITagLib(tag.getTagName());
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -218,6 +217,12 @@ public class HAPUIResourceParser {
 				Iterator<String> defNames = defsJson.keys();
 				while(defNames.hasNext()){
 					String defName = defNames.next();
+					
+					if(resource==null || defsJson==null){
+						int kkkk = 5555;
+						kkkk++;
+					}
+					
 					resource.addConstant(defName, new HAPConstantDef(defsJson.get(defName)));
 				}
 			} catch (JSONException e) {
