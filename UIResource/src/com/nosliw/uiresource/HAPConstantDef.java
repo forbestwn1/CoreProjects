@@ -142,30 +142,45 @@ public class HAPConstantDef extends HAPSerializableImp{
 			if(segment instanceof HAPScriptExpression){
 				HAPScriptExpression sciptExpression = (HAPScriptExpression)segment;
 				//find all required constants names in script expressions
-				Set<String> constantNames = new HashSet<String>();
+				Set<String> expConstantNames = new HashSet<String>();
+				Set<String> scriptConstantNames = new HashSet<String>();
+				
 				List<Object> uiExpEles = sciptExpression.getElements();
 				for(Object uiExpEle : uiExpEles){
 					if(uiExpEle instanceof HAPExpressionDefinition){
 						HAPExpressionDefinition expDef = (HAPExpressionDefinition)uiExpEle;
 						HAPOperand expOperand = expDef.getOperand();
-						constantNames.addAll(HAPExpressionUtility.discoveryUnsolvedConstants(expOperand));
+						expConstantNames.addAll(HAPExpressionUtility.discoveryUnsolvedConstants(expOperand));
+					}
+					else if(uiExpEle instanceof HAPScriptExpressionScriptSegment){
+						HAPScriptExpressionScriptSegment scriptSegment = (HAPScriptExpressionScriptSegment)uiExpEle;
+						scriptConstantNames.addAll(scriptSegment.getConstants());
 					}
 				}
 				
-				//build parms
-				Map<String, HAPData> parms = new LinkedHashMap<String, HAPData>();
-				for(String constantName : constantNames){
+				//build expression parms
+				Map<String, HAPData> expParms = new LinkedHashMap<String, HAPData>();
+				for(String constantName : expConstantNames){
 					HAPConstantDef constantDef = constantDefs.get(constantName);
 					constantDef.process(constantDefs, idGenerator, expressionMan, runtime);
 					HAPData parm = constantDef.getDataValue();
-					parms.put(constantName, parm);
+					expParms.put(constantName, parm);
+				}
+				
+				//build script constants parm
+				Map<String, Object> scriptConstants = new LinkedHashMap<String, Object>();
+				for(String scriptConstantName : scriptConstantNames){
+					HAPConstantDef constantDef = constantDefs.get(scriptConstantName);
+					constantDef.process(constantDefs, idGenerator, expressionMan, runtime);
+					Object constant = constantDef.getValue();
+					scriptConstants.put(scriptConstantName, constant);
 				}
 				
 				//process script scriptExpression
-				sciptExpression.process(parms, null);
+				sciptExpression.processExpressions(expParms, null);
 				
 				//execute script expression
-				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(sciptExpression, null);
+				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(sciptExpression, null, scriptConstants);
 				HAPServiceData serviceData = runtime.executeTaskSync(task);
 				
 				if(segments.size()>1){

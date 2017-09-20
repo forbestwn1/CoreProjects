@@ -12,7 +12,6 @@ import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
 public class HAPJSScriptUtility {
 
@@ -33,15 +32,17 @@ public class HAPJSScriptUtility {
 				expressions.put(expressionId, expression);
 				funScript.append("expressionData["+expressionId+"]");
 			}
-			else if(ele instanceof String){
-				funScript.append(ele.toString());
+			else if(ele instanceof HAPScriptExpressionScriptSegment){
+				HAPScriptExpressionScriptSegment scriptSegment = (HAPScriptExpressionScriptSegment)ele;
+				funScript.append(scriptSegment.getScript());
 			}
 		}
 		templateParms.put("functionScript", funScript.toString());
 		templateParms.put("expressions", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(expressions, HAPSerializationFormat.JSON)));
 		templateParms.put("taskId", task.getTaskId());
 		templateParms.put("gatewayPath", HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY);
-
+		templateParms.put("constants", HAPJsonUtility.buildJson(task.getScriptConstants(), HAPSerializationFormat.JSON));
+		
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPJSScriptUtility.class, "ExecuteScriptExpressionScript.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());

@@ -32,7 +32,7 @@ public class HAPScriptExpression {
 	private HAPExpressionManager m_expressionManager;
 	
 	//store all elements in ui expression:
-	//     	js expression:  string
+	//     	js expression:  HAPScriptExpressionScriptSegment
 	//		data expression : expression definition
 	private List<Object> m_elements;
 	
@@ -53,7 +53,7 @@ public class HAPScriptExpression {
 	
 	public List<Object> getProcessedElements(){ return this.m_processedElements; }
 	
-	public void process(Map<String, HAPData> contextConstants, Map<String, HAPDataTypeCriteria> variableCriterias){
+	public void processExpressions(Map<String, HAPData> contextConstants, Map<String, HAPDataTypeCriteria> variableCriterias){
 		this.m_processedElements = new ArrayList<Object>();
 		for(Object ele : this.m_elements){
 			if(ele instanceof HAPExpressionDefinition){
@@ -61,8 +61,8 @@ public class HAPScriptExpression {
 				HAPExpression expression = this.m_expressionManager.processExpression(expDef.getName(), expDef, contextConstants, variableCriterias);
 				this.m_processedElements.add(expression);
 			}
-			else{
-				this.m_processedElements.add(ele.toString());
+			else if(ele instanceof HAPScriptExpressionScriptSegment){
+				this.m_processedElements.add(ele);
 			}
 		}
 	}
@@ -74,12 +74,12 @@ public class HAPScriptExpression {
 			int index = content.indexOf(EXPRESSION_TOKEN_OPEN);
 			if(index==-1){
 				//no expression
-				this.m_elements.add(content);
+				this.m_elements.add(new HAPScriptExpressionScriptSegment(content));
 				content = null;
 			}
 			else if(index!=0){
 				//start with text
-				this.m_elements.add(content.substring(0, index));
+				this.m_elements.add(new HAPScriptExpressionScriptSegment(content.substring(0, index)));
 				content = content.substring(index);
 			}
 			else{

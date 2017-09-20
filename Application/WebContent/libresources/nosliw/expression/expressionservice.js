@@ -325,7 +325,7 @@ var node_createExpressionService = function(){
 	};	
 
 
-	var loc_getExecuteScriptExpressionRequest = function(script, expressions, variables, handlers, requester_parent){
+	var loc_getExecuteScriptExpressionRequest = function(script, expressions, variables, scriptConstants, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		//calculate multiple expression
 		var executeMultipleExpressionRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("ExecuteMultipleExpression", {"expressions":expressions, "variables":variables}), {});
@@ -337,7 +337,7 @@ var node_createExpressionService = function(){
 		var requestDependency = new node_DependentServiceRequestInfo(executeMultipleExpressionRequest, {
 			success : function(requestInfo, expressionsResult){
 				var expressionsData = expressionsResult.getResults();
-				return script.call(undefined, expressionsData);
+				return script.call(undefined, expressionsData, scriptConstants);
 			}
 		});
 		executeScriptExpressionRequest.setDependentService(requestDependency);
@@ -371,12 +371,12 @@ var node_createExpressionService = function(){
 		 * 		expressions : map (name : expression)
 		 * 		variables : variables for expression
 		 */
-		getExecuteScriptExpressionRequest : function(script, expressions, variables, handlers, requester_parent){
-			return loc_getExecuteScriptExpressionRequest(script, expressions, variables, handlers, requester_parent);
+		getExecuteScriptExpressionRequest : function(script, expressions, variables, scriptConstants, handlers, requester_parent){
+			return loc_getExecuteScriptExpressionRequest(script, expressions, variables, scriptConstants, handlers, requester_parent);
 		},
 	
-		executeExecuteScriptExpressionRequest : function(script, expressions, variables, handlers, requester_parent){
-			var requestInfo = this.getExecuteScriptExpressionRequest(script, expressions, variables, handlers, requester_parent);
+		executeExecuteScriptExpressionRequest : function(script, expressions, variables, scriptConstants, handlers, requester_parent){
+			var requestInfo = this.getExecuteScriptExpressionRequest(script, expressions, variables, scriptConstants, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},
 	};

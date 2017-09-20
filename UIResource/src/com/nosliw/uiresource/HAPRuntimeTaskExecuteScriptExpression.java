@@ -30,9 +30,12 @@ public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTask{
 	
 	Map<String, HAPData> m_variablesValue;
 	
-	public HAPRuntimeTaskExecuteScriptExpression(HAPScriptExpression scriptExpression, Map<String, HAPData> variablesValue){
+	Map<String, Object> m_scriptConstants;
+	
+	public HAPRuntimeTaskExecuteScriptExpression(HAPScriptExpression scriptExpression, Map<String, HAPData> variablesValue, Map<String, Object> scriptConstants){
 		this.m_scriptExpression = scriptExpression;
 		this.m_variablesValue = variablesValue; 
+		this.m_scriptConstants = scriptConstants;
 	}
 	
 	@Override
@@ -40,6 +43,7 @@ public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTask{
 
 	public HAPScriptExpression getScriptExpression(){ return this.m_scriptExpression;  }
 	public Map<String, HAPData> getVariablesValue(){  return this.m_variablesValue;  }
+	public Map<String, Object> getScriptConstants(){  return this.m_scriptConstants;  }
 	
 	@Override
 	public HAPRuntimeTask execute(HAPRuntime runtime) {
