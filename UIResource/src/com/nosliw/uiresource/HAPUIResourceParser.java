@@ -85,7 +85,7 @@ public class HAPUIResourceParser {
 			adjustDescendantTagAccordToDataBinding(bodyEle);
 			
 			//process expressions within text content
-			parseChildExpressionContent(bodyEle, m_resource);
+			parseChildScriptExpressionInContent(bodyEle, m_resource);
 			
 			//process all descendant tags under body element
 			parseDescendantTags(bodyEle, m_resource);
@@ -267,7 +267,7 @@ public class HAPUIResourceParser {
 	/*
 	 * process expression in child text content within element 
 	 */
-	private void parseChildExpressionContent(Element ele, HAPUIResourceBasic resource){
+	private void parseChildScriptExpressionInContent(Element ele, HAPUIResourceBasic resource){
 		List<TextNode> textNodes = ele.textNodes();
 		for(TextNode textNode : textNodes){
 			String text = textNode.text();
@@ -278,10 +278,10 @@ public class HAPUIResourceParser {
 					newText.append((String)segment);
 				}
 				else if(segment instanceof HAPScriptExpression){
-					HAPScriptExpression uiExpression = (HAPScriptExpression)segment;
-					newText.append("<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+uiExpression.getId()+"></span>");
-					HAPUIExpressionContent expressionContent = new HAPUIExpressionContent(uiExpression);
-					resource.addExpressionContent(expressionContent);
+					HAPScriptExpression scriptExpression = (HAPScriptExpression)segment;
+					newText.append("<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+scriptExpression.getId()+"></span>");
+					HAPScriptExpressionInContent expressionContent = new HAPScriptExpressionInContent(scriptExpression);
+					resource.addScriptExpressionInContent(expressionContent);
 				}
 			}
 			
@@ -324,11 +324,11 @@ public class HAPUIResourceParser {
 		}
 		else{
 			//process regular tag
-			parseChildExpressionContent(ele, resource);
+			parseChildScriptExpressionInContent(ele, resource);
 			//process key attribute
 			parseKeyAttribute(ele, resource, false);
 			//process elements's attribute that have expression value 
-			parseExpressionAttribute(ele, resource, false);
+			parseScriptExpressionInAttribute(ele, resource, false);
 			//process all descendant tags under this elment
 			parseDescendantTags(ele, resource);
 		}
@@ -360,7 +360,7 @@ public class HAPUIResourceParser {
 		parseUITagDataBindingAttribute(ele, uiTag);
 		
 		//process elements's attribute that have expression value 
-		parseExpressionAttribute(ele, resource, true);
+		parseScriptExpressionInAttribute(ele, resource, true);
 		
 		//process element's normal attribute
 		parseCurrentAttribute(ele, uiTag);
@@ -371,7 +371,7 @@ public class HAPUIResourceParser {
 		ele.remove();
 		
 		//process contents within customer ele
-		parseChildExpressionContent(ele, uiTag);
+		parseChildScriptExpressionInContent(ele, uiTag);
 		parseDescendantTags(ele, uiTag);
 		
 		HAPUIResourceParserUtility.addSpanToText(ele);
@@ -415,9 +415,10 @@ public class HAPUIResourceParser {
 	}
 
 	/*
-	 * process element's attribute that have expression value 
+	 * process element's attribute that have script expression value
+	 * only the first script expression will consider
 	 */
-	private void parseExpressionAttribute(Element ele, HAPUIResourceBasic resource, boolean isCustomerTag){
+	private void parseScriptExpressionInAttribute(Element ele, HAPUIResourceBasic resource, boolean isCustomerTag){
 		String uiId = HAPUIResourceParserUtility.getUIId(ele); 
 		
 		//read attributes
@@ -425,12 +426,22 @@ public class HAPUIResourceParser {
 		for(Attribute eleAttr : eleAttrs){
 			String eleAttrKey = eleAttr.getKey();
 			//replace express attribute value with; create ExpressEle object
-			String uiExpression = HAPUIResourceParserUtility.isExpressionAttribute(eleAttr);
-			if(uiExpression!=null){
+			
+			List<Object> segments = HAPUIResourceParserUtility.parseUIExpression(eleAttr.getValue(), this.m_idGenerator, this.m_expressionManager);
+			HAPScriptExpression scriptExpression = null;
+			//try to find first script expression in attribute value
+			for(Object segment : segments){
+				if(segment instanceof HAPScriptExpression){
+					scriptExpression = (HAPScriptExpression)segment;
+					break;
+				}
+			}
+			
+			if(scriptExpression!=null){
 				//handle expression attribute
-				HAPUIExpressionAttribute eAttr = new HAPUIExpressionAttribute(eleAttrKey, uiId, uiExpression);
-				if(isCustomerTag)  resource.addExpressionTagAttribute(eAttr);
-				else  resource.addExpressionAttribute(eAttr);
+				HAPScriptExpressionInAttribute eAttr = new HAPScriptExpressionInAttribute(eleAttrKey, uiId, scriptExpression);
+				if(isCustomerTag)  resource.addScriptExpressionInTagAttribute(eAttr);
+				else  resource.addScriptExpressionInAttribute(eAttr);
 				ele.attr(eleAttrKey, "");
 			}
 		}

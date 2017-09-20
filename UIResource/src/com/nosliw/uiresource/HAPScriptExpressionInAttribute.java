@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 
-public class HAPUIExpressionAttribute extends HAPUIExpressionContent{
+public class HAPScriptExpressionInAttribute extends HAPScriptExpressionInContent{
 
 	@HAPAttribute
 	public static final String ATTRIBUTE = "attribute";
@@ -12,8 +12,8 @@ public class HAPUIExpressionAttribute extends HAPUIExpressionContent{
 	//attribute name
 	private String m_attribute;
 
-	public HAPUIExpressionAttribute(String attr, String uiId, String content){
-		super(uiId, content);
+	public HAPScriptExpressionInAttribute(String attr, String uiId, HAPScriptExpression scriptExpression){
+		super(scriptExpression);
 		this.m_attribute = attr;
 	}
 	
