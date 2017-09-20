@@ -1,6 +1,7 @@
 package com.nosliw.uiresource;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -64,44 +65,8 @@ public class HAPUIResourceParser {
 			//use file name as ui resource name
 			String resourceName = HAPFileUtility.getFileName(input);
 			
-			m_resource = new HAPUIResource(resourceName);
-
 			Document doc = Jsoup.parse(input, "UTF-8");
-			Element bodyEle = doc.body();
-
-			//process script block
-			this.parseChildScriptBlocks(bodyEle, m_resource);
-			//process constant block
-			this.parseChildConstantBlocks(bodyEle, m_resource);
-			//process context block
-			this.parseChildContextBlocks(bodyEle, m_resource);
-			//process expression block
-			this.parseChildExpressionBlocks(bodyEle, m_resource);
-			
-			//process body tag's attribute
-			parseCurrentAttribute(bodyEle, m_resource);
-
-			//convert all standard child tags that have data key attribute to default custom tag
-			adjustDescendantTagAccordToDataBinding(bodyEle);
-			
-			//process expressions within text content
-			parseChildScriptExpressionInContent(bodyEle, m_resource);
-			
-			//process all descendant tags under body element
-			parseDescendantTags(bodyEle, m_resource);
-			
-			//add span structure around all pain text
-			HAPUIResourceParserUtility.addSpanToText(bodyEle);
-
-			m_resource.postRead();
-			
-			//set html content after processing
-			m_resource.setContent(bodyEle.html());
-
-			//get all decedant tags, for load resource purpose
-			Set<HAPUITag> tags = new HashSet<HAPUITag>();
-			HAPUIResourceParserUtility.getAllChildTags(m_resource, tags);
-			for(HAPUITag tag : tags)  this.m_resource.addUITagLib(tag.getTagName());
+			this.m_resource = parseUIResourceContent(resourceName, doc);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -109,6 +74,56 @@ public class HAPUIResourceParser {
 		return m_resource;
 	}
 
+	private HAPUIResource parseUIResourceContent(String resourceName, Document doc){
+		HAPUIResource resource = null;
+		try{
+			resource = new HAPUIResource(resourceName);
+
+			Element bodyEle = doc.body();
+
+			//parse script block
+			this.parseChildScriptBlocks(bodyEle, m_resource);
+			//parse constant block
+			this.parseChildConstantBlocks(bodyEle, m_resource);
+			//parse context block
+			this.parseChildContextBlocks(bodyEle, m_resource);
+			//parse expression block
+			this.parseChildExpressionBlocks(bodyEle, m_resource);
+			
+			//parse body tag's attribute
+			parseCurrentAttribute(bodyEle, m_resource);
+
+			//convert all standard child tags that have data key attribute to default custom tag
+			adjustDescendantTagAccordToDataBinding(bodyEle);
+			
+			//parse expressions within text content
+			parseChildScriptExpressionInContent(bodyEle, m_resource);
+			
+			//parse all descendant tags under body element
+			parseDescendantTags(bodyEle, m_resource);
+			
+			//add span structure around all pain text
+			HAPUIResourceParserUtility.addSpanToText(bodyEle);
+
+			resource.postRead();
+			
+			//set html content after processing
+			resource.setContent(bodyEle.html());
+
+			//get all decedant tags, for load resource purpose
+			Set<HAPUITag> tags = new HashSet<HAPUITag>();
+			HAPUIResourceParserUtility.getAllChildTags(m_resource, tags);
+			for(HAPUITag tag : tags)  this.m_resource.addUITagLib(tag.getTagName());
+		
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return resource;
+	}
+	
+	
+	
 	private void parseChildContextBlocks(Element ele, HAPUIResourceBasic resource){
 		List<Element> removes = new ArrayList<Element>();
 		Elements contextEles = ele.getElementsByTag(HAPUIResourceBasic.CONTEXT);

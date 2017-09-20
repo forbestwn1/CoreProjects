@@ -25,3 +25,9 @@ e
 0src/com/nosliw/test/uisource/UIResourceTest.java,a\b\ab4b377c0dcd76deb90f90c25b1b5d5278b525fb
 X
 (src/com/nosliw/test/uisource/Example.res,d\2\d2c5b0446e8d7fe44dd6849b4159cefc4c6854d8
+k
+;src/com/nosliw/test/uisource/HAPUIResourceConstantTest.java,8\f\8faf128a02b7406096ac060d38b7842ab04cefca
+Z
+*src/com/nosliw/test/uisource/Constants.txt,3\3\33845acbfae4660ad7283c4658882631abb46e1f
+c
+3src/com/nosliw/test/uisource/HAPUIResourceTest.java,9\6\9643e96d5cec11ccd121bb90fedc0717bf8d1513

@@ -16,6 +16,8 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
+import com.nosliw.data.core.expression.HAPExpressionManager;
+import com.nosliw.data.core.runtime.HAPRuntime;
 
 /*
  * ui resource basic class for both ui resource and custom tag
@@ -122,10 +124,26 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	
 	abstract public String getType(); 
 	
-	
-	
-	protected void processConstants(){
+	public void processConstants(
+			Map<String, HAPConstantDef> parentConstants,
+			HAPUIResourceIdGenerator idGenerator, 
+			HAPExpressionManager expressionMan, 
+			HAPRuntime runtime){
+		//build context constants
+		Map<String, HAPConstantDef> contextConstants = new LinkedHashMap<String, HAPConstantDef>();
+		if(parentConstants!=null)   contextConstants.putAll(parentConstants);
+		contextConstants.putAll(this.m_constants);
 		
+		//process all constants defined in this domain
+		for(String constantName : this.m_constants.keySet()){
+			HAPConstantDef constantDef = this.m_constants.get(constantName);
+			constantDef.process(contextConstants, idGenerator, expressionMan, runtime);
+		}
+		
+		//process constants in child
+		for(String tagId : this.m_uiTags.keySet()){
+			this.m_uiTags.get(tagId).processConstants(contextConstants, idGenerator, expressionMan, runtime);
+		}
 	}
 	
 	protected void processExpressions(){
