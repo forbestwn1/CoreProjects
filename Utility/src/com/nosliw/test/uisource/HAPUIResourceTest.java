@@ -7,7 +7,7 @@ import com.nosliw.uiresource.HAPRuntimeTaskExecuteScriptExpression;
 import com.nosliw.uiresource.HAPUIResource;
 import com.nosliw.uiresource.HAPUIResourceManager;
 
-public class UIResourceTest {
+public class HAPUIResourceTest {
 
 	public static void main(String[] agrs){
 
@@ -24,7 +24,7 @@ public class UIResourceTest {
 		
 		HAPUIResourceManager uiResourceMan = new HAPUIResourceManager(runtimeEnvironment.getExpressionManager(), runtimeEnvironment.getRuntime());
 
-		String file = HAPFileUtility.getFileNameOnClassPath(UIResourceTest.class, "Example.res");
+		String file = HAPFileUtility.getFileNameOnClassPath(HAPUIResourceTest.class, "Example.res");
 		HAPUIResource uiResource = uiResourceMan.processUIResource(file);
 		System.out.println(uiResource);
 	}
