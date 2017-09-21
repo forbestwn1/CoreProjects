@@ -1,5 +1,6 @@
 package com.nosliw.uiresource;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -16,6 +17,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
+import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
@@ -177,10 +179,17 @@ public class HAPConstantDef extends HAPSerializableImp{
 				}
 				
 				//process script scriptExpression
-				sciptExpression.processExpressions(expParms, null);
+				Map<String, HAPExpression> expressions = new LinkedHashMap<String, HAPExpression>();
+				for(Object ele : sciptExpression.getElements()){
+					if(ele instanceof HAPExpressionDefinition){
+						HAPExpressionDefinition expDef = (HAPExpressionDefinition)ele;
+						HAPExpression expression = expressionMan.processExpression(expDef.getName(), expDef, expParms, null);
+						expressions.put(expDef.getName(), expression);
+					}
+				}
 				
 				//execute script expression
-				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(sciptExpression, null, scriptConstants);
+				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(sciptExpression, expressions, null, scriptConstants);
 				HAPServiceData serviceData = runtime.executeTaskSync(task);
 				
 				if(segments.size()>1){

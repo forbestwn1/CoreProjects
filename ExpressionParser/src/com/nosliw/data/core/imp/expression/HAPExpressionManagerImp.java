@@ -92,4 +92,9 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		expDefinition.setOperand(this.m_expressionProcessor.parseExpression(expression));
 		return expDefinition;
 	}
+
+	@Override
+	public HAPExpressionDefinitionSuite newExpressionDefinitionSuite(String name) {
+		return new HAPExpressionDefinitionSuiteImp();
+	}
 }

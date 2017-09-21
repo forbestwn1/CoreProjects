@@ -4,8 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.interpolate.HAPInterpolateOutput;
-import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPData;
@@ -25,15 +23,24 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 	@HAPAttribute
 	public static String RESULT = "result";
 
-	public HAPExpressionDefinitionSuiteImp(){}
+	private Map<String, HAPExpressionDefinition> m_expressionDefinitions;
 
-	Map<String, HAPExpressionDefinition> m_expressionDefinitions;
-
+	private String m_name;
+	
 //	Map<String, HAPData> m_variablesData;
 	
-	@Override
-	public String getName() {  return this.getAtomicAncestorValueString(NAME);	}
+	public HAPExpressionDefinitionSuiteImp(){}
 
+	public HAPExpressionDefinitionSuiteImp(String name){
+		this.m_name = name;
+	}
+	
+	@Override
+	public String getName() {
+		if(this.m_name!=null)   return this.m_name;
+		else return this.getAtomicAncestorValueString(NAME);	
+	}
+	
 	@Override
 	public HAPExpressionDefinition getExpressionDefinition(String name) {
 		return this.getAllExpressionDefinitions().get(name);

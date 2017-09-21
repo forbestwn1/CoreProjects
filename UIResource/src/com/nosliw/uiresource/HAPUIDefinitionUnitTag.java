@@ -7,7 +7,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 
-public class HAPUITag extends HAPUIResourceBasic{
+public class HAPUIDefinitionUnitTag extends HAPUIDefinitionUnit{
 
 	//name of this customer tag
 	private String m_tagName;
@@ -15,7 +15,7 @@ public class HAPUITag extends HAPUIResourceBasic{
 	//data bindings related with this customer tag
 	private Map<String, HAPDataBinding> m_dataBindings;
 
-	public HAPUITag(String tagName, String id){
+	public HAPUIDefinitionUnitTag(String tagName, String id){
 		super(id);
 		this.m_tagName = tagName;
 		this.m_dataBindings = new LinkedHashMap<String, HAPDataBinding>();

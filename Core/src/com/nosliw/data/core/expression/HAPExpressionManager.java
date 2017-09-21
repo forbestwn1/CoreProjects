@@ -22,5 +22,6 @@ public interface HAPExpressionManager {
 
 	//create a simple expression definition
 	HAPExpressionDefinition newExpressionDefinition(String expression, String name, Map<String, HAPData> constants, Map<String, HAPDataTypeCriteria> variableCriterias); 
-	
+
+	HAPExpressionDefinitionSuite newExpressionDefinitionSuite(String name);
 }

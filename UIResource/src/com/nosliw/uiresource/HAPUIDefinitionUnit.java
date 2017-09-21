@@ -26,7 +26,7 @@ import com.nosliw.data.core.runtime.HAPRuntime;
  * 		that means, for ui resource instance, it does not contains infor within customer tag
  */
 @HAPEntityWithAttribute(baseName="UIRESOURCE")
-public abstract class HAPUIResourceBasic extends HAPSerializableImp{
+public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ID = "id";
@@ -74,11 +74,11 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	private Map<String, HAPContextElement> m_context;
 	
 	//all the expressions within content under this domain
-	private Set<HAPScriptExpressionInContent> m_scriptExpressionsInContent;
+	private Set<HAPEmbededScriptExpressionInContent> m_scriptExpressionsInContent;
 	//all the attribute expressions in regular tag under this domain 
-	private Set<HAPScriptExpressionInAttribute> m_scriptExpressionsInAttribute;
+	private Set<HAPEmbededScriptExpressionInAttribute> m_scriptExpressionsInAttribute;
 	//all the attribute expressions in customer tag under this domain
-	private Set<HAPScriptExpressionInAttribute> m_scriptExpressionsInTagAttribute;
+	private Set<HAPEmbededScriptExpressionInAttribute> m_scriptExpressionsInTagAttribute;
 	
 	//all the events related with regular tag
 	private Set<HAPElementEvent> m_elementEvents;
@@ -97,7 +97,7 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	private Map<String, HAPConstantDef> m_constants;
 	
 	//all the customer tag within the domain
-	private Map<String, HAPUITag> m_uiTags; 
+	private Map<String, HAPUIDefinitionUnitTag> m_uiTags; 
 	
 	//html content after compilation
 	private String m_content; 
@@ -107,13 +107,13 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	
 	private Map<String, HAPExpressionDefinition> m_expressionDefinitions;
 	
-	public HAPUIResourceBasic(String id){
+	public HAPUIDefinitionUnit(String id){
 		this.m_id = id;
 		this.m_context = new LinkedHashMap<String, HAPContextElement>();
-		this.m_scriptExpressionsInAttribute = new HashSet<HAPScriptExpressionInAttribute>();
-		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPScriptExpressionInAttribute>();
-		this.m_scriptExpressionsInContent = new HashSet<HAPScriptExpressionInContent>();
-		this.m_uiTags = new LinkedHashMap<String, HAPUITag>();
+		this.m_scriptExpressionsInAttribute = new HashSet<HAPEmbededScriptExpressionInAttribute>();
+		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPEmbededScriptExpressionInAttribute>();
+		this.m_scriptExpressionsInContent = new HashSet<HAPEmbededScriptExpressionInContent>();
+		this.m_uiTags = new LinkedHashMap<String, HAPUIDefinitionUnitTag>();
 		this.m_scripts = new ArrayList<HAPScript>();
 		this.m_elementEvents = new HashSet<HAPElementEvent>();
 		this.m_tagEvents = new HashSet<HAPElementEvent>();
@@ -123,8 +123,31 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	}
 	
 	abstract public String getType(); 
+
+	/**
+	 * Get all expression definitions in ui definition (content, attribute, expression block)
+	 * Exception expression definitions in Constant Definition
+	 * @return
+	 */
+	public Set<HAPExpressionDefinition> getAllExpressionDefinitions(){
+		Set<HAPExpressionDefinition> out = new HashSet<HAPExpressionDefinition>();
+		for(HAPEmbededScriptExpressionInContent embededScriptExpression : this.m_scriptExpressionsInContent)	out.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
+		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : this.m_scriptExpressionsInAttribute)	out.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
+		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : this.m_scriptExpressionsInTagAttribute)		out.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
+		out.addAll(this.m_expressionDefinitions.values());
+		
+		for(String tagId : this.m_uiTags.keySet())		out.addAll(this.m_uiTags.get(tagId).getAllExpressionDefinitions());
+		return out;
+	}
 	
-	public void processConstants(
+	/**
+	 * Calculate all the constant values in ConstantDef
+	 * @param parentConstants
+	 * @param idGenerator
+	 * @param expressionMan
+	 * @param runtime
+	 */
+	public void calculateConstantDefs(
 			Map<String, HAPConstantDef> parentConstants,
 			HAPUIResourceIdGenerator idGenerator, 
 			HAPExpressionManager expressionMan, 
@@ -142,7 +165,7 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 		
 		//process constants in child
 		for(String tagId : this.m_uiTags.keySet()){
-			this.m_uiTags.get(tagId).processConstants(contextConstants, idGenerator, expressionMan, runtime);
+			this.m_uiTags.get(tagId).calculateConstantDefs(contextConstants, idGenerator, expressionMan, runtime);
 		}
 	}
 	
@@ -163,15 +186,15 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(m_context, HAPSerializationFormat.JSON_FULL));
 
 		List<String> expressionContentJsons = new ArrayList<String>();
-		for(HAPScriptExpressionInContent expressionContent : this.m_scriptExpressionsInContent)  expressionContentJsons.add(expressionContent.toStringValue(HAPSerializationFormat.JSON_FULL));
+		for(HAPEmbededScriptExpressionInContent expressionContent : this.m_scriptExpressionsInContent)  expressionContentJsons.add(expressionContent.toStringValue(HAPSerializationFormat.JSON_FULL));
 		jsonMap.put(SCRIPTEXPRESSIONSINCONTENT, HAPJsonUtility.buildArrayJson(expressionContentJsons.toArray(new String[0])));
 		
 		List<String> expressionAttributeJsons = new ArrayList<String>();
-		for(HAPScriptExpressionInAttribute expressionAttr : this.m_scriptExpressionsInAttribute)  expressionAttributeJsons.add(expressionAttr.toStringValue(HAPSerializationFormat.JSON_FULL));
+		for(HAPEmbededScriptExpressionInAttribute expressionAttr : this.m_scriptExpressionsInAttribute)  expressionAttributeJsons.add(expressionAttr.toStringValue(HAPSerializationFormat.JSON_FULL));
 		jsonMap.put(SCRIPTEXPRESSIONINATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionAttributeJsons.toArray(new String[0])));
 
 		List<String> expressionTagAttributeJsons = new ArrayList<String>();
-		for(HAPScriptExpressionInAttribute expressionTagAttr : this.m_scriptExpressionsInTagAttribute)  expressionTagAttributeJsons.add(expressionTagAttr.toStringValue(HAPSerializationFormat.JSON_FULL));
+		for(HAPEmbededScriptExpressionInAttribute expressionTagAttr : this.m_scriptExpressionsInTagAttribute)  expressionTagAttributeJsons.add(expressionTagAttr.toStringValue(HAPSerializationFormat.JSON_FULL));
 		jsonMap.put(SCRIPTEXPRESSIONINTAGATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionTagAttributeJsons.toArray(new String[0])));
 
 		List<String> eleEventsJsons = new ArrayList<String>();
@@ -207,10 +230,10 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	public void setContent(String content){	this.m_content = content;	}
 	
 	public void addContextElement(HAPContextElement contextElement){this.m_context.put(contextElement.getName(), contextElement);	}
-	public void addScriptExpressionInAttribute(HAPScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInAttribute.add(eAttr);	}
-	public void addScriptExpressionInTagAttribute(HAPScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInTagAttribute.add(eAttr);	}
-	public void addScriptExpressionInContent(HAPScriptExpressionInContent scriptExpressionInContent){	this.m_scriptExpressionsInContent.add(scriptExpressionInContent);	}
-	public void addUITag(HAPUITag uiTag){	this.m_uiTags.put(uiTag.getId(), uiTag);	}
+	public void addScriptExpressionInAttribute(HAPEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInAttribute.add(eAttr);	}
+	public void addScriptExpressionInTagAttribute(HAPEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInTagAttribute.add(eAttr);	}
+	public void addScriptExpressionInContent(HAPEmbededScriptExpressionInContent scriptExpressionInContent){	this.m_scriptExpressionsInContent.add(scriptExpressionInContent);	}
+	public void addUITag(HAPUIDefinitionUnitTag uiTag){	this.m_uiTags.put(uiTag.getId(), uiTag);	}
 	public void addElementEvent(HAPElementEvent event){this.m_elementEvents.add(event);}
 	public void addTagEvent(HAPElementEvent event){this.m_tagEvents.add(event);}
 	public void addJSBlock(HAPScript jsBlock){this.m_scripts.add(jsBlock);}
@@ -219,10 +242,10 @@ public abstract class HAPUIResourceBasic extends HAPSerializableImp{
 	public Map<String, HAPConstantDef> getConstants(){return this.m_constants;}
 	
 	public List<HAPScript> getJSBlocks(){return this.m_scripts;}
-	public Collection<HAPUITag> getUITags(){return this.m_uiTags.values();} 
-	public Set<HAPScriptExpressionInContent> getScriptExpressionsInContent(){return this.m_scriptExpressionsInContent;}
-	public Set<HAPScriptExpressionInAttribute> getScriptExpressionsInAttributes(){return this.m_scriptExpressionsInAttribute;}
-	public Set<HAPScriptExpressionInAttribute> getScriptExpressionsInTagAttributes(){return this.m_scriptExpressionsInTagAttribute;}
+	public Collection<HAPUIDefinitionUnitTag> getUITags(){return this.m_uiTags.values();} 
+	public Set<HAPEmbededScriptExpressionInContent> getScriptExpressionsInContent(){return this.m_scriptExpressionsInContent;}
+	public Set<HAPEmbededScriptExpressionInAttribute> getScriptExpressionsInAttributes(){return this.m_scriptExpressionsInAttribute;}
+	public Set<HAPEmbededScriptExpressionInAttribute> getScriptExpressionsInTagAttributes(){return this.m_scriptExpressionsInTagAttribute;}
 
 	public void addExpressionDefinition(HAPExpressionDefinition expressionDef){		this.m_expressionDefinitions.put(expressionDef.getName(), expressionDef);	}
 	

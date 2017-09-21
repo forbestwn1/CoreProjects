@@ -2,12 +2,8 @@ package com.nosliw.uiresource;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 
@@ -33,11 +29,8 @@ public class HAPScriptExpression {
 	
 	//store all elements in ui expression:
 	//     	js expression:  HAPScriptExpressionScriptSegment
-	//		data expression : expression definition
+	//		data expression : HAPExpressionDefinition
 	private List<Object> m_elements;
-	
-	//string - expression
-	private List<Object> m_processedElements;
 	
 	public HAPScriptExpression(String uiId, String content, HAPExpressionManager expressionMan){
 		this.m_expressionManager = expressionMan;
@@ -51,20 +44,14 @@ public class HAPScriptExpression {
 	
 	public List<Object> getElements(){  return this.m_elements;   }
 	
-	public List<Object> getProcessedElements(){ return this.m_processedElements; }
-	
-	public void processExpressions(Map<String, HAPData> contextConstants, Map<String, HAPDataTypeCriteria> variableCriterias){
-		this.m_processedElements = new ArrayList<Object>();
-		for(Object ele : this.m_elements){
-			if(ele instanceof HAPExpressionDefinition){
-				HAPExpressionDefinition expDef = (HAPExpressionDefinition)ele;
-				HAPExpression expression = this.m_expressionManager.processExpression(expDef.getName(), expDef, contextConstants, variableCriterias);
-				this.m_processedElements.add(expression);
-			}
-			else if(ele instanceof HAPScriptExpressionScriptSegment){
-				this.m_processedElements.add(ele);
+	public List<HAPExpressionDefinition> getExpressionDefinitions(){
+		List<HAPExpressionDefinition> out = new ArrayList<HAPExpressionDefinition>();
+		for(Object element : this.m_elements){
+			if(element instanceof HAPExpressionDefinition){
+				out.add((HAPExpressionDefinition)element);
 			}
 		}
+		return out;
 	}
 	
 	private void init(){

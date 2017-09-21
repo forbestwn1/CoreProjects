@@ -9,7 +9,7 @@ import com.nosliw.data.core.HAPDataTypeManager;
 
 public class HAPUIResourceManager1 extends HAPSerializableImp{
 
-	private Map<String, HAPUIResource> m_uiResource;
+	private Map<String, HAPUIDefinitionUnitResource> m_uiResource;
 	
 	private Map<String, String> m_uiResourceScripts;
 	
@@ -19,7 +19,7 @@ public class HAPUIResourceManager1 extends HAPSerializableImp{
 	
 	public HAPUIResourceManager1(HAPConfigure setting, HAPDataTypeManager dataTypeMan) {
 		this.m_dataTypeMan = dataTypeMan;
-		this.m_uiResource = new LinkedHashMap<String, HAPUIResource>();
+		this.m_uiResource = new LinkedHashMap<String, HAPUIDefinitionUnitResource>();
 		this.m_uiResourceScripts = new LinkedHashMap<String, String>();
 //		this.createDefaultConfiguration();
 		this.m_setting = setting;

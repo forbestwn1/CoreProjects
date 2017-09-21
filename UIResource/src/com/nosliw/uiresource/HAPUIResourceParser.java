@@ -44,7 +44,7 @@ public class HAPUIResourceParser {
 	//configuration object
 	private HAPConfigure m_setting;
 	//current ui resource 
-	private HAPUIResource m_resource = null;
+	private HAPUIDefinitionUnitResource m_resource = null;
 	
 	private HAPValueInfoManager m_valueInfoMan;
 	private HAPCriteriaParser m_criteriaParser;
@@ -57,9 +57,9 @@ public class HAPUIResourceParser {
 		this.m_criteriaParser = HAPCriteriaParser.getInstance();
 	}
 	
-	public HAPUIResource getUIResource(){return this.m_resource;}
+	public HAPUIDefinitionUnitResource getUIResource(){return this.m_resource;}
 	
-	public HAPUIResource parseFile(String fileName){
+	public HAPUIDefinitionUnitResource parseFile(String fileName){
 		try{
 			File input = new File(fileName);
 			//use file name as ui resource name
@@ -74,10 +74,10 @@ public class HAPUIResourceParser {
 		return m_resource;
 	}
 
-	private HAPUIResource parseUIResourceContent(String resourceName, Document doc){
-		HAPUIResource resource = null;
+	private HAPUIDefinitionUnitResource parseUIResourceContent(String resourceName, Document doc){
+		HAPUIDefinitionUnitResource resource = null;
 		try{
-			resource = new HAPUIResource(resourceName);
+			resource = new HAPUIDefinitionUnitResource(resourceName);
 
 			Element bodyEle = doc.body();
 
@@ -111,9 +111,9 @@ public class HAPUIResourceParser {
 			resource.setContent(bodyEle.html());
 
 			//get all decedant tags, for load resource purpose
-			Set<HAPUITag> tags = new HashSet<HAPUITag>();
+			Set<HAPUIDefinitionUnitTag> tags = new HashSet<HAPUIDefinitionUnitTag>();
 			HAPUIResourceParserUtility.getAllChildTags(resource, tags);
-			for(HAPUITag tag : tags)  resource.addUITagLib(tag.getTagName());
+			for(HAPUIDefinitionUnitTag tag : tags)  resource.addUITagLib(tag.getTagName());
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -123,9 +123,9 @@ public class HAPUIResourceParser {
 	
 	
 	
-	private void parseChildContextBlocks(Element ele, HAPUIResourceBasic resource){
+	private void parseChildContextBlocks(Element ele, HAPUIDefinitionUnit resource){
 		List<Element> removes = new ArrayList<Element>();
-		Elements contextEles = ele.getElementsByTag(HAPUIResourceBasic.CONTEXT);
+		Elements contextEles = ele.getElementsByTag(HAPUIDefinitionUnit.CONTEXT);
 		for(int i=0; i<contextEles.size(); i++){
 			try {
 				String content = contextEles.get(i).html();
@@ -177,10 +177,10 @@ public class HAPUIResourceParser {
 		}
 	}
 	
-	private void parseChildExpressionBlocks(Element ele, HAPUIResourceBasic resource){
+	private void parseChildExpressionBlocks(Element ele, HAPUIDefinitionUnit resource){
 		List<Element> removes = new ArrayList<Element>();
 
-		Elements expressionEles = ele.getElementsByTag(HAPUIResourceBasic.EXPRESSIONS);
+		Elements expressionEles = ele.getElementsByTag(HAPUIDefinitionUnit.EXPRESSIONS);
 		for(int i=0; i<expressionEles.size(); i++){
 			try {
 				String content = expressionEles.get(i).html();
@@ -206,10 +206,10 @@ public class HAPUIResourceParser {
 	/*
 	 * process all constant blocks
 	 */
-	private void parseChildConstantBlocks(Element ele, HAPUIResourceBasic resource){
+	private void parseChildConstantBlocks(Element ele, HAPUIDefinitionUnit resource){
 		List<Element> removes = new ArrayList<Element>();
 		
-		Elements constantEles = ele.getElementsByTag(HAPUIResourceBasic.CONSTANTS);
+		Elements constantEles = ele.getElementsByTag(HAPUIDefinitionUnit.CONSTANTS);
 		for(int i=0; i<constantEles.size(); i++){
 			try {
 				String content = constantEles.get(i).text();
@@ -238,14 +238,14 @@ public class HAPUIResourceParser {
 	/*
 	 * process all script blocks
 	 */
-	private void parseChildScriptBlocks(Element ele, HAPUIResourceBasic resource){
+	private void parseChildScriptBlocks(Element ele, HAPUIDefinitionUnit resource){
 		List<Element> removes = new ArrayList<Element>();
 		
 		Elements childEles = ele.children();
 		for(int i=0; i<childEles.size(); i++){
 			Element childEle = childEles.get(i);
 			String childTagName = childEle.tag().getName();
-			if(HAPUIResourceBasic.SCRIPTS.equals(childTagName)){
+			if(HAPUIDefinitionUnit.SCRIPTS.equals(childTagName)){
 				HAPScript jsBlock = new HAPScript(ele.html());
 				resource.addJSBlock(jsBlock);
 				removes.add(childEle);
@@ -287,7 +287,7 @@ public class HAPUIResourceParser {
 	/*
 	 * process expression in child text content within element 
 	 */
-	private void parseChildScriptExpressionInContent(Element ele, HAPUIResourceBasic resource){
+	private void parseChildScriptExpressionInContent(Element ele, HAPUIDefinitionUnit resource){
 		List<TextNode> textNodes = ele.textNodes();
 		for(TextNode textNode : textNodes){
 			String text = textNode.text();
@@ -300,7 +300,7 @@ public class HAPUIResourceParser {
 				else if(segment instanceof HAPScriptExpression){
 					HAPScriptExpression scriptExpression = (HAPScriptExpression)segment;
 					newText.append("<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+scriptExpression.getId()+"></span>");
-					HAPScriptExpressionInContent expressionContent = new HAPScriptExpressionInContent(scriptExpression);
+					HAPEmbededScriptExpressionInContent expressionContent = new HAPEmbededScriptExpressionInContent(scriptExpression);
 					resource.addScriptExpressionInContent(expressionContent);
 				}
 			}
@@ -313,13 +313,14 @@ public class HAPUIResourceParser {
 	/*
 	 * process all the descendant tags under element
 	 */
-	private void parseDescendantTags(Element ele, HAPUIResourceBasic resource){
+	private void parseDescendantTags(Element ele, HAPUIDefinitionUnit resource){
 		List<Element> removes = new ArrayList<Element>();
 		Elements eles = ele.children();
 		for(Element e : eles){
 			if(HAPBasicUtility.isStringEmpty(HAPUIResourceParserUtility.getUIId(e))){
 				//if tag have no ui id, then create ui id for it
-				createUIId(e, resource);
+				String id = this.m_idGenerator.createId();
+				e.attr(HAPConstant.UIRESOURCE_ATTRIBUTE_UIID, id);
 			}
 			
 			boolean ifRemove = parseTag(e, resource);
@@ -336,7 +337,7 @@ public class HAPUIResourceParser {
 	 * return true : this element should be removed after processing
 	 * 		  false : this element should not be removed after processiong
 	 */
-	private boolean parseTag(Element ele, HAPUIResourceBasic resource){
+	private boolean parseTag(Element ele, HAPUIDefinitionUnit resource){
 		String customTag = HAPUIResourceParserUtility.isCustomTag(ele);
 		if(customTag!=null){
 			//process custome tag
@@ -359,10 +360,10 @@ public class HAPUIResourceParser {
 	/*
 	 * process customer tag
 	 */
-	private void parseCustomTag(String tagName, Element ele, HAPUIResourceBasic resource){
+	private void parseCustomTag(String tagName, Element ele, HAPUIDefinitionUnit resource){
 		String uiId = HAPUIResourceParserUtility.getUIId(ele); 
 		
-		HAPUITag uiTag = new HAPUITag(tagName, uiId);
+		HAPUIDefinitionUnitTag uiTag = new HAPUIDefinitionUnitTag(tagName, uiId);
 
 		//process script block
 		this.parseChildScriptBlocks(ele, uiTag);
@@ -406,7 +407,7 @@ public class HAPUIResourceParser {
 	/*
 	 * process attribute of Element for resource(UI resource or custom tag)
 	 */
-	private void parseCurrentAttribute(Element ele, HAPUIResourceBasic resource){
+	private void parseCurrentAttribute(Element ele, HAPUIDefinitionUnit resource){
 		Attributes eleAttrs = ele.attributes();
 		for(Attribute eleAttr : eleAttrs){
 			resource.addAttribute(eleAttr.getKey(), eleAttr.getValue());
@@ -416,7 +417,7 @@ public class HAPUIResourceParser {
 	/*
 	 * process data binding attribute within customer tag
 	 */
-	private void parseUITagDataBindingAttribute(Element ele, HAPUITag resource){
+	private void parseUITagDataBindingAttribute(Element ele, HAPUIDefinitionUnitTag resource){
 		Attributes eleAttrs = ele.attributes();
 		for(Attribute eleAttr : eleAttrs){
 			String eleAttrValue = eleAttr.getValue();
@@ -438,7 +439,7 @@ public class HAPUIResourceParser {
 	 * process element's attribute that have script expression value
 	 * only the first script expression will consider
 	 */
-	private void parseScriptExpressionInAttribute(Element ele, HAPUIResourceBasic resource, boolean isCustomerTag){
+	private void parseScriptExpressionInAttribute(Element ele, HAPUIDefinitionUnit resource, boolean isCustomerTag){
 		String uiId = HAPUIResourceParserUtility.getUIId(ele); 
 		
 		//read attributes
@@ -459,7 +460,7 @@ public class HAPUIResourceParser {
 			
 			if(scriptExpression!=null){
 				//handle expression attribute
-				HAPScriptExpressionInAttribute eAttr = new HAPScriptExpressionInAttribute(eleAttrKey, uiId, scriptExpression);
+				HAPEmbededScriptExpressionInAttribute eAttr = new HAPEmbededScriptExpressionInAttribute(eleAttrKey, uiId, scriptExpression);
 				if(isCustomerTag)  resource.addScriptExpressionInTagAttribute(eAttr);
 				else  resource.addScriptExpressionInAttribute(eAttr);
 				ele.attr(eleAttrKey, "");
@@ -472,7 +473,7 @@ public class HAPUIResourceParser {
 	 * key attribute means attribute that have predefined meaning within ui resource
 	 * isCustomertag : whether this element is a customer tag
 	 */
-	private void parseKeyAttribute(Element ele, HAPUIResourceBasic resource, boolean isCustomerTag){
+	private void parseKeyAttribute(Element ele, HAPUIDefinitionUnit resource, boolean isCustomerTag){
 		String uiId = HAPUIResourceParserUtility.getUIId(ele); 
 		Attributes eleAttrs = ele.attributes();
 		for(Attribute eleAttr : eleAttrs){
@@ -502,15 +503,6 @@ public class HAPUIResourceParser {
 				}
 			}
 		}
-	}
-	
-	/*
-	 * create ui id attribute for element
-	 */
-	private String createUIId(Element ele, HAPUIResourceBasic resource){
-		String id = this.m_idGenerator.createId();
-		ele.attr(HAPConstant.UIRESOURCE_ATTRIBUTE_UIID, id);
-		return id;
 	}
 	
 }

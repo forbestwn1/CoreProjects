@@ -173,8 +173,8 @@ public class HAPUIResourceParserUtility {
 	/*
 	 * find all child customer tags
 	 */
-	public static void getAllChildTags(HAPUIResourceBasic resource, Set<HAPUITag> tags){
-		for(HAPUITag tag : resource.getUITags()){
+	public static void getAllChildTags(HAPUIDefinitionUnit resource, Set<HAPUIDefinitionUnitTag> tags){
+		for(HAPUIDefinitionUnitTag tag : resource.getUITags()){
 			tags.add(tag);
 			getAllChildTags(tag, tags);
 		}
