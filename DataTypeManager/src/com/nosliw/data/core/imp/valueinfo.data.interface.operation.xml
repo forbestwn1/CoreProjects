@@ -9,7 +9,7 @@
 
 	<property name="name" dataType="string" description="">
 		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(20)"/>
+			<dbColumnInfo definition="VARCHAR(200)"/>
 		</dbColumnInfos>
 	</property>
 

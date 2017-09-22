@@ -1,5 +1,6 @@
 {
 	"name": "expression4",
+	"description" : "expression with variable base",
 	"expressionDefinitions": {
 		"main": {
 			"expression": "?(baseVar)?.subString(from:?(fromVar)?,to:&(to)&)",

@@ -82,59 +82,10 @@ public class HAPRuntimeRhinoMain {
 		
 		HAPExpressionImporter.importExpressionSuiteFromFolder(HAPFileUtility.getClassFolderName(HAPExpressionTest.class), runtimeEnvironment.getExpressionManager());
 		
-		executeSuite("expression0", runtimeEnvironment);
+		executeSuite("expression1", runtimeEnvironment);
 		
 //		for(String suiteName : expressionMan.getExpressionDefinitionSuites()){
 //			executeSuite(suiteName, runtimeEnvironment);
-//		}
-		
-		
-//		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression1", null);
-//		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
-//		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression2", null);
-//		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
-//		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression3", null);
-//		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
-
-//		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression5", null);
-//		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
-		
-		
-//		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression4", null);
-//		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
-
-//		HAPExpressionImp expression = (HAPExpressionImp)expressionMan.processExpression("expression7", null);
-//		System.out.println(HAPJsonUtility.formatJson(expression.toStringValue(HAPSerializationFormat.JSON)));
-		
-//		HAPRuntimeImpJSRhino runtime = new HAPRuntimeImpJSRhino(new HAPResourceDiscoveryJSImp(), resourceMan);
-//		try{
-//			runtime.start();
-//			
-//			runtime.loadScriptFromFile("loadResource1.js", HAPRuntimeRhinoMain.class, null, null);
-//			
-//			HAPDataWrapper baseData = new HAPDataWrapper("{dataTypeId:\"test.string;1.0.0\", value:\"This is my world!\"}");
-//			HAPDataWrapper baseDataUrl = new HAPDataWrapper("{dataTypeId:\"test.url;1.0.0\", value:\"This is my world!\"}");
-//			HAPDataWrapper fromData = new HAPDataWrapper("{dataTypeId:\"test.integer;1.0.0\", value:2}");
-//			HAPDataWrapper toData = new HAPDataWrapper("{dataTypeId:\"test.integer;1.0.0\", value:7}");
-//			Map<String, HAPData> varData = new LinkedHashMap<String, HAPData>();
-//			varData.put("fromVar", fromData);
-//			varData.put("toVar", toData);
-//			varData.put("baseVar", baseData);
-//			varData.put("baseVarUrl", baseDataUrl);
-//			
-//			runtime.executeExpressionTask(new HAPExpressionTaskRhino(expression, varData){
-//				@Override
-//				public void doSuccess() {
-//					Object result = getResult();
-//					System.out.println("Expression Result : " + result);
-//				}
-//			});
-//		}
-//		catch(Exception e){
-//			e.printStackTrace();
-//		}
-//		finally{
-//			runtime.close();
 //		}
 	}
 }

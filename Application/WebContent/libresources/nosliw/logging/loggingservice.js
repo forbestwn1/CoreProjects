@@ -15,8 +15,13 @@ var node_createLoggingService = function(){
 	var loc_buildMessage = function(arguments){
 		var out = "";
 		for(var i in arguments){
-			var part = arguments[i]==undefined?"undefined":JSON.stringify(arguments[i]);
-			out = out + " " + part;
+			try{
+				var part = arguments[i]==undefined?"undefined":JSON.stringify(arguments[i]);
+				out = out + " " + part;
+			}
+			catch(err){
+				
+			}
 		}
 		return out;
 	}

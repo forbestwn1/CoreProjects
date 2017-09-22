@@ -3,6 +3,9 @@
 	var resourceService = nosliw.runtime.getResourceService();
 	resourceService.executeLoadResourcesRequest(resourceInfos, {
 		success : function(){
-			nosliw.getNodeData("||gatewayPath||").notifyResourcesLoaded("||taskId||");
-		}
+			nosliw.getNodeData("||gatewayPath||").notifyResourcesLoaded("||taskId||", null);
+		},
+		error : function(requestInfo, serviceData){
+			nosliw.getNodeData("||gatewayPath||").notifyResourcesLoaded("||taskId||", serviceData);
+		},
 	}, undefined);

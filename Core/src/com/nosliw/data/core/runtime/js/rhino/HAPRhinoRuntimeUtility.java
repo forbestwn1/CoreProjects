@@ -32,7 +32,9 @@ public class HAPRhinoRuntimeUtility {
 			}
 			else{
 				Function errorFun = (Function)handlersObj.get("error");
-				errorFun.call(Context.enter(), scope, null, new Object[]{null, HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(serviceData)});
+//				errorFun.call(Context.enter(), scope, null, new Object[]{null, HAPRhinoDataUtility.toRhinoScriptableObjectFromObject(serviceData)});
+				Context context = Context.enter();
+				errorFun.call(context, scope, null, new Object[]{null, context.javaToJS(serviceData, scope)});
 			}
 		}
 		finally{

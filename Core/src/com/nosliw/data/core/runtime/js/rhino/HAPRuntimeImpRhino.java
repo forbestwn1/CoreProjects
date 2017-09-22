@@ -103,7 +103,18 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 
 		task.registerListener(new HAPRunTaskEventListener(){
 			@Override
-			public void finish(HAPRuntimeTask task) {	m_tasks.remove(task.getTaskId());	}}
+			public void finish(HAPRuntimeTask task) {
+				HAPServiceData taskServiceData = task.getResult();
+				if(taskServiceData.isSuccess()){
+					System.out.println("Task " + task.getTaskType() + " " + task.getTaskId() + " finished successfully!!!");
+					System.out.println(taskServiceData.getData());
+				}
+				else{
+					System.err.println("Task " + task.getTaskType() + " " + task.getTaskId() + " finished fail!!!");
+				}
+				m_tasks.remove(task.getTaskId());	
+				System.err.println(taskServiceData);
+			}}
 		);
 		
 		//create a new thread to execute task
@@ -168,7 +179,8 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		//Retrieve resources
 		HAPLoadResourceResponse loadResourceResponse = this.getRuntimeEnvironment().getResourceManager().getResources(resourceIds);
 
-		if(loadResourceResponse.getFailedResourcesId().size()==0){
+		List<HAPResourceId> failedResourceIds = loadResourceResponse.getFailedResourcesId();
+		if(failedResourceIds.size()==0){
 			//if all loaded, build script, return null
 			//build scripts info
 			List<HAPJSScriptInfo> scriptsInfo = new ArrayList<HAPJSScriptInfo>();
@@ -183,6 +195,10 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		}
 		else{
 			//if some resources fail to load, then do not build script, just return response back
+			System.err.println("Failed to load resources : ");
+			for(HAPResourceId resourceId : failedResourceIds){
+				System.err.println(resourceId.toString());
+			}
 			return loadResourceResponse;
 		}
 	}

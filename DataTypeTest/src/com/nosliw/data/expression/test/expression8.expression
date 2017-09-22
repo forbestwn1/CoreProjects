@@ -1,0 +1,67 @@
+{
+	"name": "expression8",
+	"description" : "array operation (operation with output criteria defined with expression)",
+	"expressionDefinitions": {
+		"main": {
+			"expression": "?(baseListVar)?.process(expression:&(expression)&,elementVariableName:&(element)&)",
+			"description": "complex data type",
+			"constants": {
+				"expression": {
+					"dataTypeId": "test.expression",
+					"value": {
+						"expression": "!(test.string)!.subString(?(eleName)?,from:&(from)&,to:&(to)&)",
+						"description": "DataType.method, all constant",
+						"constants": {
+							"from": {
+								"dataTypeId": "test.integer",
+								"value": "3"
+							},
+							"to": {
+								"dataTypeId": "test.integer",
+								"value": "7"
+							}
+						},
+						"variableCriterias": {
+						}
+					}
+				},
+				"element": {
+					"dataTypeId": "test.string",
+					"value": "eleName"
+				},
+			},
+			"variableCriterias": {
+				"baseListVar": "test.array%||element:test.string||%",
+			}
+		},
+	},
+	"variablesData": {
+		"baseListVar": {
+			"dataTypeId": "test.array",
+			"value": [
+				{
+					"dataTypeId": "test.string;1.0.0",
+					"value": "1234567890abcdefgh",
+				},
+				{
+					"dataTypeId": "test.string;1.0.0",
+					"value": "abcedfghijk1234567890",
+				}
+			] 
+		},
+	},
+	"result": {
+		"dataTypeId": "test.array;1.0.0",
+		"value": [
+			{
+				"dataTypeId": "test.string;1.0.0",
+				"value": "1234567890abcdefgh",
+			},
+			{
+				"dataTypeId": "test.string;1.0.0",
+				"value": "abcedfghijk1234567890",
+			}
+		],
+		"wapperType": "JSON"
+	}
+}

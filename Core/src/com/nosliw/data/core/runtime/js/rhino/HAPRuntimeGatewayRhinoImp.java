@@ -2,6 +2,7 @@ package com.nosliw.data.core.runtime.js.rhino;
 
 import java.util.List;
 
+import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.Scriptable;
 
@@ -30,20 +31,23 @@ public class HAPRuntimeGatewayRhinoImp implements HAPRuntimeGatewayRhino{
 	//gateway callback method
 	@Override
 	public void requestDiscoverResources(Object objResourceIds, Object handlers){
+		HAPServiceData serviceData;
 		try{
 			List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds); 
 			List<HAPResourceInfo> resourceInfos = this.m_runtimeEnviroment.getResourceDiscovery().discoverResource(resourceIds);
-			HAPServiceData serviceData = HAPServiceData.createSuccessData(resourceInfos);
-			HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_scope);
+			serviceData = HAPServiceData.createSuccessData(resourceInfos);
 		}
 		catch(Exception e){
+			serviceData = HAPServiceData.createFailureData(e, "");
 			e.printStackTrace();
 		}
+		HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_scope);
 	}
 	
 	//gateway callback method
 	@Override
 	public void requestDiscoverAndLoadResources(Object objResourceIds, Object handlers){
+		HAPServiceData serviceData = null;
 		try{
 			List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds);
 			//discovery
@@ -51,41 +55,41 @@ public class HAPRuntimeGatewayRhinoImp implements HAPRuntimeGatewayRhino{
 			//load resources to rhino runtime
 			HAPLoadResourceResponse response = this.m_runtime.loadResources(resourceInfos, m_scope);
 
-			HAPServiceData serviceData = null;
 			if(response.isSuccess()){
 				serviceData = HAPServiceData.createSuccessData(resourceInfos);
 			}
 			else{
 				serviceData = HAPServiceData.createFailureData(response.getFailedResourcesId(), "");
 			}
-			
-			//callback with resourceInfos
-			HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_scope);
 		}
 		catch(Exception e){
+			serviceData = HAPServiceData.createFailureData(e, "");
 			e.printStackTrace();
 		}
+		//callback with resourceInfos
+		HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_scope);
 	}
 	
 	//gateway callback method
 	@Override
 	public void requestLoadResources(Object objResourcesInfo, Object handlers){
+		HAPServiceData serviceData = null;
 		try{
 			List<HAPResourceInfo> resourcesInfo = HAPRhinoRuntimeUtility.rhinoResourcesInfoToResourcesInfo((NativeArray)objResourcesInfo);
 			//load resources to rhino runtime
 			HAPLoadResourceResponse response = this.m_runtime.loadResources(resourcesInfo, m_scope);
-			HAPServiceData serviceData = null;
 			if(response==null){
 				serviceData = HAPServiceData.createSuccessData();
 			}
 			else{
-				serviceData = HAPServiceData.createFailureData(response.getFailedResourcesId(), "");
+				serviceData = HAPServiceData.createFailureData(response.getFailedResourcesId(), "Fail to load resources");
 			}
-			HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_scope);
 		}
 		catch(Exception e){
+			serviceData = HAPServiceData.createFailureData(e, "Exception during loading resources");
 			e.printStackTrace();
 		}
+		HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_scope);
 	}
 	
 	//gateway callback method
@@ -122,15 +126,23 @@ public class HAPRuntimeGatewayRhinoImp implements HAPRuntimeGatewayRhino{
 	
 	//gatewary callback method
 	@Override
-	public void notifyResourcesLoaded(String taskId){
-		HAPServiceData taskServiceData;
+	public void notifyResourcesLoaded(String taskId, Object serviceDataObj){
 		try{
-			taskServiceData = HAPServiceData.createSuccessData();
+			HAPServiceData serviceData = null;
+			if(serviceDataObj==null){
+				//if success
+				serviceData = HAPServiceData.createSuccessData();
+			}
+			else{
+				serviceData = (HAPServiceData)Context.enter().jsToJava(serviceDataObj, HAPServiceData.class); 
+			}
+			this.m_runtime.finishTask(taskId, serviceData);
 		}
 		catch(Exception e){
-			taskServiceData = HAPServiceData.createFailureData(e, "");
 			e.printStackTrace();
 		}
-		this.m_runtime.finishTask(taskId, taskServiceData);
+		finally{
+			Context.exit();
+		}
 	}
 }

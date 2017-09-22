@@ -1,5 +1,6 @@
 {
 	"name": "expression6",
+	"description" : "expression need convert from url to string",
 	"expressionDefinitions": {
 		"main": {
 			"expression": "?(baseVarUrl)?.subString(from:?(fromVar)?,to:&(to)&)",

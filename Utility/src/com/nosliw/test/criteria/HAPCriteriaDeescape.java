@@ -15,7 +15,8 @@ public class HAPCriteriaDeescape {
 		String content=br.readLine();  
 		String deEscpateConent = HAPCriteriaUtility.deescape(content);
 		
-		System.out.println("Output "+deEscpateConent);  		
+		System.out.println("Output : ");
+		System.out.println(deEscpateConent);  		
 	}
 
 }

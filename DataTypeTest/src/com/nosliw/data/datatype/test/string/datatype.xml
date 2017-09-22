@@ -20,6 +20,15 @@
 			<output criteria="test.integer"/>
 		</operation>
 
+		<operation name="notImpplementedOperation" >
+			<parms>
+				<parm criteria="test.string" isBase="true"/>
+				<parm name="from" criteria="test.integer"/>
+				<parm name="to" criteria="test.integer"/>
+			</parms>
+			<output criteria="test.string"/>
+		</operation>
+
 	</operations>
 
 </definition>

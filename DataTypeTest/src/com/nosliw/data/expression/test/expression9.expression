@@ -1,15 +1,11 @@
 {
-	"name": "expression1",
-	"description" : "constant",
+	"name": "expression9",
+	"description" : "literate constant in expression",
 	"expressionDefinitions": {
 		"main": {
-			"expression": "!(test.string)!.subString(&(base)&,from:&(from)&,to:&(to)&)",
+			"expression": "!(test.string)!.notImpplementedOperation(&(#test##string___Thisismyworldabcdef)&,from:&(from)&,to:&(to)&)",
 			"description": "DataType.method, all constant",
 			"constants": {
-				"base": {
-					"dataTypeId": "test.string",
-					"value": "This is my world!"
-				},
 				"from": {
 					"dataTypeId": "test.integer",
 					"value": "3"
@@ -24,7 +20,7 @@
 	},
 	"result" : {
 		"dataTypeId": "test.string;1.0.0",
- 		"value": "s isfff",
+ 		"value": "sismfff",
 		"wapperType": "JSON"
 	}
 }

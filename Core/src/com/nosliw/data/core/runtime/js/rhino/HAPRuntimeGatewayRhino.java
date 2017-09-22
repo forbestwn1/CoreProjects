@@ -46,6 +46,6 @@ public interface HAPRuntimeGatewayRhino extends HAPRuntimeGatewayJS{
 	 * Call back method used when all the resources are loaded, so that can execute expression
 	 * @param taskId
 	 */
-	void notifyResourcesLoaded(String taskId);
+	void notifyResourcesLoaded(String taskId, Object serviceDataObj);
 
 }

@@ -1,52 +1,49 @@
 {
 	"name": "expression7",
+	"description" : "discover operation",
 	"expressionDefinitions": {
 		"main": {
-			"expression": "?(baseListVar)?.process(expression:&(expression)&,elementVariableName:&(element)&)",
+			"expression": "!(test.expression)!.outputCriteria(expression:&(expression)&.getValue(),parms:!(test.map)!.new().put(name:&(elementVariableName)&.getValue(),value:&(base)&.getCriteria().getChild(#test.string;element)))",
 			"description": "complex data type",
 			"constants": {
 				"expression": {
-					"dataTypeId": "test.expression",
+					"dataTypeId": "test.parm",
 					"value": {
-						"expression": "!(test.string)!.subString(?(eleName)?,from:&(from)&,to:&(to)&)",
-						"description": "DataType.method, all constant",
-						"constants": {
-							"from": {
-								"dataTypeId": "test.integer",
-								"value": "3"
-							},
-							"to": {
-								"dataTypeId": "test.integer",
-								"value": "7"
+						"value": {
+							"dataTypeId": "test.expression",
+							"value": {
+								"expression": "!(test.string)!.subString(?(eleName)?,from:&(from)&,to:&(to)&)",
+								"description": "DataType.method, all constant",
+								"constants": {
+									"from": {
+										"dataTypeId": "test.integer",
+										"value": "3"
+									},
+									"to": {
+										"dataTypeId": "test.integer",
+										"value": "7"
+									}
+								},
+								"variableCriterias": {
+								}
 							}
-						},
-						"variableCriterias": {
 						}
 					}
 				},
-				"element": {
-					"dataTypeId": "test.string",
-					"value": "eleName"
+				"elementVariableName": {
+					"dataTypeId": "test.parm",
+					"value": {
+						"value": {
+							"dataTypeId": "test.string",
+							"value": "element",
+						}
+					}
 				},
-			},
-			"variableCriterias": {
-				"baseListVar": "test.array%||element:test.string||%",
+				"base": {
+					"dataTypeId": "test.datatypecriteria",
+					"value": "test.array;1.0.0%||element:test.string||%"
+				},
 			}
-		},
-	},
-	"variablesData": {
-		"baseListVar": {
-			"dataTypeId": "test.array",
-			"value": [
-				{
-					"dataTypeId": "test.string;1.0.0",
-					"value": "1234567890abcdefgh",
-				},
-				{
-					"dataTypeId": "test.string;1.0.0",
-					"value": "abcedfghijk1234567890",
-				}
-			] 
 		},
 	},
 	"result": {
