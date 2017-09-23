@@ -14,6 +14,7 @@ import com.nosliw.data.core.expression.HAPExpressionDefinitionSuite;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.expression.HAPOperand;
+import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 
 public class HAPExpressionManagerImp implements HAPExpressionManager{
 
@@ -71,9 +72,9 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	public HAPExpression processExpression(String id, String suiteName, String expressionName, Map<String, HAPDataTypeCriteria> variableCriterias){
 		String expId = id;
 		if(expId==null) expId = expressionName + "_no" + this.m_idIndex++;
-		HAPExpressionDefinitionSuite suite = this.getExpressionDefinitionSuite(suiteName);
+		HAPExpressionDefinitionSuiteImp suite = (HAPExpressionDefinitionSuiteImp)this.getExpressionDefinitionSuite(suiteName);
 		HAPExpressionDefinition expDef = suite.getExpressionDefinition(expressionName); 
-		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(expId, expDef, suite.getAllExpressionDefinitions(), suite.getConstants(), variableCriterias);
+		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(expId, expDef, suite.getAllExpressionDefinitions(), suite.getConstants(), variableCriterias, this.getContext(suite.getConfigure()));
 		return expression;
 	}
 
@@ -81,7 +82,9 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	public HAPExpression processExpression(String id, HAPExpressionDefinition expressionDefinition, Map<String, HAPData> contextConstants, Map<String, HAPDataTypeCriteria> variableCriterias) {
 		String expId = id;
 		if(expId==null) expId = ""+this.m_idIndex++;
-		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(expId, expressionDefinition, null, contextConstants, variableCriterias);
+		Map<String, String> context = new LinkedHashMap<String, String>();
+		context.put(HAPProcessExpressionDefinitionContextImp.CONFIGURE_DISCOVERY, "false");
+		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(expId, expressionDefinition, null, contextConstants, variableCriterias, this.getContext(context));
 		return expression;
 	}
 
@@ -96,5 +99,9 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	@Override
 	public HAPExpressionDefinitionSuite newExpressionDefinitionSuite(String name) {
 		return new HAPExpressionDefinitionSuiteImp();
+	}
+	
+	private HAPProcessExpressionDefinitionContext getContext(Map<String, String> contextValue){
+		return  new HAPProcessExpressionDefinitionContextImp(contextValue);
 	}
 }

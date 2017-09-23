@@ -61,7 +61,7 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
-			HAPProcessVariablesContext context,
+			HAPProcessExpressionDefinitionContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		return null;
 	}

@@ -58,7 +58,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
-			HAPProcessVariablesContext context,
+			HAPProcessExpressionDefinitionContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		
 		return this.m_referencedExpression.discover(variablesInfo, expectCriteria, context, dataTypeHelper);

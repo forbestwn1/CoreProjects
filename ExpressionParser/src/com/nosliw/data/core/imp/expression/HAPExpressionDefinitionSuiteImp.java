@@ -25,6 +25,9 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 
 	@HAPAttribute
 	public static String ERRORCODE = "errorCode";
+
+	@HAPAttribute
+	public static String CONFIGURE = "configure";
 	
 	private Map<String, HAPExpressionDefinition> m_expressionDefinitions;
 
@@ -54,7 +57,7 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 		Map<String, HAPData> constants = this.getMapValueAncestorByPath(CONSTANTS); 
 		return constants;
 	}
-	
+
 	@Override
 	public Map<String, HAPExpressionDefinition> getAllExpressionDefinitions(){
 		if(this.m_expressionDefinitions==null){
@@ -64,6 +67,10 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 			}
 		}
 		return this.m_expressionDefinitions;
+	}
+	
+	public Map<String, String> getConfigure(){
+		return this.getMapValueAncestorByPath(CONFIGURE);
 	}
 	
 	public String getErrorCode() {

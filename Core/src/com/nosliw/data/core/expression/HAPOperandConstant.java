@@ -64,7 +64,7 @@ public class HAPOperandConstant extends HAPOperandImp{
 	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
-			HAPProcessVariablesContext context,
+			HAPProcessExpressionDefinitionContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		//set output criteria
 		if(this.getOutputCriteria()==null){

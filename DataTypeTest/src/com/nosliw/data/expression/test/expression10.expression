@@ -1,0 +1,30 @@
+{
+	"name": "expression10",
+	"description" : "execute expression without discovery",
+	"expressionDefinitions": {
+		"main": {
+			"expression": "!(test.string)!.subString(&(#test##string___Thisismyworldabcdef)&,from:&(from)&,to:&(to)&)",
+			"description": "DataType.method, all constant",
+			"constants": {
+				"from": {
+					"dataTypeId": "test.integer",
+					"value": "3"
+				},
+				"to": {
+					"dataTypeId": "test.integer",
+					"value": "7"
+				}
+			},
+			"variableCriterias": {}
+		}
+	},
+	"result" : {
+		"dataTypeId": "test.string;1.0.0",
+ 		"value": "sismfff",
+		"wapperType": "JSON"
+	},
+	"configure" :{
+		"discovery" : "false"
+	}
+	
+}

@@ -24,7 +24,8 @@ public interface HAPExpressionDefinitionProcessor {
 			HAPExpressionDefinition expDef, 
 			Map<String, HAPExpressionDefinition> contextExpressionDefinitions, 
 			Map<String, HAPData> contextConstants,
-			Map<String, HAPDataTypeCriteria> variableCriterias
+			Map<String, HAPDataTypeCriteria> variableCriterias,
+			HAPProcessExpressionDefinitionContext context
 	);
 
 	/**

@@ -20,4 +20,8 @@
 
 	<property name="errorCode" dataType="string" description=""/>
 
+	<property name="configure" type="map">
+		<child dataType="string" description=""/>
+	</property>
+
 </entity>

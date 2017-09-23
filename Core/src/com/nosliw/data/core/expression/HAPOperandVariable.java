@@ -40,7 +40,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
-			HAPProcessVariablesContext context,
+			HAPProcessExpressionDefinitionContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		HAPVariableInfo variableInfo = variablesInfo.get(this.getVariableName());
 		if(variableInfo==null){

@@ -71,7 +71,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	 * @param context
 	 * @return
 	 */
-	protected HAPMatchers isMatchable(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context, HAPDataTypeHelper dataTypeHelper){
+	protected HAPMatchers isMatchable(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessExpressionDefinitionContext context, HAPDataTypeHelper dataTypeHelper){
 		if(expectCriteria==null)   return null;
 		
 		HAPMatchers out = dataTypeHelper.buildMatchers(criteria, expectCriteria);
@@ -90,7 +90,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	 * @param context
 	 * @return
 	 */
-	protected HAPDataTypeCriteria validate(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessVariablesContext context, HAPDataTypeHelper dataTypeHelper){
+	protected HAPDataTypeCriteria validate(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessExpressionDefinitionContext context, HAPDataTypeHelper dataTypeHelper){
 		HAPDataTypeCriteria out = null;
 		if(criteria==HAPDataTypeCriteriaAny.getCriteria()){
 			//if var is any (not defined)
@@ -107,7 +107,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 		return out;
 	}
 	
-	protected void outputCompatible(HAPDataTypeCriteria targetCriteria, HAPProcessVariablesContext context, HAPDataTypeHelper dataTypeHelper){
+	protected void outputCompatible(HAPDataTypeCriteria targetCriteria, HAPProcessExpressionDefinitionContext context, HAPDataTypeHelper dataTypeHelper){
 		if(targetCriteria != null)
 		{
 			if(!targetCriteria.validate(this.getOutputCriteria(), dataTypeHelper))

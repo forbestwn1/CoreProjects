@@ -1,6 +1,6 @@
 {
 	"name": "expression7",
-	"description" : "discover operation",
+	"description" : "discover operation, it does not do discovery",
 	"expressionDefinitions": {
 		"main": {
 			"expression": "!(test.expression)!.outputCriteria(expression:&(expression)&.getValue(),parms:!(test.map)!.new().put(name:&(elementVariableName)&.getValue(),value:&(base)&.getCriteria().getChild(&(element)&)))",

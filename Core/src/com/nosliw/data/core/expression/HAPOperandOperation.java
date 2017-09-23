@@ -144,7 +144,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
-			HAPProcessVariablesContext context,
+			HAPProcessExpressionDefinitionContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		//clear old matchers
 		this.resetMatchers();

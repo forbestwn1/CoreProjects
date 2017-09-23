@@ -22,7 +22,7 @@ import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPOperandVariable;
-import com.nosliw.data.core.expression.HAPProcessVariablesContext;
+import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 
@@ -217,7 +217,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	}
 	
 	@Override
-	public HAPMatchers discover(Map<String, HAPVariableInfo> parentVariablesInfo, HAPDataTypeCriteria expectOutputCriteria, HAPProcessVariablesContext context,	HAPDataTypeHelper dataTypeHelper){
+	public HAPMatchers discover(Map<String, HAPVariableInfo> parentVariablesInfo, HAPDataTypeCriteria expectOutputCriteria, HAPProcessExpressionDefinitionContext context,	HAPDataTypeHelper dataTypeHelper){
 		this.m_varsInfo = parentVariablesInfo;
 		if(this.m_varsInfo==null)   this.m_varsInfo = new LinkedHashMap<String, HAPVariableInfo>();      
 		

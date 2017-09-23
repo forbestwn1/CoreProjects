@@ -18,7 +18,7 @@ import com.nosliw.data.core.expression.HAPOperandConstant;
 import com.nosliw.data.core.expression.HAPOperandReference;
 import com.nosliw.data.core.expression.HAPOperandTask;
 import com.nosliw.data.core.expression.HAPOperandVariable;
-import com.nosliw.data.core.expression.HAPProcessVariablesContext;
+import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 
@@ -44,7 +44,8 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 			HAPExpressionDefinition expDef,
 			Map<String, HAPExpressionDefinition> contextExpressionDefinitions,
 			Map<String, HAPData> contextConstants,
-			Map<String, HAPDataTypeCriteria> variableCriterias) {
+			Map<String, HAPDataTypeCriteria> variableCriterias, 
+			HAPProcessExpressionDefinitionContext context) {
 
 		System.out.println("******* Parse expression");
 		HAPExpressionImp expression = this.parseExpressionDefinition(expDef);
@@ -62,14 +63,16 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 		//process constant
 		System.out.println("******* Process constant");
 		this.processConstants(expression, contextConstants);
-		
-		//discover variables criteria / matchs in expression
-		HAPProcessVariablesContext context = new HAPProcessVariablesContext();
-		Map<String, HAPVariableInfo> parentVariableInfos = new LinkedHashMap<String, HAPVariableInfo>();
-		if(variableCriterias!=null){
-			for(String varName : variableCriterias.keySet())		parentVariableInfos.put(varName, new HAPVariableInfo(variableCriterias.get(varName)));
+
+		//only discovery is configure as "true"
+		if("true".equals(context.getConfiguration().getStringValue(HAPProcessExpressionDefinitionContextImp.CONFIGURE_DISCOVERY))){
+			//discover variables criteria / matchs in expression
+			Map<String, HAPVariableInfo> parentVariableInfos = new LinkedHashMap<String, HAPVariableInfo>();
+			if(variableCriterias!=null){
+				for(String varName : variableCriterias.keySet())		parentVariableInfos.put(varName, new HAPVariableInfo(variableCriterias.get(varName)));
+			}
+			expression.discover(parentVariableInfos, null, context, this.getDataTypeHelper());
 		}
-		expression.discover(parentVariableInfos, null, context, this.getDataTypeHelper());
 		
 		if(!context.isSuccess()){
 			System.out.println("******* Error");

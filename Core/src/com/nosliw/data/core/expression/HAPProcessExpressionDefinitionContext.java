@@ -3,13 +3,17 @@ package com.nosliw.data.core.expression;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HAPProcessVariablesContext {
+import com.nosliw.common.configure.HAPConfigurableImp;
 
+public class HAPProcessExpressionDefinitionContext extends HAPConfigurableImp{
+
+	//whether the processing success
 	private boolean m_success;
 	
+	//error message
 	private List<String> m_messages;
 	
-	public HAPProcessVariablesContext(){
+	public HAPProcessExpressionDefinitionContext(){
 		this.clear();
 	}
 	
