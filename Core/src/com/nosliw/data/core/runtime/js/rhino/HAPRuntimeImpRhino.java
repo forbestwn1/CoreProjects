@@ -111,9 +111,9 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 				}
 				else{
 					System.err.println("Task " + task.getTaskType() + " " + task.getTaskId() + " finished fail!!!");
+					System.err.println(taskServiceData);
 				}
 				m_tasks.remove(task.getTaskId());	
-				System.err.println(taskServiceData);
 			}}
 		);
 		
@@ -298,7 +298,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 //	        System.setErr(dbg.getErr());
 	        
 //		    dbg.setBreakOnEnter(true);
-		    dbg.setBreakOnExceptions(true);
+//		    dbg.setBreakOnExceptions(true);
 		    dbg.setScope(m_scope);
 		    dbg.setSize(1200, 800);
 		    dbg.setVisible(true);

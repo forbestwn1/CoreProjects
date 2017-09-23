@@ -1,6 +1,6 @@
 {
 	"name": "expression9",
-	"description" : "literate constant in expression",
+	"description" : "fail to load resource",
 	"expressionDefinitions": {
 		"main": {
 			"expression": "!(test.string)!.notImpplementedOperation(&(#test##string___Thisismyworldabcdef)&,from:&(from)&,to:&(to)&)",
@@ -18,9 +18,5 @@
 			"variableCriterias": {}
 		}
 	},
-	"result" : {
-		"dataTypeId": "test.string;1.0.0",
- 		"value": "sismfff",
-		"wapperType": "JSON"
-	}
+	"errorCode" : "400"
 }

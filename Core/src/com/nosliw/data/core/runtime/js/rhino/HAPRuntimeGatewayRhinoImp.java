@@ -127,6 +127,7 @@ public class HAPRuntimeGatewayRhinoImp implements HAPRuntimeGatewayRhino{
 	//gatewary callback method
 	@Override
 	public void notifyResourcesLoaded(String taskId, Object serviceDataObj){
+		Context context = Context.enter();
 		try{
 			HAPServiceData serviceData = null;
 			if(serviceDataObj==null){
@@ -134,7 +135,7 @@ public class HAPRuntimeGatewayRhinoImp implements HAPRuntimeGatewayRhino{
 				serviceData = HAPServiceData.createSuccessData();
 			}
 			else{
-				serviceData = (HAPServiceData)Context.enter().jsToJava(serviceDataObj, HAPServiceData.class); 
+				serviceData = (HAPServiceData)context.jsToJava(serviceDataObj, HAPServiceData.class); 
 			}
 			this.m_runtime.finishTask(taskId, serviceData);
 		}

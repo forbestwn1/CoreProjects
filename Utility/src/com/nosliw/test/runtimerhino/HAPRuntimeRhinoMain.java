@@ -47,7 +47,12 @@ public class HAPRuntimeRhinoMain {
 							}
 						}
 						else{
-							throw new Exception();
+							if((serviceData.getCode()+"").equals(suite.getErrorCode())){
+								System.out.println("Expression Result : " + serviceData.getCode());
+							}
+							else{
+								throw new Exception();
+							}
 						}
 					}
 					catch(Exception e){
@@ -82,7 +87,7 @@ public class HAPRuntimeRhinoMain {
 		
 		HAPExpressionImporter.importExpressionSuiteFromFolder(HAPFileUtility.getClassFolderName(HAPExpressionTest.class), runtimeEnvironment.getExpressionManager());
 		
-		executeSuite("expression1", runtimeEnvironment);
+		executeSuite("expression7", runtimeEnvironment);
 		
 //		for(String suiteName : expressionMan.getExpressionDefinitionSuites()){
 //			executeSuite(suiteName, runtimeEnvironment);

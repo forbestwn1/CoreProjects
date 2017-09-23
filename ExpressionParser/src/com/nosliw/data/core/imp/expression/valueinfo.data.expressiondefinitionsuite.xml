@@ -18,4 +18,6 @@
 
 	<property name="result" dataType="object" subDataType="com.nosliw.data.core.HAPDataWrapper" description=""/>
 
+	<property name="errorCode" dataType="string" description=""/>
+
 </entity>

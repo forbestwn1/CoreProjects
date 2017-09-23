@@ -57,12 +57,6 @@ public class HAPExpressionUtility {
 		processAllOperand(operand, out, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperand operand, Object data) {
-				
-				if(operand==null){
-					int kkkk = 5555;
-					kkkk++;
-				}
-				
 				Set<String> vars = (Set<String>)data;
 				switch(operand.getType()){
 				case HAPConstant.EXPRESSION_OPERAND_CONSTANT:

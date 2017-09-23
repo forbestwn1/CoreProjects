@@ -23,6 +23,9 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 	@HAPAttribute
 	public static String RESULT = "result";
 
+	@HAPAttribute
+	public static String ERRORCODE = "errorCode";
+	
 	private Map<String, HAPExpressionDefinition> m_expressionDefinitions;
 
 	private String m_name;
@@ -63,6 +66,10 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 		return this.m_expressionDefinitions;
 	}
 	
+	public String getErrorCode() {
+		return this.getAtomicAncestorValueString(ERRORCODE);	
+	}
+
 	public HAPDataWrapper getResult(){		return (HAPDataWrapper)this.getAtomicAncestorValue(RESULT);	}
 	
 	public Map<String, HAPData> getVariableData() {

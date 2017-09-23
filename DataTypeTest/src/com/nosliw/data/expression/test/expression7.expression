@@ -3,7 +3,7 @@
 	"description" : "discover operation",
 	"expressionDefinitions": {
 		"main": {
-			"expression": "!(test.expression)!.outputCriteria(expression:&(expression)&.getValue(),parms:!(test.map)!.new().put(name:&(elementVariableName)&.getValue(),value:&(base)&.getCriteria().getChild(#test.string;element)))",
+			"expression": "!(test.expression)!.outputCriteria(expression:&(expression)&.getValue(),parms:!(test.map)!.new().put(name:&(elementVariableName)&.getValue(),value:&(base)&.getCriteria().getChild(&(element)&)))",
 			"description": "complex data type",
 			"constants": {
 				"expression": {
@@ -43,6 +43,10 @@
 					"dataTypeId": "test.datatypecriteria",
 					"value": "test.array;1.0.0%||element:test.string||%"
 				},
+				"element" : {
+					"dataTypeId": "test.string",
+					"value": "element"
+				}
 			}
 		},
 	},

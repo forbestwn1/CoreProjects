@@ -69,12 +69,6 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 	 */
 	@Override
 	public boolean buildObjectByLiterate(String text){
-		if(text.contains("sismyworldabc")){
-			int kkkk = 555;
-			kkkk++;
-		}
-		
-		
 		try {
 			if(text==null)  return false;
 			

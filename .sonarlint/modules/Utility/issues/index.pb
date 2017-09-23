@@ -29,3 +29,5 @@ Z
 *src/com/nosliw/test/uisource/Constants.txt,3\3\33845acbfae4660ad7283c4658882631abb46e1f
 c
 3src/com/nosliw/test/uisource/HAPUIResourceTest.java,9\6\9643e96d5cec11ccd121bb90fedc0717bf8d1513
+a
+1src/com/nosliw/test/runtimerhino/loadResource1.js,1\6\169e40e7a1f95fa4c46b0d35f4df068e6ea23eea

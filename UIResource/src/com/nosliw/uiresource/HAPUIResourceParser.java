@@ -217,12 +217,6 @@ public class HAPUIResourceParser {
 				Iterator<String> defNames = defsJson.keys();
 				while(defNames.hasNext()){
 					String defName = defNames.next();
-					
-					if(resource==null || defsJson==null){
-						int kkkk = 5555;
-						kkkk++;
-					}
-					
 					resource.addConstant(defName, new HAPConstantDef(defsJson.get(defName)));
 				}
 			} catch (JSONException e) {
