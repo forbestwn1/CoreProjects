@@ -1,7 +1,7 @@
 	var resourceInfos = ||resourceInfos||;
 	
 	var resourceService = nosliw.runtime.getResourceService();
-	resourceService.executeLoadResourcesRequest(resourceInfos, {
+	resourceService.executeRequireResourcesRequest(resourceInfos, {
 		success : function(){
 			nosliw.getNodeData("||gatewayPath||").notifyResourcesLoaded("||taskId||", null);
 		},

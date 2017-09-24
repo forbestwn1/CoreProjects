@@ -232,7 +232,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			},
 			
 			executeStartHandler : function(thisContext){
-				nosliw.logging.info(loc_moduleName, this.getInnerId(), "Start handler");
+//				nosliw.logging.info(loc_moduleName, this.getInnerId(), "Start handler");
 				var out = undefined;
 				//internal handler
 				var handler = this.getHandlers().start;
@@ -241,8 +241,8 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			},
 			
 			executeSuccessHandler : function(data, thisContext){
-				nosliw.logging.info(loc_moduleName, this.getInnerId(), "Success handler");
-				nosliw.logging.trace(loc_moduleName, this.getInnerId(), "Data ", data);
+//				nosliw.logging.info(loc_moduleName, this.getInnerId(), "Success handler");
+//				nosliw.logging.trace(loc_moduleName, this.getInnerId(), "Data ", data);
 
 				var out = undefined;
 				//internal handler
@@ -252,8 +252,8 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			},
 			
 			executeErrorHandler : function(serviceData, thisContext){
-				nosliw.logging.error(loc_moduleName, this.getInnerId(), "Error handler");
-				nosliw.logging.trace(loc_moduleName, this.getInnerId(), serviceData);
+//				nosliw.logging.error(loc_moduleName, this.getInnerId(), "Error handler");
+//				nosliw.logging.trace(loc_moduleName, this.getInnerId(), serviceData);
 
 				var out = undefined;
 				//internal handler
@@ -263,8 +263,8 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			},
 
 			executeExceptionHandler : function(serviceData, thisContext){
-				nosliw.logging.error(loc_moduleName, this.getInnerId(), "Exception handler");
-				nosliw.logging.trace(loc_moduleName, this.getInnerId(), serviceData);
+//				nosliw.logging.error(loc_moduleName, this.getInnerId(), "Exception handler");
+//				nosliw.logging.trace(loc_moduleName, this.getInnerId(), serviceData);
 
 				var out = undefined;
 				//internal handler

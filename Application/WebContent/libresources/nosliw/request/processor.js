@@ -15,21 +15,21 @@ var node_requestServiceProcessor = function(){
 		//add request processor in order to logging the result
 		requestInfo.setRequestProcessors({
 			start : function(requestInfo){
-				nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Start handler");
+//				nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Start handler");
 			},
 			success : function(requestInfo, data){
-				nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Success handler");
-				nosliw.logging.trace(loc_moduleName, requestInfo.getInnerId(), "Data ", data);
+				nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Success handler : ", data);
+//				nosliw.logging.trace(loc_moduleName, requestInfo.getInnerId(), "Data ", data);
 				return data;
 			}, 
 			fail : function(requestInfo, data){
-				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Error handler");
-				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Data ", data);
+				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Error handler : ", data);
+//				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Data ", data);
 				return data;
 			}, 
 			exception : function(requestInfo, data){
-				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Exception handler");
-				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Data ", data);
+				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Exception handler : ", data);
+//				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Data ", data);
 				return data;
 			}, 
 		});

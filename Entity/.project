@@ -3,7 +3,6 @@
 	<name>Entity</name>
 	<comment></comment>
 	<projects>
-		<project>DataDefinition</project>
 		<project>ExpressionParser</project>
 	</projects>
 	<buildSpec>

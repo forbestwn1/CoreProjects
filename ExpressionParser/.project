@@ -3,7 +3,6 @@
 	<name>ExpressionParser</name>
 	<comment></comment>
 	<projects>
-		<project>DataDefinition</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -1,6 +1,6 @@
 {
 	"name": "expression10",
-	"description" : "execute expression without discovery",
+	"description" : "execute expression without discovery (otherwise, same as expression 0)",
 	"expressionDefinitions": {
 		"main": {
 			"expression": "!(test.string)!.subString(&(#test##string___Thisismyworldabcdef)&,from:&(from)&,to:&(to)&)",

@@ -50,7 +50,7 @@ public class HAPDBUtility {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println(createSql);
+//		System.out.println(createSql);
 	}
 	
 	public static void saveToDB(HAPStringableValueEntity obj, Connection connection){
@@ -66,7 +66,7 @@ public class HAPDBUtility {
 	public static void saveToDB(HAPStringableValueEntity obj, HAPDBTableInfo dbTableInfo, Connection connection){
 		try {
 			String insertSql = buildInstertSql(dbTableInfo);
-			System.out.println(insertSql);
+//			System.out.println(insertSql);
 			PreparedStatement statement = connection.prepareStatement(insertSql);
 			
 			saveToDB(obj, dbTableInfo, statement);

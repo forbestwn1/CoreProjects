@@ -95,8 +95,8 @@ var node_createResourceService = function(resourceManager){
 	
 	var loc_out = {
 			
-		getLoadResourcesRequest : function(resourcesInfo, handlers, requester_parent){
-			var serviceInfo = new node_ServiceInfo("LoadResources", {"resourcesInfo":resourcesInfo});
+		getRequireResourcesRequest : function(resourcesInfo, handlers, requester_parent){
+			var serviceInfo = new node_ServiceInfo("RequireResources", {"resourcesInfo":resourcesInfo});
 			
 			//look for resources in resource manager
 			var resourceTree = {};
@@ -131,8 +131,8 @@ var node_createResourceService = function(resourceManager){
 		},
 			
 			
-		executeLoadResourcesRequest : function(resourcesInfo, handlers, requester_parent){
-			var requestInfo = this.getLoadResourcesRequest(resourcesInfo, handlers, requester_parent);
+		executeRequireResourcesRequest : function(resourcesInfo, handlers, requester_parent){
+			var requestInfo = this.getRequireResourcesRequest(resourcesInfo, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},
 			
