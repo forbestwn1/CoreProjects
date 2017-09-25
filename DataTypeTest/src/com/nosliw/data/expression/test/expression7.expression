@@ -63,5 +63,8 @@
 			}
 		],
 		"wapperType": "JSON"
+	},
+	"configure" :{
+		"discovery" : "false"
 	}
 }

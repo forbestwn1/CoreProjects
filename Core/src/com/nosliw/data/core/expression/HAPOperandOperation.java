@@ -87,6 +87,12 @@ public class HAPOperandOperation extends HAPOperandImp{
 		if(this.m_base!=null)		this.addChildOperand(m_base);
 	}
 	
+	public HAPOperand getBase(){  return this.m_base;  }
+	
+	public Map<String, HAPOperand> getParms(){   return this.m_parms;   }
+	
+	public void addParm(String name, HAPOperand parmOperand){  this.m_parms.put(name, parmOperand);  }
+	
 	public void setParms(Map<String, HAPOperand> parms){
 		this.m_parms.putAll(parms);
 		for(HAPOperand parm : parms.values()){
@@ -96,6 +102,8 @@ public class HAPOperandOperation extends HAPOperandImp{
 	
 	public HAPDataTypeId getDataTypeId(){   return this.m_dataTypeId; }
 
+	public String getOperaion(){  return this.m_operation;  }
+	
 	public HAPOperationId getOperationId(){
 		HAPOperationId out = null;
 		if(this.m_dataTypeId!=null){
@@ -170,13 +178,6 @@ public class HAPOperandOperation extends HAPOperandImp{
 			List<HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
 			for(HAPOperationParmInfo parmInfo : parmsInfo){
 				HAPOperand parmOperand = this.m_parms.get(parmInfo.getName());
-				if(parmOperand==null && parmInfo.getIsBase() && this.m_base!=null){
-					//if parmInfo is base parm and is located in base
-					parmOperand = this.m_base;
-					this.m_parms.put(parmInfo.getName(), parmOperand);
-					this.m_base = null;
-				}
-				
 				HAPMatchers matchers = parmOperand.discover(variablesInfo, parmInfo.getCriteria(), context, dataTypeHelper);
 				if(matchers!=null){
 					this.m_parmsMatchers.put(parmInfo.getName(), matchers);

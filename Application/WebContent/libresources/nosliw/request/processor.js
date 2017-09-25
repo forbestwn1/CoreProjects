@@ -22,7 +22,7 @@ var node_requestServiceProcessor = function(){
 //				nosliw.logging.trace(loc_moduleName, requestInfo.getInnerId(), "Data ", data);
 				return data;
 			}, 
-			fail : function(requestInfo, data){
+			error : function(requestInfo, data){
 				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Error handler : ", data);
 //				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Data ", data);
 				return data;

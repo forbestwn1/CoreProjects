@@ -1,20 +1,26 @@
 package com.nosliw.data.core.imp.expression;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPDataTypeOperation;
+import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionDefinitionProcessor;
 import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
+import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPOperandConstant;
+import com.nosliw.data.core.expression.HAPOperandOperation;
 import com.nosliw.data.core.expression.HAPOperandReference;
 import com.nosliw.data.core.expression.HAPOperandTask;
 import com.nosliw.data.core.expression.HAPOperandVariable;
@@ -64,6 +70,9 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 		System.out.println("******* Process constant");
 		this.processConstants(expression, contextConstants);
 
+		//process anonomouse parameter in operaion
+		this.processDefaultAnonomousParmInOperation(expression);
+		
 		//only discovery is configure as "true"
 		if("true".equals(context.getConfiguration().getStringValue(HAPProcessExpressionDefinitionContextImp.CONFIGURE_DISCOVERY))){
 			//discover variables criteria / matchs in expression
@@ -86,6 +95,40 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 
 	}
 
+	/**
+	 * Process anonomouse parameter in operaion
+	 * Add parm name to it
+	 * It only works for OperationOperand with clear data typeId
+	 * @param expression
+	 */
+	private void processDefaultAnonomousParmInOperation(HAPExpressionImp expression){
+		HAPExpressionUtility.processAllOperand(expression.getOperand(), expression, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperand operand, Object data) {
+				String opType = operand.getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_OPERATION)){
+					HAPOperandOperation operationOperand = (HAPOperandOperation)operand;
+					HAPDataTypeId dataTypeId = operationOperand.getDataTypeId();
+					if(dataTypeId!=null){
+						HAPDataTypeOperation dataTypeOperation = m_dataTypeHelper.getOperationInfoByName(dataTypeId, operationOperand.getOperaion());
+						List<HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
+						Map<String, HAPOperand> parms = operationOperand.getParms();
+						for(HAPOperationParmInfo parmInfo : parmsInfo){
+							HAPOperand parmOperand = parms.get(parmInfo.getName());
+							if(parmOperand==null && parmInfo.getIsBase() && operationOperand.getBase()!=null){
+								//if parmInfo is base parm and is located in base
+								parmOperand = operationOperand.getBase();
+								operationOperand.addParm(parmInfo.getName(), parmOperand);
+								operationOperand.setBase(null);
+							}
+						}
+					}
+				}
+				return true;
+			}
+		});		
+	}
+	
 
 	/**
 	 * Find all local variables in expression, and update localVariableInfor attribute
