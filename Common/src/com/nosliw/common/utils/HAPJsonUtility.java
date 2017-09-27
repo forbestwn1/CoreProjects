@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -16,6 +18,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 
 
 public class HAPJsonUtility {
+	
+	final private static String TOKEN_UNCHANGED_START = "AAAAAAAA"; 
+	final private static String TOKEN_UNCHANGED_END = "EEEEEEEE"; 
 	
 	public static String buildJson(Object o, HAPSerializationFormat format){
 		if(o==null)   return null;
@@ -141,7 +146,7 @@ public class HAPJsonUtility {
 		
 		if(type!=null && HAPJsonTypeUnchange.class.isAssignableFrom(type)){
 			//treat the value as it is
-			out.append("\"" + attr+ "\""+":" + value + ""+lastString);
+			out.append("\"" + attr+ "\""+":\""+TOKEN_UNCHANGED_START+ HAPJsonUtility.escape(value)+TOKEN_UNCHANGED_END+ "\""+lastString);
 		}
 		else if(String.class==type){
 			out.append("\"" + attr+ "\""+":\"" + value + "\""+lastString);
@@ -180,4 +185,15 @@ public class HAPJsonUtility {
 		String value1 = value.trim();
 		return value1.indexOf("{")==0 && value1.lastIndexOf("}")==value1.trim().length()-1;
 	}
+	
+  public static String escape(String input) {
+	  	return StringEscapeUtils.escapeJson(input);
+  }
+
+		  public static String unescape(String input) {
+			  String out = input.replace("\""+TOKEN_UNCHANGED_START, "");
+			  out = out.replace(TOKEN_UNCHANGED_END+"\"", "");
+			  out = StringEscapeUtils.unescapeJson(out);
+			  return out;
+		  }
 }

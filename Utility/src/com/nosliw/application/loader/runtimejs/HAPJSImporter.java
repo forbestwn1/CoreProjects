@@ -20,6 +20,7 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeVersion;
@@ -244,6 +245,7 @@ public class HAPJSImporter {
 			break;
 		case HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER:
 			String helperScript = new HAPRhinoDataUtility().toJson(resourceObjJS)+""; 
+			helperScript = HAPJsonUtility.unescape(helperScript);
 			HAPResourceDataHelperImp helperResource = new HAPResourceDataHelperImp(helperScript);
 			helperResource = (HAPResourceDataHelperImp)this.m_jsRuntimeDataAccess.saveEntity(helperResource);
 			resourceId = new HAPResourceIdJSHelper(helperResource.getId());

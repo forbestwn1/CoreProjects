@@ -98,38 +98,38 @@ public class HAPRhinoDataUtility
     /**
      * Converts a given JavaScript native object and converts it to the relevant JSON string. 
      *  
-     * @param object            JavaScript object 
+     * @param navtieObject            JavaScript object 
      * @return String           JSON       
      */ 
-    public static Object toJson(Object object) 
+    public static Object toJson(Object navtieObject) 
     { 
     	Object out = null;
     	try{
-        	if(object instanceof String){
-        		out = object.toString();
+        	if(navtieObject instanceof String){
+        		out = navtieObject.toString();
         	}
-        	else if(object instanceof ConsString){
-        		out = object.toString();
+        	else if(navtieObject instanceof ConsString){
+        		out = navtieObject.toString();
         	}
-        	else if(object instanceof Integer){
-        		out = object;
+        	else if(navtieObject instanceof Integer){
+        		out = navtieObject;
         	}
-        	else if(object instanceof Boolean){
-        		out = object;
+        	else if(navtieObject instanceof Boolean){
+        		out = navtieObject;
         	}
-        	else if(object instanceof Double){
-        		out = object;
+        	else if(navtieObject instanceof Double){
+        		out = navtieObject;
         	}
-        	else if (object instanceof NativeArray) 
+        	else if (navtieObject instanceof NativeArray) 
             { 
-                out = new JSONArray(nativeArrayToJSONString((NativeArray)object)); 
+                out = new JSONArray(nativeArrayToJSONString((NativeArray)navtieObject)); 
             } 
-            else if (object instanceof NativeObject) 
+            else if (navtieObject instanceof NativeObject) 
             {  
-                out = new JSONObject(nativeObjectToJSONString((NativeObject)object)); 
+                out = new JSONObject(nativeObjectToJSONString((NativeObject)navtieObject)); 
             }
-            else if(object instanceof Function){
-            	out = new HAPFunctionType(Context.toString(object));
+            else if(navtieObject instanceof Function){
+            	out = new HAPFunctionType(Context.toString(navtieObject));
             }
     	}
     	catch(Exception e){
