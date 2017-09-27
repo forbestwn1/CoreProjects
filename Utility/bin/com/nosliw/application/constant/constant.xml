@@ -492,6 +492,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_CONVERTER" value="converter"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_JSLIBRARY" value="jslibrary"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_JSHELPER" value="jshelper"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_JSGATEWAY" value="jsGateway"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UITAG" value="uiTag"/>
 
 			<definition name="RUNTIME_RESOURCE_TYPE_MATCHER" value="matcher"/>

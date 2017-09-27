@@ -266,7 +266,6 @@ public class HAPConstant {
 		public static final String UIRESOURCE_ATTRIBUTE_EVENT = "event";
 		public static final String UIRESOURCE_ATTRIBUTE_DATABINDING = "data";
 		public static final String UIRESOURCE_TAG_PLACEHOLDER = "nosliw";
-		public static final String UIRESOURCE_TAG_CONTEXT = "context";
 		public static final String UIRESOURCE_CUSTOMTAG_KEYATTRIBUTE_PREFIX = "nosliw-";
 		public static final String UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX = "-tag-start";
 		public static final String UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX = "-tag-end";
@@ -403,6 +402,7 @@ public class HAPConstant {
 		public static final String RUNTIME_RESOURCE_TYPE_CONVERTER = "converter";
 		public static final String RUNTIME_RESOURCE_TYPE_JSLIBRARY = "jslibrary";
 		public static final String RUNTIME_RESOURCE_TYPE_JSHELPER = "jshelper";
+		public static final String RUNTIME_RESOURCE_TYPE_JSGATEWAY = "jsGateway";
 		public static final String RUNTIME_RESOURCE_TYPE_UITAG = "uiTag";
 		public static final String RUNTIME_RESOURCE_TYPE_MATCHER = "matcher";
 

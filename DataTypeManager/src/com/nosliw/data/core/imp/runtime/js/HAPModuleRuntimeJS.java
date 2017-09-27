@@ -9,8 +9,10 @@ import com.nosliw.data.core.imp.HAPModuleDataType;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
+import com.nosliw.data.core.runtime.js.HAPJSGatewayId;
 import com.nosliw.data.core.runtime.js.HAPJSHelperId;
 import com.nosliw.data.core.runtime.js.HAPJSLibraryId;
+import com.nosliw.data.core.runtime.js.HAPResourceIdJSGateway;
 import com.nosliw.data.core.runtime.js.HAPResourceIdJSHelper;
 import com.nosliw.data.core.runtime.js.HAPResourceIdJSLibrary;
 
@@ -34,6 +36,7 @@ public class HAPModuleRuntimeJS {
 		resourceHelper.registerResourceId(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, HAPResourceIdConverter.class, HAPDataTypeConverter.class);
 		resourceHelper.registerResourceId(HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER, HAPResourceIdJSHelper.class, HAPJSHelperId.class);
 		resourceHelper.registerResourceId(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, HAPResourceIdJSLibrary.class, HAPJSLibraryId.class);
+		resourceHelper.registerResourceId(HAPConstant.RUNTIME_RESOURCE_TYPE_JSGATEWAY, HAPResourceIdJSGateway.class, HAPJSGatewayId.class);
 		
 		//data access
 		this.m_runtimeJSDataAccess = new HAPDataAccessRuntimeJS(valueInfoManager, this.m_dataTypeModule.getDataAccess().getDBSource());

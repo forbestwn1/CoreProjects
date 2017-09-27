@@ -13,7 +13,7 @@
 
 	<property name="dataTypeName" dataType="object" subDataType="com.nosliw.data.core.HAPDataTypeId" description="">
 		<dbColumnInfos>
-			<dbColumnInfo column="dataTypeName" definition="VARCHAR(100)"/>
+			<dbColumnInfo column="dataTypeName" definition="VARCHAR(500)"/>
 		</dbColumnInfos>
 	</property>
 
