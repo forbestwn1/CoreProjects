@@ -6,15 +6,10 @@ import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManager;
+import com.nosliw.data.core.runtime.js.HAPResourceDataJSGateway;
 
-public class HAPResourceManagerJSHelper implements HAPResourceManager{
+public class HAPResourceManagerJSGateway implements HAPResourceManager{
 
-	private HAPDataAccessRuntimeJS m_dataAccess = null;
-	
-	public HAPResourceManagerJSHelper(HAPDataAccessRuntimeJS dataAccess){
-		this.m_dataAccess = dataAccess;
-	}
-	
 	@Override
 	public HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId) {
 		HAPLoadResourceResponse out = new HAPLoadResourceResponse();
@@ -28,13 +23,10 @@ public class HAPResourceManagerJSHelper implements HAPResourceManager{
 
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId) {
-		HAPResourceDataHelperImp helperResource = this.m_dataAccess.getResourceHelper(resourceId.getId());
-		if(helperResource!=null)		return new HAPResource(resourceId, helperResource, null);
-		else return null;
+		if(resourceId.getId().equals("discoveryGateway")){
+			return new HAPResource(resourceId, new HAPResourceDataJSGateway(this, resourceId.getId()), null);
+		}
+		return null;
 	}
 
-	public void hello(){
-		System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-	}
-	
 }

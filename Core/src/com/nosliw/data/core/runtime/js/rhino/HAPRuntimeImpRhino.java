@@ -32,6 +32,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSLibraryId;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
+import com.nosliw.data.core.runtime.js.HAPResourceDataJSGateway;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
 public class HAPRuntimeImpRhino implements HAPRuntime{
@@ -185,6 +186,11 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 			//build scripts info
 			List<HAPJSScriptInfo> scriptsInfo = new ArrayList<HAPJSScriptInfo>();
 			for(HAPResource resource : loadResourceResponse.getLoadedResources()){
+				if(resource.getResourceData() instanceof HAPResourceDataJSGateway){
+					//for gateway resource
+					HAPResourceDataJSGateway resourceData = (HAPResourceDataJSGateway)resource.getResourceData();
+					this.registerGatewayPoint(resource.getId().getId(), resourceData.getGateway());
+				}
 				HAPResourceInfo resourceInfo = resourcesInfo.get(resource.getId());
 				scriptsInfo.addAll(HAPRuntimeJSScriptUtility.buildScriptForResource(resourceInfo, resource));
 			}
@@ -297,7 +303,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 //	        System.setOut(dbg.getOut());
 //	        System.setErr(dbg.getErr());
 	        
-//		    dbg.setBreakOnEnter(true);
+		    dbg.setBreakOnEnter(true);
 //		    dbg.setBreakOnExceptions(true);
 		    dbg.setScope(m_scope);
 		    dbg.setSize(1200, 800);

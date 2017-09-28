@@ -11,6 +11,7 @@ public class HAPResourceManagerJSImp extends HAPResourceManagerJS{
 		this.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER, new HAPResourceManagerJSConverter(runtimeJSDataAccess));
 		this.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY, new HAPResourceManagerJSLibrary());
 		this.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER, new HAPResourceManagerJSHelper(runtimeJSDataAccess));
+		this.registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_JSGATEWAY, new HAPResourceManagerJSGateway());
 	}
 	
 }

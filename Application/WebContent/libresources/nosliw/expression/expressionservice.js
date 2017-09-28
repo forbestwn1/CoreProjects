@@ -134,7 +134,12 @@ var node_createExpressionService = function(){
 						}, this);
 
 						//execute data operation
-						var executeOperationRequest = loc_getExecuteOperationRequest(operationOperand[node_COMMONATRIBUTECONSTANT.OPERAND_DATATYPEID], operationOperand[node_COMMONATRIBUTECONSTANT.OPERAND_OPERATION], operationParms, {
+						var dataTypeId = operationOperand[node_COMMONATRIBUTECONSTANT.OPERAND_DATATYPEID];
+						if(dataTypeId==undefined){
+							//if data type id does not exists, then try to get it from base parm data type
+							datatTypeId = parmsData[operationOperand[node_COMMONATRIBUTECONSTANT.OPERAND_BASEPARMNAME]][node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID];
+						}
+						var executeOperationRequest = loc_getExecuteOperationRequest(dataTypeId, operationOperand[node_COMMONATRIBUTECONSTANT.OPERAND_OPERATION], operationParms, {
 							success : function(requestInfo, data){
 								return data;
 							}

@@ -31,6 +31,7 @@ public class HAPRuntimeJSScriptUtility {
 			out.addAll(buildScriptInfoForLibrary(resource));
 		}
 		
+		
 		StringBuffer script = new StringBuffer();
 		if(HAPRuntimeImpRhino.ADDTORESOURCEMANAGER.equals(resourceInfo.getInfo().getValue(HAPRuntimeImpRhino.ADDTORESOURCEMANAGER)))  return out;
 		

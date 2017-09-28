@@ -120,6 +120,7 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 								parmOperand = operationOperand.getBase();
 								operationOperand.addParm(parmInfo.getName(), parmOperand);
 								operationOperand.setBase(null);
+								operationOperand.setBaseParmName(parmInfo.getName());
 							}
 						}
 					}

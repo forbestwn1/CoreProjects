@@ -37,7 +37,10 @@ public class HAPOperandOperation extends HAPOperandImp{
 
 	@HAPAttribute
 	public static final String BASE = "base";
-	
+
+	@HAPAttribute
+	public static final String BASEPARMNAME = "baseParmName";
+
 	@HAPAttribute
 	public static final String MATCHERSPARMS = "matchersParms";
 
@@ -53,6 +56,11 @@ public class HAPOperandOperation extends HAPOperandImp{
 	//operation parms
 	protected Map<String, HAPOperand> m_parms = new LinkedHashMap<String, HAPOperand>();
 
+	//calculated, store which parm is base parm, 
+	//so that when dataTypeId is not available, we can use base parm value to figure out data type id
+	//it is used when without discovery
+	private String m_baseParm;
+	
 	private Map<String, HAPMatchers> m_parmsMatchers;
 	
 	private HAPOperandOperation(){this.resetMatchers();}
@@ -86,6 +94,9 @@ public class HAPOperandOperation extends HAPOperandImp{
 		this.m_base = base;
 		if(this.m_base!=null)		this.addChildOperand(m_base);
 	}
+	
+	public void setBaseParmName(String name){   this.m_baseParm = name;  }
+	public String getBaseParmName(){   return this.m_baseParm;  }
 	
 	public HAPOperand getBase(){  return this.m_base;  }
 	
@@ -139,7 +150,8 @@ public class HAPOperandOperation extends HAPOperandImp{
 		jsonMap.put(OPERATION, this.m_operation);
 		jsonMap.put(DATATYPEID, HAPSerializeManager.getInstance().toStringValue(this.m_dataTypeId, HAPSerializationFormat.LITERATE));
 		if(this.m_base!=null)	jsonMap.put(BASE, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON));
-		
+
+		jsonMap.put(BASEPARMNAME, this.m_baseParm);
 		jsonMap.put(PARMS, HAPJsonUtility.buildJson(this.m_parms, HAPSerializationFormat.JSON));
 		jsonMap.put(MATCHERSPARMS, HAPJsonUtility.buildJson(this.m_parmsMatchers, HAPSerializationFormat.JSON));
 	}
