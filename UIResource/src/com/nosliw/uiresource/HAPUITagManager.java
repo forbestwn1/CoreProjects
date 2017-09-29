@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPUITagManager {
 
-	private Map<String, HAPUITagInfo> m_uiTags;
+	private Map<String, HAPUITagDefinition> m_uiTags;
 	
 	private HAPConfigure m_configure;
 	
@@ -19,17 +19,17 @@ public class HAPUITagManager {
 	
 	public HAPUITagManager(HAPConfigure configure){
 		this.m_configure = configure;
-		this.m_uiTags = new LinkedHashMap<String, HAPUITagInfo>();
+		this.m_uiTags = new LinkedHashMap<String, HAPUITagDefinition>();
 
 		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUITagManager.class, "UITagScript.txt");
 		m_strTemplate = new HAPStringTemplate(templateStream);
 	}
 	
-	public void registerUITag(HAPUITagInfo tagInfo){
+	public void registerUITag(HAPUITagDefinition tagInfo){
 		this.m_uiTags.put(tagInfo.getName(), tagInfo);
 	}
 	
-	public HAPUITagInfo getUITag(String name){
+	public HAPUITagDefinition getUITag(String name){
 		return this.m_uiTags.get(name);
 	}
 

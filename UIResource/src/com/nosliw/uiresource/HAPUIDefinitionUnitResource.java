@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -11,6 +12,12 @@ import com.nosliw.common.utils.HAPSegmentParser;
 
 public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 
+	@HAPAttribute
+	public static final String CONTEXT = "context";
+	
+	//context definition
+	private HAPContext m_context;
+	
 	//calculated attribute that store all the decendant customer tags within this uiresource
 	//with this information, customer tag libs can be loaded when loading ui resource
 	Set<String> m_uiTagLibs;
@@ -22,11 +29,13 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	
 	public void addUITagLib(String tag){	this.m_uiTagLibs.add(tag);}
 
+	public HAPContext getContext(){  return this.m_context;  }
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(UITAGLIBS, HAPJsonUtility.buildJson(this.m_uiTagLibs, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(m_context, HAPSerializationFormat.JSON_FULL));
 	}
 		
 	@Override

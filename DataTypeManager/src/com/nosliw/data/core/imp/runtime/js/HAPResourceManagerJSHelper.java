@@ -33,8 +33,4 @@ public class HAPResourceManagerJSHelper implements HAPResourceManager{
 		else return null;
 	}
 
-	public void hello(){
-		System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-	}
-	
 }

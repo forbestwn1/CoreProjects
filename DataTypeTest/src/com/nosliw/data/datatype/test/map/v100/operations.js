@@ -12,6 +12,20 @@ dataTypeDefition.requires = {
 //define what operations in this page requires (operation, datatype, library)
 
 //define operation
+//define operation
+dataTypeDefition.operations['put'] = {
+		//defined operation
+		//in operation can access all the required resources by name through context
+		operation : function(parms, context){
+			context.logging.info("Operand Calcualting [New]  ----------------");
+			var name = parms.getParm("name").value;
+			var data = parms.getParm("value");
+			this.value[name] = data;
+			return this;
+		},
+};
+
+
 dataTypeDefition.operations['new'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context

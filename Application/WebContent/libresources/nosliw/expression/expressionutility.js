@@ -35,7 +35,6 @@ var node_utility =
 				
 				var parmDefinition = parmsDefinitions[parmName];
 				var isBase = false;
-				
 				if(parmDefinition[node_COMMONATRIBUTECONSTANT.DATAOPERATIONPARMINFO_ISBASE]=="true"){
 					isBase = true;
 					baseData = parm.value;

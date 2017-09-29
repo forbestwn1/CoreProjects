@@ -1,9 +1,9 @@
 {
-	"name": "expression7",
+	"name": "expression71",
 	"description" : "discover operation, it does not do discovery",
 	"expressionDefinitions": {
 		"main": {
-			"expression": "!(test.expression)!.outputCriteria(expression:!(test.parm)!.getValue(&(expression)&),parms:!(test.map)!.put(!(test.map)!.new(),name:!(test.parm)!.getValue(&(elementVariableName)&),value:!(test.datatypecriteria)!.getChild(&(base)&,childName:&(element)&)))",
+			"expression": "!(test.datatypecriteria)!.getChild(&(base)&,childName:&(element)&)",
 			"description": "complex data type",
 			"constants": {
 				"expression": {

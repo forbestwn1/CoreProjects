@@ -3,7 +3,7 @@
 //      dependency
 //		each operation (operation name, script, dependency)
 
-var dataTypeDefition = nosliw.getDataTypeDefinition("test.expression");
+var dataTypeDefition = nosliw.getDataTypeDefinition("test.datatypecriteria");
 
 //define what this data type globlely requires (operation, datatype, library)
 dataTypeDefition.requires = {
@@ -12,22 +12,18 @@ dataTypeDefition.requires = {
 //define what operations in this page requires (operation, datatype, library)
 
 //define operation
-dataTypeDefition.operations['outputCriteria'] = {
+dataTypeDefition.operations['getChild'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
-			context.logging.info("Operand Calcualting [outputCriteria]  ----------------");
-			var gateway = context.getResourceDataByName("myGateWay").getOutputCriteria(this.value, parms.getParm("parms"));
+			var childName = parms.getParm("childName").value;
 			return {
 				dataTypeId : "test.datatypecriteria;1.0.0",
-				value : "*",
-			}
+				value: "test.string"
+			};
 		},
 
 		requires:{
-			"jsGateway" : { 
-				myGateWay: "discoveryGateway",
-			}
 		},
 };
 

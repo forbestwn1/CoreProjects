@@ -29,4 +29,9 @@ public class HAPResourceManagerJSGateway implements HAPResourceManager{
 		return null;
 	}
 
+	public void hello(String expression, Object parmsObj){
+		System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+	}
+	
+
 }

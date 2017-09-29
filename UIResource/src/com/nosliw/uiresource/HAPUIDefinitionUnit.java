@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -32,8 +32,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public static final String ID = "id";
 	@HAPAttribute
 	public static final String TYPE = "type";
-	@HAPAttribute
-	public static final String CONTEXT = "context";
 	@HAPAttribute
 	public static final String SCRIPTEXPRESSIONSINCONTENT = "scriptExpressionsInContent";
 	@HAPAttribute
@@ -69,9 +67,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	//for tag, it is tag id within resource
 	//for resource, it is resource name
 	private String m_id;
-	
-	//input data context information
-	private Map<String, HAPContextElement> m_context;
 	
 	//all the expressions within content under this domain
 	private Set<HAPEmbededScriptExpressionInContent> m_scriptExpressionsInContent;
@@ -109,7 +104,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	
 	public HAPUIDefinitionUnit(String id){
 		this.m_id = id;
-		this.m_context = new LinkedHashMap<String, HAPContextElement>();
 		this.m_scriptExpressionsInAttribute = new HashSet<HAPEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInContent = new HashSet<HAPEmbededScriptExpressionInContent>();
@@ -129,16 +123,15 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	 * Exception expression definitions in Constant Definition
 	 * @return
 	 */
-	public Set<HAPExpressionDefinition> getAllExpressionDefinitions(){
+	public Set<HAPExpressionDefinition> getExpressionDefinitions(){
 		Set<HAPExpressionDefinition> out = new HashSet<HAPExpressionDefinition>();
 		for(HAPEmbededScriptExpressionInContent embededScriptExpression : this.m_scriptExpressionsInContent)	out.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
 		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : this.m_scriptExpressionsInAttribute)	out.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
 		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : this.m_scriptExpressionsInTagAttribute)		out.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
-		out.addAll(this.m_expressionDefinitions.values());
-		
-		for(String tagId : this.m_uiTags.keySet())		out.addAll(this.m_uiTags.get(tagId).getAllExpressionDefinitions());
 		return out;
 	}
+	
+	public Set<HAPExpressionDefinition> getOtherExpressionDefinitions(){  return new HashSet<HAPExpressionDefinition>(this.m_expressionDefinitions.values());	}
 	
 	/**
 	 * Calculate all the constant values in ConstantDef
@@ -183,7 +176,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(TYPE, String.valueOf(this.getType()));
-		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(m_context, HAPSerializationFormat.JSON_FULL));
 
 		List<String> expressionContentJsons = new ArrayList<String>();
 		for(HAPEmbededScriptExpressionInContent expressionContent : this.m_scriptExpressionsInContent)  expressionContentJsons.add(expressionContent.toStringValue(HAPSerializationFormat.JSON_FULL));
@@ -229,7 +221,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public String getContent(){return this.m_content;}
 	public void setContent(String content){	this.m_content = content;	}
 	
-	public void addContextElement(HAPContextElement contextElement){this.m_context.put(contextElement.getName(), contextElement);	}
 	public void addScriptExpressionInAttribute(HAPEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInAttribute.add(eAttr);	}
 	public void addScriptExpressionInTagAttribute(HAPEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInTagAttribute.add(eAttr);	}
 	public void addScriptExpressionInContent(HAPEmbededScriptExpressionInContent scriptExpressionInContent){	this.m_scriptExpressionsInContent.add(scriptExpressionInContent);	}
