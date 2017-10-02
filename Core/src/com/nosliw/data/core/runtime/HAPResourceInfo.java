@@ -137,6 +137,16 @@ public class HAPResourceInfo extends HAPSerializableImp{
 				}
 			}
 		}
+		
+		JSONObject infoObj = jsonObj.optJSONObject(INFO);
+		if(infoObj!=null){
+			Iterator it = infoObj.keys();
+			while(it.hasNext()){
+				String infoName = (String)it.next();
+				this.getInfo().setValue(infoName, infoObj.opt(infoName));
+			}
+		}
+		
 		return true; 
 	}
 	

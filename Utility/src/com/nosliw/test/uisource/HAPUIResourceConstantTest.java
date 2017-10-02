@@ -10,7 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.imp.runtime.js.HAPRuntimeEnvironmentImpJS;
+import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.uiresource.HAPConstantDef;
 import com.nosliw.uiresource.HAPUIResourceIdGenerator;
 
@@ -19,7 +19,7 @@ public class HAPUIResourceConstantTest {
 	public static void main(String[] agrs) throws JSONException{
 
 		//module init
-		HAPRuntimeEnvironmentImpJS runtimeEnvironment = new HAPRuntimeEnvironmentImpJS();
+		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 		
 		//start runtime
 		runtimeEnvironment.getRuntime().start();

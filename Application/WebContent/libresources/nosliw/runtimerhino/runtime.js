@@ -13,6 +13,7 @@ var packageObj = library;
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
 	var node_runtimeGateway;
+	var node_createGatewayService;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -31,6 +32,8 @@ var node_createRuntime = function(name){
 	var loc_resourceManager;
 	
 	var loc_expressionService;
+	
+	var loc_gatewayService;
 	
 	var loc_out = {
 		
@@ -56,9 +59,11 @@ var node_createRuntime = function(name){
 		
 		getGateway(){
 			return node_runtimeGateway;
-		}
+		},
 		
-		
+		getGatewayService(){
+			return loc_gatewayService;
+		},
 	};
 	
 	var lifecycleCallback = {};
@@ -67,6 +72,7 @@ var node_createRuntime = function(name){
 		loc_resourceManager = node_createResourceManager();
 		loc_resourceService = node_createResourceService(loc_resourceManager);
 		loc_expressionService = node_createExpressionService();
+		loc_gatewayService = node_createGatewayService();
 		
 		//set sortcut for object
 		 nosliw.runtime = loc_out;
@@ -99,6 +105,7 @@ nosliw.registerSetNodeDataEvent("resource.createResourceManager", function(){nod
 nosliw.registerSetNodeDataEvent("expression.service.createExpressionService", function(){node_createExpressionService = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.createResourceService", function(){node_createResourceService = this.getData();});
 nosliw.registerSetNodeDataEvent("runtime.gateway", function(){node_runtimeGateway = this.getData();});
+nosliw.registerSetNodeDataEvent("runtime.createGatewayService", function(){node_createGatewayService = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

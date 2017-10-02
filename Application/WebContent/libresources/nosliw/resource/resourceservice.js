@@ -68,30 +68,36 @@ var node_createResourceService = function(resourceManager){
 				missedResourceIds.push(resourceId);
 			}
 		});
-	}
+	};
 
 	//load resources for runtime
 	var loc_getLoadResourcesRequest = function(resourceInfos, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
-		var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("LoadResources", {"resourcesInfo":resourceInfos}), function(requestInfo){
-			nosliw.runtime.getGateway()[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES](resourceInfos, 
-				{
-					success : function(requestInfo, resourceInfos){
-						out.executeSuccessHandler();
-					},
-					error : function(requestInfo, serviceData){
-						out.executeErrorHandler(serviceData);
-					},
-					exception : function(requestInfo, serviceData){
-						out.executeExceptionHandler(serviceData);
-					}
-				}
-			
-			);
-		}, handlers, requestInfo);
-		return out;
 		
-	}
+		var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_RESOURCE;
+		var command = node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES;
+		var parms = {};
+		parms[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES_RESOURCEINFOS] = resourceInfos;
+		var out = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, handlers, requestInfo);
+		
+//		var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("LoadResources", {"resourcesInfo":resourceInfos}), function(requestInfo){
+//			nosliw.runtime.getGateway()[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES](resourceInfos, 
+//				{
+//					success : function(requestInfo, resourceInfos){
+//						out.executeSuccessHandler();
+//					},
+//					error : function(requestInfo, serviceData){
+//						out.executeErrorHandler(serviceData);
+//					},
+//					exception : function(requestInfo, serviceData){
+//						out.executeExceptionHandler(serviceData);
+//					}
+//				}
+//			
+//			);
+//		}, handlers, requestInfo);
+		return out;
+	};
 	
 	var loc_out = {
 			

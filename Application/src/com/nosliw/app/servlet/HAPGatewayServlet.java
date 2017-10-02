@@ -18,7 +18,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp;
-import com.nosliw.data.core.imp.runtime.js.HAPRuntimeEnvironmentImpJS;
+import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceDiscovered;
@@ -159,6 +159,6 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 		return out;
 	}
 
-	private HAPRuntimeEnvironmentImpJS getRuntimeEnvironment(){		return (HAPRuntimeEnvironmentImpJS)this.getServletContext().getAttribute("runtime");  }
+	private HAPRuntimeEnvironmentImpRhino getRuntimeEnvironment(){		return (HAPRuntimeEnvironmentImpRhino)this.getServletContext().getAttribute("runtime");  }
 	
 }

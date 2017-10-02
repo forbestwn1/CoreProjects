@@ -9,7 +9,7 @@ import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionImporter;
-import com.nosliw.data.core.imp.runtime.js.HAPRuntimeEnvironmentImpJS;
+import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
@@ -80,14 +80,14 @@ public class HAPRuntimeRhinoMain {
 	public static void main(String[] args){
 		
 		//module init
-		HAPRuntimeEnvironmentImpJS runtimeEnvironment = new HAPRuntimeEnvironmentImpJS();
+		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 		
 		//start runtime
 		runtimeEnvironment.getRuntime().start();
 		
 		HAPExpressionImporter.importExpressionSuiteFromFolder(HAPFileUtility.getClassFolderName(HAPExpressionTest.class), runtimeEnvironment.getExpressionManager());
 		
-		executeSuite("expression7", runtimeEnvironment);
+		executeSuite("expression1", runtimeEnvironment);
 		
 //		for(String suiteName : expressionMan.getExpressionDefinitionSuites()){
 //			executeSuite(suiteName, runtimeEnvironment);

@@ -53,7 +53,7 @@ public class HAPRuntimeGatewayRhinoImp implements HAPRuntimeGatewayRhino{
 			//discovery
 			List<HAPResourceInfo> resourceInfos = this.m_runtimeEnviroment.getResourceDiscovery().discoverResource(resourceIds);
 			//load resources to rhino runtime
-			HAPLoadResourceResponse response = this.m_runtime.loadResources(resourceInfos, m_scope);
+			HAPLoadResourceResponse response = this.m_runtime.loadResources1(resourceInfos, m_scope);
 
 			if(response.isSuccess()){
 				serviceData = HAPServiceData.createSuccessData(resourceInfos);
@@ -77,7 +77,7 @@ public class HAPRuntimeGatewayRhinoImp implements HAPRuntimeGatewayRhino{
 		try{
 			List<HAPResourceInfo> resourcesInfo = HAPRhinoRuntimeUtility.rhinoResourcesInfoToResourcesInfo((NativeArray)objResourcesInfo);
 			//load resources to rhino runtime
-			HAPLoadResourceResponse response = this.m_runtime.loadResources(resourcesInfo, m_scope);
+			HAPLoadResourceResponse response = this.m_runtime.loadResources1(resourcesInfo, m_scope);
 			if(response==null){
 				serviceData = HAPServiceData.createSuccessData();
 			}

@@ -90,3 +90,7 @@ z
 Jsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDataJSOperationImp.java,8\c\8c5da3711ed627d6736a6dc8549ade0384913a4b
 w
 Gsrc/com/nosliw/data/core/imp/runtime/js/HAPRuntimeEnvironmentImpJS.java,e\d\ed3f0d7cc766cc4e7ff0292442b9680319b45864
+x
+Hsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerJSGateway.java,c\6\c67bde0f2c9d1682ec23739b5695bbac339cf46b
+€
+Psrc/com/nosliw/data/core/imp/runtime/js/rhino/HAPRuntimeEnvironmentImpRhino.java,b\0\b0997131ab0b52dd238c0466f9726b0030728519

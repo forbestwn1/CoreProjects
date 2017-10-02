@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.ContextFactory;
 import org.mozilla.javascript.Function;
@@ -13,10 +15,15 @@ import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.tools.debugger.Main;
 
 import com.google.common.util.concurrent.SettableFuture;
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
@@ -30,11 +37,14 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
+import com.nosliw.data.core.runtime.js.HAPGatewayRuntimeResource;
 import com.nosliw.data.core.runtime.js.HAPJSLibraryId;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataJSGateway;
+import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
+@HAPEntityWithAttribute
 public class HAPRuntimeImpRhino implements HAPRuntime{
 
 	//info used to library resource that do not need to add to resource manager
@@ -64,12 +74,33 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	 * @param name
 	 * @param gateWayPoint
 	 */
-	public void registerGatewayPoint(String name, Object gateWayPoint){
+	public void registerGatewayPoint1(String name, Object gateWayPoint){
 		try{
 	        Object wrappedObject = Context.javaToJS(gateWayPoint, this.m_scope);
 	        NativeObject nosliwObj = (NativeObject)this.m_scope.get("nosliw", m_scope);
 	        Function createNodeFun = (Function)nosliwObj.get("createNode");
 	        createNodeFun.call(Context.enter(), m_scope, nosliwObj, new Object[]{name, wrappedObject});
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			Context.exit();
+		}
+	}
+
+	/**
+	 * embed gateway point into rhino env which provide different gateway by name. 
+	 * @param name
+	 * @param gateWayPoint
+	 */
+	private void embedGatewayPoint(){
+		try{
+			HAPRuntimeEnvironmentJS runtimeEnv = (HAPRuntimeEnvironmentJS)this.getRuntimeEnvironment();
+	        Object wrappedObject = Context.javaToJS(runtimeEnv.getGatewayManager(), this.m_scope);
+	        NativeObject nosliwObj = (NativeObject)this.m_scope.get("nosliw", m_scope);
+	        Function createNodeFun = (Function)nosliwObj.get("createNode");
+	        createNodeFun.call(Context.enter(), m_scope, nosliwObj, new Object[]{HAPRuntimeEnvironmentJS.NODENAME_GATEWAY, wrappedObject});
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -163,11 +194,15 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		task.finish(taskServiceData);
 		this.m_tasks.remove(taskId);
 	}
+
+	public HAPLoadResourceResponse loadResources1(List<HAPResourceInfo> resourcesIdInfo){
+		return this.loadResources1(resourcesIdInfo, this.m_scope);
+	}
 	
 	//Load all resources into rhino runtime, no discovery
 	//if all success : load script, return null
 	//if any fail : not load any script, return response
-	public HAPLoadResourceResponse loadResources(List<HAPResourceInfo> resourcesIdInfo, Scriptable scope){
+	public HAPLoadResourceResponse loadResources1(List<HAPResourceInfo> resourcesIdInfo, Scriptable scope){
 		//Get all resource data
 		//organize resource infos by id
 		Map<HAPResourceId, HAPResourceInfo> resourcesInfo = new LinkedHashMap<HAPResourceId, HAPResourceInfo>();
@@ -189,7 +224,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 				if(resource.getResourceData() instanceof HAPResourceDataJSGateway){
 					//for gateway resource
 					HAPResourceDataJSGateway resourceData = (HAPResourceDataJSGateway)resource.getResourceData();
-					this.registerGatewayPoint(resource.getId().getId(), resourceData.getGateway());
+					this.registerGatewayPoint1(resource.getId().getId(), resourceData.getGateway());
 				}
 				HAPResourceInfo resourceInfo = resourcesInfo.get(resource.getId());
 				scriptsInfo.addAll(HAPRuntimeJSScriptUtility.buildScriptForResource(resourceInfo, resource));
@@ -217,7 +252,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	 */
 	private Scriptable init(Context context, Scriptable parent){
 		this.m_scope = context.initStandardObjects(null);
-		
+
 		//library
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.Underscore", "1.6.0")));
@@ -229,7 +264,11 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		for(HAPResourceId resourceId : resourceIds){
 			resourceIdInfos.add(new HAPResourceInfo(resourceId).withInfo(ADDTORESOURCEMANAGER, ADDTORESOURCEMANAGER));
 		}
-		this.loadResources(resourceIdInfos, m_scope);
+		this.loadResources(resourceIdInfos);
+//		this.loadResources(resourceIdInfos, m_scope);
+
+		//embed gateway point
+		embedGatewayPoint();
 		
 		resourceIds = new ArrayList<HAPResourceId>();
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.constant", null)));
@@ -247,16 +286,33 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		for(HAPResourceId resourceId : resourceIds){
 			resourceIdInfos.add(new HAPResourceInfo(resourceId).withInfo(ADDTORESOURCEMANAGER, ADDTORESOURCEMANAGER));
 		}
-		this.loadResources(resourceIdInfos, m_scope);
+		this.loadResources(resourceIdInfos);
+//		this.loadResources(resourceIdInfos, m_scope);
 		
 		//data type
 		
 		//set gateway
-		this.registerGatewayPoint(HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY, new HAPRuntimeGatewayRhinoImp(this.getRuntimeEnvironment(), this, m_scope));
+		this.registerGatewayPoint1(HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY, new HAPRuntimeGatewayRhinoImp(this.getRuntimeEnvironment(), this, m_scope));
+		
 		
 		return m_scope;
 	}
+
+	private void loadResources(List<HAPResourceInfo> resourceInfos){
+		try {
+			HAPGatewayManagerRhino gatewayMan =	(HAPGatewayManagerRhino)this.getRuntimeEnvironment().getGatewayManager();
+			Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+			jsonMap.put(HAPGatewayRuntimeResource.REQUEST_LOADRESOURCES_RESOURCEINFOS, HAPSerializeManager.getInstance().toStringValue(resourceInfos, HAPSerializationFormat.JSON));
+			gatewayMan.executeGateway(HAPRuntimeEnvironmentJS.GATEWAY_RESOURCE, HAPGatewayRuntimeResource.REQUEST_LOADRESOURCES, new JSONObject(HAPJsonUtility.buildMapJson(jsonMap)));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	public void loadScript(HAPJSScriptInfo scriptInfo) throws Exception{
+		this.loadScript(scriptInfo, this.m_scope);
+	}
+
 	private void loadScript(HAPJSScriptInfo scriptInfo, Scriptable scope){
 		String file = scriptInfo.isFile(); 
 		if(HAPBasicUtility.isStringEmpty(file)){
@@ -303,7 +359,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 //	        System.setOut(dbg.getOut());
 //	        System.setErr(dbg.getErr());
 	        
-		    dbg.setBreakOnEnter(true);
+//		    dbg.setBreakOnEnter(true);
 		    dbg.setBreakOnExceptions(true);
 		    dbg.setScope(m_scope);
 		    dbg.setSize(1200, 800);

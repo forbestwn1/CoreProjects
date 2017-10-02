@@ -17,7 +17,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.imp.runtime.js.HAPRuntimeEnvironmentImpJS;
+import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.js.HAPResourceDataJSLibrary;
@@ -91,7 +91,7 @@ public class HAPBrowserGatewayServlet  extends HttpServlet{
 		return out;
 	}
 
-	private HAPRuntimeEnvironmentImpJS getRuntimeEnvironment(){		return (HAPRuntimeEnvironmentImpJS)this.getServletContext().getAttribute("runtime");  }
+	private HAPRuntimeEnvironmentImpRhino getRuntimeEnvironment(){		return (HAPRuntimeEnvironmentImpRhino)this.getServletContext().getAttribute("runtime");  }
 
 	
 	private String getLibraryPath(String fileName){
