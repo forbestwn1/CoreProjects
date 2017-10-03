@@ -28,11 +28,11 @@ var node_createGatewayService = function(){
 		getExecuteGatewayCommandRequest : function(gatewayId, command, parms, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 
-			var gatewayObject = loc_getGatewayObject();
-			var executor = new node_ServiceRequestExecuteInfo(function(requestInfo){
-				var serviceData = this.executeGateway(gatewayId, command, parms);
-				loc_out.exectueHandlerByServiceData(serviceData, this);
-			}, gatewayObject);
+			var executor = function(requestInfo){
+				var gatewayObject = loc_getGatewayObject();
+				var serviceData = gatewayObject.executeGateway(gatewayId, command, parms);
+				out.exectueHandlerByServiceData(serviceData, gatewayObject);
+			};
 			
 			var service = new node_ServiceInfo("ExecuteGatewayCommand", {"gatewayId":gatewayId, "command":command, "parms": parms});
 			var out = node_createServiceRequestInfoExecutor(service, executor, handlers, requestInfo);

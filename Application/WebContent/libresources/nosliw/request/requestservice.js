@@ -24,7 +24,7 @@ var node_createServiceRequestInfoService = function(service, handlers, requester
 	var loc_buildDependentRequestHandler = function(hanlderName){
 			return function(dependentRequestInfo, data){
 				var parentHandler = loc_out.getHandlers()[hanlderName];
-				var dependentResultProcessor = loc_out.pri_dependentService.processors[hanlderName];
+				var dependentResultProcessor = loc_out.pri_dependentService.processors==undefined?undefined : loc_out.pri_dependentService.processors[hanlderName];
 				var parentRequestInfo = dependentRequestInfo.getParentRequest();
 				
 				var out = data;

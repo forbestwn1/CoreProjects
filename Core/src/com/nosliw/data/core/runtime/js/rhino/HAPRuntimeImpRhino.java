@@ -15,7 +15,6 @@ import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.tools.debugger.Main;
 
 import com.google.common.util.concurrent.SettableFuture;
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -74,21 +73,26 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	 * @param name
 	 * @param gateWayPoint
 	 */
-	public void registerGatewayPoint1(String name, Object gateWayPoint){
-		try{
-	        Object wrappedObject = Context.javaToJS(gateWayPoint, this.m_scope);
-	        NativeObject nosliwObj = (NativeObject)this.m_scope.get("nosliw", m_scope);
-	        Function createNodeFun = (Function)nosliwObj.get("createNode");
-	        createNodeFun.call(Context.enter(), m_scope, nosliwObj, new Object[]{name, wrappedObject});
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		finally{
-			Context.exit();
-		}
-	}
+//	public void registerGatewayPoint1(String name, Object gateWayPoint){
+//		try{
+//	        Object wrappedObject = Context.javaToJS(gateWayPoint, this.m_scope);
+//	        NativeObject nosliwObj = (NativeObject)this.m_scope.get("nosliw", m_scope);
+//	        Function createNodeFun = (Function)nosliwObj.get("createNode");
+//	        createNodeFun.call(Context.enter(), m_scope, nosliwObj, new Object[]{name, wrappedObject});
+//		}
+//		catch(Exception e){
+//			e.printStackTrace();
+//		}
+//		finally{
+//			Context.exit();
+//		}
+//	}
 
+//	public void unregisterGatewayPoint(String name){
+//		
+//	}
+	
+	
 	/**
 	 * embed gateway point into rhino env which provide different gateway by name. 
 	 * @param name
@@ -108,10 +112,6 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		finally{
 			Context.exit();
 		}
-	}
-	
-	public void unregisterGatewayPoint(String name){
-		
 	}
 	
 	
@@ -195,6 +195,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		this.m_tasks.remove(taskId);
 	}
 
+/*	
 	public HAPLoadResourceResponse loadResources1(List<HAPResourceInfo> resourcesIdInfo){
 		return this.loadResources1(resourcesIdInfo, this.m_scope);
 	}
@@ -243,6 +244,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 			return loadResourceResponse;
 		}
 	}
+*/
 	
 	/**
 	 * Init essencial object, include base, all the library for expression and all basic data type
@@ -292,7 +294,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		//data type
 		
 		//set gateway
-		this.registerGatewayPoint1(HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY, new HAPRuntimeGatewayRhinoImp(this.getRuntimeEnvironment(), this, m_scope));
+//		this.registerGatewayPoint1(HAPConstant.RUNTIME_LANGUAGE_JS_GATEWAY, new HAPRuntimeGatewayRhinoImp(this.getRuntimeEnvironment(), this, m_scope));
 		
 		
 		return m_scope;

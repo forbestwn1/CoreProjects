@@ -72,30 +72,17 @@ var node_createResourceService = function(resourceManager){
 
 	//load resources for runtime
 	var loc_getLoadResourcesRequest = function(resourceInfos, handlers, requester_parent){
-		var requestInfo = loc_out.getRequestInfo(requester_parent);
-		
+		//gateway request
 		var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_RESOURCE;
 		var command = node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES;
 		var parms = {};
 		parms[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES_RESOURCEINFOS] = resourceInfos;
-		var out = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, handlers, requestInfo);
+		var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, handlers);
 		
-//		var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("LoadResources", {"resourcesInfo":resourceInfos}), function(requestInfo){
-//			nosliw.runtime.getGateway()[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES](resourceInfos, 
-//				{
-//					success : function(requestInfo, resourceInfos){
-//						out.executeSuccessHandler();
-//					},
-//					error : function(requestInfo, serviceData){
-//						out.executeErrorHandler(serviceData);
-//					},
-//					exception : function(requestInfo, serviceData){
-//						out.executeExceptionHandler(serviceData);
-//					}
-//				}
-//			
-//			);
-//		}, handlers, requestInfo);
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
+		var out = node_createServiceRequestInfoService(new node_ServiceInfo("LoadResources", {"resourcesInfo":resourceInfos}), handlers, requestInfo);
+		out.setDependentService(new node_DependentServiceRequestInfo(gatewayRequest));
+		
 		return out;
 	};
 	
@@ -187,20 +174,17 @@ var node_createResourceService = function(resourceManager){
 			
 
 		getDiscoverResourcesRequest : function(resourceIds, handlers, requester_parent){
-			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			
-			var out = node_createServiceRequestInfoExecutor(new node_ServiceInfo("DiscoverResources", {"resourcesId":resourceIds}), function(requestInfo){
-				nosliw.runtime.getGateway()[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_DISCOVERRESOURCES](resourceIds, 
-					{
-						success : function(requestInfo, resourceInfos){
-							out.executeSuccessHandler(resourceInfos);
-						},
-						exception : function(requestInfo, serviceData){
-							
-						}
-					}
-				);
-			}, handlers, requestInfo);
+			//gateway request
+			var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_RESOURCE;
+			var command = node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_DISCOVERRESOURCES;
+			var parms = {};
+			parms[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_DISCOVERRESOURCES_RESOURCEIDS] = resourceIds;
+			var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, handlers);
+			
+			var requestInfo = loc_out.getRequestInfo(requester_parent);
+			var out = node_createServiceRequestInfoService(new node_ServiceInfo("DiscoverResources", {"resourcesId":resourceIds}), handlers, requestInfo);
+			out.setDependentService(new node_DependentServiceRequestInfo(gatewayRequest));
 			return out;
 		},
 

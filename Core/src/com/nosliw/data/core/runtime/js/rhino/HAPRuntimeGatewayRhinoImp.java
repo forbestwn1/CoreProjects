@@ -47,49 +47,49 @@ public class HAPRuntimeGatewayRhinoImp implements HAPRuntimeGatewayRhino{
 	//gateway callback method
 	@Override
 	public void requestDiscoverAndLoadResources(Object objResourceIds, Object handlers){
-		HAPServiceData serviceData = null;
-		try{
-			List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds);
-			//discovery
-			List<HAPResourceInfo> resourceInfos = this.m_runtimeEnviroment.getResourceDiscovery().discoverResource(resourceIds);
-			//load resources to rhino runtime
-			HAPLoadResourceResponse response = this.m_runtime.loadResources1(resourceInfos, m_scope);
-
-			if(response.isSuccess()){
-				serviceData = HAPServiceData.createSuccessData(resourceInfos);
-			}
-			else{
-				serviceData = HAPServiceData.createFailureData(response.getFailedResourcesId(), "");
-			}
-		}
-		catch(Exception e){
-			serviceData = HAPServiceData.createFailureData(e, "");
-			e.printStackTrace();
-		}
-		//callback with resourceInfos
-		HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_scope);
+//		HAPServiceData serviceData = null;
+//		try{
+//			List<HAPResourceId> resourceIds = HAPRhinoRuntimeUtility.rhinoResourcesIdToResourcesId((NativeArray)objResourceIds);
+//			//discovery
+//			List<HAPResourceInfo> resourceInfos = this.m_runtimeEnviroment.getResourceDiscovery().discoverResource(resourceIds);
+//			//load resources to rhino runtime
+//			HAPLoadResourceResponse response = this.m_runtime.loadResources1(resourceInfos, m_scope);
+//
+//			if(response.isSuccess()){
+//				serviceData = HAPServiceData.createSuccessData(resourceInfos);
+//			}
+//			else{
+//				serviceData = HAPServiceData.createFailureData(response.getFailedResourcesId(), "");
+//			}
+//		}
+//		catch(Exception e){
+//			serviceData = HAPServiceData.createFailureData(e, "");
+//			e.printStackTrace();
+//		}
+//		//callback with resourceInfos
+//		HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_scope);
 	}
 	
 	//gateway callback method
 	@Override
 	public void requestLoadResources(Object objResourcesInfo, Object handlers){
-		HAPServiceData serviceData = null;
-		try{
-			List<HAPResourceInfo> resourcesInfo = HAPRhinoRuntimeUtility.rhinoResourcesInfoToResourcesInfo((NativeArray)objResourcesInfo);
-			//load resources to rhino runtime
-			HAPLoadResourceResponse response = this.m_runtime.loadResources1(resourcesInfo, m_scope);
-			if(response==null){
-				serviceData = HAPServiceData.createSuccessData();
-			}
-			else{
-				serviceData = HAPServiceData.createFailureData(response.getFailedResourcesId(), "Fail to load resources");
-			}
-		}
-		catch(Exception e){
-			serviceData = HAPServiceData.createFailureData(e, "Exception during loading resources");
-			e.printStackTrace();
-		}
-		HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_scope);
+//		HAPServiceData serviceData = null;
+//		try{
+//			List<HAPResourceInfo> resourcesInfo = HAPRhinoRuntimeUtility.rhinoResourcesInfoToResourcesInfo((NativeArray)objResourcesInfo);
+//			//load resources to rhino runtime
+//			HAPLoadResourceResponse response = this.m_runtime.loadResources1(resourcesInfo, m_scope);
+//			if(response==null){
+//				serviceData = HAPServiceData.createSuccessData();
+//			}
+//			else{
+//				serviceData = HAPServiceData.createFailureData(response.getFailedResourcesId(), "Fail to load resources");
+//			}
+//		}
+//		catch(Exception e){
+//			serviceData = HAPServiceData.createFailureData(e, "Exception during loading resources");
+//			e.printStackTrace();
+//		}
+//		HAPRhinoRuntimeUtility.invokeGatewayHandlers(serviceData, handlers, m_scope);
 	}
 	
 	//gateway callback method
