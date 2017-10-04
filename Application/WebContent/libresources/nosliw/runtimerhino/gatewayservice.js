@@ -39,10 +39,16 @@ var node_createGatewayService = function(){
 			return out;
 		},	
 			
-		executeExecuteGatewayCommandRequest : function(gatewayId, gatewayCommand, parms, requester_parent){
-			var requestInfo = this.getExecuteGatewayCommandRequest(gatewayId, gatewayCommand, parms, requester_parent);
+		executeExecuteGatewayCommandRequest : function(gatewayId, command, parms, requester_parent){
+			var requestInfo = this.getExecuteGatewayCommandRequest(gatewayId, command, parms, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},
+		
+		//execute command directly, no callback needed
+		executeGatewayCommand : function(gatewayId, command, parms){
+			var gatewayObject = loc_getGatewayObject();
+			gatewayObject.executeGateway(gatewayId, command, parms);
+		}
 		
 	};
 	

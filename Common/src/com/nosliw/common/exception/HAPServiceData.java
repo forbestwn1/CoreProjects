@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializable;
@@ -123,7 +125,20 @@ public class HAPServiceData extends HAPSerializableImp{
 		return HAPJsonUtility.buildMapJson(jsonMap, jsonTypeMap);
 	}
 	
+	@Override
 	public String toString(){
 		return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));
 	}
+	
+	@Override
+	protected boolean buildObjectByJson(Object json){  
+		if(json instanceof JSONObject){
+			JSONObject jsonObj = (JSONObject)json;
+			this.m_code = jsonObj.optInt(SERVICEDATA_CODE);
+			this.m_message = jsonObj.optString(SERVICEDATA_MESSAGE);
+			this.m_data = jsonObj.opt(SERVICEDATA_DATA);
+		}
+		return true;  
+	}
+
 }

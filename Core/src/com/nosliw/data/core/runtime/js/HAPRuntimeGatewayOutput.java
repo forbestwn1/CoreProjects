@@ -21,7 +21,7 @@ public class HAPRuntimeGatewayOutput {
 	
 	public HAPRuntimeGatewayOutput(List<HAPJSScriptInfo> scripts, Object data){
 		this.m_scripts = new ArrayList<HAPJSScriptInfo>();
-		this.m_scripts.addAll(scripts);
+		if(scripts!=null)		this.m_scripts.addAll(scripts);
 		this.m_data = data;
 	}
 	

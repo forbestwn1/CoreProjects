@@ -16,6 +16,6 @@ public interface HAPRuntimeGateway {
 	 * @param parms parameters in format of JSONObject
 	 * @return HAPService containing data of HAPRuntimeGatewayOutput
 	 */
-	HAPServiceData command(String command, JSONObject parms);
+	HAPServiceData command(String command, JSONObject parms) throws Exception;
 
 }

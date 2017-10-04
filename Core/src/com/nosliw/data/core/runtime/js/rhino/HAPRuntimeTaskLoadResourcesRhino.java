@@ -25,7 +25,7 @@ public class HAPRuntimeTaskLoadResourcesRhino extends HAPRuntimeTaskLoadResource
 			}
 			else{
 				HAPRuntimeImpRhino rhinoRuntime = (HAPRuntimeImpRhino)runtime;
-				HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForLoadResourceTask(this);
+				HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForLoadResourceTask(this, rhinoRuntime);
 				rhinoRuntime.loadTaskScript(scriptInfo, this.getTaskId());
 			}
 		}

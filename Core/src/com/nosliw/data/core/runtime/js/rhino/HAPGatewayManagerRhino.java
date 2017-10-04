@@ -30,7 +30,15 @@ public class HAPGatewayManagerRhino extends HAPGatewayManager{
 		else if(parmsObj instanceof JSONObject)		jsonObjParms = (JSONObject)parmsObj;
 		else if(parmsObj instanceof NativeObject)	jsonObjParms = (JSONObject)HAPRhinoDataUtility.toJson(parmsObj);
 		
-		HAPServiceData commandResult = gateway.command(command, jsonObjParms);
+		HAPServiceData commandResult = null;
+		try {
+			commandResult = gateway.command(command, jsonObjParms);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			return HAPServiceData.createFailureData(null, "Exception during command!!");
+		}
+		
+		if(commandResult==null)  return HAPServiceData.createSuccessData();
 		
 		if(commandResult.isFail())  return commandResult;    //if command return fail result, then just return the result
 		else{
@@ -45,7 +53,7 @@ public class HAPGatewayManagerRhino extends HAPGatewayManager{
 			}
 			catch(Exception e){
 				e.printStackTrace();
-				return HAPServiceData.createFailureData(null, "Fail to load resources into Rhino runtime");
+				return HAPServiceData.createFailureData(null, "Exception during process command result!!");
 			}
 		}
 	}

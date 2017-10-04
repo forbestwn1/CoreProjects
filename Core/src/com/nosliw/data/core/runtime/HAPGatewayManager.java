@@ -17,6 +17,10 @@ public abstract class HAPGatewayManager {
 		this.m_gateways.put(name, gateway);
 	}
 
+	public void unregisterGateway(String name){
+		this.m_gateways.remove(name);
+	}
+	
 	public HAPRuntimeGateway getGateway(String name){
 		return this.m_gateways.get(name);
 	}

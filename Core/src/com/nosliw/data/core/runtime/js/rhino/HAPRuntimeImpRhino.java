@@ -114,6 +114,13 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		}
 	}
 	
+	//register relevant gateway
+	private void registerGateway(){
+		//register TaskResponse gateway
+		this.getRuntimeEnvironment().getGatewayManager().registerGateway(this.getTaskResponseGatewayName(), new HAPGatewayRuntimeTaskResponse(this));
+	}
+	
+	public String getTaskResponseGatewayName(){		return "taskResponseGateway";	}
 	
 	@Override
 	public HAPServiceData executeExpressionSync(String expressionStr, Map<String, HAPData> parmsData) {
@@ -255,7 +262,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	private Scriptable init(Context context, Scriptable parent){
 		this.m_scope = context.initStandardObjects(null);
 
-		//library
+		//core library
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.Underscore", "1.6.0")));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("external.Backbone", "1.1.2")));
@@ -267,11 +274,14 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 			resourceIdInfos.add(new HAPResourceInfo(resourceId).withInfo(ADDTORESOURCEMANAGER, ADDTORESOURCEMANAGER));
 		}
 		this.loadResources(resourceIdInfos);
-//		this.loadResources(resourceIdInfos, m_scope);
 
 		//embed gateway point
 		embedGatewayPoint();
 		
+		//register gateway
+		this.registerGateway();
+		
+		//other library
 		resourceIds = new ArrayList<HAPResourceId>();
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.constant", null)));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.logging", null)));
@@ -289,7 +299,6 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 			resourceIdInfos.add(new HAPResourceInfo(resourceId).withInfo(ADDTORESOURCEMANAGER, ADDTORESOURCEMANAGER));
 		}
 		this.loadResources(resourceIdInfos);
-//		this.loadResources(resourceIdInfos, m_scope);
 		
 		//data type
 		
@@ -340,6 +349,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	@Override
 	public void close(){
 		this.m_sciprtTracker.export();
+//		this.m_runtimeEnvironment.getGatewayManager().unregisterGateway(this.getTaskResponseGatewayName());
 	}
 	
 	@Override

@@ -3,6 +3,7 @@ package com.nosliw.test.runtimerhino;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
@@ -37,9 +38,11 @@ public class HAPRuntimeRhinoMain {
 					try{
 						HAPServiceData serviceData = task.getResult();
 						if(serviceData.isSuccess()){
-							Object result = serviceData.getData();
+							Object resultObj = serviceData.getData();
 							HAPDataWrapper exprectResult = suite.getResult();
-							System.out.println("Expression Result : " + result);
+							HAPDataWrapper result = new HAPDataWrapper();
+							result.buildObject(resultObj, HAPSerializationFormat.JSON);
+							System.out.println("Expression Result : " + resultObj);
 							if(result.equals(exprectResult)){
 							}
 							else{

@@ -58,7 +58,7 @@ public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteE
 			if(resourceTaskResult.isSuccess()){
 				//after resource loaded, execute expression
 				try{
-					HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForExecuteExpressionTask(this.m_parent);
+					HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForExecuteExpressionTask(this.m_parent, this.m_runtime);
 					this.m_runtime.loadTaskScript(scriptInfo, m_parent.getTaskId());
 				}
 				catch(Exception e){
