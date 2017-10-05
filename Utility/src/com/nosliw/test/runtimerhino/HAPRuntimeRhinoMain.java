@@ -61,6 +61,10 @@ public class HAPRuntimeRhinoMain {
 					catch(Exception e){
 						e.printStackTrace();
 					}
+					finally{
+						//shut down runtime
+						runtime.close();
+					}
 				}
 			});
 
@@ -72,10 +76,6 @@ public class HAPRuntimeRhinoMain {
 		}
 		catch(Exception e){
 			e.printStackTrace();
-		}
-		finally{
-			//shut down runtime
-			runtime.close();
 		}
 		
 	}

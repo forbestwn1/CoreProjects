@@ -4,7 +4,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import com.nosliw.data.core.imp.expression.HAPExpressionImporter;
-import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
+import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.expression.test.HAPExpressionTest;
 
 public class HAPInitServlet  extends HttpServlet{
@@ -14,7 +14,7 @@ public class HAPInitServlet  extends HttpServlet{
 	public void init() throws ServletException
 	   {
 			//create runtime
-			HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
+			HAPRuntimeEnvironmentImpBrowser runtimeEnvironment = new HAPRuntimeEnvironmentImpBrowser();
 
 			HAPExpressionImporter.importExpressionSuiteFromClassFolder(HAPExpressionTest.class, runtimeEnvironment.getExpressionManager());
 

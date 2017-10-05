@@ -17,11 +17,11 @@ var node_createGateway = function(){
 	
 	var out = {};
 	
-		out[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_GETEXPRESSIONS] = function(expressionsRequest, handlers){
+		out[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_COMMAND_GETEXPRESSIONS] = function(expressionsRequest, handlers){
 			var parms = {};
-			parms[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_GETEXPRESSIONS_EXPRESSIONS] = expressionsRequest; 
+			parms[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_COMMAND_GETEXPRESSIONS_EXPRESSIONS] = expressionsRequest; 
 			
-			var service = new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_GETEXPRESSIONS, parms);
+			var service = new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_COMMAND_GETEXPRESSIONS, parms);
 			
 			var remoteServiceTask = new node_RemoteServiceTask(loc_configureName, service, {
 				success : function(request, expressionResponses){
@@ -43,11 +43,11 @@ var node_createGateway = function(){
 		 * @param objResourcesInfo: a list of resource id 
 		 * @param callBackFunction (discovered resource info)
 		 */
-		out[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_DISCOVERRESOURCES] = function(resourceIds, handlers){
+		out[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_COMMAND_DISCOVERRESOURCES] = function(resourceIds, handlers){
 			var parms = {};
-			parms[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_DISCOVERRESOURCES_RESOURCEIDS] = resourceIds; 
+			parms[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_COMMAND_DISCOVERRESOURCES_RESOURCEIDS] = resourceIds; 
 			
-			var service = new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_DISCOVERRESOURCES, parms);
+			var service = new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_COMMAND_DISCOVERRESOURCES, parms);
 			
 			var remoteServiceTask = new node_RemoteServiceTask(loc_configureName, service, {
 				success : function(request, resourceInfos){
@@ -69,7 +69,7 @@ var node_createGateway = function(){
 		 * @param objResourcesInfo: a list of resource id 
 		 * @param callBackFunction (discovered and loaded resource info)
 		 */
-		out[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_DISCOVERANDLOADRESOURCES] = function(resourceIds, handlers){
+		out[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_COMMAND_DISCOVERANDLOADRESOURCES] = function(resourceIds, handlers){
 			
 		};
 		
@@ -78,12 +78,12 @@ var node_createGateway = function(){
 		 * @param objResourcesInfo: a list of resource info 
 		 * @param callBackFunction (nothing)
 		 */
-		out[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES] = function(resourcesInfo, handlers){
+		out[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_COMMAND_LOADRESOURCES] = function(resourcesInfo, handlers){
 
 			var parms = {};
-			parms[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES_RESOURCEINFOS] = resourcesInfo; 
+			parms[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_COMMAND_LOADRESOURCES_RESOURCEINFOS] = resourcesInfo; 
 			
-			var service = new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES, parms);
+			var service = new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_COMMAND_LOADRESOURCES, parms);
 			
 			var remoteServiceTask = new node_RemoteServiceTask(loc_configureName, service, {
 				success : function(request, scriptInfos){

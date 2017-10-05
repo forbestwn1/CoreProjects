@@ -92,3 +92,5 @@ x
 Hsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerJSGateway.java,c\6\c67bde0f2c9d1682ec23739b5695bbac339cf46b
 €
 Psrc/com/nosliw/data/core/imp/runtime/js/rhino/HAPRuntimeEnvironmentImpRhino.java,b\0\b0997131ab0b52dd238c0466f9726b0030728519
+„
+Tsrc/com/nosliw/data/core/imp/runtime/js/browser/HAPRuntimeEnvironmentImpBrowser.java,0\d\0d794691dfa35f7442c324d606019c919ca6f913

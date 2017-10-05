@@ -1,9 +1,5 @@
 package com.nosliw.app.servlet;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,22 +15,14 @@ public class HAPServiceInfo {
 	public static final String SERVICE_PARMS = "parms";
 	
 	private String m_command;
-	private Map<String, Object> m_parms;
+	private JSONObject m_parms;
 	
 	public HAPServiceInfo(JSONObject serviceJson) throws JSONException {
 		m_command = serviceJson.getString(SERVICE_COMMAND);
-		this.m_parms = new LinkedHashMap<String, Object>();
-		JSONObject parmsJsonObj = serviceJson.optJSONObject(SERVICE_PARMS);
-		if(parmsJsonObj!=null){
-			Iterator keys = parmsJsonObj.keys();
-			while(keys.hasNext()){
-				String key = (String)keys.next();
-				this.m_parms.put(key, parmsJsonObj.get(key));
-			}
-		}
+		this.m_parms = serviceJson.optJSONObject(SERVICE_PARMS);
 	}
 	
 	public String getCommand(){	return this.m_command;	}
-	public Map<String, Object> getParms(){ return this.m_parms; }
-	public Object getParm(String name){ return this.m_parms.get(name);  }
+	public JSONObject getParms(){ return this.m_parms; }
+	public Object getParm(String name){ return this.m_parms.opt(name);  }
 }

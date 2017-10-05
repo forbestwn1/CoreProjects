@@ -44,16 +44,16 @@ var node_requestServiceProcessor = function(){
 			var remoteTask = execute.execute(requestInfo);
 			//whether submit the remoteTask
 			if(remoteTask==undefined){
-				nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Finish request locally : ", JSON.stringify(requestInfo.getService()));
+//				nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Finish request locally : ", JSON.stringify(requestInfo.getService()));
 			}
 			else{
 				if(processRemote!=false){
 					//submit the remote task
-					nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Finish request with remote request Id :", remoteTask.requestId);
+//					nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Finish request with remote request Id :", remoteTask.requestId);
 					nosliw.getRemoteServiceManager().addServiceTask(remoteTask);
 				}
 				else{
-					nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Finish request by creating remote request info object Id :", remoteTask.requestId);
+//					nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Finish request by creating remote request info object Id :", remoteTask.requestId);
 					//return the remote task, let the call to decide what to do with remoteTask
 					return remoteTask;
 				}

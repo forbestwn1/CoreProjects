@@ -4,9 +4,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.runtime.js.HAPRuntimeGatewayImp;
+import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 
-public class HAPGatewayRuntimeTaskResponse extends HAPRuntimeGatewayImp{
+public class HAPGatewayRhinoTaskResponse extends HAPGatewayImp{
 
 	public static final String COMMAND_SUCCESS = "success";
 	public static final String COMMAND_ERROR = "error";
@@ -17,7 +17,7 @@ public class HAPGatewayRuntimeTaskResponse extends HAPRuntimeGatewayImp{
 	
 	private HAPRuntimeImpRhino m_runtime;
 	
-	public HAPGatewayRuntimeTaskResponse(HAPRuntimeImpRhino runtime){
+	public HAPGatewayRhinoTaskResponse(HAPRuntimeImpRhino runtime){
 		this.m_runtime = runtime;
 	}
 	

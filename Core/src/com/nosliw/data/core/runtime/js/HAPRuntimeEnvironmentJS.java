@@ -51,7 +51,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_gatewayManager = gatewayManager;
 		this.m_runtime = runtime;
 		
-		this.getGatewayManager().registerGateway(GATEWAY_RESOURCE, new HAPGatewayRuntimeResource(this));
+		this.getGatewayManager().registerGateway(GATEWAY_RESOURCE, new HAPGatewayResource(this));
 	}
 	
 	@Override

@@ -20,7 +20,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskLoadResources;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
-import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRuntimeTaskResponse;
+import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 
 public class HAPRuntimeJSScriptUtility {
@@ -73,7 +73,8 @@ public class HAPRuntimeJSScriptUtility {
 		List<URI> uris = resourceLibrary.getURIs();
 		for(URI uri : uris){
 			File file = new File(uri);
-			out.add(HAPJSScriptInfo.buildByFile(file.toString(), "Library__" + resource.getId().getId() + "__" + file.getName()));
+			String fileFullName = file.getAbsolutePath().replaceAll("\\\\", "/");
+			out.add(HAPJSScriptInfo.buildByFile(fileFullName, "Library__" + resource.getId().getId() + "__" + file.getName()));
 		}
 		return out;
 	}
@@ -83,14 +84,14 @@ public class HAPRuntimeJSScriptUtility {
 		templateParms.put("expression", HAPJsonUtility.formatJson(HAPSerializeManager.getInstance().toStringValue(executeExpressionTask.getExpression(), HAPSerializationFormat.JSON)));
 		templateParms.put("variables", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(executeExpressionTask.getVariablesValue()==null?new LinkedHashMap<String, HAPData>() : executeExpressionTask.getVariablesValue(), HAPSerializationFormat.JSON)));
 
-		templateParms.put("successCommand", HAPGatewayRuntimeTaskResponse.COMMAND_SUCCESS);
-		templateParms.put("errorCommand", HAPGatewayRuntimeTaskResponse.COMMAND_ERROR);
-		templateParms.put("exceptionCommand", HAPGatewayRuntimeTaskResponse.COMMAND_EXCEPTION);
+		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
+		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
+		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
 		
 		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
-		templateParms.put("parmTaskId", HAPGatewayRuntimeTaskResponse.PARM_TASKID);
+		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
 		templateParms.put("taskId", executeExpressionTask.getTaskId());
-		templateParms.put("parmResponseData", HAPGatewayRuntimeTaskResponse.PARM_RESPONSEDATA);
+		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
 		
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ExecuteExpressionScript.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
@@ -100,14 +101,14 @@ public class HAPRuntimeJSScriptUtility {
 	
 	public static HAPJSScriptInfo buildRequestScriptForLoadResourceTask(HAPRuntimeTaskLoadResources loadResourcesTask, HAPRuntimeImpRhino runtime){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("successCommand", HAPGatewayRuntimeTaskResponse.COMMAND_SUCCESS);
-		templateParms.put("errorCommand", HAPGatewayRuntimeTaskResponse.COMMAND_ERROR);
-		templateParms.put("exceptionCommand", HAPGatewayRuntimeTaskResponse.COMMAND_EXCEPTION);
+		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
+		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
+		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
 		
 		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
-		templateParms.put("parmTaskId", HAPGatewayRuntimeTaskResponse.PARM_TASKID);
+		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
 		templateParms.put("taskId", loadResourcesTask.getTaskId());
-		templateParms.put("parmResponseData", HAPGatewayRuntimeTaskResponse.PARM_RESPONSEDATA);
+		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
 
 		templateParms.put("resourceInfos", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(loadResourcesTask.getResourcesInfo(), HAPSerializationFormat.JSON)));
 		

@@ -8,7 +8,7 @@ import com.nosliw.common.exception.HAPServiceData;
  * Gateway is a java object that will accept command from runtime  
  *
  */
-public interface HAPRuntimeGateway {
+public interface HAPGateway {
 
 	/**
 	 * execute command

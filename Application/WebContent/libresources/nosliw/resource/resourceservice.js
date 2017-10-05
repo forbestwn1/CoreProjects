@@ -74,9 +74,9 @@ var node_createResourceService = function(resourceManager){
 	var loc_getLoadResourcesRequest = function(resourceInfos, handlers, requester_parent){
 		//gateway request
 		var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_RESOURCE;
-		var command = node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES;
+		var command = node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_LOADRESOURCES;
 		var parms = {};
-		parms[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_LOADRESOURCES_RESOURCEINFOS] = resourceInfos;
+		parms[node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_LOADRESOURCES_RESOURCEINFOS] = resourceInfos;
 		var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, handlers);
 		
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
@@ -177,9 +177,9 @@ var node_createResourceService = function(resourceManager){
 			
 			//gateway request
 			var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_RESOURCE;
-			var command = node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_DISCOVERRESOURCES;
+			var command = node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_DISCOVERRESOURCES;
 			var parms = {};
-			parms[node_COMMONATRIBUTECONSTANT.RUNTIMEGATEWAYJS_REQUEST_DISCOVERRESOURCES_RESOURCEIDS] = resourceIds;
+			parms[node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_DISCOVERRESOURCES_RESOURCEIDS] = resourceIds;
 			var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, handlers);
 			
 			var requestInfo = loc_out.getRequestInfo(requester_parent);

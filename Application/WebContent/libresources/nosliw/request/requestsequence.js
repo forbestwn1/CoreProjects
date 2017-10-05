@@ -171,6 +171,15 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 	};
 	
 	var loc_out = {
+			
+		ovr_afterSetId : function(){
+			//change all children's id
+			var id = this.getId();
+			_.each(loc_out.pri_requests, function(childRequestInfo, name, list){
+				childRequestInfo.setId(id);
+			}, this);			
+		},
+			
 		addRequest : function(requestInfo){
 			if(!_.isFunction(requestInfo)){
 				requestInfo.setParentRequest(this);

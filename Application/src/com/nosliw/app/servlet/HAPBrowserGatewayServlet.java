@@ -2,9 +2,6 @@ package com.nosliw.app.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -12,16 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.data.core.runtime.HAPResource;
-import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.runtime.js.HAPResourceDataJSLibrary;
-import com.nosliw.data.core.runtime.js.HAPResourceIdJSLibrary;
+import com.nosliw.common.utils.HAPJsonUtility;
+import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
+import com.nosliw.data.core.runtime.js.browser.HAPGatewayBrowserLoadLibrary;
 
 public class HAPBrowserGatewayServlet  extends HttpServlet{
 
@@ -38,39 +32,15 @@ public class HAPBrowserGatewayServlet  extends HttpServlet{
 	public void doGet (HttpServletRequest request,
 			HttpServletResponse response)
 			throws ServletException, IOException {
-		HAPServiceData serviceData = null;
 		
-		try{
-			HAPRequestInfo requestInfo = this.getRequestInfo(request);
-			String content = null;
-			
-			switch(requestInfo.getCommand()){
-			case REQUEST_LOADLIBRARYRESOURCES:
-				JSONArray libraryIdsArray = (JSONArray)requestInfo.getData();
-				List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
-				for(int i=0; i<libraryIdsArray.length(); i++){
-					resourceIds.add(new HAPResourceIdJSLibrary(libraryIdsArray.getString(i)));
-				}
-				List<HAPResource> resources = this.getRuntimeEnvironment().getResourceManager().getResources(resourceIds).getLoadedResources();
-				List<String> fileNames = new ArrayList<String>();
-				for(HAPResource resource : resources){
-					List<URI> uris = ((HAPResourceDataJSLibrary)resource.getResourceData()).getURIs();
-					for(URI uri : uris){
-						fileNames.add(this.getLibraryPath(uri.toString()));
-					}
-				}
-				serviceData = HAPServiceData.createSuccessData(fileNames);
-				content = serviceData.toStringValue(HAPSerializationFormat.LITERATE);
-				break;
-			}
-			
-			response.setContentType("text/javascript");
-		    PrintWriter writer = response.getWriter();
-		    writer.println(content);		
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
+		HAPRequestInfo requestInfo = this.getRequestInfo(request);
+		HAPServiceData serviceData = this.getRuntimeEnvironment().getGatewayManager().executeGateway(HAPRuntimeEnvironmentImpBrowser.GATEWAY_LOADLIBRARIES, HAPGatewayBrowserLoadLibrary.COMMAND_LOADLIBRARY, requestInfo.getData());
+		String content = serviceData.toStringValue(HAPSerializationFormat.JSON);
+		content = HAPJsonUtility.formatJson(content);
+		
+		response.setContentType("text/javascript");
+	    PrintWriter writer = response.getWriter();
+	    writer.println(content);		
 	}
 	
 
@@ -91,11 +61,7 @@ public class HAPBrowserGatewayServlet  extends HttpServlet{
 		return out;
 	}
 
-	private HAPRuntimeEnvironmentImpRhino getRuntimeEnvironment(){		return (HAPRuntimeEnvironmentImpRhino)this.getServletContext().getAttribute("runtime");  }
+	private HAPRuntimeEnvironmentImpBrowser getRuntimeEnvironment(){		return (HAPRuntimeEnvironmentImpBrowser)this.getServletContext().getAttribute("runtime");  }
 
 	
-	private String getLibraryPath(String fileName){
-		String keyword = "WebContent";
-		return fileName.substring(fileName.indexOf(keyword)+keyword.length()+1);
-	}
 }

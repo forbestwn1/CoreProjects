@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +19,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
+import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 
 @HAPEntityWithAttribute
 public abstract class HAPServiceServlet  extends HttpServlet{
@@ -131,5 +131,7 @@ public abstract class HAPServiceServlet  extends HttpServlet{
 		return serviceData;
 	}
 	
-	abstract protected HAPServiceData processServiceRequest(String command, Map<String, Object> parms); 
+	abstract protected HAPServiceData processServiceRequest(String command, JSONObject parms);
+	
+	protected HAPRuntimeEnvironmentImpBrowser getRuntimeEnvironment(){		return (HAPRuntimeEnvironmentImpBrowser)this.getServletContext().getAttribute("runtime");  }
 }

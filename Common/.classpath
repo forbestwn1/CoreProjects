@@ -32,7 +32,15 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="libs/commons-text-1.1.jar"/>
-	<classpathentry kind="lib" path="libs/commons-lang3-3.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/commons-text-1.1.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="libs/commons-lang3-3.6.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

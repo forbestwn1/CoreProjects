@@ -1,5 +1,5 @@
 //
-var libResources = [
+var libNames = [
 //	"external.Underscore;1.6.0",
 //	"external.Backbone;1.1.2",
 //	"external.log4javascript;1.0.0",
@@ -22,7 +22,9 @@ var libResources = [
 var requestLoadLibraryResources = function(resourceIds, callBackFunction){
 	var data = {
 		command : "requestLoadLibraryResources",
-		data : resourceIds
+		data : {
+			"resourceIds" : resourceIds
+		}
 	};
 	
 	$.ajax({
@@ -33,13 +35,14 @@ var requestLoadLibraryResources = function(resourceIds, callBackFunction){
 		data : JSON.stringify(data),
 		async : true,
 		success : function(serviceData, status){
-			var result = serviceData.data;
+			var result = serviceData.data.data;
 			var fileNumber = result.length;
 			var count = 0;
 			
 			
 			var loadScriptInOrder = function(){
 				var url = result[count];
+				
 				var script = document.createElement('script');
 				script.setAttribute('src', url);
 				script.setAttribute('defer', "defer");
@@ -68,6 +71,14 @@ var requestLoadLibraryResources = function(resourceIds, callBackFunction){
 
 //set runtime name first
 nosliw.createNode("runtime.name", "browser");
+
+var libResources = [];
+for(var i in libNames){
+	libResources.push({
+		"id" : libNames[i],
+		"type" : "jslibrary"
+	});
+}
 
 requestLoadLibraryResources(libResources, function(){
 	  var runtime = nosliw.getNodeData("runtime.createRuntime")(nosliw.runtimeName);

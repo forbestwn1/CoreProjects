@@ -59,6 +59,12 @@ var node_createServiceRequestInfoService = function(service, handlers, requester
 	};
 	
 	var loc_out = {
+			ovr_afterSetId : function(){
+				//change all children's id
+				var id = this.getId();
+				loc_out.pri_dependentService.requestInfo.setId(id);
+			},
+			
 			getDependentServiceRequestInfo : function(){
 				var dependentService = this.pri_dependentService;
 				if(dependentService!=undefined){

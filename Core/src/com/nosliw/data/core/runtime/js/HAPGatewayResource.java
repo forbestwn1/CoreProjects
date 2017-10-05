@@ -19,26 +19,26 @@ import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
-public class HAPGatewayRuntimeResource extends HAPRuntimeGatewayImp{
+public class HAPGatewayResource extends HAPGatewayImp{
 
 	@HAPAttribute
-	final public static String REQUEST_DISCOVERRESOURCES = "requestDiscoverResources";
+	final public static String COMMAND_DISCOVERRESOURCES = "requestDiscoverResources";
 	@HAPAttribute
-	final public static String REQUEST_DISCOVERRESOURCES_RESOURCEIDS = "resourceIds";
+	final public static String COMMAND_DISCOVERRESOURCES_RESOURCEIDS = "resourceIds";
 
 	@HAPAttribute
-	final public static String REQUEST_DISCOVERANDLOADRESOURCES = "requestDiscoverAndLoadResources";
+	final public static String COMMAND_DISCOVERANDLOADRESOURCES = "requestDiscoverAndLoadResources";
 	@HAPAttribute
-	final public static String REQUEST_DISCOVERANDLOADRESOURCES_RESOURCEIDS = "resourceIds";
+	final public static String COMMAND_DISCOVERANDLOADRESOURCES_RESOURCEIDS = "resourceIds";
 
 	@HAPAttribute
-	final public static String REQUEST_LOADRESOURCES = "requestLoadResources";
+	final public static String COMMAND_LOADRESOURCES = "requestLoadResources";
 	@HAPAttribute
-	final public static String REQUEST_LOADRESOURCES_RESOURCEINFOS = "resourceInfos";
+	final public static String COMMAND_LOADRESOURCES_RESOURCEINFOS = "resourceInfos";
 	
 	private HAPRuntimeEnvironment m_runtimeEnviroment;
 	
-	public HAPGatewayRuntimeResource(HAPRuntimeEnvironment runtimeEnviroment){
+	public HAPGatewayResource(HAPRuntimeEnvironment runtimeEnviroment){
 		this.m_runtimeEnviroment = runtimeEnviroment;
 	}
 	
@@ -47,13 +47,13 @@ public class HAPGatewayRuntimeResource extends HAPRuntimeGatewayImp{
 		HAPServiceData out = null;
 		try{
 			switch(command){
-			case REQUEST_DISCOVERRESOURCES:
+			case COMMAND_DISCOVERRESOURCES:
 				out = this.requestDiscoverResources(parms);
 				break;
-			case REQUEST_DISCOVERANDLOADRESOURCES:
+			case COMMAND_DISCOVERANDLOADRESOURCES:
 				out = this.requestDiscoverAndLoadResources(parms);
 				break;
-			case REQUEST_LOADRESOURCES:
+			case COMMAND_LOADRESOURCES:
 				out = this.requestLoadResources(parms);
 				break;
 			}
@@ -72,7 +72,7 @@ public class HAPGatewayRuntimeResource extends HAPRuntimeGatewayImp{
 	 * 
 	 */
 	private HAPServiceData requestDiscoverResources(JSONObject parms) throws Exception{
-		JSONArray resourceJsonArray = parms.getJSONArray(REQUEST_DISCOVERRESOURCES_RESOURCEIDS);
+		JSONArray resourceJsonArray = parms.getJSONArray(COMMAND_DISCOVERRESOURCES_RESOURCEIDS);
 		List<HAPResourceId> resourceIds = HAPSerializeUtility.buildListFromJsonArray(HAPResourceId.class.getName(), resourceJsonArray);
 		return this.discoverResources(resourceIds);
 	}
@@ -83,7 +83,7 @@ public class HAPGatewayRuntimeResource extends HAPRuntimeGatewayImp{
 	 * @throws Exception 
 	 */
 	private HAPServiceData requestLoadResources(JSONObject parms) throws Exception{
-		JSONArray resourceJsonArray = parms.getJSONArray(REQUEST_LOADRESOURCES_RESOURCEINFOS);
+		JSONArray resourceJsonArray = parms.getJSONArray(COMMAND_LOADRESOURCES_RESOURCEINFOS);
 		List<HAPResourceInfo> resourcesInfo = HAPSerializeUtility.buildListFromJsonArray(HAPResourceInfo.class.getName(), resourceJsonArray);
 		return this.loadResources(resourcesInfo);
 	}
@@ -96,7 +96,7 @@ public class HAPGatewayRuntimeResource extends HAPRuntimeGatewayImp{
 	private HAPServiceData requestDiscoverAndLoadResources(JSONObject parms) throws Exception{
 		HAPServiceData serviceData = null;
 
-		JSONArray resourceJsonArray = parms.getJSONArray(REQUEST_DISCOVERANDLOADRESOURCES_RESOURCEIDS);
+		JSONArray resourceJsonArray = parms.getJSONArray(COMMAND_DISCOVERANDLOADRESOURCES_RESOURCEIDS);
 		List<HAPResourceId> resourceIds = HAPSerializeUtility.buildListFromJsonArray(HAPResourceId.class.getName(), resourceJsonArray); 
 
 		serviceData = this.discoverResources(resourceIds);
