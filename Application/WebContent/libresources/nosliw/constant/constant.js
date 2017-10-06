@@ -86,6 +86,7 @@ var node_CONSTANT=
 	  "REQUEST_TYPE_UITAG" : 			"uiTag",						//
 	  "REQUEST_TYPE_SIMPLE" : 			"simple",						//
 	  "REQUEST_TYPE_EXECUTOR" : 		"executor",						//
+	  "REQUEST_TYPE_REMOTE" : 		"executor",						//
 
 	  "REQUEST_TYPE_DATAOPERATION" : 	"dataoperation",			//request type is data operation
 	  "REQUEST_TYPE_WRAPPEROPERATION" : "wrapperoperation",		//request type is operation on wrapper

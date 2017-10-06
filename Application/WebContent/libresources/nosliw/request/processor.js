@@ -50,7 +50,7 @@ var node_requestServiceProcessor = function(){
 				if(processRemote!=false){
 					//submit the remote task
 //					nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Finish request with remote request Id :", remoteTask.requestId);
-					nosliw.getRemoteServiceManager().addServiceTask(remoteTask);
+					nosliw.runtime.getRemoteService().addServiceTask(remoteTask);
 				}
 				else{
 //					nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Finish request by creating remote request info object Id :", remoteTask.requestId);

@@ -12,7 +12,6 @@ var packageObj = library;
 	var node_createExpressionService;
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
-	var node_runtimeGateway;
 	var node_createGatewayService;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -55,10 +54,6 @@ var node_createRuntime = function(name){
 			
 		getName(){
 			return loc_name;
-		},
-		
-		getGateway(){
-			return node_runtimeGateway;
 		},
 		
 		getGatewayService(){
@@ -104,7 +99,6 @@ nosliw.registerSetNodeDataEvent("service.idservice.createIdService", function(){
 nosliw.registerSetNodeDataEvent("resource.createResourceManager", function(){node_createResourceManager = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.service.createExpressionService", function(){node_createExpressionService = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.createResourceService", function(){node_createResourceService = this.getData();});
-nosliw.registerSetNodeDataEvent("runtime.gateway", function(){node_runtimeGateway = this.getData();});
 nosliw.registerSetNodeDataEvent("runtime.createGatewayService", function(){node_createGatewayService = this.getData();});
 
 //Register Node by Name

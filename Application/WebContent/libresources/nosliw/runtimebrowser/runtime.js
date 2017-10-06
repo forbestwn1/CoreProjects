@@ -12,8 +12,8 @@ var packageObj = library;
 	var node_createExpressionService;
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
-	var node_createRuntimeGateway;
 	var node_createRemoteService;
+	var node_createGatewayService;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -35,7 +35,7 @@ var node_createRuntime = function(name){
 	
 	var loc_remoteService;
 	
-	var loc_runtimeGateway;
+	var loc_gatewayService;
 	
 	var loc_out = {
 		
@@ -59,13 +59,13 @@ var node_createRuntime = function(name){
 			return loc_name;
 		},
 		
-		getGateway(){
-			return loc_runtimeGateway;
-		},
-		
 		getRemoteService(){
 			return loc_remoteService;
-		}
+		},
+
+		getGatewayService(){
+			return loc_gatewayService;
+		},
 	};
 	
 	var lifecycleCallback = {};
@@ -76,7 +76,7 @@ var node_createRuntime = function(name){
 		loc_expressionService = node_createExpressionService();
 		loc_remoteService = node_createRemoteService();
 		loc_remoteService.interfaceObjectLifecycle.init();
-		loc_runtimeGateway = node_createRuntimeGateway();
+		loc_gatewayService = node_createGatewayService();
 		
 		//set sortcut for object
 		 nosliw.runtime = loc_out;
@@ -84,8 +84,6 @@ var node_createRuntime = function(name){
 		 
 		 //create node for runtime object
 		 nosliw.createNode("runtime", loc_out);
-		 nosliw.createNode("runtime.gateway", loc_runtimeGateway);
-		 
 		 nosliw.triggerNodeEvent("runtime", "active");
 
 		return true;
@@ -110,7 +108,7 @@ nosliw.registerSetNodeDataEvent("resource.createResourceManager", function(){nod
 nosliw.registerSetNodeDataEvent("expression.service.createExpressionService", function(){node_createExpressionService = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.createResourceService", function(){node_createResourceService = this.getData();});
 nosliw.registerSetNodeDataEvent("remote.createRemoteService", function(){node_createRemoteService = this.getData();});
-nosliw.registerSetNodeDataEvent("runtime.createGateway", function(){node_createRuntimeGateway = this.getData();});
+nosliw.registerSetNodeDataEvent("runtime.createGatewayService", function(){node_createGatewayService = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

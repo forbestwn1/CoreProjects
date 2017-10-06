@@ -39,7 +39,11 @@
 				suite : "expression6",
 				expressionName : "main",
 			};
-		var gatewayRequest = nosliw.runtime.getGatewayService().executeExecuteGatewayCommandRequest(gatewayId, command, parms, {});
+		var gatewayRequest = nosliw.runtime.getGatewayService().executeExecuteGatewayCommandRequest(gatewayId, command, parms, {
+			success : function(requestInfo, result){
+				nosliw.logging.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+			}	
+		});
 		
 		/*
 		nosliw.runtime.getExpressionService().executeExecuteExpressionRequest(expressionResponse.expression, expressionResponse.variablesValue, 
