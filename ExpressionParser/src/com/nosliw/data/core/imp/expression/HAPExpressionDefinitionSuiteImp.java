@@ -9,11 +9,11 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.data.core.expression.HAPExpressionDefinitionSuite;
+import com.nosliw.data.core.expression.HAPExpressionDefinitionSuiteForTest;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
 
-public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity implements HAPExpressionDefinitionSuite {
+public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity implements HAPExpressionDefinitionSuiteForTest {
 
 	public static String _VALUEINFO_NAME;
 
@@ -79,6 +79,7 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 
 	public HAPDataWrapper getResult(){		return (HAPDataWrapper)this.getAtomicAncestorValue(RESULT);	}
 	
+	@Override
 	public Map<String, HAPData> getVariableData() {
 		Map<String, HAPData> varsData = this.getMapValueAncestorByPath(VARIABLESDATA); 
 		return varsData;

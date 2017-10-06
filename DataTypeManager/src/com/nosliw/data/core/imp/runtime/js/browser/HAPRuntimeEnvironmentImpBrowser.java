@@ -13,6 +13,7 @@ import com.nosliw.data.core.runtime.HAPResourceDiscovery;
 import com.nosliw.data.core.runtime.HAPResourceManager;
 import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.browser.HAPGatewayBrowserLoadLibrary;
+import com.nosliw.data.core.runtime.js.browser.HAPGatewayLoadTestExpression;
 import com.nosliw.data.core.runtime.js.browser.HAPGatewayManagerBrowser;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
@@ -21,6 +22,9 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 
 	@HAPAttribute
 	public static final String GATEWAY_LOADLIBRARIES = "loadLibraries";
+
+	@HAPAttribute
+	public static final String GATEWAY_TESTEXPRESSION = "testExpression";
 	
 	HAPModuleRuntimeJS m_runtimeJSModule;
 	
@@ -49,5 +53,6 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		);
 		
 		this.getGatewayManager().registerGateway(GATEWAY_LOADLIBRARIES, new HAPGatewayBrowserLoadLibrary(this.getGatewayManager()));
+		this.getGatewayManager().registerGateway(GATEWAY_TESTEXPRESSION, new HAPGatewayLoadTestExpression(this.getExpressionManager()));
 	}
 }

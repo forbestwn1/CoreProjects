@@ -5,7 +5,6 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 
 @HAPEntityWithAttribute
 public class HAPGatewayServlet extends HAPServiceServlet{

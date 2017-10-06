@@ -1,4 +1,4 @@
-	nosliw.registerNodeEvent("runtime", "active", function(eventName, nodeName){
+	nosliw.registerNodeEvent("runtime1", "active", function(eventName, nodeName){
 
 		var node_buildVariableTree = nosliw.getNodeData("uidata.test.buildVariableTree");
 		var node_buildContext = nosliw.getNodeData("uidata.test.buildContext");

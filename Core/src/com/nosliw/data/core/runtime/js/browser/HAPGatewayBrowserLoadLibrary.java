@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
@@ -13,7 +14,8 @@ import com.nosliw.data.core.runtime.js.HAPGatewayResource;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 
-public class HAPGatewayBrowserLoadLibrary  extends HAPGatewayImp{
+@HAPEntityWithAttribute
+public class HAPGatewayBrowserLoadLibrary extends HAPGatewayImp{
 
 	public static final String COMMAND_LOADLIBRARY = "loadLibrary";
 	

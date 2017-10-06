@@ -18,7 +18,6 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp;
-import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceDiscovered;
@@ -27,6 +26,7 @@ import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeGatewayJS;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
+import com.nosliw.data.core.runtime.js.browser.HAPResponseGatewayLoadTestExpression;
 
 @HAPEntityWithAttribute
 public class HAPGatewayServlet1 extends HAPServiceServlet{
@@ -40,7 +40,7 @@ public class HAPGatewayServlet1 extends HAPServiceServlet{
 		switch(command){
 		case HAPRuntimeGatewayJS.REQUEST_GETEXPRESSIONS:
 		{
-			List<HAPExpressionResponse> expressions = new ArrayList<HAPExpressionResponse>();
+			List<HAPResponseGatewayLoadTestExpression> expressions = new ArrayList<HAPResponseGatewayLoadTestExpression>();
 			JSONArray expressionsRequest = (JSONArray)parms.get(HAPRuntimeGatewayJS.REQUEST_GETEXPRESSIONS_EXPRESSIONS);
 			for(int i=0; i<expressionsRequest.length(); i++){
 				JSONObject expressionRequest = expressionsRequest.optJSONObject(i);
@@ -64,7 +64,7 @@ public class HAPGatewayServlet1 extends HAPServiceServlet{
 				
 				Map<String, HAPData> varDatas = ((HAPExpressionDefinitionSuiteImp)this.getRuntimeEnvironment().getExpressionManager().getExpressionDefinitionSuite(suite)).getVariableData();
 				HAPExpression expression = this.getRuntimeEnvironment().getExpressionManager().processExpression(null, suite, expressionName, variableCriterias);
-				expressions.add(new HAPExpressionResponse(expression, varDatas));
+				expressions.add(new HAPResponseGatewayLoadTestExpression(expression, varDatas));
 			}
 			out = HAPServiceData.createSuccessData(expressions);
 			break;

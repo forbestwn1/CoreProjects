@@ -1,4 +1,4 @@
-package com.nosliw.app.servlet;
+package com.nosliw.data.core.runtime.js.browser;
 
 import java.util.Map;
 
@@ -11,7 +11,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
 
 @HAPEntityWithAttribute
-public class HAPExpressionResponse extends HAPSerializableImp{
+public class HAPResponseGatewayLoadTestExpression extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
@@ -21,9 +21,9 @@ public class HAPExpressionResponse extends HAPSerializableImp{
 
 	private HAPExpression m_expression;
 	
-	Map<String, HAPData> m_variablesValue;
+	private Map<String, HAPData> m_variablesValue;
 	
-	public HAPExpressionResponse(HAPExpression expression, Map<String, HAPData> variablesValue){
+	public HAPResponseGatewayLoadTestExpression(HAPExpression expression, Map<String, HAPData> variablesValue){
 		this.m_expression = expression;
 		this.m_variablesValue = variablesValue; 
 	}

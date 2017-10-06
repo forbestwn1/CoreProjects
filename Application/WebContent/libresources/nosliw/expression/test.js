@@ -30,15 +30,28 @@
 		);
 		*/
 
+		node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+		
+		//gateway request
+		var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_TESTEXPRESSION;
+		var command = node_COMMONATRIBUTECONSTANT.GATEWAYLOADTESTEXPRESSION_COMMAND_LOADTESTEXPRESSION;
+		var parms = {
+				suite : "expression6",
+				expressionName : "main",
+			};
+		var gatewayRequest = nosliw.runtime.getGatewayService().executeExecuteGatewayCommandRequest(gatewayId, command, parms, {});
+		
 		/*
-		var expressionRequest = {
-			suite : "expression6",
-			expressionName : "main",
-			
-		};
+		nosliw.runtime.getExpressionService().executeExecuteExpressionRequest(expressionResponse.expression, expressionResponse.variablesValue, 
+				{
+					success : function(requestInfo, result){
+						nosliw.logging.info(JSON.stringify(result));
+					}	
+				}, undefined);
+		
 		
 		nosliw.runtime.getGateway().getExpressions(
-				[expressionRequest], 
+				expressionRequest, 
 				{
 					success : function(request, expressionResponses){
 						var expressionResponse = expressionResponses[0];
@@ -53,5 +66,4 @@
 				}
 		);
 		*/
-		
 	});
