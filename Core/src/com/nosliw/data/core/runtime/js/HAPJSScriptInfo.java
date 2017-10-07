@@ -50,6 +50,11 @@ public class HAPJSScriptInfo extends HAPSerializableImp{
 		return this.m_script.toString();
 	}
 	
+	public void setScript(String script){ 
+		this.m_script = new StringBuffer();
+		this.m_script.append(script);
+	}
+	
 	public void appendScript(String script){		this.m_script.append(script);	}
 	
 	public static HAPJSScriptInfo buildByFile(String fileName, String name){

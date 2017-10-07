@@ -77,7 +77,7 @@ var node_createResourceService = function(resourceManager){
 		var command = node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_LOADRESOURCES;
 		var parms = {};
 		parms[node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_LOADRESOURCES_RESOURCEINFOS] = resourceInfos;
-		var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, handlers);
+		var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms);
 		
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		var out = node_createServiceRequestInfoService(new node_ServiceInfo("LoadResources", {"resourcesInfo":resourceInfos}), handlers, requestInfo);
@@ -126,7 +126,7 @@ var node_createResourceService = function(resourceManager){
 			
 		executeRequireResourcesRequest : function(resourcesInfo, handlers, requester_parent){
 			var requestInfo = this.getRequireResourcesRequest(resourcesInfo, handlers, requester_parent);
-			node_requestServiceProcessor.processRequest(requestInfo, false);
+			node_requestServiceProcessor.processRequest(requestInfo, true);
 		},
 			
 		
@@ -156,10 +156,10 @@ var node_createResourceService = function(resourceManager){
 										}, this);
 										return foundResourcesTree;
 									}
-								}, null);
+								});
 								return loadResourceRequest;
 							}
-						}, null);
+						});
 						return discoverResourcesRequest;
 					}
 				}
@@ -169,7 +169,7 @@ var node_createResourceService = function(resourceManager){
 			
 		executeGetResourcesRequest : function(resourceIds, handlers, requester_parent){
 			var requestInfo = this.getGetResourcesRequest(resourceIds, handlers, requester_parent);
-			node_requestServiceProcessor.processRequest(requestInfo, false);
+			node_requestServiceProcessor.processRequest(requestInfo, true);
 		},
 			
 
@@ -180,7 +180,7 @@ var node_createResourceService = function(resourceManager){
 			var command = node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_DISCOVERRESOURCES;
 			var parms = {};
 			parms[node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_DISCOVERRESOURCES_RESOURCEIDS] = resourceIds;
-			var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, handlers);
+			var gatewayRequest = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms);
 			
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoService(new node_ServiceInfo("DiscoverResources", {"resourcesId":resourceIds}), handlers, requestInfo);
@@ -188,9 +188,9 @@ var node_createResourceService = function(resourceManager){
 			return out;
 		},
 
-		executeGetDiscoverResourcesRequest : function(resourceIds, handlers, requester_parent){
+		executeDiscoverResourcesRequest : function(resourceIds, handlers, requester_parent){
 			var requestInfo = this.getDiscoverResourcesRequest(resourceIds, handlers, requester_parent);
-			node_requestServiceProcessor.processRequest(requestInfo, false);
+			node_requestServiceProcessor.processRequest(requestInfo, true);
 		},
 		
 		/**

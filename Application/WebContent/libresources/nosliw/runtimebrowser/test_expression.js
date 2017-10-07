@@ -1,35 +1,25 @@
 	nosliw.registerNodeEvent("runtime", "active", function(eventName, nodeName){
 		
 		nosliw.logging.info(nodeName + "    " + eventName );
-/*
+
 		var resourceUtility = nosliw.getNodeData("resource.utility");
-		
-		nosliw.runtime.getResourceService().executeGetResourcesRequest([resourceUtility.createOperationResourceId("test.string;1.0.0", "subString")], 
-				{
-					success : function(request, resources){
-						nosliw.logging.info(JSON.stringify(resources));
-					}
-				}, undefined);
-*/		
-		
-		//discovery resources
-/*		
-		nosliw.runtime.getGateway().requestDiscoverResources(
-				[resourceUtility.createOperationResourceId("test.string;1.0.0", "subString")], 
-				{
-					success : function(request, resourceInfos){
-						console.log(JSON.stringify(resourceInfos));
 
-						nosliw.runtime.getGateway().requestLoadResources(resourceInfos, {
-							success : function(request, resources){
-								
-							}
-						});
-					}
-				}
-		);
-		*/
-
+//		nosliw.runtime.getResourceService().executeDiscoverResourcesRequest([resourceUtility.createOperationResourceId("test.string;1.0.0", "subString")], 
+//				{
+//					success : function(request, resources){
+//						nosliw.logging.info(JSON.stringify(resources));
+//					}
+//				}, undefined);
+		
+		
+//		nosliw.runtime.getResourceService().executeGetResourcesRequest([resourceUtility.createOperationResourceId("test.string;1.0.0", "subString")], 
+//				{
+//					success : function(request, resources){
+//						nosliw.logging.info(JSON.stringify(resources));
+//					}
+//				}, undefined);
+		
+		
 		node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 		
 		//gateway request
@@ -40,11 +30,16 @@
 				expressionName : "main",
 			};
 		var gatewayRequest = nosliw.runtime.getGatewayService().executeExecuteGatewayCommandRequest(gatewayId, command, parms, {
-			success : function(requestInfo, result){
-				nosliw.logging.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+			success : function(requestInfo, expressionResponse){
+				nosliw.runtime.getExpressionService().executeExecuteExpressionRequest(expressionResponse.expression, expressionResponse.variablesValue, 
+						{
+							success : function(requestInfo, result){
+								nosliw.logging.info(JSON.stringify(result));
+							}	
+						}, undefined);
 			}	
 		});
-		
+
 		/*
 		nosliw.runtime.getExpressionService().executeExecuteExpressionRequest(expressionResponse.expression, expressionResponse.variablesValue, 
 				{
