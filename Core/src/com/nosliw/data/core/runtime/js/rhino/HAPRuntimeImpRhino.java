@@ -35,6 +35,7 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
+import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
 import com.nosliw.data.core.runtime.js.HAPGatewayResource;
 import com.nosliw.data.core.runtime.js.HAPJSLibraryId;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
@@ -73,7 +74,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	private void embedGatewayPoint(){
 		try{
 			HAPRuntimeEnvironmentJS runtimeEnv = (HAPRuntimeEnvironmentJS)this.getRuntimeEnvironment();
-			HAPGatewayEmbededPoint embededPoint = new HAPGatewayEmbededPoint(runtimeEnv.getGatewayManager(), this.m_scope);
+			HAPGatewayEmbededPoint embededPoint = new HAPGatewayEmbededPoint(runtimeEnv.getGatewayManager(), (HAPRuntimeImpRhino)runtimeEnv.getRuntime(), this.m_scope);
 	        Object wrappedObject = Context.javaToJS(embededPoint, this.m_scope);
 	        NativeObject nosliwObj = (NativeObject)this.m_scope.get("nosliw", m_scope);
 	        Function createNodeFun = (Function)nosliwObj.get("createNode");
@@ -232,8 +233,12 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 			HAPGatewayManager gatewayMan =	this.getRuntimeEnvironment().getGatewayManager();
 			Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 			jsonMap.put(HAPGatewayResource.COMMAND_LOADRESOURCES_RESOURCEINFOS, HAPSerializeManager.getInstance().toStringValue(resourceInfos, HAPSerializationFormat.JSON));
-			gatewayMan.executeGateway(HAPRuntimeEnvironmentJS.GATEWAY_RESOURCE, HAPGatewayResource.COMMAND_LOADRESOURCES, new JSONObject(HAPJsonUtility.buildMapJson(jsonMap)));
-		} catch (JSONException e) {
+			HAPServiceData serviceData = gatewayMan.executeGateway(HAPRuntimeEnvironmentJS.GATEWAY_RESOURCE, HAPGatewayResource.COMMAND_LOADRESOURCES, new JSONObject(HAPJsonUtility.buildMapJson(jsonMap)));
+
+			HAPGatewayOutput output = (HAPGatewayOutput)serviceData.getData();
+			List<HAPJSScriptInfo> scripts = output.getScripts();
+			for(HAPJSScriptInfo scriptInfo : scripts){		this.loadScript(scriptInfo);	}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -289,7 +294,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 //	        System.setOut(dbg.getOut());
 //	        System.setErr(dbg.getErr());
 	        
-		    dbg.setBreakOnEnter(true);
+//		    dbg.setBreakOnEnter(true);
 //		    dbg.setBreakOnExceptions(true);
 		    dbg.setScope(m_scope);
 		    dbg.setSize(1200, 800);
