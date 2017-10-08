@@ -26,7 +26,7 @@
 		var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_TESTEXPRESSION;
 		var command = node_COMMONATRIBUTECONSTANT.GATEWAYLOADTESTEXPRESSION_COMMAND_LOADTESTEXPRESSION;
 		var parms = {
-				suite : "expression6",
+				suite : "expression1",
 				expressionName : "main",
 			};
 		var gatewayRequest = nosliw.runtime.getGatewayService().executeExecuteGatewayCommandRequest(gatewayId, command, parms, {

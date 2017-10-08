@@ -46,7 +46,7 @@ public class HAPGatewayManager {
 			commandResult = gateway.command(command, parms);
 		} catch (Exception e1) {
 			e1.printStackTrace();
-			return HAPServiceData.createFailureData(null, "Exception during command!!");
+			return HAPServiceData.createFailureData(null, "Exception during command " + gatewayId + " : " +command + "!!");
 		}
 		
 		if(commandResult==null)  return HAPServiceData.createSuccessData();

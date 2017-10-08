@@ -45,11 +45,10 @@ public abstract class HAPServiceServlet  extends HttpServlet{
 	}
 	
 	public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HAPServiceData out = null;
 		try{
-			String content = "";
 			String command = request.getParameter(SERVLETPARMS_COMMAND);
 			String clientId = request.getParameter(SERVLETPARMS_CLIENTID);
-			HAPServiceData out = null;
 			if(HAPConstant.SERVICECOMMAND_GROUPREQUEST.equals(command)){
 				String groupRequest = request.getParameter(SERVLETPARMS_PARMS);
 				JSONArray jsonGroupReqs = new JSONArray(groupRequest);
@@ -62,20 +61,22 @@ public abstract class HAPServiceServlet  extends HttpServlet{
 					requestsResult.add(requestResult);
 				}
 				out = HAPServiceData.createSuccessData(requestsResult);
-				content = out.toStringValue(HAPSerializationFormat.JSON);
 			}
-			
-			response.setContentType("application/json");
-		    PrintWriter writer = response.getWriter();
-		    
-//		    System.out.println(HAPJsonUtility.formatJson(content));
-		    writer.println(HAPJsonUtility.formatJson(content));		
-//		    writer.println(content);		
 		}
 		catch(Exception e){
 			e.printStackTrace();
+			out = HAPServiceData.createFailureData(null, "Exceptione during process gateway service request!!!!");
 		}
-	}
+
+		String content = out.toStringValue(HAPSerializationFormat.JSON);
+
+		response.setContentType("application/json");
+	    PrintWriter writer = response.getWriter();
+	    
+//	    System.out.println(HAPJsonUtility.formatJson(content));
+	    writer.println(HAPJsonUtility.formatJson(content));		
+//	    writer.println(content);		
+}
 	
 	// process one request object
 	private HAPServiceData processRequest(JSONObject req) throws Exception{

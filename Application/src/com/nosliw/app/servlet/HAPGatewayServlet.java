@@ -23,15 +23,15 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 		String command = segs[1];
 		
 		out = this.getRuntimeEnvironment().getGatewayManager().executeGateway(gatewayId, command, parms);
-
-		HAPGatewayOutput output = (HAPGatewayOutput)out.getData();
-		for(HAPJSScriptInfo scriptInfo : output.getScripts()){
-			if(scriptInfo.isFile()==null){
-				String escaptedScript = StringEscapeUtils.escapeJavaScript(scriptInfo.getScript());
-				scriptInfo.setScript(escaptedScript);
+		if(out.isSuccess()){
+			HAPGatewayOutput output = (HAPGatewayOutput)out.getData();
+			for(HAPJSScriptInfo scriptInfo : output.getScripts()){
+				if(scriptInfo.isFile()==null){
+					String escaptedScript = StringEscapeUtils.escapeJavaScript(scriptInfo.getScript());
+					scriptInfo.setScript(escaptedScript);
+				}
 			}
 		}
-		
 		return out;
 	}
 
