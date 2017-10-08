@@ -26,6 +26,7 @@ import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
+import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
@@ -72,7 +73,8 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	private void embedGatewayPoint(){
 		try{
 			HAPRuntimeEnvironmentJS runtimeEnv = (HAPRuntimeEnvironmentJS)this.getRuntimeEnvironment();
-	        Object wrappedObject = Context.javaToJS(runtimeEnv.getGatewayManager(), this.m_scope);
+			HAPGatewayEmbededPoint embededPoint = new HAPGatewayEmbededPoint(runtimeEnv.getGatewayManager(), this.m_scope);
+	        Object wrappedObject = Context.javaToJS(embededPoint, this.m_scope);
 	        NativeObject nosliwObj = (NativeObject)this.m_scope.get("nosliw", m_scope);
 	        Function createNodeFun = (Function)nosliwObj.get("createNode");
 	        createNodeFun.call(Context.enter(), m_scope, nosliwObj, new Object[]{HAPRuntimeEnvironmentJS.NODENAME_GATEWAY, wrappedObject});
@@ -227,7 +229,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 
 	private void loadResources(List<HAPResourceInfo> resourceInfos){
 		try {
-			HAPGatewayManagerRhino gatewayMan =	(HAPGatewayManagerRhino)this.getRuntimeEnvironment().getGatewayManager();
+			HAPGatewayManager gatewayMan =	this.getRuntimeEnvironment().getGatewayManager();
 			Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 			jsonMap.put(HAPGatewayResource.COMMAND_LOADRESOURCES_RESOURCEINFOS, HAPSerializeManager.getInstance().toStringValue(resourceInfos, HAPSerializationFormat.JSON));
 			gatewayMan.executeGateway(HAPRuntimeEnvironmentJS.GATEWAY_RESOURCE, HAPGatewayResource.COMMAND_LOADRESOURCES, new JSONObject(HAPJsonUtility.buildMapJson(jsonMap)));
@@ -287,8 +289,8 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 //	        System.setOut(dbg.getOut());
 //	        System.setErr(dbg.getErr());
 	        
-//		    dbg.setBreakOnEnter(true);
-		    dbg.setBreakOnExceptions(true);
+		    dbg.setBreakOnEnter(true);
+//		    dbg.setBreakOnExceptions(true);
 		    dbg.setScope(m_scope);
 		    dbg.setSize(1200, 800);
 		    dbg.setVisible(true);

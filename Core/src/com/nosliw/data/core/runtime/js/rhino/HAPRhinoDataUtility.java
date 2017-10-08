@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -131,6 +132,15 @@ public class HAPRhinoDataUtility
             else if(navtieObject instanceof Function){
             	out = new HAPFunctionType(Context.toString(navtieObject));
             }
+            else if(navtieObject instanceof NativeJavaObject){
+            	Object javaObj = ((NativeJavaObject)navtieObject).unwrap();
+            	out = toJson(javaObj);
+            	if(out==null){
+                	String jsonStr = HAPSerializeManager.getInstance().toStringValue(javaObj, HAPSerializationFormat.JSON);
+                	if(javaObj instanceof List || javaObj instanceof Set)  out = new JSONArray(jsonStr);
+                	else out = new JSONObject(jsonStr);
+            	}
+            }
     	}
     	catch(Exception e){
     		e.printStackTrace();
@@ -153,10 +163,21 @@ public class HAPRhinoDataUtility
             Object[] ids = nativeObject.getIds(); 
             for (Object id : ids) 
             { 
+            	if(id.equals("resourceInfos")){
+            		int kkkk = 5555;
+            		kkkk++;
+            	}
+            	
                 String key = id.toString(); 
                 Object value = nativeObject.get(key, nativeObject);
                 Object json = toJson(value);
                 mapJson.put(key, json+"");
+                
+                if(json==null){
+                	int kkkk = 5555;
+                	kkkk++;
+                }
+                
                 if(!(json instanceof String))      mapTypeJson.put(key, json.getClass()); 
             } 
          

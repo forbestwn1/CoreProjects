@@ -3,10 +3,13 @@ package com.nosliw.data.core.runtime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.runtime.js.HAPGateway;
+import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
 
-public abstract class HAPGatewayManager {
+public class HAPGatewayManager {
 	private Map<String, HAPGateway> m_gateways;
 	
 	public HAPGatewayManager(){
@@ -35,5 +38,33 @@ public abstract class HAPGatewayManager {
 	 * 					NativeObject
 	 * @return
 	 */
-	abstract public HAPServiceData executeGateway(String gatewayId, String command, Object parms);
+	public HAPServiceData executeGateway(String gatewayId, String command, JSONObject parms){
+		HAPGateway gateway = this.getGateway(gatewayId);
+
+		HAPServiceData commandResult = null;
+		try {
+			commandResult = gateway.command(command, parms);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			return HAPServiceData.createFailureData(null, "Exception during command!!");
+		}
+		
+		if(commandResult==null)  return HAPServiceData.createSuccessData();
+		
+		if(commandResult.isFail())  return commandResult;    //if command return fail result, then just return the result
+		else{
+			try{
+				//if command return success, need to process output, and create new ServiceData
+				//for scripts part, load into tuntime
+				//for data part, create
+				HAPGatewayOutput output = (HAPGatewayOutput)commandResult.getData();
+				return HAPServiceData.createSuccessData(output);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+				return HAPServiceData.createFailureData(null, "Exception during process command result!!");
+			}
+		}
+		
+	}
 }

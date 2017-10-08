@@ -15,13 +15,7 @@ var node_createLoggingService = function(){
 	var loc_buildMessage = function(arguments){
 		var out = "";
 		for(var i in arguments){
-			try{
-				var part = arguments[i]==undefined?"undefined":JSON.stringify(arguments[i]);
-				out = out + " " + part;
-			}
-			catch(err){
-				
-			}
+			out = out + " " + arguments[i];
 		}
 		return out;
 	}
@@ -55,24 +49,36 @@ var node_createLoggingService = function(){
 		return loc_logging;
 	}
 	
+	var loc_processArguments = function(){
+		var out = [];
+		for(var i in arguments){
+			try{
+				out.push(JSON.stringify(arguments[i]==undefined?"undefined":arguments[i]));
+			}
+			catch(err){
+			}
+		}
+		return out;
+	}
+	
 	loc_out = {
 		trace : function(){
-			loc_getLogging().trace.apply(loc_logging, arguments);
+			loc_getLogging().trace.apply(loc_logging, loc_processArguments(arguments));
 		},
 		debug : function(){			
-			loc_getLogging().debug.apply(loc_logging, arguments);
+			loc_getLogging().debug.apply(loc_logging, loc_processArguments(arguments));
 		},
 		info : function(){			
-			loc_getLogging().info.apply(loc_logging, arguments);
+			loc_getLogging().info.apply(loc_logging, loc_processArguments(arguments));
 		},
 		warn : function(){			
-			loc_getLogging().warn.apply(loc_logging, arguments);
+			loc_getLogging().warn.apply(loc_logging, loc_processArguments(arguments));
 		},
 		error : function(){			
-			loc_getLogging().error.apply(loc_logging, arguments);
+			loc_getLogging().error.apply(loc_logging, loc_processArguments(arguments));
 		},
 		fatal : function(){			
-			loc_getLogging().fatal.apply(loc_logging, arguments);
+			loc_getLogging().fatal.apply(loc_logging, loc_processArguments(arguments));
 		},
 	};
 	

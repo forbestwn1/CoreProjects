@@ -10,7 +10,7 @@ var node_requestServiceProcessor = function(){
 	var loc_moduleName = "requestManager";
 	
 	var loc_processRequest = function(requestInfo, processRemote){
-		nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Start request : ", JSON.stringify(requestInfo.getService()));
+		nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Start request : ", requestInfo.getService());
 		
 		//add request processor in order to logging the result
 		requestInfo.setRequestProcessors({

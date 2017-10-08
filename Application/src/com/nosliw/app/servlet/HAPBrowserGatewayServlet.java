@@ -34,7 +34,10 @@ public class HAPBrowserGatewayServlet  extends HttpServlet{
 			throws ServletException, IOException {
 		
 		HAPRequestInfo requestInfo = this.getRequestInfo(request);
-		HAPServiceData serviceData = this.getRuntimeEnvironment().getGatewayManager().executeGateway(HAPRuntimeEnvironmentImpBrowser.GATEWAY_LOADLIBRARIES, HAPGatewayBrowserLoadLibrary.COMMAND_LOADLIBRARY, requestInfo.getData());
+		HAPServiceData serviceData = this.getRuntimeEnvironment().getGatewayManager().executeGateway(
+				HAPRuntimeEnvironmentImpBrowser.GATEWAY_LOADLIBRARIES, 
+				HAPGatewayBrowserLoadLibrary.COMMAND_LOADLIBRARY, 
+				(JSONObject)requestInfo.getData());
 		String content = serviceData.toStringValue(HAPSerializationFormat.JSON);
 		content = HAPJsonUtility.formatJson(content);
 		
