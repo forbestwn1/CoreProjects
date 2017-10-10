@@ -178,10 +178,11 @@ public class HAPOperandOperation extends HAPOperandImp{
 			List<HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
 			for(HAPOperationParmInfo parmInfo : parmsInfo){
 				HAPOperand parmOperand = this.m_parms.get(parmInfo.getName());
-				
-				if(parmOperand==null || parmInfo==null){
-					int kkkk = 5555;
-					kkkk++;
+				if(parmOperand==null && this.m_base!=null && parmInfo.getIsBase()){
+					//if parm does not exist, then try to use base
+					parmOperand = this.m_base;
+					this.m_parms.put(parmInfo.getName(), parmOperand);
+					this.setBase(null);
 				}
 				
 				HAPMatchers matchers = parmOperand.discover(variablesInfo, parmInfo.getCriteria(), context, dataTypeHelper);

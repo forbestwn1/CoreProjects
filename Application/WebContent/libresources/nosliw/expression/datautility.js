@@ -10,7 +10,7 @@ var packageObj = library;
 var node_dataUtility = 
 {
 	createStringData : function(stringValue){
-		return new nod_Data("test.string;1.0.0", stringValue);
+		return new node_Data("test.string;1.0.0", stringValue);
 	}
 		
 };

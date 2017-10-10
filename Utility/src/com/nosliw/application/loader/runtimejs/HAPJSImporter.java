@@ -135,12 +135,6 @@ public class HAPJSImporter {
 				//get resources for operation
 				String operationName = (String)operationNameKey;
 				NativeObject operationObjJS = (NativeObject)operationsObjJS.get(operationName);
-				
-				if(operationName.equals("outputCriteria")){
-					int kkkk = 5555;
-					kkkk++;
-				}
-				
 				HAPJSResourceDependency dep = this.processOperationObject(operationObjJS, dataTypeId, operationName, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_OPERATION);
 				this.m_jsRuntimeDataAccess.saveEntity(dep);
 			}

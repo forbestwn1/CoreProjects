@@ -53,7 +53,7 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 			Map<String, HAPDataTypeCriteria> variableCriterias, 
 			HAPProcessExpressionDefinitionContext context) {
 
-		System.out.println("******* Parse expression");
+		System.out.println("******* Parse expression : " + expDef.getExpression());
 		HAPExpressionImp expression = this.parseExpressionDefinition(expDef);
 
 		//set expression name, every expression instance has a unique name

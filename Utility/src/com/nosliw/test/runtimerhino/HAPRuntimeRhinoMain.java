@@ -37,33 +37,10 @@ public class HAPRuntimeRhinoMain {
 				public void finish(HAPRuntimeTask task){
 					try{
 						HAPServiceData serviceData = task.getResult();
-						if(serviceData.isSuccess()){
-							Object resultObj = serviceData.getData();
-							HAPDataWrapper exprectResult = suite.getResult();
-							HAPDataWrapper result = new HAPDataWrapper();
-							result.buildObject(resultObj, HAPSerializationFormat.JSON);
-							System.out.println("Expression Result : " + resultObj);
-							if(result.equals(exprectResult)){
-							}
-							else{
-								throw new Exception();
-							}
-						}
-						else{
-							if((serviceData.getCode()+"").equals(suite.getErrorCode())){
-								System.out.println("Expression Result : " + serviceData.getCode());
-							}
-							else{
-								throw new Exception();
-							}
-						}
+						processResult(suite, serviceData);
 					}
 					catch(Exception e){
 						e.printStackTrace();
-					}
-					finally{
-						//shut down runtime
-						runtime.close();
 					}
 				}
 			});
@@ -80,6 +57,54 @@ public class HAPRuntimeRhinoMain {
 		
 	}
 	
+	private static void processResult(HAPExpressionDefinitionSuiteImp suite, HAPServiceData resultServiceData){
+		boolean success = true;
+		String resultStr = "";
+		String expecectResultStr = "";
+		String suiteName = suite.getName();
+		if(resultServiceData.isSuccess()){
+			Object resultObj = resultServiceData.getData();
+			HAPDataWrapper exprectResult = suite.getResult();
+			HAPDataWrapper result = new HAPDataWrapper();
+			result.buildObject(resultObj, HAPSerializationFormat.JSON);
+			resultStr =  resultObj + "";
+			expecectResultStr = exprectResult +"";
+			if(result.equals(exprectResult))	success = true;
+			else		success = false;
+		}
+		else{
+			resultStr =  resultServiceData.getCode() + "";
+			expecectResultStr = suite.getErrorCode() +"";
+			if((resultServiceData.getCode()+"").equals(suite.getErrorCode()))  success = true;
+			else success = false;
+		}
+		
+		System.out.println();
+		if(success){
+			System.out.println("***************************** Test "+ suite.getName() +"*****************************");
+			System.out.println("******Result : ");
+			System.out.println(resultStr);
+			System.out.println("*****************************"+ "" +"*****************************");
+			System.out.println();
+		}
+		else{
+			System.err.println("***************************** Test "+ suite.getName() +"*****************************");
+			System.err.println("******Result : ");
+			System.err.println(resultStr);
+			System.err.println("******Expect Result : ");
+			System.err.println(expecectResultStr);
+			System.err.println("*****************************"+ "" +"*****************************");
+		}
+		System.out.println();
+	}
+	
+	private static void executeSuites(String[] suites, HAPRuntimeEnvironmentImpRhino runtimeEnvironment){
+		for(String suiteName : suites){
+			executeSuite(suiteName, runtimeEnvironment);
+		}
+		
+	}
+	
 	public static void main(String[] args){
 		
 		//module init
@@ -90,10 +115,31 @@ public class HAPRuntimeRhinoMain {
 		
 		HAPExpressionImporter.importExpressionSuiteFromFolder(HAPFileUtility.getClassFolderName(HAPExpressionTest.class), runtimeEnvironment.getExpressionManager());
 		
-		executeSuite("expression6", runtimeEnvironment);
+		executeSuites(new String[]{
+//				"expression0",
+//				"expression1",
+//				"expression10",
+//				"expression2",
+//				"expression3",
+//				"expression4",
+//				"expression5",
+//				"expression6",
+
+//				"expression7",
+				"expression71",
+//				"expression8",
+				
+//				"expression9",
+			}, runtimeEnvironment);
 		
-//		for(String suiteName : expressionMan.getExpressionDefinitionSuites()){
+//		for(String suiteName : runtimeEnvironment.getExpressionManager().getExpressionDefinitionSuites()){
 //			executeSuite(suiteName, runtimeEnvironment);
 //		}
+		
+//		finally{
+//			//shut down runtime
+//			runtime.close();
+//		}
+		
 	}
 }

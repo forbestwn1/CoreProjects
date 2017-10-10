@@ -40,15 +40,17 @@ public class HAPGatewayEmbededPoint {
 			else if(parmsObj instanceof NativeObject)	jsonObjParms = (JSONObject)HAPRhinoDataUtility.toJson(parmsObj);
 
 			HAPServiceData serviceData = this.m_gatewayMan.executeGateway(gatewayId, command, jsonObjParms);
-
-			//if command return success, need to process output, and create new ServiceData
-			//for scripts part, load into tuntime
-			//for data part, create
-			HAPGatewayOutput output = (HAPGatewayOutput)serviceData.getData();
-			List<HAPJSScriptInfo> scripts = output.getScripts();
-			for(HAPJSScriptInfo scriptInfo : scripts){		this.m_runtime.loadScript(scriptInfo);	}
-			
-			outServiceData = HAPServiceData.createSuccessData(output.getData());
+			if(serviceData.isSuccess()){
+				//if command return success, need to process output, and create new ServiceData
+				//for scripts part, load into tuntime
+				//for data part, create
+				HAPGatewayOutput output = (HAPGatewayOutput)serviceData.getData();
+				List<HAPJSScriptInfo> scripts = output.getScripts();
+				for(HAPJSScriptInfo scriptInfo : scripts){		this.m_runtime.loadScript(scriptInfo);	}
+				
+				outServiceData = HAPServiceData.createSuccessData(output.getData());
+			}
+			else  outServiceData = serviceData;
 		}
 		catch(Exception e){
 			e.printStackTrace();
