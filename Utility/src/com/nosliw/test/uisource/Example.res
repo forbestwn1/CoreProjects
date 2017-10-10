@@ -173,7 +173,7 @@
 	<context>
 	{
 		business : {
-			children: {
+			definition: {
 				a : {
 					aa : "abc.abc;1.0.0%||a:cde;1.1.1,b:dfe;1.0.0||%",
 					bb : "test.array;1.0.0%||element:@||!(test.expression)!.outputCriteria(&(expression)&;;&(parms)&)||@||%"
@@ -184,7 +184,7 @@
 			}
 		},
 		b : {
-			criteria: "*",
+			definition: "*",
 			default: {
 			
 			}

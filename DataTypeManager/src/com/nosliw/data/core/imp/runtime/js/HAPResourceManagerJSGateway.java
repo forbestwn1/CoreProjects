@@ -2,6 +2,7 @@ package com.nosliw.data.core.imp.runtime.js;
 
 import java.util.List;
 
+import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
@@ -10,6 +11,12 @@ import com.nosliw.data.core.runtime.js.HAPResourceDataJSGateway;
 
 public class HAPResourceManagerJSGateway implements HAPResourceManager{
 
+//	private HAPGatewayManager m_gatewayManager;
+//	
+//	HAPResourceManagerJSGateway(HAPGatewayManager gatewayManager){
+//		this.m_gatewayManager = gatewayManager;
+//	}
+	
 	@Override
 	public HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId) {
 		HAPLoadResourceResponse out = new HAPLoadResourceResponse();
@@ -24,14 +31,9 @@ public class HAPResourceManagerJSGateway implements HAPResourceManager{
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId) {
 		if(resourceId.getId().equals("discoveryGateway")){
-			return new HAPResource(resourceId, new HAPResourceDataJSGateway(this, resourceId.getId()), null);
+			return new HAPResource(resourceId, new HAPResourceDataJSGateway(resourceId.getId()), null);
 		}
 		return null;
 	}
-
-	public void hello(String expression, Object parmsObj){
-		System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-	}
-	
 
 }

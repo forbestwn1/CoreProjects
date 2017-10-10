@@ -12,7 +12,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 
-public class HAPDataTypeCriteriaId  extends HAPDataTypeCriteriaImp{
+public class HAPDataTypeCriteriaId  extends HAPDataTypeCriteriaImp implements HAPDataTypeCriteriaWithSubCriteria{
 
 	@HAPAttribute
 	public static String DATATYPEID = "dataTypeId";
@@ -37,6 +37,7 @@ public class HAPDataTypeCriteriaId  extends HAPDataTypeCriteriaImp{
 	 * In order to validate on data type or data type criteria, both parent and children data type criteria have to meet
 	 * @return
 	 */
+	@Override
 	public HAPDataTypeSubCriteriaGroup getSubCriteria(){	return this.m_subCriteriaGroup;	}
 	
 	

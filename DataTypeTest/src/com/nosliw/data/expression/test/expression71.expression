@@ -1,44 +1,11 @@
 {
 	"name": "expression71",
-	"description" : "discover operation, it does not do discovery",
+	"description" : "discover operation, it does not do discovery, and need gateway",
 	"expressionDefinitions": {
 		"main": {
 			"expression": "!(test.datatypecriteria)!.getChild(&(base)&,childName:&(element)&)",
 			"description": "complex data type",
 			"constants": {
-				"expression": {
-					"dataTypeId": "test.parm",
-					"value": {
-						"value": {
-							"dataTypeId": "test.expression",
-							"value": {
-								"expression": "!(test.string)!.subString(?(eleName)?,from:&(from)&,to:&(to)&)",
-								"description": "DataType.method, all constant",
-								"constants": {
-									"from": {
-										"dataTypeId": "test.integer",
-										"value": "3"
-									},
-									"to": {
-										"dataTypeId": "test.integer",
-										"value": "7"
-									}
-								},
-								"variableCriterias": {
-								}
-							}
-						}
-					}
-				},
-				"elementVariableName": {
-					"dataTypeId": "test.parm",
-					"value": {
-						"value": {
-							"dataTypeId": "test.string",
-							"value": "element",
-						}
-					}
-				},
 				"base": {
 					"dataTypeId": "test.datatypecriteria",
 					"value": "test.array;1.0.0%||element:test.string||%"
@@ -51,17 +18,8 @@
 		},
 	},
 	"result": {
-		"dataTypeId": "test.array;1.0.0",
-		"value": [
-			{
-				"dataTypeId": "test.string;1.0.0",
-				"value": "1234567890abcdefgh",
-			},
-			{
-				"dataTypeId": "test.string;1.0.0",
-				"value": "abcedfghijk1234567890",
-			}
-		],
+		"dataTypeId": "test.datatypecriteria",
+		"value": "test.string",
 		"wapperType": "JSON"
 	},
 	"configure" :{

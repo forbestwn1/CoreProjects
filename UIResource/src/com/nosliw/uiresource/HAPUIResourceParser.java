@@ -1,13 +1,10 @@
 package com.nosliw.uiresource;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.json.JSONException;
@@ -21,7 +18,6 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import com.nosliw.common.configure.HAPConfigure;
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -29,7 +25,6 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 
@@ -121,11 +116,9 @@ public class HAPUIResourceParser {
 		return resource;
 	}
 	
-	
-	
-	private void parseChildContextBlocks(Element ele, HAPUIDefinitionUnit resource){
+	private void parseChildContextBlocks(Element ele, HAPUIDefinitionUnitResource resource){
 		List<Element> removes = new ArrayList<Element>();
-		Elements contextEles = ele.getElementsByTag(HAPUIDefinitionUnit.CONTEXT);
+		Elements contextEles = ele.getElementsByTag(HAPUIDefinitionUnitResource.CONTEXT);
 		for(int i=0; i<contextEles.size(); i++){
 			try {
 				String content = contextEles.get(i).html();
@@ -134,24 +127,15 @@ public class HAPUIResourceParser {
 				while(defNames.hasNext()){
 					String eleName = defNames.next();
 					JSONObject eleDefJson = defsJson.optJSONObject(eleName);
-					HAPContextElement contextEle = new HAPContextElement(eleName);
+					HAPContextNodeRoot contextEle = new HAPContextNodeRoot();
 
-					Object d = eleDefJson.opt(HAPContextElement.DEFAULT);
-					if(d!=null)		contextEle.setDefault(d.toString());
+					Object d = eleDefJson.opt(HAPContextNodeRoot.DEFAULT);
+					if(d!=null)		contextEle.setDefaultValue(d.toString());
 
-					String criteria = eleDefJson.optString(HAPContextElement.CRITERIA);
-					if(!HAPBasicUtility.isStringEmpty(criteria)){
-						contextEle.setCriteria(this.m_criteriaParser.parseCriteria(criteria));
-					}
-					else{
-						Object criteriasObj = eleDefJson.opt(HAPContextElement.CHILDREN);
-						Map<String, HAPDataTypeCriteria> criterias = new LinkedHashMap<String, HAPDataTypeCriteria>();
-						this.parseContextElementChildren("", criteriasObj, criterias);
-						for(String path : criterias.keySet()){
-							contextEle.addChild(path, criterias.get(path));
-						}
-					}
-					resource.addContextElement(contextEle);
+					Object defObj = eleDefJson.opt(HAPContextNode.DEFINITION);
+					this.paresContextNode(defObj, contextEle);
+					
+					resource.getContext().addElement(eleName, contextEle);
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -163,18 +147,21 @@ public class HAPUIResourceParser {
 		for(Element remove : removes)	remove.remove();
 	}
 	
-	private void parseContextElementChildren(String path, Object criteriasObj, Map<String, HAPDataTypeCriteria> criterias){
-		if(criteriasObj instanceof String){
-			criterias.put(path, this.m_criteriaParser.parseCriteria((String)criteriasObj));
+	private HAPContextNode paresContextNode(Object eleDef, HAPContextNode node){
+		if(eleDef instanceof String){
+			node.setDefinition(new HAPContextNodeDefinition(this.m_criteriaParser.parseCriteria((String)eleDef)));
 		}
-		else if(criteriasObj instanceof JSONObject){
-			JSONObject criteriasJsonObj = (JSONObject)criteriasObj;
-			Iterator<String> names = criteriasJsonObj.keys();
+		else if(eleDef instanceof JSONObject){
+			JSONObject childrenObj = (JSONObject)eleDef;
+			Iterator<String> names = childrenObj.keys();
 			while(names.hasNext()){
 				String name = names.next();
-				parseContextElementChildren(HAPNamingConversionUtility.cascadePath(path, name), criteriasJsonObj.opt(name), criterias);
+				HAPContextNode childNode = new HAPContextNode();
+				paresContextNode(childrenObj.opt(name), childNode);
+				node.addChild(name, childNode);
 			}
 		}
+		return node;
 	}
 	
 	private void parseChildExpressionBlocks(Element ele, HAPUIDefinitionUnit resource){

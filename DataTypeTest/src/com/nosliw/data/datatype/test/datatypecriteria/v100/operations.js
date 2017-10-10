@@ -16,14 +16,18 @@ dataTypeDefition.operations['getChild'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
-			var childName = parms.getParm("childName").value;
-			return {
-				dataTypeId : "test.datatypecriteria;1.0.0",
-				value: "test.string"
+			var gatewayParms = {
+				"criteria" : this.value,
+				"childName" : parms.getParm("childName").value
 			};
+			var out = context.getResourceDataByName("myGateWay").command("getChildCriteria", gatewayParms);
+			return out;
 		},
 
 		requires:{
+			"jsGateway" : { 
+				myGateWay: "criteria",
+			}
 		},
 };
 

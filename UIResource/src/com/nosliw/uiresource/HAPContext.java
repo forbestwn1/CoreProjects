@@ -12,14 +12,14 @@ public class HAPContext {
 	@HAPAttribute
 	public static final String ELEMENTS = "elements";
 	
-	private Map<String, HAPContextElement> m_elements;
+	private Map<String, HAPContextNodeRoot> m_elements;
 	
 	public HAPContext(){
-		this.m_elements = new LinkedHashMap<String, HAPContextElement>();
+		this.m_elements = new LinkedHashMap<String, HAPContextNodeRoot>();
 	}
 	
-	public void addElement(String name, HAPContextElement element){
-		this.m_elements.put(name, element);
+	public void addElement(String name, HAPContextNodeRoot rootEle){
+		this.m_elements.put(name, rootEle);
 	}
 	
 }

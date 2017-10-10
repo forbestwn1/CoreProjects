@@ -58,19 +58,4 @@ public abstract class HAPDataTypeCriteriaImp extends HAPSerializableImp implemen
 		}
 		return out;
 	}
-
-	
-//	protected HAPDataTypeCriteria buildCriteriaByIds1(Set<HAPDataTypeId> ids){
-//	HAPDataTypeCriteria out = null;
-//	if(ids.size()==1){
-//		for(HAPDataTypeId id : ids){
-//			out = new HAPDataTypeCriteriaElementId(id);
-//		}
-//	}
-//	else{
-//		out = new HAPDataTypeCriteriaElementIds(ids);
-//	}
-//	return out;
-//}
-
 }

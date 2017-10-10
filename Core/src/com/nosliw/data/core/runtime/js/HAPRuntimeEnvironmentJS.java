@@ -18,6 +18,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	@HAPAttribute
 	public static final String GATEWAY_RESOURCE = "resources";
 	
+	@HAPAttribute
+	public static final String GATEWAY_CRITERIA = "criteria";
 	
 	private HAPResourceDiscovery m_resourceDiscovery;
 	
@@ -52,6 +54,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_runtime = runtime;
 		
 		this.getGatewayManager().registerGateway(GATEWAY_RESOURCE, new HAPGatewayResource(this));
+		this.getGatewayManager().registerGateway(GATEWAY_CRITERIA, new HAPGatewayCriteriaOperation());
 	}
 	
 	@Override
