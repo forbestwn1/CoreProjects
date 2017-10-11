@@ -1,10 +1,11 @@
-package com.nosliw.uiresource;
+package com.nosliw.uiresource.expression;
 
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Segment in script expression for in-line script 
+ * it may also contains constants and variables in it
  */
 public class HAPScriptExpressionScriptSegment {
 
@@ -25,7 +26,7 @@ public class HAPScriptExpressionScriptSegment {
 	//variables in script
 	private Set<String> m_variables;
 	
-	//script
+	//script after processing
 	private String m_script;
 	
 	public HAPScriptExpressionScriptSegment(String script){
@@ -39,6 +40,10 @@ public class HAPScriptExpressionScriptSegment {
 	public Set<String> getConstants(){  return this.m_constants;  }
 	public Set<String> getVariables(){  return this.m_variables;  } 
 	
+	//process script
+	//majorly discover constants and variables
+	//then replace placeholder for constants and variables with variable name
+	//for instance: constants.size, variables.age, ...
 	private String process(){
 		String script = this.m_orignalScript;
 		script = this.process(script, TOKEN_CONSTANT_START, TOKEN_CONSTANT_END, TEMPLATE_CONSTANT, m_constants);

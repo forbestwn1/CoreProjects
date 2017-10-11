@@ -27,6 +27,8 @@ import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
+import com.nosliw.uiresource.expression.HAPScriptExpression;
+import com.nosliw.uiresource.expression.HAPScriptExpressionUtility;
 
 /*
  * This is a utility class that process ui resource file and create ui resource object
@@ -272,7 +274,7 @@ public class HAPUIResourceParser {
 		List<TextNode> textNodes = ele.textNodes();
 		for(TextNode textNode : textNodes){
 			String text = textNode.text();
-			List<Object> segments = HAPUIResourceParserUtility.parseUIExpression(text, this.m_idGenerator, this.m_expressionManager);
+			List<Object> segments = HAPScriptExpressionUtility.discoverUIExpressionInText(text, this.m_idGenerator, this.m_expressionManager);
 			StringBuffer newText = new StringBuffer();
 			for(Object segment : segments){
 				if(segment instanceof String){
@@ -429,7 +431,7 @@ public class HAPUIResourceParser {
 			String eleAttrKey = eleAttr.getKey();
 			//replace express attribute value with; create ExpressEle object
 			
-			List<Object> segments = HAPUIResourceParserUtility.parseUIExpression(eleAttr.getValue(), this.m_idGenerator, this.m_expressionManager);
+			List<Object> segments = HAPScriptExpressionUtility.discoverUIExpressionInText(eleAttr.getValue(), this.m_idGenerator, this.m_expressionManager);
 			HAPScriptExpression scriptExpression = null;
 			//try to find first script expression in attribute value
 			for(Object segment : segments){

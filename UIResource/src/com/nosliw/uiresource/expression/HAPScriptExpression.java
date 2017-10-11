@@ -1,4 +1,4 @@
-package com.nosliw.uiresource;
+package com.nosliw.uiresource.expression;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,9 @@ import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 
 /**
- * Represent ui expression
- * UI expression is a mix of data expression and javascript expression
- * The result of UI expression is javascript entity (string, boolean number, or object)
+ * Represent script expression
+ * Script expression is a mix of data expression and javascript expression
+ * The result of script expression is javascript entity (string, boolean number, or object)
  * It is used in:
  * 		part of html text
  * 		tag attribute

@@ -3,6 +3,7 @@ package com.nosliw.uiresource;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.uiresource.expression.HAPScriptExpression;
 
 public class HAPEmbededScriptExpressionInAttribute extends HAPEmbededScriptExpression{
 

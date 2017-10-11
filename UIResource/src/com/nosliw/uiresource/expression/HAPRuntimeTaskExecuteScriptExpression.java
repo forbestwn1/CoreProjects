@@ -1,4 +1,4 @@
-package com.nosliw.uiresource;
+package com.nosliw.uiresource.expression;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +88,7 @@ public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTask{
 			if(resourceTaskResult.isSuccess()){
 				//after resource loaded, execute expression
 				try{
-					HAPJSScriptInfo scriptInfo = HAPJSScriptUtility.buildRequestScriptForExecuteScriptExpressionTask(this.m_parent);
+					HAPJSScriptInfo scriptInfo = HAPScriptExpressionUtility.buildRequestScriptForExecuteScriptExpressionTask(this.m_parent, this.m_runtime);
 					this.m_runtime.loadTaskScript(scriptInfo, m_parent.getTaskId());
 				}
 				catch(Exception e){

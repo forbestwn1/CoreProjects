@@ -1,6 +1,7 @@
 package com.nosliw.uiresource;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.uiresource.expression.HAPScriptExpression;
 
 public class HAPEmbededScriptExpression extends HAPSerializableImp{
 

@@ -1,11 +1,10 @@
 package com.nosliw.uiresource;
 
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.Map;
 
+import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.data.core.expression.HAPExpressionDefinitionSuite;
 
 /**
  * UIResource that is result of processing UI Definition
@@ -34,13 +33,18 @@ public class HAPUIResource {
 			){
 		HAPUIResourceUnit out = new HAPUIResourceUnit(context);
 		
-		//process expression
-		if(parent!=null){
-			out.addOtherExpressionDefinitions(parent.getOtherExpressionDefinitions());
+		//build data constants
+		if(parent!=null)	out.addConstants(parent.getConstants());
+		Map<String, HAPConstantDef> constantDefs = this.m_uiDefinitionResource.getConstants();
+		for(String name : constantDefs.keySet()){
+			HAPData data = constantDefs.get(name).getDataValue();
+			if(data!=null)		out.addConstant(name, data);
 		}
 		
-		Set<HAPExpressionDefinition> expDefs = defUnit.getExpressionDefinitions();
-		Set<HAPExpressionDefinition> otherExpDefs = defUnit.getOtherExpressionDefinitions();
+		//build expression
+		if(parent!=null)	out.addOtherExpressionDefinitions(parent.getOtherExpressionDefinitions());
+		Map<String, HAPExpressionDefinition> expDefs = defUnit.getExpressionDefinitions();
+		Map<String, HAPExpressionDefinition> otherExpDefs = defUnit.getOtherExpressionDefinitions();
 		out.addExpressionDefinitions(expDefs);
 		out.addOtherExpressionDefinitions(otherExpDefs);
 		

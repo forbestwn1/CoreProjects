@@ -123,15 +123,20 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	 * Exception expression definitions in Constant Definition
 	 * @return
 	 */
-	public Set<HAPExpressionDefinition> getExpressionDefinitions(){
-		Set<HAPExpressionDefinition> out = new HashSet<HAPExpressionDefinition>();
-		for(HAPEmbededScriptExpressionInContent embededScriptExpression : this.m_scriptExpressionsInContent)	out.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
-		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : this.m_scriptExpressionsInAttribute)	out.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
-		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : this.m_scriptExpressionsInTagAttribute)		out.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
+	public Map<String, HAPExpressionDefinition> getExpressionDefinitions(){
+		Set<HAPExpressionDefinition> all = new HashSet<HAPExpressionDefinition>();
+		for(HAPEmbededScriptExpressionInContent embededScriptExpression : this.m_scriptExpressionsInContent)	all.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
+		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : this.m_scriptExpressionsInAttribute)	all.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
+		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : this.m_scriptExpressionsInTagAttribute)		all.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
+		
+		Map<String, HAPExpressionDefinition> out = new LinkedHashMap<String, HAPExpressionDefinition>();
+		for(HAPExpressionDefinition def : all){
+			out.put(def.getName(), def);
+		}
 		return out;
 	}
 	
-	public Set<HAPExpressionDefinition> getOtherExpressionDefinitions(){  return new HashSet<HAPExpressionDefinition>(this.m_expressionDefinitions.values());	}
+	public Map<String, HAPExpressionDefinition> getOtherExpressionDefinitions(){  return this.m_expressionDefinitions;	}
 	
 	/**
 	 * Calculate all the constant values in ConstantDef
@@ -151,10 +156,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		contextConstants.putAll(this.m_constants);
 		
 		//process all constants defined in this domain
-		for(String constantName : this.m_constants.keySet()){
-			HAPConstantDef constantDef = this.m_constants.get(constantName);
-			constantDef.process(contextConstants, idGenerator, expressionMan, runtime);
-		}
+		HAPConstantUtility.processConstantDefs(contextConstants, idGenerator, expressionMan, runtime);
 		
 		//process constants in child
 		for(String tagId : this.m_uiTags.keySet()){

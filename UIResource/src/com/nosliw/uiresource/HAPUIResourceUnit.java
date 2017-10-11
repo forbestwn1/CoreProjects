@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionDefinitionSuite;
@@ -18,10 +19,12 @@ public class HAPUIResourceUnit {
 	HAPContext m_context;
 	
 	//expressions used to do discovery (content, attribute)
-	private Set<HAPExpressionDefinition> m_expressionDefinitions;
+	private Map<String, HAPExpressionDefinition> m_expressionDefinitions;
 
 	//expressions for suport
-	private Set<HAPExpressionDefinition> m_otherExpressionDefinitions;
+	private Map<String, HAPExpressionDefinition> m_otherExpressionDefinitions;
+	
+	private Map<String, HAPData> m_constants;
 	
 	
 	//every unit has its own expression definition suite
@@ -44,20 +47,12 @@ public class HAPUIResourceUnit {
 
 	public void addChild(String id, HAPUIResourceUnit child){  this.m_children.put(id, child);  }
 	
-	public void addExpressionDefinitions(Set<HAPExpressionDefinition> expDefs){
-		this.m_expressionDefinitions.addAll(expDefs);
-	}
-	
-	public void addOtherExpressionDefinitions(Set<HAPExpressionDefinition> expDefs){
-		this.m_otherExpressionDefinitions.addAll(expDefs);
-	}
+	public void addExpressionDefinitions(Map<String, HAPExpressionDefinition> expDefs){		this.m_expressionDefinitions.putAll(expDefs);	}
+	public void addOtherExpressionDefinitions(Map<String, HAPExpressionDefinition> expDefs){		this.m_otherExpressionDefinitions.putAll(expDefs);	}
+	public Map<String, HAPExpressionDefinition> getExpressionDefinitions(){		return this.m_expressionDefinitions;	}
+	public Map<String, HAPExpressionDefinition> getOtherExpressionDefinitions(){		return this.m_otherExpressionDefinitions;	}
 
-	public Set<HAPExpressionDefinition> getExpressionDefinitions(){
-		return this.m_expressionDefinitions;
-	}
-
-	public Set<HAPExpressionDefinition> getOtherExpressionDefinitions(){
-		return this.m_otherExpressionDefinitions;
-	}
-
+	public Map<String, HAPData> getConstants(){  return this.m_constants; }
+	public void addConstants(Map<String, HAPData> datas){  this.m_constants.putAll(datas);  }
+	public void addConstant(String name, HAPData data){ this.m_constants.put(name, data);  }
 }
