@@ -24,6 +24,7 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
+import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
@@ -100,7 +101,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		//new expression definition
 		HAPExpressionDefinition expDefinition = this.getRuntimeEnvironment().getExpressionManager().newExpressionDefinition(expressionStr, null, parmsData, null); 
 		//build expression obj
-		HAPExpression expression = this.getRuntimeEnvironment().getExpressionManager().processExpression(null, expDefinition, null, null);
+		HAPExpression expression = this.getRuntimeEnvironment().getExpressionManager().processExpression(null, expDefinition, null, null, HAPExpressionProcessConfigureUtil.setDontDiscovery(null));
 		//execute task
 		HAPRuntimeTask task = new HAPRuntimeTaskExecuteExpressionRhino(expression, parmsData);
 		return this.executeTaskSync(task);

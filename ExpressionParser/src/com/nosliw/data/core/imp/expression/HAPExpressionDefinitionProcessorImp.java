@@ -16,6 +16,7 @@ import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionDefinitionProcessor;
 import com.nosliw.data.core.expression.HAPExpressionParser;
+import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPOperand;
@@ -74,7 +75,7 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 		this.processDefaultAnonomousParmInOperation(expression);
 		
 		//only discovery is configure as "true"
-		if("true".equals(context.getConfiguration().getStringValue(HAPProcessExpressionDefinitionContextImp.CONFIGURE_DISCOVERY))){
+		if(HAPExpressionProcessConfigureUtil.isDoDiscovery(context)){
 			//discover variables criteria / matchs in expression
 			Map<String, HAPVariableInfo> parentVariableInfos = new LinkedHashMap<String, HAPVariableInfo>();
 			if(variableCriterias!=null){

@@ -49,11 +49,6 @@ public class HAPUIResourceConstantTest {
 		//process constant defs
 		HAPUIResourceIdGenerator idGenerator = new HAPUIResourceIdGenerator(1);
 		HAPConstantUtility.processConstantDefs(constantsDef, idGenerator, runtimeEnvironment.getExpressionManager(), runtimeEnvironment.getRuntime());
-		for(String name : constantsDef.keySet()){
-			HAPConstantDef constantDef = constantsDef.get(name);
-			compareOutput(name, constantDef, constantsExprectOutput.get(name));
-		}
-
 		//compare output
 		for(String name : constantsDef.keySet()){
 			HAPConstantDef constantDef = constantsDef.get(name);

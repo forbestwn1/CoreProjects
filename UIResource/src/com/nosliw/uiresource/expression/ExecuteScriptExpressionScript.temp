@@ -25,13 +25,3 @@
 			}
 		},
 		undefined);
-			
-
-/*
-	var expressionService = nosliw.runtime.getExpressionService();
-	expressionService.executeExecuteScriptExpressionRequest(function(expressionData, constants, variables){return ||functionScript||;}, ||expressions||, ||variables||, ||constants||, {
-		success : function(requestInfo, result){
-			nosliw.getNodeData("||gatewayPath||").notifyScriptExpressionExecuteResult("||taskId||", result);
-		}
-	}, undefined);
-*/			

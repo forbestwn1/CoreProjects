@@ -4,13 +4,16 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
 
-public class HAPExpressionDefinitionSimple implements HAPExpressionDefinition{
+public class HAPExpressionDefinitionSimple extends HAPSerializableImp implements HAPExpressionDefinition{
 
 	private String m_name; 
 	
@@ -101,5 +104,15 @@ public class HAPExpressionDefinitionSimple implements HAPExpressionDefinition{
 		if(this.m_operand!=null)  out.m_operand = this.m_operand.cloneOperand();
 		
 		return out;
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(NAME, m_name);
+		jsonMap.put(EXPRESSION, m_expression);
+		jsonMap.put(VARIABLECRITERIAS, HAPJsonUtility.buildJson(this.m_variableCriterias, HAPSerializationFormat.JSON));
+		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_constants, HAPSerializationFormat.JSON));
+		jsonMap.put(REFERENCES, HAPJsonUtility.buildJson(this.m_references, HAPSerializationFormat.JSON));
 	}
 }

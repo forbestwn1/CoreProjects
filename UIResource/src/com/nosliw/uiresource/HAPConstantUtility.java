@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
+import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
@@ -182,7 +183,7 @@ public class HAPConstantUtility {
 				for(Object ele : sciptExpression.getElements()){
 					if(ele instanceof HAPExpressionDefinition){
 						HAPExpressionDefinition expDef = (HAPExpressionDefinition)ele;
-						HAPExpression expression = expressionMan.processExpression(expDef.getName(), expDef, expParms, null);
+						HAPExpression expression = expressionMan.processExpression(expDef.getName(), expDef, expParms, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
 						expressions.put(expDef.getName(), expression);
 					}
 				}

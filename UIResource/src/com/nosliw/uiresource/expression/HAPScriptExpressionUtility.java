@@ -70,7 +70,7 @@ public class HAPScriptExpressionUtility {
 		for(Object ele : scriptExpression.getElements()){
 			if(ele instanceof HAPExpressionDefinition){
 				HAPExpressionDefinition expression = (HAPExpressionDefinition)ele;
-				funScript.append("expressionData["+expression.getName()+"]");
+				funScript.append("expressionData[\""+expression.getName()+"\"]");
 			}
 			else if(ele instanceof HAPScriptExpressionScriptSegment){
 				HAPScriptExpressionScriptSegment scriptSegment = (HAPScriptExpressionScriptSegment)ele;

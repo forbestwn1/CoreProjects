@@ -7,6 +7,8 @@ import com.nosliw.common.configure.HAPConfigurableImp;
 
 public class HAPProcessExpressionDefinitionContext extends HAPConfigurableImp{
 
+	public static final String CONFIGURE_DISCOVERY = "discovery";
+	
 	//whether the processing success
 	private boolean m_success;
 	
