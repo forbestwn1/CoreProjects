@@ -1,4 +1,4 @@
-package com.nosliw.uiresource;
+package com.nosliw.uiresource.tag;
 
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 

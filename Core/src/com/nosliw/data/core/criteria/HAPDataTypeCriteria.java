@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 
@@ -15,7 +16,7 @@ import com.nosliw.data.core.HAPDataTypeId;
  * 		define operation output --- what possible data type will created from operation
  */
 @HAPEntityWithAttribute(baseName="DATATYPECRITERIA")
-public interface HAPDataTypeCriteria{
+public interface HAPDataTypeCriteria extends HAPSerializable{
 
 	@HAPAttribute
 	public static String TYPE = "type";

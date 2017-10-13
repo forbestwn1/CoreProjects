@@ -26,6 +26,8 @@ public class HAPOperandAttribute extends HAPOperandImp{
 		this.m_attribute = attribute;
 	}
 	
+	public String getAttribute(){   return this.m_attribute;   }
+	
 	@Override
 	public String getType(){	return HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION;}
 

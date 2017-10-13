@@ -1,4 +1,4 @@
-package com.nosliw.uiresource;
+package com.nosliw.uiresource.tag;
 
 import java.util.Map;
 

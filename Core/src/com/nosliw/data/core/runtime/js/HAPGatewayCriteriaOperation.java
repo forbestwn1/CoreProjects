@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWithSubCriteria;
@@ -29,7 +30,7 @@ public class HAPGatewayCriteriaOperation  extends HAPGatewayImp{
 			if(criteria instanceof HAPDataTypeCriteriaWithSubCriteria){
 				childCriteria = ((HAPDataTypeCriteriaWithSubCriteria)criteria).getSubCriteria().getSubCriteria(childName);
 			}
-			out = this.createSuccessWithObject(childCriteria.toString());
+			out = this.createSuccessWithObject(childCriteria.toStringValue(HAPSerializationFormat.LITERATE));
 			break;
 		}
 		

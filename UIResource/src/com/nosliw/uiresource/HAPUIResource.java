@@ -6,12 +6,15 @@ import java.util.Set;
 
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
+import com.nosliw.data.core.expression.HAPExpressionManager;
 
 /**
  * UIResource that is result of processing UI Definition
  */
 public class HAPUIResource {
 
+	private HAPExpressionManager m_expressionMan;
+	
 	//resource definition
 	private HAPUIDefinitionUnitResource m_uiDefinitionResource;
 	
@@ -42,12 +45,15 @@ public class HAPUIResource {
 			if(data!=null)		out.addConstant(name, data);
 		}
 		
-		//build expression
+		//get all expressions
 		if(parent!=null)	out.addOtherExpressionDefinitions(parent.getOtherExpressionDefinitions());
 		Set<HAPExpressionDefinition> expDefs = defUnit.getExpressionDefinitions();
 		Set<HAPExpressionDefinition> otherExpDefs = defUnit.getOtherExpressionDefinitions();
 		out.addExpressionDefinitions(expDefs);
 		out.addOtherExpressionDefinitions(otherExpDefs);
+		
+		//prepress expressions
+		out.processExpressions(this.m_expressionMan);
 		
 		//process child tags
 		Iterator<HAPUIDefinitionUnitTag> tagsIterator = defUnit.getUITags().iterator();
@@ -62,6 +68,7 @@ public class HAPUIResource {
 	}
 	
 	private HAPContext getContextForTag(HAPContext parent, HAPUIDefinitionUnitTag tag){
+		
 		return null;
 	}
 }

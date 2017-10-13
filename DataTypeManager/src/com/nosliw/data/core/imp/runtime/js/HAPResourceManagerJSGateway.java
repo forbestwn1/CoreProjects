@@ -2,7 +2,6 @@ package com.nosliw.data.core.imp.runtime.js;
 
 import java.util.List;
 
-import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
@@ -30,10 +29,7 @@ public class HAPResourceManagerJSGateway implements HAPResourceManager{
 
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId) {
-		if(resourceId.getId().equals("discoveryGateway")){
-			return new HAPResource(resourceId, new HAPResourceDataJSGateway(resourceId.getId()), null);
-		}
-		return null;
+		return new HAPResource(resourceId, new HAPResourceDataJSGateway(resourceId.getId()), null);
 	}
 
 }

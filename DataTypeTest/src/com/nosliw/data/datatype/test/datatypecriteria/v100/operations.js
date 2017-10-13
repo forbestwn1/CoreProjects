@@ -20,8 +20,11 @@ dataTypeDefition.operations['getChild'] = {
 				"criteria" : this.value,
 				"childName" : parms.getParm("childName").value
 			};
-			var out = context.getResourceDataByName("myGateWay").command("getChildCriteria", gatewayParms);
-			return out;
+			var criteriaStr = context.getResourceDataByName("myGateWay").command("getChildCriteria", gatewayParms);
+			return {
+				dataTypeId : "test.datatypecriteria;1.0.0",
+				value : criteriaStr,
+			}
 		},
 
 		requires:{

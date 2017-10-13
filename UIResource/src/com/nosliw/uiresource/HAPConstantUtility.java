@@ -17,7 +17,6 @@ import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
-import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.expression.HAPRuntimeTaskExecuteScriptExpression;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
@@ -151,8 +150,7 @@ public class HAPConstantUtility {
 				for(Object uiExpEle : uiExpEles){
 					if(uiExpEle instanceof HAPExpressionDefinition){
 						HAPExpressionDefinition expDef = (HAPExpressionDefinition)uiExpEle;
-						HAPOperand expOperand = expDef.getOperand();
-						expConstantNames.addAll(HAPExpressionUtility.discoveryUnsolvedConstants(expOperand));
+						expConstantNames.addAll(HAPExpressionUtility.discoveryUnsolvedConstants(expDef.getOperand()));
 					}
 					else if(uiExpEle instanceof HAPScriptExpressionScriptSegment){
 						HAPScriptExpressionScriptSegment scriptSegment = (HAPScriptExpressionScriptSegment)uiExpEle;

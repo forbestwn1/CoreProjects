@@ -18,6 +18,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPOperandTask;
+import com.nosliw.data.core.expression.HAPOperandUtility;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPOperand;
@@ -73,7 +74,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		this.m_varsMatchers = new LinkedHashMap<String, HAPMatchers>();
 		
 		//find all variables, build default var criteria
-		Set<String> varsName = HAPExpressionUtility.discoveryVariables(this.m_operand);
+		Set<String> varsName = HAPOperandUtility.discoveryVariables(this.m_operand);
 		Map<String, HAPDataTypeCriteria> varsCriteria = this.m_expressionDefinition.getVariableCriterias();
 		for(String varName : varsName){
 			if(varsCriteria.get(varName)==null){
@@ -153,7 +154,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	 */
 	public void updateVariablesName(Map<String, String> varChanges){
 		//update variable operand
-		HAPExpressionUtility.processAllOperand(this.getOperand(), varChanges, new HAPOperandTask(){
+		HAPOperandUtility.processAllOperand(this.getOperand(), varChanges, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				Map<String, String> nameChanges = (Map<String, String>)data;

@@ -23,6 +23,7 @@ import com.nosliw.data.core.expression.HAPOperandConstant;
 import com.nosliw.data.core.expression.HAPOperandOperation;
 import com.nosliw.data.core.expression.HAPOperandReference;
 import com.nosliw.data.core.expression.HAPOperandTask;
+import com.nosliw.data.core.expression.HAPOperandUtility;
 import com.nosliw.data.core.expression.HAPOperandVariable;
 import com.nosliw.data.core.expression.HAPOperandWrapper;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
@@ -103,7 +104,7 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 	 * @param expression
 	 */
 	private void processDefaultAnonomousParmInOperation(HAPExpressionImp expression){
-		HAPExpressionUtility.processAllOperand(expression.getOperand(), expression, new HAPOperandTask(){
+		HAPOperandUtility.processAllOperand(expression.getOperand(), expression, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				String opType = operand.getOperand().getType();
@@ -136,7 +137,7 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 	 * @param expression
 	 */
 	private void discoverLocalVariables(HAPExpressionImp expression){
-		HAPExpressionUtility.processAllOperand(expression.getOperand(), expression, new HAPOperandTask(){
+		HAPOperandUtility.processAllOperand(expression.getOperand(), expression, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				String opType = operand.getOperand().getType();
@@ -161,7 +162,7 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 	 */
 	private void processReference(final HAPExpressionImp expression, Map<String, String> varMapping, final Map<String, HAPExpressionDefinition> contextExpressionDefinitions){
 		//process all child references
-		HAPExpressionUtility.processAllOperand(expression.getOperand(), null, new HAPOperandTask(){
+		HAPOperandUtility.processAllOperand(expression.getOperand(), null, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				String opType = operand.getOperand().getType();
@@ -225,7 +226,7 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 	}
 
 	private void processConstants(final HAPExpression expression, final Map<String, HAPData> contextConstants){
-		HAPExpressionUtility.processAllOperand(expression.getOperand(), expression.getExpressionDefinition(), new HAPOperandTask(){
+		HAPOperandUtility.processAllOperand(expression.getOperand(), expression.getExpressionDefinition(), new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				String opType = operand.getOperand().getType();

@@ -5,17 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
-import com.nosliw.data.core.expression.HAPExpressionUtility;
-import com.nosliw.data.core.expression.HAPOperand;
-import com.nosliw.data.core.expression.HAPOperandAttribute;
-import com.nosliw.data.core.expression.HAPOperandTask;
-import com.nosliw.data.core.expression.HAPOperandVariable;
 import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp;
+import com.nosliw.uiresource.expression.HAPExpressionUtility;
 
 /**
  *  
@@ -69,36 +64,16 @@ public class HAPUIResourceUnit {
 	public void addConstant(String name, HAPData data){ this.m_constants.put(name, data);  }
 
 	public void processExpressions(HAPExpressionManager expressionMan){
+		//preprocess attributes operand in expressions
+		HAPExpressionUtility.processAttributeOperandInExpression(m_expressionDefinitionSuite, this.m_context.getCriterias());
+		
+		//only expression in content(html and attributes) need to process 
 		for(HAPExpressionDefinition expDef : this.m_expressionDefinitions){
 			String name = expDef.getName();
-			expressionMan.processExpression(null, m_expressionDefinitionSuite, name, this.m_context.getCriterias());
-		}
-	}
-	
-	//process variables in expression, 
-	//	for attribute operation a.b.c.d which have responding definition in context, 
-	//			replace attribute operation with one variable operation
-	//  for attribute operation a.b.c.d which have responding defintion a.b.c in context, 
-	//			replace attribute operation with one variable operation(a.b.c) and getChild operation
-	private void processExpression(){
-		Map<String, HAPExpressionDefinition> expDefs = this.m_expressionDefinitionSuite.getAllExpressionDefinitions();
-		for(String name : expDefs.keySet()){
-			HAPExpressionDefinition expDef = expDefs.get(name);
-			HAPOperand operand = expDef.getOperand();
-			List
-			HAPExpressionUtility.processAllOperand(operand, null, new HAPOperandTask(){
-				@Override
-				public boolean processOperand(HAPOperand operand, Object data) {
-					String opType = operand.getType();
-					if(opType.equals(HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION)){
-						HAPOperandAttribute attrChild = (HAPOperandAttribute)operand;
-						
-					}
-					return true;
-				}
-				
-			});
+			HAPExpression expression = expressionMan.processExpression(null, m_expressionDefinitionSuite, name, this.m_context.getCriterias());
+			this.m_expressions.put(name, expression);
 		}
 	}
 	
 }
+

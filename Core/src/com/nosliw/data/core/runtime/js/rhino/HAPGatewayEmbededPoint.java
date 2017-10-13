@@ -33,6 +33,11 @@ public class HAPGatewayEmbededPoint {
 	public Object executeGateway(String gatewayId, String command, Object parmsObj){
 		HAPServiceData outServiceData = null;
 		
+		if(command.equals("success")){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		try{
 			JSONObject jsonObjParms = null; 
 			if(parmsObj instanceof String)				jsonObjParms = new JSONObject(parmsObj);
