@@ -19,7 +19,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 
 	private String m_type;
 	
-	private List<HAPOperand> m_children;
+	private List<HAPOperandWrapper> m_children;
 	
 	private String m_status;
 	
@@ -29,7 +29,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	
 	public HAPOperandImp(String type){
 		this.m_type = type;
-		this.m_children = new ArrayList<HAPOperand>();
+		this.m_children = new ArrayList<HAPOperandWrapper>();
 	}
 	
 	@Override
@@ -48,9 +48,9 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	public void setStatusInvalid(){  this.setStatus(HAPConstant.EXPRESSION_OPERAND_STATUS_INVALID); }
 	
 	@Override
-	public List<HAPOperand> getChildren(){		return this.m_children;	}
+	public List<HAPOperandWrapper> getChildren(){		return this.m_children;	}
 	
-	protected void addChildOperand(HAPOperand child){  this.m_children.add(child); }
+	protected void addChildOperand(HAPOperandWrapper child){  this.m_children.add(child); }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -120,5 +120,9 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	
 	protected void cloneTo(HAPOperandImp operand){
 		
+	}
+	
+	protected HAPOperandWrapper createOperandWrapper(HAPOperand operand){
+		return new HAPOperandWrapper(operand);
 	}
 }

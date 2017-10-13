@@ -69,10 +69,19 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	public HAPExpressionDefinition getExpressionDefinition(String suite, String name) {		return this.getExpressionDefinitionSuite(suite).getExpressionDefinition(name);	}
 
 	@Override
+	public HAPExpression processExpression(String id, HAPExpressionDefinitionSuite suite, String expressionName, Map<String, HAPDataTypeCriteria> variableCriterias){
+		String expId = id;
+		if(expId==null) expId = expressionName + "_no" + this.m_idIndex++;
+		HAPExpressionDefinition expDef = suite.getExpressionDefinition(expressionName); 
+		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(expId, expDef, suite.getAllExpressionDefinitions(), suite.getConstants(), variableCriterias, this.getContext(suite.getConfigure()));
+		return expression;
+	}
+	
+	@Override
 	public HAPExpression processExpression(String id, String suiteName, String expressionName, Map<String, HAPDataTypeCriteria> variableCriterias){
 		String expId = id;
 		if(expId==null) expId = expressionName + "_no" + this.m_idIndex++;
-		HAPExpressionDefinitionSuiteImp suite = (HAPExpressionDefinitionSuiteImp)this.getExpressionDefinitionSuite(suiteName);
+		HAPExpressionDefinitionSuite suite = this.getExpressionDefinitionSuite(suiteName);
 		HAPExpressionDefinition expDef = suite.getExpressionDefinition(expressionName); 
 		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(expId, expDef, suite.getAllExpressionDefinitions(), suite.getConstants(), variableCriterias, this.getContext(suite.getConfigure()));
 		return expression;

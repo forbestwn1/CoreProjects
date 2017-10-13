@@ -4,8 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.interpolate.HAPInterpolateOutput;
-import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -14,6 +12,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPOperand;
+import com.nosliw.data.core.expression.HAPOperandWrapper;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
 
 public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity implements HAPExpressionDefinition{
@@ -24,14 +23,14 @@ public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity impl
 	//This attribute store the real criteria which can be converted from literate fromat
 	Map<String, HAPDataTypeCriteria> m_variabesWithSolidCriteria;
 	
-	private HAPOperand m_operand;
+	private HAPOperandWrapper m_operand;
 	
 	public HAPExpressionDefinitionImpStr(){	}
 	
 	@Override
-	public HAPOperand getOperand() {  return this.m_operand;  }
+	public HAPOperandWrapper getOperand() {  return this.m_operand;  }
 	@Override
-	public void setOperand(HAPOperand operand){  this.m_operand = operand;   }
+	public void setOperand(HAPOperand operand){  this.m_operand = new HAPOperandWrapper(operand);   }
 	
 	@Override
 	public String getName() {  return this.getAtomicAncestorValueString(NAME);	}

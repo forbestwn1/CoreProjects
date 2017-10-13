@@ -18,13 +18,13 @@ import com.nosliw.data.core.expression.HAPExpressionDefinitionProcessor;
 import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
-import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPOperandConstant;
 import com.nosliw.data.core.expression.HAPOperandOperation;
 import com.nosliw.data.core.expression.HAPOperandReference;
 import com.nosliw.data.core.expression.HAPOperandTask;
 import com.nosliw.data.core.expression.HAPOperandVariable;
+import com.nosliw.data.core.expression.HAPOperandWrapper;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
 import com.nosliw.data.core.expression.HAPVariableInfo;
@@ -105,21 +105,21 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 	private void processDefaultAnonomousParmInOperation(HAPExpressionImp expression){
 		HAPExpressionUtility.processAllOperand(expression.getOperand(), expression, new HAPOperandTask(){
 			@Override
-			public boolean processOperand(HAPOperand operand, Object data) {
-				String opType = operand.getType();
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_OPERATION)){
-					HAPOperandOperation operationOperand = (HAPOperandOperation)operand;
+					HAPOperandOperation operationOperand = (HAPOperandOperation)operand.getOperand();
 					HAPDataTypeId dataTypeId = operationOperand.getDataTypeId();
 					if(dataTypeId!=null){
 						HAPDataTypeOperation dataTypeOperation = m_dataTypeHelper.getOperationInfoByName(dataTypeId, operationOperand.getOperaion());
 						List<HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
-						Map<String, HAPOperand> parms = operationOperand.getParms();
+						Map<String, HAPOperandWrapper> parms = operationOperand.getParms();
 						for(HAPOperationParmInfo parmInfo : parmsInfo){
-							HAPOperand parmOperand = parms.get(parmInfo.getName());
+							HAPOperandWrapper parmOperand = parms.get(parmInfo.getName());
 							if(parmOperand==null && parmInfo.getIsBase() && operationOperand.getBase()!=null){
 								//if parmInfo is base parm and is located in base
 								parmOperand = operationOperand.getBase();
-								operationOperand.addParm(parmInfo.getName(), parmOperand);
+								operationOperand.addParm(parmInfo.getName(), parmOperand.getOperand());
 								operationOperand.setBase(null);
 							}
 						}
@@ -138,10 +138,10 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 	private void discoverLocalVariables(HAPExpressionImp expression){
 		HAPExpressionUtility.processAllOperand(expression.getOperand(), expression, new HAPOperandTask(){
 			@Override
-			public boolean processOperand(HAPOperand operand, Object data) {
-				String opType = operand.getType();
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
-					HAPOperandVariable variableOperand = (HAPOperandVariable)operand;
+					HAPOperandVariable variableOperand = (HAPOperandVariable)operand.getOperand();
 					HAPExpressionImp expression = (HAPExpressionImp)data;
 					Map<String, HAPVariableInfo> varsInfo = expression.getLocalVarsInfo();
 					if(varsInfo.get(variableOperand.getVariableName())==null){
@@ -163,10 +163,10 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 		//process all child references
 		HAPExpressionUtility.processAllOperand(expression.getOperand(), null, new HAPOperandTask(){
 			@Override
-			public boolean processOperand(HAPOperand operand, Object data) {
-				String opType = operand.getType();
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
-					HAPOperandReference referenceOperand = (HAPOperandReference)operand;
+					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 					String referenceName = referenceOperand.getExpressionReference();
 					HAPReferenceInfo referenceInfo = expression.getExpressionDefinition().getReferences().get(referenceName);
 					
@@ -202,7 +202,7 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 	
 	//parse expression definition according to its name
 	private HAPExpressionImp parseExpressionDefinition(HAPExpressionDefinition expressionDefinition){
-		HAPOperand expressionOperand = expressionDefinition.getOperand();
+		HAPOperand expressionOperand = expressionDefinition.getOperand().getOperand();
 		if(expressionOperand==null)		expressionOperand = this.getExpressionParser().parseExpression(expressionDefinition.getExpression());
 		//add cloned definition to expression
 		HAPExpressionImp out = new HAPExpressionImp(expressionDefinition.cloneExpressionDefinition(), expressionOperand);
@@ -227,10 +227,10 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 	private void processConstants(final HAPExpression expression, final Map<String, HAPData> contextConstants){
 		HAPExpressionUtility.processAllOperand(expression.getOperand(), expression.getExpressionDefinition(), new HAPOperandTask(){
 			@Override
-			public boolean processOperand(HAPOperand operand, Object data) {
-				String opType = operand.getType();
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
-					HAPOperandConstant constantOperand = (HAPOperandConstant)operand;
+					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
 					if(constantOperand.getData()==null){
 						HAPExpressionDefinition expressionDefinition = (HAPExpressionDefinition)data;
 						String constantName = constantOperand.getName();

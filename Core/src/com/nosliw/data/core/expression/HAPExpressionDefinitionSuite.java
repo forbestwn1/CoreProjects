@@ -32,4 +32,8 @@ public interface HAPExpressionDefinitionSuite {
 
 	//get global constants in suite. these constants is visible to all expression definition in suite
 	Map<String, HAPData> getConstants();
+	
+	//configuration for suite
+	Map<String, String> getConfigure();
+
 }

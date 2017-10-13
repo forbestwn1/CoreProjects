@@ -29,15 +29,15 @@ public class HAPExpressionUtility {
 		return out;
 	}
 	
-	static public Set<String> discoveryVariables(HAPOperand operand){
+	static public Set<String> discoveryVariables(HAPOperandWrapper operand){
 		Set<String> out = new HashSet<String>();
 		processAllOperand(operand, out, new HAPOperandTask(){
 			@Override
-			public boolean processOperand(HAPOperand operand, Object data) {
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				Set<String> vars = (Set<String>)data;
-				switch(operand.getType()){
+				switch(operand.getOperand().getType()){
 				case HAPConstant.EXPRESSION_OPERAND_VARIABLE:
-					HAPOperandVariable varOperand = (HAPOperandVariable)operand;
+					HAPOperandVariable varOperand = (HAPOperandVariable)operand.getOperand();
 					vars.add(varOperand.getVariableName());
 					break;
 				}
@@ -52,15 +52,15 @@ public class HAPExpressionUtility {
 	 * @param operand
 	 * @return
 	 */
-	static public Set<String> discoveryUnsolvedConstants(HAPOperand operand){
+	static public Set<String> discoveryUnsolvedConstants(HAPOperandWrapper operand){
 		Set<String> out = new HashSet<String>();
 		processAllOperand(operand, out, new HAPOperandTask(){
 			@Override
-			public boolean processOperand(HAPOperand operand, Object data) {
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				Set<String> vars = (Set<String>)data;
-				switch(operand.getType()){
+				switch(operand.getOperand().getType()){
 				case HAPConstant.EXPRESSION_OPERAND_CONSTANT:
-					HAPOperandConstant constantOperand = (HAPOperandConstant)operand;
+					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
 					if(constantOperand.getData()==null){
 						vars.add(constantOperand.getName());
 					}
@@ -72,10 +72,10 @@ public class HAPExpressionUtility {
 		return out;
 	}
 	
-	static public void processAllOperand(HAPOperand operand, Object data, HAPOperandTask task){
+	static public void processAllOperand(HAPOperandWrapper operand, Object data, HAPOperandTask task){
 		if(task.processOperand(operand, data)){
-			List<HAPOperand> children = operand.getChildren();
-			for(HAPOperand child : children){
+			List<HAPOperandWrapper> children = operand.getOperand().getChildren();
+			for(HAPOperandWrapper child : children){
 				HAPExpressionUtility.processAllOperand(child, data, task);
 			}
 			task.postPross(operand, data);
@@ -98,24 +98,24 @@ public class HAPExpressionUtility {
 		
 		processAllOperand(expression.getOperand(), out, new HAPOperandTask(){
 			@Override
-			public boolean processOperand(HAPOperand operand, Object data) {
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				Set<HAPResourceId> resourceIds = (Set<HAPResourceId>)data;
-				switch(operand.getType()){
+				switch(operand.getOperand().getType()){
 				case HAPConstant.EXPRESSION_OPERAND_OPERATION:
-					HAPOperandOperation operationOperand = (HAPOperandOperation)operand;
+					HAPOperandOperation operationOperand = (HAPOperandOperation)operand.getOperand();
 					HAPOperationId operationId = operationOperand.getOperationId();
 					//operation as resource
 					if(operationId!=null)	resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(operationId));
 					break;
 				case HAPConstant.EXPRESSION_OPERAND_REFERENCE:
-					HAPOperandReference referenceOperand = (HAPOperandReference)operand;
+					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 					Set<HAPResourceId> referenceResources = discoverResources(referenceOperand.getExpression());
 					resourceIds.addAll(referenceResources);
 					break;
 				}
 
 				//converter as resource
-				for(HAPDataTypeConverter converter : operand.getConverters()){
+				for(HAPDataTypeConverter converter : operand.getOperand().getConverters()){
 					resourceIds.add(new HAPResourceIdConverter(converter));
 				}
 				

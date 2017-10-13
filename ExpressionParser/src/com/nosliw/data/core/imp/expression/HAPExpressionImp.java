@@ -22,6 +22,7 @@ import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPOperandVariable;
+import com.nosliw.data.core.expression.HAPOperandWrapper;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
 import com.nosliw.data.core.expression.HAPVariableInfo;
@@ -41,7 +42,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	private HAPExpressionDefinition m_expressionDefinition;
 
 	// parsed operand in expression
-	private HAPOperand m_operand;
+	private HAPOperandWrapper m_operand;
 
 	//referenced expression
 	private Map<String, HAPExpression> m_references;
@@ -68,7 +69,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		this.m_references = new LinkedHashMap<String, HAPExpression>();
 		this.m_errorMsgs = new ArrayList<String>();
 		this.m_expressionDefinition = expressionDefinition;
-		this.m_operand = operand;
+		this.m_operand = new HAPOperandWrapper(operand);
 		this.m_varsMatchers = new LinkedHashMap<String, HAPMatchers>();
 		
 		//find all variables, build default var criteria
@@ -122,7 +123,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	public HAPExpressionDefinition getExpressionDefinition() {		return this.m_expressionDefinition;	}
 
 	@Override
-	public HAPOperand getOperand() {  return this.m_operand;  }
+	public HAPOperandWrapper getOperand() {  return this.m_operand;  }
 
 	@Override
 	public Map<String, HAPVariableInfo> getVariableInfos() {		return this.m_varsInfo;	}
@@ -154,11 +155,11 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		//update variable operand
 		HAPExpressionUtility.processAllOperand(this.getOperand(), varChanges, new HAPOperandTask(){
 			@Override
-			public boolean processOperand(HAPOperand operand, Object data) {
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				Map<String, String> nameChanges = (Map<String, String>)data;
-				String opType = operand.getType();
+				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
-					HAPOperandVariable variableChild = (HAPOperandVariable)operand;
+					HAPOperandVariable variableChild = (HAPOperandVariable)operand.getOperand();
 					String newName = nameChanges.get(variableChild.getVariableName());
 					if(newName!=null)	variableChild.setVariableName(newName);
 				}
@@ -245,7 +246,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 			oldVarsInfo.putAll(varsInfo);
 			
 			context.clear();
-			matchers = this.getOperand().discover(varsInfo, expectOutputCriteria, context, dataTypeHelper);
+			matchers = this.getOperand().getOperand().discover(varsInfo, expectOutputCriteria, context, dataTypeHelper);
 		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
 		this.m_localVarsInfo = varsInfo;
 		

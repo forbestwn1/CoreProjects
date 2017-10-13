@@ -18,6 +18,8 @@ public interface HAPExpressionManager {
 	
 	HAPExpression processExpression(String id, String suite, String expressionName, Map<String, HAPDataTypeCriteria> variableCriterias);
 
+	public HAPExpression processExpression(String id, HAPExpressionDefinitionSuite suite, String expressionName, Map<String, HAPDataTypeCriteria> variableCriterias);
+	
 	HAPExpression processExpression(String id, HAPExpressionDefinition expressionDefinition, Map<String, HAPData> contextConstants, Map<String, HAPDataTypeCriteria> variableCriterias, Map<String, String> context);
 
 	//create a simple expression definition

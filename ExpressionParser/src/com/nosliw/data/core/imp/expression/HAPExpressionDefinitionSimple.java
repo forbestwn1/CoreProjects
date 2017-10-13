@@ -11,6 +11,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPOperand;
+import com.nosliw.data.core.expression.HAPOperandWrapper;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
 
 public class HAPExpressionDefinitionSimple extends HAPSerializableImp implements HAPExpressionDefinition{
@@ -27,7 +28,7 @@ public class HAPExpressionDefinitionSimple extends HAPSerializableImp implements
 	
 	private HAPInfo m_info;
 	
-	private HAPOperand m_operand;
+	private HAPOperandWrapper m_operand;
 	
 	HAPExpressionDefinitionSimple(){}
 	
@@ -75,8 +76,8 @@ public class HAPExpressionDefinitionSimple extends HAPSerializableImp implements
 	public Map<String, HAPReferenceInfo> getReferences() {		return this.m_references;	}
 
 	@Override
-	public HAPOperand getOperand() {   return this.m_operand;  }
-	public void setOperand(HAPOperand operand){   this.m_operand = operand;   }
+	public HAPOperandWrapper getOperand() {   return this.m_operand;  }
+	public void setOperand(HAPOperand operand){   this.m_operand = new HAPOperandWrapper(operand);   }
 
 	@Override
 	public HAPExpressionDefinition cloneExpressionDefinition() {
@@ -101,7 +102,7 @@ public class HAPExpressionDefinitionSimple extends HAPSerializableImp implements
 		}
 		
 		out.m_info = this.m_info;
-		if(this.m_operand!=null)  out.m_operand = this.m_operand.cloneOperand();
+		if(this.m_operand!=null)  out.m_operand = this.m_operand.cloneWrapper();
 		
 		return out;
 	}

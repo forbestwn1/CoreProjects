@@ -2,6 +2,7 @@ package com.nosliw.uiresource;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
@@ -43,8 +44,8 @@ public class HAPUIResource {
 		
 		//build expression
 		if(parent!=null)	out.addOtherExpressionDefinitions(parent.getOtherExpressionDefinitions());
-		Map<String, HAPExpressionDefinition> expDefs = defUnit.getExpressionDefinitions();
-		Map<String, HAPExpressionDefinition> otherExpDefs = defUnit.getOtherExpressionDefinitions();
+		Set<HAPExpressionDefinition> expDefs = defUnit.getExpressionDefinitions();
+		Set<HAPExpressionDefinition> otherExpDefs = defUnit.getOtherExpressionDefinitions();
 		out.addExpressionDefinitions(expDefs);
 		out.addOtherExpressionDefinitions(otherExpDefs);
 		
@@ -61,6 +62,6 @@ public class HAPUIResource {
 	}
 	
 	private HAPContext getContextForTag(HAPContext parent, HAPUIDefinitionUnitTag tag){
-		
+		return null;
 	}
 }

@@ -69,6 +69,7 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 		return this.m_expressionDefinitions;
 	}
 	
+	@Override
 	public Map<String, String> getConfigure(){
 		return this.getMapValueAncestorByPath(CONFIGURE);
 	}

@@ -48,7 +48,7 @@ public interface HAPExpressionDefinition {
 	String getExpression();
 	
 	//the operand after parsing the expression
-	HAPOperand getOperand();
+	HAPOperandWrapper getOperand();
 	void setOperand(HAPOperand operand);
 	
 	//constants definition

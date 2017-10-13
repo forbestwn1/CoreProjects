@@ -13,4 +13,8 @@ public class HAPContextNodeDefinition{
 	public HAPContextNodeDefinition(HAPDataTypeCriteria criteria){
 		this.m_criteria = criteria;
 	}
+
+	public HAPDataTypeCriteria getValue(){
+		return this.m_criteria;
+	}
 }

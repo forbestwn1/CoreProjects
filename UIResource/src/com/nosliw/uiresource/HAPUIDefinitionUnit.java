@@ -123,20 +123,15 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	 * Exception expression definitions in Constant Definition
 	 * @return
 	 */
-	public Map<String, HAPExpressionDefinition> getExpressionDefinitions(){
+	public Set<HAPExpressionDefinition> getExpressionDefinitions(){
 		Set<HAPExpressionDefinition> all = new HashSet<HAPExpressionDefinition>();
 		for(HAPEmbededScriptExpressionInContent embededScriptExpression : this.m_scriptExpressionsInContent)	all.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
 		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : this.m_scriptExpressionsInAttribute)	all.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
 		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : this.m_scriptExpressionsInTagAttribute)		all.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
-		
-		Map<String, HAPExpressionDefinition> out = new LinkedHashMap<String, HAPExpressionDefinition>();
-		for(HAPExpressionDefinition def : all){
-			out.put(def.getName(), def);
-		}
-		return out;
+		return all;
 	}
 	
-	public Map<String, HAPExpressionDefinition> getOtherExpressionDefinitions(){  return this.m_expressionDefinitions;	}
+	public Set<HAPExpressionDefinition> getOtherExpressionDefinitions(){  return new HashSet(this.m_expressionDefinitions.values());	}
 	
 	/**
 	 * Calculate all the constant values in ConstantDef

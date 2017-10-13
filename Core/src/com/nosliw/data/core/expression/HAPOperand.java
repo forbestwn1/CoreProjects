@@ -6,12 +6,13 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 @HAPEntityWithAttribute(baseName="OPERAND")
-public interface HAPOperand {
+public interface HAPOperand extends HAPSerializable{
 
 	@HAPAttribute
 	public static final String TYPE = "type"; 
@@ -35,7 +36,7 @@ public interface HAPOperand {
 	String getType();
 
 	//children operand
-	List<HAPOperand> getChildren();
+	List<HAPOperandWrapper> getChildren();
 
 	/**
 	 * Try best to process operand in order to discovery

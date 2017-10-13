@@ -1,7 +1,5 @@
 package com.nosliw.data.core.expression;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -18,7 +16,7 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	
 	private String m_attribute;
 	
-	private HAPOperand m_base;
+	private HAPOperandWrapper m_base;
 	
 	private HAPOperandAttribute(){}
 	
@@ -32,8 +30,8 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	public String getType(){	return HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION;}
 
 	public void setBase(HAPOperand base){
-		this.addChildOperand(base);
-		this.m_base = base;  
+		this.m_base = this.createOperandWrapper(base);
+		this.addChildOperand(this.m_base);
 	}
 	
 	@Override
@@ -48,13 +46,6 @@ public class HAPOperandAttribute extends HAPOperandImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ATTRIBUTE, this.m_attribute);
 		jsonMap.put(BASEDATA, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON));
-	}
-
-	@Override
-	public List<HAPOperand> getChildren() {
-		List<HAPOperand> out = new ArrayList<HAPOperand>();
-		out.add(m_base);
-		return out;
 	}
 
 	@Override
@@ -81,6 +72,6 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	protected void cloneTo(HAPOperandAttribute operand){
 		super.cloneTo(operand);
 		operand.m_attribute = this.m_attribute;
-		if(this.m_base!=null)	operand.m_base = this.m_base.cloneOperand();
+		if(this.m_base!=null)	operand.m_base = this.m_base.cloneWrapper();
 	}
 }

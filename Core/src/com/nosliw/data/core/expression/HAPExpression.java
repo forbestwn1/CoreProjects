@@ -50,7 +50,7 @@ public interface HAPExpression {
 	HAPExpressionDefinition getExpressionDefinition();
 	
 	//Operand to represent the expression
-	HAPOperand getOperand();
+	HAPOperandWrapper getOperand();
 	
 	Set<String> getVariables();
 
