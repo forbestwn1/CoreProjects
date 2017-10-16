@@ -10,6 +10,8 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_ServiceRequestExecuteInfo;
 	var node_COMMONATRIBUTECONSTANT;
+	var node_errorUtility;
+	var node_CONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 	
 /**
@@ -47,7 +49,22 @@ var node_createGatewayService = function(){
 		//execute command directly, no callback needed
 		executeGatewayCommand : function(gatewayId, command, parms){
 			var gatewayObject = loc_getGatewayObject();
-			gatewayObject.executeGateway(gatewayId, command, parms);
+			var serviceData = gatewayObject.executeGateway(gatewayId, command, parms);
+			if(serviceData==undefined)  return undefined;
+			else{
+				var resultStatus = node_errorUtility.getServiceDataStatus(serviceData);
+				switch(resultStatus){
+				case node_CONSTANT.REMOTESERVICE_RESULT_SUCCESS:
+					return serviceData.data;
+					break;
+				case node_CONSTANT.REMOTESERVICE_RESULT_EXCEPTION:
+					return serviceData;
+					break;
+				case node_CONSTANT.REMOTESERVICE_RESULT_ERROR:
+					return serviceData;
+					break;
+				}
+			}
 		}
 		
 	};
@@ -67,6 +84,8 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.entity.ServiceRequestExecuteInfo", function(){node_ServiceRequestExecuteInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createGatewayService", node_createGatewayService); 

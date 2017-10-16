@@ -67,7 +67,7 @@ public class HAPRuntimeRhinoMain {
 			HAPDataWrapper exprectResult = suite.getResult();
 			HAPDataWrapper result = new HAPDataWrapper();
 			result.buildObject(resultObj, HAPSerializationFormat.JSON);
-			resultStr =  resultObj + "";
+			resultStr =  result + "";
 			expecectResultStr = exprectResult +"";
 			if(result.equals(exprectResult))	success = true;
 			else		success = false;
@@ -116,14 +116,14 @@ public class HAPRuntimeRhinoMain {
 		HAPExpressionImporter.importExpressionSuiteFromFolder(HAPFileUtility.getClassFolderName(HAPExpressionTest.class), runtimeEnvironment.getExpressionManager());
 		
 		executeSuites(new String[]{
-//				"expression0",
-//				"expression1",
-//				"expression10",
-//				"expression2",
-//				"expression3",
-//				"expression4",
-//				"expression5",
-//				"expression6",
+				"expression0",
+				"expression1",
+				"expression10",
+				"expression2",
+				"expression3",
+				"expression4",
+				"expression5",
+				"expression6",
 
 //				"expression7",
 				"expression71",

@@ -30,8 +30,9 @@ public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteE
 			//execute expression after load required resources
 			List<HAPExpression> expressions = new ArrayList<HAPExpression>();
 			expressions.add(this.getExpression());
-			List<HAPResourceInfo> resourcesId = new ArrayList<HAPResourceInfo>(); 
-//					rhinoRuntime.getRuntimeEnvironment().getResourceDiscovery().discoverResourceRequirement(expressions);
+			List<HAPResourceInfo> resourcesId = 
+//					new ArrayList<HAPResourceInfo>(); 
+					rhinoRuntime.getRuntimeEnvironment().getResourceDiscovery().discoverResourceRequirement(expressions);
 			
 			HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
 			loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));

@@ -24,7 +24,7 @@ dataTypeDefition.operations['getChild'] = {
 			return {
 				dataTypeId : "test.datatypecriteria;1.0.0",
 				value : criteriaStr,
-			}
+			};
 		},
 
 		requires:{

@@ -19,7 +19,7 @@
 	},
 	"result": {
 		"dataTypeId": "test.datatypecriteria",
-		"value": "test.string",
+		"value": "test.string;1.0.0",
 		"wapperType": "JSON"
 	},
 	"configure" :{
