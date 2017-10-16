@@ -167,12 +167,6 @@ public class HAPRhinoDataUtility
                 Object value = nativeObject.get(key, nativeObject);
                 Object json = toJson(value);
                 mapJson.put(key, json+"");
-                
-                if(mapTypeJson==null || json==null){
-                	int kkkk = 55555;
-                	kkkk++;
-                }
-                
                 if(!(json instanceof String))      mapTypeJson.put(key, json.getClass()); 
             } 
          

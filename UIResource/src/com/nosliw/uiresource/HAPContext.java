@@ -20,6 +20,7 @@ public class HAPContext {
 	
 	public HAPContext(){
 		this.m_elements = new LinkedHashMap<String, HAPContextNodeRoot>();
+		this.m_criterias = new LinkedHashMap<String, HAPDataTypeCriteria>();
 	}
 	
 	public void addElement(String name, HAPContextNodeRoot rootEle){

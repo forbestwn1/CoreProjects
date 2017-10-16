@@ -24,6 +24,7 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	
 	public HAPUIDefinitionUnitResource(String id){
 		super(id);
+		this.m_context = new HAPContext();
 		this.m_uiTagLibs = new HashSet<String>();
 	}
 	

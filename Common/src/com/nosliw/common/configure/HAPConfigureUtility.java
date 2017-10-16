@@ -142,15 +142,17 @@ public class HAPConfigureUtility {
 			}
 		}
 
-		for(String name : valueMap.keySet()){
-			String path = HAPNamingConversionUtility.cascadePath(importConfigure.getBasePath(), name);
-			String value = valueMap.get(name).trim(); 
-			if(importConfigure.isHard()){
-				out.addConfigureItem(path, value);
-			}
-			else{
-				HAPConfigureValue configureValue = out.getConfigureValue(path);
-				if(configureValue==null)  out.addConfigureItem(path, value);
+		if(valueMap!=null){
+			for(String name : valueMap.keySet()){
+				String path = HAPNamingConversionUtility.cascadePath(importConfigure.getBasePath(), name);
+				String value = valueMap.get(name).trim(); 
+				if(importConfigure.isHard()){
+					out.addConfigureItem(path, value);
+				}
+				else{
+					HAPConfigureValue configureValue = out.getConfigureValue(path);
+					if(configureValue==null)  out.addConfigureItem(path, value);
+				}
 			}
 		}
 		return out;

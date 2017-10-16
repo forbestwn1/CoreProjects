@@ -62,8 +62,11 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 	public Map<String, HAPExpressionDefinition> getAllExpressionDefinitions(){
 		if(this.m_expressionDefinitions==null){
 			this.m_expressionDefinitions = this.getMapValueAncestorByPath(EXPRESSIONDEFINITIONS);
-			for(String name : this.m_expressionDefinitions.keySet()){
-				this.processExpressionDefinition(this.m_expressionDefinitions.get(name));
+			if(this.m_expressionDefinitions==null)   this.m_expressionDefinitions = new LinkedHashMap<String, HAPExpressionDefinition>();
+			else{
+				for(String name : this.m_expressionDefinitions.keySet()){
+					this.processExpressionDefinition(this.m_expressionDefinitions.get(name));
+				}
 			}
 		}
 		return this.m_expressionDefinitions;
@@ -88,7 +91,7 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 
 	public void addExpressionDefinition(HAPExpressionDefinition expressionDefinition){
 		this.processExpressionDefinition(expressionDefinition);
-		this.m_expressionDefinitions.put(expressionDefinition.getExpression(), expressionDefinition);
+		this.getAllExpressionDefinitions().put(expressionDefinition.getName(), expressionDefinition);
 	}
 		
 	private void processExpressionDefinition(HAPExpressionDefinition expressionDefinition){

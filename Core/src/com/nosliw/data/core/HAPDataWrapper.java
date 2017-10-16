@@ -77,8 +77,7 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 				//json
 				JSONObject jsonObj = new JSONObject(text);
 				this.setValueFormat(HAPSerializationFormat.JSON);
-				this.buildObjectByFullJson(jsonObj);
-				return true;
+				return this.buildObjectByFullJson(jsonObj);
 			}
 			else if(token.equals(TOKEN_LITERATE)){
 				//literate

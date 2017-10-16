@@ -3,6 +3,7 @@ package com.nosliw.test.uisource;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.uiresource.HAPUIDefinitionUnitResource;
+import com.nosliw.uiresource.HAPUIResource;
 import com.nosliw.uiresource.HAPUIResourceManager;
 
 public class HAPUIResourceTest {
@@ -19,7 +20,8 @@ public class HAPUIResourceTest {
 
 		String file = HAPFileUtility.getFileNameOnClassPath(HAPUIResourceTest.class, "Example.res");
 		HAPUIDefinitionUnitResource uiResource = uiResourceMan.addUIResourceDefinition(file);
-		System.out.println(uiResource);
+		HAPUIResource resource = uiResourceMan.processUIResource("Example", null);
+		System.out.println(resource);
 		
 	}
 	

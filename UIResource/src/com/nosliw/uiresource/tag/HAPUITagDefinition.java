@@ -15,7 +15,7 @@ public class HAPUITagDefinition {
 	//whether interit the context from parent
 	private boolean inheritContext;
 	
-	Map<String, HAPContextElement1> m_contexts;
+//	Map<String, HAPContextElement1> m_contexts;
 	
 	public HAPUITagDefinition(String name, String script){
 		this.m_name = name;

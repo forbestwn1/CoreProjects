@@ -200,7 +200,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		
 		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildMapJson(this.m_attributes));
 		
-		String htmlContent = StringEscapeUtils.escapeHtml4(this.getContent());
+		String htmlContent = StringEscapeUtils.escapeHtml(this.getContent());
 		jsonMap.put(HTML, htmlContent);
 		
 		jsonMap.put(SCRIPTFACTORYNAME, this.m_scriptFactoryName);

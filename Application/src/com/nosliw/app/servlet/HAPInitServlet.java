@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import com.nosliw.data.core.imp.expression.HAPExpressionImporter;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.expression.test.HAPExpressionTest;
+import com.nosliw.uiresource.HAPUIResourceManager;
 
 public class HAPInitServlet  extends HttpServlet{
 
@@ -20,5 +21,9 @@ public class HAPInitServlet  extends HttpServlet{
 
 			//set runtime object to context
 			this.getServletContext().setAttribute("runtime", runtimeEnvironment);
+			
+			HAPUIResourceManager uiResourceMan = new HAPUIResourceManager(runtimeEnvironment.getExpressionManager(), runtimeEnvironment.getRuntime());
+			this.getServletContext().setAttribute("uiResourceManager", uiResourceMan);
+
 	   }
 }

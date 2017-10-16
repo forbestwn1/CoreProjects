@@ -38,7 +38,7 @@ public class HAPUIResourceManager {
 	public HAPUIResource processUIResource(String name, Map<String, HAPDataTypeCriteria> contextCriteria){
 		HAPUIDefinitionUnitResource uiResourceDefinition = this.getUIResourceDefinitionByName(name);
 		HAPUIResource uiResource = new HAPUIResource(uiResourceDefinition);
-		
+		uiResource.process(this.m_expressionMan);
 		
 		return uiResource;
 	}

@@ -136,7 +136,6 @@ public class HAPUIResourceParser {
 
 					Object defObj = eleDefJson.opt(HAPContextNode.DEFINITION);
 					this.paresContextNode(defObj, contextEle);
-					
 					resource.getContext().addElement(eleName, contextEle);
 				}
 			} catch (JSONException e) {
