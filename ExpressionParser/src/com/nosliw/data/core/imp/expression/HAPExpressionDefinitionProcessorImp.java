@@ -238,6 +238,12 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 						HAPData constantData = expressionDefinition.getConstants().get(constantName);
 						if(constantData==null){
 							//if not found within expression definition, try to find from context
+							
+							if(contextConstants==null){
+								int kkkk = 5555;
+								kkkk++;
+							}
+							
 							constantData = contextConstants.get(constantName);
 						}
 						constantOperand.setData(constantData);

@@ -33,12 +33,15 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 
 	private String m_name;
 	
+	private Map<String, HAPData> m_constants;
+	
 //	Map<String, HAPData> m_variablesData;
 	
 	public HAPExpressionDefinitionSuiteImp(){}
 
 	public HAPExpressionDefinitionSuiteImp(String name){
 		this.m_name = name;
+		this.m_constants = new LinkedHashMap<String, HAPData>();
 	}
 	
 	@Override
@@ -54,9 +57,12 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 
 	@Override
 	public Map<String, HAPData> getConstants() {
-		Map<String, HAPData> constants = this.getMapValueAncestorByPath(CONSTANTS); 
-		return constants;
+		if(this.m_constants==null)	this.m_constants = this.getMapValueAncestorByPath(CONSTANTS);
+		if(this.m_constants==null)  this.m_constants = new LinkedHashMap<String, HAPData>();
+		return this.m_constants;
 	}
+	
+	public void addConstant(String name, HAPData data){		this.getConstants().put(name, data);	}
 
 	@Override
 	public Map<String, HAPExpressionDefinition> getAllExpressionDefinitions(){

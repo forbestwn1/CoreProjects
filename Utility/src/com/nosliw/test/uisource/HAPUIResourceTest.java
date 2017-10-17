@@ -18,9 +18,9 @@ public class HAPUIResourceTest {
 
 		HAPUIResourceManager uiResourceMan = new HAPUIResourceManager(runtimeEnvironment.getExpressionManager(), runtimeEnvironment.getRuntime());
 
-		String file = HAPFileUtility.getFileNameOnClassPath(HAPUIResourceTest.class, "Example.res");
+		String file = HAPFileUtility.getFileNameOnClassPath(HAPUIResourceTest.class, "Example1.res");
 		HAPUIDefinitionUnitResource uiResource = uiResourceMan.addUIResourceDefinition(file);
-		HAPUIResource resource = uiResourceMan.processUIResource("Example", null);
+		HAPUIResource resource = uiResourceMan.processUIResource("Example1", null);
 		System.out.println(resource);
 		
 	}

@@ -47,7 +47,6 @@ public class HAPUIResourceExpressionUnit extends HAPSerializableImp{
 		jsonMap.put(VARIABLES, HAPJsonUtility.buildJson(this.m_variables, HAPSerializationFormat.JSON));
 		jsonMap.put(EXPRESSIONDEFINITIONS, HAPJsonUtility.buildJson(this.m_expressionDefinitions, HAPSerializationFormat.JSON));
 		jsonMap.put(EXPRESSIONDEFINITIONS_SUPPORT, HAPJsonUtility.buildJson(this.m_supportExpressionDefinitions, HAPSerializationFormat.JSON));
-		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_constants, HAPSerializationFormat.JSON));
 		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildJson(this.m_expressions, HAPSerializationFormat.JSON));
 		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.m_children, HAPSerializationFormat.JSON));
 	}
@@ -61,8 +60,6 @@ public class HAPUIResourceExpressionUnit extends HAPSerializableImp{
 
 	//expressions for suport
 	private Set<HAPExpressionDefinition> m_supportExpressionDefinitions;
-	
-	private Map<String, HAPData> m_constants;
 	
 	//every unit has its own expression definition suite
 	//it includes expression definition and constants from parent and its own
@@ -81,7 +78,6 @@ public class HAPUIResourceExpressionUnit extends HAPSerializableImp{
 		this.m_expressions = new LinkedHashMap<String, HAPExpression>();
 		this.m_children = new LinkedHashMap<String, HAPUIResourceExpressionUnit>();
 		this.m_variables = new LinkedHashMap<String, HAPDataTypeCriteria>();
-		this.m_constants = new LinkedHashMap<String, HAPData>();
 	}
 
 	public void addVariables(Map<String, HAPDataTypeCriteria> variables){	this.m_variables.putAll(variables);	}
@@ -99,13 +95,9 @@ public class HAPUIResourceExpressionUnit extends HAPSerializableImp{
 	public Set<HAPExpressionDefinition> getExpressionDefinitions(){		return this.m_expressionDefinitions;	}
 	public Set<HAPExpressionDefinition> getSupportExpressionDefinitions(){		return this.m_supportExpressionDefinitions;	}
 
-	public Map<String, HAPData> getConstants(){  return this.m_constants; }
-	public void addConstants(Map<String, HAPData> datas){  
-		this.m_constants.putAll(datas);  
-	}
-	public void addConstant(String name, HAPData data){ 
-		this.m_constants.put(name, data);  
-	}
+	public Map<String, HAPData> getConstants(){  return this.m_expressionDefinitionSuite.getConstants(); }
+	public void addConstants(Map<String, HAPData> datas){	this.m_expressionDefinitionSuite.getConstants().putAll(datas);	}
+	public void addConstant(String name, HAPData data){		this.m_expressionDefinitionSuite.addConstant(name, data);	}
 
 	public void processExpressions(HAPExpressionManager expressionMan){
 		//preprocess attributes operand in expressions

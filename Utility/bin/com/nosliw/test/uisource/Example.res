@@ -3,6 +3,9 @@
 	<!-- Contexts define the variables input for this ui resource -->
 	<body contexts="business@object;key@object">
 
+	<%= #|?(a)?.aa.largerThan(?(dddd)?)|#.value + ' 6666 ' %>  tttttttttt  
+
+
 		<br><br>
 		Context variable data used in content:<br>
 		<%= #|?(key)?.a.aa|#.value%>   

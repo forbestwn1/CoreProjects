@@ -82,11 +82,11 @@ public class HAPExpressionUtility {
 							stack.get(stack.size()-1).open = true;
 						}
 						
-						if(stack.size()>=1 && stack.get(stack.size()-1).open){
-							HAPAttributeOperandChainInfo attrInfo = stack.get(stack.size()-1);
-							attrInfo.startOperand = operand;
-							attrInfo.open = false;
-						}
+//						if(stack.size()>=1 && stack.get(stack.size()-1).open){
+//							HAPAttributeOperandChainInfo attrInfo = stack.get(stack.size()-1);
+//							attrInfo.startOperand = operand;
+//							attrInfo.open = false;
+//						}
 					}
 				}
 			});
@@ -98,7 +98,7 @@ public class HAPExpressionUtility {
 		if(startOpType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
 			//attribute start with variable
 			HAPOperandVariable varOperand = (HAPOperandVariable)attrInfo.startOperand.getOperand();
-			attrInfo.path.add(varOperand.getVariableName());
+			attrInfo.path.add(0, varOperand.getVariableName());
 			String path = HAPNamingConversionUtility.cascadePath(attrInfo.path.toArray(new String[0]));
 			for(String name : contextVars.keySet()){
 				if(path.equals(name)){
