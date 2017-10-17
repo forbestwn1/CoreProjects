@@ -222,6 +222,9 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	@Override
 	public HAPDataTypeCriteria merge(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2) {
 		
+		if(criteria1==null)   return criteria2;
+		if(criteria2==null)   return criteria1;
+		
 		List<HAPDataTypeCriteriaId> criterias1 = new ArrayList(criteria1.getValidDataTypeCriteriaId(this));
 		List<HAPDataTypeCriteriaId> leaves1 = this.getLeafCriteriaIds(criterias1);
 		

@@ -33,3 +33,5 @@ a
 1src/com/nosliw/test/runtimerhino/loadResource1.js,1\6\169e40e7a1f95fa4c46b0d35f4df068e6ea23eea
 n
 >src/com/nosliw/application/loader/runtimejs/HAPJSImporter.java,5\a\5afa1bc19b1ea1a2be6c4151b46ac640a39030ce
+Y
+)src/com/nosliw/test/uisource/Example1.res,b\4\b4b1cf1c75bea16145c2dc545ffec130138ff614
