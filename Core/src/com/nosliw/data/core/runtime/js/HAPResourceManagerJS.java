@@ -1,28 +1,27 @@
 package com.nosliw.data.core.runtime.js;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
 import com.nosliw.data.core.runtime.HAPResource;
+import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPResourceManager;
+import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 
-public class HAPResourceManagerJS implements HAPResourceManager{
+public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 
 	private Map<String, HAPResourceManager> m_resourceMans = new LinkedHashMap<String, HAPResourceManager>();
 
+	@Override
 	public void registerResourceManager(String type, HAPResourceManager resourceMan){
 		this.m_resourceMans.put(type, resourceMan);
-	}
-	
-	@Override
-	public HAPResource getResource(HAPResourceId resourceId) {
-		HAPResourceManager resourceMan = this.getResourceManager(resourceId.getType());
-		HAPResource resource = resourceMan.getResource(resourceId);
-		return resource;
 	}
 	
 	@Override
@@ -61,8 +60,33 @@ public class HAPResourceManagerJS implements HAPResourceManager{
 		return out;
 	}
 	
+	@Override
+	public List<HAPResourceInfo> discoverResources(List<HAPResourceId> resourceIds) {
+		List<HAPResourceInfo> out = new ArrayList<HAPResourceInfo>();
+		Set<HAPResourceId> processedResources = new HashSet<HAPResourceId>();
+	
+		for(HAPResourceId resourceId : resourceIds){
+			this.discoverResource(resourceId, out, processedResources);
+		}
+		
+		return out;
+	}
+
+	private void discoverResource(HAPResourceId resourceId, List<HAPResourceInfo> resourceInfos, Set<HAPResourceId> processedResourceIds){
+		if(!processedResourceIds.contains(resourceId)){
+			processedResourceIds.add(resourceId);
+			HAPResourceInfo resourceInfo = this.getResourceManager(resourceId.getType()).discoverResource(resourceId);
+			//add dependency first
+			List<HAPResourceDependent> dependencys = resourceInfo.getDependency();
+			for(HAPResourceDependent dependency : dependencys){
+				this.discoverResource(dependency.getId(), resourceInfos, processedResourceIds);
+			}
+			//then add itself
+			resourceInfos.add(resourceInfo);
+		}
+	}
+	
 	private HAPResourceManager getResourceManager(String resourceType){
 		return this.m_resourceMans.get(resourceType);
 	}
-
 }

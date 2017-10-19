@@ -5,6 +5,7 @@ import java.util.List;
 import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPResourceManager;
 import com.nosliw.uiresource.HAPUIResource;
 import com.nosliw.uiresource.HAPUIResourceManager;
@@ -36,4 +37,5 @@ public class HAPResourceManagerUIResource implements HAPResourceManager{
 		HAPResourceDataUIResource resourceData = new HAPResourceDataUIResource(uiResource);
 		return new HAPResource(resourceId, resourceData, null);
 	}
+
 }

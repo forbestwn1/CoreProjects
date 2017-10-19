@@ -1,5 +1,6 @@
 package com.nosliw.data.core.expression;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -8,10 +9,16 @@ import java.util.Set;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeConverter;
+import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
+import com.nosliw.data.core.runtime.HAPResourceIdOperation;
+import com.nosliw.data.core.runtime.HAPResourceInfo;
+import com.nosliw.data.core.runtime.HAPResourceManager;
+import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
 
 public class HAPExpressionUtility {
@@ -28,6 +35,34 @@ public class HAPExpressionUtility {
 		}
 		return out;
 	}
+	
+	/**
+	 * Discover resources required for data type operation
+	 * @param dataTypeInfo
+	 * @param dataOpInfo
+	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
+	 */
+	static public List<HAPResourceInfo> discoverResourceRequirement(HAPDataTypeId dataTypeId, HAPOperation dataOpInfo, HAPResourceManagerRoot resourceMan) {
+		HAPOperationId operationId = new HAPOperationId(dataTypeId, dataOpInfo.getName());
+		HAPResourceId resourceId = new HAPResourceIdOperation(operationId);
+		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
+		resourceIds.add(resourceId);
+		return resourceMan.discoverResources(resourceIds);
+	}
+
+	/**
+	 * Discover resources required for expression 
+	 * @param expression
+	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
+	 */
+	static public List<HAPResourceInfo> discoverResourceRequirement(List<HAPExpression> expressions, HAPResourceManagerRoot resourceMan) {
+		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
+		for(HAPExpression expression : expressions){
+			resourceIds.addAll(discoverResources(expression));
+		}
+		return resourceMan.discoverResources(new ArrayList<HAPResourceId>(resourceIds));
+	}
+
 	
 	static public Set<HAPResourceId> discoverResources(HAPExpression expression){
 		Set<HAPResourceId> out = new HashSet<HAPResourceId>();

@@ -2,9 +2,8 @@ package com.nosliw.data.core.runtime;
 
 import java.util.List;
 
-public interface HAPResourceManager {
+public interface HAPResourceManagerRoot{
 
-	
 	/**
 	 * Response including loaded resoures and fail resources, the sequence should be the same as input. Sequence matters
 	 * @param resources
@@ -12,13 +11,20 @@ public interface HAPResourceManager {
 	 */
 	HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId);
 
-	HAPResource getResource(HAPResourceId resourceId);
-
 	/**
 	 * Discover resource information (dependency)
+	 * Sequence matters
 	 * @param resource info
 	 * @return
 	 */
-	HAPResourceInfo discoverResource(HAPResourceId resourceId);
+	List<HAPResourceInfo> discoverResources(List<HAPResourceId> resourceIds);
+	
+	
+	/**
+	 * Register resource manager for particular type
+	 * @param type
+	 * @param resourceMan
+	 */
+	public void registerResourceManager(String type, HAPResourceManager resourceMan);
 
 }

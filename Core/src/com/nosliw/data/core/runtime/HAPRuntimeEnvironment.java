@@ -14,9 +14,9 @@ public interface HAPRuntimeEnvironment {
 
 	HAPExpressionManager getExpressionManager();
 	
-	HAPResourceDiscovery getResourceDiscovery();
+//	HAPResourceDiscovery getResourceDiscovery();
 	
-	HAPResourceManager getResourceManager();
+	HAPResourceManagerRoot getResourceManager();
 
 	HAPGatewayManager getGatewayManager();
 

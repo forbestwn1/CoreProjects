@@ -112,7 +112,7 @@ public class HAPGatewayResource extends HAPGatewayImp{
 	}
 	
 	private HAPServiceData discoverResources(List<HAPResourceId> resourceIds){
-		List<HAPResourceInfo> resourceInfos = this.m_runtimeEnviroment.getResourceDiscovery().discoverResource(resourceIds);
+		List<HAPResourceInfo> resourceInfos = this.m_runtimeEnviroment.getResourceManager().discoverResources(resourceIds);
 		return this.createSuccessWithObject(resourceInfos);
 	}
 	

@@ -4,8 +4,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
-import com.nosliw.data.core.runtime.HAPResourceDiscovery;
-import com.nosliw.data.core.runtime.HAPResourceManager;
+import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayCriteriaOperation;
@@ -23,9 +22,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	@HAPAttribute
 	public static final String GATEWAY_CRITERIA = "criteria";
 	
-	private HAPResourceDiscovery m_resourceDiscovery;
-	
-	private HAPResourceManager m_resourceManager;
+	private HAPResourceManagerRoot m_resourceManager;
 	
 	private HAPExpressionManager m_expressionManager;
 	
@@ -35,21 +32,18 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	public HAPRuntimeEnvironmentJS(){}
 	
-	public HAPRuntimeEnvironmentJS(HAPResourceDiscovery resourceDiscovery, 
-								   HAPResourceManager resourceMan, 
+	public HAPRuntimeEnvironmentJS(HAPResourceManagerRoot resourceMan, 
 								   HAPExpressionManager expressionManager,
 								    HAPGatewayManager gatewayManager,
 								   HAPRuntime runtime){
 		super();
-		this.init(resourceDiscovery, resourceMan, expressionManager, gatewayManager, runtime);
+		this.init(resourceMan, expressionManager, gatewayManager, runtime);
 	}
 	
-	protected void init(HAPResourceDiscovery resourceDiscovery,
-					    HAPResourceManager resourceMan, 
+	protected void init(HAPResourceManagerRoot resourceMan, 
 					    HAPExpressionManager expressionManager,
 					    HAPGatewayManager gatewayManager,
 					    HAPRuntime runtime){
-		this.m_resourceDiscovery = resourceDiscovery;
 		this.m_resourceManager = resourceMan;
 		this.m_expressionManager = expressionManager;
 		this.m_gatewayManager = gatewayManager;
@@ -60,10 +54,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	}
 	
 	@Override
-	public HAPResourceManager getResourceManager() {		return this.m_resourceManager;	}
-
-	@Override
-	public HAPResourceDiscovery getResourceDiscovery() {		return this.m_resourceDiscovery;	}
+	public HAPResourceManagerRoot getResourceManager() {		return this.m_resourceManager;	}
 
 	@Override
 	public HAPExpressionManager getExpressionManager(){  return this.m_expressionManager;  }

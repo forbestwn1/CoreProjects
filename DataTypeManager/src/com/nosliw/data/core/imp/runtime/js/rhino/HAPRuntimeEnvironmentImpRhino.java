@@ -5,11 +5,9 @@ import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionManagerImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceDiscoveryJSImp;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceManagerJSImp;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
-import com.nosliw.data.core.runtime.HAPResourceDiscovery;
-import com.nosliw.data.core.runtime.HAPResourceManager;
+import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
@@ -29,14 +27,12 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		
 		this.m_dataTypeHelper = new HAPDataTypeHelperImp(this, this.m_runtimeJSModule.getDataTypeDataAccess());
 		
-		HAPResourceDiscovery resourceDiscovery = new HAPResourceDiscoveryJSImp(runtimeJSModule.getRuntimeJSDataAccess());
-		HAPResourceManager resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
+		HAPResourceManagerRoot resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
 		HAPExpressionManager expressionManager = new HAPExpressionManagerImp(new HAPExpressionParserImp(), this.m_dataTypeHelper); 		
 		HAPRuntimeImpRhino runtime = new HAPRuntimeImpRhino(this); 
 		HAPGatewayManager gatewayManager = new HAPGatewayManager(); 
 		
-		init(resourceDiscovery, 
-			resourceMan,
+		init(resourceMan,
 			expressionManager,
 			gatewayManager,
 			runtime

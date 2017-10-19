@@ -16,16 +16,8 @@ i
 9src/com/nosliw/data/core/imp/HAPDataTypeOperationImp.java,8\a\8a228f9776f13ed2bc5be8a6c1dbb7f801f90ffc
 i
 9src/com/nosliw/data/core/imp/runtime/js/HAPJSUtility.java,c\2\c254da6bccd34780a82e02e972d26bbc9dfc38b0
-w
-Gsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerJSHelper.java,4\5\4565b9f61414c0e23650d1c19c00e32097051972
-x
-Hsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerJSLibrary.java,8\7\875d767c4c49b7f30e6805dda3f1688de3d47134
-z
-Jsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerJSOperation.java,f\c\fc3a0c2a47e335ada3a23174296f637bf29d7057
 v
 Fsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDiscoveryJSImp.java,5\2\52439fa6610f1fde2afcf4b2f5f7f6bc03ac24f5
-u
-Esrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDataHelperImp.java,b\0\b031057ee7b50b95c4c75141f8ef666ea6dbd617
 d
 4src/com/nosliw/data/core/imp/HAPDataTypeImpLoad.java,9\5\95d197dd5a2ba46c9e1654d22a7b587cb6320cc5
 e
@@ -50,8 +42,6 @@ w
 Gsrc/com/nosliw/data/core/imp/runtime/js/valueinfo.data.js.operation.xml,7\b\7b25a920921e2e782faa62161cdc035454a81f76
 w
 Gsrc/com/nosliw/data/core/imp/runtime/js/valueinfo.data.js.converter.xml,b\b\bbf074a6ad6db967892e445051b89c3636f5ce62
-z
-Jsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerJSConverter.java,b\b\bb422ba9404192d0fece704df8c97d460e1e8ff3
 d
 4src/com/nosliw/data/core/imp/init/HAPModuleInit.java,5\9\5965c738af6b601f6e8992150c738e4f3060a111
 f
@@ -70,8 +60,6 @@ d
 Qsrc/com/nosliw/data/core/imp/runtime/js/valueinfo.data.js.resource.dependency.xml,d\5\d500d44cc71fb87c617d72f965c7c51087c9c0bf
 m
 =src/com/nosliw/data/core/imp/valueinfo.data.operationinfo.xml,9\b\9b3152dc1c9218dbd11992f05ecef4a7fda1e087
-z
-Jsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDataJSConverterImp.java,a\b\abf08074326322121a9987c846b7ba0d58b0f3e3
 `
 0src/com/nosliw/data/core/imp/io/HAPDBSource.java,5\8\58ca545cb141ec61fe1203af77cf37ebd0d94770
 g
@@ -84,12 +72,6 @@ c
 3src/com/nosliw/data/core/imp/HAPModuleDataType.java,f\f\ff9d6cf5937ba7e5f1b97b094a983d8d76d847b5
 o
 ?src/com/nosliw/data/core/imp/runtime/js/HAPModuleRuntimeJS.java,1\c\1c3e8ed84ecf0efc91936598f47ec0576f4f466f
-t
-Dsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerJSImp.java,c\6\c6f353c914497dafc3efcdea49e8efcaea698a12
-z
-Jsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDataJSOperationImp.java,8\c\8c5da3711ed627d6736a6dc8549ade0384913a4b
-x
-Hsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerJSGateway.java,c\6\c67bde0f2c9d1682ec23739b5695bbac339cf46b
 €
 Psrc/com/nosliw/data/core/imp/runtime/js/rhino/HAPRuntimeEnvironmentImpRhino.java,b\0\b0997131ab0b52dd238c0466f9726b0030728519
 „
