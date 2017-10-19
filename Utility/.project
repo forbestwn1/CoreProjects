@@ -9,6 +9,7 @@
 		<project>UIResource</project>
 		<project>DataDefinition</project>
 		<project>Core</project>
+		<project>DataTypeManager</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

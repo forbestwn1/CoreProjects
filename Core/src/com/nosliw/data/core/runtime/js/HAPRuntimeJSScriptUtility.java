@@ -20,6 +20,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskLoadResources;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
+import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSLibrary;
 import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 

@@ -27,6 +27,13 @@ import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
+import com.nosliw.uiresource.definition.HAPConstantDef;
+import com.nosliw.uiresource.definition.HAPContextNode;
+import com.nosliw.uiresource.definition.HAPContextNodeDefinition;
+import com.nosliw.uiresource.definition.HAPContextNodeRoot;
+import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
+import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
+import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
 import com.nosliw.uiresource.expression.HAPScriptExpressionUtility;
 
@@ -55,15 +62,29 @@ public class HAPUIResourceParser {
 	}
 	
 	public HAPUIDefinitionUnitResource getUIResource(){return this.m_resource;}
+
+	public HAPUIDefinitionUnitResource parseContent(String resourceId, String content){
+		try{
+			this.m_resource = new HAPUIDefinitionUnitResource(resourceId, content);
+			Document doc = Jsoup.parse(content, "UTF-8");
+			parseUIResourceContent(this.m_resource, doc);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return m_resource;
+	}
 	
 	public HAPUIDefinitionUnitResource parseFile(String fileName){
 		try{
 			File input = new File(fileName);
-			//use file name as ui resource name
-			String resourceName = HAPFileUtility.getFileName(input);
+			//use file name as ui resource id
+			String resourceId = HAPFileUtility.getFileName(input);
+			String source = HAPFileUtility.readFile(input);
+			this.m_resource = new HAPUIDefinitionUnitResource(resourceId, source);
 			
 			Document doc = Jsoup.parse(input, "UTF-8");
-			this.m_resource = parseUIResourceContent(resourceName, doc);
+			parseUIResourceContent(this.m_resource, doc);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -71,11 +92,8 @@ public class HAPUIResourceParser {
 		return m_resource;
 	}
 
-	private HAPUIDefinitionUnitResource parseUIResourceContent(String resourceName, Document doc){
-		HAPUIDefinitionUnitResource resource = null;
+	private HAPUIDefinitionUnitResource parseUIResourceContent(HAPUIDefinitionUnitResource resource, Document doc){
 		try{
-			resource = new HAPUIDefinitionUnitResource(resourceName);
-
 			Element bodyEle = doc.body();
 
 			//parse script block

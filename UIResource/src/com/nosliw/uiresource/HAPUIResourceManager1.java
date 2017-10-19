@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.HAPDataTypeManager;
+import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 
 public class HAPUIResourceManager1 extends HAPSerializableImp{
 

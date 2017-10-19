@@ -1,7 +1,7 @@
 <entity name="data.js.operation"
 		table="nosliw.OPERATIONJS"
 		primaryKeys="id" 
-		class="com.nosliw.data.core.imp.runtime.js.HAPResourceDataJSOperationImp" 
+		class="com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataJSOperationImp" 
 		description="">
 
 	<property name="id" dataType="string" description="">

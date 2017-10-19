@@ -11,9 +11,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.uiresource.HAPConstantDef;
-import com.nosliw.uiresource.HAPConstantUtility;
 import com.nosliw.uiresource.HAPUIResourceIdGenerator;
+import com.nosliw.uiresource.definition.HAPConstantDef;
+import com.nosliw.uiresource.definition.HAPConstantUtility;
 
 public class HAPUIResourceConstantTest {
 

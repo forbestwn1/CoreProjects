@@ -8,6 +8,8 @@ import com.nosliw.data.core.runtime.HAPResourceDiscovery;
 import com.nosliw.data.core.runtime.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.runtime.js.gateway.HAPGatewayCriteriaOperation;
+import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
 
 @HAPEntityWithAttribute(baseName="RUNTIME")
 public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{

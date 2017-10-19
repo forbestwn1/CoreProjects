@@ -1,7 +1,7 @@
 <entity name="data.js.helper"
 		table="nosliw.HELPERJS"
 		primaryKeys="id" 
-		class="com.nosliw.data.core.imp.runtime.js.HAPResourceDataHelperImp" 
+		class="com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataHelperImp" 
 		description="">
 
 	<property name="id" dataType="string" description="">

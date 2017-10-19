@@ -3,7 +3,7 @@
 	<!-- Contexts define the variables input for this ui resource -->
 	<body contexts="business@object;key@object">
 
-	<%= #|?(business)?.a.aa.subString(&(base)&,from:&(from)&,to:&(to)&)|#.value + ' 6666 ' %>  tttttttttt  
+	<%= #|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value + ' 6666 ' %>  tttttttttt  
 
 	</body>
 

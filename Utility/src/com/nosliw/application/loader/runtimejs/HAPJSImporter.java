@@ -27,20 +27,20 @@ import com.nosliw.data.core.HAPDataTypeVersion;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.imp.HAPDataAccessDataType;
 import com.nosliw.data.core.imp.HAPOperationImp;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceDataJSOperationImp;
 import com.nosliw.data.core.imp.runtime.js.HAPDataAccessRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceDataJSConverterImp;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceDataHelperImp;
+import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataHelperImp;
+import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataJSConverterImp;
+import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataJSOperationImp;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
-import com.nosliw.data.core.runtime.js.HAPResourceIdDataType;
-import com.nosliw.data.core.runtime.js.HAPResourceIdJSGateway;
-import com.nosliw.data.core.runtime.js.HAPResourceIdJSHelper;
-import com.nosliw.data.core.runtime.js.HAPResourceIdJSLibrary;
+import com.nosliw.data.core.runtime.js.resource.HAPResourceIdDataType;
+import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSGateway;
+import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSHelper;
+import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSLibrary;
 import com.nosliw.data.core.runtime.js.rhino.HAPRhinoDataUtility;
 
 public class HAPJSImporter {

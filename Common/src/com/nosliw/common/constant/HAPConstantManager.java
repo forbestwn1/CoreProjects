@@ -64,24 +64,24 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 				
 				try{
 					fields =checkClass.getDeclaredFields();
+
+					for(Field field : fields){
+						String fieldName = field.getName();
+						if(field.isAnnotationPresent(HAPAttribute.class)){
+							try {
+								String constantValue = field.get(null).toString();
+								String baseName = HAPConstantUtility.getBaseName(checkClass);
+								String constantName = HAPNamingConversionUtility.cascadeNameSegment(baseName, fieldName);
+								HAPConstantInfo constantInfo = HAPConstantInfo.build(constantName, constantValue);
+								group.addConstantInfo(constantInfo);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					}
 				}
 				catch(Throwable e){
 					e.printStackTrace();
-				}
-						
-				for(Field field : fields){
-					String fieldName = field.getName();
-					if(field.isAnnotationPresent(HAPAttribute.class)){
-						try {
-							String constantValue = field.get(null).toString();
-							String baseName = HAPConstantUtility.getBaseName(checkClass);
-							String constantName = HAPNamingConversionUtility.cascadeNameSegment(baseName, fieldName);
-							HAPConstantInfo constantInfo = HAPConstantInfo.build(constantName, constantValue);
-							group.addConstantInfo(constantInfo);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
 				}
 			}
 

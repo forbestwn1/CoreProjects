@@ -3,10 +3,13 @@ package com.nosliw.app.servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.imp.expression.HAPExpressionImporter;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
+import com.nosliw.data.core.runtime.js.HAPResourceManagerJS;
 import com.nosliw.data.expression.test.HAPExpressionTest;
 import com.nosliw.uiresource.HAPUIResourceManager;
+import com.nosliw.uiresource.resource.HAPResourceManagerUIResource;
 
 public class HAPInitServlet  extends HttpServlet{
 
@@ -24,6 +27,8 @@ public class HAPInitServlet  extends HttpServlet{
 			
 			HAPUIResourceManager uiResourceMan = new HAPUIResourceManager(runtimeEnvironment.getExpressionManager(), runtimeEnvironment.getRuntime());
 			this.getServletContext().setAttribute("uiResourceManager", uiResourceMan);
+			
+			((HAPResourceManagerJS)runtimeEnvironment.getResourceManager()).registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPResourceManagerUIResource(uiResourceMan));
 
 	   }
 }

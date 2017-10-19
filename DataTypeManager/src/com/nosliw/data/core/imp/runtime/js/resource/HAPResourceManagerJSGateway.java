@@ -1,0 +1,35 @@
+package com.nosliw.data.core.imp.runtime.js.resource;
+
+import java.util.List;
+
+import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
+import com.nosliw.data.core.runtime.HAPResource;
+import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResourceManager;
+import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSGateway;
+
+public class HAPResourceManagerJSGateway implements HAPResourceManager{
+
+//	private HAPGatewayManager m_gatewayManager;
+//	
+//	HAPResourceManagerJSGateway(HAPGatewayManager gatewayManager){
+//		this.m_gatewayManager = gatewayManager;
+//	}
+	
+	@Override
+	public HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId) {
+		HAPLoadResourceResponse out = new HAPLoadResourceResponse();
+		for(HAPResourceId resourceId : resourcesId){
+			HAPResource resource = this.getResource(resourceId);
+			if(resource!=null)  out.addLoadedResource(resource);
+			else  out.addFaildResourceId(resourceId);
+		}
+		return out;
+	}
+
+	@Override
+	public HAPResource getResource(HAPResourceId resourceId) {
+		return new HAPResource(resourceId, new HAPResourceDataJSGateway(resourceId.getId()), null);
+	}
+
+}

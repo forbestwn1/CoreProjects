@@ -10,9 +10,9 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
-import com.nosliw.data.core.runtime.js.HAPGatewayResource;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
+import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
 
 @HAPEntityWithAttribute
 public class HAPGatewayBrowserLoadLibrary extends HAPGatewayImp{

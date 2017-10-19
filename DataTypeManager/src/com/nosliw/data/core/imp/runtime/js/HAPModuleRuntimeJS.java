@@ -9,12 +9,12 @@ import com.nosliw.data.core.imp.HAPModuleDataType;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
-import com.nosliw.data.core.runtime.js.HAPJSGatewayId;
-import com.nosliw.data.core.runtime.js.HAPJSHelperId;
-import com.nosliw.data.core.runtime.js.HAPJSLibraryId;
-import com.nosliw.data.core.runtime.js.HAPResourceIdJSGateway;
-import com.nosliw.data.core.runtime.js.HAPResourceIdJSHelper;
-import com.nosliw.data.core.runtime.js.HAPResourceIdJSLibrary;
+import com.nosliw.data.core.runtime.js.resource.HAPJSGatewayId;
+import com.nosliw.data.core.runtime.js.resource.HAPJSHelperId;
+import com.nosliw.data.core.runtime.js.resource.HAPJSLibraryId;
+import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSGateway;
+import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSHelper;
+import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSLibrary;
 
 public class HAPModuleRuntimeJS {
 

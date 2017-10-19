@@ -6,6 +6,9 @@ import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.data.core.imp.io.HAPDataAccess;
+import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataHelperImp;
+import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataJSConverterImp;
+import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataJSOperationImp;
 import com.nosliw.data.core.runtime.HAPResourceId;
 
 public class HAPDataAccessRuntimeJS extends HAPDataAccess{

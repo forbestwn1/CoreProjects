@@ -19,13 +19,15 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>gateway1servlet</servlet-name>
-    <servlet-class>com.nosliw.app.servlet.HAPGatewayServlet</servlet-class>
+    <servlet-name>uiresourceservlet</servlet-name>
+    <servlet-class>com.nosliw.app.servlet.HAPUIResourceServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>gateway1servlet</servlet-name>
-    <url-pattern>/gateway</url-pattern>
+    <servlet-name>uiresourceservlet</servlet-name>
+    <url-pattern>/uiresource</url-pattern>
   </servlet-mapping>
+
+
 
 
   <servlet-mapping>

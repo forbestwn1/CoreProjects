@@ -6,7 +6,7 @@ import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionManagerImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceDiscoveryJSImp;
-import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerJSImp;
+import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceManagerJSImp;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPResourceDiscovery;
 import com.nosliw.data.core.runtime.HAPResourceManager;

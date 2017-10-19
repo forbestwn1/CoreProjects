@@ -36,10 +36,10 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
-import com.nosliw.data.core.runtime.js.HAPGatewayResource;
-import com.nosliw.data.core.runtime.js.HAPJSLibraryId;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
+import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
+import com.nosliw.data.core.runtime.js.resource.HAPJSLibraryId;
 
 @HAPEntityWithAttribute
 public class HAPRuntimeImpRhino implements HAPRuntime{

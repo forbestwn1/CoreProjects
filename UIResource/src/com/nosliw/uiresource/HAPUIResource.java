@@ -1,6 +1,5 @@
 package com.nosliw.uiresource;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,6 +10,11 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
+import com.nosliw.uiresource.definition.HAPConstantDef;
+import com.nosliw.uiresource.definition.HAPContext;
+import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
+import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
+import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionUnit;
 
 /**
@@ -24,7 +28,7 @@ public class HAPUIResource extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String EXPRESSIONUNIT = "expressionUnit";
-	
+
 	//resource definition
 	private HAPUIDefinitionUnitResource m_uiDefinitionResource;
 	
@@ -39,7 +43,7 @@ public class HAPUIResource extends HAPSerializableImp{
 		HAPContext context = m_uiDefinitionResource.getContext();
 		m_expressionUnit = this.processDefinitionUnit(m_uiDefinitionResource, context, null, expressionMan);
 	}
-	
+
 	private HAPUIResourceExpressionUnit processDefinitionUnit(
 			HAPUIDefinitionUnit defUnit, 
 			HAPContext context,

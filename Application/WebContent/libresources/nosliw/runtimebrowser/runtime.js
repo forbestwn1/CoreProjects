@@ -14,6 +14,7 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_createRemoteService;
 	var node_createGatewayService;
+	var node_node_createUIResourceService;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -36,6 +37,8 @@ var node_createRuntime = function(name){
 	var loc_remoteService;
 	
 	var loc_gatewayService;
+	
+	var loc_uiResourceService;
 	
 	var loc_out = {
 		
@@ -66,6 +69,10 @@ var node_createRuntime = function(name){
 		getGatewayService(){
 			return loc_gatewayService;
 		},
+		
+		getUIResourceService(){
+			return loc_uiResourceService;
+		}
 	};
 	
 	var lifecycleCallback = {};
@@ -77,6 +84,7 @@ var node_createRuntime = function(name){
 		loc_remoteService = node_createRemoteService();
 		loc_remoteService.interfaceObjectLifecycle.init();
 		loc_gatewayService = node_createGatewayService();
+		loc_uiResourceService = node_createUIResourceService();
 		
 		//set sortcut for object
 		 nosliw.runtime = loc_out;
@@ -109,6 +117,7 @@ nosliw.registerSetNodeDataEvent("expression.service.createExpressionService", fu
 nosliw.registerSetNodeDataEvent("resource.createResourceService", function(){node_createResourceService = this.getData();});
 nosliw.registerSetNodeDataEvent("remote.createRemoteService", function(){node_createRemoteService = this.getData();});
 nosliw.registerSetNodeDataEvent("runtime.createGatewayService", function(){node_createGatewayService = this.getData();});
+nosliw.registerSetNodeDataEvent("uiresource.createUIResourceService", function(){node_createUIResourceService = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 
