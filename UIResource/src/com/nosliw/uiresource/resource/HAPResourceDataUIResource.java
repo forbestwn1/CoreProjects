@@ -15,6 +15,8 @@ public class HAPResourceDataUIResource extends HAPSerializableImp implements HAP
 		this.m_uiResource = uiResource;
 	}
 	
+	public HAPUIResource getUIResource(){ return this.m_uiResource;  }
+	
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 	}
 	

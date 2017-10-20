@@ -19,7 +19,7 @@ import com.nosliw.data.core.expression.HAPOperandVariable;
 import com.nosliw.data.core.expression.HAPOperandWrapper;
 import com.nosliw.data.core.expression.HAPOperationParm;
 
-public class HAPExpressionUtility {
+public class HAPUIResourceExpressionUtility {
 
 	//process variables in expression, 
 	//	for attribute operation a.b.c.d which have responding definition in context, 

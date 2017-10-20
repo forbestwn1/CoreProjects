@@ -101,7 +101,7 @@ public class HAPUIResourceExpressionUnit extends HAPSerializableImp{
 
 	public void processExpressions(HAPExpressionManager expressionMan){
 		//preprocess attributes operand in expressions
-		HAPExpressionUtility.processAttributeOperandInExpression(m_expressionDefinitionSuite, m_variables);
+		HAPUIResourceExpressionUtility.processAttributeOperandInExpression(m_expressionDefinitionSuite, m_variables);
 		
 		//only expression in content(html and attributes) need to process 
 		for(HAPExpressionDefinition expDef : this.m_expressionDefinitions){

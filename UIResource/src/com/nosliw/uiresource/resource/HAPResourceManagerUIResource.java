@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
 import com.nosliw.data.core.runtime.HAPResource;
+import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPResourceManager;
@@ -36,6 +37,20 @@ public class HAPResourceManagerUIResource implements HAPResourceManager{
 		if(uiResource==null)  return null;
 		HAPResourceDataUIResource resourceData = new HAPResourceDataUIResource(uiResource);
 		return new HAPResource(resourceId, resourceData, null);
+	}
+
+	@Override
+	public HAPResourceInfo discoverResource(HAPResourceId resourceId) {
+		HAPResourceDataUIResource resourceData = (HAPResourceDataUIResource)this.getResource(resourceId).getResourceData();
+		HAPResourceInfo out = new HAPResourceInfo(resourceId);
+		
+		HAPUIResource uiResource = resourceData.getUIResource();
+		List<HAPResourceId> dependencyResourceIds = HAPResourceUtility.discoverUIResource(uiResource);
+		for(HAPResourceId dependencyResourceId : dependencyResourceIds){
+			out.addDependency(new HAPResourceDependent(dependencyResourceId));
+		}
+		
+		return out;
 	}
 
 }

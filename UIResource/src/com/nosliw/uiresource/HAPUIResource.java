@@ -32,8 +32,11 @@ public class HAPUIResource extends HAPSerializableImp{
 	//resource definition
 	private HAPUIDefinitionUnitResource m_uiDefinitionResource;
 	
-	//resource unit
+	//expression unit
 	private HAPUIResourceExpressionUnit m_expressionUnit;
+	
+	//resource unit
+	
 	
 	public HAPUIResource(HAPUIDefinitionUnitResource uiDefinitionUnitResource){
 		this.m_uiDefinitionResource = uiDefinitionUnitResource; 

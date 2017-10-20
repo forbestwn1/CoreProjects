@@ -30,6 +30,11 @@ var node_utility =
 			return typeResources[id];
 		},
 		
+		getResourcesByTypeFromTree : function(tree, resourceType){
+			var typeResources = tree[resourceType];
+			return typeResources;
+		},
+		
 		createOperationResourceId : function(dataTypeId, operation){
 			var out = {};
 			out[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = node_namingConvensionUtility.cascadeLevel1(dataTypeId, operation); 
