@@ -16,8 +16,6 @@ i
 9src/com/nosliw/data/core/imp/HAPDataTypeOperationImp.java,8\a\8a228f9776f13ed2bc5be8a6c1dbb7f801f90ffc
 i
 9src/com/nosliw/data/core/imp/runtime/js/HAPJSUtility.java,c\2\c254da6bccd34780a82e02e972d26bbc9dfc38b0
-v
-Fsrc/com/nosliw/data/core/imp/runtime/js/HAPResourceDiscoveryJSImp.java,5\2\52439fa6610f1fde2afcf4b2f5f7f6bc03ac24f5
 d
 4src/com/nosliw/data/core/imp/HAPDataTypeImpLoad.java,9\5\95d197dd5a2ba46c9e1654d22a7b587cb6320cc5
 e
@@ -42,8 +40,6 @@ w
 Gsrc/com/nosliw/data/core/imp/runtime/js/valueinfo.data.js.operation.xml,7\b\7b25a920921e2e782faa62161cdc035454a81f76
 w
 Gsrc/com/nosliw/data/core/imp/runtime/js/valueinfo.data.js.converter.xml,b\b\bbf074a6ad6db967892e445051b89c3636f5ce62
-d
-4src/com/nosliw/data/core/imp/init/HAPModuleInit.java,5\9\5965c738af6b601f6e8992150c738e4f3060a111
 f
 6src/com/nosliw/data/core/imp/HAPDataTypeHelperImp.java,6\6\66a73e41de6fa2b94d1b0af8ea284c7f6c8a5ccb
 h
@@ -82,3 +78,15 @@ Nsrc/com/nosliw/data/core/imp/runtime/js/resource/HAPResourceDataHelperImp.java
 Psrc/com/nosliw/data/core/imp/runtime/js/resource/HAPResourceManagerJSHelper.java,1\f\1f576953f058d68b387ac3ac40a66347e16f8cb3
 }
 Msrc/com/nosliw/data/core/imp/runtime/js/resource/HAPResourceManagerJSImp.java,1\e\1ec8c3ea04a0713f3074fdff06a0f77e0ab3caf1
+Å
+Qsrc/com/nosliw/data/core/imp/runtime/js/resource/HAPResourceManagerJSGateway.java,3\1\3191649828d9a9aa9f176682c8b40ffacfb35b4f
+Å
+Qsrc/com/nosliw/data/core/imp/runtime/js/resource/HAPResourceManagerJSLibrary.java,e\c\ec9adaf6754b10da0f126f29de6f2c0a66bd670c
+É
+Ssrc/com/nosliw/data/core/imp/runtime/js/resource/HAPResourceDataJSConverterImp.java,8\1\819f2a73221403aca403794368c870c0743bd4cc
+É
+Ssrc/com/nosliw/data/core/imp/runtime/js/resource/HAPResourceManagerJSConverter.java,8\9\898ad734208687573f13bff80f519d4a5d812166
+y
+Isrc/com/nosliw/data/core/imp/runtime/js/HAPResourceManagerDataAccess.java,3\d\3d0e933f2886599cfd9e5d9acbad83550ae1e734
+É
+Ssrc/com/nosliw/data/core/imp/runtime/js/resource/HAPResourceManagerJSOperation.java,a\a\aa5b2a11a31129b91fc2e934141303fcd3a23ad3

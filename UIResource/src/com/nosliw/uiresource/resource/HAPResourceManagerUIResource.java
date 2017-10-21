@@ -32,7 +32,7 @@ public class HAPResourceManagerUIResource implements HAPResourceManager{
 
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId) {
-		HAPResourceIdUIResource uiResourceId = (HAPResourceIdUIResource)resourceId; 
+		HAPResourceIdUIResource uiResourceId = new HAPResourceIdUIResource(resourceId); 
 		HAPUIResource uiResource = this.m_uiResourceMan.getUIResource(uiResourceId.getId());
 		if(uiResource==null)  return null;
 		HAPResourceDataUIResource resourceData = new HAPResourceDataUIResource(uiResource);

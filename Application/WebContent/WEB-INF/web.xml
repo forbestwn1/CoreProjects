@@ -10,12 +10,21 @@
   </servlet>
 
   <servlet>
-    <servlet-name>gatewayservlet</servlet-name>
+    <servlet-name>loadLibServlet</servlet-name>
     <servlet-class>com.nosliw.app.servlet.HAPBrowserGatewayServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>gatewayservlet</servlet-name>
+    <servlet-name>loadLibServlet</servlet-name>
     <url-pattern>/loadlib</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>gatewayServlet</servlet-name>
+    <servlet-class>com.nosliw.app.servlet.HAPGatewayServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>gatewayServlet</servlet-name>
+    <url-pattern>/gateway</url-pattern>
   </servlet-mapping>
 
   <servlet>

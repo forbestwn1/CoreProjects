@@ -408,6 +408,11 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 	@Override
 	public HAPDataTypeCriteriaId getDataTypeIdCriteriaByData(HAPData data) {
+		if(data==null){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		return new HAPDataTypeCriteriaId(data.getDataTypeId(), null);
 	}
 

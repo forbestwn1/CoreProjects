@@ -232,6 +232,12 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		try {
 			HAPGatewayManager gatewayMan =	this.getRuntimeEnvironment().getGatewayManager();
 			Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+			
+			if(gatewayMan==null){
+				int kkkk = 5555;
+				kkkk++;
+			}
+			
 			jsonMap.put(HAPGatewayResource.COMMAND_LOADRESOURCES_RESOURCEINFOS, HAPSerializeManager.getInstance().toStringValue(resourceInfos, HAPSerializationFormat.JSON));
 			HAPServiceData serviceData = gatewayMan.executeGateway(HAPRuntimeEnvironmentJS.GATEWAY_RESOURCE, HAPGatewayResource.COMMAND_LOADRESOURCES, new JSONObject(HAPJsonUtility.buildMapJson(jsonMap)));
 

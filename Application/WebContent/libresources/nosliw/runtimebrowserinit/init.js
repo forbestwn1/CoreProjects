@@ -16,6 +16,8 @@ var libNames = [
 	"nosliw.error",
 	"nosliw.runtime",
 	"nosliw.runtimebrowser",
+	"nosliw.uiresource",
+	"nosliw.runtimebrowsertest"
 ];
 
 

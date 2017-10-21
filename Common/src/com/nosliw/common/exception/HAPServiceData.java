@@ -71,8 +71,12 @@ public class HAPServiceData extends HAPSerializableImp{
 		return out;
 	}
 
-	public static HAPServiceData createFailureData(){return HAPServiceData.createServiceData(HAPConstant.SERVICECODE_FAILURE, null, "");}
-	public static HAPServiceData createFailureData(Object data, String message){return HAPServiceData.createServiceData(HAPConstant.SERVICECODE_FAILURE, data, message);}
+	public static HAPServiceData createFailureData(){
+		return HAPServiceData.createServiceData(HAPConstant.SERVICECODE_FAILURE, null, "");
+	}
+	public static HAPServiceData createFailureData(Object data, String message){
+		return HAPServiceData.createServiceData(HAPConstant.SERVICECODE_FAILURE, data, message);
+	}
 	
 	public static HAPServiceData createServiceData(int code, Object data, String message){
 		HAPServiceData out = new HAPServiceData();

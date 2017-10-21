@@ -58,7 +58,7 @@ public class HAPConstantDef extends HAPSerializableImp{
 		jsonMap.put(LITERATE, this.m_definitionObj.toString());
 		jsonMap.put(PROCESSED, this.m_isProcessed+"");
 		typeJsonMap.put(PROCESSED, Boolean.class);
-		jsonMap.put(VALUE, this.m_value.toString());
+		if(this.m_value!=null) jsonMap.put(VALUE, this.m_value.toString());
 		typeJsonMap.put(VALUE, this.m_value.getClass());
 	}
 }
