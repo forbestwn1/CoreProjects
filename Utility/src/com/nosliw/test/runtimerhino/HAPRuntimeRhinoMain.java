@@ -110,31 +110,26 @@ public class HAPRuntimeRhinoMain {
 		//module init
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 		
-		//start runtime
-		runtimeEnvironment.getRuntime().start();
-		
 		HAPExpressionImporter.importExpressionSuiteFromFolder(HAPFileUtility.getClassFolderName(HAPExpressionTest.class), runtimeEnvironment.getExpressionManager());
 		
 		executeSuites(new String[]{
-				"expression0",
-				"expression1",
-				"expression10",
-				"expression2",
-				"expression3",
-				"expression4",
-				"expression5",
-				"expression6",
+//				"expression0",
+//				"expression1",
+//				"expression10",
+//				"expression2",
+//				"expression3",
+//				"expression4",
+//				"expression5",
+//				"expression6",
 
-//				"expression7",
-				"expression71",
+				"expression7",
+//				"expression71",
+
+
 //				"expression8",
 				
 //				"expression9",
 			}, runtimeEnvironment);
-		
-//		for(String suiteName : runtimeEnvironment.getExpressionManager().getExpressionDefinitionSuites()){
-//			executeSuite(suiteName, runtimeEnvironment);
-//		}
 		
 //		finally{
 //			//shut down runtime

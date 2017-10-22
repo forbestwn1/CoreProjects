@@ -39,10 +39,21 @@ public class HAPGatewayManager {
 	 * @return
 	 */
 	public HAPServiceData executeGateway(String gatewayId, String command, JSONObject parms){
+		
+		if(gatewayId.equals("discoveryGateway")){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		HAPGateway gateway = this.getGateway(gatewayId);
 
 		HAPServiceData commandResult = null;
 		try {
+			if(gateway==null){
+				int kkkk = 5555;
+				kkkk++;
+			}
+			
 			commandResult = gateway.command(command, parms);
 		} catch (Exception e1) {
 			e1.printStackTrace();

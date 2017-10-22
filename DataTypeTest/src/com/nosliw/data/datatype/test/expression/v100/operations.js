@@ -17,20 +17,22 @@ dataTypeDefition.operations['outputCriteria'] = {
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
 			context.logging.info("Operand Calcualting [outputCriteria]  ----------------");
+			
+			var varCriterias = {};
+			_.each(parms.getParm("parms"), function(varName, varCriteriaData){
+				varCriterias[varName] = varCriteriaData.value;
+			});
+			
 			var gatewayParms = {
 				expression : this.value,
-				variablesCriteria : parms.getParm("parms")
+				variablesCriteria : varCriterias
 			};
 			return  context.getResourceDataByName("myGateWay").command("getOutputCriteria", gatewayParms);
-//			return {
-//				dataTypeId : "test.datatypecriteria;1.0.0",
-//				value : "*",
-//			}
 		},
 
 		requires:{
 			"jsGateway" : { 
-				myGateWay: "discoveryGateway",
+				myGateWay: "discovery",
 			}
 		},
 };

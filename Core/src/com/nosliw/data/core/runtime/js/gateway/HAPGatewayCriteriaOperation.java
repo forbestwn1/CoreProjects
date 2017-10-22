@@ -10,7 +10,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWithSubCriteria;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 
-public class HAPGatewayCriteriaOperation  extends HAPGatewayImp{
+public class HAPGatewayCriteriaOperation extends HAPGatewayImp{
 
 	@HAPAttribute
 	final public static String COMMAND_GETCHILDCRITERIA = "getChildCriteria";
