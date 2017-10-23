@@ -17,6 +17,9 @@ import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp;
+import com.nosliw.uiresource.definition.HAPConstantDef;
+import com.nosliw.uiresource.definition.HAPContext;
+import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
 
 /**
  *  This class store all the expression info related with ui resources defintion 
@@ -42,16 +45,6 @@ public class HAPUIResourceExpressionUnit extends HAPSerializableImp{
 	@HAPAttribute
 	public static String CHILDREN = "children";
 
-	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(VARIABLES, HAPJsonUtility.buildJson(this.m_variables, HAPSerializationFormat.JSON));
-		jsonMap.put(EXPRESSIONDEFINITIONS, HAPJsonUtility.buildJson(this.m_expressionDefinitions, HAPSerializationFormat.JSON));
-		jsonMap.put(EXPRESSIONDEFINITIONS_SUPPORT, HAPJsonUtility.buildJson(this.m_supportExpressionDefinitions, HAPSerializationFormat.JSON));
-		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildJson(this.m_expressions, HAPSerializationFormat.JSON));
-		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.m_children, HAPSerializationFormat.JSON));
-	}
-	
-	
 	//variables defined in context
 	private Map<String, HAPDataTypeCriteria> m_variables; 	
 	
@@ -71,15 +64,66 @@ public class HAPUIResourceExpressionUnit extends HAPSerializableImp{
 	//children resource unit by tag id
 	private Map<String, HAPUIResourceExpressionUnit> m_children;
 
-	public HAPUIResourceExpressionUnit(){
+	public HAPUIResourceExpressionUnit(
+			HAPUIDefinitionUnit currentResourceUnit, 
+			HAPUIDefinitionUnit parentResourceUnit,
+			HAPExpressionManager expressionMan
+			){
 		this.m_expressionDefinitions = new HashSet<HAPExpressionDefinition>();
 		this.m_supportExpressionDefinitions = new HashSet<HAPExpressionDefinition>();
 		this.m_expressionDefinitionSuite = new HAPExpressionDefinitionSuiteImp();
 		this.m_expressions = new LinkedHashMap<String, HAPExpression>();
 		this.m_children = new LinkedHashMap<String, HAPUIResourceExpressionUnit>();
 		this.m_variables = new LinkedHashMap<String, HAPDataTypeCriteria>();
+		this.init(currentResourceUnit, parentResourceUnit, expressionMan);
 	}
 
+	private void init(
+			HAPUIDefinitionUnit currentResourceUnit, 
+			HAPUIDefinitionUnit parentResourceUnit,
+			HAPExpressionManager expressionMan
+			){
+		
+		this.addVariables(currentResourceUnit.getContext().getCriterias());
+
+		HAPUIResourceExpressionUnit parent = parentResourceUnit==null?null:parentResourceUnit.getExpressionUnit();
+		
+		//build data constants
+		if(parent!=null)	this.addConstants(parent.getConstants());
+		Map<String, HAPConstantDef> constantDefs = currentResourceUnit.getConstants();
+		for(String name : constantDefs.keySet()){
+			HAPData data = constantDefs.get(name).getDataValue();
+			if(data!=null)		this.addConstant(name, data);
+		}
+		
+		//get all expressions
+		if(parent!=null)	this.addSupportExpressionDefinitions(parent.getSupportExpressionDefinitions());
+		Set<HAPExpressionDefinition> expDefs = currentResourceUnit.getExpressionDefinitions();
+		Set<HAPExpressionDefinition> otherExpDefs = currentResourceUnit.getOtherExpressionDefinitions();
+		this.addExpressionDefinitions(expDefs);
+		this.addSupportExpressionDefinitions(otherExpDefs);
+		
+		//prepress expressions
+		//preprocess attributes operand in expressions
+		HAPUIResourceExpressionUtility.processAttributeOperandInExpression(m_expressionDefinitionSuite, m_variables);
+		
+		//only expression in content(html and attributes) need to process 
+		for(HAPExpressionDefinition expDef : this.m_expressionDefinitions){
+			String name = expDef.getName();
+			HAPExpression expression = expressionMan.processExpression(null, m_expressionDefinitionSuite, name, m_variables);
+			this.m_expressions.put(name, expression);
+		}
+		
+		//process child tags
+//		Iterator<HAPUIDefinitionUnitTag> tagsIterator = defUnit.getUITags().iterator();
+//		while(tagsIterator.hasNext()){
+//			HAPUIDefinitionUnitTag tag = tagsIterator.next();
+//			HAPContext tagContext = this.getContextForTag(context, tag);
+//			HAPUIResourceExpressionUnit tagResource = this.processDefinitionUnit(tag, tagContext, out, expressionMan);
+//			out.addChild(tag.getId(), tagResource);
+//		}
+	}
+	
 	public void addVariables(Map<String, HAPDataTypeCriteria> variables){	this.m_variables.putAll(variables);	}
 	
 	public void addChild(String id, HAPUIResourceExpressionUnit child){  this.m_children.put(id, child);  }
@@ -99,16 +143,14 @@ public class HAPUIResourceExpressionUnit extends HAPSerializableImp{
 	public void addConstants(Map<String, HAPData> datas){	this.m_expressionDefinitionSuite.getConstants().putAll(datas);	}
 	public void addConstant(String name, HAPData data){		this.m_expressionDefinitionSuite.addConstant(name, data);	}
 
-	public void processExpressions(HAPExpressionManager expressionMan){
-		//preprocess attributes operand in expressions
-		HAPUIResourceExpressionUtility.processAttributeOperandInExpression(m_expressionDefinitionSuite, m_variables);
-		
-		//only expression in content(html and attributes) need to process 
-		for(HAPExpressionDefinition expDef : this.m_expressionDefinitions){
-			String name = expDef.getName();
-			HAPExpression expression = expressionMan.processExpression(null, m_expressionDefinitionSuite, name, m_variables);
-			this.m_expressions.put(name, expression);
-		}
-	}
+	public Map<String, HAPExpression> getExpressions(){  return this.m_expressions;  }
 	
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(VARIABLES, HAPJsonUtility.buildJson(this.m_variables, HAPSerializationFormat.JSON));
+		jsonMap.put(EXPRESSIONDEFINITIONS, HAPJsonUtility.buildJson(this.m_expressionDefinitions, HAPSerializationFormat.JSON));
+		jsonMap.put(EXPRESSIONDEFINITIONS_SUPPORT, HAPJsonUtility.buildJson(this.m_supportExpressionDefinitions, HAPSerializationFormat.JSON));
+		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildJson(this.m_expressions, HAPSerializationFormat.JSON));
+		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.m_children, HAPSerializationFormat.JSON));
+	}
 }

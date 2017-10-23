@@ -10,6 +10,7 @@ import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPResourceManager;
 import com.nosliw.uiresource.HAPUIResource;
 import com.nosliw.uiresource.HAPUIResourceManager;
+import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 
 public class HAPResourceManagerUIResource implements HAPResourceManager{
 
@@ -33,7 +34,7 @@ public class HAPResourceManagerUIResource implements HAPResourceManager{
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId) {
 		HAPResourceIdUIResource uiResourceId = new HAPResourceIdUIResource(resourceId); 
-		HAPUIResource uiResource = this.m_uiResourceMan.getUIResource(uiResourceId.getId());
+		HAPUIDefinitionUnitResource uiResource = this.m_uiResourceMan.getUIResource(uiResourceId.getId());
 		if(uiResource==null)  return null;
 		HAPResourceDataUIResource resourceData = new HAPResourceDataUIResource(uiResource);
 		return new HAPResource(resourceId, resourceData, null);
@@ -41,15 +42,11 @@ public class HAPResourceManagerUIResource implements HAPResourceManager{
 
 	@Override
 	public HAPResourceInfo discoverResource(HAPResourceId resourceId) {
-		HAPResourceDataUIResource resourceData = (HAPResourceDataUIResource)this.getResource(resourceId).getResourceData();
 		HAPResourceInfo out = new HAPResourceInfo(resourceId);
-		
-		HAPUIResource uiResource = resourceData.getUIResource();
-		List<HAPResourceId> dependencyResourceIds = HAPResourceUtility.discoverUIResource(uiResource);
-		for(HAPResourceId dependencyResourceId : dependencyResourceIds){
-			out.addDependency(new HAPResourceDependent(dependencyResourceId));
-		}
-		
+		HAPResourceIdUIResource uiResourceId = new HAPResourceIdUIResource(resourceId); 
+		HAPUIDefinitionUnitResource uiResource = this.m_uiResourceMan.getUIResource(uiResourceId.getId());
+		List<HAPResourceDependent> dependency = uiResource.getResourceDependency();
+		for(HAPResourceDependent d : dependency)   out.addDependency(d);
 		return out;
 	}
 

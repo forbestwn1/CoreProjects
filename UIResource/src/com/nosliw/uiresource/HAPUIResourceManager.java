@@ -3,8 +3,8 @@ package com.nosliw.uiresource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionManager;
+import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.definition.HAPContext;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
@@ -15,12 +15,15 @@ public class HAPUIResourceManager {
 	
 	private HAPExpressionManager m_expressionMan; 
 	
+	private HAPResourceManagerRoot m_resourceMan;
+	
 	private HAPRuntime m_runtime;
 
 	HAPUIResourceIdGenerator m_idGengerator = new HAPUIResourceIdGenerator(1);
 
-	public HAPUIResourceManager(HAPExpressionManager expressionMan, HAPRuntime runtime){
+	public HAPUIResourceManager(HAPExpressionManager expressionMan, HAPResourceManagerRoot resourceMan, HAPRuntime runtime){
 		this.m_expressionMan = expressionMan;
+		this.m_resourceMan = resourceMan;
 		this.m_runtime = runtime;
 		this.m_uiResourceDefinitions = new LinkedHashMap<String, HAPUIDefinitionUnitResource>();
 	}
@@ -56,12 +59,12 @@ public class HAPUIResourceManager {
 		return this.m_uiResourceDefinitions.get(name);
 	}
 	
-	public HAPUIResource getUIResource(String name){
+	public HAPUIDefinitionUnitResource getUIResource(String name){
 		HAPUIDefinitionUnitResource uiResourceDefinition = this.getUIResourceDefinitionByName(name);
-		HAPUIResource uiResource = new HAPUIResource(uiResourceDefinition);
-		uiResource.process(this.m_expressionMan);
-		
-		return uiResource;
+		if(!uiResourceDefinition.isProcessed()){
+			uiResourceDefinition.process(this.m_expressionMan, this.m_resourceMan);
+		}
+		return uiResourceDefinition;
 	}
 	
 	private HAPUIResourceParser getUIResourceParser(){

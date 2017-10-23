@@ -5,12 +5,6 @@ var packageObj = library;
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
-	var node_createServiceRequestInfoService;
-	var node_DependentServiceRequestInfo;
-	var node_resourceUtility;
-	var node_buildServiceProvider;
-	var node_ServiceInfo;
-	var node_requestServiceProcessor;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_createUIResourceViewFactory = function(){
@@ -43,8 +37,19 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 	//name space make sure of it as different ui resource view have different name space
 	var loc_idNameSpace = id;
 
+	//resource definition
+	var loc_uiResourceDefinition = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCE_RESOURCEDEFINITION];
+	
 	//all constants defined. they are used in expression
-	var loc_constants = loc_uiResource.constant;
+	var loc_constants = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONSTANTS];
+	
+	
+	//context object for this ui resource view
+	var loc_context = undefined;
+
+	
+	
+	
 	
 	//all content expression objects
 	var loc_expressionContents = [];
@@ -59,9 +64,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 	//all the attributes on this ui resource
 	var loc_attributes = {};
 	
-	//context object for this ui resource view
-	var loc_context = undefined;
-
 	//ui resource view wraper element
 	var loc_startEle = undefined;
 	var loc_endEle = undefined;
@@ -396,12 +398,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService", function(){node_createServiceRequestInfoService = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
-nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIResourceViewFactory", loc_createUIResourceViewFactory); 

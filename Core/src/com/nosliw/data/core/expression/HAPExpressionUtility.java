@@ -2,6 +2,7 @@ package com.nosliw.data.core.expression;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -63,21 +64,20 @@ public class HAPExpressionUtility {
 	}
 
 	
-	static public Set<HAPResourceId> discoverResources(HAPExpression expression){
-		Set<HAPResourceId> out = new HashSet<HAPResourceId>();
-		
+	static public List<HAPResourceId> discoverResources(HAPExpression expression){
+		Set<HAPResourceId> result = new LinkedHashSet<HAPResourceId>();
 		//get converter resource id from var converter in expression 
 		Map<String, HAPMatchers> matchers = expression.getVariableMatchers();
 		if(matchers!=null){
 			for(String varName : matchers.keySet()){
 				Set<HAPDataTypeConverter> converters = HAPResourceUtility.getConverterResourceIdFromRelationship(matchers.get(varName).discoverRelationships());
 				for(HAPDataTypeConverter converter : converters){
-					out.add(new HAPResourceIdConverter(converter));
+					result.add(new HAPResourceIdConverter(converter));
 				}
 			}
 		}
 		
-		HAPOperandUtility.processAllOperand(expression.getOperand(), out, new HAPOperandTask(){
+		HAPOperandUtility.processAllOperand(expression.getOperand(), result, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				Set<HAPResourceId> resourceIds = (Set<HAPResourceId>)data;
@@ -90,7 +90,7 @@ public class HAPExpressionUtility {
 					break;
 				case HAPConstant.EXPRESSION_OPERAND_REFERENCE:
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					Set<HAPResourceId> referenceResources = discoverResources(referenceOperand.getExpression());
+					List<HAPResourceId> referenceResources = discoverResources(referenceOperand.getExpression());
 					resourceIds.addAll(referenceResources);
 					break;
 				}
@@ -103,6 +103,6 @@ public class HAPExpressionUtility {
 				return true;
 			}
 		});
-		return out;
+		return new ArrayList(result);
 	}	
 }
