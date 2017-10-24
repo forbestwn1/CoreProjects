@@ -22,9 +22,6 @@ public class HAPUIResourceConstantTest {
 		//module init
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 		
-		//start runtime
-		runtimeEnvironment.getRuntime().start();
-
 		String file = HAPFileUtility.getFileNameOnClassPath(HAPUIResourceTest.class, "Constants.txt");
 		String fileContent = HAPFileUtility.readFile(new File(file));
 		JSONObject rootJson = new JSONObject(fileContent);

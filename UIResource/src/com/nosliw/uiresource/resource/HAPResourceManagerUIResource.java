@@ -8,7 +8,6 @@ import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPResourceManager;
-import com.nosliw.uiresource.HAPUIResource;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 

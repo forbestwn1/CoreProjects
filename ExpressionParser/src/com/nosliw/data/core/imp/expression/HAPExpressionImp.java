@@ -229,12 +229,6 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 			HAPVariableInfo parentVarInfo = this.m_varsInfo.get(varName);
 			if(parentVarInfo!=null){
 				if(varInfo.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN)){
-					
-					if(varInfo.getCriteria()==null){
-						int kkkk = 5555;
-						kkkk++;
-					}
-					
 					HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(varInfo.getCriteria(), parentVarInfo.getCriteria());
 					varInfo.setCriteria(adjustedCriteria);
 				}

@@ -56,18 +56,18 @@ var node_createUIResourceService = function(){
 				var requestInfo = loc_out.getRequestInfo(requester_parent);
 				var out = node_createServiceRequestInfoService(new node_ServiceInfo("CreateUIResourceView", {"name":name}), handlers, requestInfo)
 
-				var getUIResourceRequest = getGetUIResourceRequest([name], {});
+				var getUIResourceRequest = this.getGetUIResourceRequest([name], {});
 				out.setDependentService(new node_DependentServiceRequestInfo(getUIResourceRequest, {
-					success : function(requestInfo, resources){
-						var resource = resources[name];
-						return loc_uiResourceViewFactory(uiresource, loc_getResourceViewId(), undefined, undefined, depentService.requestInfo);
+					success : function(requestInfo, uiResources){
+						var uiResource = uiResources[name];
+						return loc_uiResourceViewFactory.createUIResourceView(uiResource, loc_getResourceViewId(), undefined, undefined, undefined);
 					}
 				}));
 				return out;
 			},	
 			
 			executeCreateUIResourceViewRequest : function(name, handlers, requester_parent){
-				var requestInfo = this.getCreateUIResourceViewRequest(names, handlers, requester_parent);
+				var requestInfo = this.getCreateUIResourceViewRequest(name, handlers, requester_parent);
 				node_requestServiceProcessor.processRequest(requestInfo, true);
 			},
 	};

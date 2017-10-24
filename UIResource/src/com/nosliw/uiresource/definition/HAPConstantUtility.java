@@ -136,12 +136,6 @@ public class HAPConstantUtility {
 		Object valueObj = null;
 		//otherwise, if leafData contains both script expression and plain text, then build string value instead
 		StringBuffer valueStr = new StringBuffer();
-
-		if(leafData.toString().contains("fff")){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		//try to discover script expression in leaf content 
 		List<Object> segments = HAPScriptExpressionUtility.discoverUIExpressionInText(leafData.toString(), idGenerator, expressionMan);
 		for(Object segment : segments){

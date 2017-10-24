@@ -5,13 +5,15 @@ var packageObj = library;
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
+	var node_makeObjectWithLifecycle;
+	var node_makeObjectWithType;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_createUIResourceViewFactory = function(){
 	
 	var loc_out = {
 		createUIResourceView : function(uiResource, id, parent, contextElementInfoArray, requestInfo){
-			return createUIResourceView(uiResource, id, parent, contextElementInfoArray, requestInfo);
+			return loc_createUIResourceView(uiResource, id, parent, contextElementInfoArray, requestInfo);
 		}
 	};
 	
@@ -159,8 +161,8 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 	 */
 	var loc_getViews = function(){	return loc_startEle.add(loc_startEle.nextUntil(loc_endEle)).add(loc_endEle);  };
 
-	var loc_resourceLifecycleObj = {};
-	loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT"] = function(uiResource, id, parent, contextElementInfoArray, requestInfo){
+	var lifecycleCallback = {};
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiResource, id, parent, contextElementInfoArray, requestInfo){
 		//build context element first
 		loc_context = nosliwUIResourceUtility.buildUIResourceContext(loc_uiResource, contextElementInfoArray);
 		
@@ -231,7 +233,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 		loc_uiResource = undefined;
 	};
 
-	loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY"] = function(requestInfo){
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
 		
 		//call destroy funtion in uiresource definition
 		loc_out.prv_getScriptObject().prv_callLocalFunction(NOSLIWCONSTANT.UIRESOURCE_FUNCTION_DESTROY);
@@ -385,10 +387,10 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 
 	
 	//append resource and object life cycle method to out obj
-	loc_out = nosliwLifecycleUtility.makeResourceObject(loc_out);
-	loc_out = nosliwTypedObjectUtility.makeTypedObject(loc_out, NOSLIWCONSTANT.TYPEDOBJECT_TYPE_UIRESOURCEVIEW);
-	
-	loc_out.init(uiResource, id, parent, contextElementInfoArray, requestInfo);
+	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIRESOURCEVIEW);
+
+	loc_out.interfaceObjectLifecycle.init(uiResource, id, parent, contextElementInfoArray, requestInfo);
 	
 	return loc_out;
 };
@@ -398,6 +400,8 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIResourceViewFactory", loc_createUIResourceViewFactory); 

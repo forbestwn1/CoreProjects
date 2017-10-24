@@ -18,7 +18,6 @@ import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp;
 import com.nosliw.uiresource.definition.HAPConstantDef;
-import com.nosliw.uiresource.definition.HAPContext;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
 
 /**

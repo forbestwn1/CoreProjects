@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.uiresource.HAPUIResource;
 import com.nosliw.uiresource.HAPUIResourceManager;
+import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 
 public class HAPUIResourceServlet  extends HAPServiceServlet{
 
@@ -25,9 +26,9 @@ public class HAPUIResourceServlet  extends HAPServiceServlet{
 		case COMMAND_LOADRESOURCES:
 			HAPUIResourceManager uiResourceMan = this.getUIResourceManager();
 			JSONArray names = parms.optJSONArray(COMMAND_LOADRESOURCES_NAMES);
-			Map<String, HAPUIResource> resources = new LinkedHashMap<String, HAPUIResource>();
+			Map<String, HAPUIDefinitionUnitResource> resources = new LinkedHashMap<String, HAPUIDefinitionUnitResource>();
 			for(int i=0; i<names.length(); i++){
-				HAPUIResource resource = uiResourceMan.getUIResource(names.optString(i));
+				HAPUIDefinitionUnitResource resource = uiResourceMan.getUIResource(names.optString(i));
 				resources.put(names.optString(i), resource);
 			}
 			out = HAPServiceData.createSuccessData(resources);
