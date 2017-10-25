@@ -66,8 +66,8 @@ var node_utility = {
 		 * update all the ui id within html by adding space name ahead of them
 		 */
 		updateHtmlUIId : function(html, idNameSpace){
-			var find = node_COMMONCONSTANT.CONS_UIRESOURCE_ATTRIBUTE_UIID+"=\"";
-			return html.replace(new RegExp(find, 'g'), node_COMMONCONSTANT.CONS_UIRESOURCE_ATTRIBUTE_UIID+"=\""+idNameSpace+node_COMMONCONSTANT.CONS_SEPERATOR_FULLNAME);
+			var find = node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"=\"";
+			return html.replace(new RegExp(find, 'g'), node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"=\""+idNameSpace+node_COMMONCONSTANT.SEPERATOR_FULLNAME);
 		},
 };
 

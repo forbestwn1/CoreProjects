@@ -41,7 +41,12 @@ var node_createUIResourceService = function(){
 				out.setDependentService(new node_DependentServiceRequestInfo(loadResourceRequest, {
 					success : function(requestInfo, resourceTree){
 						//translate tree to resources by id
-						return node_resourceUtility.getResourcesByTypeFromTree(resourceTree, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIRESOURCE);
+						var uiResources = {};
+						var uiResourceResources = node_resourceUtility.getResourcesByTypeFromTree(resourceTree, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIRESOURCE);
+						_.each(uiResourceResources, function(uiResourceResource, name){
+							uiResources[name] = uiResourceResource.resourceData;
+						});
+						return uiResources;
 					}
 				}));
 				return out;

@@ -8,6 +8,8 @@ var packageObj = library;
 	var node_makeObjectWithLifecycle;
 	var node_makeObjectWithType;
 	var node_createContext;
+	var node_createContextElementInfo;
+	var node_dataUtility;
 	var node_uiResourceUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -195,7 +197,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 		//wrap html by start and end element
 		var resourceStartId = "-resource-start";
 		var resourceEndId = "-resource-end";
-		var html = node_uiResourceUtility.createPlaceHolderWithId(resourceStartId) + _.unescape(loc_uiResource[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_HTML]) + node_uiResourceUtility.createPlaceHolderWithId(resourceEndId);
+		var html = node_uiResourceUtility.createPlaceHolderWithId(resourceStartId) + _.unescape(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_HTML]) + node_uiResourceUtility.createPlaceHolderWithId(resourceEndId);
 		
 		//update all uiid within html by adding space name to uiid
 		html = node_uiResourceUtility.updateHtmlUIId(html, loc_idNameSpace);
@@ -208,8 +210,8 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 		loc_parentView.append(views);
 		
 		//get wraper dom element (start and end element)
-		loc_startEle = loc_parentView.find("["+node_COMMONCONSTANT.CONS_UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_out.prv_getUpdateUIId(resourceStartId)+"']");
-		loc_endEle = loc_parentView.find("["+node_COMMONCONSTANT.CONS_UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_out.prv_getUpdateUIId(resourceEndId)+"']");
+		loc_startEle = loc_parentView.find("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_out.prv_getUpdateUIId(resourceStartId)+"']");
+		loc_endEle = loc_parentView.find("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_out.prv_getUpdateUIId(resourceEndId)+"']");
 		
 		//init attributes of ui resource
 		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_ATTRIBUTES], function(value, key, list){
@@ -322,12 +324,12 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 		/*
 		 * update ui id by adding space name ahead of them
 		 */
-		prv_getUpdateUIId : function(uiId){	return loc_idNameSpace+node_COMMONCONSTANT.CONS_SEPERATOR_FULLNAME+uiId;	},
+		prv_getUpdateUIId : function(uiId){	return loc_idNameSpace+node_COMMONCONSTANT.SEPERATOR_FULLNAME+uiId;	},
 
 		/*
 		 * find matched element according to uiid
 		 */
-		prv_getLocalElementByUIId : function(id){return loc_findLocalElement("["+node_COMMONCONSTANT.CONS_UIRESOURCE_ATTRIBUTE_UIID+"='"+id+"']");},
+		prv_getLocalElementByUIId : function(id){return loc_findLocalElement("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+id+"']");},
 		
 		getContext : function(){return loc_context;},
 		updateContext : function(wrappers, requestInfo){		loc_context.updateContext(wrappers, requestInfo);		},
@@ -426,6 +428,8 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_createContext = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.utility", function(){node_uiResourceUtility = this.getData();});
 
 
