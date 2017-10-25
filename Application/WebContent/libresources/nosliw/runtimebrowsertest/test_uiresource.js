@@ -5,7 +5,10 @@
 					success : function(requestInfo, uiResourceView){
 						nosliw.logging.info(JSON.stringify(uiResourceView));
 						
-						$('#testDiv').attr('id').append(uiResourceView.getViews().children());
+						uiResourceView.appendTo($('#testDiv'));
+						
+//						var views = uiResourceView.getViews();
+//						$('#testDiv').append(views.children());
 
 					}
 				}
