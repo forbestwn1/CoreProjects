@@ -19,6 +19,7 @@ import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp;
 import com.nosliw.uiresource.definition.HAPConstantDef;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
+import com.nosliw.uiresource.definition.HAPUIResourceUtility;
 
 /**
  *  This class store all the expression info related with ui resources defintion 
@@ -97,7 +98,7 @@ public class HAPUIResourceExpressionUnit extends HAPSerializableImp{
 		
 		//get all expressions
 		if(parent!=null)	this.addSupportExpressionDefinitions(parent.getSupportExpressionDefinitions());
-		Set<HAPExpressionDefinition> expDefs = currentResourceUnit.getExpressionDefinitions();
+		Set<HAPExpressionDefinition> expDefs = HAPUIResourceUtility.getExpressionDefinitions(currentResourceUnit);
 		Set<HAPExpressionDefinition> otherExpDefs = currentResourceUnit.getOtherExpressionDefinitions();
 		this.addExpressionDefinitions(expDefs);
 		this.addSupportExpressionDefinitions(otherExpDefs);

@@ -6,10 +6,12 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 @HAPEntityWithAttribute
-public class HAPContext {
+public class HAPContext extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ELEMENTS = "elements";
@@ -60,4 +62,10 @@ public class HAPContext {
 		}
 	}
 	
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		for(String rootName : this.m_criterias.keySet()){
+			jsonMap.put(rootName, this.m_elements.get(rootName).toStringValue(HAPSerializationFormat.JSON));
+		}
+	}
 }

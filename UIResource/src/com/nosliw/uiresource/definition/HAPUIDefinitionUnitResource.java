@@ -2,8 +2,6 @@ package com.nosliw.uiresource.definition;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,12 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
-import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.expression.HAPExpressionManager;
-import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
-import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 
 public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 
@@ -40,36 +33,12 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 		this.m_resourceDependency = new ArrayList<HAPResourceDependent>();
 	}
 	
-	public void process(HAPExpressionManager expressionManager, HAPResourceManagerRoot resourceMan){
-		this.processExpressions(null, expressionManager);
-		this.processResourceDependency(resourceMan);
-		this.m_processed = true;
-	}
-	
-	private void processResourceDependency(HAPResourceManagerRoot resourceMan){
-		 Set<HAPResourceId> dependencyResourceIds = new LinkedHashSet();
-		
-		//resources need by expression
-		List<HAPExpression> expressions = HAPUIResourceUtility.discoverExpressionsInUIResource(this);
-		for(HAPExpression exp : expressions){
-			List<HAPResourceId> expressionDependency = HAPExpressionUtility.discoverResources(exp);
-			dependencyResourceIds.addAll(expressionDependency);
-		}
-		
-		//resource need by tag
-		
-		Iterator<HAPResourceId> it = dependencyResourceIds.iterator();
-		while(it.hasNext()){
-			HAPResourceId resourceId = it.next();
-			this.m_resourceDependency.add(new HAPResourceDependent(resourceId));
-		}
-	}
-	
 	public void addUITagLib(String tag){	this.m_uiTagLibs.add(tag);}
 
 	public String getSource(){   return this.m_source;   }
 	
 	public boolean isProcessed(){  return this.m_processed;  }
+	public void processed(){  this.m_processed = true;  }
 	
 	public List<HAPResourceDependent> getResourceDependency(){  return this.m_resourceDependency;  }
 	

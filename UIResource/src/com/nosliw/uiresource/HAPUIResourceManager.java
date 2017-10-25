@@ -8,6 +8,7 @@ import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.definition.HAPContext;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
+import com.nosliw.uiresource.definition.HAPUIResourceUtility;
 
 public class HAPUIResourceManager {
 
@@ -31,7 +32,7 @@ public class HAPUIResourceManager {
     //Add resource definition from file 
 	public HAPUIDefinitionUnitResource addUIResourceDefinition(String file){
 		HAPUIDefinitionUnitResource resource = this.getUIResourceParser().parseFile(file);
-		resource.calculateConstantDefs(null, m_idGengerator, m_expressionMan, m_runtime);
+		HAPUIResourceUtility.calculateConstantDefs(resource, null, m_idGengerator, m_expressionMan, m_runtime);
 		this.m_uiResourceDefinitions.put(resource.getId(), resource);
 		return resource;
 	}
@@ -46,7 +47,7 @@ public class HAPUIResourceManager {
 		String baseContent = this.getUIResourceDefinitionByName(base).getSource();
 		//build resource using base resource
 		HAPUIDefinitionUnitResource resource = this.getUIResourceParser().parseContent(resourceId, baseContent);
-		resource.calculateConstantDefs(null, m_idGengerator, m_expressionMan, m_runtime);
+		HAPUIResourceUtility.calculateConstantDefs(resource, null, m_idGengerator, m_expressionMan, m_runtime);
 		
 		//update context with new context
 		resource.getContext().hardMergeWith(context);
@@ -62,7 +63,7 @@ public class HAPUIResourceManager {
 	public HAPUIDefinitionUnitResource getUIResource(String name){
 		HAPUIDefinitionUnitResource uiResourceDefinition = this.getUIResourceDefinitionByName(name);
 		if(!uiResourceDefinition.isProcessed()){
-			uiResourceDefinition.process(this.m_expressionMan, this.m_resourceMan);
+			HAPUIResourceUtility.processUIResource(uiResourceDefinition, m_expressionMan, m_resourceMan);
 		}
 		return uiResourceDefinition;
 	}

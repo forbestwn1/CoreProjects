@@ -1,5 +1,7 @@
 package com.nosliw.uiresource.definition;
 
+import java.util.Map;
+
 import com.nosliw.common.constant.HAPAttribute;
 
 public class HAPContextNodeRoot extends HAPContextNode{
@@ -13,4 +15,13 @@ public class HAPContextNodeRoot extends HAPContextNode{
 	public void setDefaultValue(Object defaultValue){		this.m_defaultValue = defaultValue;	}
 
 	public Object getDefaultValue(){   return this.m_defaultValue;  }
+
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
+		if(this.m_defaultValue!=null){
+			jsonMap.put(DEFAULT, this.m_defaultValue.toString());
+			typeJsonMap.put(DEFAULT, this.m_defaultValue.getClass());
+		}
+	}
 }

@@ -4,8 +4,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPJsonUtility;
 
-public class HAPContextNode {
+@HAPEntityWithAttribute
+public class HAPContextNode extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String DEFINITION  = "definition";
@@ -30,4 +35,9 @@ public class HAPContextNode {
 	
 	public void addChild(String name, HAPContextNode nodeBranch){		this.m_children.put(name, nodeBranch);	}
 	
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		if(this.m_children!=null)		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(m_children, HAPSerializationFormat.JSON));
+		if(this.m_definition!=null)  	jsonMap.put(DEFINITION, this.m_definition.toStringValue(HAPSerializationFormat.JSON));
+	}
 }

@@ -17,13 +17,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
-import com.nosliw.data.core.runtime.HAPResourceDependent;
-import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.HAPElementEvent;
 import com.nosliw.uiresource.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.HAPScript;
-import com.nosliw.uiresource.HAPUIResourceIdGenerator;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionUnit;
 
 /*
@@ -141,47 +138,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		this.m_expressionUnit = new HAPUIResourceExpressionUnit(this, parentResourceUnit, expressionMan);
 	}
 	
-	/**
-	 * Get all expression definitions in ui definition (content, attribute, expression block)
-	 * Exception expression definitions in Constant Definition
-	 * @return
-	 */
-	public Set<HAPExpressionDefinition> getExpressionDefinitions(){
-		Set<HAPExpressionDefinition> all = new HashSet<HAPExpressionDefinition>();
-		for(HAPEmbededScriptExpressionInContent embededScriptExpression : this.m_scriptExpressionsInContent)	all.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
-		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : this.m_scriptExpressionsInAttribute)	all.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
-		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : this.m_scriptExpressionsInTagAttribute)		all.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
-		return all;
-	}
-	
 	public Set<HAPExpressionDefinition> getOtherExpressionDefinitions(){  return new HashSet(this.m_expressionDefinitions.values());	}
-	
-	/**
-	 * Calculate all the constant values in ConstantDef
-	 * @param parentConstants
-	 * @param idGenerator
-	 * @param expressionMan
-	 * @param runtime
-	 */
-	public void calculateConstantDefs(
-			Map<String, HAPConstantDef> parentConstants,
-			HAPUIResourceIdGenerator idGenerator, 
-			HAPExpressionManager expressionMan, 
-			HAPRuntime runtime){
-		//build context constants
-		Map<String, HAPConstantDef> contextConstants = new LinkedHashMap<String, HAPConstantDef>();
-		if(parentConstants!=null)   contextConstants.putAll(parentConstants);
-		contextConstants.putAll(this.m_constants);
-		
-		//process all constants defined in this domain
-		HAPConstantUtility.processConstantDefs(contextConstants, idGenerator, expressionMan, runtime);
-		
-		//process constants in child
-		for(String tagId : this.m_uiTags.keySet()){
-			this.m_uiTags.get(tagId).calculateConstantDefs(contextConstants, idGenerator, expressionMan, runtime);
-		}
-	}
-	
 	
 	@Override
 	public String toString(){
@@ -259,6 +216,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public Set<HAPEmbededScriptExpressionInAttribute> getScriptExpressionsInTagAttributes(){return this.m_scriptExpressionsInTagAttribute;}
 
 	public HAPUIResourceExpressionUnit getExpressionUnit(){   return this.m_expressionUnit;   }
+	public void setExpressionUnit(HAPUIResourceExpressionUnit unit){  this.m_expressionUnit = unit;   }
 	
 	public void addExpressionDefinition(HAPExpressionDefinition expressionDef){		this.m_expressionDefinitions.put(expressionDef.getName(), expressionDef);	}
 	
