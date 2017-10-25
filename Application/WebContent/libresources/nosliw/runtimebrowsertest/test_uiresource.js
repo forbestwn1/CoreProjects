@@ -3,9 +3,9 @@
 		nosliw.runtime.getUIResourceService().executeCreateUIResourceViewRequest("Example1", 
 				{
 					success : function(requestInfo, uiResourceView){
-						nosliw.logging.info(JSON.stringify(uiResource));
+						nosliw.logging.info(JSON.stringify(uiResourceView));
 						
-						$('#test').attr('id').append(eleResourceView.getViews().children());
+						$('#testDiv').attr('id').append(uiResourceView.getViews().children());
 
 					}
 				}

@@ -123,7 +123,7 @@ var node_createWraperData = function(){
 				}, this);
 			},
 			
-			getWrapperType : function(){	return NOSLIWCONSTANT.WRAPPER_TYPE_OBJECT;		},
+			getWrapperType : function(){	return NOSLIWCONSTANT.WRAPPER_TYPE_APPDATA;		},
 	};
 	
 	return loc_out;
@@ -147,7 +147,7 @@ nosliw.registerSetNodeDataEvent("uidata.wrapper.object.utility", function(){node
 
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
 	//register wrapper faction
-	this.getData().registerWrapperFactoryByDataType([node_CONSTANT.DATA_TYPE_DATA], node_createWraperData);
+	this.getData().registerWrapperFactoryByDataType([node_CONSTANT.DATA_TYPE_APPDATA], node_createWraperData);
 });
 
 

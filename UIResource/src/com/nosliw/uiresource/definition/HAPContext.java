@@ -64,7 +64,7 @@ public class HAPContext extends HAPSerializableImp{
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		for(String rootName : this.m_criterias.keySet()){
+		for(String rootName : this.m_elements.keySet()){
 			jsonMap.put(rootName, this.m_elements.get(rootName).toStringValue(HAPSerializationFormat.JSON));
 		}
 	}

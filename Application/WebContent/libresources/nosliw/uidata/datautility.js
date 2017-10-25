@@ -14,6 +14,18 @@ var node_createData;
 var node_utility = function(){
 	
 	return {
+		
+		createDataOfAppData : function(appData){
+			var out = node_createData(appData, node_CONSTANT.DATA_TYPE_APPDATA);
+			return out;
+		},
+		
+		createDataOfObject : function(obj){
+			var out = node_createData(obj, node_CONSTANT.DATA_TYPE_OBJECT);
+			return out;
+		},
+		
+	
 		/*
 		 * create object data by value
 		 * if object is already data, then do nothing
