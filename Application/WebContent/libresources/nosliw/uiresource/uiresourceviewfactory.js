@@ -186,14 +186,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 		loc_context = node_createContext(contextElementInfosArray);
 		
 		
-		
-		
-		
-//		loc_context = nosliwUIResourceUtility.buildUIResourceContext(loc_uiResource, contextElementInfoArray);
-		
-		//create script object
-//		loc_scriptObject=  nosliwCreateUIResourceScriptObject(loc_uiResource[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_SCRIPTFACTORYNAME], loc_out);
-		
 		//wrap html by start and end element
 		var resourceStartId = "-resource-start";
 		var resourceEndId = "-resource-end";
@@ -212,6 +204,16 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 		//get wraper dom element (start and end element)
 		loc_startEle = loc_parentView.find("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_out.prv_getUpdateUIId(resourceStartId)+"']");
 		loc_endEle = loc_parentView.find("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_out.prv_getUpdateUIId(resourceEndId)+"']");
+		
+
+		
+		
+		
+		
+//		loc_context = nosliwUIResourceUtility.buildUIResourceContext(loc_uiResource, contextElementInfoArray);
+		
+		//create script object
+//		loc_scriptObject=  nosliwCreateUIResourceScriptObject(loc_uiResource[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_SCRIPTFACTORYNAME], loc_out);
 		
 		//init attributes of ui resource
 		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_ATTRIBUTES], function(value, key, list){

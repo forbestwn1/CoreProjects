@@ -1,7 +1,10 @@
 package com.nosliw.uiresource.expression;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.nosliw.common.utils.HAPBasicUtility;
 
 /**
  * Segment in script expression for in-line script 
@@ -9,60 +12,87 @@ import java.util.Set;
  */
 public class HAPScriptExpressionScriptSegment {
 
-	static final private String TOKEN_CONSTANT_START = "&(";
-	static final private String TOKEN_CONSTANT_END= ")&";
-	
-	static final private String TOKEN_VARIABLE_START = "?(";
-	static final private String TOKEN_VARIABLE_END = "?(";
-
-	static final private String TEMPLATE_CONSTANT = "constants.element";
-	static final private String TEMPLATE_VARIABLE = "variables.element";
-	
 	private String m_orignalScript;
+
+	//store segment elements
+	//   string
+	//   script constant
+	//   script variable
+	private List<Object> m_elements;
+
+	private List<String> m_constants = new ArrayList<String>();
 	
-	//constants in script
-	private Set<String> m_constants;
+	private List<String> m_variableNames = new ArrayList<String>();
 	
-	//variables in script
-	private Set<String> m_variables;
+	//define the segment parsing infor
+	private Object[][] m_definitions = {
+			{"&(", ")&", HAPScriptExpressionScriptConstant.class, m_constants}, 
+			{"?(", "?(", HAPScriptExpressionScriptVariable.class, m_variableNames}
+	};
 	
-	//script after processing
-	private String m_script;
-	
+
 	public HAPScriptExpressionScriptSegment(String script){
-		this.m_constants = new HashSet<String>();
-		this.m_variables = new HashSet<String>();
+		this.m_elements = new ArrayList<Object>();
 		this.m_orignalScript = script;
-		this.m_script = this.process();
+		this.processSegments();
 	}
 	
-	public String getScript(){ return this.m_script;  }
-	public Set<String> getConstants(){  return this.m_constants;  }
-	public Set<String> getVariables(){  return this.m_variables;  } 
+	public List<Object> getElements(){	return this.m_elements;	}
 	
-	//process script
-	//majorly discover constants and variables
-	//then replace placeholder for constants and variables with variable name
-	//for instance: constants.size, variables.age, ...
-	private String process(){
-		String script = this.m_orignalScript;
-		script = this.process(script, TOKEN_CONSTANT_START, TOKEN_CONSTANT_END, TEMPLATE_CONSTANT, m_constants);
-		script = this.process(script, TOKEN_VARIABLE_START, TOKEN_VARIABLE_END, TEMPLATE_VARIABLE, m_variables);
-		return script;
-	}
+	public List<String> getConstantNames(){  return this.m_constants;  }
+	public List<String> getVariableNames(){  return this.m_variableNames;  }
 	
-	private String process(String script, String startToken, String endToken, String template, Set<String> elements){
-		String out = script;
-		int start = out.indexOf(startToken);
-		while(start!=-1){
-			int end = out.indexOf(endToken, start);
-			String element = out.substring(start+startToken.length(), end);
-			elements.add(element);
-			String replace = template.replaceAll("element", element);
-			out = out.substring(0, start) + replace + out.substring(end+endToken.length());
-			start = out.indexOf(startToken);
+	private void processSegments(){
+		try{
+			String content = this.m_orignalScript;
+			int[] indexs = this.index(content);
+			while(indexs[0]!=-1){
+				int type = indexs[1];
+				String startToken = (String)m_definitions[type][0];
+				String endToken = (String)m_definitions[type][1];
+				int startIndex = indexs[0];
+				if(startIndex>0){
+					this.m_elements.add(content.substring(0, startIndex));
+				}
+				int endIndex = content.indexOf(endToken);
+				Class cs = (Class)m_definitions[type][2];
+				Constructor cons = cs.getConstructor(String.class);
+				String name = content.substring(startIndex+startToken.length(), endIndex);
+				this.m_elements.add(cons.newInstance(name));
+				((List<String>)this.m_definitions[type][3]).add(name);
+				content = content.substring(endIndex+endToken.length());
+				indexs = this.index(content);
+			}
+			if(HAPBasicUtility.isStringNotEmpty(content)){
+				this.m_elements.add(content);
+			}
 		}
-		return out;
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
+	private int[] index(String content){
+		int invalidValue = 99999;
+		int[] indexs = new int[2];
+		int currentIndex = invalidValue;
+		int currentType = invalidValue;
+		for(int i=0; i<m_definitions.length; i++){
+			int index = content.indexOf((String)m_definitions[i][0]);
+			if(index==-1)  continue;
+			else if(index < currentIndex){
+				currentIndex = index;
+				currentType = i;
+			}
+		}
+		if(currentIndex==invalidValue){
+			indexs[0] = -1;
+			indexs[1] = -1;
+		}
+		else{
+			indexs[0] = currentIndex;
+			indexs[1] = currentType;
+		}
+		return indexs;
+	}
 }

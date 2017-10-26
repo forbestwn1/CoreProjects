@@ -2,7 +2,10 @@ package com.nosliw.uiresource.expression;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
@@ -16,16 +19,27 @@ import com.nosliw.data.core.expression.HAPExpressionManager;
  * 		tag attribute
  * 		constant definition
  */
-public class HAPScriptExpression {
+public class HAPScriptExpression extends HAPSerializableImp{
 
 	public static final String EXPRESSION_TOKEN_OPEN = "#|";
 	public static final String EXPRESSION_TOKEN_CLOSE = "|#";
 
+	@HAPAttribute
+	public static final String UIID = "uiId";
+	
+	@HAPAttribute
+	public static final String CONTENT = "content";
+	
+	@HAPAttribute
+	public static final String SCRIPTFUNCTION = "scriptFunction";
+	
 	private String m_uiId;
 	
 	private String m_content;
 
 	private HAPExpressionManager m_expressionManager;
+	
+	private String m_scriptFunction;
 	
 	//store all elements in ui expression:
 	//     	js expression:  HAPScriptExpressionScriptSegment
@@ -37,12 +51,17 @@ public class HAPScriptExpression {
 		this.m_uiId = uiId;
 		this.m_content = content;
 		this.m_elements = new ArrayList<Object>();
-		this.init();
+		this.parseContent();
+		this.m_scriptFunction = HAPScriptExpressionUtility.buildScriptExpressionJSFunction(this);
 	}
 	
 	public String getId(){  return this.m_uiId;  }
 	
 	public List<Object> getElements(){  return this.m_elements;   }
+	
+	public String getScriptFunction(){  return this.m_scriptFunction;  }
+	
+	public String getContent(){  return this.m_content;  } 
 	
 	public List<HAPExpressionDefinition> getExpressionDefinitions(){
 		List<HAPExpressionDefinition> out = new ArrayList<HAPExpressionDefinition>();
@@ -54,7 +73,7 @@ public class HAPScriptExpression {
 		return out;
 	}
 	
-	private void init(){
+	private void parseContent(){
 		String content = this.m_content;
 		int i = 0;
 		while(HAPBasicUtility.isStringNotEmpty(content)){
@@ -82,5 +101,12 @@ public class HAPScriptExpression {
 			}
 			i++;
 		}
+	}
+	
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(UIID, this.m_uiId);
+		jsonMap.put(SCRIPTFUNCTION, m_scriptFunction);
+		jsonMap.put(CONTENT, this.m_content);
 	}
 }

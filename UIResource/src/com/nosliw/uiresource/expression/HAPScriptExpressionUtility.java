@@ -65,24 +65,17 @@ public class HAPScriptExpressionUtility {
 		templateParms.put("variables", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(variableValue==null?new LinkedHashMap<String, HAPData>() : variableValue, HAPSerializationFormat.JSON)));
 
 		//build javascript function to execute the script
-		StringBuffer funScript = new StringBuffer();
-		Map<String, HAPExpression> expressions = new LinkedHashMap<String, HAPExpression>();
-		for(Object ele : scriptExpression.getElements()){
-			if(ele instanceof HAPExpressionDefinition){
-				HAPExpressionDefinition expression = (HAPExpressionDefinition)ele;
-				funScript.append("expressionData[\""+expression.getName()+"\"]");
-			}
-			else if(ele instanceof HAPScriptExpressionScriptSegment){
-				HAPScriptExpressionScriptSegment scriptSegment = (HAPScriptExpressionScriptSegment)ele;
-				funScript.append(scriptSegment.getScript());
-			}
+		if(scriptExpression.getContent().contains("ccc")){
+			int kkkk = 5555;
+			kkkk++;
 		}
-
+		
+		String funScript = buildScriptExpressionJSFunction(scriptExpression);
+		templateParms.put("functionScript", funScript);
+		
 		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
 		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
 		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
-		
-		templateParms.put("functionScript", funScript.toString());
 		
 		templateParms.put("expressions", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(task.getExpressions(), HAPSerializationFormat.JSON)));
 		templateParms.put("taskId", task.getTaskId());
@@ -96,6 +89,47 @@ public class HAPScriptExpressionUtility {
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
 		return out;
+	}
+	
+	//build execute function for script expression
+	public static String buildScriptExpressionJSFunction(HAPScriptExpression scriptExpression){
+		String expressionsDataParmName = "expressionsData"; 
+		String constantsDataParmName = "constantsData"; 
+		String variablesDataParmName = "variablesData"; 
+		
+		//build javascript function to execute the script
+		StringBuffer funScript = new StringBuffer();
+		Map<String, HAPExpression> expressions = new LinkedHashMap<String, HAPExpression>();
+		for(Object ele : scriptExpression.getElements()){
+			if(ele instanceof HAPExpressionDefinition){
+				HAPExpressionDefinition expression = (HAPExpressionDefinition)ele;
+				funScript.append(expressionsDataParmName+"[\""+expression.getName()+"\"]");
+			}
+			else if(ele instanceof HAPScriptExpressionScriptSegment){
+				HAPScriptExpressionScriptSegment scriptSegment = (HAPScriptExpressionScriptSegment)ele;
+				List<Object> scriptSegmentEles = scriptSegment.getElements();
+				for(Object scriptSegmentEle : scriptSegmentEles){
+					if(scriptSegmentEle instanceof String){
+						funScript.append((String)scriptSegmentEle);
+					}
+					else if(scriptSegmentEle instanceof HAPScriptExpressionScriptConstant){
+						funScript.append(constantsDataParmName + "[\"" + ((HAPScriptExpressionScriptConstant)scriptSegmentEle).getConstantName()+"\"]");
+					}
+					else if(scriptSegmentEle instanceof HAPScriptExpressionScriptVariable){
+						funScript.append(variablesDataParmName + "[\"" + ((HAPScriptExpressionScriptVariable)scriptSegmentEle).getVariableName()+"\"]");
+					}
+				}
+			}
+		}
+		
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPScriptExpressionUtility.class, "ScriptExpressionFunction.temp");
+		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+		templateParms.put("functionScript", funScript.toString());
+		templateParms.put("expressionsData", expressionsDataParmName);
+		templateParms.put("constantsData", constantsDataParmName);
+		templateParms.put("variablesData", variablesDataParmName);
+		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
+		return script;
 	}
 	
 }

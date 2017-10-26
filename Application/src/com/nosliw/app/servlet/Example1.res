@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<!-- Contexts define the variables input for this ui resource -->
-	<body contexts="business@object;key@object">
+	<body>
+	<%= ' 6666 ' %>  tttttttttt  
+	<b>
 	lalalala
 	<%= #|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value + ' 6666 ' %>  tttttttttt  
 

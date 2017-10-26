@@ -154,7 +154,7 @@ public class HAPConstantUtility {
 					}
 					else if(uiExpEle instanceof HAPScriptExpressionScriptSegment){
 						HAPScriptExpressionScriptSegment scriptSegment = (HAPScriptExpressionScriptSegment)uiExpEle;
-						scriptConstantNames.addAll(scriptSegment.getConstants());
+						scriptConstantNames.addAll(scriptSegment.getConstantNames());
 					}
 				}
 				
