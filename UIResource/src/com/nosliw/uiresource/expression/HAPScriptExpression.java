@@ -7,6 +7,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPJsonTypeAsItIs;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 
@@ -107,6 +108,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(UIID, this.m_uiId);
 		jsonMap.put(SCRIPTFUNCTION, m_scriptFunction);
+		typeJsonMap.put(SCRIPTFUNCTION, HAPJsonTypeAsItIs.class);
 		jsonMap.put(CONTENT, this.m_content);
 	}
 }
