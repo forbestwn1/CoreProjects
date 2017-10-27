@@ -11,6 +11,7 @@ var packageObj = library;
 	var node_createContextElementInfo;
 	var node_dataUtility;
 	var node_uiResourceUtility;
+	var node_createUIResourceExpressionContent;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_createUIResourceViewFactory = function(){
@@ -206,9 +207,14 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 		loc_endEle = loc_parentView.find("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_out.prv_getUpdateUIId(resourceEndId)+"']");
 		
 
+		//init expression content
+		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPTEXPRESSIONSINCONTENT], function(expressionContent, key, list){
+			loc_expressionContents.push(node_createUIResourceExpressionContent(expressionContent, "text", loc_out, requestInfo));
+		});
+
 		
 		
-		
+/*		
 		
 //		loc_context = nosliwUIResourceUtility.buildUIResourceContext(loc_uiResource, contextElementInfoArray);
 		
@@ -220,14 +226,9 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 			loc_attributes[key] = value;			return list;
 		});
 		
-		//init expression content
-		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_EXPRESSIONCONTENTS], function(expressionContent, key, list){
-			loc_expressionContents.push(nosliwCreateUIResourceExpressionContent(expressionContent, "text", loc_out, requestInfo));
-		});
-
 		//init normal expression attribute
 		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_EXPRESSIONATTRIBUTES], function(expressionAttr, key, list){
-			loc_expressionContents.push(nosliwCreateUIResourceExpressionContent(expressionAttr, "attribute", loc_out, requestInfo));
+			loc_expressionContents.push(node_createUIResourceExpressionContent(expressionAttr, "attribute", loc_out, requestInfo));
 		});
 
 		//init customer tags
@@ -258,6 +259,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 //		loc_eventSource = nosliwCreateRequestEventSource();
 		
 		loc_uiResource = undefined;
+*/		
 	};
 
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
@@ -433,7 +435,7 @@ nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_
 nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.utility", function(){node_uiResourceUtility = this.getData();});
-
+nosliw.registerSetNodeDataEvent("uiresource.createUIResourceExpressionContent", function(){node_createUIResourceExpressionContent = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIResourceViewFactory", loc_createUIResourceViewFactory); 
