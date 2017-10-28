@@ -3,12 +3,14 @@ package com.nosliw.uiresource.expression;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPJsonTypeAsItIs;
+import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 
@@ -35,6 +37,12 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	
 	@HAPAttribute
 	public static final String SCRIPTFUNCTION = "scriptFunction";
+
+	@HAPAttribute
+	public static final String EXPRESSIONS = "expressions";
+	
+	@HAPAttribute
+	public static final String VARIABLENAMES = "variableNames";
 	
 	private String m_uiId;
 	
@@ -43,6 +51,11 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	private HAPExpressionManager m_expressionManager;
 	
 	private String m_scriptFunction;
+	
+	//expressions used in script expression
+	private Map<String, HAPExpression> m_expressions;
+	
+	private Set<String> m_variableNames;
 	
 	//store all elements in ui expression:
 	//     	js expression:  HAPScriptExpressionScriptSegment

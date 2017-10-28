@@ -149,6 +149,8 @@ var node_createWrapperVariable = function(data1, data2, data3){
 			 */
 			getWrapper : function(){return this.prv_wrapper;},
 			
+			getPath : function(){  return this.prv_path;  },
+			
 			/*
 			 * clear up wrapper within this variable
 			 */

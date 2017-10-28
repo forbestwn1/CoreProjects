@@ -13,6 +13,7 @@ var node_createContextElement;
 var node_createWrapperVariable;
 var node_makeObjectWithLifecycle;
 var node_getLifecycleInterface;
+var node_namingConvensionUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 /*
  * elementInfosArray : an array of element info describing context element
@@ -79,6 +80,8 @@ var node_createContext = function(elementInfosArray, request){
 		createVariable : function(contextVariable, requestInfo){
 			var parentVar = this.getContextElementVariable(contextVariable.name);
 			var variable = node_createWrapperVariable(parentVar, contextVariable.path, requestInfo);
+			//add extra attribute "contextPath" to variable for variables name under context
+			variable.contextPath = node_namingConvensionUtility.cascadePath(contextVariable.name, contextVariable.path);
 			return variable;
 		},
 		
