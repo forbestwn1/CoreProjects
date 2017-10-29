@@ -20,6 +20,7 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.HAPUIResourceIdGenerator;
+import com.nosliw.uiresource.expression.HAPScriptExpression;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionUnit;
 
 public class HAPUIResourceUtility {
@@ -101,9 +102,27 @@ public class HAPUIResourceUtility {
 	
 	public static void processUIResource(HAPUIDefinitionUnitResource uiResource, HAPExpressionManager expressionManager, HAPResourceManagerRoot resourceMan){
 		uiResource.setExpressionUnit(new HAPUIResourceExpressionUnit(uiResource, null, expressionManager));
+		
+		processScriptExpression(uiResource);
+		
 		processResourceDependency(uiResource, resourceMan);
 		uiResource.processed();
 	}
 	
-	
+	private static void processScriptExpression(HAPUIDefinitionUnit uiDefinitionUnit){
+		HAPUIResourceExpressionUnit expUnit = uiDefinitionUnit.getExpressionUnit();
+		Map<String, HAPExpression> resourceExpressions = expUnit.getExpressions();
+		for(HAPEmbededScriptExpressionInContent embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInContent()){
+			HAPScriptExpression scriptExpression = embededScriptExpression.getScriptExpression();
+			Map<String, HAPExpression> expressions = new LinkedHashMap<String, HAPExpression>();
+			for(HAPExpressionDefinition expDef : scriptExpression.getExpressionDefinitions()){
+				expressions.put(expDef.getName(), resourceExpressions.get(expDef.getName()));
+			}
+			scriptExpression.setExpressions(expressions);
+		}
+		
+		for(HAPUIDefinitionUnit child : uiDefinitionUnit.getUITags()){
+			processScriptExpression(child);
+		}
+	}
 }

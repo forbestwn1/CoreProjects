@@ -11,7 +11,8 @@ var packageObj = library;
 	var node_createContextElementInfo;
 	var node_dataUtility;
 	var node_uiResourceUtility;
-	var node_createUIResourceExpressionContent;
+	var node_createEmbededScriptExpressionInContent;
+	var node_getLifecycleInterface;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_createUIResourceViewFactory = function(){
@@ -209,7 +210,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 
 		//init expression content
 		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPTEXPRESSIONSINCONTENT], function(expressionContent, key, list){
-			loc_expressionContents.push(node_createUIResourceExpressionContent(expressionContent, "text", loc_out, requestInfo));
+			loc_expressionContents.push(node_createEmbededScriptExpressionInContent(expressionContent, loc_out, requestInfo));
 		});
 
 		
@@ -419,7 +420,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIRESOURCEVIEW);
 
-	loc_out.interfaceObjectLifecycle.init(uiResource, id, parent, contextElementInfoArray, requestInfo);
+	node_getLifecycleInterface(loc_out).init(uiResource, id, parent, contextElementInfoArray, requestInfo);
 	
 	return loc_out;
 };
@@ -435,7 +436,8 @@ nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_
 nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.utility", function(){node_uiResourceUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("uiresource.createUIResourceExpressionContent", function(){node_createUIResourceExpressionContent = this.getData();});
+nosliw.registerSetNodeDataEvent("uiresource.createEmbededScriptExpressionInContent", function(){node_createEmbededScriptExpressionInContent = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIResourceViewFactory", loc_createUIResourceViewFactory); 

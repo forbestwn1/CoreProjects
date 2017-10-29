@@ -52,6 +52,7 @@ public interface HAPExpression {
 	//Operand to represent the expression
 	HAPOperandWrapper getOperand();
 	
+	//all variables required in expression
 	Set<String> getVariables();
 
 	//Variables infos

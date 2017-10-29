@@ -1,6 +1,7 @@
 package com.nosliw.uiresource.expression;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -8,8 +9,10 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPJsonTypeAsItIs;
+import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
@@ -63,10 +66,11 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	private List<Object> m_elements;
 	
 	public HAPScriptExpression(String uiId, String content, HAPExpressionManager expressionMan){
+		this.m_variableNames = new HashSet<String>();
+		this.m_elements = new ArrayList<Object>();
 		this.m_expressionManager = expressionMan;
 		this.m_uiId = uiId;
 		this.m_content = content;
-		this.m_elements = new ArrayList<Object>();
 		this.parseContent();
 		this.m_scriptFunction = HAPScriptExpressionUtility.buildScriptExpressionJSFunction(this);
 	}
@@ -78,6 +82,14 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	public String getScriptFunction(){  return this.m_scriptFunction;  }
 	
 	public String getContent(){  return this.m_content;  } 
+	
+	public void setExpressions(Map<String, HAPExpression> expressions){  
+		this.m_expressions = expressions;
+		for(String expName : expressions.keySet()){
+			HAPExpression expression = expressions.get(expName);
+			this.m_variableNames.addAll(expression.getVariables());
+		}
+	}
 	
 	public List<HAPExpressionDefinition> getExpressionDefinitions(){
 		List<HAPExpressionDefinition> out = new ArrayList<HAPExpressionDefinition>();
@@ -101,7 +113,9 @@ public class HAPScriptExpression extends HAPSerializableImp{
 			}
 			else if(index!=0){
 				//start with text
-				this.m_elements.add(new HAPScriptExpressionScriptSegment(content.substring(0, index)));
+				HAPScriptExpressionScriptSegment scriptSegment = new HAPScriptExpressionScriptSegment(content.substring(0, index));
+				this.m_elements.add(scriptSegment);
+				this.m_variableNames.addAll(scriptSegment.getVariableNames());
 				content = content.substring(index);
 			}
 			else{
@@ -125,5 +139,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		jsonMap.put(SCRIPTFUNCTION, m_scriptFunction);
 		typeJsonMap.put(SCRIPTFUNCTION, HAPJsonTypeAsItIs.class);
 		jsonMap.put(CONTENT, this.m_content);
+		jsonMap.put(VARIABLENAMES, HAPJsonUtility.buildJson(this.m_variableNames, HAPSerializationFormat.JSON));
+		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildJson(m_expressions, HAPSerializationFormat.JSON));
 	}
 }

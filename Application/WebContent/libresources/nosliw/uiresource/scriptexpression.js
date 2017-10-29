@@ -6,6 +6,10 @@ var packageObj = library;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_makeObjectWithLifecycle;
+	var node_createEventObject;
+	var node_getLifecycleInterface;
+	var node_createContextVariablesGroup;
+	
 //*******************************************   Start Node Definition  ************************************** 	
 
 	/*
@@ -26,7 +30,7 @@ var packageObj = library;
 		var loc_dataEventObject = node_createEventObject();
 		
 		var loc_contextVarsGroupHandler = function(requestInfo){
-			loc_out.getExecuteScriptExpressionRequest({
+			loc_out.executeExecuteScriptExpressionRequest({
 				success : function(requestInfo, data){
 					loc_dataEventObject.triggerEvent(node_CONSTANT.REQUESTRESULT_EVENT_SUCCESS, data);
 				},
@@ -52,7 +56,7 @@ var packageObj = library;
 			_.each(varNames, function(varName, index){
 				contextVariables.push(node_createContextVariable(varName));
 			});
-			loc_contextVarGroup(uiResourceView.getContext(), contextVariables, loc_contextVarsGroupHandler, this);
+			node_createContextVariablesGroup(uiResourceView.getContext(), contextVariables, loc_contextVarsGroupHandler, this);
 		};
 			
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
@@ -75,6 +79,11 @@ var packageObj = library;
 				return out;
 			},
 			
+			executeExecuteScriptExpressionRequest : function(handlers, requester_parent){
+				var requestInfo = this.getExecuteScriptExpressionRequest(handlers, requester_parent);
+				node_requestServiceProcessor.processRequest(requestInfo, true);
+			},
+			
 			registerListener : function(listenerEventObj, handler){
 				loc_dataEventObject.registerListener(undefined, listenerEventObj, handler);
 			}
@@ -83,7 +92,7 @@ var packageObj = library;
 
 		//append resource and object life cycle method to out obj
 		loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
-		loc_out.init(expressionContent, type, uiResourceView, requestInfo);
+		node_getLifecycleInterface(loc_out).init(scriptExpression, uiResourceView, requestInfo);
 		return loc_out;
 	};
 
@@ -93,7 +102,11 @@ var packageObj = library;
 	nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 	nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 	nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
-
+	nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+	nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
+	nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
+	nosliw.registerSetNodeDataEvent("uidata.context.createContextVariablesGroup", function(){node_createContextVariablesGroup = this.getData();});
+	
 
 	//Register Node by Name
 	packageObj.createChildNode("createUIResourceScriptExpression", node_createUIResourceScriptExpression); 
