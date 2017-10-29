@@ -62,7 +62,9 @@ var node_createContextVariablesGroup = function(context, contextVariables, handl
 		
 		getVariable : function(key){	return loc_requestEventGroupHandler.getElement(key);		},
 		
-		getVariables : function(){  return loc_variables;  }
+		getVariables : function(){  return loc_variables;  },
+		
+		triggerEvent : function(requestInfo){   loc_requestEventGroupHandler.triggerEvent(requestInfo);  }
 	};
 	
 	//append resource and object life cycle method to out obj

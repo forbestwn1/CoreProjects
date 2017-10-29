@@ -5,7 +5,7 @@
 	<%= ' 6666 ' %>  tttttttttt  
 	<b>
 	lalalala
-	<%= #|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value + ' 6666 ' %>  tttttttttt  
+<!--	<%= #|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value + ' 6666 ' %>  tttttttttt  -->  
 
 	</body>
 

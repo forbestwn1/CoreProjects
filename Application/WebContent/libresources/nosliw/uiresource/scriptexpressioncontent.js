@@ -48,7 +48,7 @@ var packageObj = library;
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(embededScriptExpression, uiResourceView, requestInfo){
 			
 			loc_scriptExpression.registerListener(loc_dataEventObject, loc_scriptExpressionEventHandler);
-			
+			loc_out.refresh(requestInfo);
 		};
 			
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
@@ -57,6 +57,9 @@ var packageObj = library;
 		var loc_out = {
 			ovr_getResourceLifecycleObject : function(){	return loc_resourceLifecycleObj;	},
 			
+			refresh : function(requestInfo){
+				loc_scriptExpression.refresh(requestInfo);
+			}
 		};
 
 		//append resource and object life cycle method to out obj

@@ -9,7 +9,7 @@ var packageObj = library;
 	var node_createEventObject;
 	var node_getLifecycleInterface;
 	var node_createContextVariablesGroup;
-	
+	var node_requestServiceProcessor;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	/*
@@ -40,7 +40,7 @@ var packageObj = library;
 				exception : function(requestInfo, serviceData){
 					loc_dataEventObject.triggerEvent(node_CONSTANT.REQUESTRESULT_EVENT_EXCEPTION, serviceData);
 				}
-			}, requesterInfo);
+			}, requestInfo);
 		}
 		
 		var lifecycleCallback = {};
@@ -56,7 +56,7 @@ var packageObj = library;
 			_.each(varNames, function(varName, index){
 				contextVariables.push(node_createContextVariable(varName));
 			});
-			node_createContextVariablesGroup(uiResourceView.getContext(), contextVariables, loc_contextVarsGroupHandler, this);
+			loc_contextVarGroup = node_createContextVariablesGroup(uiResourceView.getContext(), contextVariables, loc_contextVarsGroupHandler, this);
 		};
 			
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
@@ -75,7 +75,7 @@ var packageObj = library;
 					variableParms[varName] = varValue;
 				});
 
-				var out = node_createExpressionService.getExecuteScriptExpressionRequest(loc_scriptFunction, loc_expressions, variableParms, loc_constants, handlers, requester_parent)
+				var out = nosliw.runtime.getExpressionService().getExecuteScriptExpressionRequest(loc_scriptFunction, loc_expressions, variableParms, loc_constants, handlers, requester_parent)
 				return out;
 			},
 			
@@ -86,8 +86,11 @@ var packageObj = library;
 			
 			registerListener : function(listenerEventObj, handler){
 				loc_dataEventObject.registerListener(undefined, listenerEventObj, handler);
-			}
+			},
 			
+			refresh : function(requestInfo){
+				loc_contextVarGroup.triggerEvent(requestInfo);
+			}
 		};
 
 		//append resource and object life cycle method to out obj
@@ -106,7 +109,8 @@ var packageObj = library;
 	nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 	nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 	nosliw.registerSetNodeDataEvent("uidata.context.createContextVariablesGroup", function(){node_createContextVariablesGroup = this.getData();});
-	
+	nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+
 
 	//Register Node by Name
 	packageObj.createChildNode("createUIResourceScriptExpression", node_createUIResourceScriptExpression); 
