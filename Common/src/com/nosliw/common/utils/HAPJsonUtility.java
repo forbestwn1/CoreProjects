@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.text.StringEscapeUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -140,6 +142,11 @@ public class HAPJsonUtility {
 	private static String buildAttributeJson(String attr, String value, boolean lastOne, Class<?> type){
 		StringBuffer out = new StringBuffer();
 		
+		if(attr.equals("default")){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		String lastString = lastOne?"":",";
 		
 		if(value==null) return null; //out.append("\"" + attr+ "\""+": undefined" + lastString);
@@ -171,6 +178,9 @@ public class HAPJsonUtility {
 			out.append("\"" + attr+ "\""+":" + value + lastString);
 		}
 		else if(JsonObject.class==type){
+			out.append("\"" + attr+ "\""+":" + value + lastString);
+		}
+		else if(JSONObject.class==type || JSONArray.class==type){
 			out.append("\"" + attr+ "\""+":" + value + lastString);
 		}
 		else{

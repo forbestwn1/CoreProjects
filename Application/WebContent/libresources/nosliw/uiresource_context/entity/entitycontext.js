@@ -95,7 +95,7 @@ function nosliwCreateContextElementEntity(wraper, path){
 
 	
 	var loc_out = {
-		ovr_getType : function(){return NOSLIWCOMMONCONSTANT.CONS_DATATYPE_CATEGARY_ENTITY;},
+		ovr_getType : function(){return NOSLIWCOMMONCONSTANT.DATATYPE_CATEGARY_ENTITY;},
 		
 		ovr_registerEvent : function(path, handler, thisContext){
 			var contextValue = context[contextPath.name];

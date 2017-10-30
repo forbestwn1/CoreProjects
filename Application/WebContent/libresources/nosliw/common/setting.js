@@ -39,10 +39,10 @@ var node_createConfigures = function(configures){
 	var loc_configures = {};
 	if(_.isString(configures)){
 		//literal
-		var pairs = configures.split(node_NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_ELEMENT);
+		var pairs = configures.split(node_NOSLIWCOMMONCONSTANT.SEPERATOR_ELEMENT);
 		for(var i in pairs){
 			var pair = pairs[i];
-			var segs = pair.split(NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_PART); 
+			var segs = pair.split(NOSLIWCOMMONCONSTANT.SEPERATOR_PART); 
 			loc_configures[seg[0]] = sets[1];
 		}
 	}

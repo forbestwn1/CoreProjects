@@ -173,12 +173,13 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 		var contextElementInfosArray = [];
 		_.each(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT], function(contextRootObj, eleName, list){
 			var defaultValue = contextRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFAULT];
-			if(contextRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFINITION]===undefined){
-				//entity
-				if(defaultValue!=undefined){
-					var defaultValueData = node_dataUtility.createDataOfAppData(defaultValue);
-					contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValueData));
+			if(contextRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFINITION]!=undefined){
+				//app data
+				var defaultValueData = defaultValue;
+				if(defaultValueData!=undefined){
+					defaultValueData = node_dataUtility.createDataOfAppData(defaultValue);
 				}
+				contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValueData));
 			}
 			else{
 				//object

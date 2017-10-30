@@ -160,7 +160,7 @@ var node_createWraperCommon = function(data, path, request){
 			
 			getData : function(){
 				var value = this.getValue();
-				return node_dataUtility.createDataByValue(object, value);
+				return node_dataUtility.createDataByValue(value);
 			},
 			
 			getValue : function(){

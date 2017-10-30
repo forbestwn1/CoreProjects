@@ -7,10 +7,10 @@ var nosliwCreateContextElement = function(wraper, path){
 	
 	var contextEle = undefined;
 	switch(dataType.categary){
-	case NOSLIWCOMMONCONSTANT.CONS_DATATYPE_CATEGARY_OBJECT:
+	case NOSLIWCOMMONCONSTANT.DATATYPE_CATEGARY_OBJECT:
 		contextEle = nosliwCreateContextElementObject(wraper, path);
 		break;
-	case NOSLIWCOMMONCONSTANT.CONS_DATATYPE_CATEGARY_ENTITY:
+	case NOSLIWCOMMONCONSTANT.DATATYPE_CATEGARY_ENTITY:
 		contextEle = nosliwCreateContextElementEntity(wraper, path);
 		break;
 	}

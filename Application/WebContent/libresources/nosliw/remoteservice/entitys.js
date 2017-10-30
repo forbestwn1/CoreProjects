@@ -95,7 +95,7 @@ var node_RemoteServiceGroupTask = function(syncName, handlers, requestInfo, sett
 node_RemoteServiceGroupTask.prototype = {
 	addTask : function(task){
 		//mark task as group child
-		task.type = node_COMMONCONSTANT.CONS_REMOTESERVICE_TASKTYPE_GROUPCHILD;
+		task.type = node_COMMONCONSTANT.REMOTESERVICE_TASKTYPE_GROUPCHILD;
 		this.children.push(task);
 		this.remoteRequest.children.push(task.getRemoteServiceRequest());
 	},

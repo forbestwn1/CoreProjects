@@ -36,7 +36,7 @@ var node_createContextVariable = function(n, p){
 		}
 		else{
 			path="";
-			var index = name.indexOf(node_COMMONCONSTANT.CONS_SEPERATOR_PATH);
+			var index = name.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
 			if(index!=-1){
 				path = name.substring(index+1);
 				name = name.substring(0, index);

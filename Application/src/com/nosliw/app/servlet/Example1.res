@@ -58,7 +58,12 @@
 				}
 			},
 			default: {
-				
+				a : {
+					aa : {
+						dataTypeId: "test.string",
+						value: "This is my world!"
+					}
+				}
 			}
 		}		
 	}

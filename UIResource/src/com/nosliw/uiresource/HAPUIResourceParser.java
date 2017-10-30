@@ -150,7 +150,7 @@ public class HAPUIResourceParser {
 					HAPContextNodeRoot contextEle = new HAPContextNodeRoot();
 
 					Object d = eleDefJson.opt(HAPContextNodeRoot.DEFAULT);
-					if(d!=null)		contextEle.setDefaultValue(d.toString());
+					if(d!=null)		contextEle.setDefaultValue(d);
 
 					Object defObj = eleDefJson.opt(HAPContextNode.DEFINITION);
 					this.paresContextNode(defObj, contextEle);

@@ -14,7 +14,7 @@ public class HAPEmbededScriptExpressionInAttribute extends HAPEmbededScriptExpre
 	private String m_attribute;
 
 	public HAPEmbededScriptExpressionInAttribute(String attr, String uiId, HAPScriptExpression scriptExpression){
-		super(scriptExpression);
+		super(uiId, scriptExpression);
 		this.m_attribute = attr;
 	}
 	

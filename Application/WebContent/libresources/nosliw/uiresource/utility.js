@@ -35,7 +35,7 @@ var node_utility = {
 			var resourceAttrs = uiResource[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_ATTRIBUTES];
 			if(resourceAttrs!=undefined){
 				var contextStr = resourceAttrs.contexts;
-				var contextSegs = nosliwCreateSegmentParser(contextStr, node_COMMONCONSTANT.CONS_SEPERATOR_ELEMENT);
+				var contextSegs = nosliwCreateSegmentParser(contextStr, node_COMMONCONSTANT.SEPERATOR_ELEMENT);
 				while(contextSegs.hasNext()){
 					var name = undefined;
 					var element = undefined;
