@@ -10,6 +10,7 @@ var packageObj = library;
 	var node_getLifecycleInterface;
 	var node_createContextVariablesGroup;
 	var node_requestServiceProcessor;
+	var node_createContextVariable;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	/*
@@ -110,7 +111,8 @@ var packageObj = library;
 	nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 	nosliw.registerSetNodeDataEvent("uidata.context.createContextVariablesGroup", function(){node_createContextVariablesGroup = this.getData();});
 	nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
-
+	nosliw.registerSetNodeDataEvent("uidata.context.createContextVariable", function(){node_createContextVariable = this.getData();});
+	
 
 	//Register Node by Name
 	packageObj.createChildNode("createUIResourceScriptExpression", node_createUIResourceScriptExpression); 

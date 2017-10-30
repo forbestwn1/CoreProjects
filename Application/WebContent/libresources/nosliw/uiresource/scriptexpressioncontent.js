@@ -24,7 +24,7 @@ var packageObj = library;
 		//parent resource view
 		var loc_uiResourceView = uiResourceView;
 		//ui id for content
-		var loc_uiId = loc_uiResourceView.prv_getUpdateUIId(embededScriptExpression[node_COMMONATRIBUTECONSTANT.UIEXPRESSIONCONTENT_UIID]);
+		var loc_uiId = loc_uiResourceView.prv_getUpdateUIId(embededScriptExpression[node_COMMONATRIBUTECONSTANT.EMBEDEDSCRIPTEXPRESSION_UIID]);
 		//element
 		var loc_ele = loc_uiResourceView.prv_getLocalElementByUIId(loc_uiId);
 

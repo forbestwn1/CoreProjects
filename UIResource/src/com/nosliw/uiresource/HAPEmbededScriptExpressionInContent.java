@@ -10,7 +10,7 @@ import com.nosliw.uiresource.expression.HAPScriptExpression;
 public class HAPEmbededScriptExpressionInContent extends HAPEmbededScriptExpression{
 
 	public HAPEmbededScriptExpressionInContent(HAPScriptExpression scriptExpression){
-		super(scriptExpression);
+		super(scriptExpression.getId(), scriptExpression);
 	}
 	
 	

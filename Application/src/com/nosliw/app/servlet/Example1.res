@@ -2,10 +2,10 @@
 <html>
 	<!-- Contexts define the variables input for this ui resource -->
 	<body>
-	<%= ' 6666 ' %>  tttttttttt  
+	<%= ' 6666 ' %>  tttttttttt11  
 	<b>
 	lalalala
-<!--	<%= #|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value + ' 6666 ' %>  tttttttttt  -->  
+	<%= #|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value + ' 6666 ' %>  tttttttttt222    
 
 	</body>
 

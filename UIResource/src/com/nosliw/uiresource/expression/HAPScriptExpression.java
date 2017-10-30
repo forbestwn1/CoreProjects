@@ -33,7 +33,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	public static final String EXPRESSION_TOKEN_CLOSE = "|#";
 
 	@HAPAttribute
-	public static final String UIID = "uiId";
+	public static final String ID = "id";
 	
 	@HAPAttribute
 	public static final String CONTENT = "content";
@@ -47,7 +47,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String VARIABLENAMES = "variableNames";
 	
-	private String m_uiId;
+	private String m_id;
 	
 	private String m_content;
 
@@ -69,13 +69,13 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		this.m_variableNames = new HashSet<String>();
 		this.m_elements = new ArrayList<Object>();
 		this.m_expressionManager = expressionMan;
-		this.m_uiId = uiId;
+		this.m_id = uiId;
 		this.m_content = content;
 		this.parseContent();
 		this.m_scriptFunction = HAPScriptExpressionUtility.buildScriptExpressionJSFunction(this);
 	}
 	
-	public String getId(){  return this.m_uiId;  }
+	public String getId(){  return this.m_id;  }
 	
 	public List<Object> getElements(){  return this.m_elements;   }
 	
@@ -126,7 +126,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 				String expressionStr = content.substring(expStart, expEnd);
 				content = content.substring(expEnd + EXPRESSION_TOKEN_CLOSE.length());
 				//build expression definition
-				HAPExpressionDefinition expressionDefinition = this.m_expressionManager.newExpressionDefinition(expressionStr, this.m_uiId+"_"+i, null, null); 
+				HAPExpressionDefinition expressionDefinition = this.m_expressionManager.newExpressionDefinition(expressionStr, this.m_id+"_"+i, null, null); 
 				this.m_elements.add(expressionDefinition);
 			}
 			i++;
@@ -135,7 +135,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(UIID, this.m_uiId);
+		jsonMap.put(ID, this.m_id);
 		jsonMap.put(SCRIPTFUNCTION, m_scriptFunction);
 		typeJsonMap.put(SCRIPTFUNCTION, HAPJsonTypeAsItIs.class);
 		jsonMap.put(CONTENT, this.m_content);

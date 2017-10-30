@@ -299,8 +299,8 @@ public class HAPUIResourceParser {
 				}
 				else if(segment instanceof HAPScriptExpression){
 					HAPScriptExpression scriptExpression = (HAPScriptExpression)segment;
-					newText.append("<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+scriptExpression.getId()+"></span>");
 					HAPEmbededScriptExpressionInContent expressionContent = new HAPEmbededScriptExpressionInContent(scriptExpression);
+					newText.append("<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+expressionContent.getUIId()+"></span>");
 					resource.addScriptExpressionInContent(expressionContent);
 				}
 			}
