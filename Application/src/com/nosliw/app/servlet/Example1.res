@@ -60,7 +60,7 @@
 			default: {
 				a : {
 					aa : {
-						dataTypeId: "test.string",
+						dataTypeId: "test.string;1.0.0",
 						value: "This is my world!"
 					}
 				}
