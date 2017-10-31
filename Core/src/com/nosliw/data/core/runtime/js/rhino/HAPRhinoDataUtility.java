@@ -163,10 +163,22 @@ public class HAPRhinoDataUtility
             Object[] ids = nativeObject.getIds(); 
             for (Object id : ids) 
             { 
-                String key = id.toString(); 
+                String key = id.toString();
+                
+                if(key.equals("variablesCriteria")){
+                	int kkkk = 5555;
+                	kkkk++;
+                }
+                
                 Object value = nativeObject.get(key, nativeObject);
                 Object json = toJson(value);
                 mapJson.put(key, json+"");
+                
+                if(json==null){
+                	int kkkk = 5555;
+                	kkkk++;
+                }
+                
                 if(!(json instanceof String))      mapTypeJson.put(key, json.getClass()); 
             } 
          

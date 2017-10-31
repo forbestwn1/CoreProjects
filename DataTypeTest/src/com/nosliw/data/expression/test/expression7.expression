@@ -51,17 +51,8 @@
 		},
 	},
 	"result": {
-		"dataTypeId": "test.array;1.0.0",
-		"value": [
-			{
-				"dataTypeId": "test.string;1.0.0",
-				"value": "1234567890abcdefgh",
-			},
-			{
-				"dataTypeId": "test.string;1.0.0",
-				"value": "abcedfghijk1234567890",
-			}
-		],
+		"dataTypeId": "test.datatypecriteria;1.0.0",
+  		"value": "test.string;1.0.0",
 		"wapperType": "JSON"
 	},
 	"configure" :{

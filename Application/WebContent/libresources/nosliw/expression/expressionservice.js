@@ -317,7 +317,18 @@ var node_createExpressionService = function(){
 
 		var resourceRequestDependency = new node_DependentServiceRequestInfo(getResourceRequest, {
 			success : function(requestInfo, resourcesTree){
-				return node_expressionUtility.executeOperationResource(dataOperationResourceId, parmArray, resourcesTree);
+				nosliw.logging.info("************************  operation");
+				nosliw.logging.info(dataTypeId, operation);
+				_.each(parmArray, function(parm, index){
+					nosliw.logging.info("Parm", parm.name, ":",JSON.stringify(parm.value));
+				});
+
+				var out = node_expressionUtility.executeOperationResource(dataOperationResourceId, parmArray, resourcesTree);
+
+				nosliw.logging.info("Out", ":",JSON.stringify(out));
+				nosliw.logging.info("************************  operation");
+
+				return out;
 			}
 		});
 		

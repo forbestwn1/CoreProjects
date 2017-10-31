@@ -155,7 +155,7 @@ public class HAPJsonUtility {
 			//treat the value as it is
 			out.append("\"" + attr+ "\""+":\""+TOKEN_UNCHANGED_START+ HAPJsonUtility.escape(value)+TOKEN_UNCHANGED_END+ "\""+lastString);
 		}
-		if(type!=null && HAPJsonTypeAsItIs.class.isAssignableFrom(type)){
+		else if(type!=null && HAPJsonTypeAsItIs.class.isAssignableFrom(type)){
 			//treat the value as it is
 			out.append("\"" + attr+ "\""+":"+ value+lastString);
 		}

@@ -28,7 +28,7 @@ public class HAPExpressionDefinitionSimple extends HAPSerializableImp implements
 	
 	private HAPInfo m_info;
 	
-	private HAPOperandWrapper m_operand;
+	private HAPOperandWrapper m_operand = new HAPOperandWrapper();
 	
 	HAPExpressionDefinitionSimple(){}
 	
@@ -77,7 +77,7 @@ public class HAPExpressionDefinitionSimple extends HAPSerializableImp implements
 
 	@Override
 	public HAPOperandWrapper getOperand() {   return this.m_operand;  }
-	public void setOperand(HAPOperand operand){   this.m_operand = new HAPOperandWrapper(operand);   }
+	public void setOperand(HAPOperand operand){   this.m_operand.setOperand(operand);  }
 
 	@Override
 	public HAPExpressionDefinition cloneExpressionDefinition() {

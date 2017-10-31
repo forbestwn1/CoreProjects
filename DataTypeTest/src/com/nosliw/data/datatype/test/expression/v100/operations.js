@@ -19,20 +19,24 @@ dataTypeDefition.operations['outputCriteria'] = {
 			context.logging.info("Operand Calcualting [outputCriteria]  ----------------");
 			
 			var varCriterias = {};
-			_.each(parms.getParm("parms"), function(varName, varCriteriaData){
+			_.each(parms.getParm("parms").value, function(varCriteriaData, varName){
 				varCriterias[varName] = varCriteriaData.value;
 			});
 			
 			var gatewayParms = {
-				expression : this.value,
-				variablesCriteria : varCriterias
+				"expression" : this.value,
+				"variablesCriteria" : varCriterias
 			};
-			return  context.getResourceDataByName("myGateWay").command("getOutputCriteria", gatewayParms);
+			var criteriaStr =  context.getResourceDataByName("myGateWay").command("getOutputCriteria", gatewayParms);
+			return {
+				dataTypeId : "test.datatypecriteria;1.0.0",
+				value : criteriaStr,
+			};
 		},
 
 		requires:{
 			"jsGateway" : { 
-				myGateWay: "discovery",
+				"myGateWay": "discovery",
 			}
 		},
 };
