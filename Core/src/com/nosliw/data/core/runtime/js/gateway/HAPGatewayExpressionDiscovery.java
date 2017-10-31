@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
+import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
@@ -38,7 +40,9 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 		HAPServiceData out = null;
 		switch(command){
 		case COMMAND_GETOUTPUTCRITERIA:
-			String expressionDef = parms.getString(COMMAND_GETOUTPUTCRITERIA_EXPRESSION);
+			JSONObject expressionDefJSON = parms.getJSONObject(COMMAND_GETOUTPUTCRITERIA_EXPRESSION);
+			HAPExpressionDefinition expressionDefinition = (HAPExpressionDefinition)HAPStringableEntityImporterJSON.parseJsonEntity(expressionDefJSON, "data.expressiondefinition", HAPValueInfoManager.getInstance());
+			
 			Map<String, HAPDataTypeCriteria> varCriterias = new LinkedHashMap<String, HAPDataTypeCriteria>();
 			JSONObject varCriteriasJson = parms.getJSONObject(COMMAND_GETOUTPUTCRITERIA_VARIABLESCRITERIA);
 			Iterator<String> it = varCriteriasJson.keys();
@@ -48,10 +52,10 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 				HAPDataTypeCriteria varCriteria = HAPCriteriaParser.getInstance().parseCriteria(criteriaStr);
 				varCriterias.put(varName, varCriteria);
 			}
-			HAPExpressionDefinition expressionDefinition = this.m_expressionManager.newExpressionDefinition(expressionDef, "", null, varCriterias);
-			HAPExpression expression = this.m_expressionManager.processExpression(null, expressionDefinition, null, null, null);
+//			HAPExpressionDefinition expressionDefinition = this.m_expressionManager.newExpressionDefinition(expressionDef, "", null, varCriterias);
+			HAPExpression expression = this.m_expressionManager.processExpression(null, expressionDefinition, null, varCriterias, null);
 			HAPDataTypeCriteria outCriteria = expression.getOperand().getOperand().getOutputCriteria();
-			out = HAPServiceData.createSuccessData(outCriteria.toStringValue(HAPSerializationFormat.LITERATE));
+			out = this.createSuccessWithObject(outCriteria.toStringValue(HAPSerializationFormat.LITERATE));
 			break;
 		}
 		
