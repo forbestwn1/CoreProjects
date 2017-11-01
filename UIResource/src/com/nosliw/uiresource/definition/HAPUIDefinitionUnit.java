@@ -21,6 +21,7 @@ import com.nosliw.uiresource.HAPElementEvent;
 import com.nosliw.uiresource.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.HAPScript;
+import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionUnit;
 
 /*
@@ -114,7 +115,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	private Map<String, HAPExpressionDefinition> m_expressionDefinitions;
 	
 	//expression unit
-	private HAPUIResourceExpressionUnit m_expressionUnit;
+	private HAPUIResourceExpressionContext m_expressionContext;
 	
 	public HAPUIDefinitionUnit(String id){
 		this.m_id = id;
@@ -129,14 +130,15 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		this.m_attributes = new LinkedHashMap<String, String>();
 		this.m_constants = new LinkedHashMap<String, HAPConstantDef>();
 		this.m_expressionDefinitions = new LinkedHashMap<String, HAPExpressionDefinition>();
+		this.m_expressionContext = new HAPUIResourceExpressionContext();
 	}
 	
 	abstract public String getType(); 
 
 	//process expressions 
-	protected void processExpressions(HAPUIDefinitionUnit parentResourceUnit, HAPExpressionManager expressionMan){
-		this.m_expressionUnit = new HAPUIResourceExpressionUnit(this, parentResourceUnit, expressionMan);
-	}
+//	protected void processExpressions(HAPUIDefinitionUnit parentResourceUnit, HAPExpressionManager expressionMan){
+//		this.m_expressionContext = new HAPUIResourceExpressionUnit(this, parentResourceUnit, expressionMan);
+//	}
 	
 	public Set<HAPExpressionDefinition> getOtherExpressionDefinitions(){  return new HashSet(this.m_expressionDefinitions.values());	}
 	
@@ -215,8 +217,8 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public Set<HAPEmbededScriptExpressionInAttribute> getScriptExpressionsInAttributes(){return this.m_scriptExpressionsInAttribute;}
 	public Set<HAPEmbededScriptExpressionInAttribute> getScriptExpressionsInTagAttributes(){return this.m_scriptExpressionsInTagAttribute;}
 
-	public HAPUIResourceExpressionUnit getExpressionUnit(){   return this.m_expressionUnit;   }
-	public void setExpressionUnit(HAPUIResourceExpressionUnit unit){  this.m_expressionUnit = unit;   }
+	public HAPUIResourceExpressionContext getExpressionContext(){   return this.m_expressionContext;   }
+	public void setExpressionContext(HAPUIResourceExpressionContext context){  this.m_expressionContext = context;   }
 	
 	public void addExpressionDefinition(HAPExpressionDefinition expressionDef){		this.m_expressionDefinitions.put(expressionDef.getName(), expressionDef);	}
 	

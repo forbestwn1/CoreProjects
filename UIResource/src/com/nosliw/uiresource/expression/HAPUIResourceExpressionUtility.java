@@ -21,6 +21,72 @@ import com.nosliw.data.core.expression.HAPOperationParm;
 
 public class HAPUIResourceExpressionUtility {
 
+	public static void processAttributeOperandInExpression(HAPExpressionDefinition expressionDefinition, final Map<String, HAPDataTypeCriteria> varCriterias){
+		processAttributeOperandInExpressionOperand(expressionDefinition.getOperand(), varCriterias);
+	}
+	
+	private static void processAttributeOperandInExpressionOperand(HAPOperandWrapper operand, final Map<String, HAPDataTypeCriteria> varCriterias){
+		List<HAPAttributeOperandChainInfo> data = new ArrayList<HAPAttributeOperandChainInfo>();
+		HAPOperandUtility.processAllOperand(operand, data, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				List<HAPAttributeOperandChainInfo> stack = (List<HAPAttributeOperandChainInfo>)data;
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION)){
+					HAPOperandAttribute attrOperand = (HAPOperandAttribute)operand.getOperand();
+					HAPAttributeOperandChainInfo attrInfo = null;
+					if(stack.size()==0 || !stack.get(stack.size()-1).open){
+						//new attrInfo
+						attrInfo = new HAPAttributeOperandChainInfo();
+						attrInfo.lastAttrOperand = operand;
+						stack.add(attrInfo);
+					}
+					else{
+						//use latest
+						attrInfo = stack.get(stack.size()-1);
+					}
+					attrInfo.insertSegment(attrOperand.getAttribute());
+				}
+				else{
+					if(stack.size()>=1 && stack.get(stack.size()-1).open){
+						HAPAttributeOperandChainInfo attrInfo = stack.get(stack.size()-1);
+						attrInfo.startOperand = operand;
+						attrInfo.open = false;
+					}
+				}
+				return true;
+			}
+			
+			@Override
+			public void postPross(HAPOperandWrapper operand, Object data){
+				List<HAPAttributeOperandChainInfo> stack = (List<HAPAttributeOperandChainInfo>)data;
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION)){
+					HAPOperandAttribute attrOperand = (HAPOperandAttribute)operand.getOperand();
+					HAPAttributeOperandChainInfo attrInfo = stack.get(stack.size()-1);
+					attrInfo.veryPath.add(attrOperand.getAttribute());
+					if(attrInfo.path.size()==attrInfo.veryPath.size()){
+						//at end of attribute chain
+						processAttributeChain(attrInfo, varCriterias);
+						stack.remove(stack.size()-1);
+					}
+				}
+				else{
+					if(stack.size()>=1 && !stack.get(stack.size()-1).open && stack.get(stack.size()-1).startOperand==operand){
+						//find start operand
+						stack.get(stack.size()-1).open = true;
+					}
+					
+//					if(stack.size()>=1 && stack.get(stack.size()-1).open){
+//						HAPAttributeOperandChainInfo attrInfo = stack.get(stack.size()-1);
+//						attrInfo.startOperand = operand;
+//						attrInfo.open = false;
+//					}
+				}
+			}
+		});
+	}
+	
 	//process variables in expression, 
 	//	for attribute operation a.b.c.d which have responding definition in context, 
 	//			replace attribute operation with one variable operation

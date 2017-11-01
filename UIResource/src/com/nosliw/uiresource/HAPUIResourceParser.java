@@ -291,7 +291,7 @@ public class HAPUIResourceParser {
 		List<TextNode> textNodes = ele.textNodes();
 		for(TextNode textNode : textNodes){
 			String text = textNode.text();
-			List<Object> segments = HAPScriptExpressionUtility.discoverUIExpressionInText(text, this.m_idGenerator, this.m_expressionManager);
+			List<Object> segments = HAPScriptExpressionUtility.discoverUIExpressionInText(text, this.m_expressionManager);
 			StringBuffer newText = new StringBuffer();
 			for(Object segment : segments){
 				if(segment instanceof String){
@@ -299,7 +299,7 @@ public class HAPUIResourceParser {
 				}
 				else if(segment instanceof HAPScriptExpression){
 					HAPScriptExpression scriptExpression = (HAPScriptExpression)segment;
-					HAPEmbededScriptExpressionInContent expressionContent = new HAPEmbededScriptExpressionInContent(scriptExpression);
+					HAPEmbededScriptExpressionInContent expressionContent = new HAPEmbededScriptExpressionInContent(this.m_idGenerator.createId(), scriptExpression);
 					newText.append("<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+expressionContent.getUIId()+"></span>");
 					resource.addScriptExpressionInContent(expressionContent);
 				}
@@ -448,7 +448,7 @@ public class HAPUIResourceParser {
 			String eleAttrKey = eleAttr.getKey();
 			//replace express attribute value with; create ExpressEle object
 			
-			List<Object> segments = HAPScriptExpressionUtility.discoverUIExpressionInText(eleAttr.getValue(), this.m_idGenerator, this.m_expressionManager);
+			List<Object> segments = HAPScriptExpressionUtility.discoverUIExpressionInText(eleAttr.getValue(), this.m_expressionManager);
 			HAPScriptExpression scriptExpression = null;
 			//try to find first script expression in attribute value
 			for(Object segment : segments){

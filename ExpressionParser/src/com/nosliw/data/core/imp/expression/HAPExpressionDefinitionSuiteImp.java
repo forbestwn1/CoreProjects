@@ -35,8 +35,6 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 	
 	private Map<String, HAPData> m_constants;
 	
-//	Map<String, HAPData> m_variablesData;
-	
 	public HAPExpressionDefinitionSuiteImp(){}
 
 	public HAPExpressionDefinitionSuiteImp(String name){

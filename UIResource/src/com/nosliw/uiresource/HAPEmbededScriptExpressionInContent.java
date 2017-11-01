@@ -9,8 +9,8 @@ import com.nosliw.uiresource.expression.HAPScriptExpression;
 @HAPEntityWithAttribute
 public class HAPEmbededScriptExpressionInContent extends HAPEmbededScriptExpression{
 
-	public HAPEmbededScriptExpressionInContent(HAPScriptExpression scriptExpression){
-		super(scriptExpression.getId(), scriptExpression);
+	public HAPEmbededScriptExpressionInContent(String uiId, HAPScriptExpression scriptExpression){
+		super(uiId, scriptExpression);
 	}
 	
 	

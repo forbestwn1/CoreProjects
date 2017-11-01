@@ -27,7 +27,7 @@ public class HAPRuntimeRhinoMain {
 		try{
 			//parse to build expression object
 			final HAPExpressionDefinitionSuiteImp suite = (HAPExpressionDefinitionSuiteImp)runtimeEnvironment.getExpressionManager().getExpressionDefinitionSuite(suiteName);
-			HAPExpressionImp expression = (HAPExpressionImp)runtimeEnvironment.getExpressionManager().processExpression(null, suiteName, "main", null);
+			HAPExpressionImp expression = (HAPExpressionImp)runtimeEnvironment.getExpressionManager().processExpression(null, "main", suiteName, null);
 			Map<String, HAPData> varData = suite.getVariableData();
 			
 			//execute expression
@@ -122,11 +122,11 @@ public class HAPRuntimeRhinoMain {
 //				"expression5",
 //				"expression6",
 
-				"expression7",
+//				"expression7",
 //				"expression71",
 
 
-//				"expression8",
+				"expression8",
 				
 //				"expression9",
 			}, runtimeEnvironment);

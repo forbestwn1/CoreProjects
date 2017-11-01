@@ -59,7 +59,7 @@ public class HAPGatewayLoadTestExpression extends HAPGatewayImp{
 			}
 			
 			Map<String, HAPData> varDatas = ((HAPExpressionDefinitionSuiteForTest)this.m_expressionManager.getExpressionDefinitionSuite(suite)).getVariableData();
-			HAPExpression expression = this.m_expressionManager.processExpression(null, suite, expressionName, variableCriterias);
+			HAPExpression expression = this.m_expressionManager.processExpression(null, expressionName, suite, variableCriterias);
 			HAPResponseGatewayLoadTestExpression response = new HAPResponseGatewayLoadTestExpression(expression, varDatas);
 			out = this.createSuccessWithObject(response);
 			break;

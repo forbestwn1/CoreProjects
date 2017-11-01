@@ -137,7 +137,7 @@ public class HAPConstantUtility {
 		//otherwise, if leafData contains both script expression and plain text, then build string value instead
 		StringBuffer valueStr = new StringBuffer();
 		//try to discover script expression in leaf content 
-		List<Object> segments = HAPScriptExpressionUtility.discoverUIExpressionInText(leafData.toString(), idGenerator, expressionMan);
+		List<Object> segments = HAPScriptExpressionUtility.discoverUIExpressionInText(leafData.toString(), expressionMan);
 		for(Object segment : segments){
 			if(segment instanceof HAPScriptExpression){
 				//only process script expression

@@ -2,6 +2,7 @@ package com.nosliw.uiresource.expression;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +16,7 @@ import com.nosliw.common.utils.HAPJsonTypeAsItIs;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
+import com.nosliw.data.core.expression.HAPExpressionDefinitionSuite;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 
 /**
@@ -33,10 +35,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	public static final String EXPRESSION_TOKEN_CLOSE = "|#";
 
 	@HAPAttribute
-	public static final String ID = "id";
-	
-	@HAPAttribute
-	public static final String CONTENT = "content";
+	public static final String DEFINITION = "definition";
 	
 	@HAPAttribute
 	public static final String SCRIPTFUNCTION = "scriptFunction";
@@ -47,62 +46,76 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String VARIABLENAMES = "variableNames";
 	
-	private String m_id;
-	
-	private String m_content;
+	//definition literate
+	private String m_definition;
 
-	private HAPExpressionManager m_expressionManager;
-	
+	//after parsing content, we got a list of elements in ui expression:
+	//     	js expression:  HAPScriptExpressionScriptSegment
+	//		data expression : HAPExpressionDefinition
+	private List<Object> m_elements;
+
+	//javascript function to execute script expression 
 	private String m_scriptFunction;
 	
 	//expressions used in script expression
 	private Map<String, HAPExpression> m_expressions;
-	
+
+	//variables used in script expression
 	private Set<String> m_variableNames;
 	
-	//store all elements in ui expression:
-	//     	js expression:  HAPScriptExpressionScriptSegment
-	//		data expression : HAPExpressionDefinition
-	private List<Object> m_elements;
+	private HAPExpressionManager m_expressionManager;
 	
-	public HAPScriptExpression(String uiId, String content, HAPExpressionManager expressionMan){
+	
+	public HAPScriptExpression(String content, HAPExpressionManager expressionMan){
 		this.m_variableNames = new HashSet<String>();
 		this.m_elements = new ArrayList<Object>();
 		this.m_expressionManager = expressionMan;
-		this.m_id = uiId;
-		this.m_content = content;
-		this.parseContent();
+		this.m_definition = content;
+		this.parseDefinition();
 		this.m_scriptFunction = HAPScriptExpressionUtility.buildScriptExpressionJSFunction(this);
 	}
-	
-	public String getId(){  return this.m_id;  }
 	
 	public List<Object> getElements(){  return this.m_elements;   }
 	
 	public String getScriptFunction(){  return this.m_scriptFunction;  }
 	
-	public String getContent(){  return this.m_content;  } 
+	public String getDefinition(){  return this.m_definition;  } 
+
+	public Map<String, HAPExpression> getExpressions(){   return this.m_expressions;    }
 	
-	public void setExpressions(Map<String, HAPExpression> expressions){  
-		this.m_expressions = expressions;
-		for(String expName : expressions.keySet()){
-			HAPExpression expression = expressions.get(expName);
-			this.m_variableNames.addAll(expression.getVariables());
+	public Set<String> getVariableNames(){   return this.m_variableNames;   }
+	
+	//process all expression definitions in script expression
+	public void processExpressions(HAPUIResourceExpressionContext expressionContext){
+		//preprocess attributes operand in expressions
+		for(HAPExpressionDefinition expDef : this.getExpressionDefinitions()){
+			HAPUIResourceExpressionUtility.processAttributeOperandInExpression(expDef, expressionContext.getVariables());
+		}
+
+		this.m_expressions = new LinkedHashMap<String, HAPExpression>();
+		for(HAPExpressionDefinition expDef : this.getExpressionDefinitions()){
+			m_expressions.put(expDef.getName(), this.m_expressionManager.processExpression(null, expDef, expressionContext.getExpressionDefinitionSuite(), expressionContext.getVariables()));
 		}
 	}
 	
-	public List<HAPExpressionDefinition> getExpressionDefinitions(){
-		List<HAPExpressionDefinition> out = new ArrayList<HAPExpressionDefinition>();
-		for(Object element : this.m_elements){
-			if(element instanceof HAPExpressionDefinition){
-				out.add((HAPExpressionDefinition)element);
+	//discover all variables in script expression
+	public void discoverVarialbes(){
+		this.m_variableNames = new HashSet<String>();
+		for(Object ele : this.m_elements){
+			if(ele instanceof HAPExpressionDefinition){
+				HAPExpressionDefinition expDef = (HAPExpressionDefinition)ele;
+				this.m_variableNames.addAll(this.m_expressions.get(expDef.getName()).getVariables());
+			}
+			else if(ele instanceof HAPScriptExpressionScriptSegment){
+				HAPScriptExpressionScriptSegment scriptSegment = (HAPScriptExpressionScriptSegment)ele;
+				this.m_variableNames.addAll(scriptSegment.getVariableNames());
 			}
 		}
-		return out;
 	}
 	
-	private void parseContent(){
-		String content = this.m_content;
+	//parse definition to get segments
+	private void parseDefinition(){
+		String content = this.m_definition;
 		int i = 0;
 		while(HAPBasicUtility.isStringNotEmpty(content)){
 			int index = content.indexOf(EXPRESSION_TOKEN_OPEN);
@@ -115,7 +128,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 				//start with text
 				HAPScriptExpressionScriptSegment scriptSegment = new HAPScriptExpressionScriptSegment(content.substring(0, index));
 				this.m_elements.add(scriptSegment);
-				this.m_variableNames.addAll(scriptSegment.getVariableNames());
+//				this.m_variableNames.addAll(scriptSegment.getVariableNames());
 				content = content.substring(index);
 			}
 			else{
@@ -126,19 +139,28 @@ public class HAPScriptExpression extends HAPSerializableImp{
 				String expressionStr = content.substring(expStart, expEnd);
 				content = content.substring(expEnd + EXPRESSION_TOKEN_CLOSE.length());
 				//build expression definition
-				HAPExpressionDefinition expressionDefinition = this.m_expressionManager.newExpressionDefinition(expressionStr, this.m_id+"_"+i, null, null); 
+				HAPExpressionDefinition expressionDefinition = this.m_expressionManager.newExpressionDefinition(expressionStr, i+"", null, null); 
 				this.m_elements.add(expressionDefinition);
 			}
 			i++;
 		}
 	}
 	
+	private List<HAPExpressionDefinition> getExpressionDefinitions(){
+		List<HAPExpressionDefinition> out = new ArrayList<HAPExpressionDefinition>();
+		for(Object element : this.m_elements){
+			if(element instanceof HAPExpressionDefinition){
+				out.add((HAPExpressionDefinition)element);
+			}
+		}
+		return out;
+	}
+	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(ID, this.m_id);
 		jsonMap.put(SCRIPTFUNCTION, m_scriptFunction);
 		typeJsonMap.put(SCRIPTFUNCTION, HAPJsonTypeAsItIs.class);
-		jsonMap.put(CONTENT, this.m_content);
+		jsonMap.put(DEFINITION, this.m_definition);
 		jsonMap.put(VARIABLENAMES, HAPJsonUtility.buildJson(this.m_variableNames, HAPSerializationFormat.JSON));
 		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildJson(m_expressions, HAPSerializationFormat.JSON));
 	}

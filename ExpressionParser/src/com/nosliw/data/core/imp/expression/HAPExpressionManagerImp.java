@@ -69,7 +69,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	public HAPExpressionDefinition getExpressionDefinition(String suite, String name) {		return this.getExpressionDefinitionSuite(suite).getExpressionDefinition(name);	}
 
 	@Override
-	public HAPExpression processExpression(String id, HAPExpressionDefinitionSuite suite, String expressionName, Map<String, HAPDataTypeCriteria> variableCriterias){
+	public HAPExpression processExpression(String id, String expressionName, HAPExpressionDefinitionSuite suite, Map<String, HAPDataTypeCriteria> variableCriterias){
 		String expId = id;
 		if(expId==null) expId = expressionName + "_no" + this.m_idIndex++;
 		HAPExpressionDefinition expDef = suite.getExpressionDefinition(expressionName); 
@@ -78,7 +78,7 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 	}
 	
 	@Override
-	public HAPExpression processExpression(String id, String suiteName, String expressionName, Map<String, HAPDataTypeCriteria> variableCriterias){
+	public HAPExpression processExpression(String id, String expressionName, String suiteName, Map<String, HAPDataTypeCriteria> variableCriterias){
 		String expId = id;
 		if(expId==null) expId = expressionName + "_no" + this.m_idIndex++;
 		HAPExpressionDefinitionSuite suite = this.getExpressionDefinitionSuite(suiteName);
@@ -87,6 +87,15 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 		return expression;
 	}
 
+
+	@Override
+	public HAPExpression processExpression(String id, HAPExpressionDefinition expressionDefinition,	HAPExpressionDefinitionSuite suite, Map<String, HAPDataTypeCriteria> variableCriterias) {
+		String expId = id;
+		if(expId==null) expId = expressionDefinition.getName() + "_no" + this.m_idIndex++;
+		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(expId, expressionDefinition, suite.getAllExpressionDefinitions(), suite.getConstants(), variableCriterias, this.getContext(suite.getConfigure()));
+		return expression;
+	}
+	
 	@Override
 	public HAPExpression processExpression(String id, HAPExpressionDefinition expressionDefinition, Map<String, HAPData> contextConstants, Map<String, HAPDataTypeCriteria> variableCriterias, Map<String, String> context) {
 		String expId = id;

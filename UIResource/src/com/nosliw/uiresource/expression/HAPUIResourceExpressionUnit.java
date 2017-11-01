@@ -17,9 +17,7 @@ import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp;
-import com.nosliw.uiresource.definition.HAPConstantDef;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
-import com.nosliw.uiresource.definition.HAPUIResourceUtility;
 
 /**
  *  This class store all the expression info related with ui resources defintion 
@@ -84,35 +82,35 @@ public class HAPUIResourceExpressionUnit extends HAPSerializableImp{
 			HAPExpressionManager expressionMan
 			){
 		
-		this.addVariables(currentResourceUnit.getContext().getCriterias());
-
-		HAPUIResourceExpressionUnit parent = parentResourceUnit==null?null:parentResourceUnit.getExpressionUnit();
-		
-		//build data constants
-		if(parent!=null)	this.addConstants(parent.getConstants());
-		Map<String, HAPConstantDef> constantDefs = currentResourceUnit.getConstants();
-		for(String name : constantDefs.keySet()){
-			HAPData data = constantDefs.get(name).getDataValue();
-			if(data!=null)		this.addConstant(name, data);
-		}
-		
-		//get all expressions
-		if(parent!=null)	this.addSupportExpressionDefinitions(parent.getSupportExpressionDefinitions());
-		Set<HAPExpressionDefinition> expDefs = HAPUIResourceUtility.getExpressionDefinitions(currentResourceUnit);
-		Set<HAPExpressionDefinition> otherExpDefs = currentResourceUnit.getOtherExpressionDefinitions();
-		this.addExpressionDefinitions(expDefs);
-		this.addSupportExpressionDefinitions(otherExpDefs);
-		
-		//prepress expressions
-		//preprocess attributes operand in expressions
-		HAPUIResourceExpressionUtility.processAttributeOperandInExpression(m_expressionDefinitionSuite, m_variables);
-		
-		//only expression in content(html and attributes) need to process 
-		for(HAPExpressionDefinition expDef : this.m_expressionDefinitions){
-			String name = expDef.getName();
-			HAPExpression expression = expressionMan.processExpression(null, m_expressionDefinitionSuite, name, m_variables);
-			this.m_expressions.put(name, expression);
-		}
+//		this.addVariables(currentResourceUnit.getContext().getCriterias());
+//
+//		HAPUIResourceExpressionUnit parent = parentResourceUnit==null?null:parentResourceUnit.getExpressionContext();
+//		
+//		//build data constants
+//		if(parent!=null)	this.addConstants(parent.getConstants());
+//		Map<String, HAPConstantDef> constantDefs = currentResourceUnit.getConstants();
+//		for(String name : constantDefs.keySet()){
+//			HAPData data = constantDefs.get(name).getDataValue();
+//			if(data!=null)		this.addConstant(name, data);
+//		}
+//		
+//		//get all expressions
+//		if(parent!=null)	this.addSupportExpressionDefinitions(parent.getSupportExpressionDefinitions());
+//		Set<HAPExpressionDefinition> expDefs = HAPUIResourceUtility.getExpressionDefinitions(currentResourceUnit);
+//		Set<HAPExpressionDefinition> otherExpDefs = currentResourceUnit.getOtherExpressionDefinitions();
+//		this.addExpressionDefinitions(expDefs);
+//		this.addSupportExpressionDefinitions(otherExpDefs);
+//		
+//		//prepress expressions
+//		//preprocess attributes operand in expressions
+//		HAPUIResourceExpressionUtility.processAttributeOperandInExpression(m_expressionDefinitionSuite, m_variables);
+//		
+//		//only expression in content(html and attributes) need to process 
+//		for(HAPExpressionDefinition expDef : this.m_expressionDefinitions){
+//			String name = expDef.getName();
+//			HAPExpression expression = expressionMan.processExpression(null, name, m_expressionDefinitionSuite, m_variables);
+//			this.m_expressions.put(name, expression);
+//		}
 		
 		//process child tags
 //		Iterator<HAPUIDefinitionUnitTag> tagsIterator = defUnit.getUITags().iterator();

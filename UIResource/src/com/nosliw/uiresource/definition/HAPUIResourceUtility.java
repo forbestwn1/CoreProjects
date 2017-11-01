@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
@@ -21,7 +22,7 @@ import com.nosliw.uiresource.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.HAPUIResourceIdGenerator;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
-import com.nosliw.uiresource.expression.HAPUIResourceExpressionUnit;
+import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
 
 public class HAPUIResourceUtility {
 
@@ -32,8 +33,7 @@ public class HAPUIResourceUtility {
 	}
 	
 	private static void discoverExpressionsInUIResourceUnit(HAPUIDefinitionUnit uiResourceUnit, List<HAPExpression> out){
-		Map<String, HAPExpression> expressions = uiResourceUnit.getExpressionUnit().getExpressions();
-		out.addAll(expressions.values());
+		out.addAll(getExpressions(uiResourceUnit));
 		
 		Iterator<HAPUIDefinitionUnitTag> it = uiResourceUnit.getUITags().iterator();
 		while(it.hasNext()){
@@ -41,16 +41,11 @@ public class HAPUIResourceUtility {
 		}
 	}
 	
-	/**
-	 * Get all expression definitions in ui definition (content, attribute, expression block)
-	 * Exception expression definitions in Constant Definition
-	 * @return
-	 */
-	public static Set<HAPExpressionDefinition> getExpressionDefinitions(HAPUIDefinitionUnit uiDefinitionUnit){
-		Set<HAPExpressionDefinition> all = new HashSet<HAPExpressionDefinition>();
-		for(HAPEmbededScriptExpressionInContent embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInContent())	all.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
-		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInAttributes())	all.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
-		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInTagAttributes())		all.addAll(embededScriptExpression.getScriptExpression().getExpressionDefinitions());
+	private static Set<HAPExpression> getExpressions(HAPUIDefinitionUnit uiDefinitionUnit){
+		Set<HAPExpression> all = new HashSet<HAPExpression>();
+		for(HAPEmbededScriptExpressionInContent embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInContent())		all.addAll(embededScriptExpression.getScriptExpression().getExpressions().values());
+		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInAttributes())	all.addAll(embededScriptExpression.getScriptExpression().getExpressions().values());
+		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInTagAttributes())		all.addAll(embededScriptExpression.getScriptExpression().getExpressions().values());
 		return all;
 	}
 	
@@ -101,24 +96,54 @@ public class HAPUIResourceUtility {
 	}
 	
 	public static void processUIResource(HAPUIDefinitionUnitResource uiResource, HAPExpressionManager expressionManager, HAPResourceManagerRoot resourceMan){
-		uiResource.setExpressionUnit(new HAPUIResourceExpressionUnit(uiResource, null, expressionManager));
+		//build expression context
+		processExpressionContext(null, uiResource);
 		
+		//process all script expressions in resource
 		processScriptExpression(uiResource);
 		
+		//discovery resources required
 		processResourceDependency(uiResource, resourceMan);
 		uiResource.processed();
 	}
 	
+	private static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition){
+
+		HAPUIResourceExpressionContext expContext = uiDefinition.getExpressionContext();
+		
+		expContext.addVariables(uiDefinition.getContext().getCriterias());
+
+		HAPUIResourceExpressionContext parentExpContext = parent==null?null:parent.getExpressionContext();
+		
+		//build data constants
+		if(parent!=null)	expContext.addConstants(parentExpContext.getConstants());
+		Map<String, HAPConstantDef> constantDefs = uiDefinition.getConstants();
+		for(String name : constantDefs.keySet()){
+			HAPData data = constantDefs.get(name).getDataValue();
+			if(data!=null)		expContext.addConstant(name, data);
+		}
+		
+		//get all expressions definitions
+		//expression from parent first
+		if(parent!=null){
+			Map<String, HAPExpressionDefinition> parentExpDefs = parentExpContext.getExpressionDefinitions();
+			for(String id : parentExpDefs.keySet())    expContext.addExpressionDefinition(parentExpDefs.get(id));
+		}
+		//expression from current
+		for(HAPExpressionDefinition expDef : uiDefinition.getOtherExpressionDefinitions())	expContext.addExpressionDefinition(expDef);
+		
+		//prepress expressions
+		//preprocess attributes operand in expressions
+//		HAPUIResourceExpressionUtility.processAttributeOperandInExpression(m_expressionDefinitionSuite, m_variables);
+		
+	}
+	
 	private static void processScriptExpression(HAPUIDefinitionUnit uiDefinitionUnit){
-		HAPUIResourceExpressionUnit expUnit = uiDefinitionUnit.getExpressionUnit();
-		Map<String, HAPExpression> resourceExpressions = expUnit.getExpressions();
+		HAPUIResourceExpressionContext expContext = uiDefinitionUnit.getExpressionContext();
 		for(HAPEmbededScriptExpressionInContent embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInContent()){
 			HAPScriptExpression scriptExpression = embededScriptExpression.getScriptExpression();
-			Map<String, HAPExpression> expressions = new LinkedHashMap<String, HAPExpression>();
-			for(HAPExpressionDefinition expDef : scriptExpression.getExpressionDefinitions()){
-				expressions.put(expDef.getName(), resourceExpressions.get(expDef.getName()));
-			}
-			scriptExpression.setExpressions(expressions);
+			scriptExpression.processExpressions(expContext);
+			scriptExpression.discoverVarialbes();
 		}
 		
 		for(HAPUIDefinitionUnit child : uiDefinitionUnit.getUITags()){

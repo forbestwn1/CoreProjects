@@ -34,7 +34,6 @@ public class HAPScriptExpressionUtility {
 	 */
 	public static List<Object> discoverUIExpressionInText(
 			String text, 
-			HAPUIResourceIdGenerator idGenerator, 
 			HAPExpressionManager expressionMan){
 		List<Object> out = new ArrayList<Object>();
 		int start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
@@ -43,8 +42,7 @@ public class HAPScriptExpressionUtility {
 			int expEnd = text.indexOf(UIEXPRESSION_TOKEN_CLOSE, start);
 			int end = expEnd + UIEXPRESSION_TOKEN_CLOSE.length();
 			String expression = text.substring(start+UIEXPRESSION_TOKEN_OPEN.length(), expEnd);
-			String uiId = idGenerator.createId();
-			HAPScriptExpression uiExpression = new HAPScriptExpression(uiId, expression, expressionMan);
+			HAPScriptExpression uiExpression = new HAPScriptExpression(expression, expressionMan);
 			out.add(uiExpression);
 			//keep searching the rest
 			text=text.substring(end);
@@ -65,7 +63,7 @@ public class HAPScriptExpressionUtility {
 		templateParms.put("variables", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(variableValue==null?new LinkedHashMap<String, HAPData>() : variableValue, HAPSerializationFormat.JSON)));
 
 		//build javascript function to execute the script
-		if(scriptExpression.getContent().contains("ccc")){
+		if(scriptExpression.getDefinition().contains("ccc")){
 			int kkkk = 5555;
 			kkkk++;
 		}
