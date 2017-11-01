@@ -63,11 +63,6 @@ public class HAPScriptExpressionUtility {
 		templateParms.put("variables", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(variableValue==null?new LinkedHashMap<String, HAPData>() : variableValue, HAPSerializationFormat.JSON)));
 
 		//build javascript function to execute the script
-		if(scriptExpression.getDefinition().contains("ccc")){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		String funScript = buildScriptExpressionJSFunction(scriptExpression);
 		templateParms.put("functionScript", funScript);
 		

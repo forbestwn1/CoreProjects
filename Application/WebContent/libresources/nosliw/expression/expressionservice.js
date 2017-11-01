@@ -163,14 +163,7 @@ var node_createExpressionService = function(){
 	//convert individual data according to matchers
 	var loc_getMatchDataTaskRequest = function(data, matchers, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
-
 		var service = new node_ServiceInfo("MatchData", {"data":data, "matcher":matchers});
-		
-		if(data==undefined){
-			var kkkk = 5555;
-			kkkk++;
-		}
-		
 		var dataTypeId = data[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID];
 		var matcher = matchers[dataTypeId];
 		

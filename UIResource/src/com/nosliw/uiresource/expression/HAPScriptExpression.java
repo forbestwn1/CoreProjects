@@ -16,7 +16,6 @@ import com.nosliw.common.utils.HAPJsonTypeAsItIs;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.data.core.expression.HAPExpressionDefinitionSuite;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 
 /**
@@ -128,7 +127,6 @@ public class HAPScriptExpression extends HAPSerializableImp{
 				//start with text
 				HAPScriptExpressionScriptSegment scriptSegment = new HAPScriptExpressionScriptSegment(content.substring(0, index));
 				this.m_elements.add(scriptSegment);
-//				this.m_variableNames.addAll(scriptSegment.getVariableNames());
 				content = content.substring(index);
 			}
 			else{

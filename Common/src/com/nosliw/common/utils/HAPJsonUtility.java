@@ -141,12 +141,6 @@ public class HAPJsonUtility {
 
 	private static String buildAttributeJson(String attr, String value, boolean lastOne, Class<?> type){
 		StringBuffer out = new StringBuffer();
-		
-		if(attr.equals("default")){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		String lastString = lastOne?"":",";
 		
 		if(value==null) return null; //out.append("\"" + attr+ "\""+": undefined" + lastString);
