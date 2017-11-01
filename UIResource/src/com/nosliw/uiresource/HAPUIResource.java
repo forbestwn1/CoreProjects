@@ -17,7 +17,6 @@ import com.nosliw.uiresource.definition.HAPContext;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
-import com.nosliw.uiresource.expression.HAPUIResourceExpressionUnit;
 
 /**
  * UIResource that is result of processing UI Definition

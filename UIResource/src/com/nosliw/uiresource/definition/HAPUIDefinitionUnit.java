@@ -16,13 +16,11 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.uiresource.HAPElementEvent;
 import com.nosliw.uiresource.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.HAPScript;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
-import com.nosliw.uiresource.expression.HAPUIResourceExpressionUnit;
 
 /*
  * ui resource basic class for both ui resource and custom tag
