@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
@@ -23,6 +26,8 @@ import com.nosliw.uiresource.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.HAPUIResourceIdGenerator;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
+import com.nosliw.uiresource.tag.HAPUITagContextElment;
+import com.nosliw.uiresource.tag.HAPUITagDefinition;
 
 public class HAPUIResourceUtility {
 
@@ -110,8 +115,25 @@ public class HAPUIResourceUtility {
 	private static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition){
 
 		HAPUIResourceExpressionContext expContext = uiDefinition.getExpressionContext();
-		
-		expContext.addVariables(uiDefinition.getContext().getCriterias());
+
+		//variables
+		switch(uiDefinition.getType()){
+		case HAPConstant.UIRESOURCE_TYPE_RESOURCE:
+			//for resource
+			expContext.addVariables(discoverDataVariablesInContext(((HAPUIDefinitionUnitResource)uiDefinition).getContext()));
+			break;
+		case HAPConstant.UIRESOURCE_TYPE_TAG:
+			//for tag
+			HAPUITagDefinition uiTagDefinition = null;
+			if(uiTagDefinition.isInheritContext()){
+				//add parent 
+				expContext.addVariables(parent.getExpressionContext().getVariables());
+			}
+			for(HAPUITagContextElment contextEle : uiTagDefinition.getContextDefinitions()){
+				
+			}
+			break;
+		}
 
 		HAPUIResourceExpressionContext parentExpContext = parent==null?null:parent.getExpressionContext();
 		
@@ -136,6 +158,14 @@ public class HAPUIResourceUtility {
 		//preprocess attributes operand in expressions
 //		HAPUIResourceExpressionUtility.processAttributeOperandInExpression(m_expressionDefinitionSuite, m_variables);
 		
+		//children ui tags
+		Iterator<HAPUIDefinitionUnitTag> its = uiDefinition.getUITags().iterator();
+		while(its.hasNext()){
+			HAPUIDefinitionUnitTag uiTag = its.next();
+			processExpressionContext(uiDefinition, uiTag);
+		}
+		
+		
 	}
 	
 	private static void processScriptExpression(HAPUIDefinitionUnit uiDefinitionUnit){
@@ -150,4 +180,27 @@ public class HAPUIResourceUtility {
 			processScriptExpression(child);
 		}
 	}
+	
+	public static Map<String, HAPDataTypeCriteria> discoverDataVariablesInContext(HAPContext context){
+		Map<String, HAPDataTypeCriteria> out = new LinkedHashMap<String, HAPDataTypeCriteria>();
+		for(String rootName : context.getElements().keySet()){
+			processCriteria(rootName, context.getElements().get(rootName), out);
+		}
+		return out;
+	}
+	
+	private static void processCriteria(String path, HAPContextNode node, Map<String, HAPDataTypeCriteria> criterias){
+		HAPContextNodeDefinition definition = node.getDefinition();
+		if(definition!=null){
+			criterias.put(path, definition.getValue());
+		}
+		else{
+			Map<String, HAPContextNode> children = node.getChildren();
+			for(String childName : children.keySet()){
+				String childPath = HAPNamingConversionUtility.cascadeComponentPath(path, childName);
+				processCriteria(childPath, children.get(childName), criterias);
+			}
+		}
+	}
+
 }

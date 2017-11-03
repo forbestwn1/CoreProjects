@@ -34,8 +34,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String ID = "id";
 	@HAPAttribute
-	public static final String CONTEXT = "context";
-	@HAPAttribute
 	public static final String TYPE = "type";
 	@HAPAttribute
 	public static final String SCRIPTEXPRESSIONSINCONTENT = "scriptExpressionsInContent";
@@ -74,9 +72,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	//for tag, it is tag id within resource
 	//for resource, it is resource name
 	private String m_id;
-	
-	//context definition
-	private HAPContext m_context;
 	
 	//all the expressions within content under this domain
 	private Set<HAPEmbededScriptExpressionInContent> m_scriptExpressionsInContent;
@@ -117,7 +112,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	
 	public HAPUIDefinitionUnit(String id){
 		this.m_id = id;
-		this.m_context = new HAPContext();
 		this.m_scriptExpressionsInAttribute = new HashSet<HAPEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInContent = new HashSet<HAPEmbededScriptExpressionInContent>();
@@ -133,11 +127,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	
 	abstract public String getType(); 
 
-	//process expressions 
-//	protected void processExpressions(HAPUIDefinitionUnit parentResourceUnit, HAPExpressionManager expressionMan){
-//		this.m_expressionContext = new HAPUIResourceExpressionUnit(this, parentResourceUnit, expressionMan);
-//	}
-	
 	public Set<HAPExpressionDefinition> getOtherExpressionDefinitions(){  return new HashSet(this.m_expressionDefinitions.values());	}
 	
 	@Override
@@ -149,8 +138,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(TYPE, String.valueOf(this.getType()));
-
-		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(m_context, HAPSerializationFormat.JSON_FULL));
 
 		List<String> expressionContentJsons = new ArrayList<String>();
 		for(HAPEmbededScriptExpressionInContent expressionContent : this.m_scriptExpressionsInContent)  expressionContentJsons.add(expressionContent.toStringValue(HAPSerializationFormat.JSON_FULL));
@@ -194,7 +181,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	
 	
 	public String getId(){return this.m_id;}
-	public HAPContext getContext(){  return this.m_context;  }
 	public String getContent(){return this.m_content;}
 	public void setContent(String content){	this.m_content = content;	}
 	
