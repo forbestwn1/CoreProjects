@@ -89,10 +89,13 @@ public class HAPExpressionManagerImp implements HAPExpressionManager{
 
 
 	@Override
-	public HAPExpression processExpression(String id, HAPExpressionDefinition expressionDefinition,	HAPExpressionDefinitionSuite suite, Map<String, HAPDataTypeCriteria> variableCriterias) {
+	public HAPExpression processExpression(String id, HAPExpressionDefinition expressionDefinition,	HAPExpressionDefinitionSuite suite, Map<String, HAPDataTypeCriteria> variableCriterias, Map<String, String> context) {
 		String expId = id;
 		if(expId==null) expId = expressionDefinition.getName() + "_no" + this.m_idIndex++;
-		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(expId, expressionDefinition, suite.getAllExpressionDefinitions(), suite.getConstants(), variableCriterias, this.getContext(suite.getConfigure()));
+		Map<String, String> cfgContext = new LinkedHashMap<String, String>();
+		if(suite.getConfigure()!=null)		cfgContext.putAll(suite.getConfigure());
+		if(context!=null)  cfgContext.putAll(context);
+		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(expId, expressionDefinition, suite.getAllExpressionDefinitions(), suite.getConstants(), variableCriterias, this.getContext(cfgContext));
 		return expression;
 	}
 	

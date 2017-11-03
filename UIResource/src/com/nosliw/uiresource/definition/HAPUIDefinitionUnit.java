@@ -193,6 +193,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public void addJSBlock(HAPScript jsBlock){this.m_scripts.add(jsBlock);}
 	public void setScriptFactoryName(String name){this.m_scriptFactoryName=name;}
 	public void addConstant(String name, HAPConstantDef data){this.m_constants.put(name, data);}
+	public void setConstants(Map<String, HAPConstantDef> data){this.m_constants = data;}
 	public Map<String, HAPConstantDef> getConstants(){return this.m_constants;}
 	
 	public List<HAPScript> getJSBlocks(){return this.m_scripts;}

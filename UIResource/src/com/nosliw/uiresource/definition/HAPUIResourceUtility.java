@@ -16,6 +16,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
+import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
@@ -67,13 +68,14 @@ public class HAPUIResourceUtility {
 			HAPUIResourceIdGenerator idGenerator, 
 			HAPExpressionManager expressionMan, 
 			HAPRuntime runtime){
-		//build context constants
+		//build constants by merging parent with current
 		Map<String, HAPConstantDef> contextConstants = new LinkedHashMap<String, HAPConstantDef>();
 		if(parentConstants!=null)   contextConstants.putAll(parentConstants);
 		contextConstants.putAll(uiDefinitionUnit.getConstants());
+		uiDefinitionUnit.setConstants(contextConstants);
 		
 		//process all constants defined in this domain
-		HAPConstantUtility.processConstantDefs(contextConstants, idGenerator, expressionMan, runtime);
+		HAPConstantUtility.processConstantDefs(uiDefinitionUnit, idGenerator, expressionMan, runtime);
 		
 		//process constants in child
 		for(HAPUIDefinitionUnitTag tag : uiDefinitionUnit.getUITags()){
@@ -130,6 +132,7 @@ public class HAPUIResourceUtility {
 				expContext.addVariables(parent.getExpressionContext().getVariables());
 			}
 			for(HAPUITagContextElment contextEle : uiTagDefinition.getContextDefinitions()){
+				String name = contextEle.getName();
 				
 			}
 			break;
@@ -172,7 +175,7 @@ public class HAPUIResourceUtility {
 		HAPUIResourceExpressionContext expContext = uiDefinitionUnit.getExpressionContext();
 		for(HAPEmbededScriptExpressionInContent embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInContent()){
 			HAPScriptExpression scriptExpression = embededScriptExpression.getScriptExpression();
-			scriptExpression.processExpressions(expContext);
+			scriptExpression.processExpressions(expContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
 			scriptExpression.discoverVarialbes();
 		}
 		

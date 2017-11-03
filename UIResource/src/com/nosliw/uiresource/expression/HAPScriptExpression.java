@@ -85,7 +85,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	public Set<String> getVariableNames(){   return this.m_variableNames;   }
 	
 	//process all expression definitions in script expression
-	public void processExpressions(HAPUIResourceExpressionContext expressionContext){
+	public void processExpressions(HAPUIResourceExpressionContext expressionContext, Map<String, String> context){
 		//preprocess attributes operand in expressions
 		for(HAPExpressionDefinition expDef : this.getExpressionDefinitions()){
 			HAPUIResourceExpressionUtility.processAttributeOperandInExpression(expDef, expressionContext.getVariables());
@@ -93,7 +93,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 
 		this.m_expressions = new LinkedHashMap<String, HAPExpression>();
 		for(HAPExpressionDefinition expDef : this.getExpressionDefinitions()){
-			m_expressions.put(expDef.getName(), this.m_expressionManager.processExpression(null, expDef, expressionContext.getExpressionDefinitionSuite(), expressionContext.getVariables()));
+			m_expressions.put(expDef.getName(), this.m_expressionManager.processExpression(null, expDef, expressionContext.getExpressionDefinitionSuite(), expressionContext.getVariables(), context));
 		}
 	}
 	

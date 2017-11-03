@@ -20,7 +20,7 @@ public interface HAPExpressionManager {
 
 	HAPExpression processExpression(String id, String expressionName, HAPExpressionDefinitionSuite suite, Map<String, HAPDataTypeCriteria> variableCriterias);
 
-	public HAPExpression processExpression(String id, HAPExpressionDefinition expressionDefinition, HAPExpressionDefinitionSuite suite, Map<String, HAPDataTypeCriteria> variableCriterias);
+	HAPExpression processExpression(String id, HAPExpressionDefinition expressionDefinition, HAPExpressionDefinitionSuite suite, Map<String, HAPDataTypeCriteria> variableCriterias, Map<String, String> context);
 	
 	HAPExpression processExpression(String id, HAPExpressionDefinition expressionDefinition, Map<String, HAPData> contextConstants, Map<String, HAPDataTypeCriteria> variableCriterias, Map<String, String> context);
 

@@ -31,17 +31,13 @@ public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTask{
 	
 	Map<String, HAPData> m_variablesValue;
 	
-	Map<String, HAPExpression> m_expressions;
-	
 	Map<String, Object> m_scriptConstants;
 	
 	public HAPRuntimeTaskExecuteScriptExpression(
 			HAPScriptExpression scriptExpression, 
-			Map<String, HAPExpression> expressions, 
 			Map<String, HAPData> variablesValue, 
 			Map<String, Object> scriptConstants){
 		this.m_scriptExpression = scriptExpression;
-		this.m_expressions = expressions;
 		this.m_variablesValue = variablesValue; 
 		this.m_scriptConstants = scriptConstants;
 	}
@@ -50,7 +46,7 @@ public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTask{
 	public String getTaskType() {		return TASK;	}
 
 	public HAPScriptExpression getScriptExpression(){ return this.m_scriptExpression;  }
-	public Map<String, HAPExpression> getExpressions(){  return this.m_expressions; }
+	public Map<String, HAPExpression> getExpressions(){  return this.m_scriptExpression.getExpressions(); }
 	public Map<String, HAPData> getVariablesValue(){  return this.m_variablesValue;  }
 	public Map<String, Object> getScriptConstants(){  return this.m_scriptConstants;  }
 	
@@ -61,7 +57,7 @@ public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTask{
 			
 			//prepare resources for expression in the runtime (resource and dependency)
 			//execute expression after load required resources
-			List<HAPExpression> expressions = new ArrayList(this.m_expressions.values());
+			List<HAPExpression> expressions = new ArrayList(this.m_scriptExpression.getExpressions().values());
 			List<HAPResourceInfo> resourcesId =  HAPExpressionUtility.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager());
 			HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
 			loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));
