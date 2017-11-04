@@ -223,7 +223,7 @@ public class HAPUIResourceParser {
 				Iterator<String> defNames = defsJson.keys();
 				while(defNames.hasNext()){
 					String defName = defNames.next();
-					resource.addConstant(defName, new HAPConstantDef(defsJson.get(defName)));
+					resource.addConstantDef(defName, new HAPConstantDef(defsJson.get(defName)));
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -437,7 +437,7 @@ public class HAPUIResourceParser {
 
 	/*
 	 * process element's attribute that have script expression value
-	 * only the first script expression will consider
+	 * only the first script expression will consider, other text or script expression will be ignored
 	 */
 	private void parseScriptExpressionInAttribute(Element ele, HAPUIDefinitionUnit resource, boolean isCustomerTag){
 		String uiId = HAPUIResourceParserUtility.getUIId(ele); 

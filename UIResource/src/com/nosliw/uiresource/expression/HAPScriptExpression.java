@@ -62,6 +62,12 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	//variables used in script expression
 	private Set<String> m_variableNames;
 	
+	//when script expression does not contain any variable
+	//it means that the script expression can be executed and get result during expression processing stage
+	//then script expression turn to constant instead
+	private boolean m_isConstant;
+	private Object m_value;
+	
 	private HAPExpressionManager m_expressionManager;
 	
 	
@@ -72,6 +78,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		this.m_definition = content;
 		this.parseDefinition();
 		this.m_scriptFunction = HAPScriptExpressionUtility.buildScriptExpressionJSFunction(this);
+		this.m_isConstant = false;
 	}
 	
 	public List<Object> getElements(){  return this.m_elements;   }
@@ -83,6 +90,10 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	public Map<String, HAPExpression> getExpressions(){   return this.m_expressions;    }
 	
 	public Set<String> getVariableNames(){   return this.m_variableNames;   }
+	
+	public boolean isConstant(){  return this.m_isConstant;  }
+	public Object getValue(){  return this.m_value;  }
+	public void setValue(Object value){  this.m_value = value;   }
 	
 	//process all expression definitions in script expression
 	public void processExpressions(HAPUIResourceExpressionContext expressionContext, Map<String, String> context){
@@ -98,6 +109,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	}
 	
 	//discover all variables in script expression
+	//variables from expression and script
 	public void discoverVarialbes(){
 		this.m_variableNames = new HashSet<String>();
 		for(Object ele : this.m_elements){

@@ -63,7 +63,7 @@ public class HAPUIResourceManager {
 	public HAPUIDefinitionUnitResource getUIResource(String name){
 		HAPUIDefinitionUnitResource uiResourceDefinition = this.getUIResourceDefinitionByName(name);
 		if(!uiResourceDefinition.isProcessed()){
-			HAPUIResourceUtility.processUIResource(uiResourceDefinition, m_expressionMan, m_resourceMan);
+			HAPUIResourceUtility.processUIResource(uiResourceDefinition, m_runtime, m_resourceMan);
 		}
 		return uiResourceDefinition;
 	}

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
@@ -22,9 +23,11 @@ import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.uiresource.HAPEmbededScriptExpression;
 import com.nosliw.uiresource.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.HAPUIResourceIdGenerator;
+import com.nosliw.uiresource.expression.HAPRuntimeTaskExecuteScriptExpression;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
 import com.nosliw.uiresource.tag.HAPUITagContextElment;
@@ -71,8 +74,8 @@ public class HAPUIResourceUtility {
 		//build constants by merging parent with current
 		Map<String, HAPConstantDef> contextConstants = new LinkedHashMap<String, HAPConstantDef>();
 		if(parentConstants!=null)   contextConstants.putAll(parentConstants);
-		contextConstants.putAll(uiDefinitionUnit.getConstants());
-		uiDefinitionUnit.setConstants(contextConstants);
+		contextConstants.putAll(uiDefinitionUnit.getConstantDefs());
+		uiDefinitionUnit.setConstantDefs(contextConstants);
 		
 		//process all constants defined in this domain
 		HAPConstantUtility.processConstantDefs(uiDefinitionUnit, idGenerator, expressionMan, runtime);
@@ -102,16 +105,40 @@ public class HAPUIResourceUtility {
 		}
 	}
 	
-	public static void processUIResource(HAPUIDefinitionUnitResource uiResource, HAPExpressionManager expressionManager, HAPResourceManagerRoot resourceMan){
+	public static void processUIResource(HAPUIDefinitionUnitResource uiResource, HAPRuntime runtime, HAPResourceManagerRoot resourceMan){
 		//build expression context
 		processExpressionContext(null, uiResource);
 		
 		//process all script expressions in resource
-		processScriptExpression(uiResource);
+		processScriptExpression(uiResource, runtime);
+		
+		//process script expression which turn out to be constant
+		processConstantExpressionInAttributeTag(uiResource);
 		
 		//discovery resources required
 		processResourceDependency(uiResource, resourceMan);
 		uiResource.processed();
+	}
+	
+	private static void processConstantExpressionInAttributeTag(HAPUIDefinitionUnit uiDefinitionUnit){
+		Set<HAPEmbededScriptExpressionInAttribute> removed = new HashSet<HAPEmbededScriptExpressionInAttribute>();
+		Set<HAPEmbededScriptExpressionInAttribute> all = uiDefinitionUnit.getScriptExpressionsInTagAttributes();
+		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : all){
+			if(embededScriptExpression.getScriptExpression().isConstant()){
+				Object value = embededScriptExpression.getScriptExpression().getValue();
+				HAPUIDefinitionUnitTag tag = uiDefinitionUnit.getUITagesByName().get(embededScriptExpression.getUIId());
+				tag.addAttribute(embededScriptExpression.getAttribute(), value.toString());
+				removed.add(embededScriptExpression);
+			}
+		}
+		
+		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : removed){
+			all.remove(embededScriptExpression);
+		}
+		
+		for(HAPUIDefinitionUnit childTag : uiDefinitionUnit.getUITags()){
+			processConstantExpressionInAttributeTag(uiDefinitionUnit);
+		}
 	}
 	
 	private static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition){
@@ -126,14 +153,16 @@ public class HAPUIResourceUtility {
 			break;
 		case HAPConstant.UIRESOURCE_TYPE_TAG:
 			//for tag
+			HAPUIDefinitionUnitTag tag = (HAPUIDefinitionUnitTag)uiDefinition;
 			HAPUITagDefinition uiTagDefinition = null;
 			if(uiTagDefinition.isInheritContext()){
 				//add parent 
 				expContext.addVariables(parent.getExpressionContext().getVariables());
 			}
 			for(HAPUITagContextElment contextEle : uiTagDefinition.getContextDefinitions()){
+				//process context name
 				String name = contextEle.getName();
-				
+//				tag.geta
 			}
 			break;
 		}
@@ -142,7 +171,7 @@ public class HAPUIResourceUtility {
 		
 		//build data constants
 		if(parent!=null)	expContext.addConstants(parentExpContext.getConstants());
-		Map<String, HAPConstantDef> constantDefs = uiDefinition.getConstants();
+		Map<String, HAPConstantDef> constantDefs = uiDefinition.getConstantDefs();
 		for(String name : constantDefs.keySet()){
 			HAPData data = constantDefs.get(name).getDataValue();
 			if(data!=null)		expContext.addConstant(name, data);
@@ -171,17 +200,32 @@ public class HAPUIResourceUtility {
 		
 	}
 	
-	private static void processScriptExpression(HAPUIDefinitionUnit uiDefinitionUnit){
-		HAPUIResourceExpressionContext expContext = uiDefinitionUnit.getExpressionContext();
-		for(HAPEmbededScriptExpressionInContent embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInContent()){
-			HAPScriptExpression scriptExpression = embededScriptExpression.getScriptExpression();
-			scriptExpression.processExpressions(expContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
-			scriptExpression.discoverVarialbes();
+	private static void processScriptExpression(HAPUIDefinitionUnit uiDefinitionUnit, HAPRuntime runtime){
+		for(HAPEmbededScriptExpression embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInContent()) processScriptExpression(embededScriptExpression, uiDefinitionUnit, runtime);
+		for(HAPEmbededScriptExpression embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInAttributes()) processScriptExpression(embededScriptExpression, uiDefinitionUnit, runtime);
+		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInTagAttributes()){
+			processScriptExpression(embededScriptExpression, uiDefinitionUnit, runtime);
 		}
 		
 		for(HAPUIDefinitionUnit child : uiDefinitionUnit.getUITags()){
-			processScriptExpression(child);
+			processScriptExpression(child, runtime);
 		}
+	}
+	
+	private static void processScriptExpression(HAPEmbededScriptExpression embededScriptExpression, HAPUIDefinitionUnit uiDefinitionUnit, HAPRuntime runtime){
+		HAPUIResourceExpressionContext expContext = uiDefinitionUnit.getExpressionContext();
+		HAPScriptExpression scriptExpression = embededScriptExpression.getScriptExpression();
+		scriptExpression.processExpressions(expContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
+		scriptExpression.discoverVarialbes();
+
+		if(scriptExpression.getVariableNames().isEmpty()){
+			//if script expression has no variable in it, then we can calculate its value
+			//execute script expression
+			HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(scriptExpression, null, uiDefinitionUnit.getConstantValues());
+			HAPServiceData serviceData = runtime.executeTaskSync(task);
+			scriptExpression.setValue(serviceData.getData());
+		}
+
 	}
 	
 	public static Map<String, HAPDataTypeCriteria> discoverDataVariablesInContext(HAPContext context){

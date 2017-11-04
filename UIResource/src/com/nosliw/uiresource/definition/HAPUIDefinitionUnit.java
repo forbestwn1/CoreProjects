@@ -72,6 +72,12 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	//for tag, it is tag id within resource
 	//for resource, it is resource name
 	private String m_id;
+
+	//a set of named data that can be used as constants
+	private Map<String, HAPConstantDef> m_constantDefs;
+	
+	//calcualted constant values from constantDefs
+	private Map<String, Object> m_constantValues;
 	
 	//all the expressions within content under this domain
 	private Set<HAPEmbededScriptExpressionInContent> m_scriptExpressionsInContent;
@@ -79,6 +85,9 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	private Set<HAPEmbededScriptExpressionInAttribute> m_scriptExpressionsInAttribute;
 	//all the attribute expressions in customer tag under this domain
 	private Set<HAPEmbededScriptExpressionInAttribute> m_scriptExpressionsInTagAttribute;
+	
+
+	
 	
 	//all the events related with regular tag
 	private Set<HAPElementEvent> m_elementEvents;
@@ -92,9 +101,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	
 	//all java script blocks within this domain
 	private List<HAPScript> m_scripts;
-	
-	//a set of named data that can be used as constants
-	private Map<String, HAPConstantDef> m_constants;
 	
 	//all the customer tag within the domain
 	private Map<String, HAPUIDefinitionUnitTag> m_uiTags; 
@@ -120,7 +126,8 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		this.m_elementEvents = new HashSet<HAPElementEvent>();
 		this.m_tagEvents = new HashSet<HAPElementEvent>();
 		this.m_attributes = new LinkedHashMap<String, String>();
-		this.m_constants = new LinkedHashMap<String, HAPConstantDef>();
+		this.m_constantDefs = new LinkedHashMap<String, HAPConstantDef>();
+		this.m_constantValues = new LinkedHashMap<String, Object>();
 		this.m_expressionDefinitions = new LinkedHashMap<String, HAPExpressionDefinition>();
 		this.m_expressionContext = new HAPUIResourceExpressionContext();
 	}
@@ -172,8 +179,8 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		jsonMap.put(SCRIPTFACTORYNAME, this.m_scriptFactoryName);
 
 		Map<String, String> constantsJsons = new LinkedHashMap<String, String>();
-		for(String name : this.m_constants.keySet()){
-			constantsJsons.put(name, this.m_constants.get(name).toStringValue(HAPSerializationFormat.JSON_FULL));
+		for(String name : this.m_constantDefs.keySet()){
+			constantsJsons.put(name, this.m_constantDefs.get(name).toStringValue(HAPSerializationFormat.JSON_FULL));
 		}
 		jsonMap.put(CONSTANTS, HAPJsonUtility.buildMapJson(constantsJsons));
 	
@@ -192,12 +199,16 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public void addTagEvent(HAPElementEvent event){this.m_tagEvents.add(event);}
 	public void addJSBlock(HAPScript jsBlock){this.m_scripts.add(jsBlock);}
 	public void setScriptFactoryName(String name){this.m_scriptFactoryName=name;}
-	public void addConstant(String name, HAPConstantDef data){this.m_constants.put(name, data);}
-	public void setConstants(Map<String, HAPConstantDef> data){this.m_constants = data;}
-	public Map<String, HAPConstantDef> getConstants(){return this.m_constants;}
+	public void addConstantDef(String name, HAPConstantDef data){this.m_constantDefs.put(name, data);}
+	public void setConstantDefs(Map<String, HAPConstantDef> data){this.m_constantDefs = data;}
+	public Map<String, HAPConstantDef> getConstantDefs(){return this.m_constantDefs;}
+	public void addConstant(String name, Object data){this.m_constantValues.put(name, data);}
+	public Map<String, Object> getConstantValues(){return this.m_constantValues;}
+	
 	
 	public List<HAPScript> getJSBlocks(){return this.m_scripts;}
 	public Collection<HAPUIDefinitionUnitTag> getUITags(){return this.m_uiTags.values();} 
+	public Map<String, HAPUIDefinitionUnitTag> getUITagesByName(){   return this.m_uiTags;   }
 	public Set<HAPEmbededScriptExpressionInContent> getScriptExpressionsInContent(){return this.m_scriptExpressionsInContent;}
 	public Set<HAPEmbededScriptExpressionInAttribute> getScriptExpressionsInAttributes(){return this.m_scriptExpressionsInAttribute;}
 	public Set<HAPEmbededScriptExpressionInAttribute> getScriptExpressionsInTagAttributes(){return this.m_scriptExpressionsInTagAttribute;}
