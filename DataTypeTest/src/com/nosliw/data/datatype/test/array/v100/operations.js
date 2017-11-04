@@ -17,6 +17,12 @@ dataTypeDefition.operations['process'] = {
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
 			var expressionData = parms.expression;
+			for(var i : this.value){
+				var ele = this.value[i];
+				var elementVariableName = parms.elementVariableName.value;
+				var expression = parms.expression;
+				
+			}
 			
 			
 			var gatewayParms = {

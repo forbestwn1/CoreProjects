@@ -12,6 +12,14 @@
 			<output criteria="test.dataTypeCriteria"/>
 		</operation>
 
+		<operation name="execute" >
+			<parms>
+				<parm name="expression" criteria="test.expression" isBase="true"/>
+				<parm name="parms" criteria="test.map"/>
+			</parms>
+			<output criteria="test.dataTypeCriteria"/>
+		</operation>
+
 	</operations>
 
 </definition>

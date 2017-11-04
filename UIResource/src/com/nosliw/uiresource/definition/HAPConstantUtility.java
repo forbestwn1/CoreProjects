@@ -183,7 +183,7 @@ public class HAPConstantUtility {
 				}
 				
 				//process expression in scriptExpression
-				sciptExpression.processExpressions(uiDefinitionUnit.getExpressionContext(), HAPExpressionProcessConfigureUtil.setDontDiscovery(null));
+				sciptExpression.processExpressions(uiDefinitionUnit.getExpressionContext(), HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
 				
 				//execute script expression
 				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(sciptExpression, null, scriptConstants);
