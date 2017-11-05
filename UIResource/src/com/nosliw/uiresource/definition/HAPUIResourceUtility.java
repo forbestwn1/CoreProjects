@@ -164,24 +164,24 @@ public class HAPUIResourceUtility {
 				Map<String, String> parms = new LinkedHashMap<String, String>();
 				parms.putAll(tag.getAttributes());
 				String nameDef = contextEle.getName();
-				HAPScriptExpression scriptExpression = new HAPScriptExpression(nameDef);
-				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(scriptExpression, parms, null);
-				HAPServiceData serviceData = runtime.executeTaskSync(task);
-				String elementName = (String)serviceData.getData();
-
-				HAPDataTypeCriteria eleCriteria = contextEle.getCriteria();
-				if(eleCriteria!=null)   expContext.addVariable(elementName, eleCriteria);
-
-				
-				String parentNodeName = contextEle.getMapFrom();
-				Map<String, HAPDataTypeCriteria> parentCriterias = parent.getExpressionContext().getVariables();
-				for(String parentVarName : parentCriterias.keySet()){
-					int index = parentVarName.indexOf(parentNodeName);
-					if(index!=-1){
-						String fullName = elementName + "." + parentVarName.substring(index);
-						expContext.addVariable(fullName, parentCriterias.get(parentVarName));
-					}
-				}
+//				HAPScriptExpression scriptExpression = new HAPScriptExpression(nameDef);
+//				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(scriptExpression, parms, null);
+//				HAPServiceData serviceData = runtime.executeTaskSync(task);
+//				String elementName = (String)serviceData.getData();
+//
+//				HAPDataTypeCriteria eleCriteria = contextEle.getCriteria();
+//				if(eleCriteria!=null)   expContext.addVariable(elementName, eleCriteria);
+//
+//				
+//				String parentNodeName = contextEle.getMapFrom();
+//				Map<String, HAPDataTypeCriteria> parentCriterias = parent.getExpressionContext().getVariables();
+//				for(String parentVarName : parentCriterias.keySet()){
+//					int index = parentVarName.indexOf(parentNodeName);
+//					if(index!=-1){
+//						String fullName = elementName + "." + parentVarName.substring(index);
+//						expContext.addVariable(fullName, parentCriterias.get(parentVarName));
+//					}
+//				}
 			}
 			break;
 		}

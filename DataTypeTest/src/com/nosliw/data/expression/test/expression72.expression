@@ -1,0 +1,50 @@
+{
+	"name": "expression72",
+	"description" : "expression execution",
+	"expressionDefinitions": {
+		"main": {
+			"expression": "!(test.expression)!.execute(expression:&(expression)&,parms:&(parms)&)",
+			"description": "complex data type",
+			"constants": {
+				"expression": {
+					"dataTypeId": "test.parm",
+					"value": {
+						"value": {
+							"dataTypeId": "test.expression",
+							"value": {
+								"expression": "!(test.string)!.subString(?(baseValue)?,from:&(from)&,to:&(to)&)",
+								"description": "DataType.method, all constant",
+								"constants": {
+									"from": {
+										"dataTypeId": "test.integer",
+										"value": "3"
+									},
+									"to": {
+										"dataTypeId": "test.integer",
+										"value": "7"
+									}
+								},
+								"variableCriterias": {
+								}
+							}
+						}
+					}
+				},
+				"parms" : {
+					"dataTypeId": "test.map",
+					"value": {
+						"baseValue" : {
+							"dataTypeId": "test.string",
+							"value": "test.string;1.0.0"
+						}		
+					}
+				}
+			}
+		},
+	},
+	"result" : {
+		"dataTypeId": "test.string;1.0.0",
+ 		"value": "s isfff",
+		"wapperType": "JSON"
+	}
+}

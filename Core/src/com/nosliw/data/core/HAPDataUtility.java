@@ -15,6 +15,13 @@ public class HAPDataUtility {
 		return null;
 	}
 
+	public static HAPDataWrapper buildDataWrapperFromJson(JSONObject jsonObj){
+		HAPDataWrapper wrapper = new HAPDataWrapper();
+		boolean result = wrapper.buildObjectByJson(jsonObj);
+		if(result)   return wrapper;
+		else return null;
+	}
+	
 	public static HAPDataTypeCriteria buildDataTypeCriteriaFromJson(JSONObject jsonObj){
 		HAPDataTypeCriteria out = (HAPDataTypeCriteria)HAPSerializeManager.getInstance().buildObject(HAPDataTypeCriteria.class.getName(), jsonObj, HAPSerializationFormat.JSON_FULL); 
 		return out;

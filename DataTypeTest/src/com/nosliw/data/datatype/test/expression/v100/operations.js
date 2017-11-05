@@ -41,4 +41,33 @@ dataTypeDefition.operations['outputCriteria'] = {
 		},
 };
 
+dataTypeDefition.operations['execute'] = {
+		//defined operation
+		//in operation can access all the required resources by name through context
+		operation : function(parms, context){
+			context.logging.info("Operand Calcualting [executeExpression]  ----------------");
+			
+			var varValues = {};
+			_.each(parms.getParm("parms").value, function(varValue, varName){
+				varValues[varName] = varValue;
+			});
+			
+			var gatewayParms = {
+				"expression" : this.value,
+				"variablesValue" : varValues
+			};
+			var criteriaStr =  context.getResourceDataByName("myGateWay").command("executeExpression", gatewayParms);
+			return {
+				dataTypeId : "test.datatypecriteria;1.0.0",
+				value : criteriaStr,
+			};
+		},
+
+		requires:{
+			"jsGateway" : { 
+				"myGateWay": "discovery",
+			}
+		},
+};
+
 nosliw.addDataTypeDefinition(dataTypeDefition);

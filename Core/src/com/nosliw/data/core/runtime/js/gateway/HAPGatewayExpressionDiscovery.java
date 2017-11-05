@@ -12,28 +12,41 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
+import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
+import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskExecuteExpressionRhino;
 
 public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 
 	@HAPAttribute
 	final public static String COMMAND_GETOUTPUTCRITERIA = "getOutputCriteria";
-	
 	@HAPAttribute
 	final public static String COMMAND_GETOUTPUTCRITERIA_EXPRESSION = "expression";
-	
 	@HAPAttribute
 	final public static String COMMAND_GETOUTPUTCRITERIA_VARIABLESCRITERIA = "variablesCriteria";
+
+	@HAPAttribute
+	final public static String COMMAND_EXECUTEEXPRESSION = "executeExpression";
+	@HAPAttribute
+	final public static String COMMAND_EXECUTEEXPRESSION_EXPRESSION = "expression";
+	@HAPAttribute
+	final public static String COMMAND_EXECUTEEXPRESSION_VARIABLESVALUE = "variablesValue";
+	
 	
 	private HAPExpressionManager m_expressionManager;
 	
-	public HAPGatewayExpressionDiscovery(HAPExpressionManager expressionManager){
+	private HAPRuntime m_runtime;
+	
+	public HAPGatewayExpressionDiscovery(HAPExpressionManager expressionManager, HAPRuntime runtime){
 		this.m_expressionManager = expressionManager;
 	}
 	
@@ -42,6 +55,7 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 		HAPServiceData out = null;
 		switch(command){
 		case COMMAND_GETOUTPUTCRITERIA:
+		{
 			JSONObject expressionDefJSON = parms.getJSONObject(COMMAND_GETOUTPUTCRITERIA_EXPRESSION);
 			HAPExpressionDefinition expressionDefinition = (HAPExpressionDefinition)HAPStringableEntityImporterJSON.parseJsonEntity(expressionDefJSON, "data.expressiondefinition", HAPValueInfoManager.getInstance());
 			
@@ -59,6 +73,28 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 			HAPDataTypeCriteria outCriteria = expression.getOperand().getOperand().getOutputCriteria();
 			out = this.createSuccessWithObject(outCriteria.toStringValue(HAPSerializationFormat.LITERATE));
 			break;
+		}
+		case COMMAND_EXECUTEEXPRESSION:
+		{
+			JSONObject expressionDefJSON = parms.getJSONObject(COMMAND_EXECUTEEXPRESSION_EXPRESSION);
+			HAPExpressionDefinition expressionDefinition = (HAPExpressionDefinition)HAPStringableEntityImporterJSON.parseJsonEntity(expressionDefJSON, "data.expressiondefinition", HAPValueInfoManager.getInstance());
+
+			Map<String, HAPData> expressionParms = new LinkedHashMap<String, HAPData>();
+			Map<String, HAPDataTypeCriteria> varCriterias = new LinkedHashMap<String, HAPDataTypeCriteria>();
+			JSONObject varValuesJson = parms.getJSONObject(COMMAND_EXECUTEEXPRESSION_VARIABLESVALUE);
+			Iterator<String> it = varValuesJson.keys();
+			while(it.hasNext()){
+				String varName = it.next();
+				JSONObject varDataJson = varValuesJson.getJSONObject(varName);
+				HAPDataWrapper data = HAPDataUtility.buildDataWrapperFromJson(varDataJson);
+				expressionParms.put(varName, data);
+				varCriterias.put(varName, new HAPDataTypeCriteriaId(data.getDataTypeId(), null));
+			}
+			HAPExpression expression = this.m_expressionManager.processExpression(null, expressionDefinition, new LinkedHashMap<String, HAPData>(), varCriterias, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
+			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expression, expressionParms);
+			this.m_runtime.executeTaskSync(task);
+			break;
+		}
 		}
 		
 		return out;
