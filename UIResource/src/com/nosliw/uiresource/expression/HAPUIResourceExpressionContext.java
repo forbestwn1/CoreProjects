@@ -36,5 +36,6 @@ public class HAPUIResourceExpressionContext {
 	}
 	public void addExpressionDefinition(HAPExpressionDefinition expressionDefinition){  this.m_expressionDefinitionSuite.addExpressionDefinition(expressionDefinition);  }
 	public void addVariables(Map<String, HAPDataTypeCriteria> variables){  this.m_variables.putAll(variables);  }
+	public void addVariable(String name, HAPDataTypeCriteria criteria){  this.m_variables.put(name, criteria);  }
 	
 }

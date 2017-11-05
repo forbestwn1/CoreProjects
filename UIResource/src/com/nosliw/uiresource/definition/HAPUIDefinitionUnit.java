@@ -204,7 +204,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public Map<String, HAPConstantDef> getConstantDefs(){return this.m_constantDefs;}
 	public void addConstant(String name, Object data){this.m_constantValues.put(name, data);}
 	public Map<String, Object> getConstantValues(){return this.m_constantValues;}
-	
+	public Map<String, String> getAttributes(){  return this.m_attributes;  }
 	
 	public List<HAPScript> getJSBlocks(){return this.m_scripts;}
 	public Collection<HAPUIDefinitionUnitTag> getUITags(){return this.m_uiTags.values();} 
@@ -221,9 +221,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	/*
 	 * process attributes
 	 */
-	public void addAttribute(String name, String value){
-		this.m_attributes.put(name, value);
-	}
+	public void addAttribute(String name, String value){		this.m_attributes.put(name, value);	}
 
 	public void postRead(){
 	}
