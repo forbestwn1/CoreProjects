@@ -27,7 +27,7 @@ public class HAPScriptExpressionScriptSegment {
 	//define the segment parsing infor
 	private Object[][] m_definitions = {
 			{"&(", ")&", HAPScriptExpressionScriptConstant.class, m_constants}, 
-			{"?(", "?(", HAPScriptExpressionScriptVariable.class, m_variableNames}
+			{"?(", ")?", HAPScriptExpressionScriptVariable.class, m_variableNames}
 	};
 	
 

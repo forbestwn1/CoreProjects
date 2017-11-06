@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
@@ -29,13 +28,14 @@ public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTask{
 	
 	private HAPScriptExpression m_scriptExpression;
 	
-	Map<String, HAPData> m_variablesValue;
+	//variable value can be data or other object
+	Map<String, Object> m_variablesValue;
 	
 	Map<String, Object> m_scriptConstants;
 	
 	public HAPRuntimeTaskExecuteScriptExpression(
 			HAPScriptExpression scriptExpression, 
-			Map<String, HAPData> variablesValue, 
+			Map<String, Object> variablesValue, 
 			Map<String, Object> scriptConstants){
 		this.m_scriptExpression = scriptExpression;
 		this.m_variablesValue = variablesValue; 
@@ -47,7 +47,7 @@ public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTask{
 
 	public HAPScriptExpression getScriptExpression(){ return this.m_scriptExpression;  }
 	public Map<String, HAPExpression> getExpressions(){  return this.m_scriptExpression.getExpressions(); }
-	public Map<String, HAPData> getVariablesValue(){  return this.m_variablesValue;  }
+	public Map<String, Object> getVariablesValue(){  return this.m_variablesValue;  }
 	public Map<String, Object> getScriptConstants(){  return this.m_scriptConstants;  }
 	
 	@Override

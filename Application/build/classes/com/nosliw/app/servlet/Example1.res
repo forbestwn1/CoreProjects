@@ -5,7 +5,7 @@
 <!--	<%= ' 6666 ' %>  tttttttttt11  -->  
 	<b>
 	lalalala
-	<%= #|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value + ' 6666 ' %>  tttttttttt222    
+	<%=#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value + ?(business.a.cc)? + ' 6666 ' %>  tttttttttt222    
 
 	</body>
 
@@ -62,7 +62,8 @@
 					aa : {
 						dataTypeId: "test.string;1.0.0",
 						value: "This is my world!"
-					}
+					},
+					cc : "HELLO!!!!"
 				}
 			}
 		}		

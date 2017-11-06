@@ -55,7 +55,7 @@ public class HAPScriptExpressionUtility {
 	
 	public static HAPJSScriptInfo buildRequestScriptForExecuteScriptExpressionTask(HAPRuntimeTaskExecuteScriptExpression task, HAPRuntimeImpRhino runtime){
 		HAPScriptExpression scriptExpression = task.getScriptExpression();
-		Map<String, HAPData> variableValue = task.getVariablesValue();
+		Map<String, Object> variableValue = task.getVariablesValue();
 
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 

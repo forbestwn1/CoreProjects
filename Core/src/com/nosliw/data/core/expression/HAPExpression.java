@@ -39,6 +39,7 @@ public interface HAPExpression {
 	@HAPAttribute
 	public static String REFERENCES = "references";
 	
+	
 	String getId();
 	void setId(String id);
 	
