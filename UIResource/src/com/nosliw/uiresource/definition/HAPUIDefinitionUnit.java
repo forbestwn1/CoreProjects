@@ -86,6 +86,11 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	//all the attribute expressions in customer tag under this domain
 	private Set<HAPEmbededScriptExpressionInAttribute> m_scriptExpressionsInTagAttribute;
 	
+	//store all the attribute for this domain
+	//for customer tag, they are the tag's attribute
+	//for resource, they are the attribute of body
+	private Map<String, String> m_attributes;
+	
 
 	
 	
@@ -93,11 +98,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	private Set<HAPElementEvent> m_elementEvents;
 	//all the events related with customer tag
 	private Set<HAPElementEvent> m_tagEvents;
-	
-	//store all the attribute for this domain
-	//for customer tag, they are the tag's attribute
-	//for resource, they are the attribute of body
-	private Map<String, String> m_attributes;
 	
 	//all java script blocks within this domain
 	private List<HAPScript> m_scripts;

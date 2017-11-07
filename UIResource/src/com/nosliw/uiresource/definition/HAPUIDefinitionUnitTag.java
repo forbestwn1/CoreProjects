@@ -7,12 +7,16 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.uiresource.HAPDataBinding;
+import com.nosliw.uiresource.tag.HAPUITagContext;
 
 public class HAPUIDefinitionUnitTag extends HAPUIDefinitionUnit{
 
 	//name of this customer tag
 	private String m_tagName;
 
+	private HAPUITagContext m_context; 
+	
+	
 	//data bindings related with this customer tag
 	private Map<String, HAPDataBinding> m_dataBindings;
 

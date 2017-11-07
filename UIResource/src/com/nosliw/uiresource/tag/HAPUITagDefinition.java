@@ -11,14 +11,14 @@ public class HAPUITagDefinition {
 	private String m_script;
 
 	//attribute definition
-	private Map<String, HAPTagAttributeDefinition> m_attributes;
+	private Map<String, HAPUITagDefinitionAttribute> m_attributes;
 	
 	//whether interit the context from parent
 	private boolean m_inheritContext;
 	
 	
 	//scriptExpression : criteria
-	Set<HAPUITagContextElment> m_contexts;
+	Set<HAPUITagDefinitionContextElment> m_contexts;
 	
 	public HAPUITagDefinition(String name, String script){
 		this.m_name = name;
@@ -31,7 +31,7 @@ public class HAPUITagDefinition {
 	
 	public boolean isInheritContext(){  return this.m_inheritContext;  }
 	
-	public Set<HAPUITagContextElment> getContextDefinitions(){
+	public Set<HAPUITagDefinitionContextElment> getContextDefinitions(){
 		return this.m_contexts;
 	}
 
