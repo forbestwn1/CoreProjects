@@ -1,6 +1,5 @@
-package com.nosliw.uiresource.definition;
+package com.nosliw.uiresource.context;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -13,9 +12,6 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
  */
 @HAPEntityWithAttribute
 public class HAPContextNodeDefinition implements HAPSerializable{
-	
-	@HAPAttribute
-	public static final String DEFAULT = "default";
 	
 	private HAPDataTypeCriteria m_criteria;
 

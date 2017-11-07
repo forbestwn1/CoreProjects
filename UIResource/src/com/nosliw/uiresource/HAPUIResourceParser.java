@@ -27,10 +27,10 @@ import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
+import com.nosliw.uiresource.context.HAPContextNode;
+import com.nosliw.uiresource.context.HAPContextNodeDefinition;
+import com.nosliw.uiresource.context.HAPUIResourceContextNodeRoot;
 import com.nosliw.uiresource.definition.HAPConstantDef;
-import com.nosliw.uiresource.definition.HAPContextNode;
-import com.nosliw.uiresource.definition.HAPContextNodeDefinition;
-import com.nosliw.uiresource.definition.HAPContextNodeRoot;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
@@ -147,9 +147,9 @@ public class HAPUIResourceParser {
 				while(defNames.hasNext()){
 					String eleName = defNames.next();
 					JSONObject eleDefJson = defsJson.optJSONObject(eleName);
-					HAPContextNodeRoot contextEle = new HAPContextNodeRoot();
+					HAPUIResourceContextNodeRoot contextEle = new HAPUIResourceContextNodeRoot();
 
-					Object d = eleDefJson.opt(HAPContextNodeRoot.DEFAULT);
+					Object d = eleDefJson.opt(HAPUIResourceContextNodeRoot.DEFAULT);
 					if(d!=null)		contextEle.setDefaultValue(d);
 
 					Object defObj = eleDefJson.opt(HAPContextNode.DEFINITION);

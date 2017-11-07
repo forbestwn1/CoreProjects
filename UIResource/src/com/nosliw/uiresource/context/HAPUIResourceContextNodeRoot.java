@@ -1,10 +1,10 @@
-package com.nosliw.uiresource.definition;
+package com.nosliw.uiresource.context;
 
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 
-public class HAPContextNodeRoot extends HAPContextNode{
+public class HAPUIResourceContextNodeRoot extends HAPContextNode{
 
 	@HAPAttribute
 	public static final String DEFAULT = "default";

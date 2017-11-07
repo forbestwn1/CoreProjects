@@ -27,6 +27,9 @@ import com.nosliw.uiresource.HAPEmbededScriptExpression;
 import com.nosliw.uiresource.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.HAPUIResourceIdGenerator;
+import com.nosliw.uiresource.context.HAPContextNode;
+import com.nosliw.uiresource.context.HAPContextNodeDefinition;
+import com.nosliw.uiresource.context.HAPUIResourceContext;
 import com.nosliw.uiresource.expression.HAPRuntimeTaskExecuteScriptExpression;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
@@ -159,30 +162,30 @@ public class HAPUIResourceUtility {
 				//add parent 
 				expContext.addVariables(parent.getExpressionContext().getVariables());
 			}
-			for(HAPUITagDefinitionContextElment contextEle : uiTagDefinition.getContextDefinitions()){
-				//process context name
-				Map<String, String> parms = new LinkedHashMap<String, String>();
-				parms.putAll(tag.getAttributes());
-				String nameDef = contextEle.getNameDefinition();
-				HAPScriptExpression scriptExpression = new HAPScriptExpression(nameDef);
-				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(scriptExpression, parms, null);
-				HAPServiceData serviceData = runtime.executeTaskSync(task);
-				String elementName = (String)serviceData.getData();
-
-				HAPDataTypeCriteria eleCriteria = contextEle.getCriteria();
-				if(eleCriteria!=null)   expContext.addVariable(elementName, eleCriteria);
-
-				
-				String parentNodeName = contextEle.getParentContextPath();
-				Map<String, HAPDataTypeCriteria> parentCriterias = parent.getExpressionContext().getVariables();
-				for(String parentVarName : parentCriterias.keySet()){
-					int index = parentVarName.indexOf(parentNodeName);
-					if(index!=-1){
-						String fullName = elementName + "." + parentVarName.substring(index);
-						expContext.addVariable(fullName, parentCriterias.get(parentVarName));
-					}
-				}
-			}
+//			for(HAPUITagDefinitionContextElment contextEle : uiTagDefinition.getContextDefinitions()){
+//				//process context name
+//				Map<String, String> parms = new LinkedHashMap<String, String>();
+//				parms.putAll(tag.getAttributes());
+//				String nameDef = contextEle.getNameDefinition();
+//				HAPScriptExpression scriptExpression = new HAPScriptExpression(nameDef);
+//				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(scriptExpression, parms, null);
+//				HAPServiceData serviceData = runtime.executeTaskSync(task);
+//				String elementName = (String)serviceData.getData();
+//
+//				HAPDataTypeCriteria eleCriteria = contextEle.getCriteria();
+//				if(eleCriteria!=null)   expContext.addVariable(elementName, eleCriteria);
+//
+//				
+//				String parentNodeName = contextEle.getParentContextPath();
+//				Map<String, HAPDataTypeCriteria> parentCriterias = parent.getExpressionContext().getVariables();
+//				for(String parentVarName : parentCriterias.keySet()){
+//					int index = parentVarName.indexOf(parentNodeName);
+//					if(index!=-1){
+//						String fullName = elementName + "." + parentVarName.substring(index);
+//						expContext.addVariable(fullName, parentCriterias.get(parentVarName));
+//					}
+//				}
+//			}
 			break;
 		}
 
@@ -247,7 +250,7 @@ public class HAPUIResourceUtility {
 
 	}
 	
-	public static Map<String, HAPDataTypeCriteria> discoverDataVariablesInContext(HAPContext context){
+	public static Map<String, HAPDataTypeCriteria> discoverDataVariablesInContext(HAPUIResourceContext context){
 		Map<String, HAPDataTypeCriteria> out = new LinkedHashMap<String, HAPDataTypeCriteria>();
 		for(String rootName : context.getElements().keySet()){
 			processCriteria(rootName, context.getElements().get(rootName), out);

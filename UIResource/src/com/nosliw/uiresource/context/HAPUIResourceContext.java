@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.definition;
+package com.nosliw.uiresource.context;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,25 +9,25 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPContext extends HAPSerializableImp{
+public class HAPUIResourceContext extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ELEMENTS = "elements";
 	
-	private Map<String, HAPContextNodeRoot> m_elements;
+	private Map<String, HAPUIResourceContextNodeRoot> m_elements;
 	
-	public HAPContext(){
-		this.m_elements = new LinkedHashMap<String, HAPContextNodeRoot>();
+	public HAPUIResourceContext(){
+		this.m_elements = new LinkedHashMap<String, HAPUIResourceContextNodeRoot>();
 	}
 	
-	public void addElement(String name, HAPContextNodeRoot rootEle){
+	public void addElement(String name, HAPUIResourceContextNodeRoot rootEle){
 		this.m_elements.put(name, rootEle);
 	}
 
-	public Map<String, HAPContextNodeRoot> getElements(){  return this.m_elements;  }
+	public Map<String, HAPUIResourceContextNodeRoot> getElements(){  return this.m_elements;  }
 	
-	public void hardMergeWith(HAPContext context){
-		Map<String, HAPContextNodeRoot> eles = context.getElements();
+	public void hardMergeWith(HAPUIResourceContext context){
+		Map<String, HAPUIResourceContextNodeRoot> eles = context.getElements();
 		for(String rootName : eles.keySet()){
 			this.m_elements.put(rootName, eles.get(rootName));
 		}

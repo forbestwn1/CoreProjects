@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.tag;
+package com.nosliw.uiresource.context;
 
 import java.util.Map;
 
@@ -8,6 +8,6 @@ import java.util.Map;
  */
 public class HAPUITagContext {
 
-	private Map<String, HAPUITagContextElement> m_elements;
+	private Map<String, HAPUITagContextNodeRoot> m_elements;
 	
 }

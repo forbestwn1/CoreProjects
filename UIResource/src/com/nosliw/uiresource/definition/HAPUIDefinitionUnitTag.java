@@ -7,7 +7,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.uiresource.HAPDataBinding;
-import com.nosliw.uiresource.tag.HAPUITagContext;
+import com.nosliw.uiresource.context.HAPUITagContext;
 
 public class HAPUIDefinitionUnitTag extends HAPUIDefinitionUnit{
 

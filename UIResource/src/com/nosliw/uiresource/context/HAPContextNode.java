@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.definition;
+package com.nosliw.uiresource.context;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
