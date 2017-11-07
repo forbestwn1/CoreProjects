@@ -7,9 +7,6 @@
 			"description": "complex data type",
 			"constants": {
 				"expression": {
-					"dataTypeId": "test.parm",
-					"value": {
-						"value": {
 							"dataTypeId": "test.expression",
 							"value": {
 								"expression": "!(test.string)!.subString(?(baseValue)?,from:&(from)&,to:&(to)&)",
@@ -27,15 +24,13 @@
 								"variableCriterias": {
 								}
 							}
-						}
-					}
 				},
 				"parms" : {
 					"dataTypeId": "test.map",
 					"value": {
 						"baseValue" : {
 							"dataTypeId": "test.string",
-							"value": "test.string;1.0.0"
+							"value": "Thisismyworldabcdef"
 						}		
 					}
 				}
@@ -44,7 +39,7 @@
 	},
 	"result" : {
 		"dataTypeId": "test.string;1.0.0",
- 		"value": "s isfff",
+ 		"value": "sismfff",
 		"wapperType": "JSON"
 	}
 }

@@ -48,6 +48,7 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 	
 	public HAPGatewayExpressionDiscovery(HAPExpressionManager expressionManager, HAPRuntime runtime){
 		this.m_expressionManager = expressionManager;
+		this.m_runtime = runtime;
 	}
 	
 	@Override
@@ -92,7 +93,10 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 			}
 			HAPExpression expression = this.m_expressionManager.processExpression(null, expressionDefinition, new LinkedHashMap<String, HAPData>(), varCriterias, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
 			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expression, expressionParms);
-			this.m_runtime.executeTaskSync(task);
+			HAPServiceData serviceData = this.m_runtime.executeTaskSync(task);
+			if(serviceData.isSuccess()){
+				out = this.createSuccessWithObject(serviceData.getData());
+			}
 			break;
 		}
 		}

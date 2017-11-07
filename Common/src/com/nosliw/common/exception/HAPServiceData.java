@@ -12,6 +12,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 
@@ -102,24 +103,27 @@ public class HAPServiceData extends HAPSerializableImp{
 		Object data = this.getData();
 		String dataString = null;
 		if(data!=null){
-			if(data instanceof HAPSerializable){
-				dataString = ((HAPSerializable)data).toStringValue(format);
-			}
-			else if(data instanceof String){
-				dataString = (String)data;
-			}
-			else if(data instanceof List){
-				dataString = HAPJsonUtility.buildJson((List)data, format);
-			}
-			else if(data instanceof Set){
-				dataString = HAPJsonUtility.buildJson((Set)data, format);
-			}
-			else if(data instanceof Map){
-				dataString = HAPJsonUtility.buildJson((Map)data, format);
-			}
-			else if(data.getClass().isArray()){
-				dataString = HAPJsonUtility.buildJson((Object[])data, format);
-			}
+			
+			dataString = HAPSerializeManager.getInstance().toStringValue(data, format);
+			
+//			if(data instanceof HAPSerializable){
+//				dataString = ((HAPSerializable)data).toStringValue(format);
+//			}
+//			else if(data instanceof String){
+//				dataString = (String)data;
+//			}
+//			else if(data instanceof List){
+//				dataString = HAPJsonUtility.buildJson((List)data, format);
+//			}
+//			else if(data instanceof Set){
+//				dataString = HAPJsonUtility.buildJson((Set)data, format);
+//			}
+//			else if(data instanceof Map){
+//				dataString = HAPJsonUtility.buildJson((Map)data, format);
+//			}
+//			else if(data.getClass().isArray()){
+//				dataString = HAPJsonUtility.buildJson((Object[])data, format);
+//			}
 		}
 		jsonMap.put(SERVICEDATA_DATA, dataString);
 		

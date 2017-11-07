@@ -56,11 +56,8 @@ dataTypeDefition.operations['execute'] = {
 				"expression" : this.value,
 				"variablesValue" : varValues
 			};
-			var criteriaStr =  context.getResourceDataByName("myGateWay").command("executeExpression", gatewayParms);
-			return {
-				dataTypeId : "test.datatypecriteria;1.0.0",
-				value : criteriaStr,
-			};
+			var resultData =  context.getResourceDataByName("myGateWay").command("executeExpression", gatewayParms);
+			return resultData;
 		},
 
 		requires:{

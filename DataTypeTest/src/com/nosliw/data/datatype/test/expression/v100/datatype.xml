@@ -17,7 +17,7 @@
 				<parm name="expression" criteria="test.expression" isBase="true"/>
 				<parm name="parms" criteria="test.map"/>
 			</parms>
-			<output criteria="test.dataTypeCriteria"/>
+			<output criteria="*"/>
 		</operation>
 
 	</operations>
