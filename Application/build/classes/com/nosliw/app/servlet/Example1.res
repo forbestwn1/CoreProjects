@@ -7,6 +7,10 @@
 	lalalala
 	<%=#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value + ?(business.a.cc)? + ' 6666 ' %>  tttttttttt222    
 
+		<br>Test Attribute Expression:<br>
+<!--		<span  style="<%=color:#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value=='s isfff'?'red':'blue'%>">Phone Number : </span>  -->
+
+
 	</body>
 
 	<script>

@@ -1,11 +1,16 @@
 package com.nosliw.uiresource.context;
 
-public class HAPUITagContextNodeRootRelative extends HAPUITagContextNodeRoot{
+import java.util.Map;
 
-	private String m_name;
-	
+import com.nosliw.data.core.expression.HAPMatchers;
+
+public class HAPUITagContextNodeRootRelative implements HAPUITagContextNodeRoot{
+
+	//relative path from parent context
 	private String m_parentPath;
-	
-//	private Map<String, Matcher> m_matchers;
+
+	//variable full name --- matchers
+	//used to convert data from parent to data within uiTag
+	private Map<String, HAPMatchers> m_matchers;
 	
 }

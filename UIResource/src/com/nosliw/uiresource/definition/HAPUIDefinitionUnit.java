@@ -17,8 +17,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.uiresource.HAPElementEvent;
-import com.nosliw.uiresource.HAPEmbededScriptExpressionInAttribute;
-import com.nosliw.uiresource.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.HAPScript;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
 

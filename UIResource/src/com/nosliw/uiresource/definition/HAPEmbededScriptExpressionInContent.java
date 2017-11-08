@@ -1,4 +1,4 @@
-package com.nosliw.uiresource;
+package com.nosliw.uiresource.definition;
 
 import java.util.Map;
 
@@ -8,8 +8,11 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
 
+/*
+ * class for script expression part in html content
+ */
 @HAPEntityWithAttribute
-public class HAPEmbededScriptExpression extends HAPSerializableImp{
+public class HAPEmbededScriptExpressionInContent extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String SCRIPTEXPRESSION = "scriptExpression";
@@ -21,7 +24,7 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 	
 	private String m_uiId;
 	
-	public HAPEmbededScriptExpression(String uiId, HAPScriptExpression scriptExpression){
+	public HAPEmbededScriptExpressionInContent(String uiId, HAPScriptExpression scriptExpression){
 		this.m_uiId = uiId;
 		this.m_scriptExpression = scriptExpression;
 	}
@@ -35,5 +38,6 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 		jsonMap.put(SCRIPTEXPRESSION, this.m_scriptExpression.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(UIID, this.m_uiId);
 	}
+	
 	
 }

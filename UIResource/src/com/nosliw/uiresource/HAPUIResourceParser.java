@@ -31,6 +31,8 @@ import com.nosliw.uiresource.context.HAPContextNode;
 import com.nosliw.uiresource.context.HAPContextNodeDefinition;
 import com.nosliw.uiresource.context.HAPUIResourceContextNodeRoot;
 import com.nosliw.uiresource.definition.HAPConstantDef;
+import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInAttribute;
+import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
@@ -451,16 +453,17 @@ public class HAPUIResourceParser {
 			List<Object> segments = HAPScriptExpressionUtility.discoverUIExpressionInText(eleAttr.getValue(), this.m_expressionManager);
 			HAPScriptExpression scriptExpression = null;
 			//try to find first script expression in attribute value
+			boolean expresionExists = false;
 			for(Object segment : segments){
 				if(segment instanceof HAPScriptExpression){
-					scriptExpression = (HAPScriptExpression)segment;
+					expresionExists = true;
 					break;
 				}
 			}
 			
-			if(scriptExpression!=null){
+			if(expresionExists){
 				//handle expression attribute
-				HAPEmbededScriptExpressionInAttribute eAttr = new HAPEmbededScriptExpressionInAttribute(eleAttrKey, uiId, scriptExpression);
+				HAPEmbededScriptExpressionInAttribute eAttr = new HAPEmbededScriptExpressionInAttribute(eleAttrKey, uiId, segments);
 				if(isCustomerTag)  resource.addScriptExpressionInTagAttribute(eAttr);
 				else  resource.addScriptExpressionInAttribute(eAttr);
 				ele.attr(eleAttrKey, "");

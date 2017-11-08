@@ -23,9 +23,6 @@ import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.uiresource.HAPEmbededScriptExpression;
-import com.nosliw.uiresource.HAPEmbededScriptExpressionInAttribute;
-import com.nosliw.uiresource.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.HAPUIResourceIdGenerator;
 import com.nosliw.uiresource.context.HAPContextNode;
 import com.nosliw.uiresource.context.HAPContextNodeDefinition;
@@ -33,7 +30,6 @@ import com.nosliw.uiresource.context.HAPUIResourceContext;
 import com.nosliw.uiresource.expression.HAPRuntimeTaskExecuteScriptExpression;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
-import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElment;
 import com.nosliw.uiresource.tag.HAPUITagDefinition;
 
 public class HAPUIResourceUtility {
@@ -56,8 +52,8 @@ public class HAPUIResourceUtility {
 	private static Set<HAPExpression> getExpressions(HAPUIDefinitionUnit uiDefinitionUnit){
 		Set<HAPExpression> all = new HashSet<HAPExpression>();
 		for(HAPEmbededScriptExpressionInContent embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInContent())		all.addAll(embededScriptExpression.getScriptExpression().getExpressions().values());
-		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInAttributes())	all.addAll(embededScriptExpression.getScriptExpression().getExpressions().values());
-		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInTagAttributes())		all.addAll(embededScriptExpression.getScriptExpression().getExpressions().values());
+//		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInAttributes())	all.addAll(embededScriptExpression.getScriptExpression().getExpressions().values());
+//		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInTagAttributes())		all.addAll(embededScriptExpression.getScriptExpression().getExpressions().values());
 		return all;
 	}
 	
@@ -124,24 +120,24 @@ public class HAPUIResourceUtility {
 	}
 	
 	private static void processConstantExpressionInAttributeTag(HAPUIDefinitionUnit uiDefinitionUnit){
-		Set<HAPEmbededScriptExpressionInAttribute> removed = new HashSet<HAPEmbededScriptExpressionInAttribute>();
-		Set<HAPEmbededScriptExpressionInAttribute> all = uiDefinitionUnit.getScriptExpressionsInTagAttributes();
-		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : all){
-			if(embededScriptExpression.getScriptExpression().isConstant()){
-				Object value = embededScriptExpression.getScriptExpression().getValue();
-				HAPUIDefinitionUnitTag tag = uiDefinitionUnit.getUITagesByName().get(embededScriptExpression.getUIId());
-				tag.addAttribute(embededScriptExpression.getAttribute(), value.toString());
-				removed.add(embededScriptExpression);
-			}
-		}
-		
-		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : removed){
-			all.remove(embededScriptExpression);
-		}
-		
-		for(HAPUIDefinitionUnit childTag : uiDefinitionUnit.getUITags()){
-			processConstantExpressionInAttributeTag(uiDefinitionUnit);
-		}
+//		Set<HAPEmbededScriptExpressionInAttribute> removed = new HashSet<HAPEmbededScriptExpressionInAttribute>();
+//		Set<HAPEmbededScriptExpressionInAttribute> all = uiDefinitionUnit.getScriptExpressionsInTagAttributes();
+//		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : all){
+//			if(embededScriptExpression.getScriptExpression().isConstant()){
+//				Object value = embededScriptExpression.getScriptExpression().getValue();
+//				HAPUIDefinitionUnitTag tag = uiDefinitionUnit.getUITagesByName().get(embededScriptExpression.getUIId());
+//				tag.addAttribute(embededScriptExpression.getAttribute(), value.toString());
+//				removed.add(embededScriptExpression);
+//			}
+//		}
+//		
+//		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : removed){
+//			all.remove(embededScriptExpression);
+//		}
+//		
+//		for(HAPUIDefinitionUnit childTag : uiDefinitionUnit.getUITags()){
+//			processConstantExpressionInAttributeTag(uiDefinitionUnit);
+//		}
 	}
 	
 	private static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition){
@@ -223,31 +219,39 @@ public class HAPUIResourceUtility {
 	}
 	
 	private static void processScriptExpression(HAPUIDefinitionUnit uiDefinitionUnit, HAPRuntime runtime){
-		for(HAPEmbededScriptExpression embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInContent()) processScriptExpression(embededScriptExpression, uiDefinitionUnit, runtime);
-		for(HAPEmbededScriptExpression embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInAttributes()) processScriptExpression(embededScriptExpression, uiDefinitionUnit, runtime);
-		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInTagAttributes()){
-			processScriptExpression(embededScriptExpression, uiDefinitionUnit, runtime);
-		}
+		List<HAPScriptExpression> scriptExpressions = new ArrayList<HAPScriptExpression>();
 		
-		for(HAPUIDefinitionUnit child : uiDefinitionUnit.getUITags()){
-			processScriptExpression(child, runtime);
-		}
+		for(HAPEmbededScriptExpressionInContent scriptExpressionInConent : uiDefinitionUnit.getScriptExpressionsInContent())  scriptExpressions.add(scriptExpressionInConent.getScriptExpression());
+			
+			
+		processScriptExpression(scriptExpressions, uiDefinitionUnit, runtime);
+
+		
+		
+//		for(HAPEmbededScriptExpression embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInAttributes()) processScriptExpression(embededScriptExpression, uiDefinitionUnit, runtime);
+//		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInTagAttributes()){
+//			processScriptExpression(embededScriptExpression, uiDefinitionUnit, runtime);
+//		}
+//		
+//		for(HAPUIDefinitionUnit child : uiDefinitionUnit.getUITags()){
+//			processScriptExpression(child, runtime);
+//		}
 	}
-	
-	private static void processScriptExpression(HAPEmbededScriptExpression embededScriptExpression, HAPUIDefinitionUnit uiDefinitionUnit, HAPRuntime runtime){
+
+	private static void processScriptExpression(List<HAPScriptExpression> scriptExpressions, HAPUIDefinitionUnit uiDefinitionUnit, HAPRuntime runtime){
 		HAPUIResourceExpressionContext expContext = uiDefinitionUnit.getExpressionContext();
-		HAPScriptExpression scriptExpression = embededScriptExpression.getScriptExpression();
-		scriptExpression.processExpressions(expContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
-		scriptExpression.discoverVarialbes();
+		for(HAPScriptExpression scriptExpression : scriptExpressions){
+			scriptExpression.processExpressions(expContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
+			scriptExpression.discoverVarialbes();
 
-		if(scriptExpression.getVariableNames().isEmpty()){
-			//if script expression has no variable in it, then we can calculate its value
-			//execute script expression
-			HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(scriptExpression, null, uiDefinitionUnit.getConstantValues());
-			HAPServiceData serviceData = runtime.executeTaskSync(task);
-			scriptExpression.setValue(serviceData.getData());
+			if(scriptExpression.getVariableNames().isEmpty()){
+				//if script expression has no variable in it, then we can calculate its value
+				//execute script expression
+				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(scriptExpression, null, uiDefinitionUnit.getConstantValues());
+				HAPServiceData serviceData = runtime.executeTaskSync(task);
+				scriptExpression.setValue(serviceData.getData());
+			}
 		}
-
 	}
 	
 	public static Map<String, HAPDataTypeCriteria> discoverDataVariablesInContext(HAPUIResourceContext context){

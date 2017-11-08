@@ -1,5 +1,5 @@
 package com.nosliw.uiresource.context;
 
-public class HAPUITagContextNodeRoot {
+public interface HAPUITagContextNodeRoot {
 
 }

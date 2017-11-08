@@ -101,12 +101,6 @@ public class HAPDataAccessDataType extends HAPDataAccess{
 	}
 
 	public HAPRelationshipImp getRelationship(HAPDataTypeId sourceDataTypeId, HAPDataTypeId targetDataTypeId){
-		
-		if(sourceDataTypeId==null || targetDataTypeId==null){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		return (HAPRelationshipImp)this.queryEntityFromDB(HAPRelationshipImp._VALUEINFO_NAME, "sourceDataType_fullName=? AND targetDataType_fullName=?", new Object[]{sourceDataTypeId.getFullName(), targetDataTypeId.getFullName()}, this.getConnection());
 	}
 	

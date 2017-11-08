@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_dataUtility;
 	var node_uiResourceUtility;
 	var node_createEmbededScriptExpressionInContent;
+	var node_createEmbededScriptExpressionInAttribute;
 	var node_getLifecycleInterface;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -214,6 +215,10 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 			loc_expressionContents.push(node_createEmbededScriptExpressionInContent(expressionContent, loc_out, requestInfo));
 		});
 
+		//init normal expression attribute
+		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPTEXPRESSIONINATTRIBUTES], function(expressionAttr, key, list){
+			loc_expressionContents.push(node_createEmbededScriptExpressionInAttribute(expressionAttr, loc_out, requestInfo));
+		});
 		
 		
 /*		
@@ -228,10 +233,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 			loc_attributes[key] = value;			return list;
 		});
 		
-		//init normal expression attribute
-		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_EXPRESSIONATTRIBUTES], function(expressionAttr, key, list){
-			loc_expressionContents.push(node_createUIResourceExpressionContent(expressionAttr, "attribute", loc_out, requestInfo));
-		});
 
 		//init customer tags
 		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_UITAGS], function(uiTag, tagUiId, list){
@@ -438,6 +439,7 @@ nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", funct
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.utility", function(){node_uiResourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.createEmbededScriptExpressionInContent", function(){node_createEmbededScriptExpressionInContent = this.getData();});
+nosliw.registerSetNodeDataEvent("uiresource.createEmbededScriptExpressionInAttribute", function(){node_createEmbededScriptExpressionInAttribute = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 
 //Register Node by Name
