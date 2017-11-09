@@ -35,6 +35,9 @@ public class HAPScriptExpression extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String DEFINITION = "definition";
+
+	@HAPAttribute
+	public static final String ID = "id";
 	
 	@HAPAttribute
 	public static final String SCRIPTFUNCTION = "scriptFunction";
@@ -44,6 +47,9 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	
 	@HAPAttribute
 	public static final String VARIABLENAMES = "variableNames";
+	
+	//id of script expression
+	private String m_id;
 	
 	//definition literate
 	private String m_definition;
@@ -71,7 +77,8 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	private HAPExpressionManager m_expressionManager;
 	
 	
-	public HAPScriptExpression(String content, HAPExpressionManager expressionMan){
+	public HAPScriptExpression(String id, String content, HAPExpressionManager expressionMan){
+		this.m_id = id;
 		this.m_variableNames = new HashSet<String>();
 		this.m_elements = new ArrayList<Object>();
 		this.m_expressionManager = expressionMan;
@@ -80,6 +87,8 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		this.m_scriptFunction = HAPScriptExpressionUtility.buildScriptExpressionJSFunction(this);
 		this.m_isConstant = false;
 	}
+
+	public String getId(){   return this.m_id;  }
 	
 	public List<Object> getElements(){  return this.m_elements;   }
 	
@@ -149,7 +158,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 				String expressionStr = content.substring(expStart, expEnd);
 				content = content.substring(expEnd + EXPRESSION_TOKEN_CLOSE.length());
 				//build expression definition
-				HAPExpressionDefinition expressionDefinition = this.m_expressionManager.newExpressionDefinition(expressionStr, i+"", null, null); 
+				HAPExpressionDefinition expressionDefinition = this.m_expressionManager.newExpressionDefinition(expressionStr, this.m_id+"_"+i+"", null, null); 
 				this.m_elements.add(expressionDefinition);
 			}
 			i++;
@@ -168,6 +177,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(ID, this.m_id);
 		jsonMap.put(SCRIPTFUNCTION, m_scriptFunction);
 		typeJsonMap.put(SCRIPTFUNCTION, HAPJsonTypeAsItIs.class);
 		jsonMap.put(DEFINITION, this.m_definition);

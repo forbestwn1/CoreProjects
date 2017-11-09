@@ -51,8 +51,13 @@ public class HAPUIResourceUtility {
 	
 	private static Set<HAPExpression> getExpressions(HAPUIDefinitionUnit uiDefinitionUnit){
 		Set<HAPExpression> all = new HashSet<HAPExpression>();
-		for(HAPEmbededScriptExpressionInContent embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInContent())		all.addAll(embededScriptExpression.getScriptExpression().getExpressions().values());
-//		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInAttributes())	all.addAll(embededScriptExpression.getScriptExpression().getExpressions().values());
+		for(HAPEmbededScriptExpressionInContent scriptExpressionInContent : uiDefinitionUnit.getScriptExpressionsInContent())		all.addAll(scriptExpressionInContent.getScriptExpression().getExpressions().values());
+		for(HAPEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInAttributes())
+		{
+			for(HAPScriptExpression scriptExpression : scriptExpressionInAttribute.getScriptExpressions()){
+				all.addAll(scriptExpression.getExpressions().values());
+			}
+		}
 //		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInTagAttributes())		all.addAll(embededScriptExpression.getScriptExpression().getExpressions().values());
 		return all;
 	}
@@ -222,13 +227,13 @@ public class HAPUIResourceUtility {
 		List<HAPScriptExpression> scriptExpressions = new ArrayList<HAPScriptExpression>();
 		
 		for(HAPEmbededScriptExpressionInContent scriptExpressionInConent : uiDefinitionUnit.getScriptExpressionsInContent())  scriptExpressions.add(scriptExpressionInConent.getScriptExpression());
+		for(HAPEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInAttributes())  scriptExpressions.addAll(scriptExpressionInAttribute.getScriptExpressions()); 
 			
 			
 		processScriptExpression(scriptExpressions, uiDefinitionUnit, runtime);
 
 		
 		
-//		for(HAPEmbededScriptExpression embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInAttributes()) processScriptExpression(embededScriptExpression, uiDefinitionUnit, runtime);
 //		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInTagAttributes()){
 //			processScriptExpression(embededScriptExpression, uiDefinitionUnit, runtime);
 //		}

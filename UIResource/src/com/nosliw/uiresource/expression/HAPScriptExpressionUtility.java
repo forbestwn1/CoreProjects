@@ -18,6 +18,7 @@ import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
+import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInAttribute;
 
 public class HAPScriptExpressionUtility {
 
@@ -35,17 +36,19 @@ public class HAPScriptExpressionUtility {
 			String text, 
 			HAPExpressionManager expressionMan){
 		List<Object> out = new ArrayList<Object>();
+		int i = 0;
 		int start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
 		while(start != -1){
 			if(start>0)   out.add(text.substring(0, start));
 			int expEnd = text.indexOf(UIEXPRESSION_TOKEN_CLOSE, start);
 			int end = expEnd + UIEXPRESSION_TOKEN_CLOSE.length();
 			String expression = text.substring(start+UIEXPRESSION_TOKEN_OPEN.length(), expEnd);
-			HAPScriptExpression uiExpression = new HAPScriptExpression(expression, expressionMan);
+			HAPScriptExpression uiExpression = new HAPScriptExpression(i+"", expression, expressionMan);
 			out.add(uiExpression);
 			//keep searching the rest
 			text=text.substring(end);
 			start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
+			i++;
 		}
 		if(!HAPBasicUtility.isStringEmpty(text)){
 			out.add(text);
@@ -123,5 +126,4 @@ public class HAPScriptExpressionUtility {
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		return script;
 	}
-	
 }
