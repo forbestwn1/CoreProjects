@@ -28,11 +28,15 @@ var packageObj = library;
 		
 		var loc_scriptFunction;
 		
+		//store result from last time calculation
+		var loc_result;
+		
 		var loc_dataEventObject = node_createEventObject();
 		
 		var loc_contextVarsGroupHandler = function(requestInfo){
 			loc_out.executeExecuteScriptExpressionRequest({
 				success : function(requestInfo, data){
+					loc_result = data;
 					loc_dataEventObject.triggerEvent(node_CONSTANT.REQUESTRESULT_EVENT_SUCCESS, data);
 				},
 				error : function(requestInfo, serviceData){
@@ -64,8 +68,6 @@ var packageObj = library;
 		};
 
 		var loc_out = {
-			ovr_getResourceLifecycleObject : function(){	return loc_resourceLifecycleObj;	},
-			
 			getExecuteScriptExpressionRequest : function(handlers, requester_parent){
 				//parepare variable parms
 				var variables = loc_contextVarGroup.getVariables();
@@ -91,7 +93,11 @@ var packageObj = library;
 			
 			refresh : function(requestInfo){
 				loc_contextVarGroup.triggerEvent(requestInfo);
-			}
+			},
+			
+			getResult : function(){
+				return loc_result;
+			},
 		};
 
 		//append resource and object life cycle method to out obj

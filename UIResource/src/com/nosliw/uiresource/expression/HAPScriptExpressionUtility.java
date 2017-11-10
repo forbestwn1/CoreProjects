@@ -18,7 +18,6 @@ import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
-import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInAttribute;
 
 public class HAPScriptExpressionUtility {
 
