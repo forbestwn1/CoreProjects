@@ -4,6 +4,12 @@ import java.util.Map;
 
 import com.nosliw.data.core.expression.HAPMatchers;
 
+/**
+ * Context element that based on context element on parent
+ * When tag has its own variable definition which is differnt from defintion from parent, 
+ * we should treat through two variables as different variables 
+ * And matcher is needed to do convert between these two variables  
+ */
 public class HAPUITagContextNodeRootRelative implements HAPUITagContextNodeRoot{
 
 	//relative path from parent context

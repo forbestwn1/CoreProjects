@@ -41,6 +41,40 @@ dataTypeDefition.operations['outputCriteria'] = {
 		},
 };
 
+dataTypeDefition.operations['outputCriteriaFromParmData'] = {
+		//defined operation
+		//in operation can access all the required resources by name through context
+		operation : function(parms, context){
+			context.logging.info("Operand Calcualting [outputCriteria]  ----------------");
+			
+			var varCriterias = {};
+			_.each(parms.getParm("parms").value, function(parm, varName){
+				var parmCriteria = context.operation("test.parm;1.0.0", "getCriteria", [{name:"base", value:parm}]).value;
+				varCriterias[varName] = parmCriteria.value;
+			});
+			
+			var gatewayParms = {
+				"expression" : this.value,
+				"variablesCriteria" : varCriterias
+			};
+			var criteriaStr =  context.getResourceDataByName("myGateWay").command("getOutputCriteria", gatewayParms);
+			return {
+				dataTypeId : "test.datatypecriteria;1.0.0",
+				value : criteriaStr,
+			};
+		},
+
+		requires:{
+			"operation" : { 
+				op1: "test.parm;1.0.0;getCriteria",
+			},
+			"jsGateway" : { 
+				"myGateWay": "discovery",
+			}
+		},
+};
+
+
 dataTypeDefition.operations['execute'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context

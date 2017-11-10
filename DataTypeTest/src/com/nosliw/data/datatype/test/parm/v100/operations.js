@@ -23,4 +23,15 @@ dataTypeDefition.operations['getValue'] = {
 		},
 };
 
+dataTypeDefition.operations['getCriteria'] = {
+		//defined operation
+		//in operation can access all the required resources by name through context
+		operation : function(parms, context){
+			return this.value.outputCriteria;
+		},
+
+		requires:{
+		},
+};
+
 nosliw.addDataTypeDefinition(dataTypeDefition);

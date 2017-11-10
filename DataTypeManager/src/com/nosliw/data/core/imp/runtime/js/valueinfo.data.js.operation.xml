@@ -6,7 +6,7 @@
 
 	<property name="id" dataType="string" description="">
 		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
+			<dbColumnInfo definition="VARCHAR(200) NOT NULL"/>
 		</dbColumnInfos>
 	</property>
 
@@ -18,13 +18,13 @@
 
 	<property name="operationId" dataType="string" description="">
 		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
+			<dbColumnInfo definition="VARCHAR(200) NOT NULL"/>
 		</dbColumnInfos>
 	</property>
 
 	<property name="operationName" dataType="string" description="">
 		<dbColumnInfos>
-			<dbColumnInfo definition="VARCHAR(20) NOT NULL"/>
+			<dbColumnInfo definition="VARCHAR(200) NOT NULL"/>
 		</dbColumnInfos>
 	</property>
 
