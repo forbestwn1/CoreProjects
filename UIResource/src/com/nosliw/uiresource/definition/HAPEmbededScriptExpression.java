@@ -71,14 +71,17 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 		String scriptExpressionDataParmName = "scriptExpressionData"; 
 		StringBuffer funScript = new StringBuffer();
 		Map<String, HAPExpression> expressions = new LinkedHashMap<String, HAPExpression>();
+		int i = 0;
 		for(Object ele : this.m_elements){
+			if(i>0)  funScript.append("+");
 			if(ele instanceof String){
-				funScript.append(ele);
+				funScript.append("\""+ele+"\"");
 			}
 			else if(ele instanceof HAPScriptExpression){
 				HAPScriptExpression scriptExpression = (HAPScriptExpression)ele;
 				funScript.append(scriptExpressionDataParmName+"[\""+scriptExpression.getId()+"\"]");
 			}
+			i++;
 		}
 		
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPEmbededScriptExpressionInAttribute.class, "EmbededScriptExpressionFunction.temp");

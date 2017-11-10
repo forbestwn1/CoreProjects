@@ -2,7 +2,6 @@ package com.nosliw.uiresource.definition;
 
 import java.util.Map;
 
-import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
 
 /*
