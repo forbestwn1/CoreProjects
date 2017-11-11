@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.uiresource.context.HAPUIResourceContext;
+import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.definition.HAPUIResourceUtility;
 
@@ -43,7 +43,7 @@ public class HAPUIResourceManager {
 	 * @param context  new context to apply
 	 * @return
 	 */
-	public HAPUIDefinitionUnitResource addUIResourceDefinition(String resourceId, String base, HAPUIResourceContext context){
+	public HAPUIDefinitionUnitResource addUIResourceDefinition(String resourceId, String base, HAPContext context){
 		String baseContent = this.getUIResourceDefinitionByName(base).getSource();
 		//build resource using base resource
 		HAPUIDefinitionUnitResource resource = this.getUIResourceParser().parseContent(resourceId, baseContent);

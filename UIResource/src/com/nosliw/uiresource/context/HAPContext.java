@@ -9,25 +9,25 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPUIResourceContext extends HAPSerializableImp{
+public class HAPContext extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ELEMENTS = "elements";
 	
-	private Map<String, HAPUIResourceContextNodeRoot> m_elements;
+	private Map<String, HAPContextNodeRoot> m_elements;
 	
-	public HAPUIResourceContext(){
-		this.m_elements = new LinkedHashMap<String, HAPUIResourceContextNodeRoot>();
+	public HAPContext(){
+		this.m_elements = new LinkedHashMap<String, HAPContextNodeRoot>();
 	}
 	
-	public void addElement(String name, HAPUIResourceContextNodeRoot rootEle){
+	public void addElement(String name, HAPContextNodeRoot rootEle){
 		this.m_elements.put(name, rootEle);
 	}
 
-	public Map<String, HAPUIResourceContextNodeRoot> getElements(){  return this.m_elements;  }
+	public Map<String, HAPContextNodeRoot> getElements(){  return this.m_elements;  }
 	
-	public void hardMergeWith(HAPUIResourceContext context){
-		Map<String, HAPUIResourceContextNodeRoot> eles = context.getElements();
+	public void hardMergeWith(HAPContext context){
+		Map<String, HAPContextNodeRoot> eles = context.getElements();
 		for(String rootName : eles.keySet()){
 			this.m_elements.put(rootName, eles.get(rootName));
 		}

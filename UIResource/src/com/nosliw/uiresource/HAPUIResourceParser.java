@@ -29,7 +29,7 @@ import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.uiresource.context.HAPContextNode;
 import com.nosliw.uiresource.context.HAPContextNodeDefinition;
-import com.nosliw.uiresource.context.HAPUIResourceContextNodeRoot;
+import com.nosliw.uiresource.context.HAPContextNodeRootAbsolute;
 import com.nosliw.uiresource.definition.HAPConstantDef;
 import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInContent;
@@ -149,9 +149,9 @@ public class HAPUIResourceParser {
 				while(defNames.hasNext()){
 					String eleName = defNames.next();
 					JSONObject eleDefJson = defsJson.optJSONObject(eleName);
-					HAPUIResourceContextNodeRoot contextEle = new HAPUIResourceContextNodeRoot();
+					HAPContextNodeRootAbsolute contextEle = new HAPContextNodeRootAbsolute();
 
-					Object d = eleDefJson.opt(HAPUIResourceContextNodeRoot.DEFAULT);
+					Object d = eleDefJson.opt(HAPContextNodeRootAbsolute.DEFAULT);
 					if(d!=null)		contextEle.setDefaultValue(d);
 
 					Object defObj = eleDefJson.opt(HAPContextNode.DEFINITION);

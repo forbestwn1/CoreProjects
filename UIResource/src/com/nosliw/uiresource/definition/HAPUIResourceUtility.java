@@ -26,7 +26,7 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.HAPUIResourceIdGenerator;
 import com.nosliw.uiresource.context.HAPContextNode;
 import com.nosliw.uiresource.context.HAPContextNodeDefinition;
-import com.nosliw.uiresource.context.HAPUIResourceContext;
+import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.expression.HAPRuntimeTaskExecuteScriptExpression;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
@@ -163,7 +163,9 @@ public class HAPUIResourceUtility {
 			HAPUIDefinitionUnitTag tag = (HAPUIDefinitionUnitTag)uiDefinition;
 			HAPUITagDefinition uiTagDefinition = null;
 			if(uiTagDefinition.isInheritContext()){
-				//add parent 
+				//add parent
+				
+				
 				expContext.addVariables(parent.getExpressionContext().getVariables());
 			}
 //			for(HAPUITagDefinitionContextElment contextEle : uiTagDefinition.getContextDefinitions()){
@@ -262,10 +264,10 @@ public class HAPUIResourceUtility {
 		}
 	}
 	
-	public static Map<String, HAPDataTypeCriteria> discoverDataVariablesInContext(HAPUIResourceContext context){
+	public static Map<String, HAPDataTypeCriteria> discoverDataVariablesInContext(HAPContext context){
 		Map<String, HAPDataTypeCriteria> out = new LinkedHashMap<String, HAPDataTypeCriteria>();
 		for(String rootName : context.getElements().keySet()){
-			processCriteria(rootName, context.getElements().get(rootName), out);
+			processCriteria(rootName, (HAPContextNode)context.getElements().get(rootName), out);
 		}
 		return out;
 	}

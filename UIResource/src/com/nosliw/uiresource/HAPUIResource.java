@@ -12,7 +12,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
-import com.nosliw.uiresource.context.HAPUIResourceContext;
+import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.definition.HAPConstantDef;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;

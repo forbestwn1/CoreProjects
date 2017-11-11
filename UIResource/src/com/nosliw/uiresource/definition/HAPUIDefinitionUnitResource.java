@@ -12,7 +12,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
-import com.nosliw.uiresource.context.HAPUIResourceContext;
+import com.nosliw.uiresource.context.HAPContext;
 
 public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 
@@ -20,7 +20,7 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	public static final String CONTEXT = "context";
 	
 	//context definition
-	private HAPUIResourceContext m_context;
+	private HAPContext m_context;
 	
 	//source code of resource definition
 	private String m_source;
@@ -40,7 +40,7 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	
 	public HAPUIDefinitionUnitResource(String id, String source){
 		super(id);
-		this.m_context = new HAPUIResourceContext();
+		this.m_context = new HAPContext();
 		this.m_source = source;
 		this.m_uiTagLibs = new HashSet<String>();
 		this.m_resourceDependency = new ArrayList<HAPResourceDependent>();
@@ -49,7 +49,7 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	public void addUITagLib(String tag){	this.m_uiTagLibs.add(tag);}
 
 	public String getSource(){   return this.m_source;   }
-	public HAPUIResourceContext getContext(){  return this.m_context;  }
+	public HAPContext getContext(){  return this.m_context;  }
 	
 	public boolean isProcessed(){  return this.m_processed;  }
 	public void processed(){  this.m_processed = true;  }

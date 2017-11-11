@@ -10,7 +10,7 @@ import com.nosliw.data.core.expression.HAPMatchers;
  * we should treat through two variables as different variables 
  * And matcher is needed to do convert between these two variables  
  */
-public class HAPUITagContextNodeRootRelative implements HAPUITagContextNodeRoot{
+public class HAPContextNodeRootRelative extends HAPContextNode implements HAPContextNodeRoot{
 
 	//relative path from parent context
 	private String m_parentPath;
