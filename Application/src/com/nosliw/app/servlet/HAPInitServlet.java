@@ -31,8 +31,8 @@ public class HAPInitServlet  extends HttpServlet{
 			
 			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPResourceManagerUIResource(uiResourceMan));
 
-			String file = HAPFileUtility.getFileNameOnClassPath(HAPInitServlet.class, "Example1.res");
-			HAPUIDefinitionUnitResource uiResource = uiResourceMan.addUIResourceDefinition(file);
+//			String file = HAPFileUtility.getFileNameOnClassPath(HAPInitServlet.class, "Example1.res");
+//			HAPUIDefinitionUnitResource uiResource = uiResourceMan.addUIResourceDefinition(file);
 
 	   }
 }

@@ -65,6 +65,12 @@ public class HAPUIResourceManager {
 	
 	public HAPUIDefinitionUnitResource getUIResource(String name){
 		HAPUIDefinitionUnitResource uiResource = this.getUIResourceDefinitionByName(name);
+		if(uiResource==null){
+			//if not registered, then process uiResource on the fly
+			String file = "C:\\Users\\ewaniwa\\Desktop\\MyWork\\ApplicationData\\uiresources\\"+name+".res";
+			uiResource = this.getUIResourceParser().parseFile(file);
+			HAPConstantUtility.calculateConstantDefs(uiResource, null, m_idGengerator, m_expressionMan, m_runtime);
+		}
 		if(!uiResource.isProcessed()){
 			//build expression context
 			HAPContextUtility.processExpressionContext(null, uiResource);

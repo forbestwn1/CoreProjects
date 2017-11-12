@@ -247,10 +247,11 @@ public class HAPUIResourceParser {
 		for(int i=0; i<childEles.size(); i++){
 			Element childEle = childEles.get(i);
 			String childTagName = childEle.tag().getName();
-			if(HAPUIDefinitionUnit.SCRIPTS.equals(childTagName)){
+			if(HAPUIDefinitionUnit.SCRIPT.equals(childTagName)){
 				HAPScript jsBlock = new HAPScript(ele.html());
-				resource.addJSBlock(jsBlock);
+				resource.setJSBlock(jsBlock);
 				removes.add(childEle);
+				break;
 			}
 		}
 		//remove script ele from doc

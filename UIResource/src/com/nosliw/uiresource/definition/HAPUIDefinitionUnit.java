@@ -43,6 +43,10 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String SCRIPTEXPRESSIONINTAGATTRIBUTES = "scriptExpressionTagAttributes";
 	@HAPAttribute
+	public static final String SCRIPT = "script";
+
+	
+	@HAPAttribute
 	public static final String ELEMENTEVENTS = "elementEvents";
 	@HAPAttribute
 	public static final String TAGEVENTS = "tagEvents";
@@ -62,8 +66,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public static final String UITAGLIBS = "uiTagLibs";
 	@HAPAttribute
 	public static final String CONSTANTS = "constants";
-	@HAPAttribute
-	public static final String SCRIPTS = "scripts";
 	@HAPAttribute
 	public static final String EXPRESSIONS = "expressions";
 	@HAPAttribute
@@ -95,6 +97,9 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	//for resource, they are the attribute of body
 	private Map<String, String> m_attributes;
 	
+	//all java script blocks within this domain
+	private HAPScript m_script;
+	
 
 	
 	
@@ -102,9 +107,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	private Set<HAPElementEvent> m_elementEvents;
 	//all the events related with customer tag
 	private Set<HAPElementEvent> m_tagEvents;
-	
-	//all java script blocks within this domain
-	private List<HAPScript> m_scripts;
 	
 	//all the customer tag within the domain
 	private Map<String, HAPUIDefinitionUnitTag> m_uiTags; 
@@ -127,7 +129,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInContent = new HashSet<HAPEmbededScriptExpressionInContent>();
 		this.m_uiTags = new LinkedHashMap<String, HAPUIDefinitionUnitTag>();
-		this.m_scripts = new ArrayList<HAPScript>();
 		this.m_elementEvents = new HashSet<HAPElementEvent>();
 		this.m_tagEvents = new HashSet<HAPElementEvent>();
 		this.m_attributes = new LinkedHashMap<String, String>();
@@ -165,6 +166,9 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		for(HAPEmbededScriptExpressionInAttribute expressionTagAttr : this.m_scriptExpressionsInTagAttribute)  expressionTagAttributeJsons.add(expressionTagAttr.toStringValue(HAPSerializationFormat.JSON_FULL));
 		jsonMap.put(SCRIPTEXPRESSIONINTAGATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionTagAttributeJsons.toArray(new String[0])));
 
+		jsonMap.put(SCRIPT, this.m_script.getBlock());
+		
+		
 		List<String> eleEventsJsons = new ArrayList<String>();
 		for(HAPElementEvent elementEvent : this.m_elementEvents)  eleEventsJsons.add(elementEvent.toStringValue(HAPSerializationFormat.JSON_FULL));
 		jsonMap.put(ELEMENTEVENTS, HAPJsonUtility.buildArrayJson(eleEventsJsons.toArray(new String[0])));
@@ -205,7 +209,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public void addUITag(HAPUIDefinitionUnitTag uiTag){	this.m_uiTags.put(uiTag.getId(), uiTag);	}
 	public void addElementEvent(HAPElementEvent event){this.m_elementEvents.add(event);}
 	public void addTagEvent(HAPElementEvent event){this.m_tagEvents.add(event);}
-	public void addJSBlock(HAPScript jsBlock){this.m_scripts.add(jsBlock);}
+	public void setJSBlock(HAPScript jsBlock){this.m_script = jsBlock;}
 	public void setScriptFactoryName(String name){this.m_scriptFactoryName=name;}
 	public void addConstantDef(String name, HAPConstantDef data){this.m_constantDefs.put(name, data);}
 	public void setConstantDefs(Map<String, HAPConstantDef> data){this.m_constantDefs = data;}
@@ -214,7 +218,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public Map<String, Object> getConstantValues(){return this.m_constantValues;}
 	public Map<String, String> getAttributes(){  return this.m_attributes;  }
 	
-	public List<HAPScript> getJSBlocks(){return this.m_scripts;}
+	public HAPScript getJSBlock(){return this.m_script;}
 	public Collection<HAPUIDefinitionUnitTag> getUITags(){return this.m_uiTags.values();} 
 	public Map<String, HAPUIDefinitionUnitTag> getUITagesByName(){   return this.m_uiTags;   }
 	public Set<HAPEmbededScriptExpressionInContent> getScriptExpressionsInContent(){return this.m_scriptExpressionsInContent;}
