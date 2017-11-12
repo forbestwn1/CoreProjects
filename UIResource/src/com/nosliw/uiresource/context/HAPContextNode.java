@@ -21,15 +21,15 @@ public class HAPContextNode extends HAPSerializableImp{
 	private Map<String, HAPContextNode> m_children;
 	
 	//context definition of that node (criteria)
-	private HAPContextNodeDefinition m_definition;
+	private HAPContextNodeCriteria m_definition;
 	
 	public HAPContextNode(){
 		this.m_children = new LinkedHashMap<String, HAPContextNode>();
 	}
 	
-	public void setDefinition(HAPContextNodeDefinition definition){	this.m_definition = definition;	}
+	public void setDefinition(HAPContextNodeCriteria definition){	this.m_definition = definition;	}
 	
-	public HAPContextNodeDefinition getDefinition(){   return this.m_definition;  }
+	public HAPContextNodeCriteria getDefinition(){   return this.m_definition;  }
 	
 	public Map<String, HAPContextNode> getChildren(){	return this.m_children;	}
 	

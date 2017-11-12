@@ -7,8 +7,11 @@ import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.context.HAPContext;
+import com.nosliw.uiresource.context.HAPContextUtility;
+import com.nosliw.uiresource.definition.HAPConstantUtility;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.definition.HAPUIResourceUtility;
+import com.nosliw.uiresource.resource.HAPResourceUtility;
 
 public class HAPUIResourceManager {
 
@@ -32,7 +35,7 @@ public class HAPUIResourceManager {
     //Add resource definition from file 
 	public HAPUIDefinitionUnitResource addUIResourceDefinition(String file){
 		HAPUIDefinitionUnitResource resource = this.getUIResourceParser().parseFile(file);
-		HAPUIResourceUtility.calculateConstantDefs(resource, null, m_idGengerator, m_expressionMan, m_runtime);
+		HAPConstantUtility.calculateConstantDefs(resource, null, m_idGengerator, m_expressionMan, m_runtime);
 		this.m_uiResourceDefinitions.put(resource.getId(), resource);
 		return resource;
 	}
@@ -47,7 +50,7 @@ public class HAPUIResourceManager {
 		String baseContent = this.getUIResourceDefinitionByName(base).getSource();
 		//build resource using base resource
 		HAPUIDefinitionUnitResource resource = this.getUIResourceParser().parseContent(resourceId, baseContent);
-		HAPUIResourceUtility.calculateConstantDefs(resource, null, m_idGengerator, m_expressionMan, m_runtime);
+		HAPConstantUtility.calculateConstantDefs(resource, null, m_idGengerator, m_expressionMan, m_runtime);
 		
 		//update context with new context
 		resource.getContext().hardMergeWith(context);
@@ -61,11 +64,19 @@ public class HAPUIResourceManager {
 	}
 	
 	public HAPUIDefinitionUnitResource getUIResource(String name){
-		HAPUIDefinitionUnitResource uiResourceDefinition = this.getUIResourceDefinitionByName(name);
-		if(!uiResourceDefinition.isProcessed()){
-			HAPUIResourceUtility.processUIResource(uiResourceDefinition, m_runtime, m_resourceMan);
+		HAPUIDefinitionUnitResource uiResource = this.getUIResourceDefinitionByName(name);
+		if(!uiResource.isProcessed()){
+			//build expression context
+			HAPContextUtility.processExpressionContext(null, uiResource);
+
+			
+			HAPUIResourceUtility.processUIResource(uiResource, m_runtime, m_resourceMan);
+			
+			//discovery resources required
+			HAPResourceUtility.processResourceDependency(uiResource, m_resourceMan);
+			uiResource.processed();
 		}
-		return uiResourceDefinition;
+		return uiResource;
 	}
 	
 	private HAPUIResourceParser getUIResourceParser(){

@@ -18,6 +18,7 @@ import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.uiresource.HAPElementEvent;
 import com.nosliw.uiresource.HAPScript;
+import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
 
 /*
@@ -31,6 +32,8 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ID = "id";
+	@HAPAttribute
+	public static final String CONTEXT = "context";
 	@HAPAttribute
 	public static final String TYPE = "type";
 	@HAPAttribute
@@ -71,6 +74,9 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	//for resource, it is resource name
 	private String m_id;
 
+	//context definition
+	private HAPContext m_context;
+	
 	//a set of named data that can be used as constants
 	private Map<String, HAPConstantDef> m_constantDefs;
 	
@@ -116,6 +122,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	
 	public HAPUIDefinitionUnit(String id){
 		this.m_id = id;
+		this.m_context = new HAPContext();
 		this.m_scriptExpressionsInAttribute = new HashSet<HAPEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInContent = new HashSet<HAPEmbededScriptExpressionInContent>();
@@ -144,6 +151,8 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(TYPE, String.valueOf(this.getType()));
 
+		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(m_context, HAPSerializationFormat.JSON_FULL));
+		
 		List<String> expressionContentJsons = new ArrayList<String>();
 		for(HAPEmbededScriptExpressionInContent expressionContent : this.m_scriptExpressionsInContent)  expressionContentJsons.add(expressionContent.toStringValue(HAPSerializationFormat.JSON_FULL));
 		jsonMap.put(SCRIPTEXPRESSIONSINCONTENT, HAPJsonUtility.buildArrayJson(expressionContentJsons.toArray(new String[0])));
@@ -189,6 +198,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public String getContent(){return this.m_content;}
 	public void setContent(String content){	this.m_content = content;	}
 	
+	public HAPContext getContext(){  return this.m_context;  }
 	public void addScriptExpressionInAttribute(HAPEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInAttribute.add(eAttr);	}
 	public void addScriptExpressionInTagAttribute(HAPEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInTagAttribute.add(eAttr);	}
 	public void addScriptExpressionInContent(HAPEmbededScriptExpressionInContent scriptExpressionInContent){	this.m_scriptExpressionsInContent.add(scriptExpressionInContent);	}

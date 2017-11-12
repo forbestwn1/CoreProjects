@@ -296,6 +296,9 @@
 			<definition name="UIRESOURCE_TYPE_RESOURCE" value="resource"/>
 			<definition name="UIRESOURCE_TYPE_TAG" value="tag"/>
 			<definition type="space"/>
+			<definition name="UIRESOURCE_ROOTTYPE_RELATIVE" value="relative"/>
+			<definition name="UIRESOURCE_ROOTTYPE_ABSOLUTE" value="absolute"/>
+			<definition type="space"/>
 			<definition name="ENTITY_CRITICALVALUE_OTHER" value="other"/>
 			<definition type="space"/>
 			<definition name="ATTRIBUTE_PATH_CRITICAL" value="critical"/>

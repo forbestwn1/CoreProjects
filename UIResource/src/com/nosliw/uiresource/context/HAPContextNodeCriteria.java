@@ -11,11 +11,11 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
  * For now, the information is data type criteria for the node 
  */
 @HAPEntityWithAttribute
-public class HAPContextNodeDefinition implements HAPSerializable{
+public class HAPContextNodeCriteria implements HAPSerializable{
 	
 	private HAPDataTypeCriteria m_criteria;
 
-	public HAPContextNodeDefinition(HAPDataTypeCriteria criteria){
+	public HAPContextNodeCriteria(HAPDataTypeCriteria criteria){
 		this.m_criteria = criteria;
 	}
 

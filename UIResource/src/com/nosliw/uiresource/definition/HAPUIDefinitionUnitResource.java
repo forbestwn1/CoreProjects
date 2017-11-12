@@ -16,12 +16,6 @@ import com.nosliw.uiresource.context.HAPContext;
 
 public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 
-	@HAPAttribute
-	public static final String CONTEXT = "context";
-	
-	//context definition
-	private HAPContext m_context;
-	
 	//source code of resource definition
 	private String m_source;
 	
@@ -40,7 +34,6 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	
 	public HAPUIDefinitionUnitResource(String id, String source){
 		super(id);
-		this.m_context = new HAPContext();
 		this.m_source = source;
 		this.m_uiTagLibs = new HashSet<String>();
 		this.m_resourceDependency = new ArrayList<HAPResourceDependent>();
@@ -49,7 +42,6 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	public void addUITagLib(String tag){	this.m_uiTagLibs.add(tag);}
 
 	public String getSource(){   return this.m_source;   }
-	public HAPContext getContext(){  return this.m_context;  }
 	
 	public boolean isProcessed(){  return this.m_processed;  }
 	public void processed(){  this.m_processed = true;  }
@@ -59,7 +51,6 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(m_context, HAPSerializationFormat.JSON_FULL));
 		jsonMap.put(UITAGLIBS, HAPJsonUtility.buildJson(this.m_uiTagLibs, HAPSerializationFormat.JSON_FULL));
 	}
 		

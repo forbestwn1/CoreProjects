@@ -2,6 +2,7 @@ package com.nosliw.uiresource.context;
 
 import java.util.Map;
 
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPMatchers;
 
 /**
@@ -18,5 +19,8 @@ public class HAPContextNodeRootRelative extends HAPContextNode implements HAPCon
 	//variable full name --- matchers
 	//used to convert data from parent to data within uiTag
 	private Map<String, HAPMatchers> m_matchers;
+	
+	@Override
+	public String getType() {		return HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE;	}
 	
 }

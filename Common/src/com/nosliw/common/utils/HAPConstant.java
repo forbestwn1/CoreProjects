@@ -169,6 +169,11 @@ public class HAPConstant {
 
 
 
+		public static final String UIRESOURCE_ROOTTYPE_RELATIVE = "relative";
+		public static final String UIRESOURCE_ROOTTYPE_ABSOLUTE = "absolute";
+
+
+
 		public static final String ENTITY_CRITICALVALUE_OTHER = "other";
 
 

@@ -91,6 +91,39 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 		this.m_scriptFunction = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 	}
 	
+	public boolean isConstant(){
+		boolean out = true;
+		for(Object ele : this.m_elements){
+			if(ele instanceof HAPScriptExpression){
+				if(!((HAPScriptExpression)ele).isConstant()){
+					out = false;
+				}
+			}
+		}
+		return out;
+	}
+	
+	public String getValue(){
+		if(this.isConstant()){
+			StringBuffer out = new StringBuffer();
+			for(Object ele : this.m_elements){
+				if(ele instanceof HAPScriptExpression){
+					HAPScriptExpression scriptExpression = (HAPScriptExpression)ele; 
+					if(!scriptExpression.isConstant()){
+						out.append(scriptExpression.getValue().toString());
+					}
+					else if(ele instanceof String){
+						out.append(ele.toString());
+					}
+				}
+			}
+			return out.toString();
+		}
+		else{
+			return null;
+		}
+	}
+	
 	public List<HAPScriptExpression> getScriptExpressions(){		return new ArrayList(this.m_scriptExpressions.values());	}
 	public String getUIId(){   return this.m_uiId;   }
 	

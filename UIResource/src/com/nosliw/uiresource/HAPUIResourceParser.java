@@ -28,7 +28,7 @@ import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.uiresource.context.HAPContextNode;
-import com.nosliw.uiresource.context.HAPContextNodeDefinition;
+import com.nosliw.uiresource.context.HAPContextNodeCriteria;
 import com.nosliw.uiresource.context.HAPContextNodeRootAbsolute;
 import com.nosliw.uiresource.definition.HAPConstantDef;
 import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInAttribute;
@@ -170,7 +170,7 @@ public class HAPUIResourceParser {
 	
 	private HAPContextNode paresContextNode(Object eleDef, HAPContextNode node){
 		if(eleDef instanceof String){
-			node.setDefinition(new HAPContextNodeDefinition(this.m_criteriaParser.parseCriteria((String)eleDef)));
+			node.setDefinition(new HAPContextNodeCriteria(this.m_criteriaParser.parseCriteria((String)eleDef)));
 		}
 		else if(eleDef instanceof JSONObject){
 			JSONObject childrenObj = (JSONObject)eleDef;

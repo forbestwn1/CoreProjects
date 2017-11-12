@@ -15,7 +15,9 @@ public class HAPDataTypeCriteriaExpression extends HAPDataTypeCriteriaAbstract{
 	
 	public HAPDataTypeCriteriaExpression(String expression){
 		//escape    
-		this.m_expression = HAPCriteriaUtility.deescape(expression); 
+		this.m_expression = HAPCriteriaUtility.deescape(expression);
+		
+		
 	}
 	
 	@Override
@@ -32,4 +34,7 @@ public class HAPDataTypeCriteriaExpression extends HAPDataTypeCriteriaAbstract{
 
 	public String getExpression(){  return this.m_expression;  }
 	
+	protected HAPDataTypeCriteria getSoldCriteria(){
+		return this.m_realCriteria;
+	}
 }

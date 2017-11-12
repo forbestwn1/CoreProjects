@@ -26,6 +26,34 @@ import com.nosliw.uiresource.expression.HAPScriptExpressionUtility;
 public class HAPConstantUtility {
 
 	/**
+	 * Calculate all the constant values in ConstantDef
+	 * @param parentConstants
+	 * @param idGenerator
+	 * @param expressionMan
+	 * @param runtime
+	 */
+	public static void calculateConstantDefs(
+			HAPUIDefinitionUnit uiDefinitionUnit,
+			Map<String, HAPConstantDef> parentConstants,
+			HAPUIResourceIdGenerator idGenerator, 
+			HAPExpressionManager expressionMan, 
+			HAPRuntime runtime){
+		//build constants by merging parent with current
+		Map<String, HAPConstantDef> contextConstants = new LinkedHashMap<String, HAPConstantDef>();
+		if(parentConstants!=null)   contextConstants.putAll(parentConstants);
+		contextConstants.putAll(uiDefinitionUnit.getConstantDefs());
+		uiDefinitionUnit.setConstantDefs(contextConstants);
+		
+		//process all constants defined in this domain
+		HAPConstantUtility.processConstantDefs(uiDefinitionUnit, idGenerator, expressionMan, runtime);
+		
+		//process constants in child
+		for(HAPUIDefinitionUnitTag tag : uiDefinitionUnit.getUITags()){
+			calculateConstantDefs(tag, contextConstants, idGenerator, expressionMan, runtime);
+		}
+	}
+	
+	/**
 	 * process all constants defs to get data of constant
 	 * it will keep the json structure and only calculate the leaf value 
 	 * 		constantDefs : all available constants
@@ -129,7 +157,7 @@ public class HAPConstantUtility {
 	 * 		if leafData contains both script expression and plain text, then return string value
 	 * 		if leafData contains a script expression only, then return the result value of sript expression
 	 */
-	static Object processConstantDefLeaf(
+	static private Object processConstantDefLeaf(
 			Object leafData,
 			HAPUIDefinitionUnit uiDefinitionUnit,
 			HAPUIResourceIdGenerator idGenerator, 
