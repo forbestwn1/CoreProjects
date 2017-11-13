@@ -1,7 +1,6 @@
 package com.nosliw.uiresource.tag;
 
 import java.util.Map;
-import java.util.Set;
 
 public class HAPUITagDefinition {
 
@@ -18,7 +17,7 @@ public class HAPUITagDefinition {
 	
 	
 	//scriptExpression : criteria
-	Set<HAPUITagDefinitionContextElment> m_contexts;
+	Map<String, HAPUITagDefinitionContextElment> m_contexts;
 	
 	public HAPUITagDefinition(String name, String script){
 		this.m_name = name;
@@ -31,7 +30,7 @@ public class HAPUITagDefinition {
 	
 	public boolean isInheritContext(){  return this.m_inheritContext;  }
 	
-	public Set<HAPUITagDefinitionContextElment> getContextDefinitions(){
+	public Map<String, HAPUITagDefinitionContextElment> getContextDefinitions(){
 		return this.m_contexts;
 	}
 

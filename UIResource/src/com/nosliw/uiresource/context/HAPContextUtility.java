@@ -15,9 +15,33 @@ import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
 import com.nosliw.uiresource.tag.HAPUITagDefinition;
+import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElementAbsolute;
+import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElment;
 
 public class HAPContextUtility {
 
+	private static String processName(String name, Map<String, Object> parms){
+		
+	}
+	
+	private static HAPContextNode buildContxtNode(HAPContextNode contextNode){
+		
+	}
+	
+	private static HAPContextNodeRoot processUITagContextElement(HAPUITagDefinitionContextElment element, HAPContext parentContext){
+		String type = element.getType();
+		switch(type){
+			case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
+				HAPUITagDefinitionContextElementAbsolute eleDef = (HAPUITagDefinitionContextElementAbsolute)element;
+				HAPContextNodeRootAbsolute out = new HAPContextNodeRootAbsolute(eleDef);
+				return eleDef;
+				break;
+			case HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE:
+				
+				break;
+		}
+	}
+	
 	public static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition){
 
 		HAPUIResourceExpressionContext expContext = uiDefinition.getExpressionContext();
@@ -34,10 +58,20 @@ public class HAPContextUtility {
 			HAPUITagDefinition uiTagDefinition = null;
 			if(uiTagDefinition.isInheritContext()){
 				//add parent
-				
+				for(String rootEleName : parent.getContext().getElements().keySet()){
+					HAPUITagDefinitionContextElmentRelative relativeEle = new HAPUITagDefinitionContextElmentRelative(rootEleName);
+					tag.getContext().addElement(rootEleName, processUITagContextElement(relativeEle, parent.getContext()));
+				}
 				
 				expContext.addVariables(parent.getExpressionContext().getVariables());
 			}
+			
+			Map<String, HAPUITagDefinitionContextElment> defEles = uiTagDefinition.getContextDefinitions();
+			for(String name : defEles.keySet()){
+				String realName = processName(name, tag.getAttributes());
+				tag.getContext().addElement(realName, processUITagContextElement(defEles.get(name), parent.getContext()));
+			}
+			
 //			for(HAPUITagDefinitionContextElment contextEle : uiTagDefinition.getContextDefinitions()){
 //				//process context name
 //				Map<String, String> parms = new LinkedHashMap<String, String>();

@@ -27,9 +27,8 @@ import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
-import com.nosliw.uiresource.context.HAPContextNode;
-import com.nosliw.uiresource.context.HAPContextNodeCriteria;
 import com.nosliw.uiresource.context.HAPContextNodeRootAbsolute;
+import com.nosliw.uiresource.context.HAPContextParser;
 import com.nosliw.uiresource.definition.HAPConstantDef;
 import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInContent;
@@ -149,13 +148,7 @@ public class HAPUIResourceParser {
 				while(defNames.hasNext()){
 					String eleName = defNames.next();
 					JSONObject eleDefJson = defsJson.optJSONObject(eleName);
-					HAPContextNodeRootAbsolute contextEle = new HAPContextNodeRootAbsolute();
-
-					Object d = eleDefJson.opt(HAPContextNodeRootAbsolute.DEFAULT);
-					if(d!=null)		contextEle.setDefaultValue(d);
-
-					Object defObj = eleDefJson.opt(HAPContextNode.DEFINITION);
-					this.paresContextNode(defObj, contextEle);
+					HAPContextNodeRootAbsolute contextEle = HAPContextParser.parseContextRootElementInUIResource(eleDefJson);
 					resource.getContext().addElement(eleName, contextEle);
 				}
 			} catch (JSONException e) {
@@ -166,23 +159,6 @@ public class HAPUIResourceParser {
 		}
 		//remove script ele from doc
 		for(Element remove : removes)	remove.remove();
-	}
-	
-	private HAPContextNode paresContextNode(Object eleDef, HAPContextNode node){
-		if(eleDef instanceof String){
-			node.setDefinition(new HAPContextNodeCriteria(this.m_criteriaParser.parseCriteria((String)eleDef)));
-		}
-		else if(eleDef instanceof JSONObject){
-			JSONObject childrenObj = (JSONObject)eleDef;
-			Iterator<String> names = childrenObj.keys();
-			while(names.hasNext()){
-				String name = names.next();
-				HAPContextNode childNode = new HAPContextNode();
-				paresContextNode(childrenObj.opt(name), childNode);
-				node.addChild(name, childNode);
-			}
-		}
-		return node;
 	}
 	
 	private void parseChildExpressionBlocks(Element ele, HAPUIDefinitionUnit resource){
@@ -242,13 +218,12 @@ public class HAPUIResourceParser {
 	 */
 	private void parseChildScriptBlocks(Element ele, HAPUIDefinitionUnit resource){
 		List<Element> removes = new ArrayList<Element>();
-		
-		Elements childEles = ele.children();
+		Elements childEles = ele.getElementsByTag(HAPUIDefinitionUnitResource.SCRIPT);
 		for(int i=0; i<childEles.size(); i++){
 			Element childEle = childEles.get(i);
 			String childTagName = childEle.tag().getName();
 			if(HAPUIDefinitionUnit.SCRIPT.equals(childTagName)){
-				HAPScript jsBlock = new HAPScript(ele.html());
+				HAPScript jsBlock = new HAPScript(childEle.html());
 				resource.setJSBlock(jsBlock);
 				removes.add(childEle);
 				break;
