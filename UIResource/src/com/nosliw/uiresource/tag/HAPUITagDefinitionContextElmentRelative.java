@@ -18,6 +18,10 @@ public class HAPUITagDefinitionContextElmentRelative extends HAPContextNode impl
 	//it can also be script expression with attribute value as parms
 	String m_path;
 
+	public HAPUITagDefinitionContextElmentRelative(String path){
+		this.m_path = path;
+	}
+	
 	public String getPath(){
 		return this.m_path;
 	}

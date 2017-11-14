@@ -3,6 +3,7 @@ package com.nosliw.uiresource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
@@ -20,12 +21,14 @@ public class HAPUIResourceManager {
 	private HAPExpressionManager m_expressionMan; 
 	
 	private HAPResourceManagerRoot m_resourceMan;
-	
+
 	private HAPRuntime m_runtime;
 
+	private HAPDataTypeHelper m_dataTypeHelper;
+	
 	HAPUIResourceIdGenerator m_idGengerator = new HAPUIResourceIdGenerator(1);
 
-	public HAPUIResourceManager(HAPExpressionManager expressionMan, HAPResourceManagerRoot resourceMan, HAPRuntime runtime){
+	public HAPUIResourceManager(HAPExpressionManager expressionMan, HAPResourceManagerRoot resourceMan, HAPRuntime runtime, HAPDataTypeHelper dataTypeHelper){
 		this.m_expressionMan = expressionMan;
 		this.m_resourceMan = resourceMan;
 		this.m_runtime = runtime;
@@ -73,7 +76,7 @@ public class HAPUIResourceManager {
 		}
 		if(!uiResource.isProcessed()){
 			//build expression context
-			HAPContextUtility.processExpressionContext(null, uiResource);
+			HAPContextUtility.processExpressionContext(null, uiResource, this.m_dataTypeHelper);
 
 			
 			HAPUIResourceUtility.processUIResource(uiResource, m_runtime, m_resourceMan);

@@ -4,12 +4,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.expression.HAPExpressionImporter;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.expression.test.HAPExpressionTest;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.resource.HAPResourceManagerUIResource;
 
 public class HAPInitServlet  extends HttpServlet{
@@ -26,7 +24,7 @@ public class HAPInitServlet  extends HttpServlet{
 			//set runtime object to context
 			this.getServletContext().setAttribute("runtime", runtimeEnvironment);
 			
-			HAPUIResourceManager uiResourceMan = new HAPUIResourceManager(runtimeEnvironment.getExpressionManager(), runtimeEnvironment.getResourceManager(), runtimeEnvironment.getRuntime());
+			HAPUIResourceManager uiResourceMan = new HAPUIResourceManager(runtimeEnvironment.getExpressionManager(), runtimeEnvironment.getResourceManager(), runtimeEnvironment.getRuntime(), runtimeEnvironment.getDataTypeHelper());
 			this.getServletContext().setAttribute("uiResourceManager", uiResourceMan);
 			
 			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPResourceManagerUIResource(uiResourceMan));

@@ -1,6 +1,7 @@
 package com.nosliw.data.core.imp.runtime.js.rhino;
 
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionManagerImp;
@@ -38,4 +39,9 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 			runtime
 		);
 	}
+
+	public HAPDataTypeHelper getDataTypeHelper(){
+		return this.m_dataTypeHelper;
+	}
+	
 }

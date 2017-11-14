@@ -10,6 +10,8 @@ public class HAPContextPath {
 	
 	private String m_path;
 	
+	public HAPContextPath(){}
+	
 	public HAPContextPath(String fullPath){
 		int index = fullPath.indexOf(HAPConstant.SEPERATOR_PATH);
 		if(index==-1){
@@ -23,6 +25,13 @@ public class HAPContextPath {
 	public HAPContextPath(String rootEleName, String path){
 		this.m_rootEleName = rootEleName;
 		this.m_path = path;
+	}
+	
+	public HAPContextPath appendSegment(String seg){
+		HAPContextPath out = new HAPContextPath();
+		out.m_rootEleName = this.m_rootEleName;
+		out.m_path = HAPNamingConversionUtility.cascadeComponentPath(m_path, seg);
+		return out;
 	}
 	
 	public String getRootElementName(){  return this.m_rootEleName;  }
