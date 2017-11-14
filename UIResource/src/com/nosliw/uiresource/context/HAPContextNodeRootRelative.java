@@ -14,7 +14,7 @@ import com.nosliw.data.core.expression.HAPMatchers;
 public class HAPContextNodeRootRelative extends HAPContextNode implements HAPContextNodeRoot{
 
 	//relative path from parent context
-	private String m_parentPath;
+	private HAPContextPath m_path;
 
 	//variable full name --- matchers
 	//used to convert data from parent to data within uiTag
@@ -22,5 +22,9 @@ public class HAPContextNodeRootRelative extends HAPContextNode implements HAPCon
 	
 	@Override
 	public String getType() {		return HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE;	}
+
+	public void setPath(HAPContextPath path){
+		this.m_path = path;
+	}
 	
 }

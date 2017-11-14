@@ -32,6 +32,15 @@ public class HAPContext extends HAPSerializableImp{
 			this.m_elements.put(rootName, eles.get(rootName));
 		}
 	}
+
+	public HAPContextNode getChild(HAPContextPath path){
+		HAPContextNode out = (HAPContextNode)this.m_elements.get(path.getRootElementName());
+		String[] pathSegs = path.getPathSegments();
+		for(String pathSeg : pathSegs){
+			out = out.getChildren().get(pathSeg);
+		}
+		return out;
+	}
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

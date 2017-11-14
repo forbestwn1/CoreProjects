@@ -17,30 +17,81 @@ import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
 import com.nosliw.uiresource.tag.HAPUITagDefinition;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElementAbsolute;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElment;
+import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElmentRelative;
 
 public class HAPContextUtility {
 
-	private static String processName(String name, Map<String, Object> parms){
-		
+	private static String getSolidName(String name){
+		return name;
 	}
 	
-	private static HAPContextNode buildContxtNode(HAPContextNode contextNode){
-		
+	//process all the name get solid name and create new contextNode
+	private static HAPContextNode buildSolidContextNode(HAPContextNode contextNode){
+		HAPContextNode out = new HAPContextNode();
+		buildSolidContextNode(contextNode, out);
+		return out;
 	}
 	
-	private static HAPContextNodeRoot processUITagContextElement(HAPUITagDefinitionContextElment element, HAPContext parentContext){
-		String type = element.getType();
-		switch(type){
-			case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
-				HAPUITagDefinitionContextElementAbsolute eleDef = (HAPUITagDefinitionContextElementAbsolute)element;
-				HAPContextNodeRootAbsolute out = new HAPContextNodeRootAbsolute(eleDef);
-				return eleDef;
-				break;
-			case HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE:
-				
-				break;
+	private static void buildSolidContextNode(HAPContextNode def, HAPContextNode solid){
+		solid.setDefinition(def.getDefinition());
+		for(String name : def.getChildren().keySet()){
+			String solidName = getSolidName(name);
+			HAPContextNode child = def.getChildren().get(name);
+			HAPContextNode soldChild = buildSolidContextNode(child);
+			solid.addChild(solidName, soldChild);
 		}
 	}
+	
+	//convert context element in ui tag to context element in ui resource/tag
+	private static HAPContextNodeRoot processUITagDefinitionContextElement(HAPUITagDefinitionContextElment defContextElement, HAPContext parentContext){
+		String type = defContextElement.getType();
+		switch(type){
+			case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
+			{
+				HAPUITagDefinitionContextElementAbsolute defContextElementAbsolute = (HAPUITagDefinitionContextElementAbsolute)defContextElement;
+				HAPContextNodeRootAbsolute out = new HAPContextNodeRootAbsolute();
+				out.setDefaultValue(defContextElementAbsolute.getDefaultValue());
+				buildSolidContextNode(defContextElementAbsolute, out);
+				return out;
+			}
+			case HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE:
+			{
+				HAPUITagDefinitionContextElmentRelative defContextElementRelative = (HAPUITagDefinitionContextElmentRelative)defContextElement;
+				HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
+				HAPContextPath path = new HAPContextPath(getSolidName(defContextElementRelative.getPath()));
+				out.setPath(path);
+				HAPContextNode parentNode = parentContext.getChild(path);
+				merge(parentNode, defContextElementRelative, out);				
+				return out;
+			}	
+		}
+		return null;
+	}
+	
+	private static void merge(HAPContextNode parent, HAPContextNode def, HAPContextNode out, ){
+		HAPContextNodeCriteria parentDefinition = parent.getDefinition();
+		if(parentDefinition!=null){
+			HAPContextNodeCriteria defDefinition = null;
+			if(def!=null)			defDefinition = def.getDefinition();
+			if(defDefinition==null)   out.setDefinition(parentDefinition);
+			else{
+				out.setDefinition(defDefinition);
+				//cal mathers
+			}
+		}
+		else{
+			for(String name : parent.getChildren().keySet()){
+				HAPContextNode outChild = new HAPContextNode();
+				out.addChild(name, outChild);
+				HAPContextNode defChild = null;
+				if(def!=null && def.getChildren().get(name)!=null){
+					defChild = def.getChildren().get(name);
+				}
+				merge(parent.getChildren().get(name), defChild, outChild);
+			}
+		}
+	}
+	
 	
 	public static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition){
 
