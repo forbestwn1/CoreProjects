@@ -44,6 +44,8 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public static final String SCRIPTEXPRESSIONINTAGATTRIBUTES = "scriptExpressionTagAttributes";
 	@HAPAttribute
 	public static final String SCRIPT = "script";
+	@HAPAttribute
+	public static final String HTML = "html";
 
 	
 	@HAPAttribute
@@ -54,8 +56,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public static final String UITAGS = "uiTags";
 	@HAPAttribute
 	public static final String ATTRIBUTES = "attributes";
-	@HAPAttribute
-	public static final String HTML = "html";
 	@HAPAttribute
 	public static final String SCRIPTFACTORYNAME = "scriptFactoryName";
 	@HAPAttribute
@@ -100,20 +100,21 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	//all java script blocks within this domain
 	private HAPScript m_script;
 	
+	//html content after compilation
+	private String m_content; 
+
+	//all the events related with regular tag
+	private Set<HAPElementEvent> m_elementEvents;
 
 	
 	
-	//all the events related with regular tag
-	private Set<HAPElementEvent> m_elementEvents;
+	
 	//all the events related with customer tag
 	private Set<HAPElementEvent> m_tagEvents;
 	
 	//all the customer tag within the domain
 	private Map<String, HAPUIDefinitionUnitTag> m_uiTags; 
 	
-	//html content after compilation
-	private String m_content; 
-
 	//the script factory name for creating script object for ui resource view
 	private String m_scriptFactoryName;
 	

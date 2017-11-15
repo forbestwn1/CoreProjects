@@ -14,6 +14,7 @@ var packageObj = library;
 	var node_createEmbededScriptExpressionInContent;
 	var node_createEmbededScriptExpressionInAttribute;
 	var node_getLifecycleInterface;
+	var node_basicUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_createUIResourceViewFactory = function(){
@@ -52,21 +53,22 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 	//all constants defined. they are used in expression
 	var loc_constants = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONSTANTS];
 	
-	
 	//context object for this ui resource view
 	var loc_context = undefined;
 
-	
-	
-	
-	
 	//all content expression objects
 	var loc_expressionContents = [];
 	
-	//all customer tags
-	var loc_uiTags = {};
 	//all events on regular elements
 	var loc_elementEvents = [];
+	
+	//object store all the functions for js block
+	var loc_scriptObject = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPT];
+	
+	
+	
+	//all customer tags
+	var loc_uiTags = {};
 	//all events on customer tag elements
 	var loc_tagEvents = [];
 	
@@ -87,8 +89,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 	//if this ui resource is defined within a customer tag, then this object store all the information about that parent tag
 	var loc_parentTagInfo = undefined;
 
-	//object store all the functions for js block and expression
-	var loc_scriptObject = undefined;
 	
 	//event source used to register and trigger event
 	var loc_eventSource = undefined;
@@ -98,21 +98,22 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 	 */
 	var loc_initElementEvent = function(eleEvent){
 		//get element for this event
-		var ele = loc_out.prv_getLocalElementByUIId(loc_out.prv_getUpdateUIId(eleEvent[node_COMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_UIID]));
+		var ele = loc_out.prv_getLocalElementByUIId(loc_out.prv_getUpdateUIId(eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_UIID]));
 		var subEle = ele;
 		//if have sel attribute set, then find sub element according to sel
-		var selection = eleEvent[node_COMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_SELECTION];
-		if(!nosliwCommonUtility.isStringEmpty(selection))		subEle = ele.find(selection);
+		var selection = eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_SELECTION];
+		if(!node_basicUtility.isStringEmpty(selection))		subEle = ele.find(selection);
 
 		//register event
 		var eventValue = eleEvent;
-		var eventName = eleEvent[node_COMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_EVENT];
+		var eventName = eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_EVENT];
 		subEle.bind(eventName, function(event){
 			var info = {
 				event : event, 
 				element : subEle,
 			};
-			loc_scriptObject.callEventFunction(eventValue[node_COMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_FUNCTION], undefined, info);
+			loc_out.prv_callScriptFunction(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], undefined, info);
+//			loc_scriptObject.callEventFunction(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], undefined, info);
 		});
 		
 		return {
@@ -220,6 +221,11 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 			loc_expressionContents.push(node_createEmbededScriptExpressionInAttribute(expressionAttr, loc_out, requestInfo));
 		});
 		
+		//init element event
+		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_ELEMENTEVENTS], function(eleEvent, key, list){
+			loc_elementEvents.push(loc_initElementEvent(eleEvent));
+		});
+		
 		
 /*		
 		
@@ -246,10 +252,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 			loc_expressionContents.push(nosliwCreateUIResourceExpressionContent(expressionTagAttr, "tagAttribute", loc_out, requestInfo));
 		});
 		
-		//init element event
-		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_ELEMENTEVENTS], function(eleEvent, key, list){
-			loc_elementEvents.push(loc_initElementEvent(eleEvent));
-		});
 
 		//init customer tag event
 		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_TAGEVENTS], function(tagEvent, key, list){
@@ -337,6 +339,16 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 		 * find matched element according to uiid
 		 */
 		prv_getLocalElementByUIId : function(id){return loc_findLocalElement("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+id+"']");},
+		
+		prv_callScriptFunction : function(funName){   
+			var fun = loc_scriptObject[funName];
+			if(fun!=undefined){
+				fun.apply(loc_parentResourveView, arguments[1]);
+			}
+			else{
+				loc_parentResourveView.prv_callScriptFunction.apply(loc_parentResourveView, arguments);
+			}
+		},
 		
 		getContext : function(){return loc_context;},
 		updateContext : function(wrappers, requestInfo){		loc_context.updateContext(wrappers, requestInfo);		},
@@ -441,6 +453,7 @@ nosliw.registerSetNodeDataEvent("uiresource.utility", function(){node_uiResource
 nosliw.registerSetNodeDataEvent("uiresource.createEmbededScriptExpressionInContent", function(){node_createEmbededScriptExpressionInContent = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.createEmbededScriptExpressionInAttribute", function(){node_createEmbededScriptExpressionInAttribute = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIResourceViewFactory", loc_createUIResourceViewFactory); 
