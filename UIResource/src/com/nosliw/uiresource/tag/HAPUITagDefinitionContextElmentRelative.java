@@ -1,5 +1,7 @@
 package com.nosliw.uiresource.tag;
 
+import java.util.Map;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.uiresource.context.HAPContextNode;
@@ -28,5 +30,12 @@ public class HAPUITagDefinitionContextElmentRelative extends HAPContextNode impl
 	
 	@Override
 	public String getType() {		return HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE;	}
+
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(HAPUITagDefinitionContextElment.TYPE, this.getType());
+		jsonMap.put(PATH, this.m_path);
+	}
 
 }

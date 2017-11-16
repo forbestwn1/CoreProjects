@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.definition;
+package com.nosliw.uiresource.expression;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,14 +9,15 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.uiresource.expression.HAPRuntimeTaskExecuteScriptExpression;
-import com.nosliw.uiresource.expression.HAPScriptExpression;
-import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
+import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInAttribute;
+import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInContent;
+import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
+import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
+import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
 
-public class HAPUIResourceUtility {
+public class HAPUIResourceExpressionProcessorUtility {
 
-	
-	public static void processUIResource(HAPUIDefinitionUnitResource uiResource, HAPRuntime runtime, HAPResourceManagerRoot resourceMan){
+	public static void processExpressions(HAPUIDefinitionUnitResource uiResource, HAPRuntime runtime, HAPResourceManagerRoot resourceMan){
 		
 		//process all script expressions in resource
 		processScriptExpression(uiResource, runtime);
@@ -39,13 +40,9 @@ public class HAPUIResourceUtility {
 			}
 		}
 		
-		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : removed){
-			all.remove(embededScriptExpression);
-		}
+		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : removed)	all.remove(embededScriptExpression);
 		
-		for(HAPUIDefinitionUnit childTag : uiDefinitionUnit.getUITags()){
-			processConstantExpressionInAttributeTag(uiDefinitionUnit);
-		}
+		for(HAPUIDefinitionUnit childTag : uiDefinitionUnit.getUITags())		processConstantExpressionInAttributeTag(uiDefinitionUnit);
 	}
 	
 	private static void processScriptExpression(HAPUIDefinitionUnit uiDefinitionUnit, HAPRuntime runtime){
@@ -54,19 +51,11 @@ public class HAPUIResourceUtility {
 		for(HAPEmbededScriptExpressionInContent scriptExpressionInConent : uiDefinitionUnit.getScriptExpressionsInContent())  scriptExpressions.addAll(scriptExpressionInConent.getScriptExpressions());
 		for(HAPEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInAttributes())  scriptExpressions.addAll(scriptExpressionInAttribute.getScriptExpressions()); 
 		for(HAPEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInTagAttributes())  scriptExpressions.addAll(scriptExpressionInAttribute.getScriptExpressions()); 
-			
-			
 		processScriptExpression(scriptExpressions, uiDefinitionUnit, runtime);
 
-		
-		
-//		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : uiDefinitionUnit.getScriptExpressionsInTagAttributes()){
-//			processScriptExpression(embededScriptExpression, uiDefinitionUnit, runtime);
-//		}
-//		
-//		for(HAPUIDefinitionUnit child : uiDefinitionUnit.getUITags()){
-//			processScriptExpression(child, runtime);
-//		}
+		for(HAPUIDefinitionUnit child : uiDefinitionUnit.getUITags()){
+			processScriptExpression(child, runtime);
+		}
 	}
 
 	private static void processScriptExpression(List<HAPScriptExpression> scriptExpressions, HAPUIDefinitionUnit uiDefinitionUnit, HAPRuntime runtime){
@@ -84,6 +73,4 @@ public class HAPUIResourceUtility {
 			}
 		}
 	}
-	
-
 }

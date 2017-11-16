@@ -11,8 +11,9 @@ import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.context.HAPContextUtility;
 import com.nosliw.uiresource.definition.HAPConstantUtility;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
-import com.nosliw.uiresource.definition.HAPUIResourceUtility;
+import com.nosliw.uiresource.expression.HAPUIResourceExpressionProcessorUtility;
 import com.nosliw.uiresource.resource.HAPResourceUtility;
+import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPUIResourceManager {
 
@@ -22,13 +23,21 @@ public class HAPUIResourceManager {
 	
 	private HAPResourceManagerRoot m_resourceMan;
 
+	private HAPUITagManager m_uiTagMan;
+	
 	private HAPRuntime m_runtime;
 
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
 	HAPUIResourceIdGenerator m_idGengerator = new HAPUIResourceIdGenerator(1);
 
-	public HAPUIResourceManager(HAPExpressionManager expressionMan, HAPResourceManagerRoot resourceMan, HAPRuntime runtime, HAPDataTypeHelper dataTypeHelper){
+	public HAPUIResourceManager(
+			HAPUITagManager uiTagMan,
+			HAPExpressionManager expressionMan, 
+			HAPResourceManagerRoot resourceMan, 
+			HAPRuntime runtime, 
+			HAPDataTypeHelper dataTypeHelper){
+		this.m_uiTagMan = uiTagMan;
 		this.m_expressionMan = expressionMan;
 		this.m_resourceMan = resourceMan;
 		this.m_runtime = runtime;
@@ -76,10 +85,10 @@ public class HAPUIResourceManager {
 		}
 		if(!uiResource.isProcessed()){
 			//build expression context
-			HAPContextUtility.processExpressionContext(null, uiResource, this.m_dataTypeHelper);
+			HAPContextUtility.processExpressionContext(null, uiResource, this.m_dataTypeHelper, this.m_uiTagMan);
 
-			
-			HAPUIResourceUtility.processUIResource(uiResource, m_runtime, m_resourceMan);
+			//process expression definition
+			HAPUIResourceExpressionProcessorUtility.processExpressions(uiResource, m_runtime, m_resourceMan);
 			
 			//discovery resources required
 			HAPResourceUtility.processResourceDependency(uiResource, m_resourceMan);

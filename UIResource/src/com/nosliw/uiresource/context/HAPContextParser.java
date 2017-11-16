@@ -5,6 +5,7 @@ import java.util.Iterator;
 import org.json.JSONObject;
 
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
+import com.nosliw.uiresource.tag.HAPUITagDefinitionContext;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElementAbsolute;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElment;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElmentRelative;
@@ -17,7 +18,23 @@ public class HAPContextParser {
 		return contextEle;
 	}
 	
-	public static HAPUITagDefinitionContextElment parseContextRootElementInTagDefinition(JSONObject eleDefJson){
+	public static void parseContextInTagDefinition(JSONObject contextJson, HAPUITagDefinitionContext contextOut){
+		Boolean inherit = (Boolean)contextJson.opt(HAPUITagDefinitionContext.INHERIT);
+		if(inherit!=null)  contextOut.setInherit(inherit);
+		
+		JSONObject contextEleJson = contextJson.optJSONObject(HAPUITagDefinitionContext.ELEMENTS);
+		if(contextEleJson!=null){
+			Iterator<String> it = contextEleJson.keys();
+			while(it.hasNext()){
+				String eleName = it.next();
+				JSONObject eleDefJson = contextEleJson.optJSONObject(eleName);
+				HAPUITagDefinitionContextElment tagDefContextEle = parseContextRootElementInTagDefinition(eleDefJson);
+				contextOut.addElement(eleName, tagDefContextEle);
+			}
+		}
+	}
+	
+	private static HAPUITagDefinitionContextElment parseContextRootElementInTagDefinition(JSONObject eleDefJson){
 		HAPUITagDefinitionContextElment out = null;
 		String path = (String)eleDefJson.opt(HAPUITagDefinitionContextElmentRelative.PATH);
 		if(path!=null){

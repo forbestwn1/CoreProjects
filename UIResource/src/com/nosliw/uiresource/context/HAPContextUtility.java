@@ -20,11 +20,12 @@ import com.nosliw.uiresource.tag.HAPUITagDefinition;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElementAbsolute;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElment;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElmentRelative;
+import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPContextUtility {
 
 	
-	public static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper){
+	public static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan){
 
 		HAPUIResourceExpressionContext expContext = uiDefinition.getExpressionContext();
 
@@ -37,8 +38,8 @@ public class HAPContextUtility {
 		case HAPConstant.UIRESOURCE_TYPE_TAG:
 			//for tag
 			HAPUIDefinitionUnitTag tag = (HAPUIDefinitionUnitTag)uiDefinition;
-			HAPUITagDefinition uiTagDefinition = null;
-			if(uiTagDefinition.isInheritContext()){
+			HAPUITagDefinition uiTagDefinition = uiTagMan.getUITagDefinition(tag.getTagName());
+			if(uiTagDefinition.getContext().isInherit()){
 				//add parent
 				for(String rootEleName : parent.getContext().getElements().keySet()){
 					HAPUITagDefinitionContextElmentRelative relativeEle = new HAPUITagDefinitionContextElmentRelative(rootEleName);
@@ -48,7 +49,7 @@ public class HAPContextUtility {
 			}
 
 			//element defined in tag definition
-			Map<String, HAPUITagDefinitionContextElment> defEles = uiTagDefinition.getContextDefinitions();
+			Map<String, HAPUITagDefinitionContextElment> defEles = uiTagDefinition.getContext().getElements();
 			for(String name : defEles.keySet()){
 				String realName = getSolidName(name);
 				tag.getContext().addElement(realName, processUITagDefinitionContextElement(realName, defEles.get(name), parent.getContext(), dataTypeHelper));
@@ -77,15 +78,11 @@ public class HAPContextUtility {
 		//expression from current
 		for(HAPExpressionDefinition expDef : uiDefinition.getOtherExpressionDefinitions())	expContext.addExpressionDefinition(expDef);
 		
-		//prepress expressions
-		//preprocess attributes operand in expressions
-//		HAPUIResourceExpressionUtility.processAttributeOperandInExpression(m_expressionDefinitionSuite, m_variables);
-		
 		//children ui tags
 		Iterator<HAPUIDefinitionUnitTag> its = uiDefinition.getUITags().iterator();
 		while(its.hasNext()){
 			HAPUIDefinitionUnitTag uiTag = its.next();
-			processExpressionContext(uiDefinition, uiTag, dataTypeHelper);
+			processExpressionContext(uiDefinition, uiTag, dataTypeHelper, uiTagMan);
 		}
 		
 		
