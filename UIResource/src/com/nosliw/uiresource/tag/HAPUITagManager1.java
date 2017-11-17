@@ -26,7 +26,7 @@ public class HAPUITagManager1 {
 	}
 	
 	public void registerUITag(HAPUITagDefinition tagInfo){
-		this.m_uiTags.put(tagInfo.getName(), tagInfo);
+//		this.m_uiTags.put(tagInfo.getName(), tagInfo);
 	}
 	
 	public HAPUITagDefinition getUITag(String name){

@@ -7,6 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
@@ -19,6 +20,7 @@ import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
+import com.nosliw.uiresource.tag.HAPUITagId;
 
 public class HAPResourceUtility {
 
@@ -33,11 +35,23 @@ public class HAPResourceUtility {
 		}
 		
 		//resource need by tag
+		Set<String> tagNames = new HashSet<String>();
+		discoverUITagsInUIUnit(uiResource, tagNames);
+		for(String tagName : tagNames)		dependencyResourceIds.add(new HAPResourceIdUITag(new HAPUITagId(tagName)));
 		
 		Iterator<HAPResourceId> it = dependencyResourceIds.iterator();
 		while(it.hasNext()){
 			HAPResourceId resourceId = it.next();
 			uiResource.getResourceDependency().add(new HAPResourceDependent(resourceId));
+		}
+	}
+	
+	private static void discoverUITagsInUIUnit(HAPUIDefinitionUnit uiUnit, Set<String> names){
+		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(uiUnit.getType())){
+			names.add(((HAPUIDefinitionUnitTag)uiUnit).getTagName());
+		}
+		for(HAPUIDefinitionUnitTag childUiUnit : uiUnit.getUITags()){
+			discoverUITagsInUIUnit(childUiUnit, names);
 		}
 	}
 	

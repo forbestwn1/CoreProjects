@@ -1,8 +1,5 @@
 package com.nosliw.uiresource.tag;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 import org.json.JSONObject;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
@@ -27,7 +24,7 @@ public class HAPUITagDefinitionParser {
 
 			String name = (String)defObjJS.get(HAPUITagDefinition.NAME);
 	    	String script = Context.toString((Function)defObjJS.get(HAPUITagDefinition.SCRIPT));
-			out = new HAPUITagDefinition(name, script);
+			out = new HAPUITagDefinition(new HAPUITagId(name), script);
 
 			//parse context
 			HAPUITagDefinitionContext context = out.getContext();

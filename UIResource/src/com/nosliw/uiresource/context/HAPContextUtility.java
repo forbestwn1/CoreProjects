@@ -20,6 +20,7 @@ import com.nosliw.uiresource.tag.HAPUITagDefinition;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElementAbsolute;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElment;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElmentRelative;
+import com.nosliw.uiresource.tag.HAPUITagId;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPContextUtility {
@@ -38,14 +39,13 @@ public class HAPContextUtility {
 		case HAPConstant.UIRESOURCE_TYPE_TAG:
 			//for tag
 			HAPUIDefinitionUnitTag tag = (HAPUIDefinitionUnitTag)uiDefinition;
-			HAPUITagDefinition uiTagDefinition = uiTagMan.getUITagDefinition(tag.getTagName());
+			HAPUITagDefinition uiTagDefinition = uiTagMan.getUITagDefinition(new HAPUITagId(tag.getTagName()));
 			if(uiTagDefinition.getContext().isInherit()){
 				//add parent
 				for(String rootEleName : parent.getContext().getElements().keySet()){
 					HAPUITagDefinitionContextElmentRelative relativeEle = new HAPUITagDefinitionContextElmentRelative(rootEleName);
 					tag.getContext().addElement(rootEleName, processUITagDefinitionContextElement(rootEleName, relativeEle, parent.getContext(), dataTypeHelper));
 				}
-				
 			}
 
 			//element defined in tag definition

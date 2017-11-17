@@ -21,7 +21,8 @@ public class HAPResourceIdUIResource  extends HAPResourceId{
 
 	public HAPResourceIdUIResource(HAPUIResourceId uiResourceId){
 		super(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, null);
-		this.setGatewayId(uiResourceId);
+		this.m_uiResourceId = uiResourceId;
+		this.m_id = HAPSerializeManager.getInstance().toStringValue(uiResourceId, HAPSerializationFormat.LITERATE); 
 	}
 
 	@Override
@@ -31,10 +32,6 @@ public class HAPResourceIdUIResource  extends HAPResourceId{
 	}
 
 	public HAPUIResourceId getUIResourceId(){  return this.m_uiResourceId;	}
-	protected void setGatewayId(HAPUIResourceId uiResourceId){
-		this.m_uiResourceId = uiResourceId;
-		this.m_id = HAPSerializeManager.getInstance().toStringValue(uiResourceId, HAPSerializationFormat.LITERATE); 
-	}
 	
 	public HAPResourceIdUIResource clone(){
 		HAPResourceIdUIResource out = new HAPResourceIdUIResource();
