@@ -1,4 +1,4 @@
-package com.nosliw.uiresource;
+package com.nosliw.uiresource.parser;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,11 +27,15 @@ import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
+import com.nosliw.uiresource.HAPDataBinding;
+import com.nosliw.uiresource.HAPUIResourceIdGenerator;
 import com.nosliw.uiresource.context.HAPContextNodeRootAbsolute;
 import com.nosliw.uiresource.context.HAPContextParser;
 import com.nosliw.uiresource.definition.HAPConstantDef;
+import com.nosliw.uiresource.definition.HAPElementEvent;
 import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInContent;
+import com.nosliw.uiresource.definition.HAPScript;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
@@ -277,7 +281,7 @@ public class HAPUIResourceParser {
 				}
 				else if(segment instanceof HAPScriptExpression){
 					HAPScriptExpression scriptExpression = (HAPScriptExpression)segment;
-					HAPEmbededScriptExpressionInContent expressionContent = new HAPEmbededScriptExpressionInContent(this.m_idGenerator.createId(), scriptExpression);
+					HAPEmbededScriptExpressionInContent expressionContent = new HAPEmbededScriptExpressionInContent(this.m_idGenerator.createId(), scriptExpression, this.m_expressionManager);
 					newText.append("<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+expressionContent.getUIId()+"></span>");
 					resource.addScriptExpressionInContent(expressionContent);
 				}
@@ -425,25 +429,33 @@ public class HAPUIResourceParser {
 		for(Attribute eleAttr : eleAttrs){
 			String eleAttrKey = eleAttr.getKey();
 			//replace express attribute value with; create ExpressEle object
-			
-			List<Object> segments = HAPScriptExpressionUtility.discoverUIExpressionInText(eleAttr.getValue(), this.m_expressionManager);
-			HAPScriptExpression scriptExpression = null;
-			//try to find first script expression in attribute value
-			boolean expresionExists = false;
-			for(Object segment : segments){
-				if(segment instanceof HAPScriptExpression){
-					expresionExists = true;
-					break;
-				}
-			}
-			
-			if(expresionExists){
-				//handle expression attribute
-				HAPEmbededScriptExpressionInAttribute eAttr = new HAPEmbededScriptExpressionInAttribute(eleAttrKey, uiId, segments);
+
+			HAPEmbededScriptExpressionInAttribute eAttr = new HAPEmbededScriptExpressionInAttribute(eleAttrKey, uiId, eleAttr.getValue(), this.m_expressionManager);
+			if(!eAttr.getScriptExpressions().isEmpty()){
 				if(isCustomerTag)  resource.addScriptExpressionInTagAttribute(eAttr);
 				else  resource.addScriptExpressionInAttribute(eAttr);
 				ele.attr(eleAttrKey, "");
 			}
+			
+			
+//			List<Object> segments = HAPScriptExpressionUtility.discoverUIExpressionInText(eleAttr.getValue(), this.m_expressionManager);
+//			HAPScriptExpression scriptExpression = null;
+//			//try to find first script expression in attribute value
+//			boolean expresionExists = false;
+//			for(Object segment : segments){
+//				if(segment instanceof HAPScriptExpression){
+//					expresionExists = true;
+//					break;
+//				}
+//			}
+//			
+//			if(expresionExists){
+//				//handle expression attribute
+//				HAPEmbededScriptExpressionInAttribute eAttr = new HAPEmbededScriptExpressionInAttribute(eleAttrKey, uiId, segments);
+//				if(isCustomerTag)  resource.addScriptExpressionInTagAttribute(eAttr);
+//				else  resource.addScriptExpressionInAttribute(eAttr);
+//				ele.attr(eleAttrKey, "");
+//			}
 		}
 	}
 	

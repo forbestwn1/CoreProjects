@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.uiresource.expression.HAPEmbededScriptExpression;
 
 public class HAPEmbededScriptExpressionInAttribute extends HAPEmbededScriptExpression{
@@ -14,8 +15,13 @@ public class HAPEmbededScriptExpressionInAttribute extends HAPEmbededScriptExpre
 	//attribute name
 	private String m_attribute;
 
-	public HAPEmbededScriptExpressionInAttribute(String attr, String uiId, List<Object> elements){
-		super(uiId, elements);
+	public HAPEmbededScriptExpressionInAttribute(String attr, String uiId, List<Object> elements, HAPExpressionManager expressionManager){
+		super(uiId, elements, expressionManager);
+		this.m_attribute = attr;
+	}
+
+	public HAPEmbededScriptExpressionInAttribute(String attr, String uiId, String content, HAPExpressionManager expressionManager){
+		super(uiId, content, expressionManager);
 		this.m_attribute = attr;
 	}
 	

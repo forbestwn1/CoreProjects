@@ -1,4 +1,4 @@
-package com.nosliw.uiresource;
+package com.nosliw.uiresource.parser;
 
 import java.util.ArrayList;
 import java.util.List;

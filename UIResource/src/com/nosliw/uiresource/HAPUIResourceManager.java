@@ -12,6 +12,7 @@ import com.nosliw.uiresource.context.HAPContextUtility;
 import com.nosliw.uiresource.definition.HAPConstantUtility;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionProcessorUtility;
+import com.nosliw.uiresource.parser.HAPUIResourceParser;
 import com.nosliw.uiresource.resource.HAPResourceUtility;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
@@ -85,7 +86,7 @@ public class HAPUIResourceManager {
 		}
 		if(!uiResource.isProcessed()){
 			//build expression context
-			HAPContextUtility.processExpressionContext(null, uiResource, this.m_dataTypeHelper, this.m_uiTagMan);
+			HAPContextUtility.processExpressionContext(null, uiResource, this.m_dataTypeHelper, this.m_uiTagMan, this.m_runtime, this.m_expressionMan);
 
 			//process expression definition
 			HAPUIResourceExpressionProcessorUtility.processExpressions(uiResource, m_runtime, m_resourceMan);
