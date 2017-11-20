@@ -1,6 +1,7 @@
 package com.nosliw.uiresource.expression;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,28 +17,28 @@ import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskLoadResourcesRhino;
 
-public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTaskExecuteExpression{
+public class HAPRuntimeTaskExecuteEmbededExpression extends HAPRuntimeTaskExecuteExpression{
 
-	final public static String TASK = "ExecuteScriptExpression"; 
+	final public static String TASK = "ExecuteEmbededExpression"; 
 	
 	@HAPAttribute
-	public static String SCRIPTEXPRESSION = "scriptExpression";
+	public static String EMBEDEDEXPRESSION = "embededExpression";
 
 	@HAPAttribute
 	public static String VARIABLESVALUE = "variablesValue";
 	
-	private HAPScriptExpression m_scriptExpression;
+	private HAPEmbededScriptExpression m_embededExpression;
 	
 	//variable value can be data or other object
 	Map<String, Object> m_variablesValue;
 	
 	Map<String, Object> m_scriptConstants;
 	
-	public HAPRuntimeTaskExecuteScriptExpression(
-			HAPScriptExpression scriptExpression, 
+	public HAPRuntimeTaskExecuteEmbededExpression(
+			HAPEmbededScriptExpression embededExpression, 
 			Map<String, Object> variablesValue, 
 			Map<String, Object> scriptConstants){
-		this.m_scriptExpression = scriptExpression;
+		this.m_embededExpression = embededExpression;
 		this.m_variablesValue = variablesValue; 
 		this.m_scriptConstants = scriptConstants;
 	}
@@ -45,16 +46,20 @@ public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTaskExecute
 	@Override
 	public String getTaskType() {		return TASK;	}
 
-	@Override
-	public String getScriptFunction() {		return HAPScriptExpressionUtility.buildScriptExpressionJSFunction(this.m_scriptExpression);	}
-	@Override
-	public Map<String, HAPExpression> getExpressions(){  return this.m_scriptExpression.getExpressions(); }
+	public HAPEmbededScriptExpression getEmbededScriptExpression(){ return this.m_embededExpression;  }
 	@Override
 	public Map<String, Object> getVariablesValue(){  return this.m_variablesValue;  }
 	@Override
 	public Map<String, Object> getScriptConstants(){  return this.m_scriptConstants;  }
-
-	public HAPScriptExpression getScriptExpression(){ return this.m_scriptExpression;  }
+	@Override
+	public Map<String, HAPExpression> getExpressions(){
+		Map<String, HAPExpression> out = new LinkedHashMap<String, HAPExpression>();
+		for(HAPExpression expression : this.m_embededExpression.getExpressions())	out.put(expression.getId(), expression);
+		return out;
+	}
+	
+	@Override
+	public String getScriptFunction() {		return HAPScriptExpressionUtility.buildEmbedScriptExpressionJSFunction(this.m_embededExpression);  }
 	
 	@Override
 	public HAPRuntimeTask execute(HAPRuntime runtime) {
@@ -63,7 +68,7 @@ public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTaskExecute
 			
 			//prepare resources for expression in the runtime (resource and dependency)
 			//execute expression after load required resources
-			List<HAPExpression> expressions = new ArrayList(this.m_scriptExpression.getExpressions().values());
+			List<HAPExpression> expressions = new ArrayList(this.m_embededExpression.getExpressions());
 			List<HAPResourceInfo> resourcesId =  HAPExpressionUtility.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager());
 			HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
 			loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));
@@ -77,10 +82,10 @@ public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTaskExecute
 	}
 
 	class HAPRunTaskEventListenerInner implements HAPRunTaskEventListener{
-		private HAPRuntimeTaskExecuteScriptExpression m_parent;
+		private HAPRuntimeTaskExecuteEmbededExpression m_parent;
 		private HAPRuntimeImpRhino m_runtime;
 		
-		public HAPRunTaskEventListenerInner(HAPRuntimeTaskExecuteScriptExpression parent, HAPRuntimeImpRhino runtime){
+		public HAPRunTaskEventListenerInner(HAPRuntimeTaskExecuteEmbededExpression parent, HAPRuntimeImpRhino runtime){
 			this.m_parent = parent;
 			this.m_runtime = runtime;
 		}
@@ -103,4 +108,5 @@ public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTaskExecute
 			}
 		}
 	}
+
 }

@@ -19,7 +19,7 @@ var packageObj = library;
 	var node_createEmbededScriptExpressionInContent = function(embededScriptExpression, uiResourceView, requestInfo){
 		
 		//script expression definition
-		var loc_embededScriptExpression = node_createUIResourceEmbededScriptExpression(embededScriptExpression, uiResourceView, requestInfo);
+		var loc_embededScriptExpression = node_createUIResourceEmbededScriptExpression(embededScriptExpression, uiResourceView.getConstants(), uiResourceView.getContext(), requestInfo);
 		
 		//parent resource view
 		var loc_uiResourceView = uiResourceView;
@@ -74,7 +74,7 @@ var packageObj = library;
 	nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 	nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 	nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
-	nosliw.registerSetNodeDataEvent("uiresource.createUIResourceEmbededScriptExpression", function(){node_createUIResourceEmbededScriptExpression = this.getData();});
+	nosliw.registerSetNodeDataEvent("uiexpression.createUIResourceEmbededScriptExpression", function(){node_createUIResourceEmbededScriptExpression = this.getData();});
 
 	//Register Node by Name
 	packageObj.createChildNode("createEmbededScriptExpressionInContent", node_createEmbededScriptExpressionInContent); 

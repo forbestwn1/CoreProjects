@@ -16,7 +16,7 @@ var packageObj = library;
 	 * type: 
 	 * 		text, attribute, tagAttribute
 	 */
-	var node_createUIResourceEmbededScriptExpression = function(embededScriptExpression, uiResourceView, requestInfo){
+	var node_createUIResourceEmbededScriptExpression = function(embededScriptExpression, constants, context, requestInfo){
 		
 		var loc_scriptExpressions = {};
 		
@@ -25,12 +25,12 @@ var packageObj = library;
 		var loc_dataEventObject = node_createEventObject();
 		
 		var lifecycleCallback = {};
-		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(embededScriptExpression, uiResourceView, requestInfo){
+		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(embededScriptExpression, constants, context, requestInfo){
 
 			loc_scriptFunction = embededScriptExpression[node_COMMONATRIBUTECONSTANT.EMBEDEDSCRIPTEXPRESSION_SCRIPTFUNCTION];
 			
 			_.each(embededScriptExpression[node_COMMONATRIBUTECONSTANT.EMBEDEDSCRIPTEXPRESSION_SCRIPTEXPRESSIONS], function(scriptExpression, id){
-				var scriptExprssionObj = node_createUIResourceScriptExpression(scriptExpression, uiResourceView, requestInfo);
+				var scriptExprssionObj = node_createUIResourceScriptExpression(scriptExpression, constants, context, requestInfo);
 				loc_scriptExpressions[id] = scriptExprssionObj;
 				scriptExprssionObj.registerListener(loc_dataEventObject, function(eventName, data){
 					switch(eventName){
@@ -64,6 +64,27 @@ var packageObj = library;
 		
 		var loc_out = {
 
+			getExecuteEmbededScriptExpressionRequest : function(handlers, requester_parent){
+				var requestInfo = loc_out.getRequestInfo(requester_parent);
+
+				//calculate multiple script expression
+				var executeMutipleScriptExpressionRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("ExecuteMutipleEmbededScriptExpression", {"scriptExpressions":loc_scriptExpressions}), {});
+				_.each(loc_scriptExpressions, function(scriptExpression, id){
+					var scriptExpressionRequest = scriptExpression.getExecuteScriptExpressionRequest(undefined, requestInfo);
+					executeEmbededScriptExpressionRequest.addRequest(id, scriptExpressionRequest);
+				});
+
+				var executeEmbededScriptExpressionRequest = node_createServiceRequestInfoService(new node_ServiceInfo("ExecuteEmbedScriptExpression", {"script":script, "expressions":expressions, "variables":variables}), handlers, requestInfo);
+				var requestDependency = new node_DependentServiceRequestInfo(executeMutipleScriptExpressionRequest, {
+					success : function(requestInfo, scriptExpressionsResult){
+						var scriptExpressionsData = scriptExpressionsResult.getResults();
+						return loc_scriptFunction.call(loc_out, scriptExpressionsData);
+					}
+				});
+				executeEmbededScriptExpressionRequest.setDependentService(requestDependency);
+				return executeEmbededScriptExpressionRequest;
+			},
+				
 			registerListener : function(listenerEventObj, handler){
 				loc_dataEventObject.registerListener(undefined, listenerEventObj, handler);
 			},
@@ -77,7 +98,7 @@ var packageObj = library;
 
 		//append resource and object life cycle method to out obj
 		loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
-		node_getLifecycleInterface(loc_out).init(embededScriptExpression, uiResourceView, requestInfo);
+		node_getLifecycleInterface(loc_out).init(embededScriptExpression, constants, context, requestInfo);
 		return loc_out;
 	};
 
@@ -90,7 +111,7 @@ var packageObj = library;
 	nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 	nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 	nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
-	nosliw.registerSetNodeDataEvent("uiresource.createUIResourceScriptExpression", function(){node_createUIResourceScriptExpression = this.getData();});
+	nosliw.registerSetNodeDataEvent("uiexpression.createUIResourceScriptExpression", function(){node_createUIResourceScriptExpression = this.getData();});
 
 	//Register Node by Name
 	packageObj.createChildNode("createUIResourceEmbededScriptExpression", node_createUIResourceEmbededScriptExpression); 

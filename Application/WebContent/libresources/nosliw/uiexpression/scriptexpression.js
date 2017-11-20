@@ -18,7 +18,7 @@ var packageObj = library;
 	 * type: 
 	 * 		text, attribute, tagAttribute
 	 */
-	var node_createUIResourceScriptExpression = function(scriptExpression, uiResourceView, requestInfo){
+	var node_createUIResourceScriptExpression = function(scriptExpression, constants, context, requestInfo){
 		
 		var loc_constants = {};
 		
@@ -49,8 +49,8 @@ var packageObj = library;
 		}
 		
 		var lifecycleCallback = {};
-		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(scriptExpression, uiResourceView, requestInfo){
-			loc_constants = uiResourceView.getConstants;
+		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(scriptExpression, constants, context, requestInfo){
+			loc_constants = constants;
 			
 			loc_expressions = scriptExpression[node_COMMONATRIBUTECONSTANT.SCRIPTEXPRESSION_EXPRESSIONS];
 			
@@ -61,7 +61,7 @@ var packageObj = library;
 			_.each(varNames, function(varName, index){
 				contextVariables.push(node_createContextVariable(varName));
 			});
-			loc_contextVarGroup = node_createContextVariablesGroup(uiResourceView.getContext(), contextVariables, loc_contextVarsGroupHandler, this);
+			loc_contextVarGroup = node_createContextVariablesGroup(context, contextVariables, loc_contextVarsGroupHandler, this);
 		};
 			
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
@@ -78,7 +78,7 @@ var packageObj = library;
 					variableParms[varName] = varValue;
 				});
 
-				var out = nosliw.runtime.getExpressionService().getExecuteScriptExpressionRequest(loc_scriptFunction, loc_expressions, variableParms, loc_constants, handlers, requester_parent)
+				var out = nosliw.runtime.getExpressionService().getExecuteScriptRequest(loc_scriptFunction, loc_expressions, variableParms, loc_constants, handlers, requester_parent)
 				return out;
 			},
 			
@@ -102,7 +102,7 @@ var packageObj = library;
 
 		//append resource and object life cycle method to out obj
 		loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
-		node_getLifecycleInterface(loc_out).init(scriptExpression, uiResourceView, requestInfo);
+		node_getLifecycleInterface(loc_out).init(scriptExpression, constants, context, requestInfo);
 		return loc_out;
 	};
 

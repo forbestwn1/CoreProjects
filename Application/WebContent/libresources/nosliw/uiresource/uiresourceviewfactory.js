@@ -221,10 +221,19 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 			loc_expressionContents.push(node_createEmbededScriptExpressionInAttribute(expressionAttr, loc_out, requestInfo));
 		});
 		
-		//init element event
+		//init regular tag event
 		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_ELEMENTEVENTS], function(eleEvent, key, list){
 			loc_elementEvents.push(loc_initElementEvent(eleEvent));
 		});
+
+		//init customer tags
+		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_UITAGS], function(uiTag, tagUiId, list){
+			var uiTagId = loc_out.prv_getUpdateUIId(uiTag[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_ID]);
+			var uiTagObj = nosliw.getUITagManager().createUITagObject(uiTagId, uiTag, loc_out);
+			loc_uiTags[uiTagId] =  uiTagObj;
+		});
+
+		
 		
 		
 /*		
@@ -239,13 +248,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 			loc_attributes[key] = value;			return list;
 		});
 		
-
-		//init customer tags
-		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_UITAGS], function(uiTag, tagUiId, list){
-			var uiTagId = loc_out.prv_getUpdateUIId(uiTag[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_ID]);
-			var uiTagObj = nosliw.getUITagManager().createUITagObject(uiTagId, uiTag, loc_out);
-			loc_uiTags[uiTagId] =  uiTagObj;
-		});
 
 		//init customer tag expression attribute
 		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_EXPRESSIONTAGATTRIBUTES], function(expressionTagAttr, key, list){
@@ -419,7 +421,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 			return tagsOut;
 		},
 		
-
+		getConstants : function(){   return loc_constants;  },
 		
 		setAttribute : function(attribute, value){loc_attributes[attribute]=value;},
 		getAttribute : function(attribute){return loc_attributes[attribute];},

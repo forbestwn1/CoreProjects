@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.definition;
+package com.nosliw.uiresource.expression;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPJsonTypeAsItIs;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.uiresource.expression.HAPScriptExpression;
+import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInAttribute;
 
 /**
  * This class represent all string value that contains script expressions 
@@ -125,7 +125,15 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 	}
 	
 	public List<HAPScriptExpression> getScriptExpressions(){		return new ArrayList(this.m_scriptExpressions.values());	}
+	public List<HAPExpression> getExpressions(){
+		List<HAPExpression> out = new ArrayList<HAPExpression>();
+		for(HAPScriptExpression scriptExpression : this.getScriptExpressions()){
+			out.addAll(scriptExpression.getExpressions().values());
+		}
+		return out;
+	}
 	public String getUIId(){   return this.m_uiId;   }
+	public String getScriptFunction(){   return this.m_scriptFunction;  }
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

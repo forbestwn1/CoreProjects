@@ -13,12 +13,12 @@ import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
-import com.nosliw.uiresource.definition.HAPEmbededScriptExpression;
 import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
+import com.nosliw.uiresource.expression.HAPEmbededScriptExpression;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
 import com.nosliw.uiresource.tag.HAPUITagId;
 

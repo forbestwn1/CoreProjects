@@ -335,7 +335,7 @@ var node_createExpressionService = function(){
 	};	
 
 
-	var loc_getExecuteScriptExpressionRequest = function(script, expressions, variables, scriptConstants, handlers, requester_parent){
+	var loc_getExecuteScriptRequest = function(script, expressions, variables, scriptConstants, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		//calculate multiple expression
 		var executeMultipleExpressionRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("ExecuteMultipleExpression", {"expressions":expressions, "variables":variables}), {});
@@ -385,13 +385,14 @@ var node_createExpressionService = function(){
 		 * 		script : function with parameter map (name : expression result)
 		 * 		expressions : map (name : expression)
 		 * 		variables : variables for expression
+		 * 		scriptConstants : constants in script
 		 */
-		getExecuteScriptExpressionRequest : function(script, expressions, variables, scriptConstants, handlers, requester_parent){
-			return loc_getExecuteScriptExpressionRequest(script, expressions, variables, scriptConstants, handlers, requester_parent);
+		getExecuteScriptRequest : function(script, expressions, variables, scriptConstants, handlers, requester_parent){
+			return loc_getExecuteScriptRequest(script, expressions, variables, scriptConstants, handlers, requester_parent);
 		},
 	
 		executeExecuteScriptExpressionRequest : function(script, expressions, variables, scriptConstants, handlers, requester_parent){
-			var requestInfo = this.getExecuteScriptExpressionRequest(script, expressions, variables, scriptConstants, handlers, requester_parent);
+			var requestInfo = this.getExecuteScriptRequest(script, expressions, variables, scriptConstants, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},
 	};

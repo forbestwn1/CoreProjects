@@ -54,9 +54,9 @@ public class HAPScriptExpressionUtility {
 		}
 		return out;
 	}
-	
-	public static HAPJSScriptInfo buildRequestScriptForExecuteScriptExpressionTask(HAPRuntimeTaskExecuteScriptExpression task, HAPRuntimeImpRhino runtime){
-		HAPScriptExpression scriptExpression = task.getScriptExpression();
+
+	//build script for execute script expression task 
+	public static HAPJSScriptInfo buildRequestScriptForExecuteScriptExpressionTask(HAPRuntimeTaskExecuteExpression task, HAPRuntimeImpRhino runtime){
 		Map<String, Object> variableValue = task.getVariablesValue();
 
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
@@ -64,8 +64,7 @@ public class HAPScriptExpressionUtility {
 		templateParms.put("variables", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(variableValue==null?new LinkedHashMap<String, HAPData>() : variableValue, HAPSerializationFormat.JSON)));
 
 		//build javascript function to execute the script
-		String funScript = buildScriptExpressionJSFunction(scriptExpression);
-		templateParms.put("functionScript", funScript);
+		templateParms.put("functionScript", task.getScriptFunction());
 		
 		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
 		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
@@ -83,6 +82,33 @@ public class HAPScriptExpressionUtility {
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
 		return out;
+	}
+
+	public static String buildEmbedScriptExpressionJSFunction(HAPEmbededScriptExpression embedScriptExpression){
+		String expressionsDataParmName = "expressionsData"; 
+		String constantsDataParmName = "constantsData"; 
+		String variablesDataParmName = "variablesData"; 
+		String scriptExpressionParmName = "scriptExpressionData";
+
+		StringBuffer scriptExpressionFunScript = new StringBuffer(); 
+		List<HAPScriptExpression> scriptExpressions = embedScriptExpression.getScriptExpressions();
+		for(HAPScriptExpression scriptExpression : scriptExpressions){
+			scriptExpressionFunScript.append(scriptExpressionParmName +  "["+ scriptExpression.getId()  + "]="  +scriptExpression.getScriptFunction() + "("+expressionsDataParmName+","+constantsDataParmName+","+variablesDataParmName+");");
+		}
+		
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPScriptExpressionUtility.class, "EmbededScriptExpressionFunction.temp");
+		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+		templateParms.put("embededScriptExpressionFunction", embedScriptExpression.getScriptFunction());
+		
+		templateParms.put("executeScriptExpressions", scriptExpressionFunScript.toString());
+		
+		templateParms.put("expressionsData", expressionsDataParmName);
+		templateParms.put("constantsData", constantsDataParmName);
+		templateParms.put("variablesData", variablesDataParmName);
+		templateParms.put("scriptExpressionData", scriptExpressionParmName);
+		
+		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
+		return script;
 	}
 	
 	//build execute function for script expression
