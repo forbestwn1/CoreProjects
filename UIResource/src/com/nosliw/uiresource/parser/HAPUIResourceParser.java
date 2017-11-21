@@ -28,7 +28,7 @@ import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.uiresource.HAPDataBinding;
-import com.nosliw.uiresource.HAPUIResourceIdGenerator;
+import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.context.HAPContextNodeRootAbsolute;
 import com.nosliw.uiresource.context.HAPContextParser;
 import com.nosliw.uiresource.definition.HAPConstantDef;
@@ -49,7 +49,7 @@ import com.nosliw.uiresource.expression.HAPScriptExpressionUtility;
 public class HAPUIResourceParser {
 
 	//for creating ui id
-	private HAPUIResourceIdGenerator m_idGenerator;
+	private HAPIdGenerator m_idGenerator;
 	//configuration object
 	private HAPConfigure m_setting;
 	//current ui resource 
@@ -59,7 +59,7 @@ public class HAPUIResourceParser {
 	private HAPCriteriaParser m_criteriaParser;
 	private HAPExpressionManager m_expressionManager;
 	
-	public HAPUIResourceParser(HAPConfigure setting, HAPExpressionManager expressionMan, HAPUIResourceIdGenerator idGenerator){
+	public HAPUIResourceParser(HAPConfigure setting, HAPExpressionManager expressionMan, HAPIdGenerator idGenerator){
 		this.m_idGenerator = idGenerator;
 		this.m_setting = setting;
 		this.m_expressionManager = expressionMan;

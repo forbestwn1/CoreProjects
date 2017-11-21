@@ -33,6 +33,8 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String CONTEXT = "context";
 	@HAPAttribute
+	public static final String PRIVATECONTEXT = "privateContext";
+	@HAPAttribute
 	public static final String TYPE = "type";
 	@HAPAttribute
 	public static final String SCRIPTEXPRESSIONSINCONTENT = "scriptExpressionsInContent";
@@ -76,6 +78,9 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 
 	//context definition
 	private HAPContext m_context;
+	
+	//private context
+	private HAPContext m_privateContext;
 	
 	//a set of named data that can be used as constants
 	private Map<String, HAPConstantDef> m_constantDefs;
@@ -124,6 +129,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public HAPUIDefinitionUnit(String id){
 		this.m_id = id;
 		this.m_context = new HAPContext();
+		this.m_privateContext = new HAPContext();
 		this.m_scriptExpressionsInAttribute = new HashSet<HAPEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInContent = new HashSet<HAPEmbededScriptExpressionInContent>();
@@ -202,6 +208,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public void setContent(String content){	this.m_content = content;	}
 	
 	public HAPContext getContext(){  return this.m_context;  }
+	public HAPContext getPrivateContext(){  return this.m_privateContext;  }
 	public void addScriptExpressionInAttribute(HAPEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInAttribute.add(eAttr);	}
 	public void addScriptExpressionInTagAttribute(HAPEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInTagAttribute.add(eAttr);	}
 	public void addScriptExpressionInContent(HAPEmbededScriptExpressionInContent scriptExpressionInContent){	this.m_scriptExpressionsInContent.add(scriptExpressionInContent);	}

@@ -1,14 +1,14 @@
 package com.nosliw.uiresource;
 
-public class HAPUIResourceIdGenerator {
+public class HAPIdGenerator {
 
 	private int m_idIndex = 0;
 	
-	public HAPUIResourceIdGenerator(int initIndex){
+	public HAPIdGenerator(int initIndex){
 		this.m_idIndex = initIndex;
 	}
 
-	public HAPUIResourceIdGenerator(){
+	public HAPIdGenerator(){
 	}
 
 	public String createId(){		return String.valueOf(++this.m_idIndex);	}

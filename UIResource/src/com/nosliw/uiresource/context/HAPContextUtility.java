@@ -54,12 +54,18 @@ public class HAPContextUtility {
 			}
 
 			//element defined in tag definition
-			Map<String, HAPUITagDefinitionContextElment> defEles = uiTagDefinition.getContext().getElements();
-			for(String name : defEles.keySet()){
+			Map<String, HAPUITagDefinitionContextElment> defElesPrivate = uiTagDefinition.getContext().getPrivateElements();
+			for(String name : defElesPrivate.keySet()){
 				String realName = getSolidName(name, uiDefinition, runtime, expressionManager);
-				tag.getContext().addElement(realName, processUITagDefinitionContextElement(realName, defEles.get(name), parent.getContext(), dataTypeHelper, uiDefinition, runtime, expressionManager));
+				tag.getContext().addElement(realName, processUITagDefinitionContextElement(realName, defElesPrivate.get(name), parent.getContext(), dataTypeHelper, uiDefinition, runtime, expressionManager));
 			}
 			
+			Map<String, HAPUITagDefinitionContextElment> defElesPublic = uiTagDefinition.getContext().getPublicElements();
+			for(String name : defElesPublic.keySet()){
+				String realName = getSolidName(name, uiDefinition, runtime, expressionManager);
+				tag.getContext().addElement(realName, processUITagDefinitionContextElement(realName, defElesPublic.get(name), parent.getContext(), dataTypeHelper, uiDefinition, runtime, expressionManager));
+			}
+
 			expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext()));
 			break;
 		}
@@ -110,10 +116,6 @@ public class HAPContextUtility {
 		else return null;
 	}
 
-//	private static String getSolidName(String name){
-//		return name;
-//	}
-	
 	//process all the name get solid name and create new contextNode
 	private static HAPContextNode buildSolidContextNode(HAPContextNode contextNode, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPExpressionManager expressionManager){
 		HAPContextNode out = new HAPContextNode();

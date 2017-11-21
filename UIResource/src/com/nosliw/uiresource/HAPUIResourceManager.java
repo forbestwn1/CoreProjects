@@ -30,7 +30,7 @@ public class HAPUIResourceManager {
 
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
-	HAPUIResourceIdGenerator m_idGengerator = new HAPUIResourceIdGenerator(1);
+	HAPIdGenerator m_idGengerator = new HAPIdGenerator(1);
 
 	public HAPUIResourceManager(
 			HAPUITagManager uiTagMan,

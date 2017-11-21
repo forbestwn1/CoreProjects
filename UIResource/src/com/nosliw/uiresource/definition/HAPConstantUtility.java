@@ -17,7 +17,7 @@ import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.uiresource.HAPUIResourceIdGenerator;
+import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.expression.HAPRuntimeTaskExecuteScriptExpression;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
 import com.nosliw.uiresource.expression.HAPScriptExpressionScriptSegment;
@@ -35,7 +35,7 @@ public class HAPConstantUtility {
 	public static void calculateConstantDefs(
 			HAPUIDefinitionUnit uiDefinitionUnit,
 			Map<String, HAPConstantDef> parentConstants,
-			HAPUIResourceIdGenerator idGenerator, 
+			HAPIdGenerator idGenerator, 
 			HAPExpressionManager expressionMan, 
 			HAPRuntime runtime){
 		//build constants by merging parent with current
@@ -60,7 +60,7 @@ public class HAPConstantUtility {
 	 */
 	static public void processConstantDefs(
 			HAPUIDefinitionUnit uiDefinitionUnit,
-			HAPUIResourceIdGenerator idGenerator, 
+			HAPIdGenerator idGenerator, 
 			HAPExpressionManager expressionMan, 
 			HAPRuntime runtime){
 		Map<String, HAPConstantDef> constantDefs = uiDefinitionUnit.getConstantDefs();
@@ -76,7 +76,7 @@ public class HAPConstantUtility {
 	static private void processConstantDef(
 			String name, 
 			HAPUIDefinitionUnit uiDefinitionUnit,
-			HAPUIResourceIdGenerator idGenerator, 
+			HAPIdGenerator idGenerator, 
 			HAPExpressionManager expressionMan, 
 			HAPRuntime runtime){
 		Map<String, HAPConstantDef> constantDefs = uiDefinitionUnit.getConstantDefs();
@@ -105,7 +105,7 @@ public class HAPConstantUtility {
 	static private Object processConstantDefJsonNode(
 			Object node,
 			HAPUIDefinitionUnit uiDefinitionUnit,
-			HAPUIResourceIdGenerator idGenerator, 
+			HAPIdGenerator idGenerator, 
 			HAPExpressionManager expressionMan, 
 			HAPRuntime runtime){
 		Map<String, HAPConstantDef> constantDefs = uiDefinitionUnit.getConstantDefs();
@@ -160,7 +160,7 @@ public class HAPConstantUtility {
 	static private Object processConstantDefLeaf(
 			Object leafData,
 			HAPUIDefinitionUnit uiDefinitionUnit,
-			HAPUIResourceIdGenerator idGenerator, 
+			HAPIdGenerator idGenerator, 
 			HAPExpressionManager expressionMan, 
 			HAPRuntime runtime){
 

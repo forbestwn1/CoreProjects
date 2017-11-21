@@ -22,14 +22,19 @@ public class HAPContextParser {
 		Boolean inherit = (Boolean)contextJson.opt(HAPUITagDefinitionContext.INHERIT);
 		if(inherit!=null)  contextOut.setInherit(inherit);
 		
-		JSONObject contextEleJson = contextJson.optJSONObject(HAPUITagDefinitionContext.ELEMENTS);
+		parseContextInTagDefinition(contextJson, contextOut, HAPUITagDefinitionContext.PUBLIC);
+		parseContextInTagDefinition(contextJson, contextOut, HAPUITagDefinitionContext.PRIVATE);
+	}
+	
+	private static void parseContextInTagDefinition(JSONObject contextJson, HAPUITagDefinitionContext contextOut, String type){
+		JSONObject contextEleJson = contextJson.optJSONObject(HAPUITagDefinitionContext.PRIVATE);
 		if(contextEleJson!=null){
 			Iterator<String> it = contextEleJson.keys();
 			while(it.hasNext()){
 				String eleName = it.next();
 				JSONObject eleDefJson = contextEleJson.optJSONObject(eleName);
 				HAPUITagDefinitionContextElment tagDefContextEle = parseContextRootElementInTagDefinition(eleDefJson);
-				contextOut.addElement(eleName, tagDefContextEle);
+				contextOut.addPublicElement(eleName, tagDefContextEle);
 			}
 		}
 	}
@@ -40,7 +45,10 @@ public class HAPContextParser {
 		if(path!=null){
 			//relative
 			out = new HAPUITagDefinitionContextElmentRelative(path);
-			parseContextNodeFromJson(eleDefJson, (HAPUITagDefinitionContextElmentRelative)out);
+			Object defJson = eleDefJson.opt(HAPContextNode.DEFINITION);
+			if(defJson!=null){
+				parseContextNodeFromJson(defJson, (HAPUITagDefinitionContextElmentRelative)out);
+			}
 		}
 		else{
 			//absolute

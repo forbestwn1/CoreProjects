@@ -27,8 +27,13 @@ public class HAPResourceManagerUITag extends HAPResourceManagerImp{
 		return new HAPResource(resourceId, resourceData, null);
 	}
 
+	@Override
 	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId){
-		return new ArrayList<HAPResourceDependent>();
+		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+		HAPResourceIdUITag uiTagResourceId = new HAPResourceIdUITag(resourceId); 
+		HAPUITagDefinition uiTagDefinition = this.m_uiTagMan.getUITagDefinition(uiTagResourceId.getUITagId());
+		out.addAll(uiTagDefinition.getResourceDependency());
+		return out;
 	}
 	
 }
