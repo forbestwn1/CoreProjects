@@ -16,8 +16,6 @@ public class HAPDataTypeCriteriaExpression extends HAPDataTypeCriteriaAbstract{
 	public HAPDataTypeCriteriaExpression(String expression){
 		//escape    
 		this.m_expression = HAPCriteriaUtility.deescape(expression);
-		
-		
 	}
 	
 	@Override

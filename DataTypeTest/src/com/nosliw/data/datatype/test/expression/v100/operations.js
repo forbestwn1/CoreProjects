@@ -49,7 +49,7 @@ dataTypeDefition.operations['outputCriteriaFromParmData'] = {
 			
 			var varCriterias = {};
 			_.each(parms.getParm("parms").value, function(parm, varName){
-				var parmCriteria = context.operation("test.parm;1.0.0", "getCriteria", [{name:"base", value:parm}]).value;
+				var parmCriteria = context.operation("test.parm;1.0.0", "getCriteria", [{name:"base", value:parm}]);
 				varCriterias[varName] = parmCriteria.value;
 			});
 			

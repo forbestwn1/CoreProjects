@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
+import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeFamily;
@@ -417,7 +418,8 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		this.discoverExpressionCriteria(criteria, expCriterias);
 		for(HAPDataTypeCriteriaExpression expCriteria : expCriterias){
 			String expressionStr = expCriteria.getExpression();
-			HAPData expressionResult = (HAPData)this.m_runtimeEnv.getRuntime().executeExpressionSync(expressionStr, parms).getData();
+			HAPServiceData serviceData = this.m_runtimeEnv.getRuntime().executeExpressionSync(expressionStr, parms);
+			HAPData expressionResult = (HAPData)serviceData.getData();
 			String criteriaStr = expressionResult.getValue().toString();
 			HAPDataTypeCriteria solidCriteria = HAPCriteriaParser.getInstance().parseCriteria(criteriaStr);
 			expCriteria.setSolidCriteria(solidCriteria);

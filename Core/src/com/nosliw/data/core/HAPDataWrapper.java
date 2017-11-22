@@ -54,7 +54,12 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 	@Override
 	public Object getValue() {		return this.m_value;	}
 	
-	public String getValueFormat(){		return this.m_valueFormat.name();	}
+	public String getValueFormat(){
+		if(this.m_valueFormat==null){
+			this.m_valueFormat = HAPSerializationFormat.JSON;
+		}
+		return this.m_valueFormat.name();	
+	}
 	private void setValueFormat(HAPSerializationFormat valueFormat){ this.m_valueFormat = valueFormat;  }
 
 	public String getContent(){		return (String)this.getValue();	}

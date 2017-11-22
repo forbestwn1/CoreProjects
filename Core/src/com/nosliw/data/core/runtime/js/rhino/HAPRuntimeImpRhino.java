@@ -296,7 +296,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 //	        System.setErr(dbg.getErr());
 	        
 //		    dbg.setBreakOnEnter(true);
-//		    dbg.setBreakOnExceptions(true);
+		    dbg.setBreakOnExceptions(true);
 		    dbg.setScope(m_scope);
 		    dbg.setSize(1200, 800);
 		    dbg.setVisible(true);

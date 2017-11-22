@@ -11,7 +11,6 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
-import com.nosliw.data.core.runtime.HAPResourceId;
 
 @HAPEntityWithAttribute
 public class HAPUITagDefinition extends HAPSerializableImp{

@@ -43,7 +43,14 @@ public class HAPOperationVarInfoImp extends HAPStringableValueEntityWithID imple
 		return this.m_criteria;
 	}
 
-	public void setCriteria(HAPDataTypeCriteria criteria){  this.m_criteria = criteria;  }
+	public void setCriteria(HAPDataTypeCriteria criteria){  
+		if(criteria instanceof HAPDataTypeCriteriaWrapperLiterate){
+			this.m_criteria = ((HAPDataTypeCriteriaWrapperLiterate)criteria).getSolidCriteria();
+		}
+		else{
+			this.m_criteria = criteria;  
+		}
+	}
 	
 	public String getDataTypeId() {		return this.getAtomicAncestorValueString(DATATYPEID);	}
 	public String getOperationId() {		return this.getAtomicAncestorValueString(OPERATIONID);	}
