@@ -9,6 +9,7 @@ import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrows
 import com.nosliw.data.expression.test.HAPExpressionTest;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.resource.HAPResourceManagerUIResource;
+import com.nosliw.uiresource.resource.HAPResourceManagerUITag;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPInitServlet  extends HttpServlet{
@@ -29,6 +30,7 @@ public class HAPInitServlet  extends HttpServlet{
 			this.getServletContext().setAttribute("uiResourceManager", uiResourceMan);
 			
 			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPResourceManagerUIResource(uiResourceMan));
+			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UITAG, new HAPResourceManagerUITag(new HAPUITagManager()));
 
 //			String file = HAPFileUtility.getFileNameOnClassPath(HAPInitServlet.class, "Example1.res");
 //			HAPUIDefinitionUnitResource uiResource = uiResourceMan.addUIResourceDefinition(file);

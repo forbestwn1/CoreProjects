@@ -64,6 +64,13 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 	}
 
 	public HAPEmbededScriptExpression(String uiId, String content, HAPExpressionManager expressionManager){
+		
+		if(content.contains("data")){
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
+		
 		this.m_expressionManager = expressionManager;
 		this.m_uiId = uiId;
 		this.m_elements = HAPScriptExpressionUtility.discoverUIExpressionInText(content, this.m_expressionManager);

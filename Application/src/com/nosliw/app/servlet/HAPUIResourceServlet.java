@@ -7,7 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.uiresource.HAPUIResource;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 

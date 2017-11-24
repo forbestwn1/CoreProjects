@@ -42,7 +42,7 @@ public class HAPUIResourceExpressionProcessorUtility {
 		
 		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : removed)	all.remove(embededScriptExpression);
 		
-		for(HAPUIDefinitionUnit childTag : uiDefinitionUnit.getUITags())		processConstantExpressionInAttributeTag(uiDefinitionUnit);
+		for(HAPUIDefinitionUnit childTag : uiDefinitionUnit.getUITags())		processConstantExpressionInAttributeTag(childTag);
 	}
 	
 	private static void processScriptExpression(HAPUIDefinitionUnit uiDefinitionUnit, HAPRuntime runtime){

@@ -38,7 +38,7 @@ public class HAPUITagDefinitionParser {
 			
 			//parse dependency
 			NativeObject requiresObj = (NativeObject)defObjJS.get(HAPUITagDefinition.REQUIRES);
-			JSONObject requiresJson = (JSONObject)HAPRhinoDataUtility.toJson(contextObj);
+			JSONObject requiresJson = (JSONObject)HAPRhinoDataUtility.toJson(requiresObj);
 			Iterator<String> typeIt = requiresJson.keys();
 			while(typeIt.hasNext()){
 				String resourceType = typeIt.next();

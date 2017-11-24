@@ -75,6 +75,13 @@ public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 	private void discoverResource(HAPResourceId resourceId, List<HAPResourceInfo> resourceInfos, Set<HAPResourceId> processedResourceIds){
 		if(!processedResourceIds.contains(resourceId)){
 			processedResourceIds.add(resourceId);
+			
+			if(resourceId==null || this.getResourceManager(resourceId.getType())==null){
+				int kkkk = 5555;
+				kkkk++;
+			}
+			
+			
 			HAPResourceInfo resourceInfo = this.getResourceManager(resourceId.getType()).discoverResource(resourceId);
 			//add dependency first
 			List<HAPResourceDependent> dependencys = resourceInfo.getDependency();

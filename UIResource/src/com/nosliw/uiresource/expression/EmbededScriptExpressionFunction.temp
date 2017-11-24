@@ -1,12 +1,12 @@
-function(||expressions||, 
-		||constants||, 
-		||variables||){
+function(||expressionsData||, 
+		||constantsData||, 
+		||variablesData||){
 	var ||scriptExpressionData|| = {
 	
 	};
 	
 	||executeScriptExpressions||
 	
-	||embededScriptExpressionFunction||(||scriptExpressionData||);
+	return ||embededScriptExpressionFunction||(||scriptExpressionData||);
 }		
 		

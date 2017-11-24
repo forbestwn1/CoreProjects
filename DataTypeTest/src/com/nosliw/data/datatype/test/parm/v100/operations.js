@@ -16,7 +16,7 @@ dataTypeDefition.operations['getValue'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
-			return this.value.value;
+			return this.value.data;
 		},
 
 		requires:{

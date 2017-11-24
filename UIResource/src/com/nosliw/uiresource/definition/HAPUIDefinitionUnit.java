@@ -171,7 +171,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		for(HAPEmbededScriptExpressionInAttribute expressionTagAttr : this.m_scriptExpressionsInTagAttribute)  expressionTagAttributeJsons.add(expressionTagAttr.toStringValue(HAPSerializationFormat.JSON_FULL));
 		jsonMap.put(SCRIPTEXPRESSIONINTAGATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionTagAttributeJsons.toArray(new String[0])));
 
-		jsonMap.put(SCRIPT, this.m_script.getBlock());
+		if(this.m_script!=null)		jsonMap.put(SCRIPT, this.m_script.getBlock());
 		
 		
 		List<String> eleEventsJsons = new ArrayList<String>();
