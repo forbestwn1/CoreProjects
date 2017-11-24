@@ -52,41 +52,27 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		});
 		
 		//create context
-		var context = {};
-
-		var contextElementInfosArray = [];
-		
-		var parentContext = parentUIResourceView.getContext();
-		var resourceContext = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT];
-		_.each(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT], function(uiResourceContextEle, name){
-			var type = uiResourceContextEle[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
-			if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_ABSOLUTE){
-				
-			}
-			else if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_RELATIVE){
-				
-			}
-		});
-		
-		loc_context = node_createContext(contextElementInfosArray);
-		
+		var parentContext;
+		if(parentUIResourceView!=undefined)   parentContext = parentUIResourceView.getContext();
+		loc_context = node_uiResourceUtility.buildContext(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT], parentContext);
 		
 		//create uiTagObject
 		var uiTagResourceId = node_uiResourceUtility.createTagResourceId(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME]);
-		loc_uiTagObj = nosliw.runtime.getResourceManager().useResource(uiTagResourceId)[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, context, uiTagResource, loc_attributes);
+		var uiTagResourceObj = nosliw.runtime.getResourceService().getResource(uiTagResourceId);
+		loc_uiTagObj = uiTagResourceObj[node_COMMONATRIBUTECONSTANT.RESOURCE_RESOURCEDATA][node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_context, uiTagResource, loc_attributes);
 		
 		//overriden method before view is attatched to dom
 		loc_out.ovr_preInit(requestInfo);
 		
-		//overridden method to create init view
-		var views = loc_out.ovr_initViews(requestInfo);
-		//attach view to resourve view
-		if(views!=undefined)  loc_startEle.after(views);	
-
-		loc_eventSource = nosliwCreateRequestEventSource();
-		
-		//overridden method to do sth after view is attatched to dom
-		loc_out.ovr_postInit(requestInfo);
+//		//overridden method to create init view
+//		var views = loc_out.ovr_initViews(requestInfo);
+//		//attach view to resourve view
+//		if(views!=undefined)  loc_startEle.after(views);	
+//
+//		loc_eventSource = nosliwCreateRequestEventSource();
+//		
+//		//overridden method to do sth after view is attatched to dom
+//		loc_out.ovr_postInit(requestInfo);
 	};
 	
 	

@@ -198,7 +198,11 @@ var node_createResourceService = function(resourceManager){
 		 */
 		importResource : function(resourceInfo, resourceData, info){
 			loc_resourceManager.addResource(resourceInfo, resourceData, info);
-		}	
+		},
+		
+		getResource : function(resourceId){
+			return loc_resourceManager.useResource(resourceId);
+		}
 	};
 	
 	loc_out = node_buildServiceProvider(loc_out, "resourceService");

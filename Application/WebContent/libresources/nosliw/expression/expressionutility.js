@@ -16,7 +16,7 @@ var node_utility =
 {
 		executeOperationResource : function(resourceId, parmArray, resourcesTree){
 			var dataOperationResource = node_resourceUtility.getResourceFromTree(resourcesTree, resourceId);
-			var dataOperationFun = dataOperationResource.resourceData;
+			var dataOperationFun = dataOperationResource[node_COMMONATRIBUTECONSTANT.RESOURCE_RESOURCEDATA];
 			var dataOperationInfo = dataOperationResource[node_COMMONATRIBUTECONSTANT.RESOURCE_INFO][node_COMMONATRIBUTECONSTANT.RESOURCEMANAGERJSOPERATION_INFO_OPERATIONINFO];
 			
 			//build operation context

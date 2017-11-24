@@ -74,7 +74,7 @@ var node_createUIResourceService = function(){
 			executeCreateUIResourceViewRequest : function(name, handlers, requester_parent){
 				var requestInfo = this.getCreateUIResourceViewRequest(name, handlers, requester_parent);
 				node_requestServiceProcessor.processRequest(requestInfo, true);
-			},
+			}
 	};
 
 	loc_out = node_buildServiceProvider(loc_out, "uiResourceService");

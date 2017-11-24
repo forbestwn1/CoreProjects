@@ -102,7 +102,7 @@ var node_utility = {
 					}
 				}
 				else if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_RELATIVE){
-					var pathObj = resourceContextRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_PATH];
+					var pathObj = resourceContextRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_PATH];
 					var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
 					var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
 					contextElementInfosArray.push(node_createContextElementInfo(eleName, parentContext, node_createContextVariable(rootName, path)));

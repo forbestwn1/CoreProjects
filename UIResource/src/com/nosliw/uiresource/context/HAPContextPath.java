@@ -3,11 +3,13 @@ package com.nosliw.uiresource.context;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
+@HAPEntityWithAttribute
 public class HAPContextPath extends HAPSerializableImp{
 
 	@HAPAttribute
