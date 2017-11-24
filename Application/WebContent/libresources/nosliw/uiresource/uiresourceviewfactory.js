@@ -15,6 +15,7 @@ var packageObj = library;
 	var node_createEmbededScriptExpressionInAttribute;
 	var node_getLifecycleInterface;
 	var node_basicUtility;
+	var node_createUITag;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_createUIResourceViewFactory = function(){
@@ -172,23 +173,9 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiResource, id, parent, contextElementInfoArray, requestInfo){
 		//build context element first
-		var contextElementInfosArray = [];
-		_.each(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT], function(contextRootObj, eleName, list){
-			var defaultValue = contextRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFAULT];
-			if(contextRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFINITION]!=undefined){
-				//app data
-				var defaultValueData = defaultValue;
-				if(defaultValueData!=undefined){
-					defaultValueData = node_dataUtility.createDataOfAppData(defaultValue);
-				}
-				contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValueData));
-			}
-			else{
-				//object
-				contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValue));
-			}
-		});
-		loc_context = node_createContext(contextElementInfosArray);
+		var parentContext;
+		if(parent!=undefined)   parentContext = parent.getContext();
+		loc_context = node_uiResourceUtility.buildContext(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT], parentContext);
 		
 		
 		//wrap html by start and end element
@@ -227,10 +214,10 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 		});
 
 		//init customer tags
-		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_UITAGS], function(uiTag, tagUiId, list){
-			var uiTagId = loc_out.prv_getUpdateUIId(uiTag[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_ID]);
-			var uiTagObj = nosliw.getUITagManager().createUITagObject(uiTagId, uiTag, loc_out);
-			loc_uiTags[uiTagId] =  uiTagObj;
+		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_UITAGS], function(uiTagResource, tagUiId, list){
+			var uiTagId = loc_out.prv_getUpdateUIId(tagUiId);
+			var uiTag = node_createUITag(uiTagId, uiTagResource, loc_out);
+			loc_uiTags[uiTagId] =  uiTag;
 		});
 
 		
@@ -456,6 +443,8 @@ nosliw.registerSetNodeDataEvent("uiresource.createEmbededScriptExpressionInConte
 nosliw.registerSetNodeDataEvent("uiresource.createEmbededScriptExpressionInAttribute", function(){node_createEmbededScriptExpressionInAttribute = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uiresource.createUITag", function(){node_createUITag = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createUIResourceViewFactory", loc_createUIResourceViewFactory); 

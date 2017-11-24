@@ -3,6 +3,7 @@ package com.nosliw.uiresource.definition;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPJsonUtility;
@@ -10,12 +11,12 @@ import com.nosliw.uiresource.HAPDataBinding;
 
 public class HAPUIDefinitionUnitTag extends HAPUIDefinitionUnit{
 
+	@HAPAttribute
+	public static final String TAGNAME = "tagName";
+	
 	//name of this customer tag
 	private String m_tagName;
 
-//	private HAPUITagContext m_context; 
-	
-	
 	//data bindings related with this customer tag
 	private Map<String, HAPDataBinding> m_dataBindings;
 

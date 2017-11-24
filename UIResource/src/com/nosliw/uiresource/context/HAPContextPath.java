@@ -1,11 +1,21 @@
 package com.nosliw.uiresource.context;
 
+import java.util.Map;
+
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
-public class HAPContextPath {
+public class HAPContextPath extends HAPSerializableImp{
 
+	@HAPAttribute
+	public static final String ROOTNAME  = "rootEleName";
+
+	@HAPAttribute
+	public static final String PATH  = "path";
+	
 	private String m_rootEleName;
 	
 	private String m_path;
@@ -45,4 +55,9 @@ public class HAPContextPath {
 		else  return HAPNamingConversionUtility.parseComponentPaths(m_path);     
 	}
 	
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(ROOTNAME, this.m_rootEleName);
+		jsonMap.put(PATH, this.m_path);
+	}
 }

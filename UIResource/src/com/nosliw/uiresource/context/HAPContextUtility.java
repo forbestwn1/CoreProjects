@@ -109,12 +109,6 @@ public class HAPContextUtility {
 
 	//evaluate embeded script expression
 	private static String getSolidName(String name, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPExpressionManager expressionManager){
-		
-		if(name.equals("<%=&(data)&%>")){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		HAPEmbededScriptExpression se = new HAPEmbededScriptExpression(null, name, expressionManager);
 		HAPRuntimeTaskExecuteEmbededExpression task = new HAPRuntimeTaskExecuteEmbededExpression(se, null, new LinkedHashMap<String, Object>(uiDefinition.getAttributes()));
 		HAPServiceData serviceData = runtime.executeTaskSync(task);

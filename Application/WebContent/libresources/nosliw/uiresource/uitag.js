@@ -32,7 +32,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 	//id of this tag object
 	var loc_id = id;
 	//parent resource view
-	var loc_parentResourceView = uiResourceView;
+	var loc_parentResourceView = parentUIResourceView;
 	//all tag attributes
 	var loc_attributes = {};
 
@@ -40,33 +40,40 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 	var loc_startEle = undefined;
 	var loc_endEle = undefined;
 	
-	
-	loc_resourceLifecycleObj["NOSLIWCONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT"] = function(id, uiTagResource, uiResourceView, requestInfo){
-
+	var lifecycleCallback = {};
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(id, uiTagResource, parentUIResourceView, requestInfo){
 		//get wraper element
-		loc_startEle = loc_parentResourceView.get$EleByUIId(loc_id+NOSLIWCOMMONCONSTANT.CONS_UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX);
-		loc_endEle = loc_parentResourceView.get$EleByUIId(loc_id+NOSLIWCOMMONCONSTANT.CONS_UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX);
+		loc_startEle = loc_parentResourceView.get$EleByUIId(loc_id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX);
+		loc_endEle = loc_parentResourceView.get$EleByUIId(loc_id+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX);
 		
 		//init all attributes value
-		_.each(loc_uiTag.attributes, function(attrValue, attribute, list){
+		_.each(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_ATTRIBUTES], function(attrValue, attribute, list){
 			loc_attributes[attribute] = attrValue;
-		});		
-		
+		});
 		
 		//create context
-		var context;
-		uiTagResource.getContext().elements
+		var context = {};
+
+		var contextElementInfosArray = [];
+		
+		var parentContext = parentUIResourceView.getContext();
+		var resourceContext = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT];
+		_.each(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT], function(uiResourceContextEle, name){
+			var type = uiResourceContextEle[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
+			if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_ABSOLUTE){
+				
+			}
+			else if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_RELATIVE){
+				
+			}
+		});
+		
+		loc_context = node_createContext(contextElementInfosArray);
 		
 		
 		//create uiTagObject
-		nosliw.getResourceManager().getResource().script.call(context, uiTagResource, loc_attributes);
-		
-		
-		//init data bindings
-		_.each(loc_uiTag[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_DATABINDINGS], function(dataBinding, name, list){
-			var contextVar = dataBinding[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_DATABINDING_VARIABLE];
-			loc_out.prv_addDataBinding(dataBinding[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_CONTEXTVARIABLE_NAME], nosliwCreateContextVariable(contextVar[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_CONTEXTVARIABLE_NAME], contextVar[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_CONTEXTVARIABLE_PATH]));
-		});
+		var uiTagResourceId = node_uiResourceUtility.createTagResourceId(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME]);
+		loc_uiTagObj = nosliw.runtime.getResourceManager().useResource(uiTagResourceId)[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, context, uiTagResource, loc_attributes);
 		
 		//overriden method before view is attatched to dom
 		loc_out.ovr_preInit(requestInfo);
@@ -89,13 +96,14 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 	};
 	
 	//append resource and object life cycle method to out obj
-	loc_out = nosliwLifecycleUtility.makeResourceObject(loc_out);
-	loc_out = nosliwTypedObjectUtility.makeTypedObject(loc_out, NOSLIWCONSTANT.TYPEDOBJECT_TYPE_UITAG);
+	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UITAG);
+
+	node_getLifecycleInterface(loc_out).init(id, uiTagResource, parentUIResourceView, requestInfo);
 	
 	return loc_out;
 	
 };
-	
 	
 //*******************************************   End Node Definition  ************************************** 	
 
@@ -114,7 +122,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", functi
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
-//packageObj.createChildNode("createUIResourceViewFactory", loc_createUIResourceViewFactory); 
+packageObj.createChildNode("createUITag", node_createUITag); 
 
 })(packageObj);
 

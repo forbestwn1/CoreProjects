@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPJsonTypeAsItIs;
 import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 
@@ -61,8 +62,8 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(NAME, this.m_name.toStringValue(HAPSerializationFormat.LITERATE));
-//		jsonMap.put(SCRIPT, this.m_script);
-//		typeJsonMap.put(SCRIPT, HAPJsonTypeAsItIs.class);
+		jsonMap.put(SCRIPT, this.m_script);
+		typeJsonMap.put(SCRIPT, HAPJsonTypeAsItIs.class);
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
 	}

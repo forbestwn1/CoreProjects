@@ -23,6 +23,7 @@ public class HAPContextNodeRootAbsolute extends HAPContextNode implements HAPCon
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(TYPE, this.getType());
 		if(this.m_defaultValue!=null){
 			jsonMap.put(DEFAULT, this.m_defaultValue.toString());
 			typeJsonMap.put(DEFAULT, this.m_defaultValue.getClass());

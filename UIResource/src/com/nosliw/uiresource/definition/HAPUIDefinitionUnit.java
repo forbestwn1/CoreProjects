@@ -59,8 +59,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String SCRIPTFACTORYNAME = "scriptFactoryName";
 	@HAPAttribute
-	public static final String TAGNAME = "tagName";
-	@HAPAttribute
 	public static final String DATABINDINGS = "dataBindings";
 	@HAPAttribute
 	public static final String UITAGLIBS = "uiTagLibs";

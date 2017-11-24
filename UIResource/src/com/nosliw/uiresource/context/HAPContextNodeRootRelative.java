@@ -2,6 +2,8 @@ package com.nosliw.uiresource.context;
 
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPMatchers;
 
@@ -13,6 +15,9 @@ import com.nosliw.data.core.expression.HAPMatchers;
  */
 public class HAPContextNodeRootRelative extends HAPContextNode implements HAPContextNodeRoot{
 
+	@HAPAttribute
+	public static final String PATH = "path";
+	
 	//relative path from parent context
 	private HAPContextPath m_path;
 
@@ -27,4 +32,10 @@ public class HAPContextNodeRootRelative extends HAPContextNode implements HAPCon
 		this.m_path = path;
 	}
 	
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(PATH, this.m_path.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(TYPE, this.getType());
+	}
 }

@@ -12,6 +12,10 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_requestServiceProcessor;
 	var node_createUIResourceViewFactory;
+	var node_createContextElementInfo;
+	var node_dataUtility;
+	var node_createContext;
+	var node_createContextVariable;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = {
@@ -69,6 +73,45 @@ var node_utility = {
 			var find = node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"=\"";
 			return html.replace(new RegExp(find, 'g'), node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"=\""+idNameSpace+node_COMMONCONSTANT.SEPERATOR_FULLNAME);
 		},
+		
+		createTagResourceId : function(name){
+			var out = {};
+			out[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = name; 
+			out[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG; 
+			return out;
+		},
+		
+		buildContext : function(resourceContext, parentContext){
+			//build context element first
+			var contextElementInfosArray = [];
+			_.each(resourceContext, function(resourceContextRootObj, eleName, list){
+				var type = resourceContextRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
+				if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_ABSOLUTE){
+					var defaultValue = resourceContextRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFAULT];
+					if(resourceContextRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFINITION]!=undefined){
+						//app data
+						var defaultValueData = defaultValue;
+						if(defaultValueData!=undefined){
+							defaultValueData = node_dataUtility.createDataOfAppData(defaultValue);
+						}
+						contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValueData));
+					}
+					else{
+						//object
+						contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValue));
+					}
+				}
+				else if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_RELATIVE){
+					var pathObj = resourceContextRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_PATH];
+					var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
+					var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
+					contextElementInfosArray.push(node_createContextElementInfo(eleName, parentContext, node_createContextVariable(rootName, path)));
+				}
+			});
+			var context = node_createContext(contextElementInfosArray);
+			return context;
+		}
+		
 };
 
 //*******************************************   End Node Definition  ************************************** 	
@@ -83,6 +126,10 @@ nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.createUIResourceViewFactory", function(){node_createUIResourceViewFactory = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_createContext = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextVariable", function(){node_createContextVariable = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 
