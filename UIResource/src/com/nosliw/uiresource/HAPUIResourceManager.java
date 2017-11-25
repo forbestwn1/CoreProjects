@@ -3,6 +3,7 @@ package com.nosliw.uiresource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
@@ -94,6 +95,10 @@ public class HAPUIResourceManager {
 			//discovery resources required
 			HAPResourceUtility.processResourceDependency(uiResource, m_resourceMan);
 			uiResource.processed();
+			
+			System.out.println("********************** "+  name  +"  ******************************");
+			System.out.println(uiResource);
+			System.out.println("**********************   ******************************");
 		}
 		return uiResource;
 	}

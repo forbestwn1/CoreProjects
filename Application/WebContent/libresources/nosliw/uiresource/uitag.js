@@ -62,17 +62,17 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		loc_uiTagObj = uiTagResourceObj[node_COMMONATRIBUTECONSTANT.RESOURCE_RESOURCEDATA][node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_context, uiTagResource, loc_attributes);
 		
 		//overriden method before view is attatched to dom
-		loc_out.ovr_preInit(requestInfo);
+		loc_uiTagObj.ovr_preInit(requestInfo);
 		
-//		//overridden method to create init view
-//		var views = loc_out.ovr_initViews(requestInfo);
-//		//attach view to resourve view
-//		if(views!=undefined)  loc_startEle.after(views);	
-//
+		//overridden method to create init view
+		var views = loc_uiTagObj.ovr_initViews(requestInfo);
+		//attach view to resourve view
+		if(views!=undefined)  loc_startEle.after(views);	
+
 //		loc_eventSource = nosliwCreateRequestEventSource();
 //		
-//		//overridden method to do sth after view is attatched to dom
-//		loc_out.ovr_postInit(requestInfo);
+		//overridden method to do sth after view is attatched to dom
+		loc_uiTagObj.ovr_postInit(requestInfo);
 	};
 	
 	
