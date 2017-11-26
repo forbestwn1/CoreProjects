@@ -37,13 +37,6 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	}
 	
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ATTRIBUTE, this.m_attribute);
-		jsonMap.put(BASEDATA, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON_FULL));
-	}
-	
-	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ATTRIBUTE, this.m_attribute);

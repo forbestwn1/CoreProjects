@@ -3,8 +3,6 @@ package com.nosliw.common.serialization;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPJsonUtility;
-
 public abstract class HAPSerializableImp implements HAPSerializable{
 
 	@Override
@@ -27,7 +25,7 @@ public abstract class HAPSerializableImp implements HAPSerializable{
 		return out;
 	}
 
-	protected boolean buildObjectByFullJson(Object json){ return false; }
+	protected boolean buildObjectByFullJson(Object json){ return this.buildObjectByJson(json); }
 
 	protected boolean buildObjectByJson(Object json){  return false;  }
 	
@@ -84,10 +82,11 @@ public abstract class HAPSerializableImp implements HAPSerializable{
 	protected String buildLiterate(){  return null; }
 	
 	protected String buildFullJson(){ return null; }
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){}
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		this.buildJsonMap(jsonMap, typeJsonMap);
+	}
 
 	protected String buildJson(){ return null; }
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		this.buildFullJsonMap(jsonMap, typeJsonMap);
 	}	
 }

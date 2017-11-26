@@ -54,7 +54,7 @@ public class HAPConstantDef extends HAPSerializableImp{
 	}
 
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(LITERATE, this.m_definitionObj.toString());
 		jsonMap.put(PROCESSED, this.m_isProcessed+"");
 		typeJsonMap.put(PROCESSED, Boolean.class);

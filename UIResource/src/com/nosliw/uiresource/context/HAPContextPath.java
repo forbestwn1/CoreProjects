@@ -58,7 +58,7 @@ public class HAPContextPath extends HAPSerializableImp{
 	}
 	
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ROOTNAME, this.m_rootEleName);
 		jsonMap.put(PATH, this.m_path);
 	}

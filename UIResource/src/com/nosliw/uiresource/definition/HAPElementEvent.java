@@ -44,7 +44,7 @@ public class HAPElementEvent extends HAPSerializableImp{
 	}
 
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(UIID, this.m_uiId);
 		jsonMap.put(EVENT, this.m_event);
 		jsonMap.put(FUNCTION, this.m_function);

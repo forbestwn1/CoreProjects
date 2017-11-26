@@ -71,11 +71,6 @@ public class HAPVariableInfo extends HAPSerializableImp{
 	}
 	
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		this.buildJsonMap(jsonMap, typeJsonMap);
-	}
-
-	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(STATUS, this.getStatus());
 		if(this.getCriteria()!=null){

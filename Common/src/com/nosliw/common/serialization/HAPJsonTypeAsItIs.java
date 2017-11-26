@@ -1,4 +1,4 @@
-package com.nosliw.common.utils;
+package com.nosliw.common.serialization;
 
 public interface HAPJsonTypeAsItIs {
 

@@ -7,9 +7,9 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.runtime.HAPResourceData;
 
 @HAPEntityWithAttribute
@@ -27,12 +27,9 @@ public class HAPResourceDataJSLibrary extends HAPSerializableImp implements HAPR
 	
 	public List<URI> getURIs(){		return this.m_uris;	}
 
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(URIS, HAPJsonUtility.buildJson(this.m_uris.toArray(new URI[0]), HAPSerializationFormat.JSON_FULL));
-	}
-	
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		this.buildFullJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(URIS, HAPJsonUtility.buildJson(this.m_uris.toArray(new URI[0]), HAPSerializationFormat.JSON_FULL));
 	}
 
 }

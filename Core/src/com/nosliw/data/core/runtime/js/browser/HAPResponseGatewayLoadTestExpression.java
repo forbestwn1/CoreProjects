@@ -32,7 +32,7 @@ public class HAPResponseGatewayLoadTestExpression extends HAPSerializableImp{
 
 	public HAPExpression getExpression(){return this.m_expression;}
 
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(EXPRESSION, HAPSerializeManager.getInstance().toStringValue(this.m_expression, HAPSerializationFormat.JSON));
 		jsonMap.put(VARIABLESVALUE, HAPSerializeManager.getInstance().toStringValue(this.m_variablesValue, HAPSerializationFormat.JSON));
 	}

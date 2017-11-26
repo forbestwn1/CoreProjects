@@ -14,10 +14,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPJsonUtility;
 
 /**
  *  Store all the information related with a resource, including
@@ -76,7 +76,7 @@ public class HAPResourceInfo extends HAPSerializableImp{
 	public void addChild(HAPResourceDependent child){  this.m_children.add(child);  }
 	
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ID, this.m_resourceId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.getChildren(), HAPSerializationFormat.JSON));
 
@@ -89,11 +89,6 @@ public class HAPResourceInfo extends HAPSerializableImp{
 		jsonMap.put(DEPENDENCY, HAPJsonUtility.buildMapJson(dependencyJsonMap));
 		
 		jsonMap.put(INFO, HAPSerializeManager.getInstance().toStringValue(this.m_info, HAPSerializationFormat.JSON));
-	}
-
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		this.buildFullJsonMap(jsonMap, typeJsonMap);
 	}
 
 	@Override

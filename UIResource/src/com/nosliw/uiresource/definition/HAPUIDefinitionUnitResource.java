@@ -6,13 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
-import com.nosliw.uiresource.context.HAPContext;
 
 public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 
@@ -47,13 +45,19 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	public void processed(){  this.m_processed = true;  }
 	
 	public List<HAPResourceDependent> getResourceDependency(){  return this.m_resourceDependency;  }
-	
+
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(UITAGLIBS, HAPJsonUtility.buildJson(this.m_uiTagLibs, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(UITAGLIBS, HAPJsonUtility.buildJson(this.m_uiTagLibs, HAPSerializationFormat.JSON));
 	}
-		
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(UITAGLIBS, HAPJsonUtility.buildJson(this.m_uiTagLibs, HAPSerializationFormat.JSON));
+	}
+
 	@Override
 	public String getType() {
 		return HAPConstant.UIRESOURCE_TYPE_RESOURCE;

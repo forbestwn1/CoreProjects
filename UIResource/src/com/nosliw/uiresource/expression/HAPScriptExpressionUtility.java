@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
@@ -93,12 +93,12 @@ public class HAPScriptExpressionUtility {
 		StringBuffer scriptExpressionFunScript = new StringBuffer(); 
 		List<HAPScriptExpression> scriptExpressions = embedScriptExpression.getScriptExpressions();
 		for(HAPScriptExpression scriptExpression : scriptExpressions){
-			scriptExpressionFunScript.append(scriptExpressionParmName +  "["+ scriptExpression.getId()  + "]="  +scriptExpression.getScriptFunction() + "("+expressionsDataParmName+","+constantsDataParmName+","+variablesDataParmName+");");
+			scriptExpressionFunScript.append(scriptExpressionParmName +  "["+ scriptExpression.getId()  + "]="  +scriptExpression.getScriptFunction().getScript() + "("+expressionsDataParmName+","+constantsDataParmName+","+variablesDataParmName+");");
 		}
 		
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPScriptExpressionUtility.class, "EmbededScriptExpressionFunction.temp");
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("embededScriptExpressionFunction", embedScriptExpression.getScriptFunction());
+		templateParms.put("embededScriptExpressionFunction", embedScriptExpression.getScriptFunction().getScript());
 		
 		templateParms.put("executeScriptExpressions", scriptExpressionFunScript.toString());
 		

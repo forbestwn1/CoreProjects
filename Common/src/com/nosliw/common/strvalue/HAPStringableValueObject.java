@@ -66,11 +66,6 @@ public abstract class HAPStringableValueObject extends HAPStringableValue{
 		jsonMap.put("stringValue", this.m_strValue.toString());
 	}
 
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		super.buildJsonMap(jsonMap, typeJsonMap);
-	}
-	
 	protected void cloneFrom(HAPStringableValueObject stringableValue){
 		this.m_strValue = stringableValue.m_strValue.clone();
 		this.m_sovled = stringableValue.m_sovled;

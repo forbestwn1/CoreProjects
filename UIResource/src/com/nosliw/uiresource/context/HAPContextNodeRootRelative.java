@@ -33,8 +33,8 @@ public class HAPContextNodeRootRelative extends HAPContextNode implements HAPCon
 	}
 	
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildFullJsonMap(jsonMap, typeJsonMap);
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PATH, this.m_path.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(TYPE, this.getType());
 	}

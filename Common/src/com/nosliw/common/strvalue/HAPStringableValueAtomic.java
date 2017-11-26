@@ -172,8 +172,8 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 	}
 	
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		super.buildFullJsonMap(jsonMap, typeJsonMap);
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TYPE, this.m_type.getType());
 		jsonMap.put(SUBTYPE, this.m_type.getSubType());
 		jsonMap.put(STRINGVALUE, this.m_strValue.toString());

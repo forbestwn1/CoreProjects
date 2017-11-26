@@ -47,14 +47,20 @@ public class HAPResource extends HAPSerializableImp{
 	
 	public HAPResourceData getResourceData(){  return this.m_resourceData;  }
 	
+	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(ID, HAPSerializeManager.getInstance().toStringValue(this.m_id, HAPSerializationFormat.JSON));
+		jsonMap.put(RESOURCEDATA, HAPSerializeManager.getInstance().toStringValue(this.m_resourceData, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(INFO, HAPSerializeManager.getInstance().toStringValue(this.m_info, HAPSerializationFormat.JSON));
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ID, HAPSerializeManager.getInstance().toStringValue(this.m_id, HAPSerializationFormat.JSON));
 		jsonMap.put(RESOURCEDATA, HAPSerializeManager.getInstance().toStringValue(this.m_resourceData, HAPSerializationFormat.JSON));
 		jsonMap.put(INFO, HAPSerializeManager.getInstance().toStringValue(this.m_info, HAPSerializationFormat.JSON));
 	}
 	
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		this.buildFullJsonMap(jsonMap, typeJsonMap);
-	}
+	
 	
 }

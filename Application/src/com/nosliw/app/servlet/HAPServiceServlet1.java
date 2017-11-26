@@ -16,8 +16,8 @@ import org.json.JSONObject;
 import com.nosliw.app.utils.HAPApplicationErrorUtility;
 import com.nosliw.app.utils.HAPAttributeConstant;
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPJsonUtility;
 
 public class HAPServiceServlet1 extends HttpServlet{
 

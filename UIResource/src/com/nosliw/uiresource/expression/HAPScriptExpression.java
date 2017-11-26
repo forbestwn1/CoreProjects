@@ -9,11 +9,11 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPJsonTypeAsItIs;
-import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
@@ -60,7 +60,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	private List<Object> m_elements;
 
 	//javascript function to execute script expression 
-	private String m_scriptFunction;
+	private HAPScript m_scriptFunction;
 	
 	//expressions used in script expression
 	private Map<String, HAPExpression> m_expressions;
@@ -85,7 +85,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		this.m_expressionManager = expressionMan;
 		this.m_definition = content;
 		this.parseDefinition();
-		this.m_scriptFunction = HAPScriptExpressionUtility.buildScriptExpressionJSFunction(this);
+		this.m_scriptFunction = new HAPScript(HAPScriptExpressionUtility.buildScriptExpressionJSFunction(this));
 		this.m_isConstant = false;
 	}
 
@@ -93,7 +93,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	
 	public List<Object> getElements(){  return this.m_elements;   }
 	
-	public String getScriptFunction(){  return this.m_scriptFunction;  }
+	public HAPScript getScriptFunction(){  return this.m_scriptFunction;  }
 	
 	public String getDefinition(){  return this.m_definition;  } 
 
@@ -177,12 +177,17 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	}
 	
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ID, this.m_id);
-		jsonMap.put(SCRIPTFUNCTION, m_scriptFunction);
-		typeJsonMap.put(SCRIPTFUNCTION, HAPJsonTypeAsItIs.class);
 		jsonMap.put(DEFINITION, this.m_definition);
 		jsonMap.put(VARIABLENAMES, HAPJsonUtility.buildJson(this.m_variableNames, HAPSerializationFormat.JSON));
 		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildJson(m_expressions, HAPSerializationFormat.JSON));
+	}
+
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(SCRIPTFUNCTION, m_scriptFunction.toStringValue(HAPSerializationFormat.JSON_FULL));
+		typeJsonMap.put(SCRIPTFUNCTION, this.m_scriptFunction.getClass());
 	}
 }

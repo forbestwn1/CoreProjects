@@ -59,11 +59,6 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 		jsonMap.put(OUTPUTCRITERIA, HAPSerializeManager.getInstance().toStringValue(this.getOutputCriteria(), HAPSerializationFormat.LITERATE));
 	}
 
-	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		this.buildJsonMap(jsonMap, typeJsonMap);
-	}
-	
 	/**
 	 * "And" two criteria and create output. If the "And" result is empty, then set error  
 	 * @param criteria

@@ -97,7 +97,7 @@ public class HAPUIResourceManager {
 			uiResource.processed();
 			
 			System.out.println("********************** "+  name  +"  ******************************");
-			System.out.println(uiResource);
+//			System.out.println(uiResource);
 			System.out.println("**********************   ******************************");
 		}
 		return uiResource;

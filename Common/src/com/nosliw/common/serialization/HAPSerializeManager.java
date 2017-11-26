@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.literate.HAPLiterateManager;
-import com.nosliw.common.utils.HAPJsonUtility;
 
 /**
  * Manager class to do serialzation job 

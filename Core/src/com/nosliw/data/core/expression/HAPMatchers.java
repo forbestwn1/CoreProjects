@@ -35,11 +35,6 @@ public class HAPMatchers extends HAPSerializableImp{
 	}
 
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		this.buildJsonMap(jsonMap, typeJsonMap);
-	}
-	
-	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		for(HAPDataTypeId dataTypeId : this.m_matchers.keySet()){
 			HAPMatcher matcher = this.m_matchers.get(dataTypeId);

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.json.JSONObject;
 import org.mozilla.javascript.Context;
-import org.mozilla.javascript.NativeJSON;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.json.JsonParser;

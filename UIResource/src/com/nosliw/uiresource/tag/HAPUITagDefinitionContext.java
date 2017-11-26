@@ -5,9 +5,9 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPJsonUtility;
 
 @HAPEntityWithAttribute
 public class HAPUITagDefinitionContext extends HAPSerializableImp{
@@ -69,7 +69,7 @@ public class HAPUITagDefinitionContext extends HAPSerializableImp{
 	public void addPrivateElement(String name, HAPUITagDefinitionContextElment ele){  this.m_privateEles.put(name, ele);  }
 	
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(INHERIT, this.m_inherit+"");
 		typeJsonMap.put(INHERIT, Boolean.class);
 		jsonMap.put(PUBLIC, HAPJsonUtility.buildJson(m_publicEles, HAPSerializationFormat.JSON));

@@ -22,7 +22,6 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteriaExpression;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaIds;
 import com.nosliw.data.core.criteria.HAPDataTypeSubCriteriaGroup;
-import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPMatcher;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;

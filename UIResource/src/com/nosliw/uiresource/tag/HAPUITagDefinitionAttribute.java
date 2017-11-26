@@ -20,10 +20,8 @@ public class HAPUITagDefinitionAttribute extends HAPSerializableImp{
 	private HAPDataTypeCriteria m_criteria;
 
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(NAME, this.m_name);
 		jsonMap.put(DESCRIPTION, this.m_description);
 	}
-
-	
 }

@@ -21,9 +21,6 @@ public class HAPResourceDataJSGateway extends HAPSerializableImp implements HAPR
 		this.m_name = name;
 	}
 	
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-	}
-	
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		this.buildFullJsonMap(jsonMap, typeJsonMap);
 	}

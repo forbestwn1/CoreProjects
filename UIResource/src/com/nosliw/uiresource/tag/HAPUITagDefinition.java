@@ -7,10 +7,11 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPJsonTypeAsItIs;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPJsonTypeAsItIs;
-import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 
 @HAPEntityWithAttribute
@@ -31,7 +32,7 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	private HAPUITagId m_name;
 	
 	//javascript
-	private String m_script;
+	private HAPScript m_script;
 
 	//attribute definition
 	private Map<String, HAPUITagDefinitionAttribute> m_attributes;
@@ -44,7 +45,7 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	
 	public HAPUITagDefinition(HAPUITagId name, String script){
 		this.m_name = name;
-		this.m_script = script;
+		this.m_script = new HAPScript(script);
 		this.m_attributes = new LinkedHashMap<String, HAPUITagDefinitionAttribute>();
 		this.m_context = new HAPUITagDefinitionContext();
 		this.m_resourceDependency = new ArrayList<HAPResourceDependent>();
@@ -52,7 +53,7 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	
 	public HAPUITagId getName(){return this.m_name;}
 	
-	public String getScript(){return this.m_script;}
+	public HAPScript getScript(){return this.m_script;}
 	
 	public HAPUITagDefinitionContext getContext(){  return this.m_context;   }
 
@@ -60,12 +61,16 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	public void addResourceDependency(HAPResourceDependent dep){  this.m_resourceDependency.add(dep);  }
 	
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(NAME, this.m_name.toStringValue(HAPSerializationFormat.LITERATE));
-		jsonMap.put(SCRIPT, this.m_script);
-		typeJsonMap.put(SCRIPT, HAPJsonTypeAsItIs.class);
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
 	}
 	
+	@Override
+	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(SCRIPT, this.m_script.getScript());
+		typeJsonMap.put(SCRIPT, m_script.getClass());
+	}
 }

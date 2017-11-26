@@ -48,22 +48,19 @@ public class HAPRuntimeInfo extends HAPSerializableImp{
 	}
 
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(LANGUAGE, m_language);
 		jsonMap.put(ENVIRONMENT, m_environment);
 	}
 	
 	@Override
-	protected boolean buildObjectByFullJson(Object json){
+	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_language = jsonObj.optString(LANGUAGE);
 		this.m_environment = jsonObj.optString(ENVIRONMENT);
 		return true; 
 	}
 
-	@Override
-	protected boolean buildObjectByJson(Object json){  return this.buildObjectByFullJson(json);  }
-	
 	@Override
 	public boolean equals(Object obj){
 		if(obj instanceof HAPRuntimeInfo){

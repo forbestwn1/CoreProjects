@@ -76,13 +76,10 @@ public abstract class HAPStringableValue extends HAPSerializableImp implements H
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(STRUCTURE, this.getStringableStructure());
 	}
 	
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-	}
-
 	@Override
 	protected String buildLiterate(){  return this.toStringValue(HAPSerializationFormat.JSON); }
 

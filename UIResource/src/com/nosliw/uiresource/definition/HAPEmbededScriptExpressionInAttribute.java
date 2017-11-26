@@ -33,4 +33,10 @@ public class HAPEmbededScriptExpressionInAttribute extends HAPEmbededScriptExpre
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ATTRIBUTE, this.m_attribute);
 	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ATTRIBUTE, this.m_attribute);
+	}
 }

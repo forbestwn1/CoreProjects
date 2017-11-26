@@ -21,10 +21,10 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 
+import com.nosliw.common.serialization.HAPJsonTypeUnchange;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPJsonTypeUnchange;
-import com.nosliw.common.utils.HAPJsonUtility; 
+import com.nosliw.common.serialization.HAPSerializeManager; 
  
 /**
  * Collection of JSON Utility methods. 

@@ -34,7 +34,7 @@ public class HAPGatewayOutput extends HAPSerializableImp{
 	public Object getData(){  return this.m_data;  }
 
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(DATA, HAPSerializeManager.getInstance().toStringValue(this.m_data, HAPSerializationFormat.JSON));
 		jsonMap.put(SCRIPTS, HAPSerializeManager.getInstance().toStringValue(this.m_scripts, HAPSerializationFormat.JSON));
 	}

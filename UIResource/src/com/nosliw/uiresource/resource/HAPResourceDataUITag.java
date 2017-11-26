@@ -17,7 +17,7 @@ public class HAPResourceDataUITag extends HAPSerializableImp implements HAPResou
 	
 	@Override
 	public String getValue() {
-		return this.m_uiTagDefinition.toStringValue(HAPSerializationFormat.JSON);
+		return this.m_uiTagDefinition.toStringValue(HAPSerializationFormat.JSON_FULL);
 	}
 
 }

@@ -32,8 +32,8 @@ public class HAPUITagDefinitionContextElmentRelative extends HAPContextNode impl
 	public String getType() {		return HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE;	}
 
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildFullJsonMap(jsonMap, typeJsonMap);
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(HAPUITagDefinitionContextElment.TYPE, this.getType());
 		jsonMap.put(PATH, this.m_path);
 	}

@@ -16,9 +16,9 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPJsonUtility;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 
 @HAPEntityWithAttribute
@@ -57,7 +57,7 @@ public abstract class HAPServiceServlet  extends HttpServlet{
 				for(int i=0; i<jsonGroupReqs.length(); i++){
 					JSONObject req = jsonGroupReqs.getJSONObject(i);
 					HAPServiceData serviceData = processRequest(req);
-					String requestResult = serviceData.toStringValue(HAPSerializationFormat.JSON);
+					String requestResult = serviceData.toStringValue(HAPSerializationFormat.JSON_FULL);
 					requestsResult.add(requestResult);
 				}
 				out = HAPServiceData.createSuccessData(requestsResult);
@@ -68,7 +68,7 @@ public abstract class HAPServiceServlet  extends HttpServlet{
 			out = HAPServiceData.createFailureData(null, "Exceptione during process gateway service request!!!!");
 		}
 
-		String content = out.toStringValue(HAPSerializationFormat.JSON);
+		String content = out.toStringValue(HAPSerializationFormat.JSON_FULL);
 
 		response.setContentType("application/json");
 	    PrintWriter writer = response.getWriter();
@@ -124,7 +124,7 @@ public abstract class HAPServiceServlet  extends HttpServlet{
 		
 		HAPServiceData serviceData = processServiceRequest(serviceInfo.getCommand(), serviceInfo.getParms());
 		
-		String content = serviceData.toStringValue(HAPSerializationFormat.JSON);
+		String content = serviceData.toStringValue(HAPSerializationFormat.JSON_FULL);
 		content = HAPJsonUtility.formatJson(content);
 		
 		System.out.println("return: \n" + content);

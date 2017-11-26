@@ -1,4 +1,4 @@
-package com.nosliw.common.utils;
+package com.nosliw.common.serialization;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -15,8 +15,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.nosliw.common.serialization.HAPSerializable;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 
 
 public class HAPJsonUtility {
