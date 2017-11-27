@@ -84,6 +84,7 @@ var node_CONSTANT=
 	  "REQUEST_TYPE_SET" : 				"set",						//
 	  "REQUEST_TYPE_SEQUENCE" : 		"sequence",						//
 	  "REQUEST_TYPE_UITAG" : 			"uiTag",						//
+	  "REQUEST_TYPE_DATAOPERATION" : 	"dataOperation",						//
 	  "REQUEST_TYPE_SIMPLE" : 			"simple",						//
 	  "REQUEST_TYPE_EXECUTOR" : 		"executor",						//
 	  "REQUEST_TYPE_REMOTE" : 		"executor",						//

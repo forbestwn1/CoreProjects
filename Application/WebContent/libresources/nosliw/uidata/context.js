@@ -116,6 +116,13 @@ var node_createContext = function(elementInfosArray, request){
 		registerContextListener : function(listener, handler, thisContext){
 			node_eventUtility.registerListener(listener, this.prv_eventObject, node_CONSTANT.EVENT_EVENTNAME_ALL, handler, thisContext)
 		},
+		
+		requestDataOperation : function(dataOperationService, request){
+			var opContextVar = node_createContextVariable(dataOperationService.target);
+			var contextEle = getContextElementVariable(opContextVar.name);
+			contextEle.requestDataOperation(new node_DataOperationService(contextEle, opContextVar.path, dataOperationService.data));
+		}
+		
 	};
 
 	//append resource life cycle method to out obj
