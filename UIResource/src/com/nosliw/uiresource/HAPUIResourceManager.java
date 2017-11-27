@@ -3,7 +3,6 @@ package com.nosliw.uiresource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
@@ -44,6 +43,7 @@ public class HAPUIResourceManager {
 		this.m_resourceMan = resourceMan;
 		this.m_runtime = runtime;
 		this.m_uiResourceDefinitions = new LinkedHashMap<String, HAPUIDefinitionUnitResource>();
+		this.m_dataTypeHelper = dataTypeHelper;
 	}
 
     //Add resource definition from file 
@@ -97,7 +97,7 @@ public class HAPUIResourceManager {
 			uiResource.processed();
 			
 			System.out.println("********************** "+  name  +"  ******************************");
-//			System.out.println(uiResource);
+			System.out.println(uiResource);
 			System.out.println("**********************   ******************************");
 		}
 		return uiResource;

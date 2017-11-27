@@ -31,6 +31,7 @@ public class HAPContextPath extends HAPSerializableImp{
 		}
 		else{
 			this.m_rootEleName = fullPath.substring(0, index);
+			this.m_path = fullPath.substring(index+1);
 		}
 	}
 	
