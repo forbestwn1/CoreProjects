@@ -24,6 +24,13 @@ public interface HAPDataTypeSubCriteriaGroup {
 	 * 		null or empty: no names
 	 */
 	Set<String> getSubCriteriaNames();
+
+	/**
+	 * 
+	 * @param name
+	 * @param child
+	 */
+	void addSubCriteria(String name, HAPDataTypeCriteria child);
 	
 	/**
 	 * Whether open for other name

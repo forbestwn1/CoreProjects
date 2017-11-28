@@ -47,6 +47,11 @@ var packageObj = library.getChildPackage("event");
 					var isAllEvent = false;
 					if(node_CONSTANT.EVENT_EVENTNAME_ALL===eventName)  isAllEvent = true;
 					
+					if(listener==undefined){
+						//if listener is not provided, then create one
+						listener = node_createEventObject();
+					}
+					
 					listener.pri_getBackboneEventObj().listenTo(loc_backboneEventObj, eventName, function(event, data){
 						//within this method, "this" refer to listenerEventObj
 						//we need to set "this" as source
@@ -62,6 +67,8 @@ var packageObj = library.getChildPackage("event");
 						handler.apply(that, parms);
 					});
 					loc_listeners.push(listener);
+					//return listener object
+					return listener;
 				},
 				
 				/*

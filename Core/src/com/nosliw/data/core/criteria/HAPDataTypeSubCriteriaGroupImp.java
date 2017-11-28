@@ -44,7 +44,9 @@ public class HAPDataTypeSubCriteriaGroupImp extends HAPSerializableImp implement
 	@Override
 	public boolean isOpen(){ return this.m_isOpen;  }
 	
-	protected void addSubCriteria(String name, HAPDataTypeCriteria subCriteria){  this.m_subCriterias.put(name, subCriteria);  }
+	@Override
+	public void addSubCriteria(String name, HAPDataTypeCriteria subCriteria){  this.m_subCriterias.put(name, subCriteria);  }
+	
 	protected void addSubCriterias(Map<String, HAPDataTypeCriteria> subCriterias){
 		if(subCriterias!=null){
 			for(String name : subCriterias.keySet()){

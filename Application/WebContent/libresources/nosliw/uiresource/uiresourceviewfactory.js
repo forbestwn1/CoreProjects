@@ -332,7 +332,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 		prv_callScriptFunction : function(funName){   
 			var fun = loc_scriptObject[funName];
 			if(fun!=undefined){
-				fun.apply(loc_parentResourveView, arguments[1]);
+				fun.apply(this, Array.prototype.slice.call(arguments, 1));
 			}
 			else{
 				loc_parentResourveView.prv_callScriptFunction.apply(loc_parentResourveView, arguments);

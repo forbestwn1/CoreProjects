@@ -9,4 +9,5 @@ public interface HAPDataTypeCriteriaWithSubCriteria {
 	 * @return
 	 */
 	HAPDataTypeSubCriteriaGroup getSubCriteria();
+
 }

@@ -12,6 +12,22 @@
 			<output criteria="test.dataTypeCriteria"/>
 		</operation>
 
+		<operation name="getChildren" >
+			<parms>
+				<parm name="base" criteria="test.dataTypeCriteria" isBase="true"/>
+			</parms>
+			<output criteria="test.map"/>
+		</operation>
+
+		<operation name="addChild" >
+			<parms>
+				<parm name="base" criteria="test.dataTypeCriteria" isBase="true"/>
+				<parm name="childName" criteria="test.string"/>
+				<parm name="child" criteria="test.dataTypeCriteria"/>
+			</parms>
+			<output criteria="test.dataTypeCriteria"/>
+		</operation>
+
 	</operations>
 
 </definition>

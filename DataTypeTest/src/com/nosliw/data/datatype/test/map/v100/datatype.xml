@@ -10,7 +10,7 @@
 				<parm name="name" criteria="test.string"/>
 				<parm name="value" criteria="*"/>
 			</parms>
-			<output criteria="test.map"/>
+			<output criteria="@||!(test.dataTypeCriteria)!.addChild(base;;;!(test.parm)!.getCriteria(&amp;(base)&amp;);;childName;;;!(test.parm)!.getValue(&amp;(name)&amp;);;child;;;!(test.parm)!.getCriteria(&amp;(value)&amp;))||@"/>
 		</operation>
 
 		<operation name="new" >
