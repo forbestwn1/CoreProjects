@@ -10,10 +10,13 @@ var node_getObjectType;
 var node_createEventObject;
 var node_eventUtility;
 var node_createContextElement;
+var node_createContextVariable;
 var node_createWrapperVariable;
+var node_DataOperationService;
 var node_makeObjectWithLifecycle;
 var node_getLifecycleInterface;
 var node_namingConvensionUtility;
+var node_ServiceInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 /*
  * elementInfosArray : an array of element info describing context element
@@ -119,8 +122,8 @@ var node_createContext = function(elementInfosArray, request){
 		
 		requestDataOperation : function(dataOperationService, request){
 			var opContextVar = node_createContextVariable(dataOperationService.target);
-			var contextEle = getContextElementVariable(opContextVar.name);
-			contextEle.requestDataOperation(new node_DataOperationService(contextEle, opContextVar.path, dataOperationService.data));
+			var contextEle = this.getContextElementVariable(opContextVar.name);
+			contextEle.requestDataOperation(new node_ServiceInfo(dataOperationService.operation, {"path":opContextVar.path, "data":dataOperationService.data}), request);
 		}
 		
 	};
@@ -145,10 +148,13 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContextElement", function(){node_createContextElement = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextVariable", function(){node_createContextVariable = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.createWrapperVariable", function(){node_createWrapperVariable = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.dataoperation.DataOperationService", function(){node_DataOperationService = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createContext", node_createContext); 

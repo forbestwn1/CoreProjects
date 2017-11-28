@@ -69,8 +69,6 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		//attach view to resourve view
 		if(views!=undefined)  loc_startEle.after(views);	
 
-//		loc_eventSource = nosliwCreateRequestEventSource();
-//		
 		//overridden method to do sth after view is attatched to dom
 		loc_uiTagObj.ovr_postInit(requestInfo);
 	};
