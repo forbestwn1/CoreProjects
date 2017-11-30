@@ -22,6 +22,11 @@ public class HAPDataTypeSubCriteriaGroupImp extends HAPSerializableImp implement
 		this.m_subCriterias = new LinkedHashMap<String, HAPDataTypeCriteria>();
 		this.addSubCriterias(subCriterias);
 	}
+
+	public HAPDataTypeSubCriteriaGroupImp(boolean anySubCriteria){
+		this.setOpen(anySubCriteria);
+		this.m_subCriterias = new LinkedHashMap<String, HAPDataTypeCriteria>();
+	}
 	
 	@Override
 	public HAPDataTypeCriteria getSubCriteria(String name) {

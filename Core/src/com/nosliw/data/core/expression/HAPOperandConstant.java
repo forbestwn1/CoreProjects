@@ -10,7 +10,6 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteriaId;
 
 public class HAPOperandConstant extends HAPOperandImp{
 
@@ -61,7 +60,7 @@ public class HAPOperandConstant extends HAPOperandImp{
 			HAPDataTypeHelper dataTypeHelper) {
 		//set output criteria
 		if(this.getOutputCriteria()==null){
-			HAPDataTypeCriteriaId criteria = dataTypeHelper.getDataTypeIdCriteriaByData(m_data);
+			HAPDataTypeCriteria criteria = dataTypeHelper.getDataTypeCriteriaByData(m_data);
 			this.setOutputCriteria(criteria);
 		}
 		return this.isMatchable(this.getOutputCriteria(), expectCriteria, context, dataTypeHelper);

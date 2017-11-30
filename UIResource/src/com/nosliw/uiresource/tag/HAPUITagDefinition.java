@@ -1,5 +1,6 @@
 package com.nosliw.uiresource.tag;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -7,7 +8,6 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonTypeAsItIs;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -43,6 +43,9 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	//dependency resources
 	private List<HAPResourceDependent> m_resourceDependency;
 	
+	//file name for tag definition, it is mainly used for uploading resource file
+	private File m_sourceFile;
+	
 	public HAPUITagDefinition(HAPUITagId name, String script){
 		this.m_name = name;
 		this.m_script = new HAPScript(script);
@@ -59,6 +62,9 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 
 	public List<HAPResourceDependent> getResourceDependency(){   return this.m_resourceDependency;    }
 	public void addResourceDependency(HAPResourceDependent dep){  this.m_resourceDependency.add(dep);  }
+	
+	public File getSourceFile(){  return this.m_sourceFile;   }
+	public void setSourceFile(File file){   this.m_sourceFile = file;   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

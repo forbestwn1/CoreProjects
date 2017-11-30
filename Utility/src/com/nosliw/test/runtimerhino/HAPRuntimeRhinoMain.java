@@ -114,7 +114,7 @@ public class HAPRuntimeRhinoMain {
 		
 		executeSuites(new String[]{
 //				"expression0",
-//				"expression1",
+				"expression1",
 //				"expression10",
 //				"expression2",
 //				"expression3",
@@ -125,7 +125,7 @@ public class HAPRuntimeRhinoMain {
 //				"expression7",
 //				"expression71",
 
-				"expression72",
+//				"expression72",
 //				"expression73",
 
 //				"expression8",

@@ -23,6 +23,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
@@ -107,6 +108,16 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		return this.executeTaskSync(task);
 	}
 
+	@Override
+	public HAPServiceData executeDataOperationSync(HAPDataTypeId dataTypeId, String operation,
+			Map<String, HAPData> parmsData) {
+		//execute task
+		HAPRuntimeTask task = new HAPRuntimeTaskExecuteDataOperationRhino(dataTypeId, operation, parmsData);
+		return this.executeTaskSync(task);
+	}
+
+	
+	
 	@Override
 	public void executeTask(HAPRuntimeTask task){
 		//prepare expression id

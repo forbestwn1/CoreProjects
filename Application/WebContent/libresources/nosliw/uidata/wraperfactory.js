@@ -61,6 +61,17 @@ var node_wrapperFactory = function(){
 				nosliw.logging.debug("create wrapper", node_getObjectId(out), "parentBased", out.pri_getPath(), node_getObjectId(out.pri_getParent()));
 			}
 			
+			out.registerDataOperationListener(undefined, function(eventName, data){
+				nosliw.logging.info("---------------------  Wrapper data change event  ----------------");
+				nosliw.logging.info("Path : " + out.getPath());
+				nosliw.logging.info("FullPath : " + out.getFullPath());
+				nosliw.logging.info("EventName : " + eventName);
+				nosliw.logging.info("Data : " + JSON.stringify(data));
+				nosliw.logging.info("---------------------    ----------------");
+				
+			}, out);
+			
+			
 			return out;
 		}
 			

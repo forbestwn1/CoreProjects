@@ -1,6 +1,6 @@
 <definition name="test.array;1.0.0">
 	
-	<info description="container for list of data"/>
+	<info description="container for list of data" complex="true"/>
 
 	<operations>
 	

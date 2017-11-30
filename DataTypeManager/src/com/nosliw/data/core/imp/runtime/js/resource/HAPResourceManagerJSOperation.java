@@ -1,8 +1,10 @@
 package com.nosliw.data.core.imp.runtime.js.resource;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.data.core.HAPOperation;
 import com.nosliw.data.core.imp.HAPDataAccessDataType;
 import com.nosliw.data.core.imp.runtime.js.HAPDataAccessRuntimeJS;
@@ -31,9 +33,9 @@ public class HAPResourceManagerJSOperation extends HAPResourceManagerDataAccess{
 		if(operationResource==null)  return null;
 		
 		HAPOperation operationInfo = this.m_dataTypeDataAccess.getOperationInfoByName(resourceIdOperation.getOperationId(), resourceIdOperation.getOperationId().getOperation());
-		HAPInfoImpSimple info = new HAPInfoImpSimple(); 
-		info.setValue(INFO_OPERATIONINFO, operationInfo);
-		
+
+		Map<String, Object> info = new LinkedHashMap<String, Object>();
+		info.put(INFO_OPERATIONINFO, operationInfo);
 		return new HAPResource(resourceId, operationResource, info);
 	}
 }

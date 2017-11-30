@@ -56,7 +56,9 @@ var node_createGatewayService = function(){
 					_.each(gatewayOutputScripts, function(scriptInfo, i, list){
 						var file = scriptInfo[node_COMMONATRIBUTECONSTANT.JSSCRIPTINFO_FILE];
 						if(file!=undefined){
-							
+							var script = document.createElement('script');
+							script.setAttribute('src', file);
+							script.setAttribute('type', 'text/javascript');
 						}
 						else{
 							eval(scriptInfo[node_COMMONATRIBUTECONSTANT.JSSCRIPTINFO_SCRIPT]);

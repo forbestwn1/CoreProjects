@@ -42,8 +42,8 @@ public class HAPExpressionUtility {
 	 * @param dataOpInfo
 	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
 	 */
-	static public List<HAPResourceInfo> discoverResourceRequirement(HAPDataTypeId dataTypeId, HAPOperation dataOpInfo, HAPResourceManagerRoot resourceMan) {
-		HAPOperationId operationId = new HAPOperationId(dataTypeId, dataOpInfo.getName());
+	static public List<HAPResourceInfo> discoverResourceRequirement(HAPDataTypeId dataTypeId, String operation, HAPResourceManagerRoot resourceMan) {
+		HAPOperationId operationId = new HAPOperationId(dataTypeId, operation);
 		HAPResourceId resourceId = new HAPResourceIdOperation(operationId);
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		resourceIds.add(resourceId);

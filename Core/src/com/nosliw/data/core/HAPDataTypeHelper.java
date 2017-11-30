@@ -16,7 +16,7 @@ public interface HAPDataTypeHelper {
 	/**
 	 * Figure out data type criteria id (data type, sub data type) according to data
 	 */
-	HAPDataTypeCriteriaId getDataTypeIdCriteriaByData(HAPData data);
+	HAPDataTypeCriteriaId getDataTypeCriteriaByData(HAPData data);
 	
 	/**
 	 * 

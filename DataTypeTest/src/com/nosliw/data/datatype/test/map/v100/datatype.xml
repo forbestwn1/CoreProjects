@@ -1,6 +1,6 @@
 <definition name="test.map;1.0.0">
 	
-	<info description="container for list of data"/>
+	<info description="container for list of data" complex="true"/>
 
 	<operations>
 	
@@ -17,6 +17,21 @@
 			<parms>
 			</parms>
 			<output criteria="test.map"/>
+		</operation>
+
+		<operation name="getChildrenNames" >
+			<parms>
+				<parm name="base" criteria="test.map" isBase="true"/>
+			</parms>
+			<output criteria="test.array;1.0.0%||element:test.string;1.0.0||%"/>
+		</operation>
+
+		<operation name="getChildData" >
+			<parms>
+				<parm name="base" criteria="test.map" isBase="true"/>
+				<parm name="name" criteria="test.string"/>
+			</parms>
+			<output criteria="*"/>
 		</operation>
 
 	</operations>

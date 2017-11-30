@@ -74,7 +74,8 @@ public class HAPJSScriptInfo extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(NAME, this.m_name);
-		jsonMap.put(SCRIPT, this.m_script.toString());
+		
+		if(this.m_script!=null)		jsonMap.put(SCRIPT, this.m_script.toString());
 		jsonMap.put(FILE, this.m_file);
 	}
 

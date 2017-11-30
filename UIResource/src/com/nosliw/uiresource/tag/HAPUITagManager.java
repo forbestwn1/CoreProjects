@@ -1,15 +1,18 @@
 package com.nosliw.uiresource.tag;
 
+import java.io.File;
+
+import com.nosliw.common.utils.HAPFileUtility;
+
 public class HAPUITagManager {
 
-	
-	
-	
 	public HAPUITagDefinition getUITagDefinition(HAPUITagId id){
-		String rootPath = "C:\\Users\\ewaniwa\\Desktop\\MyWork\\ApplicationData\\tags";
-		String fileName = rootPath + "\\" + id.getId() + ".js";
+		String fileName = HAPFileUtility.getTagDefinitionFolder() + id.getId() + ".js";
+		File file = new File(fileName);
 		
-		HAPUITagDefinition out = HAPUITagDefinitionParser.parseFromFile(fileName);
+		HAPUITagDefinition out = HAPUITagDefinitionParser.parseFromFile(file);
+		out.setSourceFile(file);
+		
 		return out;
 	}
 	

@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
@@ -33,17 +34,23 @@ public class HAPResource extends HAPSerializableImp{
 	private HAPResourceData m_resourceData;
 	
 	private HAPInfo m_info;
-	
-	public HAPResource(HAPResourceId id, HAPResourceData resourceData, HAPInfo info){
+
+	public HAPResource(HAPResourceId id, HAPResourceData resourceData, Map<String, Object> infoValues){
 		this.m_id = id;
 		this.m_resourceData = resourceData;
-		this.m_info = info;
+		this.m_info = new HAPInfoImpSimple();
+		if(infoValues!=null){
+			for(String name : infoValues.keySet()){
+				this.m_info.setValue(name, infoValues.get(name));
+			}
+		}
 	}
 	
 	public HAPResourceId getId(){		return this.m_id;	}
 	
+	public Object getInfoValue(String name){ return this.m_info.getValue(name);  }
+	
 	public HAPInfo getInfo(){  return this.m_info;  }
-	public void setInfo(HAPInfo info){   this.m_info = info; }
 	
 	public HAPResourceData getResourceData(){  return this.m_resourceData;  }
 	

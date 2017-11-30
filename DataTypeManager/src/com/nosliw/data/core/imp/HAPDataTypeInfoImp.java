@@ -8,4 +8,6 @@ public class HAPDataTypeInfoImp extends HAPInfoImpStringable{
 	@HAPAttribute
 	public static String DESCRIPTION = "description";
 
+	@HAPAttribute
+	public static String COMPLEX = "complex";
 }

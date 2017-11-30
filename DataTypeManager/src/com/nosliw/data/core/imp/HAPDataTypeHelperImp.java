@@ -2,18 +2,26 @@ package com.nosliw.data.core.imp;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.google.common.collect.Sets;
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeFamily;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeOperation;
+import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPOperationUtility;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -22,6 +30,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteriaExpression;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaIds;
 import com.nosliw.data.core.criteria.HAPDataTypeSubCriteriaGroup;
+import com.nosliw.data.core.criteria.HAPDataTypeSubCriteriaGroupImp;
 import com.nosliw.data.core.expression.HAPMatcher;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -407,8 +416,40 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	}
 
 	@Override
-	public HAPDataTypeCriteriaId getDataTypeIdCriteriaByData(HAPData data) {
-		return new HAPDataTypeCriteriaId(data.getDataTypeId(), null);
+	public HAPDataTypeCriteriaId getDataTypeCriteriaByData(HAPData data) {
+		boolean hasChild = false;
+		
+		HAPDataTypeId dataTypeId = data.getDataTypeId();
+		HAPDataTypeImp dataType = this.m_dataAccess.getDataType(dataTypeId);
+		HAPInfo info = dataType.getInfo();
+		if(info!=null){
+			if("true".equals(info.getValue(HAPDataTypeInfoImp.COMPLEX)))		hasChild = true;
+		}
+
+		HAPDataTypeSubCriteriaGroupImp group = null;
+		if(hasChild){
+			Map<String, HAPData> parmsDataGetChildrenNames = new LinkedHashMap<String, HAPData>();
+			parmsDataGetChildrenNames.put("base", data);
+			HAPServiceData serviceDataChildNames = this.m_runtimeEnv.getRuntime().executeDataOperationSync(data.getDataTypeId(), HAPOperationUtility.OPERATION_GETCHILDRENNAMES, parmsDataGetChildrenNames);
+			HAPData getChildrenNamesResultData = (HAPData)serviceDataChildNames.getData();
+			try {
+				JSONArray getChildrenNamesResultJsonArray = new JSONArray(getChildrenNamesResultData.getValue().toString());
+				for(int i=0; i<getChildrenNamesResultJsonArray.length(); i++){
+					if(group==null)  group = new HAPDataTypeSubCriteriaGroupImp(false);
+					JSONObject childNameDataJson = getChildrenNamesResultJsonArray.getJSONObject(i);
+					String childName = childNameDataJson.getString(HAPData.VALUE);
+					Map<String, HAPData> parmsDataGetChildData = new LinkedHashMap<String, HAPData>();
+					parmsDataGetChildData.put("base", data);
+					parmsDataGetChildData.put("name", HAPDataUtility.buildDataWrapperFromJson(childNameDataJson));
+					HAPServiceData serviceDataChildData = this.m_runtimeEnv.getRuntime().executeDataOperationSync(data.getDataTypeId(), HAPOperationUtility.OPERATION_GETCHILDDATA, parmsDataGetChildrenNames);
+					HAPData getChildDataResultData = (HAPData)serviceDataChildData.getData();
+					group.addSubCriteria(childName, this.getDataTypeCriteriaByData(getChildDataResultData));
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return new HAPDataTypeCriteriaId(data.getDataTypeId(), group);
 	}
 
 	@Override

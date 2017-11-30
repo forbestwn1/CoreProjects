@@ -1,5 +1,6 @@
 package com.nosliw.uiresource.tag;
 
+import java.io.File;
 import java.util.Iterator;
 
 import org.json.JSONObject;
@@ -17,14 +18,14 @@ import com.nosliw.uiresource.context.HAPContextParser;
 
 public class HAPUITagDefinitionParser {
 
-	public static HAPUITagDefinition parseFromFile(String fileName){
+	public static HAPUITagDefinition parseFromFile(File file){
 		HAPUITagDefinition out = null;
 		try {
 			Context cx = Context.enter();
 	        Scriptable scope = cx.initStandardObjects(null);
 
-			String content = HAPFileUtility.readFile(fileName);
-			NativeObject defObjJS = (NativeObject)cx.evaluateString(scope, content, fileName, 1, null);
+			String content = "var out="+HAPFileUtility.readFile(file) + "; out;";
+			NativeObject defObjJS = (NativeObject)cx.evaluateString(scope, content, file.getName(), 1, null);
 
 			String name = (String)defObjJS.get(HAPUITagDefinition.NAME);
 	    	String script = Context.toString((Function)defObjJS.get(HAPUITagDefinition.SCRIPT));

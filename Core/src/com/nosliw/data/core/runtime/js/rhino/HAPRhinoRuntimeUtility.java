@@ -21,7 +21,7 @@ public class HAPRhinoRuntimeUtility {
 
 	private static int index = 1;
 	
-	private static String scriptTempFolder = "C:/Temp/ScriptExport/scripts/" + System.currentTimeMillis() + "/";
+	private static String scriptTempFolder = HAPFileUtility.getScriptExportFolder() + System.currentTimeMillis() + "/";
 
 	public static void invokeGatewayHandlers(HAPServiceData serviceData, Object handlers, Scriptable scope){
 		Context context = Context.enter();

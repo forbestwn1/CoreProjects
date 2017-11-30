@@ -20,6 +20,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskLoadResources;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
+import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteDataOperation;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSLibrary;
 import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
@@ -34,14 +35,44 @@ public class HAPRuntimeJSScriptUtility {
 		}
 		
 		
-		StringBuffer script = new StringBuffer();
 		if(HAPRuntimeImpRhino.ADDTORESOURCEMANAGER.equals(resourceInfo.getInfo().getValue(HAPRuntimeImpRhino.ADDTORESOURCEMANAGER)))  return out;
 		
-		//build script for resource data
-		String valueScript = null;
+		//build script for resource with data
 		if(resource.getResourceData() instanceof HAPResourceDataJSValue){
-			valueScript = ((HAPResourceDataJSValue)resource.getResourceData()).getValue();
+			out.add(buildScriptInfoForResourceWithValue(resourceInfo, resource));
 		}
+		return out;
+	}
+	
+	private static HAPJSScriptInfo buildScriptInfoForResourceWithValue(HAPResourceInfo resourceInfo, HAPResource resource){
+		HAPJSScriptInfo out = null;
+		String script = buildImportResourceScriptForResourceWithValue(resourceInfo, resource);
+		
+		String loadPattern = (String)resource.getInfoValue(HAPRuntimeJSUtility.RESOURCE_LOADPATTERN);
+		if(loadPattern==null)  loadPattern = HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_VALUE;
+		switch(loadPattern){
+		case HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE:
+			//load as file, create temp file first
+			String name = resource.getId().toStringValue(HAPSerializationFormat.LITERATE);
+			String resourceFile = HAPFileUtility.getResourceFileFolder() + name + ".resource";
+			HAPFileUtility.writeFile(resourceFile, script);
+			out = HAPJSScriptInfo.buildByFile(resourceFile, name);
+			
+			break;
+		case HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_VALUE:
+			//load as value
+			out = HAPJSScriptInfo.buildByScript(script.toString(), "Resource__"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE));
+			break;
+		}
+
+		return out;
+	}
+	
+	private static String buildImportResourceScriptForResourceWithValue(HAPResourceInfo resourceInfo, HAPResource resource){
+		StringBuffer script = new StringBuffer();
+		
+		//build script for resource data
+		String valueScript = ((HAPResourceDataJSValue)resource.getResourceData()).getValue();
 		
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("resourceInfo", resourceInfo.toStringValue(HAPSerializationFormat.JSON));
@@ -63,8 +94,7 @@ public class HAPRuntimeJSScriptUtility {
 		script.append(resoruceDataScript);
 		script.append("\n");
 		
-		out.add(HAPJSScriptInfo.buildByScript(script.toString(), "Resource__"+resource.getId().toStringValue(HAPSerializationFormat.LITERATE)));
-		return out;
+		return script.toString();
 	}
 	
 	private static List<HAPJSScriptInfo> buildScriptInfoForLibrary(HAPResource resource){
@@ -80,6 +110,27 @@ public class HAPRuntimeJSScriptUtility {
 		return out;
 	}
 
+	public static HAPJSScriptInfo buildRequestScriptForExecuteDataOperationTask(HAPRuntimeTaskExecuteDataOperation executeDataOperationTask, HAPRuntimeImpRhino runtime){
+		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+		templateParms.put("operation", executeDataOperationTask.getDataTypeId().toStringValue(HAPSerializationFormat.LITERATE));
+		templateParms.put("operation", executeDataOperationTask.getOperation());
+		templateParms.put("parms", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(executeDataOperationTask.getParms()==null?new LinkedHashMap<String, HAPData>() : executeDataOperationTask.getParms(), HAPSerializationFormat.JSON)));
+
+		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
+		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
+		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
+		
+		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
+		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
+		templateParms.put("taskId", executeDataOperationTask.getTaskId());
+		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
+		
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ExecuteDataOperationScript.temp");
+		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
+		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, executeDataOperationTask.getTaskId());
+		return out;
+	}
+	
 	public static HAPJSScriptInfo buildRequestScriptForExecuteExpressionTask(HAPRuntimeTaskExecuteExpression executeExpressionTask, HAPRuntimeImpRhino runtime){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("expression", HAPJsonUtility.formatJson(HAPSerializeManager.getInstance().toStringValue(executeExpressionTask.getExpression(), HAPSerializationFormat.JSON)));
