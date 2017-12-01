@@ -49,11 +49,11 @@ var node_createLoggingService = function(){
 		return loc_logging;
 	}
 	
-	var loc_processArguments = function(){
+	var loc_processArguments = function(args){
 		var out = [];
-		for(var i in arguments){
+		for(var i in args){
 			try{
-				out.push(JSON.stringify(arguments[i]==undefined?"undefined":arguments[i]));
+				out.push(JSON.stringify(args[i]==undefined?"undefined":args[i]));
 			}
 			catch(err){
 			}
