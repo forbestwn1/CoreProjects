@@ -15,6 +15,9 @@ var packageObj = library;
 	var node_createServiceRequestInfoRemote;
 	var node_createServiceRequestInfoService;
 	var node_DependentServiceRequestInfo;
+	var node_createServiceRequestInfoCommon;
+	var node_createServiceRequestInfoSequence;
+	var node_createServiceRequestInfoSimple;
 //*******************************************   Start Node Definition  ************************************** 	
 	
 /**
@@ -40,9 +43,64 @@ var node_createGatewayService = function(){
 		nosliw.runtime.getRemoteService().registerSyncTaskConfigure(loc_configureName, configure);
 	});
 	
+	//load file to html page to execute it
+	loc_getLoadResourceFileRequest = function(fileName, handlers, requester_parent){
+		var out = node_createServiceRequestInfoCommon(new node_ServiceInfo("LoadResourceFile", {"fileName":fileName}), handlers, requester_parent);		
+		out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
+			var script = document.createElement('script');
+			script.setAttribute('src', requestInfo.getService().parms.fileName);
+			script.setAttribute('type', 'text/javascript');
+			script.onload = function(){
+				requestInfo.executeSuccessHandler(data, thisContext);
+			};
+			document.getElementsByTagName("head")[0].appendChild(script);
+		}, out));
+
+		return out;
+	};
+	
+	loc_getLoadResourceDataRequest = function(dataStr, handlers, requester_parent){
+		var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("LoadResourceData", {"dataStr":dataStr}), 
+				function(requestInfo){  
+					eval(requestInfo.getService().parms.dataStr);  
+				}, 
+				handlers, requester_parent);
+		return out;
+	};
+	
 	var loc_out = {
-		
-		getExecuteGatewayCommandRequest : function(gatewayId, command, parms, handlers, requester_parent){
+
+			getExecuteGatewayCommandRequest : function(gatewayId, command, parms, handlers, requester_parent){
+				var requestInfo = loc_out.getRequestInfo(requester_parent);
+				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RequestGatewayService", {"gatewayId":gatewayId,"command":command,"parms":parms}), handlers, requestInfo);
+
+				var gatewayRemoteServiceRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(gatewayId+";"+command, parms), undefined, {
+					success : function(requestInfo, gatewayOutput){
+						var gatewayOutputData = gatewayOutput[node_COMMONATRIBUTECONSTANT.GATEWAYOUTPUT_DATA];
+						out.setData("gatewayOutputData", gatewayOutputData);
+						var gatewayOutputScripts = gatewayOutput[node_COMMONATRIBUTECONSTANT.GATEWAYOUTPUT_SCRIPTS];
+						var requests = [];
+						//process script info output 
+						_.each(gatewayOutputScripts, function(scriptInfo, i, list){
+							var file = scriptInfo[node_COMMONATRIBUTECONSTANT.JSSCRIPTINFO_FILE];
+							if(file!=undefined)		requests.push(loc_getLoadResourceFileRequest(file));
+							else		requests.push(loc_getLoadResourceDataRequest(scriptInfo[node_COMMONATRIBUTECONSTANT.JSSCRIPTINFO_SCRIPT]));
+						});
+						if(requests.length>0)  return requests;
+					}
+				});
+				out.addRequest(gatewayRemoteServiceRequest);
+				
+				out.addPostProcessor({
+					success : function(requestInfo){
+						return out.getData("gatewayOutputData");
+					}
+				});
+				return out;
+			},	
+			
+			
+		getExecuteGatewayCommandRequest1 : function(gatewayId, command, parms, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoService(new node_ServiceInfo("RequestGatewayService", {"gatewayId":gatewayId,"command":command,"parms":parms}), handlers, requestInfo);
 
@@ -103,7 +161,10 @@ nosliw.registerSetNodeDataEvent("request.entity.ServiceRequestExecuteInfo", func
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("remote.entity.RemoteServiceTask", function(){node_RemoteServiceTask = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoRemote", function(){node_createServiceRequestInfoRemote = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon", function(){node_createServiceRequestInfoCommon = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){node_createServiceRequestInfoSequence = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService", function(){node_createServiceRequestInfoService = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 
 
