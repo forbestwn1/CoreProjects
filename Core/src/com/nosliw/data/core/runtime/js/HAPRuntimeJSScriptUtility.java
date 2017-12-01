@@ -55,7 +55,7 @@ public class HAPRuntimeJSScriptUtility {
 			//load as file, create temp file first
 			String name = resource.getId().toStringValue(HAPSerializationFormat.LITERATE);
 			String resourceFile = HAPFileUtility.getResourceFileFolder() + name + ".resource";
-			HAPFileUtility.writeFile(resourceFile, script);
+			resourceFile = HAPFileUtility.writeFile(resourceFile, script);
 			out = HAPJSScriptInfo.buildByFile(resourceFile, name);
 			
 			break;

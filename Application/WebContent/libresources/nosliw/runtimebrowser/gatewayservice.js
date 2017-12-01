@@ -59,6 +59,8 @@ var node_createGatewayService = function(){
 							var script = document.createElement('script');
 							script.setAttribute('src', file);
 							script.setAttribute('type', 'text/javascript');
+//							script.onload = callBack;
+							document.getElementsByTagName("head")[0].appendChild(script);
 						}
 						else{
 							eval(scriptInfo[node_COMMONATRIBUTECONSTANT.JSSCRIPTINFO_SCRIPT]);

@@ -77,7 +77,7 @@ public class HAPFileUtility {
 		return readFile(stream, "\n");
 	}
 	
-	public static void writeFile(String fileName, String content){
+	public static String writeFile(String fileName, String content){
 		try {
 			fileName = getValidFileName(fileName);
 			File file = new File(fileName);
@@ -99,7 +99,8 @@ public class HAPFileUtility {
  
 		} catch (IOException e) {
 			e.printStackTrace();
-		}	
+		}
+		return fileName;
 	}
 	
 	private static String getValidFileName(String fileFullName){

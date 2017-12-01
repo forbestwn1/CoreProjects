@@ -40,7 +40,7 @@ public class HAPGatewayBrowserLoadLibrary extends HAPGatewayImp{
 			for(HAPJSScriptInfo script : scripts){
 				String file = script.isFile();
 				if(file!=null){
-					fileNames.add(this.getLibraryPath(file));
+					fileNames.add(HAPRuntimeBrowserUtility.getBrowserScriptPath(file));
 				}
 			}
 			out = this.createSuccessWithObject(fileNames);
@@ -49,9 +49,5 @@ public class HAPGatewayBrowserLoadLibrary extends HAPGatewayImp{
 		return out;
 	}
 
-	private String getLibraryPath(String fileName){
-		String keyword = "WebContent";
-		return fileName.substring(fileName.indexOf(keyword)+keyword.length()+1);
-	}
 
 }

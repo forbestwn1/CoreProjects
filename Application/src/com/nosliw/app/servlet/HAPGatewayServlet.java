@@ -8,6 +8,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
+import com.nosliw.data.core.runtime.js.browser.HAPRuntimeBrowserUtility;
 
 @HAPEntityWithAttribute
 public class HAPGatewayServlet extends HAPServiceServlet{
@@ -26,9 +27,13 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 		if(out.isSuccess()){
 			HAPGatewayOutput output = (HAPGatewayOutput)out.getData();
 			for(HAPJSScriptInfo scriptInfo : output.getScripts()){
-				if(scriptInfo.isFile()==null){
+				String file = scriptInfo.isFile();
+				if(file==null){
 					String escaptedScript = StringEscapeUtils.escapeJavaScript(scriptInfo.getScript());
 					scriptInfo.setScript(escaptedScript);
+				}
+				else{
+					scriptInfo.setFile(HAPRuntimeBrowserUtility.getBrowserScriptPath(file));
 				}
 			}
 		}
