@@ -27,7 +27,7 @@ var node_createDataOperationRequest = function(context, handlers, requester_pare
 	 */
 	var loc_process = function(requestInfo){
 		_.each(loc_out.pri_childDataOperationServices, function(dataOperationService, index){
-			var target = dataOperationService.target;
+			var target = dataOperationService.parms.target;
 			if(node_getObjectType(target)==node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
 				//target is wrapper
 				target.requestDataOperation(dataOperationService, requestInfo);
@@ -65,10 +65,12 @@ var node_createDataOperationRequest = function(context, handlers, requester_pare
 };
 
 //Entity to define data operation info
-var node_DataOperationService = function(target, operation, data){
-	this.target = target;
-	this.operation = operation;
-	this.data = data;
+var node_createDataOperationService = function(target, operation, path, data){
+	return new node_ServiceInfo(operation, {
+		target : target,
+		path : path,
+		data : data
+	});
 }
 
 //*******************************************   End Node Definition  ************************************** 	
@@ -83,6 +85,6 @@ nosliw.registerSetNodeDataEvent("request.entity.ServiceRequestExecuteInfo", func
 
 //Register Node by Name
 packageObj.createChildNode("createDataOperationRequest", node_createDataOperationRequest); 
-packageObj.createChildNode("DataOperationService", node_DataOperationService); 
+packageObj.createChildNode("createDataOperationService", node_createDataOperationService); 
 
 })(packageObj);

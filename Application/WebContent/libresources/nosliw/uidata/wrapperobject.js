@@ -44,7 +44,8 @@ var node_createWraperObject = function(){
 				}
 				else{
 					//on child
-					rootWrapper.pri_triggerForwardEvent(event, fullPath.substring(rootPath.length+1), opValue, request);
+					if(rootPath=="")  rootWrapper.pri_triggerForwardEvent(event, fullPath, opValue, request);
+					else rootWrapper.pri_triggerForwardEvent(event, fullPath.substring(rootPath.length+1), opValue, request);
 				}
 			},
 

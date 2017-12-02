@@ -121,9 +121,9 @@ var node_createContext = function(elementInfosArray, request){
 		},
 		
 		requestDataOperation : function(dataOperationService, request){
-			var opContextVar = node_createContextVariable(dataOperationService.target);
-			var contextEle = this.getContextElementVariable(opContextVar.name);
-			contextEle.requestDataOperation(new node_ServiceInfo(dataOperationService.operation, {"path":opContextVar.path, "data":dataOperationService.data}), request);
+			var contextVar = node_createContextVariable(dataOperationService.parms.path);
+			var contextEle = this.getContextElementVariable(contextVar.name);
+			contextEle.requestDataOperation(new node_ServiceInfo(dataOperationService.command, {"path":contextVar.path, "data":dataOperationService.parms.data}), request);
 		}
 		
 	};

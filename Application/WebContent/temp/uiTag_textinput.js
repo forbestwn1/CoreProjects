@@ -20,20 +20,23 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"textinput",
 "attributes":{},
 "script":
 function (context, uiTagResource, attributes, env) {
-    var loc_dataContextEle = "internal_data";
+    var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+    var node_createDataOperationRequest = nosliw.getNodeData("uidata.dataoperation.createDataOperationRequest");
+    var node_createDataOperationService = nosliw.getNodeData("uidata.dataoperation.createDataOperationService");
+    var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+    var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+    var loc_context = context;
+    var loc_dataContextEleName = "internal_data";
+    var loc_dataVariable = loc_context.createVariable(node_createContextVariable(loc_dataContextEleName));
     var loc_view;
     var loc_revertChange = function () {
     };
-    var node_createDataOperationRequest = nosliw.getNodeData("uidata.dataoperation.createDataOperationRequest");
-    var node_DataOperationService = nosliw.getNodeData("uidata.dataoperation.DataOperationService");
-    var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
-    var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
     var loc_getViewData = function (name) {
         var value = loc_view.val();
         return {dataTypeId: "test.string;1.0.0", value: value};
     };
     var loc_out = {prv_updateView: function () {
-        var data = context.getContextElementData(loc_dataContextEle);
+        var data = loc_dataVariable.getData();
         if (data != undefined) {
             var value = data.value.value;
             loc_view.val(value);
@@ -42,8 +45,8 @@ function (context, uiTagResource, attributes, env) {
         var that = this;
         loc_view.bind("change", function () {
             var data = loc_getViewData();
-            var requestInfo = node_createDataOperationRequest(context, {});
-            var operationService = new node_DataOperationService(loc_dataContextEle, node_CONSTANT.WRAPPER_OPERATION_SET, data);
+            var requestInfo = node_createDataOperationRequest(loc_context, {});
+            var operationService = node_createDataOperationService(loc_dataVariable, node_CONSTANT.WRAPPER_OPERATION_SET, "", data);
             requestInfo.addOperationRequest(operationService);
             node_requestServiceProcessor.processRequest(requestInfo, false);
         });
