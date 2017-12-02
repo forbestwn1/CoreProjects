@@ -39,8 +39,22 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 		});
 	};
 	
+	//add child request, 
+	//requestInfo can be single request or a array of request
 	var loc_addChildRequest = function(requestInfo){
-		loc_out.pri_requestInfos.push(requestInfo);	
+		if(loc_out.getStatus()!=node_CONSTANT.REQUEST_STATUS_INIT){
+			if(loc_out.pri_cursor<loc_out.pri_requestInfos.length-1){
+				loc_out.pri_requestInfos = loc_out.pri_requestInfos.slice(0, loc_out.pri_cursor+1);
+			}
+		}
+		if(_.isArray(requestInfo)==true){
+			_.each(requestInfo, function(req, i){
+				loc_out.pri_requestInfos.push(req);
+			});
+		}
+		else{
+			loc_out.pri_requestInfos.push(requestInfo);	
+		}
 	}
 	
 	
@@ -68,7 +82,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 			}
 			if(isRequestArray==true){
 				//if data is an array of request
-				for(var i in data)			loc_addChildRequest(data[i]);
+				loc_addChildRequest(data);
 				data = undefined;
 			}
 		}
