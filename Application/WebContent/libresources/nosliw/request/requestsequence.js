@@ -26,13 +26,8 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 	var loc_startOutDataName = "startOutDataName";
 	
 	var loc_constructor = function(service, handlers, requester_parent){
-		//store a list of requests, it is static
-		loc_out.pri_requests = [];
-		
-		//store all request info objects that have been processed
+		//store all request info objects 
 		loc_out.pri_requestInfos = [];
-		//whether the next request is dynamiclly created
-		loc_out.pri_isDynamic = false;
 		//the next requester index
 		loc_out.pri_cursor = 0;
 		
@@ -44,128 +39,77 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 		});
 	};
 	
+	var loc_addChildRequest = function(requestInfo){
+		loc_out.pri_requestInfos.push(requestInfo);	
+	}
+	
+	
 	/*
 	 * process request in sequence according to its index
+	 * data : return value from previous request
 	 */
 	var loc_processNextRequestInSequence = function(data){
-		if(data!=undefined)		loc_out.pri_isDynamic = true;
 		
-		if(loc_out.pri_isDynamic==false){
-			//static 
-			if(loc_out.pri_requests.length<=loc_out.pri_cursor){
-				//not more request in queue
-				loc_out.executeSuccessHandler(data, loc_out);
-				return;
-			}
-			
-			var item = loc_out.pri_requests[loc_out.pri_cursor];
-			if(_.isFunction(item)==true){
-				//if item is function, then execute the function and return the requestinfo object or out object
-				item = item.call(loc_out, loc_out);
-			}
-
-			if(node_getObjectType(item)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
-				//for request
-				loc_out.pri_requestInfos.push(item);
-			}
+		if(_.isFunction(data)){
+			data = data.call(loc_out, loc_out);
+		}
+		
+		if(_.isArray(data)==true){
+			//check if this array is data or a array of request
+			var isRequestArray = true;
+			if(data.length==0)  isRequestArray = false;
 			else{
-				//other object, finish this request
-				loc_out.executeSuccessHandler(item, loc_out);
-				return;
+				for(var i in data){
+					if(node_getObjectType(data[i])!=node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
+						isRequestArray = false;
+						break;
+					}
+				}
+			}
+			if(isRequestArray==true){
+				//if data is an array of request
+				for(var i in data)			loc_addChildRequest(data[i]);
+				data = undefined;
 			}
 		}
 		else{
-			//dynamic
-			if(data==undefined){
-				loc_out.executeSuccessHandler(data, loc_out);
-				return;
-			}
-
-			if(_.isFunction(data)){
-				data = data.call(loc_out, loc_out);
-			}
-
-			if(data==undefined){
-				loc_out.executeSuccessHandler(data, loc_out);
-				return;
-			}
-			
-			if(_.isArray(data)==true){
-				//check if this array is data or a array of request
-				var isRequestArray = true;
-				if(data.length==0)  isRequestArray = false;
-				else{
-					for(var i in data){
-						if(node_getObjectType(data[i])!=node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
-							isRequestArray = false;
-							break;
-						}
-					}
-				}
-				if(isRequestArray==true){
-					//if data is an array of request
-					for(var i in data){
-						loc_out.pri_requestInfos.push(data[i]);
-					}
-				}
-				else{
-					//other object, finish this request
-					loc_out.executeSuccessHandler(data, loc_out);
-					return;
-				}
-			}
-			else{
-				if(node_getObjectType(data)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
-					//for request
-					loc_out.pri_requestInfos.push(data);
-				}
-				else{
-					//other object, finish this request
-					loc_out.executeSuccessHandler(data, loc_out);
-					return;
-				}
+			if(node_getObjectType(data)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
+				//for request
+				loc_addChildRequest(data);
+				data = undefined;
 			}
 		}
-		var requestInfo = loc_out.pri_requestInfos[loc_out.pri_cursor];
 		
-		requestInfo.setParentRequest(loc_out);
+		if(loc_out.pri_requestInfos.length<=loc_out.pri_cursor){
+			//not more request in queue
+			loc_out.executeSuccessHandler(data, loc_out);
+		}
+		else{
+			var requestInfo = loc_out.pri_requestInfos[loc_out.pri_cursor];
 
-		requestInfo.addPostProcessor({
-			success : function(requestInfo, out){
-				loc_out.pri_cursor++;
-				
-				if(out!=undefined){
-					//dynamic, keep processing next request
+			requestInfo.setParentRequest(loc_out);
+
+			requestInfo.addPostProcessor({
+				success : function(requestInfo, out){
+					loc_out.pri_cursor++;
 					loc_processNextRequestInSequence(out);
-				}
-				else{
-					var requestLen = undefined;
-					if(loc_out.pri_isDynamic==false)   requestLen = loc_out.pri_requests.length;
-					else requestLen = loc_out.pri_requestInfos.length;
-					if(loc_out.pri_cursor<requestLen){
-						//still more in request list, keep processing next request
-						loc_processNextRequestInSequence();
-					}
-					else{
-						//if finish all requests
-						loc_out.executeSuccessHandler(undefined, loc_out);
-					}
-				}
-			},
-			error : function(requestInfo, serviceData){
-				loc_out.executeErrorHandler(serviceData, loc_out);
-			},
-			exception : function(requestInfo, serviceData){
-				loc_out.executeExceptionHandler(serviceData, loc_out);
-			},
-		});
+				},
+				error : function(requestInfo, serviceData){
+					loc_out.executeErrorHandler(serviceData, loc_out);
+				},
+				exception : function(requestInfo, serviceData){
+					loc_out.executeExceptionHandler(serviceData, loc_out);
+				},
+			});
+			
+			node_requestProcessor.processRequest(requestInfo);
+		}
 		
-		node_requestProcessor.processRequest(requestInfo);
 	};
 	
 	var loc_process = function(){
 		//retrieve start handler out
-		startHandlerOut = loc_out.getData(loc_startOutDataName);
+		var startHandlerOut = loc_out.getData(loc_startOutDataName);
 		//start process first request
 		loc_processNextRequestInSequence(startHandlerOut);
 	};
@@ -175,16 +119,13 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 		ovr_afterSetId : function(){
 			//change all children's id
 			var id = this.getId();
-			_.each(loc_out.pri_requests, function(childRequestInfo, name, list){
+			_.each(loc_out.pri_requestInfos, function(childRequestInfo, name, list){
 				childRequestInfo.setId(id);
 			}, this);			
 		},
 			
 		addRequest : function(requestInfo){
-			if(!_.isFunction(requestInfo)){
-				requestInfo.setParentRequest(this);
-			}
-			this.pri_requests.push(requestInfo);	
+			loc_addChildRequest(requestInfo);
 		},
 	};
 	

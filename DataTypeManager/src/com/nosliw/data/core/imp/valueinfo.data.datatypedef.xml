@@ -9,6 +9,12 @@
 		</dbColumnInfos>
 	</property>
 
+	<property name="isComplex" dataType="boolean" description="" default="false">
+		<dbColumnInfos>
+			<dbColumnInfo definition="VARCHAR(20)"/>
+		</dbColumnInfos>
+	</property>
+
 	<property name="name" dataType="object" subDataType="com.nosliw.data.core.HAPDataTypeId" description="data type info">
 		<dbColumnInfos pathType="propertyAsPath">
 			<dbColumnInfo column="fullName" definition="VARCHAR(100) NOT NULL" getter="getFullName" setter="setFullName"/>

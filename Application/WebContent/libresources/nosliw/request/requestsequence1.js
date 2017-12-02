@@ -44,15 +44,6 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 		});
 	};
 	
-	var loc_addChildRequest = function(requestInfo){
-//		if(!_.isFunction(requestInfo)){
-//			requestInfo.setParentRequest(loc_out);
-//		}
-		loc_out.pri_requests.push(requestInfo);	
-		loc_out.pri_isDynamic = false;
-	}
-	
-	
 	/*
 	 * process request in sequence according to its index
 	 */
@@ -75,8 +66,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 
 			if(node_getObjectType(item)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
 				//for request
-//				loc_out.pri_requestInfos.push(item);
-				loc_addChildRequest(item);
+				loc_out.pri_requestInfos.push(item);
 			}
 			else{
 				//other object, finish this request
@@ -115,8 +105,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 				if(isRequestArray==true){
 					//if data is an array of request
 					for(var i in data){
-//						loc_out.pri_requestInfos.push(data[i]);
-						loc_addChildRequest(data[i]);
+						loc_out.pri_requestInfos.push(data[i]);
 					}
 				}
 				else{
@@ -139,11 +128,6 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 		}
 		var requestInfo = loc_out.pri_requestInfos[loc_out.pri_cursor];
 
-		if(requestInfo==undefined){
-			var kkkkk = 5555;
-			kkkkk++;
-		}
-		
 		requestInfo.setParentRequest(loc_out);
 
 		requestInfo.addPostProcessor({
@@ -197,8 +181,10 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 		},
 			
 		addRequest : function(requestInfo){
-			loc_addChildRequest(requestInfo);
-		},
+			if(!_.isFunction(requestInfo)){
+				requestInfo.setParentRequest(this);
+			}
+			this.pri_requests.push(requestInfo);		},
 	};
 	
 	loc_out = _.extend(node_createServiceRequestInfoCommon(service, handlers, requester_parent), loc_out);

@@ -417,15 +417,15 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 	@Override
 	public HAPDataTypeCriteriaId getDataTypeCriteriaByData(HAPData data) {
-		boolean hasChild = false;
 		
 		HAPDataTypeId dataTypeId = data.getDataTypeId();
 		HAPDataTypeImp dataType = this.m_dataAccess.getDataType(dataTypeId);
-		HAPInfo info = dataType.getInfo();
-		if(info!=null){
-			if("true".equals(info.getValue(HAPDataTypeInfoImp.COMPLEX)))		hasChild = true;
-		}
+//		HAPInfo info = dataType.getInfo();
+//		if(info!=null){
+//			if("true".equals(info.getValue(HAPDataTypeInfoImp.COMPLEX)))		hasChild = true;
+//		}
 
+		boolean hasChild = dataType.getIsComplex();
 		HAPDataTypeSubCriteriaGroupImp group = null;
 		if(hasChild){
 			Map<String, HAPData> parmsDataGetChildrenNames = new LinkedHashMap<String, HAPData>();

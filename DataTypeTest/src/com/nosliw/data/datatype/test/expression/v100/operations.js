@@ -16,8 +16,6 @@ dataTypeDefition.operations['outputCriteria'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
-			context.logging.info("Operand Calcualting [outputCriteria]  ----------------");
-			
 			var varCriterias = {};
 			_.each(parms.getParm("parms").value, function(varCriteriaData, varName){
 				varCriterias[varName] = varCriteriaData.value;
@@ -45,8 +43,6 @@ dataTypeDefition.operations['outputCriteriaFromParmData'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
-			context.logging.info("Operand Calcualting [outputCriteria]  ----------------");
-			
 			var varCriterias = {};
 			_.each(parms.getParm("parms").value, function(parm, varName){
 				var parmCriteria = context.operation("test.parm;1.0.0", "getCriteria", [{name:"base", value:parm}]);
@@ -79,8 +75,6 @@ dataTypeDefition.operations['execute'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
-			context.logging.info("Operand Calcualting [executeExpression]  ----------------");
-			
 			var varValues = {};
 			_.each(parms.getParm("parms").value, function(varValue, varName){
 				varValues[varName] = varValue;

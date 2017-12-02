@@ -323,7 +323,7 @@ var node_createExpressionService = function(){
 
 				var out = node_expressionUtility.executeOperationResource(dataOperationResourceId, parmArray, resourcesTree);
 
-				nosliw.logging.info("Out : " + JSON.stringify(out));
+				nosliw.logging.info("Out : ", out);
 				nosliw.logging.info("***************************************************************");
 
 				return out;

@@ -13,7 +13,7 @@ public class HAPDataTypeImpLoad extends HAPDataTypeImp{
 	@HAPAttribute
 	public static String OPERATIONS = "operations";
 
-	public HAPDataTypeImpLoad(){}
+	public HAPDataTypeImpLoad(){	}
 	
 	public HAPDataTypeImpLoad(String Id, String name, String version, String description, String parent, String linked) {
 		super(Id, name, version, description, parent, linked);

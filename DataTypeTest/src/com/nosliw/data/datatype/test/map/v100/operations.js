@@ -17,7 +17,6 @@ dataTypeDefition.operations['put'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
-			context.logging.info("Operand Calcualting [New]  ----------------");
 			var name = parms.getParm("name").value;
 			var data = parms.getParm("value");
 			this.value[name] = data;
@@ -30,7 +29,6 @@ dataTypeDefition.operations['new'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
-			context.logging.info("Operand Calcualting [New]  ----------------");
 			return {
 				dataTypeId : "test.map;1.0.0",
 				value : {},

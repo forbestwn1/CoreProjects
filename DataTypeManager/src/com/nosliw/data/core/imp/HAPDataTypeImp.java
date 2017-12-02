@@ -35,7 +35,9 @@ public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataT
 	public HAPDataTypeId getName() {		return (HAPDataTypeId)this.getAtomicValueAncestorByPath(NAME);	}
 	public void setId(String id){		this.updateAtomicChildStrValue(NAME, id, HAPConstant.STRINGABLE_ATOMICVALUETYPE_STRING);	}
 
-	
+	@Override
+	public boolean getIsComplex() { return this.getAtomicAncestorValueBoolean(ISCOMPLEX); }
+
 	
 	@Override
 	public HAPInfo getInfo() {	return (HAPInfo)this.getEntityAncestorByPath(INFO); }

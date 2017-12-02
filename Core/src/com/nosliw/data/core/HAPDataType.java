@@ -36,6 +36,8 @@ public interface HAPDataType extends HAPSerializable{
 	@HAPAttribute
 	public static String LINKEDVERSION = "linkedVersion";
 	
+	@HAPAttribute
+	public static String ISCOMPLEX = "isComplex";
 	
 	/*
 	 * get basic information for this data type (categary, type, description)
@@ -47,5 +49,7 @@ public interface HAPDataType extends HAPSerializable{
 	List<HAPDataTypeId> getParentsInfo();
 
 	HAPDataTypeVersion getLinkedVersion();
+	
+	boolean getIsComplex();
 	
 }

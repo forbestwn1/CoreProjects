@@ -173,6 +173,11 @@ public class HAPRhinoDataUtility
                 	kkkk++;
                 }
                 
+                if(json==null){
+                	int kkkk = 5555;
+                	kkkk++;
+                }
+                
                 
                 if(!(json instanceof String))      mapTypeJson.put(key, json.getClass()); 
             } 

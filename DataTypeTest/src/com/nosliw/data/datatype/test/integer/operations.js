@@ -14,7 +14,6 @@ dataTypeDefition.operations['add'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
-			context.logging.info("Operand Calcualting integer.add ----------------");
 			var parm1 = parms.getParm("parm1").value;
 			var parm2 = parms.getParm("parm2").value;
 			var out = parm1 +  parm2;
