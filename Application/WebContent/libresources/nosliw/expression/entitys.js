@@ -13,8 +13,8 @@ var node_Data = function(dataTypeId, value){
 	this.value = value;
 };	
 	
-var node_OperationParm = function(value, name, isBase){
-	this.value = value;
+var node_OperationParm = function(data, name, isBase){
+	this.data = data;
 	this.name = name;
 	this.isBase = isBase==undefined?false:isBase;
 };	
@@ -25,7 +25,7 @@ var node_OperationParms = function(parmsArray){
 	_.each(parmsArray, function(parm, index, list){
 		var parmName = parm.name;
 		if(parmName==undefined)		parmName = node_COMMONCONSTANT.DATAOPERATION_PARM_BASENAME;
-		this.pri_parmsMap[parmName] = parm.value;
+		this.pri_parmsMap[parmName] = parm.data;
 		if(parm.isBase===true)   this.baseParm = parmName;
 	}, this);
 };

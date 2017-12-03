@@ -43,8 +43,8 @@ dataTypeDefition.operations['subString'] = {
 			
 //			var to = context.operation("base.integer;1.0.0", "add", [{name:"parm1", value:parms.getParm("from")}, {name:"parm2", value:parms.getParm("to")}]).value;
 			
-			var from = parms.getParm("from").value;
-			var to = parms.getParm("to").value;
+			var from = parms.getParm("from").data;
+			var to = parms.getParm("to").data;
 			var outStr = this.value.substring(from, to);
 			outStr = context.getResourceDataByName("globalHelper").d(outStr);
 			return {

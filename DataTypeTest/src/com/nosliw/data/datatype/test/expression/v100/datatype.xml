@@ -25,7 +25,8 @@
 				<parm name="expression" criteria="test.expression" isBase="true"/>
 				<parm name="parms" criteria="test.map"/>
 			</parms>
-			<output criteria="@||!(test.expression)!.outputCriteria(expression;;;!(test.parm)!.getValue(&amp;(expression)&amp;);;parms;;;!(test.datatypecriteria)!.getChildren(base;;;!(test.parm)!.getCriteria(&amp;(parms)&amp;)))||@"/>
+<!-- 			<output criteria="@||!(test.expression)!.outputCriteria(expression;;;!(test.parm)!.getValue(?(expression)?);;parms;;;!(test.datatypecriteria)!.getChildren(base;;;!(test.parm)!.getCriteria(?(parms)?)))||@"/>   -->
+			<output criteria="@||!(test.parm)!.getValue(?(expression)?)||@"/>
 		</operation>
 
 	</operations>
