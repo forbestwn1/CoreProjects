@@ -32,7 +32,4 @@ public class HAPDataTypeCriteriaExpression extends HAPDataTypeCriteriaAbstract{
 
 	public String getExpression(){  return this.m_expression;  }
 	
-	protected HAPDataTypeCriteria getSoldCriteria(){
-		return this.m_realCriteria;
-	}
 }
