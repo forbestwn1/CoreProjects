@@ -28,7 +28,10 @@ dataTypeDefition.operations['getCriteria'] = {
 		//in operation can access all the required resources by name through context
 		operation : function(parms, context){
 			var out = this.value.outputCriteria;
-			return out;
+			return {
+				dataTypeId : "test.datatypecriteria;1.0.0",
+				value : out,
+			};
 		},
 
 		requires:{
