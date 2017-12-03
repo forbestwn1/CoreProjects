@@ -57,23 +57,23 @@ public class HAPOperandOperation extends HAPOperandImp{
 	
 	private HAPOperandOperation(){this.resetMatchers();}
 	
-	public HAPOperandOperation(HAPOperand base, String operation, List<HAPOperationParm> parms){
+	public HAPOperandOperation(HAPOperand base, String operation, List<HAPParmInOperationOperand> parms){
 		super(HAPConstant.EXPRESSION_OPERAND_OPERATION);
 		if(base!=null)		this.m_base = this.createOperandWrapper(base);
 		this.m_operation = operation;
 
-		for(HAPOperationParm opParm : parms)		this.m_parms.put(opParm.getName(), this.createOperandWrapper(opParm.getOperand()));
+		for(HAPParmInOperationOperand opParm : parms)		this.m_parms.put(opParm.getName(), this.createOperandWrapper(opParm.getOperand()));
 
 		this.resetMatchers();
 		this.processChildenOperand();
 	}
 	
-	public HAPOperandOperation(String dataTypeIdLiterate, String operation, List<HAPOperationParm> parms){
+	public HAPOperandOperation(String dataTypeIdLiterate, String operation, List<HAPParmInOperationOperand> parms){
 		super(HAPConstant.EXPRESSION_OPERAND_OPERATION);
 		this.m_dataTypeId = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), dataTypeIdLiterate, HAPSerializationFormat.LITERATE);
 		this.m_operation = operation;
 		
-		for(HAPOperationParm opParm : parms){
+		for(HAPParmInOperationOperand opParm : parms){
 			if(HAPBasicUtility.isStringEmpty(opParm.getName()))			this.m_base = this.createOperandWrapper(opParm.getOperand());
 			else			this.m_parms.put(opParm.getName(), this.createOperandWrapper(opParm.getOperand()));
 		}

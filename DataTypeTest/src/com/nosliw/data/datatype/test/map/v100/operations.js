@@ -25,6 +25,32 @@ dataTypeDefition.operations['put'] = {
 };
 
 
+dataTypeDefition.operations['getChildrenNames'] = {
+		operation : function(parms, context){
+			var names = [];
+			_.each(this.value, function(mapValue, name){
+				names.push({
+					dataTypeId : "test.string;1.0.0",
+					value : name
+				});
+			});
+			
+			return {
+				dataTypeId : "test.array;1.0.0",
+				value : names
+			};
+		},
+};
+
+dataTypeDefition.operations['getChildData'] = {
+		operation : function(parms, context){
+			var name = parms.getParm("name").value;
+			return this.value[name];
+		}
+};
+
+
+
 dataTypeDefition.operations['new'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context

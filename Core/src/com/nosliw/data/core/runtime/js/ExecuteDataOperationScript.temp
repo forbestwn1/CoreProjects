@@ -1,5 +1,5 @@
 	var expressionService = nosliw.runtime.getExpressionService();
-	expressionService.executeExecuteOperationRequest(||dataTypeId||, ||operation||, ||parms||, {
+	expressionService.executeExecuteOperationRequest("||dataTypeId||", "||operation||", ||parmsArray||, {
 
 		success : function(requestInfo, data){
 			var parms = {};

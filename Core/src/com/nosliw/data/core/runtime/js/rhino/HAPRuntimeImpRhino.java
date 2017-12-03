@@ -24,6 +24,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPOperationParm;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
@@ -105,18 +107,27 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		HAPExpression expression = this.getRuntimeEnvironment().getExpressionManager().processExpression(null, expDefinition, new LinkedHashMap<String, HAPData>(), null, HAPExpressionProcessConfigureUtil.setDontDiscovery(null));
 		//execute task
 		HAPRuntimeTask task = new HAPRuntimeTaskExecuteExpressionRhino(expression, parmsData);
-		return this.executeTaskSync(task);
+		HAPServiceData serviceData = this.executeTaskSync(task);
+		return this.conervertDataResult(serviceData);
 	}
 
 	@Override
 	public HAPServiceData executeDataOperationSync(HAPDataTypeId dataTypeId, String operation,
-			Map<String, HAPData> parmsData) {
+			List<HAPOperationParm> parmsData) {
 		//execute task
 		HAPRuntimeTask task = new HAPRuntimeTaskExecuteDataOperationRhino(dataTypeId, operation, parmsData);
-		return this.executeTaskSync(task);
+		HAPServiceData serviceData = this.executeTaskSync(task);
+		return this.conervertDataResult(serviceData);
 	}
 
-	
+	private HAPServiceData conervertDataResult(HAPServiceData serviceData){
+		if(serviceData.isSuccess()){
+			JSONObject dataJson = (JSONObject)serviceData.getData();
+			HAPData data = HAPDataUtility.buildDataWrapperFromJson(dataJson);
+			serviceData.setData(data);
+		}
+		return serviceData;
+	}
 	
 	@Override
 	public void executeTask(HAPRuntimeTask task){

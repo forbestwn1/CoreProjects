@@ -147,7 +147,6 @@ nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
 	this.getData().registerWrapperFactoryByDataType([node_CONSTANT.DATA_TYPE_OBJECT], node_createWraperObject);
 });
 
-
 //Register Node by Name
 packageObj.createChildNode("createWraperObject", node_createWraperObject); 
 

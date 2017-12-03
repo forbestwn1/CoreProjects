@@ -169,12 +169,6 @@ public class HAPContextUtility {
 			else{
 				out.setDefinition(defDefinition);
 				//cal matchers
-				if(parentDefinition==null || defDefinition==null || dataTypeHelper==null){
-					int kkkk = 5555;
-					kkkk++;
-				}
-				
-				
 				HAPMatchers matcher = dataTypeHelper.convertable(parentDefinition.getValue(), defDefinition.getValue());
 				matchers.put(path.getPath(), matcher);
 			}

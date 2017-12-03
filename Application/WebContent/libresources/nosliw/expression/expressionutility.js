@@ -27,22 +27,33 @@ var node_utility =
 			var operationParmArray = [];
 			var parmsDefinitions = dataOperationInfo[node_COMMONATRIBUTECONSTANT.DATAOPERATIONINFO_PAMRS];
 			_.each(parmArray, function(parm, index, list){
-				var parmName = parm.name;
+				var parmName = parm[node_COMMONATRIBUTECONSTANT.OPERATIONPARM_NAME];
 				if(parmName==undefined){
 					//if no parm name, then use base name
 					parmName = dataOperationInfo[node_COMMONATRIBUTECONSTANT.DATAOPERATIONINFO_BASEPARM];
+					parm[node_COMMONATRIBUTECONSTANT.OPERATIONPARM_NAME] = parmName;
 				}
 				
 				var parmDefinition = parmsDefinitions[parmName];
 				var isBase = false;
 				if(parmDefinition[node_COMMONATRIBUTECONSTANT.DATAOPERATIONPARMINFO_ISBASE]=="true"){
 					isBase = true;
-					baseData = parm.value;
+					baseData = parm[node_COMMONATRIBUTECONSTANT.OPERATIONPARM_DATA];
 				}
-				operationParmArray.push(new node_OperationParm(parm.value, parmName, isBase));
+				operationParmArray.push(new node_OperationParm(parm[node_COMMONATRIBUTECONSTANT.OPERATIONPARM_DATA], parmName, isBase));
 			}, this);
 			
+			nosliw.logging.info("************************  operation   ************************");
+			nosliw.logging.info(resourceId);
+			_.each(parmArray, function(parm, index){
+				nosliw.logging.info("Parm " + parm.name+":", parm.data);
+			});
+			
 			var operationResult = dataOperationFun.call(baseData, new node_OperationParms(operationParmArray), operationContext);
+
+			nosliw.logging.info("Out : ", operationResult);
+			nosliw.logging.info("***************************************************************");
+			
 			return operationResult;
 		},
 

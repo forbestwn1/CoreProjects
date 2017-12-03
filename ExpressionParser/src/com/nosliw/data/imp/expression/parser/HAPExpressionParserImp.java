@@ -12,7 +12,7 @@ import com.nosliw.data.core.expression.HAPOperandConstant;
 import com.nosliw.data.core.expression.HAPOperandOperation;
 import com.nosliw.data.core.expression.HAPOperandReference;
 import com.nosliw.data.core.expression.HAPOperandVariable;
-import com.nosliw.data.core.expression.HAPOperationParm;
+import com.nosliw.data.core.expression.HAPParmInOperationOperand;
 import com.nosliw.data.core.imp.expression.HAPExpressionEscape;
 import com.nosliw.data.imp.expression.parser.generated.NosliwExpressionParser;
 import com.nosliw.data.imp.expression.parser.generated.SimpleNode;
@@ -95,11 +95,11 @@ public class HAPExpressionParserImp implements HAPExpressionParser{
 		  return out;
 	  }
 
-	  private List<HAPOperationParm> getOperationParms(List<Parm> expressionParms){
-		  List<HAPOperationParm> out = new ArrayList<HAPOperationParm>();
+	  private List<HAPParmInOperationOperand> getOperationParms(List<Parm> expressionParms){
+		  List<HAPParmInOperationOperand> out = new ArrayList<HAPParmInOperationOperand>();
 		  for(Parm parm : expressionParms){
 			  HAPOperand op = processExpressionNode(parm.valuNode);
-			  out.add(new HAPOperationParm(parm.name, op));
+			  out.add(new HAPParmInOperationOperand(parm.name, op));
 		  }
 		  return out;
 	  }

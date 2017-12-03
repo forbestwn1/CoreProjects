@@ -1,11 +1,10 @@
 package com.nosliw.data.core.runtime.js.rhino;
 
 import java.util.List;
-import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPOperationParm;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
@@ -17,7 +16,7 @@ import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
 public class HAPRuntimeTaskExecuteDataOperationRhino extends HAPRuntimeTaskExecuteDataOperation{
 
-	public HAPRuntimeTaskExecuteDataOperationRhino(HAPDataTypeId dataTypeId, String operation, Map<String, HAPData> parms) {
+	public HAPRuntimeTaskExecuteDataOperationRhino(HAPDataTypeId dataTypeId, String operation, List<HAPOperationParm> parms) {
 		super(dataTypeId, operation, parms);
 	}
 

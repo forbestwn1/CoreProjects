@@ -16,6 +16,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPOperationParm;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskLoadResources;
 import com.nosliw.data.core.runtime.HAPResource;
@@ -112,9 +113,9 @@ public class HAPRuntimeJSScriptUtility {
 
 	public static HAPJSScriptInfo buildRequestScriptForExecuteDataOperationTask(HAPRuntimeTaskExecuteDataOperation executeDataOperationTask, HAPRuntimeImpRhino runtime){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("operation", executeDataOperationTask.getDataTypeId().toStringValue(HAPSerializationFormat.LITERATE));
+		templateParms.put("dataTypeId", executeDataOperationTask.getDataTypeId().toStringValue(HAPSerializationFormat.LITERATE));
 		templateParms.put("operation", executeDataOperationTask.getOperation());
-		templateParms.put("parms", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(executeDataOperationTask.getParms()==null?new LinkedHashMap<String, HAPData>() : executeDataOperationTask.getParms(), HAPSerializationFormat.JSON)));
+		templateParms.put("parmsArray", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(executeDataOperationTask.getParms()==null?new ArrayList<HAPOperationParm>() : executeDataOperationTask.getParms(), HAPSerializationFormat.JSON)));
 
 		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
 		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);

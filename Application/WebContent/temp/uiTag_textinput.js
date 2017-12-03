@@ -57,6 +57,9 @@ function (context, uiTagResource, attributes, env) {
     }, ovr_postInit: function () {
         this.prv_updateView();
         this.prv_setupElementEvent();
+        loc_dataVariable.registerDataChangeEventListener(undefined, function () {
+            this.prv_updateView();
+        }, this);
     }, ovr_processAttribute: function (name, value) {
     }, ovr_handleDataEvent: function (name, event, path, data, requestInfo) {
         this.prv_updateView();

@@ -16,7 +16,7 @@ import com.nosliw.data.core.expression.HAPOperandTask;
 import com.nosliw.data.core.expression.HAPOperandUtility;
 import com.nosliw.data.core.expression.HAPOperandVariable;
 import com.nosliw.data.core.expression.HAPOperandWrapper;
-import com.nosliw.data.core.expression.HAPOperationParm;
+import com.nosliw.data.core.expression.HAPParmInOperationOperand;
 
 public class HAPUIResourceExpressionUtility {
 
@@ -109,8 +109,8 @@ public class HAPUIResourceExpressionUtility {
 					HAPOperand operand = new HAPOperandVariable(name);
 					String[] pathSegs = HAPNamingConversionUtility.parsePaths(path.substring(name.length()+1));
 					for(String pathSeg : pathSegs){
-						List<HAPOperationParm> parms = new ArrayList<HAPOperationParm>();
-						parms.add(new HAPOperationParm("name", new HAPOperandConstant("#string:simple:"+pathSeg)));
+						List<HAPParmInOperationOperand> parms = new ArrayList<HAPParmInOperationOperand>();
+						parms.add(new HAPParmInOperationOperand("name", new HAPOperandConstant("#string:simple:"+pathSeg)));
 						operand = new HAPOperandOperation(operand, "getChild", parms);
 					}
 					attrInfo.lastAttrOperand.setOperand(operand);
