@@ -21,8 +21,8 @@ var packageObj = library;
 var loc_createUIResourceViewFactory = function(){
 	
 	var loc_out = {
-		createUIResourceView : function(uiResource, id, parent, contextElementInfoArray, requestInfo){
-			return loc_createUIResourceView(uiResource, id, parent, contextElementInfoArray, requestInfo);
+		createUIResourceView : function(uiResource, id, parent, context, requestInfo){
+			return loc_createUIResourceView(uiResource, id, parent, context, requestInfo);
 		}
 	};
 	
@@ -36,7 +36,7 @@ var loc_createUIResourceViewFactory = function(){
  * 	 	name space id
  * 		parent uiresource
  */
-var loc_createUIResourceView = function(uiResource, id, parent, contextElementInfoArray, requestInfo){
+var loc_createUIResourceView = function(uiResource, id, parent, context, requestInfo){
 	//temporately store uiResource
 	var loc_uiResource = uiResource;
 
@@ -55,7 +55,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 	var loc_constants = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONSTANTS];
 	
 	//context object for this ui resource view
-	var loc_context = undefined;
+	var loc_context = context;
 
 	//all content expression objects
 	var loc_expressionContents = [];
@@ -171,11 +171,11 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 	var loc_getViews = function(){	return loc_startEle.add(loc_startEle.nextUntil(loc_endEle)).add(loc_endEle);  };
 
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiResource, id, parent, contextElementInfoArray, requestInfo){
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiResource, id, parent, context, requestInfo){
 		//build context element first
 		var parentContext;
 		if(parent!=undefined)   parentContext = parent.getContext();
-		loc_context = node_uiResourceUtility.buildContext(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT], parentContext);
+		if(loc_context==undefined)	loc_context = node_uiResourceUtility.buildContext(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT], parentContext);
 		
 		
 		//wrap html by start and end element
@@ -423,7 +423,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, contextElementIn
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIRESOURCEVIEW);
 
-	node_getLifecycleInterface(loc_out).init(uiResource, id, parent, contextElementInfoArray, requestInfo);
+	node_getLifecycleInterface(loc_out).init(uiResource, id, parent, context, requestInfo);
 	
 	return loc_out;
 };

@@ -19,7 +19,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"textinput",
 },
 "attributes":{},
 "script":
-function (context, uiTagResource, attributes, env) {
+function (context, parentResourceView, uiTagResource, attributes, env) {
     var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
     var node_createDataOperationRequest = nosliw.getNodeData("uidata.dataoperation.createDataOperationRequest");
     var node_createDataOperationService = nosliw.getNodeData("uidata.dataoperation.createDataOperationService");
@@ -51,7 +51,7 @@ function (context, uiTagResource, attributes, env) {
             node_requestServiceProcessor.processRequest(requestInfo, false);
         });
     }, ovr_preInit: function () {
-    }, ovr_initViews: function () {
+    }, ovr_initViews: function (startEle, endEle, requestInfo) {
         loc_view = $("<input type=\"text\"/>");
         return loc_view;
     }, ovr_postInit: function () {

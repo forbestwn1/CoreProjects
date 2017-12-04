@@ -59,13 +59,13 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		//create uiTagObject
 		var uiTagResourceId = node_uiResourceUtility.createTagResourceId(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME]);
 		var uiTagResourceObj = nosliw.runtime.getResourceService().getResource(uiTagResourceId);
-		loc_uiTagObj = uiTagResourceObj[node_COMMONATRIBUTECONSTANT.RESOURCE_RESOURCEDATA][node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_context, uiTagResource, loc_attributes);
+		loc_uiTagObj = uiTagResourceObj[node_COMMONATRIBUTECONSTANT.RESOURCE_RESOURCEDATA][node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_context, loc_parentResourceView, uiTagResource, loc_attributes, loc_out);
 		
 		//overriden method before view is attatched to dom
 		loc_uiTagObj.ovr_preInit(requestInfo);
 		
 		//overridden method to create init view
-		var views = loc_uiTagObj.ovr_initViews(requestInfo);
+		var views = loc_uiTagObj.ovr_initViews(loc_startEle, loc_endEle, requestInfo);
 		//attach view to resourve view
 		if(views!=undefined)  loc_startEle.after(views);	
 
@@ -75,7 +75,8 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 	
 	
 	var loc_out = {
-			
+		
+		getId : function(){  return loc_id;   }
 			
 	};
 	

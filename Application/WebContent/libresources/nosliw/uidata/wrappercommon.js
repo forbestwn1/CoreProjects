@@ -197,7 +197,7 @@ var node_createWraperCommon = function(data, path, request){
 				this.pri_dataOperationEventObject.unregister(listenerEventObj);
 			},
 			
-			createChildWrapper : function(path, request){		return wrapperFactory.createWrapper(this, path, request);		},
+			createChildWrapper : function(path, request){		return node_wrapperFactory.createWrapper(this, path, request);		},
 
 			destroy(requestInfo){node_getLifecycleInterface(loc_out).destroy(requestInfo);},
 			
