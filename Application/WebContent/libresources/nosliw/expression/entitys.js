@@ -66,6 +66,10 @@ node_OperationContext.prototype = {
 		var dataOperationResourceId = node_resourceUtility.createOperationResourceId(dataTypeId, operation);
 		return node_expressionUtility.executeOperationResource(dataOperationResourceId, parmArray, this.pri_resourcesTree);
 	},
+	
+	executeExpression : function(expression, parms){
+		
+	}
 };
 
 

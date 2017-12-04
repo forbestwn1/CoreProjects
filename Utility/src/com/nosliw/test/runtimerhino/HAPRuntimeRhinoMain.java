@@ -126,9 +126,9 @@ public class HAPRuntimeRhinoMain {
 //				"expression71",
 
 //				"expression72",
-				"expression73",
+//				"expression73",
 
-//				"expression8",
+				"expression8",
 				
 //				"expression9",
 			}, runtimeEnvironment);
