@@ -40,10 +40,10 @@ function (context, parentResourceView, uiTagResource, attributes, tagEnv) {
     };
     var loc_out = {prv_addEle: function (dataWrapper, key, requestInfo) {
         var contextEleInfo = [];
-        _.each(context.getContext, function (contextEle, name) {
+        _.each(context.getContext(), function (contextEle, name) {
             contextEleInfo.push(node_createContextElementInfo(name, context, new node_createContextVariable(name, "")));
         });
-        contextEleInfo.push(node_createContextElementInfo(name, dataWrapper));
+        contextEleInfo.push(node_createContextElementInfo(loc_eleContextEleName, dataWrapper));
         var eleContext = node_createContext(contextEleInfo, requestInfo);
         var resourceView = node_createUIResourceViewFactory().createUIResourceView(loc_uiTagResource, loc_tagEnv.getId() + "." + key, loc_parentResourceView, eleContext, requestInfo);
         resourceView.insertAfter(loc_startEle);
