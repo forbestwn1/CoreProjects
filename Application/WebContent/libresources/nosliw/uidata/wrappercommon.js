@@ -43,7 +43,7 @@ var node_createWraperCommon = function(data, path, request){
 		//parent wrapper used when wraper based
 		loc_out.pri_parent = undefined;
 		//the path from basis (data or wraper) to current data
-		loc_out.pri_path = node_basicUtility.emptyStringIfUndefined(path);
+		loc_out.pri_path = node_basicUtility.emptyStringIfUndefined(path)+"";
 		
 		//event and listener for data operation event
 		loc_out.pri_dataOperationEventObject = node_createEventObject();
