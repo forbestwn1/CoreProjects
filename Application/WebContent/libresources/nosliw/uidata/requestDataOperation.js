@@ -65,11 +65,12 @@ var node_createDataOperationRequest = function(context, handlers, requester_pare
 };
 
 //Entity to define data operation info
-var node_createDataOperationService = function(target, operation, path, data){
+var node_createDataOperationService = function(target, operation, path, data, index){
 	return new node_ServiceInfo(operation, {
 		target : target,
 		path : path,
-		data : data
+		data : data,
+		index : index
 	});
 }
 

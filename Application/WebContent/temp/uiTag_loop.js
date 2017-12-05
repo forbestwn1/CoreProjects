@@ -49,6 +49,11 @@ function (context, parentResourceView, uiTagResource, attributes, tagEnv) {
         resourceView.insertAfter(loc_startEle);
     }, ovr_postInit: function (requestInfo) {
         this.prv_updateView();
+        loc_dataVariable.registerDataChangeEventListener(undefined, function (event, data) {
+            alert("aaaaa");
+            if (event == "WRAPPER_OPERATION_ADDELEMENT") {
+            }
+        }, this);
     }, ovr_preInit: function (requestInfo) {
     }, ovr_initViews: function (startEle, endEle, requestInfo) {
         loc_startEle = startEle;
