@@ -23,6 +23,10 @@ public class HAPMatchers extends HAPSerializableImp{
 		this.m_matchers.put(matcher.getDataTypeId(), matcher);
 	}
 	
+	public Map<HAPDataTypeId, HAPMatcher> getMatchers(){
+		return this.m_matchers;
+	}
+	
 	/**
 	 * Get all relationships invovled in this matchers 
 	 */

@@ -46,6 +46,10 @@ public class HAPMatcher extends HAPSerializableImp{
 	
 	public HAPRelationship getRelationship(){  return this.m_relationship;  }
 	
+	public Map<String, HAPMatchers> getSubMatchers(){  return this.m_subMatchers;    }
+	
+	public void removeAllSubMatcher(){  this.m_subMatchers.clear();  }
+	
 	public Set<HAPRelationship> discoverRelationships(){
 		Set<HAPRelationship> out = new HashSet<HAPRelationship>();
 		out.add(this.m_relationship);

@@ -55,11 +55,11 @@
 		"value": [
 			{
 				"dataTypeId": "test.string;1.0.0",
-				"value": "1234567890abcdefgh",
+				"value": "4567fff",
 			},
 			{
 				"dataTypeId": "test.string;1.0.0",
-				"value": "abcedfghijk1234567890",
+				"value": "edfgfff",
 			}
 		],
 		"wapperType": "JSON"

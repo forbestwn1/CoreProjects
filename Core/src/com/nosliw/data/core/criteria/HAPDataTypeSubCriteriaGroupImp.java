@@ -45,6 +45,11 @@ public class HAPDataTypeSubCriteriaGroupImp extends HAPSerializableImp implement
 		return out;
 	}
 
+	@Override
+	public Set<String> getDefinedSubCriteriaNames(){
+		return this.m_subCriterias.keySet();
+	}
+
 	protected void setOpen(boolean isOpen){  this.m_isOpen = isOpen;  }
 	@Override
 	public boolean isOpen(){ return this.m_isOpen;  }

@@ -21,13 +21,13 @@ dataTypeDefition.operations['process'] = {
 			_.each(this.value, function(eleData, i){
 				
 				var gatewayParms = {
-					"expression" : this.value,
+					"expression" : expressionData.value,
 					"variablesValue" : {}
 				};
-				gatewayParms.variablesValue[parms.getParm("elementVariableName")] = eleData;
+				gatewayParms.variablesValue[parms.getParm("elementVariableName").value] = eleData;
 				var eleResult =  context.getResourceDataByName("myGateWay").command("executeExpression", gatewayParms);
-				valueOUt.push(eleResult);
-			});
+				valueOut.push(eleResult);
+			}, this);
 
 			return {
 				dataTypeId : "test.array;1.0.0",

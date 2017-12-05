@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import com.google.common.collect.Sets;
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeFamily;
@@ -269,22 +270,14 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 			HAPDataTypeSubCriteriaGroup targetSubCriterias = targetIdCriteria.getSubCriteria();
 
 			if(targetSubCriterias!=null){
-				Set<String> targetSubNames = targetSubCriterias.getSubCriteriaNames();
+				Set<String> targetSubNames = targetSubCriterias.getDefinedSubCriteriaNames();
+				Set<String> sourceSubNames = sourceSubCriterias.getDefinedSubCriteriaNames();
 				for(String targetSubName : targetSubNames){
 					HAPMatchers matchers = null;
 					HAPDataTypeCriteria targetSubCriteria = targetSubCriterias.getSubCriteria(targetSubName);
 					HAPDataTypeCriteria sourceSubCriteria = sourceSubCriterias.getSubCriteria(targetSubName);
-					if(sourceSubCriteria==null){
+					if(sourceSubCriteria==null || sourceSubCriteria==HAPDataTypeCriteriaAny.getCriteria()){
 						//no sub criteria by same name in source, fail
-						return null;
-					}
-					else if(targetSubCriteria==HAPDataTypeCriteriaAny.getCriteria()){
-						matchers = this.buildMatchers(sourceSubCriteria, targetSubCriteria);
-						if(matchers!=null){
-							out.addSubMatchers(targetSubName, matchers);
-						}
-					}
-					else if(sourceSubCriteria==HAPDataTypeCriteriaAny.getCriteria()){
 						return null;
 					}
 					else{
@@ -292,15 +285,47 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 						if(matchers!=null){
 							out.addSubMatchers(targetSubName, matchers);
 						}
+						else return null;
 					}
-					if(matchers==null)  return null;
+					sourceSubNames.remove(targetSubName);
 				}
+				
+				for(String sourceSubName : sourceSubNames){
+					if(targetSubCriterias.isOpen()){
+						//any
+					}
+				}
+				
 			}
+			if(out!=null)   this.processSubMatcher(out);
 		}
 		return out;
 	}
 
-	
+	//Remove sub matchers if they don't do the real convert (target and source are same data type)
+	private void processSubMatcher(HAPMatcher parentMatcher){
+		boolean canRemove = true;
+		Map<String, HAPMatchers> subMatchers = parentMatcher.getSubMatchers();
+		for(String subName : subMatchers.keySet()){
+			if(!canRemove)  break;
+			HAPMatchers matchers = subMatchers.get(subName);
+			Map<HAPDataTypeId, HAPMatcher> matchByDataTypes = matchers.getMatchers();
+			for(HAPDataTypeId dataTypeId : matchByDataTypes.keySet()){
+				if(!canRemove)   break;
+				HAPMatcher matcher = matchByDataTypes.get(dataTypeId);
+				this.processSubMatcher(matcher);
+				
+				if((!HAPBasicUtility.isEquals(matcher.getRelationship().getSource(), matcher.getRelationship().getTarget())) && 
+						(matcher.getSubMatchers()==null||matcher.getSubMatchers().isEmpty())){
+					canRemove = false;
+				}
+			}
+		}
+		
+		if(canRemove){
+			parentMatcher.removeAllSubMatcher();
+		}
+	}
 	
 	
 	private List<HAPDataTypeCriteriaId> getLeafCriteriaIds(List<HAPDataTypeCriteriaId> criteriaIds){

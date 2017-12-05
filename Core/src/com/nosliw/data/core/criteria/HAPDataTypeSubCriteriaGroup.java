@@ -26,6 +26,13 @@ public interface HAPDataTypeSubCriteriaGroup {
 	Set<String> getSubCriteriaNames();
 
 	/**
+	 * Only defined sub criteria name, 
+	 * Not include all if is open
+	 * @return
+	 */
+	Set<String> getDefinedSubCriteriaNames();
+	
+	/**
 	 * 
 	 * @param name
 	 * @param child
