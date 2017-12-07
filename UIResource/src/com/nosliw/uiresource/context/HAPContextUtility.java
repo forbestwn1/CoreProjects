@@ -39,37 +39,35 @@ public class HAPContextUtility {
 		switch(uiDefinition.getType()){
 		case HAPConstant.UIRESOURCE_TYPE_RESOURCE:
 			//for resource
-			expContext.addVariables(discoverDataVariablesInContext(((HAPUIDefinitionUnitResource)uiDefinition).getContext()));
 			break;
 		case HAPConstant.UIRESOURCE_TYPE_TAG:
 			//for tag
 			HAPUIDefinitionUnitTag tag = (HAPUIDefinitionUnitTag)uiDefinition;
 			HAPUITagDefinition uiTagDefinition = uiTagMan.getUITagDefinition(new HAPUITagId(tag.getTagName()));
 			if(uiTagDefinition.getContext().isInherit()){
-				//add parent
-				for(String rootEleName : parent.getContext().getElements().keySet()){
+				//add public context from parent
+				for(String rootEleName : parent.getContext().getPublicContext().getElements().keySet()){
 					HAPUITagDefinitionContextElmentRelative relativeEle = new HAPUITagDefinitionContextElmentRelative(rootEleName);
-					tag.getContext().addElement(rootEleName, processUITagDefinitionContextElement(rootEleName, relativeEle, parent.getContext(), dataTypeHelper, uiDefinition, runtime, expressionManager));
+					tag.getContext().getPublicContext().addElement(rootEleName, processUITagDefinitionContextElement(rootEleName, relativeEle, parent, dataTypeHelper, uiDefinition, runtime, expressionManager));
 				}
 			}
 
 			//element defined in tag definition
-			Map<String, HAPUITagDefinitionContextElment> defElesPrivate = uiTagDefinition.getContext().getPrivateElements();
-			for(String name : defElesPrivate.keySet()){
-				String realName = getSolidName(name, uiDefinition, runtime, expressionManager);
-				tag.getContext().addElement(realName, processUITagDefinitionContextElement(realName, defElesPrivate.get(name), parent.getContext(), dataTypeHelper, uiDefinition, runtime, expressionManager));
+			for(String contextType : HAPContextGroup.getContextTypes()){
+				Map<String, HAPUITagDefinitionContextElment> defElesPublic = uiTagDefinition.getContext().getElements(contextType);
+				for(String name : defElesPublic.keySet()){
+					String realName = getSolidName(name, uiDefinition, runtime, expressionManager);
+					tag.getContext().addElement(realName, processUITagDefinitionContextElement(realName, defElesPublic.get(name), parent, dataTypeHelper, uiDefinition, runtime, expressionManager), contextType);
+				}
 			}
 			
-			Map<String, HAPUITagDefinitionContextElment> defElesPublic = uiTagDefinition.getContext().getPublicElements();
-			for(String name : defElesPublic.keySet()){
-				String realName = getSolidName(name, uiDefinition, runtime, expressionManager);
-				tag.getContext().addElement(realName, processUITagDefinitionContextElement(realName, defElesPublic.get(name), parent.getContext(), dataTypeHelper, uiDefinition, runtime, expressionManager));
-			}
-
-			expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext()));
 			break;
 		}
 
+		//find all data variables 
+		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getPublicContext()));
+		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getInternalContext()));
+		
 		HAPUIResourceExpressionContext parentExpContext = parent==null?null:parent.getExpressionContext();
 		
 		//build data constants
@@ -99,6 +97,7 @@ public class HAPContextUtility {
 		
 	}
 	
+	//find all data variables in context 
 	public static Map<String, HAPDataTypeCriteria> discoverDataVariablesInContext(HAPContext context){
 		Map<String, HAPDataTypeCriteria> out = new LinkedHashMap<String, HAPDataTypeCriteria>();
 		for(String rootName : context.getElements().keySet()){
@@ -134,7 +133,7 @@ public class HAPContextUtility {
 	}
 	
 	//convert context element in ui tag to context element in ui resource/tag
-	private static HAPContextNodeRoot processUITagDefinitionContextElement(String defRootEleName, HAPUITagDefinitionContextElment defContextElement, HAPContext parentContext, HAPDataTypeHelper dataTypeHelper, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPExpressionManager expressionManager){
+	private static HAPContextNodeRoot processUITagDefinitionContextElement(String defRootEleName, HAPUITagDefinitionContextElment defContextElement, HAPUIDefinitionUnit parentUnit, HAPDataTypeHelper dataTypeHelper, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPExpressionManager expressionManager){
 		String type = defContextElement.getType();
 		switch(type){
 			case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
@@ -151,7 +150,9 @@ public class HAPContextUtility {
 				HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
 				HAPContextPath path = new HAPContextPath(getSolidName(defContextElementRelative.getPath(), uiDefinition, runtime, expressionManager));
 				out.setPath(path);
-				HAPContextNode parentNode = parentContext.getChild(path);
+				
+				HAPContextNode parentNode = parentUnit.getContext().getPublicContext().getChild(path);   //try parent's public context first 
+				if(parentNode==null)   parentUnit.getContext().getInternalContext().getChild(path); 		//if not found, then try parent's internal context
 				Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
 				merge(parentNode, defContextElementRelative, out, matchers, new HAPContextPath(defRootEleName, null), dataTypeHelper);
 				return out;

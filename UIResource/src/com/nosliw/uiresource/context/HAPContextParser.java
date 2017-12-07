@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContext;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElementAbsolute;
@@ -22,19 +23,20 @@ public class HAPContextParser {
 		Boolean inherit = (Boolean)contextJson.opt(HAPUITagDefinitionContext.INHERIT);
 		if(inherit!=null)  contextOut.setInherit(inherit);
 		
-		parseContextInTagDefinition(contextJson, contextOut, HAPUITagDefinitionContext.PUBLIC);
-		parseContextInTagDefinition(contextJson, contextOut, HAPUITagDefinitionContext.PRIVATE);
+		for(String contextType : HAPContextGroup.getContextTypes()){
+			parseContextInTagDefinition(contextJson, contextOut, contextType);
+		}
 	}
 	
 	private static void parseContextInTagDefinition(JSONObject contextJson, HAPUITagDefinitionContext contextOut, String type){
-		JSONObject contextEleJson = contextJson.optJSONObject(HAPUITagDefinitionContext.PRIVATE);
+		JSONObject contextEleJson = contextJson.optJSONObject(type);
 		if(contextEleJson!=null){
 			Iterator<String> it = contextEleJson.keys();
 			while(it.hasNext()){
 				String eleName = it.next();
 				JSONObject eleDefJson = contextEleJson.optJSONObject(eleName);
 				HAPUITagDefinitionContextElment tagDefContextEle = parseContextRootElementInTagDefinition(eleDefJson);
-				contextOut.addPublicElement(eleName, tagDefContextEle);
+				contextOut.addElement(eleName, tagDefContextEle, type);
 			}
 		}
 	}

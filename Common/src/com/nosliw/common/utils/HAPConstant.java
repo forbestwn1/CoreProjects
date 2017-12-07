@@ -281,6 +281,12 @@ public class HAPConstant {
 
 
 
+		public static final String UIRESOURCE_CONTEXTTYPE_PUBLIC = "public";
+		public static final String UIRESOURCE_CONTEXTTYPE_INTERNAL = "internal";
+		public static final String UIRESOURCE_CONTEXTTYPE_PRIVATE = "private";
+
+
+
 		public static final String UIRESOURCEMAN_SETTINGNAME_SCRIPTLOCATION = "temp.scriptLocation";
 
 

@@ -10,12 +10,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"textinput",
 "info":{}
 }, {"name":"textinput",
 "context":{"inherit":false,
-"public":{"internal_data":{"children":{},
-"definition":"test.string;1.0.0",
-"type":"relative",
-"path":"<%=&(data)&%>"
-}
-}
+"public":{}
 },
 "attributes":{},
 "script":

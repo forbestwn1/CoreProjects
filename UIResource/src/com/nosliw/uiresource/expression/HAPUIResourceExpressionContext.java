@@ -9,6 +9,9 @@ import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionDefinitionSuite;
 import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp;
 
+//every ui resource/tag has its own context for processing expressions: 
+//		supporting expression in suite
+//		variables criteria
 public class HAPUIResourceExpressionContext {
 
 	//every unit has its own expression definition suite

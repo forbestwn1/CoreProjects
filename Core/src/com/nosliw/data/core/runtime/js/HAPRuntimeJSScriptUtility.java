@@ -55,7 +55,7 @@ public class HAPRuntimeJSScriptUtility {
 		case HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE:
 			//load as file, create temp file first
 			String name = resource.getId().toStringValue(HAPSerializationFormat.LITERATE);
-			String resourceFile = HAPFileUtility.getResourceFileFolder() + name + ".js";
+			String resourceFile = HAPFileUtility.getResourceTempFileFolder() + name + ".js";
 			resourceFile = HAPFileUtility.writeFile(resourceFile, script);
 			out = HAPJSScriptInfo.buildByFile(resourceFile, name);
 			

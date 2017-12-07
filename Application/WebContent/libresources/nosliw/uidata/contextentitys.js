@@ -76,6 +76,7 @@ var node_createContextElementInfo = function(name, data1, data2, data3){
 		//input is context + context variable
 		loc_out.context = data1;
 		loc_out.contextVariable = node_createContextVariable(data2);
+		loc_out.info = data3;
 	}
 	else if(type==node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
 		//input is wrapper
@@ -103,6 +104,7 @@ var node_createContextElement = function(elementInfo, requestInfo){
 		info : elementInfo.info,
 	};
 
+	//get variable
 	if(elementInfo.context!=undefined){
 		var context = elementInfo.context;
 		var contextVar = elementInfo.contextVariable;
@@ -112,7 +114,14 @@ var node_createContextElement = function(elementInfo, requestInfo){
 		var wrapper = elementInfo.wrapper;
 		loc_out.variable = node_createWrapperVariable(wrapper, requestInfo);
 	}
-
+	
+	//get context type(public, internal, private)
+	var contextType = node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC;
+	if(loc_out.info!=undefined && loc_out.info.contextType!=undefined){
+		contextType = loc_out.info.contextType;
+	}
+	loc_out.contextType = contextType;
+	
 	return loc_out;
 };
 

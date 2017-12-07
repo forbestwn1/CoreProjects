@@ -22,8 +22,8 @@ var packageObj = library;
 	 * base customer tag object, child tag just provide extendObj which implements its own method 
 	 * it is also constructor object for customer tag object  
 	 * 		id: 	id for this tag
-	 * 		uiTag:	ui tag resource 
-	 * 		uiResourceView: 	parent ui resource view
+	 * 		uiTagResource:	ui tag resource 
+	 * 		parentUIResourceView: 	parent ui resource view
 	 */
 var node_createUITag = function(id, uiTagResource, parentUIResourceView, requestInfo){
 	

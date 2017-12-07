@@ -30,6 +30,8 @@ import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.uiresource.HAPDataBinding;
 import com.nosliw.uiresource.HAPIdGenerator;
+import com.nosliw.uiresource.context.HAPContext;
+import com.nosliw.uiresource.context.HAPContextGroup;
 import com.nosliw.uiresource.context.HAPContextNodeRootAbsolute;
 import com.nosliw.uiresource.context.HAPContextParser;
 import com.nosliw.uiresource.definition.HAPConstantDef;
@@ -148,12 +150,8 @@ public class HAPUIResourceParser {
 			try {
 				String content = contextEles.get(i).html();
 				JSONObject defsJson = new JSONObject(content);
-				Iterator<String> defNames = defsJson.keys();
-				while(defNames.hasNext()){
-					String eleName = defNames.next();
-					JSONObject eleDefJson = defsJson.optJSONObject(eleName);
-					HAPContextNodeRootAbsolute contextEle = HAPContextParser.parseContextRootElementInUIResource(eleDefJson);
-					resource.getContext().addElement(eleName, contextEle);
+				for(String contextType : HAPContextGroup.getContextTypes()){
+					parseContext(defsJson.optJSONObject(contextType), resource.getContext().getContext(contextType));
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -163,6 +161,17 @@ public class HAPUIResourceParser {
 		}
 		//remove script ele from doc
 		for(Element remove : removes)	remove.remove();
+	}
+	
+	private void parseContext(JSONObject contextDefJson, HAPContext context){
+		if(contextDefJson==null)   return;
+		Iterator<String> defNames = contextDefJson.keys();
+		while(defNames.hasNext()){
+			String eleName = defNames.next();
+			JSONObject eleDefJson = contextDefJson.optJSONObject(eleName);
+			HAPContextNodeRootAbsolute contextEle = HAPContextParser.parseContextRootElementInUIResource(eleDefJson);
+			context.addElement(eleName, contextEle);
+		}
 	}
 	
 	private void parseChildExpressionBlocks(Element ele, HAPUIDefinitionUnit resource){

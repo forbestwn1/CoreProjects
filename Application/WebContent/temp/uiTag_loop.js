@@ -7,9 +7,9 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"loop",
 "info":{}
 }, {"name":"test",
 "context":{"inherit":true,
-"public":{"internal_data":{"children":{},
+"public":{"<%=&(element)&%>":{"children":{},
 "type":"relative",
-"path":"<%=&(data)&%>"
+"path":"<%=&(data)&%>.element"
 }
 }
 },

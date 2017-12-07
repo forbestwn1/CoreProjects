@@ -81,33 +81,47 @@ var node_utility = {
 			return out;
 		},
 		
-		buildContext : function(resourceContext, parentContext){
+		getContextTypes : function(){
+			return [ node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC, node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_INTERNAL, node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PRIVATE ];
+		},
+		
+		//build context according to context definition and parent context
+		buildContext : function(contextGroupDef, parentContext){
 			//build context element first
 			var contextElementInfosArray = [];
-			_.each(resourceContext, function(resourceContextRootObj, eleName, list){
-				var type = resourceContextRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
-				if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_ABSOLUTE){
-					var defaultValue = resourceContextRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFAULT];
-					if(resourceContextRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFINITION]!=undefined){
-						//app data
-						var defaultValueData = defaultValue;
-						if(defaultValueData!=undefined){
-							defaultValueData = node_dataUtility.createDataOfAppData(defaultValue);
+			
+			_.each(this.getContextTypes(), function(contextType, index){
+				var contextDef = contextGroupDef[contextType];
+				
+				_.each(contextDef, function(contextDefRootObj, eleName, list){
+					var info = {
+						contextType : contextType	
+					};
+					var type = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
+					if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_ABSOLUTE){
+						var defaultValue = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFAULT];
+						if(contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFINITION]!=undefined){
+							//app data
+							var defaultValueData = defaultValue;
+							if(defaultValueData!=undefined){
+								defaultValueData = node_dataUtility.createDataOfAppData(defaultValue);
+							}
+							contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValueData, "", info));
 						}
-						contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValueData));
+						else{
+							//object
+							contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValue, "", info));
+						}
 					}
-					else{
-						//object
-						contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValue));
+					else if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_RELATIVE){
+						var pathObj = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_PATH];
+						var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
+						var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
+						contextElementInfosArray.push(node_createContextElementInfo(eleName, parentContext, node_createContextVariable(rootName, path), loc_out.info.contextType));
 					}
-				}
-				else if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_RELATIVE){
-					var pathObj = resourceContextRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_PATH];
-					var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
-					var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
-					contextElementInfosArray.push(node_createContextElementInfo(eleName, parentContext, node_createContextVariable(rootName, path)));
-				}
+				});
 			});
+			
 			var context = node_createContext(contextElementInfosArray);
 			return context;
 		}

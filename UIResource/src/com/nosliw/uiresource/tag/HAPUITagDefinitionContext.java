@@ -8,14 +8,11 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 
 @HAPEntityWithAttribute
 public class HAPUITagDefinitionContext extends HAPSerializableImp{
 
-	@HAPAttribute
-	public static final String PUBLIC = "public";
-	@HAPAttribute
-	public static final String PRIVATE = "private";
 	@HAPAttribute
 	public static final String INHERIT = "inherit";
 
@@ -26,10 +23,14 @@ public class HAPUITagDefinitionContext extends HAPSerializableImp{
 	private Map<String, HAPUITagDefinitionContextElment> m_publicEles;
 
 	//public context element definition
+	private Map<String, HAPUITagDefinitionContextElment> m_internalEles;
+	
+	//public context element definition
 	private Map<String, HAPUITagDefinitionContextElment> m_privateEles;
 	
 	public HAPUITagDefinitionContext(){
 		this.m_publicEles = new LinkedHashMap<String, HAPUITagDefinitionContextElment>();
+		this.m_internalEles = new LinkedHashMap<String, HAPUITagDefinitionContextElment>();
 		this.m_privateEles = new LinkedHashMap<String, HAPUITagDefinitionContextElment>();
 		this.m_inherit = true;
 	}
@@ -40,10 +41,13 @@ public class HAPUITagDefinitionContext extends HAPSerializableImp{
 	public Map<String, HAPUITagDefinitionContextElment> getElements(String type){
 		Map<String, HAPUITagDefinitionContextElment> out = null;
 		switch(type){
-		case PUBLIC:
+		case HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC:
 			out = this.m_publicEles;
 			break;
-		case PRIVATE:
+		case HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL:
+			out = this.m_internalEles;
+			break;
+		case HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE:
 			out = this.m_privateEles;
 			break;
 		}
@@ -52,10 +56,13 @@ public class HAPUITagDefinitionContext extends HAPSerializableImp{
 
 	public void addElement(String name, HAPUITagDefinitionContextElment ele, String type){
 		switch(type){
-		case PUBLIC:
+		case HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC:
 			this.m_publicEles.put(name, ele);
 			break;
-		case PRIVATE:
+		case HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL:
+			this.m_internalEles.put(name, ele);
+			break;
+		case HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE:
 			this.m_privateEles.put(name, ele);
 			break;
 		}
@@ -65,6 +72,9 @@ public class HAPUITagDefinitionContext extends HAPSerializableImp{
 	public Map<String, HAPUITagDefinitionContextElment> getPublicElements(){		return this.m_publicEles;	}
 	public void addPublicElement(String name, HAPUITagDefinitionContextElment ele){  this.m_publicEles.put(name, ele);  }
 
+	public Map<String, HAPUITagDefinitionContextElment> getInternalElements(){		return this.m_internalEles;	}
+	public void addInternalElement(String name, HAPUITagDefinitionContextElment ele){  this.m_internalEles.put(name, ele);  }
+	
 	public Map<String, HAPUITagDefinitionContextElment> getPrivateElements(){		return this.m_privateEles;	}
 	public void addPrivateElement(String name, HAPUITagDefinitionContextElment ele){  this.m_privateEles.put(name, ele);  }
 	
@@ -72,6 +82,6 @@ public class HAPUITagDefinitionContext extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(INHERIT, this.m_inherit+"");
 		typeJsonMap.put(INHERIT, Boolean.class);
-		jsonMap.put(PUBLIC, HAPJsonUtility.buildJson(m_publicEles, HAPSerializationFormat.JSON));
+		jsonMap.put(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, HAPJsonUtility.buildJson(m_publicEles, HAPSerializationFormat.JSON));
 	}	
 }

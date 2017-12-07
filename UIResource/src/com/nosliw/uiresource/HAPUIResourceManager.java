@@ -3,11 +3,13 @@ package com.nosliw.uiresource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.context.HAPContext;
+import com.nosliw.uiresource.context.HAPContextGroup;
 import com.nosliw.uiresource.context.HAPContextUtility;
 import com.nosliw.uiresource.definition.HAPConstantUtility;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
@@ -60,7 +62,7 @@ public class HAPUIResourceManager {
 	 * @param context  new context to apply
 	 * @return
 	 */
-	public HAPUIDefinitionUnitResource addUIResourceDefinition(String resourceId, String base, HAPContext context){
+	public HAPUIDefinitionUnitResource addUIResourceDefinition(String resourceId, String base, HAPContextGroup context){
 		String baseContent = this.getUIResourceDefinitionByName(base).getSource();
 		//build resource using base resource
 		HAPUIDefinitionUnitResource resource = this.getUIResourceParser().parseContent(resourceId, baseContent);
@@ -81,7 +83,7 @@ public class HAPUIResourceManager {
 		HAPUIDefinitionUnitResource uiResource = this.getUIResourceDefinitionByName(name);
 		if(uiResource==null){
 			//if not registered, then process uiResource on the fly
-			String file = "C:\\Users\\ewaniwa\\Desktop\\MyWork\\ApplicationData\\uiresources\\"+name+".res";
+			String file = HAPFileUtility.getUIResourceFolder()+name+".res";
 			uiResource = this.getUIResourceParser().parseFile(file);
 			HAPConstantUtility.calculateConstantDefs(uiResource, null, m_idGengerator, m_expressionMan, m_runtime);
 		}
