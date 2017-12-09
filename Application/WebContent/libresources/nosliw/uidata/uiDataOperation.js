@@ -15,6 +15,7 @@ var node_createUIDataOperationRequest = function(context, uiDataOperation, handl
 	var target = uiDataOperation.target;
 	var targetType = node_getObjectType(target);
 	var operationService = uiDataOperation.operationService;
+	var loc_context = context;
 	var request;
 	switch(targetType)
 	{
@@ -25,7 +26,7 @@ var node_createUIDataOperationRequest = function(context, uiDataOperation, handl
 		request = target.getDataOperationRequest(operationService, handlers, requester_parent);
 		break;
 	case node_CONSTANT.TYPEDOBJECT_TYPE_CONTEXTVARIABLE:
-		operationService.path = node_namingConvensionUtility.cascadePath(target.path, operationService.path);
+		operationService.parms.path = node_namingConvensionUtility.cascadePath(target.path, operationService.path);
 		request = loc_context.getDataOperationRequest(target.name, operationService, handlers, requester_parent);
 		break;
 	default : 
