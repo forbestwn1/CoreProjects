@@ -198,6 +198,12 @@ var node_createWrapperVariable = function(data1, data2, data3){
 				}
 			},
 			
+			getDataOperationRequest : function(operationService, handlers, requester_parent){
+				if(this.prv_wrapper!=undefined){
+					return this.prv_wrapper.getDataOperationRequest(operationService, handlers, requester_parent);
+				}
+			},
+			
 			handleEachElement : function(handler, thatContext){
 				if(this.prv_wrapper!=undefined){
 					this.prv_wrapper.handleEachElement(handler, thatContext);

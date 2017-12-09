@@ -16,10 +16,11 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"textinput",
 "script":
 function (context, parentResourceView, uiTagResource, attributes, env) {
     var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
-    var node_createDataOperationRequest = nosliw.getNodeData("uidata.dataoperation.createDataOperationRequest");
-    var node_createDataOperationService = nosliw.getNodeData("uidata.dataoperation.createDataOperationService");
     var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
     var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+    var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest");
+    var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
+    var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
     var loc_context = context;
     var loc_dataContextEleName = "internal_data";
     var loc_dataVariable = loc_context.createVariable(node_createContextVariable(loc_dataContextEleName));
@@ -40,9 +41,9 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
         var that = this;
         loc_view.bind("change", function () {
             var data = loc_getViewData();
-            var requestInfo = node_createDataOperationRequest(loc_context, {});
-            var operationService = node_createDataOperationService(loc_dataVariable, node_CONSTANT.WRAPPER_OPERATION_SET, "", data);
-            requestInfo.addOperationRequest(operationService);
+            var requestInfo = node_createBatchUIDataOperationRequest(loc_context);
+            var uiDataOperation = new node_UIDataOperation(loc_dataVariable, node_uiDataOperationServiceUtility.createSetOperationService("", data));
+            requestInfo.addUIDataOperation(uiDataOperation);
             node_requestServiceProcessor.processRequest(requestInfo, false);
         });
     }, ovr_preInit: function () {

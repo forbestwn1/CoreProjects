@@ -15,6 +15,7 @@ var node_dataUtility;
 var node_wrapperFactory;
 var node_namingConvensionUtility;
 var node_objectWrapperUtility;	
+var node_createServiceRequestInfoSimple;
 //*******************************************   Start Node Definition  ************************************** 	
 var node_createWraperObject = function(){
 	
@@ -121,6 +122,13 @@ var node_createWraperObject = function(){
 			},
 			
 			getWrapperType : function(){	return NOSLIWCONSTANT.WRAPPER_TYPE_OBJECT;		},
+			
+			getDataOperationRequest : function(operationService, handlers, requester_parent){
+				var that = this;
+				return node_createServiceRequestInfoSimple(operationService, function(requestInfo){
+					that.requestDataOperation(operationService, requestInfo);
+				}, handlers, requester_parent);
+			}
 	};
 	
 	return loc_out;
@@ -141,6 +149,8 @@ nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.wrapper.object.utility", function(){node_objectWrapperUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
+
 
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
 	//register wrapper faction

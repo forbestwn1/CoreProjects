@@ -124,6 +124,11 @@ var node_createContext = function(elementInfosArray, request){
 			var contextVar = node_createContextVariable(dataOperationService.parms.path);
 			var contextEle = this.getContextElementVariable(contextVar.name);
 			contextEle.requestDataOperation(new node_ServiceInfo(dataOperationService.command, {"path":contextVar.path, "data":dataOperationService.parms.data}), request);
+		},
+		
+		getDataOperationRequest : function(eleName, operationService, handlers, requester_parent){
+			var eleVar = this.getContextElementVariable(eleName);
+			return eleVar.getDataOperationRequest(operationService, handlers, requester_parent);
 		}
 		
 	};
