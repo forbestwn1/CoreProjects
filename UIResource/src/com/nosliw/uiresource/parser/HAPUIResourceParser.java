@@ -144,23 +144,22 @@ public class HAPUIResourceParser {
 	}
 	
 	private void parseChildContextBlocks(Element ele, HAPUIDefinitionUnitResource resource){
-		List<Element> removes = new ArrayList<Element>();
-		Elements contextEles = ele.getElementsByTag(HAPUIDefinitionUnitResource.CONTEXT);
-		for(int i=0; i<contextEles.size(); i++){
+		List<Element> childEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, HAPUIDefinitionUnitResource.CONTEXT);
+		
+		for(Element childEle : childEles){
 			try {
-				String content = contextEles.get(i).html();
+				String content = childEle.html();
 				JSONObject defsJson = new JSONObject(content);
 				for(String contextType : HAPContextGroup.getContextTypes()){
 					parseContext(defsJson.optJSONObject(contextType), resource.getContext().getContext(contextType));
 				}
+				break;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			
-			removes.add(contextEles.get(i));
 		}
-		//remove script ele from doc
-		for(Element remove : removes)	remove.remove();
+		
+		for(Element childEle : childEles)  childEle.remove();
 	}
 	
 	private void parseContext(JSONObject contextDefJson, HAPContext context){
@@ -175,12 +174,11 @@ public class HAPUIResourceParser {
 	}
 	
 	private void parseChildExpressionBlocks(Element ele, HAPUIDefinitionUnit resource){
-		List<Element> removes = new ArrayList<Element>();
+		List<Element> childEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, HAPUIDefinitionUnit.EXPRESSIONS);
 
-		Elements expressionEles = ele.getElementsByTag(HAPUIDefinitionUnit.EXPRESSIONS);
-		for(int i=0; i<expressionEles.size(); i++){
+		for(Element childEle : childEles){
 			try {
-				String content = expressionEles.get(i).html();
+				String content = childEle.html();
 				JSONObject defsJson = new JSONObject(content);
 				Iterator<String> defNames = defsJson.keys();
 				while(defNames.hasNext()){
@@ -190,60 +188,53 @@ public class HAPUIResourceParser {
 					HAPExpressionDefinition expressionDef = (HAPExpressionDefinition)HAPStringableEntityImporterJSON.parseJsonEntity(expDefJson, "data.expressiondefinition", this.m_valueInfoMan);
 					resource.addExpressionDefinition(expressionDef);
 				}
+				break;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			
-			removes.add(expressionEles.get(i));
-		}
-		//remove script ele from doc
-		for(Element remove : removes)	remove.remove();
+		}		
+
+		for(Element childEle : childEles)   childEle.remove();
 	}
 	
 	/*
 	 * process all constant blocks
 	 */
 	private void parseChildConstantBlocks(Element ele, HAPUIDefinitionUnit resource){
-		List<Element> removes = new ArrayList<Element>();
-		
-		Elements constantEles = ele.getElementsByTag(HAPUIDefinitionUnit.CONSTANTS);
-		for(int i=0; i<constantEles.size(); i++){
+		List<Element> childEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, HAPUIDefinitionUnit.CONSTANTS);
+
+		for(Element childEle : childEles){
 			try {
-				String content = constantEles.get(i).text();
+				String content = childEle.text();
 				JSONObject defsJson = new JSONObject(content);
 				Iterator<String> defNames = defsJson.keys();
 				while(defNames.hasNext()){
 					String defName = defNames.next();
 					resource.addConstantDef(defName, new HAPConstantDef(defsJson.get(defName)));
 				}
+				break;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			
-			removes.add(constantEles.get(i));
 		}
-		//remove script ele from doc
-		for(Element remove : removes)	remove.remove();
+		
+		for(Element childEle : childEles)   childEle.remove();
 	}
 
 	/*
 	 * process all script blocks
 	 */
 	private void parseChildScriptBlocks(Element ele, HAPUIDefinitionUnit resource){
-		List<Element> removes = new ArrayList<Element>();
-		Elements childEles = ele.getElementsByTag(HAPUIDefinitionUnitResource.SCRIPT);
-		for(int i=0; i<childEles.size(); i++){
-			Element childEle = childEles.get(i);
-			String childTagName = childEle.tag().getName();
-			if(HAPUIDefinitionUnit.SCRIPT.equals(childTagName)){
-				HAPScript jsBlock = new HAPScript(childEle.html());
-				resource.setJSBlock(jsBlock);
-				removes.add(childEle);
-				break;
-			}
+		List<Element> scirptEles = new ArrayList<Element>();
+		
+		scirptEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, HAPUIDefinitionUnitResource.SCRIPT);
+		for(Element scriptEle : scirptEles){
+			HAPScript jsBlock = new HAPScript(scriptEle.html());
+			resource.setJSBlock(jsBlock);
+			break;
 		}
-		//remove script ele from doc
-		for(Element remove : removes)		remove.remove();
+		
+		for(Element scriptEle : scirptEles)  scriptEle.remove();
 	}
 
 	/*

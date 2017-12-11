@@ -147,4 +147,16 @@ public class HAPUIResourceParserUtility {
 		}
 	}
 	
+	public static List<Element> getChildElementsByTag(Element parent, String tagName){
+		List<Element> out = new ArrayList<Element>();
+		Elements childEles = parent.children(); 
+		for(int i=0; i<childEles.size(); i++){
+			Element childEle = childEles.get(i);
+			String childTagName = childEle.tag().getName();
+			if(tagName.equals(childTagName)){
+				out.add(childEle);
+			}
+		}
+		return out;
+	}
 }
