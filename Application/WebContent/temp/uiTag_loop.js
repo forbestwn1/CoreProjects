@@ -57,16 +57,17 @@ function (context, parentResourceView, uiTagResource, attributes, tagEnv) {
         var resourceView = node_createUIResourceViewFactory().createUIResourceView(loc_uiTagResource, loc_tagEnv.getId() + "." + key, loc_parentResourceView, eleContext, requestInfo);
         resourceView.insertAfter(loc_startEle);
         loc_childResourceViews[key] = resourceView;
+        var that = this;
         eleContext.getContextElementVariable(loc_eleContextEleName).registerDataChangeEventListener(undefined, function (event, path, operationData, requestInfo) {
-            if (event == "WRAPPER_EVENT_DESTROY") {
+            if (event == "EVENT_WRAPPER_DESTROY") {
                 that.prv_deleteEle(key);
             }
         }, this);
     }, prv_deleteEle: function (key, requestInfo) {
-        alert("aaaaa");
+        alert("ffff");
         var view = loc_childResourceViews[key];
-        view.destroy();
-        delete loc_childResourceViews[key1];
+        view.detachViews();
+        delete loc_childResourceViews[key];
     }, ovr_postInit: function (requestInfo) {
         this.prv_updateView();
         var that = this;
