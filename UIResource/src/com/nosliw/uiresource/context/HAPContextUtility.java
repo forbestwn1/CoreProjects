@@ -152,9 +152,11 @@ public class HAPContextUtility {
 				out.setPath(path);
 				
 				HAPContextNode parentNode = parentUnit.getContext().getPublicContext().getChild(path);   //try parent's public context first 
-				if(parentNode==null)   parentUnit.getContext().getInternalContext().getChild(path); 		//if not found, then try parent's internal context
-				Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
-				merge(parentNode, defContextElementRelative, out, matchers, new HAPContextPath(defRootEleName, null), dataTypeHelper);
+				if(parentNode==null)   parentNode = parentUnit.getContext().getInternalContext().getChild(path); 		//if not found, then try parent's internal context
+				if(parentNode!=null){
+					Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
+					merge(parentNode, defContextElementRelative, out, matchers, new HAPContextPath(defRootEleName, null), dataTypeHelper);
+				}
 				return out;
 			}	
 		}

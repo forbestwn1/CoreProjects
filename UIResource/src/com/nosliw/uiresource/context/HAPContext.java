@@ -35,9 +35,12 @@ public class HAPContext extends HAPSerializableImp{
 
 	public HAPContextNode getChild(HAPContextPath path){
 		HAPContextNode out = (HAPContextNode)this.m_elements.get(path.getRootElementName());
-		String[] pathSegs = path.getPathSegments();
-		for(String pathSeg : pathSegs){
-			out = out.getChildren().get(pathSeg);
+		if(out!=null){
+			String[] pathSegs = path.getPathSegments();
+			for(String pathSeg : pathSegs){
+				out = out.getChildren().get(pathSeg);
+				if(out==null)  break;
+			}
 		}
 		return out;
 	}

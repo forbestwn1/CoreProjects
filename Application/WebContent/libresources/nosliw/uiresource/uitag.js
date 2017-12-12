@@ -36,6 +36,8 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 	//all tag attributes
 	var loc_attributes = {};
 
+	var loc_context;
+	
 	//boundary element for this tag
 	var loc_startEle = undefined;
 	var loc_endEle = undefined;
