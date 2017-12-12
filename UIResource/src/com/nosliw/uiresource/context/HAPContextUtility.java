@@ -16,7 +16,6 @@ import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.definition.HAPConstantDef;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
 import com.nosliw.uiresource.expression.HAPEmbededScriptExpression;
 import com.nosliw.uiresource.expression.HAPRuntimeTaskExecuteEmbededExpression;

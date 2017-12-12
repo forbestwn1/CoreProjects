@@ -36,6 +36,8 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 	//all tag attributes
 	var loc_attributes = {};
 
+	var loc_tagName = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME];
+	
 	var loc_context;
 	
 	//boundary element for this tag
@@ -78,7 +80,11 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 	
 	var loc_out = {
 		
-		getId : function(){  return loc_id;   }
+		getId : function(){  return loc_id;   },
+		
+		getTagName : function(){ return loc_tagName;   },
+	
+		getTagObject : function(){ return loc_uiTagObj;  }
 			
 	};
 	
