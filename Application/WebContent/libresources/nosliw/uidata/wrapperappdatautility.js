@@ -9,6 +9,7 @@ var node_basicUtility;
 var node_parseSegment;
 var node_createServiceRequestInfoSequence;
 var node_ServiceInfo;
+var node_OperationParm;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 var node_utility = {
@@ -19,7 +20,7 @@ var node_utility = {
 		var segs = node_parseSegment(path);
 		var size = segs.getSegmentSize();
 		var opData = appData;
-		for(var i=0; i<size-1; i++){
+		for(var i=0; i<size; i++){
 			var pathSeg = segs.next();
 			var operationParms = [];
 			
@@ -52,6 +53,7 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("common.segmentparser.parseSegment", function(){node_parseSegment = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("expression.entity.OperationParm", function(){node_OperationParm = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 
