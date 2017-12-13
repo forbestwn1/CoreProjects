@@ -21,6 +21,7 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
     var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest");
     var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
     var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
+    var node_createUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createUIDataOperationRequest");
     var loc_context = context;
     var loc_dataContextEleName = "internal_data";
     var loc_dataVariable = loc_context.createVariable(node_createContextVariable(loc_dataContextEleName));
@@ -31,12 +32,21 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
         var value = loc_view.val();
         return {dataTypeId: "test.string;1.0.0", value: value};
     };
-    var loc_out = {prv_updateView: function () {
+    var loc_out = {prv_updateView1: function () {
         var data = loc_dataVariable.getData();
         if (data != undefined) {
             var value = data.value.value;
             loc_view.val(value);
         }
+    }, prv_updateView: function () {
+        var uiDataOperation = new node_UIDataOperation(loc_dataVariable, node_uiDataOperationServiceUtility.createGetOperationService(""));
+        var requestInfo = node_createUIDataOperationRequest(loc_context, uiDataOperation, {success: function (requestInfo, data) {
+            if (data != undefined) {
+                var value = data.value.value;
+                loc_view.val(value);
+            }
+        }});
+        node_requestServiceProcessor.processRequest(requestInfo, false);
     }, prv_setupElementEvent: function () {
         var that = this;
         loc_view.bind("change", function () {

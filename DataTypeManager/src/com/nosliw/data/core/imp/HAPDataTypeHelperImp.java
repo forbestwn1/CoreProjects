@@ -2,7 +2,6 @@ package com.nosliw.data.core.imp;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,7 +21,6 @@ import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.HAPOperationParm;
-import com.nosliw.data.core.HAPOperationUtility;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -455,7 +453,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		if(hasChild){
 			List<HAPOperationParm> parmsDataGetChildrenNames = new ArrayList<HAPOperationParm>();
 			parmsDataGetChildrenNames.add(new HAPOperationParm(data));
-			HAPServiceData serviceDataChildNames = this.m_runtimeEnv.getRuntime().executeDataOperationSync(data.getDataTypeId(), HAPOperationUtility.OPERATION_GETCHILDRENNAMES, parmsDataGetChildrenNames);
+			HAPServiceData serviceDataChildNames = this.m_runtimeEnv.getRuntime().executeDataOperationSync(data.getDataTypeId(), HAPConstant.DATAOPERATION_COMPLEX_GETCHILDRENNAMES, parmsDataGetChildrenNames);
 			HAPData getChildrenNamesResultData = (HAPData)serviceDataChildNames.getData();
 			try {
 				JSONArray getChildrenNamesResultJsonArray = new JSONArray(getChildrenNamesResultData.getValue().toString());
@@ -466,7 +464,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 					List<HAPOperationParm> parmsDataGetChildData = new ArrayList<HAPOperationParm>();
 					parmsDataGetChildData.add(new HAPOperationParm(data));
 					parmsDataGetChildData.add(new HAPOperationParm("name", HAPDataUtility.buildDataWrapperFromJson(childNameDataJson)));
-					HAPServiceData serviceDataChildData = this.m_runtimeEnv.getRuntime().executeDataOperationSync(data.getDataTypeId(), HAPOperationUtility.OPERATION_GETCHILDDATA, parmsDataGetChildData);
+					HAPServiceData serviceDataChildData = this.m_runtimeEnv.getRuntime().executeDataOperationSync(data.getDataTypeId(), HAPConstant.DATAOPERATION_COMPLEX_GETCHILDDATA, parmsDataGetChildData);
 					HAPData getChildDataResultData = (HAPData)serviceDataChildData.getData();
 					group.addSubCriteria(childName, this.getDataTypeCriteriaByData(getChildDataResultData));
 				}

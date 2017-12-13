@@ -147,11 +147,11 @@ nosliw.registerSetNodeDataEvent("uidata.wrapper.object.utility", function(){node
 
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
 	//register wrapper faction
-	this.getData().registerWrapperFactoryByDataType([node_CONSTANT.DATA_TYPE_APPDATA], node_createWraperData);
+//	this.getData().registerWrapperFactoryByDataType([node_CONSTANT.DATA_TYPE_APPDATA], node_createWraperData);
 });
 
 
 //Register Node by Name
-packageObj.createChildNode("createWraperData", node_createWraperData); 
+packageObj.createChildNode("createWraperData1", node_createWraperData); 
 
 })(packageObj);

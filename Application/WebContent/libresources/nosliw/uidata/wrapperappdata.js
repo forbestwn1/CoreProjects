@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("wrapper.object");    
+var packageObj = library.getChildPackage("wrapper.appdata");    
 
 (function(packageObj){
 //get used node
@@ -14,23 +14,45 @@ var node_basicUtility;
 var node_dataUtility;
 var node_wrapperFactory;
 var node_namingConvensionUtility;
-var node_objectWrapperUtility;	
-var node_createServiceRequestInfoSimple;
+var node_appDataWrapperUtility;	
 //*******************************************   Start Node Definition  ************************************** 	
-var node_createWraperObject = function(){
+var node_createWraperData = function(){
 	
-	var loc_getOperationObject = function(obj){
-		var opObject = obj;
-		if(node_getObjectType(obj)==node_CONSTANT.TYPEDOBJECT_TYPE_DATA){
-			if(obj.dataTypeInfo==node_CONSTANT.DATA_TYPE_OBJECT){
-				//if operation data is object, then use value
-				opObject = obj.value;
-			}
-		}
-		return opObject;
+	var loc_dataOperation = function(dataTypeId, operation, parms){
+		
 	};
 	
 	var loc_out = {		
+			
+			getDataOperationRequest : function(operationService, handlers, requester_parent){
+				var command = operationService.command;
+				var serviceData = operationService.parms;
+				var path = serviceData.path;
+				
+				var rootValue = this.getRootData().value;
+				var fullPath = node_namingConvensionUtility.cascadePath(this.getFullPath(), path);
+
+				var opPath = fullPath;   //node_namingConvensionUtility.cascadePath("value", fullPath);
+				if(command==node_CONSTANT.WRAPPER_OPERATION_GET){
+					return node_appDataWrapperUtility.getGetChildAppDataRequest(rootValue, fullPath, handlers, requester_parent);
+				}
+			},
+
+			getWrapperType : function(){	return node_CONSTANT.DATA_TYPE_APPDATA;		},
+			
+			
+			
+			
+			
+			getChildData : function(path){
+				var object = node_objectWrapperUtility.getObjectAttributeByPath(this.getValue(), path);
+				var data = node_dataUtility.createDataByObject(object);
+				return data;
+			},
+		
+			
+			
+	
 			/*
 			 * 
 			 */
@@ -45,8 +67,7 @@ var node_createWraperObject = function(){
 				}
 				else{
 					//on child
-					if(rootPath=="")  rootWrapper.pri_triggerForwardEvent(event, fullPath, opValue, request);
-					else rootWrapper.pri_triggerForwardEvent(event, fullPath.substring(rootPath.length+1), opValue, request);
+					rootWrapper.pri_triggerForwardEvent(event, fullPath.substring(rootPath.length+1), opValue, request);
 				}
 			},
 
@@ -71,51 +92,6 @@ var node_createWraperObject = function(){
 				return data;
 			},
 			
-			requestDataOperation : function(service, request){
-				var command = service.command;
-				var serviceData = service.parms;
-				var path = serviceData.path;
-				
-				var rootValue = this.getRootData().value;
-				var fullPath = node_namingConvensionUtility.cascadePath(this.getFullPath(), path);
-
-				var opPath = fullPath;   //node_namingConvensionUtility.cascadePath("value", fullPath);
-				if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
-					var opValue = loc_getOperationObject(serviceData.data);
-					//change value
-					if(_.isObject(rootValue)){
-						node_objectWrapperUtility.operateObject(rootValue, opPath, node_CONSTANT.WRAPPER_OPERATION_SET, opValue);
-					}
-					else{
-						this.getRootData().value = opValue;
-						this.getRootWrapper().pri_invalidateData(request);
-					}
-					//trigue event
-					this.pri_triggerOperationEvent(node_CONSTANT.WRAPPER_EVENT_SET, path, opValue, request);
-				}
-				else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
-					var opValue = loc_getOperationObject(serviceData.data);
-					var index = serviceData.index;
-					var operationData = {
-						data : opValue,
-						index : index,
-					};
-					node_objectWrapperUtility.operateObject(rootValue, opPath, node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT, operationData);
-					//trigue event
-					if(path==undefined)  path="";
-					this.pri_triggerOperationEvent(node_CONSTANT.WRAPPER_EVENT_ADDELEMENT, path, operationData, request);
-				}
-				else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
-					var index = serviceData.index; 
-					node_objectWrapperUtility.operateObject(rootValue, opPath, node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, index);
-					//trigue event
-					this.pri_triggerOperationEvent(node_CONSTANT.WRAPPER_EVENT_DESTROY, node_namingConvensionUtility.cascadePath(path, index), {}, request);
-				}
-				else if(command==node_CONSTANT.WRAPPER_OPERATION_GET){
-					return this.getChildData(path);
-				}
-			},
-
 			handleEachElement : function(handler, thatContext){	
 				var containerData = this.getData();
 				_.each(containerData.value, function(data, key, list){
@@ -124,14 +100,6 @@ var node_createWraperObject = function(){
 				}, this);
 			},
 			
-			getWrapperType : function(){	return node_CONSTANT.DATA_TYPE_OBJECT;		},
-			
-			getDataOperationRequest : function(operationService, handlers, requester_parent){
-				var that = this;
-				return node_createServiceRequestInfoSimple(operationService, function(requestInfo){
-					return that.requestDataOperation(operationService, requestInfo);
-				}, handlers, requester_parent);
-			}
 	};
 	
 	return loc_out;
@@ -151,16 +119,15 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.wrapper.object.utility", function(){node_objectWrapperUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
-
+nosliw.registerSetNodeDataEvent("uidata.wrapper.appdata.utility", function(){node_appDataWrapperUtility = this.getData();});
 
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
 	//register wrapper faction
-	this.getData().registerWrapperFactoryByDataType([node_CONSTANT.DATA_TYPE_OBJECT], node_createWraperObject);
+	this.getData().registerWrapperFactoryByDataType([node_CONSTANT.DATA_TYPE_APPDATA], node_createWraperData);
 });
 
+
 //Register Node by Name
-packageObj.createChildNode("createWraperObject", node_createWraperObject); 
+packageObj.createChildNode("createWraperData", node_createWraperData); 
 
 })(packageObj);

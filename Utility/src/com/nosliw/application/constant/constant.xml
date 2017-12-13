@@ -223,6 +223,8 @@
 			<definition name="DATAOPERATION_GETCHILDDATATYPE" value="getChildDatatype"/>
 			<definition name="DATAOPERATION_COMPARE" value="compare"/>
 			<definition name="DATAOPERATION_PARSELITERAL" value="parseLiteral"/>
+			<definition name="DATAOPERATION_COMPLEX_GETCHILDRENNAMES" value="getChildrenNames" description="operation for get all children names. it is only defined in complex data"/>
+			<definition name="DATAOPERATION_COMPLEX_GETCHILDDATA" value="getChildData" description="operation for get all children names. it is only defined in complex data"/>
 			<definition type="space"/>
 			<definition name="DATAOPERATION_PARM_BASENAME" value="ABCDEFGHIJKLMN"/>
 			<definition type="space"/>

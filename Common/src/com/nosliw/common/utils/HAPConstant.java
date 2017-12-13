@@ -70,6 +70,8 @@ public class HAPConstant {
 		public static final String DATAOPERATION_GETCHILDDATATYPE = "getChildDatatype";
 		public static final String DATAOPERATION_COMPARE = "compare";
 		public static final String DATAOPERATION_PARSELITERAL = "parseLiteral";
+		public static final String DATAOPERATION_COMPLEX_GETCHILDRENNAMES = "getChildrenNames";
+		public static final String DATAOPERATION_COMPLEX_GETCHILDDATA = "getChildData";
 
 
 

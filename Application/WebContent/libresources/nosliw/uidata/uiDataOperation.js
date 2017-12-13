@@ -93,7 +93,14 @@ var node_uiDataOperationServiceUtility = {
 			path : path,
 			index : index 
 		});
+	},
+
+	createGetOperationService : function(path){
+		return new node_ServiceInfo(node_CONSTANT.WRAPPER_OPERATION_GET, {
+			path : path
+		});
 	}
+	
 };
 
 
