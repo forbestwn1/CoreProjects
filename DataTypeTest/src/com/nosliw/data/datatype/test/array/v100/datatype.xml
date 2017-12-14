@@ -13,6 +13,22 @@
 			<output criteria="test.array%||element:@||!(test.expression)!.outputCriteria(expression;;;?(expression)?.getValue();;parms;;;!(test.map)!.new().put(name;;;?(elementVariableName)?.getValue();;value;;;?(base)?.getCriteria().getChild(childName;;;#test.string;element)))||@||%"/>
 		</operation>
 
+		<operation name="getChildrenNames" >
+			<parms>
+				<parm name="base" criteria="test.map" isBase="true"/>
+			</parms>
+			<output criteria="test.array;1.0.0%||element:test.string;1.0.0||%"/>
+		</operation>
+
+		<operation name="getChildData" >
+			<parms>
+				<parm name="base" criteria="test.array" isBase="true"/>
+				<parm name="name" criteria="test.string"/>
+			</parms>
+			<output criteria="*"/>
+		</operation>
+
+
 		<operation name="new" >
 			<parms>
 			</parms>

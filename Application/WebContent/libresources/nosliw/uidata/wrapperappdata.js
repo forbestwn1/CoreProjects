@@ -4,6 +4,7 @@ var packageObj = library.getChildPackage("wrapper.appdata");
 (function(packageObj){
 //get used node
 var node_CONSTANT;
+var node_COMMONCONSTANT;
 var node_createEventObject;
 var node_makeObjectWithLifecycle;
 var node_getLifecycleInterface;
@@ -15,6 +16,11 @@ var node_dataUtility;
 var node_wrapperFactory;
 var node_namingConvensionUtility;
 var node_appDataWrapperUtility;	
+var node_createServiceRequestInfoSequence;
+var node_ServiceInfo;
+var node_uiDataOperationServiceUtility;
+var node_requestServiceProcessor;
+var node_OperationParm;
 //*******************************************   Start Node Definition  ************************************** 	
 var node_createWraperData = function(){
 	
@@ -68,7 +74,47 @@ var node_createWraperData = function(){
 				}
 			},
 
-			
+			handleEachElement : function(handler, thatContext){	
+				
+				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("HandleEachElementInCollection", {"collectionWrapper":this}));
+				
+				var getDataRequest = this.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
+					success : function(requestInfo, data)
+					{ 
+						var containerData = data.value;  
+						var operationParms = [];
+						operationParms.push(new node_OperationParm(containerData, "base"));
+						var getChildNamesRequest = nosliw.runtime.getExpressionService().getExecuteOperationRequest(
+								containerData.dataTypeId, 
+								node_COMMONCONSTANT.DATAOPERATION_COMPLEX_GETCHILDRENNAMES, 
+								operationParms, {
+									success : function(request, data){
+										var requests = [];
+										var childNames = data.value;
+										_.each(childNames, function(childName, i){
+											
+											var operationParms = [];
+											operationParms.push(new node_OperationParm(containerData, "base"));
+											var getChildNamesRequest = nosliw.runtime.getExpressionService().getExecuteOperationRequest(
+													containerData.dataTypeId, 
+													node_COMMONCONSTANT.DATAOPERATION_COMPLEX_GETCHILDRENNAMES, 
+													operationParms, {
+														success : function(request, data){
+													    	handler.call(thatContext, data, childNames);
+														}
+													});
+											requests.push(getChildNamesRequest);
+										});
+										return requests;
+									}
+								});
+						return getChildNamesRequest;
+					}
+				});
+				out.addRequest(getDataRequest);
+				
+				node_requestServiceProcessor.processRequest(out, false);
+			},
 			
 			getWrapperType : function(){	return node_CONSTANT.DATA_TYPE_APPDATA;		},
 			
@@ -82,7 +128,7 @@ var node_createWraperData = function(){
 			
 			
 			
-			
+/*			
 			getChildData : function(path){
 				var object = node_objectWrapperUtility.getObjectAttributeByPath(this.getValue(), path);
 				var data = node_dataUtility.createDataByObject(object);
@@ -91,9 +137,6 @@ var node_createWraperData = function(){
 		
 			
 			
-			/*
-			 * calculate current object
-			 */
 			ovr_calValue : function(){
 				var baseValue = undefined;
 				if(this.pri_isDataBased()==false){
@@ -110,16 +153,8 @@ var node_createWraperData = function(){
 				var object = node_objectWrapperUtility.getObjectAttributeByPath(this.getValue(), path);
 				var data = node_dataUtility.createDataByObject(object);
 				return data;
-			},
-			
-			handleEachElement : function(handler, thatContext){	
-				var containerData = this.getData();
-				_.each(containerData.value, function(data, key, list){
-					var child = this.createChildWrapper(key);
-			    	handler.call(thatContext, child, key);
-				}, this);
-			},
-			
+			}
+*/			
 	};
 	
 	return loc_out;
@@ -129,6 +164,7 @@ var node_createWraperData = function(){
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
@@ -140,6 +176,11 @@ nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.wrapper.appdata.utility", function(){node_appDataWrapperUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("expression.entity.OperationParm", function(){node_OperationParm = this.getData();});
 
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
 	//register wrapper faction

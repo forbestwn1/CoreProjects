@@ -42,6 +42,30 @@ dataTypeDefition.operations['process'] = {
 		},
 };
 
+dataTypeDefition.operations['getChildrenNames'] = {
+		operation : function(parms, context){
+			var names = [];
+			_.each(this.value, function(arrayValue, index){
+				names.push({
+					dataTypeId : "test.string;1.0.0",
+					value : index+""
+				});
+			});
+			
+			return {
+				dataTypeId : "test.array;1.0.0",
+				value : names
+			};
+		},
+};
+
+dataTypeDefition.operations['getChildData'] = {
+		operation : function(parms, context){
+			var name = parms.getParm("name").value;
+			return this.value[parseInt(name)];
+		}
+};
+
 dataTypeDefition.operations['new'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context
