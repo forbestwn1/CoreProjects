@@ -32,27 +32,23 @@ var node_createWraperData = function(){
 				var rootValue = this.getRootData().value;
 				var fullPath = node_namingConvensionUtility.cascadePath(this.getFullPath(), path);
 
-				var opPath = fullPath;   //node_namingConvensionUtility.cascadePath("value", fullPath);
+				var out;
 				if(command==node_CONSTANT.WRAPPER_OPERATION_GET){
-					return node_appDataWrapperUtility.getGetChildAppDataRequest(rootValue, fullPath, handlers, requester_parent);
+					out = node_appDataWrapperUtility.getGetChildAppDataRequest(rootValue, fullPath, handlers, requester_parent);
 				}
+				else if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
+					out = node_appDataWrapperUtility.getSetChildAppDataRequest(rootValue, fullPath, serviceData.data, handlers, requester_parent);
+					var that  = this;
+					out.addPostProcessor({
+						success : function(requestInfo, data){
+							that.pri_triggerOperationEvent(node_CONSTANT.WRAPPER_EVENT_SET, path, serviceData.data, requestInfo);
+						}
+					});
+				}
+				return out;
 			},
 
-			getWrapperType : function(){	return node_CONSTANT.DATA_TYPE_APPDATA;		},
 			
-			
-			
-			
-			
-			getChildData : function(path){
-				var object = node_objectWrapperUtility.getObjectAttributeByPath(this.getValue(), path);
-				var data = node_dataUtility.createDataByObject(object);
-				return data;
-			},
-		
-			
-			
-	
 			/*
 			 * 
 			 */
@@ -67,10 +63,34 @@ var node_createWraperData = function(){
 				}
 				else{
 					//on child
-					rootWrapper.pri_triggerForwardEvent(event, fullPath.substring(rootPath.length+1), opValue, request);
+					if(rootPath=="")  rootWrapper.pri_triggerForwardEvent(event, fullPath, opValue, request);
+					else rootWrapper.pri_triggerForwardEvent(event, fullPath.substring(rootPath.length+1), opValue, request);
 				}
 			},
 
+			
+			
+			getWrapperType : function(){	return node_CONSTANT.DATA_TYPE_APPDATA;		},
+			
+			
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			getChildData : function(path){
+				var object = node_objectWrapperUtility.getObjectAttributeByPath(this.getValue(), path);
+				var data = node_dataUtility.createDataByObject(object);
+				return data;
+			},
+		
+			
+			
 			/*
 			 * calculate current object
 			 */
