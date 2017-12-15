@@ -51,6 +51,12 @@ var node_createWraperData = function(){
 						}
 					});
 				}
+				else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
+					
+				}
+				else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
+					
+				}
 				return out;
 			},
 
