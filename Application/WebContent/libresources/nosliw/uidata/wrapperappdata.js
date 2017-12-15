@@ -91,16 +91,17 @@ var node_createWraperData = function(){
 									success : function(request, data){
 										var requests = [];
 										var childNames = data.value;
-										_.each(childNames, function(childName, i){
+										_.each(childNames, function(childNameData, i){
 											
 											var operationParms = [];
 											operationParms.push(new node_OperationParm(containerData, "base"));
+											operationParms.push(new node_OperationParm(childNameData, "name"));
 											var getChildNamesRequest = nosliw.runtime.getExpressionService().getExecuteOperationRequest(
 													containerData.dataTypeId, 
-													node_COMMONCONSTANT.DATAOPERATION_COMPLEX_GETCHILDRENNAMES, 
+													node_COMMONCONSTANT.DATAOPERATION_COMPLEX_GETCHILDDATA, 
 													operationParms, {
 														success : function(request, data){
-													    	handler.call(thatContext, data, childNames);
+													    	handler.call(thatContext, data, i);
 														}
 													});
 											requests.push(getChildNamesRequest);

@@ -165,11 +165,6 @@ var node_createExpressionService = function(){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		var service = new node_ServiceInfo("MatchData", {"data":data, "matcher":matchers});
 		
-		if(data==undefined){
-			var kkkk = 555;
-			kkkk++;
-		}
-		
 		var dataTypeId = data[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID];
 		var matcher = matchers[dataTypeId];
 		
