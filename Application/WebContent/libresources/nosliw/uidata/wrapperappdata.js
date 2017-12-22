@@ -52,7 +52,19 @@ var node_createWraperData = function(){
 					});
 				}
 				else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
-					
+					var operationData = {
+							data : opValue,
+							index : serviceData.index,
+						};
+					out = node_appDataWrapperUtility.getAddElementAppDataRequest(rootValue, fullPath, operationData, handlers, requester_parent);
+					var that  = this;
+					out.addPostProcessor({
+						success : function(requestInfo, data){
+							//trigue event
+							if(path==undefined)  path="";
+							that.pri_triggerOperationEvent(node_CONSTANT.WRAPPER_EVENT_ADDELEMENT, path, operationData, requestInfo);
+						}
+					});
 				}
 				else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
 					
@@ -126,42 +138,6 @@ var node_createWraperData = function(){
 			getWrapperType : function(){	return node_CONSTANT.DATA_TYPE_APPDATA;		},
 			
 			
-
-			
-			
-			
-			
-			
-			
-			
-			
-/*			
-			getChildData : function(path){
-				var object = node_objectWrapperUtility.getObjectAttributeByPath(this.getValue(), path);
-				var data = node_dataUtility.createDataByObject(object);
-				return data;
-			},
-		
-			
-			
-			ovr_calValue : function(){
-				var baseValue = undefined;
-				if(this.pri_isDataBased()==false){
-					baseValue = this.pri_getParent().getValue();
-				}
-				else{
-					baseValue = this.pri_getRootData().value;			
-				}
-				this.pri_setValue(node_objectWrapperUtility.getObjectAttributeByPath(baseValue, this.pri_getPath()));
-				this.pri_validValue = true;
-			},
-			
-			getChildData : function(path){
-				var object = node_objectWrapperUtility.getObjectAttributeByPath(this.getValue(), path);
-				var data = node_dataUtility.createDataByObject(object);
-				return data;
-			}
-*/			
 	};
 	
 	return loc_out;

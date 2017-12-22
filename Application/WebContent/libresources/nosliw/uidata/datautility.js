@@ -15,6 +15,56 @@ var node_utility = function(){
 	
 	return {
 		
+		/**
+		 * compare two path
+		 * if path1 equals path2, then 0
+		 * if path1 contains path2, then 1
+		 * if path2 contains path1, then 2
+		 * otherwise, -1
+		 */
+		comparePath : function(path1, path2){
+			var compare = 0;
+			var result = "";
+			var p1 = node_basicUtility.emptyStringIfUndefined(path1)+"";
+			var p2 = node_basicUtility.emptyStringIfUndefined(path2)+"";
+			if(p1==p2){
+				compare = 0;
+				result = p1; 
+			}
+			else if(node_basicUtility.isStringEmpty(p1)){
+				compare = 2;
+				result = p2;
+			}
+			else if(node_basicUtility.isStringEmpty(p2)){
+				compare = 1;
+				result = p1;
+			}
+			else if(p1.startsWith(p2+".")){
+				compare = 1;
+				result = p1.substring((p2+".").length);
+			}
+			else if(p2.startsWith(p1+".")){
+				compare = 2;
+				result = p2.substring((p1+".").length);
+			}
+			else{
+				compare = -1;
+				result = undefined;
+			}
+			return {
+				compare : compare,
+				subPath : result
+			};
+		},
+		
+		combinePath : function(){
+			var out = "";
+			_.each(arguments, function(seg, index){
+				out = node_namingConvensionUtility.cascadePath(out, seg);
+			});
+			return out;
+		},
+		
 		createDataOfAppData : function(appData){
 			var out = node_createData(appData, node_CONSTANT.DATA_TYPE_APPDATA);
 			return out;

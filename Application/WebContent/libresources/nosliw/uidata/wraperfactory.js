@@ -31,28 +31,31 @@ var node_wrapperFactory = function(){
 		 * parent wrapper + path
 		 * data + path 
 		 */	
-		createWrapper : function(data, path, request){
-			if(data==undefined)   return undefined;
-			
+		createWrapper : function(parm1, path, request){
+			var wrapperParm1;
 			var dataType = undefined;
 			
-			var entityType = node_getObjectType(data);
+			var entityType = node_getObjectType(parm1);
 			if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
 				dataType = data.getDataType();
+				wrapperParm1 = parm1;
 			}
 			else if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_DATA){
 				dataType = data.dataTypeInfo;
+				wrapperParm1 = parm1.value;
 			}
 			else if(dataType==node_CONSTANT.TYPEDOBJECT_TYPE_VALUE){
 				dataType = node_CONSTANT.DATA_TYPE_OBJECT;
+				wrapperParm1 = parm1;
 			}
 			else{
 				dataType = node_CONSTANT.DATA_TYPE_OBJECT;
+				wrapperParm1 = parm1;
 			}
 			
 			var wrapper = loc_factoryFuns[dataType].call();
 			
-			var out = _.extend(node_createWraperCommon(data, path, request), wrapper);
+			var out = _.extend(node_createWraperCommon(wrapperParm1, path, request), wrapper);
 			
 			if(out.pri_isDataBased()){
 				nosliw.logging.debug("create wrapper", node_getObjectId(out), "dataBased", JSON.stringify(out.pri_getPath()), JSON.stringify(out.pri_getRootData()));

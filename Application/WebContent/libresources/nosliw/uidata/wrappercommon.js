@@ -20,96 +20,115 @@ var node_namingConvensionUtility;
 /**
  * 
  */
-var node_createWraperCommon = function(data, path, request){
+var node_createWraperCommon = function(parm1, path, typeHelper, dataType, request){
 	//sync task name for remote call 
 	var loc_moduleName = "wrapper";
 
-	/*
-	 * mark data as invalid so that it would be recalculated
-	 * also trigue event to inform that data need to be updated
-	 */
-	var loc_invalidateData = function(requestInfo){
-		loc_out.pri_validValue = false;
-		loc_out.pri_value = undefined;
-	};
-	
 	var loc_resourceLifecycleObj = {};
-	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(obj, path, request){
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(parm1, path, typeHelper, dataType, request){
+		//helper object that depend on data type in wraper
+		loc_out.pri_typeHelper = typeHelper;
+		
+		//what kind of data this wrapper represent
+		loc_out.pri_dataType = dataType;
 		
 		//if true, this wrapper is based on root data, otherwise, this wrapper is based on parent wrapper, 
 		loc_out.pri_dataBased = true;
-		//root data used when data based
-		loc_out.pri_rootData = undefined;
+
+		//root value used when data based
+		loc_out.pri_rootValue = undefined;
+		
 		//parent wrapper used when wraper based
 		loc_out.pri_parent = undefined;
+		
 		//the path from basis (data or wraper) to current data
-		loc_out.pri_path = node_basicUtility.emptyStringIfUndefined(path)+"";
+		//path is valid for both data based or wrapper based
+		loc_out.pri_path = path;
 		
 		//event and listener for data operation event
 		loc_out.pri_dataOperationEventObject = node_createEventObject();
 
-		//calculated: the value this wrapper represented
-		loc_out.pri_validValue = false;
-		loc_out.pri_value = undefined;
+		//a list of wrapper operations that should be applied to wrapper
+		//if this list is not empty, that means we only need to apply all operation, then get data
+		//in this case, isValidData is true
+		loc_out.pri_toBeDoneWrapperOperations = [];
+		
+		//whether the data need to calculated from parent
+		loc_out.pri_isValidData = false;
+		//calculated value, with this value, we don't need do operation from root value everytime
+		loc_out.pri_value = undefined
+		
+		//whether this wrapper is a container
+		loc_out.pri_isContainer = false;
+		//keep track of all children elements, so that it can be removed by container 
+		loc_out.pri_elements = {};
+		
 		
 		//whether data based or wrapper based
-		if(node_getObjectType(obj)==node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
+		if(node_getObjectType(parm1)==node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
 			//wrapper based
-			loc_out.pri_parent = obj;
+			loc_out.pri_parent = parm1;
 			loc_out.pri_dataBased = false;
+			loc_out.pri_dataType = loc_out.pri_parent.getDataType(); 
 		}
 		else{
 			//data based
-			loc_out.pri_rootData = node_dataUtility.createDataByObject(obj);
+			loc_out.pri_rootValue = parm1;
 			loc_out.pri_dataBased = true;
+			loc_out.pri_path = undefined;
 		}
 		
 		if(loc_out.pri_dataBased==false){
 			//if parent based, then listen to parent's event
-			loc_out.pri_parent.registerDataOperationListener(this.pri_dataOperationEventObject, function(event, path, opValue, requestInfo){
-				
+			loc_out.pri_parent.registerDataOperationListener(this.pri_dataOperationEventObject, function(event, eventData, requestInfo){
+
 				if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD){
 					//for forward event, expand it
-					event = opValue.event;
-					path = opValue.path;
-					opValue = opValue.operationValue;
+					event = eventData.event;
+					eventData = eventData.value;
 				}
 				
 				if(event==node_CONSTANT.WRAPPER_EVENT_CHANGE){
 					//for change event from parent, just make data invalid & forward the event, 
 					loc_invalidateData(requestInfo);
-					loc_out.pri_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, "", {}, requestInfo);
+					loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, {}, requestInfo);
 				}
 				else{
-					var k = -1;
-					if(loc_out.pri_path==path){
+					var pathCompare = node_dataUtility.comparePath(loc_out.pri_path, eventData.path);
+					if(pathCompare.compare == 0){
 						//event happens on this wrapper, trigue the same
 						//inform the change of wrapper
 						if(event==node_CONSTANT.WRAPPER_EVENT_DESTROY){
 							loc_out.destroy(requestInfo);
 						}
-						else{
-							loc_invalidateData(requestInfo);
-							loc_out.pri_trigueDataOperationEvent(event, "", opValue, requestInfo);
+						else if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT || event==node_CONSTANT.WRAPPER_EVENT_DELETEELEMENT){
+							//store data operation event
+							loc_addToBeDoneDataOperation(eventData);
+							//inform outside about change
+							loc_trigueDataOperationEvent(event, eventData, requestInfo);
+						}
+						else if(event==node_CONSTANT.WRAPPER_EVENT_SET){
+							loc_setValue(eventData.value);
+							loc_trigueDataOperationEvent(event, eventData, requestInfo);
 						}
 					}
-					else if(loc_out.pri_path.startsWith(path+".") || node_basicUtility.isStringEmpty(path)){
+					else if(pathCompare.compare == 1){
 						//something happens in the middle between parent and this
-						if(event==node_CONSTANT.WRAPPER_EVENT_SET){
-							loc_invalidateData(requestInfo);
-							loc_out.pri_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, "", {}, requestInfo);
-						}
-						else if(event==node_CONSTANT.WRAPPER_EVENT_DESTROY){
+						if(event==node_CONSTANT.WRAPPER_EVENT_DESTROY){
 							loc_out.destroy(requestInfo);
 						}
+						else if(event==node_CONSTANT.WRAPPER_EVENT_SET){
+							loc_invalidateData(requestInfo);
+							loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, {}, requestInfo);
+						}
 					}
-					else if(path.startsWith(loc_out.pri_path+".")){
-						//something happens beyond this, just forward the event with rest path, only set event
-						loc_out.pri_triggerForwardEvent(event, path.substring(loc_out.pri_path.length+1), opValue, requestInfo);
-					}
-					else if(node_basicUtility.isStringEmpty(loc_out.pri_path)){
-						//something happens beyond this, just forward the event with rest path, only set event
-						loc_out.pri_triggerForwardEvent(event, path, opValue, requestInfo);
+					else if(pathCompare.compare == 2){
+						//something happens beyond this, just forward the event with sub path, only set event
+						//store the change
+						loc_addToBeDoneDataOperation(eventData);
+						eventData = eventData.clone();
+						eventData.path = pathCompare.subPath;
+						loc_triggerForwardEvent(event, eventData, requestInfo);
 					}
 					else{
 						//not on right path, do nothing
@@ -123,7 +142,7 @@ var node_createWraperCommon = function(data, path, request){
 		//for delete event, it means itself and all children should be destroy
 		loc_invalidateData();
 		//forward the event
-		loc_out.pri_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_DESTROY, "", {}, requestInfo);
+		loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_DESTROY, "", {}, requestInfo);
 		//clear up event source
 		loc_out.pri_dataOperationEventObject.clearup();
 		
@@ -132,25 +151,219 @@ var node_createWraperCommon = function(data, path, request){
 		loc_out.pri_path = undefined;
 	};
 	
+	//data operation request
+	var loc_getDataOperationRequest = function(operationService, handlers, requester_parent){
+		
+		var command = operationService.command;
+		var dataOperation = operationService.parms;
+		var path = dataOperation.path;
+		
+		var rootValue = this.getRootData().value;
+		var fullPath = node_namingConvensionUtility.cascadePath(this.getFullPath(), path);
+
+		var out;
+
+		if(loc_out.pri_dataBased==true){
+			//root data
+			if(command==node_CONSTANT.WRAPPER_OPERATION_GET){
+				out = node_createServiceRequestInfoSimple(operationService, function(){return loc_getData();}, handlers, requester_parent);
+			}
+			else{
+				out = loc_getDataOperationOnRootValue(operationService.clone(), handlers, requester_parent); 
+			}
+		}
+		else{
+			if(command==node_CONSTANT.WRAPPER_OPERATION_GET){
+				if(loc_out.loc_out.pri_isValidData==false){
+					//calculate data
+					out = node_createServiceRequestInfoSequence(service, handlers, requester_parent);
+					//get parent data first
+					var calParentDataRequest = loc_out.pri_parent.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
+						success : function(request, data){
+							//calculate current value
+							return loc_out.pri_typeHelper.getChildValueRequest(data.value, loc_out.pri_path, {
+								success : function(requestInfo, value){
+									//set local value
+									loc_setValue(value);
+									return loc_getData();
+								}
+							});
+						}
+					});
+					out.addRequest(calParentDataRequest);
+				}
+				else{
+					if(loc_out.pri_toBeDoneWrapperOperations.length>0){
+						//calculate current value 
+						out = node_createServiceRequestInfoSequence(operationService, {
+							success : function(request, data){
+								return loc_getData();
+							}
+						}, requester_parent);
+						out.addRequest(loc_getProcessToBeDoneValueOperationRequest(0, loc_out.pri_value, {
+							success : function(requestInfo, value){
+								//set local value
+								loc_setValue(value);
+								return loc_getData();
+							}
+						}));
+					}
+					else{
+						out = node_createServiceRequestInfoSimple(operationService, function(){return loc_getData();}, handlers, requester_parent);
+					}
+				}
+			}
+			else{
+				//other operation
+				out = loc_out.pri_getWrapperOperationRequest(operationService, handlers, requester_parent);
+			}
+		}
+	};
+	
+	var loc_getDataOperationOnRootValue = function(dataOperationService, handlers, request){
+		var out = loc_out.pri_typeHelper.getDataOperationRequest(loc_out.pri_rootValue, dataOperationService.clone(), handlers, requester_parent);
+		out.addPostProcessor({
+			success : function(requestInfo, data){
+				//trigue event
+				if(path==undefined)  path="";
+				loc_triggerEventByDataOperation(node_CONSTANT.WRAPPER_EVENT_ADDELEMENT, operationData, requestInfo);
+			}
+		});
+		return out;
+	}
+	
+	var loc_getProcessToBeDoneValueOperationRequest = function(i, value, handlers, request){
+		out = loc_out.pri_typeHelper.getDataOperationRequest(value, loc_out.pri_pri_toBeDoneWrapperOperations[i], {
+			success : function(requestInfo, value){
+				i++;
+				if(i<loc_out.pri_pri_toBeDoneWrapperOperations.length){
+					return loc_getProcessToBeDoneValueOperationRequest(i, value);
+				}
+				else{
+					return value;
+				}
+			}
+		}, requester_parent);
+		
+		return out;
+	};
+	
+	var loc_setValue = function(value){
+		//make value invalid first
+		loc_invalidateData();
+		//then stroe value
+		loc_out.pri_isValidData = true;
+		loc_out.pri_value = value;
+	
+	}
+	
+	//add to be done operation
+	//it only when data is valid
+	//if data is not valid, data should be recalculated
+	var loc_addToBeDoneDataOperation = function(dataOperation){
+		if(loc_out.pri_isValidData==true){
+			loc_out.pri_toBeDoneWrapperOperations.push(dataOperation);
+		}
+	};
+	
+	/*
+	 * mark data as invalid so that it would be recalculated
+	 */
+	var loc_invalidateData = function(requestInfo){
+		loc_out.pri_isValidData = false;
+		loc_out.pri_value = undefined;
+		loc_out.pri_toBeDoneWrapperOperations = [];
+
+		//for container, destroy all elements
+		if(loc_out.pri_isContainer==true){
+			_.each(loc_out.pri_elements, function(ele, name){
+				ele.destroy(requestInfo);
+			});
+			loc_out.pri_elements = {};
+			loc_out.pri_isContainer = false;
+		}
+	};
+	
+	var loc_trigueDataOperationEvent = function(event, path, operationValue, requestInfo){
+		loc_out.pri_dataOperationEventObject.triggerEvent(event, path, operationValue, requestInfo);
+	};
+	
+	var loc_triggerForwardEvent = function(event, eventData, requestInfo){
+		var eData = {
+				event : event, 
+				value : eventData 
+		};
+		this.pri_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_FORWARD, eData, requestInfo);
+	};
+	
+	var loc_getData = function(){
+		var value;
+		if(loc_out.pri_dataBased==true)		value = loc_out.pri_rootValue;
+		else	value = loc_out.pri_value;
+		return loc_makeDataFromValue(value);
+	}
+	
+	var loc_makeDataFromValue = function(value){    
+		node_dataUtility.createDataByObject(value, loc_out.pri_dataType);
+	};
+
+	var loc_triggerEventByDataOperation = function(command, dataOperation, requestInfo){
+		var event;
+		var eventData = dataOperation;
+		switch(command){
+		case node_CONSTANT.WRAPPER_OPERATION_SET:
+			event = node_CONSTANT.WRAPPER_EVENT_SET;
+			break;
+		case node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT:
+			event = node_CONSTANT.WRAPPER_EVENT_ADDELEMENT;
+			break;
+		case node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT:
+			event = node_CONSTANT.WRAPPER_EVENT_DESTROY;
+			var path = node_dataUtility.combinePath(dataOperationService.parms.path, dataOperationService.parms.index);
+			eventData = node_uiDataOperationServiceUtility.createDestroyOperationData(path); 
+			break;
+		case node_CONSTANT.WRAPPER_OPERATION_DESTROY:
+			event = node_CONSTANT.WRAPPER_EVENT_DESTROY;
+			break;
+		}
+		this.pri_dataOperationEventObject.triggerEvent(event, eventData, requestInfo);
+	};
+
+	var loc_getOperationObject = function(obj){
+		var opObject = obj;
+		if(node_getObjectType(obj)==node_CONSTANT.TYPEDOBJECT_TYPE_DATA){
+			if(obj.dataTypeInfo==node_CONSTANT.DATA_TYPE_OBJECT){
+				//if operation data is object, then use value
+				opObject = obj.value;
+			}
+		}
+		return opObject;
+	};
+
 	
 	var loc_out = {
+			
+			pri_getWrapperOperationRequest : function(dataOperationService, handlers, requester_parent){
+				var out;
+				if(loc_out.pri_dataBased==true){
+					out = loc_getDataOperationOnRootValue(operationService.clone(), handlers, requester_parent); 
+				}
+				else{
+					var parentDataOperationService = dataOperationService.clone();
+					parentDataOperationService.parms.path = node_dataUtility.combinePath(loc_out.pri_path, parentDataOperationService.parms.path);
+					out = loc_out.pri_parent.pri_getWrapperOperationRequest();
+				}
+				return out;
+			},
+			
 			pri_getPath : function(){  return this.pri_path;  },
 			pri_getParent : function(){  return this.pri_parent; },
 			pri_getRootData : function(){  return this.pri_rootData; },
 			pri_isDataBased : function(){  return this.pri_dataBased; },
 			pri_setValue : function(value){ this.pri_value = value;},
-			pri_triggerForwardEvent : function(event, path, opValue, requestInfo){
-				var eData = {
-						event : event, 
-						path : path, 
-						operationValue : opValue,
-				};
-				this.pri_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_FORWARD, "", eData, requestInfo);
-			},
 			
 			pri_invalidateData : function(requestInfo){loc_invalidateData(requestInfo);},
 			
-			pri_trigueDataOperationEvent : function(event, path, operationValue, requestInfo){this.pri_dataOperationEventObject.triggerEvent(event, path, operationValue, requestInfo);},
 
 			ovr_calValue : function(){},
 			
@@ -205,6 +418,11 @@ var node_createWraperCommon = function(data, path, request){
 			getChildData : function(path){},
 			requestDataOperation : function(service, request){},
 			handleEachElement : function(handler, thatContext){	},
+			
+			prv_getDataByPrentRequest : function(parentData){},
+			prv_getDataOperationRequest : function(operationData){},
+			
+			getDataOperationSetRequest : function(dataOperation){},
 	};
 	
 	//append resource life cycle method to out obj
@@ -214,7 +432,7 @@ var node_createWraperCommon = function(data, path, request){
 	
 	loc_out = node_makeObjectWithId(loc_out, nosliw.generateId());
 	
-	node_getLifecycleInterface(loc_out).init(data, path, request);
+	node_getLifecycleInterface(loc_out).init(parm1, path, typeHelper, dataType, request);
 	
 	return loc_out;
 };

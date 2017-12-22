@@ -62,6 +62,8 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			pri_status : node_CONSTANT.REQUEST_STATUS_INIT,
 			//request process result
 			pri_result : undefined,
+			//request process input, it is for runtime input which cannot be determined during request creation 
+			pri_input : undefined,
 			//event object
 			pri_eventObject : node_createEventObject(),
 		};
@@ -348,6 +350,9 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			
 			getResult : function(){  return this.pri_metaData.pri_result; },
 			setResult : function(result){  this.pri_metaData.pri_result = result; },
+
+			getInput : function(){  return this.pri_metaData.pri_input; },
+			setInput : function(input){  this.pri_metaData.pri_input = input; },
 			
 			registerEventListener : function(listener, handler, thisContext){
 				node_eventUtility.registerListener(listener, this.pri_metaData.pri_eventObject, undefined, handler, thisContext)

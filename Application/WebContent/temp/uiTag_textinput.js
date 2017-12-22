@@ -3,7 +3,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"textinput",
 "type":"uiTag"
 },
 "children":[],
-"dependency":{"op1":{"id":"base.integer;1.0.0;add",
+"dependency":{"op1":{"id":"test.integer;1.0.0;add",
 "type":"operation"
 }
 },

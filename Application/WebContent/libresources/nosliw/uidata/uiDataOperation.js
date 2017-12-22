@@ -72,36 +72,95 @@ var node_UIDataOperation = function(target, operationService){
 
 
 //utility method to build data operation service
-var node_uiDataOperationServiceUtility = {
-	createSetOperationService : function(path, data){
-		return new node_ServiceInfo(node_CONSTANT.WRAPPER_OPERATION_SET, {
-			path : path,
-			data : data
-		});
-	},
-	
-	createAddElementOperationService : function(path, index, data){
-		return new node_ServiceInfo(node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT, {
-			path : path,
-			index : index, 
-			data : data
-		});
-	},
-	
-	createDeleteElementOperationService : function(path, index){
-		return new node_ServiceInfo(node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, {
-			path : path,
-			index : index 
-		});
-	},
+var node_uiDataOperationServiceUtility = function(){
 
-	createGetOperationService : function(path){
-		return new node_ServiceInfo(node_CONSTANT.WRAPPER_OPERATION_GET, {
-			path : path
-		});
-	}
+	var loc_createServiceInfo = function(command, parms){
+		var out = new node_ServiceInfo(command, parms);
+		out.clone = function(){
+			return loc_createServiceInfo(out.command, out.parms.clone());
+		}
+		return out;
+	};
 	
-};
+	var loc_out = {
+			createSetOperationData : function(path, value){
+				var that = this;
+				return {
+					path : path,
+					value : value,
+					clone : function(){
+						return that.createSetOperationData(this.path, this.value);
+					}
+				};
+			},
+			
+			createSetOperationService : function(path, value){
+				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_SET, this.createSetOperationData(path, value));
+			},
+
+			createAddElementOperationData : function(path, index, value){
+				var that = this;
+				return {
+					path : path,
+					index : index,
+					value : value,
+					clone : function(){
+						return that.createAddElementOperationData(this.path, this.index, this.value);
+					}
+				};
+			},
+
+			createAddElementOperationService : function(path, index, value){
+				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT, this.createAddElementOperationData(path, index, value));
+			},
+
+			createDeleteElementOperationData : function(path, index){
+				var that = this;
+				return {
+					path : path,
+					index : index,
+					clone : function(){
+						return that.createDeleteElementOperationData(this.path, this.index);
+					}
+				};
+			},
+			
+			createDeleteElementOperationService : function(path, index){
+				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, this.createDeleteElementOperationData(path, index));
+			},
+
+			createGetOperationData : function(path){
+				var that = this;
+				return {
+					path : path,
+					clone : function(){
+						return that.createGetOperationData(this.path);
+					}
+				};
+			},
+			
+			createGetOperationService : function(path){
+				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_GET, this.createGetOperationData(path));
+			},
+			
+			createDestroyOperationData : function(path){
+				var that = this;
+				return {
+					path : path,
+					clone : function(){
+						return that.createDestroyOperationData(this.path);
+					}
+				};
+			},
+			
+			createDestroyOperationService : function(path){
+				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_DESTROY, this.createDestroyOperationData(path));
+			}
+	};
+		
+	
+	return loc_out;
+}();
 
 
 //*******************************************   End Node Definition  ************************************** 	

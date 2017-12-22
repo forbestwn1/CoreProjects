@@ -19,103 +19,126 @@ var node_createServiceRequestInfoSimple;
 //*******************************************   Start Node Definition  ************************************** 	
 var node_createWraperObject = function(){
 	
-	var loc_getOperationObject = function(obj){
-		var opObject = obj;
-		if(node_getObjectType(obj)==node_CONSTANT.TYPEDOBJECT_TYPE_DATA){
-			if(obj.dataTypeInfo==node_CONSTANT.DATA_TYPE_OBJECT){
-				//if operation data is object, then use value
-				opObject = obj.value;
+	/*
+	 * get attribute value according to the path
+	 */
+	var loc_getObjectAttributeByPath = function(obj, prop) {
+		if(obj==undefined)  return;
+		if(prop==undefined || prop=='')  return obj;
+		
+	    var parts = prop.split('.'),
+	        last = parts.pop(),
+	        l = parts.length,
+	        i = 1,
+	        current = parts[0];
+
+	    if(current==undefined)  return obj[last];
+	    
+	    while((obj = obj[current]) && i < l) {
+	        current = parts[i];
+	        i++;
+	    }
+
+	    if(obj) {
+	        return obj[last];
+	    }
+	};
+
+	/*
+	 * do operation on object
+	 * 		obj : root object
+	 * 		prop : path from root object
+	 * 		command : what to do
+	 * 		data : data for command
+	 */
+	var loc_operateObject = function(obj, prop, command, data){
+		var baseObj = obj;
+		var attribute = prop;
+		
+		if(node_basicUtility.isStringEmpty(prop)){
+			baseObj = obj;
+		}
+		else if(prop.indexOf('.')==-1){
+			baseObj = obj;
+			attribute = prop;
+		}
+		else{
+			var segs = node_parseSegment(prop);
+			var size = segs.getSegmentSize();
+			for(var i=0; i<size-1; i++){
+				var attr = segs.next();
+				var obj = baseObj[attr];
+				if(obj==undefined){
+					obj = {};
+					baseObj[attr] = obj; 
+				}
+				baseObj = obj;
+			}
+			attribute = segs.next();
+		}
+		
+		if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
+			baseObj[attribute] = data;
+		}
+		else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
+			//if container does not exist, then create a map
+			if(baseObj[attribute]==undefined)  baseObj[attribute] = {};
+			if(data.index!=undefined){
+				baseObj[attribute][data.index]=data.data;
+			}
+			else{
+				//if index is not specified, for array, just append it
+				if(_.isArray(baseObj[attribute])){
+					baseObj[attribute].push(data.data);
+				}
 			}
 		}
-		return opObject;
+		else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
+			delete baseObj[attribute][data];
+		}			
 	};
 	
 	var loc_out = {		
-			/*
-			 * 
-			 */
-			pri_triggerOperationEvent : function(event, path, opValue, request){
-				var rootWrapper = this.getRootWrapper();
-				var rootPath = rootWrapper.getPath();
-				if(rootPath==undefined)  rootPath = "";
-				var fullPath = node_namingConvensionUtility.cascadePath(this.getFullPath(), path);
-				if(rootPath==fullPath){
-					//on root wrapper
-					rootWrapper.pri_trigueDataOperationEvent(event, fullPath, opValue, request);
-				}
-				else{
-					//on child
-					if(rootPath=="")  rootWrapper.pri_triggerForwardEvent(event, fullPath, opValue, request);
-					else rootWrapper.pri_triggerForwardEvent(event, fullPath.substring(rootPath.length+1), opValue, request);
-				}
-			},
 
-			/*
-			 * calculate current object
-			 */
-			ovr_calValue : function(){
-				var baseValue = undefined;
-				if(this.pri_isDataBased()==false){
-					baseValue = this.pri_getParent().getValue();
-				}
-				else{
-					baseValue = this.pri_getRootData().value;			
-				}
-				this.pri_setValue(node_objectWrapperUtility.getObjectAttributeByPath(baseValue, this.pri_getPath()));
-				this.pri_validValue = true;
+			//get child value by path
+			getChildValueRequest : function(parentValue, path, handler, requester_parent){
+				var that = this;
+				return node_createServiceRequestInfoSimple(loc_createServiceInfo("GetChildValueFromObjectValue", {"parent":parentValue, "path":path}), function(requestInfo){
+					return loc_getObjectAttributeByPath(this.getValue(), path);
+				}, handlers, requester_parent);
 			},
 			
-			getChildData : function(path){
-				var object = node_objectWrapperUtility.getObjectAttributeByPath(this.getValue(), path);
-				var data = node_dataUtility.createDataByObject(object);
-				return data;
-			},
-			
-			requestDataOperation : function(service, request){
-				var command = service.command;
-				var serviceData = service.parms;
-				var path = serviceData.path;
+			getDataOperationRequest : function(baseValue, dataOperationService, handler, requester_parent){
+				var that = this;
+				return node_createServiceRequestInfoSimple(loc_createServiceInfo("GetDataOperationFromObjectValue", {"baseValue":baseValue, "dataOperation":dataOperation}), function(requestInfo){
+					var command = dataOperationService.command;
+					var dataOperation = dataOperationService.parms;
+					var out = baseValue;
+					if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
+						var opValue = loc_getOperationObject(serviceData.data);
+						//change value
+						if(_.isObject(rootValue)){
+							node_objectWrapperUtility.operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_SET, dataOperation.value);
+						}
+						else{
+							out = dataOperation.value;
+						}
+					}
+					else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
+						var operationData = {
+								data : dataOperation.path,
+								index : dataOperation.index,
+							};
+						loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT, operationData);
+					}
+					else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
+						loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, dataOperation.index);
+					}
 				
-				var rootValue = this.getRootData().value;
-				var fullPath = node_namingConvensionUtility.cascadePath(this.getFullPath(), path);
-
-				var opPath = fullPath;   //node_namingConvensionUtility.cascadePath("value", fullPath);
-				if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
-					var opValue = loc_getOperationObject(serviceData.data);
-					//change value
-					if(_.isObject(rootValue)){
-						node_objectWrapperUtility.operateObject(rootValue, opPath, node_CONSTANT.WRAPPER_OPERATION_SET, opValue);
-					}
-					else{
-						this.getRootData().value = opValue;
-						this.getRootWrapper().pri_invalidateData(request);
-					}
-					//trigue event
-					this.pri_triggerOperationEvent(node_CONSTANT.WRAPPER_EVENT_SET, path, opValue, request);
-				}
-				else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
-					var opValue = loc_getOperationObject(serviceData.data);
-					var index = serviceData.index;
-					var operationData = {
-						data : opValue,
-						index : index,
-					};
-					node_objectWrapperUtility.operateObject(rootValue, opPath, node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT, operationData);
-					//trigue event
-					if(path==undefined)  path="";
-					this.pri_triggerOperationEvent(node_CONSTANT.WRAPPER_EVENT_ADDELEMENT, path, operationData, request);
-				}
-				else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
-					var index = serviceData.index; 
-					node_objectWrapperUtility.operateObject(rootValue, opPath, node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, index);
-					//trigue event
-					this.pri_triggerOperationEvent(node_CONSTANT.WRAPPER_EVENT_DESTROY, node_namingConvensionUtility.cascadePath(path, index), {}, request);
-				}
-				else if(command==node_CONSTANT.WRAPPER_OPERATION_GET){
-					return this.getChildData(path);
-				}
+				}, handlers, requester_parent);
 			},
-
+			
+			
 			handleEachElement : function(handler, thatContext){	
 				var containerData = this.getData();
 				_.each(containerData.value, function(data, key, list){
@@ -125,13 +148,7 @@ var node_createWraperObject = function(){
 			},
 			
 			getWrapperType : function(){	return node_CONSTANT.DATA_TYPE_OBJECT;		},
-			
-			getDataOperationRequest : function(operationService, handlers, requester_parent){
-				var that = this;
-				return node_createServiceRequestInfoSimple(operationService, function(requestInfo){
-					return that.requestDataOperation(operationService, requestInfo);
-				}, handlers, requester_parent);
-			}
+	
 	};
 	
 	return loc_out;

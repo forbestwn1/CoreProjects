@@ -62,7 +62,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 	 * process request in sequence according to its index
 	 * data : return value from previous request
 	 */
-	var loc_processNextRequestInSequence = function(data){
+	var loc_processNextRequestInSequence = function(previousRequest, data){
 		
 		if(_.isFunction(data)){
 			data = data.call(loc_out, loc_out);
@@ -102,11 +102,14 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 			var requestInfo = loc_out.pri_requestInfos[loc_out.pri_cursor];
 
 			requestInfo.setParentRequest(loc_out);
-
+			
+			//pass the result from previous request to input of current request
+			requestInfo.setInput(previousRequest.getResult());
+			
 			requestInfo.addPostProcessor({
 				success : function(requestInfo, out){
 					loc_out.pri_cursor++;
-					loc_processNextRequestInSequence(out);
+					loc_processNextRequestInSequence(requestInfo, out);
 				},
 				error : function(requestInfo, serviceData){
 					loc_out.executeErrorHandler(serviceData, loc_out);
@@ -125,7 +128,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 		//retrieve start handler out
 		var startHandlerOut = loc_out.getData(loc_startOutDataName);
 		//start process first request
-		loc_processNextRequestInSequence(startHandlerOut);
+		loc_processNextRequestInSequence(undefined, startHandlerOut);
 	};
 	
 	var loc_out = {
