@@ -105,11 +105,15 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 						}
 						else if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT || event==node_CONSTANT.WRAPPER_EVENT_DELETEELEMENT){
 							//store data operation event
+							eventData = eventData.clone();
+							eventData.path = "";
 							loc_addToBeDoneDataOperation(eventData);
 							//inform outside about change
 							loc_trigueDataOperationEvent(event, eventData, requestInfo);
 						}
 						else if(event==node_CONSTANT.WRAPPER_EVENT_SET){
+							eventData = eventData.clone();
+							eventData.path = "";
 							loc_setValue(eventData.value);
 							loc_trigueDataOperationEvent(event, eventData, requestInfo);
 						}
@@ -144,7 +148,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		//for delete event, it means itself and all children should be destroy
 		loc_invalidateData();
 		//forward the event
-		loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_DESTROY, "", {}, requestInfo);
+		loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_DESTROY, {}, requestInfo);
 		//clear up event source
 		loc_out.pri_dataOperationEventObject.clearup();
 		
@@ -225,8 +229,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		out.addPostProcessor({
 			success : function(requestInfo, data){
 				//trigue event
-				if(path==undefined)  path="";
-				loc_triggerEventByDataOperation(node_CONSTANT.WRAPPER_EVENT_ADDELEMENT, dataOperationService.parms, requestInfo);
+				loc_triggerEventByDataOperation(dataOperationService.command, dataOperationService.parms, requestInfo);
 			}
 		});
 		return out;
@@ -284,18 +287,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		}
 	};
 	
-	var loc_trigueDataOperationEvent = function(event, path, operationValue, requestInfo){
-		loc_out.pri_dataOperationEventObject.triggerEvent(event, path, operationValue, requestInfo);
-	};
-	
-	var loc_triggerForwardEvent = function(event, eventData, requestInfo){
-		var eData = {
-				event : event, 
-				value : eventData 
-		};
-		loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_FORWARD, eData, requestInfo);
-	};
-	
 	var loc_getData = function(){
 		var value;
 		if(loc_out.pri_dataBased==true)		value = loc_out.pri_rootValue;
@@ -307,6 +298,18 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		return node_dataUtility.createDataByObject(value, loc_out.pri_dataType);
 	};
 
+	var loc_trigueDataOperationEvent = function(event, eventData, requestInfo){
+		loc_out.pri_dataOperationEventObject.triggerEvent(event, eventData, requestInfo);
+	};
+	
+	var loc_triggerForwardEvent = function(event, eventData, requestInfo){
+		var eData = {
+				event : event, 
+				value : eventData 
+		};
+		loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_FORWARD, eData, requestInfo);
+	};
+	
 	var loc_triggerEventByDataOperation = function(command, dataOperation, requestInfo){
 		var event;
 		var eventData = dataOperation;
@@ -326,7 +329,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			event = node_CONSTANT.WRAPPER_EVENT_DESTROY;
 			break;
 		}
-		loc_out.pri_dataOperationEventObject.triggerEvent(event, eventData, requestInfo);
+		loc_trigueDataOperationEvent(event, eventData, requestInfo);
 	};
 
 	var loc_getOperationObject = function(obj){
