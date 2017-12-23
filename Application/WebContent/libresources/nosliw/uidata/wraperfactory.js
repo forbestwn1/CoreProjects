@@ -37,11 +37,11 @@ var node_wrapperFactory = function(){
 			
 			var entityType = node_getObjectType(parm1);
 			if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
-				dataType = data.getDataType();
+				dataType = parm1.getDataType();
 				wrapperParm1 = parm1;
 			}
 			else if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_DATA){
-				dataType = data.dataTypeInfo;
+				dataType = parm1.dataTypeInfo;
 				wrapperParm1 = parm1.value;
 			}
 			else if(dataType==node_CONSTANT.TYPEDOBJECT_TYPE_VALUE){
@@ -53,26 +53,24 @@ var node_wrapperFactory = function(){
 				wrapperParm1 = parm1;
 			}
 			
-			var wrapper = loc_factoryFuns[dataType].call();
+			var out = node_createWraperCommon(wrapperParm1, path, loc_factoryFuns[dataType].call(), dataType, request);
 			
-			var out = _.extend(node_createWraperCommon(wrapperParm1, path, request), wrapper);
+//			if(out.pri_isDataBased()){
+//				nosliw.logging.debug("create wrapper", node_getObjectId(out), "dataBased", JSON.stringify(out.pri_getPath()), JSON.stringify(out.pri_getRootData()));
+//			}
+//			else{
+//				nosliw.logging.debug("create wrapper", node_getObjectId(out), "parentBased", out.pri_getPath(), node_getObjectId(out.pri_getParent()));
+//			}
 			
-			if(out.pri_isDataBased()){
-				nosliw.logging.debug("create wrapper", node_getObjectId(out), "dataBased", JSON.stringify(out.pri_getPath()), JSON.stringify(out.pri_getRootData()));
-			}
-			else{
-				nosliw.logging.debug("create wrapper", node_getObjectId(out), "parentBased", out.pri_getPath(), node_getObjectId(out.pri_getParent()));
-			}
-			
-			out.registerDataOperationListener(undefined, function(eventName, data){
-				nosliw.logging.info("---------------------  Wrapper data change event  ----------------");
-				nosliw.logging.info("Path : " + out.getPath());
-				nosliw.logging.info("FullPath : " + out.getFullPath());
-				nosliw.logging.info("EventName : " + eventName);
-				nosliw.logging.info("Data : " + JSON.stringify(data));
-				nosliw.logging.info("---------------------    ----------------");
-				
-			}, out);
+//			out.registerDataOperationListener(undefined, function(eventName, data){
+//				nosliw.logging.info("---------------------  Wrapper data change event  ----------------");
+//				nosliw.logging.info("Path : " + out.pri_path);
+//				nosliw.logging.info("FullPath : " + out.getFullPath());
+//				nosliw.logging.info("EventName : " + eventName);
+//				nosliw.logging.info("Data : " + JSON.stringify(data));
+//				nosliw.logging.info("---------------------    ----------------");
+//				
+//			}, out);
 			
 			
 			return out;

@@ -104,7 +104,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 			requestInfo.setParentRequest(loc_out);
 			
 			//pass the result from previous request to input of current request
-			requestInfo.setInput(previousRequest.getResult());
+			if(previousRequest!=undefined)		requestInfo.setInput(previousRequest.getResult());
 			
 			requestInfo.addPostProcessor({
 				success : function(requestInfo, out){

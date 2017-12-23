@@ -14,7 +14,9 @@ var node_basicUtility;
 var node_dataUtility;
 var node_wrapperFactory;
 var node_namingConvensionUtility;
-
+var node_createServiceRequestInfoSequence;
+var node_uiDataOperationServiceUtility;
+var node_createServiceRequestInfoSimple;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 /**
@@ -158,9 +160,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		var dataOperation = operationService.parms;
 		var path = dataOperation.path;
 		
-		var rootValue = this.getRootData().value;
-		var fullPath = node_namingConvensionUtility.cascadePath(this.getFullPath(), path);
-
 		var out;
 
 		if(loc_out.pri_dataBased==true){
@@ -174,9 +173,9 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		}
 		else{
 			if(command==node_CONSTANT.WRAPPER_OPERATION_GET){
-				if(loc_out.loc_out.pri_isValidData==false){
+				if(loc_out.pri_isValidData==false){
 					//calculate data
-					out = node_createServiceRequestInfoSequence(service, handlers, requester_parent);
+					out = node_createServiceRequestInfoSequence(operationService, handlers, requester_parent);
 					//get parent data first
 					var calParentDataRequest = loc_out.pri_parent.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
 						success : function(request, data){
@@ -218,32 +217,33 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 				out = loc_out.pri_getWrapperOperationRequest(operationService, handlers, requester_parent);
 			}
 		}
+		return out;
 	};
 	
 	var loc_getDataOperationOnRootValue = function(dataOperationService, handlers, request){
-		var out = loc_out.pri_typeHelper.getDataOperationRequest(loc_out.pri_rootValue, dataOperationService.clone(), handlers, requester_parent);
+		var out = loc_out.pri_typeHelper.getDataOperationRequest(loc_out.pri_rootValue, dataOperationService.clone(), handlers, request);
 		out.addPostProcessor({
 			success : function(requestInfo, data){
 				//trigue event
 				if(path==undefined)  path="";
-				loc_triggerEventByDataOperation(node_CONSTANT.WRAPPER_EVENT_ADDELEMENT, operationData, requestInfo);
+				loc_triggerEventByDataOperation(node_CONSTANT.WRAPPER_EVENT_ADDELEMENT, dataOperationService.parms, requestInfo);
 			}
 		});
 		return out;
 	}
 	
 	var loc_getProcessToBeDoneValueOperationRequest = function(i, value, handlers, request){
-		out = loc_out.pri_typeHelper.getDataOperationRequest(value, loc_out.pri_pri_toBeDoneWrapperOperations[i], {
+		var out = loc_out.pri_typeHelper.getDataOperationRequest(value, loc_out.pri_toBeDoneWrapperOperations[i], {
 			success : function(requestInfo, value){
 				i++;
-				if(i<loc_out.pri_pri_toBeDoneWrapperOperations.length){
+				if(i<loc_out.pri_toBeDoneWrapperOperations.length){
 					return loc_getProcessToBeDoneValueOperationRequest(i, value);
 				}
 				else{
 					return value;
 				}
 			}
-		}, requester_parent);
+		}, request);
 		
 		return out;
 	};
@@ -293,7 +293,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 				event : event, 
 				value : eventData 
 		};
-		this.pri_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_FORWARD, eData, requestInfo);
+		loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_FORWARD, eData, requestInfo);
 	};
 	
 	var loc_getData = function(){
@@ -304,7 +304,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 	}
 	
 	var loc_makeDataFromValue = function(value){    
-		node_dataUtility.createDataByObject(value, loc_out.pri_dataType);
+		return node_dataUtility.createDataByObject(value, loc_out.pri_dataType);
 	};
 
 	var loc_triggerEventByDataOperation = function(command, dataOperation, requestInfo){
@@ -326,7 +326,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			event = node_CONSTANT.WRAPPER_EVENT_DESTROY;
 			break;
 		}
-		this.pri_dataOperationEventObject.triggerEvent(event, eventData, requestInfo);
+		loc_out.pri_dataOperationEventObject.triggerEvent(event, eventData, requestInfo);
 	};
 
 	var loc_getOperationObject = function(obj){
@@ -346,59 +346,30 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			pri_getWrapperOperationRequest : function(dataOperationService, handlers, requester_parent){
 				var out;
 				if(loc_out.pri_dataBased==true){
-					out = loc_getDataOperationOnRootValue(operationService.clone(), handlers, requester_parent); 
+					out = loc_getDataOperationOnRootValue(dataOperationService.clone(), handlers, requester_parent); 
 				}
 				else{
 					var parentDataOperationService = dataOperationService.clone();
 					parentDataOperationService.parms.path = node_dataUtility.combinePath(loc_out.pri_path, parentDataOperationService.parms.path);
-					out = loc_out.pri_parent.pri_getWrapperOperationRequest();
+					out = loc_out.pri_parent.pri_getWrapperOperationRequest(parentDataOperationService);
 				}
 				return out;
 			},
 			
-			pri_getPath : function(){  return this.pri_path;  },
-			pri_getParent : function(){  return this.pri_parent; },
-			pri_getRootData : function(){  return this.pri_rootData; },
-			pri_isDataBased : function(){  return this.pri_dataBased; },
-			pri_setValue : function(value){ this.pri_value = value;},
+			getDataType : function(){  return this.pri_dataType;   },
 			
-			pri_invalidateData : function(requestInfo){loc_invalidateData(requestInfo);},
-			
-
-			ovr_calValue : function(){},
-			
-			isDataBased : function(){  return this.pri_dataBased; },
-			
-			getPath : function(){ return this.pri_path;  },
-			
-			getData : function(){
-				var value = this.getValue();
-				return node_dataUtility.createDataByValue(value);
+			getDataOperationRequest : function(operationService, handlers, requester_parent){
+				return loc_getDataOperationRequest(operationService, handlers, requester_parent);
 			},
 			
-			getValue : function(){
-				if(this.pri_validValue==false){
-					this.ovr_calValue();
-				}
-				return this.pri_value;
-			},
-			
-			getDataType : function(){ return this.getRootData().dataTypeInfo; },
-
-			getFullPath : function(){
-				if(loc_out.pri_dataBased==true)   return loc_out.pri_path;
-				return node_namingConvensionUtility.cascadePath(loc_out.pri_parent.getFullPath(), loc_out.pri_path);
-			},
-			
-			getRootWrapper : function(){
-				if(loc_out.pri_dataBased==true)   return this;
-				return loc_out.pri_parent.getRootWrapper();
-			},
-			
-			getRootData : function(){
-				return this.getRootWrapper().pri_getRootData();
+			getHandleEachElementRequest : function(handler, thatContext, requestHanders, request){
+				out = node_createServiceRequestInfoSequence(new node_ServiceInfo("HandleEachElement"), requestHanders, request);
+				out.addRequest(loc_getDataOperationRequest(operationService));
+				this.pri_typeHelper.handleEachElement( handler, thatContext);
 			},
 
+			destroy(requestInfo){node_getLifecycleInterface(loc_out).destroy(requestInfo);},
+			
 			/*
 			 * handler : function (event, path, operationValue, requestInfo)
 			 */
@@ -410,19 +381,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 				this.pri_dataOperationEventObject.unregister(listenerEventObj);
 			},
 			
-			createChildWrapper : function(path, request){		return node_wrapperFactory.createWrapper(this, path, request);		},
-
-			destroy(requestInfo){node_getLifecycleInterface(loc_out).destroy(requestInfo);},
-			
-			getWrapperType : function(){},
-			getChildData : function(path){},
-			requestDataOperation : function(service, request){},
-			handleEachElement : function(handler, thatContext){	},
-			
-			prv_getDataByPrentRequest : function(parentData){},
-			prv_getDataOperationRequest : function(operationData){},
-			
-			getDataOperationSetRequest : function(dataOperation){},
+			createChildWrapper : function(path, request){		return node_wrapperFactory.createWrapper(this, path, this.pri_typeHelper, this.pri_dataType, request);		},
 	};
 	
 	//append resource life cycle method to out obj
@@ -451,6 +410,9 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 
 
 //Register Node by Name

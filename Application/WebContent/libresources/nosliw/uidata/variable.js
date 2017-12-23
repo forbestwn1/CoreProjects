@@ -218,15 +218,15 @@ var node_createWrapperVariable = function(data1, data2, data3){
 	node_getLifecycleInterface(loc_out).init(data1, data2, data3);
 
 	//debug event
-	loc_out.registerDataChangeEventListener(undefined, function(eventName, data){
-		nosliw.logging.info("---------------------  Variable data change event  ----------------");
-		nosliw.logging.info("Path : " + loc_out.getPath());
-		nosliw.logging.info("FullPath : " + loc_out.getWrapper().getFullPath());
-		nosliw.logging.info("EventName : " + eventName);
-		nosliw.logging.info("Data : " + JSON.stringify(data));
-		nosliw.logging.info("---------------------    ----------------");
-		
-	}, loc_out);
+//	loc_out.registerDataChangeEventListener(undefined, function(eventName, data){
+//		nosliw.logging.info("---------------------  Variable data change event  ----------------");
+//		nosliw.logging.info("Path : " + loc_out.getPath());
+//		nosliw.logging.info("FullPath : " + loc_out.getWrapper().getFullPath());
+//		nosliw.logging.info("EventName : " + eventName);
+//		nosliw.logging.info("Data : " + JSON.stringify(data));
+//		nosliw.logging.info("---------------------    ----------------");
+//		
+//	}, loc_out);
 	
 	
 	return loc_out;

@@ -16,6 +16,7 @@ var node_wrapperFactory;
 var node_namingConvensionUtility;
 var node_objectWrapperUtility;	
 var node_createServiceRequestInfoSimple;
+var node_ServiceInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 var node_createWraperObject = function(){
 	
@@ -101,23 +102,22 @@ var node_createWraperObject = function(){
 	var loc_out = {		
 
 			//get child value by path
-			getChildValueRequest : function(parentValue, path, handler, requester_parent){
+			getChildValueRequest : function(parentValue, path, handlers, requester_parent){
 				var that = this;
-				return node_createServiceRequestInfoSimple(loc_createServiceInfo("GetChildValueFromObjectValue", {"parent":parentValue, "path":path}), function(requestInfo){
-					return loc_getObjectAttributeByPath(this.getValue(), path);
+				return node_createServiceRequestInfoSimple(new node_ServiceInfo("GetChildValueFromObjectValue", {"parent":parentValue, "path":path}), function(requestInfo){
+					return loc_getObjectAttributeByPath(parentValue, path);
 				}, handlers, requester_parent);
 			},
 			
-			getDataOperationRequest : function(baseValue, dataOperationService, handler, requester_parent){
+			getDataOperationRequest : function(baseValue, dataOperationService, handlers, requester_parent){
 				var that = this;
-				return node_createServiceRequestInfoSimple(loc_createServiceInfo("GetDataOperationFromObjectValue", {"baseValue":baseValue, "dataOperation":dataOperation}), function(requestInfo){
+				return node_createServiceRequestInfoSimple(new node_ServiceInfo("GetDataOperationFromObjectValue", {"baseValue":baseValue, "dataOperation":dataOperationService}), function(requestInfo){
 					var command = dataOperationService.command;
 					var dataOperation = dataOperationService.parms;
 					var out = baseValue;
 					if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
-						var opValue = loc_getOperationObject(serviceData.data);
 						//change value
-						if(_.isObject(rootValue)){
+						if(_.isObject(baseValue)){
 							node_objectWrapperUtility.operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_SET, dataOperation.value);
 						}
 						else{
@@ -139,11 +139,9 @@ var node_createWraperObject = function(){
 			},
 			
 			
-			handleEachElement : function(handler, thatContext){	
-				var containerData = this.getData();
-				_.each(containerData.value, function(data, key, list){
-					var child = this.createChildWrapper(key);
-			    	handler.call(thatContext, child, key);
+			handleEachElement : function(baseValue, handler, thatContext){	
+				_.each(baseValue, function(eleValue, key, list){					
+			    	handler.call(thatContext, eleValue, key);
 				}, this);
 			},
 			
@@ -170,6 +168,7 @@ nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtili
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.wrapper.object.utility", function(){node_objectWrapperUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 
 
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
