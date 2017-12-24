@@ -138,12 +138,18 @@ var node_createWraperObject = function(){
 				}, handlers, requester_parent);
 			},
 			
-			
-			handleEachElement : function(baseValue, handler, thatContext){	
-				_.each(baseValue, function(eleValue, key, list){					
-			    	handler.call(thatContext, eleValue, key);
-				}, this);
-			},
+			getGetElementsRequest : function(baseValue, handlers, request){
+				return node_createServiceRequestInfoSimple(new node_ServiceInfo("GetElements", {"baseValue":baseValue}), function(requestInfo){
+					var elements = [];
+					_.each(baseValue, function(eleValue, key, list){
+						elements.push({
+							key : key,
+							value : eleValue
+						});
+					}, this);
+					return elements;
+				}, handlers, requester_parent);
+			}, 
 			
 			getWrapperType : function(){	return node_CONSTANT.DATA_TYPE_OBJECT;		},
 	

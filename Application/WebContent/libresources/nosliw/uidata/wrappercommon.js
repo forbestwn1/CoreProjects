@@ -17,6 +17,7 @@ var node_namingConvensionUtility;
 var node_createServiceRequestInfoSequence;
 var node_uiDataOperationServiceUtility;
 var node_createServiceRequestInfoSimple;
+var node_ServiceInfo;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 /**
@@ -93,7 +94,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 				if(event==node_CONSTANT.WRAPPER_EVENT_CHANGE){
 					//for change event from parent, just make data invalid & forward the event, 
 					loc_invalidateData(requestInfo);
-					loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, {}, requestInfo);
+					loc_trigueEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, {}, requestInfo);
 				}
 				else{
 					var pathCompare = node_dataUtility.comparePath(loc_out.pri_path, eventData.path);
@@ -109,13 +110,13 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 							eventData.path = "";
 							loc_addToBeDoneDataOperation(eventData);
 							//inform outside about change
-							loc_trigueDataOperationEvent(event, eventData, requestInfo);
+							loc_trigueEvent(event, eventData, requestInfo);
 						}
 						else if(event==node_CONSTANT.WRAPPER_EVENT_SET){
 							eventData = eventData.clone();
 							eventData.path = "";
 							loc_setValue(eventData.value);
-							loc_trigueDataOperationEvent(event, eventData, requestInfo);
+							loc_trigueEvent(event, eventData, requestInfo);
 						}
 					}
 					else if(pathCompare.compare == 1){
@@ -125,7 +126,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 						}
 						else if(event==node_CONSTANT.WRAPPER_EVENT_SET){
 							loc_invalidateData(requestInfo);
-							loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, {}, requestInfo);
+							loc_trigueEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, {}, requestInfo);
 						}
 					}
 					else if(pathCompare.compare == 2){
@@ -148,7 +149,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		//for delete event, it means itself and all children should be destroy
 		loc_invalidateData();
 		//forward the event
-		loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_DESTROY, {}, requestInfo);
+		loc_trigueEvent(node_CONSTANT.WRAPPER_EVENT_DESTROY, {}, requestInfo);
 		//clear up event source
 		loc_out.pri_dataOperationEventObject.clearup();
 		
@@ -298,7 +299,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		return node_dataUtility.createDataByObject(value, loc_out.pri_dataType);
 	};
 
-	var loc_trigueDataOperationEvent = function(event, eventData, requestInfo){
+	var loc_trigueEvent = function(event, eventData, requestInfo){
 		loc_out.pri_dataOperationEventObject.triggerEvent(event, eventData, requestInfo);
 	};
 	
@@ -307,7 +308,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 				event : event, 
 				value : eventData 
 		};
-		loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_FORWARD, eData, requestInfo);
+		loc_trigueEvent(node_CONSTANT.WRAPPER_EVENT_FORWARD, eData, requestInfo);
 	};
 	
 	var loc_triggerEventByDataOperation = function(command, dataOperation, requestInfo){
@@ -329,7 +330,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			event = node_CONSTANT.WRAPPER_EVENT_DESTROY;
 			break;
 		}
-		loc_trigueDataOperationEvent(event, eventData, requestInfo);
+		loc_trigueEvent(event, eventData, requestInfo);
 	};
 
 	var loc_getOperationObject = function(obj){
@@ -365,10 +366,25 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 				return loc_getDataOperationRequest(operationService, handlers, requester_parent);
 			},
 			
-			getHandleEachElementRequest : function(handler, thatContext, requestHanders, request){
-				out = node_createServiceRequestInfoSequence(new node_ServiceInfo("HandleEachElement"), requestHanders, request);
-				out.addRequest(loc_getDataOperationRequest(operationService));
-				this.pri_typeHelper.handleEachElement( handler, thatContext);
+			getHandleEachElementRequest : function(elementHandleRequestFactory, handlers, request){
+				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("HandleEachElement"), handlers, request);
+				//get current value first
+				out.addRequest(loc_getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService("")), {
+					success : function(request, data){
+						//get all elements
+						return loc_out.pri_typeHelper.getGetElementsRequest(data.value, {
+							success : function(request, elements){
+								//handle each element
+								var handleElementsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("HandleElements", {"elements":elements}));
+								_.each(elements, function(element, index){
+									handleElementsRequest.addRequest(element.key, elementHandleRequestFactory.call(element));
+								});
+								return handleElementsRequest;
+							}
+						});
+					}
+				});
+				return out;
 			},
 
 			destroy(requestInfo){node_getLifecycleInterface(loc_out).destroy(requestInfo);},
@@ -416,6 +432,7 @@ nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 
 
 //Register Node by Name
