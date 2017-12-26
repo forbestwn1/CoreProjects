@@ -46,8 +46,11 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		loc_out.pri_parent = undefined;
 		
 		//the path from basis (data or wraper) to current data
-		//path is valid for both data based or wrapper based
+		//path is valid for wrapper based only
 		loc_out.pri_path = path;
+		
+		//
+		loc_out.adapter;
 		
 		//event and listener for data operation event
 		loc_out.pri_dataOperationEventObject = node_createEventObject();
@@ -116,8 +119,20 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 						else if(event==node_CONSTANT.WRAPPER_EVENT_SET){
 							eventData = eventData.clone();
 							eventData.path = "";
-							loc_setValue(eventData.value);
-							loc_trigueEvent(event, eventData, requestInfo);
+							if(loc_out.pri_adapter==undefined){
+								loc_setValue(eventData.value);
+								loc_trigueEvent(event, eventData, requestInfo);
+							}
+							else{
+								//apply adapter to value
+								loc_out.pri_adapter.getInValueRequest(eventData.value, {
+									success: function(request, value){
+										loc_setValue(value);
+										eventData.value = value;
+										loc_trigueEvent(event, eventData, requestInfo);
+									}
+								}, requestInfo);
+							}
 						}
 					}
 					else if(pathCompare.compare == 1){
@@ -189,8 +204,19 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 							return loc_out.pri_typeHelper.getChildValueRequest(data.value, loc_out.pri_path, {
 								success : function(requestInfo, value){
 									//set local value
-									loc_setValue(value);
-									return loc_getData();
+									if(loc_out.pri_adapter==undefined){
+										loc_setValue(value);
+										return loc_getData();
+									}
+									else{
+										//apply adapter to value
+										return loc_out.pri_adapter.getInValueRequest(eventData.value, {
+											success: function(request, value){
+												loc_setValue(value);
+												return loc_getData();
+											}
+										}, requestInfo);
+									}
 								}
 							});
 						}
@@ -294,7 +320,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		if(loc_out.pri_dataBased==true)		value = loc_out.pri_rootValue;
 		else	value = loc_out.pri_value;
 		return loc_makeDataFromValue(value);
-	}
+	};
 	
 	var loc_makeDataFromValue = function(value){    
 		return node_dataUtility.createDataByObject(value, loc_out.pri_dataType);
@@ -354,12 +380,29 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 					out = loc_getDataOperationOnRootValue(dataOperationService.clone(), handlers, requester_parent); 
 				}
 				else{
-					var parentDataOperationService = dataOperationService.clone();
-					parentDataOperationService.parms.path = node_dataUtility.combinePath(loc_out.pri_path, parentDataOperationService.parms.path);
-					out = loc_out.pri_parent.pri_getWrapperOperationRequest(parentDataOperationService);
+					if(dataOperationService.command==node_CONSTANT.WRAPPER_OPERATION_SET && loc_out.pri_adapter!=undefined){
+						//apply adapter for SET command
+						out = node_createServiceRequestInfoSequence({}, handlers, requester_parent);
+						//apply adapter to value
+						out.addRequest(loc_out.pri_adapter.getOutValueRequest(dataOperationService.parms.value, {
+							success: function(request, value){
+								var parentDataOperationService = dataOperationService.clone();
+								parentDataOperationService.parms.path = node_dataUtility.combinePath(loc_out.pri_path, parentDataOperationService.parms.path);
+								parentDataOperationService.parms.value = value;
+								return loc_out.pri_parent.pri_getWrapperOperationRequest(parentDataOperationService);
+							}
+						}));
+					}
+					else{
+						var parentDataOperationService = dataOperationService.clone();
+						parentDataOperationService.parms.path = node_dataUtility.combinePath(loc_out.pri_path, parentDataOperationService.parms.path);
+						out = loc_out.pri_parent.pri_getWrapperOperationRequest(parentDataOperationService, handlers, requester_parent);
+					}
 				}
 				return out;
 			},
+			
+			setAdapter : function(adapter){  this.pri_adapter = adpater;  },
 			
 			getDataType : function(){  return this.pri_dataType;   },
 			
