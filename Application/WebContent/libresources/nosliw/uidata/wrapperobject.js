@@ -17,6 +17,7 @@ var node_namingConvensionUtility;
 var node_objectWrapperUtility;	
 var node_createServiceRequestInfoSimple;
 var node_ServiceInfo;
+var node_parseSegment;
 //*******************************************   Start Node Definition  ************************************** 	
 var node_createWraperObject = function(){
 	
@@ -148,7 +149,7 @@ var node_createWraperObject = function(){
 						});
 					}, this);
 					return elements;
-				}, handlers, requester_parent);
+				}, handlers, request);
 			}, 
 			
 			getWrapperType : function(){	return node_CONSTANT.DATA_TYPE_OBJECT;		},
@@ -175,6 +176,7 @@ nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node
 nosliw.registerSetNodeDataEvent("uidata.wrapper.object.utility", function(){node_objectWrapperUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.segmentparser.parseSegment", function(){node_parseSegment = this.getData();});
 
 
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
