@@ -104,14 +104,13 @@ var node_createWraperObject = function(){
 
 			//get child value by path
 			getChildValueRequest : function(parentValue, path, handlers, requester_parent){
-				var that = this;
 				return node_createServiceRequestInfoSimple(new node_ServiceInfo("GetChildValueFromObjectValue", {"parent":parentValue, "path":path}), function(requestInfo){
-					return loc_getObjectAttributeByPath(parentValue, path);
+					var out = loc_getObjectAttributeByPath(parentValue, path);
+					return node_dataUtility.cloneValue(out);
 				}, handlers, requester_parent);
 			},
 			
 			getDataOperationRequest : function(baseValue, dataOperationService, handlers, requester_parent){
-				var that = this;
 				return node_createServiceRequestInfoSimple(new node_ServiceInfo("GetDataOperationFromObjectValue", {"baseValue":baseValue, "dataOperation":dataOperationService}), function(requestInfo){
 					var command = dataOperationService.command;
 					var dataOperation = dataOperationService.parms;
@@ -145,7 +144,7 @@ var node_createWraperObject = function(){
 					_.each(baseValue, function(eleValue, key, list){
 						elements.push({
 							key : key,
-							value : eleValue
+							value : node_dataUtility.cloneValue(eleValue)
 						});
 					}, this);
 					return elements;

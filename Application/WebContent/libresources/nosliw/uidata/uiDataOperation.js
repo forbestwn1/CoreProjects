@@ -8,6 +8,7 @@ var node_getObjectType;
 var node_ServiceInfo;
 var node_createServiceRequestInfoSet;
 var node_namingConvensionUtility;
+var node_dataUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 //create request for data operation
@@ -89,7 +90,7 @@ var node_uiDataOperationServiceUtility = function(){
 					path : path,
 					value : value,
 					clone : function(){
-						return that.createSetOperationData(this.path, this.value);
+						return that.createSetOperationData(this.path, node_dataUtility.cloneValue(this.value));
 					}
 				};
 			},
@@ -105,7 +106,7 @@ var node_uiDataOperationServiceUtility = function(){
 					index : index,
 					value : value,
 					clone : function(){
-						return that.createAddElementOperationData(this.path, this.index, this.value);
+						return that.createAddElementOperationData(this.path, this.index, node_dataUtility.cloneValue(this.value));
 					}
 				};
 			},
@@ -171,6 +172,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 
 
 //Register Node by Name

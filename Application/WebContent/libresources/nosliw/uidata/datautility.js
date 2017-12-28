@@ -17,6 +17,11 @@ var node_utility = function(){
 	
 	return {
 		
+		cloneValue : function(value){
+			var copy = JSON.parse(JSON.stringify(value));
+			return copy;
+		},
+		
 		/**
 		 * compare two path
 		 * if path1 equals path2, then 0

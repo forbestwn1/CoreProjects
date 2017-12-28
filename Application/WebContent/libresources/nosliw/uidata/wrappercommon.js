@@ -19,6 +19,7 @@ var node_uiDataOperationServiceUtility;
 var node_createServiceRequestInfoSimple;
 var node_ServiceInfo;
 var node_createServiceRequestInfoSet;
+var node_requestServiceProcessor;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 /**
@@ -30,6 +31,9 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 
 	var loc_resourceLifecycleObj = {};
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(parm1, path, typeHelper, dataType, request){
+		//every wrapper has a id, it is for debuging purpose
+		loc_out.pri_id = nosliw.runtime.getIdService().generateId();
+		
 		//helper object that depend on data type in wraper
 		loc_out.pri_typeHelper = typeHelper;
 		
@@ -49,7 +53,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		//path is valid for wrapper based only
 		loc_out.pri_path = path;
 		
-		//
+		//adapter for converting value
 		loc_out.adapter;
 		
 		//event and listener for data operation event
@@ -125,13 +129,14 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 							}
 							else{
 								//apply adapter to value
-								loc_out.pri_adapter.getInValueRequest(eventData.value, {
+								var r = loc_out.pri_adapter.getInValueRequest(eventData.value, {
 									success: function(request, value){
 										loc_setValue(value);
 										eventData.value = value;
-										loc_trigueEvent(event, eventData, requestInfo);
+										loc_trigueEvent(event, eventData, request);
 									}
 								}, requestInfo);
+								node_requestServiceProcessor.processRequest(r, true);
 							}
 						}
 					}
@@ -186,7 +191,10 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		if(loc_out.pri_dataBased==true){
 			//root data
 			if(command==node_CONSTANT.WRAPPER_OPERATION_GET){
-				out = node_createServiceRequestInfoSimple(operationService, function(){return loc_getData();}, handlers, requester_parent);
+				out = node_createServiceRequestInfoSimple(operationService, 
+					function(){
+						return loc_getData();
+					}, handlers, requester_parent);
 			}
 			else{
 				out = loc_getDataOperationOnRootValue(operationService.clone(), handlers, requester_parent); 
@@ -340,7 +348,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 	
 	var loc_triggerEventByDataOperation = function(command, dataOperation, requestInfo){
 		var event;
-		var eventData = dataOperation;
+		var eventData = dataOperation.clone();
 		switch(command){
 		case node_CONSTANT.WRAPPER_OPERATION_SET:
 			event = node_CONSTANT.WRAPPER_EVENT_SET;
@@ -478,6 +486,7 @@ nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUt
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 
 //Register Node by Name
