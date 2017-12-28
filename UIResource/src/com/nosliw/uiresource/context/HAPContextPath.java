@@ -49,7 +49,7 @@ public class HAPContextPath extends HAPSerializableImp{
 	
 	public String getRootElementName(){  return this.m_rootEleName;  }
 	
-	public String getPath(){  return this.m_path;  }
+	public String getPath(){		return this.m_path==null?"":this.m_path;	}
 	
 	public String getFullPath(){  return HAPNamingConversionUtility.cascadeComponentPath(this.m_rootEleName, this.m_path);   }
 	

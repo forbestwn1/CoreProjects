@@ -210,7 +210,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 									}
 									else{
 										//apply adapter to value
-										return loc_out.pri_adapter.getInValueRequest(eventData.value, {
+										return loc_out.pri_adapter.getInValueRequest(value, {
 											success: function(request, value){
 												loc_setValue(value);
 												return loc_getData();
@@ -402,7 +402,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 				return out;
 			},
 			
-			setAdapter : function(adapter){  this.pri_adapter = adpater;  },
+			setAdapter : function(adapter){  this.pri_adapter = adapter;  },
 			
 			getDataType : function(){  return this.pri_dataType;   },
 			

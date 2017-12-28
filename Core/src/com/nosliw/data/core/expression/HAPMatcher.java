@@ -42,6 +42,10 @@ public class HAPMatcher extends HAPSerializableImp{
 		this.m_relationship = relationship;
 	}
 	
+	public boolean isVoid(){
+		return this.m_relationship.getSource().equals(this.m_relationship.getTarget());
+	}
+	
 	public HAPDataTypeId getDataTypeId(){   return this.m_dataTypeId;  }
 	
 	public HAPRelationship getRelationship(){  return this.m_relationship;  }

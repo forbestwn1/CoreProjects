@@ -88,6 +88,7 @@ var node_createContextElementInfo = function(name, data1, data2, data3){
 		loc_out.wrapper = node_wrapperFactory.createWrapper(data1, data2);
 		loc_out.info = data3;
 	}
+	if(loc_out.info==undefined)  loc_out.info = {};
 	return loc_out;
 };
 

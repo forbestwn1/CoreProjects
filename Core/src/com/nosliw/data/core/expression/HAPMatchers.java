@@ -1,6 +1,7 @@
 package com.nosliw.data.core.expression;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +26,19 @@ public class HAPMatchers extends HAPSerializableImp{
 	
 	public Map<HAPDataTypeId, HAPMatcher> getMatchers(){
 		return this.m_matchers;
+	}
+	
+	public boolean isVoid(){
+		boolean out = true;
+		Iterator<HAPMatcher> it = this.m_matchers.values().iterator();
+		while(it.hasNext()){
+			HAPMatcher matcher = it.next();
+			if(!matcher.isVoid()){
+				out = false;
+				break;
+			}
+		}
+		return out;
 	}
 	
 	/**

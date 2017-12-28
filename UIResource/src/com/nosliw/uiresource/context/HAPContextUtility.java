@@ -155,6 +155,15 @@ public class HAPContextUtility {
 				if(parentNode!=null){
 					Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
 					merge(parentNode, defContextElementRelative, out, matchers, new HAPContextPath(defRootEleName, null), dataTypeHelper);
+					//remove all the void matchers
+					Map<String, HAPMatchers> noVoidMatchers = new LinkedHashMap<String, HAPMatchers>();
+					for(String p : matchers.keySet()){
+						HAPMatchers match = matchers.get(p);
+						if(!match.isVoid()){
+							noVoidMatchers.put(p, match);
+						}
+					}
+					out.setMatchers(noVoidMatchers);
 				}
 				return out;
 			}	

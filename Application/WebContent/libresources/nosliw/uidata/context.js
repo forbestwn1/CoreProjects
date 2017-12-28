@@ -17,12 +17,57 @@ var node_makeObjectWithLifecycle;
 var node_getLifecycleInterface;
 var node_namingConvensionUtility;
 var node_ServiceInfo;
+var node_dataUtility;
+var node_createServiceRequestInfoSimple;
 //*******************************************   Start Node Definition  ************************************** 	
 /*
  * elementInfosArray : an array of element info describing context element
  * 
  */
 var node_createContext = function(elementInfosArray, request){
+	/*
+	 * get context element variable by name
+	 */
+	var loc_getContextElementVariable = function(name){ 
+		var contextEle = loc_out.prv_elements[name];
+		if(contextEle==undefined)  return undefined;
+		return contextEle.variable;
+	};
+	
+	var loc_createVariableFromContextVariable = function(contextVariable, requestInfo){
+		var fullPath = node_dataUtility.combinePath(contextVariable.name, contextVariable.path);
+		//get parent var from adapter first
+		var parentVar = loc_out.prv_adapters[fullPath];
+		if(parentVar==undefined){
+			parentVar = loc_getContextElementVariable(contextVariable.name);
+		}
+		
+		var variable = node_createWrapperVariable(parentVar, contextVariable.path, requestInfo);
+		//add extra attribute "contextPath" to variable for variables name under context
+		variable.contextPath = fullPath;
+		return variable;
+	};
+	
+	var loc_buildAdapterVariableFromMatchers = function(rootName, path, matchers, requestInfo){
+		var contextVar = node_createContextVariable(rootName, path);
+		var variable = loc_createVariableFromContextVariable(contextVar, requestInfo);
+		var adapter = {
+			getInValueRequest : function(value, handlers, request){
+				return node_createServiceRequestInfoSimple({}, function(request){
+					value.value = "0123456789" + value.value;
+					return value;
+				}, handlers, request);
+			},
+			getOutValueRequest : function(value, handlers, request){
+				return node_createServiceRequestInfoSimple({}, function(request){
+					value.value = value.value.substring(10);
+					return value;
+				}, handlers, request);
+			},
+		};
+		variable.setAdapter(adapter);
+		return variable;
+	};
 	
 	var loc_resourceLifecycleObj = {};
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
@@ -40,10 +85,17 @@ var node_createContext = function(elementInfosArray, request){
 		loc_out.prv_elements = {};
 		//object used as event object
 		loc_out.prv_eventObject = node_createEventObject();
+		//adapter variables by path
+		loc_out.prv_adapters = {};
 		
 		_.each(elementInfosArray, function(elementInfo, key){
 			//create empty wrapper variable for each element
 			loc_out.prv_elements[elementInfo.name] = node_createContextElement(elementInfo, request);
+			
+			//get all adapters from elementInfo
+			_.each(elementInfo.info.matchers, function(matchers, path){
+				loc_out.prv_adapters[node_dataUtility.combinePath(elementInfo.name, path)] = loc_buildAdapterVariableFromMatchers(elementInfo.name, path, matchers);
+			});
 		});
 	};
 	
@@ -60,15 +112,6 @@ var node_createContext = function(elementInfosArray, request){
 		getContextElement : function(name){ return this.getContext()[name]; },
 
 		/*
-		 * get context element variable by name
-		 */
-		getContextElementVariable : function(name){ 
-			var contextEle = this.getContextElement(name);
-			if(contextEle==undefined)  return undefined;
-			return contextEle.variable;
-		},
-
-		/*
 		 * get data of context element
 		 */
 		getContextElementData : function(name){ 
@@ -81,11 +124,7 @@ var node_createContext = function(elementInfosArray, request){
 		 * create context variable
 		 */
 		createVariable : function(contextVariable, requestInfo){
-			var parentVar = this.getContextElementVariable(contextVariable.name);
-			var variable = node_createWrapperVariable(parentVar, contextVariable.path, requestInfo);
-			//add extra attribute "contextPath" to variable for variables name under context
-			variable.contextPath = node_namingConvensionUtility.cascadePath(contextVariable.name, contextVariable.path);
-			return variable;
+			return loc_createVariableFromContextVariable(contextVariable, requestInfo);
 		},
 		
 		/*
@@ -160,6 +199,8 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createContext", node_createContext); 

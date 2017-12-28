@@ -42,10 +42,15 @@ var node_createWrapperVariable = function(data1, data2, data3){
 		loc_out.prv_wrapper = undefined;
 	};
 	
+	var loc_setWrapper = function(wrapper, requestInfo){
+		loc_out.prv_wrapper = wrapper;
+		loc_out.prv_wrapper.setAdapter(loc_out.prv_adapter);
+	};
+	
 	/*
 	 * set new wrapper
 	 */
-	var loc_setWrapper = function(wrapper, requestInfo){
+	var loc_setNewWrapper = function(wrapper, requestInfo){
 		
 		if(wrapper==undefined){
 			//if no wrapper , then clear up
@@ -58,7 +63,7 @@ var node_createWrapperVariable = function(data1, data2, data3){
 		loc_clearupWrapper(requestInfo); 
 
 		//set new wrapper
-		loc_out.prv_wrapper = wrapper;
+		loc_setWrapper(wrapper, requestInfo);
 		//inform child variable that wrapper is set to new object
 		node_eventUtility.triggerEvent(loc_out.prv_lifecycleEventObject, node_CONSTANT.WRAPPERVARIABLE_EVENT_SETWRAPPER, requestInfo);
 
@@ -88,6 +93,9 @@ var node_createWrapperVariable = function(data1, data2, data3){
 		//wrapper object
 		loc_out.prv_wrapper = undefined;
 		
+		//adapter that will apply to wrapper
+		loc_out.prv_adapter = undefined;
+		
 		//event source for event that communicate with child wrapper variables 
 		loc_out.prv_lifecycleEventObject = node_createEventObject();
 		//event source for event that communicate operation information with outsiders
@@ -99,13 +107,13 @@ var node_createWrapperVariable = function(data1, data2, data3){
 			//for variable having parent variable
 			loc_out.prv_parent = data1;
 			loc_out.prv_path = node_basicUtility.emptyStringIfUndefined(data2);
-			loc_out.prv_wrapper = node_wrapperFactory.createWrapper(loc_out.prv_parent.getWrapper(), loc_out.prv_path);
+			loc_setWrapper(node_wrapperFactory.createWrapper(loc_out.prv_parent.getWrapper(), loc_out.prv_path));
 			loc_out.prv_parent.registerLifecycleEventListener(loc_out.prv_lifecycleEventObject, function(event, data, requestInfo){
 				switch(event){
 				case node_CONSTANT.WRAPPERVARIABLE_EVENT_SETWRAPPER:
 					//create new wrapper based on wrapper in parent and path
 					var newWrapper = node_wrapperFactory.createWrapper(loc_out.prv_parent.getWrapper(), loc_out.prv_path);
-					loc_setWrapper(newWrapper, requestInfo);
+					loc_setNewWrapper(newWrapper, requestInfo);
 					break;
 				case node_CONSTANT.WRAPPERVARIABLE_EVENT_CLEARUP:
 					loc_clearupWrapper(requestInfo);
@@ -119,11 +127,11 @@ var node_createWrapperVariable = function(data1, data2, data3){
 		}
 		else if(data1Type==node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
 			//for wrapper
-			loc_out.prv_wrapper = data1;
+			loc_setWrapper(data1);
 		}
 		else{
 			//for object
-			loc_out.prv_wrapper = node_wrapperFactory.createWrapper(data1, data2, requestInfo);
+			loc_setWrapper(node_wrapperFactory.createWrapper(data1, data2, requestInfo));
 		}
 		if(loc_out.prv_wrapper!=undefined){
 			loc_registerWrapperDataOperationEvent();
@@ -138,11 +146,19 @@ var node_createWrapperVariable = function(data1, data2, data3){
 	};
 	
 	var loc_out = {
+
+			setAdapter : function(adapter){  
+				this.prv_adapter = adapter;
+				if(this.prv_wrapper!=undefined){
+					this.prv_wrapper.setAdapter(adapter);
+				}
+			},
+			
 			/*
 			 * set wrapper object to variable
 			 * only for root variable
 			 */
-			setWrapper : function(wrapper, requestInfo){	loc_setWrapper(wrapper, requestInfo);	},
+			setWrapper : function(wrapper, requestInfo){	loc_setNewWrapper(wrapper, requestInfo);	},
 			
 			/*
 			 * get wrapper object contained in variable
