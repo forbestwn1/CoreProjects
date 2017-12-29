@@ -23,6 +23,27 @@
 </body>
 
 <script>
+
+
+nosliw.registerNodeEvent("runtime", "active", function(eventName, nodeName){
 	
+	var currentSearchString = window.location.search;
+	var page = currentSearchString.substring(currentSearchString.indexOf("=")+1);
+	nosliw.runtime.getUIResourceService().executeCreateUIResourceViewRequest(page, 
+			{
+				success : function(requestInfo, uiResourceView){
+					nosliw.logging.info(JSON.stringify(uiResourceView));
+					
+					uiResourceView.appendTo($('#testDiv'));
+					
+//					var views = uiResourceView.getViews();
+//					$('#testDiv').append(views.children());
+
+				}
+			}
+	);
+});
+
+
 </script>
 </html>

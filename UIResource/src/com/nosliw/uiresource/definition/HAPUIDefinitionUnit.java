@@ -17,7 +17,6 @@ import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.context.HAPContextGroup;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
 
@@ -58,8 +57,6 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public static final String ATTRIBUTES = "attributes";
 	@HAPAttribute
 	public static final String SCRIPTFACTORYNAME = "scriptFactoryName";
-	@HAPAttribute
-	public static final String DATABINDINGS = "dataBindings";
 	@HAPAttribute
 	public static final String UITAGLIBS = "uiTagLibs";
 	@HAPAttribute

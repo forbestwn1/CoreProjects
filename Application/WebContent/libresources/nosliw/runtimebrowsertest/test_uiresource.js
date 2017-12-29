@@ -1,4 +1,4 @@
-	nosliw.registerNodeEvent("runtime", "active", function(eventName, nodeName){
+	nosliw.registerNodeEvent("runtime", "active111", function(eventName, nodeName){
 		
 		nosliw.runtime.getUIResourceService().executeCreateUIResourceViewRequest("Example1", 
 				{

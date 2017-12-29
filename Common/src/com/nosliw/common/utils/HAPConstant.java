@@ -406,6 +406,10 @@ public class HAPConstant {
 
 
 
+		public static final String UITAG_NAME_INCLUDE = "include";
+
+
+
 		public static final String DATAOPERATION_VAR_TYPE_IN = "parm";
 		public static final String DATAOPERATION_VAR_TYPE_OUT = "out";
 

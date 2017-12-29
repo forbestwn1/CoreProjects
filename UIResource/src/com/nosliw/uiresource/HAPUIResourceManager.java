@@ -8,7 +8,6 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.context.HAPContextGroup;
 import com.nosliw.uiresource.context.HAPContextUtility;
 import com.nosliw.uiresource.definition.HAPConstantUtility;
@@ -76,17 +75,18 @@ public class HAPUIResourceManager {
 	}
 	
 	public HAPUIDefinitionUnitResource getUIResourceDefinitionByName(String name){
-		return this.m_uiResourceDefinitions.get(name);
-	}
-	
-	public HAPUIDefinitionUnitResource getUIResource(String name){
-		HAPUIDefinitionUnitResource uiResource = this.getUIResourceDefinitionByName(name);
+		HAPUIDefinitionUnitResource uiResource = this.m_uiResourceDefinitions.get(name);
 		if(uiResource==null){
 			//if not registered, then process uiResource on the fly
 			String file = HAPFileUtility.getUIResourceFolder()+name+".res";
 			uiResource = this.getUIResourceParser().parseFile(file);
 			HAPConstantUtility.calculateConstantDefs(uiResource, null, m_idGengerator, m_expressionMan, m_runtime);
 		}
+		return uiResource;
+	}
+	
+	public HAPUIDefinitionUnitResource getUIResource(String name){
+		HAPUIDefinitionUnitResource uiResource = this.getUIResourceDefinitionByName(name);
 		if(!uiResource.isProcessed()){
 			//build expression context
 			HAPContextUtility.processExpressionContext(null, uiResource, this.m_dataTypeHelper, this.m_uiTagMan, this.m_runtime, this.m_expressionMan);

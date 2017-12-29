@@ -1,13 +1,9 @@
 package com.nosliw.uiresource.definition;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
@@ -18,13 +14,6 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	private String m_source;
 	
 	
-	//calculated attribute that store all the decendant customer tags within this uiresource
-	//with this information, customer tag libs can be loaded when loading ui resource
-	Set<String> m_uiTagLibs;
-	
-
-
-	
 	private boolean m_processed = false;
 	
 	//all dependency resources
@@ -33,12 +22,9 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	public HAPUIDefinitionUnitResource(String id, String source){
 		super(id);
 		this.m_source = source;
-		this.m_uiTagLibs = new HashSet<String>();
 		this.m_resourceDependency = new ArrayList<HAPResourceDependent>();
 	}
 	
-	public void addUITagLib(String tag){	this.m_uiTagLibs.add(tag);}
-
 	public String getSource(){   return this.m_source;   }
 	
 	public boolean isProcessed(){  return this.m_processed;  }
@@ -49,13 +35,11 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(UITAGLIBS, HAPJsonUtility.buildJson(this.m_uiTagLibs, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(UITAGLIBS, HAPJsonUtility.buildJson(this.m_uiTagLibs, HAPSerializationFormat.JSON));
 	}
 
 	@Override
