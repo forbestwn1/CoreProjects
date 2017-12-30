@@ -407,6 +407,8 @@ public class HAPConstant {
 
 
 		public static final String UITAG_NAME_INCLUDE = "include";
+		public static final String UITAG_NAME_INCLUDE_PARM_SOURCE = "source";
+		public static final String UITAG_NAME_INCLUDE_PARM_CONTEXT = "context";
 
 
 

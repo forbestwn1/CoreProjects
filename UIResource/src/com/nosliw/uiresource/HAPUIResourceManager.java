@@ -16,6 +16,7 @@ import com.nosliw.uiresource.expression.HAPUIResourceExpressionProcessorUtility;
 import com.nosliw.uiresource.parser.HAPUIResourceParser;
 import com.nosliw.uiresource.resource.HAPResourceUtility;
 import com.nosliw.uiresource.tag.HAPUITagManager;
+import com.nosliw.uiresource.tag.HAPUITagUtility;
 
 public class HAPUIResourceManager {
 
@@ -88,6 +89,9 @@ public class HAPUIResourceManager {
 	public HAPUIDefinitionUnitResource getUIResource(String name){
 		HAPUIDefinitionUnitResource uiResource = this.getUIResourceDefinitionByName(name);
 		if(!uiResource.isProcessed()){
+			//process include tags
+			HAPUITagUtility.processIncludeTags(uiResource, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, getUIResourceParser());
+			
 			//build expression context
 			HAPContextUtility.processExpressionContext(null, uiResource, this.m_dataTypeHelper, this.m_uiTagMan, this.m_runtime, this.m_expressionMan);
 
