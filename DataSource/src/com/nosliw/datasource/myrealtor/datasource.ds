@@ -1,0 +1,73 @@
+{
+    "name": "myrealtor",
+    "description": "",
+    "output": "",
+    "parms": [{
+            name: "type",
+            criteria: "",
+        	default:""
+        }, {
+            name: "schoolType",
+            criteria: "",
+        	default: ""
+        }
+
+    ],
+    "configure": {
+    	"type" : "",
+        "dependentDataSource": {
+            "myschool": {
+                "name": "school",
+                "parms": {
+                    "type": "#||schoolType||#",
+                }
+            },
+            "myrealtor": {}
+        },
+        "expressionDefinitions": {
+            "main": {
+                "expression": "!(test.string)!.subString(<(expression1)>,from:?(fromVar)?,to:?(toVar)?)",
+                "description": "Variable.method, all constant",
+                "constants": {
+                    "base": {
+                        "dataTypeId": "test.string",
+                        "value": "This is my world!"
+                    },
+                    "from": {
+                        "dataTypeId": "test.integer",
+                        "value": "3"
+                    },
+                    "to": {
+                        "dataTypeId": "test.integer",
+                        "value": "7"
+                    }
+                },
+                "variableCriterias": {
+                    "baseVar": "test.string",
+                    "fromVar": "test.integer",
+                    "toVar": "test.integer"
+                },
+                "references": {
+                    "expression1": {
+                        "variablesMap": {
+                            "baseVar": "var1",
+                            "fromVar": "var2",
+                            "toVar": "var3"
+                        }
+                    }
+                }
+            },
+            "expression1": {
+                "expression": "!(test.string)!.subString(?(var1)?,from:?(var2)?,to:?(var3)?)",
+                "description": "all variables",
+                "constants": {},
+                "variableCriterias": {
+                    "var1": "test.string",
+                    "var2": "test.integer",
+                    "var3": "test.integer"
+                }
+            }
+        },
+    },
+
+}

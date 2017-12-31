@@ -1,0 +1,13 @@
+{
+	"name": "realtor",
+	"description" : "all house for sale in toronto",
+	"output" : "",
+	"parms" : [ 
+		{
+			name : "type",
+			criteria : "",
+			default : ""
+		}
+	
+	]
+}

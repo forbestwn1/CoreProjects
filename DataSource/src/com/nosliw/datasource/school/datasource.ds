@@ -1,0 +1,13 @@
+{
+	"name": "school",
+	"description" : "all element school rank in ontario",
+	"output" : "",
+	"parms" : [ 
+		{
+			name : "type",
+			criteria : "",
+			default : ""
+		}
+	
+	]
+}

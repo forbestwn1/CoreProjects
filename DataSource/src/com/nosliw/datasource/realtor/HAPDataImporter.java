@@ -4,26 +4,16 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPDataWrapper;
 
-public class HAPDataSource {
-	
-	public HAPData getData(Map<String, HAPData> parms){
-		return null;
-	}
-	
+public class HAPDataImporter {
+
 	public static void main(String[] args) throws Exception{
 		StringBuffer out = new StringBuffer();
 		out.append("[");
@@ -111,64 +101,5 @@ public class HAPDataSource {
 		return totalPage;
 	}	
 
-	public static HAPData buildData(JSONArray jsonHomesData) throws JSONException{
-		JSONArray homeArrayData = new JSONArray();
-		
-		for(int i=0; i<jsonHomesData.length(); i++){
-			JSONObject outHome = new JSONObject();
-			
-			JSONObject jsonHomeData = jsonHomesData.optJSONObject(i);
-			
-			JSONObject jsonProperty = jsonHomeData.optJSONObject("Property");
-			JSONObject jsonAddress = jsonProperty.optJSONObject("Address");
-			JSONObject jsonBuilding = jsonHomeData.optJSONObject("Building");
-
-			
-			JSONObject outGeoValue = new JSONObject();
-			outGeoValue.put("latitude", jsonAddress.optDouble("Latitude"));
-			outGeoValue.put("longitude", jsonAddress.optDouble("Longitude"));
-			outHome.put("geo", createJSONData("test.geo;1.0.0", outGeoValue));
-			
-			String bedroomStr = jsonBuilding.optString("Bedrooms").trim();
-			int index = bedroomStr.indexOf("+");
-			String bedroom1 = "0";
-			String bedroom2 = "0";
-			if(index==-1){
-				bedroom1 = bedroomStr;
-			}
-			else{
-				bedroom1 = bedroomStr.substring(0, index);
-				bedroom2 = bedroomStr.substring(index+1);
-			}
-			outHome.put("bedroom1", createJSONData("test.string;1.0.0", bedroom1));
-			outHome.put("bedroom2", createJSONData("test.string;1.0.0", bedroom2));
-
-			String bathrooms = jsonBuilding.optString("BathroomTotal");
-			outHome.put("bathrooms", createJSONData("test.string;1.0.0", bathrooms));
-
-			String priceStr = jsonProperty.optString("Price").trim();
-			priceStr = priceStr.substring(1);
-			int priceIndex = priceStr.indexOf(",");
-			while(priceIndex!=-1){
-				priceStr = priceStr.substring(0, priceIndex) + priceStr.substring(priceIndex+1);
-				priceIndex = priceStr.indexOf(",");
-			}
-			int price = Integer.valueOf(priceStr).intValue();
-			outHome.put("bathrooms", createJSONData("test.price;1.0.0", price));
-
-			outHome.put("MlsNumber", createJSONData("test.string;1.0.0", jsonHomeData.optString("MlsNumber")));
-			outHome.put("buildingType", createJSONData("test.string;1.0.0", jsonBuilding.optString("Type")));
-			
-			homeArrayData.put(createJSONData("test.map;1.0.0", outHome));
-		}			
-		HAPDataWrapper out = new HAPDataWrapper(new HAPDataTypeId("test.array;1.0.0"), homeArrayData);
-		return out;
-	}
-
-	private static JSONObject createJSONData(String dataTypeId, Object value) throws JSONException{
-		JSONObject out = new JSONObject();
-		out.put(HAPData.VALUE, value);
-		out.put(HAPData.DATATYPEID, dataTypeId);
-		return out;
-	}
+	
 }
