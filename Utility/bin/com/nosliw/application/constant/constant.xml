@@ -252,6 +252,7 @@
 			<definition name="EXPRESSION_OPERAND_DATAOPERATION" value="dataoperation"/>
 			<definition name="EXPRESSION_OPERAND_DATATYPEOPERATION" value="datatypeoperation"/>
 			<definition name="EXPRESSION_OPERAND_ATTRIBUTEOPERATION" value="attributeoperation"/>
+			<definition name="EXPRESSION_OPERAND_DATASOURCE" value="datasource"/>
 			<definition name="EXPRESSION_OPERAND_PATHOPERATION" value="pathoperation"/>
 			<definition name="EXPRESSION_OPERAND_NEWOPERATION" value="newoperation"/>
 			<definition type="space"/>

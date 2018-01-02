@@ -100,10 +100,33 @@ var node_createExpressionService = function(){
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_REFERENCE:
 			out = loc_getExecuteExpressionRequest(expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_REFERENCES][operand[node_COMMONATRIBUTECONSTANT.OPERAND_REFERENCENAME]], variables, handlers, requestInfo);
 			break;
+		case node_COMMONCONSTANT.EXPRESSION_OPERAND_DATASOURCE:
+			out = loc_getExecuteDataSourceOperandRequest(expression, operand, variables, handlers, requestInfo);
+			break;
 		}
 		return out;
 	};
 
+	
+	//execute operation operand
+	var loc_getExecuteDataSourceOperandRequest = function(expression, datasourceOperand, variables, handlers, requester_parent){
+		var dataSourceDefinition = datasourceOperand.dataSourceDefinition;
+		_.each(dataSourceDefinition.parms, function(parmDef, parmName){
+			//get parm value from constant first
+			var parmValue = dataSourceOperand.constants[parmName];
+			if(parmValue==undefined){
+				var mappedVarName = datasourceOperand.varConfigure[parmName];
+				if(mappedVarName!=undefined){
+					//get from variable
+					var varValue = variables[mappedVarName];
+					var varMatchers = datasourceOperand.matchers[parmName];
+					//convert according to matchers
+					loc_getMatchDataTaskRequest(varValue, varMatchers);
+				}
+			}
+		});
+	};
+	
 	//execute operation operand
 	var loc_getExecuteOperationOperandRequest = function(expression, operationOperand, variables, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);

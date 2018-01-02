@@ -50,6 +50,8 @@ public class HAPVariableInfo extends HAPSerializableImp{
 	
 	public String getStatus(){		return this.m_status;	}
 	
+	public void setStatus(String status){  this.m_status = status;   }
+	
 	public HAPDataTypeCriteria getCriteria(){
 		return m_criteriaStack.get(this.m_criteriaStack.size()-1);
 	}

@@ -107,6 +107,7 @@ public class HAPConstant {
 		public static final String EXPRESSION_OPERAND_DATAOPERATION = "dataoperation";
 		public static final String EXPRESSION_OPERAND_DATATYPEOPERATION = "datatypeoperation";
 		public static final String EXPRESSION_OPERAND_ATTRIBUTEOPERATION = "attributeoperation";
+		public static final String EXPRESSION_OPERAND_DATASOURCE = "datasource";
 		public static final String EXPRESSION_OPERAND_PATHOPERATION = "pathoperation";
 		public static final String EXPRESSION_OPERAND_NEWOPERATION = "newoperation";
 
