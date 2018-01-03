@@ -104,7 +104,6 @@ public class HAPDataSourceImpSecondHand implements HAPDataSource{
 		return (HAPData)serviceData.getData();
 	}
 
-	@Override
 	public HAPDataSourceDefinition getDefinition() {
 		return this.m_dataSourceDefinition;
 	}

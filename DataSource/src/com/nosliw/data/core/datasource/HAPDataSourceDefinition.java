@@ -19,6 +19,9 @@ public class HAPDataSourceDefinition extends HAPSerializableImp{
 	public static String NAME = "name";
 	
 	@HAPAttribute
+	public static String IMPLEMENTATION = "implementation";
+	
+	@HAPAttribute
 	public static String DESCRIPTION = "description";
 	
 	@HAPAttribute
@@ -32,6 +35,8 @@ public class HAPDataSourceDefinition extends HAPSerializableImp{
 	
 	private String m_name;
 	
+	private String m_implementation;
+	
 	private String m_description;
 	
 	private Map<String, HAPDataSourceParm> m_parms;
@@ -43,6 +48,8 @@ public class HAPDataSourceDefinition extends HAPSerializableImp{
 	private HAPCriteriaParser m_parser;
 	
 	public String getName(){  return this.m_name;   }
+	
+	public String getImplementation(){  return this.m_implementation;   }
 	
 	public String getDescription(){   return this.m_description;   }
 	
@@ -57,13 +64,13 @@ public class HAPDataSourceDefinition extends HAPSerializableImp{
 		this.m_parser = HAPCriteriaParser.getInstance();
 	}
 	
-	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{
 			JSONObject objJson = (JSONObject)json;
 			
 			this.m_name = objJson.getString(NAME);
+			this.m_implementation = (String)objJson.opt(IMPLEMENTATION);
 			this.m_description = objJson.optString(DESCRIPTION);
 			this.m_output = new HAPDataSourceOutput(this.m_parser.parseCriteria(objJson.getString(OUTPUT)));
 			

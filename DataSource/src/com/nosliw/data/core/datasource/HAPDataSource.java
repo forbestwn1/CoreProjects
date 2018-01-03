@@ -6,7 +6,7 @@ import com.nosliw.data.core.HAPData;
 
 public interface HAPDataSource {
 
-	HAPDataSourceDefinition getDefinition();
+//	HAPDataSourceDefinition getDefinition();
 	
 	HAPData getData(Map<String, HAPData> parms);
 

@@ -1,5 +1,6 @@
 {
 	"name": "realtor",
+    "implementation" : "com.nosliw.datasource.realtor.HAPDataSourceImp",
 	"description" : "all house for sale in toronto",
 	"output" : "",
 	"parms" : [ 

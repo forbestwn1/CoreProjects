@@ -1,5 +1,6 @@
 {
 	"name": "school",
+    "implementation" : "com.nosliw.datasource.school.HAPDataSourceImp",
 	"description" : "all element school rank in ontario",
 	"output" : "",
 	"parms" : [ 

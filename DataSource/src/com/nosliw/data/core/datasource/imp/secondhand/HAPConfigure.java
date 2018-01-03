@@ -59,7 +59,7 @@ public class HAPConfigure extends HAPSerializableImp{
 			}
 			
 			JSONObject expressionSuiteJson = (JSONObject)objJson.opt(EXPRESSIONSUITE);
-		    this.m_expressionSuite = (HAPExpressionDefinitionSuiteImp)HAPStringableEntityImporterJSON.parseJsonEntity(expressionSuiteJson, HAPExpressionDefinitionSuiteImp._VALUEINFO_NAME, HAPValueInfoManager.getInstance());
+		    this.m_expressionSuite = (HAPExpressionDefinitionSuite)HAPStringableEntityImporterJSON.parseJsonEntity(expressionSuiteJson, HAPExpressionDefinitionSuiteImp._VALUEINFO_NAME, HAPValueInfoManager.getInstance());
 		}
 		catch(Exception e){
 			e.printStackTrace();

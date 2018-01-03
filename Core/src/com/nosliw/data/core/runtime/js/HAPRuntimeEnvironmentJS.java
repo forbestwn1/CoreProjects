@@ -47,7 +47,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	protected void init(HAPResourceManagerRoot resourceMan, 
 					    HAPExpressionManager expressionManager,
 					    HAPGatewayManager gatewayManager,
-					    HAPRuntime runtime){
+					    HAPRuntime runtime){ 
 		this.m_resourceManager = resourceMan;
 		this.m_expressionManager = expressionManager;
 
