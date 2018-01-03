@@ -3,10 +3,17 @@ package com.nosliw.datasource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.HAPData;
 
+@HAPEntityWithAttribute
 public class HAPDataSourceManager {
 
+	@HAPAttribute
+	public static final String GATEWAY_DATASOURCE = "dataSource";
+	
+	
 	private HAPDataSourceDefinitionManager m_dataSourceDefinitionManager;
 	
 	private Map<String, HAPDataSource> m_dataSources;

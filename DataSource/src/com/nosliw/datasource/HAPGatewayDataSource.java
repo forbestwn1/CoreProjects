@@ -7,11 +7,13 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 
+@HAPEntityWithAttribute
 public class HAPGatewayDataSource extends HAPGatewayImp{
 
 	@HAPAttribute

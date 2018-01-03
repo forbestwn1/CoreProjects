@@ -1,13 +1,26 @@
 package com.nosliw.datasource.imp.secondhand;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataTypeConverter;
+import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinitionSuite;
 import com.nosliw.data.core.expression.HAPExpressionManager;
+import com.nosliw.data.core.expression.HAPOperandOperation;
+import com.nosliw.data.core.expression.HAPOperandReference;
+import com.nosliw.data.core.expression.HAPOperandTask;
+import com.nosliw.data.core.expression.HAPOperandUtility;
+import com.nosliw.data.core.expression.HAPOperandWrapper;
+import com.nosliw.data.core.runtime.HAPResourceHelper;
+import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
@@ -34,6 +47,34 @@ public class HAPDataSourceImpSecondHand implements HAPDataSource{
 	}
 	
 	private void init(){
+		
+		HAPOperandUtility.processAllOperand(expression.getOperand(), result, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				Set<HAPResourceId> resourceIds = (Set<HAPResourceId>)data;
+				switch(operand.getOperand().getType()){
+				case HAPConstant.EXPRESSION_OPERAND_OPERATION:
+					HAPOperandOperation operationOperand = (HAPOperandOperation)operand.getOperand();
+					HAPOperationId operationId = operationOperand.getOperationId();
+					//operation as resource
+					if(operationId!=null)	resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(operationId));
+					break;
+				case HAPConstant.EXPRESSION_OPERAND_REFERENCE:
+					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+					List<HAPResourceId> referenceResources = discoverResources(referenceOperand.getExpression());
+					resourceIds.addAll(referenceResources);
+					break;
+				}
+
+				//converter as resource
+				for(HAPDataTypeConverter converter : operand.getOperand().getConverters()){
+					resourceIds.add(new HAPResourceIdConverter(converter));
+				}
+				
+				return true;
+			}
+		});
+		
 		
 		
 		HAPExpressionDefinitionSuite expressionSuite = this.m_configure.getExpressionSuite();
@@ -75,28 +116,11 @@ public class HAPDataSourceImpSecondHand implements HAPDataSource{
 	
 	@Override
 	public HAPData getData(Map<String, HAPData> parms) {
-		
 		HAPExpression expression = m_expressionManager.processExpression(null, "main", m_configure.getExpressionSuite(), null);
-		
 		//execute expression
 		HAPRuntimeTask task1 = new HAPRuntimeTaskExecuteExpressionRhino(expression, parms);
-		task1.registerListener(new HAPRunTaskEventListener(){
-			@Override
-			public void finish(HAPRuntimeTask task){
-				try{
-					HAPServiceData serviceData = task.getResult();
-					processResult(suite, serviceData);
-				}
-				catch(Exception e){
-					e.printStackTrace();
-				}
-			}
-		});
-
-		m_runtime.executeTask(task1);
-		
-		
-		return null;
+		HAPServiceData serviceData = m_runtime.executeTaskSync(task1);
+		return (HAPData)serviceData.getData();
 	}
 
 	@Override

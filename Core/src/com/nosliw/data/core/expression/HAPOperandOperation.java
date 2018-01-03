@@ -1,5 +1,6 @@
 package com.nosliw.data.core.expression;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -22,6 +23,9 @@ import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.runtime.HAPResourceHelper;
+import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
 
 public class HAPOperandOperation extends HAPOperandImp{
@@ -243,5 +247,16 @@ public class HAPOperandOperation extends HAPOperandImp{
 		for(String name : this.m_parms.keySet()){
 			operand.m_parms.put(name, this.m_parms.get(name).cloneWrapper());
 		}
+	}
+
+	@Override
+	public List<HAPResourceId> getResources() {
+		List<HAPResourceId> out = super.getResources();
+		
+		HAPOperationId operationId = this.getOperationId();
+		//operation as resource
+		if(operationId!=null)	out.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(operationId));
+		
+		return out;
 	}
 }

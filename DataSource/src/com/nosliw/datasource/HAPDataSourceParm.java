@@ -3,12 +3,14 @@ package com.nosliw.datasource;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
+@HAPEntityWithAttribute
 public class HAPDataSourceParm extends HAPSerializableImp{
 
 	@HAPAttribute

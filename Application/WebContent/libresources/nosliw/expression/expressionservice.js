@@ -109,22 +109,48 @@ var node_createExpressionService = function(){
 
 	
 	//execute operation operand
-	var loc_getExecuteDataSourceOperandRequest = function(expression, datasourceOperand, variables, handlers, requester_parent){
-		var dataSourceDefinition = datasourceOperand.dataSourceDefinition;
-		_.each(dataSourceDefinition.parms, function(parmDef, parmName){
-			//get parm value from constant first
-			var parmValue = dataSourceOperand.constants[parmName];
-			if(parmValue==undefined){
-				var mappedVarName = datasourceOperand.varConfigure[parmName];
-				if(mappedVarName!=undefined){
-					//get from variable
-					var varValue = variables[mappedVarName];
-					var varMatchers = datasourceOperand.matchers[parmName];
-					//convert according to matchers
-					loc_getMatchDataTaskRequest(varValue, varMatchers);
-				}
+	var loc_getExecuteDataSourceOperandRequest = function(expression, dataSourceOperand, variables, handlers, requester_parent){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataSourceOperand", {"dataSourceOperand":dataSourceOperand}), handlers, requester_parent);
+
+		var getParmsValueRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("GetDataSourceParmsValue", {}), {
+			success : function(requestInfo, setResult){
+				var gatewayParms = {};
+				gatewayParms[node_COMMONATRIBUTECONSTANT.GATEWAYDATASOURCE_COMMAND_GETDATA_NAME] = dataSourceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_DATASOURCE_NAME];
+				gatewayParms[node_COMMONATRIBUTECONSTANT.GATEWAYDATASOURCE_COMMAND_GETDATA_PARMS] = setResult.getResults(); 
+				return nosliw.runtime.getGatwayService().getExecuteGatewayCommandRequest(
+						node_COMMONATRIBUTECONSTANT[DATASOURCEMANAGER_GATEWAY_DATASOURCE], 
+						node_COMMONATRIBUTECONSTANT[GATEWAYDATASOURCE_COMMAND_GETDATA], 
+						gatewayParms);
 			}
 		});
+		var dataSourceDefinition = dataSourceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_DATASOURCE_DEFINITION];
+		_.each(dataSourceDefinition[node_COMMONATRIBUTECONSTANT.DATASOURCEDEFINITION_PARMS], function(parmDef, parmName){
+			//get parm value from constant first
+			var getParmValueRequest;
+			var parmValue = dataSourceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_DATASOURCE_CONSTANT][parmName];
+			if(parmValue!=undefined){
+				//get from constant
+				getParmValueRequest = node_createServiceRequestInfoSimple({}, function(requestInfo){	return parmValue;});
+			}
+			else{
+				//try from variable
+				var mappedVarName = dataSourceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_DATASOURCE_VARCONFIGURE][parmName];
+				if(mappedVarName==undefine)  mappedVarName = parmName;    //no mapping, use original name to find varible
+
+				//get from variable
+				var varValue = variables[mappedVarName];
+				if(varValue!=undefined){
+					var varMatchers = dataSourceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_DATASOURCE_PARMMATCHERS][parmName];
+					//convert according to matchers
+					getParmValueRequest = loc_getMatchDataTaskRequest(varValue, varMatchers);
+				}
+			}
+			
+			if(getParmValueRequest!=undefined)		getParmsValueRequest.addRequest(parmName, getParmValueRequest);
+		});
+		
+		out.addRequest(getParmsValueRequest);
+		return out;
 	};
 	
 	//execute operation operand

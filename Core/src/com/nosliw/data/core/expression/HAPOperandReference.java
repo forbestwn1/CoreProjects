@@ -1,6 +1,7 @@
 package com.nosliw.data.core.expression;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -8,7 +9,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.runtime.HAPResourceHelper;
+import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
 
 public class HAPOperandReference extends HAPOperandImp{
@@ -42,6 +46,15 @@ public class HAPOperandReference extends HAPOperandImp{
 		return out;	
 	}
 
+	@Override
+	public List<HAPResourceId> getResources() {
+		List<HAPResourceId> out = super.getResources();
+		List<HAPResourceId> referenceResources = HAPExpressionUtility.discoverResources(this.getExpression());
+		out.addAll(referenceResources);
+		return out;
+	}
+	
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);

@@ -363,7 +363,25 @@ var COMMONATRIBUTECONSTANT=
   "UITAGDEFINITION_REQUIRES": "requires",
   "_DESCRIPTION": "description",
   "UITAGDEFINITIONCONTEXT_INHERIT": "inherit",
-  "_TYPE": "type"
+  "_TYPE": "type",
+  "DATASOURCEDEFINITION_NAME": "name",
+  "DATASOURCEDEFINITION_DESCRIPTION": "description",
+  "DATASOURCEDEFINITION_PARMS": "parms",
+  "DATASOURCEDEFINITION_OUTPUT": "output",
+  "DATASOURCEDEFINITION_CONFIGURE": "configure",
+  "DATASOURCEMANAGER_GATEWAY_DATASOURCE": "dataSource",
+  "_CRITERIA": "criteria",
+  "_DEFAULT": "default",
+  "GATEWAYDATASOURCE_COMMAND_GETDATA": "getData",
+  "GATEWAYDATASOURCE_COMMAND_GETDATA_NAME": "name",
+  "GATEWAYDATASOURCE_COMMAND_GETDATA_PARMS": "parms",
+  "_PARMS": "parms",
+  "OPERAND_DATASOURCE_NAME": "dataSource_name",
+  "OPERAND_DATASOURCE_DEFINITION": "dataSource_definition",
+  "OPERAND_DATASOURCE_CONSTANT": "dataSource_constant",
+  "OPERAND_DATASOURCE_VARCONFIGURE": "dataSource_varConfigure",
+  "OPERAND_DATASOURCE_VARMAPPING": "dataSource_varMapping",
+  "OPERAND_DATASOURCE_PARMMATCHERS": "dataSource_parmMatchers"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

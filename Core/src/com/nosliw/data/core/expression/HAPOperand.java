@@ -10,6 +10,7 @@ import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.runtime.HAPResourceId;
 
 @HAPEntityWithAttribute(baseName="OPERAND")
 public interface HAPOperand extends HAPSerializable{
@@ -57,6 +58,8 @@ public interface HAPOperand extends HAPSerializable{
 	
 	//status of operand: new, processed, failed
 	String getStatus();
+	
+	List<HAPResourceId> getResources();
 	
 	//get all the convertor required by this operand
 	Set<HAPDataTypeConverter> getConverters();  

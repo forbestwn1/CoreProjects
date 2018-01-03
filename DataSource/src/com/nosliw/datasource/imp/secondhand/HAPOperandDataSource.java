@@ -1,13 +1,17 @@
 package com.nosliw.datasource.imp.secondhand;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPMatchers;
@@ -15,7 +19,11 @@ import com.nosliw.data.core.expression.HAPOperand;
 import com.nosliw.data.core.expression.HAPOperandImp;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResourceUtility;
+import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSGateway;
 import com.nosliw.datasource.HAPDataSourceDefinition;
+import com.nosliw.datasource.HAPDataSourceManager;
 import com.nosliw.datasource.HAPDataSourceOutput;
 import com.nosliw.datasource.HAPDataSourceParm;
 
@@ -63,6 +71,22 @@ public class HAPOperandDataSource extends HAPOperandImp{
 		}
 	}
 
+	@Override
+	public Set<HAPDataTypeConverter> getConverters(){
+		Set<HAPDataTypeConverter> out = new HashSet<HAPDataTypeConverter>();
+		for(String parm : this.m_parmsMatchers.keySet()){
+			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(this.m_parmsMatchers.get(parm).discoverRelationships()));
+		}
+		return out;	
+	}
+	
+	@Override
+	public List<HAPResourceId> getResources() {
+		List<HAPResourceId> out = super.getResources();
+		out.add(new HAPResourceIdJSGateway(HAPDataSourceManager.GATEWAY_DATASOURCE));
+		return out;
+	}
+	
 	@Override
 	public HAPMatchers discover(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectCriteria,
 			HAPProcessExpressionDefinitionContext context, HAPDataTypeHelper dataTypeHelper) {
