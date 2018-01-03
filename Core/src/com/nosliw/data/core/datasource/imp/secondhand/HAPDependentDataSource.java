@@ -1,4 +1,4 @@
-package com.nosliw.datasource.imp.secondhand;
+package com.nosliw.data.core.datasource.imp.secondhand;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -48,8 +48,8 @@ public class HAPDependentDataSource extends HAPSerializableImp{
 			Iterator<String> parmsIts = parmJsonObj.keys();
 			while(parmsIts.hasNext()){
 				String parmName = parmsIts.next();
-				String parmValue = parmJsonObj.getString(parmName);
-				this.m_parms.put(parmName, new HAPDependentDataSourceParm(parmValue));
+				Object parmValueJson = parmJsonObj.get(parmName);
+				this.m_parms.put(parmName, new HAPDependentDataSourceParm(parmValueJson));
 			}
 		}
 		catch(Exception e){

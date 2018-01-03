@@ -1,4 +1,4 @@
-package com.nosliw.datasource;
+package com.nosliw.data.core.datasource;
 
 import org.json.JSONObject;
 

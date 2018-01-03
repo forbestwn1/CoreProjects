@@ -10,7 +10,7 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataWrapper;
-import com.nosliw.datasource.HAPDataSource;
+import com.nosliw.data.core.datasource.HAPDataSource;
 
 public class HAPDataSourceImp implements HAPDataSource{
 

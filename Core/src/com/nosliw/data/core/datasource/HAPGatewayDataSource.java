@@ -1,4 +1,4 @@
-package com.nosliw.datasource;
+package com.nosliw.data.core.datasource;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;

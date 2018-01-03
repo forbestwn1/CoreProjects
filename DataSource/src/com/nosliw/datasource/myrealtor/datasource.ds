@@ -15,7 +15,7 @@
     ],
     "configure": {
     	"type" : "",
-        "dependentDataSource": {
+        "dependentDataSources": {
             "myschool": {
                 "name": "school",
                 "parms": {
@@ -24,7 +24,7 @@
             },
             "myrealtor": {}
         },
-        "expressionDefinitions": {
+        "expressionSuite": {
             "main": {
                 "expression": "!(test.string)!.subString(<(expression1)>,from:?(fromVar)?,to:?(toVar)?)",
                 "description": "Variable.method, all constant",

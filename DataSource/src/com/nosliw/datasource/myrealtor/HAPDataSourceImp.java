@@ -3,7 +3,7 @@ package com.nosliw.datasource.myrealtor;
 import java.util.Map;
 
 import com.nosliw.data.core.HAPData;
-import com.nosliw.datasource.HAPDataSource;
+import com.nosliw.data.core.datasource.HAPDataSource;
 
 public class HAPDataSourceImp implements HAPDataSource{
 
