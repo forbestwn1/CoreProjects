@@ -3,9 +3,12 @@ package com.nosliw.data.core.datasource.imp.secondhand;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.datasource.HAPDataSource;
 import com.nosliw.data.core.datasource.HAPDataSourceDefinition;
 import com.nosliw.data.core.datasource.HAPDataSourceDefinitionManager;
@@ -112,9 +115,9 @@ public class HAPDataSourceImpSecondHand implements HAPDataSource{
 	public HAPData getData(Map<String, HAPData> parms) {
 		HAPExpression expression = m_expressionManager.processExpression(null, "main", m_configure.getExpressionSuite(), null);
 		//execute expression
-		HAPRuntimeTask task1 = new HAPRuntimeTaskExecuteExpressionRhino(expression, parms);
-		HAPServiceData serviceData = m_runtime.executeTaskSync(task1);
-		return (HAPData)serviceData.getData();
+		HAPRuntimeTask task = new HAPRuntimeTaskExecuteExpressionRhino(expression, parms);
+		HAPServiceData serviceData = m_runtime.executeTaskSync(task);
+		return HAPDataUtility.buildDataWrapperFromJson((JSONObject)serviceData.getData());
 	}
 
 	public HAPDataSourceDefinition getDefinition() {

@@ -1,5 +1,6 @@
 package com.nosliw.datasource.school;
 
+import java.io.InputStream;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -36,7 +37,8 @@ public class HAPDataSourceImp implements HAPDataSource{
 
 //		InputStream elementDataInputStream = new FileInputStream(new File("elementSchoolArray.js"));
 		
-		String content = HAPFileUtility.readFile("elementSchoolArray.js");
+		InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(getClass(), "elementSchoolArray.js");
+		String content =  HAPFileUtility.readFile(inputStream);
 		
 		try{
 			JSONArray originalDataArray = new JSONArray(content);

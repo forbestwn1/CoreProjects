@@ -117,9 +117,9 @@ var node_createExpressionService = function(){
 				var gatewayParms = {};
 				gatewayParms[node_COMMONATRIBUTECONSTANT.GATEWAYDATASOURCE_COMMAND_GETDATA_NAME] = dataSourceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_DATASOURCE_NAME];
 				gatewayParms[node_COMMONATRIBUTECONSTANT.GATEWAYDATASOURCE_COMMAND_GETDATA_PARMS] = setResult.getResults(); 
-				return nosliw.runtime.getGatwayService().getExecuteGatewayCommandRequest(
-						node_COMMONATRIBUTECONSTANT[DATASOURCEMANAGER_GATEWAY_DATASOURCE], 
-						node_COMMONATRIBUTECONSTANT[GATEWAYDATASOURCE_COMMAND_GETDATA], 
+				return nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(
+						node_COMMONATRIBUTECONSTANT.DATASOURCEMANAGER_GATEWAY_DATASOURCE, 
+						node_COMMONATRIBUTECONSTANT.GATEWAYDATASOURCE_COMMAND_GETDATA, 
 						gatewayParms);
 			}
 		});

@@ -27,8 +27,8 @@ public class HAPDataSourceImp implements HAPDataSource{
 	public HAPData getData(Map<String, HAPData> parms){
 		HAPData out = null;
 		try{
-			InputStream elementDataInputStream = new FileInputStream(new File("homesArray.js"));
-			String content = HAPFileUtility.readFile(elementDataInputStream);
+			InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(getClass(), "homesArray.js");
+			String content =  HAPFileUtility.readFile(inputStream);
 			out = buildData(new JSONArray(content));
 		}
 		catch(Exception e){
