@@ -2,7 +2,7 @@
     "name": "myrealtor",
     "implementation" : "secondHand",
     "description": "",
-	"output" : "test.array;1.0.0%||element:test.map;1.0.0%||geo:test.geo;1.0.0||%||%",
+	"output" : "test.array;1.0.0%||element:test.map;1.0.0%||geo:test.geo;1.0.0,MlsNumber:test.string;1.0.0||%||%",
     "parms": [
     ],
     "configure": {
@@ -21,12 +21,43 @@
         "expressionSuite": {
         	"expressionDefinitions" : {
 	            "main": {
-	                "expression": "?(schoolDataSource)?",
+	                "expression": "?(realtors)?.filter(elementVariableName:&(#test##string___school)&, expression:filterAndProcessRealtor)",
 	                "description": "Variable.method, all constant",
 	                "constants": {
 	                },
 	                "variableCriterias": {
 	                },
+	            },
+	            "filterAndProcessRealtor" : {
+	            	"expression" : "!(control)!.diverse(getMatchedSchoolForRealtor.isNull(), yes:null, no:getMatchedSchoolForRealtor.put("name", school.name))"
+	            },
+	            "getMatchedSchoolForRealtor" : {
+	            	"expression" : "?(schools)?.findFirstOne(elementVariableName:&(#test##string___school)&, expression:"isWithinDistance")"
+	            },
+	            "filterSchool: : {
+	            	"expression" : "?(schools)?.filter(elementVariableName:&(#test##string___school)&, expression:)"
+	            },
+	            "isGoodSchool" : {
+	            	"expression" : "?(school)?.score.higherThan(parm2:&(shoolScoreMin)&)"
+	            	"constants" : {
+	            		"shoolScoreMin" : {
+								"dataTypeId": "test.integer",
+								"value": "7"
+						}		
+	            	}
+	            },
+	            "isWithinDistance" : {
+	            	"expression" : "!(test.geo)!.distance(geo1:?(schoolData)?.geo,geo2:?(realData)?.geo).lowerThan(parm2:&(dis)&)",
+	                "variableCriterias": {
+	                	"schoolData" : "test.map",
+	                	"realData"
+	                },
+	            	"constants" : {
+	            		"dis" : {
+								"dataTypeId": "test.double",
+								"value": "6"
+						}		
+	            	}
 	            }
         	}
         },

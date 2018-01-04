@@ -35,3 +35,5 @@ n
 >src/com/nosliw/application/loader/runtimejs/HAPJSImporter.java,5\a\5afa1bc19b1ea1a2be6c4151b46ac640a39030ce
 Y
 )src/com/nosliw/test/uisource/Example1.res,b\4\b4b1cf1c75bea16145c2dc545ffec130138ff614
+d
+4src/com/nosliw/test/datasource/HAPDataSourceMan.java,6\1\61c90f6491979902524b9bfc17641d2385011e61

@@ -94,3 +94,7 @@ j
 :src/com/nosliw/data/core/imp/HAPDataTypeImpOperations.java,9\7\9740301b8a27b3db573d9be8a0c3fe1107b0ad39
 ƒ
 Ssrc/com/nosliw/data/core/imp/runtime/js/resource/HAPResourceDataJSOperationImp.java,1\9\19d9de3d393928d46151cc830547c38290964d7e
+~
+Nsrc/com/nosliw/data/core/imp/datasource/HAPDataSourceDefinitionManagerImp.java,4\6\462aedd5afd36928f427edd7859e00857b229427
+t
+Dsrc/com/nosliw/data/core/imp/datasource/HAPDataSourceManagerImp.java,6\f\6f14fd9d83ad071229c5b5712fefd207e3e0ea8b
