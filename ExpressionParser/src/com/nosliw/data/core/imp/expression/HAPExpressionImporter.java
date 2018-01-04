@@ -18,13 +18,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import org.json.JSONObject;
 
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionDefinitionSuite;
 import com.nosliw.data.core.expression.HAPExpressionManager;
+import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 
 public class HAPExpressionImporter {
 
@@ -86,7 +91,23 @@ public class HAPExpressionImporter {
 	}
 	
 	static private HAPExpressionDefinitionSuiteImp importExpressionDefinitionSuiteFromFile(InputStream inputStream){
-        HAPExpressionDefinitionSuiteImp expressionDefinitionSuite = (HAPExpressionDefinitionSuiteImp)HAPStringableEntityImporterJSON.parseJsonEntity(inputStream, HAPExpressionDefinitionSuiteImp._VALUEINFO_NAME, HAPValueInfoManager.getInstance());
-        return expressionDefinitionSuite;
+        HAPExpressionDefinitionSuiteImp out = (HAPExpressionDefinitionSuiteImp)HAPStringableEntityImporterJSON.parseJsonEntity(inputStream, HAPExpressionDefinitionSuiteImp._VALUEINFO_NAME, HAPValueInfoManager.getInstance());
+		Map<String, HAPExpressionDefinition> expressionDefs = out.getAllExpressionDefinitions();
+		for(String expName : expressionDefs.keySet()){
+			HAPExpressionDefinition expDef = expressionDefs.get(expName);
+			expDef.setOperand(new HAPExpressionParserImp().parseExpression(expDef.getExpression()));
+		}
+        return out;
 	}
+	
+	public static HAPExpressionDefinitionSuiteImp importExpressionDefinitionSuiteFromJSON(JSONObject expressionSuiteJson){
+		HAPExpressionDefinitionSuiteImp out = (HAPExpressionDefinitionSuiteImp)HAPStringableEntityImporterJSON.parseJsonEntity(expressionSuiteJson, HAPExpressionDefinitionSuiteImp._VALUEINFO_NAME, HAPValueInfoManager.getInstance());
+		Map<String, HAPExpressionDefinition> expressionDefs = out.getAllExpressionDefinitions();
+		for(String expName : expressionDefs.keySet()){
+			HAPExpressionDefinition expDef = expressionDefs.get(expName);
+			expDef.setOperand(new HAPExpressionParserImp().parseExpression(expDef.getExpression()));
+		}
+		return out;
+	}
+	
 }

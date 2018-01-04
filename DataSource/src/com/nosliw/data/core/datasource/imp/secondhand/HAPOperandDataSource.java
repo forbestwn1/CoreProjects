@@ -60,9 +60,10 @@ public class HAPOperandDataSource extends HAPOperandImp{
 	//matchers required by data source parm
 	private Map<String, HAPMatchers> m_parmsMatchers;
 	
-	public HAPOperandDataSource(String dataSourceName, Map<String, HAPData> constants, Map<String, String> varConfigure){
+	public HAPOperandDataSource(String dataSourceName, HAPDataSourceDefinition dataSourceDefinition, Map<String, HAPData> constants, Map<String, String> varConfigure){
 		super(HAPConstant.EXPRESSION_OPERAND_DATASOURCE);
 		this.m_dataSourceName = dataSourceName;
+		this.m_dataSourceDefinition = dataSourceDefinition;
 		this.m_constants = constants;
 		this.m_varConfigure = varConfigure;
 		this.m_varMapping = new LinkedHashMap<String, String>();
@@ -131,7 +132,7 @@ public class HAPOperandDataSource extends HAPOperandImp{
 
 	@Override
 	public HAPOperand cloneOperand() {
-		HAPOperand out = new HAPOperandDataSource(m_dataSourceName, m_constants, m_varConfigure);
+		HAPOperand out = new HAPOperandDataSource(m_dataSourceName, this.m_dataSourceDefinition, m_constants, m_varConfigure);
 		return out;
 	}
 	

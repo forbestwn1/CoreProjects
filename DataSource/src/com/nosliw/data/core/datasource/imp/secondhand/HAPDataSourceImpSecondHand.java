@@ -8,6 +8,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.datasource.HAPDataSource;
 import com.nosliw.data.core.datasource.HAPDataSourceDefinition;
+import com.nosliw.data.core.datasource.HAPDataSourceDefinitionManager;
+import com.nosliw.data.core.datasource.HAPDataSourceParm;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionDefinitionSuite;
@@ -22,6 +24,8 @@ import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskExecuteExpressionRhin
 
 public class HAPDataSourceImpSecondHand implements HAPDataSource{
 
+	private HAPDataSourceDefinitionManager m_dataSourceDefinitionManager;
+	
 	private HAPExpressionManager m_expressionManager;
 	
 	private HAPRuntime m_runtime;
@@ -32,8 +36,10 @@ public class HAPDataSourceImpSecondHand implements HAPDataSource{
 	
 	public HAPDataSourceImpSecondHand(
 			HAPDataSourceDefinition dataSourceDefinition, 
+			HAPDataSourceDefinitionManager dataSourceDefinitionManager,
 			HAPExpressionManager expressionManager,
 			HAPRuntime runtime){
+		this.m_dataSourceDefinitionManager = dataSourceDefinitionManager;
 		this.m_runtime = runtime;
 		this.m_expressionManager = expressionManager;
 		this.m_dataSourceDefinition = dataSourceDefinition;
@@ -57,6 +63,13 @@ public class HAPDataSourceImpSecondHand implements HAPDataSource{
 		Map<String, HAPExpressionDefinition> expressions = expressionSuite.getAllExpressionDefinitions();
 		for(String expName : expressions.keySet()){
 			HAPExpressionDefinition expDef = expressions.get(expName);
+			
+			//add data source parms to expression as variable
+			Map<String, HAPDataSourceParm> dataSourceParms = this.m_dataSourceDefinition.getParms();
+			for(String parmName : dataSourceParms.keySet()){
+				expDef.getVariableCriterias().put(parmName, dataSourceParms.get(parmName).getCriteria());
+			}
+			
 			HAPOperandUtility.processAllOperand(expDef.getOperand(), mappedDataSourceNames, new HAPOperandTask(){
 				@Override
 				public boolean processOperand(HAPOperandWrapper operand, Object data) {
@@ -83,7 +96,7 @@ public class HAPDataSourceImpSecondHand implements HAPDataSource{
 									constants.put(dataSourceParmName, dependentParm.getParmData());
 								}
 							}
-							operand.setOperand(new  HAPOperandDataSource(dataSourceName, constants, varConfigure));							
+							operand.setOperand(new HAPOperandDataSource(dataSourceName, m_dataSourceDefinitionManager.getDataSourceDefinition(dataSourceName), constants, varConfigure));							
 						}
 						break;
 					}

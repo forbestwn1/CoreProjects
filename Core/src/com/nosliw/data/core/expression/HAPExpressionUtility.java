@@ -11,7 +11,6 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperationId;
-import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;

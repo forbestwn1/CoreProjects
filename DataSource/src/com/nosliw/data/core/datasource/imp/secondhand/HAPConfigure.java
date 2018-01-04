@@ -9,10 +9,8 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
-import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.core.expression.HAPExpressionDefinitionSuite;
-import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp;
+import com.nosliw.data.core.imp.expression.HAPExpressionImporter;
 
 @HAPEntityWithAttribute
 public class HAPConfigure extends HAPSerializableImp{
@@ -59,7 +57,7 @@ public class HAPConfigure extends HAPSerializableImp{
 			}
 			
 			JSONObject expressionSuiteJson = (JSONObject)objJson.opt(EXPRESSIONSUITE);
-		    this.m_expressionSuite = (HAPExpressionDefinitionSuite)HAPStringableEntityImporterJSON.parseJsonEntity(expressionSuiteJson, HAPExpressionDefinitionSuiteImp._VALUEINFO_NAME, HAPValueInfoManager.getInstance());
+		    this.m_expressionSuite = HAPExpressionImporter.importExpressionDefinitionSuiteFromJSON(expressionSuiteJson); 
 		}
 		catch(Exception e){
 			e.printStackTrace();

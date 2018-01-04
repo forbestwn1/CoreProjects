@@ -41,6 +41,7 @@ public class HAPExpressionDefinitionProcessorImp implements HAPExpressionDefinit
 		this.m_dataTypeHelper = dataTypeHelper;
 	}
 	
+	@Override
 	public HAPOperand parseExpression(String expression){
 		HAPOperand expressionOperand = this.getExpressionParser().parseExpression(expression);
 		return expressionOperand;

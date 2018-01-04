@@ -18,7 +18,7 @@ public class HAPDataSourceManagerImp extends HAPDataSourceManager{
 		this.m_expressionManager = expressionManager;
 		this.m_runtime = runtime;
 		
-		this.registerDataSourceFactory(HAPDataSourceFactorySecondHand.DATASOURCEFACTORY_NAME, new HAPDataSourceFactorySecondHand(this.m_expressionManager, this.m_runtime));
+		this.registerDataSourceFactory(HAPDataSourceFactorySecondHand.DATASOURCEFACTORY_NAME, new HAPDataSourceFactorySecondHand(this.getDataSourceDefinitionManager(), this.m_expressionManager, this.m_runtime));
 	}
 
 }

@@ -46,7 +46,7 @@ public class HAPDataSourceManager {
 				}
 				else{
 					//it is factory name
-					this.m_dataSourceFactorys.get(imp).newDataSource(def);
+					dataSource = this.m_dataSourceFactorys.get(imp).newDataSource(def);
 				}
 			}
 			catch(Exception e){
@@ -60,4 +60,7 @@ public class HAPDataSourceManager {
 		return out;
 	}
 	
+	protected HAPDataSourceDefinitionManager getDataSourceDefinitionManager(){
+		return this.m_dataSourceDefinitionManager;
+	}
 }

@@ -40,7 +40,7 @@ public class HAPDataSourceDefinitionManagerImp extends HAPDataSourceDefinitionMa
 
 	private HAPDataSourceDefinition loadDataSourceDefinition(Class cls){
 		try{
-			InputStream inputStream = cls.getResourceAsStream("dataresource.ds");
+			InputStream inputStream = cls.getResourceAsStream("datasource.ds");
 			String content = HAPFileUtility.readFile(inputStream);
 			HAPDataSourceDefinition out = new HAPDataSourceDefinition();
 			out.buildObject(new JSONObject(content), HAPSerializationFormat.JSON);

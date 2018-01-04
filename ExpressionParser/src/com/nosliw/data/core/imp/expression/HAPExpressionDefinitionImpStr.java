@@ -23,7 +23,7 @@ public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity impl
 	//This attribute store the real criteria which can be converted from literate fromat
 	Map<String, HAPDataTypeCriteria> m_variabesWithSolidCriteria;
 	
-	private HAPOperandWrapper m_operand  = new HAPOperandWrapper();   ;
+	private HAPOperandWrapper m_operand  = new HAPOperandWrapper();
 	
 	public HAPExpressionDefinitionImpStr(){	}
 	
