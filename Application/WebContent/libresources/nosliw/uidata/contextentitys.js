@@ -53,6 +53,9 @@ var node_createContextVariable = function(n, p){
 		path : path,
 		//key
 		key : node_namingConvensionUtility.cascadePath(name, path),
+		getFullPath : function(){
+			return this.key;
+		}
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_CONTEXTVARIABLE);

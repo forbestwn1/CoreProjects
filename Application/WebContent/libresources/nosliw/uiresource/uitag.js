@@ -15,6 +15,11 @@ var packageObj = library;
 	var node_createEmbededScriptExpressionInAttribute;
 	var node_getLifecycleInterface;
 	var node_basicUtility;
+	var node_createContextVariable;
+	var node_requestServiceProcessor;
+	var node_createUIDataOperationRequest;
+	var node_UIDataOperation;
+	var node_uiDataOperationServiceUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	/**
@@ -26,7 +31,7 @@ var packageObj = library;
 	 * 		parentUIResourceView: 	parent ui resource view
 	 */
 var node_createUITag = function(id, uiTagResource, parentUIResourceView, requestInfo){
-	
+	//object to implement tag logic, it is from tag library
 	var loc_uiTagObj;
 	
 	//id of this tag object
@@ -43,6 +48,36 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 	//boundary element for this tag
 	var loc_startEle = undefined;
 	var loc_endEle = undefined;
+	
+	//runtime env for uiTagObj
+	//include : basic info, utility method
+	var loc_envObj = {
+		getStartElement : function(){  return loc_startEle;  },
+		getEneElement : function(){  return loc_endEle;  },
+		getContext : function(){   return loc_context;  },
+		getAttributeValue : function(name){  return loc_attributes[name];  },
+		getAttributes : function(){   return loc_attributes;   },
+		
+		//utility methods
+		createVariable : function(fullPath){  return loc_context.createVariable(node_createContextVariable(fullPath));  },
+		processRequest : function(requestInfo){   node_requestServiceProcessor.processRequest(requestInfo, false);  },
+		
+		getDataOperationGet : function(target, path){  return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createGetOperationService(path)); },
+		getDataOperationRequestGet : function(target, path, handler, request){
+			return node_createUIDataOperationRequest(loc_context, this.getDataOperationGet(target, path), handler, request);
+		},
+		executeDataOperationRequestGet : function(target, path, handler, request){	this.processRequest(this.getDataOperationRequestGet(target, path, handler, request));	},
+		
+		
+		executeBatchDataOperationRequest : function(operations){
+			var requestInfo = node_createBatchUIDataOperationRequest(loc_context);
+			_.each(operations, function(operation, i){
+				requestInfo.addUIDataOperation(operation);						
+			});
+			this.processRequest(requestInfo);
+		} 
+		
+	};
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(id, uiTagResource, parentUIResourceView, requestInfo){
@@ -63,7 +98,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		//create uiTagObject
 		var uiTagResourceId = node_uiResourceUtility.createTagResourceId(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME]);
 		var uiTagResourceObj = nosliw.runtime.getResourceService().getResource(uiTagResourceId);
-		loc_uiTagObj = uiTagResourceObj[node_COMMONATRIBUTECONSTANT.RESOURCE_RESOURCEDATA][node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_context, loc_parentResourceView, uiTagResource, loc_attributes, loc_out);
+		loc_uiTagObj = uiTagResourceObj[node_COMMONATRIBUTECONSTANT.RESOURCE_RESOURCEDATA][node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_context, loc_parentResourceView, uiTagResource, loc_attributes, loc_envObj);
 		
 		//overriden method before view is attatched to dom
 		loc_uiTagObj.ovr_preInit(requestInfo);
@@ -113,6 +148,11 @@ nosliw.registerSetNodeDataEvent("uiresource.createEmbededScriptExpressionInConte
 nosliw.registerSetNodeDataEvent("uiresource.createEmbededScriptExpressionInAttribute", function(){node_createEmbededScriptExpressionInAttribute = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextVariable", function(){node_createContextVariable = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUITag", node_createUITag); 

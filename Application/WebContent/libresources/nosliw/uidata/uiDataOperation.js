@@ -31,6 +31,7 @@ var node_createUIDataOperationRequest = function(context, uiDataOperation, handl
 		request = loc_context.getDataOperationRequest(target.name, operationService, handlers, requester_parent);
 		break;
 	default : 
+		//target is context element name
 		request = loc_context.getDataOperationRequest(target, operationService, handlers, requester_parent);
 	}
 	return request;

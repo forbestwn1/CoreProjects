@@ -54,6 +54,8 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		loc_out.pri_path = path;
 		
 		//adapter for converting value
+		//with adapter, we can insert some converting job into this wrapper, 
+		//this converting job can transform the wrapper value during read and set
 		loc_out.adapter;
 		
 		//event and listener for data operation event

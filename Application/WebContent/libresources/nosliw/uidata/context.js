@@ -25,6 +25,43 @@ var node_createServiceRequestInfoSimple;
  * 
  */
 var node_createContext = function(elementInfosArray, request){
+	
+	//according to contextVariable, find the base variable from Context
+	//base variable contains two info: 1. variable,  2. path from variable
+	var loc_findBaseVariable = function(contextVariable){
+		var fullPath = contextVariable.getFullPath();
+		
+		//get parent var from adapter first
+		//find longest matching path
+		var parentVar;
+		var varPath = contextVariable.path;
+		var pathLength = -1;
+		_.each(loc_out.prv_adapters, function(adapterVariable, path){
+			var comparePath = node_dataUtility.comparePath(fullPath, path);
+			if(comparePath.compare==0){
+				parentVar = adapterVariable;
+				varPath = "";
+				pathLength = path.length>pathLength? path.length:pathLength;
+			}
+			else if(comparePath.compare==1){
+				parentVar = adapterVariable;
+				varPath = comparePath.subPath;
+				pathLength = path.length>pathLength? path.length:pathLength;
+			}
+		});
+		
+		//not found, use variable from elements
+		if(parentVar==undefined){
+			parentVar = loc_out.prv_elements[contextVariable.name].variable;
+			varPath = contextVariable.path;
+		}
+		
+		return {
+			variable : parentVar,
+			path : varPath
+		}
+	};
+	
 	/*
 	 * get context element variable by name
 	 */
@@ -35,16 +72,10 @@ var node_createContext = function(elementInfosArray, request){
 	};
 	
 	var loc_createVariableFromContextVariable = function(contextVariable, requestInfo){
-		var fullPath = node_dataUtility.combinePath(contextVariable.name, contextVariable.path);
-		//get parent var from adapter first
-		var parentVar = loc_out.prv_adapters[fullPath];
-		if(parentVar==undefined){
-			parentVar = loc_getContextElementVariable(contextVariable.name);
-		}
-		
-		var variable = node_createWrapperVariable(parentVar, contextVariable.path, requestInfo);
+		var baseVar = loc_findBaseVariable(contextVariable);
+		var variable = node_createWrapperVariable(baseVar.variable, baseVar.path, requestInfo);
 		//add extra attribute "contextPath" to variable for variables name under context
-		variable.contextPath = fullPath;
+		variable.contextPath = contextVariable.getFullPath();
 		return variable;
 	};
 	
@@ -102,25 +133,6 @@ var node_createContext = function(elementInfosArray, request){
 	var loc_out = {
 		
 		/*
-		 * get all context elements
-		 */
-		getContext : function(){ return this.prv_elements; },
-		
-		/*
-		 * get context element by name
-		 */
-		getContextElement : function(name){ return this.getContext()[name]; },
-
-		/*
-		 * get data of context element
-		 */
-		getContextElementData : function(name){ 
-			var contextEle = this.getContextElement(name);
-			if(contextEle==undefined)  return undefined;
-			return contextEle.variable.getData();
-		},
-		
-		/*
 		 * create context variable
 		 */
 		createVariable : function(contextVariable, requestInfo){
@@ -140,7 +152,7 @@ var node_createContext = function(elementInfosArray, request){
 			var that = this;
 			_.each(wrappers, function(wrapper, name){
 				//set wrapper to each variable
-				var eleVar = that.getContextElementVariable(name);
+				var eleVar = loc_getContextElementVariable(name);
 				if(eleVar!=undefined){
 					eleVar.setWrapper(wrapper, requestInfo);
 				}
@@ -159,17 +171,41 @@ var node_createContext = function(elementInfosArray, request){
 			node_eventUtility.registerListener(listener, this.prv_eventObject, node_CONSTANT.EVENT_EVENTNAME_ALL, handler, thisContext)
 		},
 		
-		requestDataOperation : function(dataOperationService, request){
-			var contextVar = node_createContextVariable(dataOperationService.parms.path);
-			var contextEle = this.getContextElementVariable(contextVar.name);
-			contextEle.requestDataOperation(new node_ServiceInfo(dataOperationService.command, {"path":contextVar.path, "data":dataOperationService.parms.data}), request);
-		},
-		
 		getDataOperationRequest : function(eleName, operationService, handlers, requester_parent){
-			var eleVar = this.getContextElementVariable(eleName);
-			return eleVar.getDataOperationRequest(operationService, handlers, requester_parent);
+			var operationPath = operationService.parms.path;
+			var baseVariable = loc_findBaseVariable(node_createContextVariable(eleName, operationPath));
+			if(operationPath!=undefined){
+				operationService.parms.path = baseVariable.path;
+			}
+			return baseVariable.variable.getDataOperationRequest(operationService, handlers, requester_parent);
 		}
 		
+		
+		/*
+		 * get all context elements
+		 */
+//		getContext : function(){ return this.prv_elements; },
+		
+		/*
+		 * get context element by name
+		 */
+//		getContextElement : function(name){ return this.getContext()[name]; },
+
+		/*
+		 * get data of context element
+		 */
+//		getContextElementData : function(name){ 
+//			var contextEle = this.getContextElement(name);
+//			if(contextEle==undefined)  return undefined;
+//			return contextEle.variable.getData();
+//		},
+		
+//		requestDataOperation : function(dataOperationService, request){
+//		var contextVar = node_createContextVariable(dataOperationService.parms.path);
+//		var contextEle = loc_getContextElementVariable(contextVar.name);
+//		contextEle.requestDataOperation(new node_ServiceInfo(dataOperationService.command, {"path":contextVar.path, "data":dataOperationService.parms.data}), request);
+//	},
+	
 	};
 
 	//append resource life cycle method to out obj
