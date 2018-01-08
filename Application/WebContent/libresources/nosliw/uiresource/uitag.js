@@ -21,6 +21,7 @@ var packageObj = library;
 	var node_UIDataOperation;
 	var node_uiDataOperationServiceUtility;
 	var node_createBatchUIDataOperationRequest;
+	var node_createUIResourceViewFactory;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	/**
@@ -37,6 +38,8 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 	
 	//id of this tag object
 	var loc_id = id;
+	//ui resource definition
+	var loc_uiTagResource = uiTagResource;
 	//parent resource view
 	var loc_parentResourceView = parentUIResourceView;
 	//all tag attributes
@@ -64,10 +67,31 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		createVariable : function(fullPath){  return loc_context.createVariable(node_createContextVariable(fullPath));  },
 		processRequest : function(requestInfo){   node_requestServiceProcessor.processRequest(requestInfo, false);  },
 		
-		createUIResourceView : function(uiTagResource, id, requestInfo){
-			return node_createUIResourceViewFactory().createUIResourceView(uiTagResource, id, loc_parentResourceView, loc_context, requestInfo);
+		//---------------------------------ui resource view
+		createUIResourceViewWithId : function(id, context, requestInfo){
+			return node_createUIResourceViewFactory().createUIResourceView(loc_uiTagResource, id, loc_parentResourceView, context, requestInfo);
+		},
+
+		createDefaultUIResourceView : function(requestInfo){
+			return node_createUIResourceViewFactory().createUIResourceView(loc_uiTagResource, loc_id, loc_parentResourceView, loc_context, requestInfo);
 		},
 		
+		//---------------------------------build context
+		createContextElementInfo : function(name, data1, data2, data3){  return node_createContextElementInfo(name, data1, data2, data3);  },
+		createContextElementInfoFromContext : function(name, contextEle, path){	 return node_createContextElementInfo(name, loc_context, node_createContextVariable(contextEle, path));	},
+		createExtendedContext : function(extendedEleInfos, requestInfo){
+			var contextElesInfo = [];
+			var that  = this;
+			_.each(loc_context.getElementsName(), function(elementName, index){
+				contextElesInfo.push(that.createContextElementInfoFromContext(elementName, elementName));
+			});
+			_.each(extendedEleInfos, function(eleInfo, index){
+				contextElesInfo.push(eleInfo);
+			});
+			return node_createContext(contextElesInfo, requestInfo);
+		},
+		
+		//---------------------------------operation request
 		getDataOperationGet : function(target, path){  return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createGetOperationService(path)); },
 		getDataOperationRequestGet : function(target, path, handler, request){
 			return node_createUIDataOperationRequest(loc_context, this.getDataOperationGet(target, path), handler, request);
@@ -166,6 +190,7 @@ nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createUIDataOperationReq
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createBatchUIDataOperationRequest", function(){node_createBatchUIDataOperationRequest  = this.getData();});
+nosliw.registerSetNodeDataEvent("uiresource.createUIResourceViewFactory", function(){node_createUIResourceViewFactory = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUITag", node_createUITag); 

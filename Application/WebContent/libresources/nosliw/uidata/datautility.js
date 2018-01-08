@@ -18,6 +18,7 @@ var node_utility = function(){
 	return {
 		
 		cloneValue : function(value){
+			if(value==undefined)  return undefined;
 			var copy = JSON.parse(JSON.stringify(value));
 			return copy;
 		},

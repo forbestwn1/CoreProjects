@@ -178,8 +178,15 @@ var node_createContext = function(elementInfosArray, request){
 				operationService.parms.path = baseVariable.path;
 			}
 			return baseVariable.variable.getDataOperationRequest(operationService, handlers, requester_parent);
-		}
+		},
 		
+		getElementsName : function(){
+			var out = [];
+			_.each(loc_out.prv_elements, function(ele, eleName){
+				out.push(eleName);
+			});
+			return out;
+		}
 		
 		/*
 		 * get all context elements

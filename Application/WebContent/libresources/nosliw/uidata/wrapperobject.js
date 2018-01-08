@@ -143,7 +143,7 @@ var node_createWraperObject = function(){
 					var elements = [];
 					_.each(baseValue, function(eleValue, key, list){
 						elements.push({
-							key : key,
+							key : key+"",
 							value : node_dataUtility.cloneValue(eleValue)
 						});
 					}, this);
