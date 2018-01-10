@@ -108,8 +108,6 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 			},
 		}, loc_setting.getConfiguresObject());
 		
-		var kkk;
-		
 		$.ajax(_.extend({
 			data : remoteRequestData,
 			success : function(serviceDataResult, status){

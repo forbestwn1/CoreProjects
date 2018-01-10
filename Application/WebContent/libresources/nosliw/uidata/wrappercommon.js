@@ -53,12 +53,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		//path is valid for wrapper based only
 		loc_out.pri_path = path;
 		
-		if(loc_out.pri_id=="167"){
-			var kkkk = 5555;
-			kkkk++;
-		}
-
-		
 		//adapter for converting value
 		//with adapter, we can insert some converting job into this wrapper, 
 		//this converting job can transform the wrapper value during read and set
@@ -212,46 +206,12 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		else{
 			if(command==node_CONSTANT.WRAPPER_OPERATION_GET){
 				
-				if(loc_out.pri_id=="167"){
-					var kkkk = 5555;
-					kkkk++;
-				}
-
-				if(loc_out.pri_id=="45"){
-					var kkkk = 5555;
-					kkkk++;
-				}
-
-				if(loc_out.pri_id=="31"){
-					var kkkk = 5555;
-					kkkk++;
-				}
-				
 				if(loc_out.pri_isValidData==false){
 					//calculate data
 					out = node_createServiceRequestInfoSequence(operationService, handlers, requester_parent);
 					//get parent data first
 					var calParentDataRequest = loc_out.pri_parent.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
-						error: function(){
-							if(loc_out.pri_id=="167"){
-								var kkkk = 5555;
-								kkkk++;
-							}
-						},
-						exception : function(){
-							if(loc_out.pri_id=="167"){
-								var kkkk = 5555;
-								kkkk++;
-							}
-						},
-					
 						success : function(request, data){
-							if(loc_out.pri_id=="167"){
-								var kkkk = 5555;
-								kkkk++;
-							}
-
-							
 							//calculate current value
 							return loc_out.pri_typeHelper.getChildValueRequest(data.value, loc_out.pri_path, {
 								success : function(requestInfo, value){
@@ -473,26 +433,12 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 				//logging wrapper operation
 				out.setRequestProcessors({
 					success : function(requestInfo, data){
-						
-						if(loc_out.pri_id=="167"){
-							var kkkk = 5555;
-							kkkk++;
-						}
-						
 						nosliw.logging.info("************************  wrapper operation   ************************");
 						nosliw.logging.info("ID: " + that.pri_id);
 						nosliw.logging.info("Parent: " , ((that.pri_parent==undefined)?"":that.pri_parent.pri_id));
 						nosliw.logging.info("ParentPath: " , that.pri_path);
 						nosliw.logging.info("Request: " , JSON.stringify(operationService));
-						
-						try{
-							nosliw.logging.info("Result: " , JSON.stringify(data));
-						}
-						catch(e){
-							var kkkk = 555;
-							kkkk++;
-						}
-						
+						nosliw.logging.info("Result: " , JSON.stringify(data));
 						nosliw.logging.info("***************************************************************");
 						return data;
 					}

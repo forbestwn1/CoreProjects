@@ -21,7 +21,7 @@ import java.util.Set;
 
 public class HAPFileUtility {
 	
-	public static String getApplicationDataFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/ApplicationData/";   }
+	public static String getApplicationDataFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/ApplicationData/";   }
 	public static String getTagDefinitionFolder(){  return getApplicationDataFolder() + "tags/";   }
 	public static String getTempFolder(){		return "C:/Temp/nosliw/";	}
 	public static String getScriptExportFolder(){  return HAPFileUtility.getTempFolder()+"scriptexport/scripts/";  }
