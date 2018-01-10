@@ -118,7 +118,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 							//store data operation event
 							eventData = eventData.clone();
 							eventData.path = "";
-							loc_addToBeDoneDataOperation(eventData);
+							loc_addToBeDoneDataOperation(event, eventData);
 							//inform outside about change
 							loc_trigueEvent(event, eventData, requestInfo);
 						}
@@ -155,10 +155,11 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 					else if(pathCompare.compare == 2){
 						//something happens beyond this, just forward the event with sub path, only set event
 						//store the change
-						loc_addToBeDoneDataOperation(eventData);
-						eventData = eventData.clone();
 						eventData.path = pathCompare.subPath;
-						loc_triggerForwardEvent(event, eventData, requestInfo);
+						loc_addToBeDoneDataOperation(event, eventData);
+						var forwardEventData = eventData.clone();
+//						forwardEventData.path = pathCompare.subPath;
+						loc_triggerForwardEvent(event, forwardEventData, requestInfo);
 					}
 					else{
 						//not on right path, do nothing
@@ -237,17 +238,12 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 					if(loc_out.pri_toBeDoneWrapperOperations.length>0){
 						//calculate current value 
 						out = node_createServiceRequestInfoSequence(operationService, {
-							success : function(request, data){
-								return loc_getData();
-							}
-						}, requester_parent);
-						out.addRequest(loc_getProcessToBeDoneValueOperationRequest(0, loc_out.pri_value, {
-							success : function(requestInfo, value){
-								//set local value
+							success : function(request, value){
 								loc_setValue(value);
 								return loc_getData();
 							}
-						}));
+						}, requester_parent);
+						out.addRequest(loc_getProcessToBeDoneValueOperationRequest(0, loc_out.pri_value));
 					}
 					else{
 						out = node_createServiceRequestInfoSimple(operationService, function(){return loc_getData();}, handlers, requester_parent);
@@ -301,9 +297,19 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 	//add to be done operation
 	//it only when data is valid
 	//if data is not valid, data should be recalculated
-	var loc_addToBeDoneDataOperation = function(dataOperation){
+	var loc_addToBeDoneDataOperation = function(event, eventData){
 		if(loc_out.pri_isValidData==true){
-			loc_out.pri_toBeDoneWrapperOperations.push(dataOperation);
+			var command;
+			switch(event){
+			case node_CONSTANT.WRAPPER_EVENT_SET:
+				command = node_CONSTANT.WRAPPER_OPERATION_SET;
+				break;
+			case node_CONSTANT.WRAPPER_EVENT_ADDELEMENT:
+				command = node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT;
+				break;
+			}
+
+			loc_out.pri_toBeDoneWrapperOperations.push(new node_ServiceInfo(command, eventData));
 		}
 	};
 	
@@ -409,6 +415,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 						out = loc_out.pri_parent.pri_getWrapperOperationRequest(parentDataOperationService, handlers, requester_parent);
 					}
 				}
+				
 				return out;
 			},
 			
@@ -417,7 +424,27 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			getDataType : function(){  return this.pri_dataType;   },
 			
 			getDataOperationRequest : function(operationService, handlers, requester_parent){
-				return loc_getDataOperationRequest(operationService, handlers, requester_parent);
+				var that = this;
+				var out = loc_getDataOperationRequest(operationService, handlers, requester_parent);
+				out.addPostProcessor({
+					success : function(requestInfo, data){
+						nosliw.logging.info("************************  wrapper operation   ************************");
+						nosliw.logging.info("ID: " + that.pri_id);
+						nosliw.logging.info("Parent: " , ((that.pri_parent==undefined)?"":that.pri_parent.pri_id));
+						nosliw.logging.info("ParentPath: " , that.pri_path);
+						nosliw.logging.info("Request: " , JSON.stringify(operationService));
+						try{
+							nosliw.logging.info("Result: " , JSON.stringify(data));
+						}
+						catch(e){
+							var kkkk = 555;
+							kkkk++;
+						}
+						nosliw.logging.info("***************************************************************");
+						return data;
+					}
+				});
+				return out;
 			},
 			
 			getHandleEachElementRequest : function(elementHandleRequestFactory, handlers, request){

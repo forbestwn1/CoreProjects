@@ -14,7 +14,6 @@ var node_basicUtility;
 var node_dataUtility;
 var node_wrapperFactory;
 var node_namingConvensionUtility;
-var node_objectWrapperUtility;	
 var node_createServiceRequestInfoSimple;
 var node_ServiceInfo;
 var node_parseSegment;
@@ -79,25 +78,37 @@ var node_createWraperObject = function(){
 			attribute = segs.next();
 		}
 		
+		var out = obj;
 		if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
-			baseObj[attribute] = data;
+			if(node_basicUtility.isStringEmpty(attribute))	out = data;
+			else	baseObj[attribute] = data;
 		}
 		else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
-			//if container does not exist, then create a map
-			if(baseObj[attribute]==undefined)  baseObj[attribute] = {};
+			var opObj;
+			if(node_basicUtility.isStringEmpty(attribute))	opObj = obj; 
+			else{
+				//if container does not exist, then create a map
+				if(baseObj[attribute]==undefined)	baseObj[attribute] = {};
+				opObj = baseObj[attribute];
+			}
+
 			if(data.index!=undefined){
-				baseObj[attribute][data.index]=data.data;
+				opObj[data.index]=data.data;
 			}
 			else{
 				//if index is not specified, for array, just append it
 				if(_.isArray(baseObj[attribute])){
-					baseObj[attribute].push(data.data);
+					opObj.push(data.data);
 				}
 			}
 		}
 		else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
-			delete baseObj[attribute][data];
+			var opObj;
+			if(node_basicUtility.isStringEmpty(attribute))	opObj = obj; 
+			else  opObj = baseObj[attribute];
+			delete opObj[data];
 		}			
+		return out;
 	};
 	
 	var loc_out = {		
@@ -118,7 +129,7 @@ var node_createWraperObject = function(){
 					if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
 						//change value
 						if(_.isObject(baseValue)){
-							node_objectWrapperUtility.operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_SET, dataOperation.value);
+							out = loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_SET, dataOperation.value);
 						}
 						else{
 							out = dataOperation.value;
@@ -126,14 +137,15 @@ var node_createWraperObject = function(){
 					}
 					else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
 						var operationData = {
-								data : dataOperation.path,
+								data : dataOperation.value,
 								index : dataOperation.index,
 							};
-						loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT, operationData);
+						out = loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT, operationData);
 					}
 					else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
-						loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, dataOperation.index);
+						out = loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, dataOperation.index);
 					}
+					return out;
 				
 				}, handlers, requester_parent);
 			},
@@ -172,7 +184,6 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.wrapper.object.utility", function(){node_objectWrapperUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.segmentparser.parseSegment", function(){node_parseSegment = this.getData();});

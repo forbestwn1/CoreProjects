@@ -41,7 +41,7 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
             loc_contextVariableGroup.addVariable(node_createContextVariable(eleName));
         });
     }, ovr_initViews: function (startEle, endEle, requestInfo) {
-        loc_view = $("<div><textarea rows=\"15\" cols=\"150\" id=\"aboutDescription\" style=\"resize: none;\" data-role=\"none\"></textarea></div>");
+        loc_view = $("<textarea rows=\"15\" cols=\"150\" id=\"aboutDescription\" style=\"resize: none;\" data-role=\"none\"></textarea>");
         return loc_view;
     }, ovr_postInit: function () {
         loc_updateView();
