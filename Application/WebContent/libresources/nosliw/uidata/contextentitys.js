@@ -44,7 +44,7 @@ var node_createContextVariable = function(n, p){
 		}
 	}
 	
-	path = node_basicUtility.emptyStringIfUndefined(path);
+	path = node_basicUtility.emptyStringIfUndefined(path)+"";
 	
 	var loc_out = {
 		//context item name

@@ -153,12 +153,24 @@ var node_createWraperObject = function(){
 			getGetElementsRequest : function(baseValue, handlers, request){
 				return node_createServiceRequestInfoSimple(new node_ServiceInfo("GetElements", {"baseValue":baseValue}), function(requestInfo){
 					var elements = [];
-					_.each(baseValue, function(eleValue, key, list){
-						elements.push({
-							key : key+"",
-							value : node_dataUtility.cloneValue(eleValue)
-						});
-					}, this);
+					if(_.isArray(baseValue)){
+						//for array
+						_.each(baseValue, function(eleValue, index){
+							elements.push({
+								value : node_dataUtility.cloneValue(eleValue)
+							});
+						}, this);
+					}
+					else if(_.isObject(baseValue)){
+						//for object
+						_.each(baseValue, function(eleValue, name){
+							elements.push({
+								path : name,
+								id : name,
+								value : node_dataUtility.cloneValue(eleValue)
+							});
+						}, this);
+					} 
 					return elements;
 				}, handlers, request);
 			}, 

@@ -49,6 +49,13 @@
 		
 		var loc_childResourceViews = {};
 		
+		var loc_id = 0;
+		
+		var loc_generateId = function(){
+			loc_id++;
+			return loc_id+"";
+		};
+		
 		var loc_getElementContextVariable = function(key){
 			var out = node_createContextVariable(loc_dataContextEleName);
 			out.path = node_namingConvensionUtility.cascadePath(out.path, key+"");
@@ -56,24 +63,26 @@
 		};
 
 		var loc_updateView = function(requestInfo){
-			var request = loc_dataVariable.getWrapper().getHandleEachElementRequest(function(element){
+			var index = 0;
+			var request = loc_dataVariable.getWrapper().getHandleEachElementRequest(function(data, path){
 				return node_createServiceRequestInfoSimple({}, function(){
-					loc_addEle(element, requestInfo);
+					loc_addEle(data, index, path, requestInfo);
+					index++;
 				});
 			});
 			node_requestServiceProcessor.processRequest(request, false);
 		};
 
-		var loc_addEle = function(element, requestInfo){
+		var loc_addEle = function(data, index, path, requestInfo){
 			var eleContext = loc_env.createExtendedContext([
-				loc_env.createContextElementInfoFromContext(loc_eleContextEleName, "internal_data", element.key),
-				loc_env.createContextElementInfo(loc_eleNameContextEleName, element.key)
+				loc_env.createContextElementInfoFromContext(loc_eleContextEleName, "internal_data", path),
+//				loc_env.createContextElementInfo(loc_eleNameContextEleName, index)
 			], requestInfo);
 			
-			var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId()+"."+element.key, eleContext, requestInfo);
+			var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId()+"."+loc_generateId(), eleContext, requestInfo);
 	    	resourceView.insertAfter(loc_env.getStartElement());
 				
-	    	loc_childResourceViews[element.key] = resourceView;
+	    	loc_childResourceViews[index] = resourceView;
 
 /*			
 			var that = this;
@@ -105,7 +114,7 @@
 							value : dataOperation.value
 						});
 					}
-					if(event=="WRAPPER_EVENT_DESTROY"){
+					if(event=="WRAPPER_EVENT_DESTROY1"){
 						that.prv_deleteEle(loc_getElementContextVariable(dataOperation.index));
 					}
 				}, this);

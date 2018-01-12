@@ -5,7 +5,6 @@ var packageObj = library.getChildPackage("orderedcontainer");
 	//get used node
 //*******************************************   Start Node Definition  ************************************** 	
 
-	
 /**
  * 
  */
@@ -123,7 +122,7 @@ var node_handleDataContainerEachElement = function(dataContainerWraper, handler)
 
 
 //Register Node by Name
-packageObj.createChildNode("OrderedContainer.newEntity", node_newOrderedContainerGeneral); 
-packageObj.createChildNode("utils.handleDataContainerEachElement", node_handleDataContainerEachElement); 
+packageObj.createChildNode("OrderedContainer.newEntity1", node_newOrderedContainerGeneral); 
+packageObj.createChildNode("utils.handleDataContainerEachElement1", node_handleDataContainerEachElement); 
 
 })(packageObj);

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+		<nosliw-debug/>
 		
 		<br>
 		<br>Loop:
@@ -14,8 +15,6 @@
 				deleteElementInLoop : function(data, info){
 					alert("cccccc");
 					event.preventDefault();
-
-
 				
 					var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
 					var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
@@ -24,12 +23,24 @@
 					var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
 					var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
 					var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+					var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 
-					var index = this.getContext().getContextElementData("index").value;
-					
-					var requestInfo = node_createBatchUIDataOperationRequest(this.getContext());
-					var uiDataOperation = new node_UIDataOperation(new node_createContextVariable("business.a.cc"), node_uiDataOperationServiceUtility.createDeleteElementOperationService("", index));
-					requestInfo.addUIDataOperation(uiDataOperation);						
+					var requestInfo = node_createServiceRequestInfoSequence({}, {
+						success:function(requestInfo, data){
+							
+						}
+					});
+					var that = this;
+					requestInfo.addRequest(this.getContext().getDataOperationRequest("index", node_uiDataOperationServiceUtility.createGetOperationService(), {
+						success : function(request, data){
+							var index = data.value;
+						
+							var opRequest = node_createBatchUIDataOperationRequest(that.getContext());
+							var uiDataOperation = new node_UIDataOperation("business.a.cc", node_uiDataOperationServiceUtility.createDeleteElementOperationService("", index));
+							opRequest.addUIDataOperation(uiDataOperation);
+							return opRequest;
+						}
+					}));
 					node_requestServiceProcessor.processRequest(requestInfo, false);
 				}
 			}

@@ -9,6 +9,7 @@ var node_ServiceInfo;
 var node_createServiceRequestInfoSet;
 var node_namingConvensionUtility;
 var node_dataUtility;
+var node_createContextVariable;
 //*******************************************   Start Node Definition  ************************************** 	
 
 //create request for data operation
@@ -32,7 +33,9 @@ var node_createUIDataOperationRequest = function(context, uiDataOperation, handl
 		break;
 	default : 
 		//target is context element name
-		request = loc_context.getDataOperationRequest(target, operationService, handlers, requester_parent);
+		var targeContextVar = node_createContextVariable(target);
+		operationService.parms.path = node_dataUtility.combinePath(targeContextVar.path, operationService.parms.path);
+		request = loc_context.getDataOperationRequest(targeContextVar.name, operationService, handlers, requester_parent);
 	}
 	return request;
 };
@@ -174,6 +177,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextVariable", function(){node_createContextVariable = this.getData();});
 
 
 //Register Node by Name
