@@ -342,6 +342,9 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 		getContext : function(){return loc_context;},
 		updateContext : function(wrappers, requestInfo){		loc_context.updateContext(wrappers, requestInfo);		},
 
+		getStartElement : function(){  return loc_startEle;   },
+		getEndElement : function(){  return loc_endEle; },
+		
 		//get all elements of this ui resourve view
 		getViews : function(){	return loc_startEle.add(loc_startEle.nextUntil(loc_endEle)).add(loc_endEle).get();	},
 

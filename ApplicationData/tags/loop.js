@@ -47,7 +47,7 @@
 		//element name
 		var loc_eleNameContextEleName = attributes.elename;
 		
-		var loc_childResourceViews = {};
+		var loc_childResourceViews = [];
 		
 		var loc_id = 0;
 		
@@ -73,6 +73,11 @@
 			node_requestServiceProcessor.processRequest(request, false);
 		};
 
+		/**
+		*  data : data for element
+		*  index : index in list for element
+		*  path : element's path from parent
+		**/
 		var loc_addEle = function(data, index, path, requestInfo){
 			var eleContext = loc_env.createExtendedContext([
 				loc_env.createContextElementInfo(loc_eleContextEleName, loc_dataVariable, path),
@@ -80,9 +85,11 @@
 			], requestInfo);
 			
 			var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId()+"."+loc_generateId(), eleContext, requestInfo);
-	    	resourceView.insertAfter(loc_env.getStartElement());
+			if(index==0)	resourceView.insertAfter(loc_env.getStartElement());
+			else	resourceView.insertAfter(loc_childResourceViews[index-1].getEndElement());
 				
-	    	loc_childResourceViews[index] = resourceView;
+			loc_childResourceViews.splice(index, 0, resourceView);
+
 
 /*			
 			var that = this;

@@ -182,6 +182,16 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		loc_out.pri_rootData = undefined;
 		loc_out.pri_path = undefined;
 	};
+
+	//get real path from parent, may do mapping
+	var loc_getRealPath = function(){
+		var out = loc_out.pri_path;
+		if(loc_out.pri_parent.pri_isContainer){
+			//for container, do mapping from pri_path to real path
+			out = loc_out.pri_parent.pri_elements.getPathById(out);
+		}
+		return out;
+	};
 	
 	//data operation request
 	var loc_getDataOperationRequest = function(operationService, handlers, requester_parent){
@@ -201,7 +211,12 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 					}, handlers, requester_parent);
 			}
 			else{
-				out = loc_getDataOperationOnRootValue(operationService.clone(), handlers, requester_parent); 
+				var service = operationService.clone();
+				if(service.command==addele){
+					service.parms.path = loc_getRealPath
+				}
+				
+				out = loc_getDataOperationOnRootValue(, handlers, requester_parent); 
 			}
 		}
 		else{
@@ -214,11 +229,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 					var calParentDataRequest = loc_out.pri_parent.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
 						success : function(request, parentData){
 							//calculate current value from parent
-							var childPath = loc_out.pri_path;
-							if(loc_out.pri_parent.pri_isContainer){
-								//for container, do mapping from pri_path to real path
-								childPath = loc_out.pri_parent.pri_elements.getPathById(childPath);
-							}
+							var childPath = loc_getRealPath(); 
 							
 							return loc_out.pri_typeHelper.getChildValueRequest(parentData.value, childPath, {
 								success : function(requestInfo, value){
@@ -263,14 +274,15 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			}
 			else{
 				//other operation
-				out = loc_out.pri_getWrapperOperationRequest(operationService, handlers, requester_parent);
+				out = loc_out.pri_getModifyOperationRequest(operationService, handlers, requester_parent);
 			}
 		}
 		return out;
 	};
 	
 	var loc_getDataOperationOnRootValue = function(dataOperationService, handlers, request){
-		var out = loc_out.pri_typeHelper.getDataOperationRequest(loc_out.pri_rootValue, dataOperationService.clone(), handlers, request);
+		var service = dataOperationService.clone();
+		var out = loc_out.pri_typeHelper.getDataOperationRequest(loc_out.pri_rootValue, service, handlers, request);
 		out.addPostProcessor({
 			success : function(requestInfo, data){
 				//trigue event
@@ -397,36 +409,36 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 
 	
 	var loc_out = {
-			
-			pri_getWrapperOperationRequest : function(dataOperationService, handlers, requester_parent){
+			//data operation for modify : set, addelement, deleteelement
+			pri_getModifyOperationRequest : function(dataOperationService, handlers, requester_parent){
 				var out;
-				if(loc_out.pri_dataBased==true){
+				if(this.pri_dataBased==true){
 					out = loc_getDataOperationOnRootValue(dataOperationService.clone(), handlers, requester_parent); 
 				}
 				else{
-					if(dataOperationService.command==node_CONSTANT.WRAPPER_OPERATION_SET && loc_out.pri_adapter!=undefined){
+					if(dataOperationService.command==node_CONSTANT.WRAPPER_OPERATION_SET && this.pri_adapter!=undefined){
 						//apply adapter for SET command
 						out = node_createServiceRequestInfoSequence({}, handlers, requester_parent);
 						//apply adapter to value
-						out.addRequest(loc_out.pri_adapter.getOutValueRequest(dataOperationService.parms.value, {
+						var that  = this;
+						out.addRequest(this.pri_adapter.getOutValueRequest(dataOperationService.parms.value, {
 							success: function(request, value){
 								var parentDataOperationService = dataOperationService.clone();
-								parentDataOperationService.parms.path = node_dataUtility.combinePath(loc_out.pri_path, parentDataOperationService.parms.path);
+								parentDataOperationService.parms.path = node_dataUtility.combinePath(loc_getRealPath(), parentDataOperationService.parms.path);
 								parentDataOperationService.parms.value = value;
-								return loc_out.pri_parent.pri_getWrapperOperationRequest(parentDataOperationService);
+								return that.pri_parent.pri_getModifyOperationRequest(parentDataOperationService);
 							}
 						}));
 					}
 					else{
 						var parentDataOperationService = dataOperationService.clone();
-						parentDataOperationService.parms.path = node_dataUtility.combinePath(loc_out.pri_path, parentDataOperationService.parms.path);
-						out = loc_out.pri_parent.pri_getWrapperOperationRequest(parentDataOperationService, handlers, requester_parent);
+						parentDataOperationService.parms.path = node_dataUtility.combinePath(loc_getRealPath(), parentDataOperationService.parms.path);
+						out = this.pri_parent.pri_getModifyOperationRequest(parentDataOperationService, handlers, requester_parent);
 					}
 				}
-				
 				return out;
 			},
-			
+
 			setAdapter : function(adapter){  this.pri_adapter = adapter;  },
 			
 			getDataType : function(){  return this.pri_dataType;   },
@@ -466,6 +478,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 									//add to container
 									var eleId = loc_out.pri_elements.insertValue(element.value, index, element.path, element.id);
 									//add child request from factory
+									//eleId as path
 									handleElementsRequest.addRequest(eleId, elementHandleRequestFactory.call(this, loc_makeDataFromValue(element.value), eleId+""));
 								});
 								return handleElementsRequest;

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 	
-	<nosliw-debug/>
 	
 		<br>
 		<br>Loop:
@@ -52,7 +51,6 @@
 		<br>
 		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 
-<!--		
 	<br>
 	Content:<%=?(bus.a.aa)?.value + '   6666 ' %>
 	<br>
@@ -91,7 +89,6 @@
 				</nosliw-casedefualt>
 			<br>
 		</nosliw-switch>
--->
 		
 		
 	</body>
