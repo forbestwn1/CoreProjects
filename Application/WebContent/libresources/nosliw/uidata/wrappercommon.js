@@ -215,9 +215,9 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 						success : function(request, parentData){
 							//calculate current value from parent
 							var childPath = loc_out.pri_path;
-							if(loc_out.pri_isContainer){
+							if(loc_out.pri_parent.pri_isContainer){
 								//for container, do mapping from pri_path to real path
-								childPath = loc_out.pri_elements.getPathById(childPath);
+								childPath = loc_out.pri_parent.pri_elements.getPathById(childPath);
 							}
 							
 							return loc_out.pri_typeHelper.getChildValueRequest(parentData.value, childPath, {
@@ -451,11 +451,12 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			},
 			
 			getHandleEachElementRequest : function(elementHandleRequestFactory, handlers, request){
-				this.pri_isContainer = true;
+				var that  = this;
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("HandleEachElement"), handlers, request);
 				//get current value first
 				out.addRequest(loc_getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
 					success : function(request, data){
+						that.pri_isContainer = true;
 						//get all elements
 						return loc_out.pri_typeHelper.getGetElementsRequest(data.value, {
 							success : function(request, elements){

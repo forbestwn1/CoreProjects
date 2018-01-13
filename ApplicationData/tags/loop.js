@@ -75,7 +75,7 @@
 
 		var loc_addEle = function(data, index, path, requestInfo){
 			var eleContext = loc_env.createExtendedContext([
-				loc_env.createContextElementInfoFromContext(loc_eleContextEleName, "internal_data", path),
+				loc_env.createContextElementInfo(loc_eleContextEleName, loc_dataVariable, path),
 //				loc_env.createContextElementInfo(loc_eleNameContextEleName, index)
 			], requestInfo);
 			

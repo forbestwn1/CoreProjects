@@ -69,6 +69,7 @@ var node_createContextVariable = function(n, p){
  * 		1. name + parent context + parent context contextVariable
  * 		2. name + wrapper + info
  * 		3. name + data/value + path + info
+ * 		4. name + parent variable + path
  */
 var node_createContextElementInfo = function(name, data1, data2, data3){
 	var loc_out = {
@@ -85,6 +86,12 @@ var node_createContextElementInfo = function(name, data1, data2, data3){
 		//input is wrapper
 		loc_out.wrapper = data1;
 		loc_out.info = data2;
+	}
+	else if(type==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE){
+		//input is wrapper
+		loc_out.variable = data1;
+		loc_out.path = data2;
+		loc_out.info = data3;
 	}
 	else{
 		//input is data/value
@@ -114,9 +121,11 @@ var node_createContextElement = function(elementInfo, requestInfo){
 		var contextVar = elementInfo.contextVariable;
 		loc_out.variable = context.createVariable(contextVar, requestInfo);
 	}
+	else if(elementInfo.variable!=undefined){
+		loc_out.variable = node_createWrapperVariable(elementInfo.variable, elementInfo.path, requestInfo);
+	}
 	else{
-		var wrapper = elementInfo.wrapper;
-		loc_out.variable = node_createWrapperVariable(wrapper, requestInfo);
+		loc_out.variable = node_createWrapperVariable(elementInfo.wrapper, requestInfo);
 	}
 	
 	//get context type(public, internal, private)

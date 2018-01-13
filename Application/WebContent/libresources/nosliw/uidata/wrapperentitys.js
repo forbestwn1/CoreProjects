@@ -17,7 +17,7 @@ var node_createWrapperOrderedContainer = function(){
 
 	var loc_generateId = function(){
 		loc_id++;
-		return loc_id+"";
+		return "id"+loc_id+"";
 	};
 	
 	var loc_getIdByIndex = function(index){
@@ -32,7 +32,7 @@ var node_createWrapperOrderedContainer = function(){
 		getPathById : function(id){
 			var path = loc_pathById[id];
 			if(path==undefined){
-				path = this.getIndexById()+"";
+				path = this.getIndexById(id)+"";
 			}
 			return path;
 		},
@@ -52,7 +52,8 @@ var node_createWrapperOrderedContainer = function(){
 		insertValue : function(value, index, path, id){
 			if(id==undefined)  id = loc_generateId();
 			loc_valueById[id] = value;
-			loc_ids.splice(index, 0, value);
+			if(path!=undefined)  loc_pathById[id] = path;
+			loc_ids.splice(index, 0, id);
 			return id;
 		},
 		
