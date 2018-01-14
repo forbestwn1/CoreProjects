@@ -107,7 +107,7 @@ var node_uiDataOperationServiceUtility = function(){
 				var that = this;
 				return {
 					path : path,
-					index : index+"",
+					index : index,
 					value : value,
 					clone : function(){
 						return that.createAddElementOperationData(this.path, this.index, node_dataUtility.cloneValue(this.value));
@@ -123,7 +123,7 @@ var node_uiDataOperationServiceUtility = function(){
 				var that = this;
 				return {
 					path : path,
-					index : index+"",
+					index : index,
 					clone : function(){
 						return that.createDeleteElementOperationData(this.path, this.index);
 					}

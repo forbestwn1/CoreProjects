@@ -3,7 +3,6 @@ package com.nosliw.uiresource.context;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -26,7 +25,8 @@ public class HAPContextGroup extends HAPSerializableImp{
 		String[] contextTypes = {
 				HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC,
 				HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL,
-				HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE
+				HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE,
+				HAPConstant.UIRESOURCE_CONTEXTTYPE_EXCLUDED
 				};
 		return contextTypes;
 	}
@@ -34,6 +34,7 @@ public class HAPContextGroup extends HAPSerializableImp{
 	public HAPContext getPublicContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);  }
 	public HAPContext getInternalContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL);  }
 	public HAPContext getPrivateContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);  }
+	public HAPContext getExcludedContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_EXCLUDED);  }
 
 	public void addElement(String name, HAPContextNodeRoot rootEle, String type){
 		this.getContext(type).addElement(name, rootEle);

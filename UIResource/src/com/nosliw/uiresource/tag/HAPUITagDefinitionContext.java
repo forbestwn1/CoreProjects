@@ -27,11 +27,15 @@ public class HAPUITagDefinitionContext extends HAPSerializableImp{
 	
 	//public context element definition
 	private Map<String, HAPUITagDefinitionContextElment> m_privateEles;
+
+	//excluded context element definition
+	private Map<String, HAPUITagDefinitionContextElment> m_excludedEles;
 	
 	public HAPUITagDefinitionContext(){
 		this.m_publicEles = new LinkedHashMap<String, HAPUITagDefinitionContextElment>();
 		this.m_internalEles = new LinkedHashMap<String, HAPUITagDefinitionContextElment>();
 		this.m_privateEles = new LinkedHashMap<String, HAPUITagDefinitionContextElment>();
+		this.m_excludedEles = new LinkedHashMap<String, HAPUITagDefinitionContextElment>();
 		this.m_inherit = true;
 	}
 
@@ -50,6 +54,9 @@ public class HAPUITagDefinitionContext extends HAPSerializableImp{
 		case HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE:
 			out = this.m_privateEles;
 			break;
+		case HAPConstant.UIRESOURCE_CONTEXTTYPE_EXCLUDED:
+			out = this.m_excludedEles;
+			break;
 		}
 		return out;	
 	}
@@ -65,6 +72,9 @@ public class HAPUITagDefinitionContext extends HAPSerializableImp{
 		case HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE:
 			this.m_privateEles.put(name, ele);
 			break;
+		case HAPConstant.UIRESOURCE_CONTEXTTYPE_EXCLUDED:
+			this.m_excludedEles.put(name, ele);
+			break;
 		}
 	}
 	
@@ -77,6 +87,9 @@ public class HAPUITagDefinitionContext extends HAPSerializableImp{
 	
 	public Map<String, HAPUITagDefinitionContextElment> getPrivateElements(){		return this.m_privateEles;	}
 	public void addPrivateElement(String name, HAPUITagDefinitionContextElment ele){  this.m_privateEles.put(name, ele);  }
+
+	public Map<String, HAPUITagDefinitionContextElment> getExcludedElements(){		return this.m_excludedEles;	}
+	public void addExcludedElement(String name, HAPUITagDefinitionContextElment ele){  this.m_excludedEles.put(name, ele);  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

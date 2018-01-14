@@ -49,6 +49,17 @@ var node_createWrapperOrderedContainer = function(){
 //			return out;
 		},
 		
+		getIdByPath : function(path){
+			var out;
+			_.each(loc_pathById, function(p, id){
+				if(path==p){
+					out = p;
+				}
+			});
+			if(out==undefined)  out = loc_ids[path];
+			return out;
+		},
+		
 		insertValue : function(value, index, path, id){
 			if(id==undefined)  id = loc_generateId();
 			loc_valueById[id] = value;

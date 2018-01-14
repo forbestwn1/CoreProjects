@@ -4,8 +4,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.json.JSONObject;
-
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -16,16 +14,12 @@ import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.definition.HAPConstantDef;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
 import com.nosliw.uiresource.expression.HAPEmbededScriptExpression;
 import com.nosliw.uiresource.expression.HAPRuntimeTaskExecuteEmbededExpression;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
-import com.nosliw.uiresource.parser.HAPUIResourceParser;
-import com.nosliw.uiresource.tag.HAPUITagDefinition;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContext;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElementAbsolute;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElment;
@@ -42,6 +36,7 @@ public class HAPContextUtility {
 		//find all data variables 
 		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getPublicContext()));
 		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getInternalContext()));
+		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getExcludedContext()));
 		
 		HAPUIResourceExpressionContext parentExpContext = parent==null?null:parent.getExpressionContext();
 		
@@ -67,6 +62,7 @@ public class HAPContextUtility {
 		while(its.hasNext()){
 			HAPUIDefinitionUnitTag uiTag = its.next();
 			buildUITagContext(uiDefinition, uiTag, dataTypeHelper, uiTagMan, runtime, expressionManager);
+			processExpressionContext(uiDefinition, uiTag, dataTypeHelper, uiTagMan, runtime, expressionManager);
 		}
 	}
 	
@@ -89,10 +85,10 @@ public class HAPContextUtility {
 
 		//element defined in tag definition
 		for(String contextType : HAPContextGroup.getContextTypes()){
-			Map<String, HAPUITagDefinitionContextElment> defElesPublic = contextDefinition.getElements(contextType);
-			for(String name : defElesPublic.keySet()){
+			Map<String, HAPUITagDefinitionContextElment> defEles = contextDefinition.getElements(contextType);
+			for(String name : defEles.keySet()){
 				String realName = getSolidName(name, uiTag, runtime, expressionManager);
-				uiTag.getContext().addElement(realName, processUITagDefinitionContextElement(realName, defElesPublic.get(name), parent, dataTypeHelper, uiTag, runtime, expressionManager), contextType);
+				uiTag.getContext().addElement(realName, processUITagDefinitionContextElement(realName, defEles.get(name), parent, dataTypeHelper, uiTag, runtime, expressionManager), contextType);
 			}
 		}
 	}
@@ -132,6 +128,20 @@ public class HAPContextUtility {
 		}
 	}
 	
+	private static HAPContextNode getReferencedParentContextNode(HAPContextPath path, HAPUIDefinitionUnit parentUnit){
+		String[] contextTypes = {
+				HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC,
+				HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL,
+				HAPConstant.UIRESOURCE_CONTEXTTYPE_EXCLUDED
+				};
+		HAPContextNode parentNode = null;
+		for(String contextType : contextTypes){
+			parentNode = parentUnit.getContext().getContext(contextType).getChild(path);
+			if(parentNode!=null)   break;
+		}
+		return parentNode;
+	}
+	
 	//convert context element in ui tag to context element in ui resource/tag
 	private static HAPContextNodeRoot processUITagDefinitionContextElement(String defRootEleName, HAPUITagDefinitionContextElment defContextElement, HAPUIDefinitionUnit parentUnit, HAPDataTypeHelper dataTypeHelper, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPExpressionManager expressionManager){
 		String type = defContextElement.getType();
@@ -151,8 +161,7 @@ public class HAPContextUtility {
 				HAPContextPath path = new HAPContextPath(getSolidName(defContextElementRelative.getPath(), uiDefinition, runtime, expressionManager));
 				out.setPath(path);
 				
-				HAPContextNode parentNode = parentUnit.getContext().getPublicContext().getChild(path);   //try parent's public context first 
-				if(parentNode==null)   parentNode = parentUnit.getContext().getInternalContext().getChild(path); 		//if not found, then try parent's internal context
+				HAPContextNode parentNode = getReferencedParentContextNode(path, parentUnit);
 				if(parentNode!=null){
 					Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
 					merge(parentNode, defContextElementRelative, out, matchers, new HAPContextPath(defRootEleName, null), dataTypeHelper);

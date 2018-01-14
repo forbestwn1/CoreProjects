@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
 	
-	
 		<br>
 		<br>Loop:
 		<br>
 		<nosliw-loop data="business.a.cc" element="ele" elename="index">  
-			<%=?(ele)?.value + '   6666 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
-			In Loop
 			<br>
-
+			<br>
+			<%=?(ele)?.value + '   6666 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
+			<br>
+			<nosliw-textinput data="ele"/>  
+			<br>
+			<br>
 			<script>
 			{
 				deleteElementInLoop : function(data, info){
@@ -51,6 +53,7 @@
 		<br>
 		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 
+<!--		
 	<br>
 	Content:<%=?(bus.a.aa)?.value + '   6666 ' %>
 	<br>
@@ -89,7 +92,7 @@
 				</nosliw-casedefualt>
 			<br>
 		</nosliw-switch>
-		
+-->		
 		
 	</body>
 

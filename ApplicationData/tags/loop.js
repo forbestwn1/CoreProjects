@@ -14,15 +14,15 @@
 	],
 	context: {
 		inherit : true,
-		public : {
-			"<%=&(element)&%>" : {
-				path : "<%=&(data)&%>.element"
-			}		
-		},
 		private : {
 			"internal_data": {
 				path : "<%=&(data)&%>"
 			}
+		},
+		excluded : {
+			"<%=&(element)&%>" : {
+				path : "<%=&(data)&%>.element"
+			}		
 		}
 	},
 	script : function(context, parentResourceView, uiTagResource, attributes, env){
@@ -116,10 +116,7 @@
 				var that = this;
 				loc_dataVariable.registerDataChangeEventListener(undefined, function(event, dataOperation, requestInfo){
 					if(event=="EVENT_WRAPPER_ADDELEMENT"){
-						loc_addEle({
-							key : dataOperation.index,
-							value : dataOperation.value
-						});
+						loc_addEle(dataOperation.value, dataOperation.index, dataOperation.path);
 					}
 					if(event=="WRAPPER_EVENT_DESTROY1"){
 						that.prv_deleteEle(loc_getElementContextVariable(dataOperation.index));

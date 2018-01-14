@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContext;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElementAbsolute;

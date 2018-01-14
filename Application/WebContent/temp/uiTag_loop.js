@@ -7,11 +7,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"loop",
 "info":{}
 }, {"name":"test",
 "context":{"inherit":true,
-"public":{"<%=&(element)&%>":{"children":{},
-"type":"relative",
-"path":"<%=&(data)&%>.element"
-}
-}
+"public":{}
 },
 "attributes":{},
 "script":
@@ -30,25 +26,36 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
     var loc_dataVariable = env.createVariable("internal_data");
     var loc_eleContextEleName = attributes.element;
     var loc_eleNameContextEleName = attributes.elename;
-    var loc_childResourceViews = {};
+    var loc_childResourceViews = [];
+    var loc_id = 0;
+    var loc_generateId = function () {
+        loc_id++;
+        return loc_id + "";
+    };
     var loc_getElementContextVariable = function (key) {
         var out = node_createContextVariable(loc_dataContextEleName);
         out.path = node_namingConvensionUtility.cascadePath(out.path, key + "");
         return out;
     };
     var loc_updateView = function (requestInfo) {
-        var request = loc_dataVariable.getWrapper().getHandleEachElementRequest(function (element) {
+        var index = 0;
+        var request = loc_dataVariable.getWrapper().getHandleEachElementRequest(function (data, path) {
             return node_createServiceRequestInfoSimple({}, function () {
-                loc_addEle(element, requestInfo);
+                loc_addEle(data, index, path, requestInfo);
+                index++;
             });
         });
         node_requestServiceProcessor.processRequest(request, false);
     };
-    var loc_addEle = function (element, requestInfo) {
-        var eleContext = loc_env.createExtendedContext([loc_env.createContextElementInfoFromContext(loc_eleContextEleName, "internal_data", element.key), loc_env.createContextElementInfo(loc_eleNameContextEleName, element.key)], requestInfo);
-        var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId() + "." + element.key, eleContext, requestInfo);
-        resourceView.insertAfter(loc_env.getStartElement());
-        loc_childResourceViews[element.key] = resourceView;
+    var loc_addEle = function (data, index, path, requestInfo) {
+        var eleContext = loc_env.createExtendedContext([loc_env.createContextElementInfo(loc_eleContextEleName, loc_dataVariable, path)], requestInfo);
+        var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId() + "." + loc_generateId(), eleContext, requestInfo);
+        if (index == 0) {
+            resourceView.insertAfter(loc_env.getStartElement());
+        } else {
+            resourceView.insertAfter(loc_childResourceViews[index - 1].getEndElement());
+        }
+        loc_childResourceViews.splice(index, 0, resourceView);
     };
     var loc_out = {prv_deleteEle: function (key, requestInfo) {
         alert("ffff");
@@ -60,9 +67,9 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
         var that = this;
         loc_dataVariable.registerDataChangeEventListener(undefined, function (event, dataOperation, requestInfo) {
             if (event == "EVENT_WRAPPER_ADDELEMENT") {
-                loc_addEle({key: dataOperation.index, value: dataOperation.value});
+                loc_addEle(dataOperation.value, dataOperation.index, dataOperation.path);
             }
-            if (event == "WRAPPER_EVENT_DESTROY") {
+            if (event == "WRAPPER_EVENT_DESTROY1") {
                 that.prv_deleteEle(loc_getElementContextVariable(dataOperation.index));
             }
         }, this);

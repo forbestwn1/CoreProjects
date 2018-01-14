@@ -118,7 +118,12 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 						else if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT || event==node_CONSTANT.WRAPPER_EVENT_DELETEELEMENT){
 							//store data operation event
 							eventData = eventData.clone();
-							eventData.path = "";
+							
+							if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
+								var eleId = loc_out.pri_elements.insertValue(eventData.value, eventData.index);
+								eventData.path = eleId;
+							}
+							
 							loc_addToBeDoneDataOperation(event, eventData);
 							//inform outside about change
 							loc_trigueEvent(event, eventData, requestInfo);
@@ -156,7 +161,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 					else if(pathCompare.compare == 2){
 						//something happens beyond this, just forward the event with sub path, only set event
 						//store the change
-						eventData.path = pathCompare.subPath;
+						eventData.path = loc_getIdPath(pathCompare.subPath);
 						loc_addToBeDoneDataOperation(event, eventData);
 						var forwardEventData = eventData.clone();
 //						forwardEventData.path = pathCompare.subPath;
@@ -193,6 +198,23 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		return out;
 	};
 	
+	//convert global path to local path
+	var loc_getIdPath = function(path){
+		var out = path;
+		if(loc_out.pri_isContainer){
+			//for container, do mapping from path to id path
+			var index = path.indexOf(".");
+			var elePath = path;
+			if(index!=-1)  elePath = path.subString(0, index);
+			out = loc_out.pri_elements.getIdByPath(elePath);
+			if(index!=-1){
+				out = out + path.subString(index);
+			}
+		}
+		return out;
+	};
+	
+	
 	//data operation request
 	var loc_getDataOperationRequest = function(operationService, handlers, requester_parent){
 		
@@ -212,11 +234,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			}
 			else{
 				var service = operationService.clone();
-				if(service.command==addele){
-					service.parms.path = loc_getRealPath
-				}
-				
-				out = loc_getDataOperationOnRootValue(, handlers, requester_parent); 
+				out = loc_getDataOperationOnRootValue(service, handlers, requester_parent); 
 			}
 		}
 		else{
@@ -265,7 +283,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 								return loc_getData();
 							}
 						});
-						
 					}
 					else{
 						out = node_createServiceRequestInfoSimple(operationService, function(){return loc_getData();}, handlers, requester_parent);
