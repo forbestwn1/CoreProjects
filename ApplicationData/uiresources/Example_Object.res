@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-	
+		<nosliw-debug/>
+
+		<br>
+		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 		<br>
 		<br>Loop:
 		<br>
@@ -8,8 +11,6 @@
 			<br>
 			<br>
 			<%=?(ele)?.value + '   6666 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
-			<br>
-			<nosliw-textinput data="ele"/>  
 			<br>
 			<br>
 			<script>
@@ -50,8 +51,6 @@
 			
 		</nosliw-loop>
 
-		<br>
-		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 
 <!--		
 	<br>

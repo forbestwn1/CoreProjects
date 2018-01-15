@@ -93,11 +93,16 @@ var node_createWraperObject = function(){
 			}
 
 			if(data.index!=undefined){
-				opObj[data.index]=data.data;
+				if(_.isArray(opObj)){
+					opObj.splice(data.index, 0, data.data);
+				}
+				else{
+					opObj[data.elePath]=data.data;
+				}
 			}
 			else{
 				//if index is not specified, for array, just append it
-				if(_.isArray(baseObj[attribute])){
+				if(_.isArray(opObj)){
 					opObj.push(data.data);
 				}
 			}
@@ -106,7 +111,13 @@ var node_createWraperObject = function(){
 			var opObj;
 			if(node_basicUtility.isStringEmpty(attribute))	opObj = obj; 
 			else  opObj = baseObj[attribute];
-			delete opObj[data];
+
+			if(_.isArray(opObj)){
+				opObj.splice(data.index, 1);
+			}
+			else{
+//				delete opObj[data];
+			}
 		}			
 		return out;
 	};
@@ -139,6 +150,7 @@ var node_createWraperObject = function(){
 						var operationData = {
 								data : dataOperation.value,
 								index : dataOperation.index,
+								elePath : dataOperation.elePath
 							};
 						out = loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT, operationData);
 					}

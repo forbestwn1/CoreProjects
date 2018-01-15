@@ -115,14 +115,21 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 						if(event==node_CONSTANT.WRAPPER_EVENT_DESTROY){
 							loc_out.destroy(requestInfo);
 						}
-						else if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT || event==node_CONSTANT.WRAPPER_EVENT_DELETEELEMENT){
+						else if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
 							//store data operation event
 							eventData = eventData.clone();
+							eventData.path = "";
+							eventData.elePath = loc_out.pri_elements.insertValue(eventData.value, eventData.index);
 							
-							if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
-								var eleId = loc_out.pri_elements.insertValue(eventData.value, eventData.index);
-								eventData.path = eleId;
-							}
+							loc_addToBeDoneDataOperation(event, eventData);
+							//inform outside about change
+							loc_trigueEvent(event, eventData, requestInfo);
+						}
+						else if(event==node_CONSTANT.WRAPPER_EVENT_DELETEELEMENT){
+							//store data operation event
+							eventData = eventData.clone();
+							eventData.path = "";
+							eventData.elePath = loc_out.pri_elements.deleteValue(eventData.index)
 							
 							loc_addToBeDoneDataOperation(event, eventData);
 							//inform outside about change
@@ -205,10 +212,10 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			//for container, do mapping from path to id path
 			var index = path.indexOf(".");
 			var elePath = path;
-			if(index!=-1)  elePath = path.subString(0, index);
+			if(index!=-1)  elePath = path.substring(0, index);
 			out = loc_out.pri_elements.getIdByPath(elePath);
 			if(index!=-1){
-				out = out + path.subString(index);
+				out = out + path.substring(index);
 			}
 		}
 		return out;
@@ -248,7 +255,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 						success : function(request, parentData){
 							//calculate current value from parent
 							var childPath = loc_getRealPath(); 
-							
+
 							return loc_out.pri_typeHelper.getChildValueRequest(parentData.value, childPath, {
 								success : function(requestInfo, value){
 									//set local value
@@ -279,7 +286,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 						
 						out.setRequestProcessors({
 							success : function(requestInfo, value){
-								loc_setValue(value);
+								loc_out.pri_value = value;
 								return loc_getData();
 							}
 						});

@@ -69,9 +69,14 @@ var node_createWrapperOrderedContainer = function(){
 		},
 		
 		deleteValue : function(index){
-			var id = this.getValueByIndex(index);
-			delete loc_valueById[id];
+			var id = loc_ids[index];
+			var path = this.getPathById();
+			
 			loc_ids.splice(index, 1);
+			delete loc_valueById[id];
+			delete loc_pathById[id];
+			
+			return path;
 		},
 
 		getAllValue : function(){

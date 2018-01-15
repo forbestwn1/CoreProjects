@@ -108,7 +108,7 @@
 				alert("ffff");
 				var view = loc_childResourceViews[key];
 				view.detachViews();
-				delete loc_childResourceViews[key];
+				loc_childResourceViews.splice(key, 1);
 			},
 			
 			ovr_postInit : function(requestInfo){
@@ -116,9 +116,9 @@
 				var that = this;
 				loc_dataVariable.registerDataChangeEventListener(undefined, function(event, dataOperation, requestInfo){
 					if(event=="EVENT_WRAPPER_ADDELEMENT"){
-						loc_addEle(dataOperation.value, dataOperation.index, dataOperation.path);
+						loc_addEle(dataOperation.value, dataOperation.index, dataOperation.elePath);
 					}
-					if(event=="WRAPPER_EVENT_DESTROY1"){
+					if(event=="WRAPPER_EVENT_DESTROY"){
 						that.prv_deleteEle(loc_getElementContextVariable(dataOperation.index));
 					}
 				}, this);
