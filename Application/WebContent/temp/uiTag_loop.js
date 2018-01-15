@@ -48,7 +48,7 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
         node_requestServiceProcessor.processRequest(request, false);
     };
     var loc_addEle = function (data, index, path, requestInfo) {
-        var eleContext = loc_env.createExtendedContext([loc_env.createContextElementInfo(loc_eleContextEleName, loc_dataVariable, path)], requestInfo);
+        var eleContext = loc_env.createExtendedContext([loc_env.createContextElementInfo(loc_eleContextEleName, loc_dataVariable, path), loc_env.createContextElementInfo(loc_eleNameContextEleName, path)], requestInfo);
         var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId() + "." + loc_generateId(), eleContext, requestInfo);
         if (index == 0) {
             resourceView.insertAfter(loc_env.getStartElement());

@@ -48,6 +48,7 @@
 		var loc_eleNameContextEleName = attributes.elename;
 		
 		var loc_childResourceViews = [];
+		var loc_childVaraibles = [];
 		
 		var loc_id = 0;
 		
@@ -90,6 +91,8 @@
 				
 			loc_childResourceViews.splice(index, 0, resourceView);
 
+			var eleVariable = loc_env.createVariable("internal_data");;
+			loc_childVaraibles.splice(index, 0, eleVariable);
 
 /*			
 			var that = this;

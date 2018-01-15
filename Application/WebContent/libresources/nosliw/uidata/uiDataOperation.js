@@ -119,19 +119,20 @@ var node_uiDataOperationServiceUtility = function(){
 				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT, this.createAddElementOperationData(path, index, value));
 			},
 
-			createDeleteElementOperationData : function(path, index){
+			createDeleteElementOperationData : function(path, index, elePath){
 				var that = this;
 				return {
 					path : path,
 					index : index,
+					elePath : elePath,
 					clone : function(){
-						return that.createDeleteElementOperationData(this.path, this.index);
+						return that.createDeleteElementOperationData(this.path, this.index, this.elePath);
 					}
 				};
 			},
 			
-			createDeleteElementOperationService : function(path, index){
-				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, this.createDeleteElementOperationData(path, index));
+			createDeleteElementOperationService : function(path, index, elePath){
+				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, this.createDeleteElementOperationData(path, index, elePath));
 			},
 
 			createGetOperationData : function(path){

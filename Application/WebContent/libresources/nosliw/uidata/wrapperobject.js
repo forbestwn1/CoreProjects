@@ -155,7 +155,7 @@ var node_createWraperObject = function(){
 						out = loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT, operationData);
 					}
 					else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
-						out = loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, dataOperation.index);
+						out = loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, dataOperation);
 					}
 					return out;
 				

@@ -36,10 +36,11 @@
 					var that = this;
 					requestInfo.addRequest(this.getContext().getDataOperationRequest("index", node_uiDataOperationServiceUtility.createGetOperationService(), {
 						success : function(request, data){
-							var index = data.value;
+							var elePath = data.value;
 						
 							var opRequest = node_createBatchUIDataOperationRequest(that.getContext());
-							var uiDataOperation = new node_UIDataOperation("business.a.cc", node_uiDataOperationServiceUtility.createDeleteElementOperationService("", index));
+//							var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createDeleteElementOperationService("", undefined, elePath));
+							var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createDestroyOperationService(""));
 							opRequest.addUIDataOperation(uiDataOperation);
 							return opRequest;
 						}

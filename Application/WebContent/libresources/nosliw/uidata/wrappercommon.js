@@ -21,6 +21,7 @@ var node_ServiceInfo;
 var node_createServiceRequestInfoSet;
 var node_requestServiceProcessor;
 var node_createWrapperOrderedContainer;
+var node_basicUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 /**
@@ -198,7 +199,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 	//get real path from parent, may do mapping
 	var loc_getRealPath = function(){
 		var out = loc_out.pri_path;
-		if(loc_out.pri_parent.pri_isContainer){
+		if(loc_out.pri_parent.pri_isContainer && !node_basicUtility.isStringEmpty(out)){
 			//for container, do mapping from pri_path to real path
 			out = loc_out.pri_parent.pri_elements.getPathById(out);
 		}
@@ -297,15 +298,15 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 				}
 			}
 			else{
-				//other operation
-				if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
-					if(loc_out.pri_isContainer && dataOperation.index==undefined){
-						var eleId = loc_out.pri_element.getIdByPath(dataOperation.elePath);
-						dataOperation.index = loc_out.pri_element.getIndexById(eleId);
-					}
+				if(command==node_CONSTANT.WRAPPER_OPERATION_DESTROY && loc_out.pri_parent.pri_isContainer){
+					//change to delete element command
+					operationService = node_uiDataOperationServiceUtility.createDeleteElementOperationService(undefined, undefined, loc_getRealPath());
+					out = loc_out.pri_parent.pri_getModifyOperationRequest(operationService, handlers, requester_parent);
 				}
-				
-				out = loc_out.pri_getModifyOperationRequest(operationService, handlers, requester_parent);
+				else{
+					//other operation
+					out = loc_out.pri_getModifyOperationRequest(operationService, handlers, requester_parent);
+				}
 			}
 		}
 		return out;
@@ -442,6 +443,19 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 	var loc_out = {
 			//data operation for modify : set, addelement, deleteelement
 			pri_getModifyOperationRequest : function(dataOperationService, handlers, requester_parent){
+				
+				var command = dataOperationService.command;
+				var dataOperation = dataOperationService.parms;
+				if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
+					if(loc_out.pri_isContainer && node_basicUtility.isStringEmpty(dataOperation.path) && dataOperation.index==undefined){
+						var eleId = loc_out.pri_elements.getIdByPath(dataOperation.elePath);
+						dataOperation.index = loc_out.pri_elements.getIndexById(eleId);
+						dataOperation.elePath = undefined;
+					}
+				}
+				
+				
+				
 				var out;
 				if(this.pri_dataBased==true){
 					out = loc_getDataOperationOnRootValue(dataOperationService.clone(), handlers, requester_parent); 
@@ -569,6 +583,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.wrapper.createWrapperOrderedContainer", function(){node_createWrapperOrderedContainer = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createWraperCommon", node_createWraperCommon); 
