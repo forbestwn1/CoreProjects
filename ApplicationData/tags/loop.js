@@ -81,7 +81,7 @@
 		var loc_addEle = function(data, index, path, requestInfo){
 			var eleContext = loc_env.createExtendedContext([
 				loc_env.createContextElementInfo(loc_eleContextEleName, loc_dataVariable, path),
-//				loc_env.createContextElementInfo(loc_eleNameContextEleName, index)
+				loc_env.createContextElementInfo(loc_eleNameContextEleName, path)
 			], requestInfo);
 			
 			var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId()+"."+loc_generateId(), eleContext, requestInfo);

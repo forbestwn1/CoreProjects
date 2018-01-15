@@ -298,6 +298,13 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			}
 			else{
 				//other operation
+				if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
+					if(loc_out.pri_isContainer && dataOperation.index==undefined){
+						var eleId = loc_out.pri_element.getIdByPath(dataOperation.elePath);
+						dataOperation.index = loc_out.pri_element.getIndexById(eleId);
+					}
+				}
+				
 				out = loc_out.pri_getModifyOperationRequest(operationService, handlers, requester_parent);
 			}
 		}
