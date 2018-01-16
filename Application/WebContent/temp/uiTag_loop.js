@@ -27,6 +27,7 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
     var loc_eleContextEleName = attributes.element;
     var loc_eleNameContextEleName = attributes.elename;
     var loc_childResourceViews = [];
+    var loc_childVaraibles = [];
     var loc_id = 0;
     var loc_generateId = function () {
         loc_id++;
@@ -56,6 +57,13 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
             resourceView.insertAfter(loc_childResourceViews[index - 1].getEndElement());
         }
         loc_childResourceViews.splice(index, 0, resourceView);
+        var eleVariable = loc_dataVariable.createChildVariable(path);
+        loc_childVaraibles.splice(index, 0, eleVariable);
+        eleVariable.registerDataChangeEventListener(undefined, function (event, dataOperation, requestInfo) {
+            if (event == "EVENT_WRAPPER_DESTROY") {
+                loc_out.prv_deleteEle(index);
+            }
+        }, this);
     };
     var loc_out = {prv_deleteEle: function (key, requestInfo) {
         alert("ffff");

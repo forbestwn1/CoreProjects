@@ -91,9 +91,15 @@
 				
 			loc_childResourceViews.splice(index, 0, resourceView);
 
-			var eleVariable = loc_env.createVariable("internal_data");;
+			var eleVariable = loc_dataVariable.createChildVariable(path);
 			loc_childVaraibles.splice(index, 0, eleVariable);
+			eleVariable.registerDataChangeEventListener(undefined, function(event, dataOperation, requestInfo){
+				if(event=="EVENT_WRAPPER_DESTROY"){
+					loc_out.prv_deleteEle(index);
+				}
+			}, this);
 
+			
 /*			
 			var that = this;
 			eleContext.getContextElementVariable(loc_eleContextEleName).registerDataChangeEventListener(undefined, function(event, path, operationData, requestInfo){

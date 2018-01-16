@@ -119,6 +119,14 @@ var node_createWraperObject = function(){
 //				delete opObj[data];
 			}
 		}			
+		else if(command==node_CONSTANT.WRAPPER_OPERATION_DESTROY){
+			if(_.isArray(baseObj)){
+				baseObj.splice(parseInt(attribute), 1);
+			}
+			else{
+				delete baseObj[attribute];
+			}
+		}
 		return out;
 	};
 	
@@ -156,6 +164,9 @@ var node_createWraperObject = function(){
 					}
 					else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
 						out = loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, dataOperation);
+					}
+					else if(command==node_CONSTANT.WRAPPER_OPERATION_DESTROY){
+						out = loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_DESTROY, dataOperation);
 					}
 					return out;
 				

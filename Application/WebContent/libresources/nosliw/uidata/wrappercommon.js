@@ -167,6 +167,11 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 						}
 					}
 					else if(pathCompare.compare == 2){
+						if(loc_out.pri_id=="41" || loc_out.pri_id=="47"){
+							var kkkk = 5555;
+							kkkk++;
+						}
+						
 						//something happens beyond this, just forward the event with sub path, only set event
 						//store the change
 						eventData.path = loc_getIdPath(pathCompare.subPath);
@@ -247,6 +252,12 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		}
 		else{
 			if(command==node_CONSTANT.WRAPPER_OPERATION_GET){
+				
+				if(loc_out.pri_id=="41" || loc_out.pri_id=="47"){
+					var kkkk = 5555;
+					kkkk++;
+				}
+				
 				
 				if(loc_out.pri_isValidData==false){
 					//calculate data
@@ -361,6 +372,9 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 				break;
 			case node_CONSTANT.WRAPPER_EVENT_ADDELEMENT:
 				command = node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT;
+				break;
+			case node_CONSTANT.WRAPPER_EVENT_DESTROY:
+				command = node_CONSTANT.WRAPPER_OPERATION_DESTROY;
 				break;
 			}
 

@@ -41,12 +41,12 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"Example_Object",
 "scriptExpressionsInContent":[],
 "scriptExpressionInAttributes":[],
 "scriptExpressionTagAttributes":[],
-"elementEvents":[{"uiId":"740",
+"elementEvents":[{"uiId":"1100",
 "event":"click",
 "function":"newElementInLoop"
 }],
 "tagEvents":[],
-"uiTags":{"737":{"id":"737",
+"uiTags":{"1097":{"id":"1097",
 "type":"tag",
 "context":{"public":{"bus":{"children":{"a":{"children":{"aa":{"children":{},
 "definition":"test.url;1.0.0"
@@ -87,7 +87,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"Example_Object",
 "elementEvents":[],
 "tagEvents":[],
 "uiTags":{},
-"attributes":{"nosliwid":"737"
+"attributes":{"nosliwid":"1097"
 },
 "html":"",
 "constants":{"from":{"literate":{"dataTypeId":"test.integer","value":3},
@@ -133,7 +133,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"Example_Object",
 },
 "tagName":"debug"
 },
-"745":{"id":"745",
+"1105":{"id":"1105",
 "type":"tag",
 "context":{"public":{"bus":{"children":{"a":{"children":{"aa":{"children":{},
 "definition":"test.url;1.0.0"
@@ -184,7 +184,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"Example_Object",
 }
 }
 },
-"scriptExpressionsInContent":[{"uiId":"746",
+"scriptExpressionsInContent":[{"uiId":"1106",
 "scriptExpressions":{"0":{"id":"0",
 "definition":"?(ele)?.value + ' 6666 ' ",
 "variableNames":["ele"],
@@ -202,7 +202,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"Example_Object",
 }],
 "scriptExpressionInAttributes":[],
 "scriptExpressionTagAttributes":[],
-"elementEvents":[{"uiId":"749",
+"elementEvents":[{"uiId":"1109",
 "event":"click",
 "function":"deleteElementInLoop"
 }],
@@ -211,9 +211,9 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"Example_Object",
 "attributes":{"data":"business.a.cc",
 "element":"ele",
 "elename":"index",
-"nosliwid":"745"
+"nosliwid":"1105"
 },
-"html":"&lt;br nosliwid=&quot;747&quot;&gt; &lt;br nosliwid=&quot;748&quot;&gt;&lt;span&gt; &lt;/span&gt;&lt;span nosliwid=&quot;746&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;a href=&quot;&quot; nosliwid=&quot;749&quot;&gt;&lt;span&gt;Delete&lt;/span&gt;&lt;/a&gt; &lt;br nosliwid=&quot;750&quot;&gt; &lt;br nosliwid=&quot;751&quot;&gt;",
+"html":"&lt;br nosliwid=&quot;1107&quot;&gt; &lt;br nosliwid=&quot;1108&quot;&gt;&lt;span&gt; &lt;/span&gt;&lt;span nosliwid=&quot;1106&quot;&gt;&lt;/span&gt;&lt;span&gt; &lt;/span&gt;&lt;a href=&quot;&quot; nosliwid=&quot;1109&quot;&gt;&lt;span&gt;Delete&lt;/span&gt;&lt;/a&gt; &lt;br nosliwid=&quot;1110&quot;&gt; &lt;br nosliwid=&quot;1111&quot;&gt;",
 "constants":{"from":{"literate":{"dataTypeId":"test.integer","value":3},
 "processed":true,
 "value":{"dataTypeId":"test.integer","value":3}
@@ -293,7 +293,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"Example_Object",
 }
 },
 "attributes":{},
-"html":"&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;737-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;737-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;br nosliwid=&quot;738&quot;&gt; &lt;br nosliwid=&quot;739&quot;&gt;&lt;a href=&quot;&quot; nosliwid=&quot;740&quot;&gt;&lt;span&gt;New&lt;/span&gt;&lt;/a&gt;&lt;br nosliwid=&quot;741&quot;&gt; &lt;br nosliwid=&quot;742&quot;&gt; &lt;br nosliwid=&quot;743&quot;&gt;&lt;span&gt;Loop: &lt;/span&gt;&lt;br nosliwid=&quot;744&quot;&gt; &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;745-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;745-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;!--			&lt;br&gt;	Content:&lt;%=?(bus.a.aa)?.value + '   6666 ' %&gt;	&lt;br&gt;	TextInput_converter:&lt;nosliw-textinput data=&quot;bus.a.aa&quot;/&gt;  	&lt;br&gt;	TextInput_converter&lt;nosliw-textinput data=&quot;bus.a.aa&quot;/&gt;  	&lt;br&gt;	Content:&lt;%=?(business.a.aa)?.value + '   6666 ' %&gt;	&lt;br&gt;	Content:&lt;%=#|?(business)?.a.aa.subString(from:&amp;(from)&amp;,to:&amp;(to)&amp;)|#.value + ?(business.a.dd)? + ' 6666 ' %&gt;	&lt;br&gt;	Attribute:&lt;span  style=&quot;color:&lt;%=#|?(business)?.a.aa.subString(from:&amp;(from)&amp;,to:&amp;(to)&amp;)|#.value=='s isfff'?'red':'blue'%&gt;&quot;&gt;Phone Number : &lt;/span&gt; 	&lt;br&gt;	TextInput:&lt;nosliw-textinput data=&quot;business.a.aa&quot;/&gt;  	&lt;br&gt;	TextInput: &lt;nosliw-textinput data=&quot;business.a.aa&quot;/&gt;  	&lt;br&gt;	Switch/case	&lt;br&gt;		&lt;nosliw-switch variable=&quot;business.a.aa.value&quot;&gt;			&lt;br&gt; switch&lt;br&gt;			&lt;%=?(internal_switchVariable)?%&gt;								&lt;nosliw-case value=&quot;This is my world!&quot;&gt;					&lt;br&gt;First one &lt;br&gt;				&lt;/nosliw-case&gt;							&lt;nosliw-case value=&quot;This is my w&quot;&gt;					&lt;br&gt;Second one &lt;br&gt;				&lt;/nosliw-case&gt;				&lt;nosliw-casedefault&gt;					&lt;br&gt;Default one &lt;br&gt;				&lt;/nosliw-casedefualt&gt;			&lt;br&gt;		&lt;/nosliw-switch&gt;--&gt;    &lt;!-- This part can be used to define context (variable)				it describle data type criteria for each context element and its default value		--&gt;  &lt;!-- This part can be used to define expressions		--&gt;",
+"html":"&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;1097-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;1097-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;br nosliwid=&quot;1098&quot;&gt; &lt;br nosliwid=&quot;1099&quot;&gt;&lt;a href=&quot;&quot; nosliwid=&quot;1100&quot;&gt;&lt;span&gt;New&lt;/span&gt;&lt;/a&gt;&lt;br nosliwid=&quot;1101&quot;&gt; &lt;br nosliwid=&quot;1102&quot;&gt; &lt;br nosliwid=&quot;1103&quot;&gt;&lt;span&gt;Loop: &lt;/span&gt;&lt;br nosliwid=&quot;1104&quot;&gt; &lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;1105-tag-start&quot;&gt;&lt;/nosliw&gt;&lt;nosliw style=&quot;display:none;&quot; nosliwid=&quot;1105-tag-end&quot;&gt;&lt;/nosliw&gt; &lt;!--			&lt;br&gt;	Content:&lt;%=?(bus.a.aa)?.value + '   6666 ' %&gt;	&lt;br&gt;	TextInput_converter:&lt;nosliw-textinput data=&quot;bus.a.aa&quot;/&gt;  	&lt;br&gt;	TextInput_converter&lt;nosliw-textinput data=&quot;bus.a.aa&quot;/&gt;  	&lt;br&gt;	Content:&lt;%=?(business.a.aa)?.value + '   6666 ' %&gt;	&lt;br&gt;	Content:&lt;%=#|?(business)?.a.aa.subString(from:&amp;(from)&amp;,to:&amp;(to)&amp;)|#.value + ?(business.a.dd)? + ' 6666 ' %&gt;	&lt;br&gt;	Attribute:&lt;span  style=&quot;color:&lt;%=#|?(business)?.a.aa.subString(from:&amp;(from)&amp;,to:&amp;(to)&amp;)|#.value=='s isfff'?'red':'blue'%&gt;&quot;&gt;Phone Number : &lt;/span&gt; 	&lt;br&gt;	TextInput:&lt;nosliw-textinput data=&quot;business.a.aa&quot;/&gt;  	&lt;br&gt;	TextInput: &lt;nosliw-textinput data=&quot;business.a.aa&quot;/&gt;  	&lt;br&gt;	Switch/case	&lt;br&gt;		&lt;nosliw-switch variable=&quot;business.a.aa.value&quot;&gt;			&lt;br&gt; switch&lt;br&gt;			&lt;%=?(internal_switchVariable)?%&gt;								&lt;nosliw-case value=&quot;This is my world!&quot;&gt;					&lt;br&gt;First one &lt;br&gt;				&lt;/nosliw-case&gt;							&lt;nosliw-case value=&quot;This is my w&quot;&gt;					&lt;br&gt;Second one &lt;br&gt;				&lt;/nosliw-case&gt;				&lt;nosliw-casedefault&gt;					&lt;br&gt;Default one &lt;br&gt;				&lt;/nosliw-casedefualt&gt;			&lt;br&gt;		&lt;/nosliw-switch&gt;--&gt;    &lt;!-- This part can be used to define context (variable)				it describle data type criteria for each context element and its default value		--&gt;  &lt;!-- This part can be used to define expressions		--&gt;",
 "constants":{"from":{"literate":{"dataTypeId":"test.integer","value":3},
 "processed":true,
 "value":{"dataTypeId":"test.integer","value":3}
