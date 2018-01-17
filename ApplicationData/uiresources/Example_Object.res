@@ -16,7 +16,6 @@
 			<script>
 			{
 				deleteElementInLoop : function(data, info){
-					alert("cccccc");
 					event.preventDefault();
 				
 					var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
@@ -53,7 +52,6 @@
 		</nosliw-loop>
 
 
-<!--		
 	<br>
 	Content:<%=?(bus.a.aa)?.value + '   6666 ' %>
 	<br>
@@ -92,7 +90,6 @@
 				</nosliw-casedefualt>
 			<br>
 		</nosliw-switch>
--->		
 		
 	</body>
 

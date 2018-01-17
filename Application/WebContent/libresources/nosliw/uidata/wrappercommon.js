@@ -298,6 +298,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 						
 						out.setRequestProcessors({
 							success : function(requestInfo, value){
+								loc_out.pri_toBeDoneWrapperOperations.splice(0,loc_out.pri_toBeDoneWrapperOperations.length)
 								loc_out.pri_value = value;
 								return loc_getData();
 							}

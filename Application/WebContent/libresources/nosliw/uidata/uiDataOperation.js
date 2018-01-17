@@ -106,8 +106,8 @@ var node_uiDataOperationServiceUtility = function(){
 			createAddElementOperationData : function(path, index, value){
 				var that = this;
 				return {
-					path : path,
-					index : index,
+					path : path,              //unchanged path from parent, if not provided, then will generate unique one
+					index : index,            //index in array, mandatory
 					value : value,
 					clone : function(){
 						return that.createAddElementOperationData(this.path, this.index, node_dataUtility.cloneValue(this.value));

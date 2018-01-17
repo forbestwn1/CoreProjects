@@ -114,7 +114,6 @@
 		{
 			
 			prv_deleteEle : function(key, requestInfo){
-				alert("ffff");
 				var view = loc_childResourceViews[key];
 				view.detachViews();
 				loc_childResourceViews.splice(key, 1);

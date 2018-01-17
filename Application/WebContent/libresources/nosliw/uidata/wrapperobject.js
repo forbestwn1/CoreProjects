@@ -45,26 +45,20 @@ var node_createWraperObject = function(){
 	    }
 	};
 
-	/*
-	 * do operation on object
-	 * 		obj : root object
-	 * 		prop : path from root object
-	 * 		command : what to do
-	 * 		data : data for command
-	 */
-	var loc_operateObject = function(obj, prop, command, data){
-		var baseObj = obj;
-		var attribute = prop;
+	
+	var loc_getOperationBase = function(value, path){
+		var baseObj = value;
+		var attribute = path;
 		
-		if(node_basicUtility.isStringEmpty(prop)){
-			baseObj = obj;
+		if(node_basicUtility.isStringEmpty(path)){
+			baseObj = value;
 		}
-		else if(prop.indexOf('.')==-1){
-			baseObj = obj;
-			attribute = prop;
+		else if(path.indexOf('.')==-1){
+			baseObj = value;
+			attribute = path;
 		}
 		else{
-			var segs = node_parseSegment(prop);
+			var segs = node_parseSegment(path);
 			var size = segs.getSegmentSize();
 			for(var i=0; i<size-1; i++){
 				var attr = segs.next();
@@ -77,58 +71,11 @@ var node_createWraperObject = function(){
 			}
 			attribute = segs.next();
 		}
-		
-		var out = obj;
-		if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
-			if(node_basicUtility.isStringEmpty(attribute))	out = data;
-			else	baseObj[attribute] = data;
+		return {
+			base : baseObj, 
+			attribute : attribute
 		}
-		else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
-			var opObj;
-			if(node_basicUtility.isStringEmpty(attribute))	opObj = obj; 
-			else{
-				//if container does not exist, then create a map
-				if(baseObj[attribute]==undefined)	baseObj[attribute] = {};
-				opObj = baseObj[attribute];
-			}
-
-			if(data.index!=undefined){
-				if(_.isArray(opObj)){
-					opObj.splice(data.index, 0, data.data);
-				}
-				else{
-					opObj[data.elePath]=data.data;
-				}
-			}
-			else{
-				//if index is not specified, for array, just append it
-				if(_.isArray(opObj)){
-					opObj.push(data.data);
-				}
-			}
-		}
-		else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
-			var opObj;
-			if(node_basicUtility.isStringEmpty(attribute))	opObj = obj; 
-			else  opObj = baseObj[attribute];
-
-			if(_.isArray(opObj)){
-				opObj.splice(data.index, 1);
-			}
-			else{
-//				delete opObj[data];
-			}
-		}			
-		else if(command==node_CONSTANT.WRAPPER_OPERATION_DESTROY){
-			if(_.isArray(baseObj)){
-				baseObj.splice(parseInt(attribute), 1);
-			}
-			else{
-				delete baseObj[attribute];
-			}
-		}
-		return out;
-	};
+	}
 	
 	var loc_out = {		
 
@@ -140,53 +87,97 @@ var node_createWraperObject = function(){
 				}, handlers, requester_parent);
 			},
 			
-			getDataOperationRequest : function(baseValue, dataOperationService, handlers, requester_parent){
-				return node_createServiceRequestInfoSimple(new node_ServiceInfo("GetDataOperationFromObjectValue", {"baseValue":baseValue, "dataOperation":dataOperationService}), function(requestInfo){
+			//do operation on value
+			getDataOperationRequest : function(value, dataOperationService, handlers, requester_parent){
+				return node_createServiceRequestInfoSimple(new node_ServiceInfo("GetDataOperationFromObjectValue", {"value":value, "dataOperationService":dataOperationService}), function(requestInfo){
 					var command = dataOperationService.command;
-					var dataOperation = dataOperationService.parms;
-					var out = baseValue;
+					var operationData = dataOperationService.parms;
+					
+					//get operation base
+					var operationBase = loc_getOperationBase(value, operationData.path);
+					
+					var out = value;
 					if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
-						//change value
-						if(_.isObject(baseValue)){
-							out = loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_SET, dataOperation.value);
+						if(_.isObject(value) || _.isArray(value)){
+							//for array or object
+							if(node_basicUtility.isStringEmpty(operationBase.attribute))	out = operationData.value;
+							else	operationBase.base[operationBase.attribute] = operationData.value;
 						}
 						else{
-							out = dataOperation.value;
+							//for basic value
+							out = operationData.value;
 						}
 					}
 					else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
-						var operationData = {
-								data : dataOperation.value,
-								index : dataOperation.index,
-								elePath : dataOperation.elePath
-							};
-						out = loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT, operationData);
+						if(_.isArray(operationBase.base) || _.isObject(operationBase.base)){
+							//get container object to add element to it
+							var containerObj;
+							if(node_basicUtility.isStringEmpty(operationBase.attribute))	containerObj = operationBase.base; 
+							else{
+								containerObj = operationBase.base[operationBase.attribute];
+								if(containerObj==undefined){
+									//if container does not exist, then create it
+									if(operationData.elePath!=undefined)		operationBase.base[operationBase.attribute] = {};
+									else		operationBase.base[operationBase.attribute] = [];
+								}
+								containerObj = operationBase.base[operationBase.attribute];
+							}
+							
+							if(operationData.index!=undefined){
+								if(_.isArray(containerObj))		containerObj.splice(operationData.index, 0, operationData.value);
+								else if(_.isObject(containerObj)) containerObj[operationData.elePath]=operationData.value;
+							}
+							else{
+								//if index is not specified, for array, just append it
+								if(_.isArray(containerObj))		containerObj.push(operationData.value);
+								else if(_.isObject(containerObj)) containerObj[operationData.elePath]=operationData.value;
+							}
+						}
+						else{
+							//not valid operation 
+						}
 					}
 					else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
-						out = loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, dataOperation);
+						var containerObj;
+						if(node_basicUtility.isStringEmpty(operationBase.attribute))	containerObj = operationBase.base; 
+						else	containerObj = operationBase.base[operationBase.attribute];
+
+						if(containerObj!=undefined){
+							if(_.isArray(containerObj))		containerObj.splice(operationData.index, 1);
+							else if(_.isObject(containerObj)) delete containerObj[operationData.elePath];
+						}
+						else{
+							//not valid operation 
+						}
 					}
 					else if(command==node_CONSTANT.WRAPPER_OPERATION_DESTROY){
-						out = loc_operateObject(baseValue, dataOperation.path, node_CONSTANT.WRAPPER_OPERATION_DESTROY, dataOperation);
+						if(_.isArray(operationBase.base)){
+							operationBase.base.splice(parseInt(operationBase.attribute), 1);
+						}
+						else if(_.isObject(operationBase.base)){
+							delete operationBase.base[operationBase.attribute];
+						}
 					}
 					return out;
 				
 				}, handlers, requester_parent);
 			},
 			
-			getGetElementsRequest : function(baseValue, handlers, request){
-				return node_createServiceRequestInfoSimple(new node_ServiceInfo("GetElements", {"baseValue":baseValue}), function(requestInfo){
+			//loop through elements under value
+			getGetElementsRequest : function(value, handlers, request){
+				return node_createServiceRequestInfoSimple(new node_ServiceInfo("GetElements", {"value":value}), function(requestInfo){
 					var elements = [];
-					if(_.isArray(baseValue)){
+					if(_.isArray(value)){
 						//for array
-						_.each(baseValue, function(eleValue, index){
+						_.each(value, function(eleValue, index){
 							elements.push({
 								value : node_dataUtility.cloneValue(eleValue)
 							});
 						}, this);
 					}
-					else if(_.isObject(baseValue)){
+					else if(_.isObject(value)){
 						//for object
-						_.each(baseValue, function(eleValue, name){
+						_.each(value, function(eleValue, name){
 							elements.push({
 								path : name,
 								id : name,
