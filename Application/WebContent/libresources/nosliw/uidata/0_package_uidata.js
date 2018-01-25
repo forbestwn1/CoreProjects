@@ -7,6 +7,7 @@ var library = nosliw.getPackage("uidata");
  * data : 	value + data type
  * 			data can only used for reading, not for writing
  * wrapper:
+ * 			wrapper should not be exposed to user, only variable
  * 			wrapper has two ways to do it:  data based and parent wrapper based
  * 				data based : it store root data and the path from root data to this data
  * 				parent wrapper based: it store parent wrapper and the path from data in parent wrapper to this data
@@ -18,6 +19,7 @@ var library = nosliw.getPackage("uidata");
  * 				operate on data according to request infor and trigue event
  *  
  * wrapper variable: 
+ * 			variable is exposed to user
  * 			a variable that can contain wrapper that can be set to differen value
  * 			two types of wrapper variables: normal and child 
  * 			child variable is dependent on normal variable: its wrapper is wrapper based on wrapper within parent variable

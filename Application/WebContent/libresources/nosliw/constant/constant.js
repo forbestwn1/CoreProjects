@@ -17,18 +17,26 @@ var node_CONSTANT=
 	  //wrapper event
 	  "WRAPPER_EVENT_SET" : "EVENT_WRAPPER_SET",                        //the value get set					
 	  "WRAPPER_EVENT_ADDELEMENT" : "EVENT_WRAPPER_ADDELEMENT",          //element is added to container
-	  "WRAPPER_EVENT_DESTROYELEMENT" : "EVENT_WRAPPER_DELETEELEMENT",    //element is removed from container
+	  "WRAPPER_EVENT_DELETEELEMENT" : "EVENT_WRAPPER_DELETEELEMENT",    //element is removed from container
 	  "WRAPPER_EVENT_FORWARD" : "EVENT_WRAPPER_FORWARD",				//forward original event information to child
 	  "WRAPPER_EVENT_CHANGE" : "EVENT_WRAPPER_CHANGE",					//indicate something changes, need to update data 
-	  "WRAPPER_EVENT_DESTROY" : "EVENT_WRAPPER_DESTROY",                //indicate that the wrapper is destroyed (the wrapper is not valid any more), it is like a lifecycle event
+	  "WRAPPER_EVENT_DELETE" : "EVENT_WRAPPER_DELETE",                //delete means the path does not exist anymore. all the resources related with this wrapper should be destroy (variable, child wrapper)
+	  "WRAPPER_EVENT_CLEARUP" : "EVENT_WRAPPER_CLEARUP",                //clear up means release resource
 	  
 	  //operation on wrapper
 	  "WRAPPER_OPERATION_SET" : "WRAPPER_OPERATION_SET",
-	  "WRAPPER_OPERATION_ADDELEMENT" : "WRAPPER_OPERATION_ADDELEMENT",
+	  "WRAPPER_OPERATION_ADDELEMENT" : "WRAPPER_OPERATION_ADDELEMENT",      //
 	  "WRAPPER_OPERATION_DELETEELEMENT" : "WRAPPER_OPERATION_DELETEELEMENT",
 	  "WRAPPER_OPERATION_GET" : "WRAPPER_OPERATION_GET",
-	  "WRAPPER_OPERATION_DESTROY" : "WRAPPER_OPERATION_DESTROY",
+	  "WRAPPER_OPERATION_DELETE" : "WRAPPER_OPERATION_DELETE",		//delete means the path does not exist anymore. all the resources related with this wrapper should be destroy (variable, child wrapper) 
 
+	  //wrapper variable events
+	  "WRAPPERVARIABLE_EVENT_SETDATA" : "WRAPPERVARIABLE_EVENT_SETDATA",
+	  "WRAPPERVARIABLE_EVENT_CLEARUP" : "WRAPPERVARIABLE_EVENT_CLEARUP",    //clear up resource
+
+	  "WRAPPERVARIABLE_EVENT_NEW" : "WRAPPERVARIABLE_EVENT_NEW",
+	  "WRAPPERVARIABLE_EVENT_DESTROY" : "WRAPPERVARIABLE_EVENT_DESTROY",
+	  
 	  //wrapper type
 	  "WRAPPER_TYPE_OBJECT" : "object",
 	  "WRAPPER_TYPE_APPDATA" : "appdata",
@@ -36,13 +44,6 @@ var node_CONSTANT=
 
 	  "DATA_TYPE_OBJECT" : "object",
 	  "DATA_TYPE_APPDATA" : "appata",
-	  
-	  
-	  //wrapper variable events
-	  "WRAPPERVARIABLE_EVENT_NEW" : "WRAPPERVARIABLE_EVENT_NEW",
-	  "WRAPPERVARIABLE_EVENT_SETWRAPPER" : "WRAPPERVARIABLE_EVENT_SETWRAPPER",
-	  "WRAPPERVARIABLE_EVENT_CLEARUP" : "WRAPPERVARIABLE_EVENT_CLEARUP",
-	  "WRAPPERVARIABLE_EVENT_DESTROY" : "WRAPPERVARIABLE_EVENT_DESTROY",
 	  
 	  //context events
 	  "CONTEXT_EVENT_BEFOREUPDATE" : "NOSLIWCONSTANT.LIFECYCLE_CONTEXT_EVENT_BEFOREUPDATE",

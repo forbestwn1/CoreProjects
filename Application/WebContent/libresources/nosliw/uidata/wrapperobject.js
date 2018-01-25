@@ -117,7 +117,7 @@ var node_createWraperObject = function(){
 								containerObj = operationBase.base[operationBase.attribute];
 								if(containerObj==undefined){
 									//if container does not exist, then create it
-									if(operationData.elePath!=undefined)		operationBase.base[operationBase.attribute] = {};
+									if(operationData.id!=undefined)		operationBase.base[operationBase.attribute] = {};
 									else		operationBase.base[operationBase.attribute] = [];
 								}
 								containerObj = operationBase.base[operationBase.attribute];
@@ -125,12 +125,12 @@ var node_createWraperObject = function(){
 							
 							if(operationData.index!=undefined){
 								if(_.isArray(containerObj))		containerObj.splice(operationData.index, 0, operationData.value);
-								else if(_.isObject(containerObj)) containerObj[operationData.elePath]=operationData.value;
+								else if(_.isObject(containerObj)) containerObj[operationData.id]=operationData.value;
 							}
 							else{
 								//if index is not specified, for array, just append it
 								if(_.isArray(containerObj))		containerObj.push(operationData.value);
-								else if(_.isObject(containerObj)) containerObj[operationData.elePath]=operationData.value;
+								else if(_.isObject(containerObj)) containerObj[operationData.id]=operationData.value;
 							}
 						}
 						else{
@@ -144,7 +144,7 @@ var node_createWraperObject = function(){
 
 						if(containerObj!=undefined){
 							if(_.isArray(containerObj))		containerObj.splice(operationData.index, 1);
-							else if(_.isObject(containerObj)) delete containerObj[operationData.elePath];
+							else if(_.isObject(containerObj)) delete containerObj[operationData.id];
 						}
 						else{
 							//not valid operation 
@@ -179,7 +179,6 @@ var node_createWraperObject = function(){
 						//for object
 						_.each(value, function(eleValue, name){
 							elements.push({
-								path : name,
 								id : name,
 								value : node_dataUtility.cloneValue(eleValue)
 							});

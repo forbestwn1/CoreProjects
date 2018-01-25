@@ -6,6 +6,18 @@ var packageObj = library.getChildPackage("wrapper");
 
 //*******************************************   Start Node Definition  ************************************** 	
 
+	
+	/**
+	 * Container for ordered elements in wrapper
+	 * value : value of element
+	 * index : position in array, index for element may change
+	 * id	 : id for element that wont change; id is also internal path
+	 * 		id use path if path exist
+	 * 		otherwise, generate id 
+	 * path  : path related with container. 
+	 * 		if path exists, it is used as id. 
+	 * 		if path not exists, use index as path.
+	 */
 var node_createWrapperOrderedContainer = function(){
 	
 	//id generation 
@@ -30,24 +42,12 @@ var node_createWrapperOrderedContainer = function(){
 		getValueById : function(id){	return loc_valueById[id];	},
 		
 		getPathById : function(id){
-			var path = loc_pathById[id];
-			if(path==undefined){
-				path = this.getIndexById(id)+"";
-			}
+			var path = loc_pathById[id];       //find from provided
+			if(path==undefined)		path = this.getIndexById(id)+"";   //not provided, then use index as path
 			return path;
 		},
 		
-		getIndexById : function(id){
-			return loc_ids.indexOf(id);
-//			var out = -1;
-//			for(var i in loc_ids){
-//				if(loc_ids[i]==id){
-//					out = i;
-//					break;
-//				}
-//			}
-//			return out;
-		},
+		getIndexById : function(id){	return loc_ids.indexOf(id);	},
 		
 		getIdByPath : function(path){
 			var out;
@@ -56,21 +56,24 @@ var node_createWrapperOrderedContainer = function(){
 					out = p;
 				}
 			});
-			if(out==undefined)  out = loc_ids[path];
+			if(out==undefined)  out = loc_ids[path];    //if not provided, treat path as index
 			return out;
 		},
 		
-		insertValue : function(value, index, path, id){
+		insertValue : function(value, index, path){
+			var id = path;
 			if(id==undefined)  id = loc_generateId();
+			
 			loc_valueById[id] = value;
-			if(path!=undefined)  loc_pathById[id] = path;
 			loc_ids.splice(index, 0, id);
+			
+			if(path!=undefined)  loc_pathById[id] = path;
 			return id;
 		},
 		
-		deleteValue : function(index){
+		deleteElementByIndex : function(index){
 			var id = loc_ids[index];
-			var path = this.getPathById();
+			var path = this.getPathById(id);
 			
 			loc_ids.splice(index, 1);
 			delete loc_valueById[id];
@@ -90,6 +93,7 @@ var node_createWrapperOrderedContainer = function(){
 		clear : function(){
 			loc_id = 0;
 			loc_valueById = {};
+			loc_pathById = {};
 			loc_ids = [];
 		}
 		

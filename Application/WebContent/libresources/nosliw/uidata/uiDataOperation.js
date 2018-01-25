@@ -88,6 +88,20 @@ var node_uiDataOperationServiceUtility = function(){
 	};
 	
 	var loc_out = {
+			createGetOperationData : function(path){
+				var that = this;
+				return {
+					path : path,
+					clone : function(){
+						return that.createGetOperationData(this.path);
+					}
+				};
+			},
+			
+			createGetOperationService : function(path){
+				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_GET, this.createGetOperationData(path));
+			},
+			
 			createSetOperationData : function(path, value){
 				var that = this;
 				return {
@@ -103,64 +117,51 @@ var node_uiDataOperationServiceUtility = function(){
 				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_SET, this.createSetOperationData(path, value));
 			},
 
-			createAddElementOperationData : function(path, index, value){
+			createAddElementOperationData : function(path, value, index, id){
 				var that = this;
 				return {
-					path : path,              //unchanged path from parent, if not provided, then will generate unique one
-					index : index,            //index in array, mandatory
+					path : path,              
+					index : index,            	//index in array, mandatory
+					id : id,					//unchanged path from parent, if not provided, then will generate unique one
 					value : value,
 					clone : function(){
-						return that.createAddElementOperationData(this.path, this.index, node_dataUtility.cloneValue(this.value));
+						return that.createAddElementOperationData(this.path, node_dataUtility.cloneValue(this.value), this.index, this.id);
 					}
 				};
 			},
 
-			createAddElementOperationService : function(path, index, value){
-				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT, this.createAddElementOperationData(path, index, value));
+			createAddElementOperationService : function(path, value, index, id){
+				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT, this.createAddElementOperationData(path, value, index, id));
 			},
 
-			createDeleteElementOperationData : function(path, index, elePath){
+			createDeleteElementOperationData : function(path, index, id){
 				var that = this;
 				return {
 					path : path,
 					index : index,
-					elePath : elePath,
+					id : id,
 					clone : function(){
-						return that.createDeleteElementOperationData(this.path, this.index, this.elePath);
+						return that.createDeleteElementOperationData(this.path, this.index, this.id);
 					}
 				};
 			},
 			
-			createDeleteElementOperationService : function(path, index, elePath){
-				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, this.createDeleteElementOperationData(path, index, elePath));
+			createDeleteElementOperationService : function(path, index, id){
+				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT, this.createDeleteElementOperationData(path, index, id));
 			},
 
-			createGetOperationData : function(path){
+			createDeleteOperationData : function(path){
 				var that = this;
 				return {
 					path : path,
 					clone : function(){
-						return that.createGetOperationData(this.path);
+						return that.createDeleteOperationData(this.path);
 					}
 				};
 			},
 			
-			createGetOperationService : function(path){
-				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_GET, this.createGetOperationData(path));
-			},
-			
-			createDestroyOperationData : function(path){
-				var that = this;
-				return {
-					path : path,
-					clone : function(){
-						return that.createDestroyOperationData(this.path);
-					}
-				};
-			},
-			
-			createDestroyOperationService : function(path){
-				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_DESTROY, this.createDestroyOperationData(path));
+			createDeleteOperationService : function(path){
+				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_DELETE, this.createDeleteOperationData(path));
 			}
 	};
 		
