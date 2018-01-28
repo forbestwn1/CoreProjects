@@ -641,6 +641,6 @@ nosliw.registerSetNodeDataEvent("uidata.wrapper.createWrapperOrderedContainer", 
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createWraperCommon", node_createWraperCommon); 
+packageObj.createChildNode("createWraperCommon2", node_createWraperCommon); 
 
 })(packageObj);

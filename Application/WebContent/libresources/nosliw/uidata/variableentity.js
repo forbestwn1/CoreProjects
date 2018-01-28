@@ -1,22 +1,46 @@
-//entity to describe relative variable : parent + path to parent
-var node_RelativeVariableInfo = function(parent, path){
-	this.parent = parent;
-	this.path = node_basicUtility.emptyStringIfUndefined(path);
+//get/create package
+var packageObj = library.getChildPackage("variable");    
+
+(function(packageObj){
+//get used node
+var node_CONSTANT;
+var node_makeObjectWithLifecycle;
+var node_getLifecycleInterface;
+var node_makeObjectWithType;
+var node_getObjectType;
+var node_makeObjectWithId;
+var node_eventUtility;
+var node_requestUtility;
+var node_wrapperFactory;
+var node_basicUtility;
+var node_createEventObject;
+
+//*******************************************   Start Node Definition  ************************************** 	
+//element info expose to end user
+//including two variable: element variabe, index variable
+var node_OrderedContainerElementInfo = function(elementVarWrapper, indexVarWrapper){
+	this.elementVarWrapper = elementVarWrapper;
+	this.indexVarWrapper = indexVarWrapper;
 	return this;
 };
 
-//element info expose to end user
-//including two variable: element variabe, index variable
-var node_SortedContainerElementInfo = function(elementVar, indexVar){
-	this.element = elementVar;
-	this.index = indexVar;
+var node_createVariableWrapper = function(variable){
+	var loc_variable = variable;
+	
+	var loc_out = {
+		getVariable : function(){
+			loc_variable.use();
+			return loc_variable;
+		}
+	};
+	return loc_out;
 };
 
-var node_createSortedContainersInfo = function(baseVaraible, typeHelper){
+var node_createOrderedContainersInfo = function(baseVariable){
 	
 	var loc_baseVariable = baseVariable;
 	
-	var loc_typeHelper = typeHelper;
+	var loc_typeHelper;
 	
 	var loc_containerByPath = {};
 	
@@ -32,11 +56,11 @@ var node_createSortedContainersInfo = function(baseVaraible, typeHelper){
 			out.addRequest(loc_getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
 				success : function(request, data){
 					//get all elements
-					return loc_out.pri_typeHelper.getGetElementsRequest(data.value, {
+					return loc_typeHelper.getGetElementsRequest(data.value, {
 						success : function(request, valueElements){
 							//handle each element
 							var handleElementsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("HandleElements", {"elements":valueElements}));
-							container = node_createSortedContainer(loc_baseVariable, path, valueElements);
+							container = getContainerElementsByPathRequest(loc_baseVariable, path, valueElements);
 							loc_containerByPath[path] = container;
 						}
 					});
@@ -48,6 +72,12 @@ var node_createSortedContainersInfo = function(baseVaraible, typeHelper){
 	
 	var loc_out = {
 			
+		setDataTypeHelper : function(typeHelper){ loc_typeHelper = typeHelper;  },
+			
+		getContainerInfoByPath : function(path){
+			return loc_containerByPath[path];
+		},	
+		
 		getContainerElementsByPathRequest : function(path, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getContainerElementsByPath"), handlers, request);
 			out.addRequest(loc_getContainerByPathRequest(path, {
@@ -72,166 +102,176 @@ var node_createSortedContainersInfo = function(baseVaraible, typeHelper){
 	return loc_out;
 };	
 
-var node_createSortedContainer = function(baseVariable, path, valueElements, typeHelper){
-	
-	//container wrapper
-	var loc_containerVariable = baseVariable.createChildVariable(path);
-	
-	loc_containerVariable.registerDataOperationListener(loc_out.prv_dataOperationEventObject, function(event, eventData, requestInfo){
-		
-		//change, 
-		
-		//ignore forward event
-		//we should not ignore forward event, as forward event also indicate that something get changed on child, in that case, the data also get changed
-		//inform the operation
-		loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, requestInfo);
-	});
 
+
+var node_createOrderVariableContainer = function(variable, path, valueElements){
 	
-	//convert global path to local path
-	var loc_getIdPath = function(path){
-		var out = path;
-		if(loc_out.pri_pathAdapter!=undefined){
-			//for container, do mapping from path to id path
-			var index = path.indexOf(".");
-			var elePath = path;
-			if(index!=-1)  elePath = path.substring(0, index);
-			out = loc_out.pri_elements.getIdByPath(elePath);
-			if(index!=-1){
-				out = out + path.substring(index);
+	var loc_generateId = function(){
+		loc_out.prv_id++;
+		return "id"+loc_out.prv_id+"";
+	};
+	
+	var loc_insertValue = function(value, index, id){
+		var path = id;
+		if(path==undefined)  path = loc_generateId();
+		
+		var eleVariable = loc_out.prv_containerVariable.createChildVariable(path);
+		loc_out.prv_elementVarById[path] = eleVariable;  
+		loc_paths.splice(index, 0, path);
+		
+		if(id!=undefined)  loc_idByPath[path] = id;
+		return eleVariable;
+	};
+	
+	var loc_resourceLifecycleObj = {};
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(variable, path, valueElements){
+
+		loc_out.prv_id = 0;
+		
+		loc_out.prv_elementVarByPath = {};
+		loc_out.prv_idByPath = {};
+		loc_out.prv_paths = [];
+		
+		//get variable as container
+		loc_out.prv_containerVariable = variable;
+		if(!node_basicUtility.isStringEmpty(path)){
+			loc_out.prv_containerVariable = variable.createChildVariable(path);
+		}
+
+		//create element variables and add to list
+		_.each(valueElements, function(valueEle, index){
+			loc_insertValue(valueEle.value, index, valueEle.id);
+		});
+
+		//event adapter
+		loc_containerVariable.setEventAdapter(function(event, eventData, request){
+			var events = [];
+			events.push({
+				event: event,
+				value : eventData
+			});
+			
+			if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
+				var eleVar = loc_insertValue(eventData.value, eventData.index, eventData.id);
+				events.push({
+					event : node_CONSTANT.WRAPPER_EVENT_NEWELEMENT,
+					value : new node_OrderedContainerElementInfo(node_createVariableWrapper(eleVar), undefined),
+				});
 			}
-		}
-		return out;
-	};
-	
-	//get real path from parent, may do mapping from local path to real path
-	var loc_getRealPath = function(){
-		var out = loc_out.pri_path;
-		if(loc_out.pri_parent.pri_isContainer && !node_basicUtility.isStringEmpty(out)){
-			//for container, do mapping from pri_path to real path
-			out = loc_out.pri_parent.pri_elements.getPathById(out);
-		}
-		return out;
-	};
-	
-
-	
-	//elements variable
-	var loc_elementsContainer = node_createOrderedContainer();
-	
-	loc_containerVariable.setPathAdapter(loc_elementsContainer);
-	
-	_.each(valueElements, function(valueEle, index){
+			return events;
+		});
 		
-		var eleId = loc_elementsContainer.insertValue(valueEle.value, index, valueEle.id);
-
-	});
+		//path adapter
+		loc_containerVariable.setPathAdapter({
+			toRealPath : function(path){
+				//find first path seg
+				var index = path.indexOf(".");
+				var elePath = path;
+				if(index!=-1)  elePath = path.substring(0, index);
+				
+				//convert first path seg from path to real path
+				var realElePath = loc_out.prv_idByPath[elePath];       //find from provided
+				if(realElePath==undefined)		realElePath = loc_paths.indexOf(elePath)+"";   //not provided, then use index as path
+				
+				//build full path again
+				var out = realElePath;
+				if(index!=-1){
+					out = out + path.substring(index);
+				}
+				var out;
+			},
+			
+			toAdapteredPath : function(path){
+				//find first path seg
+				var index = path.indexOf(".");
+				var elePath = path;
+				if(index!=-1)  elePath = path.substring(0, index);
+				
+				//convert first path seg from real path to adapted path
+				var adapteredElePath = elePath;
+				_.each(loc_out.prv_idByPath, function(id, p){
+					if(id==elePath) adapteredElePath = p;
+				});
+				
+				//build full path again
+				var out = adapteredElePath;
+				if(index!=-1){
+					out = out + path.substring(index);
+				}
+				var out;
+			},
+			
+		});
+		
+	};
 	
 	var loc_out = {
-		getElements : function(){	return loc_elements;	},
+		getElements : function(){
+			var out = [];
+			_.each(this.prv_paths, function(path, index){
+				var eleVar = this.prv_elementVarByPath[path];
+				out.push(new node_OrderedContainerElementInfo(node_createVariableWrapper(eleVar)));
+			});
+			return out;	
+		},
 		
 		clearup : function(){
 			
 		},
+		
+		populateDeleteElementOperationData : function(operationData){
+			var index = operationData.index;
+			var id = operationData.id;
+			if(id==undefined){
+				var path = this.prv_paths[index];
+				id = this.prv_idByPath[path];
+			}
+			else if(index==undefined){
+				var path;
+				_.each(this.prv_idByPath, function(id1, path1){	if(id==id1)  path = path1;	});
+				_.each(this.prv_paths, function(path1, index1){  if(path==path1) index = index1; });
+			}
+			
+			operationData.index = index;
+			operationData.id = id;
+		},
+		
+		populateDeleteElementOperationDataByPath : function(operationData, childPath){
+			operationData.id = this.prv_idByPath[childPath];
+			_.each(this.prv_paths, function(path, index){
+				if(path==childPath)  operationData.index = index;
+			});
+		}
 	};
+	
+	loc_out = node_makeObjectWithLifecycle(loc_out, loc_resourceLifecycleObj, loc_out);
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE);
+	loc_out = node_makeObjectWithId(loc_out, nosliw.generateId());
+	
+	node_getLifecycleInterface(loc_out).init(variable, path, valueElements);
 	
 	return loc_out;
 };
 
+//*******************************************   End Node Definition  ************************************** 	
 
-/**
- * Container for ordered elements in wrapper
- * value : value of element
- * index : position in array, index for element may change
- * id	 : id for element that wont change; id is also internal path
- * 		id use path if path exist
- * 		otherwise, generate id 
- * path  : path related with container. 
- * 		if path exists, it is used as id. 
- * 		if path not exists, use index as path.
- */
-var node_createOrderedContainer = function(){
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithid.makeObjectWithId", function(){node_makeObjectWithId = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.request.utility", function(){node_requestUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 
-	//id generation 
-	var loc_id = 0;
-	
-	var loc_elementById = {};
-	var loc_pathById = {};
-	var loc_ids = [];
-	
-	var loc_generateId = function(){
-		loc_id++;
-		return "id"+loc_id+"";
-	};
-	
-	var loc_getIdByIndex = function(index){
-		return loc_ids[index];
-	};
-	
-	var loc_out = {
-		getValueByIndex : function(index){		return this.getValueById(loc_getIdByIndex(index));		},
-		
-		getValueById : function(id){	return loc_valueById[id];	},
-		
-		getPathById : function(id){
-			var path = loc_pathById[id];       //find from provided
-			if(path==undefined)		path = this.getIndexById(id)+"";   //not provided, then use index as path
-			return path;
-		},
-		
-		getIndexById : function(id){	return loc_ids.indexOf(id);	},
-		
-		getIdByPath : function(path){
-			var out;
-			_.each(loc_pathById, function(p, id){
-				if(path==p){
-					out = p;
-				}
-			});
-			if(out==undefined)  out = loc_ids[path];    //if not provided, treat path as index
-			return out;
-		},
-		
-		insertValue : function(value, index, path){
-			var id = path;
-			if(id==undefined)  id = loc_generateId();
-			
-			loc_valueById[id] = value;
-			loc_ids.splice(index, 0, id);
-			
-			if(path!=undefined)  loc_pathById[id] = path;
-			return id;
-		},
-		
-		deleteElementByIndex : function(index){
-			var id = loc_ids[index];
-			var path = this.getPathById(id);
-			
-			loc_ids.splice(index, 1);
-			delete loc_valueById[id];
-			delete loc_pathById[id];
-			
-			return path;
-		},
-	
-		getAllValue : function(){
-			var out = [];
-			for(var i in loc_ids){
-				out.push(this.getValueByIndex(i));
-			}
-			return out;
-		},
-		
-		clear : function(){
-			loc_id = 0;
-			loc_valueById = {};
-			loc_pathById = {};
-			loc_ids = [];
-		}
-		
-	};
-	return loc_out;
-};	
+//Register Node by Name
+packageObj.createChildNode("OrderedContainerElementInfo", node_OrderedContainerElementInfo); 
+packageObj.createChildNode("createVariableWrapper", node_createVariableWrapper); 
+packageObj.createChildNode("createOrderedContainersInfo", node_createOrderedContainersInfo); 
+packageObj.createChildNode("createOrderVariableContainer", node_createOrderVariableContainer); 
 
-
-	
+})(packageObj);

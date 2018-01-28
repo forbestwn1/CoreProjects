@@ -25,7 +25,7 @@ var node_utility = function(){
 			}
 			else{
 				var relativeInfo = parent.getRelativeInfo();
-				return this.getVariableInfoFromRoot(new node_RelativeVariableInfo(relativeInfo.parent, node_dataUtility.combinePath(relativeInfo.path,relativeVariableInfo.path)));
+				return this.getVariableInfoFromRoot(new node_RelativeEntityInfo(relativeInfo.parent, node_dataUtility.combinePath(relativeInfo.path,relativeVariableInfo.path)));
 			}
 		},
 	};	
