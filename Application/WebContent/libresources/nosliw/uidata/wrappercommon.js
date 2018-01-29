@@ -21,7 +21,7 @@ var node_ServiceInfo;
 var node_createServiceRequestInfoSet;
 var node_requestServiceProcessor;
 var node_createWrapperOrderedContainer;
-var node_basicUtility;
+var node_RelativeEntityInfo;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 /**
@@ -185,9 +185,15 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		var operationService = new node_ServiceInfo("Internal_GetWrapperValue", {});
 		if(loc_out.prv_dataBased==true){
 			//root data
-			out = node_createServiceRequestInfoSimple(operationService,	function(){	return loc_out.prv_rootValue;  }, handlers, requester_parent);
+			out = node_createServiceRequestInfoSimple(operationService,	function(){	return loc_out.prv_value;  }, handlers, requester_parent);
 		}
 		else{
+			if(loc_out.prv_relativeWrapperInfo.path.indexOf("a")!=-1){
+				var kkkk = 5555;
+				kkkk++;
+			}
+			
+			
 			if(loc_out.prv_isValidData==false){
 				//calculate data
 				out = node_createServiceRequestInfoSequence(operationService, handlers, requester_parent);
@@ -244,7 +250,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 	//modify value in 
 	var loc_getModifyDataOperationOnRootValue = function(dataOperationService, handlers, request){
 		var service = dataOperationService.clone();
-		var out = loc_out.prv_typeHelper.getDataOperationRequest(loc_out.prv_rootValue, service, handlers, request);
+		var out = loc_out.prv_typeHelper.getDataOperationRequest(loc_out.prv_value, service, handlers, request);
 		out.addPostProcessor({
 			success : function(requestInfo, data){
 				//trigue event
@@ -313,7 +319,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 	
 	var loc_getData = function(){
 		var value;
-		if(loc_out.prv_dataBased==true)		value = loc_out.prv_rootValue;
+		if(loc_out.prv_dataBased==true)		value = loc_out.prv_value;
 		else	value = loc_out.prv_value;
 		return loc_makeDataFromValue(value);
 	};
@@ -416,8 +422,8 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 					success : function(requestInfo, data){
 						nosliw.logging.info("************************  wrapper operation   ************************");
 						nosliw.logging.info("ID: " + that.prv_id);
-						nosliw.logging.info("Parent: " , ((that.prv_relativeWrapperInfo.parent==undefined)?"":that.prv_relativeWrapperInfo.parent.prv_id));
-						nosliw.logging.info("ParentPath: " , that.prv_relativeWrapperInfo.path);
+						nosliw.logging.info("Parent: " , ((that.prv_relativeWrapperInfo==undefined)?"":that.prv_relativeWrapperInfo.parent.prv_id));
+						nosliw.logging.info("ParentPath: " , ((that.prv_relativeWrapperInfo==undefined)?"":that.prv_relativeWrapperInfo.path)); 
 						nosliw.logging.info("Request: " , JSON.stringify(operationService));
 						nosliw.logging.info("Result: " , JSON.stringify(data));
 						nosliw.logging.info("***************************************************************");
@@ -452,6 +458,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			createChildWrapper : function(path, request){		return node_wrapperFactory.createWrapper(this, path, this.prv_typeHelper, this.prv_dataType, request);		},
 			
 			//path conversion using path adapter
+			setPathAdapter : function(pathAdapter){  this.prv_pathAdapter = pathAdapter;  },
 			toRealPath : function(path){	return loc_out.prv_pathAdapter!=undefined ? this.prv_pathAdapter.toRealPath(path) : path;	},
 			toAdapteredPath : function(path){	return loc_out.prv_pathAdapter!=undefined ? this.prv_pathAdapter.toAdapteredPath(path) : path;		},
 			
@@ -490,7 +497,8 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.wrapper.createWrapperOrderedContainer", function(){node_createWrapperOrderedContainer = this.getData();});
-nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.entity.RelativeEntityInfo", function(){node_RelativeEntityInfo = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createWraperCommon", node_createWraperCommon); 

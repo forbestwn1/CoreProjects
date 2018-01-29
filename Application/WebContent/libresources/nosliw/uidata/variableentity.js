@@ -3,6 +3,7 @@ var packageObj = library.getChildPackage("variable");
 
 (function(packageObj){
 //get used node
+var node_ServiceInfo;
 var node_CONSTANT;
 var node_makeObjectWithLifecycle;
 var node_getLifecycleInterface;
@@ -14,6 +15,8 @@ var node_requestUtility;
 var node_wrapperFactory;
 var node_basicUtility;
 var node_createEventObject;
+var node_createServiceRequestInfoSequence;
+var node_uiDataOperationServiceUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //element info expose to end user
@@ -28,7 +31,7 @@ var node_createVariableWrapper = function(variable){
 	var loc_variable = variable;
 	
 	var loc_out = {
-		getVariable : function(){
+		get : function(){
 			loc_variable.use();
 			return loc_variable;
 		}
@@ -53,15 +56,14 @@ var node_createOrderedContainersInfo = function(baseVariable){
 		else{
 			out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getContainerByPath"), handlers, request);
 			//get current value first
-			out.addRequest(loc_getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
+			out.addRequest(baseVariable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(path), {
 				success : function(request, data){
 					//get all elements
 					return loc_typeHelper.getGetElementsRequest(data.value, {
 						success : function(request, valueElements){
-							//handle each element
-							var handleElementsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("HandleElements", {"elements":valueElements}));
-							container = getContainerElementsByPathRequest(loc_baseVariable, path, valueElements);
-							loc_containerByPath[path] = container;
+							var containerInfo = node_createOrderVariableContainer(baseVariable, path, valueElements);
+							loc_containerByPath[path] = containerInfo;
+							return containerInfo;
 						}
 					});
 				}
@@ -81,13 +83,8 @@ var node_createOrderedContainersInfo = function(baseVariable){
 		getContainerElementsByPathRequest : function(path, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getContainerElementsByPath"), handlers, request);
 			out.addRequest(loc_getContainerByPathRequest(path, {
-				success : function(request, sortedContainer){
-					var elementsOut = [];
-					var elements = sortedContainer.getElements();
-					_.each(elements, function(element, index){
-						elementsOut.push(new node_SortedContainerElementInfo(element.createChildVariable(), index));
-					});
-					return elementsOut;
+				success : function(request, ordedContainer){
+					return ordedContainer;
 				}
 			}));
 			return out;
@@ -116,10 +113,10 @@ var node_createOrderVariableContainer = function(variable, path, valueElements){
 		if(path==undefined)  path = loc_generateId();
 		
 		var eleVariable = loc_out.prv_containerVariable.createChildVariable(path);
-		loc_out.prv_elementVarById[path] = eleVariable;  
-		loc_paths.splice(index, 0, path);
+		loc_out.prv_elementVarByPath[path] = eleVariable;  
+		loc_out.prv_paths.splice(index, 0, path);
 		
-		if(id!=undefined)  loc_idByPath[path] = id;
+		if(id!=undefined)  loc_out.prv_idByPath[path] = id;
 		return eleVariable;
 	};
 	
@@ -144,7 +141,7 @@ var node_createOrderVariableContainer = function(variable, path, valueElements){
 		});
 
 		//event adapter
-		loc_containerVariable.setEventAdapter(function(event, eventData, request){
+		loc_out.prv_containerVariable.setEventAdapter(function(event, eventData, request){
 			var events = [];
 			events.push({
 				event: event,
@@ -162,7 +159,7 @@ var node_createOrderVariableContainer = function(variable, path, valueElements){
 		});
 		
 		//path adapter
-		loc_containerVariable.setPathAdapter({
+		loc_out.prv_containerVariable.setPathAdapter({
 			toRealPath : function(path){
 				//find first path seg
 				var index = path.indexOf(".");
@@ -171,7 +168,7 @@ var node_createOrderVariableContainer = function(variable, path, valueElements){
 				
 				//convert first path seg from path to real path
 				var realElePath = loc_out.prv_idByPath[elePath];       //find from provided
-				if(realElePath==undefined)		realElePath = loc_paths.indexOf(elePath)+"";   //not provided, then use index as path
+				if(realElePath==undefined)		realElePath = loc_out.prv_paths.indexOf(elePath)+"";   //not provided, then use index as path
 				
 				//build full path again
 				var out = realElePath;
@@ -207,9 +204,10 @@ var node_createOrderVariableContainer = function(variable, path, valueElements){
 	
 	var loc_out = {
 		getElements : function(){
+			var that = this;
 			var out = [];
 			_.each(this.prv_paths, function(path, index){
-				var eleVar = this.prv_elementVarByPath[path];
+				var eleVar = that.prv_elementVarByPath[path];
 				out.push(new node_OrderedContainerElementInfo(node_createVariableWrapper(eleVar)));
 			});
 			return out;	
@@ -256,6 +254,7 @@ var node_createOrderVariableContainer = function(variable, path, valueElements){
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
@@ -267,6 +266,8 @@ nosliw.registerSetNodeDataEvent("common.request.utility", function(){node_reques
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("OrderedContainerElementInfo", node_OrderedContainerElementInfo); 

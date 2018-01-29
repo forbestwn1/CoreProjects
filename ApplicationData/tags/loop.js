@@ -65,9 +65,10 @@
 
 		var loc_updateView = function(requestInfo){
 			var index = 0;
-			var request = loc_dataVariable.getWrapper().getHandleEachElementRequest(function(data, path){
+			var request = loc_dataVariable.getHandleEachElementRequest(function(eleVarWrapper, indexVarWrapper){
 				return node_createServiceRequestInfoSimple({}, function(){
-					loc_addEle(data, index, path, requestInfo);
+					
+					loc_addEle(eleVarWrapper, indexVarWrapper, requestInfo);
 					index++;
 				});
 			});
@@ -79,21 +80,21 @@
 		*  index : index in list for element
 		*  path : element's path from parent
 		**/
-		var loc_addEle = function(data, index, path, requestInfo){
+		var loc_addEle = function(eleVarWrapper, indexVarWrapper, requestInfo){
+			var eleVar = eleVarWrapper.get();
 			var eleContext = loc_env.createExtendedContext([
-				loc_env.createContextElementInfo(loc_eleContextEleName, loc_dataVariable, path),
-				loc_env.createContextElementInfo(loc_eleNameContextEleName, path)
+				loc_env.createContextElementInfo(loc_eleContextEleName, eleVar),
+//				loc_env.createContextElementInfo(loc_eleNameContextEleName, path)
 			], requestInfo);
 			
+			var index = loc_childResourceViews.length;
 			var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId()+"."+loc_generateId(), eleContext, requestInfo);
 			if(index==0)	resourceView.insertAfter(loc_env.getStartElement());
 			else	resourceView.insertAfter(loc_childResourceViews[index-1].getEndElement());
 				
 			loc_childResourceViews.splice(index, 0, resourceView);
-
-			var eleVariable = loc_dataVariable.createChildVariable(path);
-			loc_childVaraibles.splice(index, 0, eleVariable);
-			eleVariable.registerDataChangeEventListener(undefined, function(event, dataOperation, requestInfo){
+			loc_childVaraibles.splice(index, 0, eleVar);
+			eleVar.registerDataChangeEventListener(undefined, function(event, dataOperation, requestInfo){
 				if(event=="EVENT_WRAPPER_DESTROY"){
 					loc_out.prv_deleteEle(index);
 				}
