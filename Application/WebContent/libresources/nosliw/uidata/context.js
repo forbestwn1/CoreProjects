@@ -121,7 +121,17 @@ var node_createContext = function(elementInfosArray, request){
 		
 		_.each(elementInfosArray, function(elementInfo, key){
 			//create empty wrapper variable for each element
-			loc_out.prv_elements[elementInfo.name] = node_createContextElement(elementInfo, request);
+			var contextEle = node_createContextElement(elementInfo, request);
+			loc_out.prv_elements[elementInfo.name] = contextEle;
+			
+			var eleVar = contextEle.variable;
+			nosliw.logging.info("************************  Named variable creation  ************************");
+			nosliw.logging.info("Name: " + contextEle.name);
+			nosliw.logging.info("ID: " + eleVar.prv_id);
+			nosliw.logging.info("Wrapper: " + (eleVar.prv_wrapper==undefined?"":eleVar.prv_wrapper.prv_id));
+			nosliw.logging.info("Parent: " , ((eleVar.prv_relativeVariableInfo==undefined)?"":eleVar.prv_relativeVariableInfo.parent.prv_id));
+			nosliw.logging.info("ParentPath: " , ((eleVar.prv_relativeVariableInfo==undefined)?"":eleVar.prv_relativeVariableInfo.path)); 
+			nosliw.logging.info("***************************************************************");
 			
 			//get all adapters from elementInfo
 			_.each(elementInfo.info.matchers, function(matchers, path){

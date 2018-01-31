@@ -112,6 +112,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 			var info = {
 				event : event, 
 				element : subEle,
+				context : loc_out.getContext()
 			};
 			loc_out.prv_callScriptFunction(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], undefined, info);
 //			loc_scriptObject.callEventFunction(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], undefined, info);

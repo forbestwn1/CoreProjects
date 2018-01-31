@@ -65,10 +65,11 @@
 
 		var loc_updateView = function(requestInfo){
 			var index = 0;
-			var request = loc_dataVariable.getHandleEachElementRequest(function(eleVarWrapper, indexVarWrapper){
+			var request = loc_dataVariable.getHandleEachElementRequest(function(container, eleVarWrapper, indexVarWrapper){
+				loc_dataVariable = container;
 				return node_createServiceRequestInfoSimple({}, function(){
 					
-					loc_addEle(eleVarWrapper, indexVarWrapper, requestInfo);
+					loc_addEle(eleVarWrapper, indexVarWrapper, index, requestInfo);
 					index++;
 				});
 			});
@@ -80,7 +81,7 @@
 		*  index : index in list for element
 		*  path : element's path from parent
 		**/
-		var loc_addEle = function(eleVarWrapper, indexVarWrapper, requestInfo){
+		var loc_addEle = function(eleVarWrapper, indexVarWrapper, index, requestInfo){
 			var eleVar = eleVarWrapper.get();
 			var eleContext = loc_env.createExtendedContext([
 				loc_env.createContextElementInfo(loc_eleContextEleName, eleVar),
@@ -95,7 +96,8 @@
 			loc_childResourceViews.splice(index, 0, resourceView);
 			loc_childVaraibles.splice(index, 0, eleVar);
 			eleVar.registerDataChangeEventListener(undefined, function(event, dataOperation, requestInfo){
-				if(event=="EVENT_WRAPPER_DESTROY"){
+				window.alert("element:" + event);
+				if(event=="EVENT_WRAPPER_DELETE"){
 					loc_out.prv_deleteEle(index);
 				}
 			}, this);
@@ -123,12 +125,13 @@
 			ovr_postInit : function(requestInfo){
 				loc_updateView();
 				var that = this;
-				loc_dataVariable.registerDataChangeEventListener(undefined, function(event, dataOperation, requestInfo){
-					if(event=="EVENT_WRAPPER_ADDELEMENT"){
-						loc_addEle(dataOperation.value, dataOperation.index, dataOperation.elePath);
+				loc_dataVariable.registerDataChangeEventListener(undefined, function(event, eventData, requestInfo){
+					window.alert(event + "  " + JSON.stringify(eventData));
+					if(event=="EVENT_WRAPPER_NEWELEMENT"){
+						loc_addEle(eventData.elementVarWrapper, eventData.indexVarWrapper, 0);
 					}
 					if(event=="WRAPPER_EVENT_DESTROY"){
-						that.prv_deleteEle(loc_getElementContextVariable(dataOperation.index));
+						that.prv_deleteEle(loc_getElementContextVariable(eventData.index));
 					}
 				}, this);
 				

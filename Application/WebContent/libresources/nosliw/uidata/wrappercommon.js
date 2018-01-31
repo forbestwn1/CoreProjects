@@ -92,7 +92,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			});
 			
 			loc_out.prv_relativeWrapperInfo.parent.registerDataOperationListener(this.prv_dataOperationEventObject, function(event, eventData, requestInfo){
-
 				if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD){
 					//for forward event, expand it
 					event = eventData.event;
@@ -157,8 +156,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 						//store the change
 						eventData.path = loc_out.toAdapteredPath(pathCompare.subPath);
 						loc_addToBeDoneDataOperation(event, eventData);
-						var forwardEventData = eventData.clone();
-						loc_triggerForwardEvent(event, forwardEventData, requestInfo);
+						loc_triggerForwardEvent(event, eventData, requestInfo);
 					}
 					else{
 						//not on right path, do nothing
@@ -188,12 +186,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			out = node_createServiceRequestInfoSimple(operationService,	function(){	return loc_out.prv_value;  }, handlers, requester_parent);
 		}
 		else{
-			if(loc_out.prv_relativeWrapperInfo.path.indexOf("a")!=-1){
-				var kkkk = 5555;
-				kkkk++;
-			}
-			
-			
 			if(loc_out.prv_isValidData==false){
 				//calculate data
 				out = node_createServiceRequestInfoSequence(operationService, handlers, requester_parent);
@@ -350,12 +342,15 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			event = node_CONSTANT.WRAPPER_EVENT_ADDELEMENT;
 			break;
 		case node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT:
-			event = node_CONSTANT.WRAPPER_EVENT_DESTROY;
-			var path = node_dataUtility.combinePath(dataOperationParms.path, dataOperationParms.index);
+			event = node_CONSTANT.WRAPPER_EVENT_DELETE;
+			var path = node_dataUtility.combinePath(dataOperationParms.path, dataOperationParms.index==undefined?dataOperationParms.id:dataOperationParms.index);
 			eventData = node_uiDataOperationServiceUtility.createDestroyOperationData(path); 
 			break;
 		case node_CONSTANT.WRAPPER_OPERATION_DESTROY:
 			event = node_CONSTANT.WRAPPER_EVENT_DESTROY;
+			break;
+		case node_CONSTANT.WRAPPER_OPERATION_DELETE:
+			event = node_CONSTANT.WRAPPER_EVENT_DELETE;
 			break;
 		}
 		loc_trigueDataOperationEvent(event, eventData, requestInfo);

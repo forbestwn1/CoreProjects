@@ -11,11 +11,6 @@ var node_requestServiceProcessor = function(){
 	
 	var loc_processRequest = function(requestInfo, processRemote){
 		
-		if(requestInfo==undefined){
-			var kkkk = 5555;
-			kkkk++;
-		}
-		
 		nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Start request : ", requestInfo.getService());
 		
 		//add request processor in order to logging the result

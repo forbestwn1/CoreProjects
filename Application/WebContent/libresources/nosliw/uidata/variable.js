@@ -24,6 +24,7 @@ var node_createVariableWrapper;
 var node_createOrderedContainersInfo;
 var node_createOrderVariableContainer;
 var node_uiDataOperationServiceUtility;
+var node_dataUtility;
 
 
 //*******************************************   Start Node Definition  ************************************** 	
@@ -153,10 +154,21 @@ var node_createWrapperVariable = function(data1, data2, data3){
 	var loc_registerWrapperDataOperationEvent = function(){
 		if(loc_out.prv_wrapper==undefined)  return;
 		loc_out.prv_wrapper.registerDataOperationListener(loc_out.prv_dataOperationEventObject, function(event, eventData, requestInfo){
-			//ignore forward event
-			//we should not ignore forward event, as forward event also indicate that something get changed on child, in that case, the data also get changed
-			//inform the operation
-			loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, requestInfo);
+			var events = [];
+			
+			if(loc_out.prv_eventAdapter!=undefined){
+				events = loc_out.prv_eventAdapter(event, eventData, requestInfo);
+			}
+			else{
+				events.push({
+					event : event,
+					value : eventData
+				});
+			}
+			
+			_.each(events, function(eventInfo, index){
+				loc_out.prv_dataOperationEventObject.triggerEvent(eventInfo.event, eventInfo.value, requestInfo);
+			});
 		});
 	};
 
@@ -179,7 +191,7 @@ var node_createWrapperVariable = function(data1, data2, data3){
 		_.each(containerInfo.getElements(), function(element, index){
 			//add child request from factory
 			//eleId as path
-			handleElementsRequest.addRequest(i+"", elementHandleRequestFactory.call(loc_out, element.elementVarWrapper, element.indexVarWrapper));
+			handleElementsRequest.addRequest(i+"", elementHandleRequestFactory.call(loc_out, containerInfo.getContainer(), element.elementVarWrapper, element.indexVarWrapper));
 			i++;
 		});
 		return handleElementsRequest;
@@ -188,9 +200,23 @@ var node_createWrapperVariable = function(data1, data2, data3){
 	
 	var loc_out = {
 
+			prv_getRelativeInfoFromRoot : function(path){
+				
+				if(this.prv_pathAdapter!=undefined){
+					path = this.prv_pathAdapter.toRealPath(path);
+				}
+				
+				if(this.isBase()){
+					return new node_RelativeEntityInfo(this, path);
+				}
+				else{
+					return this.prv_relativeVariableInfo.parent.prv_getRelativeInfoFromRoot(node_dataUtility.combinePath(this.prv_relativeVariableInfo.path,path));
+				}
+			},
+			
 			prv_getOrderedContainerInformation : function(){
-				var rootRelativeVarInfo = node_variableUtility.getVariableInfoFromRoot(this.prv_relativeVariableInfo);
-				return rootRelativeVarInfo.prv_orderedContainersInfo.getContainerInfoByPath();
+				var rootRelativeVarInfo = this.prv_getRelativeInfoFromRoot();
+				return rootRelativeVarInfo.parent.prv_orderedContainersInfo.getContainerInfoByPath(rootRelativeVarInfo.path);
 			},
 			
 			//handle each element on base value
@@ -317,7 +343,6 @@ var node_createWrapperVariable = function(data1, data2, data3){
 	loc_out = node_makeObjectWithId(loc_out, nosliw.generateId());
 	
 	node_getLifecycleInterface(loc_out).init(data1, data2, data3);
-
 	return loc_out;
 };
 
@@ -340,7 +365,7 @@ nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtilit
 nosliw.registerSetNodeDataEvent("uidata.entity.RelativeEntityInfo", function(){node_RelativeEntityInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
-
+nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.OrderedContainerElementInfo", function(){node_OrderedContainerElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.createOrderedContainersInfo", function(){node_createOrderedContainersInfo = this.getData();});

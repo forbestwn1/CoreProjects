@@ -117,6 +117,14 @@ var node_createOrderVariableContainer = function(variable, path, valueElements){
 		loc_out.prv_paths.splice(index, 0, path);
 		
 		if(id!=undefined)  loc_out.prv_idByPath[path] = id;
+		
+//		eleVariable.registerDataChangeEventListenen(undefined, function(event, eventData, request){
+//			if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
+//				//when element was deleted
+//				
+//			}
+//		});
+		
 		return eleVariable;
 	};
 	
@@ -175,7 +183,7 @@ var node_createOrderVariableContainer = function(variable, path, valueElements){
 				if(index!=-1){
 					out = out + path.substring(index);
 				}
-				var out;
+				return out;
 			},
 			
 			toAdapteredPath : function(path){
@@ -185,17 +193,20 @@ var node_createOrderVariableContainer = function(variable, path, valueElements){
 				if(index!=-1)  elePath = path.substring(0, index);
 				
 				//convert first path seg from real path to adapted path
-				var adapteredElePath = elePath;
+				var adapteredElePath;
 				_.each(loc_out.prv_idByPath, function(id, p){
 					if(id==elePath) adapteredElePath = p;
 				});
+				if(adapteredElePath==undefined){
+					adapteredElePath = loc_out.prv_paths[parseInt(elePath)];
+				}
 				
 				//build full path again
 				var out = adapteredElePath;
 				if(index!=-1){
 					out = out + path.substring(index);
 				}
-				var out;
+				return out;
 			},
 			
 		});
@@ -211,6 +222,10 @@ var node_createOrderVariableContainer = function(variable, path, valueElements){
 				out.push(new node_OrderedContainerElementInfo(node_createVariableWrapper(eleVar)));
 			});
 			return out;	
+		},
+		
+		getContainer : function(){
+			return this.prv_containerVariable;
 		},
 		
 		clearup : function(){

@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html>
 <body>
-
-	<br>
-	Content:<%=?(business.a.aa)?.value + '   6666 ' %>
-	<br>
-
-	<br>
-	TextInput:<nosliw-textinput data="business.a.aa"/>  
-	<br>
-
-		<br>
 		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 		<br>
 		<br>Loop:
@@ -35,6 +25,11 @@
 					var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
 					var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 
+					var context = info.context;
+					var requestInfo = context.getDataOperationRequest("ele", node_uiDataOperationServiceUtility.createDeleteOperationService());
+					
+					
+/*					
 					var requestInfo = node_createServiceRequestInfoSequence({}, {
 						success:function(requestInfo, data){
 							
@@ -52,6 +47,8 @@
 							return opRequest;
 						}
 					}));
+*/
+					
 					node_requestServiceProcessor.processRequest(requestInfo, false);
 				}
 			}
@@ -59,6 +56,9 @@
 			
 		</nosliw-loop>
 
+		<br>
+		<nosliw-debug/>
+		<br>
 
 	
 	
@@ -153,7 +153,7 @@
 				</nosliw-casedefualt>
 			<br>
 		</nosliw-switch>
-		
+-->		
 	</body>
 
 	<script>
@@ -176,7 +176,7 @@
 			};
 
 			var requestInfo = node_createBatchUIDataOperationRequest(this.getContext());
-			var uiDataOperation = new node_UIDataOperation(new node_createContextVariable("business.a.cc"), node_uiDataOperationServiceUtility.createAddElementOperationService("", 2, eleData));
+			var uiDataOperation = new node_UIDataOperation(new node_createContextVariable("business.a.cc"), node_uiDataOperationServiceUtility.createAddElementOperationService("", eleData, 2));
 			requestInfo.addUIDataOperation(uiDataOperation);						
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},

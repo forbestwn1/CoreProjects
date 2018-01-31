@@ -300,34 +300,16 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	
 	@Override
 	public void start(){
-        this.m_sciprtTracker = new HAPScriptTracker();
-		
-		ContextFactory factory = ContextFactory.getGlobal(); 
+		try {
+	        this.m_sciprtTracker = new HAPScriptTracker();
+			
+			ContextFactory factory = ContextFactory.getGlobal(); 
 
-	    Main dbg = new Main("Hello");
-	    dbg.attachTo(factory);
-
-	    Context context = factory.enterContext();
-		
-//		this.m_context = Context.enter();
-	    try {
+//			this.debug(factory);
+			
+		    Context context = factory.enterContext();
+			
 	        this.init(context, null);
-
-//	        System.setIn(dbg.getIn());
-//	        System.setOut(dbg.getOut());
-//	        System.setErr(dbg.getErr());
-	        
-//		    dbg.setBreakOnEnter(true);
-//		    dbg.setBreakOnExceptions(true);
-		    dbg.setScope(m_scope);
-		    dbg.setSize(1200, 800);
-		    dbg.setVisible(true);
-		    dbg.setExitAction(new Runnable(){
-			    @Override
-			    public void run() {
-			      System.exit(0);
-			    }
-			  });	    
 
 	    }
 	    catch(Exception e){
@@ -336,6 +318,27 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	    finally{
 	    	Context.exit();
 	    }
+	}
+	
+	private void debug(ContextFactory factory){
+	    Main dbg = new Main("Hello");
+	    dbg.attachTo(factory);
+		
+//        System.setIn(dbg.getIn());
+//        System.setOut(dbg.getOut());
+//        System.setErr(dbg.getErr());
+        
+//	    dbg.setBreakOnEnter(true);
+//	    dbg.setBreakOnExceptions(true);
+	    dbg.setScope(m_scope);
+	    dbg.setSize(1200, 800);
+	    dbg.setVisible(true);
+	    dbg.setExitAction(new Runnable(){
+		    @Override
+		    public void run() {
+		      System.exit(0);
+		    }
+		  });	    
 	}
 	
 	public HAPRuntimeEnvironment getRuntimeEnvironment(){  return this.m_runtimeEnvironment;  }

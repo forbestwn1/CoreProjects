@@ -17,12 +17,14 @@ var node_CONSTANT=
 	  //wrapper event
 	  "WRAPPER_EVENT_SET" : "EVENT_WRAPPER_SET",                        //the value get set					
 	  "WRAPPER_EVENT_ADDELEMENT" : "EVENT_WRAPPER_ADDELEMENT",          //element is added to container
-	  "WRAPPER_EVENT_DELETEELEMENT" : "EVENT_WRAPPER_DELETEELEMENT",    //element is removed from container
 	  "WRAPPER_EVENT_FORWARD" : "EVENT_WRAPPER_FORWARD",				//forward original event information to child
 	  "WRAPPER_EVENT_CHANGE" : "EVENT_WRAPPER_CHANGE",					//indicate something changes, need to update data 
 	  "WRAPPER_EVENT_DELETE" : "EVENT_WRAPPER_DELETE",                //delete means the path does not exist anymore. all the resources related with this wrapper should be destroy (variable, child wrapper)
 	  "WRAPPER_EVENT_CLEARUP" : "EVENT_WRAPPER_CLEARUP",                //clear up means release resource
 	  "WRAPPER_EVENT_NEWELEMENT" : "EVENT_WRAPPER_NEWELEMENT",          //new element with element variable in event data. only on variable, not on wrapper 
+
+	  "WRAPPER_EVENT_DELETEELEMENT" : "EVENT_WRAPPER_DELETEELEMENT",    //element is removed from container. it may not be valid
+
 	  
 	  //operation on wrapper
 	  "WRAPPER_OPERATION_SET" : "WRAPPER_OPERATION_SET",
