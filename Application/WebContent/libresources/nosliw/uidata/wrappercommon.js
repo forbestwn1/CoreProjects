@@ -25,7 +25,10 @@ var node_RelativeEntityInfo;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 /**
- * 
+ * parm1 : parent wrapper / value
+ * path : valid for relative wrapper, path to parent
+ * typeHelper : utility methods according to different data type : object data / app data
+ * dataType : object data / appdata
  */
 var node_createWraperCommon = function(parm1, path, typeHelper, dataType, request){
 
@@ -53,6 +56,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		//event and listener for data operation event
 		loc_out.prv_dataOperationEventObject = node_createEventObject();
 		loc_out.prv_lifecycleEventObject = node_createEventObject();
+		loc_out.prv_internalEventObject = node_createEventObject();
 
 		//a list of wrapper operations that should be applied to wrapper
 		//if this list is not empty, that means we only need to apply all operation, then get data
@@ -75,108 +79,129 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			//wrapper based
 			loc_out.prv_dataBased = false;
 			loc_out.prv_relativeWrapperInfo = new node_RelativeEntityInfo(parm1, path);
-			loc_out.prv_dataType = loc_out.prv_relativeWrapperInfo.parent.getDataType(); 
+			loc_out.prv_dataType = loc_out.prv_relativeWrapperInfo.parent.getDataType();
+
+			loc_out.prv_relativeWrapperInfo.parent.registerLifecycleListener(loc_out.prv_lifecycleEventObject, loc_lifecycleEventProcessor);
+			loc_out.prv_relativeWrapperInfo.parent.registerDataOperationListener(loc_out.prv_dataOperationEventObject, loc_dataOperationEventProcessor, this);
+			loc_out.prv_relativeWrapperInfo.parent.registerInternalListener(loc_out.prv_internalEventObject, loc_internalEventProcessor, this);
+
 		}
 		else{
 			//data based
 			loc_out.prv_dataBased = true;
 			loc_out.prv_value = parm1;
 		}
-		
-		if(loc_out.prv_dataBased==false){
-			//if parent based, then listen to parent's event
-			loc_out.prv_relativeWrapperInfo.parent.registerLifecycleListener(this.prv_lifecycleEventObject, function(event, eventData, requestInfo){
-				if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP){
-					loc_out.destroy(requestInfo);
-				}				
-			});
-			
-			loc_out.prv_relativeWrapperInfo.parent.registerDataOperationListener(this.prv_dataOperationEventObject, function(event, eventData, requestInfo){
-				if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD){
-					//for forward event, expand it
-					event = eventData.event;
-					eventData = eventData.value;
-				}
-				
-				//clone event data so that we can modify it and resent it
-				eventData = eventData.clone();
-				if(event==node_CONSTANT.WRAPPER_EVENT_CHANGE){
-					//for change event from parent, just make data invalid & forward the event, 
-					loc_invalidateData(requestInfo);
-					loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, {}, requestInfo);
-				}
-				else{
-					var pathCompare = node_dataUtility.comparePath(loc_out.prv_relativeWrapperInfo.path, eventData.path);
-					if(pathCompare.compare == 0){
-						//event happens on this wrapper, trigue the same
-						//inform the change of wrapper
-						eventData.path = "";
-						if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
-							loc_trigueDataOperationEvent(event, eventData, requestInfo);
-							loc_destroy(requestInfo);
-						}
-						else if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT || event==node_CONSTANT.WRAPPER_EVENT_DELETEELEMENT){
-							//store data operation event
-							loc_addToBeDoneDataOperation(event, eventData);
-							//inform outside about change
-							loc_trigueDataOperationEvent(event, eventData, requestInfo);
-						}
-						else if(event==node_CONSTANT.WRAPPER_EVENT_SET){
-							if(loc_out.prv_valueAdapter==undefined){
-								loc_setValue(eventData.value);
-								loc_trigueDataOperationEvent(event, eventData, requestInfo);
-							}
-							else{
-								//apply adapter to value
-								var r = loc_out.prv_valueAdapter.getInValueRequest(eventData.value, {
-									success: function(request, value){
-										loc_setValue(value);
-										eventData.value = value;
-										loc_trigueDataOperationEvent(event, eventData, request);
-									}
-								}, requestInfo);
-								node_requestServiceProcessor.processRequest(r, true);
-							}
-						}
-					}
-					else if(pathCompare.compare == 1){
-						//something happens in the middle between parent and this
-						if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
-							eventData.path = "";
-							loc_trigueDataOperationEvent(event, eventData, requestInfo);
-							loc_destroy(requestInfo);
-						}
-						else if(event==node_CONSTANT.WRAPPER_EVENT_SET){
-							loc_invalidateData(requestInfo);
-							loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, {}, requestInfo);
-						}
-					}
-					else if(pathCompare.compare == 2){
-						//something happens beyond this, just forward the event with sub path, only set event
-						//store the change
-						eventData.path = loc_out.toAdapteredPath(pathCompare.subPath);
-						loc_addToBeDoneDataOperation(event, eventData);
-						loc_triggerForwardEvent(event, eventData, requestInfo);
-					}
-					else{
-						//not on right path, do nothing
-					}
-				}
-			}, this);
-		}
 	};
 
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
-		//for delete event, it means itself and all children should be destroy
+		//for destroy, release resource
 		loc_invalidateData();
 		//clear up event source
 		loc_out.prv_dataOperationEventObject.clearup();
 		loc_out.prv_lifecycleEventObject.clearup();
-		
-		loc_out.prv_relativeWrapperInfo = undefined;
-		loc_out.prv_value = undefined;
+		loc_out.prv_internalEventObject.clearup();
+
+		for (var key in loc_out){
+		    if (loc_out.hasOwnProperty(key)){
+		        delete lock_out[key];
+		    }
+		}		
 	};
 
+	var loc_lifecycleEventProcessor = function(event, eventData, requestInfo){
+		if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP){
+			loc_out.destroy(requestInfo);
+		}				
+	};
+	
+	//data operation event processor
+	var loc_dataOperationEventProcessor = function(event, eventData, requestInfo){
+		if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD){
+			//for forward event, expand it
+			event = eventData.event;
+			eventData = eventData.value;
+		}
+		
+		//in order to avoid any change on original event data, clone event data so that we can modify it and resent it
+		if(eventData!=undefined)  eventData = eventData.clone();
+		if(event==node_CONSTANT.WRAPPER_EVENT_CHANGE){
+			//for change event from parent, just make data invalid & forward the change event, 
+			loc_invalidateData(requestInfo);
+			loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, undefined, requestInfo);
+		}
+		else{
+			var pathCompare = node_dataUtility.comparePath(loc_out.prv_relativeWrapperInfo.path, eventData.path);
+			if(pathCompare.compare == 0){
+				//event happens on this wrapper, trigue the same
+				//inform the change of wrapper
+				eventData.path = "";
+				if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
+					loc_trigueDataOperationEvent(event, eventData, requestInfo);
+					loc_destroy(requestInfo);
+				}
+				else if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
+					//store data operation event
+					loc_addToBeDoneDataOperation(event, eventData);
+					//inform outside about change
+					loc_trigueDataOperationEvent(event, eventData, requestInfo);
+				}
+				else if(event==node_CONSTANT.WRAPPER_EVENT_DELETEELEMENT){
+					//store data operation event
+					loc_addToBeDoneDataOperation(event, eventData);
+					//transform to delete event, delete event is internal only, means it would not inform to user, use inform child 
+					var elePath;
+					if(eventData.id!=undefined)  elePath = eventData.id;
+					else if(eventData.index!=undefined)  elePath = eventData.index+"";
+					elePath = loc_out.prv_pathAdapter.toAdapteredPath(elePath);
+					loc_trigueInternalEvent(node_CONSTANT.WRAPPER_EVENT_DELETE, node_uiDataOperationServiceUtility.createDeleteOperationService(elePath), requestInfo);
+					
+					//inform outside about change
+					loc_trigueDataOperationEvent(event, eventData, requestInfo);
+				}
+				else if(event==node_CONSTANT.WRAPPER_EVENT_SET){
+					if(loc_out.prv_valueAdapter==undefined){
+						loc_setValue(eventData.value);
+						loc_trigueDataOperationEvent(event, eventData, requestInfo);
+					}
+					else{
+						//apply adapter to value
+						var r = loc_out.prv_valueAdapter.getInValueRequest(eventData.value, {
+							success: function(request, value){
+								loc_setValue(value);
+								eventData.value = value;
+								loc_trigueDataOperationEvent(event, eventData, requestInfo);
+							}
+						}, requestInfo);
+						node_requestServiceProcessor.processRequest(r, true);
+					}
+				}
+			}
+			else if(pathCompare.compare == 1){
+				//something happens in the middle between parent and this
+				if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
+					eventData.path = "";
+					loc_trigueDataOperationEvent(event, eventData, requestInfo);
+					loc_destroy(requestInfo);
+				}
+				else if(event==node_CONSTANT.WRAPPER_EVENT_SET){
+					loc_invalidateData(requestInfo);
+					loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, undefined, requestInfo);
+				}
+			}
+			else if(pathCompare.compare == 2){
+				//something happens beyond this, just forward the event with sub path, only set event
+				//store the change
+				eventData.path = loc_out.toAdapteredPath(pathCompare.subPath);
+				loc_addToBeDoneDataOperation(event, eventData);
+				loc_triggerForwardEvent(event, eventData, requestInfo);
+			}
+			else{
+				//not on right path, do nothing
+			}
+		}
+	};
+	
+	
 	//get value of current wrapper request
 	var loc_getGetValueRequest = function(handlers, requester_parent){
 		var out;
@@ -239,19 +264,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		return out;
 	};
 	
-	//modify value in 
-	var loc_getModifyDataOperationOnRootValue = function(dataOperationService, handlers, request){
-		var service = dataOperationService.clone();
-		var out = loc_out.prv_typeHelper.getDataOperationRequest(loc_out.prv_value, service, handlers, request);
-		out.addPostProcessor({
-			success : function(requestInfo, data){
-				//trigue event
-				loc_triggerEventByDataOperation(dataOperationService.command, dataOperationService.parms, requestInfo);
-			}
-		});
-		return out;
-	};
-	
 	var loc_getProcessToBeDoneValueOperationRequest = function(i, value, handlers, request){
 		var out = loc_out.prv_typeHelper.getDataOperationRequest(value, loc_out.prv_toBeDoneWrapperOperations[i], {
 			success : function(requestInfo, value){
@@ -275,7 +287,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		//then store value
 		loc_out.prv_isValidData = true;
 		loc_out.prv_value = value;
-	
 	};
 	
 	//add to be done operation
@@ -290,6 +301,9 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 				break;
 			case node_CONSTANT.WRAPPER_EVENT_ADDELEMENT:
 				command = node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT;
+				break;
+			case node_CONSTANT.WRAPPER_EVENT_DELETEELEMENT:
+				command = node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT;
 				break;
 			case node_CONSTANT.WRAPPER_EVENT_DELETE:
 				command = node_CONSTANT.WRAPPER_OPERATION_DELETE;
@@ -309,19 +323,11 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		loc_out.prv_toBeDoneWrapperOperations = [];
 	};
 	
-	var loc_getData = function(){
-		var value;
-		if(loc_out.prv_dataBased==true)		value = loc_out.prv_value;
-		else	value = loc_out.prv_value;
-		return loc_makeDataFromValue(value);
-	};
-	
-	var loc_makeDataFromValue = function(value){    
-		return node_dataUtility.createDataByObject(value, loc_out.prv_dataType);
-	};
+	var loc_makeDataFromValue = function(value){    return node_dataUtility.createDataByObject(value, loc_out.prv_dataType);	};
 
 	var loc_trigueDataOperationEvent = function(event, eventData, requestInfo){		loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, requestInfo);	};
 	var loc_trigueLifecycleEvent = function(event, eventData, requestInfo){		loc_out.prv_lifecycleEventObject.triggerEvent(event, eventData, requestInfo);	};
+	var loc_trigueInternalEvent = function(event, eventData, requestInfo){		loc_out.prv_internalEventObject.triggerEvent(event, eventData, requestInfo);	};
 	
 	var loc_triggerForwardEvent = function(event, eventData, requestInfo){
 		var eData = {
@@ -331,6 +337,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_FORWARD, eData, requestInfo);
 	};
 	
+	//trigger event according to data operation on root value
 	var loc_triggerEventByDataOperation = function(command, dataOperationParms, requestInfo){
 		var event;
 		var eventData = dataOperationParms.clone();
@@ -342,12 +349,9 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			event = node_CONSTANT.WRAPPER_EVENT_ADDELEMENT;
 			break;
 		case node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT:
-			event = node_CONSTANT.WRAPPER_EVENT_DELETE;
-			var path = node_dataUtility.combinePath(dataOperationParms.path, dataOperationParms.index==undefined?dataOperationParms.id:dataOperationParms.index);
-			eventData = node_uiDataOperationServiceUtility.createDestroyOperationData(path); 
-			break;
-		case node_CONSTANT.WRAPPER_OPERATION_DESTROY:
-			event = node_CONSTANT.WRAPPER_EVENT_DESTROY;
+			event = node_CONSTANT.WRAPPER_EVENT_DELETEELEMENT;
+//			var path = node_dataUtility.combinePath(dataOperationParms.path, dataOperationParms.id!=undefined?dataOperationParms.id:dataOperationParms.index);
+//			eventData = node_uiDataOperationServiceUtility.createDestroyOperationData(path); 
 			break;
 		case node_CONSTANT.WRAPPER_OPERATION_DELETE:
 			event = node_CONSTANT.WRAPPER_EVENT_DELETE;
@@ -356,9 +360,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		loc_trigueDataOperationEvent(event, eventData, requestInfo);
 	};
 
-	var loc_destroy = function(requestInfo){
-		node_getLifecycleInterface(loc_out).destroy(requestInfo);
-	};
+	var loc_destroy = function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	};
 	
 	var loc_out = {
 			getDataOperationRequest : function(operationService, handlers, requester_parent){
@@ -386,10 +388,15 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 				}
 				else{
 					var opService = operationService.clone();
-					
 					if(this.prv_dataBased==true){
 						//operate on root value
-						out = loc_getModifyDataOperationOnRootValue(opService, handlers, requester_parent); 
+						out = loc_out.prv_typeHelper.getDataOperationRequest(loc_out.prv_value, opService, handlers, requester_parent);
+						out.addPostProcessor({
+							success : function(requestInfo, data){
+								//trigue event
+								loc_triggerEventByDataOperation(opService.command, opService.parms, requestInfo);
+							}
+						});
 					}
 					else{
 						//otherwise, convert to operation on parent, util reach root
@@ -428,8 +435,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 				return out;
 			},
 
-			setValueAdapter : function(valueAdapter){  this.prv_valueAdapter = valueAdapter;  },
-			
 			getDataType : function(){  return this.prv_dataType;   },
 			getDataTypeHelper : function(){  return this.prv_typeHelper;   },
 			
@@ -443,12 +448,11 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			 * handler : function (event, path, operationValue, requestInfo)
 			 */
 			registerDataOperationListener : function(listenerEventObj, handler, thisContext){		this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
-
 			registerLifecycleListener : function(listenerEventObj, handler, thisContext){		this.prv_lifecycleEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
-			
+			registerInternalListener : function(listenerEventObj, handler, thisContext){		this.prv_dataInternalEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
 			unregisterDataOperationListener : function(listenerEventObj){		this.prv_dataOperationEventObject.unregister(listenerEventObj);		},
-
 			unregisterLifecycleListener : function(listenerEventObj){		this.prv_lifecycleEventObject.unregister(listenerEventObj);		},
+			unregisterInternalListener : function(listenerEventObj){		this.prv_internalEventObject.unregister(listenerEventObj);		},
 			
 			createChildWrapper : function(path, request){		return node_wrapperFactory.createWrapper(this, path, this.prv_typeHelper, this.prv_dataType, request);		},
 			
@@ -457,6 +461,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			toRealPath : function(path){	return loc_out.prv_pathAdapter!=undefined ? this.prv_pathAdapter.toRealPath(path) : path;	},
 			toAdapteredPath : function(path){	return loc_out.prv_pathAdapter!=undefined ? this.prv_pathAdapter.toAdapteredPath(path) : path;		},
 			
+			setValueAdapter : function(valueAdapter){  this.prv_valueAdapter = valueAdapter;  },
 	};
 	
 	//append resource life cycle method to out obj

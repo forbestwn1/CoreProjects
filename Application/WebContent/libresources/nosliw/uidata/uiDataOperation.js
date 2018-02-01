@@ -117,6 +117,7 @@ var node_uiDataOperationServiceUtility = function(){
 				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_SET, this.createSetOperationData(path, value));
 			},
 
+			//index or id or both
 			createAddElementOperationData : function(path, value, index, id){
 				var that = this;
 				return {
@@ -134,6 +135,7 @@ var node_uiDataOperationServiceUtility = function(){
 				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT, this.createAddElementOperationData(path, value, index, id));
 			},
 
+			//index or id, cannot both
 			createDeleteElementOperationData : function(path, index, id){
 				var that = this;
 				return {
@@ -164,7 +166,6 @@ var node_uiDataOperationServiceUtility = function(){
 				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_DELETE, this.createDeleteOperationData(path));
 			}
 	};
-		
 	
 	return loc_out;
 }();

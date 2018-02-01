@@ -233,6 +233,7 @@ var node_createOrderVariableContainer = function(variable, path, valueElements){
 		},
 		
 		populateDeleteElementOperationData : function(operationData){
+			//try to find the missing part id/index
 			var index = operationData.index;
 			var id = operationData.id;
 			if(id==undefined){

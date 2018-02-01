@@ -96,7 +96,7 @@ var node_createContext = function(elementInfosArray, request){
 				}, handlers, request);
 			},
 		};
-		variable.setAdapter(adapter);
+		variable.setValueAdapter(adapter);
 		return variable;
 	};
 	

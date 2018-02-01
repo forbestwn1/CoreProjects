@@ -328,10 +328,9 @@ var node_createWrapperVariable = function(data1, data2, data3){
 			},
 			
 			getHandleEachElementRequest : function(elementHandleRequestFactory, handlers, request){
-				var varInfoFromRoot = node_variableUtility.getVariableInfoFromRoot(loc_out.prv_relativeVariableInfo);
+				var varInfoFromRoot = this.prv_getRelativeInfoFromRoot(this.prv_relativeVariableInfo.path);
 				return varInfoFromRoot.parent.prv_getHandleEachElementOfRootRequest(varInfoFromRoot.path, elementHandleRequestFactory, handlers, request);
 			},
-			
 			
 			use : function(){
 				
