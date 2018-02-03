@@ -17,10 +17,19 @@ var library = nosliw.getPackage("uidata");
  * 				create child wrapper based on path to child wrapper
  * 				register listeners for data operation event
  * 				operate on data according to request infor and trigue event
+ * 			three type of events: 
+ * 				data operation event : inform children and variable about what happend within wrapper
+ * 				lifecycle event : inform children about lifeccycle winthin wrapper : clearup
+ * 				internal event : 
+ * 					inform children about data operation event. 
+ * 					for instance, for delete element operation, the container will receive the DELETEELEMENT event
+ * 					then beside forward the same event, the container will triggue another event DELETE for delete child
+ * 					this DELETE event should not be processed by variable, it should only be delivered to responding children  
  *  
- * wrapper variable: 
+ * variable: 
  * 			variable is exposed to user
  * 			a variable that can contain wrapper that can be set to differen value
+ * 			variable only listen to data operation event from wrapper, no lifecycle event
  * 			two types of wrapper variables: normal and child 
  * 			child variable is dependent on normal variable: its wrapper is wrapper based on wrapper within parent variable
  * 			variable event : 
@@ -30,6 +39,9 @@ var library = nosliw.getPackage("uidata");
  * 				CHANGE
  * 				ADDELEMENT
  * 				DELETEELEMENT	
+ * 
+ * variable wrapper : 
+ * 			
  * 
  * context : 
  * 			a set of normal wrapper variables

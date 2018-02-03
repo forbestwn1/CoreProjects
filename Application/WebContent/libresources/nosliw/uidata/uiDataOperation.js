@@ -102,19 +102,20 @@ var node_uiDataOperationServiceUtility = function(){
 				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_GET, this.createGetOperationData(path));
 			},
 			
-			createSetOperationData : function(path, value){
+			createSetOperationData : function(path, value, dataType){
 				var that = this;
 				return {
 					path : path,
 					value : value,
+					dataType : dataType,
 					clone : function(){
-						return that.createSetOperationData(this.path, node_dataUtility.cloneValue(this.value));
+						return that.createSetOperationData(this.path, node_dataUtility.cloneValue(this.value), dataType);
 					}
 				};
 			},
 			
-			createSetOperationService : function(path, value){
-				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_SET, this.createSetOperationData(path, value));
+			createSetOperationService : function(path, value, dataType){
+				return loc_createServiceInfo(node_CONSTANT.WRAPPER_OPERATION_SET, this.createSetOperationData(path, value, dataType));
 			},
 
 			//index or id or both
