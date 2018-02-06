@@ -15,7 +15,7 @@ var packageObj = library;
 	var node_createEmbededScriptExpressionInAttribute;
 	var node_getLifecycleInterface;
 	var node_basicUtility;
-	var node_createContextVariable;
+	var node_createContextVariableInfo;
 	var node_requestServiceProcessor;
 	var node_createUIDataOperationRequest;
 	var node_UIDataOperation;
@@ -64,7 +64,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		getAttributes : function(){   return loc_attributes;   },
 		
 		//utility methods
-		createVariable : function(fullPath){  return loc_context.createVariable(node_createContextVariable(fullPath));  },
+		createVariable : function(fullPath){  return loc_context.createVariable(node_createContextVariableInfo(fullPath));  },
 		processRequest : function(requestInfo){   node_requestServiceProcessor.processRequest(requestInfo, false);  },
 		
 		//---------------------------------ui resource view
@@ -77,8 +77,8 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		},
 		
 		//---------------------------------build context
-		createContextElementInfo : function(name, data1, data2, data3){  return node_createContextElementInfo(name, data1, data2, data3);  },
-		createContextElementInfoFromContext : function(name, contextEle, path){	 return node_createContextElementInfo(name, loc_context, node_createContextVariable(contextEle, path));	},
+		createContextElementInfo : function(name, data1, data2, adapterInfo, info){  return node_createContextElementInfo(name, data1, data2, adapterInfo, info);  },
+		createContextElementInfoFromContext : function(name, contextEle, path){	 return node_createContextElementInfo(name, loc_context, node_createContextVariableInfo(contextEle, path));	},
 		createExtendedContext : function(extendedEleInfos, requestInfo){
 			var contextElesInfo = [];
 			var that  = this;
@@ -184,7 +184,7 @@ nosliw.registerSetNodeDataEvent("uiresource.createEmbededScriptExpressionInConte
 nosliw.registerSetNodeDataEvent("uiresource.createEmbededScriptExpressionInAttribute", function(){node_createEmbededScriptExpressionInAttribute = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.context.createContextVariable", function(){node_createContextVariable = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextVariableInfo", function(){node_createContextVariableInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});

@@ -30,10 +30,10 @@ var node_RelativeEntityInfo;
  * typeHelper : utility methods according to different data type : object data / app data
  * dataType : object data / appdata
  */
-var node_createWraperCommon = function(parm1, path, typeHelper, dataType, request){
+var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 
 	var loc_resourceLifecycleObj = {};
-	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(parm1, path, typeHelper, dataType, request){
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(parm1, path, typeHelper, dataType){
 		//every wrapper has a id, it is for debuging purpose
 		loc_out.prv_id = nosliw.runtime.getIdService().generateId();
 		
@@ -81,9 +81,9 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			loc_out.prv_relativeWrapperInfo = new node_RelativeEntityInfo(parm1, path);
 			loc_out.prv_dataType = loc_out.prv_relativeWrapperInfo.parent.getDataType();
 
-			loc_out.prv_relativeWrapperInfo.parent.registerLifecycleListener(loc_out.prv_lifecycleEventObject, loc_lifecycleEventProcessor);
-			loc_out.prv_relativeWrapperInfo.parent.registerDataOperationListener(loc_out.prv_dataOperationEventObject, loc_dataOperationEventProcessor, this);
-			loc_out.prv_relativeWrapperInfo.parent.registerInternalListener(loc_out.prv_internalEventObject, loc_internalEventProcessor, this);
+			loc_out.prv_relativeWrapperInfo.parent.registerLifecycleEventListener(loc_out.prv_lifecycleEventObject, loc_lifecycleEventProcessor);
+			loc_out.prv_relativeWrapperInfo.parent.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, loc_dataOperationEventProcessor, this);
+			loc_out.prv_relativeWrapperInfo.parent.registerInternalEventListener(loc_out.prv_internalEventObject, loc_dataOperationEventProcessor, this);
 
 		}
 		else{
@@ -447,12 +447,12 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			/*
 			 * handler : function (event, path, operationValue, requestInfo)
 			 */
-			registerDataOperationListener : function(listenerEventObj, handler, thisContext){		this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
-			registerLifecycleListener : function(listenerEventObj, handler, thisContext){		this.prv_lifecycleEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
-			registerInternalListener : function(listenerEventObj, handler, thisContext){		this.prv_dataInternalEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
-			unregisterDataOperationListener : function(listenerEventObj){		this.prv_dataOperationEventObject.unregister(listenerEventObj);		},
-			unregisterLifecycleListener : function(listenerEventObj){		this.prv_lifecycleEventObject.unregister(listenerEventObj);		},
-			unregisterInternalListener : function(listenerEventObj){		this.prv_internalEventObject.unregister(listenerEventObj);		},
+			registerDataOperationEventListener : function(listenerEventObj, handler, thisContext){		this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
+			registerLifecycleEventListener : function(listenerEventObj, handler, thisContext){		this.prv_lifecycleEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
+			registerInternalEventListener : function(listenerEventObj, handler, thisContext){		this.prv_internalEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
+			unregisterDataOperationEventListener : function(listenerEventObj){		this.prv_dataOperationEventObject.unregister(listenerEventObj);		},
+			unregisterLifecycleEventListener : function(listenerEventObj){		this.prv_lifecycleEventObject.unregister(listenerEventObj);		},
+			unregisterInternalEventListener : function(listenerEventObj){		this.prv_internalEventObject.unregister(listenerEventObj);		},
 			
 			createChildWrapper : function(path, request){		return node_wrapperFactory.createWrapper(this, path, this.prv_typeHelper, this.prv_dataType, request);		},
 			
@@ -471,7 +471,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 	
 	loc_out = node_makeObjectWithId(loc_out, nosliw.generateId());
 	
-	node_getLifecycleInterface(loc_out).init(parm1, path, typeHelper, dataType, request);
+	node_getLifecycleInterface(loc_out).init(parm1, path, typeHelper, dataType);
 	
 	return loc_out;
 };

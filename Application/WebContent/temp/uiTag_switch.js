@@ -12,7 +12,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"switch",
 "attributes":{},
 "script":
 function (context, parentResourceView, uiTagResource, attributes, tagEnv) {
-    var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+    var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
     var node_createDataOperationRequest = nosliw.getNodeData("uidata.dataoperation.createDataOperationRequest");
     var node_DataOperationService = nosliw.getNodeData("uidata.dataoperation.DataOperationService");
     var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
@@ -29,7 +29,7 @@ function (context, parentResourceView, uiTagResource, attributes, tagEnv) {
     var loc_startEle;
     var loc_endEle;
     var loc_valueContextEleName = "internal_switchVariable";
-    var loc_valueVariable = loc_context.createVariable(node_createContextVariable(loc_valueContextEleName));
+    var loc_valueVariable = loc_context.createVariable(node_createContextVariableInfo(loc_valueContextEleName));
     var loc_updateView = function () {
         var data = loc_valueVariable.getData();
         var value;

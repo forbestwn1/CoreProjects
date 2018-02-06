@@ -8,9 +8,9 @@ var packageObj = library;
 	var node_makeObjectWithLifecycle;
 	var node_createEventObject;
 	var node_getLifecycleInterface;
-	var node_createContextVariablesGroup;
+	var node_createContextVariableInfosGroup;
 	var node_requestServiceProcessor;
-	var node_createContextVariable;
+	var node_createContextVariableInfo;
 	var node_createServiceRequestInfoSet;
 	var node_createServiceRequestInfoService;
 	var node_createServiceRequestInfoSimple;
@@ -68,9 +68,9 @@ var packageObj = library;
 			var varNames = scriptExpression[node_COMMONATRIBUTECONSTANT.SCRIPTEXPRESSION_VARIABLENAMES];
 			var contextVariables = [];
 			_.each(varNames, function(varName, index){
-				contextVariables.push(node_createContextVariable(varName));
+				contextVariables.push(node_createContextVariableInfo(varName));
 			});
-			loc_contextVarGroup = node_createContextVariablesGroup(context, contextVariables, loc_contextVarsGroupHandler, this);
+			loc_contextVarGroup = node_createContextVariableInfosGroup(context, contextVariables, loc_contextVarsGroupHandler, this);
 		};
 			
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
@@ -151,9 +151,9 @@ var packageObj = library;
 	nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 	nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 	nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
-	nosliw.registerSetNodeDataEvent("uidata.context.createContextVariablesGroup", function(){node_createContextVariablesGroup = this.getData();});
+	nosliw.registerSetNodeDataEvent("uidata.context.createContextVariablesGroup", function(){node_createContextVariableInfosGroup = this.getData();});
 	nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
-	nosliw.registerSetNodeDataEvent("uidata.context.createContextVariable", function(){node_createContextVariable = this.getData();});
+	nosliw.registerSetNodeDataEvent("uidata.context.createContextVariableInfo", function(){node_createContextVariableInfo = this.getData();});
 	nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 	nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService", function(){node_createServiceRequestInfoService = this.getData();});
 	nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});

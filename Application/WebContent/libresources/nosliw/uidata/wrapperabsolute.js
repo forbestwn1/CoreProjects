@@ -469,11 +469,11 @@ var node_createWraperAbsolute = function(value, typeHelper, dataType, request){
 			/*
 			 * handler : function (event, path, operationValue, requestInfo)
 			 */
-			registerDataOperationListener : function(listenerEventObj, handler, thisContext){
+			registerDataOperationEventListener : function(listenerEventObj, handler, thisContext){
 				this.pri_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);
 			},
 
-			unregisterDataOperationListener : function(listenerEventObj){
+			unregisterDataOperationEventListener : function(listenerEventObj){
 				this.pri_dataOperationEventObject.unregister(listenerEventObj);
 			},
 			

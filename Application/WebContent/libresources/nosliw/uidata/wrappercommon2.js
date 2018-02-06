@@ -95,7 +95,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 		
 		if(loc_out.pri_dataBased==false){
 			//if parent based, then listen to parent's event
-			loc_out.pri_parent.registerDataOperationListener(this.pri_dataOperationEventObject, function(event, eventData, requestInfo){
+			loc_out.pri_parent.registerDataOperationEventListener(this.pri_dataOperationEventObject, function(event, eventData, requestInfo){
 
 				if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD){
 					//for forward event, expand it
@@ -594,11 +594,11 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType, reques
 			/*
 			 * handler : function (event, path, operationValue, requestInfo)
 			 */
-			registerDataOperationListener : function(listenerEventObj, handler, thisContext){
+			registerDataOperationEventListener : function(listenerEventObj, handler, thisContext){
 				this.pri_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);
 			},
 
-			unregisterDataOperationListener : function(listenerEventObj){
+			unregisterDataOperationEventListener : function(listenerEventObj){
 				this.pri_dataOperationEventObject.unregister(listenerEventObj);
 			},
 			

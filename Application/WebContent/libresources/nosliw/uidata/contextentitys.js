@@ -10,7 +10,7 @@ var node_CONSTANT;
 var node_COMMONCONSTANT;
 var node_makeObjectWithType;
 var node_getObjectType;
-var node_createWrapperVariable;
+var node_createVariableWrapper;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -24,7 +24,7 @@ var node_createWrapperVariable;
  * 		contextVariable
  * 		string
  */
-var node_createContextVariable = function(n, p){
+var node_createContextVariableInfo = function(n, p){
 	var path = p;
 	var name = n;
 	if(path==undefined){
@@ -66,11 +66,11 @@ var node_createContextVariable = function(n, p){
 
 /*
  * object to describe context element info, two models:
- * 		1. name + parent context + parent context contextVariable
+ * 		1. name + parent context + parent context contextVariable + info
  * 		2. name + data/value + path + info
- * 		3. name + parent variable + path
+ * 		3. name + parent variable + path + info
  */
-var node_createContextElementInfo = function(name, data1, data2, data3){
+var node_createContextElementInfo = function(name, data1, data2, adapterInfo, info){
 	var loc_out = {
 		name : name,
 	};
@@ -78,22 +78,21 @@ var node_createContextElementInfo = function(name, data1, data2, data3){
 	if(type==node_CONSTANT.TYPEDOBJECT_TYPE_CONTEXT){
 		//input is context + context variable
 		loc_out.context = data1;
-		loc_out.contextVariable = node_createContextVariable(data2);
-		loc_out.info = data3;
+		loc_out.contextVariable = node_createContextVariableInfo(data2);
 	}
 	else if(type==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE){
 		//input is wrapper
 		loc_out.variable = data1;
 		loc_out.path = data2;
-		loc_out.info = data3;
 	}
 	else{
 		//input is data/value
 		loc_out.data1 = data1;
 		loc_out.data2 = data2;
-		loc_out.info = data3;
 	}
-	if(loc_out.info==undefined)  loc_out.info = {};
+	
+	loc_out.info = info==undefined ? {} : info;
+	loc_out.adapterInfo = adapterInfo;
 	return loc_out;
 };
 
@@ -104,24 +103,21 @@ var node_createContextElementInfo = function(name, data1, data2, data3){
  * 		variable
  * 		info
  */
-var node_createContextElement = function(elementInfo, requestInfo){
+var node_createContextElement = function(elementInfo){
 	var loc_out = {
 		name : elementInfo.name,
 		info : elementInfo.info,
 	};
 
+	var adapterInfo = elementInfo.adapterInfo;
 	//get variable
 	if(elementInfo.context!=undefined){
 		var context = elementInfo.context;
 		var contextVar = elementInfo.contextVariable;
-		loc_out.variable = context.createVariable(contextVar, requestInfo);
+		loc_out.variable = context.createVariable(contextVar, adapterInfo);
 	}
-	else if(elementInfo.variable!=undefined){
-		loc_out.variable = node_createWrapperVariable(elementInfo.variable, elementInfo.path, requestInfo);
-	}
-	else{
-		loc_out.variable = node_createWrapperVariable(elementInfo.data1, elementInfo.data2, requestInfo);
-	}
+	else if(elementInfo.variable!=undefined)		loc_out.variable = node_createVariableWrapper(elementInfo.variable, elementInfo.path, adapterInfo);
+	else		loc_out.variable = node_createVariableWrapper(elementInfo.data1, elementInfo.data2, adapterInfo);
 	
 	//get context type(public, internal, private)
 	var contextType = node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC;
@@ -143,10 +139,10 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.variable.createWrapperVariable", function(){node_createWrapperVariable = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.variable.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createContextVariable", node_createContextVariable); 
+packageObj.createChildNode("createContextVariableInfo", node_createContextVariableInfo); 
 packageObj.createChildNode("createContextElementInfo", node_createContextElementInfo); 
 packageObj.createChildNode("createContextElement", node_createContextElement); 
 

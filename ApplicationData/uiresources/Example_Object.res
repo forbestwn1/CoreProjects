@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <body>
-	
+
+	<br>
+	Content:<%=?(business.a.aa)?.value + '   6666 ' %>
+	<br>
+
+<!--	
 		<nosliw-debug/>
 
 		<br>
@@ -92,6 +97,7 @@
 				</nosliw-casedefualt>
 			<br>
 		</nosliw-switch>
+-->		
 
 </body>
 

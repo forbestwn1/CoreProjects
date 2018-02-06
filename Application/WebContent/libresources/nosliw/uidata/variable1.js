@@ -34,7 +34,7 @@ var node_createWrapperVariable = function(data1, data2, data3){
 		if(loc_out.prv_wrapper==undefined)   return;
 
 		//unregister listener from wrapper
-		loc_out.prv_wrapper.unregisterDataOperationListener(loc_out.prv_dataOperationEventObject);
+		loc_out.prv_wrapper.unregisterDataOperationEventListener(loc_out.prv_dataOperationEventObject);
 		
 		//destroy wrapper
 		loc_out.prv_wrapper.destroy(requestInfo);
@@ -74,7 +74,7 @@ var node_createWrapperVariable = function(data1, data2, data3){
 	//listen to wrapper event
 	var loc_registerWrapperDataOperationEvent = function(){
 		if(loc_out.prv_wrapper==undefined)  return;
-		loc_out.prv_wrapper.registerDataOperationListener(loc_out.prv_dataOperationEventObject, function(event, path, data, requestInfo){
+		loc_out.prv_wrapper.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, function(event, path, data, requestInfo){
 			//ignore forward event
 			//we should not ignore forward event, as forward event also indicate that something get changed on child, in that case, the data also get changed
 //			if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD)  return;

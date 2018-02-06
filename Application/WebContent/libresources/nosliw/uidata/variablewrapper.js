@@ -17,37 +17,66 @@ var node_basicUtility;
 var node_createEventObject;
 var node_createServiceRequestInfoSequence;
 var node_uiDataOperationServiceUtility;
+var node_createVariable;
 
 //*******************************************   Start Node Definition  ************************************** 	
-var node_createVariableWrapper = function(variable){
-	var loc_variable = variable;
+var node_createVariableWrapper = function(data1, data2, adapterInfo){
+	
+	var loc_resourceLifecycleObj = {};
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(data1, data2, adapterInfo){
+		var entityType = node_getObjectType(data1);
+
+		if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE && node_basicUtility.isStringEmpty(data2)){
+			loc_out.prv_variable = data1;
+		}
+		else{
+			if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLEWRAPPER)	data1 = data1.prv_getVariable();
+			loc_out.prv_variable = node_createVariable(data1, data2, adapterInfo);
+		}
+		
+		//use variable when created
+		loc_out.prv_variable.use();
+		
+		//event source for event that communicate operation information with outsiders
+		loc_out.prv_dataOperationEventObject = node_createEventObject();
+
+		//receive event from variable and trigue new same event
+		//the purpose of re-trigue the new event is for release the resources after this variable wrapper is released
+		loc_out.prv_variable.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, function(event, eventData, request){loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, request);}, loc_out);
+	};	
+
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
+		loc_out.prv_variable.release();
+		//take care of release event 
+		loc_out.prv_lifecycleEventObject.clearup();
+		loc_out.prv_dataOperationEventObject.clearup();
+	};	
 	
 	var loc_out = {
-		use : function(){
-			loc_variable.use();
-			return loc_variable;
-		},
 		
-		release : function(){
-			loc_variable.release();
-			return loc_variable;
-		},
+		prv_getVariable : function(){	return loc_out.prv_variable;	},
+			
+		createChildVariable : function(path, adapterInfo){	
+			return node_createVariableWrapper(loc_out.prv_variable.createChildVariable(path).variable, undefined, adpaterInfo);  
+		}, 
 		
-		getDataOperationRequest : function(operationService, handlers, requester_parent){
-		},
+		release : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
 		
-		getHandleEachElementRequest : function(elementHandleRequestFactory, handlers, request){
-		},
+		getDataOperationRequest : function(operationService, handlers, request){	return loc_out.prv_variable.getDataOperationRequest(operationService, handlers, request);	},
 		
-		registerDataChangeEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
+		getHandleEachElementRequest : function(elementHandleRequestFactory, handlers, request){		return loc_out.prv_variable.getHandleEachElementRequest(elementHandleRequestFactory, handlers, request);	},
 		
-		/*
-		 * register handler for event of communication between parent and child variables
-		 */
-		registerLifecycleEventListener : function(listenerEventObj, handler, thisContext){return this.prv_lifecycleEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);	},
-
+		registerDataOperationEventListener : function(handler, thisContext){return this.prv_dataOperationEventObject.registerListener(undefined, loc_out.prv_dataOperationEventObject, handler, thisContext);},
+		getDataOperationEventObject : function(){   return this.prv_dataOperationEventObject;   },
 		
 	};
+	
+	loc_out = node_makeObjectWithLifecycle(loc_out, loc_resourceLifecycleObj, loc_out);
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLEWRAPPER);
+	loc_out = node_makeObjectWithId(loc_out, nosliw.generateId());
+
+	node_getLifecycleInterface(loc_out).init(data1, data2, adapterInfo);
+	
 	return loc_out;
 };
 
@@ -68,6 +97,7 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.variable.createVariable", function(){node_createVariable = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createVariableWrapper", node_createVariableWrapper); 

@@ -13,7 +13,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"loop",
 "script":
 function (context, parentResourceView, uiTagResource, attributes, env) {
     var node_namingConvensionUtility = nosliw.getNodeData("common.namingconvension.namingConvensionUtility");
-    var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+    var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
     var node_createDataOperationRequest = nosliw.getNodeData("uidata.dataoperation.createDataOperationRequest");
     var node_DataOperationService = nosliw.getNodeData("uidata.dataoperation.DataOperationService");
     var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
@@ -34,7 +34,7 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
         return loc_id + "";
     };
     var loc_getElementContextVariable = function (key) {
-        var out = node_createContextVariable(loc_dataContextEleName);
+        var out = node_createContextVariableInfo(loc_dataContextEleName);
         out.path = node_namingConvensionUtility.cascadePath(out.path, key + "");
         return out;
     };

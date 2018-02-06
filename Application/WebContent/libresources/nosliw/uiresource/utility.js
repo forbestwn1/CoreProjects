@@ -15,7 +15,7 @@ var packageObj = library;
 	var node_createContextElementInfo;
 	var node_dataUtility;
 	var node_createContext;
-	var node_createContextVariable;
+	var node_createContextVariableInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = {
@@ -107,18 +107,18 @@ var node_utility = {
 							if(defaultValueData!=undefined){
 								defaultValueData = node_dataUtility.createDataOfAppData(defaultValue);
 							}
-							contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValueData, "", info));
+							contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValueData, "", undefined, info));
 						}
 						else{
 							//object
-							contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValue, "", info));
+							contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValue, "", undefined, info));
 						}
 					}
 					else if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_RELATIVE){
 						var pathObj = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_PATH];
 						var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
 						var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
-						contextElementInfosArray.push(node_createContextElementInfo(eleName, parentContext, node_createContextVariable(rootName, path), info));
+						contextElementInfosArray.push(node_createContextElementInfo(eleName, parentContext, node_createContextVariableInfo(rootName, path), undefined, info));
 					}
 				});
 			});
@@ -144,7 +144,7 @@ nosliw.registerSetNodeDataEvent("uiresource.createUIResourceViewFactory", functi
 nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_createContext = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.context.createContextVariable", function(){node_createContextVariable = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextVariableInfo", function(){node_createContextVariableInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

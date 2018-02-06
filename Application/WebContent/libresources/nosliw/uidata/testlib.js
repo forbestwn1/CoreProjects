@@ -6,7 +6,7 @@ var packageObj = library.getChildPackage("test");
 var node_wrapperFactory;
 var node_createContextElementInfo;
 var node_createContext;
-var node_createContextVariable;
+var node_createContextVariableInfo;
 var node_ServiceInfo;
 var node_CONSTANT;
 var node_createEventObject;
@@ -64,7 +64,7 @@ var node_buildVariableTree = function(variablesDefinition, contexts){
 		 var path = variableDef[3];
 		 
 		 var context = loc_contexts.getContext(contextName);
-		 var contextVariable = node_createContextVariable(contextEleName, path);
+		 var contextVariable = node_createContextVariableInfo(contextEleName, path);
 		 var variable = context.createVariable(contextVariable);
 		 loc_variables[variableName] = variable;
 		 
@@ -123,7 +123,7 @@ var node_buildVariableTree = function(variablesDefinition, contexts){
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_createContext = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.context.createContextVariable", function(){node_createContextVariable = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextVariableInfo", function(){node_createContextVariableInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});

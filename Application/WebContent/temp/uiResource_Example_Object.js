@@ -260,13 +260,13 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"Example_Object",
 					alert("cccccc");
 					event.preventDefault();
 				
-					var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+					var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
 					var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 					var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 					var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest");
 					var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
 					var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
-					var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+					var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
 					var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 
 					var requestInfo = node_createServiceRequestInfoSequence({}, {
@@ -340,13 +340,13 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"Example_Object",
 
 			event.preventDefault();
 
-			var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+			var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest");
 			var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
 			var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
-			var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+			var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
 			
 			var eleData = {
 				dataTypeId: "test.string;1.0.0",
@@ -354,19 +354,19 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"Example_Object",
 			};
 
 			var requestInfo = node_createBatchUIDataOperationRequest(this.getContext());
-			var uiDataOperation = new node_UIDataOperation(new node_createContextVariable("business.a.cc"), node_uiDataOperationServiceUtility.createAddElementOperationService("", 2, eleData));
+			var uiDataOperation = new node_UIDataOperation(new node_createContextVariableInfo("business.a.cc"), node_uiDataOperationServiceUtility.createAddElementOperationService("", 2, eleData));
 			requestInfo.addUIDataOperation(uiDataOperation);						
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},
 	
 		testLinkEvent : function(data, info){
-			var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+			var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
 			
 			event.preventDefault();
 			alert("aaaaa");
 			
 			var context = this.getContext();
-			var variable = context.createVariable(new node_createContextVariable("business.a.aa"));
+			var variable = context.createVariable(new node_createContextVariableInfo("business.a.aa"));
 			variable.registerDataChangeEventListener(undefined, function(eventName){
 				alert(eventName);
 			});

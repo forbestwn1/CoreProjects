@@ -19,7 +19,7 @@ var node_createRequestEventGroupHandler;
  * 		thisContext : the this context for event handler
  */
 
-var node_createContextVariablesGroup = function(context, contextVariables, handler, thisContext){
+var node_createContextVariableInfosGroup = function(context, contextVariableInfosArray, handler, thisContext){
 
 	//context
 	var loc_context = context;
@@ -28,28 +28,24 @@ var node_createContextVariablesGroup = function(context, contextVariables, handl
 	//variables
 	var loc_variables = {};
 	
-	var loc_thisContext = thisContext;
-	
 	var loc_requestEventGroupHandler = undefined;
 	
-	var loc_addElement = function(contextVariable){
-		var variable = loc_context.createVariable(contextVariable);
-		loc_variables[contextVariable.key] = variable;
-		loc_requestEventGroupHandler.addElement(variable.getDataChangeEventObject(), contextVariable.key);
-		loc_requestEventGroupHandler.addElement(variable.getLifecycleEventObject(), contextVariable.key);
+	var loc_addElement = function(contextVariableInfo){
+		var variable = loc_context.createVariable(contextVariableInfo);
+		loc_variables[contextVariableInfo.key] = variable;
+		loc_requestEventGroupHandler.addElement(variable.getDataOperationEventObject(), contextVariableInfo.key);
 	};
 	
 	var loc_resourceLifecycleObj = {};
-	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(context, contextVariablesArray, handler, thisContext){
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(context, contextVariableInfosArray, handler, thisContext){
 		loc_requestEventGroupHandler = node_createRequestEventGroupHandler(loc_handler, thisContext);
 		
-		for(var i in contextVariablesArray){
-			loc_addElement(contextVariablesArray[i]);
+		for(var i in contextVariableInfosArray){
+			loc_addElement(contextVariableInfosArray[i]);
 		}
 	};	
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
 		loc_requestEventGroupHandler.destroy(requestInfo);
-		loc_thisContext = undefined;
 		loc_context = undefined;
 		loc_handler = undefined;
 	};
@@ -60,7 +56,6 @@ var node_createContextVariablesGroup = function(context, contextVariables, handl
 		 */
 		addVariable : function(contextVariable){	loc_addElement(contextVariable);		},
 		
-//		getVariable : function(key){	return loc_requestEventGroupHandler.getElement(key);		},
 		getVariable : function(key){	return loc_variables[key];		},
 		
 		getVariables : function(){  return loc_variables;  },
@@ -70,7 +65,7 @@ var node_createContextVariablesGroup = function(context, contextVariables, handl
 	
 	//append resource and object life cycle method to out obj
 	loc_out = node_makeObjectWithLifecycle(loc_out, loc_resourceLifecycleObj, loc_out);
-	node_getLifecycleInterface(loc_out).init(context, contextVariables, handler, thisContext);
+	node_getLifecycleInterface(loc_out).init(context, contextVariableInfosArray, handler, thisContext);
 	
 	return loc_out;
 };
@@ -86,6 +81,6 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", functi
 nosliw.registerSetNodeDataEvent("request.event.createRequestEventGroupHandler", function(){node_createRequestEventGroupHandler = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createContextVariablesGroup", node_createContextVariablesGroup); 
+packageObj.createChildNode("createContextVariablesGroup", node_createContextVariableInfosGroup); 
 
 })(packageObj);

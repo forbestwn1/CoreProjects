@@ -12,7 +12,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"casedefault",
 "attributes":{},
 "script":
 function (context, parentResourceView, uiTagResource, attributes, tagEnv) {
-    var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+    var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
     var node_createDataOperationRequest = nosliw.getNodeData("uidata.dataoperation.createDataOperationRequest");
     var node_DataOperationService = nosliw.getNodeData("uidata.dataoperation.DataOperationService");
     var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
@@ -25,7 +25,7 @@ function (context, parentResourceView, uiTagResource, attributes, tagEnv) {
     var loc_parentResourceView = parentResourceView;
     var loc_tagEnv = tagEnv;
     var loc_foundContextEleName = "private_found";
-    var loc_foundVariable = loc_context.createVariable(node_createContextVariable(loc_foundContextEleName));
+    var loc_foundVariable = loc_context.createVariable(node_createContextVariableInfo(loc_foundContextEleName));
     var loc_view;
     var loc_startEle;
     var loc_endEle;

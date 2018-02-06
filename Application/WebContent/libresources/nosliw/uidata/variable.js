@@ -25,32 +25,34 @@ var node_createOrderedContainersInfo;
 var node_createOrderVariableContainer;
 var node_uiDataOperationServiceUtility;
 var node_dataUtility;
-
+var node_requestServiceProcessor;
 
 //*******************************************   Start Node Definition  ************************************** 	
 /**
  * two input model : 
- * 		1. parent variable + path from parent +  requestInfo
- *      2. data + undefined + requestInfo
- *      3. value + value type + requestInfo
+ * 		1. parent variable + path from parent
+ *      2. data + undefined
+ *      3. value + value type
  */
-var node_createWrapperVariable = function(data1, data2, requestInfo){
+var node_createVariable = function(data1, data2, adapterInfo){
 	
 	var loc_resourceLifecycleObj = {};
-	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(data1, data2, requestInfo){
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(data1, data2, adapterInfo){
 		//every variable has a id, it is for debuging purpose
 		loc_out.prv_id = nosliw.runtime.getIdService().generateId();
 
 		//adapter that will apply to value of wrapper
-		loc_out.prv_valueAdapter = undefined;
+		loc_out.prv_valueAdapter = adapterInfo==undefined ? undefined : adapterInfo.valueAdapter;
 
-		loc_out.prv_pathAdapter = undefined;
+		loc_out.prv_pathAdapter = adapterInfo==undefined ? undefined : adapterInfo.pathAdapter;
 		
 		//adapter that affect the event from wrapper and listener of this variable
-		loc_out.prv_eventAdapter = undefined;
+		loc_out.prv_eventAdapter = adapterInfo==undefined ? undefined : adapterInfo.eventAdapter;
 
+		loc_out.prv_destoryAdapter = adapterInfo==undefined ? undefined : adapterInfo.destroyAdapter; 
+		
 		//adapter that affect the data operation on wrapper
-		loc_out.prv_dataOperationRequestAdapter = undefined;
+		loc_out.prv_dataOperationRequestAdapter = adapterInfo==undefined ? undefined : adapterInfo.dataOperationRequestAdapter;;
 		
 		//event source for event that communicate with child wrapper variables 
 		loc_out.prv_lifecycleEventObject = node_createEventObject();
@@ -65,8 +67,10 @@ var node_createWrapperVariable = function(data1, data2, requestInfo){
 		//relative to parent : parent + path
 		loc_out.prv_relativeVariableInfo;
 		
-		//child variables by path
+		//normal child variables by path
 		loc_out.prv_childrenVariable = {};
+		//child variables with extra adapter
+		loc_out.prv_extraChildrenVariable = {};
 		
 		//store information for children order info
 		loc_out.prv_orderChildrenInfo;
@@ -87,24 +91,32 @@ var node_createWrapperVariable = function(data1, data2, requestInfo){
 		else{
 			//for object/data
 			loc_out.prv_isBase = true;
-			loc_setWrapper(node_wrapperFactory.createWrapper(data1, data2, requestInfo));
+			var r = loc_out.prv_getSetBaseDataRequest(data1, data2);
+			node_requestServiceProcessor.processRequest(r, true);
 		}
 	};
 	
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
-		//destroy wrapper fist
-		loc_destroyWrapper(requestInfo);
-		//clean up event object
-		loc_out.prv_dataOperationEventObject.clearup();
-		loc_out.prv_lifecycleEventObject.clearup();
 		
-		//clear children variable
+		if(loc_out.prv_destoryAdapter!=undefined)   loc_out.prv_destoryAdapter();
+		
+		//clear children variable first
 		for (var key in loc_out.prv_childrenVariable){
 		    if (loc_out.prv_childrenVariable.hasOwnProperty(key)){
 		    	loc_out.prv_childrenVariable[key].destroy(requestInfo);
 		        delete loc_out.prv_childrenVariable[key];
 		    }
-		}		
+		}	
+		
+		//trigger lifecycle event
+		loc_out.prv_lifecycleEventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_CLEARUP, {}, requestInfo);
+		
+		//destroy wrapper 
+		loc_destroyWrapper(requestInfo);
+
+		//clean up event object
+		loc_out.prv_dataOperationEventObject.clearup();
+		loc_out.prv_lifecycleEventObject.clearup();
 		
 		for (var key in loc_out){
 		    if (loc_out.hasOwnProperty(key)){
@@ -112,7 +124,6 @@ var node_createWrapperVariable = function(data1, data2, requestInfo){
 		    }
 		}		
 	};
-	
 	
 	/*
 	 * destroy wrapper within this variable
@@ -125,7 +136,7 @@ var node_createWrapperVariable = function(data1, data2, requestInfo){
 		if(loc_out.prv_wrapper==undefined)   return;
 
 		//unregister listener from wrapper
-		loc_out.prv_wrapper.unregisterDataOperationListener(loc_out.prv_dataOperationEventObject);
+		loc_out.prv_wrapper.unregisterDataOperationEventListener(loc_out.prv_dataOperationEventObject);
 		
 		//destroy wrapper
 		loc_out.prv_wrapper.destroy(requestInfo);
@@ -152,7 +163,7 @@ var node_createWrapperVariable = function(data1, data2, requestInfo){
 	//listen to wrapper data operation event
 	var loc_registerWrapperDataOperationEvent = function(){
 		if(loc_out.prv_wrapper==undefined)  return;
-		loc_out.prv_wrapper.registerDataOperationListener(loc_out.prv_dataOperationEventObject, function(event, eventData, requestInfo){
+		loc_out.prv_wrapper.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, function(event, eventData, requestInfo){
 			var events = [{
 				event : event,
 				value : eventData
@@ -168,25 +179,31 @@ var node_createWrapperVariable = function(data1, data2, requestInfo){
 		});
 	};
 
-	var loc_addChildVariable = function(childVar, path){
-		loc_out.prv_childrenVariable[path] = childVar;
-		childVar.registerLifecycleListener(loc_out.prv_lifecycleEventObject, function(event, eventData){
-			if(event==node_CONSTANT.WRAPPER_EVENT_DELETE)	delete loc_out.prv_childrenVariable[path];
-		});
+	var loc_addNormalChildVariable = function(childVar, path){
+		loc_addChildVariable(loc_out.prv_childrenVariable, childVar, path);
+		return {
+			variable : childVar,
+			path : path
+		};
+	};
+
+	var loc_addChildVariableWithAdapter = function(childVar, path){
+		var p = path+"_"+childVar.prv_id;
+		loc_addChildVariable(loc_out.prv_extraChildrenVariable, childVar, p);
+		return {
+			variable : childVar,
+			path : p
+		};
 	};
 	
-	var loc_getHandleEachElementOfOrderContainer = function(elementHandleRequestFactory, handlers, request){
-		//container looped
-		//handle each element
-		var i = 0;
-		var handleElementsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("HandleElements", {"elements":loc_out.prv_orderChildrenInfo.getElements()}));
-		_.each(loc_out.prv_orderChildrenInfo.getElements(), function(ele, index){
-			//add child request from factory
-			//eleId as path
-			handleElementsRequest.addRequest(i+"", elementHandleRequestFactory.call(loc_out, node_createVariableWrapper(loc_out), node_createVariableWrapper(loc_out.prv_childrenVariable[ele.path]), node_createVariableWrapper(ele.indexVariable)));
-			i++;
+	var loc_addChildVariable = function(container, childVar, path){
+		container[path] = childVar;
+		childVar.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, function(event, eventData, request){
+			if(event==node_CONSTANT.WRAPPER_EVENT_DELETE)	delete container[path];
 		});
-		return handleElementsRequest;
+		childVar.registerLifecycleEventListener(loc_out.prv_lifecycleEventObject, function(event, eventData, request){
+			if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP)	delete container[path];
+		});
 	};
 	
 	var loc_updateChildrenData = function(requestInfo){
@@ -197,14 +214,34 @@ var node_createWrapperVariable = function(data1, data2, requestInfo){
 	
 	
 	var loc_out = {
+	
 			prv_getWrapper : function(){return this.prv_wrapper;},
 
 			//has to be base variable
-			prv_setBaseData : function(parm1, parm2, requestInfo){	
+			prv_getSetBaseDataRequest : function(parm1, parm2, handlers, requestInfo){	
 				loc_destroyWrapper(requestInfo);
+				
+				//create empty wrapper fist
+				var wrapperValue;      //store the value
+				var entityType = node_getObjectType(parm1);
+				if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_DATA){
+					wrapperValue = parm1.value;
+					parm1.value = undefined;
+				}
+				else if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VALUE){
+					wrapperValue = parm1;
+					parm1 = undefined;
+				}
+				else{
+					wrapperValue = parm1;
+					parm1 = undefined;
+				}
 				var wrapper = node_wrapperFactory.createWrapper(parm1, parm2, requestInfo);
 				loc_setWrapper(wrapper, requestInfo);
+				//update children's wrapper according to base wrapper changes
 				loc_updateChildrenData(requestInfo);
+				//set new value
+				return wrapper.getDataOperationRequest(node_uiDataOperationServiceUtility.createSetOperationService("", wrapperValue), handlers, requestInfo);
 			},
 
 			//update data when parent's wrapper changed
@@ -236,7 +273,6 @@ var node_createWrapperVariable = function(data1, data2, requestInfo){
 			release : function(requestInfo){
 				loc_out.prv_usage--;
 				if(loc_out.prv_usage<=0){
-					loc_trigueLifecycleEvent(node_CONSTANT.WRAPPER_EVENT_CLEARUP, {}, requestInfo);
 					node_getLifecycleInterface(loc_out).destroy(requestInfo);
 				}
 			},
@@ -247,20 +283,35 @@ var node_createWrapperVariable = function(data1, data2, requestInfo){
 			},
 
 			//create child variable, if exist, then reuse it
-			createChildVariable : function(path, requestInfo){
-				var out = loc_out.prv_childrenVariable[path];
-				if(out==undefined){
-					out = node_createWrapperVariable(loc_out, path, requestInfo);
-					loc_addChildVariable(out, path);
+			createChildVariable : function(path, adapterInfo){
+				var out;
+				if(adapterInfo==undefined){
+					//normal child, try to reuse exsiting one
+					var childVar = loc_out.prv_childrenVariable[path];
+					if(childVar==undefined){
+						childVar = node_createVariable(loc_out, path);
+						out = loc_addNormalChildVariable(childVar, path);
+					}
+					else{
+						out = {
+							variable : childVar,
+							path : path
+						}
+					}
 				}
+				else{
+					//child with extra info
+					out = loc_addChildVariableWithAdapter(node_createVariable(loc_out, path, adapterInfo), path);
+				}
+
 				return out;
 			},
 
 			/*
 			 * register handler for operation event
 			 */
-			registerDataChangeEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
-			getDataChangeEventObject : function(){   return this.prv_dataOperationEventObject;   },
+			registerDataOperationEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
+			getDataOperationEventObject : function(){   return this.prv_dataOperationEventObject;   },
 			
 			/*
 			 * register handler for event of communication between parent and child variables
@@ -274,9 +325,7 @@ var node_createWrapperVariable = function(data1, data2, requestInfo){
 				
 				if(operationService.command==node_CONSTANT.WRAPPER_OPERATION_SET && loc_out.prv_isBase==true){
 					//for set root data
-					return node_createServiceRequestInfoSimple(operationService, function(requestInfo){	
-						loc_out.prv_setBaseData(operationService.value, operationService.dataType, requestInfo);
-					}, handlers, requester_parent);
+					return loc_out.prv_getSetBaseDataRequest(operationService.value, operationService.dataType, handlers, requestInfo);
 				}
 				
 				if(this.prv_wrapper!=undefined){
@@ -304,90 +353,13 @@ var node_createWrapperVariable = function(data1, data2, requestInfo){
 				
 				return out;
 			},
-			
-			getHandleEachElementRequest : function(elementHandleRequestFactory, handlers, request){
-				if(loc_out.prv_wrapper==null){
-					return node_createServiceRequestInfoSimple({}, function(){}, handlers, request);
-				}
-				
-				if(loc_out.prv_orderChildrenInfo!=undefined){
-					return loc_getHandleEachElementOfOrderContainer(elementHandleRequestFactory, handlers, request);
-				}
-				else{
-					//not loop yet, get value first, then loop it
-					loc_out.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
-						success : function(request, data){
-							loc_out.prv_wrapper.getDataTypeHelper.getGetElementsRequest(data.value, {
-								success : function(request, valueElements){
-									loc_out.prv_orderChildrenInfo = node_createContainerOrderInfo();
-									//create child variables
-									_.each(valueElements, function(valueEle, index){
-										var path = loc_out.prv_orderChildrenInfo.insert(index, valueEle.id);
-										loc_out.prv_childrenVariable[path] = loc_out.createChildVariable(path);
-										loc_out.prv_childrenVariable[path].registerDataOperationEvent(undefined, function(){
-											if(event==DELETE){
-												loc_out.prv_orderChildrenInfo.removeByPath(path);
-											}
-										});
-									});
-									
-									//path adapter
-									loc_out.setPathAdapter(loc_out.prv_orderChildrenInfo);
-									
-									//event adapter
-									loc_out.prv_containerVariable.setEventAdapter(function(event, eventData, request){
-										var events = [];
-										events.push({
-											event: event,
-											value : eventData
-										});
-										
-										if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
-											var eleVar = loc_insertValue(eventData.value, eventData.index, eventData.id);
-											events.push({
-												event : node_CONSTANT.WRAPPER_EVENT_NEWELEMENT,
-												value : new node_OrderedContainerElementInfo(node_createVariableWrapper(eleVar), undefined),
-											});
-										}
-										return events;
-									});
-									
-									//data operation request adapter
-									loc_out.prv_containerVariable.setDataOperationAdapter(
-											{
-												dataOperationRequest : function(operationService, handlers, requester_parent){
-													var wrapper = this.prv_wrapper;
-													var os = operationService.clone();
-													var command = os.command;
-													var operationData = os.parms;
-													if(command==node_CONSTANT.WRAPPER_OPERATION_DELETE && node_basicUtility.isStringEmpty(operationData.path)){
-														var parentOrderContainerInfo = this.prv_relativeVariableInfo.parent.prv_getOrderedContainerInformation();
-														if(parentOrderContainerInfo!=undefined){
-															//change to delete element command on parent variable
-															var delEleOpData = node_createDeleteElementOperationData();
-															parentOrderContainerInfo.populateDeleteElementOperationDataByPath(delEleOpData, loc_out.prv_relativeVariableInfo.path);
-															operationService = node_uiDataOperationServiceUtility.createDeleteElementOperationService(undefined, undefined, delEleOpData.index, delEleOpData.id);
-															wrapper = this.prv_relativeVariableInfo.parent.prv_wrapper;
-														}
-													}
-													out = wrapper.getDataOperationRequest(operationService, handlers, requester_parent);
-												}
-											}
-									);
-								}
-							});
-						}
-					});
-				}
-			},
-			
 	};
 	
 	loc_out = node_makeObjectWithLifecycle(loc_out, loc_resourceLifecycleObj, loc_out);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE);
 	loc_out = node_makeObjectWithId(loc_out, nosliw.generateId());
 	
-	node_getLifecycleInterface(loc_out).init(data1, data2, requestInfo);
+	node_getLifecycleInterface(loc_out).init(data1, data2, adapterInfo);
 	return loc_out;
 };
 
@@ -417,9 +389,10 @@ nosliw.registerSetNodeDataEvent("uidata.variable.createOrderedContainersInfo", f
 nosliw.registerSetNodeDataEvent("uidata.variable.createOrderVariableContainer", function(){node_createOrderVariableContainer = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.utility", function(){node_variableUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 
 //Register Node by Name
-packageObj.createChildNode("createWrapperVariable", node_createWrapperVariable); 
+packageObj.createChildNode("createVariable", node_createVariable); 
 
 })(packageObj);
