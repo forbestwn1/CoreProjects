@@ -27,6 +27,9 @@ var node_createUIDataOperationRequest = function(context, uiDataOperation, handl
 	case node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE:
 		request = target.getDataOperationRequest(operationService, handlers, requester_parent);
 		break;
+	case node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLEWRAPPER:
+		request = target.getDataOperationRequest(operationService, handlers, requester_parent);
+		break;
 	case node_CONSTANT.TYPEDOBJECT_TYPE_CONTEXTVARIABLE:
 		operationService.parms.path = node_namingConvensionUtility.cascadePath(target.path, operationService.path);
 		request = loc_context.getDataOperationRequest(target.name, operationService, handlers, requester_parent);

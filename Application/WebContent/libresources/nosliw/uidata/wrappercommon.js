@@ -390,7 +390,13 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 					var opService = operationService.clone();
 					if(this.prv_dataBased==true){
 						//operate on root value
-						out = loc_out.prv_typeHelper.getDataOperationRequest(loc_out.prv_value, opService, handlers, requester_parent);
+						if(command==node_CONSTANT.WRAPPER_OPERATION_SET && node_basicUtility.isStringEmpty(opService.parms.path)){
+							//if set to base, then just set directly
+							out = node_createServiceRequestInfoSimple(operationService,	function(){	loc_out.prv_value=operationService.parms.value;  }, handlers, requester_parent);
+						}
+						else{
+							out = loc_out.prv_typeHelper.getDataOperationRequest(loc_out.prv_value, opService, handlers, requester_parent);
+						}
 						out.addPostProcessor({
 							success : function(requestInfo, data){
 								//trigue event

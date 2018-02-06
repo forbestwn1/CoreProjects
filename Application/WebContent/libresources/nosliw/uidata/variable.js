@@ -77,7 +77,7 @@ var node_createVariable = function(data1, data2, adapterInfo){
 		
 		//record how many usage of this variable.
 		//when usage go to 0, that means it should be clean up
-		loc_out.usage = 0;
+		loc_out.prv_usage = 0;
 		
 		var data1Type = node_getObjectType(data1);
 		if(data1Type==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE){
@@ -120,7 +120,7 @@ var node_createVariable = function(data1, data2, adapterInfo){
 		
 		for (var key in loc_out){
 		    if (loc_out.hasOwnProperty(key)){
-		        delete lock_out[key];
+		        delete loc_out[key];
 		    }
 		}		
 	};
