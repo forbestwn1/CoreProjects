@@ -66,7 +66,7 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo){
 		
 		getHandleEachElementRequest : function(elementHandleRequestFactory, handlers, request){		return loc_out.prv_variable.getHandleEachElementRequest(elementHandleRequestFactory, handlers, request);	},
 		
-		registerDataOperationEventListener : function(handler, thisContext){return this.prv_dataOperationEventObject.registerListener(undefined, loc_out.prv_dataOperationEventObject, handler, thisContext);},
+		registerDataOperationEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);},
 		getDataOperationEventObject : function(){   return this.prv_dataOperationEventObject;   },
 		
 	};

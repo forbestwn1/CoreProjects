@@ -35,6 +35,13 @@ var packageObj = library.getChildPackage("event");
 				 * 		listener : event object
 				 */
 				registerListener : function(eventName, listener, handler, thisContext){
+					
+					if(handler==undefined){
+						var kkkk = 5555;
+						kkkk++;
+					}
+					
+					
 					var that = thisContext;
 					if(that==undefined){
 						if(this.getBaseObject!=null)   that = this.getBaseObject();
@@ -67,6 +74,14 @@ var packageObj = library.getChildPackage("event");
 						handler.apply(that, parms);
 					});
 					loc_listeners.push(listener);
+
+					
+					if(handler==undefined){
+						var kkkk = 5555;
+						kkkk++;
+					}
+					
+					
 					//return listener object
 					return listener;
 				},
