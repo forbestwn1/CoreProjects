@@ -13,7 +13,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"loop",
 "script":
 function (context, parentResourceView, uiTagResource, attributes, env) {
     var node_namingConvensionUtility = nosliw.getNodeData("common.namingconvension.namingConvensionUtility");
-    var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
+    var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
     var node_createDataOperationRequest = nosliw.getNodeData("uidata.dataoperation.createDataOperationRequest");
     var node_DataOperationService = nosliw.getNodeData("uidata.dataoperation.DataOperationService");
     var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
@@ -22,6 +22,8 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
     var node_createContextElementInfo = nosliw.getNodeData("uidata.context.createContextElementInfo");
     var node_createContext = nosliw.getNodeData("uidata.context.createContext");
     var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
+    var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
+    var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
     var loc_env = env;
     var loc_dataVariable = env.createVariable("internal_data");
     var loc_eleContextEleName = attributes.element;
@@ -34,22 +36,34 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
         return loc_id + "";
     };
     var loc_getElementContextVariable = function (key) {
-        var out = node_createContextVariableInfo(loc_dataContextEleName);
+        var out = node_createContextVariable(loc_dataContextEleName);
         out.path = node_namingConvensionUtility.cascadePath(out.path, key + "");
         return out;
     };
     var loc_updateView = function (requestInfo) {
         var index = 0;
-        var request = loc_dataVariable.getWrapper().getHandleEachElementRequest(function (data, path) {
+        var request = loc_dataVariable.getHandleEachElementRequest(function (container, eleVarWrapper, indexVarWrapper) {
+            loc_dataVariable = container;
             return node_createServiceRequestInfoSimple({}, function () {
-                loc_addEle(data, index, path, requestInfo);
+                loc_addEle(eleVarWrapper, indexVarWrapper, index, requestInfo);
                 index++;
             });
         });
         node_requestServiceProcessor.processRequest(request, false);
     };
-    var loc_addEle = function (data, index, path, requestInfo) {
-        var eleContext = loc_env.createExtendedContext([loc_env.createContextElementInfo(loc_eleContextEleName, loc_dataVariable, path), loc_env.createContextElementInfo(loc_eleNameContextEleName, path)], requestInfo);
+    var loc_addEle = function (eleVar, indexVar, index, requestInfo) {
+        var r1 = eleVar.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {success: function (request, data) {
+            var kkkk = 5555;
+            kkkk++;
+        }});
+        node_requestServiceProcessor.processRequest(r1, false);
+        var eleContext = loc_env.createExtendedContext([loc_env.createContextElementInfo(loc_eleContextEleName, eleVar)], requestInfo);
+        var r = eleContext.getDataOperationRequest("ele", node_uiDataOperationServiceUtility.createGetOperationService(), {success: function (request, data) {
+            var kkkk = 5555;
+            kkkk++;
+        }});
+        node_requestServiceProcessor.processRequest(r, false);
+        var index = loc_childResourceViews.length;
         var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId() + "." + loc_generateId(), eleContext, requestInfo);
         if (index == 0) {
             resourceView.insertAfter(loc_env.getStartElement());
@@ -57,28 +71,28 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
             resourceView.insertAfter(loc_childResourceViews[index - 1].getEndElement());
         }
         loc_childResourceViews.splice(index, 0, resourceView);
-        var eleVariable = loc_dataVariable.createChildVariable(path);
-        loc_childVaraibles.splice(index, 0, eleVariable);
-        eleVariable.registerDataChangeEventListener(undefined, function (event, dataOperation, requestInfo) {
-            if (event == "EVENT_WRAPPER_DESTROY") {
+        loc_childVaraibles.splice(index, 0, eleVar);
+        eleVar.registerDataOperationEventListener(undefined, function (event, dataOperation, requestInfo) {
+            window.alert("element:" + event);
+            if (event == "EVENT_WRAPPER_DELETE") {
                 loc_out.prv_deleteEle(index);
             }
         }, this);
     };
     var loc_out = {prv_deleteEle: function (key, requestInfo) {
-        alert("ffff");
         var view = loc_childResourceViews[key];
         view.detachViews();
         loc_childResourceViews.splice(key, 1);
     }, ovr_postInit: function (requestInfo) {
         loc_updateView();
         var that = this;
-        loc_dataVariable.registerDataChangeEventListener(undefined, function (event, dataOperation, requestInfo) {
-            if (event == "EVENT_WRAPPER_ADDELEMENT") {
-                loc_addEle(dataOperation.value, dataOperation.index, dataOperation.elePath);
+        loc_dataVariable.registerDataOperationEventListener(undefined, function (event, eventData, requestInfo) {
+            window.alert(event + "  " + JSON.stringify(eventData));
+            if (event == "EVENT_WRAPPER_NEWELEMENT") {
+                loc_addEle(eventData.elementVarWrapper, eventData.indexVarWrapper, 0);
             }
             if (event == "WRAPPER_EVENT_DESTROY") {
-                that.prv_deleteEle(loc_getElementContextVariable(dataOperation.index));
+                that.prv_deleteEle(loc_getElementContextVariable(eventData.index));
             }
         }, this);
     }, ovr_preInit: function (requestInfo) {

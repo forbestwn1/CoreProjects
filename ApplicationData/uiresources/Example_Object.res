@@ -2,13 +2,75 @@
 <html>
 <body>
 
+
+	<br>
+	Content:<%=?(bus.a.aa)?.value + '   6666 ' %>
+	<br>
+	TextInput_converter:<nosliw-textinput data="bus.a.aa"/>  
+	<br>
+	TextInput_converter<nosliw-textinput data="bus.a.aa"/>  
+
 	<br>
 	Content:<%=?(business.a.aa)?.value + '   6666 ' %>
 	<br>
+	Content:<%=#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value + ?(business.a.dd)? + ' 6666 ' %>
+	<br>
+	Attribute:<span  style="color:<%=#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value=='s isfff'?'red':'blue'%>">Phone Number : </span> 
 	<br>
 	TextInput:<nosliw-textinput data="business.a.aa"/>  
 	<br>
+	TextInput: <nosliw-textinput data="business.a.aa"/>  
 
+
+		<br>
+		<nosliw-loop data="business.a.cc" element="ele" elename="index">  
+			<br>
+			<br>
+			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
+			<br>
+			<br>
+			<script>
+			{
+				deleteElementInLoop : function(data, info){
+					event.preventDefault();
+				
+					var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+					var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+					var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+					var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest");
+					var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
+					var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
+					var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+					var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+
+					var requestInfo = node_createServiceRequestInfoSequence({}, {
+						success:function(requestInfo, data){
+							
+						}
+					});
+					var that = this;
+					requestInfo.addRequest(this.getContext().getDataOperationRequest("index", node_uiDataOperationServiceUtility.createGetOperationService(), {
+						success : function(request, data){
+							var elePath = data.value;
+						
+							var opRequest = node_createBatchUIDataOperationRequest(that.getContext());
+//							var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createDeleteElementOperationService("", undefined, elePath));
+							var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createDestroyOperationService(""));
+							opRequest.addUIDataOperation(uiDataOperation);
+							return opRequest;
+						}
+					}));
+					node_requestServiceProcessor.processRequest(requestInfo, false);
+				}
+			}
+			</script>
+			
+		</nosliw-loop>
+
+
+	<br>
+	
+	
 <!--	
 		<nosliw-debug/>
 

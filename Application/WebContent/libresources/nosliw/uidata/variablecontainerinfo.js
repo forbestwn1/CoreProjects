@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("variable");    
+var packageObj = library.getChildPackage("orderedcontainer");    
 
 (function(packageObj){
 //get used node
@@ -17,6 +17,8 @@ var node_basicUtility;
 var node_createEventObject;
 var node_createServiceRequestInfoSequence;
 var node_uiDataOperationServiceUtility;
+var node_createServiceRequestInfoSet;
+var node_createVariableWrapper;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -48,10 +50,10 @@ var node_getHandleEachElementRequest = function(varWrapper, path, elementHandleR
 	
 	//not loop yet, get value first, then loop it
 	var out = node_createServiceRequestInfoSequence({}, handlers, request);
-	out.addRequest(containerVar.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
+	out.addRequest(varWrapper.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
 		success : function(request, data){
 			//get current value
-			containerVar.prv_wrapper.getDataTypeHelper().getGetElementsRequest(data.value, {
+			return varWrapper.prv_variable.prv_wrapper.getDataTypeHelper().getGetElementsRequest(data.value, {
 				success : function(request, valueElements){
 					loc_orderChildrenInfo = node_createContainerOrderInfo();
 					
@@ -88,18 +90,18 @@ var node_getHandleEachElementRequest = function(varWrapper, path, elementHandleR
 					};
 					
 					loc_containerVarWrapper = varWrapper.createChildVariable(path, adapterInfo);
-					loc_containerVar = containerVarWrapper.getVariable();
+					loc_containerVar = loc_containerVarWrapper.prv_getVariable();
 					
 					//loop through element
 					//create child variables
 					_.each(valueElements, function(valueEle, index){
 						var eleInfo = loc_orderChildrenInfo.insertElement(index, valueEle.id);
-						var childVarInfo = containerVar.createChildVariable(eleInfo.path);
+						var childVarInfo = loc_containerVar.createChildVariable(eleInfo.path);
 						childVarInfo.variable.registerDataOperationEventListener(loc_dataOperationEventObject, function(event, eventData, request){
-							if(event==node_CONSTANT.WRAPPER_EVENT_DELETE)	containerVar.prv_orderChildrenInfo.deleteElement(childVarInfo.path);
+							if(event==node_CONSTANT.WRAPPER_EVENT_DELETE)	loc_containerVar.prv_orderChildrenInfo.deleteElement(childVarInfo.path);
 						});
 						childVarInfo.variable.registerLifecycleEventListener(loc_lifecycleEventObject, function(event, eventData, request){
-							if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP)	containerVar.prv_orderChildrenInfo.deleteElement(childVarInfo.path);
+							if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP)	loc_containerVar.prv_orderChildrenInfo.deleteElement(childVarInfo.path);
 						});
 					});
 					return loc_getHandleEachElementOfOrderContainer(elementHandleRequestFactory, handlers, request);
@@ -109,9 +111,6 @@ var node_getHandleEachElementRequest = function(varWrapper, path, elementHandleR
 	}));
 	return out;
 };
-
-
-
 
 //element info expose to end user
 //including two variable: element variabe, index variable
@@ -164,7 +163,7 @@ var node_createContainerOrderInfo = function(){
 			if(id!=undefined)  loc_out.prv_idByPath[path] = id;
 			
 			var eleInfo = new node_ContainerElementInfo(path, loc_createIndexVariable());
-			loc_out.prv_elementsInfo.splice(index, 0, eleInf);
+			loc_out.prv_elementsInfo.splice(index, 0, eleInfo);
 			return eleInfo;
 		},
 			
@@ -274,10 +273,14 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.variable.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
 
 //Register Node by Name
+
+packageObj.createChildNode("getHandleEachElementRequest", node_getHandleEachElementRequest); 
 packageObj.createChildNode("OrderedContainerElementInfo", node_OrderedContainerElementInfo); 
-packageObj.createChildNode("node_createContainerOrderInfo", node_createContainerOrderInfo); 
-packageObj.createChildNode("node_ContainerElementInfo", node_ContainerElementInfo); 
+packageObj.createChildNode("ContainerElementInfo", node_ContainerElementInfo); 
+packageObj.createChildNode("createContainerOrderInfo", node_createContainerOrderInfo); 
 
 })(packageObj);

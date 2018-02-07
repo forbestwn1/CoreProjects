@@ -18,6 +18,7 @@ var node_createEventObject;
 var node_createServiceRequestInfoSequence;
 var node_uiDataOperationServiceUtility;
 var node_createVariable;
+var node_getHandleEachElementRequest;
 
 //*******************************************   Start Node Definition  ************************************** 	
 var node_createVariableWrapper = function(data1, data2, adapterInfo){
@@ -26,8 +27,9 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo){
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(data1, data2, adapterInfo){
 		var entityType = node_getObjectType(data1);
 
-		if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE && node_basicUtility.isStringEmpty(data2)){
+		if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE && node_basicUtility.isStringEmpty(data2) && adapterInfo==undefined){
 			loc_out.prv_variable = data1;
+			
 		}
 		else{
 			if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLEWRAPPER)	data1 = data1.prv_getVariable();
@@ -64,7 +66,9 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo){
 		
 		getDataOperationRequest : function(operationService, handlers, request){	return loc_out.prv_variable.getDataOperationRequest(operationService, handlers, request);	},
 		
-		getHandleEachElementRequest : function(elementHandleRequestFactory, handlers, request){		return loc_out.prv_variable.getHandleEachElementRequest(elementHandleRequestFactory, handlers, request);	},
+		getHandleEachElementRequest : function(elementHandleRequestFactory, handlers, request){		
+			return node_getHandleEachElementRequest(loc_out, "", elementHandleRequestFactory, handlers, request);		
+		},
 		
 		registerDataOperationEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);},
 		getDataOperationEventObject : function(){   return this.prv_dataOperationEventObject;   },
@@ -98,6 +102,7 @@ nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){nod
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.createVariable", function(){node_createVariable = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.orderedcontainer.getHandleEachElementRequest", function(){node_getHandleEachElementRequest = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createVariableWrapper", node_createVariableWrapper); 

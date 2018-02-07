@@ -37,8 +37,10 @@
 		var node_createContextElementInfo = nosliw.getNodeData("uidata.context.createContextElementInfo");
 		var node_createContext = nosliw.getNodeData("uidata.context.createContext");
 		var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
+		var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
+		var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 
-
+		
 		var loc_env = env;
 		//container data variable
 		var loc_dataVariable = env.createVariable("internal_data");
@@ -81,12 +83,34 @@
 		*  index : index in list for element
 		*  path : element's path from parent
 		**/
-		var loc_addEle = function(eleVarWrapper, indexVarWrapper, index, requestInfo){
-			var eleVar = eleVarWrapper.get();
-			var eleContext = loc_env.createExtendedContext([
+		var loc_addEle = function(eleVar, indexVar, index, requestInfo){
+
+			var r1 = eleVar.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), 
+			{
+				success : function(request, data){
+					var kkkk = 5555;
+					kkkk++;
+				}
+			}
+			);
+			node_requestServiceProcessor.processRequest(r1, false);
+
+
+		var eleContext = loc_env.createExtendedContext([
 				loc_env.createContextElementInfo(loc_eleContextEleName, eleVar),
 //				loc_env.createContextElementInfo(loc_eleNameContextEleName, path)
 			], requestInfo);
+			
+			var r = eleContext.getDataOperationRequest("ele", node_uiDataOperationServiceUtility.createGetOperationService(), 
+			{
+				success : function(request, data){
+					var kkkk = 5555;
+					kkkk++;
+				}
+			}
+			);
+			node_requestServiceProcessor.processRequest(r, false);
+
 			
 			var index = loc_childResourceViews.length;
 			var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId()+"."+loc_generateId(), eleContext, requestInfo);
@@ -95,7 +119,7 @@
 				
 			loc_childResourceViews.splice(index, 0, resourceView);
 			loc_childVaraibles.splice(index, 0, eleVar);
-			eleVar.registerDataChangeEventListener(undefined, function(event, dataOperation, requestInfo){
+			eleVar.registerDataOperationEventListener(undefined, function(event, dataOperation, requestInfo){
 				window.alert("element:" + event);
 				if(event=="EVENT_WRAPPER_DELETE"){
 					loc_out.prv_deleteEle(index);
@@ -125,7 +149,7 @@
 			ovr_postInit : function(requestInfo){
 				loc_updateView();
 				var that = this;
-				loc_dataVariable.registerDataChangeEventListener(undefined, function(event, eventData, requestInfo){
+				loc_dataVariable.registerDataOperationEventListener(undefined, function(event, eventData, requestInfo){
 					window.alert(event + "  " + JSON.stringify(eventData));
 					if(event=="EVENT_WRAPPER_NEWELEMENT"){
 						loc_addEle(eventData.elementVarWrapper, eventData.indexVarWrapper, 0);

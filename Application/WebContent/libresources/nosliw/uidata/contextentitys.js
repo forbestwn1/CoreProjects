@@ -81,8 +81,13 @@ var node_createContextElementInfo = function(name, data1, data2, adapterInfo, in
 		loc_out.contextVariable = node_createContextVariableInfo(data2);
 	}
 	else if(type==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE){
-		//input is wrapper
+		//input is variable
 		loc_out.variable = data1;
+		loc_out.path = data2;
+	}
+	else if(type==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLEWRAPPER){
+		//input is variable wrapper
+		loc_out.variable = data1.prv_getVariable();
 		loc_out.path = data2;
 	}
 	else{

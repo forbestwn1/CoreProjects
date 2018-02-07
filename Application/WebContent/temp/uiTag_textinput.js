@@ -46,7 +46,7 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
     }, ovr_postInit: function () {
         loc_updateView();
         loc_setupElementEvent();
-        loc_dataVariable.registerDataChangeEventListener(undefined, function () {
+        loc_dataVariable.registerDataOperationEventListener(undefined, function () {
             loc_updateView();
         }, this);
     }, ovr_processAttribute: function (name, value) {

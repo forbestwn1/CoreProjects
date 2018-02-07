@@ -20,6 +20,8 @@ var node_ServiceInfo;
 var node_dataUtility;
 var node_createServiceRequestInfoSimple;
 var node_createVariableWrapper;
+var node_getHandleEachElementRequest;
+
 //*******************************************   Start Node Definition  ************************************** 	
 /*
  * elementInfosArray : an array of element info describing context element
@@ -74,9 +76,9 @@ var node_createContext = function(elementInfosArray, request){
 		return contextEle.variable;
 	};
 	
-	var loc_createVariableFromContextVariableInfo = function(contextVariableInfo){
+	var loc_createVariableFromContextVariableInfo = function(contextVariableInfo, adapterInfo){
 		var baseVar = loc_findBaseVariable(contextVariableInfo);
-		var variable = baseVar.variable.createChildVariable(baseVar.path); 
+		var variable = baseVar.variable.createChildVariable(baseVar.path, adapterInfo); 
 		//add extra attribute "contextPath" to variable for variables name under context
 		variable.contextPath = contextVariableInfo.getFullPath();
 		return variable;
@@ -84,7 +86,6 @@ var node_createContext = function(elementInfosArray, request){
 	
 	var loc_buildAdapterVariableFromMatchers = function(rootName, path, matchers){
 		var contextVar = node_createContextVariableInfo(rootName, path);
-		var variable = loc_createVariableFromContextVariableInfo(contextVar);
 		var adapter = {
 			getInValueRequest : function(value, handlers, request){
 				return node_createServiceRequestInfoSimple({}, function(request){
@@ -99,7 +100,9 @@ var node_createContext = function(elementInfosArray, request){
 				}, handlers, request);
 			},
 		};
-		variable.setValueAdapter(adapter);
+		var variable = loc_createVariableFromContextVariableInfo(contextVar, {
+			valueAdapter : adapter
+		});
 		return variable;
 	};
 	
@@ -162,8 +165,8 @@ var node_createContext = function(elementInfosArray, request){
 		},
 		
 		getHandleEachElementRequest : function(name, path, elementHandleRequestFactory, handlers, request){
-			var eleVar = loc_out.prv_elements[name];
-			
+			var eleVar = loc_out.prv_elements[name].variable;
+			return node_getHandleEachElementRequest(eleVar, path, elementHandleRequestFactory, handlers, request)
 		},
 		
 		getElementsName : function(){
@@ -230,6 +233,8 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.orderedcontainer.getHandleEachElementRequest", function(){node_getHandleEachElementRequest = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createContext", node_createContext); 

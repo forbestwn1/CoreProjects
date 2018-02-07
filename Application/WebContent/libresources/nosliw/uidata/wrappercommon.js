@@ -463,8 +463,25 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 			createChildWrapper : function(path, request){		return node_wrapperFactory.createWrapper(this, path, this.prv_typeHelper, this.prv_dataType, request);		},
 			
 			//path conversion using path adapter
-			setPathAdapter : function(pathAdapter){  this.prv_pathAdapter = pathAdapter;  },
-			toRealPath : function(path){	return loc_out.prv_pathAdapter!=undefined ? this.prv_pathAdapter.toRealPath(path) : path;	},
+			setPathAdapter : function(pathAdapter){  
+				this.prv_pathAdapter = pathAdapter;
+				
+				if(this.prv_pathAdapter!=undefined){
+					var kkkk = 5555;
+					kkkk++;
+				}
+			},
+			toRealPath : function(path){
+				var out = path;
+				if(loc_out.prv_pathAdapter!=undefined){
+					out = this.prv_pathAdapter.toRealPath(path);
+				}
+				else{
+					out = path;
+				}
+				return out;
+//				return loc_out.prv_pathAdapter!=undefined ? this.prv_pathAdapter.toRealPath(path) : path;
+			},
 			toAdapteredPath : function(path){	return loc_out.prv_pathAdapter!=undefined ? this.prv_pathAdapter.toAdapteredPath(path) : path;		},
 			
 			setValueAdapter : function(valueAdapter){  this.prv_valueAdapter = valueAdapter;  },
