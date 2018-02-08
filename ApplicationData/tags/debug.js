@@ -21,7 +21,7 @@
 		var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
 		var node_requestProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 		var node_createContextVariablesGroup = nosliw.getNodeData("uidata.context.createContextVariablesGroup");
-		var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+		var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
 		
 		var loc_env = env;
 	
@@ -53,7 +53,7 @@
 					loc_updateView();
 				});
 				_.each(loc_env.getContext().getElementsName(), function(eleName, index){
-					loc_contextVariableGroup.addVariable(node_createContextVariable(eleName));
+					loc_contextVariableGroup.addVariable(node_createContextVariableInfo(eleName));
 				});
 			},
 				

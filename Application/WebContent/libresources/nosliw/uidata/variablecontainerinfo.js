@@ -68,16 +68,16 @@ var node_getHandleEachElementRequest = function(varWrapper, path, elementHandleR
 							
 							if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
 								var eleInfo = loc_orderChildrenInfo.insertElement(eventData.index, eventData.id);
-								var newEleVarInfo = containerVar.createChildVariable(eleInfo.path);
+								var newEleVarInfo = loc_containerVar.createChildVariable(eleInfo.path);
 								newEleVarInfo.variable.registerDataOperationEventListener(loc_dataOperationEventObject, function(event, eventData, request){
-									if(event==node_CONSTANT.WRAPPER_EVENT_DELETE)	loc_out.prv_orderChildrenInfo.deleteElement(newEleVarInfo.path);
+									if(event==node_CONSTANT.WRAPPER_EVENT_DELETE)	loc_out.prv_orderChildrenInfo.deleteElement(eleInfo.path);
 								});
 								newEleVarInfo.variable.registerLifecycleEventListener(loc_lifecycleEventObject, function(event, eventData, request){
-									if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP)	loc_out.prv_orderChildrenInfo.deleteElement(newEleVarInfo.path);
+									if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP)	loc_out.prv_orderChildrenInfo.deleteElement(eleInfo.path);
 								});
 								events.push({
 									event : node_CONSTANT.WRAPPER_EVENT_NEWELEMENT,
-									value : new node_OrderedContainerElementInfo(newEleVar, eleInfo.indexVariable),
+									value : new node_OrderedContainerElementInfo(newEleVarInfo.variable, eleInfo.indexVariable),
 								});
 							}
 							return events;
@@ -98,10 +98,10 @@ var node_getHandleEachElementRequest = function(varWrapper, path, elementHandleR
 						var eleInfo = loc_orderChildrenInfo.insertElement(index, valueEle.id);
 						var childVarInfo = loc_containerVar.createChildVariable(eleInfo.path);
 						childVarInfo.variable.registerDataOperationEventListener(loc_dataOperationEventObject, function(event, eventData, request){
-							if(event==node_CONSTANT.WRAPPER_EVENT_DELETE)	loc_containerVar.prv_orderChildrenInfo.deleteElement(childVarInfo.path);
+							if(event==node_CONSTANT.WRAPPER_EVENT_DELETE)	loc_orderChildrenInfo.deleteElement(childVarInfo.path);
 						});
 						childVarInfo.variable.registerLifecycleEventListener(loc_lifecycleEventObject, function(event, eventData, request){
-							if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP)	loc_containerVar.prv_orderChildrenInfo.deleteElement(childVarInfo.path);
+							if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP)	loc_orderChildrenInfo.deleteElement(childVarInfo.path);
 						});
 					});
 					return loc_getHandleEachElementOfOrderContainer(elementHandleRequestFactory, handlers, request);
@@ -166,7 +166,17 @@ var node_createContainerOrderInfo = function(){
 			loc_out.prv_elementsInfo.splice(index, 0, eleInfo);
 			return eleInfo;
 		},
-			
+		
+		deleteElement : function(path){
+			delete this.prv_idByPath[path];
+			for(var i in this.prv_elementsInfo){
+				if(this.prv_elementsInfo[i].path==path){
+					this.prv_elementsInfo.splice(i, 1);
+					break;
+				}
+			}
+		},
+		
 		getElements : function(){		return loc_out.prv_elementsInfo;	},
 
 		toRealPath : function(path){

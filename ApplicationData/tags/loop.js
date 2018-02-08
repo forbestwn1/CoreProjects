@@ -150,9 +150,8 @@
 				loc_updateView();
 				var that = this;
 				loc_dataVariable.registerDataOperationEventListener(undefined, function(event, eventData, requestInfo){
-					window.alert(event + "  " + JSON.stringify(eventData));
 					if(event=="EVENT_WRAPPER_NEWELEMENT"){
-						loc_addEle(eventData.elementVarWrapper, eventData.indexVarWrapper, 0);
+						loc_addEle(eventData.getElement(), eventData.indexVarWrapper, 0);
 					}
 					if(event=="WRAPPER_EVENT_DESTROY"){
 						that.prv_deleteEle(loc_getElementContextVariable(eventData.index));

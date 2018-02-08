@@ -103,7 +103,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 
 		for (var key in loc_out){
 		    if (loc_out.hasOwnProperty(key)){
-		        delete lock_out[key];
+		        delete loc_out[key];
 		    }
 		}		
 	};

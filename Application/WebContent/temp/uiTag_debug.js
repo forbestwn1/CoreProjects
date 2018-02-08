@@ -14,7 +14,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"debug",
 function (context, parentResourceView, uiTagResource, attributes, env) {
     var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
     var node_requestProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-    var node_createContextVariableInfosGroup = nosliw.getNodeData("uidata.context.createContextVariablesGroup");
+    var node_createContextVariablesGroup = nosliw.getNodeData("uidata.context.createContextVariablesGroup");
     var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
     var loc_env = env;
     var loc_view;
@@ -34,7 +34,7 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
         node_requestProcessor.processRequest(setRequest, false);
     };
     var loc_out = {ovr_preInit: function () {
-        loc_contextVariableGroup = node_createContextVariableInfosGroup(loc_env.getContext(), undefined, function () {
+        loc_contextVariableGroup = node_createContextVariablesGroup(loc_env.getContext(), undefined, function () {
             loc_updateView();
         });
         _.each(loc_env.getContext().getElementsName(), function (eleName, index) {
