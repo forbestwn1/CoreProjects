@@ -177,6 +177,8 @@ var node_createContext = function(elementInfosArray, request){
 			return out;
 		},
 
+		destroy : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
+		
 		/*
 		 * update context wrappers
 		 * elements: 

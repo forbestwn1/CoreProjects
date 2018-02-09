@@ -51,12 +51,20 @@ var packageObj = library;
 		};
 			
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
+			loc_dataEventObject.clearup();
+			loc_embededScriptExpression.destroy();
+			loc_embededScriptExpression = undefined; 
+			loc_uiResourceView = undefined;
+			loc_uiId = undefined;
+			loc_ele = undefined;
 		};
 
 		var loc_out = {
 			refresh : function(requestInfo){
 				loc_embededScriptExpression.refresh(requestInfo);
-			}
+			},
+			
+			destroy : function(requestInfo){  node_getLifecycleInterface(loc_out).destroy(requestInfo);  },
 		};
 
 		//append resource and object life cycle method to out obj

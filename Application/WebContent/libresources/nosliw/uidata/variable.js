@@ -96,34 +96,7 @@ var node_createVariable = function(data1, data2, adapterInfo){
 		}
 	};
 	
-	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
-		
-		if(loc_out.prv_destoryAdapter!=undefined)   loc_out.prv_destoryAdapter();
-		
-		//clear children variable first
-		for (var key in loc_out.prv_childrenVariable){
-		    if (loc_out.prv_childrenVariable.hasOwnProperty(key)){
-		    	loc_out.prv_childrenVariable[key].destroy(requestInfo);
-		        delete loc_out.prv_childrenVariable[key];
-		    }
-		}	
-		
-		//trigger lifecycle event
-		loc_out.prv_lifecycleEventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_CLEARUP, {}, requestInfo);
-		
-		//destroy wrapper 
-		loc_destroyWrapper(requestInfo);
-
-		//clean up event object
-		loc_out.prv_dataOperationEventObject.clearup();
-		loc_out.prv_lifecycleEventObject.clearup();
-		
-		for (var key in loc_out){
-		    if (loc_out.hasOwnProperty(key)){
-		        delete loc_out[key];
-		    }
-		}		
-	};
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){loc_destroy();};
 	
 	/*
 	 * destroy wrapper within this variable
@@ -212,6 +185,39 @@ var node_createVariable = function(data1, data2, adapterInfo){
 		});
 	};
 	
+	var loc_destroy = function(requestInfo){
+		
+		nosliw.logging.info("************************  variable destroying   ************************");
+		nosliw.logging.info("ID: " + loc_out.prv_id);
+		nosliw.logging.info("***************************************************************");
+		
+		//clean up event object
+		loc_out.prv_dataOperationEventObject.clearup();
+		loc_out.prv_lifecycleEventObject.clearup();
+
+		//clean up adapter
+		if(loc_out.prv_destoryAdapter!=undefined)   loc_out.prv_destoryAdapter();
+
+		//clear children variable first
+		for (var key in loc_out.prv_childrenVariable){
+		    if (loc_out.prv_childrenVariable.hasOwnProperty(key)){
+		    	loc_out.prv_childrenVariable[key].destroy(requestInfo);
+		        delete loc_out.prv_childrenVariable[key];
+		    }
+		}	
+
+		//destroy wrapper 
+		loc_destroyWrapper(requestInfo);
+
+		for (var key in loc_out){
+		    if (loc_out.hasOwnProperty(key)){
+		    	//don't delete function
+		    	if(typeof loc_out[key] != 'function'){
+		    		delete loc_out[key];
+		    	}
+		    }
+		}		
+	};
 	
 	var loc_out = {
 	
@@ -265,23 +271,6 @@ var node_createVariable = function(data1, data2, adapterInfo){
 			setEventAdapter : function(eventAdapter){	this.prv_eventAdapter = eventAdapter;	},
 			
 			
-			use : function(){	
-				loc_out.prv_usage++;
-				return this;
-			},
-			
-			release : function(requestInfo){
-				loc_out.prv_usage--;
-				if(loc_out.prv_usage<=0){
-					node_getLifecycleInterface(loc_out).destroy(requestInfo);
-				}
-			},
-			
-			destroy : function(requestInfo){
-				loc_out.prv_usage = 0;
-				this.release(requestInfo);
-			},
-
 			//create child variable, if exist, then reuse it
 			createChildVariable : function(path, adapterInfo){
 				var out;
@@ -352,6 +341,25 @@ var node_createVariable = function(data1, data2, adapterInfo){
 				});
 				
 				return out;
+			},
+			
+			use : function(){	
+				loc_out.prv_usage++;
+				return this;
+			},
+			
+			release : function(requestInfo){
+				loc_out.prv_usage--;
+				if(loc_out.prv_usage<=0){
+					//trigger lifecycle event
+					loc_out.prv_lifecycleEventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_CLEARUP, {}, requestInfo);
+					node_getLifecycleInterface(loc_out).destroy(requestInfo);
+				}
+			},
+			
+			destroy : function(requestInfo){
+				loc_out.prv_usage = 0;
+				this.release(requestInfo);
 			},
 	};
 	

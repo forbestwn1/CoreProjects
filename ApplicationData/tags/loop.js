@@ -67,15 +67,15 @@
 
 		var loc_updateView = function(requestInfo){
 			var index = 0;
-			var request = loc_dataVariable.getHandleEachElementRequest(function(container, eleVarWrapper, indexVarWrapper){
+			
+			loc_env.executeGetHandleEachElementRequest("internal_data", "", 
+			function(container, eleVarWrapper, indexVarWrapper){
 				loc_dataVariable = container;
 				return node_createServiceRequestInfoSimple({}, function(){
-					
 					loc_addEle(eleVarWrapper, indexVarWrapper, index, requestInfo);
 					index++;
 				});
 			});
-			node_requestServiceProcessor.processRequest(request, false);
 		};
 
 		/**
@@ -85,32 +85,10 @@
 		**/
 		var loc_addEle = function(eleVar, indexVar, index, requestInfo){
 
-			var r1 = eleVar.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), 
-			{
-				success : function(request, data){
-					var kkkk = 5555;
-					kkkk++;
-				}
-			}
-			);
-			node_requestServiceProcessor.processRequest(r1, false);
-
-
-		var eleContext = loc_env.createExtendedContext([
+			var eleContext = loc_env.createExtendedContext([
 				loc_env.createContextElementInfo(loc_eleContextEleName, eleVar),
 //				loc_env.createContextElementInfo(loc_eleNameContextEleName, path)
 			], requestInfo);
-			
-			var r = eleContext.getDataOperationRequest("ele", node_uiDataOperationServiceUtility.createGetOperationService(), 
-			{
-				success : function(request, data){
-					var kkkk = 5555;
-					kkkk++;
-				}
-			}
-			);
-			node_requestServiceProcessor.processRequest(r, false);
-
 			
 			var index = loc_childResourceViews.length;
 			var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId()+"."+loc_generateId(), eleContext, requestInfo);
@@ -122,7 +100,10 @@
 			eleVar.registerDataOperationEventListener(undefined, function(event, dataOperation, requestInfo){
 				window.alert("element:" + event);
 				if(event=="EVENT_WRAPPER_DELETE"){
-					loc_out.prv_deleteEle(index);
+//					loc_out.prv_deleteEle(index);
+					resourceView.detachViews();
+					resourceView.destroy();
+
 				}
 			}, this);
 
@@ -143,6 +124,7 @@
 			prv_deleteEle : function(key, requestInfo){
 				var view = loc_childResourceViews[key];
 				view.detachViews();
+				view.destroy();
 				loc_childResourceViews.splice(key, 1);
 			},
 			
@@ -168,6 +150,16 @@
 				loc_endEle = endEle;
 			},
 			
+			ovr_destroy : function(){
+				loc_dataVariable.release();
+				_.each(loc_childResourceViews, function(resourceView, id){
+					resourceView.destroy();
+				});
+				_.each(loc_childVaraibles, function(variable, path){
+					variable.release();
+				});
+				
+			}
 			
 		};
 		

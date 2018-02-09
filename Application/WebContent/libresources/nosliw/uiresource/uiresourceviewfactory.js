@@ -16,6 +16,7 @@ var packageObj = library;
 	var node_getLifecycleInterface;
 	var node_basicUtility;
 	var node_createUITag;
+	var node_createEventObject;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_createUIResourceViewFactory = function(){
@@ -66,8 +67,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 	//object store all the functions for js block
 	var loc_scriptObject = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPT];
 	
-	
-	
 	//all customer tags
 	var loc_uiTags = {};
 	//all events on customer tag elements
@@ -92,7 +91,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 
 	
 	//event source used to register and trigger event
-	var loc_eventSource = undefined;
+	var loc_eventSource = node_createEventObject();
 	
 	/*
 	 * init element event object
@@ -178,7 +177,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 		if(parent!=undefined)   parentContext = parent.getContext();
 		if(loc_context==undefined)	loc_context = node_uiResourceUtility.buildContext(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT], parentContext);
 		
-		
 		//wrap html by start and end element
 		var resourceStartId = "-resource-start";
 		var resourceEndId = "-resource-end";
@@ -226,8 +224,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 		
 /*		
 		
-//		loc_context = nosliwUIResourceUtility.buildUIResourceContext(loc_uiResource, contextElementInfoArray);
-		
 		//create script object
 //		loc_scriptObject=  nosliwCreateUIResourceScriptObject(loc_uiResource[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_SCRIPTFACTORYNAME], loc_out);
 		
@@ -260,7 +256,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
 		
 		//call destroy funtion in uiresource definition
-		loc_out.prv_getScriptObject().prv_callLocalFunction(NOSLIWCONSTANT.UIRESOURCE_FUNCTION_DESTROY);
+//		loc_out.prv_getScriptObject().prv_callLocalFunction(NOSLIWCONSTANT.UIRESOURCE_FUNCTION_DESTROY);
 		
 		//detach view from dom
 		loc_out.detachViews();
@@ -420,6 +416,8 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 		getIdNameSpace : function(){return loc_idNameSpace;},
 		getParentTagInfo : function(){	return loc_parentTagInfo;	},
 		setParentTagInfo : function(info){		loc_parentTagInfo = info;	},
+		
+		destroy : function(requestInfo){  node_getLifecycleInterface(loc_out).destroy(requestInfo);  },
 	};
 
 	
@@ -448,6 +446,7 @@ nosliw.registerSetNodeDataEvent("uiresource.createEmbededScriptExpressionInAttri
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.createUITag", function(){node_createUITag = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 
 
 //Register Node by Name

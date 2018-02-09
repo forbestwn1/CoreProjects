@@ -50,7 +50,6 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo){
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
 		loc_out.prv_variable.release();
 		//take care of release event 
-		loc_out.prv_lifecycleEventObject.clearup();
 		loc_out.prv_dataOperationEventObject.clearup();
 	};	
 	

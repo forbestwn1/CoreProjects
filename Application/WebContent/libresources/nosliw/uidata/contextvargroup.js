@@ -46,6 +46,11 @@ var node_createContextVariableInfosGroup = function(context, contextVariableInfo
 	};	
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
 		loc_requestEventGroupHandler.destroy(requestInfo);
+		
+		_.each(loc_variables, function(variable, key){
+			variable.release(requestInfo);
+		});
+		
 		loc_context = undefined;
 		loc_handler = undefined;
 	};
@@ -60,7 +65,9 @@ var node_createContextVariableInfosGroup = function(context, contextVariableInfo
 		
 		getVariables : function(){  return loc_variables;  },
 		
-		triggerEvent : function(requestInfo){   loc_requestEventGroupHandler.triggerEvent(requestInfo);  }
+		triggerEvent : function(requestInfo){   loc_requestEventGroupHandler.triggerEvent(requestInfo);  },
+		
+		destroy : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
 	};
 	
 	//append resource and object life cycle method to out obj

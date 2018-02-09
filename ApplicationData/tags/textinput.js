@@ -92,6 +92,9 @@
 				loc_updateView();
 //					NosliwErrorManager.clearErrorMessage(this.m_createRequestInfo());
 			},
+			ovr_destroy : function(){
+				loc_dataVariable.release();
+			}
 		};
 		return loc_out;
 	}

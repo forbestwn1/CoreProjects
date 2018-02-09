@@ -23,7 +23,7 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	/*
-	 * create expression content object
+	 * script expression unit
 	 * type: 
 	 * 		text, attribute, tagAttribute
 	 */
@@ -74,6 +74,10 @@ var packageObj = library;
 		};
 			
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
+			loc_contextVarGroup.destroy();
+			loc_scriptFunction = undefined;
+			loc_constants = undefined;
+			loc_expressions = undefined;
 		};
 
 		var loc_out = {
@@ -134,6 +138,8 @@ var packageObj = library;
 			getResult : function(){
 				return loc_result;
 			},
+
+			destroy : function(requestInfo){  node_getLifecycleInterface(loc_out).destroy(requestInfo);  },
 		};
 
 		//append resource and object life cycle method to out obj

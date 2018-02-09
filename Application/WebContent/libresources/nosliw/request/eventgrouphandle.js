@@ -8,6 +8,7 @@ var packageObj = library.getChildPackage("event");
 	var node_makeObjectWithLifecycle;
 	var node_createEventObject;
 	var node_requestUtility;
+	var node_getLifecycleInterface;
 //*******************************************   Start Node Definition  ************************************** 	
 
 
@@ -100,6 +101,7 @@ var node_createRequestEventGroupHandler = function(eventHandler, thisContext){
 			loc_processEvent(undefined, undefined, requestInfo);
 		},
 		
+		destroy : function(requestInfo){  node_getLifecycleInterface(loc_out).destroy(requestInfo);  },
 	};
 	
 	//append resource life cycle method to out obj
@@ -117,6 +119,7 @@ nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUti
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 
 
 //Register Node by Name

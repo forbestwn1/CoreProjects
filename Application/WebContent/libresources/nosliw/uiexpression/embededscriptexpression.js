@@ -12,7 +12,7 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	/*
-	 * create expression content object
+	 * put ui script expression together
 	 * type: 
 	 * 		text, attribute, tagAttribute
 	 */
@@ -50,7 +50,13 @@ var packageObj = library;
 			});
 		};
 		
-		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){	};
+		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){	
+			_.each(loc_scriptExpressions, function(scriptExpression, id){
+				scriptExpression.destroy();
+			});
+			loc_dataEventObject.clearup();
+			loc_dataEventObject = undefined;
+		};
 
 		var loc_calculateResult = function(){
 			var scriptExpressionResults = {};
@@ -93,7 +99,9 @@ var packageObj = library;
 				_.each(loc_scriptExpressions, function(scriptExpression, id){
 					scriptExpression.refresh(requestInfo);
 				});
-			}
+			},
+			
+			destroy : function(requestInfo){  node_getLifecycleInterface(loc_out).destroy(requestInfo);  },
 		};
 
 		//append resource and object life cycle method to out obj

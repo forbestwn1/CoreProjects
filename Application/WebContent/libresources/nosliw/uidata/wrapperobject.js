@@ -150,7 +150,7 @@ var node_createWraperObject = function(){
 							//not valid operation 
 						}
 					}
-					else if(command==node_CONSTANT.WRAPPER_OPERATION_DESTROY){
+					else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETE){
 						if(_.isArray(operationBase.base)){
 							operationBase.base.splice(parseInt(operationBase.attribute), 1);
 						}

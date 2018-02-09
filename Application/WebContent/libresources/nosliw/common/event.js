@@ -17,31 +17,20 @@ var packageObj = library.getChildPackage("event");
 		var loc_listeners = [];
 	
 		var out = {
-				pri_getBackboneEventObj : function(){
-					return loc_backboneEventObj;
-				},
+				pri_getBackboneEventObj : function(){		return loc_backboneEventObj;		},
 				
 				/*
 				 * trigger event on source
 				 * eventName : event name
 				 * parms : can be any multiple value to transfer to handler 
 				 */
-				triggerEvent : function(eventName){
-					loc_backboneEventObj.trigger(eventName, arguments);
-				},
+				triggerEvent : function(eventName){		loc_backboneEventObj.trigger(eventName, arguments);		},
 
 				/*
 				 * register listener to source
 				 * 		listener : event object
 				 */
 				registerListener : function(eventName, listener, handler, thisContext){
-					
-					if(handler==undefined){
-						var kkkk = 5555;
-						kkkk++;
-					}
-					
-					
 					var that = thisContext;
 					if(that==undefined){
 						if(this.getBaseObject!=null)   that = this.getBaseObject();
@@ -75,13 +64,6 @@ var packageObj = library.getChildPackage("event");
 					});
 					loc_listeners.push(listener);
 
-					
-					if(handler==undefined){
-						var kkkk = 5555;
-						kkkk++;
-					}
-					
-					
 					//return listener object
 					return listener;
 				},
@@ -89,14 +71,12 @@ var packageObj = library.getChildPackage("event");
 				/*
 				 * stop listener from listenering any events
 				 */
-				unregister : function(listener){
-					listener.pri_getBackboneEventObj().stopListening(loc_backboneEventObj);
-				},
+				unregister : function(listener){	listener.pri_getBackboneEventObj().stopListening(loc_backboneEventObj);	},
 				
-				unregisterAllListeners : function(listeners){
+				unregisterAllListeners : function(){
 					var that = this;
 					//unregister all listeners
-					_.each(listeners, function(listener, key){
+					_.each(loc_listeners, function(listener, key){
 						that.unregister(listener);
 					});
 				},
@@ -105,7 +85,7 @@ var packageObj = library.getChildPackage("event");
 					//stop listening to other 
 					this.pri_getBackboneEventObj().stopListening();
 					//unregister all listeners
-					this.unregisterAllListeners(loc_listeners);
+					this.unregisterAllListeners();
 					loc_listeners = [];
 				}
 		};
