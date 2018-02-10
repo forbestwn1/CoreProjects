@@ -2,6 +2,12 @@
 <html>
 <body>
 
+	Content:<%=?(business.a.aa)?.value + '   6666 ' %>
+	<br>
+	TextInput:<nosliw-textinput data="business.a.aa"/>  
+
+
+<!--
 		<nosliw-debug/>
 
 
@@ -15,6 +21,9 @@
 			<br>
 			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
 			<br>
+			TextInput:<nosliw-textinput data="ele"/>  
+			<br>
+			TextInput:<nosliw-textinput data="ele"/>  
 			<br>
 			<script>
 			{
@@ -63,7 +72,7 @@
 
 
 	<br>
-	
+-->	
 	
 <!--	
 		<nosliw-debug/>

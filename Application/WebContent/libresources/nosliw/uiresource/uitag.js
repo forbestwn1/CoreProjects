@@ -62,6 +62,8 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		getContext : function(){   return loc_context;  },
 		getAttributeValue : function(name){  return loc_attributes[name];  },
 		getAttributes : function(){   return loc_attributes;   },
+		getParentResourceView : function(){ return loc_parentResourceView;  },
+		getUIResource : function(){  return  loc_uiTagResource; },
 		
 		//utility methods
 		createVariable : function(fullPath){  return loc_context.createVariable(node_createContextVariableInfo(fullPath));  },
@@ -93,15 +95,11 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		
 		//---------------------------------operation request
 		getDataOperationGet : function(target, path){  return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createGetOperationService(path)); },
-		getDataOperationRequestGet : function(target, path, handler, request){
-			return node_createUIDataOperationRequest(loc_context, this.getDataOperationGet(target, path), handler, request);
-		},
+		getDataOperationRequestGet : function(target, path, handler, request){	return node_createUIDataOperationRequest(loc_context, this.getDataOperationGet(target, path), handler, request);	},
 		executeDataOperationRequestGet : function(target, path, handler, request){	this.processRequest(this.getDataOperationRequestGet(target, path, handler, request));	},
 
 		getDataOperationSet : function(target, path, value){  return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createSetOperationService(path, value)); },
-		getDataOperationRequestSet : function(target, path, value, handler, request){
-			return node_createUIDataOperationRequest(loc_context, this.getDataOperationSet(target, path, value), handler, request);
-		},
+		getDataOperationRequestSet : function(target, path, value, handler, request){	return node_createUIDataOperationRequest(loc_context, this.getDataOperationSet(target, path, value), handler, request);	},
 		executeDataOperationRequestSet : function(target, path, value, handler, request){	this.processRequest(this.getDataOperationRequestSet(target, path, value, handler, request));	},
 
 		getHandleEachElementRequest : function(name, path, elementHandleRequestFactory, handlers, request){	return this.getContext().getHandleEachElementRequest(name, path, elementHandleRequestFactory, handlers, request);},
@@ -138,22 +136,24 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		//create uiTagObject
 		var uiTagResourceId = node_uiResourceUtility.createTagResourceId(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME]);
 		var uiTagResourceObj = nosliw.runtime.getResourceService().getResource(uiTagResourceId);
-		loc_uiTagObj = uiTagResourceObj[node_COMMONATRIBUTECONSTANT.RESOURCE_RESOURCEDATA][node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_context, loc_parentResourceView, uiTagResource, loc_attributes, loc_envObj);
+		loc_uiTagObj = uiTagResourceObj[node_COMMONATRIBUTECONSTANT.RESOURCE_RESOURCEDATA][node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_envObj);
 		
 		//overriden method before view is attatched to dom
-		loc_uiTagObj.ovr_preInit(requestInfo);
+		if(loc_uiTagObj.preInit!=undefined)  loc_uiTagObj.preInit(requestInfo);
 		
 		//overridden method to create init view
-		var views = loc_uiTagObj.ovr_initViews(loc_startEle, loc_endEle, requestInfo);
-		//attach view to resourve view
-		if(views!=undefined)  loc_startEle.after(views);	
+		if(loc_uiTagObj.initViews!=undefined){
+			var views = loc_uiTagObj.initViews(requestInfo);
+			//attach view to resourve view
+			if(views!=undefined)  loc_startEle.after(views);	
+		}
 
 		//overridden method to do sth after view is attatched to dom
-		loc_uiTagObj.ovr_postInit(requestInfo);
+		if(loc_uiTagObj.postInit!=undefined)  loc_uiTagObj.postInit(requestInfo);
 	};
 	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY]  = function(){
-		loc_uiTagObj.ovr_destroy();
+		loc_uiTagObj.destroy();
 		if(loc_context!=undefined)  loc_context.destroy();
 	};
 	
@@ -166,6 +166,10 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		getTagObject : function(){ return loc_uiTagObj;  },
 		
 		destroy : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
+		
+		setAttribute : function(name, value){
+			if(loc_uiTagObj.processAttribute!=undefined)  loc_uiTagObj.processAttribute(name, value);  
+		}
 	};
 	
 	//append resource and object life cycle method to out obj

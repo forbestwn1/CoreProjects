@@ -25,7 +25,7 @@
 			}		
 		}
 	},
-	script : function(context, parentResourceView, uiTagResource, attributes, env){
+	script : function(env){
 
 		var node_namingConvensionUtility = nosliw.getNodeData("common.namingconvension.namingConvensionUtility");
 		var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
@@ -45,9 +45,9 @@
 		//container data variable
 		var loc_dataVariable = env.createVariable("internal_data");
 		//element data variable
-		var loc_eleContextEleName = attributes.element;
+		var loc_eleContextEleName = env.getAttributeValue("element");
 		//element name
-		var loc_eleNameContextEleName = attributes.elename;
+		var loc_eleNameContextEleName = env.getAttributeValue("elename");
 		
 		var loc_childResourceViews = [];
 		var loc_childVaraibles = [];

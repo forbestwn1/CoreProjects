@@ -16,7 +16,7 @@
 	},
 	requires:{
 	},
-	script : function(context, parentResourceView, uiTagResource, attributes, env){
+	script : function(env){
 
 		var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
 		var node_requestProcessor = nosliw.getNodeData("request.requestServiceProcessor");

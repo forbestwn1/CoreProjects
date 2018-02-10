@@ -52,6 +52,8 @@ function (context, parentResourceView, uiTagResource, attributes, env) {
     }, ovr_processAttribute: function (name, value) {
     }, ovr_handleDataEvent: function (name, event, path, data, requestInfo) {
         loc_updateView();
+    }, ovr_destroy: function () {
+        loc_dataVariable.release();
     }};
     return loc_out;
 }
