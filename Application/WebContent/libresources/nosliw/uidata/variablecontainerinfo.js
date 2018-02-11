@@ -38,10 +38,14 @@ var node_getHandleEachElementRequest = function(varWrapper, path, elementHandleR
 		var i = 0;
 		var handleElementsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("HandleElements", {"elements":loc_orderChildrenInfo.getElements()}));
 		_.each(loc_orderChildrenInfo.getElements(), function(ele, index){
-			//add child request from factory
-			//eleId as path
-			handleElementsRequest.addRequest(i+"", elementHandleRequestFactory.call(loc_out, loc_containerVarWrapper, node_createVariableWrapper(loc_containerVar.prv_childrenVariable[ele.path]), node_createVariableWrapper(ele.indexVariable)));
-			i++;
+			var elementHandlerResult = elementHandleRequestFactory.call(loc_out, loc_containerVarWrapper, node_createVariableWrapper(loc_containerVar.prv_childrenVariable[ele.path]), node_createVariableWrapper(ele.indexVariable));
+			//output of elementHandleRequestFactory method maybe request, maybe just object
+			if(node_getObjectType(elementHandlerResult)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
+				//add child request from factory
+				//eleId as path
+				handleElementsRequest.addRequest(i+"", elementHandlerResult);
+				i++;
+			}
 		});
 		return handleElementsRequest;
 	};

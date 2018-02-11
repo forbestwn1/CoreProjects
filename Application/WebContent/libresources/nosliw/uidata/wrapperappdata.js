@@ -21,16 +21,75 @@ var node_ServiceInfo;
 var node_uiDataOperationServiceUtility;
 var node_requestServiceProcessor;
 var node_OperationParm;
+var node_parseSegment;
+var node_parsePathSegment;
+var node_createServiceRequestInfoSimple;
 //*******************************************   Start Node Definition  ************************************** 	
 var node_createWraperData = function(){
 	
-	var loc_dataOperation = function(dataTypeId, operation, parms){
+	var loc_getDirectChildValueRequest = function(parentValue, path, handlers, request){
+		var operationParms = [];
+		operationParms.push(new node_OperationParm(parentValue, "base"));
+		operationParms.push(new node_OperationParm({
+			dataTypeId: "test.string;1.0.0",
+			value : path
+		}, "name"));
+
+		return nosliw.runtime.getExpressionService().getExecuteOperationRequest(
+				parentValue.dataTypeId, 
+				node_COMMONCONSTANT.DATAOPERATION_COMPLEX_GETCHILDDATA, 
+				operationParms, handlers, request);
+	}; 
+
+	var loc_getCurrentSegmentChildValueRequest = function(parentValue, segs, handlers, request){
+		return loc_getDirectChildValueRequest(parentValue, segs.next(), handlers, request);			
+	};
+	
+	var loc_getSegmentsChildValueRequest = function(parentValue, segs, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetSegsChildValue", {"parent":parentValue, "segs":segs}), handlers, request);
+		if(segs.hasNext()){
+			out.addRequest(loc_getCurrentSegmentChildValueRequest(parentValue, segs, {
+				success : function(request, segChildValue){
+					return loc_getSegmentsChildValueRequest(segChildValue, segs);
+				}
+			}));
+		}
+		else{
+			//end of segments
+			out.addRequest(node_createServiceRequestInfoSimple({}, function(request){
+				return parentValue;
+			})); 
+		}
+		return out;
+	};
+	
+	var loc_getOperationBaseRequest = function(value, path, first, lastReverse, handlers, request){
+		
+		var segs = node_parsePathSegment(path, first, lastReverse);
+		loc_getSegmentsChildValueRequest(value, segs, handlers, request);
 		
 	};
 	
+	
 	var loc_out = {		
+		
+			//get child value by path
+			getChildValueRequest : function(parentValue, path, handlers, request){
+				var pathSegs = node_parsePathSegment(path);
+				var out = loc_getSegmentsChildValueRequest(parentValue, pathSegs, handlers, request);
+				out.setRequestProcessors({
+					success : function(request, childValue){
+						return node_dataUtility.cloneValue(childValue);
+					}
+				});
+				return out;
+			},
 			
-			getDataOperationRequest : function(operationService, handlers, requester_parent){
+			getDataOperationRequest : function(value, dataOperationService, handlers, requester_parent){
+				var command = dataOperationService.command;
+				var operationData = dataOperationService.parms;
+
+				
 				var command = operationService.command;
 				var serviceData = operationService.parms;
 				var path = serviceData.path;
@@ -39,10 +98,7 @@ var node_createWraperData = function(){
 				var fullPath = node_namingConvensionUtility.cascadePath(this.getFullPath(), path);
 
 				var out;
-				if(command==node_CONSTANT.WRAPPER_OPERATION_GET){
-					out = node_appDataWrapperUtility.getGetChildAppDataRequest(rootValue, fullPath, handlers, requester_parent);
-				}
-				else if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
+				if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
 					out = node_appDataWrapperUtility.getSetChildAppDataRequest(rootValue, fullPath, serviceData.data, handlers, requester_parent);
 					var that  = this;
 					out.addPostProcessor({
@@ -164,6 +220,9 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.entity.OperationParm", function(){node_OperationParm = this.getData();});
+nosliw.registerSetNodeDataEvent("common.segmentparser.parseSegment", function(){node_parseSegment = this.getData();});
+nosliw.registerSetNodeDataEvent("common.segmentparser.parsePathSegment", function(){node_parsePathSegment = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
 	//register wrapper faction

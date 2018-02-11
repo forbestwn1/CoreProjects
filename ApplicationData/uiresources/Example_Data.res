@@ -9,6 +9,10 @@
 		<nosliw-textinput data="company.name"/>  
 		<br>
 
+	<%=?(company.name)?.value + '   6666 ' %>  tttttttttt222  
+	<br>
+		
+<!--		
 		<nosliw-loop data="school" element="ele" elename="index">  
 			<%=?(ele)?.value + '   6666 ' %>   
 			In Loop
@@ -16,9 +20,7 @@
 		</nosliw-loop>
 		<br>
 		<br><a href='' nosliw-event="click:newElementInLoopData:">New</a><br>
-		
-	<%=?(company.name)?.value + '   6666 ' %>  tttttttttt222  
-	<br>
+-->		
 	
 	</body>
 
@@ -98,46 +100,6 @@
 	}
 	</script>
 	
-	<constants>
-	{
-			aaaa : "<%=5+6+7%>",
-			bbbb : "<%=(5+6+7)>5%>",
-			cccc : {
-						a : 12345,
-						b : true,
-						c : "good",
-						d : "<%=5+6+7%>"
-					},
-			dddd : "<%=&(cccc)&.a+6%>",
-
-			ffff : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>",
-			eeee : "<%=#|&(ffff)&.subString(from:&(#test##integer___3)&,to:&(#test##integer___7)&)|#%>",
-			
-				base: {
-					dataTypeId: "test.string",
-					value: "This is my world!"
-				},
-				from: {
-					dataTypeId: "test.integer",
-					value: 3
-				},
-				to: {
-					dataTypeId: "test.integer",
-					value: 7
-				},
-				
-				childResource: {
-					inherit : true,
-					public : {
-						name : {
-							path : "business.a.aa"
-						}
-					}
-				}
-			
-	}
-	</constants>
-	
 		<!-- This part can be used to define context (variable)
 				it describle data type criteria for each context element and its default value
 		-->
@@ -176,13 +138,16 @@
 		}
 	}
 	</context>
+
+	<constants>
+	{
+	}
+	</constants>
 	
 		<!-- This part can be used to define expressions
 		-->
 	<expressions>
 	{
-		
-	
 	}
 	</expressions>
 	

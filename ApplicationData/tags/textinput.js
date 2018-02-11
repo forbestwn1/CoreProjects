@@ -79,7 +79,10 @@
 
 			processAttribute : function(name, value){},
 
-			destroy : function(){	loc_dataVariable.release();	}
+			destroy : function(){	
+				loc_dataVariable.release();	
+				loc_view.remove();
+			},
 		};
 		return loc_out;
 	}
