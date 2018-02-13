@@ -53,8 +53,8 @@ var node_getHandleEachElementRequest = function(varWrapper, path, elementHandleR
 	
 	
 	//not loop yet, get value first, then loop it
-	var out = node_createServiceRequestInfoSequence({}, handlers, request);
-	out.addRequest(varWrapper.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
+	var loc_out = node_createServiceRequestInfoSequence({}, handlers, request);
+	loc_out.addRequest(varWrapper.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
 		success : function(request, data){
 			//get current value
 			return varWrapper.prv_variable.prv_wrapper.getDataTypeHelper().getGetElementsRequest(data.value, {
@@ -74,10 +74,10 @@ var node_getHandleEachElementRequest = function(varWrapper, path, elementHandleR
 								var eleInfo = loc_orderChildrenInfo.insertElement(eventData.index, eventData.id);
 								var newEleVarInfo = loc_containerVar.createChildVariable(eleInfo.path);
 								newEleVarInfo.variable.registerDataOperationEventListener(loc_dataOperationEventObject, function(event, eventData, request){
-									if(event==node_CONSTANT.WRAPPER_EVENT_DELETE)	loc_out.prv_orderChildrenInfo.deleteElement(eleInfo.path);
+									if(event==node_CONSTANT.WRAPPER_EVENT_DELETE)	loc_orderChildrenInfo.deleteElement(eleInfo.path);
 								});
 								newEleVarInfo.variable.registerLifecycleEventListener(loc_lifecycleEventObject, function(event, eventData, request){
-									if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP)	loc_out.prv_orderChildrenInfo.deleteElement(eleInfo.path);
+									if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP)	loc_orderChildrenInfo.deleteElement(eleInfo.path);
 								});
 								events.push({
 									event : node_CONSTANT.WRAPPER_EVENT_NEWELEMENT,
@@ -113,7 +113,7 @@ var node_getHandleEachElementRequest = function(varWrapper, path, elementHandleR
 			});
 		}
 	}));
-	return out;
+	return loc_out;
 };
 
 //element info expose to end user

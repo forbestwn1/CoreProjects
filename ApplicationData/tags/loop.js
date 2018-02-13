@@ -51,10 +51,22 @@
 		};
 
 		var loc_updateView = function(requestInfo){
+			loc_containerVariable = undefined;
 			var index = 0;
 			loc_env.executeGetHandleEachElementRequest("internal_data", "", 
 			function(containerVar, eleVar, indexVar){
-				loc_containerVariable = containerVar;
+				if(loc_containerVariable!=undefined){
+					loc_containerVariable = containerVar;
+					
+					loc_containerVariable.registerDataOperationEventListener(undefined, function(event, eventData, requestInfo){
+						if(event=="EVENT_WRAPPER_NEWELEMENT"){
+							loc_addEle(eventData.getElement(), eventData.getIndex(), 0);
+						}
+						if(event=="WRAPPER_EVENT_DESTROY"){
+							loc_out.prv_deleteEle(loc_getElementContextVariable(eventData.index));
+						}
+					}, this);
+				}
 				loc_addEle(eleVar, indexVar, index);
 				index++;
 			});
@@ -98,15 +110,6 @@
 			
 			postInit : function(requestInfo){
 				loc_updateView();
-				var that = this;
-				loc_containerVariable.registerDataOperationEventListener(undefined, function(event, eventData, requestInfo){
-					if(event=="EVENT_WRAPPER_NEWELEMENT"){
-						loc_addEle(eventData.getElement(), eventData.getIndex(), 0);
-					}
-					if(event=="WRAPPER_EVENT_DESTROY"){
-						that.prv_deleteEle(loc_getElementContextVariable(eventData.index));
-					}
-				}, this);
 			},
 
 			destroy : function(){

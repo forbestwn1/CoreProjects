@@ -92,7 +92,7 @@ var node_createVariable = function(data1, data2, adapterInfo){
 			//for object/data
 			loc_out.prv_isBase = true;
 			var r = loc_out.prv_getSetBaseDataRequest(data1, data2);
-			node_requestServiceProcessor.processRequest(r, true);
+			node_requestServiceProcessor.processRequest(r);
 		}
 	};
 	

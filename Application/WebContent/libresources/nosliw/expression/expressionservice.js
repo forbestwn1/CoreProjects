@@ -367,6 +367,14 @@ var node_createExpressionService = function(){
 			success : function(requestInfo, resourcesTree){
 				var out = node_expressionUtility.executeOperationResource(dataOperationResourceId, parmArray, resourcesTree);
 				return out;
+			},
+			error : function(){
+				var kkkk = 555;
+				kkkk++;
+			},
+			exception : function(){
+				var kkkk = 555;
+				kkkk++;
 			}
 		});
 		
@@ -408,7 +416,7 @@ var node_createExpressionService = function(){
 			
 		executeExecuteOperationRequest : function(dataTypeId, operation, parmsArray, handlers, requester_parent){
 			var requestInfo = this.getExecuteOperationRequest(dataTypeId, operation, parmsArray, handlers, requester_parent);
-			node_requestServiceProcessor.processRequest(requestInfo, false);
+			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 
 		getExecuteExpressionRequest : function(expression, variables, handlers, requester_parent){
@@ -417,7 +425,7 @@ var node_createExpressionService = function(){
 			
 		executeExecuteExpressionRequest : function(expression, variables, handlers, requester_parent){
 			var requestInfo = this.getExecuteExpressionRequest(expression, variables, handlers, requester_parent);
-			node_requestServiceProcessor.processRequest(requestInfo, false);
+			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 
 		/**
@@ -433,7 +441,7 @@ var node_createExpressionService = function(){
 	
 		executeExecuteScriptExpressionRequest : function(script, expressions, variables, scriptConstants, handlers, requester_parent){
 			var requestInfo = this.getExecuteScriptRequest(script, expressions, variables, scriptConstants, handlers, requester_parent);
-			node_requestServiceProcessor.processRequest(requestInfo, false);
+			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 	};
 	

@@ -18,6 +18,10 @@ var node_RemoteServiceSetting = function(mode){
  * remote service request object (for ajax)
  */
 var node_RemoteServiceRequest = function(serviceTask){
+	//id of remote task
+	this.id = nosliw.runtime.getIdService().generateId();
+	//task id
+	this.taskId = serviceTask.id;
 	//type of request: group or normal
 	this.type = serviceTask.type;
 	//service : command and parms
@@ -39,6 +43,8 @@ var node_RemoteServiceRequest = function(serviceTask){
  * remote request object --- normal
  */
 var node_RemoteServiceTask = function(syncName, service, handlers, requestInfo, setting){
+	//unique id
+	this.id = nosliw.runtime.getIdService().generateId();
 	//normal task
 	this[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_REQUEST_TYPE] = node_COMMONCONSTANT.REMOTESERVICE_TASKTYPE_NORMAL;
 	//sync task name, different sync name have different configuration
@@ -71,6 +77,8 @@ node_RemoteServiceTask.prototype = {
  * 
  */
 var node_RemoteServiceGroupTask = function(syncName, handlers, requestInfo, setting){
+	//unique id
+	this.id = nosliw.runtime.getIdService().generateId();
 	//task type : group
 	this[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_REQUEST_TYPE] = node_COMMONCONSTANT.REMOTESERVICE_TASKTYPE_GROUP;
 	//sync task name, different sync name have different configuration

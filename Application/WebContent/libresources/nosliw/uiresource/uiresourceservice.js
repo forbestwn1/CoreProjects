@@ -54,7 +54,7 @@ var node_createUIResourceService = function(){
 			
 			executeGetUIResourceRequest : function(names, handlers, requester_parent){
 				var requestInfo = this.getGetUIResourceRequest(names, handlers, requester_parent);
-				node_requestServiceProcessor.processRequest(requestInfo, true);
+				node_requestServiceProcessor.processRequest(requestInfo);
 			},
 			
 			getCreateUIResourceViewRequest : function(name, handlers, requester_parent){
@@ -73,7 +73,7 @@ var node_createUIResourceService = function(){
 			
 			executeCreateUIResourceViewRequest : function(name, handlers, requester_parent){
 				var requestInfo = this.getCreateUIResourceViewRequest(name, handlers, requester_parent);
-				node_requestServiceProcessor.processRequest(requestInfo, true);
+				node_requestServiceProcessor.processRequest(requestInfo);
 			}
 	};
 

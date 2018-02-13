@@ -43,7 +43,7 @@ var node_createGatewayService = function(){
 			
 		executeExecuteGatewayCommandRequest : function(gatewayId, command, parms, requester_parent){
 			var requestInfo = this.getExecuteGatewayCommandRequest(gatewayId, command, parms, requester_parent);
-			node_requestServiceProcessor.processRequest(requestInfo, false);
+			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		
 		//execute command directly, no callback needed

@@ -126,7 +126,7 @@ var node_createResourceService = function(resourceManager){
 			
 		executeRequireResourcesRequest : function(resourcesInfo, handlers, requester_parent){
 			var requestInfo = this.getRequireResourcesRequest(resourcesInfo, handlers, requester_parent);
-			node_requestServiceProcessor.processRequest(requestInfo, true);
+			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 			
 		//resource discovery + get
@@ -169,7 +169,7 @@ var node_createResourceService = function(resourceManager){
 			
 		executeGetResourcesRequest : function(resourceIds, handlers, requester_parent){
 			var requestInfo = this.getGetResourcesRequest(resourceIds, handlers, requester_parent);
-			node_requestServiceProcessor.processRequest(requestInfo, true);
+			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 			
 		//resource discovery
@@ -190,7 +190,7 @@ var node_createResourceService = function(resourceManager){
 
 		executeDiscoverResourcesRequest : function(resourceIds, handlers, requester_parent){
 			var requestInfo = this.getDiscoverResourcesRequest(resourceIds, handlers, requester_parent);
-			node_requestServiceProcessor.processRequest(requestInfo, true);
+			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		
 		/**

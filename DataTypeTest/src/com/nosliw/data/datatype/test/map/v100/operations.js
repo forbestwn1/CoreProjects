@@ -42,6 +42,32 @@ dataTypeDefition.operations['getChildrenNames'] = {
 		},
 };
 
+dataTypeDefition.operations['isAccessChildById'] = {
+		operation : function(parms, context){
+			return {
+				dataTypeId : "test.boolean;1.0.0",
+				value : true
+			};
+		},
+};
+
+dataTypeDefition.operations['length'] = {
+		operation : function(parms, context){
+			var obj = parms.getParm("base").value;
+			var count = 0;
+			for (var k in obj) {
+			    if (obj.hasOwnProperty(k)) {
+			       ++count;
+			    }
+			}			
+			
+			return {
+				dataTypeId : "test.integer;1.0.0",
+				value : count
+			};
+		},
+};
+
 dataTypeDefition.operations['getChildData'] = {
 		operation : function(parms, context){
 			var name = parms.getParm("name").value;

@@ -251,7 +251,7 @@ var nosliwCreateDataTypeManager = function(){
 		
 		requestGetDataTypes : function(dataTypeInfoArray, handlers, requester_parent){
 			var requestInfo = this.getRequestInfoGetDataTypes(dataTypeInfoArray, handlers, requester_parent);
-			return nosliw.getRequestServiceManager().processRequest(requestInfo, true); 
+			return nosliw.getRequestServiceManager().processRequest(requestInfo); 
 		},
 
 		/*
@@ -305,7 +305,7 @@ var nosliwCreateDataTypeManager = function(){
 
 		requestExecuteDataOperation : function(baseDataTypeInfo, operation, parms, handlers, requester_parent){
 			var requestInfo = this.getRequestInfoExecuteDataOperation(baseDataTypeInfo, operation, parms, handlers, requester_parent);
-			return nosliw.getRequestServiceManager().processRequest(requestInfo, true); 
+			return nosliw.getRequestServiceManager().processRequest(requestInfo); 
 		},
 				
 	};

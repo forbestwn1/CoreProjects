@@ -138,7 +138,7 @@ var node_createUIResourceService = function(){
 			
 			requestGetUIResource : function(name, handlers, requester_parent){
 				var requestInfo = this.getRequestInfoGetUIResource(name, handlers, requester_parent);
-				return nosliw.getRequestServiceManager().processRequest(requestInfo, true); 
+				return nosliw.getRequestServiceManager().processRequest(requestInfo); 
 			},
 			
 			getRequestInfoCreateUIResourceView : function(name, handlers, requester_parent){
@@ -156,7 +156,7 @@ var node_createUIResourceService = function(){
 			
 			requestCreateUIResourceView : function(name, handlers, requester_parent){
 				var requestInfo = this.getRequestInfoCreateUIResourceView(name, handlers, requester_parent);
-				return nosliw.getRequestServiceManager().processRequest(requestInfo, true);
+				return nosliw.getRequestServiceManager().processRequest(requestInfo);
 			},
 			
 			getRequestInfoExecuteUIExpression : function(expressionObjsArray, uiExpFunction, handlers, reqer){

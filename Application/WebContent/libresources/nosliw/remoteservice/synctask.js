@@ -42,83 +42,43 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 	var loc_syncRemoteCall = function(){
 		//set flag so that no new processing allowed before this function is finished
 		loc_syncReady = false;
+
+		//id for this remote call
+		loc_id = nosliw.runtime.getIdService().generateId();
 		
 		//prepare remote request and do ajax call
+		nosliw.logging.info("************************  Remote AJAX Request   ************************");
+		nosliw.logging.info("Syntask: " + loc_name);
+		nosliw.logging.info("Remote call Id: " + loc_id);
+		
 		var serviceTaskRequests = [];
 		for(var i in loc_syncTasks){
-			serviceTaskRequests.push(loc_syncTasks[i].getRemoteServiceRequest());
+			var remoteRequest = loc_syncTasks[i].getRemoteServiceRequest();
+			serviceTaskRequests.push(remoteRequest);
+			nosliw.logging.info("Task ID: " + loc_syncTasks[i].id);
 		}
+		nosliw.logging.info("***************************************************************");
+		
 		var remoteRequestData = {};
 //		remoteRequestData[node_COMMONATRIBUTECONSTANT.SERVLETPARMS_CLIENTID] = nosliw.getClientId();
 		remoteRequestData[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND] = loc_setting.getConfigure(node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND);
 		remoteRequestData[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_PARMS] = JSON.stringify(serviceTaskRequests);
 	
-		var aaaa = _.extend({
-			data : remoteRequestData,
-			success : function(serviceDataResult, status){
-				if(node_errorUtility.isSuccess(serviceDataResult)==true){
-					nosliw.logging.info(loc_moduleName, loc_name, "Success remote processing");
-					
-					var serviceDatas = serviceDataResult.data;
-					//processed normally
-					for(var j in serviceDatas){
-						var serviceData = serviceDatas[j];
-						var task = loc_syncTasks[j];
-						var taskType = task.type;
-
-						if(taskType==node_COMMONCONSTANT.REMOTESERVICE_TASKTYPE_GROUP){
-							//for group task, handle child task first
-							for(var k in task.children)		loc_handleServiceResult(task.children[k], serviceData.data[k]);
-						}
-						//handle task
-						loc_handleServiceResult(task, serviceData);
-					}
-					//empty synTasks
-					loc_syncTasks = [];
-				}
-				else{
-					nosliw.logging.error(loc_moduleName, loc_name, "System error when processing tasks in snycTask :", serviceDataResult);
-					loc_processSyncRequestSystemError(serviceDataResult);
-				}
-				
-				//clear tasks
-				loc_syncTasks = [];
-				//ready to process new task
-				loc_syncReady = true;
-				//process sync task again
-				loc_processTasks();
-			},
-			error: function(obj, textStatus, errorThrown){
-				nosliw.logging.error(loc_moduleName, loc_name, "Exception when processing tasks in snycTask ", textStatus, errorThrown);
-
-				//when ajax error happened, which may be caused by network error, server is down or server internal error
-				//remote service manager is put into suspend status
-				//the service request is not removed
-				var serviceData = node_remoteServiceErrorUtility.createRemoteServiceExceptionServiceData(obj, textStatus, errorThrown); 
-				
-				node_remoteServiceUtility.handleServiceTask(loc_syncTasks, function(serviceTask){
-					loc_handleServiceResult(serviceTask, serviceData);
-					serviceTask.status = node_CONSTANT.REMOTESERVICE_SERVICESTATUS_FAIL;
-				});
-				
-				//suspend the system
-				loc_remoteServiceMan.interfaceObjectLifecycle.suspend();
-				//finish processing, so that ready to process again
-				loc_syncReady = true;
-			},
-		}, loc_setting.getConfiguresObject());
-		
 		$.ajax(_.extend({
 			data : remoteRequestData,
 			success : function(serviceDataResult, status){
+				var syncTasks = loc_syncTasks;
+				//clear tasks
+				loc_syncTasks = [];
+				//ready to process new task
+				loc_syncReady = true;
+
 				if(node_errorUtility.isSuccess(serviceDataResult)==true){
-					nosliw.logging.info(loc_moduleName, loc_name, "Success remote processing");
-					
 					var serviceDatas = serviceDataResult.data;
 					//processed normally
 					for(var j in serviceDatas){
 						var serviceData = serviceDatas[j];
-						var task = loc_syncTasks[j];
+						var task = syncTasks[j];
 						var taskType = task.type;
 
 						if(taskType==node_COMMONCONSTANT.REMOTESERVICE_TASKTYPE_GROUP){
@@ -128,20 +88,21 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 						//handle task
 						loc_handleServiceResult(task, serviceData);
 					}
-					//empty synTasks
-					loc_syncTasks = [];
 				}
 				else{
 					nosliw.logging.error(loc_moduleName, loc_name, "System error when processing tasks in snycTask :", serviceDataResult);
 					loc_processSyncRequestSystemError(serviceDataResult);
 				}
 				
-				//clear tasks
-				loc_syncTasks = [];
-				//ready to process new task
-				loc_syncReady = true;
+				nosliw.logging.info("************************  Remote AJAX Request Finish  ************************");
+				nosliw.logging.info("Syntask: " + loc_name);
+				nosliw.logging.info("Remote call Id: " + loc_id);
+				nosliw.logging.info("Syn status: " + loc_syncReady);
+				nosliw.logging.info("***************************************************************");
+				
 				//process sync task again
 				loc_processTasks();
+
 			},
 			error: function(obj, textStatus, errorThrown){
 				nosliw.logging.error(loc_moduleName, loc_name, "Exception when processing tasks in snycTask ", textStatus, errorThrown);
@@ -228,8 +189,8 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 		 */
 		addTask : function(task){	
 			loc_syncTaskQueue.push(task);	
-			nosliw.logging.info(loc_moduleName,  task.requestId, "New remote task is added to sync task: ", task.service.command, ":", JSON.stringify(task.service.parms));
-			this.logSyncTask();
+			nosliw.logging.info(loc_moduleName,  task.requestId, "New remote task is added to sync task ", loc_name, task.id, task.service.command, ":", JSON.stringify(task.service.parms));
+//			this.logSyncTask();
 		},
 		
 		logSyncTask : function(){

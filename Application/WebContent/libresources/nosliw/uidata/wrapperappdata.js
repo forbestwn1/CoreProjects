@@ -24,6 +24,7 @@ var node_OperationParm;
 var node_parseSegment;
 var node_parsePathSegment;
 var node_createServiceRequestInfoSimple;
+var node_createServiceRequestInfoSet;
 //*******************************************   Start Node Definition  ************************************** 	
 var node_createWraperData = function(){
 	
@@ -64,10 +65,17 @@ var node_createWraperData = function(){
 	};
 	
 	var loc_getOperationBaseRequest = function(value, path, first, lastReverse, handlers, request){
-		
 		var segs = node_parsePathSegment(path, first, lastReverse);
-		loc_getSegmentsChildValueRequest(value, segs, handlers, request);
-		
+		var out = loc_getSegmentsChildValueRequest(value, segs, handlers, request);
+		out.setRequestProcessors({
+			success : function(request, value){
+				return {
+					base : value,
+					attribute : sets.getRestPath()
+				}
+			}
+		});
+		return out;
 	};
 	
 	
@@ -85,115 +93,108 @@ var node_createWraperData = function(){
 				return out;
 			},
 			
-			getDataOperationRequest : function(value, dataOperationService, handlers, requester_parent){
+			getDataOperationRequest : function(value, dataOperationService, handlers, request){
 				var command = dataOperationService.command;
 				var operationData = dataOperationService.parms;
 
-				
-				var command = operationService.command;
-				var serviceData = operationService.parms;
-				var path = serviceData.path;
-				
-				var rootValue = this.getRootData().value;
-				var fullPath = node_namingConvensionUtility.cascadePath(this.getFullPath(), path);
+				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DataOperation", {"command":command, "operationData":operationData}), handlers, request);
 
-				var out;
 				if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
-					out = node_appDataWrapperUtility.getSetChildAppDataRequest(rootValue, fullPath, serviceData.data, handlers, requester_parent);
-					var that  = this;
-					out.addPostProcessor({
-						success : function(requestInfo, data){
-							that.pri_triggerOperationEvent(node_CONSTANT.WRAPPER_EVENT_SET, path, serviceData.data, requestInfo);
+					loc_getOperationBaseRequest(value, operationData.path, undefined, 1, {
+						success : function(requestInfo, operationBase){
+							var operationParms = [];
+							operationParms.push(new node_OperationParm(parentValue, "base"));
+							operationParms.push(new node_OperationParm({
+								dataTypeId: "test.string;1.0.0",
+								value : path
+							}, "name"));
+							operationParms.push(operationData.value);
+
+							return nosliw.runtime.getExpressionService().getExecuteOperationRequest(
+									operationBase.base.dataTypeId, 
+									node_COMMONCONSTANT.DATAOPERATION_COMPLEX_SETCHILDDATA, 
+									operationParms);
 						}
 					});
 				}
 				else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
-					var operationData = {
-							data : opValue,
-							index : serviceData.index,
-						};
-					out = node_appDataWrapperUtility.getAddElementAppDataRequest(rootValue, fullPath, operationData, handlers, requester_parent);
-					var that  = this;
-					out.addPostProcessor({
-						success : function(requestInfo, data){
-							//trigue event
-							if(path==undefined)  path="";
-							that.pri_triggerOperationEvent(node_CONSTANT.WRAPPER_EVENT_ADDELEMENT, path, operationData, requestInfo);
+					loc_getOperationBaseRequest(value, operationData.path, undefined, 0, {
+						success : function(requestInfo){
+							
 						}
 					});
+					
 				}
 				else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){
 					
 				}
+				else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETE){
+					
+				}
+				
 				return out;
 			},
 
-			
-			/*
-			 * 
-			 */
-			pri_triggerOperationEvent : function(event, path, opValue, request){
-				var rootWrapper = this.getRootWrapper();
-				var rootPath = rootWrapper.getPath();
-				if(rootPath==undefined)  rootPath = "";
-				var fullPath = node_namingConvensionUtility.cascadePath(this.getFullPath(), path);
-				if(rootPath==fullPath){
-					//on root wrapper
-					rootWrapper.pri_trigueDataOperationEvent(event, fullPath, opValue, request);
-				}
-				else{
-					//on child
-					if(rootPath=="")  rootWrapper.pri_triggerForwardEvent(event, fullPath, opValue, request);
-					else rootWrapper.pri_triggerForwardEvent(event, fullPath.substring(rootPath.length+1), opValue, request);
-				}
-			},
+			getGetElementsRequest : function(value, handlers, request){
+				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetElements", {"value":value}), handlers, request); 
+				
+				var operationParms = [];
+				operationParms.push(new node_OperationParm(value, "base"));
+				out.addRequest(nosliw.runtime.getExpressionService().getExecuteOperationRequest(
+					value.dataTypeId, 
+					node_COMMONCONSTANT.DATAOPERATION_COMPLEX_ISACCESSCHILDBYID, 
+					operationParms, {
+						success : function(request, isAccessChildById){
+							if(isAccessChildById.value){
+								//througth id
+								
+							}
+							else{
+								//throught index,
+								//get length first
+								var operationParms = [];
+								operationParms.push(new node_OperationParm(value, "base"));
+								return nosliw.runtime.getExpressionService().getExecuteOperationRequest(
+									value.dataTypeId, 
+									node_COMMONCONSTANT.DATAOPERATION_COMPLEX_LENGTH, 
+									operationParms, {
+										success : function(request, arrayValueLength){
+											var allElesRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("", {}), {
+												success : function(request, setResult){
+													var elements = [];
+													for(var i=0; i<arrayValueLength.value; i++){
+														var eleValue = setResult.getResult(i+"");
+														elements.push({
+															value : eleValue
+														});
+													}
+													return elements;
+												}
+											}); 
 
-			handleEachElement : function(handler, thatContext){	
-				
-				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("HandleEachElementInCollection", {"collectionWrapper":this}));
-				
-				var getDataRequest = this.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
-					success : function(requestInfo, data)
-					{ 
-						var containerData = data.value;  
-						var operationParms = [];
-						operationParms.push(new node_OperationParm(containerData, "base"));
-						var getChildNamesRequest = nosliw.runtime.getExpressionService().getExecuteOperationRequest(
-								containerData.dataTypeId, 
-								node_COMMONCONSTANT.DATAOPERATION_COMPLEX_GETCHILDRENNAMES, 
-								operationParms, {
-									success : function(request, data){
-										var requests = [];
-										var childNames = data.value;
-										_.each(childNames, function(childNameData, i){
-											
-											var operationParms = [];
-											operationParms.push(new node_OperationParm(containerData, "base"));
-											operationParms.push(new node_OperationParm(childNameData, "name"));
-											var getChildNamesRequest = nosliw.runtime.getExpressionService().getExecuteOperationRequest(
-													containerData.dataTypeId, 
-													node_COMMONCONSTANT.DATAOPERATION_COMPLEX_GETCHILDDATA, 
-													operationParms, {
-														success : function(request, data){
-													    	handler.call(thatContext, data, i);
-														}
-													});
-											requests.push(getChildNamesRequest);
-										});
-										return requests;
-									}
+											for(var i=0; i<arrayValueLength.value; i++){
+												var operationParms = [];
+												operationParms.push(new node_OperationParm(value, "base"));
+												operationParms.push(new node_OperationParm({
+													dataTypeId: "test.integer;1.0.0",
+													value : i,
+												}, "index"));
+												allElesRequest.addRequest(i+"", nosliw.runtime.getExpressionService().getExecuteOperationRequest(
+													value.dataTypeId, 
+													node_COMMONCONSTANT.DATAOPERATION_COMPLEX_GETCHILDDATABYINDEX, 
+													operationParms));
+											}
+											return allElesRequest;
+										}
 								});
-						return getChildNamesRequest;
-					}
-				});
-				out.addRequest(getDataRequest);
-				
-				node_requestServiceProcessor.processRequest(out, false);
-			},
+							}
+						}
+					})
+				);
+				return out;
+			}, 
 			
 			getWrapperType : function(){	return node_CONSTANT.DATA_TYPE_APPDATA;		},
-			
-			
 	};
 	
 	return loc_out;
@@ -223,6 +224,7 @@ nosliw.registerSetNodeDataEvent("expression.entity.OperationParm", function(){no
 nosliw.registerSetNodeDataEvent("common.segmentparser.parseSegment", function(){node_parseSegment = this.getData();});
 nosliw.registerSetNodeDataEvent("common.segmentparser.parsePathSegment", function(){node_parsePathSegment = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
 	//register wrapper faction

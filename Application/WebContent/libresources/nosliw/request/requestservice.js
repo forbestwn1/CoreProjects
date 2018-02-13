@@ -55,7 +55,7 @@ var node_createServiceRequestInfoService = function(service, handlers, requester
 	 */
 	var loc_processRequestWithDependentRequest = function(reqeustInfo){
 		var dependentRequest = reqeustInfo.getDependentServiceRequestInfo();
-		return node_requestProcessor.processRequest(dependentRequest, false);
+		return node_requestProcessor.processRequest(dependentRequest);
 	};
 	
 	var loc_out = {

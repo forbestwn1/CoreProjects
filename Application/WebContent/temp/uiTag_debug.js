@@ -11,7 +11,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"debug",
 },
 "attributes":{},
 "script":
-function (context, parentResourceView, uiTagResource, attributes, env) {
+function (env) {
     var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
     var node_requestProcessor = nosliw.getNodeData("request.requestServiceProcessor");
     var node_createContextVariablesGroup = nosliw.getNodeData("uidata.context.createContextVariablesGroup");

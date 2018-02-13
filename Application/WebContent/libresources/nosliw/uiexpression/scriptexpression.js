@@ -124,7 +124,7 @@ var packageObj = library;
 			
 			executeExecuteScriptExpressionRequest : function(handlers, requester_parent){
 				var requestInfo = this.getExecuteScriptExpressionRequest(handlers, requester_parent);
-				node_requestServiceProcessor.processRequest(requestInfo, true);
+				node_requestServiceProcessor.processRequest(requestInfo);
 			},
 			
 			registerListener : function(listenerEventObj, handler){

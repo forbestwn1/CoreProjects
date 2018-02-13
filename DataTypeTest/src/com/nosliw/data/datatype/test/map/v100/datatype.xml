@@ -26,6 +26,20 @@
 			<output criteria="test.array;1.0.0%||element:test.string;1.0.0||%"/>
 		</operation>
 
+		<operation name="isAccessChildById" >
+			<parms>
+				<parm name="base" criteria="test.map" isBase="true"/>
+			</parms>
+			<output criteria="test.boolean;1.0.0"/>
+		</operation>
+
+		<operation name="length" >
+			<parms>
+				<parm name="base" criteria="test.map" isBase="true"/>
+			</parms>
+			<output criteria="test.integer;1.0.0"/>
+		</operation>
+
 		<operation name="getChildData" >
 			<parms>
 				<parm name="base" criteria="test.map" isBase="true"/>

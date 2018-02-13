@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html>
 	<body>
-	
+		<br>
+		<nosliw-loop data="school" element="ele" index="index">  
+			<%=?(ele)?.value + '   6666 ' %>   
+			In Loop
+			<br>
+		</nosliw-loop>
+
+		
+<!--	
 		<br>
 		<nosliw-textinput data="company.name"/>  
 		<br>
@@ -12,16 +20,14 @@
 	<%=?(company.name)?.value + '   6666 ' %>  tttttttttt222  
 	<br>
 		
-<!--		
-		<nosliw-loop data="school" element="ele" elename="index">  
+		<nosliw-loop data="school" element="ele" index="index">  
 			<%=?(ele)?.value + '   6666 ' %>   
 			In Loop
 			<br>
 		</nosliw-loop>
 		<br>
 		<br><a href='' nosliw-event="click:newElementInLoopData:">New</a><br>
--->		
-	
+-->	
 	</body>
 
 	<script>

@@ -195,7 +195,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 									loc_trigueDataOperationEvent(event, eventData, requestInfo);
 								}
 							}, requestInfo);
-							node_requestServiceProcessor.processRequest(r, true);
+							node_requestServiceProcessor.processRequest(r);
 						}
 					}
 				}

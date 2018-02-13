@@ -59,10 +59,35 @@ dataTypeDefition.operations['getChildrenNames'] = {
 		},
 };
 
+dataTypeDefition.operations['isAccessChildById'] = {
+		operation : function(parms, context){
+			return {
+				dataTypeId : "test.boolean;1.0.0",
+				value : false
+			};
+		},
+};
+
+dataTypeDefition.operations['length'] = {
+		operation : function(parms, context){
+			return {
+				dataTypeId : "test.integer;1.0.0",
+				value : parms.getParm("base").value.length
+			};
+		},
+};
+
 dataTypeDefition.operations['getChildData'] = {
 		operation : function(parms, context){
 			var name = parms.getParm("name").value;
 			return this.value[parseInt(name)];
+		}
+};
+
+dataTypeDefition.operations['getChildDataByIndex'] = {
+		operation : function(parms, context){
+			var index = parms.getParm("index").value;
+			return this.value[index];
 		}
 };
 

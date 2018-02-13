@@ -70,6 +70,9 @@ var node_requestServiceProcessor = function(){
 	
 	var loc_out = {
 		processRequest : function(requestInfo, processRemote){
+			if(processRemote==undefined){
+				processRemote = true;
+			}
 			return loc_processRequest(requestInfo, processRemote);
 		},	
 	};
