@@ -147,12 +147,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 				loc_trigueDataOperationEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, undefined, requestInfo);
 			}
 			else{
-				if(loc_out.prv_relativeWrapperInfo==undefined){
-					var kkkk = 555;
-					kkkk++;
-				}
-				
-				
 				var pathCompare = node_dataUtility.comparePath(loc_out.prv_relativeWrapperInfo.path, eventData.path);
 				if(pathCompare.compare == 0){
 					//event happens on this wrapper, trigue the same

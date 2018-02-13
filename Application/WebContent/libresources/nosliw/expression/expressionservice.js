@@ -368,14 +368,6 @@ var node_createExpressionService = function(){
 				var out = node_expressionUtility.executeOperationResource(dataOperationResourceId, parmArray, resourcesTree);
 				return out;
 			},
-			error : function(){
-				var kkkk = 555;
-				kkkk++;
-			},
-			exception : function(){
-				var kkkk = 555;
-				kkkk++;
-			}
 		});
 		
 		out.setDependentService(resourceRequestDependency);
