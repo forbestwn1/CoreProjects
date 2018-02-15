@@ -48,7 +48,7 @@
 
 		var loc_out = 
 		{
-			ovr_preInit : function(){
+			preInit : function(){
 				loc_contextVariableGroup = node_createContextVariablesGroup(loc_env.getContext(), undefined, function(){
 					loc_updateView();
 				});
@@ -57,18 +57,18 @@
 				});
 			},
 				
-			ovr_initViews : function(startEle, endEle, requestInfo){
+			initViews : function(requestInfo){
 				loc_view = $('<textarea rows="15" cols="150" id="aboutDescription" style="resize: none;" data-role="none"></textarea>');
 				return loc_view;
 			},
 				
-			ovr_postInit : function(){
+			postInit : function(){
 				loc_updateView();
 			},
 
-			ovr_processAttribute : function(name, value){},
+			processAttribute : function(name, value){},
 
-			ovr_handleDataEvent : function(name, event, path, data, requestInfo){	},
+			handleDataEvent : function(name, event, path, data, requestInfo){	},
 		};
 		return loc_out;
 	}

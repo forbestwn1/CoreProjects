@@ -76,6 +76,8 @@ public class HAPConstant {
 		public static final String DATAOPERATION_COMPLEX_SETCHILDDATA = "setChildData";
 		public static final String DATAOPERATION_COMPLEX_ISACCESSCHILDBYID = "isAccessChildById";
 		public static final String DATAOPERATION_COMPLEX_LENGTH = "length";
+		public static final String DATAOPERATION_COMPLEX_ADDCHILD = "addChild";
+		public static final String DATAOPERATION_COMPLEX_REMOVECHILD = "removeChild";
 
 
 

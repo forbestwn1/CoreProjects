@@ -27,6 +27,23 @@
 			<output criteria="test.boolean;1.0.0"/>
 		</operation>
 
+		<operation name="addChild" >
+			<parms>
+				<parm name="base" criteria="test.array" isBase="true"/>
+				<parm name="index" criteria="test.integer"/>
+				<parm name="child" criteria="*"/>
+			</parms>
+			<output criteria="*"/>
+		</operation>
+
+		<operation name="removeChild" >
+			<parms>
+				<parm name="base" criteria="test.array" isBase="true"/>
+				<parm name="index" criteria="test.integer"/>
+			</parms>
+			<output criteria="*"/>
+		</operation>
+
 		<operation name="length" >
 			<parms>
 				<parm name="base" criteria="test.map" isBase="true"/>

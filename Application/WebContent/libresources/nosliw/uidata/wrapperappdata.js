@@ -71,7 +71,7 @@ var node_createWraperData = function(){
 			success : function(request, value){
 				return {
 					base : value,
-					attribute : sets.getRestPath()
+					attribute : segs.getRestPath()
 				}
 			}
 		});
@@ -100,29 +100,61 @@ var node_createWraperData = function(){
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DataOperation", {"command":command, "operationData":operationData}), handlers, request);
 
 				if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
-					loc_getOperationBaseRequest(value, operationData.path, undefined, 1, {
+					out.addRequest(loc_getOperationBaseRequest(value, operationData.path, undefined, 1, {
 						success : function(requestInfo, operationBase){
 							var operationParms = [];
-							operationParms.push(new node_OperationParm(parentValue, "base"));
+							operationParms.push(new node_OperationParm(operationBase.base, "base"));
 							operationParms.push(new node_OperationParm({
 								dataTypeId: "test.string;1.0.0",
-								value : path
+								value : operationBase.path
 							}, "name"));
-							operationParms.push(operationData.value);
+							operationParms.push(new node_OperationParm(operationData.value, "value"));
 
 							return nosliw.runtime.getExpressionService().getExecuteOperationRequest(
 									operationBase.base.dataTypeId, 
 									node_COMMONCONSTANT.DATAOPERATION_COMPLEX_SETCHILDDATA, 
 									operationParms);
 						}
-					});
+					}));
 				}
 				else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
-					loc_getOperationBaseRequest(value, operationData.path, undefined, 0, {
-						success : function(requestInfo){
-							
+					out.addRequest(loc_getOperationBaseRequest(value, operationData.path, undefined, 0, {
+						success : function(requestInfo, operationBase){
+							var operationParms = [];
+							operationParms.push(new node_OperationParm(value, "base"));
+							out.addRequest(nosliw.runtime.getExpressionService().getExecuteOperationRequest(
+								value.dataTypeId, 
+								node_COMMONCONSTANT.DATAOPERATION_COMPLEX_ISACCESSCHILDBYID, 
+								operationParms, {
+									success : function(request, isAccessChildById){
+										if(isAccessChildById.value){
+											//througth id
+											
+										}
+										else{
+											//throught index,
+											var operationParms = [];
+											operationParms.push(new node_OperationParm(operationBase.base, "base"));
+											operationParms.push(new node_OperationParm({
+												dataTypeId: "test.integer;1.0.0",
+												value : operationData.index
+											}, "index"));
+											operationParms.push(new node_OperationParm(operationData.value, "child"));
+											out.addRequest(nosliw.runtime.getExpressionService().getExecuteOperationRequest(
+												value.dataTypeId, 
+												node_COMMONCONSTANT.DATAOPERATION_COMPLEX_ADDCHILD, 
+												operationParms, {
+													success : function(request, childValue){
+														return value;
+													}
+												}
+											));
+										}										
+									}
+								}
+							));
 						}
-					});
+					}));
 					
 				}
 				else if(command==node_CONSTANT.WRAPPER_OPERATION_DELETEELEMENT){

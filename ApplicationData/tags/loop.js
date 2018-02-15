@@ -55,7 +55,7 @@
 			var index = 0;
 			loc_env.executeGetHandleEachElementRequest("internal_data", "", 
 			function(containerVar, eleVar, indexVar){
-				if(loc_containerVariable!=undefined){
+				if(loc_containerVariable==undefined){
 					loc_containerVariable = containerVar;
 					
 					loc_containerVariable.registerDataOperationEventListener(undefined, function(event, eventData, requestInfo){

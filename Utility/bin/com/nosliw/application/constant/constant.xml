@@ -230,6 +230,8 @@
 			<definition name="DATAOPERATION_COMPLEX_SETCHILDDATA" value="setChildData" description="operation for get all children names. it is only defined in complex data"/>
 			<definition name="DATAOPERATION_COMPLEX_ISACCESSCHILDBYID" value="isAccessChildById" description="operation for get all children names. Whether is able to access through id"/>
 			<definition name="DATAOPERATION_COMPLEX_LENGTH" value="length" description="operation for get all children names. length of container"/>
+			<definition name="DATAOPERATION_COMPLEX_ADDCHILD" value="addChild" description="operation for get all children names. add child"/>
+			<definition name="DATAOPERATION_COMPLEX_REMOVECHILD" value="removeChild" description="operation for get all children names. add child"/>
 			<definition type="space"/>
 			<definition name="DATAOPERATION_PARM_BASENAME" value="ABCDEFGHIJKLMN"/>
 			<definition type="space"/>

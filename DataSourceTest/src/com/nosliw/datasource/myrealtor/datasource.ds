@@ -19,47 +19,114 @@
             }
         },
         "expressionSuite": {
-        	"expressionDefinitions" : {
+        	"expressions" : {
 	            "main": {
-	                "expression": "?(realtors)?.filter(elementVariableName:&(#test##string___school)&, expression:filterAndProcessRealtor)",
-	                "description": "Variable.method, all constant",
+	                "description": "Main expression, get all realtor & school data",
+	                "execute": [
+	                	{
+	                		"description" : "Find valid schools",
+	                		"expression" : "?(schools)?.filter(elementVariableName:&(#test##string___school)&, expression:findValidSchools)",
+	                		"output" : "validSchools" 
+	                	},
+	                	{
+	                		"description" : "Build realtors",
+	                		"expression" : "?(realtors)?.filter(elementVariableName:&(#test##string___realtor)&, expression:filterAndProcessRealtor)",
+	                		"output" : "" 
+	                	},
+	                	
+	                ],
 	                "constants": {
 	                },
 	                "variableCriterias": {
+	                	"schools" : "",
+	                	"realtors" : ""
+	                },
+	            },
+	            "findValidSchools" : {
+	                "description": "Find valid schools",
+	            	"execute" : [
+	                	{
+	                		"description" : "Find valid schools",
+	                		"expression" : "?(school)?.score.higherThan(parm2:&(shoolScoreMin)&)",
+	                	},
+	            	],
+	                "constants": {
+	                },
+	                "variableCriterias": {
+	                	"school" : ""
 	                },
 	            },
 	            "filterAndProcessRealtor" : {
-	            	"expression" : "!(control)!.diverse(getMatchedSchoolForRealtor.isNull(), yes:null, no:getMatchedSchoolForRealtor.put("name", school.name))"
-	            },
-	            "getMatchedSchoolForRealtor" : {
-	            	"expression" : "?(schools)?.findFirstOne(elementVariableName:&(#test##string___school)&, expression:"isWithinDistance")"
-	            },
-	            "filterSchool: : {
-	            	"expression" : "?(schools)?.filter(elementVariableName:&(#test##string___school)&, expression:)"
-	            },
-	            "isGoodSchool" : {
-	            	"expression" : "?(school)?.score.higherThan(parm2:&(shoolScoreMin)&)"
-	            	"constants" : {
-	            		"shoolScoreMin" : {
-								"dataTypeId": "test.integer",
-								"value": "7"
-						}		
-	            	}
-	            },
-	            "isWithinDistance" : {
-	            	"expression" : "!(test.geo)!.distance(geo1:?(schoolData)?.geo,geo2:?(realData)?.geo).lowerThan(parm2:&(dis)&)",
-	                "variableCriterias": {
-	                	"schoolData" : "test.map",
-	                	"realData"
+	                "description": "Filter realtors and attach related school info to it",
+	            	"execute" : [
+	                	{
+	                		"description" : "Is valid realtor",
+	                		"expression" : "",
+	                		"output" : "isValidRealtor"
+	                	},
+	                	{
+	                		"type" : "branch"
+	                		"expression" : "isValidRealtor",
+	                		"output" : {
+	                			"true" :{
+	                				"Find belong school for realtor",
+	                			},
+	                			"false" : {
+	                				exit with null
+	                			}
+	                		}
+	                	},
+	                	{
+	                		"name" : "Find belong school for realtor",
+	                		"description" : "Find belong school for realtor",
+	                		"expression" : "?(validSchools)?.findFirstOne(elementVariableName:&(#test##string___school)&, expression:"isBelongSchoolForRealotor")",
+	                		"output" : "belongSchool"
+	                	},
+	                	{
+	                		"type" : "branch"
+	                		"expression" : "belongSchool!=null",
+	                		"output" : {
+	                			"true" :{
+	                				"Combine school data and realtor data",
+	                			},
+	                			"false" : {
+	                				exit with null
+	                			}
+	                		}
+	                	},
+	                	{
+	                		"name" : "Combine school data and realtor data",
+	                		"description" : "Combine school data and realtor data",
+	                		"expression" : "map.merge()",
+	                		"output" : "combinedData"
+	                	},
+	            	],
+	                "constants": {
 	                },
-	            	"constants" : {
-	            		"dis" : {
-								"dataTypeId": "test.double",
-								"value": "6"
-						}		
-	            	}
-	            }
-        	}
+	                "variableCriterias": {
+	                	"validSchools" : "",
+	                	"realtor" : ""
+	                },
+	            },
+	            "isBelongSchoolForRealotor" : {
+	                "description": "",
+	            	"execute" : [
+	                	{
+	                		"description" : "Calculate distance between school and realtor",
+			            	"expression" : "!(test.geo)!.distance(geo1:?(schoolData)?.geo,geo2:?(realData)?.geo).lowerThan(parm2:&(dis)&)",
+	                	},
+	            	],
+	                "constants": {
+	                },
+	                "variableCriterias": {
+	                	"school" : "",
+	                	"realtor" : ""
+	                },
+	            },
+	            
+        	},
+            "constants": {
+            },
         },
     },
 

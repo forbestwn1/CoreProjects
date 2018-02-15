@@ -84,6 +84,24 @@ dataTypeDefition.operations['getChildData'] = {
 		}
 };
 
+dataTypeDefition.operations['addChild'] = {
+		operation : function(parms, context){
+			var index = parms.getParm("index").value;
+			var childValue = parms.getParm("child");
+			this.value.splice(index, 0, childValue);
+			return childValue;
+		}
+};
+
+dataTypeDefition.operations['removeChild'] = {
+		operation : function(parms, context){
+			var index = parms.getParm("index").value;
+			var childValue = this.value[index];
+			this.value.splice(index, 1);
+			return childValue;
+		}
+};
+
 dataTypeDefition.operations['getChildDataByIndex'] = {
 		operation : function(parms, context){
 			var index = parms.getParm("index").value;

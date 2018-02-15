@@ -33,20 +33,20 @@ function (env) {
         });
         node_requestProcessor.processRequest(setRequest, false);
     };
-    var loc_out = {ovr_preInit: function () {
+    var loc_out = {preInit: function () {
         loc_contextVariableGroup = node_createContextVariablesGroup(loc_env.getContext(), undefined, function () {
             loc_updateView();
         });
         _.each(loc_env.getContext().getElementsName(), function (eleName, index) {
             loc_contextVariableGroup.addVariable(node_createContextVariableInfo(eleName));
         });
-    }, ovr_initViews: function (startEle, endEle, requestInfo) {
+    }, initViews: function (requestInfo) {
         loc_view = $("<textarea rows=\"15\" cols=\"150\" id=\"aboutDescription\" style=\"resize: none;\" data-role=\"none\"></textarea>");
         return loc_view;
-    }, ovr_postInit: function () {
+    }, postInit: function () {
         loc_updateView();
-    }, ovr_processAttribute: function (name, value) {
-    }, ovr_handleDataEvent: function (name, event, path, data, requestInfo) {
+    }, processAttribute: function (name, value) {
+    }, handleDataEvent: function (name, event, path, data, requestInfo) {
     }};
     return loc_out;
 }
