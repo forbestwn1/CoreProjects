@@ -290,7 +290,9 @@ var COMMONCONSTANT=
   "RUNTIME_ENVIRONMENT_RHINO": "rhino",
   "RUNTIME_ENVIRONMENT_BROWSER": "browser",
   "RUNTIME_LANGUAGE_JS_GATEWAY": "runtime.gateway",
-  "CATEGARY_NAME": "CATEGARY_NAME"
+  "CATEGARY_NAME": "CATEGARY_NAME",
+  "DATATASK_TYPE_EXPRESSION": "expression",
+  "EXPRESSIONTASK_STEPTYPE_EXPRESSION": "expression"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

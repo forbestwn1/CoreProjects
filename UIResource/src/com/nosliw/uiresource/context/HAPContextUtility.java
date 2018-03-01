@@ -10,10 +10,10 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPTaskManager;
 import com.nosliw.uiresource.definition.HAPConstantDef;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
@@ -29,7 +29,7 @@ import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPContextUtility {
 
-	public static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionManager expressionManager){
+	public static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPTaskManager expressionManager){
 
 		HAPUIResourceExpressionContext expContext = uiDefinition.getExpressionContext();
 
@@ -51,11 +51,11 @@ public class HAPContextUtility {
 		//get all expressions definitions
 		//expression from parent first
 		if(parent!=null){
-			Map<String, HAPExpressionDefinition> parentExpDefs = parentExpContext.getExpressionDefinitions();
+			Map<String, HAPDefinitionTask> parentExpDefs = parentExpContext.getExpressionDefinitions();
 			for(String id : parentExpDefs.keySet())    expContext.addExpressionDefinition(parentExpDefs.get(id));
 		}
 		//expression from current
-		for(HAPExpressionDefinition expDef : uiDefinition.getOtherExpressionDefinitions())	expContext.addExpressionDefinition(expDef);
+		for(HAPDefinitionTask expDef : uiDefinition.getOtherExpressionDefinitions())	expContext.addExpressionDefinition(expDef);
 		
 		//children ui tags
 		Iterator<HAPUIDefinitionUnitTag> its = uiDefinition.getUITags().iterator();
@@ -66,7 +66,7 @@ public class HAPContextUtility {
 		}
 	}
 	
-	private static void buildUITagContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnitTag uiTag, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionManager expressionManager){
+	private static void buildUITagContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnitTag uiTag, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPTaskManager expressionManager){
 		//get contextDef from uiTag first
 		HAPUITagDefinitionContext contextDefinition = uiTag.getContextDefinition();
 		//if not exist, then from tag definition
@@ -103,7 +103,7 @@ public class HAPContextUtility {
 	}
 
 	//evaluate embeded script expression
-	private static String getSolidName(String name, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPExpressionManager expressionManager){
+	private static String getSolidName(String name, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPTaskManager expressionManager){
 		HAPEmbededScriptExpression se = new HAPEmbededScriptExpression(null, name, expressionManager);
 		HAPRuntimeTaskExecuteEmbededExpression task = new HAPRuntimeTaskExecuteEmbededExpression(se, null, new LinkedHashMap<String, Object>(uiDefinition.getAttributes()));
 		HAPServiceData serviceData = runtime.executeTaskSync(task);
@@ -112,13 +112,13 @@ public class HAPContextUtility {
 	}
 
 	//process all the name get solid name and create new contextNode
-	private static HAPContextNode buildSolidContextNode(HAPContextNode contextNode, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPExpressionManager expressionManager){
+	private static HAPContextNode buildSolidContextNode(HAPContextNode contextNode, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPTaskManager expressionManager){
 		HAPContextNode out = new HAPContextNode();
 		buildSolidContextNode(contextNode, out, uiDefinition, runtime, expressionManager);
 		return out;
 	}
 	
-	private static void buildSolidContextNode(HAPContextNode def, HAPContextNode solid, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPExpressionManager expressionManager){
+	private static void buildSolidContextNode(HAPContextNode def, HAPContextNode solid, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPTaskManager expressionManager){
 		solid.setDefinition(def.getDefinition());
 		for(String name : def.getChildren().keySet()){
 			String solidName = getSolidName(name, uiDefinition, runtime, expressionManager);
@@ -143,7 +143,7 @@ public class HAPContextUtility {
 	}
 	
 	//convert context element in ui tag to context element in ui resource/tag
-	private static HAPContextNodeRoot processUITagDefinitionContextElement(String defRootEleName, HAPUITagDefinitionContextElment defContextElement, HAPUIDefinitionUnit parentUnit, HAPDataTypeHelper dataTypeHelper, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPExpressionManager expressionManager){
+	private static HAPContextNodeRoot processUITagDefinitionContextElement(String defRootEleName, HAPUITagDefinitionContextElment defContextElement, HAPUIDefinitionUnit parentUnit, HAPDataTypeHelper dataTypeHelper, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPTaskManager expressionManager){
 		String type = defContextElement.getType();
 		switch(type){
 			case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:

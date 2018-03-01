@@ -10,12 +10,12 @@ import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate;
-import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.data.core.expression.HAPOperand;
-import com.nosliw.data.core.expression.HAPOperandWrapper;
+import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
+import com.nosliw.data.core.operand.HAPOperand;
+import com.nosliw.data.core.operand.HAPOperandWrapper;
 
-public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity implements HAPExpressionDefinition{
+public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity implements HAPDefinitionTask{
 
 	public static String _VALUEINFO_NAME;
 	
@@ -66,7 +66,7 @@ public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity impl
 	@Override
 	public Map<String, HAPReferenceInfo> getReferences() {  return this.getMapAncestorByPath(REFERENCES).getMapValue();  }
 	
-	public HAPExpressionDefinition cloneExpressionDefinition(){
+	public HAPDefinitionTask cloneTaskDefinition(){
 		HAPExpressionDefinitionImpStr out = this.clone(HAPExpressionDefinitionImpStr.class);
 
 		Map<String, HAPDataTypeCriteria> vars = this.getMapAncestorByPath(VARIABLECRITERIAS).getMapValue();

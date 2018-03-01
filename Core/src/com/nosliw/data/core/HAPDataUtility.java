@@ -9,6 +9,18 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public class HAPDataUtility {
 
+	public static HAPDataWrapper buildDataWrapperFromObject(Object obj){
+		HAPDataWrapper out = null;
+		if(obj instanceof String){
+			out = buildDataWrapper((String)obj);
+		}
+		else if(obj instanceof JSONObject){
+			out = buildDataWrapperFromJson((JSONObject)obj);
+		}
+		return out;
+	}
+	
+	
 	public static HAPDataWrapper buildDataWrapper(String strValue){
 		HAPDataWrapper wrapper = new HAPDataWrapper();
 		if(wrapper.buildObjectByLiterate(strValue))  return wrapper;
@@ -20,11 +32,6 @@ public class HAPDataUtility {
 		boolean result = wrapper.buildObjectByJson(jsonObj);
 		if(result)   return wrapper;
 		else return null;
-	}
-	
-	public static HAPDataTypeCriteria buildDataTypeCriteriaFromJson(JSONObject jsonObj){
-		HAPDataTypeCriteria out = (HAPDataTypeCriteria)HAPSerializeManager.getInstance().buildObject(HAPDataTypeCriteria.class.getName(), jsonObj, HAPSerializationFormat.JSON_FULL); 
-		return out;
 	}
 	
 	public static boolean isNormalDataOpration(HAPOperation operation){

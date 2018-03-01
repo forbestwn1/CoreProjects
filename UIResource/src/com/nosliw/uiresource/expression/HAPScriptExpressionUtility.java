@@ -13,11 +13,11 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
+import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPTaskManager;
 
 public class HAPScriptExpressionUtility {
 
@@ -33,7 +33,7 @@ public class HAPScriptExpressionUtility {
 	 */
 	public static List<Object> discoverUIExpressionInText(
 			String text, 
-			HAPExpressionManager expressionMan){
+			HAPTaskManager expressionMan){
 		List<Object> out = new ArrayList<Object>();
 		int i = 0;
 		int start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
@@ -121,8 +121,8 @@ public class HAPScriptExpressionUtility {
 		StringBuffer funScript = new StringBuffer();
 		Map<String, HAPExpression> expressions = new LinkedHashMap<String, HAPExpression>();
 		for(Object ele : scriptExpression.getElements()){
-			if(ele instanceof HAPExpressionDefinition){
-				HAPExpressionDefinition expression = (HAPExpressionDefinition)ele;
+			if(ele instanceof HAPDefinitionTask){
+				HAPDefinitionTask expression = (HAPDefinitionTask)ele;
 				funScript.append(expressionsDataParmName+"[\""+expression.getName()+"\"]");
 			}
 			else if(ele instanceof HAPScriptExpressionScriptSegment){

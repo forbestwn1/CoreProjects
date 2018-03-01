@@ -16,7 +16,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.expression.HAPExpressionDefinition;
+import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.uiresource.context.HAPContextGroup;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
 
@@ -111,7 +111,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	//the script factory name for creating script object for ui resource view
 	private String m_scriptFactoryName;
 	
-	private Map<String, HAPExpressionDefinition> m_expressionDefinitions;
+	private Map<String, HAPDefinitionTask> m_expressionDefinitions;
 	
 	//expression unit
 	private HAPUIResourceExpressionContext m_expressionContext;
@@ -128,13 +128,13 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		this.m_attributes = new LinkedHashMap<String, String>();
 		this.m_constantDefs = new LinkedHashMap<String, HAPConstantDef>();
 		this.m_constantValues = new LinkedHashMap<String, Object>();
-		this.m_expressionDefinitions = new LinkedHashMap<String, HAPExpressionDefinition>();
+		this.m_expressionDefinitions = new LinkedHashMap<String, HAPDefinitionTask>();
 		this.m_expressionContext = new HAPUIResourceExpressionContext();
 	}
 	
 	abstract public String getType(); 
 
-	public Set<HAPExpressionDefinition> getOtherExpressionDefinitions(){  return new HashSet(this.m_expressionDefinitions.values());	}
+	public Set<HAPDefinitionTask> getOtherExpressionDefinitions(){  return new HashSet(this.m_expressionDefinitions.values());	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -228,7 +228,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public HAPUIResourceExpressionContext getExpressionContext(){   return this.m_expressionContext;   }
 	public void setExpressionContext(HAPUIResourceExpressionContext context){  this.m_expressionContext = context;   }
 	
-	public void addExpressionDefinition(HAPExpressionDefinition expressionDef){		this.m_expressionDefinitions.put(expressionDef.getName(), expressionDef);	}
+	public void addExpressionDefinition(HAPDefinitionTask expressionDef){		this.m_expressionDefinitions.put(expressionDef.getName(), expressionDef);	}
 	
 	/*
 	 * process attributes

@@ -14,9 +14,9 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.expression.HAPExpressionDefinitionSuiteForTest;
-import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
+import com.nosliw.data.core.task.HAPDefinitionTaskSuiteForTest;
+import com.nosliw.data.core.task.HAPTaskManager;
 
 @HAPEntityWithAttribute
 public class HAPGatewayLoadTestExpression extends HAPGatewayImp{
@@ -30,10 +30,10 @@ public class HAPGatewayLoadTestExpression extends HAPGatewayImp{
 	@HAPAttribute
 	final public static String COMMAND_LOADTESTEXPRESSION_ELEMENT_VARIABLES = "variables";
 	
-	private HAPExpressionManager m_expressionManager;
+	private HAPTaskManager m_taskManager;
 
-	public HAPGatewayLoadTestExpression(HAPExpressionManager expressionManager){
-		this.m_expressionManager = expressionManager;
+	public HAPGatewayLoadTestExpression(HAPTaskManager taskManager){
+		this.m_taskManager = taskManager;
 	}
 	
 	@Override
@@ -58,8 +58,8 @@ public class HAPGatewayLoadTestExpression extends HAPGatewayImp{
 				}
 			}
 			
-			Map<String, HAPData> varDatas = ((HAPExpressionDefinitionSuiteForTest)this.m_expressionManager.getExpressionDefinitionSuite(suite)).getVariableData();
-			HAPExpression expression = this.m_expressionManager.processExpression(null, expressionName, suite, variableCriterias);
+			Map<String, HAPData> varDatas = ((HAPDefinitionTaskSuiteForTest)this.m_taskManager.getTaskDefinitionSuite(suite)).getVariableData();
+			HAPExpression expression = this.m_taskManager.processExpression(null, expressionName, suite, variableCriterias);
 			HAPResponseGatewayLoadTestExpression response = new HAPResponseGatewayLoadTestExpression(expression, varDatas);
 			out = this.createSuccessWithObject(response);
 			break;

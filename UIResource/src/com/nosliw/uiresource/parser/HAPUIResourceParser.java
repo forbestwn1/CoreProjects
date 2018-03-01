@@ -24,8 +24,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
-import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.data.core.expression.HAPExpressionManager;
+import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPTaskManager;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.context.HAPContextGroup;
@@ -54,9 +54,9 @@ public class HAPUIResourceParser {
 	
 	private HAPValueInfoManager m_valueInfoMan;
 	private HAPCriteriaParser m_criteriaParser;
-	private HAPExpressionManager m_expressionManager;
+	private HAPTaskManager m_expressionManager;
 	
-	public HAPUIResourceParser(HAPConfigure setting, HAPExpressionManager expressionMan, HAPIdGenerator idGenerator){
+	public HAPUIResourceParser(HAPConfigure setting, HAPTaskManager expressionMan, HAPIdGenerator idGenerator){
 		this.m_idGenerator = idGenerator;
 		this.m_setting = setting;
 		this.m_expressionManager = expressionMan;
@@ -185,7 +185,7 @@ public class HAPUIResourceParser {
 					String defName = defNames.next();
 					
 					JSONObject expDefJson = defsJson.optJSONObject(defName);
-					HAPExpressionDefinition expressionDef = (HAPExpressionDefinition)HAPStringableEntityImporterJSON.parseJsonEntity(expDefJson, "data.expressiondefinition", this.m_valueInfoMan);
+					HAPDefinitionTask expressionDef = (HAPDefinitionTask)HAPStringableEntityImporterJSON.parseJsonEntity(expDefJson, "data.expressiondefinition", this.m_valueInfoMan);
 					resource.addExpressionDefinition(expressionDef);
 				}
 				break;

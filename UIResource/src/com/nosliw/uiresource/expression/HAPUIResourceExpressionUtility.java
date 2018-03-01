@@ -7,16 +7,16 @@ import java.util.Map;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.data.core.expression.HAPOperand;
-import com.nosliw.data.core.expression.HAPOperandAttribute;
-import com.nosliw.data.core.expression.HAPOperandConstant;
-import com.nosliw.data.core.expression.HAPOperandOperation;
-import com.nosliw.data.core.expression.HAPOperandTask;
-import com.nosliw.data.core.expression.HAPOperandUtility;
-import com.nosliw.data.core.expression.HAPOperandVariable;
-import com.nosliw.data.core.expression.HAPOperandWrapper;
+import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.expression.HAPParmInOperationOperand;
+import com.nosliw.data.core.operand.HAPOperand;
+import com.nosliw.data.core.operand.HAPOperandAttribute;
+import com.nosliw.data.core.operand.HAPOperandConstant;
+import com.nosliw.data.core.operand.HAPOperandOperation;
+import com.nosliw.data.core.operand.HAPOperandTask;
+import com.nosliw.data.core.operand.HAPOperandUtility;
+import com.nosliw.data.core.operand.HAPOperandVariable;
+import com.nosliw.data.core.operand.HAPOperandWrapper;
 
 public class HAPUIResourceExpressionUtility {
 
@@ -25,7 +25,7 @@ public class HAPUIResourceExpressionUtility {
 	//			replace attribute operation with one variable operation
 	//  for attribute operation a.b.c.d which have responding defintion a.b.c in context, 
 	//			replace attribute operation with one variable operation(a.b.c) and getChild operation
-	public static void processAttributeOperandInExpression(HAPExpressionDefinition expressionDefinition, final Map<String, HAPDataTypeCriteria> varCriterias){
+	public static void processAttributeOperandInExpression(HAPDefinitionTask expressionDefinition, final Map<String, HAPDataTypeCriteria> varCriterias){
 		processAttributeOperandInExpressionOperand(expressionDefinition.getOperand(), varCriterias);
 	}
 	

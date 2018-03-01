@@ -1,5 +1,7 @@
 package com.nosliw.data.core.expression;
 
+import com.nosliw.data.core.operand.HAPOperand;
+
 public class HAPParmInOperationOperand {
 
 	private String m_name;

@@ -18,12 +18,12 @@ import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskExecuteExpressionRhino;
+import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPTaskManager;
 
 public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 
@@ -42,11 +42,11 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 	final public static String COMMAND_EXECUTEEXPRESSION_VARIABLESVALUE = "variablesValue";
 	
 	
-	private HAPExpressionManager m_expressionManager;
+	private HAPTaskManager m_expressionManager;
 	
 	private HAPRuntime m_runtime;
 	
-	public HAPGatewayExpressionDiscovery(HAPExpressionManager expressionManager, HAPRuntime runtime){
+	public HAPGatewayExpressionDiscovery(HAPTaskManager expressionManager, HAPRuntime runtime){
 		this.m_expressionManager = expressionManager;
 		this.m_runtime = runtime;
 	}
@@ -58,7 +58,7 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 		case COMMAND_GETOUTPUTCRITERIA:
 		{
 			JSONObject expressionDefJSON = parms.getJSONObject(COMMAND_GETOUTPUTCRITERIA_EXPRESSION);
-			HAPExpressionDefinition expressionDefinition = (HAPExpressionDefinition)HAPStringableEntityImporterJSON.parseJsonEntity(expressionDefJSON, "data.expressiondefinition", HAPValueInfoManager.getInstance());
+			HAPDefinitionTask expressionDefinition = (HAPDefinitionTask)HAPStringableEntityImporterJSON.parseJsonEntity(expressionDefJSON, "data.expressiondefinition", HAPValueInfoManager.getInstance());
 			
 			Map<String, HAPDataTypeCriteria> varCriterias = new LinkedHashMap<String, HAPDataTypeCriteria>();
 			JSONObject varCriteriasJson = parms.getJSONObject(COMMAND_GETOUTPUTCRITERIA_VARIABLESCRITERIA);
@@ -78,7 +78,7 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 		case COMMAND_EXECUTEEXPRESSION:
 		{
 			JSONObject expressionDefJSON = parms.getJSONObject(COMMAND_EXECUTEEXPRESSION_EXPRESSION);
-			HAPExpressionDefinition expressionDefinition = (HAPExpressionDefinition)HAPStringableEntityImporterJSON.parseJsonEntity(expressionDefJSON, "data.expressiondefinition", HAPValueInfoManager.getInstance());
+			HAPDefinitionTask expressionDefinition = (HAPDefinitionTask)HAPStringableEntityImporterJSON.parseJsonEntity(expressionDefJSON, "data.expressiondefinition", HAPValueInfoManager.getInstance());
 
 			Map<String, HAPData> expressionParms = new LinkedHashMap<String, HAPData>();
 			Map<String, HAPDataTypeCriteria> varCriterias = new LinkedHashMap<String, HAPDataTypeCriteria>();

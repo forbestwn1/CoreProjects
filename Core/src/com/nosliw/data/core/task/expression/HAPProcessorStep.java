@@ -1,0 +1,37 @@
+package com.nosliw.data.core.task.expression;
+
+import java.util.Map;
+
+import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.expression.HAPMatchers;
+import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
+import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPExecutable;
+import com.nosliw.data.core.task.HAPProcessTaskContext;
+
+public interface HAPProcessorStep {
+
+	/**
+	 * Process expression definition
+	 * 		parse it to operand
+	 * 		solve constant
+	 * 		solve reference
+	 * 		discovery 
+	 * @param id  the id assigned to expression
+	 * @param expDef   expression definition need to process
+	 * @param contextExpressionDefinitions   other expressions that may need during solving reference
+	 * @param variableCriterias   variable criterias that need to respect during discovery
+	 * @return
+	 */
+	HAPExecutable process(
+			HAPDefinitionStep stepDefinition,
+			Map<String, HAPDefinitionTask> contextTaskDefinitions, 
+			Map<String, HAPData> contextConstants,
+			HAPProcessTaskContext context
+	);
+
+	HAPMatchers discover(Map<String, HAPVariableInfo> parentVariablesInfo, HAPDataTypeCriteria expectOutputCriteria, HAPProcessExpressionDefinitionContext context);
+	
+}

@@ -22,4 +22,8 @@ public class HAPCriteriaUtility {
 		}
 		return out;
 	}
+	
+	  public static HAPDataTypeCriteria parseCriteria(String criteria){
+		  return HAPCriteriaParser.getInstance().parseCriteria(criteria);
+	  }	
 }

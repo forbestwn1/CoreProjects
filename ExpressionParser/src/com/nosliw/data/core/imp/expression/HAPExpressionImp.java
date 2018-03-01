@@ -16,17 +16,17 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.data.core.expression.HAPOperandTask;
-import com.nosliw.data.core.expression.HAPOperandUtility;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expression.HAPMatchers;
-import com.nosliw.data.core.expression.HAPOperand;
-import com.nosliw.data.core.expression.HAPOperandVariable;
-import com.nosliw.data.core.expression.HAPOperandWrapper;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
 import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.operand.HAPOperand;
+import com.nosliw.data.core.operand.HAPOperandTask;
+import com.nosliw.data.core.operand.HAPOperandUtility;
+import com.nosliw.data.core.operand.HAPOperandVariable;
+import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.task.HAPDefinitionTask;
 
 /**
  * Parsed expression 
@@ -40,7 +40,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	private String m_name;
 	
 	// original expression definition
-	private HAPExpressionDefinition m_expressionDefinition;
+	private HAPDefinitionTask m_expressionDefinition;
 
 	// parsed operand in expression
 	private HAPOperandWrapper m_operand;
@@ -66,7 +66,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	// it convert variable from caller to variable in expression
 	private Map<String, HAPMatchers> m_varsMatchers;
 	
-	public HAPExpressionImp(HAPExpressionDefinition expressionDefinition, HAPOperand operand){
+	public HAPExpressionImp(HAPDefinitionTask expressionDefinition, HAPOperand operand){
 		this.m_references = new LinkedHashMap<String, HAPExpression>();
 		this.m_errorMsgs = new ArrayList<String>();
 		this.m_expressionDefinition = expressionDefinition;
@@ -121,7 +121,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	}
 	
 	@Override
-	public HAPExpressionDefinition getExpressionDefinition() {		return this.m_expressionDefinition;	}
+	public HAPDefinitionTask getExpressionDefinition() {		return this.m_expressionDefinition;	}
 
 	@Override
 	public HAPOperandWrapper getOperand() {  return this.m_operand;  }

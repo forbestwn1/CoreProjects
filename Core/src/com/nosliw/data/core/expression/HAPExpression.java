@@ -7,13 +7,16 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPExecutable;
 
 /**
  * Expression object we get after processing HAPExpressionDefinition
  *  
  */
 @HAPEntityWithAttribute(baseName="EXPRESSION")
-public interface HAPExpression {
+public interface HAPExpression extends HAPExecutable{
 
 	@HAPAttribute
 	public static String ID = "id";
@@ -48,7 +51,7 @@ public interface HAPExpression {
 	void setName(String name);
 	
 	//ExpressionDefinition used to define expression
-	HAPExpressionDefinition getExpressionDefinition();
+	HAPDefinitionTask getExpressionDefinition();
 	
 	//Operand to represent the expression
 	HAPOperandWrapper getOperand();

@@ -28,7 +28,6 @@ import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.HAPOperationParm;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
-import com.nosliw.data.core.expression.HAPExpressionDefinition;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
@@ -43,6 +42,7 @@ import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
 import com.nosliw.data.core.runtime.js.resource.HAPJSLibraryId;
+import com.nosliw.data.core.task.HAPDefinitionTask;
 
 @HAPEntityWithAttribute
 public class HAPRuntimeImpRhino implements HAPRuntime{
@@ -102,7 +102,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	@Override
 	public HAPServiceData executeExpressionSync(String expressionStr, Map<String, HAPData> parmsData) {
 		//new expression definition
-		HAPExpressionDefinition expDefinition = this.getRuntimeEnvironment().getExpressionManager().newExpressionDefinition(expressionStr, null, parmsData, null); 
+		HAPDefinitionTask expDefinition = this.getRuntimeEnvironment().getExpressionManager().newExpressionDefinition(expressionStr, null, parmsData, null); 
 		//build expression obj
 		HAPExpression expression = this.getRuntimeEnvironment().getExpressionManager().processExpression(null, expDefinition, new LinkedHashMap<String, HAPData>(), null, HAPExpressionProcessConfigureUtil.setDontDiscovery(null));
 		//execute task

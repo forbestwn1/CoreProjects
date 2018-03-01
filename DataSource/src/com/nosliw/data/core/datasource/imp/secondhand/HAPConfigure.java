@@ -9,8 +9,8 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.expression.HAPExpressionDefinitionSuite;
-import com.nosliw.data.core.imp.expression.HAPExpressionImporter;
+import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
+import com.nosliw.data.core.task.expression.HAPExpressionTaskImporter;
 
 @HAPEntityWithAttribute
 public class HAPConfigure extends HAPSerializableImp{
@@ -24,7 +24,7 @@ public class HAPConfigure extends HAPSerializableImp{
 	
 	private Map<String, HAPDependentDataSource> m_dependentDataSources;
 	
-	private HAPExpressionDefinitionSuite m_expressionSuite;
+	private HAPDefinitionTaskSuite m_expressionSuite;
 	
 	public HAPConfigure(){
 		this.m_dependentDataSources = new LinkedHashMap<String, HAPDependentDataSource>();
@@ -35,7 +35,7 @@ public class HAPConfigure extends HAPSerializableImp{
 		return this.m_dependentDataSources;
 	}
 
-	public HAPExpressionDefinitionSuite getExpressionSuite(){
+	public HAPDefinitionTaskSuite getExpressionSuite(){
 		return this.m_expressionSuite;
 	}
 	
@@ -57,7 +57,7 @@ public class HAPConfigure extends HAPSerializableImp{
 			}
 			
 			JSONObject expressionSuiteJson = (JSONObject)objJson.opt(EXPRESSIONSUITE);
-		    this.m_expressionSuite = HAPExpressionImporter.importExpressionDefinitionSuiteFromJSON(expressionSuiteJson); 
+		    this.m_expressionSuite = HAPExpressionTaskImporter.importTaskDefinitionSuiteFromJSON(expressionSuiteJson); 
 		}
 		catch(Exception e){
 			e.printStackTrace();

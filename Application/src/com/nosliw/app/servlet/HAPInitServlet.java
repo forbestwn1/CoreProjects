@@ -4,8 +4,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.imp.expression.HAPExpressionImporter;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
+import com.nosliw.data.core.task.expression.HAPExpressionTaskImporter;
 import com.nosliw.data.expression.test.HAPExpressionTest;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.resource.HAPResourceManagerUIResource;
@@ -21,7 +21,7 @@ public class HAPInitServlet  extends HttpServlet{
 			//create runtime
 			HAPRuntimeEnvironmentImpBrowser runtimeEnvironment = new HAPRuntimeEnvironmentImpBrowser();
 
-			HAPExpressionImporter.importExpressionSuiteFromClassFolder(HAPExpressionTest.class, runtimeEnvironment.getExpressionManager());
+			HAPExpressionTaskImporter.importTaskDefinitionSuiteFromClassFolder(HAPExpressionTest.class, runtimeEnvironment.getExpressionManager());
 
 			//set runtime object to context
 			this.getServletContext().setAttribute("runtime", runtimeEnvironment);

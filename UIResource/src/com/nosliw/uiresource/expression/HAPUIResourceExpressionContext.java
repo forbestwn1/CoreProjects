@@ -5,9 +5,9 @@ import java.util.Map;
 
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.data.core.expression.HAPExpressionDefinitionSuite;
 import com.nosliw.data.core.imp.expression.HAPExpressionDefinitionSuiteImp;
+import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
 
 //every ui resource/tag has its own context for processing expressions: 
 //		supporting expression in suite
@@ -26,10 +26,10 @@ public class HAPUIResourceExpressionContext {
 		this.m_variables = new LinkedHashMap<String, HAPDataTypeCriteria>();
 	}
 	
-	public HAPExpressionDefinitionSuite getExpressionDefinitionSuite(){		return this.m_expressionDefinitionSuite;	}
+	public HAPDefinitionTaskSuite getExpressionDefinitionSuite(){		return this.m_expressionDefinitionSuite;	}
 	public Map<String, HAPDataTypeCriteria> getVariables(){  return this.m_variables;  }
 	public Map<String, HAPData> getConstants(){  return this.m_expressionDefinitionSuite.getConstants();  }
-	public Map<String, HAPExpressionDefinition> getExpressionDefinitions(){  return this.m_expressionDefinitionSuite.getAllExpressionDefinitions();   }
+	public Map<String, HAPDefinitionTask> getExpressionDefinitions(){  return this.m_expressionDefinitionSuite.getAllTaskDefinitions();   }
 	
 	public void addConstant(String name, HAPData data){  this.m_expressionDefinitionSuite.addConstant(name, data);  }
 	public void addConstants(Map<String, HAPData> datas){  
@@ -37,7 +37,7 @@ public class HAPUIResourceExpressionContext {
 			this.m_expressionDefinitionSuite.addConstant(name, datas.get(name));  
 		}
 	}
-	public void addExpressionDefinition(HAPExpressionDefinition expressionDefinition){  this.m_expressionDefinitionSuite.addExpressionDefinition(expressionDefinition);  }
+	public void addExpressionDefinition(HAPDefinitionTask expressionDefinition){  this.m_expressionDefinitionSuite.addExpressionDefinition(expressionDefinition);  }
 	public void addVariables(Map<String, HAPDataTypeCriteria> variables){  this.m_variables.putAll(variables);  }
 	public void addVariable(String name, HAPDataTypeCriteria criteria){  this.m_variables.put(name, criteria);  }
 	

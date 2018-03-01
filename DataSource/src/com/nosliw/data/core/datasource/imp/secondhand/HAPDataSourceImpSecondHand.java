@@ -14,22 +14,22 @@ import com.nosliw.data.core.datasource.HAPDataSourceDefinition;
 import com.nosliw.data.core.datasource.HAPDataSourceDefinitionManager;
 import com.nosliw.data.core.datasource.HAPDataSourceParm;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.data.core.expression.HAPExpressionDefinitionSuite;
-import com.nosliw.data.core.expression.HAPExpressionManager;
-import com.nosliw.data.core.expression.HAPOperandTask;
-import com.nosliw.data.core.expression.HAPOperandUtility;
-import com.nosliw.data.core.expression.HAPOperandVariable;
-import com.nosliw.data.core.expression.HAPOperandWrapper;
+import com.nosliw.data.core.operand.HAPOperandTask;
+import com.nosliw.data.core.operand.HAPOperandUtility;
+import com.nosliw.data.core.operand.HAPOperandVariable;
+import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskExecuteExpressionRhino;
+import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
+import com.nosliw.data.core.task.HAPTaskManager;
 
 public class HAPDataSourceImpSecondHand implements HAPDataSource{
 
 	private HAPDataSourceDefinitionManager m_dataSourceDefinitionManager;
 	
-	private HAPExpressionManager m_expressionManager;
+	private HAPTaskManager m_expressionManager;
 	
 	private HAPRuntime m_runtime;
 	
@@ -40,7 +40,7 @@ public class HAPDataSourceImpSecondHand implements HAPDataSource{
 	public HAPDataSourceImpSecondHand(
 			HAPDataSourceDefinition dataSourceDefinition, 
 			HAPDataSourceDefinitionManager dataSourceDefinitionManager,
-			HAPExpressionManager expressionManager,
+			HAPTaskManager expressionManager,
 			HAPRuntime runtime){
 		this.m_dataSourceDefinitionManager = dataSourceDefinitionManager;
 		this.m_runtime = runtime;
@@ -62,10 +62,10 @@ public class HAPDataSourceImpSecondHand implements HAPDataSource{
 			mappedDataSourceNames.put(mappedName, dependentDataSources.get(mappedName).getName());
 		}
 		
-		HAPExpressionDefinitionSuite expressionSuite = this.m_configure.getExpressionSuite();
-		Map<String, HAPExpressionDefinition> expressions = expressionSuite.getAllExpressionDefinitions();
+		HAPDefinitionTaskSuite expressionSuite = this.m_configure.getExpressionSuite();
+		Map<String, HAPDefinitionTask> expressions = expressionSuite.getAllTaskDefinitions();
 		for(String expName : expressions.keySet()){
-			HAPExpressionDefinition expDef = expressions.get(expName);
+			HAPDefinitionTask expDef = expressions.get(expName);
 			
 			//add data source parms to expression as variable
 			Map<String, HAPDataSourceParm> dataSourceParms = this.m_dataSourceDefinition.getParms();

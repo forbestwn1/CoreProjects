@@ -449,4 +449,12 @@ public class HAPConstant {
 		public static final String CATEGARY_NAME = "CATEGARY_NAME";
 
 
+
+		public static final String DATATASK_TYPE_EXPRESSION = "expression";
+
+
+
+		public static final String EXPRESSIONTASK_STEPTYPE_EXPRESSION = "expression";
+
+
 }

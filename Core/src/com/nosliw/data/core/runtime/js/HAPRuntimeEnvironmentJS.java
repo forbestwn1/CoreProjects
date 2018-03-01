@@ -2,7 +2,6 @@ package com.nosliw.data.core.runtime.js;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
@@ -10,6 +9,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayCriteriaOperation;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayExpressionDiscovery;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
+import com.nosliw.data.core.task.HAPTaskManager;
 
 @HAPEntityWithAttribute(baseName="RUNTIME")
 public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
@@ -28,7 +28,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 	private HAPResourceManagerRoot m_resourceManager;
 	
-	private HAPExpressionManager m_expressionManager;
+	private HAPTaskManager m_expressionManager;
 	
 	private HAPGatewayManager m_gatewayManager;
 	
@@ -37,7 +37,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	public HAPRuntimeEnvironmentJS(){}
 	
 	public HAPRuntimeEnvironmentJS(HAPResourceManagerRoot resourceMan, 
-								   HAPExpressionManager expressionManager,
+								   HAPTaskManager expressionManager,
 								    HAPGatewayManager gatewayManager,
 								   HAPRuntime runtime){
 		super();
@@ -45,7 +45,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	}
 	
 	protected void init(HAPResourceManagerRoot resourceMan, 
-					    HAPExpressionManager expressionManager,
+					    HAPTaskManager expressionManager,
 					    HAPGatewayManager gatewayManager,
 					    HAPRuntime runtime){ 
 		this.m_resourceManager = resourceMan;
@@ -66,7 +66,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	public HAPResourceManagerRoot getResourceManager() {		return this.m_resourceManager;	}
 
 	@Override
-	public HAPExpressionManager getExpressionManager(){  return this.m_expressionManager;  }
+	public HAPTaskManager getExpressionManager(){  return this.m_expressionManager;  }
 
 	@Override
 	public HAPGatewayManager getGatewayManager(){  return this.m_gatewayManager;   }

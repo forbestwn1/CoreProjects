@@ -5,9 +5,9 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.task.HAPTaskManager;
 import com.nosliw.uiresource.context.HAPContextGroup;
 import com.nosliw.uiresource.context.HAPContextUtility;
 import com.nosliw.uiresource.definition.HAPConstantUtility;
@@ -22,7 +22,7 @@ public class HAPUIResourceManager {
 
 	private Map<String, HAPUIDefinitionUnitResource> m_uiResourceDefinitions;
 	
-	private HAPExpressionManager m_expressionMan; 
+	private HAPTaskManager m_expressionMan; 
 	
 	private HAPResourceManagerRoot m_resourceMan;
 
@@ -36,7 +36,7 @@ public class HAPUIResourceManager {
 
 	public HAPUIResourceManager(
 			HAPUITagManager uiTagMan,
-			HAPExpressionManager expressionMan, 
+			HAPTaskManager expressionMan, 
 			HAPResourceManagerRoot resourceMan, 
 			HAPRuntime runtime, 
 			HAPDataTypeHelper dataTypeHelper){

@@ -8,12 +8,12 @@ import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
-import com.nosliw.data.core.expression.HAPExpressionDefinition;
-import com.nosliw.data.core.expression.HAPExpressionDefinitionSuiteForTest;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expression.HAPReferenceInfo;
+import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPDefinitionTaskSuiteForTest;
 
-public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity implements HAPExpressionDefinitionSuiteForTest {
+public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity implements HAPDefinitionTaskSuiteForTest {
 
 	public static String _VALUEINFO_NAME;
 
@@ -29,7 +29,7 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 	@HAPAttribute
 	public static String CONFIGURE = "configure";
 	
-	private Map<String, HAPExpressionDefinition> m_expressionDefinitions;
+	private Map<String, HAPDefinitionTask> m_expressionDefinitions;
 
 	private String m_name;
 	
@@ -49,8 +49,8 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 	}
 	
 	@Override
-	public HAPExpressionDefinition getExpressionDefinition(String name) {
-		return this.getAllExpressionDefinitions().get(name);
+	public HAPDefinitionTask getTaskDefinition(String name) {
+		return this.getAllTaskDefinitions().get(name);
 	}
 
 	@Override
@@ -63,10 +63,10 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 	public void addConstant(String name, HAPData data){		this.getConstants().put(name, data);	}
 
 	@Override
-	public Map<String, HAPExpressionDefinition> getAllExpressionDefinitions(){
+	public Map<String, HAPDefinitionTask> getAllTaskDefinitions(){
 		if(this.m_expressionDefinitions==null){
 			this.m_expressionDefinitions = this.getMapValueAncestorByPath(EXPRESSIONDEFINITIONS);
-			if(this.m_expressionDefinitions==null)   this.m_expressionDefinitions = new LinkedHashMap<String, HAPExpressionDefinition>();
+			if(this.m_expressionDefinitions==null)   this.m_expressionDefinitions = new LinkedHashMap<String, HAPDefinitionTask>();
 			else{
 				for(String name : this.m_expressionDefinitions.keySet()){
 					this.processExpressionDefinition(this.m_expressionDefinitions.get(name));
@@ -93,12 +93,12 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 		return varsData;
 	}
 
-	public void addExpressionDefinition(HAPExpressionDefinition expressionDefinition){
+	public void addExpressionDefinition(HAPDefinitionTask expressionDefinition){
 		this.processExpressionDefinition(expressionDefinition);
-		this.getAllExpressionDefinitions().put(expressionDefinition.getName(), expressionDefinition);
+		this.getAllTaskDefinitions().put(expressionDefinition.getName(), expressionDefinition);
 	}
 		
-	private void processExpressionDefinition(HAPExpressionDefinition expressionDefinition){
+	private void processExpressionDefinition(HAPDefinitionTask expressionDefinition){
 		String name = expressionDefinition.getName();
 		if(HAPBasicUtility.isStringEmpty(name)){
 			name = System.currentTimeMillis()+"";
@@ -120,7 +120,7 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 	}
 
 	public void merge(HAPExpressionDefinitionSuiteImp suite){
-		this.getAllExpressionDefinitions().putAll(suite.getAllExpressionDefinitions());
+		this.getAllTaskDefinitions().putAll(suite.getAllTaskDefinitions());
 		this.getVariableData().putAll(suite.getVariableData());
 	}
 

@@ -531,6 +531,13 @@
 	
 			<definition type="space"/>
 			<definition name="CATEGARY_NAME" value="CATEGARY_NAME"/>
+
+			<definition type="space"/>
+			<definition name="DATATASK_TYPE_EXPRESSION" value="expression"/>
+
+			<definition type="space"/>
+			<definition name="EXPRESSIONTASK_STEPTYPE_EXPRESSION" value="expression"/>
+
 		</definitions>
 	</constants>
 </root>
