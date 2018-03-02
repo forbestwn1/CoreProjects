@@ -31,6 +31,7 @@ import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
+import com.nosliw.data.core.task.HAPProcessTaskContext;
 
 public class HAPOperandOperation extends HAPOperandImp{
 
@@ -162,7 +163,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
-			HAPProcessExpressionDefinitionContext context,
+			HAPProcessTaskContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		//clear old matchers
 		this.resetMatchers();

@@ -19,6 +19,7 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
+import com.nosliw.data.core.task.HAPProcessTaskContext;
 
 public class HAPOperandReference extends HAPOperandImp{
 
@@ -70,7 +71,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
-			HAPProcessExpressionDefinitionContext context,
+			HAPProcessTaskContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		
 		return this.m_referencedExpression.discover(variablesInfo, expectCriteria, context, dataTypeHelper);

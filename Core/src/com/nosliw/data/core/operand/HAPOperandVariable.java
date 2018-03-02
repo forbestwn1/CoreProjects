@@ -9,6 +9,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.task.HAPProcessTaskContext;
 
 public class HAPOperandVariable extends HAPOperandImp{
 
@@ -37,7 +38,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
-			HAPProcessExpressionDefinitionContext context,
+			HAPProcessTaskContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		HAPVariableInfo variableInfo = variablesInfo.get(this.getVariableName());
 		if(variableInfo==null){

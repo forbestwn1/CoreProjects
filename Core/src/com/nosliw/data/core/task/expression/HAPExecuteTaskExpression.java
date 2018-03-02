@@ -1,8 +1,10 @@
 package com.nosliw.data.core.task.expression;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
@@ -34,7 +36,6 @@ public class HAPExecuteTaskExpression implements HAPExecutable{
 	// it convert variable from caller to variable in expression
 	private Map<String, HAPMatchers> m_varsMatchers;
 	
-	
 	public HAPExecuteTaskExpression(HAPDefinitionTaskExpression taskDef, String domain) {
 		this.m_taskDefinition = taskDef;
 		this.m_domain = domain;
@@ -56,8 +57,11 @@ public class HAPExecuteTaskExpression implements HAPExecutable{
 		
 	}
 
-	public HAPMatchers discover(Map<String, HAPVariableInfo> parentVariablesInfo, HAPProcessTaskContext context) {
-		
+	public HAPMatchers discover(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria, HAPProcessTaskContext context, HAPDataTypeHelper dataTypeHelper) {
+		Map<String, HAPVariableInfo> localVariablesInfo = new LinkedHashMap<String, HAPVariableInfo>(); 
+		for(HAPExecuteStep step : this.m_steps) {
+			step.discover(variablesInfo, localVariablesInfo, expectOutputCriteria, context, dataTypeHelper);
+		}
 	}
 	
 }

@@ -20,6 +20,7 @@ import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
+import com.nosliw.data.core.task.HAPProcessTaskContext;
 
 public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOperand{
 
@@ -84,7 +85,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	 * @param context
 	 * @return
 	 */
-	protected HAPMatchers isMatchable(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessExpressionDefinitionContext context, HAPDataTypeHelper dataTypeHelper){
+	protected HAPMatchers isMatchable(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessTaskContext context, HAPDataTypeHelper dataTypeHelper){
 		if(expectCriteria==null)   return null;
 		
 		HAPMatchers out = dataTypeHelper.buildMatchers(criteria, expectCriteria);

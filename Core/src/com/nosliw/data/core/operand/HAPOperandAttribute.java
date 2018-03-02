@@ -10,6 +10,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.task.HAPProcessTaskContext;
 
 public class HAPOperandAttribute extends HAPOperandImp{
 
@@ -50,7 +51,7 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
-			HAPProcessExpressionDefinitionContext context,
+			HAPProcessTaskContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		return null;
 	}

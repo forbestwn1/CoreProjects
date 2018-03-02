@@ -14,6 +14,7 @@ import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.task.HAPProcessTaskContext;
 
 @HAPEntityWithAttribute(baseName="OPERAND")
 public interface HAPOperand extends HAPSerializable{
@@ -53,7 +54,7 @@ public interface HAPOperand extends HAPSerializable{
 	 */
 	HAPMatchers discover(Map<String, HAPVariableInfo> variablesInfo,
 										HAPDataTypeCriteria expectCriteria,
-										HAPProcessExpressionDefinitionContext context, 
+										HAPProcessTaskContext context, 
 										HAPDataTypeHelper dataTypeHelper);
 
 	//operand output data type criteria
