@@ -12,6 +12,4 @@ public abstract class HAPDefinitionStep extends HAPDefinitionComponent {
 	
 	abstract public Set<String> getReferenceNames();
 
-	abstract public 
-	
 }

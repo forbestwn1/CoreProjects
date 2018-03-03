@@ -1,11 +1,16 @@
 package com.nosliw.data.core.task.expression;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaOr;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.task.HAPExecutable;
@@ -55,13 +60,33 @@ public class HAPExecuteTaskExpression implements HAPExecutable{
 	@Override
 	public void updateVariable(HAPUpdateVariable updateVar) {
 		
+		for(HAPExecuteStep step : this.m_steps) {
+			step.updateVariable(updateVar);
+		}
+		
 	}
 
 	public HAPMatchers discover(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria, HAPProcessTaskContext context, HAPDataTypeHelper dataTypeHelper) {
-		Map<String, HAPVariableInfo> localVariablesInfo = new LinkedHashMap<String, HAPVariableInfo>(); 
-		for(HAPExecuteStep step : this.m_steps) {
-			step.discover(variablesInfo, localVariablesInfo, expectOutputCriteria, context, dataTypeHelper);
-		}
+
+		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		varsInfo.putAll(variablesInfo);
+		Map<String, HAPVariableInfo> oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		Set<HAPDataTypeCriteria> exitCriterias;
+		do {
+			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+			oldVarsInfo.putAll(varsInfo);
+			context.clear();
+
+			Map<String, HAPVariableInfo> localVariablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
+			exitCriterias = new HashSet<HAPDataTypeCriteria>();
+			for(HAPExecuteStep step : this.m_steps) {
+				step.discover(variablesInfo, localVariablesInfo, exitCriterias, context, dataTypeHelper);
+				if(!context.isSuccess())  break;
+			}
+		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
+		
+		
+		HAPMatchers varMatchers = dataTypeHelper.buildMatchers(new HAPDataTypeCriteriaOr(new ArrayList(exitCriterias)), expectOutputCriteria);
+		return varMatchers;
 	}
-	
 }

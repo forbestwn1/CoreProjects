@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeOperation;
@@ -28,7 +29,7 @@ public class HAPDefinitionStepExpression extends HAPDefinitionStep{
 	
 	//output variable name
 	@HAPAttribute
-	public static String OUTPUT = "output";
+	public static String OUTPUTVARIABLE = "outputVariable";
 
 	@HAPAttribute
 	public static String OPERAND = "operand";
@@ -37,11 +38,15 @@ public class HAPDefinitionStepExpression extends HAPDefinitionStep{
 	public static String VARIABLENAMES = "variableNames";
 
 	@HAPAttribute
+	public static String EXIT = "exit";
+
+	@HAPAttribute
 	public static String REFERENCENAMES = "referenceNames";
 
 	private String m_expression;
 	
-	private String m_output;
+	private boolean m_exit = false;
+	private String m_outputVariable;
 	
 	private HAPOperandWrapper m_operand;
 	
@@ -61,7 +66,9 @@ public class HAPDefinitionStepExpression extends HAPDefinitionStep{
 	
 	public String getExpression(){  return this.m_expression;    }
 
-	public String getOutput(){  return this.m_output;  }
+	public boolean isExit() {  return this.m_exit;   }
+	
+	public String getOutputVariable(){  return this.m_outputVariable;  }
 
 	public HAPOperandWrapper getOperand() {  return this.m_operand;  }
 	
@@ -152,7 +159,12 @@ public class HAPDefinitionStepExpression extends HAPDefinitionStep{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_expression = jsonObj.optString(EXPRESSION);
-		this.m_output = jsonObj.optString(OUTPUT);
+		this.m_outputVariable = jsonObj.optString(OUTPUTVARIABLE);
+		if(HAPBasicUtility.isStringEmpty(m_outputVariable)) {
+			Boolean exit = jsonObj.optBoolean(EXIT);
+			if(exit==null)  exit = Boolean.TRUE;
+			this.m_exit = exit;
+		}
 		this.process();
 		return true;  
 	}
@@ -161,7 +173,7 @@ public class HAPDefinitionStepExpression extends HAPDefinitionStep{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(EXPRESSION, this.m_expression);
-		jsonMap.put(OUTPUT, this.m_output);
+		jsonMap.put(OUTPUTVARIABLE, this.m_outputVariable);
 		jsonMap.put(VARIABLENAMES, HAPJsonUtility.buildJson(this.m_variableNames, HAPSerializationFormat.JSON));
 		jsonMap.put(REFERENCENAMES, HAPJsonUtility.buildJson(this.m_referenceNames, HAPSerializationFormat.JSON));
 		jsonMap.put(OPERAND, HAPJsonUtility.buildJson(this.m_operand, HAPSerializationFormat.JSON));

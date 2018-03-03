@@ -2,12 +2,12 @@ package com.nosliw.data.core.task.expression;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPMatchers;
-import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.task.HAPProcessTaskContext;
@@ -21,19 +21,21 @@ public class HAPExecuteStepExpression extends HAPExecuteStep{
 	//Operand to represent the expression
 	private HAPOperandWrapper m_operand;
 	
+	private String m_outputVariable;
 	
 	public HAPExecuteStepExpression(HAPDefinitionStepExpression stepDef) {
 		this.m_expressionDefinition = stepDef.clone();
+		this.m_outputVariable = stepDef.getOutputVariable();
 	}
 	
 	public HAPOperandWrapper getOperand() {	return this.m_operand;	}
 
 
 	@Override
-	public HAPMatchers discover(
+	public void discover(
 			Map<String, HAPVariableInfo> variablesInfo, 
 			Map<String, HAPVariableInfo> localVariablesInfo, 
-			HAPDataTypeCriteria expectOutputCriteria, 
+			Set<HAPDataTypeCriteria> exitCriterias, 
 			HAPProcessTaskContext context,
 			HAPDataTypeHelper dataTypeHelper){
 		
@@ -53,11 +55,16 @@ public class HAPExecuteStepExpression extends HAPExecuteStep{
 			oldVarsInfo.putAll(varsInfo);
 			
 			context.clear();
-			matchers = this.getOperand().getOperand().discover(varsInfo, expectOutputCriteria, context, dataTypeHelper);
+			matchers = this.getOperand().getOperand().discover(varsInfo, null, context, dataTypeHelper);
 		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
 
+		//if this step exit, then update exit criteria
+		if(this.m_expressionDefinition.isExit()) {
+			exitCriterias.add(this.getOutput());
+		}
+		
 		//handle output variable
-		String outVarName = this.m_expressionDefinition.getOutput();
+		String outVarName = this.m_outputVariable;
 		if(outVarName!=null) {
 			HAPVariableInfo localOutVarInfo = new HAPVariableInfo(this.getOperand().getOperand().getOutputCriteria());
 			varsInfo.put(outVarName, localOutVarInfo);
@@ -77,8 +84,6 @@ public class HAPExecuteStepExpression extends HAPExecuteStep{
 				variablesInfo.put(varName, varInfo);
 			}
 		}
-		
-		return matchers;
 	}
 	
 	@Override
@@ -90,8 +95,7 @@ public class HAPExecuteStepExpression extends HAPExecuteStep{
 
 	@Override
 	public void updateVariable(HAPUpdateVariable updateVar) {
-		// TODO Auto-generated method stub
-		
+		if(this.m_outputVariable!=null) this.m_outputVariable = updateVar.getUpdatedVariable(this.m_outputVariable);
 	}
 	
 	
