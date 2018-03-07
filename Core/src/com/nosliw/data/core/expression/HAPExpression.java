@@ -10,6 +10,8 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutable;
+import com.nosliw.data.core.task.HAPMatchers;
+import com.nosliw.data.core.task.HAPVariableInfo;
 
 /**
  * Expression object we get after processing HAPExpressionDefinition

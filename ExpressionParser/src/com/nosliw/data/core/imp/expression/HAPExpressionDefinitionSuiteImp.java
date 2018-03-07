@@ -8,10 +8,10 @@ import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
-import com.nosliw.data.core.expression.HAPExpressionUtility;
-import com.nosliw.data.core.expression.HAPReferenceInfo;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuiteForTest;
+import com.nosliw.data.core.task.HAPReferenceInfo;
+import com.nosliw.data.core.task.expression.HAPExpressionUtility;
 
 public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity implements HAPDefinitionTaskSuiteForTest {
 

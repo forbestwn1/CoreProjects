@@ -10,21 +10,25 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
-import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.task.expression.HAPExecuteTaskExpression;
 
-public class HAPTaskManager {
+public class HAPManagerTask {
 	
 	private static Map<String, HAPProcessorTask> m_taskProcessors;
+
+	private HAPDataTypeHelper m_dataTypeHelper;
 	
 	//all expression definition suites
 	private Map<String, HAPDefinitionTaskSuite> m_taskDefinitionSuites;
 
+	
 	//used to generate id
 	private int m_idIndex;
 	
-	public HAPTaskManager(){
+	
+	
+	public HAPManagerTask(){
 		this.init();
 	}
 	
@@ -40,30 +44,38 @@ public class HAPTaskManager {
 	}
 
 	
-	public HAPExecutable compileTask(
+	public HAPExecuteTask compileTask(
 			String id,
 			HAPDefinitionTask taskDefinition, 
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, 
-			Map<String, HAPVariableInfo> contextVariablesInfo, 
+			Map<String, HAPVariableInfo> parentVariablesInfo, 
 			Map<String, HAPData> contextConstants,
+			HAPDataTypeCriteria expectOutput,
 			HAPProcessTaskContext context) {
 		HAPExecuteTaskExpression task = (HAPExecuteTaskExpression)processTask(taskDefinition, null, null, contextTaskDefinitions, contextConstants, context);
 		task.setId(id);
-		task.discover(contextVariablesInfo, context);
+		
+		Map<String, HAPVariableInfo> variableInfos = parentVariablesInfo;
+		if(variableInfos==null) {
+			//if no overriding var info, use var info defined in task definition
+			variableInfos = new LinkedHashMap<String, HAPVariableInfo>(); 
+			Map<String, HAPDataTypeCriteria> variableCriterias = taskDefinition.getVariables();
+			for(String varName : variableCriterias.keySet()) {
+				variableInfos.put(varName, new HAPVariableInfo(variableCriterias.get(varName)));
+			}
+		}
+		
+		task.discoverVariable(variableInfos, expectOutput, context, this.m_dataTypeHelper);
 		return task;
 	}
 	
-	public static HAPExecutable processTask(HAPDefinitionTask taskDefinition, String domain, Map<String, String> variableMap,
+	public static HAPExecuteTask processTask(HAPDefinitionTask taskDefinition, String domain, Map<String, String> variableMap,
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
 			HAPProcessTaskContext context) {
-		
 		HAPProcessorTask taskProcessor = m_taskProcessors.get(taskDefinition.getType());
-		HAPExecutable out = taskProcessor.process(taskDefinition, domain, variableMap, contextTaskDefinitions, contextConstants, context);
+		HAPExecuteTask out = taskProcessor.process(taskDefinition, domain, variableMap, contextTaskDefinitions, contextConstants, context);
 		return out;
 	}
-	
-	
-	
 	
 	
 	
@@ -99,6 +111,10 @@ public class HAPTaskManager {
 		}
 	}
 	
+
+	
+/*	
+	
 	public HAPDefinitionTask getTaskDefinition(String suite, String name) {		return this.getTaskDefinitionSuite(suite).getTask(name);	}
 
 	public HAPDefinitionTask newExpressionDefinition(String expression, String name,
@@ -111,4 +127,5 @@ public class HAPTaskManager {
 	public HAPDefinitionTaskSuite newTaskDefinitionSuite(String name) {
 		return new HAPDefinitionTaskSuite();
 	}
+	*/
 }

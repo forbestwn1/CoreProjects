@@ -16,17 +16,17 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.expression.HAPExpressionUtility;
-import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
-import com.nosliw.data.core.expression.HAPReferenceInfo;
-import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPMatchers;
+import com.nosliw.data.core.task.HAPReferenceInfo;
+import com.nosliw.data.core.task.HAPVariableInfo;
+import com.nosliw.data.core.task.expression.HAPExpressionUtility;
 
 /**
  * Parsed expression 
@@ -247,7 +247,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 			oldVarsInfo.putAll(varsInfo);
 			
 			context.clear();
-			matchers = this.getOperand().getOperand().discover(varsInfo, expectOutputCriteria, context, dataTypeHelper);
+			matchers = this.getOperand().getOperand().discoverVariable(varsInfo, expectOutputCriteria, context, dataTypeHelper);
 		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
 		this.m_localVarsInfo = varsInfo;
 		

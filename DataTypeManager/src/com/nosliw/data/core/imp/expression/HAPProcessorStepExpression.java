@@ -15,10 +15,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
-import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
-import com.nosliw.data.core.expression.HAPReferenceInfo;
-import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandConstant;
 import com.nosliw.data.core.operand.HAPOperandOperation;
@@ -29,11 +26,14 @@ import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutable;
-import com.nosliw.data.core.task.HAPTaskManager;
+import com.nosliw.data.core.task.HAPManagerTask;
+import com.nosliw.data.core.task.HAPReferenceInfo;
+import com.nosliw.data.core.task.HAPVariableInfo;
 import com.nosliw.data.core.task.expression.HAPProcessorStep;
 import com.nosliw.data.core.task.expression.HAPDefinitionStep;
 import com.nosliw.data.core.task.expression.HAPDefinitionStepExpression;
 import com.nosliw.data.core.task.expression.HAPExecuteStepExpression;
+import com.nosliw.data.core.task.expression.HAPExpressionUtility;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 
 public class HAPProcessorStepExpression implements HAPProcessorStep{
@@ -43,7 +43,7 @@ public class HAPProcessorStepExpression implements HAPProcessorStep{
 	private HAPDataTypeHelper m_dataTypeHelper;
 
 	public HAPProcessorStepExpression(HAPExpressionParser expressionParser, HAPDataTypeHelper dataTypeHelper){
-		HAPTaskManager.expressionParser = expressionParser;
+		HAPManagerTask.expressionParser = expressionParser;
 		this.m_dataTypeHelper = dataTypeHelper;
 	}
 	
@@ -76,7 +76,7 @@ public class HAPProcessorStepExpression implements HAPProcessorStep{
 			if(variableCriterias!=null){
 				for(String varName : variableCriterias.keySet())		parentVariableInfos.put(varName, new HAPVariableInfo(variableCriterias.get(varName)));
 			}
-			expression.discover(parentVariableInfos, null, context, this.getDataTypeHelper());
+			expression.discoverVariable(parentVariableInfos, null, context, this.getDataTypeHelper());
 		}
 		
 		if(!context.isSuccess()){

@@ -1,0 +1,7 @@
+{
+	"command" : function(command, parms){
+
+		var out = nosliw.runtime.getGatewayService().executeGatewayCommand("||gatewayId||", command, parms);
+		return out;
+	}
+}

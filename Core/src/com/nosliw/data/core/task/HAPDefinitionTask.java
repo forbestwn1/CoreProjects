@@ -1,6 +1,7 @@
 package com.nosliw.data.core.task;
 
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -10,6 +11,7 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.runtime.HAPResourceDependent;
 
 /**
  * Task is unit that can execute 
@@ -27,6 +29,9 @@ public abstract class HAPDefinitionTask extends HAPDefinitionComponent{
 
 	private HAPInfo m_info;
 	
+	//dependent resources
+	private Set<HAPResourceDependent> m_requiredResources;
+	
 	public HAPDefinitionTask(){
 	}
 	
@@ -35,6 +40,7 @@ public abstract class HAPDefinitionTask extends HAPDefinitionComponent{
 	//related information, for instance, description, 
 	public HAPInfo getInfo(){  return this.m_info;  }
 	
+	public Set<HAPResourceDependent> getRequiredResources(){ return this.m_requiredResources;  }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

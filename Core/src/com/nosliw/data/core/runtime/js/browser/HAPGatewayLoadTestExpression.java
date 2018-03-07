@@ -16,7 +16,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuiteForTest;
-import com.nosliw.data.core.task.HAPTaskManager;
+import com.nosliw.data.core.task.HAPManagerTask;
 
 @HAPEntityWithAttribute
 public class HAPGatewayLoadTestExpression extends HAPGatewayImp{
@@ -30,9 +30,9 @@ public class HAPGatewayLoadTestExpression extends HAPGatewayImp{
 	@HAPAttribute
 	final public static String COMMAND_LOADTESTEXPRESSION_ELEMENT_VARIABLES = "variables";
 	
-	private HAPTaskManager m_taskManager;
+	private HAPManagerTask m_taskManager;
 
-	public HAPGatewayLoadTestExpression(HAPTaskManager taskManager){
+	public HAPGatewayLoadTestExpression(HAPManagerTask taskManager){
 		this.m_taskManager = taskManager;
 	}
 	

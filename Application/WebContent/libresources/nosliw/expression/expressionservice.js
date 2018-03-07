@@ -27,7 +27,7 @@ var node_createExpressionService = function(){
 	/**
 	 * Request for execute expression
 	 */
-	var loc_getExecuteExpressionRequest = function(expression, variables, handlers, requester_parent){
+	var loc_getExecuteExpressionRequest = function(expression, variables, constants, references, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpression", {"expression":expression, "variables":variables}), handlers, requestInfo);
@@ -50,7 +50,7 @@ var node_createExpressionService = function(){
 							out.setData("variables", matchedVars);
 							
 							//execute operand
-							var executeOperandRequest = loc_getExecuteOperandRequest(expression, expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_OPERAND], out.getData("variables"), {
+							var executeOperandRequest = loc_getExecuteOperandRequest(expression, expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_OPERAND], out.getData("variables"), constants, references, {
 								success : function(requestInfo, operandResult){
 									return operandResult;
 								}
@@ -73,16 +73,19 @@ var node_createExpressionService = function(){
 	};
 
 	//execute general operand
-	var loc_getExecuteOperandRequest = function(expression, operand, variables, handlers, requester_parent){
+	var loc_getExecuteOperandRequest = function(expression, operand, variables, constants, references, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 
 		var out;
 		var operandType = operand[node_COMMONATRIBUTECONSTANT.OPERAND_TYPE];
 		switch(operandType){
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_CONSTANT:
-			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteConstantOperand", {"operand":operand, "variables":variables}), 
-					function(requestInfo){  
-						return requestInfo.getService().parms.operand[node_COMMONATRIBUTECONSTANT.OPERAND_DATA];  
+			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteConstantOperand", {"operand":operand, "constants":constants}), 
+					function(requestInfo){
+						var constantName = requestInfo.getService().parms.operand[node_COMMONATRIBUTECONSTANT.OPERAND_NAME];
+						var constantData = requestInfo.getService().parms.operand[node_COMMONATRIBUTECONSTANT.OPERAND_DATA];
+						if(constantData==undefined)  constantData = requestInfo.getService().parms.constants[constantName];
+						return constantData;
 					}, 
 					handlers, requestInfo);
 			break;
@@ -95,10 +98,16 @@ var node_createExpressionService = function(){
 					handlers, requestInfo);
 		    break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_OPERATION:
-			out = loc_getExecuteOperationOperandRequest(expression, operand, variables, handlers, requestInfo);
+			out = loc_getExecuteOperationOperandRequest(expression, operand, variables, constants, references, handlers, requestInfo);
 			break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_REFERENCE:
-			out = loc_getExecuteExpressionRequest(expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_REFERENCES][operand[node_COMMONATRIBUTECONSTANT.OPERAND_REFERENCENAME]], variables, handlers, requestInfo);
+			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteReferenceOperand", {"operand":operand, "references":references}), 
+					function(requestInfo){
+						var refName = requestInfo.getService().parms.operand[node_COMMONATRIBUTECONSTANT.OPERAND_REFERENCENAME];
+						return requestInfo.getService().parms.references[refName];
+					}, 
+					handlers, requestInfo);
+//			out = loc_getExecuteExpressionRequest(expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_REFERENCES][operand[node_COMMONATRIBUTECONSTANT.OPERAND_REFERENCENAME]], variables, handlers, requestInfo);
 			break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_DATASOURCE:
 			out = loc_getExecuteDataSourceOperandRequest(expression, operand, variables, handlers, requestInfo);
@@ -154,7 +163,7 @@ var node_createExpressionService = function(){
 	};
 	
 	//execute operation operand
-	var loc_getExecuteOperationOperandRequest = function(expression, operationOperand, variables, handlers, requester_parent){
+	var loc_getExecuteOperationOperandRequest = function(expression, operationOperand, variables, constants, references, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteOperationOperand", {"operationOperand":operationOperand, "variables":variables}), handlers, requestInfo);
@@ -200,7 +209,7 @@ var node_createExpressionService = function(){
 			}
 		});
 		_.each(parmsOperand, function(parmOperand, parmName, list){
-			var parmOperandRequest = loc_getExecuteOperandRequest(expression, parmOperand, variables, {});
+			var parmOperandRequest = loc_getExecuteOperandRequest(expression, parmOperand, variables, constants, references);
 			parmsOperandRequest.addRequest(parmName, parmOperandRequest);
 		}, this);
 		out.addRequest(parmsOperandRequest);
@@ -385,7 +394,7 @@ var node_createExpressionService = function(){
 			_.each(expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS], function(varInfo, name){
 				expVariables[name] = variables[name];
 			});
-			executeMultipleExpressionRequest.addRequest(name, loc_getExecuteExpressionRequest(expression, expVariables, {}));
+			executeMultipleExpressionRequest.addRequest(name, loc_getExecuteExpressionRequest(expression, expVariables, {}, {}));
 		});
 
 		var executeScriptExpressionRequest = node_createServiceRequestInfoService(new node_ServiceInfo("ExecuteScriptExpression", {"script":script, "expressions":expressions, "variables":variables}), handlers, requestInfo);
@@ -411,12 +420,12 @@ var node_createExpressionService = function(){
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 
-		getExecuteExpressionRequest : function(expression, variables, handlers, requester_parent){
-			return loc_getExecuteExpressionRequest(expression, variables, handlers, requester_parent);
+		getExecuteExpressionRequest : function(expression, variables, constants, references, handlers, requester_parent){
+			return loc_getExecuteExpressionRequest(expression, variables, constants, references, handlers, requester_parent);
 		},
 			
-		executeExecuteExpressionRequest : function(expression, variables, handlers, requester_parent){
-			var requestInfo = this.getExecuteExpressionRequest(expression, variables, handlers, requester_parent);
+		executeExecuteExpressionRequest : function(expression, variables, constants, references, handlers, requester_parent){
+			var requestInfo = this.getExecuteExpressionRequest(expression, variables, constants, references, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 

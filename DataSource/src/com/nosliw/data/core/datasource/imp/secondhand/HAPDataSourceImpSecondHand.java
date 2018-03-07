@@ -23,13 +23,13 @@ import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskExecuteExpressionRhino;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
-import com.nosliw.data.core.task.HAPTaskManager;
+import com.nosliw.data.core.task.HAPManagerTask;
 
 public class HAPDataSourceImpSecondHand implements HAPDataSource{
 
 	private HAPDataSourceDefinitionManager m_dataSourceDefinitionManager;
 	
-	private HAPTaskManager m_expressionManager;
+	private HAPManagerTask m_expressionManager;
 	
 	private HAPRuntime m_runtime;
 	
@@ -40,7 +40,7 @@ public class HAPDataSourceImpSecondHand implements HAPDataSource{
 	public HAPDataSourceImpSecondHand(
 			HAPDataSourceDefinition dataSourceDefinition, 
 			HAPDataSourceDefinitionManager dataSourceDefinitionManager,
-			HAPTaskManager expressionManager,
+			HAPManagerTask expressionManager,
 			HAPRuntime runtime){
 		this.m_dataSourceDefinitionManager = dataSourceDefinitionManager;
 		this.m_runtime = runtime;

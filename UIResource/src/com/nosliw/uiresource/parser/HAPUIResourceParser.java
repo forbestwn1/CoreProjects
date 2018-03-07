@@ -25,7 +25,7 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.task.HAPDefinitionTask;
-import com.nosliw.data.core.task.HAPTaskManager;
+import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.context.HAPContextGroup;
@@ -54,9 +54,9 @@ public class HAPUIResourceParser {
 	
 	private HAPValueInfoManager m_valueInfoMan;
 	private HAPCriteriaParser m_criteriaParser;
-	private HAPTaskManager m_expressionManager;
+	private HAPManagerTask m_expressionManager;
 	
-	public HAPUIResourceParser(HAPConfigure setting, HAPTaskManager expressionMan, HAPIdGenerator idGenerator){
+	public HAPUIResourceParser(HAPConfigure setting, HAPManagerTask expressionMan, HAPIdGenerator idGenerator){
 		this.m_idGenerator = idGenerator;
 		this.m_setting = setting;
 		this.m_expressionManager = expressionMan;

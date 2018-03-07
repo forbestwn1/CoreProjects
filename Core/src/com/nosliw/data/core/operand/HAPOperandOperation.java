@@ -23,15 +23,15 @@ import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPParmInOperationOperand;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
-import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
+import com.nosliw.data.core.task.HAPMatchers;
 import com.nosliw.data.core.task.HAPProcessTaskContext;
+import com.nosliw.data.core.task.HAPVariableInfo;
 
 public class HAPOperandOperation extends HAPOperandImp{
 

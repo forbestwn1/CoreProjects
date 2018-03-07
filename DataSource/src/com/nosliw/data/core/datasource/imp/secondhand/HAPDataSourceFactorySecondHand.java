@@ -5,7 +5,7 @@ import com.nosliw.data.core.datasource.HAPDataSourceDefinition;
 import com.nosliw.data.core.datasource.HAPDataSourceDefinitionManager;
 import com.nosliw.data.core.datasource.HAPDataSourceFactory;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.task.HAPTaskManager;
+import com.nosliw.data.core.task.HAPManagerTask;
 
 public class HAPDataSourceFactorySecondHand implements HAPDataSourceFactory{
 
@@ -13,13 +13,13 @@ public class HAPDataSourceFactorySecondHand implements HAPDataSourceFactory{
 	
 	private HAPDataSourceDefinitionManager m_dataSourceDefinitionManager;
 	
-	private HAPTaskManager m_expressionManager;
+	private HAPManagerTask m_expressionManager;
 	
 	private HAPRuntime m_runtime;
 	
 	public HAPDataSourceFactorySecondHand(
 			HAPDataSourceDefinitionManager dataSourceDefinitionManager,
-			HAPTaskManager expressionManager,
+			HAPManagerTask expressionManager,
 			HAPRuntime runtime){
 		this.m_dataSourceDefinitionManager = dataSourceDefinitionManager;
 		this.m_runtime = runtime;

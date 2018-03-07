@@ -3,16 +3,16 @@ package com.nosliw.data.core.imp.datasource;
 import com.nosliw.data.core.datasource.HAPDataSourceManager;
 import com.nosliw.data.core.datasource.imp.secondhand.HAPDataSourceFactorySecondHand;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.task.HAPTaskManager;
+import com.nosliw.data.core.task.HAPManagerTask;
 
 public class HAPDataSourceManagerImp extends HAPDataSourceManager{
 
-	private HAPTaskManager m_expressionManager;
+	private HAPManagerTask m_expressionManager;
 	
 	private HAPRuntime m_runtime;
 	
 	public HAPDataSourceManagerImp(			
-			HAPTaskManager expressionManager,
+			HAPManagerTask expressionManager,
 			HAPRuntime runtime) {
 		super(new HAPDataSourceDefinitionManagerImp());
 		this.m_expressionManager = expressionManager;

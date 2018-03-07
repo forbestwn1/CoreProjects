@@ -12,11 +12,12 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPProcessTaskContext;
 
 public class HAPManagerExpression {
 
-	private static Map<String, Class<? extends HAPDefinitionStep>> stepDefinitionClasses = new LinkedHashMap<String, Class<? extends HAPDefinitionStep>>();
-	private static Map<String, HAPProcessorStep> stepProcessors = new LinkedHashMap<String, HAPProcessorStep>();
+	private static Map<String, Class<? extends HAPDefinitionStep>> m_stepDefinitionClasses = new LinkedHashMap<String, Class<? extends HAPDefinitionStep>>();
+	private static Map<String, HAPProcessorStep> m_stepProcessors = new LinkedHashMap<String, HAPProcessorStep>();
 	
 	public static HAPExpressionParser expressionParser;
 	
@@ -29,8 +30,8 @@ public class HAPManagerExpression {
 	public static void registerStep(Class<? extends HAPDefinitionStep> stepClass, HAPProcessorStep stepProcessor){
 		try {
 			HAPDefinitionStep step = stepClass.newInstance();
-			stepDefinitionClasses.put(step.getType(), stepClass);
-			stepProcessors.put(step.getType(), stepProcessor);
+			m_stepDefinitionClasses.put(step.getType(), stepClass);
+			m_stepProcessors.put(step.getType(), stepProcessor);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -42,7 +43,7 @@ public class HAPManagerExpression {
 			JSONObject jsonObj = (JSONObject)obj;
 			String type = jsonObj.optString(HAPDefinitionTask.TYPE);
 			if(HAPBasicUtility.isStringEmpty(type))  type = HAPConstant.EXPRESSIONTASK_STEPTYPE_EXPRESSION;
-			step = stepDefinitionClasses.get(type).newInstance();
+			step = m_stepDefinitionClasses.get(type).newInstance();
 			step.buildObject(obj, HAPSerializationFormat.JSON);
 		}
 		catch(Exception e){
@@ -51,8 +52,8 @@ public class HAPManagerExpression {
 		return step;
 	}
 	
-	public static HAPExecuteStep processStep(HAPDefinitionStep stepDef, Map<String, HAPData> constants) {
-		
+	public static HAPExecuteStep processStep(HAPDefinitionStep stepDef, Map<String, HAPData> constants, HAPProcessTaskContext context) {
+		return m_stepProcessors.get(stepDef.getType()).process(stepDef, constants, context);
 	}
 	
 }

@@ -15,7 +15,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.task.HAPTaskManager;
+import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInAttribute;
 
 /**
@@ -46,9 +46,9 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 	//javascript function to execute script expression 
 	private HAPScript m_scriptFunction;
 
-	private HAPTaskManager m_expressionManager;
+	private HAPManagerTask m_expressionManager;
 	
-	public HAPEmbededScriptExpression(String uiId, HAPScriptExpression scriptExpression, HAPTaskManager expressionManager){
+	public HAPEmbededScriptExpression(String uiId, HAPScriptExpression scriptExpression, HAPManagerTask expressionManager){
 		this.m_expressionManager = expressionManager;
 		this.m_uiId = uiId;
 		this.m_elements = new ArrayList<Object>();
@@ -56,14 +56,14 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 		this.init();
 	}
 	
-	public HAPEmbededScriptExpression(String uiId, List<Object> elements, HAPTaskManager expressionManager){
+	public HAPEmbededScriptExpression(String uiId, List<Object> elements, HAPManagerTask expressionManager){
 		this.m_expressionManager = expressionManager;
 		this.m_uiId = uiId;
 		this.m_elements = elements;
 		this.init();
 	}
 
-	public HAPEmbededScriptExpression(String uiId, String content, HAPTaskManager expressionManager){
+	public HAPEmbededScriptExpression(String uiId, String content, HAPManagerTask expressionManager){
 		this.m_expressionManager = expressionManager;
 		this.m_uiId = uiId;
 		this.m_elements = HAPScriptExpressionUtility.discoverUIExpressionInText(content, this.m_expressionManager);

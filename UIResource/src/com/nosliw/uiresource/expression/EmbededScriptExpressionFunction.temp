@@ -1,0 +1,12 @@
+function(||expressionsData||, 
+		||constantsData||, 
+		||variablesData||){
+	var ||scriptExpressionData|| = {
+	
+	};
+	
+	||executeScriptExpressions||
+	
+	return ||embededScriptExpressionFunction||(||scriptExpressionData||);
+}		
+		

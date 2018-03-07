@@ -9,7 +9,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayCriteriaOperation;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayExpressionDiscovery;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
-import com.nosliw.data.core.task.HAPTaskManager;
+import com.nosliw.data.core.task.HAPManagerTask;
 
 @HAPEntityWithAttribute(baseName="RUNTIME")
 public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
@@ -28,7 +28,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 	private HAPResourceManagerRoot m_resourceManager;
 	
-	private HAPTaskManager m_expressionManager;
+	private HAPManagerTask m_expressionManager;
 	
 	private HAPGatewayManager m_gatewayManager;
 	
@@ -37,7 +37,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	public HAPRuntimeEnvironmentJS(){}
 	
 	public HAPRuntimeEnvironmentJS(HAPResourceManagerRoot resourceMan, 
-								   HAPTaskManager expressionManager,
+								   HAPManagerTask expressionManager,
 								    HAPGatewayManager gatewayManager,
 								   HAPRuntime runtime){
 		super();
@@ -45,7 +45,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	}
 	
 	protected void init(HAPResourceManagerRoot resourceMan, 
-					    HAPTaskManager expressionManager,
+					    HAPManagerTask expressionManager,
 					    HAPGatewayManager gatewayManager,
 					    HAPRuntime runtime){ 
 		this.m_resourceManager = resourceMan;
@@ -66,7 +66,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	public HAPResourceManagerRoot getResourceManager() {		return this.m_resourceManager;	}
 
 	@Override
-	public HAPTaskManager getExpressionManager(){  return this.m_expressionManager;  }
+	public HAPManagerTask getExpressionManager(){  return this.m_expressionManager;  }
 
 	@Override
 	public HAPGatewayManager getGatewayManager(){  return this.m_gatewayManager;   }

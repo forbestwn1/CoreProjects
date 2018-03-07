@@ -11,8 +11,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPReferenceInfo;
 import com.nosliw.data.core.task.expression.HAPTaskDefinition;
-import com.nosliw.data.core.expression.HAPReferenceInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 

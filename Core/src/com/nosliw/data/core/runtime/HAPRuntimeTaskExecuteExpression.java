@@ -5,7 +5,6 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.expression.HAPExpression;
 
 @HAPEntityWithAttribute
 public abstract class HAPRuntimeTaskExecuteExpression extends HAPRuntimeTask{
@@ -19,18 +18,23 @@ public abstract class HAPRuntimeTaskExecuteExpression extends HAPRuntimeTask{
 	public static String VARIABLESVALUE = "variablesValue";
 
 	
-	private HAPExpression m_expression;
+	private HAPExpressionExecute m_expression;
 	
-	Map<String, HAPData> m_variablesValue;
+	private Map<String, HAPData> m_variablesValue;
+
+	private Map<String, HAPData> m_referencesValue;
 	
-	public HAPRuntimeTaskExecuteExpression(HAPExpression expression, Map<String, HAPData> variablesValue){
+	public HAPRuntimeTaskExecuteExpression(HAPExpressionExecute expression, Map<String, HAPData> variablesValue, Map<String, HAPData> referencesValue){
 		this.m_expression = expression;
 		this.m_variablesValue = variablesValue; 
+		this.m_referencesValue = referencesValue;
 	}
 	
 	public Map<String, HAPData> getVariablesValue(){  return this.m_variablesValue;  }
 
-	public HAPExpression getExpression(){return this.m_expression;}
+	public Map<String, HAPData> getReferencesValue(){  return this.m_referencesValue;  }
+	
+	public HAPExpressionExecute getExpression(){return this.m_expression;}
 	
 	public HAPData getExpressionDataResult(){ return (HAPData)this.getResult(); }
 

@@ -23,7 +23,7 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskExecuteExpressionRhino;
 import com.nosliw.data.core.task.HAPDefinitionTask;
-import com.nosliw.data.core.task.HAPTaskManager;
+import com.nosliw.data.core.task.HAPManagerTask;
 
 public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 
@@ -42,11 +42,11 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 	final public static String COMMAND_EXECUTEEXPRESSION_VARIABLESVALUE = "variablesValue";
 	
 	
-	private HAPTaskManager m_expressionManager;
+	private HAPManagerTask m_expressionManager;
 	
 	private HAPRuntime m_runtime;
 	
-	public HAPGatewayExpressionDiscovery(HAPTaskManager expressionManager, HAPRuntime runtime){
+	public HAPGatewayExpressionDiscovery(HAPManagerTask expressionManager, HAPRuntime runtime){
 		this.m_expressionManager = expressionManager;
 		this.m_runtime = runtime;
 	}

@@ -11,9 +11,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.expression.HAPExpressionUtility;
-import com.nosliw.data.core.expression.HAPReferenceInfo;
 import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.task.HAPReferenceInfo;
 
 public class HAPDefinitionTaskExpression extends HAPDefinitionTask{
 

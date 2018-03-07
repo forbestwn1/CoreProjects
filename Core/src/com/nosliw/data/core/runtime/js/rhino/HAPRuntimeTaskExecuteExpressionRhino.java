@@ -7,19 +7,20 @@ import java.util.Map;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
+import com.nosliw.data.core.runtime.HAPExpressionExecute;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
+import com.nosliw.data.core.task.expression.HAPExpressionUtility;
 
 public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteExpression{
 
-	public HAPRuntimeTaskExecuteExpressionRhino(HAPExpression expression, Map<String, HAPData> variablesValue) {
-		super(expression, variablesValue);
+	public HAPRuntimeTaskExecuteExpressionRhino(HAPExpressionExecute expression, Map<String, HAPData> variablesValue, Map<String, HAPData> referencesValue) {
+		super(expression, variablesValue, referencesValue);
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteE
 			
 			//prepare resources for expression in the runtime (resource and dependency)
 			//execute expression after load required resources
-			List<HAPExpression> expressions = new ArrayList<HAPExpression>();
+			List<HAPExpressionExecute> expressions = new ArrayList<HAPExpressionExecute>();
 			expressions.add(this.getExpression());
 			List<HAPResourceInfo> resourcesId =	HAPExpressionUtility.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager());
 			

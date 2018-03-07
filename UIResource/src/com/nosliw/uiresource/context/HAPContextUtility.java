@@ -10,10 +10,10 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.task.HAPDefinitionTask;
-import com.nosliw.data.core.task.HAPTaskManager;
+import com.nosliw.data.core.task.HAPManagerTask;
+import com.nosliw.data.core.task.HAPMatchers;
 import com.nosliw.uiresource.definition.HAPConstantDef;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
@@ -29,7 +29,7 @@ import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPContextUtility {
 
-	public static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPTaskManager expressionManager){
+	public static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPManagerTask expressionManager){
 
 		HAPUIResourceExpressionContext expContext = uiDefinition.getExpressionContext();
 
@@ -66,7 +66,7 @@ public class HAPContextUtility {
 		}
 	}
 	
-	private static void buildUITagContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnitTag uiTag, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPTaskManager expressionManager){
+	private static void buildUITagContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnitTag uiTag, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPManagerTask expressionManager){
 		//get contextDef from uiTag first
 		HAPUITagDefinitionContext contextDefinition = uiTag.getContextDefinition();
 		//if not exist, then from tag definition
@@ -103,7 +103,7 @@ public class HAPContextUtility {
 	}
 
 	//evaluate embeded script expression
-	private static String getSolidName(String name, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPTaskManager expressionManager){
+	private static String getSolidName(String name, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPManagerTask expressionManager){
 		HAPEmbededScriptExpression se = new HAPEmbededScriptExpression(null, name, expressionManager);
 		HAPRuntimeTaskExecuteEmbededExpression task = new HAPRuntimeTaskExecuteEmbededExpression(se, null, new LinkedHashMap<String, Object>(uiDefinition.getAttributes()));
 		HAPServiceData serviceData = runtime.executeTaskSync(task);
@@ -112,13 +112,13 @@ public class HAPContextUtility {
 	}
 
 	//process all the name get solid name and create new contextNode
-	private static HAPContextNode buildSolidContextNode(HAPContextNode contextNode, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPTaskManager expressionManager){
+	private static HAPContextNode buildSolidContextNode(HAPContextNode contextNode, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPManagerTask expressionManager){
 		HAPContextNode out = new HAPContextNode();
 		buildSolidContextNode(contextNode, out, uiDefinition, runtime, expressionManager);
 		return out;
 	}
 	
-	private static void buildSolidContextNode(HAPContextNode def, HAPContextNode solid, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPTaskManager expressionManager){
+	private static void buildSolidContextNode(HAPContextNode def, HAPContextNode solid, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPManagerTask expressionManager){
 		solid.setDefinition(def.getDefinition());
 		for(String name : def.getChildren().keySet()){
 			String solidName = getSolidName(name, uiDefinition, runtime, expressionManager);
@@ -143,7 +143,7 @@ public class HAPContextUtility {
 	}
 	
 	//convert context element in ui tag to context element in ui resource/tag
-	private static HAPContextNodeRoot processUITagDefinitionContextElement(String defRootEleName, HAPUITagDefinitionContextElment defContextElement, HAPUIDefinitionUnit parentUnit, HAPDataTypeHelper dataTypeHelper, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPTaskManager expressionManager){
+	private static HAPContextNodeRoot processUITagDefinitionContextElement(String defRootEleName, HAPUITagDefinitionContextElment defContextElement, HAPUIDefinitionUnit parentUnit, HAPDataTypeHelper dataTypeHelper, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPManagerTask expressionManager){
 		String type = defContextElement.getType();
 		switch(type){
 			case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:

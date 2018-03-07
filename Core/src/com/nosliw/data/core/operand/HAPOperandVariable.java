@@ -6,10 +6,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
-import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.task.HAPMatchers;
 import com.nosliw.data.core.task.HAPProcessTaskContext;
+import com.nosliw.data.core.task.HAPVariableInfo;
 
 public class HAPOperandVariable extends HAPOperandImp{
 

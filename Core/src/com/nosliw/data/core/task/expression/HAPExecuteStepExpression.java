@@ -1,17 +1,25 @@
 package com.nosliw.data.core.task.expression;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPMatchers;
-import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.operand.HAPOperandReference;
+import com.nosliw.data.core.operand.HAPOperandTask;
+import com.nosliw.data.core.operand.HAPOperandUtility;
+import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.task.HAPExecuteTask;
+import com.nosliw.data.core.task.HAPMatchers;
 import com.nosliw.data.core.task.HAPProcessTaskContext;
 import com.nosliw.data.core.task.HAPUpdateVariable;
+import com.nosliw.data.core.task.HAPVariableInfo;
 
 public class HAPExecuteStepExpression extends HAPExecuteStep{
 
@@ -21,15 +29,35 @@ public class HAPExecuteStepExpression extends HAPExecuteStep{
 	//Operand to represent the expression
 	private HAPOperandWrapper m_operand;
 	
+	//output variable
 	private String m_outputVariable;
+	
+	private boolean m_exits;
 	
 	public HAPExecuteStepExpression(HAPDefinitionStepExpression stepDef) {
 		this.m_expressionDefinition = stepDef.clone();
 		this.m_outputVariable = stepDef.getOutputVariable();
+		this.m_exits = stepDef.isExit();
 	}
+	
+	public Set<String> getReferenceNames(){   return this.m_expressionDefinition.getReferenceNames();    }
 	
 	public HAPOperandWrapper getOperand() {	return this.m_operand;	}
 
+	@Override
+	public void updateReferencedExecute(Map<String, HAPExecuteTask> references) {
+		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+					referenceOperand.updateReferenceExecute(references);
+				}
+				return true;
+			}
+		});	
+	}
 
 	@Override
 	public void discover(
@@ -96,7 +124,24 @@ public class HAPExecuteStepExpression extends HAPExecuteStep{
 	@Override
 	public void updateVariable(HAPUpdateVariable updateVar) {
 		if(this.m_outputVariable!=null) this.m_outputVariable = updateVar.getUpdatedVariable(this.m_outputVariable);
+	
+		//update variable operand
+		HAPOperandUtility.processAllOperand(this.getOperand(), null, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
+					HAPOperandVariable variableChild = (HAPOperandVariable)operand.getOperand();
+					String newName = updateVar.getUpdatedVariable(variableChild.getVariableName()); 
+					if(newName!=null)	variableChild.setVariableName(newName);
+				}
+				return true;
+			}
+		});	
 	}
-	
-	
+
+	@Override
+	public List<HAPResourceId> discoverResources() {
+		return this.m_operand.getOperand().getResources();
+	}
 }

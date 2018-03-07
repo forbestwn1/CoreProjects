@@ -5,22 +5,22 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
-import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperandConstant;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutable;
+import com.nosliw.data.core.task.HAPMatchers;
 import com.nosliw.data.core.task.HAPProcessTaskContext;
+import com.nosliw.data.core.task.HAPVariableInfo;
 
 public class HAPProcessorStepExpression implements HAPProcessorStep{
 
 	@Override
-	public HAPExecutable process(HAPDefinitionStep stepDefinition,
-			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
+	public HAPExecuteStep process(HAPDefinitionStep stepDefinition,
+			Map<String, HAPData> contextConstants,
 			HAPProcessTaskContext context) {
 
 		HAPDefinitionStepExpression stepDefExp = (HAPDefinitionStepExpression)stepDefinition;

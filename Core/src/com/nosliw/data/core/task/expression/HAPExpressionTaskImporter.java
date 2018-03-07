@@ -26,11 +26,11 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuiteForTest;
-import com.nosliw.data.core.task.HAPTaskManager;
+import com.nosliw.data.core.task.HAPManagerTask;
 
 public class HAPExpressionTaskImporter {
 
-	static public List<HAPDefinitionTaskSuite> importTaskDefinitionSuiteFromFolder(String folder, HAPTaskManager expressionTaskMan){
+	static public List<HAPDefinitionTaskSuite> importTaskDefinitionSuiteFromFolder(String folder, HAPManagerTask expressionTaskMan){
 		List<HAPDefinitionTaskSuite> suites = readTaskDefinitionSuiteFromFolder(folder);
 		for(HAPDefinitionTaskSuite suite : suites){
 			expressionTaskMan.addTaskDefinitionSuite(suite);
@@ -38,7 +38,7 @@ public class HAPExpressionTaskImporter {
 		return suites;
 	}
 
-	static public List<HAPDefinitionTaskSuite> importTaskDefinitionSuiteFromClassFolder(Class cs, HAPTaskManager expressionTaskMan){
+	static public List<HAPDefinitionTaskSuite> importTaskDefinitionSuiteFromClassFolder(Class cs, HAPManagerTask expressionTaskMan){
 		List<HAPDefinitionTaskSuite> suites = readTaskSuiteFromClassFolder(cs);
 		for(HAPDefinitionTaskSuite suite : suites){
 			expressionTaskMan.addTaskDefinitionSuite(suite);

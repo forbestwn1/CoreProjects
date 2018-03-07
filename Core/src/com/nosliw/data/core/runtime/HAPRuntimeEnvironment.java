@@ -1,6 +1,6 @@
 package com.nosliw.data.core.runtime;
 
-import com.nosliw.data.core.task.HAPTaskManager;
+import com.nosliw.data.core.task.HAPManagerTask;
 
 /**
  * Runtime environment, 
@@ -12,7 +12,7 @@ import com.nosliw.data.core.task.HAPTaskManager;
  */
 public interface HAPRuntimeEnvironment {
 
-	HAPTaskManager getExpressionManager();
+	HAPManagerTask getExpressionManager();
 	
 //	HAPResourceDiscovery getResourceDiscovery();
 	

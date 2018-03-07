@@ -10,11 +10,11 @@ import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
-import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.task.HAPMatchers;
 import com.nosliw.data.core.task.HAPProcessTaskContext;
+import com.nosliw.data.core.task.HAPVariableInfo;
 
 @HAPEntityWithAttribute(baseName="OPERAND")
 public interface HAPOperand extends HAPSerializable{

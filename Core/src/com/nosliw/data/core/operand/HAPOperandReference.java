@@ -9,53 +9,47 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.expression.HAPExpressionUtility;
-import com.nosliw.data.core.expression.HAPMatchers;
-import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
-import com.nosliw.data.core.expression.HAPVariableInfo;
-import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPResourceUtility;
+import com.nosliw.data.core.task.HAPExecuteTask;
+import com.nosliw.data.core.task.HAPMatchers;
 import com.nosliw.data.core.task.HAPProcessTaskContext;
+import com.nosliw.data.core.task.HAPVariableInfo;
 
 public class HAPOperandReference extends HAPOperandImp{
 
 	@HAPAttribute
 	public static final String REFERENCENAME = "referenceName";
 	
-	private String m_expressionReference;
+	private String m_referenceName;
 	
-	private HAPExpression m_referencedExpression;
+	private HAPExecuteTask m_referencedTask;
 
 	private HAPOperandReference(){}
 	
 	public HAPOperandReference(String expressionName){
 		super(HAPConstant.EXPRESSION_OPERAND_REFERENCE);
-		this.m_expressionReference = expressionName;
+		this.m_referenceName = expressionName;
 	}
 
-	public String getExpressionReference(){  return this.m_expressionReference;  }
+	public String getExpressionReference(){  return this.m_referenceName;  }
 	
-	public void setExpression(HAPExpression expression){ 		this.m_referencedExpression = expression;	}
-	public HAPExpression getExpression(){  return this.m_referencedExpression;  }
+	public void updateReferenceExecute(Map<String, HAPExecuteTask> refTasks) { this.m_referencedTask = refTasks.get(this.m_referenceName);   }
 	
 	@Override
 	public Set<HAPDataTypeConverter> getConverters(){
 		Set<HAPDataTypeConverter> out = new HashSet<HAPDataTypeConverter>();
-		Map<String, HAPMatchers> varConverters = this.m_referencedExpression.getVariableMatchers();
-		for(String var : varConverters.keySet()){
-			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(varConverters.get(var).discoverRelationships()));
-		}
+//		Map<String, HAPMatchers> varConverters = this.m_referencedTask.getVariableMatchers();
+//		for(String var : varConverters.keySet()){
+//			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(varConverters.get(var).discoverRelationships()));
+//		}
 		return out;	
 	}
 
 	@Override
 	public List<HAPResourceId> getResources() {
 		List<HAPResourceId> out = super.getResources();
-		List<HAPResourceId> referenceResources = HAPExpressionUtility.discoverResources(this.getExpression());
+		List<HAPResourceId> referenceResources = this.m_referencedTask.discoverResources(); 
 		out.addAll(referenceResources);
 		return out;
 	}
@@ -64,7 +58,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(REFERENCENAME, m_expressionReference);
+		jsonMap.put(REFERENCENAME, m_referenceName);
 	}
 
 	@Override
@@ -73,8 +67,7 @@ public class HAPOperandReference extends HAPOperandImp{
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessTaskContext context,
 			HAPDataTypeHelper dataTypeHelper) {
-		
-		return this.m_referencedExpression.discover(variablesInfo, expectCriteria, context, dataTypeHelper);
+		return this.m_referencedTask.discoverVariable(variablesInfo, expectCriteria, context, dataTypeHelper);
 	}
 	
 	@Override
@@ -86,7 +79,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	protected void cloneTo(HAPOperandReference operand){
 		super.cloneTo(operand);
-		operand.m_expressionReference = this.m_expressionReference;
+		operand.m_referenceName = this.m_referenceName;
 	}
 
 }

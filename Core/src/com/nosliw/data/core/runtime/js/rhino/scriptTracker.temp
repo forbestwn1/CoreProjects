@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8" />
+        <title>Nosliw Go Go !!</title>
+
+		||script||
+
+	var resourceIds = [];
+	resourceIds.push({
+		
+	});
+	
+	
+	var resourceService = nosliw.runtime.getResourceService();
+	resourceService.executeGetResourcesRequest(resourceIds, {
+		success : function(){
+			nosliw.loggine.info("Ha Ha Ha Ha!!!!!");
+		}
+	}, undefined);
+
+</head>
+
+<body>
+    aaaaa
+</body>
+
+</html>

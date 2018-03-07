@@ -38,7 +38,7 @@ public class HAPDefinitionComponent extends HAPSerializableImp {
 	
 	private String m_description;
 	
-	private Map<String, HAPDataTypeCriteria> m_variables;
+	private Map<String, HAPVariableInfo> m_variables;
 	
 	private Map<String, HAPData> m_constants;
 	
@@ -47,7 +47,7 @@ public class HAPDefinitionComponent extends HAPSerializableImp {
 	
 	public HAPDefinitionComponent(){
 		this.m_constants = new LinkedHashMap<String, HAPData>(); 
-		this.m_variables = new LinkedHashMap<String, HAPDataTypeCriteria>();
+		this.m_variables = new LinkedHashMap<String, HAPVariableInfo>();
 		this.m_children = new ArrayList<HAPDefinitionComponent>();
 	}
 
@@ -59,8 +59,8 @@ public class HAPDefinitionComponent extends HAPSerializableImp {
 	public Map<String, HAPData> getConstants(){  return this.m_constants;  }
 
 	//variables definition
-	public Map<String, HAPDataTypeCriteria> getVariables(){  return this.m_variables;  }
-	public void setVariables(Map<String, HAPDataTypeCriteria> varCriterias){  this.m_variables = varCriterias;  }
+	public Map<String, HAPVariableInfo> getVariables(){  return this.m_variables;  }
+	public void setVariables(Map<String, HAPVariableInfo> varCriterias){  this.m_variables = varCriterias;  }
 
 	public List<HAPDefinitionComponent> getChildren(){   return this.m_children;   }
 	public void addChild(HAPDefinitionComponent child) {   this.m_children.add(child);   }
@@ -90,7 +90,7 @@ public class HAPDefinitionComponent extends HAPSerializableImp {
 				String name = its.next();
 				String criteriaStr = jsonObj.optString(name);
 				HAPDataTypeCriteria criteria = HAPCriteriaUtility.parseCriteria(criteriaStr);
-				this.m_variables.put(name, criteria);
+				this.m_variables.put(name, new HAPVariableInfo(criteria));
 			}
 			
 			return true;  

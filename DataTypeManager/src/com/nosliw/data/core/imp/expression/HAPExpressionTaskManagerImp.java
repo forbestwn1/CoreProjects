@@ -11,12 +11,12 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
-import com.nosliw.data.core.task.HAPTaskManager;
+import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 import com.nosliw.data.core.operand.HAPOperand;
 
-public class HAPExpressionTaskManagerImp extends HAPTaskManager{
+public class HAPExpressionTaskManagerImp extends HAPManagerTask{
 
 	//used to generate id
 	private int m_idIndex;

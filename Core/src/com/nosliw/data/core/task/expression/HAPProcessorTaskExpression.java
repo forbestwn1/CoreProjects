@@ -5,20 +5,19 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.expression.HAPExpressionUtility;
-import com.nosliw.data.core.expression.HAPReferenceInfo;
 import com.nosliw.data.core.task.HAPProcessorTask;
-import com.nosliw.data.core.task.HAPTaskManager;
+import com.nosliw.data.core.task.HAPReferenceInfo;
+import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.core.task.HAPUpdateVariableDomain;
 import com.nosliw.data.core.task.HAPUpdateVariableMap;
 import com.nosliw.data.core.task.HAPDefinitionTask;
-import com.nosliw.data.core.task.HAPExecutable;
+import com.nosliw.data.core.task.HAPExecuteTask;
 import com.nosliw.data.core.task.HAPProcessTaskContext;
 
 public class HAPProcessorTaskExpression implements HAPProcessorTask{
 
 	@Override
-	public HAPExecutable process(HAPDefinitionTask taskDefinition, String domain, Map<String, String> variableMap, 
+	public HAPExecuteTask process(HAPDefinitionTask taskDefinition, String domain, Map<String, String> variableMap, 
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
 			HAPProcessTaskContext context) {
 		
@@ -27,10 +26,10 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 		HAPExecuteTaskExpression out = new HAPExecuteTaskExpression(taskDefExp, domain);
 		
 		//process steps
-		this.processSteps(out, taskDefExp, contextConstants);
+		this.processSteps(out, taskDefExp, contextConstants, context);
 		
 		//process references info
-		this.processReferences(out, taskDefExp, contextTaskDefinitions, contextConstants, context);
+		this.processReferencedTasks(out, taskDefExp, contextTaskDefinitions, contextConstants, context);
 		
 		//get updated variables map according to domain
 		Map<String, String> domainedVariableMap = new LinkedHashMap<String, String>();
@@ -40,15 +39,17 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 		//update variable in task
 		out.updateVariable(new HAPUpdateVariableMap(domainedVariableMap));
 		
+		this.updateReference(out);
+		
 		return out;
 	}
 	
-	private void processSteps(HAPExecuteTaskExpression out, HAPDefinitionTaskExpression taskDefExp, Map<String, HAPData> contextConstants) {
+	private void processSteps(HAPExecuteTaskExpression out, HAPDefinitionTaskExpression taskDefExp, Map<String, HAPData> contextConstants, HAPProcessTaskContext context) {
 		//update constants according to constants in context and in task
 		Map<String, HAPData> updatedContextConstants = this.getUpdatedConstants(taskDefExp, contextConstants);
 		HAPDefinitionStep[] stepDefs = taskDefExp.getSteps();
 		for(HAPDefinitionStep stepDef : stepDefs) {
-			HAPExecuteStep step = HAPManagerExpression.processStep(stepDef, updatedContextConstants);
+			HAPExecuteStep step = HAPManagerExpression.processStep(stepDef, updatedContextConstants, context);
 			step.updateVariable(new HAPUpdateVariableDomain(out.getDomain()));
 			out.addStep(step);
 		}
@@ -60,8 +61,15 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 		out.putAll(taskDefExp.getConstants());
 		return out;
 	}
+
+	private void updateReference(HAPExecuteTaskExpression out) {
+		 for(HAPExecuteStep step : out.getSteps()) {
+			 step.updateReferencedExecute(out.getReferencedExecute());
+		 }
+		out.getReferencedExecute();
+	}
 	
-	private void processReferences(HAPExecuteTaskExpression out, HAPDefinitionTaskExpression taskDefExp,
+	private void processReferencedTasks(HAPExecuteTaskExpression out, HAPDefinitionTaskExpression taskDefExp,
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
 			HAPProcessTaskContext context) {
 
@@ -106,7 +114,7 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 			if(referenceInfo!=null)		refVarMap = referenceInfo.getVariablesMap();
 		
 			//process reference task
-			HAPExecutable executable = HAPTaskManager.processTask(refedTaskDef, refDomain, HAPBasicUtility.reverseMapping(refVarMap), contextTaskDefinitions, contextConstants, context);
+			HAPExecuteTask executable = HAPManagerTask.processTask(refedTaskDef, refDomain, HAPBasicUtility.reverseMapping(refVarMap), contextTaskDefinitions, contextConstants, context);
 			out.addReferencedExecute(refName, executable);
 			
 		}
