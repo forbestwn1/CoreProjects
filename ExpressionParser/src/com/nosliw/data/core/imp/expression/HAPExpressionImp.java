@@ -14,18 +14,18 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+
 import com.nosliw.data.core.expression.HAPExpression;
+import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
+import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.task.HAPDefinitionTask;
-import com.nosliw.data.core.task.HAPMatchers;
 import com.nosliw.data.core.task.HAPReferenceInfo;
-import com.nosliw.data.core.task.HAPVariableInfo;
 import com.nosliw.data.core.task.expression.HAPExpressionUtility;
 
 /**
@@ -75,7 +75,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		
 		//find all variables, build default var criteria
 		Set<String> varsName = HAPOperandUtility.discoveryVariables(this.m_operand);
-		Map<String, HAPDataTypeCriteria> varsCriteria = this.m_expressionDefinition.getVariableCriterias();
+		Map<String, HAPVariableInfo> varsCriteria = this.m_expressionDefinition.getVariableCriterias();
 		for(String varName : varsName){
 			if(varsCriteria.get(varName)==null){
 				varsCriteria.put(varName, null);
@@ -84,7 +84,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		
 		//build vars info
 		this.m_localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		Map<String, HAPDataTypeCriteria> varCriterias = this.m_expressionDefinition.getVariableCriterias();
+		Map<String, HAPVariableInfo> varCriterias = this.m_expressionDefinition.getVariableCriterias();
 		if(varCriterias!=null){
 			for(String varName : varCriterias.keySet()){
 				this.m_localVarsInfo.put(varName, new HAPVariableInfo(varCriterias.get(varName)));
@@ -169,8 +169,8 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		});	
 		
 		//update variable criteria in definition
-		Map<String, HAPDataTypeCriteria> oldVarsDef = this.getExpressionDefinition().getVariableCriterias();
-		Map<String, HAPDataTypeCriteria> newVarsDef = new LinkedHashMap<String, HAPDataTypeCriteria>();
+		Map<String, HAPVariableInfo> oldVarsDef = this.getExpressionDefinition().getVariableCriterias();
+		Map<String, HAPVariableInfo> newVarsDef = new LinkedHashMap<String, HAPVariableInfo>();
 		for(String oldName : oldVarsDef.keySet()){
 			String newName = varChanges.get(oldName);
 			if(newName==null)  newName = oldName;
@@ -219,7 +219,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	}
 	
 	@Override
-	public HAPMatchers discover(Map<String, HAPVariableInfo> parentVariablesInfo, HAPDataTypeCriteria expectOutputCriteria, HAPProcessExpressionDefinitionContext context,	HAPDataTypeHelper dataTypeHelper){
+	public HAPMatchers discover(Map<String, HAPVariableInfo> parentVariablesInfo, HAPVariableInfo expectOutputCriteria, HAPProcessExpressionDefinitionContext context,	HAPDataTypeHelper dataTypeHelper){
 		this.m_varsInfo = parentVariablesInfo;
 		if(this.m_varsInfo==null)   this.m_varsInfo = new LinkedHashMap<String, HAPVariableInfo>();      
 		
@@ -229,7 +229,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 			HAPVariableInfo parentVarInfo = this.m_varsInfo.get(varName);
 			if(parentVarInfo!=null){
 				if(varInfo.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN)){
-					HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(varInfo.getCriteria(), parentVarInfo.getCriteria());
+					HAPVariableInfo adjustedCriteria = dataTypeHelper.merge(varInfo.getCriteria(), parentVarInfo.getCriteria());
 					varInfo.setCriteria(adjustedCriteria);
 				}
 			}
@@ -262,7 +262,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 			}
 			else{
 				if(parentVarInfo.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN)){
-					HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(varInfo.getCriteria(), parentVarInfo.getCriteria());
+					HAPVariableInfo adjustedCriteria = dataTypeHelper.merge(varInfo.getCriteria(), parentVarInfo.getCriteria());
 					parentVarInfo.setCriteria(adjustedCriteria);
 				}
 			}

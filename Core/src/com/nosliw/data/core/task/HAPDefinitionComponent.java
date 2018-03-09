@@ -15,7 +15,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.expression.HAPVariableInfo;
+
 
 public class HAPDefinitionComponent extends HAPSerializableImp {
 
@@ -73,15 +74,7 @@ public class HAPDefinitionComponent extends HAPSerializableImp {
 			this.m_description = jsonObj.optString(DESCRIPTION);
 			{
 				JSONObject constantsObj = jsonObj.optJSONObject(CONSTANTS);
-				if(constantsObj!=null){
-					Iterator<String> its = constantsObj.keys();
-					while(its.hasNext()){
-						String name = its.next();
-						Object constantObj = jsonObj.opt(name);
-						HAPData data = HAPDataUtility.buildDataWrapperFromObject(constantObj);
-						this.m_constants.put(name, data);
-					}
-				}
+				this.m_constants = HAPDataUtility.buildDataWrapperMapFromJson(constantsObj);
 			}
 			
 			JSONObject varsObj = jsonObj.optJSONObject(VARIABLES);
@@ -89,7 +82,7 @@ public class HAPDefinitionComponent extends HAPSerializableImp {
 			while(its.hasNext()){
 				String name = its.next();
 				String criteriaStr = jsonObj.optString(name);
-				HAPDataTypeCriteria criteria = HAPCriteriaUtility.parseCriteria(criteriaStr);
+				HAPVariableInfo criteria = HAPCriteriaUtility.parseCriteria(criteriaStr);
 				this.m_variables.put(name, new HAPVariableInfo(criteria));
 			}
 			

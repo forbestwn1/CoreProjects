@@ -8,16 +8,22 @@ import java.util.Map;
  */
 public class HAPExpressionProcessConfigureUtil {
 
+	public static final String CONFIGURE_DISCOVERY = "discovery";
+	
 	static public Map<String, String> setDoDiscovery(Map<String, String> configure){
-		return buildContextConfigure(configure, HAPProcessExpressionDefinitionContext.CONFIGURE_DISCOVERY, "true");
+		return buildContextConfigure(configure, CONFIGURE_DISCOVERY, "true");
 	}
 
 	static public Map<String, String> setDontDiscovery(Map<String, String> configure){
-		return buildContextConfigure(configure, HAPProcessExpressionDefinitionContext.CONFIGURE_DISCOVERY, "false");
+		return buildContextConfigure(configure, CONFIGURE_DISCOVERY, "false");
 	}
 
-	static public boolean isDoDiscovery(HAPProcessExpressionDefinitionContext context){
-		return "true".equals(context.getConfiguration().getStringValue(HAPProcessExpressionDefinitionContext.CONFIGURE_DISCOVERY));
+	static public boolean isDoDiscovery(Map<String, String> configure){
+		boolean out = false;
+		if(configure!=null) {
+			out = "true".equals(configure.get(CONFIGURE_DISCOVERY));
+		}
+		return out;
 	}
 	
 	static private Map<String, String> buildContextConfigure(Map<String, String> configure, String name, String value){

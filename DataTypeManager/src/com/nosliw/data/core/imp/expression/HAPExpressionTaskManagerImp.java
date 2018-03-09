@@ -7,7 +7,7 @@ import java.util.Set;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
@@ -36,7 +36,7 @@ public class HAPExpressionTaskManagerImp extends HAPManagerTask{
 
 
 	@Override
-	public HAPExpression processExpression(String id, String expressionName, HAPDefinitionTaskSuite suite, Map<String, HAPDataTypeCriteria> variableCriterias){
+	public HAPExpression processExpression(String id, String expressionName, HAPDefinitionTaskSuite suite, Map<String, HAPVariableInfo> variableCriterias){
 		String expId = id;
 		if(expId==null) expId = expressionName + "_no" + this.m_idIndex++;
 		HAPDefinitionTask expDef = suite.getTaskDefinition(expressionName); 
@@ -45,7 +45,7 @@ public class HAPExpressionTaskManagerImp extends HAPManagerTask{
 	}
 	
 	@Override
-	public HAPExpression processExpression(String id, String expressionName, String suiteName, Map<String, HAPDataTypeCriteria> variableCriterias){
+	public HAPExpression processExpression(String id, String expressionName, String suiteName, Map<String, HAPVariableInfo> variableCriterias){
 		String expId = id;
 		if(expId==null) expId = expressionName + "_no" + this.m_idIndex++;
 		HAPDefinitionTaskSuite suite = this.getTaskDefinitionSuite(suiteName);
@@ -56,7 +56,7 @@ public class HAPExpressionTaskManagerImp extends HAPManagerTask{
 
 
 	@Override
-	public HAPExpression processExpression(String id, HAPDefinitionTask expressionDefinition,	HAPDefinitionTaskSuite suite, Map<String, HAPDataTypeCriteria> variableCriterias, Map<String, String> context) {
+	public HAPExpression processExpression(String id, HAPDefinitionTask expressionDefinition,	HAPDefinitionTaskSuite suite, Map<String, HAPVariableInfo> variableCriterias, Map<String, String> context) {
 		String expId = id;
 		if(expId==null) expId = expressionDefinition.getName() + "_no" + this.m_idIndex++;
 		Map<String, String> cfgContext = new LinkedHashMap<String, String>();
@@ -67,7 +67,7 @@ public class HAPExpressionTaskManagerImp extends HAPManagerTask{
 	}
 	
 	@Override
-	public HAPExpression processExpression(String id, HAPDefinitionTask expressionDefinition, Map<String, HAPData> contextConstants, Map<String, HAPDataTypeCriteria> variableCriterias, Map<String, String> context) {
+	public HAPExpression processExpression(String id, HAPDefinitionTask expressionDefinition, Map<String, HAPData> contextConstants, Map<String, HAPVariableInfo> variableCriterias, Map<String, String> context) {
 		String expId = id;
 		if(expId==null) expId = ""+this.m_idIndex++;
 		HAPExpression expression = this.m_expressionProcessor.processExpressionDefinition(expId, expressionDefinition, null, contextConstants, variableCriterias, this.getContext(context));

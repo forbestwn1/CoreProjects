@@ -50,15 +50,7 @@ public class HAPDefinitionStepExpression extends HAPDefinitionStep{
 	
 	private HAPOperandWrapper m_operand;
 	
-	//all variables defined in expression
-	private Set<String> m_variableNames;
-
-	//all references defined in expression
-	private Set<String> m_referenceNames;
-	
 	public HAPDefinitionStepExpression() {
-		this.m_variableNames = new HashSet<String>();
-		this.m_referenceNames = new HashSet<String>();
 	}
 	
 	@Override
@@ -72,12 +64,6 @@ public class HAPDefinitionStepExpression extends HAPDefinitionStep{
 
 	public HAPOperandWrapper getOperand() {  return this.m_operand;  }
 	
-	@Override
-	public Set<String> getVariableNames() {		return this.m_variableNames;	}
-
-	@Override
-	public Set<String> getReferenceNames() {		return this.m_referenceNames;	}
-
 
 	private void process() {
 		//parse expression
@@ -91,69 +77,6 @@ public class HAPDefinitionStepExpression extends HAPDefinitionStep{
 		
 	}
 	
-	//find all variables and references in expression
-	private void discoverVariables() {
-		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
-					HAPOperandVariable variableOperand = (HAPOperandVariable)operand.getOperand();
-					m_variableNames.add(variableOperand.getVariableName());
-				}
-				return true;
-			}
-		});		
-	}
-	
-	//find all variables and references in expression
-	private void discoverReferences() {
-		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
-					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					m_referenceNames.add(referenceOperand.getExpressionReference());
-				}
-				return true;
-			}
-		});		
-	}
-	
-	/**
-	 * Process anonomouse parameter in operaion
-	 * Add parm name to it
-	 * It only works for OperationOperand with clear data typeId
-	 * @param expression
-	 */
-	private void processDefaultAnonomousParmInOperation(){
-		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_OPERATION)){
-					HAPOperandOperation operationOperand = (HAPOperandOperation)operand.getOperand();
-					HAPDataTypeId dataTypeId = operationOperand.getDataTypeId();
-					if(dataTypeId!=null){
-						HAPDataTypeOperation dataTypeOperation = HAPManagerExpression.dataTypeHelper.getOperationInfoByName(dataTypeId, operationOperand.getOperaion());
-						List<HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
-						Map<String, HAPOperandWrapper> parms = operationOperand.getParms();
-						for(HAPOperationParmInfo parmInfo : parmsInfo){
-							HAPOperandWrapper parmOperand = parms.get(parmInfo.getName());
-							if(parmOperand==null && parmInfo.getIsBase() && operationOperand.getBase()!=null){
-								//if parmInfo is base parm and is located in base
-								parmOperand = operationOperand.getBase();
-								operationOperand.addParm(parmInfo.getName(), parmOperand.getOperand());
-								operationOperand.setBase(null);
-							}
-						}
-					}
-				}
-				return true;
-			}
-		});		
-	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

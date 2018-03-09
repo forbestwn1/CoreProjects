@@ -6,6 +6,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
+
 /**
  * Store information for node context
  * For now, the information is data type criteria for the node 

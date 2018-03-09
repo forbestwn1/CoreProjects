@@ -8,7 +8,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+
 
 @HAPEntityWithAttribute
 public class HAPDataSourceParm extends HAPSerializableImp{
@@ -29,7 +29,7 @@ public class HAPDataSourceParm extends HAPSerializableImp{
 	
 	private String m_description;
 	
-	private HAPDataTypeCriteria m_criteria;
+	private HAPVariableInfo m_criteria;
 	
 	private HAPData m_default;
 
@@ -39,7 +39,7 @@ public class HAPDataSourceParm extends HAPSerializableImp{
 
 	public String getDescription(){   return this.m_description;   }
 	
-	public HAPDataTypeCriteria getCriteria(){   return this.m_criteria;   }
+	public HAPVariableInfo getCriteria(){   return this.m_criteria;   }
 	
 	public HAPData getDefault(){   return this.m_default;   }
 	

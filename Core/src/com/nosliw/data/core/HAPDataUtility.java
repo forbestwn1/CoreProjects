@@ -1,11 +1,12 @@
 package com.nosliw.data.core;
 
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 public class HAPDataUtility {
 
@@ -32,6 +33,19 @@ public class HAPDataUtility {
 		boolean result = wrapper.buildObjectByJson(jsonObj);
 		if(result)   return wrapper;
 		else return null;
+	}
+	
+	public static Map<String, HAPData> buildDataWrapperMapFromJson(JSONObject jsonObj){
+		Map<String, HAPData> constants = new LinkedHashMap<String, HAPData>();
+		if(jsonObj!=null) {
+			Iterator<String> it2 = jsonObj.keys();
+			while(it2.hasNext()){
+				String constantName = it2.next();
+				JSONObject constantJson = jsonObj.getJSONObject(constantName);
+				constants.put(constantName, HAPDataUtility.buildDataWrapperFromJson(constantJson));
+			}
+		}
+		return constants;
 	}
 	
 	public static boolean isNormalDataOpration(HAPOperation operation){

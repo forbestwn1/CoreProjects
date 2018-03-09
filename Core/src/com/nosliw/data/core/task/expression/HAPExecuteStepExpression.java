@@ -7,8 +7,10 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.expression.HAPMatchers;
+import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
@@ -16,10 +18,7 @@ import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task.HAPExecuteTask;
-import com.nosliw.data.core.task.HAPMatchers;
-import com.nosliw.data.core.task.HAPProcessTaskContext;
 import com.nosliw.data.core.task.HAPUpdateVariable;
-import com.nosliw.data.core.task.HAPVariableInfo;
 
 public class HAPExecuteStepExpression extends HAPExecuteStep{
 
@@ -63,8 +62,8 @@ public class HAPExecuteStepExpression extends HAPExecuteStep{
 	public void discover(
 			Map<String, HAPVariableInfo> variablesInfo, 
 			Map<String, HAPVariableInfo> localVariablesInfo, 
-			Set<HAPDataTypeCriteria> exitCriterias, 
-			HAPProcessTaskContext context,
+			Set<HAPVariableInfo> exitCriterias, 
+			HAPProcessContext context,
 			HAPDataTypeHelper dataTypeHelper){
 		
 		HAPMatchers matchers = null;
@@ -115,7 +114,7 @@ public class HAPExecuteStepExpression extends HAPExecuteStep{
 	}
 	
 	@Override
-	public HAPDataTypeCriteria getOutput() {	return this.m_operand.getOperand().getOutputCriteria();	}
+	public HAPVariableInfo getOutput() {	return this.m_operand.getOperand().getOutputCriteria();	}
 
 	public HAPExecuteStepExpression clone() {
 		return null;

@@ -8,7 +8,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWrapperLiterate;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPReferenceInfo;
@@ -21,7 +21,7 @@ public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity impl
 	
 	//As when this class is instantiated, the variable attribute is criteria in literate format which can not use directly
 	//This attribute store the real criteria which can be converted from literate fromat
-	Map<String, HAPDataTypeCriteria> m_variabesWithSolidCriteria;
+	Map<String, HAPVariableInfo> m_variabesWithSolidCriteria;
 	
 	private HAPOperandWrapper m_operand  = new HAPOperandWrapper();
 	
@@ -47,10 +47,10 @@ public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity impl
 	public Map<String, HAPData> getConstants(){return this.getMapAncestorByPath(CONSTANTS).getMapValue();}
 
 	@Override
-	public Map<String, HAPDataTypeCriteria> getVariableCriterias() {
+	public Map<String, HAPVariableInfo> getVariableCriterias() {
 		if(this.m_variabesWithSolidCriteria == null){
-			this.m_variabesWithSolidCriteria = new LinkedHashMap<String, HAPDataTypeCriteria>(); 
-			Map<String, HAPDataTypeCriteria> vars = this.getMapAncestorByPath(VARIABLECRITERIAS).getMapValue();
+			this.m_variabesWithSolidCriteria = new LinkedHashMap<String, HAPVariableInfo>(); 
+			Map<String, HAPVariableInfo> vars = this.getMapAncestorByPath(VARIABLECRITERIAS).getMapValue();
 			for(String varName : vars.keySet()){
 				m_variabesWithSolidCriteria.put(varName, ((HAPDataTypeCriteriaWrapperLiterate)vars.get(varName)).getSolidCriteria());
 			}
@@ -58,7 +58,7 @@ public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity impl
 		return this.m_variabesWithSolidCriteria;
 	}
 
-	public void setVariableCriterias(Map<String, HAPDataTypeCriteria> varCriterias){
+	public void setVariableCriterias(Map<String, HAPVariableInfo> varCriterias){
 		this.m_variabesWithSolidCriteria = varCriterias;
 	}
 	
@@ -69,7 +69,7 @@ public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity impl
 	public HAPDefinitionTask cloneTaskDefinition(){
 		HAPExpressionDefinitionImpStr out = this.clone(HAPExpressionDefinitionImpStr.class);
 
-		Map<String, HAPDataTypeCriteria> vars = this.getMapAncestorByPath(VARIABLECRITERIAS).getMapValue();
+		Map<String, HAPVariableInfo> vars = this.getMapAncestorByPath(VARIABLECRITERIAS).getMapValue();
 		
 		for(String varName : vars.keySet()){
 			getVariableCriterias().put(varName, ((HAPDataTypeCriteriaWrapperLiterate)vars.get(varName)).getSolidCriteria());

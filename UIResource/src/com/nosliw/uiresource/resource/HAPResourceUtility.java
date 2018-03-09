@@ -12,7 +12,6 @@ import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
-import com.nosliw.data.core.task.expression.HAPExpressionUtility;
 import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;

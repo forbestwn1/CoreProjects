@@ -13,19 +13,19 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+
 import com.nosliw.data.core.datasource.HAPDataSourceDefinition;
 import com.nosliw.data.core.datasource.HAPDataSourceManager;
 import com.nosliw.data.core.datasource.HAPDataSourceOutput;
 import com.nosliw.data.core.datasource.HAPDataSourceParm;
+import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
+import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandImp;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSGateway;
-import com.nosliw.data.core.task.HAPMatchers;
-import com.nosliw.data.core.task.HAPVariableInfo;
 
 public class HAPOperandDataSource extends HAPOperandImp{
 
@@ -89,7 +89,7 @@ public class HAPOperandDataSource extends HAPOperandImp{
 	}
 	
 	@Override
-	public HAPMatchers discover(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectCriteria,
+	public HAPMatchers discover(Map<String, HAPVariableInfo> variablesInfo, HAPVariableInfo expectCriteria,
 			HAPProcessExpressionDefinitionContext context, HAPDataTypeHelper dataTypeHelper) {
 		m_parmsMatchers = new LinkedHashMap<String, HAPMatchers>();
 		

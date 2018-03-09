@@ -11,11 +11,12 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPOperationParmInfo;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
+import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandConstant;
 import com.nosliw.data.core.operand.HAPOperandOperation;
@@ -28,7 +29,6 @@ import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutable;
 import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.core.task.HAPReferenceInfo;
-import com.nosliw.data.core.task.HAPVariableInfo;
 import com.nosliw.data.core.task.expression.HAPProcessorStep;
 import com.nosliw.data.core.task.expression.HAPDefinitionStep;
 import com.nosliw.data.core.task.expression.HAPDefinitionStepExpression;
@@ -52,7 +52,7 @@ public class HAPProcessorStepExpression implements HAPProcessorStep{
 			HAPDefinitionStep stepDefinition,
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, 
 			Map<String, HAPData> contextConstants,
-			Map<String, HAPDataTypeCriteria> contextVariableCriterias,
+			Map<String, HAPVariableInfo> contextVariableCriterias,
 			HAPProcessExpressionDefinitionContext context
 	) {
 		HAPDefinitionStepExpression stepDefExp = (HAPDefinitionStepExpression)stepDefinition;
@@ -105,7 +105,7 @@ public class HAPProcessorStepExpression implements HAPProcessorStep{
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					String referenceName = referenceOperand.getExpressionReference();
+					String referenceName = referenceOperand.getReferenceName();
 					HAPReferenceInfo referenceInfo = expression.getExpressionDefinition().getReferences().get(referenceName);
 					
 					String refExpName = null;   //referenced expression name, by default, use referenceName as expression name

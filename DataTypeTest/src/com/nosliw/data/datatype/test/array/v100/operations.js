@@ -21,7 +21,8 @@ dataTypeDefition.operations['process'] = {
 			_.each(this.value, function(eleData, i){
 				
 				var gatewayParms = {
-					"expression" : expressionData.value,
+					"expression" : expressionData.value.expression,
+					"constants" : expressionData.value.constants,
 					"variablesValue" : {}
 				};
 				gatewayParms.variablesValue[parms.getParm("elementVariableName").value] = eleData;

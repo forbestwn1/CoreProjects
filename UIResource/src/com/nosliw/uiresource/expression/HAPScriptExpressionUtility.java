@@ -13,11 +13,10 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpression;
+import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
-import com.nosliw.data.core.task.HAPDefinitionTask;
-import com.nosliw.data.core.task.HAPManagerTask;
 
 public class HAPScriptExpressionUtility {
 
@@ -33,7 +32,7 @@ public class HAPScriptExpressionUtility {
 	 */
 	public static List<Object> discoverUIExpressionInText(
 			String text, 
-			HAPManagerTask expressionMan){
+			HAPExpressionSuiteManager expressionMan){
 		List<Object> out = new ArrayList<Object>();
 		int i = 0;
 		int start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);

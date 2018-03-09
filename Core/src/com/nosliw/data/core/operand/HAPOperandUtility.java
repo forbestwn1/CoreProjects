@@ -1,10 +1,19 @@
 package com.nosliw.data.core.operand;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.expression.HAPMatchers;
+import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPOperandUtility {
 
@@ -60,5 +69,74 @@ public class HAPOperandUtility {
 			task.postPross(operand, data);
 		}
 	}
+	
+	static public void updateConstantData(HAPOperandWrapper operand, final Map<String, HAPData> contextConstants){
+		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
+					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
+					if(constantOperand.getData()==null){
+						String constantName = constantOperand.getName();
+						HAPData constantData = contextConstants.get(constantName);
+						constantOperand.setData(constantData);
+					}
+				}
+				return true;
+			}
+		});	
+	}
+
+	static public Map<String, HAPVariableInfo> discover(
+			HAPOperand operand, 
+			Map<String, HAPVariableInfo> parentVariablesInfo, 
+			HAPDataTypeCriteria expectOutput,
+			HAPDataTypeHelper dataTypeHelper) {
+
+		//do discovery on operand
+		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		varsInfo.putAll(parentVariablesInfo);
+		
+		Map<String, HAPVariableInfo> oldVarsInfo;
+		HAPProcessContext context = new HAPProcessContext();
+		//Do discovery until local vars definition not change or fail 
+		do{
+			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+			oldVarsInfo.putAll(varsInfo);
+			context.clear();
+			operand.discover(varsInfo, expectOutput, context, dataTypeHelper);
+		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
+		
+		return varsInfo;
+	}
+
+//	static public Map<String, HAPMatchers> aaa(){
+//		Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
+//		
+//		//merge back, cal variable matchers, update parent variable
+//		for(String varName : varsInfo.keySet()){
+//			HAPVariableInfo varInfo = varsInfo.get(varName);
+//			HAPVariableInfo parentVarInfo = parentVariablesInfo.get(varName);
+//			if(parentVarInfo==null){
+//				parentVarInfo = new HAPVariableInfo();
+//				parentVarInfo.setCriteria(varInfo.getCriteria());
+//				parentVariablesInfo.put(varName, parentVarInfo);
+//			}
+//			else{
+//				if(parentVarInfo.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN)){
+//					HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(varInfo.getCriteria(), parentVarInfo.getCriteria());
+//					parentVarInfo.setCriteria(adjustedCriteria);
+//				}
+//			}
+//
+//			//cal var converters
+//			HAPMatchers varMatchers = dataTypeHelper.buildMatchers(parentVarInfo.getCriteria(), varInfo.getCriteria());
+//			matchers.put(varName, varMatchers);
+//		}
+//		
+//		return matchers;
+//		
+//	}
 	
 }

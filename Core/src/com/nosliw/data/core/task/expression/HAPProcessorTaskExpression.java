@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.task.HAPProcessorTask;
 import com.nosliw.data.core.task.HAPReferenceInfo;
@@ -12,14 +13,13 @@ import com.nosliw.data.core.task.HAPUpdateVariableDomain;
 import com.nosliw.data.core.task.HAPUpdateVariableMap;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecuteTask;
-import com.nosliw.data.core.task.HAPProcessTaskContext;
 
 public class HAPProcessorTaskExpression implements HAPProcessorTask{
 
 	@Override
 	public HAPExecuteTask process(HAPDefinitionTask taskDefinition, String domain, Map<String, String> variableMap, 
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
-			HAPProcessTaskContext context) {
+			HAPProcessContext context) {
 		
 		HAPDefinitionTaskExpression taskDefExp = (HAPDefinitionTaskExpression)taskDefinition; 
 		
@@ -44,7 +44,7 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 		return out;
 	}
 	
-	private void processSteps(HAPExecuteTaskExpression out, HAPDefinitionTaskExpression taskDefExp, Map<String, HAPData> contextConstants, HAPProcessTaskContext context) {
+	private void processSteps(HAPExecuteTaskExpression out, HAPDefinitionTaskExpression taskDefExp, Map<String, HAPData> contextConstants, HAPProcessContext context) {
 		//update constants according to constants in context and in task
 		Map<String, HAPData> updatedContextConstants = this.getUpdatedConstants(taskDefExp, contextConstants);
 		HAPDefinitionStep[] stepDefs = taskDefExp.getSteps();
@@ -71,7 +71,7 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 	
 	private void processReferencedTasks(HAPExecuteTaskExpression out, HAPDefinitionTaskExpression taskDefExp,
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
-			HAPProcessTaskContext context) {
+			HAPProcessContext context) {
 
 		//gate updated referenceInfos according to domain info
 		Map<String, HAPReferenceInfo> updatedReferenceInfos = new LinkedHashMap<String, HAPReferenceInfo>();

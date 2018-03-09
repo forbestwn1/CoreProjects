@@ -4,6 +4,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.datasource.HAPDataSourceManager;
 import com.nosliw.data.core.datasource.HAPGatewayDataSource;
+import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.datasource.HAPDataSourceManagerImp;
 import com.nosliw.data.core.imp.expression.HAPExpressionTaskManagerImp;
@@ -32,7 +33,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		this.m_dataTypeHelper = new HAPDataTypeHelperImp(this, this.m_runtimeJSModule.getDataTypeDataAccess());
 		
 		HAPResourceManagerRoot resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
-		HAPManagerTask expressionManager = new HAPExpressionTaskManagerImp(new HAPExpressionParserImp(), this.m_dataTypeHelper); 		
+		HAPExpressionSuiteManager expressionManager = new HAPExpressionSuiteManager(this.m_dataTypeHelper); 		
 		HAPRuntimeImpRhino runtime = new HAPRuntimeImpRhino(this); 
 		HAPGatewayManager gatewayManager = new HAPGatewayManager(); 
 

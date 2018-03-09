@@ -6,8 +6,7 @@ import java.util.Map;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.task.HAPDefinitionTask;
+
 import com.nosliw.data.core.expression.HAPParmInOperationOperand;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandAttribute;
@@ -25,11 +24,11 @@ public class HAPUIResourceExpressionUtility {
 	//			replace attribute operation with one variable operation
 	//  for attribute operation a.b.c.d which have responding defintion a.b.c in context, 
 	//			replace attribute operation with one variable operation(a.b.c) and getChild operation
-	public static void processAttributeOperandInExpression(HAPDefinitionTask expressionDefinition, final Map<String, HAPDataTypeCriteria> varCriterias){
+	public static void processAttributeOperandInExpression(HAPDefinitionTask expressionDefinition, final Map<String, HAPVariableInfo> varCriterias){
 		processAttributeOperandInExpressionOperand(expressionDefinition.getOperand(), varCriterias);
 	}
 	
-	private static void processAttributeOperandInExpressionOperand(HAPOperandWrapper operand, final Map<String, HAPDataTypeCriteria> varCriterias){
+	private static void processAttributeOperandInExpressionOperand(HAPOperandWrapper operand, final Map<String, HAPVariableInfo> varCriterias){
 		List<HAPAttributeOperandChainInfo> data = new ArrayList<HAPAttributeOperandChainInfo>();
 		HAPOperandUtility.processAllOperand(operand, data, new HAPOperandTask(){
 			@Override
@@ -91,7 +90,7 @@ public class HAPUIResourceExpressionUtility {
 		});
 	}
 	
-	private static void processAttributeChain(HAPAttributeOperandChainInfo attrInfo, Map<String, HAPDataTypeCriteria> contextVars){
+	private static void processAttributeChain(HAPAttributeOperandChainInfo attrInfo, Map<String, HAPVariableInfo> contextVars){
 		String startOpType = attrInfo.startOperand.getOperand().getType();
 		if(startOpType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
 			//attribute start with variable

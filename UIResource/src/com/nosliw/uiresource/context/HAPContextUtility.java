@@ -10,10 +10,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.task.HAPDefinitionTask;
-import com.nosliw.data.core.task.HAPManagerTask;
-import com.nosliw.data.core.task.HAPMatchers;
 import com.nosliw.uiresource.definition.HAPConstantDef;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
@@ -51,7 +49,7 @@ public class HAPContextUtility {
 		//get all expressions definitions
 		//expression from parent first
 		if(parent!=null){
-			Map<String, HAPDefinitionTask> parentExpDefs = parentExpContext.getExpressionDefinitions();
+			Map<String, HAPDefinitionExpression> parentExpDefs = parentExpContext.getExpressionDefinitions();
 			for(String id : parentExpDefs.keySet())    expContext.addExpressionDefinition(parentExpDefs.get(id));
 		}
 		//expression from current

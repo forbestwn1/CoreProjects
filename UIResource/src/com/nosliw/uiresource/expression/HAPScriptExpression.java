@@ -15,8 +15,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.task.HAPDefinitionTask;
-import com.nosliw.data.core.task.HAPManagerTask;
+import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 
 /**
  * Represent script expression
@@ -74,10 +73,10 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	private boolean m_isConstant;
 	private Object m_value;
 	
-	private HAPManagerTask m_expressionManager;
+	private HAPExpressionSuiteManager m_expressionManager;
 	
 	
-	public HAPScriptExpression(String id, String content, HAPManagerTask expressionMan){
+	public HAPScriptExpression(String id, String content, HAPExpressionSuiteManager expressionMan){
 		this.m_id = id;
 		this.m_variableNames = new HashSet<String>();
 		this.m_elements = new ArrayList<Object>();

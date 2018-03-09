@@ -7,14 +7,13 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
+import com.nosliw.data.core.expression.HAPMatchers;
+import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.task.HAPMatchers;
-import com.nosliw.data.core.task.HAPProcessTaskContext;
-import com.nosliw.data.core.task.HAPVariableInfo;
 
 @HAPEntityWithAttribute(baseName="OPERAND")
 public interface HAPOperand extends HAPSerializable{
@@ -53,9 +52,9 @@ public interface HAPOperand extends HAPSerializable{
 	 * @return  matchers from output criteria to expect criteria
 	 */
 	HAPMatchers discover(Map<String, HAPVariableInfo> variablesInfo,
-										HAPDataTypeCriteria expectCriteria,
-										HAPProcessTaskContext context, 
-										HAPDataTypeHelper dataTypeHelper);
+							HAPDataTypeCriteria expectCriteria,
+							HAPProcessContext context, 
+							HAPDataTypeHelper dataTypeHelper);
 
 	//operand output data type criteria
 	HAPDataTypeCriteria getOutputCriteria();

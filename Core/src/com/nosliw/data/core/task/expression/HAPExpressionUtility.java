@@ -12,17 +12,17 @@ import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.expression.HAPExpression;
+import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
-import com.nosliw.data.core.runtime.HAPExpressionExecute;
+import com.nosliw.data.core.runtime.HAPExecuteExpression;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
-import com.nosliw.data.core.task.HAPMatchers;
 
 public class HAPExpressionUtility {
 
@@ -58,9 +58,9 @@ public class HAPExpressionUtility {
 	 * @param expression
 	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
 	 */
-	static public List<HAPResourceInfo> discoverResourceRequirement(List<HAPExpressionExecute> expressions, HAPResourceManagerRoot resourceMan) {
+	static public List<HAPResourceInfo> discoverResourceRequirement(List<HAPExecuteExpression> expressions, HAPResourceManagerRoot resourceMan) {
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
-		for(HAPExpressionExecute expression : expressions){
+		for(HAPExecuteExpression expression : expressions){
 			resourceIds.addAll(getResourceRequirement(expression));
 		}
 		return resourceMan.discoverResources(new ArrayList<HAPResourceId>(resourceIds));
@@ -71,7 +71,7 @@ public class HAPExpressionUtility {
 	 * @param expression
 	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
 	 */
-	static private List<HAPResourceId> getResourceRequirement(HAPExpressionExecute expression){
+	static private List<HAPResourceId> getResourceRequirement(HAPExecuteExpression expression){
 		Set<HAPResourceId> result = new LinkedHashSet<HAPResourceId>();
 		HAPOperandUtility.processAllOperand(expression.getOperand(), result, new HAPOperandTask(){
 			@Override

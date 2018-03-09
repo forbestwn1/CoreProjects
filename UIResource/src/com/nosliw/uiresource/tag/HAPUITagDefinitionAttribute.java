@@ -6,6 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
+
 public class HAPUITagDefinitionAttribute extends HAPSerializableImp{
 
 	@HAPAttribute

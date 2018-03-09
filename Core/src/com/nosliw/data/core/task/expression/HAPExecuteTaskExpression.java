@@ -9,16 +9,16 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaOr;
+import com.nosliw.data.core.expression.HAPMatchers;
+import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task.HAPExecuteTask;
-import com.nosliw.data.core.task.HAPMatchers;
-import com.nosliw.data.core.task.HAPProcessTaskContext;
 import com.nosliw.data.core.task.HAPUpdateVariable;
-import com.nosliw.data.core.task.HAPVariableInfo;
 
 public class HAPExecuteTaskExpression implements HAPExecuteTask{
 
@@ -38,7 +38,7 @@ public class HAPExecuteTaskExpression implements HAPExecuteTask{
 	private Map<String, HAPVariableInfo> m_varsInfo;
 	
 	//
-	private HAPDataTypeCriteria m_output;
+	private HAPVariableInfo m_output;
 	
 	// store all the matchers from variables info to variables defined in task
 	private Map<String, HAPMatchers> m_varsMatchers;
@@ -64,7 +64,7 @@ public class HAPExecuteTaskExpression implements HAPExecuteTask{
 	public Map<String, HAPMatchers> getVariableMatchers() {	return this.m_varsMatchers;	}
 	
 	@Override
-	public HAPDataTypeCriteria getOutput() {  return this.m_output;  }
+	public HAPVariableInfo getOutput() {  return this.m_output;  }
 
 	@Override
 	public void updateVariable(HAPUpdateVariable updateVar) {
@@ -82,19 +82,19 @@ public class HAPExecuteTaskExpression implements HAPExecuteTask{
 	}
 
 	@Override
-	public HAPMatchers discoverVariable(Map<String, HAPVariableInfo> parentVariablesInfo, HAPDataTypeCriteria expectOutputCriteria, HAPProcessTaskContext context, HAPDataTypeHelper dataTypeHelper) {
+	public HAPMatchers discoverVariable(Map<String, HAPVariableInfo> parentVariablesInfo, HAPVariableInfo expectOutputCriteria, HAPProcessContext context, HAPDataTypeHelper dataTypeHelper) {
 		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		varsInfo.putAll(parentVariablesInfo);
 
 		Map<String, HAPVariableInfo> oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		Set<HAPDataTypeCriteria> exitCriterias;
+		Set<HAPVariableInfo> exitCriterias;
 		do {
 			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 			oldVarsInfo.putAll(varsInfo);
 			context.clear();
 
 			Map<String, HAPVariableInfo> localVariablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
-			exitCriterias = new HashSet<HAPDataTypeCriteria>();
+			exitCriterias = new HashSet<HAPVariableInfo>();
 			for(HAPExecuteStep step : this.m_steps) {
 				step.discover(parentVariablesInfo, localVariablesInfo, exitCriterias, context, dataTypeHelper);
 				if(!context.isSuccess())  break;
@@ -113,7 +113,7 @@ public class HAPExecuteTaskExpression implements HAPExecuteTask{
 			}
 			else{
 				if(parentVarInfo.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN)){
-					HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(varInfo.getCriteria(), parentVarInfo.getCriteria());
+					HAPVariableInfo adjustedCriteria = dataTypeHelper.merge(varInfo.getCriteria(), parentVarInfo.getCriteria());
 					parentVarInfo.setCriteria(adjustedCriteria);
 				}
 			}

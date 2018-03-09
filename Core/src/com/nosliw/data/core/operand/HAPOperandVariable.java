@@ -4,12 +4,11 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
-import com.nosliw.data.core.task.HAPMatchers;
-import com.nosliw.data.core.task.HAPProcessTaskContext;
-import com.nosliw.data.core.task.HAPVariableInfo;
+import com.nosliw.data.core.expression.HAPMatchers;
+import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPOperandVariable extends HAPOperandImp{
 
@@ -38,7 +37,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
-			HAPProcessTaskContext context,
+			HAPProcessContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		HAPVariableInfo variableInfo = variablesInfo.get(this.getVariableName());
 		if(variableInfo==null){

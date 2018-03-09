@@ -5,11 +5,13 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+
 import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
+import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.task.expression.HAPExecuteTaskExpression;
 
@@ -50,11 +52,11 @@ public class HAPManagerTask {
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, 
 			Map<String, HAPVariableInfo> parentVariablesInfo, 
 			Map<String, HAPData> contextConstants,
-			HAPDataTypeCriteria expectOutput,
-			HAPProcessTaskContext context) {
+			HAPVariableInfo expectOutput,
+			HAPProcessContext context) {
 		HAPExecuteTaskExpression task = (HAPExecuteTaskExpression)processTask(taskDefinition, null, null, contextTaskDefinitions, contextConstants, context);
 		task.setId(id);
-		
+		/*
 		Map<String, HAPVariableInfo> variableInfos = parentVariablesInfo;
 		if(variableInfos==null) {
 			//if no overriding var info, use var info defined in task definition
@@ -66,12 +68,15 @@ public class HAPManagerTask {
 		}
 		
 		task.discoverVariable(variableInfos, expectOutput, context, this.m_dataTypeHelper);
+		
+*/		
+		
 		return task;
 	}
 	
 	public static HAPExecuteTask processTask(HAPDefinitionTask taskDefinition, String domain, Map<String, String> variableMap,
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
-			HAPProcessTaskContext context) {
+			HAPProcessContext context) {
 		HAPProcessorTask taskProcessor = m_taskProcessors.get(taskDefinition.getType());
 		HAPExecuteTask out = taskProcessor.process(taskDefinition, domain, variableMap, contextTaskDefinitions, contextConstants, context);
 		return out;
@@ -86,7 +91,7 @@ public class HAPManagerTask {
 	
 	
 	
-	
+/*	
 	
 	public HAPDefinitionTaskSuite getTaskDefinitionSuite(String suiteName){		return this.m_taskDefinitionSuites.get(suiteName);	}
 	
@@ -111,7 +116,7 @@ public class HAPManagerTask {
 		}
 	}
 	
-
+*/
 	
 /*	
 	

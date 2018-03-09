@@ -7,14 +7,14 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.expression.HAPMatchers;
+import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task.HAPExecuteTask;
-import com.nosliw.data.core.task.HAPMatchers;
-import com.nosliw.data.core.task.HAPProcessTaskContext;
-import com.nosliw.data.core.task.HAPVariableInfo;
 
 public class HAPOperandReference extends HAPOperandImp{
 
@@ -32,7 +32,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		this.m_referenceName = expressionName;
 	}
 
-	public String getExpressionReference(){  return this.m_referenceName;  }
+	public String getReferenceName(){  return this.m_referenceName;  }
 	
 	public void updateReferenceExecute(Map<String, HAPExecuteTask> refTasks) { this.m_referencedTask = refTasks.get(this.m_referenceName);   }
 	
@@ -65,7 +65,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
-			HAPProcessTaskContext context,
+			HAPProcessContext context,
 			HAPDataTypeHelper dataTypeHelper) {
 		return this.m_referencedTask.discoverVariable(variablesInfo, expectCriteria, context, dataTypeHelper);
 	}

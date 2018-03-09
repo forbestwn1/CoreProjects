@@ -1,11 +1,9 @@
-package com.nosliw.data.core.expression;
+package com.nosliw.common.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.common.configure.HAPConfigurableImp;
-
-public class HAPProcessExpressionDefinitionContext extends HAPConfigurableImp{
+public class HAPProcessContext {
 
 	public static final String CONFIGURE_DISCOVERY = "discovery";
 	
@@ -15,7 +13,7 @@ public class HAPProcessExpressionDefinitionContext extends HAPConfigurableImp{
 	//error message
 	private List<String> m_messages;
 	
-	public HAPProcessExpressionDefinitionContext(){
+	public HAPProcessContext(){
 		this.clear();
 	}
 	
@@ -32,5 +30,4 @@ public class HAPProcessExpressionDefinitionContext extends HAPConfigurableImp{
 	
 	public List<String> getMessages(){  return this.m_messages;  }
 	public void addMessage(String message){  this.m_messages.add(message);  }
-	
 }

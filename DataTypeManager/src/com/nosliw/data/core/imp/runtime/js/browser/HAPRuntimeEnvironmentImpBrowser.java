@@ -3,8 +3,8 @@ package com.nosliw.data.core.imp.runtime.js.browser;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
-import com.nosliw.data.core.imp.expression.HAPExpressionTaskManagerImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceManagerJSImp;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
@@ -13,8 +13,6 @@ import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.browser.HAPGatewayBrowserLoadLibrary;
 import com.nosliw.data.core.runtime.js.browser.HAPGatewayLoadTestExpression;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
-import com.nosliw.data.core.task.HAPManagerTask;
-import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 
 public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 
@@ -38,7 +36,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		this.m_dataTypeHelper = new HAPDataTypeHelperImp(this, this.m_runtimeJSModule.getDataTypeDataAccess());
 		
 		HAPResourceManagerRoot resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
-		HAPManagerTask expressionManager = new HAPExpressionTaskManagerImp(new HAPExpressionParserImp(), this.m_dataTypeHelper); 		
+		HAPExpressionSuiteManager expressionManager = new HAPExpressionSuiteManager(this.m_dataTypeHelper); 		
 		HAPRuntimeImpRhino runtime = new HAPRuntimeImpRhino(this); 
 		HAPGatewayManager gatewayManager = new HAPGatewayManager(); 
 		
@@ -49,7 +47,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		);
 		
 		this.getGatewayManager().registerGateway(GATEWAY_LOADLIBRARIES, new HAPGatewayBrowserLoadLibrary(this.getGatewayManager()));
-		this.getGatewayManager().registerGateway(GATEWAY_TESTEXPRESSION, new HAPGatewayLoadTestExpression(this.getExpressionManager()));
+		this.getGatewayManager().registerGateway(GATEWAY_TESTEXPRESSION, new HAPGatewayLoadTestExpression());
 	}
 	
 	public HAPDataTypeHelper getDataTypeHelper(){		return this.m_dataTypeHelper;	}

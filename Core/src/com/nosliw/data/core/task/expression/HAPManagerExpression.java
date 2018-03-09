@@ -8,20 +8,14 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.task.HAPDefinitionTask;
-import com.nosliw.data.core.task.HAPProcessTaskContext;
 
 public class HAPManagerExpression {
 
 	private static Map<String, Class<? extends HAPDefinitionStep>> m_stepDefinitionClasses = new LinkedHashMap<String, Class<? extends HAPDefinitionStep>>();
 	private static Map<String, HAPProcessorStep> m_stepProcessors = new LinkedHashMap<String, HAPProcessorStep>();
-	
-	public static HAPExpressionParser expressionParser;
-	
-	public static HAPDataTypeHelper dataTypeHelper;
 	
 	static{
 		HAPManagerExpression.registerStep(HAPDefinitionStepExpression.class, null);
@@ -52,7 +46,7 @@ public class HAPManagerExpression {
 		return step;
 	}
 	
-	public static HAPExecuteStep processStep(HAPDefinitionStep stepDef, Map<String, HAPData> constants, HAPProcessTaskContext context) {
+	public static HAPExecuteStep processStep(HAPDefinitionStep stepDef, Map<String, HAPData> constants, HAPProcessContext context) {
 		return m_stepProcessors.get(stepDef.getType()).process(stepDef, constants, context);
 	}
 	

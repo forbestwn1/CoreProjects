@@ -50,7 +50,8 @@ dataTypeDefition.operations['outputCriteriaFromParmData'] = {
 			});
 			
 			var gatewayParms = {
-				"expression" : this.value,
+				"expression" : this.value.expression,
+				"constants" : this.value.constants,
 				"variablesCriteria" : varCriterias
 			};
 			var criteriaStr =  context.getResourceDataByName("myGateWay").command("getOutputCriteria", gatewayParms);

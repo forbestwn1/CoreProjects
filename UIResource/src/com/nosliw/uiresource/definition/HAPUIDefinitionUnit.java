@@ -16,7 +16,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.task.HAPDefinitionTask;
+import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.uiresource.context.HAPContextGroup;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
 
@@ -134,7 +134,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	
 	abstract public String getType(); 
 
-	public Set<HAPDefinitionTask> getOtherExpressionDefinitions(){  return new HashSet(this.m_expressionDefinitions.values());	}
+	public Set<HAPDefinitionExpression> getOtherExpressionDefinitions(){  return new HashSet(this.m_expressionDefinitions.values());	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

@@ -6,12 +6,9 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.HAPDataTypeHelper;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutable;
-import com.nosliw.data.core.task.HAPMatchers;
-import com.nosliw.data.core.task.HAPVariableInfo;
 
 /**
  * Expression object we get after processing HAPExpressionDefinition
@@ -77,6 +74,6 @@ public interface HAPExpression extends HAPExecutable{
 	//1 discover internal variable
 	//2 discover expect variable
 	//3 build converters between expect variable to internal variable
-	HAPMatchers discover(Map<String, HAPVariableInfo> parentVariablesInfo, HAPDataTypeCriteria expectOutputCriteria, HAPProcessExpressionDefinitionContext context,	HAPDataTypeHelper dataTypeHelper);
+//	HAPMatchers discover(Map<String, HAPVariableInfo> parentVariablesInfo, HAPVariableInfo expectOutputCriteria, HAPProcessExpressionDefinitionContext context,	HAPDataTypeHelper dataTypeHelper);
 	
 }
