@@ -21,6 +21,11 @@ public class HAPDefinitionExpressionSuite  extends HAPSerializableImp{
 
 	private Map<String, HAPDefinitionExpression> m_expressions;
 	
+	public HAPDefinitionExpressionSuite() {
+		this.m_variables = new LinkedHashMap<String, HAPVariableInfo>();
+		this.m_constants = new LinkedHashMap<String, HAPData>();
+	}
+	
 	public HAPDefinitionExpressionSuite(
 			String name, 
 			String description, 

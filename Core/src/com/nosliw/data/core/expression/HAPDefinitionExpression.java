@@ -13,7 +13,6 @@ import com.nosliw.data.core.operand.HAPOperandOperation;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
-import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 
 public class HAPDefinitionExpression {
@@ -48,28 +47,12 @@ public class HAPDefinitionExpression {
 		//parse expression
 		this.m_operand = new HAPOperandWrapper(HAPExpressionManager.expressionParser.parseExpression(this.m_expression));
 
-		this.discoverVariables();
+		this.m_variableNames.addAll(HAPExpressionUtility.discoverVariables(this.m_operand));
 		
 		this.discoverReferences();
 		
 		this.processDefaultAnonomousParmInOperation();
 		
-	}
-	
-	
-	//find all variables and references in expression
-	private void discoverVariables() {
-		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
-					HAPOperandVariable variableOperand = (HAPOperandVariable)operand.getOperand();
-					m_variableNames.add(variableOperand.getVariableName());
-				}
-				return true;
-			}
-		});		
 	}
 	
 	//find all variables and references in expression

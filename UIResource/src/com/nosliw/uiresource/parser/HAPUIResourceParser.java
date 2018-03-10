@@ -24,6 +24,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
+import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.context.HAPContext;
@@ -182,10 +183,8 @@ public class HAPUIResourceParser {
 				Iterator<String> defNames = defsJson.keys();
 				while(defNames.hasNext()){
 					String defName = defNames.next();
-					
-					JSONObject expDefJson = defsJson.optJSONObject(defName);
-					HAPDefinitionTask expressionDef = (HAPDefinitionTask)HAPStringableEntityImporterJSON.parseJsonEntity(expDefJson, "data.expressiondefinition", this.m_valueInfoMan);
-					resource.addExpressionDefinition(expressionDef);
+					HAPDefinitionExpression expDef = new HAPDefinitionExpression(defsJson.optString(defName));
+					resource.addExpressionDefinition(defName, expDef);
 				}
 				break;
 			} catch (JSONException e) {

@@ -26,19 +26,6 @@ import com.nosliw.data.core.runtime.HAPResourceUtility;
 
 public class HAPExpressionUtility {
 
-	static public String buildFullVariableName(String parent, String name){
-		String out = HAPNamingConversionUtility.cascadePath(parent, name); 
-		return out;
-	}
-	
-	static public String updateVaraible(String parent, String name){
-		String out = name;
-		if(!out.startsWith(name+HAPConstant.SEPERATOR_PATH)){
-			out = buildFullVariableName(parent, name);
-		}
-		return out;
-	}
-	
 	/**
 	 * Discover resources required for data type operation
 	 * @param dataTypeInfo

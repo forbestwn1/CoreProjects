@@ -1,5 +1,6 @@
 package com.nosliw.data.core.expressionsuite;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
@@ -32,17 +33,31 @@ public class HAPExpressionSuiteManager {
 			HAPDataTypeCriteria expectOutput, 
 			Map<String, String> configure) {
 		
-		HAPOperandWrapper operand = expression.getOperand().cloneWrapper();
-		processReferencesInOperand(operand, contextExpressionDefinitions);
-		
-		HAPExecuteExpressionSuite out = new HAPExecuteExpressionSuite(operand.getOperand());
-		
-		HAPOperandUtility.updateConstantData(out.getOperand(), contextConstants);
-		
-		out.discover(parentVariablesInfo, expectOutput, this.m_dataTypeHelper);
-		
-		return out;
+		return HAPExpressionSuiteUtility.compileExpression(id, expression, contextExpressionDefinitions, parentVariablesInfo, contextConstants, expectOutput, configure, m_dataTypeHelper);
 	}
+
+	public HAPExecuteExpression compileExpression(
+			String id,
+			HAPDefinitionExpression expression, 
+			Map<String, HAPVariableInfo> parentVariablesInfo, 
+			Map<String, HAPData> contextConstants,
+			HAPDataTypeCriteria expectOutput, 
+			Map<String, String> configure) {
+		
+		return HAPExpressionSuiteUtility.compileExpression(id, expression, new LinkedHashMap<String, HAPDefinitionExpression>(), parentVariablesInfo, contextConstants, expectOutput, configure, m_dataTypeHelper);
+	}
+
+
+	public HAPExecuteExpression compileExpression(
+			String id,
+			HAPDefinitionExpression expression, 
+			HAPDefinitionExpressionSuite contextExpressionDefinitionsSuite, 
+			Map<String, HAPVariableInfo> parentVariablesInfo, 
+			Map<String, HAPData> contextConstants,
+			HAPDataTypeCriteria expectOutput, 
+			Map<String, String> configure) {
+		return this.compileExpression(id, expression, contextExpressionDefinitionsSuite.getExpressionDefinitions(), parentVariablesInfo, contextConstants, expectOutput, configure);
+	}	
 	
 	//replace reference operand with referenced operand
 	private void processReferencesInOperand(HAPOperandWrapper operand, 

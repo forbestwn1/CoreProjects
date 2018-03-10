@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.data.core.expression.HAPExpressionParser;
-import com.nosliw.data.core.expression.HAPParmInOperationOperand;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandAttribute;
 import com.nosliw.data.core.operand.HAPOperandConstant;
 import com.nosliw.data.core.operand.HAPOperandOperation;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandVariable;
+import com.nosliw.data.core.operand.HAPParmInOperationOperand;
 import com.nosliw.data.core.task.expression.HAPExpressionEscape;
 import com.nosliw.data.imp.expression.parser.generated.NosliwExpressionParser;
 import com.nosliw.data.imp.expression.parser.generated.SimpleNode;

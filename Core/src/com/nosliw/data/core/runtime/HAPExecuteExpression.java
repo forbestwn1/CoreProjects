@@ -16,6 +16,8 @@ public interface HAPExecuteExpression {
 	@HAPAttribute
 	public static String VARIABLESMATCHERS = "variablesMatchers";
 
+	String getId();
+	
 	//Operand to represent the expression
 	HAPOperandWrapper getOperand();
 

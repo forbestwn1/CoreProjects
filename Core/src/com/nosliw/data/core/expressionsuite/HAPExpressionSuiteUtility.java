@@ -31,7 +31,7 @@ public class HAPExpressionSuiteUtility {
 		HAPOperandWrapper operand = expression.getOperand().cloneWrapper();
 		processReferencesInOperand(operand, contextExpressionDefinitions);
 		
-		HAPExecuteExpressionSuite out = new HAPExecuteExpressionSuite(operand.getOperand());
+		HAPExecuteExpressionSuite out = new HAPExecuteExpressionSuite(id, operand.getOperand());
 		
 		HAPOperandUtility.updateConstantData(out.getOperand(), contextConstants);
 		

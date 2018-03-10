@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
@@ -119,10 +120,11 @@ public class HAPScriptExpressionUtility {
 		//build javascript function to execute the script
 		StringBuffer funScript = new StringBuffer();
 		Map<String, HAPExpression> expressions = new LinkedHashMap<String, HAPExpression>();
+		int i = 0;
 		for(Object ele : scriptExpression.getElements()){
-			if(ele instanceof HAPDefinitionTask){
-				HAPDefinitionTask expression = (HAPDefinitionTask)ele;
-				funScript.append(expressionsDataParmName+"[\""+expression.getName()+"\"]");
+			if(ele instanceof HAPDefinitionExpression){
+				HAPDefinitionExpression expression = (HAPDefinitionExpression)ele;
+				funScript.append(expressionsDataParmName+"[\""+i+"\"]");
 			}
 			else if(ele instanceof HAPScriptExpressionScriptSegment){
 				HAPScriptExpressionScriptSegment scriptSegment = (HAPScriptExpressionScriptSegment)ele;
@@ -139,6 +141,7 @@ public class HAPScriptExpressionUtility {
 					}
 				}
 			}
+			i++;
 		}
 		
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPScriptExpressionUtility.class, "ScriptExpressionFunction.temp");

@@ -111,7 +111,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	//the script factory name for creating script object for ui resource view
 	private String m_scriptFactoryName;
 	
-	private Map<String, HAPDefinitionTask> m_expressionDefinitions;
+	private Map<String, HAPDefinitionExpression> m_expressionDefinitions;
 	
 	//expression unit
 	private HAPUIResourceExpressionContext m_expressionContext;
@@ -128,13 +128,13 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		this.m_attributes = new LinkedHashMap<String, String>();
 		this.m_constantDefs = new LinkedHashMap<String, HAPConstantDef>();
 		this.m_constantValues = new LinkedHashMap<String, Object>();
-		this.m_expressionDefinitions = new LinkedHashMap<String, HAPDefinitionTask>();
+		this.m_expressionDefinitions = new LinkedHashMap<String, HAPDefinitionExpression>();
 		this.m_expressionContext = new HAPUIResourceExpressionContext();
 	}
 	
 	abstract public String getType(); 
 
-	public Set<HAPDefinitionExpression> getOtherExpressionDefinitions(){  return new HashSet(this.m_expressionDefinitions.values());	}
+	public Map<String, HAPDefinitionExpression> getOtherExpressionDefinitions(){  return this.m_expressionDefinitions;	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -228,7 +228,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public HAPUIResourceExpressionContext getExpressionContext(){   return this.m_expressionContext;   }
 	public void setExpressionContext(HAPUIResourceExpressionContext context){  this.m_expressionContext = context;   }
 	
-	public void addExpressionDefinition(HAPDefinitionTask expressionDef){		this.m_expressionDefinitions.put(expressionDef.getName(), expressionDef);	}
+	public void addExpressionDefinition(String name, HAPDefinitionExpression expressionDef){		this.m_expressionDefinitions.put(name, expressionDef);	}
 	
 	/*
 	 * process attributes

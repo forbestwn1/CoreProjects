@@ -4,7 +4,7 @@ package com.nosliw.test.criteria;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
-
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.imp.criteria.parser.generated.ParseException;
 
 public class HAPCriteriaParserTest {
@@ -25,7 +25,7 @@ public class HAPCriteriaParserTest {
 		};
 
 		for(String criteriaStr : criteriasStr){
-			HAPVariableInfo criteria = HAPCriteriaParser.getInstance().parseCriteria(criteriaStr);
+			HAPDataTypeCriteria criteria = HAPCriteriaParser.getInstance().parseCriteria(criteriaStr);
 			String criteriaLiterate = HAPSerializeManager.getInstance().toStringValue(criteria, HAPSerializationFormat.LITERATE);
 			if(criteriaLiterate.equals(criteriaStr)){
 				System.out.println(criteriaLiterate);

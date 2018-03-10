@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.operand.HAPOperandUtility;
@@ -181,8 +182,8 @@ public class HAPConstantUtility {
 				
 				List<Object> uiExpEles = sciptExpression.getElements();
 				for(Object uiExpEle : uiExpEles){
-					if(uiExpEle instanceof HAPDefinitionTask){
-						HAPDefinitionTask expDef = (HAPDefinitionTask)uiExpEle;
+					if(uiExpEle instanceof HAPDefinitionExpression){
+						HAPDefinitionExpression expDef = (HAPDefinitionExpression)uiExpEle;
 						expConstantNames.addAll(HAPOperandUtility.discoveryUnsolvedConstants(expDef.getOperand()));
 					}
 					else if(uiExpEle instanceof HAPScriptExpressionScriptSegment){

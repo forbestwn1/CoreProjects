@@ -75,7 +75,7 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 			JSONObject constantsJson = parms.optJSONObject(COMMAND_GETOUTPUTCRITERIA_CONSTANTS);
 			Map<String, HAPData> constants = HAPDataUtility.buildDataWrapperMapFromJson(constantsJson); 
 			
-			HAPExecuteExpression expression = this.m_expressionSuiteManager.compileExpression(null, expressionDef, null, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
+			HAPExecuteExpression expression = this.m_expressionSuiteManager.compileExpression(null, expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
 			HAPDataTypeCriteria outCriteria = expression.getOperand().getOperand().getOutputCriteria();
 			out = this.createSuccessWithObject(outCriteria.toStringValue(HAPSerializationFormat.LITERATE));
 			break;
@@ -99,7 +99,7 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 				varsInfo.put(varName, new HAPVariableInfo(new HAPDataTypeCriteriaId(data.getDataTypeId(), null)));
 			}
 			
-			HAPExecuteExpression expression = this.m_expressionSuiteManager.compileExpression(null, expressionDef, null, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
+			HAPExecuteExpression expression = this.m_expressionSuiteManager.compileExpression(null, expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
 			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expression, expressionParms, null);
 			HAPServiceData serviceData = this.m_runtime.executeTaskSync(task);
 			if(serviceData.isSuccess()){

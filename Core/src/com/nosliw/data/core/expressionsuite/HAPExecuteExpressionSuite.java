@@ -15,8 +15,11 @@ public class HAPExecuteExpressionSuite implements HAPExecuteExpression{
 
 	private HAPOperandWrapper m_operand;
 	
-	public HAPExecuteExpressionSuite(HAPOperand operand) {
+	private String m_id;
+	
+	public HAPExecuteExpressionSuite(String id, HAPOperand operand) {
 		this.m_operand = new HAPOperandWrapper(operand);
+		this.m_id = id;
 	}
 	
 	@Override
@@ -37,5 +40,8 @@ public class HAPExecuteExpressionSuite implements HAPExecuteExpression{
 		parentVariablesInfo.putAll(discoveredVarsInf);
 		
 	}
+
+	@Override
+	public String getId() {		return this.m_id;	}
 	
 }

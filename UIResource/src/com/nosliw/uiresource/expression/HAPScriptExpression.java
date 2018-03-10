@@ -14,8 +14,11 @@ import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExpression;
+import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
+import com.nosliw.data.core.runtime.HAPExecuteExpression;
 
 /**
  * Represent script expression
@@ -62,7 +65,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	private HAPScript m_scriptFunction;
 	
 	//expressions used in script expression
-	private Map<String, HAPExpression> m_expressions;
+	private Map<String, HAPExecuteExpression> m_expressions;
 
 	//variables used in script expression
 	private Set<String> m_variableNames;
@@ -80,7 +83,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		this.m_id = id;
 		this.m_variableNames = new HashSet<String>();
 		this.m_elements = new ArrayList<Object>();
-		this.m_expressions = new LinkedHashMap<String, HAPExpression>();
+		this.m_expressions = new LinkedHashMap<String, HAPExecuteExpression>();
 		this.m_expressionManager = expressionMan;
 		this.m_definition = content;
 		this.parseDefinition();
@@ -96,7 +99,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	
 	public String getDefinition(){  return this.m_definition;  } 
 
-	public Map<String, HAPExpression> getExpressions(){   return this.m_expressions;    }
+	public Map<String, HAPExecuteExpression> getExpressions(){   return this.m_expressions;    }
 	
 	public Set<String> getVariableNames(){   return this.m_variableNames;   }
 	
@@ -107,13 +110,16 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	//process all expression definitions in script expression
 	public void processExpressions(HAPUIResourceExpressionContext expressionContext, Map<String, String> context){
 		//preprocess attributes operand in expressions
-		for(HAPDefinitionTask expDef : this.getExpressionDefinitions()){
+		for(HAPDefinitionExpression expDef : this.getExpressionDefinitions()){
 			HAPUIResourceExpressionUtility.processAttributeOperandInExpression(expDef, expressionContext.getVariables());
 		}
 
-		this.m_expressions = new LinkedHashMap<String, HAPExpression>();
-		for(HAPDefinitionTask expDef : this.getExpressionDefinitions()){
-			m_expressions.put(expDef.getName(), this.m_expressionManager.processExpression(null, expDef, expressionContext.getExpressionDefinitionSuite(), expressionContext.getVariables(), context));
+		this.m_expressions = new LinkedHashMap<String, HAPExecuteExpression>();
+		for(int i=0; i<this.m_elements.size(); i++) {
+			Object element = this.m_elements.get(i);
+			if(element instanceof HAPDefinitionExpression){
+				m_expressions.put(i+"", this.m_expressionManager.compileExpression(null, (HAPDefinitionExpression)element, expressionContext.getExpressionDefinitionSuite(), expressionContext.getVariables(), null, null, context));
+			}
 		}
 	}
 	
@@ -121,15 +127,17 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	//variables from expression and script
 	public void discoverVarialbes(){
 		this.m_variableNames = new HashSet<String>();
+		int i = 0;
 		for(Object ele : this.m_elements){
-			if(ele instanceof HAPDefinitionTask){
-				HAPDefinitionTask expDef = (HAPDefinitionTask)ele;
-				this.m_variableNames.addAll(this.m_expressions.get(expDef.getName()).getVariables());
+			if(ele instanceof HAPDefinitionExpression){
+				HAPDefinitionExpression expDef = (HAPDefinitionExpression)ele;
+				this.m_variableNames.addAll(HAPExpressionUtility.discoverVariables(this.m_expressions.get(i+"").getOperand()));
 			}
 			else if(ele instanceof HAPScriptExpressionScriptSegment){
 				HAPScriptExpressionScriptSegment scriptSegment = (HAPScriptExpressionScriptSegment)ele;
 				this.m_variableNames.addAll(scriptSegment.getVariableNames());
 			}
+			i++;
 		}
 	}
 	
@@ -158,18 +166,18 @@ public class HAPScriptExpression extends HAPSerializableImp{
 				String expressionStr = content.substring(expStart, expEnd);
 				content = content.substring(expEnd + EXPRESSION_TOKEN_CLOSE.length());
 				//build expression definition
-				HAPDefinitionTask expressionDefinition = this.m_expressionManager.newExpressionDefinition(expressionStr, this.m_id+"_"+i+"", null, null); 
+				HAPDefinitionExpression expressionDefinition = new HAPDefinitionExpression(expressionStr);
 				this.m_elements.add(expressionDefinition);
 			}
 			i++;
 		}
 	}
 	
-	private List<HAPDefinitionTask> getExpressionDefinitions(){
-		List<HAPDefinitionTask> out = new ArrayList<HAPDefinitionTask>();
+	private List<HAPDefinitionExpression> getExpressionDefinitions(){
+		List<HAPDefinitionExpression> out = new ArrayList<HAPDefinitionExpression>();
 		for(Object element : this.m_elements){
-			if(element instanceof HAPDefinitionTask){
-				out.add((HAPDefinitionTask)element);
+			if(element instanceof HAPDefinitionExpression){
+				out.add((HAPDefinitionExpression)element);
 			}
 		}
 		return out;

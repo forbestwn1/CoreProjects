@@ -6,8 +6,9 @@ import java.util.Map;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
-
-import com.nosliw.data.core.expression.HAPParmInOperationOperand;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.expression.HAPDefinitionExpression;
+import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandAttribute;
 import com.nosliw.data.core.operand.HAPOperandConstant;
@@ -16,6 +17,7 @@ import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.operand.HAPParmInOperationOperand;
 
 public class HAPUIResourceExpressionUtility {
 
@@ -24,8 +26,8 @@ public class HAPUIResourceExpressionUtility {
 	//			replace attribute operation with one variable operation
 	//  for attribute operation a.b.c.d which have responding defintion a.b.c in context, 
 	//			replace attribute operation with one variable operation(a.b.c) and getChild operation
-	public static void processAttributeOperandInExpression(HAPDefinitionTask expressionDefinition, final Map<String, HAPVariableInfo> varCriterias){
-		processAttributeOperandInExpressionOperand(expressionDefinition.getOperand(), varCriterias);
+	public static void processAttributeOperandInExpression(HAPDefinitionExpression expressionDefinition, final Map<String, HAPVariableInfo> varsInfo){
+		processAttributeOperandInExpressionOperand(expressionDefinition.getOperand(), varsInfo);
 	}
 	
 	private static void processAttributeOperandInExpressionOperand(HAPOperandWrapper operand, final Map<String, HAPVariableInfo> varCriterias){

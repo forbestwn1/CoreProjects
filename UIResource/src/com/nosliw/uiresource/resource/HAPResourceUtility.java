@@ -9,6 +9,8 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPExpression;
+import com.nosliw.data.core.expression.HAPExpressionUtility;
+import com.nosliw.data.core.runtime.HAPExecuteExpression;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
@@ -27,8 +29,8 @@ public class HAPResourceUtility {
 		 Set<HAPResourceId> dependencyResourceIds = new LinkedHashSet();
 		
 		//resources need by expression
-		List<HAPExpression> expressions = discoverExpressionsInUIResource(uiResource);
-		for(HAPExpression exp : expressions){
+		List<HAPExecuteExpression> expressions = discoverExpressionsInUIResource(uiResource);
+		for(HAPExecuteExpression exp : expressions){
 			List<HAPResourceId> expressionDependency = HAPExpressionUtility.discoverResources(exp);
 			dependencyResourceIds.addAll(expressionDependency);
 		}
@@ -54,13 +56,13 @@ public class HAPResourceUtility {
 		}
 	}
 	
-	private static List<HAPExpression> discoverExpressionsInUIResource(HAPUIDefinitionUnitResource uiResource){
-		List<HAPExpression> out = new ArrayList<HAPExpression>();
+	private static List<HAPExecuteExpression> discoverExpressionsInUIResource(HAPUIDefinitionUnitResource uiResource){
+		List<HAPExecuteExpression> out = new ArrayList<HAPExecuteExpression>();
 		discoverExpressionsInUIResourceUnit(uiResource, out);		
 		return out;
 	}
 	
-	private static void discoverExpressionsInUIResourceUnit(HAPUIDefinitionUnit uiResourceUnit, List<HAPExpression> out){
+	private static void discoverExpressionsInUIResourceUnit(HAPUIDefinitionUnit uiResourceUnit, List<HAPExecuteExpression> out){
 		out.addAll(getExpressions(uiResourceUnit));
 		
 		Iterator<HAPUIDefinitionUnitTag> it = uiResourceUnit.getUITags().iterator();
@@ -69,16 +71,16 @@ public class HAPResourceUtility {
 		}
 	}
 	
-	private static Set<HAPExpression> getExpressions(HAPUIDefinitionUnit uiDefinitionUnit){
-		Set<HAPExpression> all = new HashSet<HAPExpression>();
+	private static Set<HAPExecuteExpression> getExpressions(HAPUIDefinitionUnit uiDefinitionUnit){
+		Set<HAPExecuteExpression> all = new HashSet<HAPExecuteExpression>();
 		for(HAPEmbededScriptExpressionInContent scriptExpressionInContent : uiDefinitionUnit.getScriptExpressionsInContent())		all.addAll(getExpressions(scriptExpressionInContent));
 		for(HAPEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInAttributes())    all.addAll(getExpressions(scriptExpressionInAttribute));
 		for(HAPEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInTagAttributes())		all.addAll(getExpressions(scriptExpressionInAttribute));
 		return all;
 	}
 	
-	private static Set<HAPExpression> getExpressions(HAPEmbededScriptExpression embededScriptExpression){
-		Set<HAPExpression> out = new HashSet<HAPExpression>();
+	private static Set<HAPExecuteExpression> getExpressions(HAPEmbededScriptExpression embededScriptExpression){
+		Set<HAPExecuteExpression> out = new HashSet<HAPExecuteExpression>();
 		for(HAPScriptExpression scriptExpression : embededScriptExpression.getScriptExpressions()){
 			out.addAll(scriptExpression.getExpressions().values());
 		}

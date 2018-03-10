@@ -25,7 +25,6 @@ import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPMatchers;
-import com.nosliw.data.core.expression.HAPParmInOperationOperand;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;

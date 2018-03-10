@@ -13,7 +13,7 @@ public class HAPUIResourceTest {
 		//module init
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 		
-		HAPUIResourceManager uiResourceMan = new HAPUIResourceManager(new HAPUITagManager(), runtimeEnvironment.getExpressionManager(), runtimeEnvironment.getResourceManager(), runtimeEnvironment.getRuntime(), runtimeEnvironment.getDataTypeHelper());
+		HAPUIResourceManager uiResourceMan = new HAPUIResourceManager(new HAPUITagManager(), runtimeEnvironment.getExpressionSuiteManager(), runtimeEnvironment.getResourceManager(), runtimeEnvironment.getRuntime(), runtimeEnvironment.getDataTypeHelper());
 
 		String file = HAPFileUtility.getFileNameOnClassPath(HAPUIResourceTest.class, "Example1.res");
 		uiResourceMan.addUIResourceDefinition(file);
