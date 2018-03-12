@@ -52,7 +52,9 @@ public class HAPContextUtility {
 		//expression from parent first
 		if(parent!=null){
 			Map<String, HAPDefinitionExpression> parentExpDefs = parentExpContext.getExpressionDefinitions();
-			for(String id : parentExpDefs.keySet())    expContext.addExpressionDefinition(id, parentExpDefs.get(id));
+			for(String id : parentExpDefs.keySet()) {
+				expContext.addExpressionDefinition(id, parentExpDefs.get(id));
+			}
 		}
 		//expression from current
 		for(String expName : uiDefinition.getOtherExpressionDefinitions().keySet())	expContext.addExpressionDefinition(expName, uiDefinition.getOtherExpressionDefinitions().get(expName));

@@ -260,10 +260,6 @@ public class HAPJSImporter {
 	
 	private String getOperationId(HAPDataTypeId dataTypeId, String operationName){
 		HAPOperationImp operation = this.m_dataTypeDataAccess.getOperationBasicInfoByName(dataTypeId, operationName);
-		if(operation==null) {
-			int kkkk = 5555;
-			kkkk++;
-		}
 		return operation.getId();
 	}
 	

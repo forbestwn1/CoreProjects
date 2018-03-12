@@ -71,21 +71,23 @@ public class HAPOperandUtility {
 	}
 	
 	static public void updateConstantData(HAPOperandWrapper operand, final Map<String, HAPData> contextConstants){
-		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
-					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
-					if(constantOperand.getData()==null){
-						String constantName = constantOperand.getName();
-						HAPData constantData = contextConstants.get(constantName);
-						constantOperand.setData(constantData);
+		if(contextConstants!=null && !contextConstants.isEmpty()) {
+			HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
+				@Override
+				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+					String opType = operand.getOperand().getType();
+					if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
+						HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
+						if(constantOperand.getData()==null){
+							String constantName = constantOperand.getName();
+							HAPData constantData = contextConstants.get(constantName);
+							constantOperand.setData(constantData);
+						}
 					}
+					return true;
 				}
-				return true;
-			}
-		});	
+			});	
+		}
 	}
 
 	static public Map<String, HAPVariableInfo> discover(

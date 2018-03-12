@@ -1,5 +1,7 @@
 package com.nosliw.data.core.operand;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -36,8 +38,15 @@ public class HAPOperandAttribute extends HAPOperandImp{
 
 	public void setBase(HAPOperand base){
 		this.m_base = this.createOperandWrapper(base);
-		this.addChildOperand(this.m_base);
 	}
+	
+	@Override
+	public List<HAPOperandWrapper> getChildren(){
+		List<HAPOperandWrapper> out = new ArrayList<HAPOperandWrapper>();
+		if(this.m_base!=null)	out.add(this.m_base);
+		return out;
+	}
+	
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

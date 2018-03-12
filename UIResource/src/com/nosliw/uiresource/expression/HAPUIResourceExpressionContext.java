@@ -1,10 +1,8 @@
 package com.nosliw.uiresource.expression;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.expressionsuite.HAPDefinitionExpressionSuite;
@@ -18,16 +16,12 @@ public class HAPUIResourceExpressionContext {
 	//it includes expression definition and constants from parent and its own
 	private HAPDefinitionExpressionSuite m_expressionDefinitionSuite;
 
-	//variables defined in context
-	private Map<String, HAPVariableInfo> m_variables; 	
-
 	public HAPUIResourceExpressionContext(){
 		this.m_expressionDefinitionSuite = new HAPDefinitionExpressionSuite();
-		this.m_variables = new LinkedHashMap<String, HAPVariableInfo>();
 	}
 	
 	public HAPDefinitionExpressionSuite getExpressionDefinitionSuite(){		return this.m_expressionDefinitionSuite;	}
-	public Map<String, HAPVariableInfo> getVariables(){  return this.m_variables;  }
+	public Map<String, HAPVariableInfo> getVariables(){  return this.m_expressionDefinitionSuite.getVariablesInfo();  }
 	public Map<String, HAPData> getConstants(){  return this.m_expressionDefinitionSuite.getConstants();  }
 	public Map<String, HAPDefinitionExpression> getExpressionDefinitions(){  return this.m_expressionDefinitionSuite.getExpressionDefinitions();   }
 	
@@ -38,7 +32,12 @@ public class HAPUIResourceExpressionContext {
 		}
 	}
 	public void addExpressionDefinition(String name, HAPDefinitionExpression expressionDefinition){  this.m_expressionDefinitionSuite.addExpressionDefinition(name, expressionDefinition);  }
-	public void addVariables(Map<String, HAPVariableInfo> variables){  this.m_variables.putAll(variables);  }
-	public void addVariable(String name, HAPVariableInfo criteria){  this.m_variables.put(name, criteria);  }
-	
+	public void addVariables(Map<String, HAPVariableInfo> variables){
+		for(String varName : variables.keySet()) {
+			this.m_expressionDefinitionSuite.addVariableInfo(varName, variables.get(varName));
+		}
+	}
+	public void addVariable(String name, HAPVariableInfo varInfo){  
+		this.m_expressionDefinitionSuite.addVariableInfo(name, varInfo);
+	}	
 }

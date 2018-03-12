@@ -52,11 +52,9 @@ public class HAPExpressionSuiteManager {
 			String id,
 			HAPDefinitionExpression expression, 
 			HAPDefinitionExpressionSuite contextExpressionDefinitionsSuite, 
-			Map<String, HAPVariableInfo> parentVariablesInfo, 
-			Map<String, HAPData> contextConstants,
 			HAPDataTypeCriteria expectOutput, 
 			Map<String, String> configure) {
-		return this.compileExpression(id, expression, contextExpressionDefinitionsSuite.getExpressionDefinitions(), parentVariablesInfo, contextConstants, expectOutput, configure);
+		return this.compileExpression(id, expression, contextExpressionDefinitionsSuite.getExpressionDefinitions(), contextExpressionDefinitionsSuite.getVariablesInfo(), contextExpressionDefinitionsSuite.getConstants(), expectOutput, configure);
 	}	
 	
 	//replace reference operand with referenced operand

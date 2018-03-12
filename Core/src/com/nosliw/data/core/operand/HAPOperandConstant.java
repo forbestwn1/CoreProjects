@@ -80,5 +80,6 @@ public class HAPOperandConstant extends HAPOperandImp{
 		super.cloneTo(operand);
 		operand.m_name = this.m_name;
 		operand.m_data = this.m_data;
+		
 	}
 }

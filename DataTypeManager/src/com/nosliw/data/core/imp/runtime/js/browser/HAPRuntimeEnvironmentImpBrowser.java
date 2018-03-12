@@ -2,7 +2,7 @@ package com.nosliw.data.core.imp.runtime.js.browser;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
@@ -13,6 +13,7 @@ import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.browser.HAPGatewayBrowserLoadLibrary;
 import com.nosliw.data.core.runtime.js.browser.HAPGatewayLoadTestExpression;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
+import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 
 public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 
@@ -24,8 +25,6 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 	
 	HAPModuleRuntimeJS m_runtimeJSModule;
 	
-	HAPDataTypeHelperImp m_dataTypeHelper;
-	
 	public HAPRuntimeEnvironmentImpBrowser(){
 		this(new HAPModuleRuntimeJS().init(HAPValueInfoManager.getInstance()));
 	}
@@ -33,10 +32,11 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 	public HAPRuntimeEnvironmentImpBrowser(HAPModuleRuntimeJS runtimeJSModule) {
 		this.m_runtimeJSModule = runtimeJSModule;
 		
-		this.m_dataTypeHelper = new HAPDataTypeHelperImp(this, this.m_runtimeJSModule.getDataTypeDataAccess());
+		HAPExpressionManager.dataTypeHelper = new HAPDataTypeHelperImp(this, this.m_runtimeJSModule.getDataTypeDataAccess());
+		HAPExpressionManager.expressionParser = new HAPExpressionParserImp();
 		
 		HAPResourceManagerRoot resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
-		HAPExpressionSuiteManager expressionManager = new HAPExpressionSuiteManager(this.m_dataTypeHelper); 		
+		HAPExpressionSuiteManager expressionManager = new HAPExpressionSuiteManager(HAPExpressionManager.dataTypeHelper); 		
 		HAPRuntimeImpRhino runtime = new HAPRuntimeImpRhino(this); 
 		HAPGatewayManager gatewayManager = new HAPGatewayManager(); 
 		
@@ -49,6 +49,4 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		this.getGatewayManager().registerGateway(GATEWAY_LOADLIBRARIES, new HAPGatewayBrowserLoadLibrary(this.getGatewayManager()));
 		this.getGatewayManager().registerGateway(GATEWAY_TESTEXPRESSION, new HAPGatewayLoadTestExpression());
 	}
-	
-	public HAPDataTypeHelper getDataTypeHelper(){		return this.m_dataTypeHelper;	}
 }

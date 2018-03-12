@@ -28,7 +28,6 @@ import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
 
 public class HAPOperandOperation extends HAPOperandImp{
@@ -72,7 +71,6 @@ public class HAPOperandOperation extends HAPOperandImp{
 		for(HAPParmInOperationOperand opParm : parms)		this.m_parms.put(opParm.getName(), this.createOperandWrapper(opParm.getOperand()));
 
 		this.resetMatchers();
-		this.processChildenOperand();
 	}
 	
 	public HAPOperandOperation(String dataTypeIdLiterate, String operation, List<HAPParmInOperationOperand> parms){
@@ -86,14 +84,12 @@ public class HAPOperandOperation extends HAPOperandImp{
 		}
 		
 		this.resetMatchers();
-		this.processChildenOperand();
 	}
 
 	public void setBase(HAPOperand base){
 		this.m_base = null;
 		if(base!=null){
 			this.m_base = this.createOperandWrapper(base);
-			this.addChildOperand(m_base);
 		}
 	}
 	
@@ -110,7 +106,6 @@ public class HAPOperandOperation extends HAPOperandImp{
 	public void setParms(Map<String, HAPOperand> parms){
 		for(String name : parms.keySet()){
 			HAPOperandWrapper parmWrapper = this.addParm(name, parms.get(name));
-			this.addChildOperand(parmWrapper);
 		}
 	}
 	
@@ -126,12 +121,14 @@ public class HAPOperandOperation extends HAPOperandImp{
 		return out;  
 	}
 	
-	private void processChildenOperand(){
-		if(this.m_base!=null)  this.addChildOperand(m_base);
-		for(String parm : this.m_parms.keySet()){
-			this.addChildOperand(this.m_parms.get(parm));
-		}
+	@Override
+	public List<HAPOperandWrapper> getChildren(){
+		List<HAPOperandWrapper> out = new ArrayList<HAPOperandWrapper>();
+		if(this.m_base!=null)	out.add(this.m_base);
+		out.addAll(this.m_parms.values());
+		return out;
 	}
+	
 	
 	@Override
 	public Set<HAPDataTypeConverter> getConverters(){

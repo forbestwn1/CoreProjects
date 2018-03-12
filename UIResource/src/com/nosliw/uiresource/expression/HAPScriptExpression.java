@@ -118,7 +118,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		for(int i=0; i<this.m_elements.size(); i++) {
 			Object element = this.m_elements.get(i);
 			if(element instanceof HAPDefinitionExpression){
-				m_expressions.put(i+"", this.m_expressionManager.compileExpression(null, (HAPDefinitionExpression)element, expressionContext.getExpressionDefinitionSuite(), expressionContext.getVariables(), null, null, context));
+				m_expressions.put(i+"", this.m_expressionManager.compileExpression(null, (HAPDefinitionExpression)element, expressionContext.getExpressionDefinitionSuite(), null, context));
 			}
 		}
 	}

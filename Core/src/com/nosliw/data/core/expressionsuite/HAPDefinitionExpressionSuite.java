@@ -24,6 +24,7 @@ public class HAPDefinitionExpressionSuite  extends HAPSerializableImp{
 	public HAPDefinitionExpressionSuite() {
 		this.m_variables = new LinkedHashMap<String, HAPVariableInfo>();
 		this.m_constants = new LinkedHashMap<String, HAPData>();
+		this.m_expressions = new LinkedHashMap<String, HAPDefinitionExpression>();
 	}
 	
 	public HAPDefinitionExpressionSuite(
@@ -31,17 +32,17 @@ public class HAPDefinitionExpressionSuite  extends HAPSerializableImp{
 			String description, 
 			Map<String, HAPVariableInfo> variables,
 			Map<String, HAPData> constants) {
+		super();
 		this.m_name = name;
 		this.m_description = description;
-		this.m_variables = new LinkedHashMap<String, HAPVariableInfo>();
 		this.m_variables.putAll(variables);
-		this.m_constants = new LinkedHashMap<String, HAPData>();
 		this.m_constants.putAll(constants);
 	}
 	
+	public Map<String, HAPVariableInfo> getVariablesInfo(){   return this.m_variables;   }
+	public void addVariableInfo(String name, HAPVariableInfo varInfo) {   this.m_variables.put(name, varInfo);   }
 	
 	public Map<String, HAPData> getConstants(){  return this.m_constants;    }
-	
 	public void addConstant(String name, HAPData constant) {  this.m_constants.put(name, constant);    }
 	
 	public void addExpressionDefinition(String name, HAPDefinitionExpression expDef) {  this.m_expressions.put(name, expDef);   }

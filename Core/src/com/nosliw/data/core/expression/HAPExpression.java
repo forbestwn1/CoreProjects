@@ -14,7 +14,7 @@ import com.nosliw.data.core.task.HAPExecutable;
  * Expression object we get after processing HAPExpressionDefinition
  *  
  */
-@HAPEntityWithAttribute(baseName="EXPRESSION")
+//@HAPEntityWithAttribute(baseName="EXPRESSION")
 public interface HAPExpression extends HAPExecutable{
 
 	@HAPAttribute
