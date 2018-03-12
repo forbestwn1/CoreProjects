@@ -9,7 +9,7 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task.HAPExecutable;
-import com.nosliw.data.core.task.HAPExecuteTask;
+import com.nosliw.data.core.task.HAPExecutableTask;
 
 public abstract class HAPExecuteStep  implements HAPExecutable{
 
@@ -20,7 +20,7 @@ public abstract class HAPExecuteStep  implements HAPExecutable{
 			HAPProcessContext context,
 			HAPDataTypeHelper dataTypeHelper);
 
-	public abstract void updateReferencedExecute(Map<String, HAPExecuteTask> references);
+	public abstract void updateReferencedExecute(Map<String, HAPExecutableTask> references);
 	
 	public abstract List<HAPResourceId> discoverResources();
 	

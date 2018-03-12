@@ -10,9 +10,9 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.datasource.HAPDataSource;
-import com.nosliw.data.core.datasource.HAPDataSourceDefinition;
+import com.nosliw.data.core.datasource.HAPDefinition;
 import com.nosliw.data.core.datasource.HAPDataSourceDefinitionManager;
-import com.nosliw.data.core.datasource.HAPDataSourceParm;
+import com.nosliw.data.core.datasource.HAPDefinitionParm;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
@@ -33,12 +33,12 @@ public class HAPDataSourceImpSecondHand implements HAPDataSource{
 	
 	private HAPRuntime m_runtime;
 	
-	private HAPDataSourceDefinition m_dataSourceDefinition;
+	private HAPDefinition m_dataSourceDefinition;
 	
 	private HAPConfigure m_configure;
 	
 	public HAPDataSourceImpSecondHand(
-			HAPDataSourceDefinition dataSourceDefinition, 
+			HAPDefinition dataSourceDefinition, 
 			HAPDataSourceDefinitionManager dataSourceDefinitionManager,
 			HAPManagerTask expressionManager,
 			HAPRuntime runtime){
@@ -68,9 +68,9 @@ public class HAPDataSourceImpSecondHand implements HAPDataSource{
 			HAPDefinitionTask expDef = expressions.get(expName);
 			
 			//add data source parms to expression as variable
-			Map<String, HAPDataSourceParm> dataSourceParms = this.m_dataSourceDefinition.getParms();
+			Map<String, HAPDefinitionParm> dataSourceParms = this.m_dataSourceDefinition.getParms();
 			for(String parmName : dataSourceParms.keySet()){
-				expDef.getVariableCriterias().put(parmName, dataSourceParms.get(parmName).getCriteria());
+				expDef.getVariableCriterias().put(parmName, dataSourceParms.get(parmName).getVaraibleInfo());
 			}
 			
 			HAPOperandUtility.processAllOperand(expDef.getOperand(), mappedDataSourceNames, new HAPOperandTask(){
@@ -120,7 +120,7 @@ public class HAPDataSourceImpSecondHand implements HAPDataSource{
 		return HAPDataUtility.buildDataWrapperFromJson((JSONObject)serviceData.getData());
 	}
 
-	public HAPDataSourceDefinition getDefinition() {
+	public HAPDefinition getDefinition() {
 		return this.m_dataSourceDefinition;
 	}
 

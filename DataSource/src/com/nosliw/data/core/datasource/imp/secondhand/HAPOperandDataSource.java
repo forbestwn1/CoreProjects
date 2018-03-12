@@ -14,10 +14,10 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
 
-import com.nosliw.data.core.datasource.HAPDataSourceDefinition;
+import com.nosliw.data.core.datasource.HAPDefinition;
 import com.nosliw.data.core.datasource.HAPDataSourceManager;
-import com.nosliw.data.core.datasource.HAPDataSourceOutput;
-import com.nosliw.data.core.datasource.HAPDataSourceParm;
+import com.nosliw.data.core.datasource.HAPDefinitionOutput;
+import com.nosliw.data.core.datasource.HAPDefinitionParm;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 import com.nosliw.data.core.expression.HAPVariableInfo;
@@ -49,7 +49,7 @@ public class HAPOperandDataSource extends HAPOperandImp{
 	
 	private String m_dataSourceName;
 	
-	private HAPDataSourceDefinition m_dataSourceDefinition;
+	private HAPDefinition m_dataSourceDefinition;
 	
 	private Map<String, HAPData> m_constants;
 	
@@ -60,7 +60,7 @@ public class HAPOperandDataSource extends HAPOperandImp{
 	//matchers required by data source parm
 	private Map<String, HAPMatchers> m_parmsMatchers;
 	
-	public HAPOperandDataSource(String dataSourceName, HAPDataSourceDefinition dataSourceDefinition, Map<String, HAPData> constants, Map<String, String> varConfigure){
+	public HAPOperandDataSource(String dataSourceName, HAPDefinition dataSourceDefinition, Map<String, HAPData> constants, Map<String, String> varConfigure){
 		super(HAPConstant.EXPRESSION_OPERAND_DATASOURCE);
 		this.m_dataSourceName = dataSourceName;
 		this.m_dataSourceDefinition = dataSourceDefinition;
@@ -93,9 +93,9 @@ public class HAPOperandDataSource extends HAPOperandImp{
 			HAPProcessExpressionDefinitionContext context, HAPDataTypeHelper dataTypeHelper) {
 		m_parmsMatchers = new LinkedHashMap<String, HAPMatchers>();
 		
-		Map<String, HAPDataSourceParm> dataSourceParms = this.m_dataSourceDefinition.getParms();
+		Map<String, HAPDefinitionParm> dataSourceParms = this.m_dataSourceDefinition.getParms();
 		for(String dataSourceParmName : dataSourceParms.keySet()){
-			HAPDataSourceParm dataSourceParm = dataSourceParms.get(dataSourceParmName);
+			HAPDefinitionParm dataSourceParm = dataSourceParms.get(dataSourceParmName);
 			if(this.m_constants.get(dataSourceParmName)!=null){
 				//constant
 				
@@ -105,25 +105,25 @@ public class HAPOperandDataSource extends HAPOperandImp{
 				if(mappedParmName!=null){
 					//mapped to different variable name
 					HAPVariableInfo variableInfo = variablesInfo.get(mappedParmName);
-					this.m_parmsMatchers.put(dataSourceParmName, this.isMatchable(variableInfo.getCriteria(), dataSourceParm.getCriteria(), context, dataTypeHelper));
+					this.m_parmsMatchers.put(dataSourceParmName, this.isMatchable(variableInfo.getCriteria(), dataSourceParm.getVaraibleInfo(), context, dataTypeHelper));
 				}
 				else{
 					HAPVariableInfo variableInfo = variablesInfo.get(dataSourceParmName);
 					if(variableInfo==null){
 						//add new variable
 						HAPVariableInfo newVariableInfo = new HAPVariableInfo();
-						newVariableInfo.setCriteria(dataSourceParm.getCriteria());
+						newVariableInfo.setCriteria(dataSourceParm.getVaraibleInfo());
 						newVariableInfo.setStatus(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN);
 						variablesInfo.put(dataSourceParmName, newVariableInfo);
 					}
 					else{
-						this.m_parmsMatchers.put(dataSourceParmName, this.isMatchable(variableInfo.getCriteria(), dataSourceParm.getCriteria(), context, dataTypeHelper));
+						this.m_parmsMatchers.put(dataSourceParmName, this.isMatchable(variableInfo.getCriteria(), dataSourceParm.getVaraibleInfo(), context, dataTypeHelper));
 					}
 				}
 			}
 		}
 		
-		HAPDataSourceOutput dataSourceOutput = this.m_dataSourceDefinition.getOutput();
+		HAPDefinitionOutput dataSourceOutput = this.m_dataSourceDefinition.getOutput();
 		//set output criteria
 		this.setOutputCriteria(dataSourceOutput.getCriteria());
 		//cal converter

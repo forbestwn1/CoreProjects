@@ -12,12 +12,12 @@ import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.core.task.HAPUpdateVariableDomain;
 import com.nosliw.data.core.task.HAPUpdateVariableMap;
 import com.nosliw.data.core.task.HAPDefinitionTask;
-import com.nosliw.data.core.task.HAPExecuteTask;
+import com.nosliw.data.core.task.HAPExecutableTask;
 
 public class HAPProcessorTaskExpression implements HAPProcessorTask{
 
 	@Override
-	public HAPExecuteTask process(HAPDefinitionTask taskDefinition, String domain, Map<String, String> variableMap, 
+	public HAPExecutableTask process(HAPDefinitionTask taskDefinition, String domain, Map<String, String> variableMap, 
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
 			HAPProcessContext context) {
 		
@@ -114,7 +114,7 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 			if(referenceInfo!=null)		refVarMap = referenceInfo.getVariablesMap();
 		
 			//process reference task
-			HAPExecuteTask executable = HAPManagerTask.processTask(refedTaskDef, refDomain, HAPBasicUtility.reverseMapping(refVarMap), contextTaskDefinitions, contextConstants, context);
+			HAPExecutableTask executable = HAPManagerTask.processTask(refedTaskDef, refDomain, HAPBasicUtility.reverseMapping(refVarMap), contextTaskDefinitions, contextConstants, context);
 			out.addReferencedExecute(refName, executable);
 			
 		}

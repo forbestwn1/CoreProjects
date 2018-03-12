@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 
 @HAPEntityWithAttribute
-public class HAPDataSourceDefinition extends HAPSerializableImp{
+public class HAPDefinition extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String NAME = "name";
@@ -39,9 +39,9 @@ public class HAPDataSourceDefinition extends HAPSerializableImp{
 	
 	private String m_description;
 	
-	private Map<String, HAPDataSourceParm> m_parms;
+	private Map<String, HAPDefinitionParm> m_parms;
 	
-	private HAPDataSourceOutput m_output;
+	private HAPDefinitionOutput m_output;
 	
 	private Object m_configure;
 	
@@ -55,12 +55,12 @@ public class HAPDataSourceDefinition extends HAPSerializableImp{
 	
 	public Object getConfigure(){  return this.m_configure;   }
 
-	public Map<String, HAPDataSourceParm> getParms(){  return this.m_parms;   }
+	public Map<String, HAPDefinitionParm> getParms(){  return this.m_parms;   }
 	
-	public HAPDataSourceOutput getOutput(){ return this.m_output;  }
+	public HAPDefinitionOutput getOutput(){ return this.m_output;  }
 	
-	public HAPDataSourceDefinition(){
-		this.m_parms = new LinkedHashMap<String, HAPDataSourceParm>();
+	public HAPDefinition(){
+		this.m_parms = new LinkedHashMap<String, HAPDefinitionParm>();
 		this.m_parser = HAPCriteriaParser.getInstance();
 	}
 	
@@ -72,11 +72,11 @@ public class HAPDataSourceDefinition extends HAPSerializableImp{
 			this.m_name = objJson.getString(NAME);
 			this.m_implementation = (String)objJson.opt(IMPLEMENTATION);
 			this.m_description = objJson.optString(DESCRIPTION);
-			this.m_output = new HAPDataSourceOutput(this.m_parser.parseCriteria(objJson.getString(OUTPUT)));
+			this.m_output = new HAPDefinitionOutput(this.m_parser.parseCriteria(objJson.getString(OUTPUT)));
 			
 			JSONArray parmsArray = objJson.getJSONArray(PARMS);
 			for(int i = 0; i<parmsArray.length(); i++){
-				HAPDataSourceParm parm = new HAPDataSourceParm();
+				HAPDefinitionParm parm = new HAPDefinitionParm();
 				parm.buildObject(parmsArray.get(i), HAPSerializationFormat.JSON);
 				this.m_parms.put(parm.getName(), parm);
 			}

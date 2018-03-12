@@ -10,7 +10,7 @@ import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceId;
 
-public interface HAPExecuteTask extends HAPExecutable{
+public interface HAPExecutableTask extends HAPExecutable{
 
 	HAPMatchers discoverVariable(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria, HAPProcessContext context, HAPDataTypeHelper dataTypeHelper);
 

@@ -1,6 +1,5 @@
 package com.nosliw.data.core.task;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -9,18 +8,12 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataUtility;
 
 /**
  * A group of expression definitions 
  */
 @HAPEntityWithAttribute
 public class HAPDefinitionTaskSuite extends HAPDefinitionComponent {
-
 
 	@HAPAttribute
 	public static String TASKS = "tasks";

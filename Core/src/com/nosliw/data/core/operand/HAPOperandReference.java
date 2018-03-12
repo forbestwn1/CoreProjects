@@ -14,7 +14,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.task.HAPExecuteTask;
+import com.nosliw.data.core.task.HAPExecutableTask;
 
 public class HAPOperandReference extends HAPOperandImp{
 
@@ -23,7 +23,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	private String m_referenceName;
 	
-	private HAPExecuteTask m_referencedTask;
+	private HAPExecutableTask m_referencedTask;
 
 	private HAPOperandReference(){}
 	
@@ -34,7 +34,7 @@ public class HAPOperandReference extends HAPOperandImp{
 
 	public String getReferenceName(){  return this.m_referenceName;  }
 	
-	public void updateReferenceExecute(Map<String, HAPExecuteTask> refTasks) { this.m_referencedTask = refTasks.get(this.m_referenceName);   }
+	public void updateReferenceExecute(Map<String, HAPExecutableTask> refTasks) { this.m_referencedTask = refTasks.get(this.m_referenceName);   }
 	
 	@Override
 	public Set<HAPDataTypeConverter> getConverters(){

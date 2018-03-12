@@ -38,7 +38,7 @@ public class HAPDataSourceManager {
 		if(dataSource==null){
 			try{
 				//not exists, then create one using factory
-				HAPDataSourceDefinition def = this.m_dataSourceDefinitionManager.getDataSourceDefinition(dataSourceName);
+				HAPDefinition def = this.m_dataSourceDefinitionManager.getDataSourceDefinition(dataSourceName);
 				String imp = def.getImplementation();
 				if(imp.contains(".")){
 					//it is class name

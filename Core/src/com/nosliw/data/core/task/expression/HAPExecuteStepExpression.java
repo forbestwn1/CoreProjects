@@ -17,7 +17,7 @@ import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.task.HAPExecuteTask;
+import com.nosliw.data.core.task.HAPExecutableTask;
 import com.nosliw.data.core.task.HAPUpdateVariable;
 
 public class HAPExecuteStepExpression extends HAPExecuteStep{
@@ -44,7 +44,7 @@ public class HAPExecuteStepExpression extends HAPExecuteStep{
 	public HAPOperandWrapper getOperand() {	return this.m_operand;	}
 
 	@Override
-	public void updateReferencedExecute(Map<String, HAPExecuteTask> references) {
+	public void updateReferencedExecute(Map<String, HAPExecutableTask> references) {
 		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {

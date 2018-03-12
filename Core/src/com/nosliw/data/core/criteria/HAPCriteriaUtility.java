@@ -1,11 +1,5 @@
 package com.nosliw.data.core.criteria;
 
-import java.util.Iterator;
-
-import org.json.JSONObject;
-
-import com.nosliw.data.core.expression.HAPVariableInfo;
-
 public class HAPCriteriaUtility {
 
 	public static String[][] mapping = {

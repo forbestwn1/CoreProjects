@@ -15,6 +15,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 
 
@@ -82,7 +83,7 @@ public class HAPDefinitionComponent extends HAPSerializableImp {
 			while(its.hasNext()){
 				String name = its.next();
 				String criteriaStr = jsonObj.optString(name);
-				HAPVariableInfo criteria = HAPCriteriaUtility.parseCriteria(criteriaStr);
+				HAPDataTypeCriteria criteria = HAPCriteriaUtility.parseCriteria(criteriaStr);
 				this.m_variables.put(name, new HAPVariableInfo(criteria));
 			}
 			

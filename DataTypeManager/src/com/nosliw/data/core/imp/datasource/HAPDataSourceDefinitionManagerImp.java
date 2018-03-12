@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.datasource.HAPDataSourceDefinition;
+import com.nosliw.data.core.datasource.HAPDefinition;
 import com.nosliw.data.core.datasource.HAPDataSourceDefinitionManager;
 import com.nosliw.data.core.datasource.HAPDataSourceProvider;
 
@@ -21,7 +21,7 @@ public class HAPDataSourceDefinitionManagerImp extends HAPDataSourceDefinitionMa
 		new HAPClassFilter(){
 			@Override
 			protected void process(Class cls, Object data) {
-				HAPDataSourceDefinition def = loadDataSourceDefinition(cls);
+				HAPDefinition def = loadDataSourceDefinition(cls);
 				if(def!=null)	registerDataSourceDefinition(def.getName(), def);
 			}
 
@@ -38,11 +38,11 @@ public class HAPDataSourceDefinitionManagerImp extends HAPDataSourceDefinitionMa
 		}.process(null);
 	}
 
-	private HAPDataSourceDefinition loadDataSourceDefinition(Class cls){
+	private HAPDefinition loadDataSourceDefinition(Class cls){
 		try{
 			InputStream inputStream = cls.getResourceAsStream("datasource.ds");
 			String content = HAPFileUtility.readFile(inputStream);
-			HAPDataSourceDefinition out = new HAPDataSourceDefinition();
+			HAPDefinition out = new HAPDefinition();
 			out.buildObject(new JSONObject(content), HAPSerializationFormat.JSON);
 			return out;
 		}

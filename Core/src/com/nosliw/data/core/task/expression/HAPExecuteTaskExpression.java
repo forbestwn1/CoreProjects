@@ -17,10 +17,10 @@ import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.task.HAPExecuteTask;
+import com.nosliw.data.core.task.HAPExecutableTask;
 import com.nosliw.data.core.task.HAPUpdateVariable;
 
-public class HAPExecuteTaskExpression implements HAPExecuteTask{
+public class HAPExecuteTaskExpression implements HAPExecutableTask{
 
 	private HAPDefinitionTaskExpression m_taskDefinition;
 	
@@ -30,7 +30,7 @@ public class HAPExecuteTaskExpression implements HAPExecuteTask{
 	private String m_domain;  //?? intermediate value
 
 	//referenced task
-	private Map<String, HAPExecuteTask> m_executeReferences;
+	private Map<String, HAPExecutableTask> m_executeReferences;
 	
 	private List<HAPExecuteStep> m_steps;
 
@@ -52,8 +52,8 @@ public class HAPExecuteTaskExpression implements HAPExecuteTask{
 	
 	public void setId(String id) {  this.m_id = id;   }
 	
-	public void addReferencedExecute(String refName, HAPExecuteTask execute) {	this.m_executeReferences.put(refName, execute);	}
-	public Map<String, HAPExecuteTask> getReferencedExecute(){  return this.m_executeReferences;    }
+	public void addReferencedExecute(String refName, HAPExecutableTask execute) {	this.m_executeReferences.put(refName, execute);	}
+	public Map<String, HAPExecutableTask> getReferencedExecute(){  return this.m_executeReferences;    }
 	
 	public void addStep(HAPExecuteStep step) {  this.m_steps.add(step);   }
 	public List<HAPExecuteStep> getSteps(){   return this.m_steps;   }

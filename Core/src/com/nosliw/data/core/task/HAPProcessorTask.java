@@ -7,7 +7,7 @@ import com.nosliw.data.core.HAPData;
 
 public interface HAPProcessorTask {
 
-	HAPExecuteTask process(
+	HAPExecutableTask process(
 			HAPDefinitionTask taskDefinition, String domain, Map<String, String> variableMap,
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, 
 			Map<String, HAPData> contextConstants,
