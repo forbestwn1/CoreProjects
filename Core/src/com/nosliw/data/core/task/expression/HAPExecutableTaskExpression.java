@@ -20,7 +20,7 @@ import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task.HAPExecutableTask;
 import com.nosliw.data.core.task.HAPUpdateVariable;
 
-public class HAPExecuteTaskExpression implements HAPExecutableTask{
+public class HAPExecutableTaskExpression implements HAPExecutableTask{
 
 	private HAPDefinitionTaskExpression m_taskDefinition;
 	
@@ -32,7 +32,7 @@ public class HAPExecuteTaskExpression implements HAPExecutableTask{
 	//referenced task
 	private Map<String, HAPExecutableTask> m_executeReferences;
 	
-	private List<HAPExecuteStep> m_steps;
+	private List<HAPExecutableStep> m_steps;
 
 	//variable info defined for task
 	private Map<String, HAPVariableInfo> m_varsInfo;
@@ -43,7 +43,7 @@ public class HAPExecuteTaskExpression implements HAPExecutableTask{
 	// store all the matchers from variables info to variables defined in task
 	private Map<String, HAPMatchers> m_varsMatchers;
 	
-	public HAPExecuteTaskExpression(HAPDefinitionTaskExpression taskDef, String domain) {
+	public HAPExecutableTaskExpression(HAPDefinitionTaskExpression taskDef, String domain) {
 		this.m_taskDefinition = taskDef;
 		this.m_domain = domain;
 		this.m_varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
@@ -55,8 +55,8 @@ public class HAPExecuteTaskExpression implements HAPExecutableTask{
 	public void addReferencedExecute(String refName, HAPExecutableTask execute) {	this.m_executeReferences.put(refName, execute);	}
 	public Map<String, HAPExecutableTask> getReferencedExecute(){  return this.m_executeReferences;    }
 	
-	public void addStep(HAPExecuteStep step) {  this.m_steps.add(step);   }
-	public List<HAPExecuteStep> getSteps(){   return this.m_steps;   }
+	public void addStep(HAPExecutableStep step) {  this.m_steps.add(step);   }
+	public List<HAPExecutableStep> getSteps(){   return this.m_steps;   }
 	
 	public String getDomain() {  return this.m_domain;  }
 
@@ -76,7 +76,7 @@ public class HAPExecuteTaskExpression implements HAPExecutableTask{
 		this.m_varsInfo = updatedVarsInfo;
 		
 		//update variables in steps
-		for(HAPExecuteStep step : this.m_steps) {
+		for(HAPExecutableStep step : this.m_steps) {
 			step.updateVariable(updateVar);
 		}
 	}
@@ -95,7 +95,7 @@ public class HAPExecuteTaskExpression implements HAPExecutableTask{
 
 			Map<String, HAPVariableInfo> localVariablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
 			exitCriterias = new HashSet<HAPVariableInfo>();
-			for(HAPExecuteStep step : this.m_steps) {
+			for(HAPExecutableStep step : this.m_steps) {
 				step.discover(parentVariablesInfo, localVariablesInfo, exitCriterias, context, dataTypeHelper);
 				if(!context.isSuccess())  break;
 			}
@@ -129,10 +129,10 @@ public class HAPExecuteTaskExpression implements HAPExecutableTask{
 	}
 
 	@Override
-	public List<HAPResourceId> discoverResources() {
+	public List<HAPResourceId> getResourceDependency() {
 		Set<HAPResourceId> out = new HashSet<HAPResourceId>();
 		//resource for steps
-		for(HAPExecuteStep step : this.m_steps) {
+		for(HAPExecutableStep step : this.m_steps) {
 			out.addAll(step.discoverResources());
 		}
 		//resources from task definition

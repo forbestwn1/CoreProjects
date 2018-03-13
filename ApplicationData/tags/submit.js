@@ -4,7 +4,16 @@
 	attributes : [
 		{
 			name : "datasource"
-		}
+		},
+		{
+			name : "title"
+		},
+		{
+			name : "parms"
+		},
+		{
+			name : "output"
+		},
 	],
 	context: {
 		inherit : true,
@@ -36,26 +45,25 @@
 			
 		};
 
-		var loc_getViewData = function(){
-			return {
-				dataTypeId: "test.string;1.0.0",
-				value: loc_view.val()
-			};
-		};
-
-		var loc_updateView = function(){
-			env.executeDataOperationRequestGet(loc_dataVariable, "", {
-				success : function(requestInfo, data){
-					loc_view.val(data.value.value);
-				}
-			});
-		};
-
 		var loc_setupUIEvent = function(){
-			loc_view.bind('change', function(){
-				env.executeBatchDataOperationRequest([
-					env.getDataOperationSet(loc_dataVariable, "", loc_getViewData())
-				]);
+			loc_view.bind('onclick', function(){
+				var setRequest = node_createServiceRequestInfoSet({}, {
+					success : function(requestInfo, result){
+						var commandParms = {
+							name : loc_env.getAttribute("datasource"),
+							parms : result.getResults()
+						};
+						var serviceData = loc_env.executeGatewayCommand("dataSource", "getData", commandParms);
+						loc_env.executeDataOperationRequestSet(loc_env.getAttribute("output"), "", serviceData.data);
+					}
+				});
+
+				var parmDefs = loc_env.getAttention("parms").split(";");
+				_.each(parmDefs, function(parmDef, i){
+					var ps = parmDef.split(":");
+					setRequest.addRequest(ps[0], loc_env.getDataOperationRequestGet(ps[1]));
+				});
+				node_requestProcessor.processRequest(setRequest, false);
 			});
 		};
 
@@ -64,17 +72,12 @@
 			preInit : function(){	},
 				
 			initViews : function(requestInfo){	
-				loc_view = $('<input type="text"/>');	
+				loc_view = $('<button type="button">'+loc_env.getAttention('title')+'</button>');	
 				return loc_view;
 			},
 				
 			postInit : function(){
-				loc_updateView();
 				loc_setupUIEvent();
-
-				loc_dataVariable.registerDataOperationEventListener(undefined, function(){
-					loc_updateView();
-				}, this);
 			},
 
 			processAttribute : function(name, value){},

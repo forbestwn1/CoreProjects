@@ -24,7 +24,7 @@ import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
 
-public class HAPExpressionUtility {
+public class HAPExpressionTaskUtility {
 
 	/**
 	 * Discover resources required for data type operation

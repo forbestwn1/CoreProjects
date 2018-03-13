@@ -27,9 +27,9 @@ import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPManagerTask;
-import com.nosliw.data.core.task.HAPReferenceInfo;
-import com.nosliw.data.core.task.expression.HAPExpressionUtility;
+import com.nosliw.data.core.task.expression.HAPExpressionTaskUtility;
 import com.nosliw.data.core.task.expression.HAPProcessorStep;
+import com.nosliw.data.core.task.expression.HAPReferenceInfo;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 
 public class HAPExpressionDefinitionProcessorImp implements HAPProcessorStep{
@@ -220,7 +220,7 @@ public class HAPExpressionDefinitionProcessorImp implements HAPProcessorStep{
 				Map<String, String> newVarMapping = new LinkedHashMap<String, String>();
 				Map<String, String> varMapping = refInfo.getVariablesMap();
 				for(String varName : varMapping.keySet()){
-					newVarMapping.put(varName, HAPExpressionUtility.buildFullVariableName(ref, varMapping.get(varName)));
+					newVarMapping.put(varName, HAPExpressionTaskUtility.buildFullVariableName(ref, varMapping.get(varName)));
 				}
 				refInfo.setVariableMap(newVarMapping);
 			}

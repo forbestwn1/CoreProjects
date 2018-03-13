@@ -1,6 +1,6 @@
 package com.nosliw.data.core.task;
 
-import com.nosliw.data.core.task.expression.HAPExpressionUtility;
+import com.nosliw.data.core.expression.HAPExpressionUtility;
 
 public class HAPUpdateVariableDomain implements HAPUpdateVariable{
 

@@ -28,12 +28,12 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutable;
 import com.nosliw.data.core.task.HAPManagerTask;
-import com.nosliw.data.core.task.HAPReferenceInfo;
 import com.nosliw.data.core.task.expression.HAPProcessorStep;
+import com.nosliw.data.core.task.expression.HAPReferenceInfo;
 import com.nosliw.data.core.task.expression.HAPDefinitionStep;
 import com.nosliw.data.core.task.expression.HAPDefinitionStepExpression;
-import com.nosliw.data.core.task.expression.HAPExecuteStepExpression;
-import com.nosliw.data.core.task.expression.HAPExpressionUtility;
+import com.nosliw.data.core.task.expression.HAPExecutableStepExpression;
+import com.nosliw.data.core.task.expression.HAPExpressionTaskUtility;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 
 public class HAPProcessorStepExpression implements HAPProcessorStep{
@@ -56,7 +56,7 @@ public class HAPProcessorStepExpression implements HAPProcessorStep{
 			HAPProcessExpressionDefinitionContext context
 	) {
 		HAPDefinitionStepExpression stepDefExp = (HAPDefinitionStepExpression)stepDefinition;
-		HAPExecuteStepExpression out = new HAPExecuteStepExpression(stepDefExp);
+		HAPExecutableStepExpression out = new HAPExecutableStepExpression(stepDefExp);
 
 		//process reference
 		System.out.println("******* Process reference");

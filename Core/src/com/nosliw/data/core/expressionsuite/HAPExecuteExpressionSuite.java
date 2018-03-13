@@ -56,10 +56,9 @@ public class HAPExecuteExpressionSuite extends HAPSerializableImp implements HAP
 
 	public void discover(
 			Map<String, HAPVariableInfo> parentVariablesInfo, 
-			HAPDataTypeCriteria expectOutput,
-			HAPDataTypeHelper dataTypeHelper) {
+			HAPDataTypeCriteria expectOutput) {
 
-		Map<String, HAPVariableInfo> discoveredVarsInf = HAPOperandUtility.discover(this.getOperand().getOperand(), parentVariablesInfo, expectOutput, dataTypeHelper);
+		Map<String, HAPVariableInfo> discoveredVarsInf = HAPOperandUtility.discover(this.getOperand().getOperand(), parentVariablesInfo, expectOutput);
 		parentVariablesInfo.clear();
 		parentVariablesInfo.putAll(discoveredVarsInf);
 		this.m_localVarsInfo.clear();

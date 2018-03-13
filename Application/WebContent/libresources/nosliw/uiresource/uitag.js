@@ -105,16 +105,16 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		getHandleEachElementRequest : function(name, path, elementHandleRequestFactory, handlers, request){	return this.getContext().getHandleEachElementRequest(name, path, elementHandleRequestFactory, handlers, request);},
 		executeGetHandleEachElementRequest : function(name, path, elementHandleRequestFactory, handlers){	this.processRequest(this.getHandleEachElementRequest(name, path, elementHandleRequestFactory, handlers));	},
 
-		
-		
 		executeBatchDataOperationRequest : function(operations){
 			var requestInfo = node_createBatchUIDataOperationRequest(loc_context);
 			_.each(operations, function(operation, i){
 				requestInfo.addUIDataOperation(operation);						
 			});
 			this.processRequest(requestInfo);
-		} 
+		},
 		
+		//---------------------------------other request
+		executeGatewayCommand : function(gatewayId, command, parms){	return nosliw.runtime.getGatewayService().executeGatewayCommand(gatewayId, command, parms);	}
 	};
 	
 	var lifecycleCallback = {};

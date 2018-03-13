@@ -12,13 +12,13 @@ import com.nosliw.data.core.operand.HAPOperandUtility;
 public class HAPProcessorStepExpression implements HAPProcessorStep{
 
 	@Override
-	public HAPExecuteStep process(HAPDefinitionStep stepDefinition,
+	public HAPExecutableStep process(HAPDefinitionStep stepDefinition,
 			Map<String, HAPData> contextConstants,
 			HAPProcessContext context) {
 
 		HAPDefinitionStepExpression stepDefExp = (HAPDefinitionStepExpression)stepDefinition;
 		
-		HAPExecuteStepExpression out = new HAPExecuteStepExpression(stepDefExp);
+		HAPExecutableStepExpression out = new HAPExecutableStepExpression(stepDefExp);
 		
 		HAPOperandUtility.updateConstantData(out.getOperand(), contextConstants);
 		

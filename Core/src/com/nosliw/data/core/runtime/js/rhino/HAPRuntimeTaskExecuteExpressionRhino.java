@@ -14,7 +14,7 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
-import com.nosliw.data.core.task.expression.HAPExpressionUtility;
+import com.nosliw.data.core.task.expression.HAPExpressionTaskUtility;
 
 public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteExpression{
 
@@ -31,7 +31,7 @@ public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteE
 			//execute expression after load required resources
 			List<HAPExecuteExpression> expressions = new ArrayList<HAPExecuteExpression>();
 			expressions.add(this.getExpression());
-			List<HAPResourceInfo> resourcesId =	HAPExpressionUtility.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager());
+			List<HAPResourceInfo> resourcesId =	HAPExpressionTaskUtility.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager());
 			
 			HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
 			loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));

@@ -49,7 +49,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	@Override
 	public List<HAPResourceId> getResources() {
 		List<HAPResourceId> out = super.getResources();
-		List<HAPResourceId> referenceResources = this.m_referencedTask.discoverResources(); 
+		List<HAPResourceId> referenceResources = this.m_referencedTask.getResourceDependency(); 
 		out.addAll(referenceResources);
 		return out;
 	}
@@ -67,7 +67,8 @@ public class HAPOperandReference extends HAPOperandImp{
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessContext context,
 			HAPDataTypeHelper dataTypeHelper) {
-		return this.m_referencedTask.discoverVariable(variablesInfo, expectCriteria, context, dataTypeHelper);
+		this.m_referencedTask.discoverVariable(variablesInfo, expectCriteria, context);
+		return this.isMatchable(this.m_referencedTask.getOutput(), expectCriteria, context, dataTypeHelper);
 	}
 	
 	@Override

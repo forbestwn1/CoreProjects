@@ -11,7 +11,7 @@ import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task.HAPExecutable;
 import com.nosliw.data.core.task.HAPExecutableTask;
 
-public abstract class HAPExecuteStep  implements HAPExecutable{
+public abstract class HAPExecutableStep  implements HAPExecutable{
 
 	public abstract void discover(
 			Map<String, HAPVariableInfo> variablesInfo, 

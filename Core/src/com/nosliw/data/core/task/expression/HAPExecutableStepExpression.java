@@ -20,7 +20,7 @@ import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task.HAPExecutableTask;
 import com.nosliw.data.core.task.HAPUpdateVariable;
 
-public class HAPExecuteStepExpression extends HAPExecuteStep{
+public class HAPExecutableStepExpression extends HAPExecutableStep{
 
 	// original expression definition
 	private HAPDefinitionStepExpression m_expressionDefinition;
@@ -33,7 +33,7 @@ public class HAPExecuteStepExpression extends HAPExecuteStep{
 	
 	private boolean m_exits;
 	
-	public HAPExecuteStepExpression(HAPDefinitionStepExpression stepDef) {
+	public HAPExecutableStepExpression(HAPDefinitionStepExpression stepDef) {
 		this.m_expressionDefinition = stepDef.clone();
 		this.m_outputVariable = stepDef.getOutputVariable();
 		this.m_exits = stepDef.isExit();
@@ -116,7 +116,7 @@ public class HAPExecuteStepExpression extends HAPExecuteStep{
 	@Override
 	public HAPVariableInfo getOutput() {	return this.m_operand.getOperand().getOutputCriteria();	}
 
-	public HAPExecuteStepExpression clone() {
+	public HAPExecutableStepExpression clone() {
 		return null;
 	}
 

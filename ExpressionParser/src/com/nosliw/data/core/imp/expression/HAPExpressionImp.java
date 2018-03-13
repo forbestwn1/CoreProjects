@@ -25,8 +25,8 @@ import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.task.HAPDefinitionTask;
-import com.nosliw.data.core.task.HAPReferenceInfo;
-import com.nosliw.data.core.task.expression.HAPExpressionUtility;
+import com.nosliw.data.core.task.expression.HAPExpressionTaskUtility;
+import com.nosliw.data.core.task.expression.HAPReferenceInfo;
 
 /**
  * Parsed expression 
@@ -115,7 +115,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		Set<String> variables = this.getVariables();
 		Map<String, String> varMapping = new LinkedHashMap<String, String>();
 		for(String variableName : variables){
-			varMapping.put(variableName, HAPExpressionUtility.buildFullVariableName(name, variableName));
+			varMapping.put(variableName, HAPExpressionTaskUtility.buildFullVariableName(name, variableName));
 		}
 		this.updateVariablesName(varMapping);
 	}
@@ -212,7 +212,7 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 	
 	public void addReference(String referenceName, HAPExpressionImp expression){
 		//modify variables in referenced expression by add prefix
-		String prefix = HAPExpressionUtility.buildFullVariableName(this.getName(), referenceName); 
+		String prefix = HAPExpressionTaskUtility.buildFullVariableName(this.getName(), referenceName); 
 		expression.setName(prefix);
 
 		this.m_references.put(referenceName, expression);   

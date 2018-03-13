@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.HAPDataWrapper;
@@ -75,7 +76,8 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 			JSONObject constantsJson = parms.optJSONObject(COMMAND_GETOUTPUTCRITERIA_CONSTANTS);
 			Map<String, HAPData> constants = HAPDataUtility.buildDataWrapperMapFromJson(constantsJson); 
 			
-			HAPExecuteExpression expression = this.m_expressionSuiteManager.compileExpression(null, expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
+			HAPProcessContext processContext = new HAPProcessContext();
+			HAPExecuteExpression expression = this.m_expressionSuiteManager.compileExpression(null, expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), processContext);
 			HAPDataTypeCriteria outCriteria = expression.getOperand().getOperand().getOutputCriteria();
 			out = this.createSuccessWithObject(outCriteria.toStringValue(HAPSerializationFormat.LITERATE));
 			break;
@@ -99,7 +101,8 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 				varsInfo.put(varName, new HAPVariableInfo(new HAPDataTypeCriteriaId(data.getDataTypeId(), null)));
 			}
 			
-			HAPExecuteExpression expression = this.m_expressionSuiteManager.compileExpression(null, expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
+			HAPProcessContext processContext = new HAPProcessContext();
+			HAPExecuteExpression expression = this.m_expressionSuiteManager.compileExpression(null, expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), processContext);
 			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expression, expressionParms, null);
 			HAPServiceData serviceData = this.m_runtime.executeTaskSync(task);
 			if(serviceData.isSuccess()){

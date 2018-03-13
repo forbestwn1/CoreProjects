@@ -24,7 +24,7 @@ public interface HAPProcessorStep {
 	 * @param variableCriterias   variable criterias that need to respect during discovery
 	 * @return
 	 */
-	HAPExecuteStep process(
+	HAPExecutableStep process(
 			HAPDefinitionStep stepDefinition,
 			Map<String, HAPData> contextConstants,
 			HAPProcessContext context

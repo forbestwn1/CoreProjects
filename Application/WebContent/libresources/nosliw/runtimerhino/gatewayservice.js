@@ -55,7 +55,7 @@ var node_createGatewayService = function(){
 				var resultStatus = node_errorUtility.getServiceDataStatus(serviceData);
 				switch(resultStatus){
 				case node_CONSTANT.REMOTESERVICE_RESULT_SUCCESS:
-					return serviceData.data;
+					return serviceData;
 					break;
 				case node_CONSTANT.REMOTESERVICE_RESULT_EXCEPTION:
 					return serviceData;

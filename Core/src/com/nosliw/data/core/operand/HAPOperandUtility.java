@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 
@@ -93,8 +94,7 @@ public class HAPOperandUtility {
 	static public Map<String, HAPVariableInfo> discover(
 			HAPOperand operand, 
 			Map<String, HAPVariableInfo> parentVariablesInfo, 
-			HAPDataTypeCriteria expectOutput,
-			HAPDataTypeHelper dataTypeHelper) {
+			HAPDataTypeCriteria expectOutput) {
 
 		//do discovery on operand
 		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
@@ -107,7 +107,7 @@ public class HAPOperandUtility {
 			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 			oldVarsInfo.putAll(varsInfo);
 			context.clear();
-			operand.discover(varsInfo, expectOutput, context, dataTypeHelper);
+			operand.discover(varsInfo, expectOutput, context, HAPExpressionManager.dataTypeHelper);
 		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
 		
 		return varsInfo;
