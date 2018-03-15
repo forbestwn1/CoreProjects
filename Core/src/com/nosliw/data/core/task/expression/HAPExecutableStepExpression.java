@@ -9,6 +9,8 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperandReference;
@@ -16,11 +18,12 @@ import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.runtime.HAPExecuteExpression;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task.HAPExecutableTask;
 import com.nosliw.data.core.task.HAPUpdateVariable;
 
-public class HAPExecutableStepExpression extends HAPExecutableStep{
+public class HAPExecutableStepExpression extends HAPExecutableStep implements HAPExecuteExpression{
 
 	// original expression definition
 	private HAPDefinitionStepExpression m_expressionDefinition;
@@ -33,15 +36,25 @@ public class HAPExecutableStepExpression extends HAPExecutableStep{
 	
 	private boolean m_exits;
 	
-	public HAPExecutableStepExpression(HAPDefinitionStepExpression stepDef) {
+	public HAPExecutableStepExpression(HAPDefinitionStepExpression stepDef, int index, String name) {
+		super(index, name);
 		this.m_expressionDefinition = stepDef.clone();
 		this.m_outputVariable = stepDef.getOutputVariable();
 		this.m_exits = stepDef.isExit();
 	}
 	
+	public boolean isExit() {  return this.m_exits;   }
+	
+	public String getOutputVariable(){  return this.m_outputVariable;  }
+
 	public Set<String> getReferenceNames(){   return this.m_expressionDefinition.getReferenceNames();    }
 	
 	public HAPOperandWrapper getOperand() {	return this.m_operand;	}
+
+	public HAPDataTypeCriteria getExitDataTypeCriteria() {
+		if(this.m_expressionDefinition.isExit()) return this.getOutput();
+		return null;
+	}
 
 	@Override
 	public void updateReferencedExecute(Map<String, HAPExecutableTask> references) {
@@ -59,62 +72,23 @@ public class HAPExecutableStepExpression extends HAPExecutableStep{
 	}
 
 	@Override
-	public void discover(
-			Map<String, HAPVariableInfo> variablesInfo, 
-			Map<String, HAPVariableInfo> localVariablesInfo, 
-			Set<HAPVariableInfo> exitCriterias, 
-			HAPProcessContext context,
-			HAPDataTypeHelper dataTypeHelper){
-		
-		HAPMatchers matchers = null;
-		//store all variables info including global and local, it is used for operand discovery
-		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		//only local variable
-		Map<String, HAPVariableInfo> localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		varsInfo.putAll(variablesInfo);
-		varsInfo.putAll(localVariablesInfo);
-		localVarsInfo.putAll(localVariablesInfo);
-
-		//Do discovery until variables definition not change or fail 
-		Map<String, HAPVariableInfo> oldVarsInfo;
-		do{
-			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
-			oldVarsInfo.putAll(varsInfo);
-			
-			context.clear();
-			matchers = this.getOperand().getOperand().discover(varsInfo, null, context, dataTypeHelper);
-		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
-
-		//if this step exit, then update exit criteria
-		if(this.m_expressionDefinition.isExit()) {
-			exitCriterias.add(this.getOutput());
-		}
+	public void discoverVariable(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria,
+			HAPProcessContext context) {
+		Map<String, HAPVariableInfo> varsInfo = HAPOperandUtility.discover(this.m_operand.getOperand(), variablesInfo, expectOutputCriteria, context);
 		
 		//handle output variable
 		String outVarName = this.m_outputVariable;
 		if(outVarName!=null) {
 			HAPVariableInfo localOutVarInfo = new HAPVariableInfo(this.getOperand().getOperand().getOutputCriteria());
+			localOutVarInfo.setInfoValue(HAPExecutableTaskExpression.INFO_LOCALVRIABLE, HAPExecutableTaskExpression.INFO_LOCALVRIABLE);
 			varsInfo.put(outVarName, localOutVarInfo);
-			localVarsInfo.put(outVarName, localOutVarInfo);
 		}
-
-		//update variables in output
 		variablesInfo.clear();
-		localVariablesInfo.clear();
-		for(String varName : varsInfo.keySet()) {
-			HAPVariableInfo varInfo = variablesInfo.get(varName);
-			if(localVarsInfo.get(varName)!=null) {
-				//local var
-				localVariablesInfo.put(varName, varInfo);
-			}
-			else {
-				variablesInfo.put(varName, varInfo);
-			}
-		}
+		variablesInfo.putAll(varsInfo);
 	}
-	
+
 	@Override
-	public HAPVariableInfo getOutput() {	return this.m_operand.getOperand().getOutputCriteria();	}
+	public HAPDataTypeCriteria getOutput() {	return this.m_operand.getOperand().getOutputCriteria();	}
 
 	public HAPExecutableStepExpression clone() {
 		return null;
@@ -143,4 +117,32 @@ public class HAPExecutableStepExpression extends HAPExecutableStep{
 	public List<HAPResourceId> discoverResources() {
 		return this.m_operand.getOperand().getResources();
 	}
+
+	@Override
+	public String getType() {  return this.m_expressionDefinition.getType(); }
+
+
+	@Override
+	public List<HAPResourceId> getResourceDependency() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<String> getReferences() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<String> getVariables() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getId() {  return null; }
+
+	@Override
+	public Map<String, HAPMatchers> getVariableMatchers() {		return null;	}
 }

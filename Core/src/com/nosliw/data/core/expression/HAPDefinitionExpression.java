@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeOperation;
@@ -15,8 +19,21 @@ import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 
-public class HAPDefinitionExpression {
+public class HAPDefinitionExpression  extends HAPSerializableImp{
 
+	@HAPAttribute
+	public static String EXPRESSION = "expression";
+	
+	@HAPAttribute
+	public static String OPERAND = "operand";
+
+	@HAPAttribute
+	public static String VARIABLENAMES = "variableNames";
+
+	@HAPAttribute
+	public static String REFERENCENAMES = "referenceNames";
+
+	
 	private String m_expression;
 	
 	private HAPOperandWrapper m_operand;
@@ -34,7 +51,9 @@ public class HAPDefinitionExpression {
 		this.m_referenceNames = new HashSet<String>();
 		this.process();
 	}
-
+	
+	public String getExpression() {  return this.m_expression;  }
+	
 	public HAPOperandWrapper getOperand() {  return this.m_operand;    }
 	
 	public Set<String> getVariableNames() {		return this.m_variableNames;	}
@@ -102,6 +121,15 @@ public class HAPDefinitionExpression {
 				return true;
 			}
 		});		
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(EXPRESSION, this.m_expression);
+		jsonMap.put(VARIABLENAMES, HAPJsonUtility.buildJson(this.m_variableNames, HAPSerializationFormat.JSON));
+		jsonMap.put(REFERENCENAMES, HAPJsonUtility.buildJson(this.m_referenceNames, HAPSerializationFormat.JSON));
+		jsonMap.put(OPERAND, HAPJsonUtility.buildJson(this.m_operand, HAPSerializationFormat.JSON));
 	}
 
 }

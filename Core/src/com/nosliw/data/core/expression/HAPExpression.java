@@ -16,7 +16,7 @@ import com.nosliw.data.core.task.HAPExecutable;
  */
 //@HAPEntityWithAttribute(baseName="EXPRESSION")
 public interface HAPExpression extends HAPExecutable{
-
+/*
 	@HAPAttribute
 	public static String ID = "id";
 	
@@ -75,5 +75,5 @@ public interface HAPExpression extends HAPExecutable{
 	//2 discover expect variable
 	//3 build converters between expect variable to internal variable
 //	HAPMatchers discover(Map<String, HAPVariableInfo> parentVariablesInfo, HAPVariableInfo expectOutputCriteria, HAPProcessExpressionDefinitionContext context,	HAPDataTypeHelper dataTypeHelper);
-	
+	*/
 }

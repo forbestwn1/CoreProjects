@@ -12,13 +12,17 @@ import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 
-public class HAPManagerExpression {
+public class HAPManagerTaskExpression {
 
 	private static Map<String, Class<? extends HAPDefinitionStep>> m_stepDefinitionClasses = new LinkedHashMap<String, Class<? extends HAPDefinitionStep>>();
 	private static Map<String, HAPProcessorStep> m_stepProcessors = new LinkedHashMap<String, HAPProcessorStep>();
 	
 	static{
-		HAPManagerExpression.registerStep(HAPDefinitionStepExpression.class, null);
+		HAPManagerTaskExpression.registerStep(HAPDefinitionStepExpression.class, null);
+	}
+	
+	public HAPResultStep executeStep(HAPExecutableStep step, Map<String, HAPData> parms, Map<String, HAPData> referenceData) {
+		return null;
 	}
 	
 	public static void registerStep(Class<? extends HAPDefinitionStep> stepClass, HAPProcessorStep stepProcessor){

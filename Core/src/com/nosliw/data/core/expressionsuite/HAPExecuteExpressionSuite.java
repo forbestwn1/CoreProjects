@@ -9,6 +9,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPMatchers;
@@ -56,9 +57,10 @@ public class HAPExecuteExpressionSuite extends HAPSerializableImp implements HAP
 
 	public void discover(
 			Map<String, HAPVariableInfo> parentVariablesInfo, 
-			HAPDataTypeCriteria expectOutput) {
+			HAPDataTypeCriteria expectOutput,
+			HAPProcessContext context) {
 
-		Map<String, HAPVariableInfo> discoveredVarsInf = HAPOperandUtility.discover(this.getOperand().getOperand(), parentVariablesInfo, expectOutput);
+		Map<String, HAPVariableInfo> discoveredVarsInf = HAPOperandUtility.discover(this.getOperand().getOperand(), parentVariablesInfo, expectOutput, context);
 		parentVariablesInfo.clear();
 		parentVariablesInfo.putAll(discoveredVarsInf);
 		this.m_localVarsInfo.clear();

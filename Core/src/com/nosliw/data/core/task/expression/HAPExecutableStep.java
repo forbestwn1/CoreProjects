@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPProcessContext;
-import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task.HAPExecutable;
@@ -13,13 +13,20 @@ import com.nosliw.data.core.task.HAPExecutableTask;
 
 public abstract class HAPExecutableStep  implements HAPExecutable{
 
-	public abstract void discover(
-			Map<String, HAPVariableInfo> variablesInfo, 
-			Map<String, HAPVariableInfo> localVariablesInfo, 
-			Set<HAPVariableInfo> exitCriterias, 
-			HAPProcessContext context,
-			HAPDataTypeHelper dataTypeHelper);
-
+	private int m_index;
+	
+	private String m_name;
+	
+	public HAPExecutableStep(int index, String name) {
+		this.m_index = index;
+		this.m_name = name;
+	}
+	
+	public int getIndex() { return this.m_index;  }
+	public String getName() {   return this.m_name;   }
+	
+	public abstract HAPDataTypeCriteria getExitDataTypeCriteria();
+	
 	public abstract void updateReferencedExecute(Map<String, HAPExecutableTask> references);
 	
 	public abstract List<HAPResourceId> discoverResources();

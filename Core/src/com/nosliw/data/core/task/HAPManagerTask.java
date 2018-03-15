@@ -37,8 +37,14 @@ public class HAPManagerTask {
 		//convert parms
 		
 		//execute task
-		HAPData out = m_taskExecutors.get(suite.getTask(taskName).getType()).execute(executableTask, parms);
+		HAPTaskReferenceCache cache = new HAPTaskReferenceCache();
+		HAPData out = this.executeTask(executableTask, parms, cache);
 		
+		return out;
+	}
+	
+	public HAPData executeTask(HAPExecutableTask executableTask, Map<String, HAPData> parms, HAPTaskReferenceCache cache) {
+		HAPData out = m_taskExecutors.get(executableTask.getType()).execute(executableTask, parms, cache);
 		return out;
 	}
 

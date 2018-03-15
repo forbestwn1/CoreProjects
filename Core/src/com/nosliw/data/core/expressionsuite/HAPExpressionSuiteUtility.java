@@ -36,7 +36,7 @@ public class HAPExpressionSuiteUtility {
 		HAPOperandUtility.updateConstantData(out.getOperand(), contextConstants);
 		
 		if(HAPExpressionProcessConfigureUtil.isDoDiscovery(configure)){
-			out.discover(parentVariablesInfo, expectOutput);
+			out.discover(parentVariablesInfo, expectOutput, context);
 		}
 		
 		return out;

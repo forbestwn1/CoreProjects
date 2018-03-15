@@ -16,6 +16,12 @@ import com.nosliw.data.core.task.HAPExecutableTask;
 
 public class HAPProcessorTaskExpression implements HAPProcessorTask{
 
+	private HAPManagerTask m_managerTask;
+	
+	public HAPProcessorTaskExpression(HAPManagerTask managerTask) {
+		this.m_managerTask = managerTask;
+	}
+	
 	@Override
 	public HAPExecutableTask process(HAPDefinitionTask taskDefinition, String domain, Map<String, String> variableMap, 
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
@@ -51,7 +57,7 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 		//update constants according to constants in context and in task
 		HAPDefinitionStep[] stepDefs = taskDefExp.getSteps();
 		for(HAPDefinitionStep stepDef : stepDefs) {
-			HAPExecutableStep step = HAPManagerExpression.processStep(stepDef, contextConstants, context);
+			HAPExecutableStep step = HAPManagerTaskExpression.processStep(stepDef, contextConstants, context);
 			step.updateVariable(new HAPUpdateVariableDomain(out.getDomain()));
 			out.addStep(step);
 		}
@@ -116,7 +122,7 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 			if(referenceInfo!=null)		refVarMap = referenceInfo.getVariablesMap();
 		
 			//process reference task
-			HAPExecutableTask executable = HAPManagerTask.processTask(refedTaskDef, refDomain, HAPBasicUtility.reverseMapping(refVarMap), contextTaskDefinitions, contextConstants, context);
+			HAPExecutableTask executable = m_managerTask.processTask(refedTaskDef, refDomain, HAPBasicUtility.reverseMapping(refVarMap), contextTaskDefinitions, contextConstants, context);
 			out.addReferencedExecute(refName, executable);
 			
 		}

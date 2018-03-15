@@ -94,14 +94,13 @@ public class HAPOperandUtility {
 	static public Map<String, HAPVariableInfo> discover(
 			HAPOperand operand, 
 			Map<String, HAPVariableInfo> parentVariablesInfo, 
-			HAPDataTypeCriteria expectOutput) {
-
+			HAPDataTypeCriteria expectOutput,
+			HAPProcessContext context) {
 		//do discovery on operand
 		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		varsInfo.putAll(parentVariablesInfo);
 		
 		Map<String, HAPVariableInfo> oldVarsInfo;
-		HAPProcessContext context = new HAPProcessContext();
 		//Do discovery until local vars definition not change or fail 
 		do{
 			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
@@ -109,7 +108,6 @@ public class HAPOperandUtility {
 			context.clear();
 			operand.discover(varsInfo, expectOutput, context, HAPExpressionManager.dataTypeHelper);
 		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
-		
 		return varsInfo;
 	}
 

@@ -6,6 +6,8 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
@@ -24,6 +26,9 @@ public class HAPVariableInfo extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String STATUS = "status";
+
+	@HAPAttribute
+	public static String INFO = "info";
 	
 	//use stack to store all the change applied for criteria
 	private List<HAPDataTypeCriteria> m_criteriaStack = new ArrayList<HAPDataTypeCriteria>();
@@ -33,8 +38,11 @@ public class HAPVariableInfo extends HAPSerializableImp{
 	//close : the criteria is close to change
 	private String m_status;
 
+	private HAPInfo m_info;
+	
 	public HAPVariableInfo(){
 		this(null);
+		this.m_info = new HAPInfoImpSimple();
 	}	
 	
 	public HAPVariableInfo(HAPDataTypeCriteria criteria, String status){
@@ -52,13 +60,13 @@ public class HAPVariableInfo extends HAPSerializableImp{
 	
 	public void setStatus(String status){  this.m_status = status;   }
 	
-	public HAPDataTypeCriteria getCriteria(){
-		return m_criteriaStack.get(this.m_criteriaStack.size()-1);
-	}
+	public HAPDataTypeCriteria getCriteria(){		return m_criteriaStack.get(this.m_criteriaStack.size()-1);	}
 	
-	public void setCriteria(HAPDataTypeCriteria criteria){
-		this.m_criteriaStack.add(criteria);
-	}
+	public void setCriteria(HAPDataTypeCriteria criteria){		this.m_criteriaStack.add(criteria);	}
+	
+	public String getInfoValue(String name) {   return (String)this.m_info.getValue(name);   }
+	
+	public void setInfoValue(String name, String value) {  this.m_info.setValue(name, value);    }
 	
 	@Override
 	public boolean equals(Object obj){

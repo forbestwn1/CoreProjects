@@ -2,6 +2,7 @@ package com.nosliw.data.core.task;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -10,6 +11,8 @@ import com.nosliw.data.core.runtime.HAPResourceId;
 
 public interface HAPExecutable {
 
+	String getType();
+	
 	//get output criteria
 	HAPDataTypeCriteria getOutput();
 	
@@ -24,5 +27,9 @@ public interface HAPExecutable {
 
 	//resource dependency 
 	List<HAPResourceId> getResourceDependency();
+
+	Set<String> getReferences();
+	
+	Set<String> getVariables();
 	
 }
