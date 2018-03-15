@@ -14,8 +14,8 @@ import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
@@ -108,7 +108,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	public void setValue(Object value){  this.m_value = value;   }
 	
 	//process all expression definitions in script expression
-	public void processExpressions(HAPUIResourceExpressionContext expressionContext, Map<String, String> context){
+	public void processExpressions(HAPUIResourceExpressionContext expressionContext, Map<String, String> configure){
 		//preprocess attributes operand in expressions
 		for(HAPDefinitionExpression expDef : this.getExpressionDefinitions()){
 			HAPUIResourceExpressionUtility.processAttributeOperandInExpression(expDef, expressionContext.getVariables());
@@ -118,7 +118,8 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		for(int i=0; i<this.m_elements.size(); i++) {
 			Object element = this.m_elements.get(i);
 			if(element instanceof HAPDefinitionExpression){
-				m_expressions.put(i+"", this.m_expressionManager.compileExpression(null, (HAPDefinitionExpression)element, expressionContext.getExpressionDefinitionSuite(), null, context));
+				HAPProcessContext context = new HAPProcessContext(); 
+				m_expressions.put(i+"", this.m_expressionManager.compileExpression(null, (HAPDefinitionExpression)element, expressionContext.getExpressionDefinitionSuite(), null, configure, context));
 			}
 		}
 	}

@@ -50,8 +50,8 @@ public class HAPManagerTaskExpression {
 		return step;
 	}
 	
-	public static HAPExecutableStep processStep(HAPDefinitionStep stepDef, Map<String, HAPData> constants, HAPProcessContext context) {
-		return m_stepProcessors.get(stepDef.getType()).process(stepDef, constants, context);
+	public static HAPExecutableStep processStep(HAPDefinitionStep stepDef, int index, Map<String, HAPData> constants, HAPProcessContext context) {
+		return m_stepProcessors.get(stepDef.getType()).process(stepDef, index, stepDef.getName(), constants, context);
 	}
 	
 }

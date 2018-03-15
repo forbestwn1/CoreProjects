@@ -12,7 +12,9 @@ import com.nosliw.data.core.task.expression.HAPReferenceInfo;
  * 		reference : the name of expression
  * 		variableMap: the mapping from variable in parent expression to variable in referenced expression 
  */
-public class HAPReferenceInfoImp extends HAPStringableValueEntity implements HAPReferenceInfo{
+public class HAPReferenceInfoImp{ 
+/*
+extends HAPStringableValueEntity implements HAPReferenceInfo{
 
 	public static String _VALUEINFO_NAME;
 	
@@ -31,4 +33,5 @@ public class HAPReferenceInfoImp extends HAPStringableValueEntity implements HAP
 			mapValue.updateChild(fromVar, new HAPStringableValueAtomic(variablesMap.get(fromVar)));
 		}
 	}
+	*/
 }

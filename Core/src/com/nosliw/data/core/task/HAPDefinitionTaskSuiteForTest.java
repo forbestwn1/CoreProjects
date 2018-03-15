@@ -11,16 +11,24 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPDataWrapper;
 
 public class HAPDefinitionTaskSuiteForTest extends HAPDefinitionTaskSuite{
 
 	@HAPAttribute
 	public static String VARIABLESDATA = "variablesData";
+
+	@HAPAttribute
+	public static String RESULT = "result";
+
+	private HAPDataWrapper m_result;
 	
 	private Map<String, HAPData> m_variableData;
 	
 	public Map<String, HAPData> getVariableData(){	return this.m_variableData;	}
 
+	public HAPDataWrapper getResult() {   return this.m_result;   }
+	
 	public HAPDefinitionTaskSuiteForTest(){
 		this.m_variableData = new LinkedHashMap<String, HAPData>();
 	}

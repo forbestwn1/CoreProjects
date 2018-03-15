@@ -13,7 +13,9 @@ import com.nosliw.data.core.task.HAPDefinitionTaskSuiteForTest;
 import com.nosliw.data.core.task.expression.HAPExpressionTaskUtility;
 import com.nosliw.data.core.task.expression.HAPReferenceInfo;
 
-public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity implements HAPDefinitionTaskSuiteForTest {
+public class HAPExpressionDefinitionSuiteImp{ 
+/*
+extends HAPStringableValueEntity implements HAPDefinitionTaskSuiteForTest {
 
 	public static String _VALUEINFO_NAME;
 
@@ -123,5 +125,5 @@ public class HAPExpressionDefinitionSuiteImp extends HAPStringableValueEntity im
 		this.getAllTaskDefinitions().putAll(suite.getAllTaskDefinitions());
 		this.getVariableData().putAll(suite.getVariableData());
 	}
-
+*/
 }

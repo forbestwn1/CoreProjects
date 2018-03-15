@@ -86,7 +86,7 @@ public class HAPExpressionTaskUtility {
 //		return resourceMan.discoverResources(new ArrayList<HAPResourceId>(resourceIds));
 //	}
 
-	
+/*	
 	static public List<HAPResourceId> discoverResources1(HAPExpression expression){
 		Set<HAPResourceId> result = new LinkedHashSet<HAPResourceId>();
 		//get converter resource id from var converter in expression 
@@ -132,4 +132,5 @@ public class HAPExpressionTaskUtility {
 		});
 		return new ArrayList(result);
 	}	
+*/	
 }

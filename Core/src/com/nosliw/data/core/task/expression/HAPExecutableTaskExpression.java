@@ -170,7 +170,7 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 		Set<HAPResourceId> out = new HashSet<HAPResourceId>();
 		//resource for steps
 		for(HAPExecutableStep step : this.m_steps) {
-			out.addAll(step.discoverResources());
+			out.addAll(step.getResourceDependency());
 		}
 		//resources from task definition
 		Set<HAPResourceDependent> required = this.m_taskDefinition.getRequiredResources();

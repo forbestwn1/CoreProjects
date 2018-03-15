@@ -1,0 +1,96 @@
+package com.nosliw.test.task;
+
+import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataWrapper;
+import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
+import com.nosliw.data.core.task.HAPDefinitionTaskSuiteForTest;
+import com.nosliw.data.core.task.HAPTaskDefinitionSuiteImporter;
+
+public class HAPTaskMain {
+
+	public static void main(String[] args) {
+		//module init
+		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
+		
+		HAPTaskDefinitionSuiteImporter.importTaskDefinitionSuiteFromFolder(HAPFileUtility.getClassFolderName(HAPTaskMain.class), runtimeEnvironment.getTaskManager());
+		
+		executeSuites(new String[]{
+//				"expression0",
+				"expression1",
+//				"expression10",
+//				"expression2",
+//				"expression3",
+//				"expression4",
+//				"expression5",
+//				"expression6",
+
+//				"expression7",
+//				"expression71",
+
+//				"expression72",
+//				"expression73",
+
+//				"expression8",
+				
+//				"expression9",
+			}, runtimeEnvironment);
+		
+//		finally{
+//			//shut down runtime
+//			runtime.close();
+//		}
+	}
+
+	private static void processResult(HAPDefinitionTaskSuiteForTest suite, HAPServiceData resultServiceData){
+		boolean success = true;
+		String resultStr = "";
+		String expecectResultStr = "";
+		String suiteName = suite.getName();
+		if(resultServiceData.isSuccess()){
+			Object resultObj = resultServiceData.getData();
+			HAPDataWrapper exprectResult = suite.getResult();
+			HAPDataWrapper result = new HAPDataWrapper();
+			result.buildObject(resultObj, HAPSerializationFormat.JSON);
+			resultStr =  result + "";
+			expecectResultStr = exprectResult +"";
+			if(result.equals(exprectResult))	success = true;
+			else		success = false;
+		}
+		else{
+//			resultStr =  resultServiceData.getCode() + "";
+//			expecectResultStr = suite.getErrorCode() +"";
+//			if((resultServiceData.getCode()+"").equals(suite.getErrorCode()))  success = true;
+//			else success = false;
+		}
+		
+		System.out.println();
+		if(success){
+			System.out.println("***************************** Test "+ suite.getName() +"*****************************");
+			System.out.println("******Result : ");
+			System.out.println(resultStr);
+			System.out.println("*****************************"+ "" +"*****************************");
+			System.out.println();
+		}
+		else{
+			System.err.println("***************************** Test "+ suite.getName() +"*****************************");
+			System.err.println("******Result : ");
+			System.err.println(resultStr);
+			System.err.println("******Expect Result : ");
+			System.err.println(expecectResultStr);
+			System.err.println("*****************************"+ "" +"*****************************");
+		}
+		System.out.println();
+	}
+	
+	private static void executeSuites(String[] suites, HAPRuntimeEnvironmentImpRhino runtimeEnvironment){
+		for(String suiteName : suites){
+			HAPDefinitionTaskSuiteForTest suite = (HAPDefinitionTaskSuiteForTest)runtimeEnvironment.getTaskManager().getTaskDefinitionSuite(suiteName);
+			HAPData out = runtimeEnvironment.getTaskManager().executeTask("name", suite, suite.getVariableData());
+			processResult(suite, HAPServiceData.createSuccessData(out));
+		}
+	}
+
+}

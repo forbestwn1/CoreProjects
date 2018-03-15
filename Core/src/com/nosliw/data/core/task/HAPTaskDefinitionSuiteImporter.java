@@ -1,4 +1,4 @@
-package com.nosliw.data.core.task.expression;
+package com.nosliw.data.core.task;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,11 +24,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
-import com.nosliw.data.core.task.HAPDefinitionTaskSuiteForTest;
-import com.nosliw.data.core.task.HAPManagerTask;
 
-public class HAPExpressionTaskImporter {
+public class HAPTaskDefinitionSuiteImporter {
 
 	static public List<HAPDefinitionTaskSuite> importTaskDefinitionSuiteFromFolder(String folder, HAPManagerTask expressionTaskMan){
 		List<HAPDefinitionTaskSuite> suites = readTaskDefinitionSuiteFromFolder(folder);
@@ -53,7 +50,7 @@ public class HAPExpressionTaskImporter {
 			if(file.getName().endsWith(".expression")){
 				try {
 					InputStream inputStream = new FileInputStream(file);
-					HAPDefinitionTaskSuite taskDefinitionSuite = importExpressionDefinitionSuiteFromFile(inputStream);
+					HAPDefinitionTaskSuite taskDefinitionSuite = importTaskDefinitionSuiteFromFile(inputStream);
 			         out.add(taskDefinitionSuite);
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
@@ -73,7 +70,7 @@ public class HAPExpressionTaskImporter {
 		            @Override
 		            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 		            	if(file.getFileName().toString().endsWith(".expression")){
-		            		HAPDefinitionTaskSuite taskDefinitionSuite = importExpressionDefinitionSuiteFromFile(Files.newInputStream(file)); 
+		            		HAPDefinitionTaskSuite taskDefinitionSuite = importTaskDefinitionSuiteFromFile(Files.newInputStream(file)); 
 					         out.add(taskDefinitionSuite);
 		            	}
 		                return FileVisitResult.CONTINUE;
@@ -87,7 +84,7 @@ public class HAPExpressionTaskImporter {
 		return out;
 	}
 	
-	static private HAPDefinitionTaskSuite importExpressionDefinitionSuiteFromFile(InputStream inputStream){
+	static private HAPDefinitionTaskSuite importTaskDefinitionSuiteFromFile(InputStream inputStream){
 		HAPDefinitionTaskSuite suite = null;
 		try{
 			String content = HAPFileUtility.readFile(inputStream);

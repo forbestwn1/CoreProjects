@@ -10,6 +10,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayCriteriaOperation;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayExpressionDiscovery;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
+import com.nosliw.data.core.task.HAPManagerTask;
 
 @HAPEntityWithAttribute(baseName="RUNTIME")
 public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
@@ -28,6 +29,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 	private HAPResourceManagerRoot m_resourceManager;
 	
+	private HAPManagerTask m_taskManager;
+	
 	private HAPExpressionSuiteManager m_expressionSuiteManager;
 	
 	private HAPGatewayManager m_gatewayManager;
@@ -36,15 +39,17 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	public HAPRuntimeEnvironmentJS(){}
 	
-	public HAPRuntimeEnvironmentJS(HAPResourceManagerRoot resourceMan, 
+	public HAPRuntimeEnvironmentJS(HAPResourceManagerRoot resourceMan,
+									HAPManagerTask taskManager,
 									HAPExpressionSuiteManager expressionSuiteManager,
 								    HAPGatewayManager gatewayManager,
 								    HAPRuntime runtime){
 		super();
-		this.init(resourceMan, expressionSuiteManager, gatewayManager, runtime);
+		this.init(resourceMan, taskManager, expressionSuiteManager, gatewayManager, runtime);
 	}
 	
-	protected void init(HAPResourceManagerRoot resourceMan, 
+	protected void init(HAPResourceManagerRoot resourceMan,
+						HAPManagerTask taskManager,
 						HAPExpressionSuiteManager expressionSuiteManager,
 					    HAPGatewayManager gatewayManager,
 					    HAPRuntime runtime){ 
@@ -64,6 +69,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	@Override
 	public HAPResourceManagerRoot getResourceManager() {		return this.m_resourceManager;	}
+
+	@Override
+	public HAPManagerTask getTaskManager() {  return this.m_taskManager;  }
 
 	@Override
 	public HAPExpressionSuiteManager getExpressionSuiteManager(){  return this.m_expressionSuiteManager;  }

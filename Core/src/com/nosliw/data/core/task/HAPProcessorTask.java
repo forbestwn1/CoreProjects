@@ -14,6 +14,4 @@ public interface HAPProcessorTask {
 			HAPProcessContext context
 	);
 
-
-	
 }

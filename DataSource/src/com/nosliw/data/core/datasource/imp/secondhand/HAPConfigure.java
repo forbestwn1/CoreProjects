@@ -10,7 +10,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
-import com.nosliw.data.core.task.expression.HAPExpressionTaskImporter;
+import com.nosliw.data.core.task.HAPTaskDefinitionSuiteImporter;
 
 @HAPEntityWithAttribute
 public class HAPConfigure extends HAPSerializableImp{
@@ -57,7 +57,7 @@ public class HAPConfigure extends HAPSerializableImp{
 			}
 			
 			JSONObject expressionSuiteJson = (JSONObject)objJson.opt(EXPRESSIONSUITE);
-		    this.m_expressionSuite = HAPExpressionTaskImporter.importTaskDefinitionSuiteFromJSON(expressionSuiteJson); 
+		    this.m_expressionSuite = HAPTaskDefinitionSuiteImporter.importTaskDefinitionSuiteFromJSON(expressionSuiteJson); 
 		}
 		catch(Exception e){
 			e.printStackTrace();

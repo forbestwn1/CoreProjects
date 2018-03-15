@@ -12,6 +12,4 @@ public class HAPDefinitionOutput {
 	
 	public HAPDataTypeCriteria getCriteria(){   return this.m_criteria;    }
 	
-	
-	
 }

@@ -55,9 +55,9 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 	
 	private void processSteps(HAPExecutableTaskExpression out, HAPDefinitionTaskExpression taskDefExp, Map<String, HAPData> contextConstants, HAPProcessContext context) {
 		//update constants according to constants in context and in task
-		HAPDefinitionStep[] stepDefs = taskDefExp.getSteps();
-		for(HAPDefinitionStep stepDef : stepDefs) {
-			HAPExecutableStep step = HAPManagerTaskExpression.processStep(stepDef, contextConstants, context);
+		for(int i=0; i<taskDefExp.getSteps().length; i++) {
+			HAPDefinitionStep stepDef = taskDefExp.getSteps()[i];
+			HAPExecutableStep step = HAPManagerTaskExpression.processStep(stepDef, i, contextConstants, context);
 			step.updateVariable(new HAPUpdateVariableDomain(out.getDomain()));
 			out.addStep(step);
 		}

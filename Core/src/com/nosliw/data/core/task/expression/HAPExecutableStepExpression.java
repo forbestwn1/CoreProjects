@@ -5,12 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
-import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperandReference;
@@ -31,6 +28,8 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 	//Operand to represent the expression
 	private HAPOperandWrapper m_operand;
 	
+	Map<String, HAPVariableInfo> m_variablesInfo;
+	
 	//output variable
 	private String m_outputVariable;
 	
@@ -41,13 +40,31 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 		this.m_expressionDefinition = stepDef.clone();
 		this.m_outputVariable = stepDef.getOutputVariable();
 		this.m_exits = stepDef.isExit();
+		this.m_variablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
 	}
+	
+	@Override
+	public String getType() {  return this.m_expressionDefinition.getType(); }
+
+	@Override
+	public List<HAPResourceId> getResourceDependency() {		return this.m_operand.getOperand().getResources();	}
+
+	@Override
+	public Set<String> getReferences(){   return this.m_expressionDefinition.getReferenceNames();    }
+
+	@Override
+	public Set<String> getVariables() {  return this.m_variablesInfo.keySet();  }
+
+	@Override
+	public String getId() {  return null; }
+
+	@Override
+	public Map<String, HAPMatchers> getVariableMatchers() {		return null;	}
 	
 	public boolean isExit() {  return this.m_exits;   }
 	
 	public String getOutputVariable(){  return this.m_outputVariable;  }
 
-	public Set<String> getReferenceNames(){   return this.m_expressionDefinition.getReferenceNames();    }
 	
 	public HAPOperandWrapper getOperand() {	return this.m_operand;	}
 
@@ -85,6 +102,8 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 		}
 		variablesInfo.clear();
 		variablesInfo.putAll(varsInfo);
+		m_variablesInfo.clear();
+		m_variablesInfo.putAll(varsInfo);
 	}
 
 	@Override
@@ -113,36 +132,4 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 		});	
 	}
 
-	@Override
-	public List<HAPResourceId> discoverResources() {
-		return this.m_operand.getOperand().getResources();
-	}
-
-	@Override
-	public String getType() {  return this.m_expressionDefinition.getType(); }
-
-
-	@Override
-	public List<HAPResourceId> getResourceDependency() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set<String> getReferences() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set<String> getVariables() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getId() {  return null; }
-
-	@Override
-	public Map<String, HAPMatchers> getVariableMatchers() {		return null;	}
 }

@@ -1,6 +1,7 @@
 package com.nosliw.data.core.runtime;
 
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
+import com.nosliw.data.core.task.HAPManagerTask;
 
 /**
  * Runtime environment, 
@@ -13,6 +14,8 @@ import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 public interface HAPRuntimeEnvironment {
 
 	HAPExpressionSuiteManager getExpressionSuiteManager();
+
+	HAPManagerTask getTaskManager();
 	
 	HAPResourceManagerRoot getResourceManager();
 

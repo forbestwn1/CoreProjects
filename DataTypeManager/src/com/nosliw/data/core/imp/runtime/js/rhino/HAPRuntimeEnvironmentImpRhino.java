@@ -31,11 +31,13 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPExpressionManager.expressionParser = new HAPExpressionParserImp();
 		
 		HAPResourceManagerRoot resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
-		HAPExpressionSuiteManager expressionManager = new HAPExpressionSuiteManager(HAPExpressionManager.dataTypeHelper); 		
+		HAPExpressionSuiteManager expressionManager = new HAPExpressionSuiteManager(); 		
+		HAPManagerTask taskManager = new HAPManagerTask();
 		HAPRuntimeImpRhino runtime = new HAPRuntimeImpRhino(this); 
 		HAPGatewayManager gatewayManager = new HAPGatewayManager(); 
 
 		init(resourceMan,
+			taskManager,
 			expressionManager,
 			gatewayManager,
 			runtime

@@ -2,15 +2,13 @@ package com.nosliw.data.core.task;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPVariableInfo;
-import com.nosliw.data.core.task.expression.HAPExecutableTaskExpression;
 
 public class HAPManagerTask {
 	
@@ -28,6 +26,10 @@ public class HAPManagerTask {
 		this.init();
 	}
 
+	public HAPData executeTask(String taskName, String suite, Map<String, HAPData> parms) {
+		return this.executeTask(taskName, this.getTaskDefinitionSuite(suite), parms);
+	}
+	
 	public HAPData executeTask(String taskName, HAPDefinitionTaskSuite suite, Map<String, HAPData> parms) {
 		
 		//compile task
@@ -89,7 +91,15 @@ public class HAPManagerTask {
 	private String generateId() {	return ++this.m_idIndex+"";  }
 	
 	
+	public HAPDefinitionTaskSuite getTaskDefinitionSuite(String suiteName){		return this.m_taskDefinitionSuites.get(suiteName);	}
 	
+	public HAPDefinitionTask getTaskDefinition(String suite, String name) {		return this.getTaskDefinitionSuite(suite).getTask(name);	}
+
+	public Set<String> getTaskDefinitionSuites() {		return this.m_taskDefinitionSuites.keySet();	}
+	
+	public void addTaskDefinitionSuite(HAPDefinitionTaskSuite expressionDefinitionSuite){
+		this.m_taskDefinitionSuites.put(expressionDefinitionSuite.getName(), expressionDefinitionSuite);
+	}
 	
 	
 	
@@ -99,9 +109,6 @@ public class HAPManagerTask {
 	
 /*	
 	
-	public HAPDefinitionTaskSuite getTaskDefinitionSuite(String suiteName){		return this.m_taskDefinitionSuites.get(suiteName);	}
-	
-	public Set<String> getTaskDefinitionSuites() {		return this.m_taskDefinitionSuites.keySet();	}
 	
 	public void addTaskDefinitionSuite(HAPDefinitionTaskSuite expressionDefinitionSuite){
 		//parse expression in suite
@@ -126,7 +133,6 @@ public class HAPManagerTask {
 	
 /*	
 	
-	public HAPDefinitionTask getTaskDefinition(String suite, String name) {		return this.getTaskDefinitionSuite(suite).getTask(name);	}
 
 	public HAPDefinitionTask newExpressionDefinition(String expression, String name,
 			Map<String, HAPData> constants, Map<String, HAPDataTypeCriteria> variableCriterias) {

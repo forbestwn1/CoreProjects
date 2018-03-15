@@ -17,7 +17,6 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPMatchers;
-import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandTask;
@@ -31,7 +30,9 @@ import com.nosliw.data.core.task.expression.HAPReferenceInfo;
 /**
  * Parsed expression 
  */
-public class HAPExpressionImp extends HAPSerializableImp implements HAPExpression{
+public class HAPExpressionImp{
+/*
+extends HAPSerializableImp implements HAPExpression{
 
 	//unique in system
 	private String m_id;
@@ -145,13 +146,13 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		return out;
 	}
 	
-	/**
-	 * Rename variables, including
-	 *  	variable in variable operand
-	 *  	variable in variable criteria in definition
-	 *  	variable in variable info
-	 *  	variable in variable mapping in reference
-	 */
+	
+//	 * Rename variables, including
+//	 *  	variable in variable operand
+//	 *  	variable in variable criteria in definition
+//	 *  	variable in variable info
+//	 *  	variable in variable mapping in reference
+	 
 	public void updateVariablesName(Map<String, String> varChanges){
 		//update variable operand
 		HAPOperandUtility.processAllOperand(this.getOperand(), varChanges, new HAPOperandTask(){
@@ -299,4 +300,5 @@ public class HAPExpressionImp extends HAPSerializableImp implements HAPExpressio
 		jsonMap.put(VARIABLESMATCHERS, HAPJsonUtility.buildJson(this.m_varsMatchers, HAPSerializationFormat.JSON));
 		jsonMap.put(REFERENCES, HAPJsonUtility.buildJson(this.m_references, HAPSerializationFormat.JSON));
 	}
+	*/
 }

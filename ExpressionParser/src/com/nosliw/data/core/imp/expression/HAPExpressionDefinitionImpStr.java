@@ -15,7 +15,9 @@ import com.nosliw.data.core.task.expression.HAPReferenceInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 
-public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity implements HAPDefinitionTask{
+public class HAPExpressionDefinitionImpStr{ 
+/*
+extends HAPStringableValueEntity implements HAPDefinitionTask{
 
 	public static String _VALUEINFO_NAME;
 	
@@ -87,5 +89,5 @@ public class HAPExpressionDefinitionImpStr extends HAPStringableValueEntity impl
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VARIABLECRITERIAS, HAPJsonUtility.buildJson(m_variabesWithSolidCriteria, HAPSerializationFormat.JSON));
 	}
-
+*/
 }

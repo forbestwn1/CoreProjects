@@ -12,11 +12,13 @@ import com.nosliw.data.core.HAPData;
 
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.expression.HAPReferenceInfo;
-import com.nosliw.data.core.task.expression.HAPTaskDefinition;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 
-public class HAPTaskDefinitionSimple extends HAPSerializableImp implements HAPDefinitionTask{
+public class HAPTaskDefinitionSimple{ 
+
+/*	
+extends HAPSerializableImp implements HAPDefinitionTask{
 
 	private String m_name; 
 	
@@ -117,5 +119,5 @@ public class HAPTaskDefinitionSimple extends HAPSerializableImp implements HAPDe
 		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_constants, HAPSerializationFormat.JSON));
 		jsonMap.put(REFERENCES, HAPJsonUtility.buildJson(this.m_references, HAPSerializationFormat.JSON));
 	}
-
+*/
 }

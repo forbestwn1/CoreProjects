@@ -52,15 +52,18 @@ public class HAPDefinitionComponent extends HAPSerializableImp {
 	}
 
 	public String getName(){  return this.m_name;  }
+	public void setName(String name) {    this.m_name = name;   }
 	
 	public String getDescription() {    return this.m_description;  }
 	
 	//get global constants in suite. these constants is visible to all expression definition in suite
 	public Map<String, HAPData> getConstants(){  return this.m_constants;  }
-
+	public void addConstant(String name, HAPData constant) {   this.m_constants.put(name, constant);   }
+	
 	//variables definition
 	public Map<String, HAPVariableInfo> getVariables(){  return this.m_variables;  }
-	public void setVariables(Map<String, HAPVariableInfo> varCriterias){  this.m_variables = varCriterias;  }
+	public void setVariables(Map<String, HAPVariableInfo> variableInfo){  this.m_variables = variableInfo;  }
+	public void addVariable(String name, HAPVariableInfo variableInfo) {  this.m_variables.put(name, variableInfo);   }
 
 	public List<HAPDefinitionComponent> getChildren(){   return this.m_children;   }
 	public void addChild(HAPDefinitionComponent child) {   this.m_children.add(child);   }
