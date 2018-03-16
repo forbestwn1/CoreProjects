@@ -50,10 +50,8 @@ public class HAPTaskMain {
 		String expecectResultStr = "";
 		String suiteName = suite.getName();
 		if(resultServiceData.isSuccess()){
-			Object resultObj = resultServiceData.getData();
+			HAPDataWrapper result = (HAPDataWrapper)resultServiceData.getData();
 			HAPDataWrapper exprectResult = suite.getResult();
-			HAPDataWrapper result = new HAPDataWrapper();
-			result.buildObject(resultObj, HAPSerializationFormat.JSON);
 			resultStr =  result + "";
 			expecectResultStr = exprectResult +"";
 			if(result.equals(exprectResult))	success = true;

@@ -10,7 +10,6 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPProcessContext;
-import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
@@ -23,16 +22,7 @@ import com.nosliw.data.core.runtime.HAPExecuteExpression;
 public class HAPExecuteExpressionSuite extends HAPSerializableImp implements HAPExecuteExpression{
 
 	@HAPAttribute
-	public static String ID = "id";
-	
-	@HAPAttribute
-	public static String OPERAND = "operand";
-	
-	@HAPAttribute
 	public static String VARIABLEINFOS = "variableInfos";
-	
-	@HAPAttribute
-	public static String VARIABLESMATCHERS = "variablesMatchers";
 	
 	private String m_id;
 	

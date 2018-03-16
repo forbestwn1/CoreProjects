@@ -110,7 +110,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		//execute task
 		HAPRuntimeTask task = new HAPRuntimeTaskExecuteExpressionRhino(expression, parmsData, null);
 		HAPServiceData serviceData = this.executeTaskSync(task);
-		return this.conervertDataResult(serviceData);
+		return serviceData;
 	}
 
 	@Override
@@ -119,18 +119,9 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		//execute task
 		HAPRuntimeTask task = new HAPRuntimeTaskExecuteDataOperationRhino(dataTypeId, operation, parmsData);
 		HAPServiceData serviceData = this.executeTaskSync(task);
-		return this.conervertDataResult(serviceData);
-	}
-
-	private HAPServiceData conervertDataResult(HAPServiceData serviceData){
-		if(serviceData.isSuccess()){
-			JSONObject dataJson = (JSONObject)serviceData.getData();
-			HAPData data = HAPDataUtility.buildDataWrapperFromJson(dataJson);
-			serviceData.setData(data);
-		}
 		return serviceData;
 	}
-	
+
 	@Override
 	public void executeTask(HAPRuntimeTask task){
 		//prepare expression id

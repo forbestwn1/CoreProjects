@@ -11,6 +11,9 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 public interface HAPExecuteExpression {
 
 	@HAPAttribute
+	public static String ID = "id";
+	
+	@HAPAttribute
 	public static String OPERAND = "operand";
 	
 	@HAPAttribute

@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -24,6 +27,8 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 
 	//Operand to represent the expression
 	private HAPOperandWrapper m_operand;
+	
+	private Map<String, HAPMatchers> m_varsMatchers;
 	
 	Map<String, HAPVariableInfo> m_variablesInfo;
 	
@@ -126,6 +131,19 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 				return true;
 			}
 		});	
+	}
+
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		return true;
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ID, this.getId());
+		jsonMap.put(OPERAND, HAPSerializeManager.getInstance().toStringValue(this.m_operand, HAPSerializationFormat.JSON));
+		jsonMap.put(VARIABLESMATCHERS, HAPJsonUtility.buildJson(this.m_varsMatchers, HAPSerializationFormat.JSON));
 	}
 
 }

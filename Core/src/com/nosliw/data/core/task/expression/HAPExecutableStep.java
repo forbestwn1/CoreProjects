@@ -2,11 +2,12 @@ package com.nosliw.data.core.task.expression;
 
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.task.HAPExecutable;
 import com.nosliw.data.core.task.HAPExecutableTask;
 
-public abstract class HAPExecutableStep  implements HAPExecutable{
+public abstract class HAPExecutableStep extends HAPSerializableImp implements HAPExecutable{
 
 	private int m_index;
 	

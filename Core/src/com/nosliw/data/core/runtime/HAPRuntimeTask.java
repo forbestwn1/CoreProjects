@@ -3,7 +3,11 @@ package com.nosliw.data.core.runtime;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataUtility;
 
 public abstract class HAPRuntimeTask {
 
@@ -34,9 +38,20 @@ public abstract class HAPRuntimeTask {
 	public void setResult(HAPServiceData result){ this.m_result = result;  }
 	public HAPServiceData getResult(){  return this.m_result;   }
 
+	//data type for result
+	public Class getResultDataType() {return null;}
+	
 	//success
-	public void finish(HAPServiceData data){
-		this.setResult(data);
+	public void finish(HAPServiceData serviceData){
+		if(serviceData.isSuccess()){
+			if(this.getResultDataType()==HAPData.class) {
+				//if result is data, then convert json object to data
+				JSONObject dataJson = (JSONObject)serviceData.getData();
+				HAPData data = HAPDataUtility.buildDataWrapperFromJson(dataJson);
+				serviceData.setData(data);
+			}
+		}
+		this.setResult(serviceData);
 		this.doFinish();
 		this.trigueSuccessEvent();
 	}

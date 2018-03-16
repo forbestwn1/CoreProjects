@@ -3,6 +3,7 @@ package com.nosliw.data.core.runtime.js.rhino;
 import java.util.List;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperationParm;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
@@ -20,6 +21,9 @@ public class HAPRuntimeTaskExecuteDataOperationRhino extends HAPRuntimeTaskExecu
 		super(dataTypeId, operation, parms);
 	}
 
+	@Override
+	public Class getResultDataType() {	return HAPData.class;	}
+	
 	@Override
 	public HAPRuntimeTask execute(HAPRuntime runtime){
 		try{

@@ -51,6 +51,15 @@ public class HAPDefinitionTaskSuiteForTest extends HAPDefinitionTaskSuite{
 					}
 				}
 			}
+
+			{
+				JSONObject resultDataObjJson = jsonObj.optJSONObject(RESULT);
+				if(resultDataObjJson!=null){
+					this.m_result = HAPDataUtility.buildDataWrapperFromJson(resultDataObjJson);
+				}
+			}
+
+			
 			return true;  
 		}
 		catch(Exception e){
@@ -63,6 +72,7 @@ public class HAPDefinitionTaskSuiteForTest extends HAPDefinitionTaskSuite{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VARIABLESDATA, HAPJsonUtility.buildJson(this.m_variableData, HAPSerializationFormat.JSON));
+		jsonMap.put(RESULT, HAPJsonUtility.buildJson(this.m_result, HAPSerializationFormat.JSON));
 	}
 	
 }
