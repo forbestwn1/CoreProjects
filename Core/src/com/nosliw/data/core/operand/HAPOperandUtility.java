@@ -76,6 +76,10 @@ public class HAPOperandUtility {
 			HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
 				@Override
 				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+					if(operand==null) {
+						int kkkk = 555;
+						kkkk++;
+					}
 					String opType = operand.getOperand().getType();
 					if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
 						HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();

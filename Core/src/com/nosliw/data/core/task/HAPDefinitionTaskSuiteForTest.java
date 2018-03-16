@@ -29,7 +29,8 @@ public class HAPDefinitionTaskSuiteForTest extends HAPDefinitionTaskSuite{
 
 	public HAPDataWrapper getResult() {   return this.m_result;   }
 	
-	public HAPDefinitionTaskSuiteForTest(){
+	public HAPDefinitionTaskSuiteForTest(HAPManagerTask taskManager){
+		super(taskManager);
 		this.m_variableData = new LinkedHashMap<String, HAPData>();
 	}
 	

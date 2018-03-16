@@ -307,7 +307,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 			
 			ContextFactory factory = ContextFactory.getGlobal(); 
 
-			this.debug(factory);
+//			this.debug(factory);
 			
 		    Context context = factory.enterContext();
 			

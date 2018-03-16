@@ -49,6 +49,8 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 	public HAPExecutableTaskExpression(HAPDefinitionTaskExpression taskDef, String domain) {
 		this.m_taskDefinition = taskDef;
 		this.m_domain = domain;
+		this.m_steps = new ArrayList<HAPExecutableStep>();
+		this.m_stepsByName = new LinkedHashMap<String, HAPExecutableStep>();
 		this.m_varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		this.m_varsInfo.putAll(taskDef.getVariables());
 	}

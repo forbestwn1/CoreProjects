@@ -37,10 +37,10 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPExpressionManager.expressionParser = new HAPExpressionParserImp();
 		
 		HAPResourceManagerRoot resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
-		HAPExpressionSuiteManager expressionManager = new HAPExpressionSuiteManager(); 		
-		HAPManagerTask taskManager = new HAPManagerTask();
 		HAPRuntimeImpRhino runtime = new HAPRuntimeImpRhino(this); 
 		HAPGatewayManager gatewayManager = new HAPGatewayManager(); 
+		HAPExpressionSuiteManager expressionManager = new HAPExpressionSuiteManager(); 		
+		HAPManagerTask taskManager = new HAPManagerTask(runtime);
 		
 		init(resourceMan,
 			taskManager,

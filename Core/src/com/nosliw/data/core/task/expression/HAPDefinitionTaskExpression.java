@@ -16,6 +16,8 @@ import com.nosliw.data.core.task.HAPDefinitionTask;
 
 public class HAPDefinitionTaskExpression extends HAPDefinitionTask{
 
+	private HAPManagerTaskExpression m_expressionTaskManager;
+	
 	@HAPAttribute
 	public static String STEPS = "steps";
 
@@ -25,8 +27,9 @@ public class HAPDefinitionTaskExpression extends HAPDefinitionTask{
 
 	private Map<String, HAPReferenceInfo> m_referencesInfo;
 	
-	public HAPDefinitionTaskExpression(){
+	public HAPDefinitionTaskExpression(HAPManagerTaskExpression expressionTaskManager){
 		this.m_referencesInfo = new LinkedHashMap<String, HAPReferenceInfo>();
+		this.m_expressionTaskManager = expressionTaskManager;
 	}
 	
 	@Override
@@ -75,7 +78,7 @@ public class HAPDefinitionTaskExpression extends HAPDefinitionTask{
 			{
 				JSONArray stepsArray = jsonObj.optJSONArray(STEPS);
 				for(int i=0; i<stepsArray.length(); i++){
-					this.addChild(HAPManagerTaskExpression.buildExpressionStep(stepsArray.get(i)));
+					this.addChild(HAPExpressionTaskUtility.buildExpressionStep(stepsArray.get(i), this.m_expressionTaskManager));
 				}
 			}
 			

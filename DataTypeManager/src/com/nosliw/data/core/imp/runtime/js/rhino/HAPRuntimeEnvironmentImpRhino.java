@@ -31,10 +31,10 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPExpressionManager.expressionParser = new HAPExpressionParserImp();
 		
 		HAPResourceManagerRoot resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
-		HAPExpressionSuiteManager expressionManager = new HAPExpressionSuiteManager(); 		
-		HAPManagerTask taskManager = new HAPManagerTask();
 		HAPRuntimeImpRhino runtime = new HAPRuntimeImpRhino(this); 
 		HAPGatewayManager gatewayManager = new HAPGatewayManager(); 
+		HAPExpressionSuiteManager expressionManager = new HAPExpressionSuiteManager(); 		
+		HAPManagerTask taskManager = new HAPManagerTask(runtime);
 
 		init(resourceMan,
 			taskManager,
@@ -44,7 +44,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		);
 
 		//data source gateway
-		this.getGatewayManager().registerGateway(HAPDataSourceManager.GATEWAY_DATASOURCE, new HAPGatewayDataSource(new HAPDataSourceManagerImp(new HAPManagerTask(), this.getRuntime())));
+//		this.getGatewayManager().registerGateway(HAPDataSourceManager.GATEWAY_DATASOURCE, new HAPGatewayDataSource(new HAPDataSourceManagerImp(new HAPManagerTask(), this.getRuntime())));
 	}
 
 }

@@ -5,16 +5,19 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.task.expression.HAPManagerTaskExpression;
 
 public class HAPManagerTask {
 	
-	private static Map<String, HAPProcessorTask> m_taskProcessors;
-
-	private static Map<String, HAPExecutorTask> m_taskExecutors;
+	private HAPRuntime m_runtime;
+	
+	private static Map<String, HAPManagerTaskSpecific> m_taskManagers = new LinkedHashMap<String, HAPManagerTaskSpecific>();
 	
 	//all expression definition suites
 	private Map<String, HAPDefinitionTaskSuite> m_taskDefinitionSuites;
@@ -22,10 +25,21 @@ public class HAPManagerTask {
 	//used to generate id
 	private int m_idIndex;
 	
-	public HAPManagerTask(){
+	public HAPManagerTask(HAPRuntime runtime){
+		this.m_runtime = runtime;
 		this.init();
 	}
 
+	private void init(){
+		HAPValueInfoManager.getInstance().importFromClassFolder(this.getClass());
+		
+		this.m_taskDefinitionSuites = new LinkedHashMap<String, HAPDefinitionTaskSuite>();
+		this.m_idIndex = 1;
+		
+		this.registerTaskManager(HAPConstant.DATATASK_TYPE_EXPRESSION, new HAPManagerTaskExpression(this, this.m_runtime));
+	}
+
+	
 	public HAPData executeTask(String taskName, String suite, Map<String, HAPData> parms) {
 		return this.executeTask(taskName, this.getTaskDefinitionSuite(suite), parms);
 	}
@@ -46,7 +60,7 @@ public class HAPManagerTask {
 	}
 	
 	public HAPData executeTask(HAPExecutableTask executableTask, Map<String, HAPData> parms, HAPTaskReferenceCache cache) {
-		HAPData out = m_taskExecutors.get(executableTask.getType()).execute(executableTask, parms, cache);
+		HAPData out = m_taskManagers.get(executableTask.getType()).getTaskExecutor().execute(executableTask, parms, cache);
 		return out;
 	}
 
@@ -72,22 +86,15 @@ public class HAPManagerTask {
 	public HAPExecutableTask processTask(HAPDefinitionTask taskDefinition, String domain, Map<String, String> variableMap,
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
 			HAPProcessContext context) {
-		HAPProcessorTask taskProcessor = m_taskProcessors.get(taskDefinition.getType());
+		HAPProcessorTask taskProcessor = m_taskManagers.get(taskDefinition.getType()).getTaskProcessor();
 		HAPExecutableTask out = taskProcessor.process(taskDefinition, domain, variableMap, contextTaskDefinitions, contextConstants, context);
 		return out;
 	}
 	
 	
-	public static void registerTaskProcessor(String type, HAPProcessorTask processor) {		m_taskProcessors.put(type, processor);	}
-	public static void registerTaskExecutor(String type, HAPExecutorTask executor) {		m_taskExecutors.put(type, executor);	}
+	public void registerTaskManager(String type, HAPManagerTaskSpecific manager) {		m_taskManagers.put(type, manager);	}
+	public HAPManagerTaskSpecific getTaskManager(String type) {  return this.m_taskManagers.get(type);  }  
 	
-	private void init(){
-		HAPValueInfoManager.getInstance().importFromClassFolder(this.getClass());
-		
-		this.m_taskDefinitionSuites = new LinkedHashMap<String, HAPDefinitionTaskSuite>();
-		this.m_idIndex = 1;
-	}
-
 	private String generateId() {	return ++this.m_idIndex+"";  }
 	
 	

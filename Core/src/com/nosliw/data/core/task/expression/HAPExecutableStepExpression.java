@@ -22,13 +22,12 @@ import com.nosliw.data.core.task.HAPUpdateVariable;
 
 public class HAPExecutableStepExpression extends HAPExecutableStep implements HAPExecuteExpression{
 
-	// original expression definition
-	private HAPDefinitionStepExpression m_expressionDefinition;
-
 	//Operand to represent the expression
 	private HAPOperandWrapper m_operand;
 	
 	Map<String, HAPVariableInfo> m_variablesInfo;
+	
+	Set<String> m_references;
 	
 	//output variable
 	private String m_outputVariable;
@@ -37,20 +36,21 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 	
 	public HAPExecutableStepExpression(HAPDefinitionStepExpression stepDef, int index, String name) {
 		super(index, name);
-		this.m_expressionDefinition = stepDef.clone();
+		this.m_operand = stepDef.getOperand().cloneWrapper();
 		this.m_outputVariable = stepDef.getOutputVariable();
 		this.m_exits = stepDef.isExit();
 		this.m_variablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		this.m_references = stepDef.getReferenceNames();
 	}
 	
 	@Override
-	public String getType() {  return this.m_expressionDefinition.getType(); }
+	public String getType(){   return HAPConstant.DATATASK_TYPE_EXPRESSION;   };
 
 	@Override
 	public List<HAPResourceId> getResourceDependency() {		return this.m_operand.getOperand().getResources();	}
 
 	@Override
-	public Set<String> getReferences(){   return this.m_expressionDefinition.getReferenceNames();    }
+	public Set<String> getReferences(){   return this.m_references;    }
 
 	@Override
 	public Set<String> getVariables() {  return this.m_variablesInfo.keySet();  }
@@ -69,7 +69,7 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 	public HAPOperandWrapper getOperand() {	return this.m_operand;	}
 
 	public HAPDataTypeCriteria getExitDataTypeCriteria() {
-		if(this.m_expressionDefinition.isExit()) return this.getOutput();
+		if(this.m_exits) return this.getOutput();
 		return null;
 	}
 
@@ -108,10 +108,6 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 
 	@Override
 	public HAPDataTypeCriteria getOutput() {	return this.m_operand.getOperand().getOutputCriteria();	}
-
-	public HAPExecutableStepExpression clone() {
-		return null;
-	}
 
 	@Override
 	public void updateVariable(HAPUpdateVariable updateVar) {

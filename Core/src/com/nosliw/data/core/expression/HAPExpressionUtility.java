@@ -45,13 +45,15 @@ public class HAPExpressionUtility {
 	
 	  public static Map<String, HAPVariableInfo> buildVariablesInfoMapFromJson(JSONObject jsonObj) {
 		  Map<String, HAPVariableInfo> out = new LinkedHashMap<String, HAPVariableInfo>(); 
-			Iterator<String> its = jsonObj.keys();
-			while(its.hasNext()){
-				String name = its.next();
-				String criteriaStr = jsonObj.optString(name);
-				HAPDataTypeCriteria criteria = HAPCriteriaUtility.parseCriteria(criteriaStr);
-				out.put(name, new HAPVariableInfo(criteria));
-			}
+		  if(jsonObj!=null) {
+				Iterator<String> its = jsonObj.keys();
+				while(its.hasNext()){
+					String name = its.next();
+					String criteriaStr = jsonObj.optString(name);
+					HAPDataTypeCriteria criteria = HAPCriteriaUtility.parseCriteria(criteriaStr);
+					out.put(name, new HAPVariableInfo(criteria));
+				}
+		  }
 		  return out;
 	  }
 

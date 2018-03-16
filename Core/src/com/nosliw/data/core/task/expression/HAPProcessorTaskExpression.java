@@ -16,10 +16,13 @@ import com.nosliw.data.core.task.HAPExecutableTask;
 
 public class HAPProcessorTaskExpression implements HAPProcessorTask{
 
+	private HAPManagerTaskExpression m_expressionTaskManager;
+	
 	private HAPManagerTask m_managerTask;
 	
-	public HAPProcessorTaskExpression(HAPManagerTask managerTask) {
+	public HAPProcessorTaskExpression(HAPManagerTaskExpression expressionTaskManager, HAPManagerTask managerTask) {
 		this.m_managerTask = managerTask;
+		this.m_expressionTaskManager = expressionTaskManager;
 	}
 	
 	@Override
@@ -42,8 +45,10 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 		
 		//get updated variables map according to domain
 		Map<String, String> domainedVariableMap = new LinkedHashMap<String, String>();
-		for(String name : variableMap.keySet()) {
-			domainedVariableMap.put(HAPExpressionUtility.buildFullVariableName(out.getDomain(), name), variableMap.get(name));
+		if(variableMap!=null) {
+			for(String name : variableMap.keySet()) {
+				domainedVariableMap.put(HAPExpressionUtility.buildFullVariableName(out.getDomain(), name), variableMap.get(name));
+			}
 		}
 		//update variable in task
 		out.updateVariable(new HAPUpdateVariableMap(domainedVariableMap));
@@ -57,7 +62,7 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 		//update constants according to constants in context and in task
 		for(int i=0; i<taskDefExp.getSteps().length; i++) {
 			HAPDefinitionStep stepDef = taskDefExp.getSteps()[i];
-			HAPExecutableStep step = HAPManagerTaskExpression.processStep(stepDef, i, contextConstants, context);
+			HAPExecutableStep step = this.m_expressionTaskManager.processStep(stepDef, i, contextConstants, context);
 			step.updateVariable(new HAPUpdateVariableDomain(out.getDomain()));
 			out.addStep(step);
 		}

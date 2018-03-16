@@ -15,7 +15,8 @@ import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.operand.HAPOperand;
 
-public class HAPExpressionTaskManagerImp extends HAPManagerTask{
+public class HAPExpressionTaskManagerImp{ 
+//extends HAPManagerTask{
 
 //	//used to generate id
 //	private int m_idIndex;

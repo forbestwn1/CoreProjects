@@ -54,6 +54,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 					    HAPGatewayManager gatewayManager,
 					    HAPRuntime runtime){ 
 		this.m_resourceManager = resourceMan;
+		this.m_taskManager = taskManager;
 		this.m_expressionSuiteManager = expressionSuiteManager;
 
 		//gateway

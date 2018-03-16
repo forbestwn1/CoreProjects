@@ -15,14 +15,17 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 @HAPEntityWithAttribute
 public class HAPDefinitionTaskSuite extends HAPDefinitionComponent {
 
+	HAPManagerTask m_taskManager;
+	
 	@HAPAttribute
 	public static String TASKS = "tasks";
 
 	//tasks
 	private Map<String, HAPDefinitionTask> m_tasks;
 	
-	public HAPDefinitionTaskSuite(){
+	public HAPDefinitionTaskSuite(HAPManagerTask taskManager){
 		this.m_tasks = new LinkedHashMap<String, HAPDefinitionTask>();
+		this.m_taskManager = taskManager;
 	}
 	
 	public HAPDefinitionTask getTask(String name){  return this.m_tasks.get(name); }
@@ -42,7 +45,7 @@ public class HAPDefinitionTaskSuite extends HAPDefinitionComponent {
 			{
 				JSONArray tasksArray = jsonObj.optJSONArray(TASKS);
 				for(int i=0; i<tasksArray.length(); i++){
-					HAPDefinitionTask task = HAPTaskDefinitionManager.buildTask(tasksArray.get(i));
+					HAPDefinitionTask task = HAPTaskUtility.buildTask(tasksArray.get(i), m_taskManager); 
 					this.m_tasks.put(task.getName(), task);
 				}
 			}

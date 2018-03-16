@@ -16,6 +16,11 @@ public class HAPExecutorTaskExpression implements HAPExecutorTask{
 	
 	private HAPManagerTask m_taskManager;
 	
+	public HAPExecutorTaskExpression(HAPManagerTaskExpression expTaskManager, HAPManagerTask taskManager) {
+		this.m_expTaskManager = expTaskManager;
+		this.m_taskManager = taskManager;
+	}
+	
 	@Override
 	public HAPData execute(HAPExecutableTask task, Map<String, HAPData> parms, HAPTaskReferenceCache cache) {
 		HAPExecutableTaskExpression expTask = (HAPExecutableTaskExpression)task;
@@ -40,7 +45,7 @@ public class HAPExecutorTaskExpression implements HAPExecutorTask{
 				referencesData.put(refName, cachedResult);
 			}
 			
-			HAPResultStep stepResult = m_expTaskManager.executeStep(step, executeParms, referencesData);
+			HAPResultStep stepResult = m_expTaskManager.getStepManager(step.getType()).getStepExecutor().execute(step, executeParms, referencesData);
 			if(stepResult.isExit()) {
 				//exit
 				out = stepResult.getData();

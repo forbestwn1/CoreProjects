@@ -27,30 +27,30 @@ import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPTaskDefinitionSuiteImporter {
 
-	static public List<HAPDefinitionTaskSuite> importTaskDefinitionSuiteFromFolder(String folder, HAPManagerTask expressionTaskMan){
-		List<HAPDefinitionTaskSuite> suites = readTaskDefinitionSuiteFromFolder(folder);
+	static public List<HAPDefinitionTaskSuite> importTaskDefinitionSuiteFromFolder(String folder, HAPManagerTask taskMan){
+		List<HAPDefinitionTaskSuite> suites = readTaskDefinitionSuiteFromFolder(folder, taskMan);
 		for(HAPDefinitionTaskSuite suite : suites){
-			expressionTaskMan.addTaskDefinitionSuite(suite);
+			taskMan.addTaskDefinitionSuite(suite);
 		}
 		return suites;
 	}
 
-	static public List<HAPDefinitionTaskSuite> importTaskDefinitionSuiteFromClassFolder(Class cs, HAPManagerTask expressionTaskMan){
-		List<HAPDefinitionTaskSuite> suites = readTaskSuiteFromClassFolder(cs);
+	static public List<HAPDefinitionTaskSuite> importTaskDefinitionSuiteFromClassFolder(Class cs, HAPManagerTask taskMan){
+		List<HAPDefinitionTaskSuite> suites = readTaskSuiteFromClassFolder(cs, taskMan);
 		for(HAPDefinitionTaskSuite suite : suites){
-			expressionTaskMan.addTaskDefinitionSuite(suite);
+			taskMan.addTaskDefinitionSuite(suite);
 		}
 		return suites;
 	}
 	
-	static public List<HAPDefinitionTaskSuite> readTaskDefinitionSuiteFromFolder(String folder){
+	static public List<HAPDefinitionTaskSuite> readTaskDefinitionSuiteFromFolder(String folder, HAPManagerTask taskManager){
 		List<HAPDefinitionTaskSuite> out = new ArrayList<HAPDefinitionTaskSuite>();
 		Set<File> files = HAPFileUtility.getAllFiles(folder);
 		for(File file : files){
 			if(file.getName().endsWith(".expression")){
 				try {
 					InputStream inputStream = new FileInputStream(file);
-					HAPDefinitionTaskSuite taskDefinitionSuite = importTaskDefinitionSuiteFromFile(inputStream);
+					HAPDefinitionTaskSuite taskDefinitionSuite = importTaskDefinitionSuiteFromFile(inputStream, taskManager);
 			         out.add(taskDefinitionSuite);
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
@@ -60,7 +60,7 @@ public class HAPTaskDefinitionSuiteImporter {
 		return out;
 	}
 
-	static public List<HAPDefinitionTaskSuite> readTaskSuiteFromClassFolder(Class cs){
+	static public List<HAPDefinitionTaskSuite> readTaskSuiteFromClassFolder(Class cs, HAPManagerTask taskManager){
 		final List<HAPDefinitionTaskSuite> out = new ArrayList<HAPDefinitionTaskSuite>();
 		try{
 			URI uri = cs.getResource("").toURI();
@@ -70,7 +70,7 @@ public class HAPTaskDefinitionSuiteImporter {
 		            @Override
 		            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 		            	if(file.getFileName().toString().endsWith(".expression")){
-		            		HAPDefinitionTaskSuite taskDefinitionSuite = importTaskDefinitionSuiteFromFile(Files.newInputStream(file)); 
+		            		HAPDefinitionTaskSuite taskDefinitionSuite = importTaskDefinitionSuiteFromFile(Files.newInputStream(file), taskManager); 
 					         out.add(taskDefinitionSuite);
 		            	}
 		                return FileVisitResult.CONTINUE;
@@ -84,12 +84,12 @@ public class HAPTaskDefinitionSuiteImporter {
 		return out;
 	}
 	
-	static private HAPDefinitionTaskSuite importTaskDefinitionSuiteFromFile(InputStream inputStream){
+	static private HAPDefinitionTaskSuite importTaskDefinitionSuiteFromFile(InputStream inputStream, HAPManagerTask taskManager){
 		HAPDefinitionTaskSuite suite = null;
 		try{
 			String content = HAPFileUtility.readFile(inputStream);
 			JSONObject contentJson = new JSONObject(content);
-			suite = importTaskDefinitionSuiteFromJSON(contentJson);
+			suite = importTaskDefinitionSuiteFromJSON(contentJson, taskManager);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -97,10 +97,10 @@ public class HAPTaskDefinitionSuiteImporter {
 		return suite;
 	}
 	
-	public static HAPDefinitionTaskSuite importTaskDefinitionSuiteFromJSON(JSONObject taskSuiteJson){
+	public static HAPDefinitionTaskSuite importTaskDefinitionSuiteFromJSON(JSONObject taskSuiteJson, HAPManagerTask taskManager){
 		HAPDefinitionTaskSuiteForTest suite = null;
 		try{
-			suite = new HAPDefinitionTaskSuiteForTest();
+			suite = new HAPDefinitionTaskSuiteForTest(taskManager);
 			suite.buildObject(taskSuiteJson, HAPSerializationFormat.JSON);
 		}
 		catch(Exception e){

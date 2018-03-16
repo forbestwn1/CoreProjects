@@ -4,8 +4,6 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.expression.HAPMatchers;
-import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 
 public class HAPProcessorStepExpression implements HAPProcessorStep{

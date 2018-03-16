@@ -88,7 +88,7 @@ public class HAPTaskMain {
 	private static void executeSuites(String[] suites, HAPRuntimeEnvironmentImpRhino runtimeEnvironment){
 		for(String suiteName : suites){
 			HAPDefinitionTaskSuiteForTest suite = (HAPDefinitionTaskSuiteForTest)runtimeEnvironment.getTaskManager().getTaskDefinitionSuite(suiteName);
-			HAPData out = runtimeEnvironment.getTaskManager().executeTask("name", suite, suite.getVariableData());
+			HAPData out = runtimeEnvironment.getTaskManager().executeTask("main", suite, suite.getVariableData());
 			processResult(suite, HAPServiceData.createSuccessData(out));
 		}
 	}

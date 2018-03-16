@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeId;
@@ -23,9 +26,25 @@ import com.nosliw.data.core.runtime.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
+import com.nosliw.data.core.task.HAPDefinitionTask;
 
 public class HAPExpressionTaskUtility {
 
+	static public HAPDefinitionStep buildExpressionStep(Object obj, HAPManagerTaskExpression expTaskMan){
+		HAPDefinitionStep step = null;
+		try{
+			JSONObject jsonObj = (JSONObject)obj;
+			String type = jsonObj.optString(HAPDefinitionTask.TYPE);
+			if(HAPBasicUtility.isStringEmpty(type))  type = HAPConstant.EXPRESSIONTASK_STEPTYPE_EXPRESSION;
+			step = expTaskMan.getStepManager(type).buildStepDefinition(obj);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return step;
+	}
+	
+	
 	/**
 	 * Discover resources required for data type operation
 	 * @param dataTypeInfo
