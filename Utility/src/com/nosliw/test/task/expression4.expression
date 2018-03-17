@@ -1,0 +1,50 @@
+{
+	"name": "expression4",
+	"description" : "expression with variable base",
+	"tasks": [
+		{
+			"type" : "expression",
+			"name" : "main",
+			"steps" : [
+				{
+					"type" : "expression",
+					"expression": "?(baseVar)?.subString(from:?(fromVar)?,to:&(to)&)",
+				}
+			]
+		}
+	],
+	"constants": {
+		"base": {
+			"dataTypeId": "test.string",
+			"value": "This is my world!"
+		},
+		"from": {
+			"dataTypeId": "test.integer",
+			"value": "3"
+		},
+		"to": {
+			"dataTypeId": "test.integer",
+			"value": "7"
+		}
+	},
+	"variables" : {
+		"baseVar": "test.string",
+		"fromVar": "test.integer"
+	},
+	"variablesData" : {
+		"fromVar": {
+			"dataTypeId": "test.integer",
+			"value": "3"
+		},
+		"baseVar": {
+			"dataTypeId": "test.string",
+			"value": "This is my world!"
+		},
+	},
+	"result" : {
+		"dataTypeId": "test.string;1.0.0",
+ 		"value": "s isfff",
+		"wapperType": "JSON"
+	}
+}
+
