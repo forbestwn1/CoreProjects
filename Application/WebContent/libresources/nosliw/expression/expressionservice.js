@@ -36,6 +36,7 @@ var node_createExpressionService = function(){
 			
 		//if have variables, convert variables
 			var varsMatchers = expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLESMATCHERS];
+			if(varsMatchers==undefined)  varsMatchers = {};
 			var varsMatchRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatcherVariable", {"variables":variables, "variablesMatchers":varsMatchers}), 
 					{			
 						success : function(reqInfo, setResult){
@@ -224,7 +225,10 @@ var node_createExpressionService = function(){
 		var service = new node_ServiceInfo("MatchData", {"data":data, "matcher":matchers});
 		
 		var dataTypeId = data[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID];
-		var matcher = matchers[dataTypeId];
+		var matcher;
+		if(matchers!=undefined){
+			matcher = matchers[dataTypeId];
+		}
 		
 		var out;
 		if(matcher==undefined){

@@ -19,9 +19,9 @@ public class HAPTaskMain {
 		
 		executeSuites(new String[]{
 //				"expression0",
-				"expression1",
+//				"expression1",
 //				"expression10",
-//				"expression2",
+				"expression2",
 //				"expression3",
 //				"expression4",
 //				"expression5",

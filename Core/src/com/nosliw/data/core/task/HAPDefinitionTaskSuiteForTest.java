@@ -45,7 +45,7 @@ public class HAPDefinitionTaskSuiteForTest extends HAPDefinitionTaskSuite{
 					Iterator<String> its = varsDataObjJson.keys();
 					while(its.hasNext()){
 						String name = its.next();
-						Object varDataObj = jsonObj.opt(name);
+						Object varDataObj = varsDataObjJson.opt(name);
 						HAPData data = HAPDataUtility.buildDataWrapperFromObject(varDataObj);
 						this.m_variableData.put(name, data);
 					}

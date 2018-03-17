@@ -48,12 +48,14 @@ public class HAPVariableInfo extends HAPSerializableImp{
 	public HAPVariableInfo(HAPDataTypeCriteria criteria, String status){
 		this.m_status = status;
 		this.m_criteriaStack.add(criteria);
+		this.m_info = new HAPInfoImpSimple();
 	}
 
 	public HAPVariableInfo(HAPDataTypeCriteria criteria){
 		this.m_criteriaStack.add(criteria);
 		if(criteria==null)   this.m_status = HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN;
 		else   this.m_status = HAPConstant.EXPRESSION_VARIABLE_STATUS_CLOSE;
+		this.m_info = new HAPInfoImpSimple();
 	}
 	
 	public String getStatus(){		return this.m_status;	}
