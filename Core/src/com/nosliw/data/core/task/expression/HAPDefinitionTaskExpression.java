@@ -71,6 +71,7 @@ public class HAPDefinitionTaskExpression extends HAPDefinitionTask{
 						JSONObject refInfoObj = refsObj.optJSONObject(name);
 						HAPReferenceInfo refInfo = new HAPReferenceInfo();
 						refInfo.buildObject(refInfoObj, HAPSerializationFormat.JSON);
+						this.m_referencesInfo.put(name, refInfo);
 					}
 				}
 			}

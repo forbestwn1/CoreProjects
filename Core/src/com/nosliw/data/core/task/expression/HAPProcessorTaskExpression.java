@@ -118,7 +118,7 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 			if(refTaskName==null)  refTaskName = refName;
 			
 			HAPDefinitionTask refedTaskDef = contextTaskDefinitions.get(refTaskName);
-			
+
 			//domain name for reference
 			String refDomain = HAPExpressionUtility.buildFullVariableName(out.getDomain(), refName); 
 

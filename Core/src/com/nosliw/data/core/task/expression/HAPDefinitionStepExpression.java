@@ -57,6 +57,7 @@ public class HAPDefinitionStepExpression extends HAPDefinitionStep{
 		String expressionStr = jsonObj.optString(EXPRESSION);
 		this.setExpression(expressionStr);
 		this.m_outputVariable = jsonObj.optString(OUTPUTVARIABLE);
+		if(HAPBasicUtility.isStringEmpty(this.m_outputVariable))   this.m_outputVariable = null;
 		if(HAPBasicUtility.isStringEmpty(m_outputVariable)) {
 			Boolean exit = jsonObj.optBoolean(EXIT);
 			if(exit==null)  exit = Boolean.TRUE;

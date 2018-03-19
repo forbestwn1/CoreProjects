@@ -1,13 +1,13 @@
 package com.nosliw.data.core.operand;
 
-import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 /**
  * Wrapper of operand 
  * It is introduced so that we can replace operand with another one without knowing its parent during expression processing
  */
-public class HAPOperandWrapper implements HAPSerializable{
+public class HAPOperandWrapper extends HAPSerializableImp{
 
 	private HAPOperand m_operand;
 	

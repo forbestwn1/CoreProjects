@@ -10,6 +10,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
 
 /**
  * The information used to define reference in expression
@@ -33,14 +34,14 @@ public class HAPReferenceInfo extends HAPSerializableImp{
 	}
 
 	public HAPReferenceInfo(String ref){
-		super();
+		this();
 		this.m_reference = ref;
 	}
 	
 	public String getReference(){  return this.m_reference;	}
 	
 	public Map<String, String> getVariablesMap(){  return this.m_variableMap;  }
-	public void addVariableMap(String name, String mapped) {  this.m_variableMap.put(name, mapped);   }
+	public void addVariableMap(String name, String mapped) { 	this.m_variableMap.put(name, mapped);	}
 	
 	public void setVariableMap(Map<String, String> varsMap) {
 		this.m_variableMap.clear();
@@ -51,12 +52,13 @@ public class HAPReferenceInfo extends HAPSerializableImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_reference = jsonObj.optString(REFERENCE);
+		if(HAPBasicUtility.isStringEmpty(this.m_reference))   this.m_reference = null;
 		
-		JSONObject mapsObj = jsonObj.optJSONObject(VARIABLESMAP);
+		JSONObject mapsObj = jsonObj.getJSONObject(VARIABLESMAP);
 		Iterator<String> its = mapsObj.keys();
 		while(its.hasNext()){
 			String name = its.next();
-			String map = jsonObj.optString(name);
+			String map = mapsObj.optString(name);
 			this.m_variableMap.put(name, map);
 		}
 		return true;  
