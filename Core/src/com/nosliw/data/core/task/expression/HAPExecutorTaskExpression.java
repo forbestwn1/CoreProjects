@@ -3,6 +3,7 @@ package com.nosliw.data.core.task.expression;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.task.HAPExecutableTask;
@@ -31,6 +32,8 @@ public class HAPExecutorTaskExpression implements HAPExecutorTask{
 		boolean exit = false;
 		HAPExecutableStep step = expTask.getStep(0);
 		while(!exit) {
+			System.out.println("***************************  Execute Step   ************************************");
+			System.out.println("STEP : "+step.getName());
 			//execute referenced executable
 			Map<String, HAPData> referencesData = new LinkedHashMap<String, HAPData>();
 			for(String refName : step.getReferences()) {
@@ -55,7 +58,7 @@ public class HAPExecutorTaskExpression implements HAPExecutorTask{
 				//handle variable output
 				String varName = stepResult.getVariableName();
 				if(HAPBasicUtility.isStringNotEmpty(varName)) {
-					parms.put(varName, stepResult.getData());
+					executeParms.put(varName, stepResult.getData());
 				}
 				//next step
 				String nextStep = stepResult.getNext();
@@ -72,6 +75,11 @@ public class HAPExecutorTaskExpression implements HAPExecutorTask{
 					}
 				}
 			}
+			
+			System.out.println("RESULT : " + stepResult.toStringValue(HAPSerializationFormat.JSON));
+
+			System.out.println("***************************                 ************************************");
+			
 		}
 		return out;
 	}

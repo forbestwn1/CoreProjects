@@ -281,7 +281,7 @@ var node_createExpressionService = function(){
 				}
 
 				//convert sub data
-				if(node_basicUtility.isEmptyObject(subMatchers)==true){
+				if(!node_basicUtility.isEmptyObject(subMatchers)==true){
 					out.addRequest(loc_getSubMatchDataTaskRequest(converterData, subMatchers, {
 						success : function(requestInfo, convertedData){
 							converterData = convertedData;

@@ -71,13 +71,4 @@ public class HAPDefinitionStepExpression extends HAPDefinitionStep{
 		jsonMap.put(EXPRESSION, HAPJsonUtility.buildJson(this.m_expression, HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTVARIABLE, this.m_outputVariable);
 	}
-	
-	public void cloneTo(HAPDefinitionStepExpression taskStep){
-		
-	}
-
-	public HAPDefinitionStepExpression clone() {
-		return null;
-	}
-
 }

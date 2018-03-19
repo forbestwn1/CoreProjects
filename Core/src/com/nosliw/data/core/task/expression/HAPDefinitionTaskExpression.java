@@ -77,6 +77,10 @@ public class HAPDefinitionTaskExpression extends HAPDefinitionTask{
 			
 			{
 				JSONArray stepsArray = jsonObj.optJSONArray(STEPS);
+				if(stepsArray==null) {
+					int kkkkk = 5555;
+					kkkkk++;
+				}
 				for(int i=0; i<stepsArray.length(); i++){
 					this.addChild(HAPExpressionTaskUtility.buildExpressionStep(stepsArray.get(i), this.m_expressionTaskManager));
 				}

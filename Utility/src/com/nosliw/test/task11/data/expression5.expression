@@ -1,0 +1,70 @@
+{
+	"name": "expression5",
+	"description" : "task with reference",
+	"tasks": [
+		{
+			"type" : "expression",
+			"name" : "main",
+			"steps" : [
+				{
+					"type" : "expression",
+					"expression": "!(test.string)!.subString(<(expression1)>,from:?(fromVar)?,to:?(toVar)?)",
+				}
+			],
+			"variables": {
+				"baseVar": "test.string",
+				"fromVar": "test.integer",
+				"toVar": "test.integer"
+			},
+		},
+		{
+			"type" : "expression",
+			"name" : "expression1",
+			"steps" : [
+				{
+					"type" : "expression",
+					"expression": "!(test.string)!.subString(?(var1)?,from:?(var2)?,to:?(var3)?)",
+				}
+			],
+			"description": "all variables",
+			"constants": {},
+			"variables": {
+				"var1": "test.string",
+				"var2": "test.integer",
+				"var3": "test.integer"
+			}
+		}
+	],
+	"references": {
+		"expression1": {
+			"variablesMap": {
+				"baseVar": "var1",
+				"fromVar": "var2",
+				"toVar": "var3"
+			}
+		}
+	},
+	"constants": {
+	},
+	"variables" : {
+	},
+	"variablesData": {
+		"fromVar": {
+			"dataTypeId": "test.integer",
+			"value": "3"
+		},
+		"baseVar": {
+			"dataTypeId": "test.string",
+			"value": "This is my world!"
+		},
+		"toVar": {
+			"dataTypeId": "test.integer",
+			"value": "7"
+		}
+	},
+	"result" : {
+		"dataTypeId": "test.string;1.0.0",
+ 		"value": "sffffff",
+		"wapperType": "JSON"
+	}
+}

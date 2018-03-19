@@ -126,7 +126,7 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 			for(String varName : varsInfo.keySet()) {
 				if(HAPBasicUtility.isStringNotEmpty(varsInfo.get(varName).getInfoValue(HAPExecutableTaskExpression.INFO_LOCALVRIABLE)))  localVars.add(varName);
 			}
-			for(String localVar : localVars)   localVars.remove(localVar);
+			for(String localVar : localVars)   varsInfo.remove(localVar);
 			
 		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
 
