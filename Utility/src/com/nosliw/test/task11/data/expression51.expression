@@ -1,6 +1,6 @@
 {
 	"name": "expression51",
-	"description" : "task with ref",
+	"description" : "task with steps",
 	"tasks": [
 		{
 			"type" : "expression",

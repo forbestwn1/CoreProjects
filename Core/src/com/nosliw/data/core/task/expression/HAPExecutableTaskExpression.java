@@ -53,6 +53,8 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 		this.m_stepsByName = new LinkedHashMap<String, HAPExecutableStep>();
 		this.m_varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		this.m_varsInfo.putAll(taskDef.getVariables());
+		this.m_executeReferences = new LinkedHashMap<String, HAPExecutableTask>();
+		this.m_varsMatchers = new LinkedHashMap<String, HAPMatchers>();
 	}
 	
 	public void setId(String id) {  this.m_id = id;   }

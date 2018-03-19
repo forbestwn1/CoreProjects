@@ -68,7 +68,7 @@ public class HAPDefinitionTaskExpression extends HAPDefinitionTask{
 					Iterator<String> its = refsObj.keys();
 					while(its.hasNext()){
 						String name = its.next();
-						JSONObject refInfoObj = jsonObj.optJSONObject(name);
+						JSONObject refInfoObj = refsObj.optJSONObject(name);
 						HAPReferenceInfo refInfo = new HAPReferenceInfo();
 						refInfo.buildObject(refInfoObj, HAPSerializationFormat.JSON);
 					}
@@ -77,10 +77,6 @@ public class HAPDefinitionTaskExpression extends HAPDefinitionTask{
 			
 			{
 				JSONArray stepsArray = jsonObj.optJSONArray(STEPS);
-				if(stepsArray==null) {
-					int kkkkk = 5555;
-					kkkkk++;
-				}
 				for(int i=0; i<stepsArray.length(); i++){
 					this.addChild(HAPExpressionTaskUtility.buildExpressionStep(stepsArray.get(i), this.m_expressionTaskManager));
 				}
@@ -101,8 +97,4 @@ public class HAPDefinitionTaskExpression extends HAPDefinitionTask{
 		jsonMap.put(REFERENCES, HAPJsonUtility.buildJson(this.m_referencesInfo, HAPSerializationFormat.JSON));
 	}
 	
-	public void cloneTo(HAPDefinitionTaskExpression taskDef){
-		
-	}
-
 }

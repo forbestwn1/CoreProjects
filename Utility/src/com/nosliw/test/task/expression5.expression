@@ -16,6 +16,15 @@
 				"fromVar": "test.integer",
 				"toVar": "test.integer"
 			},
+			"references": {
+				"expression1": {
+					"variablesMap": {
+						"baseVar": "var1",
+						"fromVar": "var2",
+						"toVar": "var3"
+					}
+				}
+			},
 		},
 		{
 			"type" : "expression",
@@ -35,15 +44,6 @@
 			}
 		}
 	],
-	"references": {
-		"expression1": {
-			"variablesMap": {
-				"baseVar": "var1",
-				"fromVar": "var2",
-				"toVar": "var3"
-			}
-		}
-	},
 	"constants": {
 	},
 	"variables" : {

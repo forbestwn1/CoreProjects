@@ -24,8 +24,8 @@ public class HAPTaskMain {
 //				"expression2",
 //				"expression3",
 //				"expression4",
-//				"expression5",
-				"expression51",
+				"expression5",
+//				"expression51",
 //				"expression6",
 
 //				"expression7",
