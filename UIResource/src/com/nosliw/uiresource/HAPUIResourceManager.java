@@ -32,7 +32,7 @@ public class HAPUIResourceManager {
 
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
-	HAPIdGenerator m_idGengerator = new HAPIdGenerator(1);
+	private HAPIdGenerator m_idGengerator = new HAPIdGenerator(1);
 
 	public HAPUIResourceManager(
 			HAPUITagManager uiTagMan,
@@ -90,7 +90,7 @@ public class HAPUIResourceManager {
 		HAPUIDefinitionUnitResource uiResource = this.getUIResourceDefinitionByName(name);
 		if(!uiResource.isProcessed()){
 			//process include tags
-			HAPUITagUtility.processIncludeTags(uiResource, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, getUIResourceParser());
+			HAPUITagUtility.processIncludeTags(uiResource, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, getUIResourceParser(), this.m_idGengerator);
 			
 			//build expression context
 			HAPContextUtility.processExpressionContext(null, uiResource, this.m_dataTypeHelper, this.m_uiTagMan, this.m_runtime, this.m_expressionMan);

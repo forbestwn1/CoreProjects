@@ -10,11 +10,13 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.context.HAPContextGroup;
 import com.nosliw.uiresource.context.HAPContextNodeRoot;
 import com.nosliw.uiresource.context.HAPContextParser;
+import com.nosliw.uiresource.definition.HAPConstantUtility;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
 import com.nosliw.uiresource.definition.HAPUIDefinitionUnitUtility;
@@ -22,21 +24,22 @@ import com.nosliw.uiresource.parser.HAPUIResourceParser;
 
 public class HAPUITagUtility {
 
-	public static void processIncludeTags(HAPUIDefinitionUnitResource uiResource, HAPUIResourceManager uiResourceMan, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager, HAPUIResourceParser uiResourceParser){
+	public static void processIncludeTags(HAPUIDefinitionUnitResource uiResource, HAPUIResourceManager uiResourceMan, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager, HAPUIResourceParser uiResourceParser, HAPIdGenerator idGengerator){
 		Set<HAPUIDefinitionUnitTag> includeTags = new HashSet<HAPUIDefinitionUnitTag>();
 		HAPUIDefinitionUnitUtility.getUITagByName(uiResource, HAPConstant.UITAG_NAME_INCLUDE, includeTags);
 		for(HAPUIDefinitionUnitTag includeTag : includeTags){
-			processIncludeTag(includeTag, uiResource, uiResourceMan, dataTypeHelper, uiTagMan, runtime, expressionManager, uiResourceParser);			
+			processIncludeTag(includeTag, uiResource, uiResourceMan, dataTypeHelper, uiTagMan, runtime, expressionManager, uiResourceParser, idGengerator);			
 		}
 	}	
 	
-	private static void processIncludeTag(HAPUIDefinitionUnitTag includeTagResource, HAPUIDefinitionUnitResource rootResource, HAPUIResourceManager uiResourceMan, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager, HAPUIResourceParser uiResourceParser){
+	private static void processIncludeTag(HAPUIDefinitionUnitTag includeTagResource, HAPUIDefinitionUnitResource rootResource, HAPUIResourceManager uiResourceMan, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager, HAPUIResourceParser uiResourceParser, HAPIdGenerator idGengerator){
 		String includeResourceName = includeTagResource.getAttributes().get(HAPConstant.UITAG_NAME_INCLUDE_PARM_SOURCE);
 		String contextMapName = includeTagResource.getAttributes().get(HAPConstant.UITAG_NAME_INCLUDE_PARM_CONTEXT);
 
 		//build include tag
 		HAPUIDefinitionUnitResource uiResource = uiResourceMan.getUIResourceDefinitionByName(includeResourceName);
 		uiResourceParser.parseContent(includeTagResource, uiResource.getSource());
+		HAPConstantUtility.calculateConstantDefs(includeTagResource, null, idGengerator, expressionManager, runtime);
 
 		//get context mapping definition
 		HAPUITagDefinitionContext contextDef = null;

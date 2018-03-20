@@ -2,7 +2,7 @@
 <html>
 <body>
 
-	<nosliw-debug/>
+	
 
 	<br>
 	Content:<%=?(business.a.aa)?.value + '   6666 ' %>

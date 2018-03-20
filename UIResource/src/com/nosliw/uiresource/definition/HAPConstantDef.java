@@ -36,7 +36,13 @@ public class HAPConstantDef extends HAPSerializableImp{
 	 * @return
 	 */
 	public Object getValue(){	return this.m_value;	}
-	public void setValue(Object value){   this.m_value = value;  }
+	public void setValue(Object value){
+		if(value==null) {
+			int kkkk = 5555;
+			kkkk++;
+		}
+		this.m_value = value;  
+	}
 	
 	public boolean isProcessed(){  return this.m_isProcessed; }
 	public void processed(){   this.m_isProcessed = true;   }
@@ -48,6 +54,10 @@ public class HAPConstantDef extends HAPSerializableImp{
 	 */
 	public HAPData getDataValue(){
 		HAPDataWrapper out = new HAPDataWrapper();
+		if(this.m_value==null) {
+			int kkkk = 5555;
+			kkkk++;
+		}
 		boolean isData = out.buildObjectByLiterate(this.m_value.toString());
 		if(isData)  return out;
 		else return null;
