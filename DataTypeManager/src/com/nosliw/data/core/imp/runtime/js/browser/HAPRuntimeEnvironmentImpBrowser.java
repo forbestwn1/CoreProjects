@@ -2,6 +2,7 @@ package com.nosliw.data.core.imp.runtime.js.browser;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.data.core.datasource.HAPGatewayDataSource;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
@@ -23,6 +24,10 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 
 	@HAPAttribute
 	public static final String GATEWAY_TESTEXPRESSION = "testExpression";
+	
+	@HAPAttribute
+	public static final String GATEWAY_DATASOURCE = "dataSource";
+	
 	
 	HAPModuleRuntimeJS m_runtimeJSModule;
 	
@@ -48,6 +53,9 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 			gatewayManager,
 			runtime
 		);
+		
+		
+		this.getGatewayManager().registerGateway(GATEWAY_DATASOURCE, new HAPGatewayDataSource());
 		
 		this.getGatewayManager().registerGateway(GATEWAY_LOADLIBRARIES, new HAPGatewayBrowserLoadLibrary(this.getGatewayManager()));
 		this.getGatewayManager().registerGateway(GATEWAY_TESTEXPRESSION, new HAPGatewayLoadTestExpression());

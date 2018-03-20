@@ -27,6 +27,14 @@ import com.nosliw.data.core.task.HAPManagerTask;
 
 public class HAPDataSourceImpSecondHand implements HAPDataSource{
 
+	@Override
+	public HAPData getData(Map<String, HAPData> parms) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+/*
+implements HAPDataSource{
+
 	private HAPDataSourceDefinitionManager m_dataSourceDefinitionManager;
 	
 	private HAPManagerTask m_expressionManager;
@@ -123,5 +131,5 @@ public class HAPDataSourceImpSecondHand implements HAPDataSource{
 	public HAPDefinition getDefinition() {
 		return this.m_dataSourceDefinition;
 	}
-
+*/
 }

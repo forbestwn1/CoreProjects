@@ -17,18 +17,19 @@ public class HAPDataSourceFactoryTask implements HAPDataSourceFactory{
 	@Override
 	public HAPDataSource newDataSource(HAPDefinition dataSourceDefinition) {
 		
-		JSONObject configJson = (JSONObject)dataSourceDefinition.getConfigure();
-		HAPDefinitionTaskSuite taskSuite = new HAPDefinitionTaskSuite();
-		taskSuite.buildObject(configJson, HAPSerializationFormat.JSON);
-		
-		for(String parmName : dataSourceDefinition.getParms().keySet())
-		{
-			HAPDefinitionParm parmDef = dataSourceDefinition.getParms().get(parmName);
-			taskSuite.addVariable(parmName, parmDef.getVaraibleInfo());
-		}
-		
-		HAPDataSourceImp out = new HAPDataSourceImp(dataSourceDefinition, "main", taskSuite, this.m_taskManager);
-		return out;
+//		JSONObject configJson = (JSONObject)dataSourceDefinition.getConfigure();
+//		HAPDefinitionTaskSuite taskSuite = new HAPDefinitionTaskSuite();
+//		taskSuite.buildObject(configJson, HAPSerializationFormat.JSON);
+//		
+//		for(String parmName : dataSourceDefinition.getParms().keySet())
+//		{
+//			HAPDefinitionParm parmDef = dataSourceDefinition.getParms().get(parmName);
+//			taskSuite.addVariable(parmName, parmDef.getVaraibleInfo());
+//		}
+//		
+//		HAPDataSourceImp out = new HAPDataSourceImp(dataSourceDefinition, "main", taskSuite, this.m_taskManager);
+//		return out;
+		return null;
 	}
 
 }

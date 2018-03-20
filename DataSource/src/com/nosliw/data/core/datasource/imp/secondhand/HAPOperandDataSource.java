@@ -19,7 +19,6 @@ import com.nosliw.data.core.datasource.HAPDataSourceManager;
 import com.nosliw.data.core.datasource.HAPDefinitionOutput;
 import com.nosliw.data.core.datasource.HAPDefinitionParm;
 import com.nosliw.data.core.expression.HAPMatchers;
-import com.nosliw.data.core.expression.HAPProcessExpressionDefinitionContext;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandImp;
@@ -27,7 +26,9 @@ import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSGateway;
 
-public class HAPOperandDataSource extends HAPOperandImp{
+public class HAPOperandDataSource{
+/*
+	extends HAPOperandImp{
 
 	@HAPAttribute
 	public static final String DATASOURCE_NAME = "dataSource_name";
@@ -147,5 +148,5 @@ public class HAPOperandDataSource extends HAPOperandImp{
 		jsonMap.put(DATASOURCE_PARMMATCHERS, HAPSerializeManager.getInstance().toStringValue(this.m_parmsMatchers, HAPSerializationFormat.JSON));
 		
 	}
-	
+*/	
 }

@@ -1,25 +1,12 @@
 <!DOCTYPE html>
 <html>
-	<body>
-	<nosliw-debug/>
-	
-	<div>
-	Include Object
-	<nosliw-include source="Example_Object_Basic"/> 
-	</div>
-
-	
-	
-	<div>
-	Include Data
-	<nosliw-include source="Example_Data"/> 
-	</div>
-
-	<br>
-	</body>
+<body>
+******************************	Result  ********************************
+</body>
 
 	<script>
 	{
+	
 	}
 	</script>
 	

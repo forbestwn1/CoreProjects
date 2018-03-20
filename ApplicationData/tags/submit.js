@@ -21,10 +21,6 @@
 			
 		},
 		private : {
-			internal_data: {
-				path : "<%=&(data)&%>",
-				definition : "test.string;1.0.0"
-			}
 		}
 	},
 	events : {
@@ -36,9 +32,10 @@
 		},
 	},
 	script : function(env){
-
+		var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
+		var node_requestProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	
 		var loc_env = env;
-		var loc_dataVariable = env.createVariable("internal_data");
 		var loc_view;
 		
 		var loc_revertChange = function(){
@@ -46,19 +43,20 @@
 		};
 
 		var loc_setupUIEvent = function(){
-			loc_view.bind('onclick', function(){
+			loc_view.bind('click', function(){
+				window.alert("sometext");
 				var setRequest = node_createServiceRequestInfoSet({}, {
 					success : function(requestInfo, result){
 						var commandParms = {
-							name : loc_env.getAttribute("datasource"),
+							name : loc_env.getAttributeValue("datasource"),
 							parms : result.getResults()
 						};
 						var serviceData = loc_env.executeGatewayCommand("dataSource", "getData", commandParms);
-						loc_env.executeDataOperationRequestSet(loc_env.getAttribute("output"), "", serviceData.data);
+//						loc_env.executeDataOperationRequestSet(loc_env.getAttributeValue("output"), "", serviceData.data);
 					}
 				});
 
-				var parmDefs = loc_env.getAttention("parms").split(";");
+				var parmDefs = loc_env.getAttributeValue("parms").split(";");
 				_.each(parmDefs, function(parmDef, i){
 					var ps = parmDef.split(":");
 					setRequest.addRequest(ps[0], loc_env.getDataOperationRequestGet(ps[1]));
@@ -72,19 +70,17 @@
 			preInit : function(){	},
 				
 			initViews : function(requestInfo){	
-				loc_view = $('<button type="button">'+loc_env.getAttention('title')+'</button>');	
+				loc_view = $('<button type="button">'+loc_env.getAttributeValue('title')+'</button>');	
+				loc_setupUIEvent();
 				return loc_view;
 			},
 				
 			postInit : function(){
-				loc_setupUIEvent();
 			},
 
 			processAttribute : function(name, value){},
 
 			destroy : function(){	
-				loc_dataVariable.release();	
-				loc_view.remove();
 			},
 		};
 		return loc_out;

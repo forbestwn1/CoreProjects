@@ -10,6 +10,7 @@
 		<project>DataTypeTest</project>
 		<project>CriteriaParser</project>
 		<project>UIResource</project>
+		<project>DataSource</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

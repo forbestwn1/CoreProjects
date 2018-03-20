@@ -28,7 +28,8 @@ public class HAPDataSourceFactorySecondHand implements HAPDataSourceFactory{
 	
 	@Override
 	public HAPDataSource newDataSource(HAPDefinition dataSourceDefinition){
-		return new HAPDataSourceImpSecondHand(dataSourceDefinition, this.m_dataSourceDefinitionManager, m_expressionManager, m_runtime);		
+		return null;
+//		return new HAPDataSourceImpSecondHand(dataSourceDefinition, this.m_dataSourceDefinitionManager, m_expressionManager, m_runtime);		
 	}
 	
 	

@@ -24,7 +24,10 @@ public class HAPGatewayDataSource extends HAPGatewayImp{
 	final public static String COMMAND_GETDATA_PARMS = "parms";
 	
 	private HAPDataSourceManager m_dataSourceManager;
-	
+
+	public HAPGatewayDataSource(){
+	}
+
 	public HAPGatewayDataSource(HAPDataSourceManager dataSourceMan){
 		this.m_dataSourceManager = dataSourceMan;
 	}

@@ -15,6 +15,7 @@ import com.nosliw.data.core.task.HAPTaskDefinitionSuiteImporter;
 @HAPEntityWithAttribute
 public class HAPConfigure extends HAPSerializableImp{
 
+/*	
 	@HAPAttribute
 	public static String DEPENDENTDATASOURCES = "dependentDataSources";
 	
@@ -66,5 +67,5 @@ public class HAPConfigure extends HAPSerializableImp{
 		
 		return true;  
 	}
-	
+	*/
 }

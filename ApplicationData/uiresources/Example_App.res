@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html>
 	<body>
+	
+	<div>
+	Include Object
+	<nosliw-include source="Example_App_Query"/> 
+	</div>
 
 	<br>
-	<%=?(name)?.value + '   6666 ' %>  tttttttttt222  
+	<nosliw-submit title="Submit" datasource="schoolData" parms="data1:business"/>  
 	<br>
-	<%=?(childName)?.value + '   6666 ' %>  tttttttttt222  
-	<br>
+	
+	<div>
+	Include Data
+	<nosliw-include source="Example_App_Result"/> 
+	</div>
 
+	<br>
 	</body>
 
 	<script>
@@ -25,21 +34,6 @@
 		-->
 	<context>
 	{
-		public : {
-			
-			name : {
-				default: {
-							dataTypeId: "test.string;1.0.0",
-							value: "This is child name!"
-						}
-			},
-			childName : {
-				default: {
-							dataTypeId: "test.string;1.0.0",
-							value: "This is child!"
-						}
-			},
-		}
 	}
 	</context>
 	
@@ -47,6 +41,8 @@
 		-->
 	<expressions>
 	{
+		
+	
 	}
 	</expressions>
 	
