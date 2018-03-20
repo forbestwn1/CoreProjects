@@ -1,5 +1,6 @@
 package com.nosliw.data.core.task;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,6 +34,7 @@ public abstract class HAPDefinitionTask extends HAPDefinitionComponent{
 	private Set<HAPResourceDependent> m_requiredResources;
 	
 	public HAPDefinitionTask(){
+		this.m_requiredResources = new HashSet<HAPResourceDependent>();
 	}
 	
 	public abstract String getType();

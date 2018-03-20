@@ -39,6 +39,9 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 		
 		//process steps
 		this.processSteps(out, taskDefExp, taskContextConstants, context);
+
+		//update variable in task executable : add domain prefix
+		out.updateVariable(new HAPUpdateVariableDomain(domain));
 		
 		//process references info
 		this.processReferencedTasks(out, taskDefExp, contextTaskDefinitions, contextConstants, context);
@@ -63,7 +66,6 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 		for(int i=0; i<taskDefExp.getSteps().length; i++) {
 			HAPDefinitionStep stepDef = taskDefExp.getSteps()[i];
 			HAPExecutableStep step = this.m_expressionTaskManager.processStep(stepDef, i, contextConstants, context);
-			step.updateVariable(new HAPUpdateVariableDomain(out.getDomain()));
 			out.addStep(step);
 		}
 	}

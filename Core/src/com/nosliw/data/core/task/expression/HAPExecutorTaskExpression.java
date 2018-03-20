@@ -38,7 +38,7 @@ public class HAPExecutorTaskExpression implements HAPExecutorTask{
 			Map<String, HAPData> referencesData = new LinkedHashMap<String, HAPData>();
 			for(String refName : step.getReferences()) {
 				Map<String, HAPData> cacheSearchParms = new LinkedHashMap<String, HAPData>();
-				for(String varName : step.getVariables()) 	cacheSearchParms.put(varName, parms.get(varName));
+				for(String varName : expTask.getReferencedExecute().get(refName).getVariables()) 	cacheSearchParms.put(varName, parms.get(varName));
 				HAPData cachedResult = cache.getResult(refName, cacheSearchParms);
 				if(cachedResult==null) {
 					//not find from cache, execute the referenced executable
