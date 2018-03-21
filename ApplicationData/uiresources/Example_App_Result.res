@@ -2,7 +2,16 @@
 <html>
 <body>
 ******************************	Result  ********************************
+
+		<nosliw-loop data="result" element="ele" index="index">  
+			<br>
+			<%=?(ele.name)?.value%>   
+			<br>
+		</nosliw-loop>
+
 </body>
+
+
 
 	<script>
 	{
@@ -20,6 +29,34 @@
 		-->
 	<context>
 	{
+		public : {
+			result : {
+				definition : "test.array;1.0.0",
+				default : {
+					dataTypeId: "test.array;1.0.0",
+					value: [
+						{
+							dataTypeId: "test.map;1.0.0",
+							value: {
+								name : {
+									dataTypeId: "test.string;1.0.0",
+									value: "School1"
+								}
+							}
+						},
+												{
+							dataTypeId: "test.map;1.0.0",
+							value: {
+								name : {
+									dataTypeId: "test.string;1.0.0",
+									value: "School2"
+								}
+							}
+						}					
+					]
+				}
+			},
+		}
 	}
 	</context>
 	

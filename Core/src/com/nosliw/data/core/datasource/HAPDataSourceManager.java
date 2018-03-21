@@ -19,8 +19,8 @@ public class HAPDataSourceManager {
 	
 	private Map<String, HAPDataSource> m_dataSources;
 	
-	public HAPDataSourceManager(HAPDataSourceDefinitionManager dataSourceDefinitionManager){
-		this.m_dataSourceDefinitionManager = dataSourceDefinitionManager;
+	public HAPDataSourceManager(){
+		this.m_dataSourceDefinitionManager = new HAPDataSourceDefinitionManager();
 		this.m_dataSources = new LinkedHashMap<String, HAPDataSource>();
 		this.m_dataSourceFactorys = new LinkedHashMap<String, HAPDataSourceFactory>();
 	}

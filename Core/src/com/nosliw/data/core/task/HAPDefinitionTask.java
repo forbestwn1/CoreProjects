@@ -63,8 +63,4 @@ public abstract class HAPDefinitionTask extends HAPDefinitionComponent{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_info, HAPSerializationFormat.JSON));
 	}
-	
-	public void cloneTo(HAPDefinitionTask taskDef){
-		
-	}
 }

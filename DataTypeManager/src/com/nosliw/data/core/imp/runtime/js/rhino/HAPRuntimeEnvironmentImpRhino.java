@@ -2,11 +2,9 @@ package com.nosliw.data.core.imp.runtime.js.rhino;
 
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.core.datasource.HAPDataSourceManager;
-import com.nosliw.data.core.datasource.HAPGatewayDataSource;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
-import com.nosliw.data.core.imp.datasource.HAPDataSourceManagerImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceManagerJSImp;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
@@ -35,14 +33,17 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPGatewayManager gatewayManager = new HAPGatewayManager(); 
 		HAPExpressionSuiteManager expressionManager = new HAPExpressionSuiteManager(); 		
 		HAPManagerTask taskManager = new HAPManagerTask(runtime);
+		HAPDataSourceManager dataSourceManager = new HAPDataSourceManager();
 
 		init(resourceMan,
 			taskManager,
 			expressionManager,
 			gatewayManager,
+			dataSourceManager,
 			runtime
 		);
 
+		
 		//data source gateway
 //		this.getGatewayManager().registerGateway(HAPDataSourceManager.GATEWAY_DATASOURCE, new HAPGatewayDataSource(new HAPDataSourceManagerImp(new HAPManagerTask(), this.getRuntime())));
 	}

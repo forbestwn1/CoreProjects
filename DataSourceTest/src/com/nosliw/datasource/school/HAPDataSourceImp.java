@@ -37,7 +37,7 @@ public class HAPDataSourceImp implements HAPDataSource{
 
 //		InputStream elementDataInputStream = new FileInputStream(new File("elementSchoolArray.js"));
 		
-		InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(getClass(), "elementSchoolArray.js");
+		InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(getClass(), "elementSchoolArray_simple.js");
 		String content =  HAPFileUtility.readFile(inputStream);
 		
 		try{

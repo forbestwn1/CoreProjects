@@ -20,5 +20,6 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataTypeTest"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/UIResource"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataSource"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataSourceTest"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -2,6 +2,7 @@ package com.nosliw.data.core.runtime.js;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.data.core.datasource.HAPDataSourceManager;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
@@ -35,6 +36,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPGatewayManager m_gatewayManager;
 	
+	private HAPDataSourceManager m_dataSourceManager;
+	
 	private HAPRuntime m_runtime;
 	
 	public HAPRuntimeEnvironmentJS(){}
@@ -43,19 +46,22 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 									HAPManagerTask taskManager,
 									HAPExpressionSuiteManager expressionSuiteManager,
 								    HAPGatewayManager gatewayManager,
+								    HAPDataSourceManager dataSourceManager,
 								    HAPRuntime runtime){
 		super();
-		this.init(resourceMan, taskManager, expressionSuiteManager, gatewayManager, runtime);
+		this.init(resourceMan, taskManager, expressionSuiteManager, gatewayManager, dataSourceManager, runtime);
 	}
 	
 	protected void init(HAPResourceManagerRoot resourceMan,
 						HAPManagerTask taskManager,
 						HAPExpressionSuiteManager expressionSuiteManager,
 					    HAPGatewayManager gatewayManager,
+					    HAPDataSourceManager dataSourceManager,
 					    HAPRuntime runtime){ 
 		this.m_resourceManager = resourceMan;
 		this.m_taskManager = taskManager;
 		this.m_expressionSuiteManager = expressionSuiteManager;
+		this.m_dataSourceManager = dataSourceManager;
 
 		//gateway
 		this.m_gatewayManager = gatewayManager;
@@ -79,7 +85,10 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 	@Override
 	public HAPGatewayManager getGatewayManager(){  return this.m_gatewayManager;   }
-	
+
+	@Override
+	public HAPDataSourceManager getDataSourceManager() {  return this.m_dataSourceManager;  }
+
 	@Override
 	public HAPRuntime getRuntime() {		return this.m_runtime;	}
 

@@ -2,6 +2,7 @@ package com.nosliw.data.core;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPConstant;
 
 public class HAPOperationId extends HAPDataTypeId{
 
@@ -43,15 +44,18 @@ public class HAPOperationId extends HAPDataTypeId{
 	}
 
 	@Override
-	protected boolean buildObjectByLiterate(String literateValue){	
-		String[] segs = HAPNamingConversionUtility.parseLevel1(literateValue);
-		this.setName(segs[0]);
-		if(segs.length>=2){
-			this.setVersion(segs[1]);
-		}
-		if(segs.length>=3){
-			this.setOperation(segs[2]);
-		}
+	protected boolean buildObjectByLiterate(String literateValue){
+		int index = literateValue.lastIndexOf(HAPConstant.SEPERATOR_LEVEL1);
+		this.setOperation(literateValue.substring(index+1));
+		super.buildObjectByLiterate(literateValue.substring(0, index));
+		
+//		this.setName(segs[0]);
+//		if(segs.length>=2){
+//			this.setVersion(segs[1]);
+//		}
+//		if(segs.length>=3){
+//			this.setOperation(segs[2]);
+//		}
 		return true;
 	}
 }

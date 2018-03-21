@@ -25,9 +25,6 @@ public class HAPGatewayDataSource extends HAPGatewayImp{
 	
 	private HAPDataSourceManager m_dataSourceManager;
 
-	public HAPGatewayDataSource(){
-	}
-
 	public HAPGatewayDataSource(HAPDataSourceManager dataSourceMan){
 		this.m_dataSourceManager = dataSourceMan;
 	}

@@ -21,7 +21,7 @@ public class HAPDefinitionParm extends HAPSerializableImp{
 	public static String DESCRIPTION = "description";
 	
 	@HAPAttribute
-	public static String VARIABLEINFO = "variableInfo";
+	public static String CRITERIA = "criteria";
 	
 	@HAPAttribute
 	public static String DEFAULT = "default";
@@ -52,7 +52,7 @@ public class HAPDefinitionParm extends HAPSerializableImp{
 			
 			this.m_name = objJson.optString(NAME);
 			this.m_description = objJson.optString(DESCRIPTION);
-			this.m_variableInfo = new HAPVariableInfo(HAPExpressionManager.criteriaParser.parseCriteria(objJson.getString(VARIABLEINFO)));
+			this.m_variableInfo = new HAPVariableInfo(HAPExpressionManager.criteriaParser.parseCriteria(objJson.getString(CRITERIA)));
 			
 			JSONObject defaultJson = objJson.optJSONObject(DEFAULT);
 			if(defaultJson!=null)	this.m_default = HAPDataUtility.buildDataWrapperFromJson(defaultJson);

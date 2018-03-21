@@ -4,6 +4,8 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -34,23 +36,27 @@ public class HAPDataTypeId extends HAPSerializableImp{
 	
 	private HAPDataTypeVersion m_version;
 	
-	private Map<String, String> m_parms;
+	private HAPInfo m_parms;
 	
 	private String m_fullName;
 	
-	public HAPDataTypeId(){	}
+	public HAPDataTypeId(){	
+		this.m_parms = new HAPInfoImpSimple();
+	}
 
 	public HAPDataTypeId(String name, String version){
 		this(name, new HAPDataTypeVersion(version));
 	}
 		
 	public HAPDataTypeId(String name, HAPDataTypeVersion version){
+		this();
 		this.m_name = name;
 		this.m_version = version;
 		this.processVersion();
 	}
 
 	public HAPDataTypeId(String fullName){
+		this();
 		this.setFullName(fullName);
 	}
 	
@@ -60,7 +66,8 @@ public class HAPDataTypeId extends HAPSerializableImp{
 			if(this.m_version!=null){
 				versionLiterate = this.m_version.toStringValue(HAPSerializationFormat.LITERATE);
 			}
-			this.m_fullName = HAPNamingConversionUtility.cascadeLevel1(this.getName(), versionLiterate);
+//			this.m_fullName = HAPNamingConversionUtility.cascadeLevel1(new String[] {this.getName(), versionLiterate, this.m_parms.toStringValue(HAPSerializationFormat.LITERATE)});
+			this.m_fullName = HAPNamingConversionUtility.cascadeLevel1(new String[] {this.getName(), versionLiterate});
 		}
 		return this.m_fullName;
 	}
@@ -72,6 +79,9 @@ public class HAPDataTypeId extends HAPSerializableImp{
 		if(segs.length>=2){
 			this.m_version = new HAPDataTypeVersion(segs[1]);
 		}
+//		if(segs.length>=3) {
+//			this.m_parms.buildObject(segs[2], HAPSerializationFormat.LITERATE);
+//		}
 		this.processVersion();
 	}
 	

@@ -1,19 +1,36 @@
 package com.nosliw.common.info;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPBasicUtility;
 
 public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 
-	private Map<String, Object> m_values = new LinkedHashMap<String, Object>();
+	private String m_seperator1 = ";";
+	private String m_seperator2 = ":";
+	
+	private Map<String, Object> m_values;
+	
+	public HAPInfoImpSimple(String seperator1, String seperator2) {
+		this();
+		this.m_seperator1 = seperator1;
+		this.m_seperator2 = seperator2;
+	}
+
+	public HAPInfoImpSimple() {	
+		m_values = new LinkedHashMap<String, Object>();
+	}
 	
 	@Override
 	public Object getValue(String name) {		return this.m_values.get(name);	}
@@ -40,5 +57,30 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 			this.setValue(key, value);
 		}
 		return true;
+	}
+	
+	@Override
+	protected String buildLiterate(){
+		List<String> segs = new ArrayList<String>();
+		for(String name : this.m_values.keySet()) {
+			segs.add(HAPNamingConversionUtility.cascadeComponents(new String[] {name, HAPSerializeManager.getInstance().toStringValue(this.m_values.get(name), HAPSerializationFormat.LITERATE)}, this.m_seperator2));
+		}
+		return HAPNamingConversionUtility.cascadeComponents(segs.toArray(new String[0]), this.m_seperator1); 
+	}
+
+	@Override
+	protected boolean buildObjectByLiterate(String literateValue){
+		if(HAPBasicUtility.isStringNotEmpty(literateValue)) {
+			String[] segs = HAPNamingConversionUtility.splitTextByComponents(literateValue, m_seperator1);
+			if(segs.length==1) {
+				int kkkk = 5555;
+				kkkk++;
+			}
+			for(String seg : segs) {
+				String[] eles = HAPNamingConversionUtility.splitTextByComponents(seg, this.m_seperator2);
+				this.m_values.put(eles[0], eles[1]);
+			}
+		}
+		return true;  
 	}
 }
