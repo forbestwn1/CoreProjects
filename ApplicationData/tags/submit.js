@@ -33,6 +33,7 @@
 	},
 	script : function(env){
 		var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
+		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 		var node_requestProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	
 		var loc_env = env;
@@ -45,23 +46,30 @@
 		var loc_setupUIEvent = function(){
 			loc_view.bind('click', function(){
 				window.alert("sometext");
-				var setRequest = node_createServiceRequestInfoSet({}, {
+				var out = node_createServiceRequestInfoSequence({}, {
+					success : function(requestInfo, data){
+//						loc_env.executeDataOperationRequestSet(loc_env.getAttributeValue("output"), "", serviceData.data);
+					}
+				});
+				
+				var getParmsRequest = node_createServiceRequestInfoSet({}, {
 					success : function(requestInfo, result){
 						var commandParms = {
 							name : loc_env.getAttributeValue("datasource"),
 							parms : result.getResults()
 						};
-						var serviceData = loc_env.executeGatewayCommand("dataSource", "getData", commandParms);
-//						loc_env.executeDataOperationRequestSet(loc_env.getAttributeValue("output"), "", serviceData.data);
+						return loc_env.getGatewayCommandRequest("dataSource", "getData", commandParms);
 					}
 				});
 
 				var parmDefs = loc_env.getAttributeValue("parms").split(";");
 				_.each(parmDefs, function(parmDef, i){
 					var ps = parmDef.split(":");
-					setRequest.addRequest(ps[0], loc_env.getDataOperationRequestGet(ps[1]));
+					getParmsRequest.addRequest(ps[0], loc_env.getDataOperationRequestGet(ps[1]));
 				});
-				node_requestProcessor.processRequest(setRequest, false);
+				
+				out.addRequest(getParmsRequest);
+				node_requestProcessor.processRequest(out, false);
 			});
 		};
 

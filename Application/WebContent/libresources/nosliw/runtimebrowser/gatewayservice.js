@@ -130,8 +130,8 @@ var node_createGatewayService = function(){
 			return out;
 		},	
 			
-		executeExecuteGatewayCommandRequest : function(gatewayId, command, parms, requester_parent){
-			var requestInfo = this.getExecuteGatewayCommandRequest(gatewayId, command, parms, requester_parent);
+		executeExecuteGatewayCommandRequest : function(gatewayId, command, parms, handlers, requester_parent){
+			var requestInfo = this.getExecuteGatewayCommandRequest(gatewayId, command, parms, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		

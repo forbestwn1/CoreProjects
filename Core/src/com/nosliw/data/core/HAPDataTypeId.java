@@ -1,5 +1,7 @@
 package com.nosliw.data.core;
 
+import java.util.Map;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
@@ -23,11 +25,16 @@ public class HAPDataTypeId extends HAPSerializableImp{
 	public static String VERSION = "version";
 
 	@HAPAttribute
+	public static String PARMS = "parms";
+
+	@HAPAttribute
 	public static String FULLNAME = "fullName";
 	
 	private String m_name;
 	
 	private HAPDataTypeVersion m_version;
+	
+	private Map<String, String> m_parms;
 	
 	private String m_fullName;
 	

@@ -114,6 +114,8 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		},
 		
 		//---------------------------------other request
+		getGatewayCommandRequest : function(gatewayId, command, parms, requestInfo){	return nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, requestInfo);	},
+		executeGatewayCommandRequest : function(gatewayId, command, parms, requestInfo){	return nosliw.runtime.getGatewayService().executeExecuteGatewayCommandRequest(gatewayId, command, parms, requestInfo);	},
 		executeGatewayCommand : function(gatewayId, command, parms){	return nosliw.runtime.getGatewayService().executeGatewayCommand(gatewayId, command, parms);	}
 	};
 	
