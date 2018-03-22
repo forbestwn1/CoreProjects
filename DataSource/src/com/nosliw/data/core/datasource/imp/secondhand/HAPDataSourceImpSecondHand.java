@@ -9,7 +9,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
-import com.nosliw.data.core.datasource.HAPDataSource;
+import com.nosliw.data.core.datasource.HAPExecutableDataSource;
 import com.nosliw.data.core.datasource.HAPDefinition;
 import com.nosliw.data.core.datasource.HAPDataSourceDefinitionManager;
 import com.nosliw.data.core.datasource.HAPDefinitionParm;
@@ -25,7 +25,7 @@ import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
 import com.nosliw.data.core.task.HAPManagerTask;
 
-public class HAPDataSourceImpSecondHand implements HAPDataSource{
+public class HAPDataSourceImpSecondHand implements HAPExecutableDataSource{
 
 	@Override
 	public HAPData getData(Map<String, HAPData> parms) {

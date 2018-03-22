@@ -35,6 +35,10 @@ function (env) {
             if (loc_containerVariable == undefined) {
                 loc_containerVariable = containerVar;
                 loc_containerVariable.registerDataOperationEventListener(undefined, function (event, eventData, requestInfo) {
+                    if (event == "EVENT_WRAPPER_SET") {
+                        loc_out.destroy();
+                        loc_updateView();
+                    }
                     if (event == "EVENT_WRAPPER_NEWELEMENT") {
                         loc_addEle(eventData.getElement(), eventData.getIndex(), 0);
                     }

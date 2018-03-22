@@ -1,6 +1,6 @@
 package com.nosliw.data.core.datasource.imp.secondhand;
 
-import com.nosliw.data.core.datasource.HAPDataSource;
+import com.nosliw.data.core.datasource.HAPExecutableDataSource;
 import com.nosliw.data.core.datasource.HAPDefinition;
 import com.nosliw.data.core.datasource.HAPDataSourceDefinitionManager;
 import com.nosliw.data.core.datasource.HAPDataSourceFactory;
@@ -27,7 +27,7 @@ public class HAPDataSourceFactorySecondHand implements HAPDataSourceFactory{
 	}
 	
 	@Override
-	public HAPDataSource newDataSource(HAPDefinition dataSourceDefinition){
+	public HAPExecutableDataSource newDataSource(HAPDefinition dataSourceDefinition){
 		return null;
 //		return new HAPDataSourceImpSecondHand(dataSourceDefinition, this.m_dataSourceDefinitionManager, m_expressionManager, m_runtime);		
 	}

@@ -4,13 +4,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.datasource.HAPDataSource;
+import com.nosliw.data.core.datasource.HAPExecutableDataSource;
 import com.nosliw.data.core.datasource.HAPDefinition;
 import com.nosliw.data.core.datasource.HAPDefinitionParm;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
 import com.nosliw.data.core.task.HAPManagerTask;
 
-public class HAPDataSourceImp implements HAPDataSource{
+public class HAPDataSourceImp implements HAPExecutableDataSource{
 
 	private HAPDefinition m_dataSourceDefinition;
 	

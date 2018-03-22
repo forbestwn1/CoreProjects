@@ -1,13 +1,19 @@
 package com.nosliw.data.core.datasource;
 
-import java.util.Map;
+public class HAPDataSource {
 
-import com.nosliw.data.core.HAPData;
-
-public interface HAPDataSource {
-
-//	HAPDataSourceDefinition getDefinition();
+	private HAPDefinition m_definition;
 	
-	HAPData getData(Map<String, HAPData> parms);
-
+	private HAPExecutableDataSource m_executable;
+	
+	public HAPDataSource(HAPDefinition definition, HAPExecutableDataSource executable) {
+		this.m_definition = definition;
+		this.m_executable = executable;
+	}
+	
+	
+	public HAPDefinition getDefinition() {		return this.m_definition;	}
+	
+	public HAPExecutableDataSource getExecutable() {   return this.m_executable;    }
+	
 }

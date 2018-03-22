@@ -11,9 +11,9 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataWrapper;
-import com.nosliw.data.core.datasource.HAPDataSource;
+import com.nosliw.data.core.datasource.HAPExecutableDataSource;
 
-public class HAPDataSourceImp implements HAPDataSource{
+public class HAPDataSourceImp implements HAPExecutableDataSource{
 
 	public static int INDEX_ID = 0;
 	public static int INDEX_LAT = 1;

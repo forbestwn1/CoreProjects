@@ -2,6 +2,7 @@ package com.nosliw.data.core.datasource;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -39,15 +40,17 @@ public class HAPDataSourceManager {
 			try{
 				//not exists, then create one using factory
 				HAPDefinition def = this.m_dataSourceDefinitionManager.getDataSourceDefinition(dataSourceName);
+				HAPExecutableDataSource dataSourceExe;
 				String imp = def.getImplementation();
 				if(imp.contains(".")){
 					//it is class name
-					dataSource = (HAPDataSource)Class.forName(imp).newInstance();
+					dataSourceExe = (HAPExecutableDataSource)Class.forName(imp).newInstance();
 				}
 				else{
 					//it is factory name
-					dataSource = this.m_dataSourceFactorys.get(imp).newDataSource(def);
+					dataSourceExe = this.m_dataSourceFactorys.get(imp).newDataSource(def);
 				}
+				dataSource = new HAPDataSource(def, dataSourceExe);
 			}
 			catch(Exception e){
 				e.printStackTrace();
@@ -56,7 +59,15 @@ public class HAPDataSourceManager {
 		}
 		
 		HAPData out = null;
-		if(dataSource!=null)  out = dataSource.getData(parms);
+		if(dataSource!=null) {
+			Map<String, HAPData> dataSourceParms = new LinkedHashMap<String, HAPData>();
+			Map<String, HAPDefinitionParm> parmsDef = dataSource.getDefinition().getParms();
+			for(String parmName : parmsDef.keySet()) {
+				HAPData parmData = parms.get(parmName);
+				if(parmData==null) parmData = parmsDef.get(parmName).getDefault();   //not provide, use default 
+			}
+			out = dataSource.getExecutable().getData(dataSourceParms);
+		}
 		return out;
 	}
 	
