@@ -7,8 +7,18 @@
 		{
 			name : "type",
 			criteria : "test.string;1.0.0",
-			default : "public"
+			default :{
+				dataTypeId: "test.string;1.0.0",
+				value: "public"
+			},
+		},
+		{
+			name : "score",
+			criteria : "test.integer;1.0.0",
+			default :{
+				dataTypeId: "test.integer;1.0.0",
+				value: "5"
+			},
 		}
-	
 	]
 }

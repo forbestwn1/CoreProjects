@@ -39,7 +39,7 @@
 					a : {
 						aa : {
 							dataTypeId: "test.string;1.0.0",
-							value: "This is my world!"
+							value: "Public"
 						},
 						dd : "HELLO!!!!",
 						cc : [

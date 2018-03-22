@@ -2,6 +2,10 @@
 <html>
 <body>
 ******************************	Result  ********************************
+		<br>
+		Sum:<%=#|?(result)?.length()|#.value%>
+		<br>
+		
 
 		<nosliw-loop data="result" element="ele" index="index">  
 			<br>

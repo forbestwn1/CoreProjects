@@ -2,7 +2,6 @@ package com.nosliw.data.core.datasource;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -65,6 +64,7 @@ public class HAPDataSourceManager {
 			for(String parmName : parmsDef.keySet()) {
 				HAPData parmData = parms.get(parmName);
 				if(parmData==null) parmData = parmsDef.get(parmName).getDefault();   //not provide, use default 
+				dataSourceParms.put(parmName, parmData);
 			}
 			out = dataSource.getExecutable().getData(dataSourceParms);
 		}

@@ -33,13 +33,12 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 	@Override
 	public HAPData getData(Map<String, HAPData> parms){
 
-		JSONArray schoolArrayData = new JSONArray();
-
 //		InputStream elementDataInputStream = new FileInputStream(new File("elementSchoolArray.js"));
 		
 		InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(getClass(), "elementSchoolArray_simple.js");
 		String content =  HAPFileUtility.readFile(inputStream);
 		
+		JSONArray schoolArrayData = new JSONArray();
 		try{
 			JSONArray originalDataArray = new JSONArray(content);
 			for(int i=0; i<originalDataArray.length(); i++){
@@ -47,6 +46,15 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 					JSONObject outSchool = new JSONObject();
 					
 					JSONArray jsonSchoolData = originalDataArray.optJSONArray(i);
+
+					String schoolType = jsonSchoolData.getString(INDEX_TYPE);
+					Double schoolScore = jsonSchoolData.getDouble(INDEX_SCORE);
+					if(!(parms.get("type").getValue()+"").equalsIgnoreCase(schoolType))  continue;
+					if(schoolScore < Double.valueOf(parms.get("score").getValue()+""))  continue;
+					
+					outSchool.put("type", createJSONData("test.string;1.0.0", schoolType));
+					outSchool.put("score", createJSONData("test.float;1.0.0", schoolScore));
+					
 					
 					JSONObject outGeoValue = new JSONObject();
 					outGeoValue.put("latitude", jsonSchoolData.getDouble(INDEX_LAT));
@@ -55,9 +63,7 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 					
 					
 					outSchool.put("id", createJSONData("test.string;1.0.0", jsonSchoolData.getString(INDEX_ID)));
-					outSchool.put("type", createJSONData("test.string;1.0.0", jsonSchoolData.getString(INDEX_TYPE)));
 					outSchool.put("name", createJSONData("test.string;1.0.0", jsonSchoolData.getString(INDEX_NAME)));
-					outSchool.put("score", createJSONData("test.float;1.0.0", jsonSchoolData.getDouble(INDEX_SCORE)));
 					outSchool.put("color", createJSONData("test.string;1.0.0", jsonSchoolData.getString(INDEX_COLOR)));
 					
 					schoolArrayData.put(createJSONData("test.map;1.0.0", outSchool));

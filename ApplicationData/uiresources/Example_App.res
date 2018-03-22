@@ -8,7 +8,7 @@
 	</div>
 
 	<br>
-	<nosliw-submit title="Submit" datasource="school" parms="data1:business.a.aa"  output="result"/>  
+	<nosliw-submit title="Submit" datasource="school" parms="type:business.a.aa"  output="result"/>  
 	<br>
 	
 	<div>

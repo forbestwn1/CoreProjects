@@ -1,0 +1,53 @@
+{
+	"name": "test",
+    "implementation" : "task",
+	"description" : "test data source",
+	"output" : "test.array;1.0.0%||element:test.map;1.0.0%||geo:test.geo;1.0.0||%||%",
+	"parms" : [ 
+		{
+			name : "type",
+			criteria : "test.string;1.0.0",
+			default :{
+				dataTypeId: "test.string;1.0.0",
+				value: "public"
+			},
+		},
+		{
+			name : "score",
+			criteria : "test.integer;1.0.0",
+			default :{
+				dataTypeId: "test.integer;1.0.0",
+				value: "5"
+			},
+		}
+	],
+	"configure" : {
+		"name": "expression5",
+		"description" : "task with reference",
+		"tasks": [
+			{
+				"name" : "main",
+				"type" : "expression",
+				"steps" : [
+					{
+						"type" : "expression",
+						"expression": "<(expression1)",
+					}
+				],
+			},
+			{
+				"name" : "schooldata",
+				"type" : "datasource",
+				"datasource" : "school",
+				"parms" : {
+					"type" : "",
+					"score" : ""					
+				}
+			},
+		],
+		"constants": {
+		},
+		"variables" : {
+		},
+	}
+}
