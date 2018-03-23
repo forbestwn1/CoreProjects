@@ -38,7 +38,7 @@
 			{
 				"name" : "schooldata",
 				"type" : "datasource",
-				"datasource" : "school",
+				"dataSource" : "school",
 				"parms" : {
 					"type" : "",
 					"score" : ""					

@@ -45,18 +45,17 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 		
 		//process references info
 		this.processReferencedTasks(out, taskDefExp, contextTaskDefinitions, contextConstants, context);
+		this.updateReference(out);
 		
 		//get updated variables map according to domain
 		Map<String, String> domainedVariableMap = new LinkedHashMap<String, String>();
 		if(variableMap!=null) {
 			for(String name : variableMap.keySet()) {
-				domainedVariableMap.put(HAPExpressionUtility.buildFullVariableName(out.getDomain(), name), variableMap.get(name));
+				domainedVariableMap.put(HAPExpressionUtility.buildFullVariableName(domain, name), variableMap.get(name));
 			}
 		}
 		//update variable in task
 		out.updateVariable(new HAPUpdateVariableMap(domainedVariableMap));
-		
-		this.updateReference(out);
 		
 		return out;
 	}
@@ -81,7 +80,6 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 		 for(HAPExecutableStep step : out.getSteps()) {
 			 step.updateReferencedExecute(out.getReferencedExecute());
 		 }
-		out.getReferencedExecute();
 	}
 	
 	private void processReferencedTasks(HAPExecutableTaskExpression out, HAPDefinitionTaskExpression taskDefExp,

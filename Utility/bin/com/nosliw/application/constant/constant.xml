@@ -534,6 +534,7 @@
 
 			<definition type="space"/>
 			<definition name="DATATASK_TYPE_EXPRESSION" value="expression"/>
+			<definition name="DATATASK_TYPE_DATASOURCE" value="dataSource"/>
 
 			<definition type="space"/>
 			<definition name="EXPRESSIONTASK_STEPTYPE_EXPRESSION" value="expression"/>

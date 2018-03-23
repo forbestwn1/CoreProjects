@@ -451,6 +451,7 @@ public class HAPConstant {
 
 
 		public static final String DATATASK_TYPE_EXPRESSION = "expression";
+		public static final String DATATASK_TYPE_DATASOURCE = "dataSource";
 
 
 

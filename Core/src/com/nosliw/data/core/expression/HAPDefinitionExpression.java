@@ -68,25 +68,10 @@ public class HAPDefinitionExpression  extends HAPSerializableImp{
 
 		this.m_variableNames.addAll(HAPExpressionUtility.discoverVariables(this.m_operand));
 		
-		this.discoverReferences();
+		this.m_referenceNames.addAll(HAPOperandUtility.discoverReferences(this.m_operand));
 		
 		this.processDefaultAnonomousParmInOperation();
 		
-	}
-	
-	//find all variables and references in expression
-	private void discoverReferences() {
-		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
-					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					m_referenceNames.add(referenceOperand.getReferenceName());
-				}
-				return true;
-			}
-		});		
 	}
 	
 	/**

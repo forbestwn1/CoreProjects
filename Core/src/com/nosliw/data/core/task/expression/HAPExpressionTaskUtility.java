@@ -3,29 +3,22 @@ package com.nosliw.data.core.task.expression;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPOperationId;
-import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
 import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
-import com.nosliw.data.core.runtime.HAPResourceUtility;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 
 public class HAPExpressionTaskUtility {

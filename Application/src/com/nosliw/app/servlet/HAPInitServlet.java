@@ -4,6 +4,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.datasource.HAPGatewayDataSource;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.task.HAPTaskDefinitionSuiteImporter;
@@ -33,6 +34,9 @@ public class HAPInitServlet  extends HttpServlet{
 			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPResourceManagerUIResource(uiResourceMan));
 			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UITAG, new HAPResourceManagerUITag(new HAPUITagManager()));
 
+			runtimeEnvironment.getGatewayManager().registerGateway("options", new HAPGatewayOptions());
+			
+			
 //			String file = HAPFileUtility.getFileNameOnClassPath(HAPInitServlet.class, "Example1.res");
 //			HAPUIDefinitionUnitResource uiResource = uiResourceMan.addUIResourceDefinition(file);
 

@@ -15,9 +15,43 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.task.HAPUpdateVariable;
 
 public class HAPOperandUtility {
 
+	static public void updateVariable(HAPOperandWrapper operand, HAPUpdateVariable updateVar) {
+		//update variable operand
+		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
+					HAPOperandVariable variableChild = (HAPOperandVariable)operand.getOperand();
+					String newName = updateVar.getUpdatedVariable(variableChild.getVariableName()); 
+					if(newName!=null)	variableChild.setVariableName(newName);
+				}
+				return true;
+			}
+		});	
+	}
+
+	static public Set<String> discoverReferences(HAPOperandWrapper operand) {
+		Set<String> out = new HashSet<String>();
+		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+					out.add(referenceOperand.getReferenceName());
+				}
+				return true;
+			}
+		});	
+		return out;
+	}
+	
+	
 	static public Set<String> discoveryVariables(HAPOperandWrapper operand){
 		Set<String> out = new HashSet<String>();
 		processAllOperand(operand, out, new HAPOperandTask(){

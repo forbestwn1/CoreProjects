@@ -117,20 +117,7 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 	@Override
 	public void updateVariable(HAPUpdateVariable updateVar) {
 		if(this.m_outputVariable!=null) this.m_outputVariable = updateVar.getUpdatedVariable(this.m_outputVariable);
-	
-		//update variable operand
-		HAPOperandUtility.processAllOperand(this.getOperand(), null, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
-					HAPOperandVariable variableChild = (HAPOperandVariable)operand.getOperand();
-					String newName = updateVar.getUpdatedVariable(variableChild.getVariableName()); 
-					if(newName!=null)	variableChild.setVariableName(newName);
-				}
-				return true;
-			}
-		});	
+		HAPOperandUtility.updateVariable(this.getOperand(), updateVar);
 	}
 
 	@Override
