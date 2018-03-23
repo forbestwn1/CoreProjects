@@ -2,8 +2,10 @@ package com.nosliw.data.core.runtime.js;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.datasource.HAPDataSourceFactoryTask;
 import com.nosliw.data.core.datasource.HAPDataSourceManager;
+import com.nosliw.data.core.datasource.task.HAPManagerTaskDatasource;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
@@ -65,6 +67,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_dataSourceManager = dataSourceManager;
 
 		this.m_dataSourceManager.registerDataSourceFactory(HAPDataSourceFactoryTask.FACTORY_TYPE, new HAPDataSourceFactoryTask(this.getTaskManager()));
+		
+		this.getTaskManager().registerTaskManager(HAPConstant.DATATASK_TYPE_DATASOURCE, new HAPManagerTaskDatasource(this.getDataSourceManager().getDataSourceDefinitionManager(), this.getDataSourceManager(), this.getRuntime()));
 		
 		//gateway
 		this.m_gatewayManager = gatewayManager;

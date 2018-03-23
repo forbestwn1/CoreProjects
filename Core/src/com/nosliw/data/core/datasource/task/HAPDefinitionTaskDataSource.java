@@ -25,8 +25,12 @@ public class HAPDefinitionTaskDataSource extends HAPDefinitionTask{
 	
 	private Map<String, HAPDefinitionExpression> m_parmsDef;
 	
-	public HAPDefinitionTaskDataSource(String dataSource) {
+	public HAPDefinitionTaskDataSource() {
 		this.m_parmsDef = new LinkedHashMap<String, HAPDefinitionExpression>();
+	}
+	
+	public HAPDefinitionTaskDataSource(String dataSource) {
+		this();
 		this.m_dataSource = dataSource;
 	}
 	

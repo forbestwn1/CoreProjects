@@ -435,6 +435,15 @@ var node_createExpressionService = function(){
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 
+		getMatchDataRequest : function(data, matchers, handlers, requester_parent){
+			return loc_getMatchDataTaskRequest(data, matchers, handlers, requester_parent);
+		},
+
+		executeMatchDataRequest : function(data, matchers, handlers, requester_parent){
+			var requestInfo = this.getMatchDataRequest(data, matchers, handlers, requester_parent);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+		
 		/**
 		 * Execute script expression
 		 * 		script : function with parameter map (name : expression result)

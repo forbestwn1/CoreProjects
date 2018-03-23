@@ -18,6 +18,7 @@ import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
+import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
 
 /**
@@ -132,7 +133,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		for(Object ele : this.m_elements){
 			if(ele instanceof HAPDefinitionExpression){
 				HAPDefinitionExpression expDef = (HAPDefinitionExpression)ele;
-				this.m_variableNames.addAll(HAPExpressionUtility.discoverVariables(this.m_expressions.get(i+"").getOperand()));
+				this.m_variableNames.addAll(HAPOperandUtility.discoverVariables(this.m_expressions.get(i+"").getOperand()));
 			}
 			else if(ele instanceof HAPScriptExpressionScriptSegment){
 				HAPScriptExpressionScriptSegment scriptSegment = (HAPScriptExpressionScriptSegment)ele;

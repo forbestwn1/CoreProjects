@@ -124,7 +124,7 @@ public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 	public Set<String> getVariables() {
 		Set<String> out = new HashSet<String>();
 		for(String parm : this.m_parmsOperand.keySet()) {
-			out.addAll(HAPOperandUtility.discoveryVariables(this.m_parmsOperand.get(parm)));
+			out.addAll(HAPOperandUtility.discoverVariables(this.m_parmsOperand.get(parm)));
 		}
 		return out;
 	}

@@ -25,6 +25,8 @@ public class HAPDataSourceManager {
 		this.m_dataSourceFactorys = new LinkedHashMap<String, HAPDataSourceFactory>();
 	}
 	
+	public HAPDataSourceDefinitionManager getDataSourceDefinitionManager() {   return this.m_dataSourceDefinitionManager;   }
+	
 	public void registerDataSource(String name, HAPDataSource dataSource){
 		this.m_dataSources.put(name, dataSource);
 	}
@@ -71,7 +73,4 @@ public class HAPDataSourceManager {
 		return out;
 	}
 	
-	protected HAPDataSourceDefinitionManager getDataSourceDefinitionManager(){
-		return this.m_dataSourceDefinitionManager;
-	}
 }

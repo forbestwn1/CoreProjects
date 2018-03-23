@@ -38,52 +38,6 @@ public class HAPExpressionTaskUtility {
 	}
 	
 	
-	/**
-	 * Discover resources required for data type operation
-	 * @param dataTypeInfo
-	 * @param dataOpInfo
-	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
-	 */
-	static public List<HAPResourceInfo> discoverResourceRequirement(HAPDataTypeId dataTypeId, String operation, HAPResourceManagerRoot resourceMan) {
-		HAPOperationId operationId = new HAPOperationId(dataTypeId, operation);
-		HAPResourceId resourceId = new HAPResourceIdOperation(operationId);
-		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
-		resourceIds.add(resourceId);
-		return resourceMan.discoverResources(resourceIds);
-	}
-
-	/**
-	 * Discover resources required for expression 
-	 * @param expression
-	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
-	 */
-	static public List<HAPResourceInfo> discoverResourceRequirement(List<HAPExecuteExpression> expressions, HAPResourceManagerRoot resourceMan) {
-		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
-		for(HAPExecuteExpression expression : expressions){
-			resourceIds.addAll(getResourceRequirement(expression));
-		}
-		return resourceMan.discoverResources(new ArrayList<HAPResourceId>(resourceIds));
-	}
-	
-	/**
-	 * Discover resources required for expression 
-	 * @param expression
-	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
-	 */
-	static private List<HAPResourceId> getResourceRequirement(HAPExecuteExpression expression){
-		Set<HAPResourceId> result = new LinkedHashSet<HAPResourceId>();
-		HAPOperandUtility.processAllOperand(expression.getOperand(), result, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				Set<HAPResourceId> resourceIds = (Set<HAPResourceId>)data;
-				resourceIds.addAll(operand.getOperand().getResources());
-				return true;
-			}
-		});
-		return new ArrayList(result);
-	}	
-	
-	
 	
 	/**
 	 * Discover resources required for expression 

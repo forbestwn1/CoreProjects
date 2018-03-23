@@ -9,6 +9,7 @@ import com.nosliw.data.core.datasource.HAPDataSourceDefinitionManager;
 import com.nosliw.data.core.datasource.HAPDefinition;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
+import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutableTask;
@@ -44,6 +45,11 @@ public class HAPProcessorTaskDataSource implements HAPProcessorTask{
 				//if not defined, then use datasource variable name
 				out.addParmOperand(dsParm, new HAPOperandVariable(dsParm));
 			}
+		}
+
+		//constant
+		for(String dsParm : out.getParmsOperand().keySet()) {
+			HAPOperandUtility.updateConstantData(out.getParmsOperand().get(dsParm), contextConstants);
 		}
 		
 		out.updateVariable(new HAPUpdateVariableDomain(domain));

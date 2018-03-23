@@ -66,7 +66,7 @@ public class HAPDefinitionExpression  extends HAPSerializableImp{
 		//parse expression
 		this.m_operand = new HAPOperandWrapper(HAPExpressionManager.expressionParser.parseExpression(this.m_expression));
 
-		this.m_variableNames.addAll(HAPExpressionUtility.discoverVariables(this.m_operand));
+		this.m_variableNames.addAll(HAPOperandUtility.discoverVariables(this.m_operand));
 		
 		this.m_referenceNames.addAll(HAPOperandUtility.discoverReferences(this.m_operand));
 		

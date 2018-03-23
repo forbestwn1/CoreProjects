@@ -52,7 +52,7 @@ public class HAPOperandUtility {
 	}
 	
 	
-	static public Set<String> discoveryVariables(HAPOperandWrapper operand){
+	static public Set<String> discoverVariables(HAPOperandWrapper operand){
 		Set<String> out = new HashSet<String>();
 		processAllOperand(operand, out, new HAPOperandTask(){
 			@Override

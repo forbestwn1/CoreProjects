@@ -2,6 +2,7 @@ package com.nosliw.data.core.imp.runtime.js.browser;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.datasource.HAPDataSourceManager;
 import com.nosliw.data.core.datasource.HAPGatewayDataSource;
 import com.nosliw.data.core.expression.HAPExpressionManager;
@@ -56,7 +57,6 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 			dataSourceManager,
 			runtime
 		);
-		
 		
 		this.getGatewayManager().registerGateway(GATEWAY_DATASOURCE, new HAPGatewayDataSource(this.getDataSourceManager()));
 		
