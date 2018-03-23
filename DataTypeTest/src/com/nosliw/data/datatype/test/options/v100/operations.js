@@ -18,18 +18,21 @@ dataTypeDefition.operations['all'] = {
 			var gatewayParms = {
 				"id" : parms.getParm("optionsId").value,
 			};
-			var optionsValues =  context.getResourceDataByName("myGateWay").command("getValues", gatewayParms);
-			_.each(optionsValues, function(value, i){
-				valueOut.push({
-					dataTypeId : "test.string;1.0.0",
-					value : value,
-				});
+			var out =  context.getResourceDataByName("myGateWay").request("getValues", gatewayParms, {
+				success : function(requestInfo, optionsValues){
+					_.each(optionsValues, function(value, i){
+						valueOut.push({
+							dataTypeId : "test.string;1.0.0",
+							value : value,
+						});
+					});
+					return {
+						dataTypeId : "test.array;1.0.0",
+						value : valueOut,
+					};
+				}
 			});
-
-			return {
-				dataTypeId : "test.array;1.0.0",
-				value : valueOut,
-			};
+			return out;
 		},
 
 		requires:{

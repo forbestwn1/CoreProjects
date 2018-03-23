@@ -372,20 +372,18 @@ var node_createExpressionService = function(){
 	
 	//execute data operation
 	var loc_getExecuteOperationRequest = function(dataTypeId, operation, parmArray, handlers, requester_parent){
-		var requestInfo = loc_out.getRequestInfo(requester_parent);
-		var out = node_createServiceRequestInfoService(new node_ServiceInfo("ExecuteOperation", {"dataType":dataTypeId, "operation":operation, "parms":parmArray}), handlers, requestInfo);
-		
-		var dataOperationResourceId = node_resourceUtility.createOperationResourceId(dataTypeId, operation);
-		var getResourceRequest = nosliw.runtime.getResourceService().getGetResourcesRequest([dataOperationResourceId]);
 
-		var resourceRequestDependency = new node_DependentServiceRequestInfo(getResourceRequest, {
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteOperation", {"dataType":dataTypeId, "operation":operation, "parms":parmArray}), handlers, requestInfo);
+
+		var dataOperationResourceId = node_resourceUtility.createOperationResourceId(dataTypeId, operation);
+		var getResourceRequest = nosliw.runtime.getResourceService().getGetResourcesRequest([dataOperationResourceId], {
 			success : function(requestInfo, resourcesTree){
-				var out = node_expressionUtility.executeOperationResource(dataOperationResourceId, parmArray, resourcesTree);
-				return out;
-			},
+				var opResult = node_expressionUtility.executeOperationResource(dataOperationResourceId, parmArray, resourcesTree);
+				return opResult;
+			}
 		});
-		
-		out.setDependentService(resourceRequestDependency);
+		out.addRequest(getResourceRequest);
 		return out;
 	};	
 

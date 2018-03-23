@@ -3,5 +3,9 @@
 
 		var out = nosliw.runtime.getGatewayService().executeGatewayCommand("||gatewayId||", command, parms);
 		return out;
+	},
+	"request" : function(command, parms, handlers, request){
+		return nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest("||gatewayId||", command, parms, handlers, request);
 	}
+	
 }
