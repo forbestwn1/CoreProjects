@@ -7,7 +7,7 @@
 	TextInput:<nosliw-textinput data="business.a.aa"/>  
 
 	<br>
-	<nosliw-options optionsId="id" data="business.a.aa"/>
+	<nosliw-options id="school" data="business.a.aa"/>
 	<br>
 	
 </body>

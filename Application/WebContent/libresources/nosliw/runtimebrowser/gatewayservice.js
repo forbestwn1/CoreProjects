@@ -71,6 +71,11 @@ var node_createGatewayService = function(){
 	var loc_out = {
 
 			getExecuteGatewayCommandRequest : function(gatewayId, command, parms, handlers, requester_parent){
+				if(gatewayId=="options"){
+					var kkkk = 5555;
+					kkkk++;
+				}
+				
 				var requestInfo = loc_out.getRequestInfo(requester_parent);
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RequestGatewayService", {"gatewayId":gatewayId,"command":command,"parms":parms}), handlers, requestInfo);
 

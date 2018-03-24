@@ -3,7 +3,7 @@
 	description : "",
 	attributes : [
 		{
-			name : "optionsId"
+			name : "id"
 		},
 		{
 			name : "data"
@@ -73,25 +73,25 @@
 				operationParms.push(new node_OperationParm(
 					{
 						dataTypeId: "test.string;1.0.0",
-						value: loc_env.getAttributeValue("optionsId")
+						value: loc_env.getAttributeValue("id")
 					}, "optionsId"));
 				
 				loc_env.executeExecuteOperationRequest("test.options;1.0.0", "all", operationParms, {
 					success : function(request, optionsValueArray){
 						_.each(optionsValueArray.value, function(optionsValue, i){
 							loc_view.append($('<option>', {
-								value: i,
+								value: optionsValue.value,
 								text: optionsValue.value
 							}));
 						});
+						loc_updateView();
 					}
 				});
-				
 				return loc_view;
 			},
 				
-			postInit1 : function(){
-				loc_updateView();
+			postInit : function(){
+//				loc_updateView();
 				loc_setupUIEvent();
 
 				loc_dataVariable.registerDataOperationEventListener(undefined, function(){

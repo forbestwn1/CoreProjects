@@ -7,9 +7,21 @@ import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 
 public class HAPGatewayOptions extends HAPGatewayImp{
 
+	static public final String COMMAND_GETVALUES = "getValues";
+	static public final String PARMS_GETVALUES_ID = "id";
+	
+	
 	@Override
 	public HAPServiceData command(String command, JSONObject parms) throws Exception {
-		return this.createSuccessWithObject(new String[] {"value1", "value2", "value3"});
+		if(COMMAND_GETVALUES.equals(command)) {
+			String[] values = null;
+			switch(parms.getString(PARMS_GETVALUES_ID)) {
+			case "school":
+				values = new String[] {"Public", "Private", "First Nation"};
+			}
+			return this.createSuccessWithObject(values);
+		}
+		return null;
 	}
 
 }

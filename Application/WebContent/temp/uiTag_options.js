@@ -31,6 +31,7 @@ function (env) {
     };
     var loc_setupUIEvent = function () {
         loc_view.bind("change", function () {
+            window.alert("aaaa");
             env.executeBatchDataOperationRequest([env.getDataOperationSet(loc_dataVariable, "", loc_getViewData())]);
         });
     };
@@ -38,15 +39,15 @@ function (env) {
     }, initViews: function (requestInfo) {
         loc_view = $("<select/>");
         var operationParms = [];
-        operationParms.push(new node_OperationParm({dataTypeId: "test.string;1.0.0", value: loc_env.getAttributeValue("optionsId")}, "optionsId"));
+        operationParms.push(new node_OperationParm({dataTypeId: "test.string;1.0.0", value: loc_env.getAttributeValue("id")}, "optionsId"));
         loc_env.executeExecuteOperationRequest("test.options;1.0.0", "all", operationParms, {success: function (request, optionsValueArray) {
             _.each(optionsValueArray.value, function (optionsValue, i) {
-                loc_view.append($("<option>", {value: i, text: optionsValue.value}));
+                loc_view.append($("<option>", {value: optionsValue.value, text: optionsValue.value}));
             });
+            loc_updateView();
         }});
         return loc_view;
-    }, postInit1: function () {
-        loc_updateView();
+    }, postInit: function () {
         loc_setupUIEvent();
         loc_dataVariable.registerDataOperationEventListener(undefined, function () {
             loc_updateView();
