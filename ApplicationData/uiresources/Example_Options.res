@@ -4,9 +4,6 @@
 	<br>
 ************************************   Query  **************************************
 	<br>
-	TextInput:<nosliw-textinput data="business.a.aa"/>  
-
-	<br>
 	<nosliw-options optionsId="id" data="business.a.aa"/>
 	<br>
 	

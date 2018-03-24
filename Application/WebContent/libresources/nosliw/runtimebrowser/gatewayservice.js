@@ -86,16 +86,19 @@ var node_createGatewayService = function(){
 							if(file!=undefined)		requests.push(loc_getLoadResourceFileRequest(file));
 							else		requests.push(loc_getLoadResourceDataRequest(scriptInfo[node_COMMONATRIBUTECONSTANT.JSSCRIPTINFO_SCRIPT]));
 						});
+						
+						requests.push( node_createServiceRequestInfoSimple({}, function(request){  return out.getData("gatewayOutputData")})  );
+						
 						if(requests.length>0)  return requests;
 					}
 				});
 				out.addRequest(gatewayRemoteServiceRequest);
 				
-				out.addPostProcessor({
-					success : function(requestInfo){
-						return out.getData("gatewayOutputData");
-					}
-				});
+//				out.addPostProcessor({
+//					success : function(requestInfo){
+//						return out.getData("gatewayOutputData");
+//					}
+//				});
 				return out;
 			},	
 			

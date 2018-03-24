@@ -115,7 +115,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		
 		//---------------------------------
 		getExecuteOperationRequest : function(dataTypeId, operation, parmsArray, handlers, requester_parent){  return nosliw.runtime.getExpressionService().getExecuteOperationRequest(dataTypeId, operation, parmsArray, handlers, requester_parent)  },
-		executeExecuteOperationRequest : function(dataTypeId, operation, parmsArray, handlers, requester_parent){ this.processRequest(getExecuteOperationRequest(dataTypeId, operation, parmsArray, handlers, requester_parent));  },
+		executeExecuteOperationRequest : function(dataTypeId, operation, parmsArray, handlers, requester_parent){ this.processRequest(this.getExecuteOperationRequest(dataTypeId, operation, parmsArray, handlers, requester_parent));  },
 		
 		//---------------------------------other request
 		getGatewayCommandRequest : function(gatewayId, command, parms, requestInfo){	return nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, requestInfo);	},

@@ -30,6 +30,7 @@
 		},
 	},
 	script : function(env){
+		var node_OperationParm = nosliw.getNodeData("expression.entity.OperationParm");
 
 		var loc_env = env;
 		var loc_dataVariable = env.createVariable("internal_data");

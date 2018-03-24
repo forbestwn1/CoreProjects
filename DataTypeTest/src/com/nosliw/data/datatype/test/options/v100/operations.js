@@ -18,7 +18,8 @@ dataTypeDefition.operations['all'] = {
 			var gatewayParms = {
 				"id" : parms.getParm("optionsId").value,
 			};
-			var out =  context.getResourceDataByName("myGateWay").request("getValues", gatewayParms, {
+			var out = nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest("options", "getValues", gatewayParms, {
+//			var out =  context.getResourceDataByName("myGateWay").request("getValues", gatewayParms, {
 				success : function(requestInfo, optionsValues){
 					_.each(optionsValues, function(value, i){
 						valueOut.push({
@@ -36,9 +37,6 @@ dataTypeDefition.operations['all'] = {
 		},
 
 		requires:{
-			"jsGateway" : { 
-				myGateWay: "options",
-			}
 		},
 };
 
