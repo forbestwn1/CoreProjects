@@ -31,11 +31,16 @@
 				"steps" : [
 					{
 						"type" : "expression",
-						"expression": "<(main1)>",
+						"expression": "<(school)>",
+						"outputVariable" : "schoolData" 
+					},
+					{
+						"type" : "expression",
+						"expression": "?(schoolData)?",
 					}
 				],
 				"references": {
-					"main1": {
+					"school": {
 						"variablesMap": {
 							"type": "type",
 							"score": "score",
@@ -44,7 +49,7 @@
 				},
 			},
 			{
-				"name" : "main1",
+				"name" : "school",
 				"type" : "dataSource",
 				"dataSource" : "school",
 				"parms" : {

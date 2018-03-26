@@ -5,9 +5,41 @@
 	"output" : "test.array;1.0.0%||element:test.map;1.0.0%||geo:test.geo;1.0.0||%||%",
 	"parms" : [ 
 		{
-			name : "type",
-			criteria : "test.string;1.0.0",
-			default : "house"
-		}
+			name : "buildingType",
+			criteria : "test.array;1.0.0%||element:test.string;1.0.0||%",
+			default :{
+				dataTypeId: "test.array;1.0.0",
+				value: [
+					{
+						dataTypeId: "test.string;1.0.0",
+						value: "House"
+					},
+				]
+			},
+		},
+		{
+			name : "bedrooms",
+			criteria : "test.integer;1.0.0",
+			default :{
+				dataTypeId: "test.integer;1.0.0",
+				value: 3
+			},
+		},
+		{
+			name : "fromPrice",
+			criteria : "test.price;1.0.0",
+			default :{
+				dataTypeId: "test.price;1.0.0",
+				value: 400000.0
+			},
+		},
+		{
+			name : "toPrice",
+			criteria : "test.price;1.0.0",
+			default :{
+				dataTypeId: "test.price;1.0.0",
+				value: 1000000.0
+			},
+		},
 	]
 }
