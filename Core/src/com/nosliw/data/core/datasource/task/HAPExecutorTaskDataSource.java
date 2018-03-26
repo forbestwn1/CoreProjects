@@ -3,6 +3,8 @@ package com.nosliw.data.core.datasource.task;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.datasource.HAPDataSourceManager;
 import com.nosliw.data.core.expression.HAPMatchers;
@@ -52,11 +54,24 @@ public class HAPExecutorTaskDataSource implements HAPExecutorTask{
 
 			@Override
 			public Map<String, HAPMatchers> getVariableMatchers() {	return null; }
+
+			@Override
+			public String toStringValue(HAPSerializationFormat format) {
+				Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
+				Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
+				HAPExecuteExpression.buildJsonMap(this, outJsonMap, typeJsonMap);
+				return HAPJsonUtility.buildMapJson(outJsonMap, typeJsonMap);
+			}
+
+			@Override
+			public boolean buildObject(Object value, HAPSerializationFormat format) {
+				return false;
+			}
 		}, parms, null);
 		HAPData parmData = (HAPData)this.m_runtime.executeTaskSync(exeExpTask).getData();
 		
 		HAPRuntimeTaskExecuteConverterRhino converterTask = new HAPRuntimeTaskExecuteConverterRhino(parmData, matchers); 
-		HAPData out = (HAPData)this.m_runtime.executeTaskSync(converterTask);
+		HAPData out = (HAPData)this.m_runtime.executeTaskSync(converterTask).getData();
 		return out;
 	}
 }

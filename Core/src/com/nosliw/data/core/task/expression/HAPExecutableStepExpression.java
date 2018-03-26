@@ -128,9 +128,7 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ID, this.getId());
-		jsonMap.put(OPERAND, HAPSerializeManager.getInstance().toStringValue(this.m_operand, HAPSerializationFormat.JSON));
-		jsonMap.put(VARIABLESMATCHERS, HAPJsonUtility.buildJson(this.m_varsMatchers, HAPSerializationFormat.JSON));
+		HAPExecuteExpression.buildJsonMap(this, jsonMap, typeJsonMap);
 	}
 
 }

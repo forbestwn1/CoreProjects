@@ -35,6 +35,7 @@ public class HAPExpressionParserImp implements HAPExpressionParser{
 		  }
 		  catch(Exception e){
 			  e.printStackTrace();
+			  System.out.println(expression);
 			  return null;
 		  }
           return processExpressionNode(root);

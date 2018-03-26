@@ -31,17 +31,23 @@
 				"steps" : [
 					{
 						"type" : "expression",
-						"expression": "<(expression1)",
+						"expression": "<(main1)>",
 					}
 				],
+				"references": {
+					"main1": {
+						"variablesMap": {
+							"type": "type",
+							"score": "score",
+						}
+					}
+				},
 			},
 			{
-				"name" : "schooldata",
-				"type" : "datasource",
+				"name" : "main1",
+				"type" : "dataSource",
 				"dataSource" : "school",
 				"parms" : {
-					"type" : "",
-					"score" : ""					
 				}
 			},
 		],

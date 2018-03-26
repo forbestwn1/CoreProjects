@@ -1,4 +1,4 @@
-package com.nosliw.datasource.realtor.test;
+package com.nosliw.datasource.test;
 
 import com.nosliw.data.core.datasource.HAPDataSourceProvider;
 

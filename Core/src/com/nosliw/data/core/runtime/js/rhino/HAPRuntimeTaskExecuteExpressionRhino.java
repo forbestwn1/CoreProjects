@@ -15,7 +15,6 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
-import com.nosliw.data.core.task.expression.HAPExpressionTaskUtility;
 
 public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteExpression{
 

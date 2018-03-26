@@ -20,6 +20,9 @@ public class HAPManagerTaskDatasource implements HAPManagerTaskSpecific{
 	private HAPRuntime m_runtime;
 	
 	public HAPManagerTaskDatasource(HAPDataSourceDefinitionManager dataSourceDefMan, HAPDataSourceManager dataSourceManager, HAPRuntime runtime) {
+		this.m_runtime = runtime;
+		this.m_dataSourceDefMan = dataSourceDefMan;
+		this.m_dataSourceManager = dataSourceManager;
 		this.m_taskProcessor = new HAPProcessorTaskDataSource(this.m_dataSourceDefMan);
 		this.m_taskExecutor = new HAPExecutorTaskDataSource(this.m_dataSourceManager, this.m_runtime);
 	}

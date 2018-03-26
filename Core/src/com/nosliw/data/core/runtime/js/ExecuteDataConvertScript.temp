@@ -1,5 +1,5 @@
 var expressionService = nosliw.runtime.getExpressionService();
-	expressionService.executeMatchDataRequest("||data||", "||matchers||", {
+	expressionService.executeMatchDataRequest(||data||, ||matchers||, {
 
 		success : function(requestInfo, data){
 			var parms = {};
