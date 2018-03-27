@@ -6,6 +6,9 @@
 			name : "fromPrice"
 		},
 		{
+			name : "toPrice"
+		},
+		{
 			name : "min"
 		},
 		{
@@ -18,9 +21,13 @@
 			
 		},
 		private : {
-			internal_data: {
+			internal_fromPrice: {
 				path : "<%=&(fromPrice)&%>",
-				definition : "test.double;1.0.0"
+				definition : "test.price;1.0.0"
+			},
+			internal_toPrice: {
+				path : "<%=&(toPrice)&%>",
+				definition : "test.price;1.0.0"
 			}
 		}
 	},
@@ -32,7 +39,8 @@
 	script : function(env){
 
 		var loc_env = env;
-		var loc_dataVariable = env.createVariable("internal_data");
+		var loc_fromPriceVariable = env.createVariable("internal_fromPrice");
+		var loc_toPriceVariable = env.createVariable("internal_toPrice");
 		var loc_view;
 		
 		var loc_revertChange = function(){

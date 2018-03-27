@@ -1,5 +1,5 @@
 {
-	name : "loop",
+	name : "map",
 	description : "",
 	attributes : [
 		{
@@ -36,8 +36,11 @@
 		
 		var loc_childResourceViews = [];
 		var loc_childVaraibles = [];
+		var loc_markers = [];
 		
 		var loc_id = 0;
+		
+		var loc_map;
 		
 		var loc_generateId = function(){
 			loc_id++;
@@ -85,13 +88,22 @@
 
 			var eleContext = loc_env.createExtendedContext([
 				loc_env.createContextElementInfo(loc_env.getAttributeValue("element"), eleVar),
-//				loc_env.createContextElementInfo(loc_env.getAttributeValue("index"), indexVar)
 			], requestInfo);
 			
 			var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId()+"."+loc_generateId(), eleContext, requestInfo);
-			if(index==0)	resourceView.insertAfter(loc_env.getStartElement());
-			else	resourceView.insertAfter(loc_childResourceViews[index-1].getEndElement());
-				
+//			if(index==0)	resourceView.insertAfter(loc_env.getStartElement());
+//			else	resourceView.insertAfter(loc_childResourceViews[index-1].getEndElement());
+
+			loc_env.executeDataOperationRequestGet(eleVar, "geo", {
+				success : function(request, data){
+					var marker = new google.maps.Marker({
+						position: {lat: data.value.value.latitude, lng: data.value.value.longitude},
+						map: loc_map
+					});
+					loc_markers.splice(index, 0, marker);
+				}
+			});
+	
 			loc_childResourceViews.splice(index, 0, resourceView);
 			loc_childVaraibles.splice(index, 0, eleVar);
 			eleVar.registerDataOperationEventListener(undefined, function(event, dataOperation, requestInfo){
@@ -101,6 +113,15 @@
 			}, this);
 		};
 		
+		function initMap() {
+			var uluru = {lat: 43.751319, lng: -79.407853};
+			loc_map = new google.maps.Map(loc_view.get(0), {
+			  zoom: 8,
+			  center: uluru
+			});
+	    };
+		
+		
 		var loc_out = 
 		{
 			
@@ -108,12 +129,23 @@
 				var view = loc_childResourceViews[index];
 				view.detachViews();
 				view.destroy();
+				
+				var marker = loc_markers[index];
+				marker.setMap(null);
+				
 				loc_childResourceViews.splice(index, 1);
 				loc_childVaraibles.splice(index, 1);
+				loc_markders.splice(index, 1);
 			},
 			
 			postInit : function(requestInfo){
+				initMap();
 				loc_updateView();
+			},
+
+			initViews : function(requestInfo){	
+				loc_view = $('<div id="map" style="height:400px;width:100%;"></div>');	
+				return loc_view;
 			},
 
 			destroy : function(){

@@ -18,7 +18,7 @@ var libNames = [
 	"nosliw.runtimebrowser",
 	"nosliw.uiexpression",
 	"nosliw.uiresource",
-	"nosliw.runtimebrowsertest"
+	"nosliw.runtimebrowsertest",
 ];
 
 
@@ -39,6 +39,10 @@ var requestLoadLibraryResources = function(resourceIds, callBackFunction){
 		async : true,
 		success : function(serviceData, status){
 			var result = serviceData.data.data;
+			
+			//temperary solution for map
+			result.push("https://maps.googleapis.com/maps/api/js?key=AIzaSyBCcQbzlVgvSWsXexpcAMXkjPgtfVbPiBE");
+			
 			var fileNumber = result.length;
 			var count = 0;
 			

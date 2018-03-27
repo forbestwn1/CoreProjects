@@ -47,11 +47,17 @@
 					},
 					fromPrice : {
 						dataTypeId: "test.price;1.0.0",
-						value: 300000
+						value: {
+							price : 300000,
+							currency : "$"
+						}
 					},
 					toPrice : {
 						dataTypeId: "test.price;1.0.0",
-						value: 700000
+						value: {
+							price : 700000,
+							currency : "$"
+						}
 					},
 				}
 			},
