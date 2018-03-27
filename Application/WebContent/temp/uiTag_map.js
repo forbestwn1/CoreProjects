@@ -1,11 +1,11 @@
 
-nosliw.runtime.getResourceService().importResource({"id":{"id":"loop",
+nosliw.runtime.getResourceService().importResource({"id":{"id":"map",
 "type":"uiTag"
 },
 "children":[],
 "dependency":{},
 "info":{}
-}, {"name":"loop",
+}, {"name":"map",
 "context":{"inherit":true,
 "public":{}
 },
@@ -18,7 +18,9 @@ function (env) {
     var loc_containerVariable;
     var loc_childResourceViews = [];
     var loc_childVaraibles = [];
+    var loc_markers = [];
     var loc_id = 0;
+    var loc_map;
     var loc_generateId = function () {
         loc_id++;
         return loc_id + "";
@@ -54,11 +56,14 @@ function (env) {
     var loc_addEle = function (eleVar, indexVar, index, requestInfo) {
         var eleContext = loc_env.createExtendedContext([loc_env.createContextElementInfo(loc_env.getAttributeValue("element"), eleVar)], requestInfo);
         var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId() + "." + loc_generateId(), eleContext, requestInfo);
-        if (index == 0) {
-            resourceView.insertAfter(loc_env.getStartElement());
-        } else {
-            resourceView.insertAfter(loc_childResourceViews[index - 1].getEndElement());
-        }
+        loc_env.executeDataOperationRequestGet(eleVar, "geo", {success: function (request, data) {
+            var marker = new google.maps.Marker({position: {lat: data.value.value.latitude, lng: data.value.value.longitude}, map: loc_map});
+            loc_markers.splice(index, 0, marker);
+            marker.addListener("click", function () {
+                var infowindow = new google.maps.InfoWindow({content: loc_childResourceViews[index].get(0)});
+                infowindow.open(loc_map, marker);
+            });
+        }});
         loc_childResourceViews.splice(index, 0, resourceView);
         loc_childVaraibles.splice(index, 0, eleVar);
         eleVar.registerDataOperationEventListener(undefined, function (event, dataOperation, requestInfo) {
@@ -67,14 +72,25 @@ function (env) {
             }
         }, this);
     };
+    function initMap() {
+        var uluru = {lat: 43.751319, lng: -79.407853};
+        loc_map = new google.maps.Map(loc_view.get(0), {zoom: 8, center: uluru});
+    }
     var loc_out = {prv_deleteEle: function (index, requestInfo) {
         var view = loc_childResourceViews[index];
         view.detachViews();
         view.destroy();
+        var marker = loc_markers[index];
+        marker.setMap(null);
         loc_childResourceViews.splice(index, 1);
         loc_childVaraibles.splice(index, 1);
+        loc_markders.splice(index, 1);
     }, postInit: function (requestInfo) {
+        initMap();
         loc_updateView();
+    }, initViews: function (requestInfo) {
+        loc_view = $("<div id=\"map\" style=\"height:400px;width:100%;\"></div>");
+        return loc_view;
     }, destroy: function () {
         loc_containerVariable.release();
         _.each(loc_childResourceViews, function (resourceView, id) {
@@ -82,6 +98,9 @@ function (env) {
         });
         _.each(loc_childVaraibles, function (variable, path) {
             variable.release();
+        });
+        _.each(loc_markers, function (marker, index) {
+            marker.setMap(null);
         });
     }};
     return loc_out;

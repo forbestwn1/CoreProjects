@@ -7,13 +7,17 @@
 		<br>
 		
 		<nosliw-map data="result" element="ele" index="index">
-			
+			<div style="height:40px;width:200px;">
+				Price: <%=?(ele.price)?.value.price%>   
+			</div>
 		</nosliw-map>
 		
 		
 		<nosliw-loop data="result" element="ele" index="index">  
 			<br>
-			<%=?(ele.name)?.value%>   
+			Name : <%=?(ele.name)?.value%>   
+			<br>
+			Price: <%=?(ele.price)?.value.price%>   
 			<br>
 		</nosliw-loop>
 		
@@ -51,6 +55,13 @@
 									dataTypeId: "test.string;1.0.0",
 									value: "School1"
 								},
+								price : {
+									dataTypeId: "test.price;1.0.0",
+									value: {
+										"price" : 500000,
+										"currency" : "$"
+									}
+								},
 								geo : {
 									dataTypeId: "test.geo;1.0.0",
 									value: {
@@ -66,6 +77,13 @@
 								name : {
 									dataTypeId: "test.string;1.0.0",
 									value: "School2"
+								},
+								price : {
+									dataTypeId: "test.price;1.0.0",
+									value: {
+										"price" : 700000,
+										"currency" : "$"
+									}
 								},
 								geo : {
 									dataTypeId: "test.geo;1.0.0",

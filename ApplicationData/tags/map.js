@@ -41,6 +41,9 @@
 		var loc_id = 0;
 		
 		var loc_map;
+		var loc_infowindow;
+		
+		var loc_currentChildView;
 		
 		var loc_generateId = function(){
 			loc_id++;
@@ -101,6 +104,16 @@
 						map: loc_map
 					});
 					loc_markers.splice(index, 0, marker);
+					
+					marker.addListener('click', function() {
+						if(loc_currentChildView!=undefined)  loc_currentChildView.detachViews();
+						loc_currentChildView = loc_childResourceViews[index];
+						loc_currentChildView.appendTo(loc_infowindow.getContent());
+//						var content = loc_childResourceViews[index].getViews()[1];
+//						loc_infowindow.setContent(content);
+						loc_infowindow.open(loc_map, marker);
+					});
+					
 				}
 			});
 	
@@ -118,6 +131,10 @@
 			loc_map = new google.maps.Map(loc_view.get(0), {
 			  zoom: 8,
 			  center: uluru
+			});
+			
+			loc_infowindow = new google.maps.InfoWindow({
+				content: $('<div style="height:100px;width:200px;">').get(0)
 			});
 	    };
 		
@@ -156,7 +173,9 @@
 				_.each(loc_childVaraibles, function(variable, path){
 					variable.release();
 				});
-				
+				_.each(loc_markers, function(marker, index){
+					marker.setMap(null);
+				});
 			}
 		};
 		return loc_out;

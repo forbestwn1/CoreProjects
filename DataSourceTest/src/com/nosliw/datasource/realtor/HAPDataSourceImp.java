@@ -80,7 +80,7 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 				JSONObject priceData = new JSONObject();
 				priceData.put("price", price);
 				priceData.put("currency", "$");
-				outHome.put("price", createJSONData("test.price;1.0.0", price));
+				outHome.put("price", createJSONData("test.price;1.0.0", priceData));
 				
 				//check price
 				if(price<fromPriceParm || price>toPriceParm)  continue;
