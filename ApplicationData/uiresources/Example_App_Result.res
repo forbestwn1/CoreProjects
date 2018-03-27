@@ -8,7 +8,10 @@
 		
 		<nosliw-map data="result" element="ele" index="index">
 			<div style="height:40px;width:200px;">
+				<br>
 				Price: <%=?(ele.price)?.value.price%>   
+				<br>
+				Info : <a href="<%=?(ele.url)?.value%>" target="_blank">Info</a>
 			</div>
 		</nosliw-map>
 		
@@ -68,7 +71,11 @@
 										"latitude" :  43.651299,
 										"longitude" : -79.579473
 									}
-								}
+								},
+								url : {
+									dataTypeId: "test.url;1.0.0",
+									value: "http://www.google.com"
+								},
 							}
 						},
 						{
@@ -91,7 +98,11 @@
 										"latitude" :  43.649016, 
 										"longitude" : -79.485059
 									}
-								}
+								},
+								url : {
+									dataTypeId: "test.url;1.0.0",
+									value: "http://www.google.com"
+								},
 							}
 						}					
 					]

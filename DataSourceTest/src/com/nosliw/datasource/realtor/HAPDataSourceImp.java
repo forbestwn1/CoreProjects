@@ -120,6 +120,8 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 				outHome.put("MlsNumber", createJSONData("test.string;1.0.0", jsonHomeData.optString("MlsNumber")));
 				outHome.put("name", createJSONData("test.string;1.0.0", jsonHomeData.optString("MlsNumber")));
 				
+				outHome.put("url", createJSONData("test.url;1.0.0", "https://www.realtor.ca/"+jsonHomeData.optString("RelativeDetailsURL")));
+				
 				homeArrayData.put(createJSONData("test.map;1.0.0", outHome));
 			}
 			catch(Exception e){
