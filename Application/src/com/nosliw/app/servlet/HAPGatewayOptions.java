@@ -16,8 +16,12 @@ public class HAPGatewayOptions extends HAPGatewayImp{
 		if(COMMAND_GETVALUES.equals(command)) {
 			String[] values = null;
 			switch(parms.getString(PARMS_GETVALUES_ID)) {
-			case "school":
+			case "schoolType":
 				values = new String[] {"Public", "Private", "First Nation"};
+				break;
+			case "buildingType":
+				values = new String[] {"House", "Townhouse", "Appartment"};
+				break;
 			}
 			return this.createSuccessWithObject(values);
 		}

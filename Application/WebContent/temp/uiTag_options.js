@@ -31,7 +31,6 @@ function (env) {
     };
     var loc_setupUIEvent = function () {
         loc_view.bind("change", function () {
-            window.alert("aaaa");
             env.executeBatchDataOperationRequest([env.getDataOperationSet(loc_dataVariable, "", loc_getViewData())]);
         });
     };

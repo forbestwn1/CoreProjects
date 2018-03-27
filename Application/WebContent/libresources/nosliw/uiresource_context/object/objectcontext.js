@@ -10,7 +10,7 @@ function nosliwCreateContextElementObject(wraper, path){
 	loc_wraper.path = undefined;				
 	
 	
-	loc_requestSetObjectContextElePathValue(contextEle, subPath, value, reqInfo){
+	var loc_requestSetObjectContextElePathValue = function(contextEle, subPath, value, reqInfo){
 		var wraper = contextEle.data;
 		var object = contextEle.data.data;
 		var path = cascadePath(contextEle.path, subPath);
@@ -30,7 +30,7 @@ function nosliwCreateContextElementObject(wraper, path){
 	};
 
 
-	loc_registerObjectContextEventBySubPath(i, currentPath, pathSegments, contextEle, contextPathEventInfo, action, contextPath){
+	var loc_registerObjectContextEventBySubPath = function(i, currentPath, pathSegments, contextEle, contextPathEventInfo, action, contextPath){
 		contextPathEventInfo.listenTo(contextEle.data.data, EVENT_DATA_CHANGE+':'+currentPath, function(value, requestInfo){
 			var eventData = value;
 			var k = i;

@@ -77,6 +77,9 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 					priceIndex = priceStr.indexOf(",");
 				}
 				double price = Double.valueOf(priceStr).doubleValue();
+				JSONObject priceData = new JSONObject();
+				priceData.put("price", price);
+				priceData.put("currency", "$");
 				outHome.put("price", createJSONData("test.price;1.0.0", price));
 				
 				//check price

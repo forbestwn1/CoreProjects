@@ -96,26 +96,29 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		//---------------------------------operation request
 		getDataOperationGet : function(target, path){  return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createGetOperationService(path)); },
 		getDataOperationRequestGet : function(target, path, handler, request){	return node_createUIDataOperationRequest(loc_context, this.getDataOperationGet(target, path), handler, request);	},
-		executeDataOperationRequestGet : function(target, path, handler, request){	this.processRequest(this.getDataOperationRequestGet(target, path, handler, request));	},
+		executeDataOperationRequestGet : function(target, path, handler, request){			return this.processRequest(this.getDataOperationRequestGet(target, path, handler, request));		},
 
 		getDataOperationSet : function(target, path, value){  return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createSetOperationService(path, value)); },
 		getDataOperationRequestSet : function(target, path, value, handler, request){	return node_createUIDataOperationRequest(loc_context, this.getDataOperationSet(target, path, value), handler, request);	},
-		executeDataOperationRequestSet : function(target, path, value, handler, request){	this.processRequest(this.getDataOperationRequestSet(target, path, value, handler, request));	},
+		executeDataOperationRequestSet : function(target, path, value, handler, request){	return this.processRequest(this.getDataOperationRequestSet(target, path, value, handler, request));	},
 
 		getHandleEachElementRequest : function(name, path, elementHandleRequestFactory, handlers, request){	return this.getContext().getHandleEachElementRequest(name, path, elementHandleRequestFactory, handlers, request);},
-		executeGetHandleEachElementRequest : function(name, path, elementHandleRequestFactory, handlers){	this.processRequest(this.getHandleEachElementRequest(name, path, elementHandleRequestFactory, handlers));	},
+		executeGetHandleEachElementRequest : function(name, path, elementHandleRequestFactory, handlers){	return this.processRequest(this.getHandleEachElementRequest(name, path, elementHandleRequestFactory, handlers));	},
 
-		executeBatchDataOperationRequest : function(operations){
+		getBatchDataOperationRequest : function(operations){
 			var requestInfo = node_createBatchUIDataOperationRequest(loc_context);
 			_.each(operations, function(operation, i){
 				requestInfo.addUIDataOperation(operation);						
 			});
-			this.processRequest(requestInfo);
+			return requestInfo;
 		},
+		executeBatchDataOperationRequest : function(operations){		this.processRequest(this.getBatchDataOperationRequest(operations));		},
 		
 		//---------------------------------
 		getExecuteOperationRequest : function(dataTypeId, operation, parmsArray, handlers, requester_parent){  return nosliw.runtime.getExpressionService().getExecuteOperationRequest(dataTypeId, operation, parmsArray, handlers, requester_parent)  },
-		executeExecuteOperationRequest : function(dataTypeId, operation, parmsArray, handlers, requester_parent){ this.processRequest(this.getExecuteOperationRequest(dataTypeId, operation, parmsArray, handlers, requester_parent));  },
+		executeExecuteOperationRequest : function(dataTypeId, operation, parmsArray, handlers, requester_parent){
+			this.processRequest(this.getExecuteOperationRequest(dataTypeId, operation, parmsArray, handlers, requester_parent));
+		},
 		
 		//---------------------------------other request
 		getGatewayCommandRequest : function(gatewayId, command, parms, requestInfo){	return nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, requestInfo);	},
