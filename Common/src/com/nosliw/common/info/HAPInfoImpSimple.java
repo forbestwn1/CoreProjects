@@ -72,10 +72,6 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 	protected boolean buildObjectByLiterate(String literateValue){
 		if(HAPBasicUtility.isStringNotEmpty(literateValue)) {
 			String[] segs = HAPNamingConversionUtility.splitTextByComponents(literateValue, m_seperator1);
-			if(segs.length==1) {
-				int kkkk = 5555;
-				kkkk++;
-			}
 			for(String seg : segs) {
 				String[] eles = HAPNamingConversionUtility.splitTextByComponents(seg, this.m_seperator2);
 				this.m_values.put(eles[0], eles[1]);

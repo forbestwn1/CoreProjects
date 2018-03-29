@@ -94,6 +94,14 @@ dataTypeDefition.operations['addChild'] = {
 		}
 };
 
+dataTypeDefition.operations['add'] = {
+		operation : function(parms, context){
+			var childValue = parms.getParm("child");
+			this.value.push(childValue);
+			return childValue;
+		}
+};
+
 dataTypeDefition.operations['removeChild'] = {
 		operation : function(parms, context){
 			var index = parms.getParm("index").value;

@@ -45,11 +45,6 @@ public class HAPResourceHelper {
 	}
 
 	public HAPResourceId buildResourceIdObject(String literate){
-		if("operation|base.integer;1.0.0|add".equals(literate)) {
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		HAPResourceId out = new HAPResourceId(literate);
 		try {
 			Class resourceIdClass = this.m_typeToResourceId.get(out.getType());

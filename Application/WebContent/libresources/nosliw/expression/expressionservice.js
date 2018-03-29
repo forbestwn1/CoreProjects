@@ -233,8 +233,6 @@ var node_createExpressionService = function(){
 		var out;
 		if(matcher==undefined){
 			//if converter does not created, then get it
-			var kkkk = 5555;
-			kkkk++;
 		}
 		else{
 			var relationship = matcher[node_COMMONATRIBUTECONSTANT.MATCHER_RELATIONSHIP];

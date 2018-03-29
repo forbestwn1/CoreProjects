@@ -36,6 +36,14 @@
 			<output criteria="*"/>
 		</operation>
 
+		<operation name="add" >
+			<parms>
+				<parm name="base" criteria="test.array" isBase="true"/>
+				<parm name="child" criteria="*"/>
+			</parms>
+			<output criteria="*"/>
+		</operation>
+
 		<operation name="removeChild" >
 			<parms>
 				<parm name="base" criteria="test.array" isBase="true"/>

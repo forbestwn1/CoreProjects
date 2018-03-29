@@ -8,7 +8,7 @@
 			"steps": [{
 					"description": "get school data, and save to variable",
 					"type": "expression",
-					"expression": "<(school)>",
+					"expression": "<(schoolData)>",
 					"outputVariable": "schoolData"
 				},
 
@@ -34,7 +34,7 @@
 				}
 			],
 			"references": {
-				"school": {
+				"schoolData": {
 					"variablesMap": {
 						"score": "score"
 					}
@@ -64,7 +64,7 @@
 				{
 					"description": "add modified school data to output",
 					"type": "expression",
-					"expression": "?(output)?.add(?(newSchool)?)",
+					"expression": "?(output)?.add(child:?(newSchool)?)",
 					"outputVariable": ""
 				}
 			],
@@ -90,7 +90,8 @@
 			"name": "schoolData",
 			"type": "dataSource",
 			"dataSource": "school",
-			"parms": {}
+			"parms": {
+			}
 		}
 	],
 	"constants": {},

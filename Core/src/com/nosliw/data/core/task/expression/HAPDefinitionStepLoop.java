@@ -1,16 +1,12 @@
 package com.nosliw.data.core.task.expression;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 
@@ -32,7 +28,7 @@ public class HAPDefinitionStepLoop extends HAPDefinitionStep{
 	private HAPDefinitionExpression m_executeTask;
 	
 	@Override
-	public String getType() {  return HAPConstant.EXPRESSIONTASK_STEPTYPE_EXPRESSION;	}
+	public String getType() {  return HAPConstant.EXPRESSIONTASK_STEPTYPE_LOOP;	}
 
 	public HAPDefinitionExpression getContainer() {  return this.m_container;   }
 	

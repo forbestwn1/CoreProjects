@@ -34,9 +34,13 @@ public class HAPExecutorTaskDataSource implements HAPExecutorTask{
 		HAPExecutableTaskDataSource dataSourceExe = (HAPExecutableTaskDataSource)task;
 		
 		Map<String, HAPData> dataSourceParms = new LinkedHashMap<String, HAPData>();
+		dataSourceParms.putAll(parms);
 		//prepare data source parms : converter, expression result
 		for(String parm : dataSourceExe.getParmsOperand().keySet()) {
-			this.calculateParmData(dataSourceExe.getParmsOperand().get(parm), dataSourceExe.getMatchers().get(parm), parms);
+			HAPOperandWrapper parmOperand = dataSourceExe.getParmsOperand().get(parm);
+			if(parmOperand!=null) {
+				dataSourceParms.put(parm, this.calculateParmData(parmOperand, dataSourceExe.getMatchers().get(parm), parms));
+			}
 		}
 		
 		//execute data source

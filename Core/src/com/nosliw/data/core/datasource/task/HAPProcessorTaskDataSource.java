@@ -43,7 +43,7 @@ public class HAPProcessorTaskDataSource implements HAPProcessorTask{
 			}
 			else {
 				//if not defined, then use datasource variable name
-				out.addParmOperand(dsParm, new HAPOperandVariable(dsParm));
+//				out.addParmOperand(dsParm, new HAPOperandVariable(dsParm));
 			}
 		}
 

@@ -3,7 +3,7 @@
 	<body>
 	
 	<br>
-	<nosliw-submit title="School" datasource="school" parms="schoolType:criteria.schoolType;schoolRating:criteria.schoolRating"  output="schoolresult"/>  
+	<nosliw-submit title="School" datasource="test" parms="schoolType:criteria.schoolType;schoolRating:criteria.schoolRating"  output="schoolresult"/>  
 	<br>
 	
 	<div>

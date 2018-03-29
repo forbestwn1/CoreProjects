@@ -42,7 +42,7 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 	public String getElementVariable() {  return this.m_elementVariable;   }
 	
 	@Override
-	public String getType() {  return HAPConstant.EXPRESSIONTASK_STEPTYPE_EXPRESSION;	}
+	public String getType() {  return HAPConstant.EXPRESSIONTASK_STEPTYPE_LOOP;	}
 
 	@Override
 	public HAPDataTypeCriteria getOutput() {  return this.m_containerOperand.getOperand().getOutputCriteria();  }

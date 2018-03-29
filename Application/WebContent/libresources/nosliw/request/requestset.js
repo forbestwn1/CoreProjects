@@ -93,10 +93,6 @@ var node_createServiceRequestInfoSet = function(service, handlers, requester_par
 		},
 		
 		addRequest : function(name, childRequest){
-			if(childRequest==undefined){
-				var kkkk = 5555;
-				kkkk++;
-			}
 			childRequest.setParentRequest(this);
 			this.pri_requests[name] = childRequest;
 			loc_updateChildRequestHandlers(name, childRequest);

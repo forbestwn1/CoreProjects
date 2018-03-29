@@ -24,7 +24,7 @@ public class HAPTaskMain {
 //				"expression2",
 //				"expression3",
 //				"expression4",
-				"expression5",
+//				"expression5",
 //				"expression51",
 //				"expression6",
 
@@ -37,6 +37,7 @@ public class HAPTaskMain {
 //				"expression8",
 				
 //				"expression9",
+				"school",
 			}, runtimeEnvironment);
 		
 //		finally{
