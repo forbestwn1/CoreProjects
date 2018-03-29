@@ -3,16 +3,16 @@
 //      dependency
 //		each operation (operation name, script, dependency)
 
-var dataTypeDefition = nosliw.getDataTypeDefinition("test.options");
+var dataTypeDefinition = nosliw.getDataTypeDefinition("test.options");
 
 //define what this data type globlely requires (operation, datatype, library)
-dataTypeDefition.requires = {
+dataTypeDefinition.requires = {
 };
 
 //define what operations in this page requires (operation, datatype, library)
 
 //define operation
-dataTypeDefition.operations['all'] = {
+dataTypeDefinition.operations['all'] = {
 		operation : function(parms, context){
 			var valueOut = [];
 			var gatewayParms = {
@@ -23,7 +23,7 @@ dataTypeDefition.operations['all'] = {
 				success : function(requestInfo, optionsValues){
 					_.each(optionsValues, function(value, i){
 						valueOut.push({
-							dataTypeId : "test.string;1.0.0",
+							dataTypeId : "test.options;1.0.0",
 							value : value,
 						});
 					});
@@ -40,4 +40,16 @@ dataTypeDefition.operations['all'] = {
 		},
 };
 
-nosliw.addDataTypeDefinition(dataTypeDefition);
+
+dataTypeDefinition.convertTo = {
+		//defined operation
+		//in operation can access all the required resources by name through context
+		operation : function(data, toDataType, context){
+			return {
+				dataTypeId : "test.string;1.0.0",
+				value : data.value
+			};
+		} 
+};
+
+nosliw.addDataTypeDefinition(dataTypeDefinition);

@@ -50,11 +50,10 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 					String schoolType = jsonSchoolData.getString(INDEX_TYPE);
 					Double schoolScore = jsonSchoolData.getDouble(INDEX_SCORE);
 					if(!(parms.get("schoolType").getValue()+"").equalsIgnoreCase(schoolType))  continue;
-					if(schoolScore < Double.valueOf(parms.get("score").getValue()+""))  continue;
+					if(schoolScore < Double.valueOf(parms.get("schoolRating").getValue()+""))  continue;
 					
-					outSchool.put("type", createJSONData("test.string;1.0.0", schoolType));
-					outSchool.put("score", createJSONData("test.float;1.0.0", schoolScore));
-					
+					outSchool.put("schoolType", createJSONData("test.options;1.0.0", schoolType));
+					outSchool.put("schoolRating", createJSONData("test.float;1.0.0", schoolScore));
 					
 					JSONObject outGeoValue = new JSONObject();
 					outGeoValue.put("latitude", jsonSchoolData.getDouble(INDEX_LAT));
@@ -63,7 +62,7 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 					
 					
 					outSchool.put("id", createJSONData("test.string;1.0.0", jsonSchoolData.getString(INDEX_ID)));
-					outSchool.put("name", createJSONData("test.string;1.0.0", jsonSchoolData.getString(INDEX_NAME)));
+					outSchool.put("schoolName", createJSONData("test.string;1.0.0", jsonSchoolData.getString(INDEX_NAME)));
 					outSchool.put("color", createJSONData("test.string;1.0.0", jsonSchoolData.getString(INDEX_COLOR)));
 					
 					schoolArrayData.put(createJSONData("test.map;1.0.0", outSchool));

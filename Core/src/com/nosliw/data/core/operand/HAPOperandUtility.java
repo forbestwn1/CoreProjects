@@ -15,10 +15,25 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.task.HAPExecutableTask;
 import com.nosliw.data.core.task.HAPUpdateVariable;
 
 public class HAPOperandUtility {
 
+	static public void updateReferencedExecute(HAPOperandWrapper operand, Map<String, HAPExecutableTask> references) {
+		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+					referenceOperand.updateReferenceExecute(references);
+				}
+				return true;
+			}
+		});	
+	}
+	
 	static public void updateVariable(HAPOperandWrapper operand, HAPUpdateVariable updateVar) {
 		//update variable operand
 		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
@@ -126,7 +141,7 @@ public class HAPOperandUtility {
 	}
 
 	static public Map<String, HAPVariableInfo> discover(
-			HAPOperand operand, 
+			HAPOperand[] operands, 
 			Map<String, HAPVariableInfo> parentVariablesInfo, 
 			HAPDataTypeCriteria expectOutput,
 			HAPProcessContext context) {
@@ -140,7 +155,9 @@ public class HAPOperandUtility {
 			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 			oldVarsInfo.putAll(varsInfo);
 			context.clear();
-			operand.discover(varsInfo, expectOutput, context, HAPExpressionManager.dataTypeHelper);
+			for(HAPOperand operand : operands) {
+				operand.discover(varsInfo, expectOutput, context, HAPExpressionManager.dataTypeHelper);
+			}
 		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
 		return varsInfo;
 	}

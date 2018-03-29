@@ -2,7 +2,9 @@ package com.nosliw.data.core.runtime.js.rhino;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 import org.mozilla.javascript.Context;
@@ -12,10 +14,16 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.expression.HAPMatchers;
+import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.runtime.HAPExecuteExpression;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
+import com.nosliw.data.core.runtime.HAPRuntime;
 
 public class HAPRhinoRuntimeUtility {
 
@@ -23,6 +31,35 @@ public class HAPRhinoRuntimeUtility {
 	
 	private static String scriptTempFolder = HAPFileUtility.getScriptExportFolder() + System.currentTimeMillis() + "/";
 
+	public static HAPData executeOperandSync(HAPOperandWrapper operand, Map<String, HAPData> parms, HAPRuntime runtime) {
+		HAPRuntimeTaskExecuteExpressionRhino exeExpTask = new HAPRuntimeTaskExecuteExpressionRhino(new HAPExecuteExpression() {
+			@Override
+			public String getId() {				return "";			}
+
+			@Override
+			public HAPOperandWrapper getOperand() {  return operand;  }
+
+			@Override
+			public Map<String, HAPMatchers> getVariableMatchers() {	return null; }
+
+			@Override
+			public String toStringValue(HAPSerializationFormat format) {
+				Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
+				Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
+				HAPExecuteExpression.buildJsonMap(this, outJsonMap, typeJsonMap);
+				return HAPJsonUtility.buildMapJson(outJsonMap, typeJsonMap);
+			}
+
+			@Override
+			public boolean buildObject(Object value, HAPSerializationFormat format) {
+				return false;
+			}
+		}, parms, null);
+		HAPData out = (HAPData)runtime.executeTaskSync(exeExpTask).getData();
+		return out;
+	}
+	
+	
 	public static void invokeGatewayHandlers(HAPServiceData serviceData, Object handlers, Scriptable scope){
 		Context context = Context.enter();
 		try{

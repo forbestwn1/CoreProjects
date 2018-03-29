@@ -3,6 +3,7 @@
 <body>
 	<br>
 ************************************   Query  **************************************
+
 	<br>
 	SchoolType:<nosliw-textinput data="criteria.schoolType"/>  
 	<br>
@@ -10,7 +11,7 @@
 	<br>
 	SchoolType:<nosliw-options id="schoolType" data="criteria.schoolType"/>
 	<br>
-	
+
 	<br>
 	BuildingType:<nosliw-multioptions id="buildingType" data="criteria.buildingType"/>
 	<br>
@@ -26,21 +27,26 @@
 		public : {
 			criteria : {
 				definition: {
-					schoolType : "test.string;1.0.0",
-					buildingType : "test.array;1.0.0%||element:test.string;1.0.0||%",
+					schoolType : "test.options;1.0.0",
+					schoolRating : "test.float;1.0.0",
+					buildingType : "test.array;1.0.0%||element:test.options;1.0.0||%",
 					fromPrice : "test.price;1.0.0",
 					toPrice : "test.price;1.0.0",
 				},
 				default: {
 					schoolType : {
-						dataTypeId: "test.string;1.0.0",
+						dataTypeId: "test.options;1.0.0",
 						value: "Public"
+					},
+					schoolRating : {
+						dataTypeId: "test.float;1.0.0",
+						value: 5.0
 					},
 					buildingType : {
 						dataTypeId: "test.array;1.0.0",
 						value: [
 							{
-								dataTypeId: "test.string;1.0.0",
+								dataTypeId: "test.options;1.0.0",
 								value: "House"
 							},						
 						]

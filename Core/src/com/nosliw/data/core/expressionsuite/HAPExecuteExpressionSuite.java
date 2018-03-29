@@ -50,7 +50,7 @@ public class HAPExecuteExpressionSuite extends HAPSerializableImp implements HAP
 			HAPDataTypeCriteria expectOutput,
 			HAPProcessContext context) {
 
-		Map<String, HAPVariableInfo> discoveredVarsInf = HAPOperandUtility.discover(this.getOperand().getOperand(), parentVariablesInfo, expectOutput, context);
+		Map<String, HAPVariableInfo> discoveredVarsInf = HAPOperandUtility.discover(new HAPOperand[]{this.getOperand().getOperand()}, parentVariablesInfo, expectOutput, context);
 		parentVariablesInfo.clear();
 		parentVariablesInfo.putAll(discoveredVarsInf);
 		this.m_localVarsInfo.clear();

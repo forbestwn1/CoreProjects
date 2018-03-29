@@ -176,6 +176,7 @@
 				_.each(loc_markers, function(marker, index){
 					marker.setMap(null);
 				});
+				loc_currentChildView = undefined;
 			}
 		};
 		return loc_out;

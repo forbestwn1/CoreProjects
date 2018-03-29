@@ -13,6 +13,7 @@ import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
@@ -80,23 +81,13 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 
 	@Override
 	public void updateReferencedExecute(Map<String, HAPExecutableTask> references) {
-		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
-					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					referenceOperand.updateReferenceExecute(references);
-				}
-				return true;
-			}
-		});	
+		HAPOperandUtility.updateReferencedExecute(this.m_operand, references);
 	}
 
 	@Override
 	public void discoverVariable(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria,
 			HAPProcessContext context) {
-		Map<String, HAPVariableInfo> varsInfo = HAPOperandUtility.discover(this.m_operand.getOperand(), variablesInfo, expectOutputCriteria, context);
+		Map<String, HAPVariableInfo> varsInfo = HAPOperandUtility.discover(new HAPOperand[]{this.m_operand.getOperand()}, variablesInfo, expectOutputCriteria, context);
 		
 		//handle output variable
 		String outVarName = this.m_outputVariable;

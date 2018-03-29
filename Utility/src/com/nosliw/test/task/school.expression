@@ -1,0 +1,111 @@
+{
+	"name": "school",
+	"description": "control",
+	"tasks": [{
+			"description": "main",
+			"name": "main",
+			"type": "expression",
+			"steps": [{
+					"description": "get school data, and save to variable",
+					"type": "expression",
+					"expression": "<(school)>",
+					"outputVariable": "schoolData"
+				},
+
+				{
+					"description": "create output array",
+					"type": "expression",
+					"expression": "!(test.array)!.new()",
+					"outputVariable": "output"
+				},
+
+				{
+					"description": "loop element",
+					"type": "loop",
+					"container": "?(schoolData)?",
+					"elementVariable": "school",
+					"executeTask": "<(processElement)>"
+				},
+
+				{
+					"description": "return",
+					"type": "expression",
+					"expression": "?(output)?"
+				}
+			],
+			"references": {
+				"school": {
+					"variablesMap": {
+						"score": "score"
+					}
+				},
+				"processElement": {
+					"variablesMap": {
+						"school": "school",
+						"output": "output"
+					}
+				}
+			}
+		},
+
+		{
+			"description": "operate on element",
+			"name": "processElement",
+			"type": "expression",
+			"steps": [
+
+				{
+					"description": "modify school data",
+					"type": "expression",
+					"expression": "?(school)?.setChildData(name:&(newAttr)&, value:&(newValue)&)",
+					"outputVariable": "newSchool"
+				},
+
+				{
+					"description": "add modified school data to output",
+					"type": "expression",
+					"expression": "?(output)?.add(?(newSchool)?)",
+					"outputVariable": ""
+				}
+			],
+			"references": {},
+			"variables": {
+				"school": "test.map;1.0.0",
+				"output": "test.array;1.0.0"
+			},
+			"constants": {
+				"newAttr": {
+					"dataTypeId": "test.string;1.0.0",
+					"value": "age"
+				},
+				"newValue": {
+					"dataTypeId": "test.integer;1.0.0",
+					"value": 100
+				}
+			}
+		},
+
+		{
+			"description": "get school data",
+			"name": "schoolData",
+			"type": "dataSource",
+			"dataSource": "school",
+			"parms": {}
+		}
+	],
+	"constants": {},
+	"variables": {
+		"schoolType": "test.options;1.0.0"
+	},
+	"variablesData": {
+		"schoolType": {
+			"dataTypeId": "test.options",
+			"value": "Public"
+		}
+	},
+	"result": {
+		"dataTypeId": "test.string;1.0.0",
+		"value": "sffffff",
+		"wapperType": "JSON"
+	}
+}

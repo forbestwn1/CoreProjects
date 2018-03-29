@@ -1,4 +1,4 @@
-<definition name="test.options;1.0.0">
+<definition name="test.options;1.0.0" parentsInfo="test.string;1.0.0">
 	
 	<info description="enum" complex="true"/>
 
@@ -8,7 +8,7 @@
 			<parms>
 				<parm name="optionsId" criteria="test.string"/>
 			</parms>
-			<output criteria="test.array;1.0.0%||element:test.string;1.0.0||%"/>
+			<output criteria="test.array;1.0.0%||element:test.options;1.0.0||%"/>
 		</operation>
 	</operations>
 

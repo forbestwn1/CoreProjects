@@ -26,7 +26,6 @@
 	},
 	requires:{
 		"operation" : { 
-			op1: "test.integer;1.0.0;add",
 		},
 	},
 	script : function(env){

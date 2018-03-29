@@ -22,7 +22,6 @@ public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteE
 		super(expression, variablesValue, referencesValue);
 	}
 
-
 	@Override
 	public Class getResultDataType() {	return HAPData.class;	}
 

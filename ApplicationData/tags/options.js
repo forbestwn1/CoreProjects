@@ -17,7 +17,7 @@
 		private : {
 			internal_data: {
 				path : "<%=&(data)&%>",
-				definition : "test.string;1.0.0"
+				definition : "test.options;1.0.0"
 			}
 		}
 	},
@@ -26,7 +26,6 @@
 	},
 	requires:{
 		"operation" : { 
-			op1: "test.integer;1.0.0;add",
 		},
 	},
 	script : function(env){
@@ -42,7 +41,7 @@
 
 		var loc_getViewData = function(){
 			return {
-				dataTypeId: "test.string;1.0.0",
+				dataTypeId: "test.options;1.0.0",
 				value: loc_view.val()
 			};
 		};

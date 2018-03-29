@@ -11,6 +11,7 @@ import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.runtime.js.rhino.HAPRhinoRuntimeUtility;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskExecuteConverterRhino;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskExecuteExpressionRhino;
 import com.nosliw.data.core.task.HAPExecutableTask;
@@ -45,30 +46,7 @@ public class HAPExecutorTaskDataSource implements HAPExecutorTask{
 	}
 
 	private HAPData calculateParmData(HAPOperandWrapper operand, HAPMatchers matchers, Map<String, HAPData> parms) {
-		HAPRuntimeTaskExecuteExpressionRhino exeExpTask = new HAPRuntimeTaskExecuteExpressionRhino(new HAPExecuteExpression() {
-			@Override
-			public String getId() {				return "";			}
-
-			@Override
-			public HAPOperandWrapper getOperand() {  return operand;  }
-
-			@Override
-			public Map<String, HAPMatchers> getVariableMatchers() {	return null; }
-
-			@Override
-			public String toStringValue(HAPSerializationFormat format) {
-				Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
-				Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
-				HAPExecuteExpression.buildJsonMap(this, outJsonMap, typeJsonMap);
-				return HAPJsonUtility.buildMapJson(outJsonMap, typeJsonMap);
-			}
-
-			@Override
-			public boolean buildObject(Object value, HAPSerializationFormat format) {
-				return false;
-			}
-		}, parms, null);
-		HAPData parmData = (HAPData)this.m_runtime.executeTaskSync(exeExpTask).getData();
+		HAPData parmData = HAPRhinoRuntimeUtility.executeOperandSync(operand, parms, m_runtime);
 		
 		HAPRuntimeTaskExecuteConverterRhino converterTask = new HAPRuntimeTaskExecuteConverterRhino(parmData, matchers); 
 		HAPData out = (HAPData)this.m_runtime.executeTaskSync(converterTask).getData();

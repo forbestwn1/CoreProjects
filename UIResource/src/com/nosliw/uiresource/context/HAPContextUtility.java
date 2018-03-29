@@ -171,6 +171,10 @@ public class HAPContextUtility {
 					Map<String, HAPMatchers> noVoidMatchers = new LinkedHashMap<String, HAPMatchers>();
 					for(String p : matchers.keySet()){
 						HAPMatchers match = matchers.get(p);
+						if(match==null) {
+							int kkkk = 5555;
+							kkkk++;
+						}
 						if(!match.isVoid()){
 							noVoidMatchers.put(p, match);
 						}

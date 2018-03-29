@@ -6,17 +6,17 @@
 	"parms" : [ 
 		{
 			name : "schoolType",
-			criteria : "test.string;1.0.0",
+			criteria : "test.options;1.0.0",
 			default :{
-				dataTypeId: "test.string;1.0.0",
+				dataTypeId: "test.options;1.0.0",
 				value: "public"
 			},
 		},
 		{
-			name : "score",
-			criteria : "test.integer;1.0.0",
+			name : "schoolRating",
+			criteria : "test.float;1.0.0",
 			default :{
-				dataTypeId: "test.integer;1.0.0",
+				dataTypeId: "test.float;1.0.0",
 				value: "5"
 			},
 		}

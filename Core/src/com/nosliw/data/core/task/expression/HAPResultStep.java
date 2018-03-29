@@ -30,6 +30,12 @@ public class HAPResultStep extends HAPSerializableImp{
 	
 	private String m_next;
 
+	public static HAPResultStep createNullResult(){
+		HAPResultStep out = new HAPResultStep();
+		out.m_exit = false;
+		return out;
+	}
+	
 	public static HAPResultStep createExitResult(HAPData data){
 		HAPResultStep out = new HAPResultStep();
 		out.m_data = data;
