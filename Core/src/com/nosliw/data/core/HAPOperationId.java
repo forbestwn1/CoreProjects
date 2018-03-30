@@ -47,6 +47,12 @@ public class HAPOperationId extends HAPDataTypeId{
 	protected boolean buildObjectByLiterate(String literateValue){
 		int index = literateValue.lastIndexOf(HAPConstant.SEPERATOR_LEVEL1);
 		this.setOperation(literateValue.substring(index+1));
+		
+		if(index==-1) {
+			int kkkk = 555;
+			kkkk++;
+		}
+		
 		super.buildObjectByLiterate(literateValue.substring(0, index));
 		
 //		this.setName(segs[0]);

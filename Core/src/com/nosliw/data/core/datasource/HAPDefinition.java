@@ -11,6 +11,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 @HAPEntityWithAttribute
 public class HAPDefinition extends HAPSerializableImp{
@@ -70,9 +71,17 @@ public class HAPDefinition extends HAPSerializableImp{
 			JSONObject objJson = (JSONObject)json;
 			
 			this.m_name = objJson.getString(NAME);
+			
+			if(this.m_name.equals("school")) {
+				int kkkk = 5555;
+				kkkk++;
+			}
+			
+			
 			this.m_implementation = (String)objJson.opt(IMPLEMENTATION);
 			this.m_description = objJson.optString(DESCRIPTION);
-			this.m_output = new HAPDefinitionOutput(this.m_parser.parseCriteria(objJson.getString(OUTPUT)));
+			HAPDataTypeCriteria outputCriteria = this.m_parser.parseCriteria(objJson.getString(OUTPUT));
+			this.m_output = new HAPDefinitionOutput(outputCriteria);
 			
 			JSONArray parmsArray = objJson.getJSONArray(PARMS);
 			for(int i = 0; i<parmsArray.length(); i++){

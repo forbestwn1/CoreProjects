@@ -67,6 +67,7 @@ public class HAPOperandReference extends HAPOperandImp{
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessContext context,
 			HAPDataTypeHelper dataTypeHelper) {
+		this.setOutputCriteria(this.m_referencedTask.getOutput());
 		this.m_referencedTask.discoverVariable(variablesInfo, expectCriteria, context);
 		return this.isMatchable(this.m_referencedTask.getOutput(), expectCriteria, context, dataTypeHelper);
 	}

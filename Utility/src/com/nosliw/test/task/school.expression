@@ -65,7 +65,6 @@
 					"description": "add modified school data to output",
 					"type": "expression",
 					"expression": "?(output)?.add(child:?(newSchool)?)",
-					"outputVariable": ""
 				}
 			],
 			"references": {},

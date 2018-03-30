@@ -63,7 +63,9 @@ public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 	}
 
 	@Override
-	public HAPDataTypeCriteria getOutput() {		return this.m_dataSourceDefinition.getOutput().getCriteria();	}
+	public HAPDataTypeCriteria getOutput() {		
+		return this.m_dataSourceDefinition.getOutput().getCriteria();	
+	}
 
 	@Override
 	public void discoverVariable(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria,

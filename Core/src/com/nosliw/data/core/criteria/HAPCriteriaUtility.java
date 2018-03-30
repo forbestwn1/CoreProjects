@@ -2,6 +2,20 @@ package com.nosliw.data.core.criteria;
 
 public class HAPCriteriaUtility {
 
+	public static final String CHILD_ELEMENT = "element";
+	
+	public static HAPDataTypeCriteria getChildCriteria(HAPDataTypeCriteria criteria, String childName) {
+		HAPDataTypeCriteria out = null;
+		if(criteria instanceof HAPDataTypeCriteriaWithSubCriteria){
+			out = ((HAPDataTypeCriteriaWithSubCriteria)criteria).getSubCriteria().getSubCriteria(childName);
+		}
+		return out;
+	}
+
+	public static HAPDataTypeCriteria getElementCriteria(HAPDataTypeCriteria criteria) {
+		return getChildCriteria(criteria, CHILD_ELEMENT);
+	}
+	
 	public static String[][] mapping = {
 		{":", ";;;"},
 		{",", ";;"}
@@ -26,5 +40,4 @@ public class HAPCriteriaUtility {
 	  public static HAPDataTypeCriteria parseCriteria(String criteria){
 		  return HAPCriteriaParser.getInstance().parseCriteria(criteria);
 	  }	
-
 }

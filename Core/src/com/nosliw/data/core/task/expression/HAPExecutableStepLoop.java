@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperand;
@@ -55,7 +57,20 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 	@Override
 	public void discoverVariable(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria,
 			HAPProcessContext context) {
-		Map<String, HAPVariableInfo> varsInfo = HAPOperandUtility.discover(new HAPOperand[] {this.m_containerOperand.getOperand(), this.m_executeOperand.getOperand()}, variablesInfo, expectOutputCriteria, context);
+		
+		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		Map<String, HAPVariableInfo> oldVarsInfo = null;
+		varsInfo.putAll(variablesInfo);
+		do {
+			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+			oldVarsInfo.putAll(varsInfo);
+			
+			Map<String, HAPVariableInfo> varsInfo1 = HAPOperandUtility.discover(new HAPOperand[] {this.m_containerOperand.getOperand()}, oldVarsInfo, expectOutputCriteria, context);
+			varsInfo1.put(this.m_elementVariable, new HAPVariableInfo(HAPCriteriaUtility.getElementCriteria(this.m_containerOperand.getOperand().getOutputCriteria())));
+			varsInfo = HAPOperandUtility.discover(new HAPOperand[] {this.m_executeOperand.getOperand()}, varsInfo1, expectOutputCriteria, context);
+			varsInfo.remove(this.m_elementVariable);
+		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
+		
 		variablesInfo.clear();
 		variablesInfo.putAll(varsInfo);
 		m_variablesInfo.clear();

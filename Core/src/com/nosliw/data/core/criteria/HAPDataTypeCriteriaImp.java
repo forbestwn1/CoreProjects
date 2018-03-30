@@ -48,6 +48,9 @@ public abstract class HAPDataTypeCriteriaImp extends HAPSerializableImp implemen
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){	this.buildJsonMap(jsonMap, typeJsonMap);	}
 
 	@Override
+	public String toString() {		return this.toStringValue(HAPSerializationFormat.LITERATE);	}
+	
+	@Override
 	public boolean equals(Object obj){
 		boolean out = false;
 		if(obj instanceof HAPDataTypeCriteriaImp){

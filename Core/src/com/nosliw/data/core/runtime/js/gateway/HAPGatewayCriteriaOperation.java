@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
+import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWithSubCriteria;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
@@ -48,7 +49,7 @@ public class HAPGatewayCriteriaOperation extends HAPGatewayImp{
 			HAPDataTypeCriteria criteria = HAPCriteriaParser.getInstance().parseCriteria(criteriaStr);
 			HAPDataTypeCriteria childCriteria = null;
 			if(criteria instanceof HAPDataTypeCriteriaWithSubCriteria){
-				childCriteria = ((HAPDataTypeCriteriaWithSubCriteria)criteria).getSubCriteria().getSubCriteria(childName);
+				childCriteria = HAPCriteriaUtility.getChildCriteria(criteria, childName); 
 				out = this.createSuccessWithObject(childCriteria.toStringValue(HAPSerializationFormat.LITERATE));
 			}
 			break;
