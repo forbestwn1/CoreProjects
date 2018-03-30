@@ -50,7 +50,7 @@ public class HAPExecutorTaskDataSource implements HAPExecutorTask{
 	}
 
 	private HAPData calculateParmData(HAPOperandWrapper operand, HAPMatchers matchers, Map<String, HAPData> parms) {
-		HAPData parmData = HAPRhinoRuntimeUtility.executeOperandSync(operand, parms, m_runtime);
+		HAPData parmData = HAPRhinoRuntimeUtility.executeOperandSync(operand, parms, null, m_runtime);
 		
 		HAPRuntimeTaskExecuteConverterRhino converterTask = new HAPRuntimeTaskExecuteConverterRhino(parmData, matchers); 
 		HAPData out = (HAPData)this.m_runtime.executeTaskSync(converterTask).getData();

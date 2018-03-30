@@ -6,5 +6,5 @@ import com.nosliw.data.core.HAPData;
 
 public interface HAPExecutorStep {
 
-	HAPResultStep execute(HAPExecutableStep step, Map<String, HAPData> parms, Map<String, HAPData> referencedData);
+	HAPResultStep execute(HAPExecutableStep step, HAPExecutableTaskExpression task, Map<String, HAPData> parms, Map<String, HAPData> referencedData);
 }

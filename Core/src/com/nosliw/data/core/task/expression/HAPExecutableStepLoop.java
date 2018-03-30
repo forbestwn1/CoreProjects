@@ -26,16 +26,13 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 	
 	private HAPOperandWrapper m_executeOperand;
 
-	Map<String, HAPVariableInfo> m_variablesInfo;
-	
-	Set<String> m_references;
+	private Map<String, HAPVariableInfo> m_variablesInfo;
 
 	public HAPExecutableStepLoop(HAPDefinitionStepLoop loopStepDef, int index, String name) {
 		super(index, name);
 		this.m_containerOperand = loopStepDef.getContainer().getOperand().cloneWrapper();
 		this.m_elementVariable = loopStepDef.getElementVariable();
 		this.m_executeOperand = loopStepDef.getExecuteTask().getOperand().cloneWrapper();
-		this.m_references = loopStepDef.getReferenceNames();
 		this.m_variablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
 	}
 
@@ -81,7 +78,7 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 	public List<HAPResourceId> getResourceDependency() {		return this.m_containerOperand.getOperand().getResources();	}
 
 	@Override
-	public Set<String> getReferences() {  return this.m_references;  }
+	public Set<String> getReferences() {  return HAPOperandUtility.discoverReferences(this.m_containerOperand);  }
 
 	@Override
 	public Set<String> getVariables() {  return this.m_variablesInfo.keySet();  }

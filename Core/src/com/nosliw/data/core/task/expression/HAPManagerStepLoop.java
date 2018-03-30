@@ -2,15 +2,16 @@ package com.nosliw.data.core.task.expression;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.task.HAPManagerTask;
 
 public class HAPManagerStepLoop implements HAPManagerStep{
 
 	private HAPProcessorStepLoop m_processor;
 	private HAPExecutorStepLoop m_executor;
 	
-	public HAPManagerStepLoop(HAPRuntime runtime) {
+	public HAPManagerStepLoop(HAPRuntime runtime, HAPManagerTask taskManager) {
 		this.m_processor = new HAPProcessorStepLoop();
-		this.m_executor = new HAPExecutorStepLoop(runtime);
+		this.m_executor = new HAPExecutorStepLoop(runtime, taskManager);
 	}
 	
 	@Override

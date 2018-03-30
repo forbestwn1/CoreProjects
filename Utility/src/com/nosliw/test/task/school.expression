@@ -57,7 +57,7 @@
 				{
 					"description": "modify school data",
 					"type": "expression",
-					"expression": "?(school)?.setChildData(name:&(newAttr)&, value:&(newValue)&)",
+					"expression": "?(school)?.setChildData(name:&(newAttr)&,value:&(newValue)&)",
 					"outputVariable": "newSchool"
 				},
 

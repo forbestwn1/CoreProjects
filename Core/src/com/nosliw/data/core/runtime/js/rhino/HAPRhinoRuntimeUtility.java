@@ -31,7 +31,7 @@ public class HAPRhinoRuntimeUtility {
 	
 	private static String scriptTempFolder = HAPFileUtility.getScriptExportFolder() + System.currentTimeMillis() + "/";
 
-	public static HAPData executeOperandSync(HAPOperandWrapper operand, Map<String, HAPData> parms, HAPRuntime runtime) {
+	public static HAPData executeOperandSync(HAPOperandWrapper operand, Map<String, HAPData> parms, Map<String, HAPData> referenceValues, HAPRuntime runtime) {
 		HAPRuntimeTaskExecuteExpressionRhino exeExpTask = new HAPRuntimeTaskExecuteExpressionRhino(new HAPExecuteExpression() {
 			@Override
 			public String getId() {				return "";			}
@@ -54,7 +54,7 @@ public class HAPRhinoRuntimeUtility {
 			public boolean buildObject(Object value, HAPSerializationFormat format) {
 				return false;
 			}
-		}, parms, null);
+		}, parms, referenceValues);
 		HAPData out = (HAPData)runtime.executeTaskSync(exeExpTask).getData();
 		return out;
 	}

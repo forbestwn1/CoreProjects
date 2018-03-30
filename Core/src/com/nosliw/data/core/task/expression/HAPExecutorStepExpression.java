@@ -16,7 +16,7 @@ public class HAPExecutorStepExpression implements HAPExecutorStep{
 	}
 	
 	@Override
-	public HAPResultStep execute(HAPExecutableStep step, Map<String, HAPData> parms,
+	public HAPResultStep execute(HAPExecutableStep step, HAPExecutableTaskExpression task, Map<String, HAPData> parms,
 			Map<String, HAPData> referencedData) {
 
 		HAPExecutableStepExpression expStep = (HAPExecutableStepExpression)step;

@@ -36,19 +36,21 @@ public class HAPExecutorTaskExpression implements HAPExecutorTask{
 			System.out.println("STEP : "+step.getName());
 			//execute referenced executable
 			Map<String, HAPData> referencesData = new LinkedHashMap<String, HAPData>();
-			for(String refName : step.getReferences()) {
-				Map<String, HAPData> cacheSearchParms = new LinkedHashMap<String, HAPData>();
-				for(String varName : expTask.getReferencedExecute().get(refName).getVariables()) 	cacheSearchParms.put(varName, parms.get(varName));
-				HAPData cachedResult = cache.getResult(refName, cacheSearchParms);
-				if(cachedResult==null) {
-					//not find from cache, execute the referenced executable
-					cachedResult = this.m_taskManager.executeTask(expTask.getReferencedExecute().get(refName), cacheSearchParms, cache);
-					cache.addResult(refName, cachedResult, cacheSearchParms);
+			if(step.getReferences()!=null) {
+				for(String refName : step.getReferences()) {
+					Map<String, HAPData> cacheSearchParms = new LinkedHashMap<String, HAPData>();
+					for(String varName : expTask.getReferencedExecute().get(refName).getVariables()) 	cacheSearchParms.put(varName, parms.get(varName));
+					HAPData cachedResult = cache.getResult(refName, cacheSearchParms);
+					if(cachedResult==null) {
+						//not find from cache, execute the referenced executable
+						cachedResult = this.m_taskManager.executeTask(expTask.getReferencedExecute().get(refName), cacheSearchParms, cache);
+						cache.addResult(refName, cachedResult, cacheSearchParms);
+					}
+					referencesData.put(refName, cachedResult);
 				}
-				referencesData.put(refName, cachedResult);
 			}
 			
-			HAPResultStep stepResult = m_expTaskManager.getStepManager(step.getType()).getStepExecutor().execute(step, executeParms, referencesData);
+			HAPResultStep stepResult = m_expTaskManager.getStepManager(step.getType()).getStepExecutor().execute(step, expTask, executeParms, referencesData);
 			if(stepResult.isExit()) {
 				//exit
 				out = stepResult.getData();
