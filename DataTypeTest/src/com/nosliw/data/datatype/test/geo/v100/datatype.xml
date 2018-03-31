@@ -1,0 +1,17 @@
+<definition name="test.geo;1.0.0">
+	
+	<info description="Data type for integer."/>
+
+	<operations>
+		<operation name="distance" >
+			<parms>
+				<parm name="from" criteria="test.geo"/>
+				<parm name="to" criteria="test.geo"/>
+			</parms>
+			<output criteria="test.distance"/>
+		</operation>
+	
+	</operations>
+
+
+</definition>

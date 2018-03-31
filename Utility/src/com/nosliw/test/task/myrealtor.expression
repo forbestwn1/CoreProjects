@@ -1,0 +1,204 @@
+{
+	"name": "myrealtor",
+	"description": "control",
+	"tasks": [
+		{
+			"name" : "main",
+			"type" : "expression",
+			"steps" : [
+				{
+					"description" : "get school data, and save to variable",
+					"type" : "expression",
+					"expression": "<(school)>",
+					"outputVariable" : "schoolData" 
+				},
+				{
+					"description" : "get realtor data, and save to variable",
+					"type" : "expression",
+					"expression": "<(house)>",
+					"outputVariable" : "houseData" 
+				},
+				{
+					"description" : ""
+					"type" : "expression",
+					"expression": "?(houseData)?.process(elementVariableName:&(eleName)&, task:&(processTaskName)&)",
+					"outputVariable" : "processedHouses" 
+				},
+				{
+					"description" : ""
+					"type" : "expression",
+					"expression": "?(processedHouses)?.filter(elementVariableName:&(eleName)&, task:&(filterTaskName)&)",
+				},
+			],
+			"references": {
+				"main1": {
+					"variablesMap": {
+						"type": "type",
+						"score": "score",
+					}
+				}
+			},
+			"constants" : {
+				"eleName" : {
+					dataTypeId: "test.string;1.0.0",
+					value: "house"
+				},
+				"processTaskName" : {
+					dataTypeId: "test.string;1.0.0",
+					value: "processHouse"
+				},
+				"processTaskName" : {
+					dataTypeId: "test.string;1.0.0",
+					value: "filterHouse"
+				}
+			}
+		},
+		{
+			"description" : "if house contains school info, then keep it",
+			"name" : "filterHouse",
+			"type" : "expression",
+			"steps" : [
+				{
+					"description" : "find  ",
+					"type" : "expression",
+					"expression": "!(house)!.hasAttribute.(&(schoolAttributeName)&)",
+				},
+			],
+			"references": {
+				"main1": {
+					"variablesMap": {
+						"type": "type",
+						"score": "score",
+					}
+				}
+			},
+			"variables" : {
+				"house" : "test.map;1.0.0"
+			},
+		},
+		{
+			"description" : "process single house, if is valid house, attach school information to it",
+			"name" : "processHouse",
+			"type" : "expression",
+			"steps" : [
+				{
+					"description" : ""
+					"type" : "expression",
+					"expression": "?(schools)?.filter(elementVariableName:&(eleName)&, task:&(taskName)&)",
+					"outputVariable" : "validSchools" 
+				},
+				{
+					"description" : ""
+					"type" : "branch",
+					"expression": "?(validSchools)?.isEmpty()",
+					"false" : "true",
+					"true" : "exit",
+				},
+				{
+					"description" : ""
+					"type" : "expression",
+					"expression": "?(house)?.setChildData(name:&(schoolAttributeName)&,value:?(validSchools)?.getFirst())",
+					"outputVariable" : "validSchools" 
+				},
+			],
+			"references": {
+			},
+			"variables" : {
+				"schools" : "test.array;1.0.0",
+				"house" : "test.map;1.0.0",
+			},
+			"constants" : {
+				"eleName" : {
+					dataTypeId: "test.string;1.0.0",
+					value: "school"
+				},
+				"taskName" : {
+					dataTypeId: "test.string;1.0.0",
+					value: "houseSchoolMatch"
+				}
+			}
+		},
+		{
+			"description" : "if house match with a school",
+			"name" : "houseSchoolMatch",
+			"type" : "expression",
+			"steps" : [
+				{
+					"description" : "find  ",
+					"type" : "expression",
+					"expression": "!(test.geo)!.distance(from:?(school)?.geo,to:?(house)?.geo).shorterThan(&(distance)&)",
+					"outputVariable" : "isMatch" 
+				},
+				{
+					"description" : "",
+					"type" : "branch",
+					"expression": "isMatch",
+					"true" : 
+					"outputVariable" : "schoolData" 
+				},
+			],
+			"references": {
+				"main1": {
+					"variablesMap": {
+						"type": "type",
+						"score": "score",
+					}
+				}
+			},
+			"variables" : {
+				"school" : "test.map;1.0.0",
+				"house" : "test.map;1.0.0",
+			},
+			"constants" : {
+				"distance" : {
+					dataTypeId: "test.distance;1.0.0",
+					value: {
+						distance : 10,
+						unit : "km"
+					}
+				}
+			}
+		},
+		{
+			"description" : "get school data",
+			"name" : "school",
+			"type" : "dataSource",
+			"dataSource" : "school",
+			"parms" : {
+			}
+		},
+		{
+			"description" : "get house data",
+			"name" : "house",
+			"type" : "dataSource",
+			"dataSource" : "realtor",
+			"parms" : {
+			}
+		},
+	],
+	"constants": {},
+	"variables": {
+		"schooltype" : "test.string;1.0.0",
+		"score" : "test.integer;1.0.0",
+		"buildingtype" : "test.optons;1.0.0",
+	},
+	"variablesData": {
+		"schooltype": {
+			"dataTypeId": "test.options",
+			"value": "public"
+		},
+		"score": {
+			dataTypeId: "test.integer;1.0.0",
+			value: "5"
+		},
+		"buildingtype": {
+			"dataTypeId": "test.options",
+			"value": "house"
+		},
+	},
+	"result": {
+		"dataTypeId": "test.string;1.0.0",
+		"value": "sffffff",
+		"wapperType": "JSON"
+	}
+}
