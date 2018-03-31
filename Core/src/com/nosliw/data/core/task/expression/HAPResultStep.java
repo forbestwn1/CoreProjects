@@ -2,11 +2,15 @@ package com.nosliw.data.core.task.expression;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.expression.HAPDefinitionExpression;
 
 public class HAPResultStep extends HAPSerializableImp{
 
@@ -63,6 +67,28 @@ public class HAPResultStep extends HAPSerializableImp{
 	public HAPData getData() {   return this.m_data;    }
 	public String getVariableName() {   return this.m_variableName;   }
 
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		try{
+			super.buildObjectByJson(json);
+			JSONObject jsonObj = (JSONObject)json;
+
+			this.m_next = (String)jsonObj.opt(NEXT);
+			this.m_variableName = (String)jsonObj.opt(VARIABLENAME);
+			
+			Object exitObj = jsonObj.opt(EXIT);
+			if(exitObj!=null)   this.m_exit = Boolean.valueOf((String)exitObj);
+			
+			Object dataObj = jsonObj.opt(DATA);
+			if(dataObj!=null)   this.m_data = HAPDataUtility.buildDataWrapperFromJson((JSONObject)dataObj);
+			return true;  
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);

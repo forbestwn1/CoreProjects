@@ -457,6 +457,7 @@ public class HAPConstant {
 
 		public static final String EXPRESSIONTASK_STEPTYPE_EXPRESSION = "expression";
 		public static final String EXPRESSIONTASK_STEPTYPE_LOOP = "loop";
+		public static final String EXPRESSIONTASK_STEPTYPE_BRANCH = "branch";
 
 
 }
