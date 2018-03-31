@@ -33,7 +33,7 @@
 				<parm name="index" criteria="test.integer"/>
 				<parm name="child" criteria="*"/>
 			</parms>
-			<output criteria="*"/>
+			<output criteria="test.array"/>
 		</operation>
 
 		<operation name="add" >
@@ -41,7 +41,7 @@
 				<parm name="base" criteria="test.array" isBase="true"/>
 				<parm name="child" criteria="*"/>
 			</parms>
-			<output criteria="*"/>
+			<output criteria="test.array"/>
 		</operation>
 
 		<operation name="removeChild" >

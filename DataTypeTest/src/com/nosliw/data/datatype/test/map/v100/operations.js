@@ -78,7 +78,7 @@ dataTypeDefition.operations['getChildData'] = {
 dataTypeDefition.operations['setChildData'] = {
 		operation : function(parms, context){
 			var name = parms.getParm("name").value;
-			var value = parms.getParm("value").value;
+			var value = parms.getParm("value");
 			this.value[name] = value;
 			return this;
 		}

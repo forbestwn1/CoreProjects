@@ -23,6 +23,8 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 	private HAPOperandWrapper m_containerOperand;
 	
 	private String m_elementVariable;
+
+	private String m_outputVariable;
 	
 	private HAPOperandWrapper m_executeOperand;
 
@@ -32,6 +34,7 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 		super(index, name);
 		this.m_containerOperand = loopStepDef.getContainer().getOperand().cloneWrapper();
 		this.m_elementVariable = loopStepDef.getElementVariable();
+		this.m_outputVariable = loopStepDef.getOutputVariable();
 		this.m_executeOperand = loopStepDef.getExecuteTask().getOperand().cloneWrapper();
 		this.m_variablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
 	}
@@ -39,7 +42,8 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 	public HAPOperandWrapper getContainerOperand() {  return this.m_containerOperand;   }
 	public HAPOperandWrapper getExecuteOperand() {   return this.m_executeOperand;   }
 	public String getElementVariable() {  return this.m_elementVariable;   }
-	
+	public String getOutputVariable() {   return this.m_outputVariable;  }
+
 	@Override
 	public String getType() {  return HAPConstant.EXPRESSIONTASK_STEPTYPE_LOOP;	}
 

@@ -38,15 +38,18 @@ public class HAPExecutorStepLoop implements HAPExecutorStep{
 		//loop through element
 		Set<String> eleRefs = HAPOperandUtility.discoverReferences(loopStep.getExecuteOperand());
 		
+		HAPData eleOut = null;
+		
 		JSONArray elesJson =  (JSONArray)containerData.getValue();
 		for(int i=0; i<elesJson.length(); i++) {
 			JSONObject eleJson = (JSONObject)elesJson.get(i);
 			HAPData eleData = HAPDataUtility.buildDataWrapperFromJson(eleJson);
 
-			Map<String, HAPData> eleParms = new LinkedHashMap<String, HAPData>(); 
+			Map<String, HAPData> eleParms = new LinkedHashMap<String, HAPData>();
 			eleParms.putAll(parms);
 			eleParms.put(loopStep.getElementVariable(), eleData);
-
+			if(eleOut!=null)   eleParms.put(loopStep.getOutputVariable(), eleOut);
+			
 			Map<String, HAPData> eleRefDatas = new LinkedHashMap<String, HAPData>(); 
 			eleRefDatas.putAll(referencedData);
 			for(String eleRefName : eleRefs) {
@@ -54,10 +57,10 @@ public class HAPExecutorStepLoop implements HAPExecutorStep{
 				eleRefDatas.put(eleRefName, eleRefData);
 			}
 			
-			HAPRhinoRuntimeUtility.executeOperandSync(loopStep.getExecuteOperand(), eleParms, eleRefDatas, m_runtime);
+			eleOut = HAPRhinoRuntimeUtility.executeOperandSync(loopStep.getExecuteOperand(), eleParms, eleRefDatas, m_runtime);
 		}
 		
-		HAPResultStep out = HAPResultStep.createNullResult();
-		return out;
+		if(eleOut!=null)  return HAPResultStep.createNextStepResult(eleOut, loopStep.getOutputVariable());
+		else return HAPResultStep.createNullResult();
 	}
 }

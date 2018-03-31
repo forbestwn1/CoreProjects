@@ -80,6 +80,8 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	protected HAPMatchers isMatchable(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessContext context, HAPDataTypeHelper dataTypeHelper){
 		if(expectCriteria==null)   return null;
 		
+		if(expectCriteria==HAPDataTypeCriteriaAny.getCriteria())   expectCriteria = criteria;
+		
 		HAPMatchers out = dataTypeHelper.buildMatchers(criteria, expectCriteria);
 		if(out==null){
 			//not able to match, then error

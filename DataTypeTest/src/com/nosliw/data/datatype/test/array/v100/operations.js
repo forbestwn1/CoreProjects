@@ -90,7 +90,7 @@ dataTypeDefition.operations['addChild'] = {
 			var index = parms.getParm("index").value;
 			var childValue = parms.getParm("child");
 			this.value.splice(index, 0, childValue);
-			return childValue;
+			return this;
 		}
 };
 
@@ -98,7 +98,7 @@ dataTypeDefition.operations['add'] = {
 		operation : function(parms, context){
 			var childValue = parms.getParm("child");
 			this.value.push(childValue);
-			return childValue;
+			return this;
 		}
 };
 

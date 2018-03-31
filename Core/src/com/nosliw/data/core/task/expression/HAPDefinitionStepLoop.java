@@ -21,11 +21,16 @@ public class HAPDefinitionStepLoop extends HAPDefinitionStep{
 	@HAPAttribute
 	public static String EXECUTETASK = "executeTask";
 	
+	@HAPAttribute 
+	public static String OUTPUTVARIABLE = "outputVariable";
+	
 	private HAPDefinitionExpression m_container;
 	
 	private String m_elementVariable;
 	
 	private HAPDefinitionExpression m_executeTask;
+	
+	private String m_outputVariable;
 	
 	@Override
 	public String getType() {  return HAPConstant.EXPRESSIONTASK_STEPTYPE_LOOP;	}
@@ -35,6 +40,8 @@ public class HAPDefinitionStepLoop extends HAPDefinitionStep{
 	public String getElementVariable() {  return this.m_elementVariable;   }
 	
 	public HAPDefinitionExpression getExecuteTask() {   return this.m_executeTask;   }
+	
+	public String getOutputVariable() {   return this.m_outputVariable;  }
 	
 	@Override
 	public Set<String> getVariableNames() {
@@ -62,6 +69,7 @@ public class HAPDefinitionStepLoop extends HAPDefinitionStep{
 			this.m_elementVariable = jsonObj.getString(ELEMENTVARIABLE);
 			this.m_container = new HAPDefinitionExpression(jsonObj.getString(CONTAINER));
 			this.m_executeTask = new HAPDefinitionExpression(jsonObj.getString(EXECUTETASK));
+			this.m_outputVariable = jsonObj.getString(OUTPUTVARIABLE);
 			return true;  
 		}
 		catch(Exception e){
@@ -74,5 +82,4 @@ public class HAPDefinitionStepLoop extends HAPDefinitionStep{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 	}
-	
 }

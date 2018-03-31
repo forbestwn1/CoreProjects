@@ -191,6 +191,11 @@ public class HAPOperandOperation extends HAPOperandImp{
 					this.setBase(null);
 				}
 				
+				if(this.m_operation.equals("setChildData") && parmInfo.getName().equals("value")) {
+					int kkkk = 55555;
+					kkkk++;
+				}
+				
 				if(parmOperandWrapper==null) {
 					int kkkk = 55555;
 					kkkk++;
