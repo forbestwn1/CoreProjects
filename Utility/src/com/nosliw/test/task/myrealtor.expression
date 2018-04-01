@@ -22,7 +22,7 @@
 				{
 					"description": "create output array",
 					"type": "expression",
-					"expression": "!(test.array)!.new()",
+					"expression": "!(test.array)!.emptyArray()",
 					"outputVariable": "output"
 				},
 				
@@ -36,10 +36,12 @@
 				},
 			],
 			"references": {
-				"main1": {
+				"school": {
 					"variablesMap": {
-						"type": "type",
-						"score": "score",
+					}
+				},
+				"house": {
+					"variablesMap": {
 					}
 				}
 			},
@@ -147,7 +149,7 @@
 				{
 					"description" : "",
 					"type" : "branch",
-					"expression": "?(isMatch)?.isTrue()",
+					"expression": "?(isMatch)?",
 					"false" : {
 						"next" : "exit"
 					},

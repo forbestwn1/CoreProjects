@@ -67,15 +67,21 @@ public class HAPDataAccessDataType extends HAPDataAccess{
 	
 	public HAPDataTypeOperationImp getDataTypeOperation(HAPDataTypeId dataTypeId, String operationName){
 		HAPDataTypeOperationImp out = (HAPDataTypeOperationImp)this.queryEntityFromDB(HAPDataTypeOperationImp._VALUEINFO_NAME, "source=? AND name=?", new Object[]{dataTypeId.getFullName(), operationName}, this.getConnection());
-		List<HAPOperationVarInfoImp> parms = (List<HAPOperationVarInfoImp>)this.queryEntitysFromDB(HAPOperationVarInfoImp._VALUEINFO_NAME, "operationId=?", new Object[]{out.getOperationId()}, this.getConnection());
-		for(HAPOperationVarInfoImp parm : parms){
-			if(HAPConstant.DATAOPERATION_VAR_TYPE_IN.equals(parm.getType())){
-				out.addParmsInfo(parm);
-			}
-			else if(HAPConstant.DATAOPERATION_VAR_TYPE_OUT.equals(parm.getType())){
-				out.setOutputInfo(parm);
+		if(out!=null) {
+			List<HAPOperationVarInfoImp> parms = (List<HAPOperationVarInfoImp>)this.queryEntitysFromDB(HAPOperationVarInfoImp._VALUEINFO_NAME, "operationId=?", new Object[]{out.getOperationId()}, this.getConnection());
+			for(HAPOperationVarInfoImp parm : parms){
+				if(HAPConstant.DATAOPERATION_VAR_TYPE_IN.equals(parm.getType())){
+					out.addParmsInfo(parm);
+				}
+				else if(HAPConstant.DATAOPERATION_VAR_TYPE_OUT.equals(parm.getType())){
+					out.setOutputInfo(parm);
+				}
 			}
 		}
+		else {
+			System.err.println("Operation does not exist : "  + dataTypeId.toString() + "  " + operationName);
+		}
+		
 		return out;
 	}
 	

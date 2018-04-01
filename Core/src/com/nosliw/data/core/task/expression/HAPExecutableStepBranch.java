@@ -31,6 +31,7 @@ public class HAPExecutableStepBranch extends HAPExecutableStep{
 	public HAPExecutableStepBranch(HAPDefinitionStepBranch branchStepDef, int index, String name) {
 		super(index, name);
 		this.m_expression = branchStepDef.getExpression().getOperand().cloneWrapper();
+		this.m_variablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
 	}
 
 	public HAPResultStep getTrueResult() {   return this.m_trueResult;  }
