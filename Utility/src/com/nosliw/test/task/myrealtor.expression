@@ -18,16 +18,21 @@
 					"expression": "<(house)>",
 					"outputVariable" : "houseData" 
 				},
+				
 				{
-					"description" : ""
-					"type" : "expression",
-					"expression": "?(houseData)?.process(elementVariableName:&(eleName)&, task:&(processTaskName)&)",
-					"outputVariable" : "processedHouses" 
+					"description": "create output array",
+					"type": "expression",
+					"expression": "!(test.array)!.new()",
+					"outputVariable": "output"
 				},
+				
 				{
-					"description" : ""
-					"type" : "expression",
-					"expression": "?(processedHouses)?.filter(elementVariableName:&(eleName)&, task:&(filterTaskName)&)",
+					"description": "loop element",
+					"type": "loop",
+					"container": "?(houseData)?",
+					"elementVariable": "house",
+					"executeTask": "<(processHouse)>",
+					"outputVariable": "output"
 				},
 			],
 			"references": {
@@ -45,77 +50,68 @@
 				},
 				"processTaskName" : {
 					dataTypeId: "test.string;1.0.0",
-					value: "processHouse"
-				},
-				"processTaskName" : {
-					dataTypeId: "test.string;1.0.0",
 					value: "filterHouse"
 				}
 			}
-		},
-		{
-			"description" : "if house contains school info, then keep it",
-			"name" : "filterHouse",
-			"type" : "expression",
-			"steps" : [
-				{
-					"description" : "find  ",
-					"type" : "expression",
-					"expression": "!(house)!.hasAttribute.(&(schoolAttributeName)&)",
-				},
-			],
-			"references": {
-				"main1": {
-					"variablesMap": {
-						"type": "type",
-						"score": "score",
-					}
-				}
-			},
-			"variables" : {
-				"house" : "test.map;1.0.0"
-			},
 		},
 		{
 			"description" : "process single house, if is valid house, attach school information to it",
 			"name" : "processHouse",
 			"type" : "expression",
 			"steps" : [
+
 				{
-					"description" : ""
-					"type" : "expression",
-					"expression": "?(schools)?.filter(elementVariableName:&(eleName)&, task:&(taskName)&)",
-					"outputVariable" : "validSchools" 
+					"description": "create valid school variable",
+					"type": "expression",
+					"expression": "!(test.string)!.emptyString()",
+					"outputVariable": "validSchool"
+				},
+			
+				{
+					"description": "loop element",
+					"type": "loop",
+					"container": "?(schoolData)?",
+					"elementVariable": "school",
+					"executeTask": "<(houseSchoolMatch)>",
+					"outputVariable": "validSchool"
 				},
 				{
-					"description" : ""
+					"description" : "",
 					"type" : "branch",
-					"expression": "?(validSchools)?.isEmpty()",
-					"false" : "true",
-					"true" : "exit",
+					"expression": "?(validSchool)?.isEmpty()",
+					"false" : {
+						"next" : "merge"
+					},
+					"true" : {
+						"next" : "exit"
+					}
 				},
 				{
-					"description" : ""
+					"name" : "exit",
+					"description" : "",
 					"type" : "expression",
-					"expression": "?(house)?.setChildData(name:&(schoolAttributeName)&,value:?(validSchools)?.getFirst())",
-					"outputVariable" : "validSchools" 
+					"expression": "?(output)?",
+					"exit" : true
+				},
+				{
+					"name" : "merge",
+					"description" : "",
+					"type" : "expression",
+					"expression": "?(output)?.add(child:?(house)?.setChildData(name:&(schoolAttributeName)&,value:?(validSchool)?))",
 				},
 			],
 			"references": {
 			},
 			"variables" : {
-				"schools" : "test.array;1.0.0",
+				"schoolData" : "test.array;1.0.0",
 				"house" : "test.map;1.0.0",
+				"output": "test.array;1.0.0"
 			},
 			"constants" : {
 				"eleName" : {
 					dataTypeId: "test.string;1.0.0",
 					value: "school"
 				},
-				"taskName" : {
-					dataTypeId: "test.string;1.0.0",
-					value: "houseSchoolMatch"
-				}
 			}
 		},
 		{
@@ -124,28 +120,53 @@
 			"type" : "expression",
 			"steps" : [
 				{
+					"description" : "",
+					"type" : "branch",
+					"expression": "?(validSchool)?.isEmpty()",
+					"false" : {
+						"next" : "exit"
+					},
+					"true" : {
+						"next" : "match"
+					}
+				},
+				{
+					"name" : "exit",
+					"description" : "",
+					"type" : "expression",
+					"expression": "?(validSchool)?",
+					"exit" : true
+				},
+				{
+					"name" : "match",
 					"description" : "find  ",
 					"type" : "expression",
-					"expression": "!(test.geo)!.distance(from:?(school)?.geo,to:?(house)?.geo).shorterThan(&(distance)&)",
+					"expression": "!(test.geo)!.distance(from:?(school)?.geo,to:?(house)?.geo).shorterThan(dis2:&(distance)&)",
 					"outputVariable" : "isMatch" 
 				},
 				{
 					"description" : "",
 					"type" : "branch",
-					"expression": "isMatch",
-					"true" : 
-					"outputVariable" : "schoolData" 
+					"expression": "?(isMatch)?.isTrue()",
+					"false" : {
+						"next" : "exit"
+					},
+					"true" : {
+						"next" : "setOutput"
+					}
+				},
+				{
+					"name" : "setOutput",
+					"description" : "",
+					"type" : "expression",
+					"expression": "?(school)?",
+					"outputVariable" : "validSchool" 
 				},
 			],
 			"references": {
-				"main1": {
-					"variablesMap": {
-						"type": "type",
-						"score": "score",
-					}
-				}
 			},
 			"variables" : {
+				"validSchool" : "test.string;1.0.0",
 				"school" : "test.map;1.0.0",
 				"house" : "test.map;1.0.0",
 			},
@@ -153,7 +174,7 @@
 				"distance" : {
 					dataTypeId: "test.distance;1.0.0",
 					value: {
-						distance : 10,
+						distance : 10.0,
 						unit : "km"
 					}
 				}
@@ -176,23 +197,28 @@
 			}
 		},
 	],
-	"constants": {},
+	"constants": {
+		"schoolAttributeName" : {
+			"dataTypeId": "test.string;1.0.0",
+			"value": "schoolName"
+		}
+	},
 	"variables": {
-		"schooltype" : "test.string;1.0.0",
-		"score" : "test.integer;1.0.0",
-		"buildingtype" : "test.optons;1.0.0",
+		"schoolType" : "test.options;1.0.0",
+		"schoolRating" : "test.float;1.0.0",
+		"buildingType" : "test.optons;1.0.0",
 	},
 	"variablesData": {
-		"schooltype": {
-			"dataTypeId": "test.options",
+		"schoolType": {
+			"dataTypeId": "test.options;1.0.0",
 			"value": "public"
 		},
-		"score": {
-			dataTypeId: "test.integer;1.0.0",
-			value: "5"
+		"schoolRating": {
+			dataTypeId: "test.float;1.0.0",
+			value: 5.0
 		},
-		"buildingtype": {
-			"dataTypeId": "test.options",
+		"buildingType": {
+			"dataTypeId": "test.options;1.0.0",
 			"value": "house"
 		},
 	},

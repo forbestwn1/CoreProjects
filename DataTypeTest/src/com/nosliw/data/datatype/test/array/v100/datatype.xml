@@ -75,6 +75,12 @@
 			<output criteria="*"/>
 		</operation>
 
+		<operation name="emptyArray" >
+			<parms>
+			</parms>
+			<output criteria="test.array"/>
+		</operation>
+
 		<operation name="new" >
 			<parms>
 			</parms>

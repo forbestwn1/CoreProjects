@@ -118,6 +118,17 @@ dataTypeDefition.operations['getChildDataByIndex'] = {
 		}
 };
 
+dataTypeDefition.operations['emptyArray'] = {
+		//defined operation
+		//in operation can access all the required resources by name through context
+		operation : function(parms, context){
+			return {
+				dataTypeId : "test.array;1.0.0",
+				value : [],
+			};
+		},
+};
+
 dataTypeDefition.operations['new'] = {
 		//defined operation
 		//in operation can access all the required resources by name through context

@@ -3,6 +3,19 @@
 	<info description="Data type for string."/>
 
 	<operations>
+
+		<operation name="emptyString" >
+			<parms>
+			</parms>
+			<output criteria="test.string;1.0.0"/>
+		</operation>
+	
+		<operation name="isEmpty" >
+			<parms>
+				<parm name="base" criteria="test.string" isBase="true"/>
+			</parms>
+			<output criteria="test.boolean;1.0.0"/>
+		</operation>
 	
 		<operation name="subString" >
 			<parms>

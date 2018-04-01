@@ -1,0 +1,17 @@
+<definition name="test.distance;1.0.0">
+	
+	<info description="Data type for integer."/>
+
+	<operations>
+		<operation name="shorterThan" >
+			<parms>
+				<parm name="dis1" criteria="test.distance" isBase="true"/>
+				<parm name="dis2" criteria="test.distance"/>
+			</parms>
+			<output criteria="test.boolean"/>
+		</operation>
+	
+	</operations>
+
+
+</definition>

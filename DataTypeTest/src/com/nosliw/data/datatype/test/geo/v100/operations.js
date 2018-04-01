@@ -3,7 +3,7 @@
 //      dependency
 //		each operation (operation name, script, dependency)
 
-var dataTypeDefition = nosliw.getDataTypeDefinition("test.integer");
+var dataTypeDefition = nosliw.getDataTypeDefinition("test.geo");
 
 //define what this data type globlely requires (operation, datatype, library)
 dataTypeDefition.requires = {
@@ -24,7 +24,10 @@ dataTypeDefition.operations['distance'] = {
 			
 			return {
 				dataTypeId : "test.distance;1.0.0",
-				value : distance,
+				value : {
+					distance : distance,
+					unit : "km"
+				}
 			}
 		},
 

@@ -51,6 +51,7 @@ dataTypeDefition.operations['isAccessChildById'] = {
 		},
 };
 
+
 dataTypeDefition.operations['length'] = {
 		operation : function(parms, context){
 			var obj = parms.getParm("base").value;

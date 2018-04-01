@@ -29,6 +29,7 @@ public class HAPManagerTaskExpression implements HAPManagerTaskSpecific{
 		this.m_expressionTaskExecutor = new HAPExecutorTaskExpression(this, this.m_taskMan);
 		registerStepManager(HAPConstant.EXPRESSIONTASK_STEPTYPE_EXPRESSION, new HAPManagerStepExpression(this.m_runtime));
 		registerStepManager(HAPConstant.EXPRESSIONTASK_STEPTYPE_LOOP, new HAPManagerStepLoop(this.m_runtime, taskMan));
+		registerStepManager(HAPConstant.EXPRESSIONTASK_STEPTYPE_BRANCH, new HAPManagerStepBranch(this.m_runtime));
 	}
 	
 	public void registerStepManager(String type, HAPManagerStep stepManager){		this.m_stepManagers.put(type, stepManager);	}

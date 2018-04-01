@@ -79,8 +79,8 @@
       "Type": "Single Family",
       "Address": {
         "AddressText": "22 ARBUTUS CRES|Hamilton, Ontario L8J1M8",
-        "Latitude": "43.1934714",
-        "Longitude": "-79.8017496"
+        "Latitude": "43.138973",
+        "Longitude": "-81.030187"
       },
       "ParkingSpaceTotal": "4",
       "Price": "$603,800",

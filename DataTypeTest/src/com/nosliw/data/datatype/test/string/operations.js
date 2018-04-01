@@ -33,6 +33,31 @@ dataTypeDefition.localRequires = {
 	}
 };
 
+dataTypeDefition.operations['emptyString'] = {
+		operation : function(parms, context){
+			return {
+				dataTypeId : "test.string;1.0.0",
+				value : ""
+			};
+		},
+};
+
+dataTypeDefition.operations['isEmpty'] = {
+		operation : function(parms, context){
+			if(this.value==""){
+				return {
+					dataTypeId : "test.boolean;1.0.0",
+					value : true
+				};
+			}
+			else{
+				return {
+					dataTypeId : "test.boolean;1.0.0",
+					value : false
+				};
+			}
+		},
+};
 
 //define operation
 dataTypeDefition.operations['subString'] = {

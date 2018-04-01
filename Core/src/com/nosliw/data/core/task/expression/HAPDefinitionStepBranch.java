@@ -49,6 +49,7 @@ public class HAPDefinitionStepBranch extends HAPDefinitionStep{
 
 			this.m_trueResult = new HAPResultStep();
 			this.m_trueResult.buildObjectByJson(jsonObj.getJSONObject(TRUERESULT));
+			this.m_falseResult = new HAPResultStep();
 			this.m_falseResult.buildObjectByJson(jsonObj.getJSONObject(FALSERESULT));
 			return true;  
 		}
