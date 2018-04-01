@@ -43,7 +43,15 @@
 				"house": {
 					"variablesMap": {
 					}
-				}
+				},
+				"processHouse": {
+					"variablesMap": {
+						"schoolData" : "schoolData",
+						"house" : "house",
+						"output" : "output",
+						
+					}
+				},
 			},
 			"constants" : {
 				"eleName" : {
@@ -103,6 +111,13 @@
 				},
 			],
 			"references": {
+				"houseSchoolMatch" : {
+					"variablesMap": {
+						"validSchool" : "validSchool",
+						"school" : "school",
+						"house" : "house",
+					}
+				}
 			},
 			"variables" : {
 				"schoolData" : "test.array;1.0.0",
