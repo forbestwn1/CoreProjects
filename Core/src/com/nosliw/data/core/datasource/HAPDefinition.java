@@ -71,13 +71,6 @@ public class HAPDefinition extends HAPSerializableImp{
 			JSONObject objJson = (JSONObject)json;
 			
 			this.m_name = objJson.getString(NAME);
-			
-			if(this.m_name.equals("school")) {
-				int kkkk = 5555;
-				kkkk++;
-			}
-			
-			
 			this.m_implementation = (String)objJson.opt(IMPLEMENTATION);
 			this.m_description = objJson.optString(DESCRIPTION);
 			HAPDataTypeCriteria outputCriteria = this.m_parser.parseCriteria(objJson.getString(OUTPUT));

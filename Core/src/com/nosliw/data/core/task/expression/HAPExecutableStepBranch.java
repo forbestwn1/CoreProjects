@@ -5,10 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
-import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperand;
@@ -31,6 +29,8 @@ public class HAPExecutableStepBranch extends HAPExecutableStep{
 	public HAPExecutableStepBranch(HAPDefinitionStepBranch branchStepDef, int index, String name) {
 		super(index, name);
 		this.m_expression = branchStepDef.getExpression().getOperand().cloneWrapper();
+		this.m_trueResult = branchStepDef.getTrueResult();
+		this.m_falseResult = branchStepDef.getFalseResult();
 		this.m_variablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
 	}
 
@@ -47,6 +47,8 @@ public class HAPExecutableStepBranch extends HAPExecutableStep{
 	@Override
 	public void updateVariable(HAPUpdateVariable updateVar) {
 		HAPOperandUtility.updateVariable(this.m_expression, updateVar);
+		this.m_trueResult.updateVariable(updateVar);
+		this.m_falseResult.updateVariable(updateVar);
 	}
 
 	@Override

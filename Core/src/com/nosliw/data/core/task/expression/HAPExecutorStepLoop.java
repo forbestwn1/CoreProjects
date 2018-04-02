@@ -30,6 +30,11 @@ public class HAPExecutorStepLoop implements HAPExecutorStep{
 	public HAPResultStep execute(HAPExecutableStep step, HAPExecutableTaskExpression task, Map<String, HAPData> parms,
 			Map<String, HAPData> referencedData) {
 
+		if("processHouse2".equals(step.getName())) {
+			int kkkk = 555;
+			kkkk++;
+		}
+		
 		HAPExecutableStepLoop loopStep = (HAPExecutableStepLoop)step;
 		
 		//get container data

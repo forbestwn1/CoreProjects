@@ -52,7 +52,9 @@ public class HAPDefinitionComponent extends HAPSerializableImp {
 	}
 
 	public String getName(){  return this.m_name;  }
-	public void setName(String name) {    this.m_name = name;   }
+	public void setName(String name) {
+		this.m_name = name;   
+	}
 	
 	public String getDescription() {    return this.m_description;  }
 	

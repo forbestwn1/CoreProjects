@@ -105,6 +105,11 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 		for(HAPExecutableStep step : this.m_steps) {
 			step.updateVariable(updateVar);
 		}
+		
+		//update variables in referenced task
+		for(String refName : this.m_executeReferences.keySet()) {
+			this.m_executeReferences.get(refName).updateVariable(updateVar);
+		}
 	}
 
 	@Override

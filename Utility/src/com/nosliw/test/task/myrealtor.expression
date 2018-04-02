@@ -7,12 +7,14 @@
 			"type" : "expression",
 			"steps" : [
 				{
+					"name" : "main1",
 					"description" : "get school data, and save to variable",
 					"type" : "expression",
 					"expression": "<(school)>",
 					"outputVariable" : "schoolData" 
 				},
 				{
+					"name" : "main2",
 					"description" : "get realtor data, and save to variable",
 					"type" : "expression",
 					"expression": "<(house)>",
@@ -20,6 +22,7 @@
 				},
 				
 				{
+					"name" : "main3",
 					"description": "create output array",
 					"type": "expression",
 					"expression": "!(test.array)!.emptyArray()",
@@ -27,6 +30,7 @@
 				},
 				
 				{
+					"name" : "main4",
 					"description": "loop element",
 					"type": "loop",
 					"container": "?(houseData)?",
@@ -71,6 +75,7 @@
 			"steps" : [
 
 				{
+					"name" : "processHouse1",
 					"description": "create valid school variable",
 					"type": "expression",
 					"expression": "!(test.string)!.emptyString()",
@@ -78,6 +83,7 @@
 				},
 			
 				{
+					"name" : "processHouse2",
 					"description": "loop element",
 					"type": "loop",
 					"container": "?(schoolData)?",
@@ -86,6 +92,7 @@
 					"outputVariable": "validSchool"
 				},
 				{
+					"name" : "processHouse3",
 					"description" : "",
 					"type" : "branch",
 					"expression": "?(validSchool)?.isEmpty()",
@@ -137,6 +144,7 @@
 			"type" : "expression",
 			"steps" : [
 				{
+					"name" : "houseSchoolMatch1",
 					"description" : "",
 					"type" : "branch",
 					"expression": "?(validSchool)?.isEmpty()",
@@ -149,7 +157,7 @@
 				},
 				{
 					"name" : "exit",
-					"description" : "",
+					"description" : "aaaaaaaaaaa",
 					"type" : "expression",
 					"expression": "?(validSchool)?",
 					"exit" : true
@@ -162,6 +170,7 @@
 					"outputVariable" : "isMatch" 
 				},
 				{
+					"name" : "houseSchoolMatch2",
 					"description" : "",
 					"type" : "branch",
 					"expression": "?(isMatch)?",

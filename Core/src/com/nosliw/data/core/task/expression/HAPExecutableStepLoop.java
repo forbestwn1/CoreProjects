@@ -53,6 +53,9 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 	@Override
 	public void updateVariable(HAPUpdateVariable updateVar) {
 		HAPOperandUtility.updateVariable(this.m_containerOperand, updateVar);
+		HAPOperandUtility.updateVariable(this.m_executeOperand, updateVar);
+		this.m_elementVariable = updateVar.getUpdatedVariable(this.m_elementVariable);
+		this.m_outputVariable = updateVar.getUpdatedVariable(this.m_outputVariable);
 	}
 
 	@Override

@@ -8,9 +8,11 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
+import com.nosliw.data.core.task.HAPUpdateVariable;
 
 public class HAPResultStep extends HAPSerializableImp{
 
@@ -67,6 +69,12 @@ public class HAPResultStep extends HAPSerializableImp{
 	public HAPData getData() {   return this.m_data;    }
 	public String getVariableName() {   return this.m_variableName;   }
 
+	public void updateVariable(HAPUpdateVariable updateVar) {
+		if(HAPBasicUtility.isStringNotEmpty(m_variableName)) {
+			this.m_variableName = updateVar.getUpdatedVariable(this.m_variableName);
+		}
+	}
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{

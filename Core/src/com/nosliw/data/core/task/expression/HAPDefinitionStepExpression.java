@@ -53,6 +53,7 @@ public class HAPDefinitionStepExpression extends HAPDefinitionStep{
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
+		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		String expressionStr = jsonObj.optString(EXPRESSION);
 		this.setExpression(expressionStr);
