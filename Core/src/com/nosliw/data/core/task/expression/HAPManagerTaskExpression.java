@@ -35,8 +35,12 @@ public class HAPManagerTaskExpression implements HAPManagerTaskSpecific{
 	public void registerStepManager(String type, HAPManagerStep stepManager){		this.m_stepManagers.put(type, stepManager);	}
 	public HAPManagerStep getStepManager(String type) {  return this.m_stepManagers.get(type);   }
 	
-	public HAPExecutableStep processStep(HAPDefinitionStep stepDef, int index, Map<String, HAPData> constants, HAPProcessContext context) {
-		return this.getStepManager(stepDef.getType()).getStepProcessor().process(stepDef, index, stepDef.getName(), constants, context);
+	public HAPExecutableStep processStep(HAPDefinitionStep stepDef, HAPExecutableTaskExpression taskExpressionExe, int index, Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> constants, HAPProcessContext context) {
+		return this.getStepManager(stepDef.getType()).getStepProcessor().process(stepDef, taskExpressionExe, index, stepDef.getName(), contextTaskDefinitions, constants, context);
+	}
+
+	public void postProcessStep(HAPExecutableStep exeDef, HAPDefinitionStep stepDef, HAPExecutableTaskExpression taskExpressionExe, int index, Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> constants, HAPProcessContext context) {
+		this.getStepManager(stepDef.getType()).getStepProcessor().postProcess(exeDef, stepDef, taskExpressionExe, index, stepDef.getName(), contextTaskDefinitions, constants, context);
 	}
 
 	@Override

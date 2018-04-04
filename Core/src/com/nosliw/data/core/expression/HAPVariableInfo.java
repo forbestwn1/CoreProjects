@@ -13,6 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 /**
@@ -31,7 +32,7 @@ public class HAPVariableInfo extends HAPSerializableImp{
 	public static String INFO = "info";
 	
 	//use stack to store all the change applied for criteria
-	private List<HAPDataTypeCriteria> m_criteriaStack = new ArrayList<HAPDataTypeCriteria>();
+	private HAPDataTypeCriteria m_criteria;
 	
 	//status of variable, now there are two status
 	//open: the criteria is open to change
@@ -47,24 +48,36 @@ public class HAPVariableInfo extends HAPSerializableImp{
 	
 	public HAPVariableInfo(HAPDataTypeCriteria criteria, String status){
 		this.m_status = status;
-		this.m_criteriaStack.add(criteria);
 		this.m_info = new HAPInfoImpSimple();
+		this.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
+
+		this.kkkkkk();
+		
+		System.out.println(this);
 	}
 
 	public HAPVariableInfo(HAPDataTypeCriteria criteria){
-		this.m_criteriaStack.add(criteria);
+		this.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
 		if(criteria==null)   this.m_status = HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN;
 		else   this.m_status = HAPConstant.EXPRESSION_VARIABLE_STATUS_CLOSE;
 		this.m_info = new HAPInfoImpSimple();
+	
+		this.kkkkkk();
+		System.out.println(this);
 	}
 	
 	public String getStatus(){		return this.m_status;	}
 	
 	public void setStatus(String status){  this.m_status = status;   }
 	
-	public HAPDataTypeCriteria getCriteria(){		return m_criteriaStack.get(this.m_criteriaStack.size()-1);	}
+	public HAPDataTypeCriteria getCriteria(){		return HAPCriteriaUtility.cloneDataTypeCriteria(this.m_criteria);	}
 	
-	public void setCriteria(HAPDataTypeCriteria criteria){		this.m_criteriaStack.add(criteria);	}
+	public void setCriteria(HAPDataTypeCriteria criteria){
+		this.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
+		this.kkkkkk();
+
+		System.out.println(this);
+	}
 	
 	public String getInfoValue(String name) {   return (String)this.m_info.getValue(name);   }
 	
@@ -87,6 +100,17 @@ public class HAPVariableInfo extends HAPSerializableImp{
 		jsonMap.put(STATUS, this.getStatus());
 		if(this.getCriteria()!=null){
 			jsonMap.put(CRITERIA, HAPSerializeManager.getInstance().toStringValue(this.getCriteria(), HAPSerializationFormat.LITERATE));
+			jsonMap.put("kkkkkk", this.m_criteria.getClass().toString());
+			
+			this.kkkkkk();
+		}
+	}
+	
+	
+	private void kkkkkk() {
+		if("test.map;1.0.0%%||||%%".equals(HAPSerializeManager.getInstance().toStringValue(this.getCriteria(), HAPSerializationFormat.LITERATE)+"")) {
+			int kkkk = 5555;
+			kkkk++;
 		}
 	}
 	

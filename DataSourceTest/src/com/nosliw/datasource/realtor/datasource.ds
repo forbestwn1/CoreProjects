@@ -2,7 +2,7 @@
 	"name": "realtor",
     "implementation" : "com.nosliw.datasource.realtor.HAPDataSourceImp",
 	"description" : "all house for sale in toronto",
-	"output" : "test.array;1.0.0%||element:test.map;1.0.0%||geo:test.geo;1.0.0||%||%",
+	"output" : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0||%%||%%",
 	"parms" : [ 
 		{
 			name : "buildingType",

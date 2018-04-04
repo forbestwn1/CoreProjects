@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.task.HAPExecutable;
 import com.nosliw.data.core.task.HAPExecutableTask;
 
@@ -24,5 +25,17 @@ public abstract class HAPExecutableStep extends HAPSerializableImp implements HA
 	public abstract HAPDataTypeCriteria getExitDataTypeCriteria();
 	
 	public abstract void updateReferencedExecute(Map<String, HAPExecutableTask> references);
+	
+	public static void ifKKKKKe(Map<String, HAPVariableInfo> before, Map<String, HAPVariableInfo> after) {
+		HAPVariableInfo b = before.get("house");
+		HAPVariableInfo a = after.get("house");
+		
+		if(b!=null) {
+			if(!b.equals(a)) {
+				int kkkk = 5555;
+				kkkk++;
+			}
+		}
+	}
 	
 }

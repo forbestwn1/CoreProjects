@@ -1,12 +1,25 @@
 package com.nosliw.data.core.criteria;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
+
 public class HAPCriteriaUtility {
 
 	public static final String CHILD_ELEMENT = "element";
 	
+	public static HAPDataTypeCriteria cloneDataTypeCriteria(HAPDataTypeCriteria criteria) {
+		if(criteria==null)  return null;
+		String str = criteria.toStringValue(HAPSerializationFormat.LITERATE);
+		return HAPCriteriaParser.getInstance().parseCriteria(str);
+	}
+	
 	public static HAPDataTypeCriteria getChildCriteria(HAPDataTypeCriteria criteria, String childName) {
 		HAPDataTypeCriteria out = null;
 		if(criteria instanceof HAPDataTypeCriteriaWithSubCriteria){
+			if(((HAPDataTypeCriteriaWithSubCriteria)criteria).getSubCriteria()==null) {
+				int kkkk = 5555;
+				kkkk++;
+			}
+			
 			out = ((HAPDataTypeCriteriaWithSubCriteria)criteria).getSubCriteria().getSubCriteria(childName);
 		}
 		return out;

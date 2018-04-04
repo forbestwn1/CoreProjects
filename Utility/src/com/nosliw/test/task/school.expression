@@ -24,7 +24,7 @@
 					"type": "loop",
 					"container": "?(schoolData)?",
 					"elementVariable": "school",
-					"executeTask": "<(processElement)>",
+					"executeTask": "processElement",
 					"outputVariable": "output"
 				},
 

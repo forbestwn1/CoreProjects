@@ -3,6 +3,8 @@ package com.nosliw.data.core.operand;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPDataTypeHelper;
@@ -59,6 +61,13 @@ public class HAPOperandVariable extends HAPOperandImp{
 						return null;
 					}
 					else{
+						
+						if("test.map;1.0.0%%||||%%".equals(HAPSerializeManager.getInstance().toStringValue(adjustedCriteria, HAPSerializationFormat.LITERATE))) {
+							int kkkk = 5555;
+							kkkk++;
+						}
+						
+						
 						variableInfo.setCriteria(adjustedCriteria);
 					}
 				}

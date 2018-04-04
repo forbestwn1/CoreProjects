@@ -10,7 +10,7 @@ public class HAPManagerStepLoop implements HAPManagerStep{
 	private HAPExecutorStepLoop m_executor;
 	
 	public HAPManagerStepLoop(HAPRuntime runtime, HAPManagerTask taskManager) {
-		this.m_processor = new HAPProcessorStepLoop();
+		this.m_processor = new HAPProcessorStepLoop(taskManager);
 		this.m_executor = new HAPExecutorStepLoop(runtime, taskManager);
 	}
 	

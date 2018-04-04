@@ -43,6 +43,8 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 	public HAPExecutableStepExpression(HAPDefinitionStepExpression stepDef, int index, String name) {
 		super(index, name);
 		this.m_operand = stepDef.getOperand().cloneWrapper();
+		HAPOperandUtility.replaceAttributeOpWithOperationOp(this.m_operand);
+		
 		this.m_outputVariable = stepDef.getOutputVariable();
 		this.m_exits = stepDef.isExit();
 		this.m_variablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
@@ -87,6 +89,13 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 	@Override
 	public void discoverVariable(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria,
 			HAPProcessContext context) {
+		if("match".equals(this.getName())) {
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
+
+		
 		Map<String, HAPVariableInfo> varsInfo = HAPOperandUtility.discover(new HAPOperand[]{this.m_operand.getOperand()}, variablesInfo, expectOutputCriteria, context);
 		
 		//handle output variable
@@ -96,6 +105,10 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 			localOutVarInfo.setInfoValue(HAPExecutableTaskExpression.INFO_LOCALVRIABLE, HAPExecutableTaskExpression.INFO_LOCALVRIABLE);
 			varsInfo.put(outVarName, localOutVarInfo);
 		}
+		
+		HAPExecutableStep.ifKKKKKe(variablesInfo, varsInfo);
+
+		
 		variablesInfo.clear();
 		variablesInfo.putAll(varsInfo);
 		m_variablesInfo.clear();
@@ -107,6 +120,7 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 
 	@Override
 	public void updateVariable(HAPUpdateVariable updateVar) {
+		
 		if(this.m_outputVariable!=null) this.m_outputVariable = updateVar.getUpdatedVariable(this.m_outputVariable);
 		HAPOperandUtility.updateVariable(this.getOperand(), updateVar);
 	}

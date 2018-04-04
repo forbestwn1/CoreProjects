@@ -41,7 +41,7 @@ public class HAPExecutorStepLoop implements HAPExecutorStep{
 		HAPData containerData = HAPRhinoRuntimeUtility.executeOperandSync(loopStep.getContainerOperand(), parms, referencedData, m_runtime);
 		
 		//loop through element
-		Set<String> eleRefs = HAPOperandUtility.discoverReferences(loopStep.getExecuteOperand());
+//		Set<String> eleRefs = HAPOperandUtility.discoverReferences(loopStep.getExecuteOperand());
 		
 		HAPData eleOut = null;
 		
@@ -55,14 +55,15 @@ public class HAPExecutorStepLoop implements HAPExecutorStep{
 			eleParms.put(loopStep.getElementVariable(), eleData);
 			if(eleOut!=null)   eleParms.put(loopStep.getOutputVariable(), eleOut);
 			
-			Map<String, HAPData> eleRefDatas = new LinkedHashMap<String, HAPData>(); 
-			eleRefDatas.putAll(referencedData);
-			for(String eleRefName : eleRefs) {
-				HAPData eleRefData = this.m_taskManager.executeTask(task.getReferencedExecute().get(eleRefName), eleParms, new HAPTaskReferenceCache());
-				eleRefDatas.put(eleRefName, eleRefData);
-			}
+//			Map<String, HAPData> eleRefDatas = new LinkedHashMap<String, HAPData>(); 
+//			eleRefDatas.putAll(referencedData);
+//			for(String eleRefName : eleRefs) {
+//				HAPData eleRefData = this.m_taskManager.executeTask(task.getReferencedExecute().get(eleRefName), eleParms, new HAPTaskReferenceCache());
+//				eleRefDatas.put(eleRefName, eleRefData);
+//			}
+//			eleOut = HAPRhinoRuntimeUtility.executeOperandSync(loopStep.getExecuteOperand(), eleParms, eleRefDatas, m_runtime);
 			
-			eleOut = HAPRhinoRuntimeUtility.executeOperandSync(loopStep.getExecuteOperand(), eleParms, eleRefDatas, m_runtime);
+			eleOut = this.m_taskManager.executeTask(loopStep.getExecuteTask(), eleParms, new HAPTaskReferenceCache());
 		}
 		
 		if(eleOut!=null)  return HAPResultStep.createNextStepResult(eleOut, loopStep.getOutputVariable());

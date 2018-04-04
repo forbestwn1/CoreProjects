@@ -41,21 +41,6 @@ public class HAPDefinitionTaskExpression extends HAPDefinitionTask{
 	//references definition
 	public Map<String, HAPReferenceInfo> getReferences(){  return this.m_referencesInfo;   }
 
-	//process preference info in definition to add reference name to mapped variable name
-	private void processReferenceInfos(){
-		if(m_referencesInfo!=null){
-			for(String ref : m_referencesInfo.keySet()){
-				HAPReferenceInfo refInfo = m_referencesInfo.get(ref);
-				Map<String, String> newVarMapping = new LinkedHashMap<String, String>();
-				Map<String, String> varMapping = refInfo.getVariablesMap();
-				for(String varName : varMapping.keySet()){
-					newVarMapping.put(varName, HAPExpressionUtility.buildFullVariableName(ref, varMapping.get(varName)));
-				}
-				refInfo.setVariableMap(newVarMapping);
-			}
-		}
-	}
-	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{

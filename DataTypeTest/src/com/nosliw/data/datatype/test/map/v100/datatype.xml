@@ -45,7 +45,7 @@
 				<parm name="base" criteria="test.map" isBase="true"/>
 				<parm name="name" criteria="test.string"/>
 			</parms>
-			<output criteria="*"/>
+			<output criteria="@||!(test.dataTypeCriteria)!.getChild(base;;;!(test.parm)!.getCriteria(base;;;?(base)?);;childName;;;!(test.parm)!.getValue(base;;;?(name)?))||@"/>
 		</operation>
 
 		<operation name="setChildData" >

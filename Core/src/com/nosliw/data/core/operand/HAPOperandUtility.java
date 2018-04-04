@@ -1,5 +1,6 @@
 package com.nosliw.data.core.operand;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -11,6 +12,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.HAPDataTypeId;
+import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPMatchers;
@@ -20,6 +23,35 @@ import com.nosliw.data.core.task.HAPUpdateVariable;
 
 public class HAPOperandUtility {
 
+	static public final String OPERATION_GETCHILDDATA = "getChildData";
+	static public final String OPERATION_GETCHILDDATA_NAME = "name";
+	
+	static public void replaceAttributeOpWithOperationOp(HAPOperandWrapper operand) {
+		List<HAPOperandWrapper> attrOperands = new ArrayList<HAPOperandWrapper>();
+		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
+			@Override
+			public void postPross(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION)){
+					attrOperands.add(operand);
+				}
+			}
+
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {		return true;	}
+		});	
+
+		for(int i=0; i<attrOperands.size(); i++) {
+			HAPOperandWrapper attrOpWrapper = attrOperands.get(i);
+			HAPOperandAttribute attrOp = (HAPOperandAttribute)attrOpWrapper.getOperand();
+			
+			List<HAPParmInOperationOperand> parms = new ArrayList<HAPParmInOperationOperand>();
+			parms.add(new HAPParmInOperationOperand(OPERATION_GETCHILDDATA_NAME, new HAPOperandConstant(new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), attrOp.getAttribute()))));
+			HAPOperandOperation opOperand = new HAPOperandOperation(attrOp.getBase().getOperand(), OPERATION_GETCHILDDATA, parms);
+			attrOpWrapper.setOperand(opOperand);
+		}
+	}
+	
 	static public void updateReferencedExecute(HAPOperandWrapper operand, Map<String, HAPExecutableTask> references) {
 		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
 			@Override

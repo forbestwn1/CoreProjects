@@ -39,6 +39,9 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 
 	//variable info defined for task
 	private Map<String, HAPVariableInfo> m_varsInfo;
+
+	
+	private Map<String, HAPReferenceInfo> m_referencesInfo;
 	
 	//
 	private HAPDataTypeCriteria m_output;
@@ -55,6 +58,11 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 		this.m_varsInfo.putAll(taskDef.getVariables());
 		this.m_executeReferences = new LinkedHashMap<String, HAPExecutableTask>();
 		this.m_varsMatchers = new LinkedHashMap<String, HAPMatchers>();
+		
+		this.m_referencesInfo = new LinkedHashMap<String, HAPReferenceInfo>();
+		for(String refName : taskDef.getReferences().keySet()) {
+			this.m_referencesInfo.put(refName, taskDef.getReferences().get(refName).clone());
+		}
 	}
 	
 	public void setId(String id) {  this.m_id = id;   }
@@ -79,6 +87,8 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 	public String getDomain() {  return this.m_domain;  }
 
 	public Map<String, HAPMatchers> getVariableMatchers() {	return this.m_varsMatchers;	}
+	
+	public Map<String, HAPReferenceInfo> getReferencesInfo(){   return this.m_referencesInfo;    }
 	
 	@Override
 	public String getType() {	return this.m_taskDefinition.getType();	}
@@ -110,6 +120,10 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 		for(String refName : this.m_executeReferences.keySet()) {
 			this.m_executeReferences.get(refName).updateVariable(updateVar);
 		}
+		
+		for(String refName : this.m_referencesInfo.keySet()) {
+			this.m_referencesInfo.get(refName).upateVariableName(updateVar);
+		}
 	}
 
 	@Override
@@ -124,6 +138,11 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 			context.clear();
 
 			for(HAPExecutableStep step : this.m_steps) {
+				if("processHouse2".equals(step.getName())) {
+					int kkkk = 5555;
+					kkkk++;
+				}
+				
 				step.discoverVariable(varsInfo, expectOutputCriteria, context);
 				if(!context.isSuccess())  break;
 			}
@@ -143,6 +162,12 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 			HAPVariableInfo parentVarInfo = varsInfo.get(varName);
 			if(parentVarInfo==null){
 				parentVarInfo = new HAPVariableInfo();
+				
+				if("schoolData".equals(varName) && varInfo.getCriteria()==null) {
+					int kkkk = 5555;
+					kkkk++;
+				}
+				
 				parentVarInfo.setCriteria(varInfo.getCriteria());
 				this.m_varsInfo.put(varName, parentVarInfo);
 			}

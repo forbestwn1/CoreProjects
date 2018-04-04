@@ -28,7 +28,7 @@ public class HAPDefinitionStepLoop extends HAPDefinitionStep{
 	
 	private String m_elementVariable;
 	
-	private HAPDefinitionExpression m_executeTask;
+	private String m_executeTask;
 	
 	private String m_outputVariable;
 	
@@ -39,7 +39,7 @@ public class HAPDefinitionStepLoop extends HAPDefinitionStep{
 	
 	public String getElementVariable() {  return this.m_elementVariable;   }
 	
-	public HAPDefinitionExpression getExecuteTask() {   return this.m_executeTask;   }
+	public String getExecuteTask() {   return this.m_executeTask;   }
 	
 	public String getOutputVariable() {   return this.m_outputVariable;  }
 	
@@ -48,14 +48,12 @@ public class HAPDefinitionStepLoop extends HAPDefinitionStep{
 		Set<String> out = new HashSet<String>();
 		out.addAll(this.m_container.getVariableNames());
 		out.add(this.m_elementVariable);
-		out.addAll(this.m_executeTask.getVariableNames());
 		return out;
 	}
 
 	@Override
 	public Set<String> getReferenceNames() {
 		Set<String> out = new HashSet<String>();
-		out.addAll(this.m_executeTask.getReferenceNames());
 		out.addAll(this.m_container.getReferenceNames());
 		return out;
 	}
@@ -68,7 +66,7 @@ public class HAPDefinitionStepLoop extends HAPDefinitionStep{
 
 			this.m_elementVariable = jsonObj.getString(ELEMENTVARIABLE);
 			this.m_container = new HAPDefinitionExpression(jsonObj.getString(CONTAINER));
-			this.m_executeTask = new HAPDefinitionExpression(jsonObj.getString(EXECUTETASK));
+			this.m_executeTask = jsonObj.getString(EXECUTETASK);
 			this.m_outputVariable = jsonObj.getString(OUTPUTVARIABLE);
 			return true;  
 		}

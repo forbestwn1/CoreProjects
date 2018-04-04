@@ -26,24 +26,29 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 
 	private String m_outputVariable;
 	
-	private HAPOperandWrapper m_executeOperand;
-
+	private String m_executeTaskName;
+	private HAPExecutableTask m_executeTask;
+	
 	private Map<String, HAPVariableInfo> m_variablesInfo;
 
 	public HAPExecutableStepLoop(HAPDefinitionStepLoop loopStepDef, int index, String name) {
 		super(index, name);
 		this.m_containerOperand = loopStepDef.getContainer().getOperand().cloneWrapper();
+		HAPOperandUtility.replaceAttributeOpWithOperationOp(this.m_containerOperand);
+		
 		this.m_elementVariable = loopStepDef.getElementVariable();
 		this.m_outputVariable = loopStepDef.getOutputVariable();
-		this.m_executeOperand = loopStepDef.getExecuteTask().getOperand().cloneWrapper();
+		this.m_executeTaskName = loopStepDef.getExecuteTask();
 		this.m_variablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
 	}
 
 	public HAPOperandWrapper getContainerOperand() {  return this.m_containerOperand;   }
-	public HAPOperandWrapper getExecuteOperand() {   return this.m_executeOperand;   }
 	public String getElementVariable() {  return this.m_elementVariable;   }
 	public String getOutputVariable() {   return this.m_outputVariable;  }
-
+	public String getExecuteTaskName() {  return this.m_executeTaskName;  }
+	public HAPExecutableTask getExecuteTask() {  return this.m_executeTask;   }
+	public void setExecuteTask(HAPExecutableTask task) {   this.m_executeTask = task;   }
+	
 	@Override
 	public String getType() {  return HAPConstant.EXPRESSIONTASK_STEPTYPE_LOOP;	}
 
@@ -53,9 +58,9 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 	@Override
 	public void updateVariable(HAPUpdateVariable updateVar) {
 		HAPOperandUtility.updateVariable(this.m_containerOperand, updateVar);
-		HAPOperandUtility.updateVariable(this.m_executeOperand, updateVar);
 		this.m_elementVariable = updateVar.getUpdatedVariable(this.m_elementVariable);
 		this.m_outputVariable = updateVar.getUpdatedVariable(this.m_outputVariable);
+		if(this.m_executeTask!=null)		this.m_executeTask.updateVariable(updateVar);
 	}
 
 	@Override
@@ -69,12 +74,17 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 			oldVarsInfo.putAll(varsInfo);
 			
-			Map<String, HAPVariableInfo> varsInfo1 = HAPOperandUtility.discover(new HAPOperand[] {this.m_containerOperand.getOperand()}, oldVarsInfo, expectOutputCriteria, context);
-			varsInfo1.put(this.m_elementVariable, new HAPVariableInfo(HAPCriteriaUtility.getElementCriteria(this.m_containerOperand.getOperand().getOutputCriteria())));
-			varsInfo = HAPOperandUtility.discover(new HAPOperand[] {this.m_executeOperand.getOperand()}, varsInfo1, expectOutputCriteria, context);
+			varsInfo = HAPOperandUtility.discover(new HAPOperand[] {this.m_containerOperand.getOperand()}, oldVarsInfo, expectOutputCriteria, context);
+			varsInfo.put(this.m_elementVariable, new HAPVariableInfo(HAPCriteriaUtility.getElementCriteria(this.m_containerOperand.getOperand().getOutputCriteria())));
+			
+			this.m_executeTask.discoverVariable(varsInfo, expectOutputCriteria, context); 
+//					HAPOperandUtility.discover(new HAPOperand[] {this.m_executeOperand.getOperand()}, varsInfo1, expectOutputCriteria, context);
 			varsInfo.remove(this.m_elementVariable);
 		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
 		
+		
+		HAPExecutableStep.ifKKKKKe(variablesInfo, varsInfo);
+
 		variablesInfo.clear();
 		variablesInfo.putAll(varsInfo);
 		m_variablesInfo.clear();
@@ -96,6 +106,5 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 	@Override
 	public void updateReferencedExecute(Map<String, HAPExecutableTask> references) {
 		HAPOperandUtility.updateReferencedExecute(this.m_containerOperand, references);
-		HAPOperandUtility.updateReferencedExecute(this.m_executeOperand, references);
 	}
 }

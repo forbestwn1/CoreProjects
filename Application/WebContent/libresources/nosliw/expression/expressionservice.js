@@ -113,6 +113,8 @@ var node_createExpressionService = function(){
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_DATASOURCE:
 			out = loc_getExecuteDataSourceOperandRequest(expression, operand, variables, handlers, requestInfo);
 			break;
+		case node_COMMONCONSTANT.EXPRESSION_OPERAND_ATTRIBUTEOPERATION:
+			break;
 		}
 		return out;
 	};

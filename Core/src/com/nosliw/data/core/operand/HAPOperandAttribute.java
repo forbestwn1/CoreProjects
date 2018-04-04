@@ -36,9 +36,9 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	@Override
 	public String getType(){	return HAPConstant.EXPRESSION_OPERAND_ATTRIBUTEOPERATION;}
 
-	public void setBase(HAPOperand base){
-		this.m_base = this.createOperandWrapper(base);
-	}
+	public HAPOperandWrapper getBase() {  return this.m_base;  }
+	
+	public void setBase(HAPOperand base){	this.m_base = this.createOperandWrapper(base);	}
 	
 	@Override
 	public List<HAPOperandWrapper> getChildren(){

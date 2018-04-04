@@ -39,14 +39,17 @@ public class HAPOperandConstant extends HAPOperandImp{
 			this.setData(data);
 		}
 	}
-	
+
+	public HAPOperandConstant(HAPData constantData){
+		super(HAPConstant.EXPRESSION_OPERAND_CONSTANT);
+		this.m_data = constantData;
+	}
+
 	public String getName(){  return this.m_name;  }
 	
 	public HAPData getData(){  return this.m_data;  }
 	
-	public void setData(HAPData data){ 
-		this.m_data = data;
-	}
+	public void setData(HAPData data){ 	this.m_data = data;	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

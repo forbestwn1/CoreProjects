@@ -47,10 +47,13 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 		Map<String, HAPData> taskContextConstants = this.getContextConstantsForTask(taskDefExp, contextConstants);
 		
 		//process steps
-		this.processSteps(out, taskDefExp, taskContextConstants, context);
+		this.processSteps(out, taskDefExp, contextTaskDefinitions, taskContextConstants, context);
 
 		//update variable in task executable : add domain prefix
 		out.updateVariable(new HAPUpdateVariableDomain(domain));
+
+		//process steps
+		this.postProcessSteps(out, taskDefExp, contextTaskDefinitions, taskContextConstants, context);
 		
 		//process references info
 		this.processReferencedTasks(out, taskDefExp, contextTaskDefinitions, contextConstants, context);
@@ -69,15 +72,23 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 		return out;
 	}
 	
-	private void processSteps(HAPExecutableTaskExpression out, HAPDefinitionTaskExpression taskDefExp, Map<String, HAPData> contextConstants, HAPProcessContext context) {
+	private void processSteps(HAPExecutableTaskExpression out, HAPDefinitionTaskExpression taskDefExp, Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants, HAPProcessContext context) {
 		//update constants according to constants in context and in task
 		for(int i=0; i<taskDefExp.getSteps().length; i++) {
 			HAPDefinitionStep stepDef = taskDefExp.getSteps()[i];
-			HAPExecutableStep step = this.m_expressionTaskManager.processStep(stepDef, i, contextConstants, context);
+			HAPExecutableStep step = this.m_expressionTaskManager.processStep(stepDef, out, i, contextTaskDefinitions, contextConstants, context);
 			out.addStep(step);
 		}
 	}
-	
+
+	private void postProcessSteps(HAPExecutableTaskExpression executableTask, HAPDefinitionTaskExpression taskDefExp, Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants, HAPProcessContext context) {
+		//update constants according to constants in context and in task
+		for(int i=0; i<executableTask.getSteps().size(); i++) {
+			HAPExecutableStep stepExe = executableTask.getSteps().get(i);
+			this.m_expressionTaskManager.postProcessStep(stepExe, taskDefExp.getSteps()[i], executableTask, i, contextTaskDefinitions, contextConstants, context);
+		}
+	}
+
 	private Map<String, HAPData> getContextConstantsForTask(HAPDefinitionTaskExpression taskDefExp, Map<String, HAPData> contextConstants){
 		Map<String, HAPData> out = new LinkedHashMap<String, HAPData>();
 		out.putAll(contextConstants);
@@ -96,17 +107,17 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 			HAPProcessContext context) {
 
 		//gate updated referenceInfos according to domain info
-		Map<String, HAPReferenceInfo> updatedReferenceInfos = new LinkedHashMap<String, HAPReferenceInfo>();
-		Map<String, HAPReferenceInfo> originalRefInfos = taskDefExp.getReferences();
-		for(String refName : originalRefInfos.keySet()) {
-			HAPReferenceInfo originalRefInfo = originalRefInfos.get(refName);
-			HAPReferenceInfo refInfo = new HAPReferenceInfo(originalRefInfo.getReference());
-			Map<String, String> originalMaps = originalRefInfo.getVariablesMap();
-			for(String name : originalMaps.keySet()) {
-				refInfo.addVariableMap(HAPExpressionUtility.buildFullVariableName(out.getDomain(), name), originalMaps.get(name));
-			}
-			updatedReferenceInfos.put(refName, refInfo);
-		}
+//		Map<String, HAPReferenceInfo> updatedReferenceInfos = new LinkedHashMap<String, HAPReferenceInfo>();
+//		Map<String, HAPReferenceInfo> originalRefInfos = taskDefExp.getReferences();
+//		for(String refName : originalRefInfos.keySet()) {
+//			HAPReferenceInfo originalRefInfo = originalRefInfos.get(refName);
+//			HAPReferenceInfo refInfo = new HAPReferenceInfo(originalRefInfo.getReference());
+//			Map<String, String> originalMaps = originalRefInfo.getVariablesMap();
+//			for(String name : originalMaps.keySet()) {
+//				refInfo.addVariableMap(HAPExpressionUtility.buildFullVariableName(out.getDomain(), name), originalMaps.get(name));
+//			}
+//			updatedReferenceInfos.put(refName, refInfo);
+//		}
 
 		
 		//find all reference infos in task
@@ -116,7 +127,7 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 				referencesInfo.put(refName, null);
 			}
 		}
-		referencesInfo.putAll(updatedReferenceInfos);
+		referencesInfo.putAll(out.getReferencesInfo());
 		
 		for(String refName : referencesInfo.keySet()) {
 			HAPReferenceInfo referenceInfo = referencesInfo.get(refName);

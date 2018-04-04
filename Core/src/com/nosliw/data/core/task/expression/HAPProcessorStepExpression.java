@@ -5,12 +5,15 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.operand.HAPOperandUtility;
+import com.nosliw.data.core.task.HAPDefinitionTask;
 
-public class HAPProcessorStepExpression implements HAPProcessorStep{
+public class HAPProcessorStepExpression extends HAPProcessorStepImp{
 
 	@Override
 	public HAPExecutableStep process(HAPDefinitionStep stepDefinition,
+			HAPExecutableTaskExpression taskExpressionExe,
 			int index, String name,
+			Map<String, HAPDefinitionTask> contextTaskDefinitions, 
 			Map<String, HAPData> contextConstants,
 			HAPProcessContext context) {
 

@@ -11,6 +11,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.data.core.task.HAPUpdateVariable;
 
 /**
  * The information used to define reference in expression
@@ -46,6 +47,22 @@ public class HAPReferenceInfo extends HAPSerializableImp{
 	public void setVariableMap(Map<String, String> varsMap) {
 		this.m_variableMap.clear();
 		this.m_variableMap.putAll(varsMap);
+	}
+	
+	public HAPReferenceInfo clone() {
+		HAPReferenceInfo out = new HAPReferenceInfo();
+		out.m_reference = this.m_reference;
+		out.m_variableMap.putAll(this.m_variableMap);
+		return out;
+	}
+
+	public void upateVariableName(HAPUpdateVariable updateVar) {
+		Map<String, String> varMap = new LinkedHashMap<String, String>();
+		for(String name : this.m_variableMap.keySet()) {
+			varMap.put(updateVar.getUpdatedVariable(name), this.m_variableMap.get(name));
+		}
+		this.m_variableMap.clear();
+		this.m_variableMap.putAll(varMap);
 	}
 	
 	@Override

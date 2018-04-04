@@ -35,7 +35,7 @@
 					"type": "loop",
 					"container": "?(houseData)?",
 					"elementVariable": "house",
-					"executeTask": "<(processHouse)>",
+					"executeTask": "processHouse",
 					"outputVariable": "output"
 				},
 			],
@@ -88,7 +88,7 @@
 					"type": "loop",
 					"container": "?(schoolData)?",
 					"elementVariable": "school",
-					"executeTask": "<(houseSchoolMatch)>",
+					"executeTask": "houseSchoolMatch",
 					"outputVariable": "validSchool"
 				},
 				{
@@ -127,8 +127,8 @@
 				}
 			},
 			"variables" : {
-				"schoolData" : "test.array;1.0.0",
-				"house" : "test.map;1.0.0",
+				"schoolData" : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,name:test.string;1.0.0,score:test.double;1.0.0||%%||%%",
+				"house" : "test.map;1.0.0%%||geo:test.geo;1.0.0||%%",
 				"output": "test.array;1.0.0"
 			},
 			"constants" : {
@@ -185,7 +185,7 @@
 					"name" : "setOutput",
 					"description" : "",
 					"type" : "expression",
-					"expression": "?(school)?",
+					"expression": "?(school)?.name",
 					"outputVariable" : "validSchool" 
 				},
 			],
@@ -193,8 +193,8 @@
 			},
 			"variables" : {
 				"validSchool" : "test.string;1.0.0",
-				"school" : "test.map;1.0.0",
-				"house" : "test.map;1.0.0",
+				"school" : "test.map;1.0.0%%||geo:test.geo;1.0.0||%%",
+				"house" : "test.map;1.0.0%%||geo:test.geo;1.0.0||%%",
 			},
 			"constants" : {
 				"distance" : {
