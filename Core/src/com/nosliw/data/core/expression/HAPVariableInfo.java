@@ -50,10 +50,6 @@ public class HAPVariableInfo extends HAPSerializableImp{
 		this.m_status = status;
 		this.m_info = new HAPInfoImpSimple();
 		this.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
-
-		this.kkkkkk();
-		
-		System.out.println(this);
 	}
 
 	public HAPVariableInfo(HAPDataTypeCriteria criteria){
@@ -61,9 +57,6 @@ public class HAPVariableInfo extends HAPSerializableImp{
 		if(criteria==null)   this.m_status = HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN;
 		else   this.m_status = HAPConstant.EXPRESSION_VARIABLE_STATUS_CLOSE;
 		this.m_info = new HAPInfoImpSimple();
-	
-		this.kkkkkk();
-		System.out.println(this);
 	}
 	
 	public String getStatus(){		return this.m_status;	}
@@ -74,9 +67,6 @@ public class HAPVariableInfo extends HAPSerializableImp{
 	
 	public void setCriteria(HAPDataTypeCriteria criteria){
 		this.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
-		this.kkkkkk();
-
-		System.out.println(this);
 	}
 	
 	public String getInfoValue(String name) {   return (String)this.m_info.getValue(name);   }
@@ -100,17 +90,6 @@ public class HAPVariableInfo extends HAPSerializableImp{
 		jsonMap.put(STATUS, this.getStatus());
 		if(this.getCriteria()!=null){
 			jsonMap.put(CRITERIA, HAPSerializeManager.getInstance().toStringValue(this.getCriteria(), HAPSerializationFormat.LITERATE));
-			jsonMap.put("kkkkkk", this.m_criteria.getClass().toString());
-			
-			this.kkkkkk();
-		}
-	}
-	
-	
-	private void kkkkkk() {
-		if("test.map;1.0.0%%||||%%".equals(HAPSerializeManager.getInstance().toStringValue(this.getCriteria(), HAPSerializationFormat.LITERATE)+"")) {
-			int kkkk = 5555;
-			kkkk++;
 		}
 	}
 	

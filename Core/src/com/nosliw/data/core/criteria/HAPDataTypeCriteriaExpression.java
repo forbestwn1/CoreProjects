@@ -14,12 +14,6 @@ public class HAPDataTypeCriteriaExpression extends HAPDataTypeCriteriaAbstract{
 	private HAPDataTypeCriteria m_realCriteria;
 	
 	public HAPDataTypeCriteriaExpression(String expression){
-		
-		if(expression.contains(";;;")) {
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		//escape    
 		this.m_expression = HAPCriteriaUtility.deescape(expression);
 	}

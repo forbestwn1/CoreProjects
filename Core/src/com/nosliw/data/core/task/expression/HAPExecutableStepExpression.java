@@ -89,13 +89,6 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 	@Override
 	public void discoverVariable(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria,
 			HAPProcessContext context) {
-		if("match".equals(this.getName())) {
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
-
-		
 		Map<String, HAPVariableInfo> varsInfo = HAPOperandUtility.discover(new HAPOperand[]{this.m_operand.getOperand()}, variablesInfo, expectOutputCriteria, context);
 		
 		//handle output variable
@@ -105,9 +98,6 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 			localOutVarInfo.setInfoValue(HAPExecutableTaskExpression.INFO_LOCALVRIABLE, HAPExecutableTaskExpression.INFO_LOCALVRIABLE);
 			varsInfo.put(outVarName, localOutVarInfo);
 		}
-		
-		HAPExecutableStep.ifKKKKKe(variablesInfo, varsInfo);
-
 		
 		variablesInfo.clear();
 		variablesInfo.putAll(varsInfo);

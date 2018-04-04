@@ -138,11 +138,6 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 			context.clear();
 
 			for(HAPExecutableStep step : this.m_steps) {
-				if("processHouse2".equals(step.getName())) {
-					int kkkk = 5555;
-					kkkk++;
-				}
-				
 				step.discoverVariable(varsInfo, expectOutputCriteria, context);
 				if(!context.isSuccess())  break;
 			}
@@ -150,7 +145,9 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 			//remove local variables
 			Set<String> localVars = new HashSet<String>();
 			for(String varName : varsInfo.keySet()) {
-				if(HAPBasicUtility.isStringNotEmpty(varsInfo.get(varName).getInfoValue(HAPExecutableTaskExpression.INFO_LOCALVRIABLE)))  localVars.add(varName);
+				if(oldVarsInfo.get(varName)==null) {
+					if(HAPBasicUtility.isStringNotEmpty(varsInfo.get(varName).getInfoValue(HAPExecutableTaskExpression.INFO_LOCALVRIABLE)))  localVars.add(varName);
+				}
 			}
 			for(String localVar : localVars)   varsInfo.remove(localVar);
 			
@@ -162,12 +159,6 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 			HAPVariableInfo parentVarInfo = varsInfo.get(varName);
 			if(parentVarInfo==null){
 				parentVarInfo = new HAPVariableInfo();
-				
-				if("schoolData".equals(varName) && varInfo.getCriteria()==null) {
-					int kkkk = 5555;
-					kkkk++;
-				}
-				
 				parentVarInfo.setCriteria(varInfo.getCriteria());
 				this.m_varsInfo.put(varName, parentVarInfo);
 			}

@@ -61,13 +61,6 @@ public class HAPOperandVariable extends HAPOperandImp{
 						return null;
 					}
 					else{
-						
-						if("test.map;1.0.0%%||||%%".equals(HAPSerializeManager.getInstance().toStringValue(adjustedCriteria, HAPSerializationFormat.LITERATE))) {
-							int kkkk = 5555;
-							kkkk++;
-						}
-						
-						
 						variableInfo.setCriteria(adjustedCriteria);
 					}
 				}

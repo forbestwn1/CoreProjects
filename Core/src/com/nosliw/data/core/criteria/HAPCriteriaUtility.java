@@ -9,17 +9,16 @@ public class HAPCriteriaUtility {
 	public static HAPDataTypeCriteria cloneDataTypeCriteria(HAPDataTypeCriteria criteria) {
 		if(criteria==null)  return null;
 		String str = criteria.toStringValue(HAPSerializationFormat.LITERATE);
-		return HAPCriteriaParser.getInstance().parseCriteria(str);
+		HAPDataTypeCriteria out = HAPCriteriaParser.getInstance().parseCriteria(str);
+		if(criteria instanceof HAPDataTypeCriteriaAbstract) {
+			((HAPDataTypeCriteriaAbstract)out).setSolidCriteria(((HAPDataTypeCriteriaAbstract)criteria).getSoldCriteria());
+		}
+		return out;
 	}
 	
 	public static HAPDataTypeCriteria getChildCriteria(HAPDataTypeCriteria criteria, String childName) {
 		HAPDataTypeCriteria out = null;
 		if(criteria instanceof HAPDataTypeCriteriaWithSubCriteria){
-			if(((HAPDataTypeCriteriaWithSubCriteria)criteria).getSubCriteria()==null) {
-				int kkkk = 5555;
-				kkkk++;
-			}
-			
 			out = ((HAPDataTypeCriteriaWithSubCriteria)criteria).getSubCriteria().getSubCriteria(childName);
 		}
 		return out;

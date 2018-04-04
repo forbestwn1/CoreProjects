@@ -29,16 +29,6 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 	public HAPExecutableTask process(HAPDefinitionTask taskDefinition, String domain, Map<String, String> variableMap, 
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
 			HAPProcessContext context) {
-		
-		if(domain==null) {
-			int kkkk  =5555;
-			kkkk++;
-		}
-		if("processHouse".equals(domain)) {
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		HAPDefinitionTaskExpression taskDefExp = (HAPDefinitionTaskExpression)taskDefinition; 
 		
 		HAPExecutableTaskExpression out = new HAPExecutableTaskExpression(taskDefExp, domain);

@@ -46,12 +46,6 @@ public class HAPOperationId extends HAPDataTypeId{
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){
 		int index = literateValue.lastIndexOf(HAPConstant.SEPERATOR_LEVEL1);
-		
-		if(index==-1) {
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		this.setOperation(literateValue.substring(index+1));
 		super.buildObjectByLiterate(literateValue.substring(0, index));
 		

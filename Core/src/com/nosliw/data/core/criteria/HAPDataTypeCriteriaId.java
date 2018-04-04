@@ -27,11 +27,6 @@ public class HAPDataTypeCriteriaId  extends HAPDataTypeCriteriaImp implements HA
 	public HAPDataTypeCriteriaId(HAPDataTypeId dataTypeId, HAPDataTypeSubCriteriaGroup subCriteria){
 		this.m_dataTypeId = dataTypeId;
 		this.m_subCriteriaGroup = subCriteria;
-		
-		if("test.map;1.0.0%%||||%%".equals(HAPSerializeManager.getInstance().toStringValue(this, HAPSerializationFormat.LITERATE)+"")) {
-			int kkkk = 5555;
-			kkkk++;
-		}
 	}
 
 	public HAPDataTypeId getDataTypeId(){  return this.m_dataTypeId;  }
