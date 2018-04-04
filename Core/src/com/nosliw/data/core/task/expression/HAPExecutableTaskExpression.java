@@ -86,6 +86,9 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 	
 	public String getDomain() {  return this.m_domain;  }
 
+	@Override
+	public String getName() {  return this.m_taskDefinition.getName();   }
+	
 	public Map<String, HAPMatchers> getVariableMatchers() {	return this.m_varsMatchers;	}
 	
 	public Map<String, HAPReferenceInfo> getReferencesInfo(){   return this.m_referencesInfo;    }

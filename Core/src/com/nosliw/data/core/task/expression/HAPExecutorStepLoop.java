@@ -12,10 +12,11 @@ import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.rhino.HAPRhinoRuntimeUtility;
+import com.nosliw.data.core.task.HAPLog;
 import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.core.task.HAPTaskReferenceCache;
 
-public class HAPExecutorStepLoop implements HAPExecutorStep{
+public class HAPExecutorStepLoop extends HAPExecutorStepImp{
 
 	private HAPRuntime m_runtime;
 
@@ -27,15 +28,12 @@ public class HAPExecutorStepLoop implements HAPExecutorStep{
 	}
 	
 	@Override
-	public HAPResultStep execute(HAPExecutableStep step, HAPExecutableTaskExpression task, Map<String, HAPData> parms,
-		Map<String, HAPData> referencedData) {
+	protected HAPResultStep executeStep(HAPExecutableStep step, HAPExecutableTaskExpression task, Map<String, HAPData> parms,
+		Map<String, HAPData> referencedData, HAPLog taskLog) {
 		HAPExecutableStepLoop loopStep = (HAPExecutableStepLoop)step;
 		
 		//get container data
 		HAPData containerData = HAPRhinoRuntimeUtility.executeOperandSync(loopStep.getContainerOperand(), parms, referencedData, m_runtime);
-		
-		//loop through element
-//		Set<String> eleRefs = HAPOperandUtility.discoverReferences(loopStep.getExecuteOperand());
 		
 		HAPData eleOut = null;
 		
@@ -48,14 +46,6 @@ public class HAPExecutorStepLoop implements HAPExecutorStep{
 			eleParms.putAll(parms);
 			eleParms.put(loopStep.getElementVariable(), eleData);
 			if(eleOut!=null)   eleParms.put(loopStep.getOutputVariable(), eleOut);
-			
-//			Map<String, HAPData> eleRefDatas = new LinkedHashMap<String, HAPData>(); 
-//			eleRefDatas.putAll(referencedData);
-//			for(String eleRefName : eleRefs) {
-//				HAPData eleRefData = this.m_taskManager.executeTask(task.getReferencedExecute().get(eleRefName), eleParms, new HAPTaskReferenceCache());
-//				eleRefDatas.put(eleRefName, eleRefData);
-//			}
-//			eleOut = HAPRhinoRuntimeUtility.executeOperandSync(loopStep.getExecuteOperand(), eleParms, eleRefDatas, m_runtime);
 			
 			eleOut = this.m_taskManager.executeTask(loopStep.getExecuteTask(), eleParms, new HAPTaskReferenceCache());
 		}

@@ -50,7 +50,7 @@ public class HAPExecutorTaskExpression implements HAPExecutorTask{
 				}
 			}
 			
-			HAPResultStep stepResult = m_expTaskManager.getStepManager(step.getType()).getStepExecutor().execute(step, expTask, executeParms, referencesData);
+			HAPResultStep stepResult = m_expTaskManager.getStepManager(step.getType()).getStepExecutor().executeStep(step, expTask, executeParms, referencesData);
 			if(stepResult.isExit()) {
 				//exit
 				out = stepResult.getData();

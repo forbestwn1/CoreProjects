@@ -96,20 +96,6 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
 			HAPProcessContext context) {
 
-		//gate updated referenceInfos according to domain info
-//		Map<String, HAPReferenceInfo> updatedReferenceInfos = new LinkedHashMap<String, HAPReferenceInfo>();
-//		Map<String, HAPReferenceInfo> originalRefInfos = taskDefExp.getReferences();
-//		for(String refName : originalRefInfos.keySet()) {
-//			HAPReferenceInfo originalRefInfo = originalRefInfos.get(refName);
-//			HAPReferenceInfo refInfo = new HAPReferenceInfo(originalRefInfo.getReference());
-//			Map<String, String> originalMaps = originalRefInfo.getVariablesMap();
-//			for(String name : originalMaps.keySet()) {
-//				refInfo.addVariableMap(HAPExpressionUtility.buildFullVariableName(out.getDomain(), name), originalMaps.get(name));
-//			}
-//			updatedReferenceInfos.put(refName, refInfo);
-//		}
-
-		
 		//find all reference infos in task
 		Map<String, HAPReferenceInfo> referencesInfo = new LinkedHashMap<String, HAPReferenceInfo>();
 		for(HAPDefinitionStep step : taskDefExp.getSteps()) {

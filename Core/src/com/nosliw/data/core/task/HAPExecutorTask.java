@@ -6,6 +6,6 @@ import com.nosliw.data.core.HAPData;
 
 public interface HAPExecutorTask {
 
-	HAPData execute(HAPExecutableTask task, Map<String, HAPData> parms, HAPTaskReferenceCache cache);
+	HAPData execute(HAPExecutableTask task, Map<String, HAPData> parms, HAPTaskReferenceCache cache, HAPLog logger);
 	
 }

@@ -82,9 +82,6 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 			varsInfo.remove(this.m_elementVariable);
 		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
 		
-		
-		HAPExecutableStep.ifKKKKKe(variablesInfo, varsInfo);
-
 		variablesInfo.clear();
 		variablesInfo.putAll(varsInfo);
 		m_variablesInfo.clear();

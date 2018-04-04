@@ -6,8 +6,9 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskExecuteExpressionRhino;
+import com.nosliw.data.core.task.HAPLog;
 
-public class HAPExecutorStepExpression implements HAPExecutorStep{
+public class HAPExecutorStepExpression extends HAPExecutorStepImp{
 
 	private HAPRuntime m_runtime;
 
@@ -16,8 +17,8 @@ public class HAPExecutorStepExpression implements HAPExecutorStep{
 	}
 	
 	@Override
-	public HAPResultStep execute(HAPExecutableStep step, HAPExecutableTaskExpression task, Map<String, HAPData> parms,
-			Map<String, HAPData> referencedData) {
+	protected HAPResultStep executeStep(HAPExecutableStep step, HAPExecutableTaskExpression task, Map<String, HAPData> parms,
+			Map<String, HAPData> referencedData, HAPLog taskLog) {
 
 		HAPExecutableStepExpression expStep = (HAPExecutableStepExpression)step;
 		HAPRuntimeTaskExecuteExpressionRhino runtimeTask = new HAPRuntimeTaskExecuteExpressionRhino(expStep, parms, referencedData);

@@ -5,8 +5,9 @@ import java.util.Map;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.rhino.HAPRhinoRuntimeUtility;
+import com.nosliw.data.core.task.HAPLog;
 
-public class HAPExecutorStepBranch implements HAPExecutorStep{
+public class HAPExecutorStepBranch extends HAPExecutorStepImp{
 
 	private HAPRuntime m_runtime;
 
@@ -15,8 +16,8 @@ public class HAPExecutorStepBranch implements HAPExecutorStep{
 	}
 	
 	@Override
-	public HAPResultStep execute(HAPExecutableStep step, HAPExecutableTaskExpression task, Map<String, HAPData> parms,
-			Map<String, HAPData> referencedData) {
+	protected HAPResultStep executeStep(HAPExecutableStep step, HAPExecutableTaskExpression task, Map<String, HAPData> parms,
+			Map<String, HAPData> referencedData, HAPLog taskLog) {
 		HAPExecutableStepBranch branchStep = (HAPExecutableStepBranch)step;
 		
 		//get container data
