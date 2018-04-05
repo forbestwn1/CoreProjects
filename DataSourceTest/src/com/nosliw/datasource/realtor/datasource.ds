@@ -38,7 +38,7 @@
 			criteria : "test.price;1.0.0",
 			default :{
 				dataTypeId: "test.price;1.0.0",
-				value: 500000.0
+				value: 1000000.0
 			},
 		},
 	]

@@ -200,7 +200,7 @@
 				"distance" : {
 					dataTypeId: "test.distance;1.0.0",
 					value: {
-						distance : 10.0,
+						distance : 5.0,
 						unit : "km"
 					}
 				}

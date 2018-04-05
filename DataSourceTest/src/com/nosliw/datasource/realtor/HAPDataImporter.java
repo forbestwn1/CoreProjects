@@ -14,6 +14,11 @@ import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPDataImporter {
 
+	public static final double minLat = 43.758307;
+	public static final double maxLat = 43.858130;
+	public static final double minLon = -79.355032;
+	public static final double maxLon = -79.257924;
+
 	public static void main(String[] args) throws Exception{
 		StringBuffer out = new StringBuffer();
 		out.append("[");
@@ -62,7 +67,8 @@ public class HAPDataImporter {
 //		con.setRequestProperty("Accept-Encoding", "gzip, deflate, br");
 		con.setRequestProperty("Accept", "*/*");
 
-		String urlParameters = "PriceMin=400000&PriceMax=700000&CultureId=1&ApplicationId=1&RecordsPerPage=90&MaximumResults=90&PropertySearchTypeId=1&TransactionTypeId=2&StoreyRange=0-0&BedRange=0-0&BathRange=0-0&LongitudeMin=-80.444052&LongitudeMax=-78.570883&LatitudeMin=43.168231&LatitudeMax=44.107412&SortOrder=A&SortBy=1&viewState=m&Longitude=-79.312311&Latitude=43.755543&ZoomLevel=5&PropertyTypeGroupID=1&CurrentPage="+page+"&"+parms;
+//		String urlParameters = "PriceMin=400000&PriceMax=700000&CultureId=1&ApplicationId=1&RecordsPerPage=90&MaximumResults=90&PropertySearchTypeId=1&TransactionTypeId=2&StoreyRange=0-0&BedRange=0-0&BathRange=0-0&LongitudeMin=-80.444052&LongitudeMax=-78.570883&LatitudeMin=43.168231&LatitudeMax=44.107412&SortOrder=A&SortBy=1&viewState=m&Longitude=-79.312311&Latitude=43.755543&ZoomLevel=5&PropertyTypeGroupID=1&CurrentPage="+page+"&"+parms;
+		String urlParameters = "PriceMin=400000&PriceMax=700000&CultureId=1&ApplicationId=1&RecordsPerPage=90&MaximumResults=90&PropertySearchTypeId=1&TransactionTypeId=2&StoreyRange=0-0&BedRange=0-0&BathRange=0-0&LongitudeMin="+minLon+"&LongitudeMax="+maxLon+"&LatitudeMin="+minLat+"&LatitudeMax="+maxLat+"&SortOrder=A&SortBy=1&viewState=m&Longitude=-79.312311&Latitude=43.755543&ZoomLevel=5&PropertyTypeGroupID=1&CurrentPage="+page+"&"+parms;
 
 		// Send post request
 		con.setDoOutput(true);

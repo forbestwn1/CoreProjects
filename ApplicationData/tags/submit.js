@@ -65,11 +65,14 @@
 					}
 				});
 
-				var parmDefs = loc_env.getAttributeValue("parms").split(";");
-				_.each(parmDefs, function(parmDef, i){
-					var ps = parmDef.split(":");
-					getParmsRequest.addRequest(ps[0], loc_env.getDataOperationRequestGet(ps[1]));
-				});
+				var parms = loc_env.getAttributeValue("parms");
+				if(parms!=undefined && parms!=""){
+					var parmDefs = parms.split(";");
+					_.each(parmDefs, function(parmDef, i){
+						var ps = parmDef.split(":");
+						getParmsRequest.addRequest(ps[0], loc_env.getDataOperationRequestGet(ps[1]));
+					});
+				}					
 				
 				out.addRequest(getParmsRequest);
 				node_requestProcessor.processRequest(out, false);

@@ -3,13 +3,13 @@
 	<body>
 	
 	<br>
-	<nosliw-submit title="Submit" datasource="school" parms=""  output="result"/>  
+	<nosliw-submit title="Submit" datasource="myrealtor"  output="result"/>  
 	<br>
 	
 	<div>
-	Result
+	Results:
 	<br>
-	<nosliw-include source="Example_App_Result_School"/> 
+	<nosliw-include source="Example_App_Result_MyRealtor"/> 
 	</div>
 
 	<nosliw-debug/>

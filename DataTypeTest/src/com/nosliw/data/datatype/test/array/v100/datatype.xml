@@ -54,7 +54,7 @@
 
 		<operation name="length" >
 			<parms>
-				<parm name="base" criteria="test.map" isBase="true"/>
+				<parm name="base" criteria="test.array" isBase="true"/>
 			</parms>
 			<output criteria="test.integer;1.0.0"/>
 		</operation>

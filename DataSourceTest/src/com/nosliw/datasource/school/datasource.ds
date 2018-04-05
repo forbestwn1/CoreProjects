@@ -17,7 +17,7 @@
 			criteria : "test.float;1.0.0",
 			default :{
 				dataTypeId: "test.float;1.0.0",
-				value: "5"
+				value: "8"
 			},
 		}
 	]

@@ -12,6 +12,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.datasource.HAPExecutableDataSource;
+import com.nosliw.datasource.realtor.HAPDataImporter;
 
 public class HAPDataSourceImp implements HAPExecutableDataSource{
 
@@ -33,9 +34,9 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 	@Override
 	public HAPData getData(Map<String, HAPData> parms){
 
-//		InputStream elementDataInputStream = new FileInputStream(new File("elementSchoolArray.js"));
+		InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(getClass(), "elementSchoolArray.js");
 		
-		InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(getClass(), "elementSchoolArray_simple.js");
+//		InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(getClass(), "elementSchoolArray_simple.js");
 		String content =  HAPFileUtility.readFile(inputStream);
 		
 		JSONArray schoolArrayData = new JSONArray();
@@ -56,10 +57,14 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 					outSchool.put("schoolRating", createJSONData("test.float;1.0.0", schoolScore));
 					
 					JSONObject outGeoValue = new JSONObject();
-					outGeoValue.put("latitude", jsonSchoolData.getDouble(INDEX_LAT));
-					outGeoValue.put("longitude", jsonSchoolData.getDouble(INDEX_LON));
+					double lat = jsonSchoolData.getDouble(INDEX_LAT);
+					double lon = jsonSchoolData.getDouble(INDEX_LON);
+					outGeoValue.put("latitude", lat);
+					outGeoValue.put("longitude", lon);
 					outSchool.put("geo", createJSONData("test.geo;1.0.0", outGeoValue));
 					
+					if(lat<HAPDataImporter.minLat||lat>HAPDataImporter.maxLat) continue;
+					if(lon<HAPDataImporter.minLon||lon>HAPDataImporter.maxLon) continue;
 					
 					outSchool.put("id", createJSONData("test.string;1.0.0", jsonSchoolData.getString(INDEX_ID)));
 					outSchool.put("schoolName", createJSONData("test.string;1.0.0", jsonSchoolData.getString(INDEX_NAME)));

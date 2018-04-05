@@ -41,6 +41,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessContext context,
 			HAPDataTypeHelper dataTypeHelper) {
+		
 		HAPVariableInfo variableInfo = variablesInfo.get(this.getVariableName());
 		if(variableInfo==null){
 			//found a new variable
@@ -69,6 +70,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 		
 		//set output criteria
 		this.setOutputCriteria(variableInfo.getCriteria());
+
 		//cal converter
 		return this.isMatchable(variableInfo.getCriteria(), expectCriteria, context, dataTypeHelper);
 	}
