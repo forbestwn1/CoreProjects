@@ -16,12 +16,13 @@ public class HAPLog extends HAPSerializableImp{
 		this.m_children = new ArrayList<HAPLog>();
 	}
 
+	public List<HAPLog> getChildren(){   return this.m_children;   }
+	
 	public void addChild(HAPLog child) {	this.m_children.add(child);	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put("children", HAPJsonUtility.buildJson(m_children, HAPSerializationFormat.JSON));
 	}	
 	
 }

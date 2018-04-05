@@ -40,5 +40,6 @@ public class HAPLogStep extends HAPLog{
 		jsonMap.put("result", this.m_result.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put("parms", HAPJsonUtility.buildJson(m_parms, HAPSerializationFormat.JSON));
 		jsonMap.put("referencedData", HAPJsonUtility.buildJson(this.m_referencedData, HAPSerializationFormat.JSON));
+		jsonMap.put("children", HAPJsonUtility.buildJson(this.getChildren(), HAPSerializationFormat.JSON));
 	}	
 }

@@ -127,7 +127,7 @@
 				}
 			},
 			"variables" : {
-				"schoolData" : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,name:test.string;1.0.0,score:test.double;1.0.0||%%||%%",
+				"schoolData" : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,score:test.double;1.0.0||%%||%%",
 				"house" : "test.map;1.0.0%%||geo:test.geo;1.0.0||%%",
 				"output": "test.array;1.0.0"
 			},
@@ -185,7 +185,7 @@
 					"name" : "setOutput",
 					"description" : "",
 					"type" : "expression",
-					"expression": "?(school)?.name",
+					"expression": "?(school)?.schoolName",
 					"outputVariable" : "validSchool" 
 				},
 			],
@@ -193,7 +193,7 @@
 			},
 			"variables" : {
 				"validSchool" : "test.string;1.0.0",
-				"school" : "test.map;1.0.0%%||geo:test.geo;1.0.0||%%",
+				"school" : "test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0||%%",
 				"house" : "test.map;1.0.0%%||geo:test.geo;1.0.0||%%",
 			},
 			"constants" : {

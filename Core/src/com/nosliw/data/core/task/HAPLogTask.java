@@ -35,7 +35,10 @@ public class HAPLogTask extends HAPLog{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put("type", "TASK");
 		jsonMap.put("name", this.m_name);
-		jsonMap.put("result", this.m_result.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_result!=null) {
+			jsonMap.put("result", this.m_result.toStringValue(HAPSerializationFormat.JSON));
+		}
 		jsonMap.put("parms", HAPJsonUtility.buildJson(m_parms, HAPSerializationFormat.JSON));
+		jsonMap.put("children", HAPJsonUtility.buildJson(this.getChildren(), HAPSerializationFormat.JSON));
 	}	
 }

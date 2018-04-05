@@ -299,8 +299,8 @@
       "Type": "Single Family",
       "Address": {
         "AddressText": "5 Brookbanks Drive|St. Catharines, Ontario L2N3W5",
-        "Latitude": "43.19981",
-        "Longitude": "-79.24694"
+        "Latitude": "44.106474",
+        "Longitude": "-77.547199"
       },
       "ParkingSpaceTotal": "0",
       "Price": "$405,000",

@@ -2,7 +2,7 @@
 	"name": "school",
     "implementation" : "com.nosliw.datasource.school.HAPDataSourceImp",
 	"description" : "all element school rank in ontario",
-	"output" : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,name:test.string;1.0.0,score:test.double;1.0.0||%%||%%",
+	"output" : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,score:test.double;1.0.0||%%||%%",
 	"parms" : [ 
 		{
 			name : "schoolType",

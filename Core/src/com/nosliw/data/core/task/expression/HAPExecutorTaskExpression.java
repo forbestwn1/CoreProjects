@@ -33,8 +33,6 @@ public class HAPExecutorTaskExpression extends HAPExecutorTaskImp{
 		boolean exit = false;
 		HAPExecutableStep step = expTask.getStep(0);
 		while(!exit) {
-			System.out.println("***************************  Execute Step   ************************************");
-			System.out.println("STEP : "+step.getName());
 			//execute referenced executable
 			Map<String, HAPData> referencesData = new LinkedHashMap<String, HAPData>();
 			if(step.getReferences()!=null) {
@@ -80,11 +78,6 @@ public class HAPExecutorTaskExpression extends HAPExecutorTaskImp{
 					}
 				}
 			}
-			
-			System.out.println("RESULT : " + stepResult.toStringValue(HAPSerializationFormat.JSON));
-
-			System.out.println("***************************                 ************************************");
-			
 		}
 		return out;
 	}
