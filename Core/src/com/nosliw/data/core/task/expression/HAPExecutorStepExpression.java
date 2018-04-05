@@ -18,7 +18,7 @@ public class HAPExecutorStepExpression extends HAPExecutorStepImp{
 	
 	@Override
 	protected HAPResultStep executeStep(HAPExecutableStep step, HAPExecutableTaskExpression task, Map<String, HAPData> parms,
-			Map<String, HAPData> referencedData, HAPLog taskLog) {
+			Map<String, HAPData> referencedData, HAPLogStep stepLog) {
 
 		HAPExecutableStepExpression expStep = (HAPExecutableStepExpression)step;
 		HAPRuntimeTaskExecuteExpressionRhino runtimeTask = new HAPRuntimeTaskExecuteExpressionRhino(expStep, parms, referencedData);

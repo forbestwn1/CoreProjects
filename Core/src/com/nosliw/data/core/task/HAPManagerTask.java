@@ -40,11 +40,11 @@ public class HAPManagerTask {
 	}
 
 	
-	public HAPData executeTask(String taskName, String suite, Map<String, HAPData> parms) {
-		return this.executeTask(taskName, this.getTaskDefinitionSuite(suite), parms);
+	public HAPData executeTask(String taskName, String suite, Map<String, HAPData> parms, HAPLogTask logger) {
+		return this.executeTask(taskName, this.getTaskDefinitionSuite(suite), parms, logger);
 	}
 	
-	public HAPData executeTask(String taskName, HAPDefinitionTaskSuite suite, Map<String, HAPData> parms) {
+	public HAPData executeTask(String taskName, HAPDefinitionTaskSuite suite, Map<String, HAPData> parms, HAPLogTask logger) {
 		
 		//compile task
 		HAPProcessContext  processContext = new HAPProcessContext();
@@ -54,13 +54,14 @@ public class HAPManagerTask {
 		
 		//execute task
 		HAPTaskReferenceCache cache = new HAPTaskReferenceCache();
-		HAPData out = this.executeTask(executableTask, parms, cache);
+		HAPData out = this.executeTask(executableTask, parms, cache, logger);
 		
 		return out;
 	}
 	
-	public HAPData executeTask(HAPExecutableTask executableTask, Map<String, HAPData> parms, HAPTaskReferenceCache cache) {
-		HAPData out = m_taskManagers.get(executableTask.getType()).getTaskExecutor().execute(executableTask, parms, cache);
+	public HAPData executeTask(HAPExecutableTask executableTask, Map<String, HAPData> parms, HAPTaskReferenceCache cache, HAPLogTask logger) {
+		
+		HAPData out = m_taskManagers.get(executableTask.getType()).getTaskExecutor().execute(executableTask, parms, cache, logger);
 		return out;
 	}
 

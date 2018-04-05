@@ -7,6 +7,8 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuiteForTest;
+import com.nosliw.data.core.task.HAPExporterLog;
+import com.nosliw.data.core.task.HAPLogTask;
 import com.nosliw.data.core.task.HAPTaskDefinitionSuiteImporter;
 
 public class HAPTaskMain {
@@ -89,7 +91,11 @@ public class HAPTaskMain {
 	private static void executeSuites(String[] suites, HAPRuntimeEnvironmentImpRhino runtimeEnvironment){
 		for(String suiteName : suites){
 			HAPDefinitionTaskSuiteForTest suite = (HAPDefinitionTaskSuiteForTest)runtimeEnvironment.getTaskManager().getTaskDefinitionSuite(suiteName);
-			HAPData out = runtimeEnvironment.getTaskManager().executeTask("main", suite, suite.getVariableData());
+			HAPLogTask taskLog = new HAPLogTask();
+			HAPData out = runtimeEnvironment.getTaskManager().executeTask("main", suite, suite.getVariableData(), taskLog);
+			
+			HAPExporterLog.exportLog(suiteName, taskLog);
+			
 			processResult(suite, HAPServiceData.createSuccessData(out));
 		}
 	}

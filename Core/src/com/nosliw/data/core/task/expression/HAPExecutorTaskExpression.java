@@ -7,11 +7,12 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.task.HAPExecutableTask;
-import com.nosliw.data.core.task.HAPExecutorTask;
+import com.nosliw.data.core.task.HAPExecutorTaskImp;
+import com.nosliw.data.core.task.HAPLogTask;
 import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.core.task.HAPTaskReferenceCache;
 
-public class HAPExecutorTaskExpression implements HAPExecutorTask{
+public class HAPExecutorTaskExpression extends HAPExecutorTaskImp{
 
 	private HAPManagerTaskExpression m_expTaskManager;
 	
@@ -23,7 +24,7 @@ public class HAPExecutorTaskExpression implements HAPExecutorTask{
 	}
 	
 	@Override
-	public HAPData execute(HAPExecutableTask task, Map<String, HAPData> parms, HAPTaskReferenceCache cache) {
+	public HAPData executeTask(HAPExecutableTask task, Map<String, HAPData> parms, HAPTaskReferenceCache cache, HAPLogTask logger) {
 		HAPExecutableTaskExpression expTask = (HAPExecutableTaskExpression)task;
 		
 		Map<String, HAPData> executeParms = new LinkedHashMap<String, HAPData>();
@@ -43,14 +44,16 @@ public class HAPExecutorTaskExpression implements HAPExecutorTask{
 					HAPData cachedResult = cache.getResult(refName, cacheSearchParms);
 					if(cachedResult==null) {
 						//not find from cache, execute the referenced executable
-						cachedResult = this.m_taskManager.executeTask(expTask.getReferencedExecute().get(refName), cacheSearchParms, cache);
+						HAPLogTask refTaskLog = new HAPLogTask();
+						cachedResult = this.m_taskManager.executeTask(expTask.getReferencedExecute().get(refName), cacheSearchParms, cache, refTaskLog);
+						logger.addChild(refTaskLog);
 						cache.addResult(refName, cachedResult, cacheSearchParms);
 					}
 					referencesData.put(refName, cachedResult);
 				}
 			}
 			
-			HAPResultStep stepResult = m_expTaskManager.getStepManager(step.getType()).getStepExecutor().executeStep(step, expTask, executeParms, referencesData);
+			HAPResultStep stepResult = m_expTaskManager.getStepManager(step.getType()).getStepExecutor().execute(step, expTask, executeParms, referencesData, logger);
 			if(stepResult.isExit()) {
 				//exit
 				out = stepResult.getData();

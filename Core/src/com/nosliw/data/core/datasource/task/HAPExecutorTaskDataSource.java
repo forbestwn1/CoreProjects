@@ -3,22 +3,19 @@ package com.nosliw.data.core.datasource.task;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.datasource.HAPDataSourceManager;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
-import com.nosliw.data.core.runtime.HAPExecuteExpression;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.rhino.HAPRhinoRuntimeUtility;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskExecuteConverterRhino;
-import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskExecuteExpressionRhino;
 import com.nosliw.data.core.task.HAPExecutableTask;
-import com.nosliw.data.core.task.HAPExecutorTask;
+import com.nosliw.data.core.task.HAPExecutorTaskImp;
+import com.nosliw.data.core.task.HAPLogTask;
 import com.nosliw.data.core.task.HAPTaskReferenceCache;
 
-public class HAPExecutorTaskDataSource implements HAPExecutorTask{
+public class HAPExecutorTaskDataSource extends HAPExecutorTaskImp{
 
 	private HAPDataSourceManager m_dataSourceManager;
 	private HAPRuntime m_runtime;
@@ -29,7 +26,7 @@ public class HAPExecutorTaskDataSource implements HAPExecutorTask{
 	}
 	
 	@Override
-	public HAPData execute(HAPExecutableTask task, Map<String, HAPData> parms, HAPTaskReferenceCache cache) {
+	public HAPData executeTask(HAPExecutableTask task, Map<String, HAPData> parms, HAPTaskReferenceCache cache, HAPLogTask logger) {
 		
 		HAPExecutableTaskDataSource dataSourceExe = (HAPExecutableTaskDataSource)task;
 		

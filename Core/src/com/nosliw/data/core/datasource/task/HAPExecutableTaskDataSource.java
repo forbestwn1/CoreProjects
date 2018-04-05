@@ -53,6 +53,9 @@ public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 	public Map<String, HAPMatchers> getMatchers(){   return this.m_matchers;   }
 	
 	@Override
+	public String getName() {  return this.m_dataSourceDefinition.getName();  }
+	
+	@Override
 	public String getType() {	return HAPConstant.DATATASK_TYPE_DATASOURCE;	}
 
 	@Override
@@ -135,4 +138,5 @@ public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 
 	@Override
 	public void setId(String id) {		this.m_id = id;	}
+
 }

@@ -2,8 +2,13 @@ package com.nosliw.data.core.task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class HAPLog {
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+
+public class HAPLog extends HAPSerializableImp{
 
 	private List<HAPLog> m_children;
 	
@@ -12,5 +17,11 @@ public class HAPLog {
 	}
 
 	public void addChild(HAPLog child) {	this.m_children.add(child);	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put("children", HAPJsonUtility.buildJson(m_children, HAPSerializationFormat.JSON));
+	}	
 	
 }

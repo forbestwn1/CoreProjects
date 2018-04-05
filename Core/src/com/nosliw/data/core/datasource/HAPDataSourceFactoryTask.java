@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
+import com.nosliw.data.core.task.HAPLogTask;
 import com.nosliw.data.core.task.HAPManagerTask;
 
 public class HAPDataSourceFactoryTask implements HAPDataSourceFactory{
@@ -35,7 +36,8 @@ public class HAPDataSourceFactoryTask implements HAPDataSourceFactory{
 		HAPExecutableDataSource out = new HAPExecutableDataSource(){
 			@Override
 			public HAPData getData(Map<String, HAPData> parms) {
-				return m_taskManager.executeTask("main", taskSuite, parms);
+				HAPLogTask taskLog = new HAPLogTask();
+				return m_taskManager.executeTask("main", taskSuite, parms, taskLog);
 			}
 		};
 		return out;

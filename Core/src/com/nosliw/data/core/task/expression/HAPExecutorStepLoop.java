@@ -2,17 +2,15 @@ package com.nosliw.data.core.task.expression;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
-import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.rhino.HAPRhinoRuntimeUtility;
-import com.nosliw.data.core.task.HAPLog;
+import com.nosliw.data.core.task.HAPLogTask;
 import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.core.task.HAPTaskReferenceCache;
 
@@ -29,7 +27,7 @@ public class HAPExecutorStepLoop extends HAPExecutorStepImp{
 	
 	@Override
 	protected HAPResultStep executeStep(HAPExecutableStep step, HAPExecutableTaskExpression task, Map<String, HAPData> parms,
-		Map<String, HAPData> referencedData, HAPLog taskLog) {
+		Map<String, HAPData> referencedData, HAPLogStep stepLog) {
 		HAPExecutableStepLoop loopStep = (HAPExecutableStepLoop)step;
 		
 		//get container data
@@ -46,8 +44,10 @@ public class HAPExecutorStepLoop extends HAPExecutorStepImp{
 			eleParms.putAll(parms);
 			eleParms.put(loopStep.getElementVariable(), eleData);
 			if(eleOut!=null)   eleParms.put(loopStep.getOutputVariable(), eleOut);
-			
-			eleOut = this.m_taskManager.executeTask(loopStep.getExecuteTask(), eleParms, new HAPTaskReferenceCache());
+		
+			HAPLogTask taskLog = new HAPLogTask();
+			eleOut = this.m_taskManager.executeTask(loopStep.getExecuteTask(), eleParms, new HAPTaskReferenceCache(), taskLog);
+			stepLog.addChild(taskLog);
 		}
 		
 		if(eleOut!=null)  return HAPResultStep.createNextStepResult(eleOut, loopStep.getOutputVariable());

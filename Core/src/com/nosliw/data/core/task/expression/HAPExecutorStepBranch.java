@@ -17,7 +17,7 @@ public class HAPExecutorStepBranch extends HAPExecutorStepImp{
 	
 	@Override
 	protected HAPResultStep executeStep(HAPExecutableStep step, HAPExecutableTaskExpression task, Map<String, HAPData> parms,
-			Map<String, HAPData> referencedData, HAPLog taskLog) {
+			Map<String, HAPData> referencedData, HAPLogStep stepLog) {
 		HAPExecutableStepBranch branchStep = (HAPExecutableStepBranch)step;
 		
 		//get container data

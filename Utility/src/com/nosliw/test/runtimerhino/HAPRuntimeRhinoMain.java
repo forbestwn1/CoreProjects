@@ -15,6 +15,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskExecuteExpressionRhino;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuiteForTest;
+import com.nosliw.data.core.task.HAPLogTask;
 import com.nosliw.data.core.task.HAPTaskDefinitionSuiteImporter;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.expression.test.HAPExpressionTest;
@@ -104,7 +105,8 @@ public class HAPRuntimeRhinoMain {
 	private static void executeSuites(String[] suites, HAPRuntimeEnvironmentImpRhino runtimeEnvironment){
 		for(String suiteName : suites){
 			HAPDefinitionTaskSuiteForTest suite = (HAPDefinitionTaskSuiteForTest)runtimeEnvironment.getTaskManager().getTaskDefinitionSuite(suiteName);
-			HAPData out = runtimeEnvironment.getTaskManager().executeTask("name", suite, suite.getVariableData());
+			HAPLogTask taskLog = new HAPLogTask();
+			HAPData out = runtimeEnvironment.getTaskManager().executeTask("name", suite, suite.getVariableData(), taskLog);
 			processResult(suite, HAPServiceData.createSuccessData(out));
 		}
 	}

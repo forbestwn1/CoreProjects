@@ -25,6 +25,7 @@ public class HAPFileUtility {
 	public static String getTagDefinitionFolder(){  return getApplicationDataFolder() + "tags/";   }
 	public static String getTempFolder(){		return "C:/Temp/nosliw/";	}
 	public static String getScriptExportFolder(){  return HAPFileUtility.getTempFolder()+"scriptexport/scripts/";  }
+	public static String getTaskLogFolder(){  return HAPFileUtility.getTempFolder()+"tasklog/";  }
 	public static String getResourceTempFileFolder(){  return getJSFolder() + "temp/";  }
 	public static String getJSFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/Application/WebContent/";  }
 	public static String getUIResourceFolder(){  return getApplicationDataFolder() + "uiresources/";  }
