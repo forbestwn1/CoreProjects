@@ -102,9 +102,9 @@ public class HAPUIResourceManager {
 			HAPResourceUtility.processResourceDependency(uiResource, m_resourceMan);
 			uiResource.processed();
 			
-			System.out.println("********************** "+  name  +"  ******************************");
-			System.out.println(uiResource);
-			System.out.println("**********************   ******************************");
+//			System.out.println("********************** "+  name  +"  ******************************");
+//			System.out.println(uiResource);
+//			System.out.println("**********************   ******************************");
 		}
 		return uiResource;
 	}

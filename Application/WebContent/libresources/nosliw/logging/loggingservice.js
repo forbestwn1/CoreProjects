@@ -21,11 +21,11 @@ var node_createLoggingService = function(){
 	}
 	
 	var loc_rhinoLogFun = function(){
-		java.lang.System.out.println(loc_buildMessage(arguments));
+//		java.lang.System.out.println(loc_buildMessage(arguments));
 	}
 
 	var loc_rhinoErrorFun = function(){
-		java.lang.System.err.println(loc_buildMessage(arguments));
+//		java.lang.System.err.println(loc_buildMessage(arguments));
 	}
 	
 	var loc_getLogging = function(){

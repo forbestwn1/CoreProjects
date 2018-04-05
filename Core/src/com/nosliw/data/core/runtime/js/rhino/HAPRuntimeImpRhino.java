@@ -134,12 +134,12 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 			public void finish(HAPRuntimeTask task) {
 				HAPServiceData taskServiceData = task.getResult();
 				if(taskServiceData.isSuccess()){
-					System.out.println("Task " + task.getTaskType() + " " + task.getTaskId() + " finished successfully!!!");
-					System.out.println(taskServiceData.getData());
+//					System.out.println("Task " + task.getTaskType() + " " + task.getTaskId() + " finished successfully!!!");
+//					System.out.println(taskServiceData.getData());
 				}
 				else{
-					System.err.println("Task " + task.getTaskType() + " " + task.getTaskId() + " finished fail!!!");
-					System.err.println(taskServiceData);
+//					System.err.println("Task " + task.getTaskType() + " " + task.getTaskId() + " finished fail!!!");
+//					System.err.println(taskServiceData);
 				}
 				m_tasks.remove(task.getTaskId());	
 			}}

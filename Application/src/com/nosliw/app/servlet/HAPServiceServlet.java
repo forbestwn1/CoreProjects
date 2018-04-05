@@ -118,17 +118,17 @@ public abstract class HAPServiceServlet  extends HttpServlet{
 	}
 	
 	private HAPServiceData processRequest(HAPServiceInfo serviceInfo){
-		System.out.println("*********************** Start Service ************************");
-		System.out.println(HAPServiceInfo.SERVICE_COMMAND + "  " + serviceInfo.getCommand());
-		System.out.println(HAPServiceInfo.SERVICE_PARMS + "   " + serviceInfo.getParms().toString());
+//		System.out.println("*********************** Start Service ************************");
+//		System.out.println(HAPServiceInfo.SERVICE_COMMAND + "  " + serviceInfo.getCommand());
+//		System.out.println(HAPServiceInfo.SERVICE_PARMS + "   " + serviceInfo.getParms().toString());
 		
 		HAPServiceData serviceData = processServiceRequest(serviceInfo.getCommand(), serviceInfo.getParms());
 		
 		String content = serviceData.toStringValue(HAPSerializationFormat.JSON_FULL);
 		content = HAPJsonUtility.formatJson(content);
 		
-		System.out.println("return: \n" + content);
-		System.out.println("*********************** End Service ************************");
+//		System.out.println("return: \n" + content);
+//		System.out.println("*********************** End Service ************************");
 		return serviceData;
 	}
 	
