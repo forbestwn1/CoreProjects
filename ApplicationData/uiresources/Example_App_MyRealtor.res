@@ -3,13 +3,19 @@
 	<body>
 	
 	<br>
-	<nosliw-submit title="Submit" datasource="myrealtor"  output="result"/>  
+	<nosliw-submit title="Submit" datasource="myrealtor" parms="schoolType:criteria.schoolType;schoolRating:criteria.schoolRating;buildingType:criteria.buildingType" output="result"/>  
 	<br>
 	
 	<div>
 	Results:
 	<br>
 	<nosliw-include source="Example_App_Result_MyRealtor"/> 
+	</div>
+
+	<div>
+	Query:
+	<br>
+	<nosliw-include source="Example_App_Query_MyRealtor"/> 
 	</div>
 
 	<nosliw-debug/>

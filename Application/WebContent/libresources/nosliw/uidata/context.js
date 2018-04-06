@@ -21,6 +21,7 @@ var node_dataUtility;
 var node_createServiceRequestInfoSimple;
 var node_createVariableWrapper;
 var node_getHandleEachElementRequest;
+var node_createExpressionService;
 
 //*******************************************   Start Node Definition  ************************************** 	
 /*
@@ -88,10 +89,11 @@ var node_createContext = function(elementInfosArray, request){
 		var contextVar = node_createContextVariableInfo(rootName, path);
 		var adapter = {
 			getInValueRequest : function(value, handlers, request){
-				return node_createServiceRequestInfoSimple({}, function(request){
-					value.value = "0123456789" + value.value;
-					return value;
-				}, handlers, request);
+				node_createExpressionService.executeMatchDataRequest(value, matchers, handlers, request);
+//				return node_createServiceRequestInfoSimple({}, function(request){
+//					value.value = "0123456789" + value.value;
+//					return value;
+//				}, handlers, request);
 			},
 			getOutValueRequest : function(value, handlers, request){
 				return node_createServiceRequestInfoSimple({}, function(request){
@@ -236,6 +238,7 @@ nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtili
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.orderedcontainer.getHandleEachElementRequest", function(){node_getHandleEachElementRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("expression.service.createExpressionService", function(){node_createExpressionService = this.getData();});
 
 
 //Register Node by Name
