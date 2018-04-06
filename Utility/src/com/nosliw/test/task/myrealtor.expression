@@ -237,7 +237,10 @@
 	"variablesData": {
 		"schoolType": {
 			"dataTypeId": "test.options;1.0.0",
-			"value": "public"
+			value: {
+				value : "public",
+				optionsId : "schoolType"
+			}
 		},
 		"schoolRating": {
 			dataTypeId: "test.float;1.0.0",
@@ -245,7 +248,10 @@
 		},
 		"buildingType": {
 			"dataTypeId": "test.options;1.0.0",
-			"value": "house"
+			value: {
+				value : "house",
+				optionsId : "buildingType"
+			}
 		},
 	},
 	"result": {

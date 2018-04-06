@@ -101,7 +101,10 @@
 	"variablesData": {
 		"schoolType": {
 			"dataTypeId": "test.options",
-			"value": "Public"
+			value: {
+				value : "public",
+				optionsId : "schoolType"
+			}
 		}
 	},
 	"result": {

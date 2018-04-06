@@ -36,7 +36,10 @@
 				default: {
 					schoolType : {
 						dataTypeId: "test.options;1.0.0",
-						value: "Public"
+						value: {
+							value : "Public",
+							optionsId : "schoolType"
+						}
 					},
 					schoolRating : {
 						dataTypeId: "test.float;1.0.0",
@@ -47,7 +50,10 @@
 						value: [
 							{
 								dataTypeId: "test.options;1.0.0",
-								value: "House"
+								value: {
+									value : "House",
+									optionsId : "buildingType"
+								}
 							},						
 						]
 					},

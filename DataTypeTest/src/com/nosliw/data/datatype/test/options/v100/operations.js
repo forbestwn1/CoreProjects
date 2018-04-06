@@ -47,7 +47,7 @@ dataTypeDefinition.convertTo = {
 		operation : function(data, toDataType, context){
 			return {
 				dataTypeId : "test.string;1.0.0",
-				value : data.value
+				value : data.value.value
 			};
 		} 
 };

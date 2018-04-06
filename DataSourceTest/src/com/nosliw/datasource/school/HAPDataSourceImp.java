@@ -50,10 +50,13 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 
 					String schoolType = jsonSchoolData.getString(INDEX_TYPE);
 					Double schoolScore = jsonSchoolData.getDouble(INDEX_SCORE);
-					if(!(parms.get("schoolType").getValue()+"").equalsIgnoreCase(schoolType))  continue;
+					if(!(((JSONObject)parms.get("schoolType").getValue()).getString("value")).equalsIgnoreCase(schoolType))  continue;
 					if(schoolScore < Double.valueOf(parms.get("schoolRating").getValue()+""))  continue;
 					
-					outSchool.put("schoolType", createJSONData("test.options;1.0.0", schoolType));
+					JSONObject schoolTypeOptionJson = new JSONObject();
+					schoolTypeOptionJson.put("value", schoolType);
+					schoolTypeOptionJson.put("optionsId", "schoolType");
+					outSchool.put("schoolType", createJSONData("test.options;1.0.0", schoolTypeOptionJson));
 					outSchool.put("schoolRating", createJSONData("test.float;1.0.0", schoolScore));
 					
 					JSONObject outGeoValue = new JSONObject();

@@ -9,7 +9,10 @@
 			criteria : "test.options;1.0.0",
 			default :{
 				dataTypeId: "test.options;1.0.0",
-				value: "public"
+				value: {
+					value : "public",
+					optionsId : "schoolType"
+				}
 			},
 		},
 		{

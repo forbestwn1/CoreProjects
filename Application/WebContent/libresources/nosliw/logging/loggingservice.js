@@ -63,22 +63,22 @@ var node_createLoggingService = function(){
 	
 	loc_out = {
 		trace : function(){
-//			loc_getLogging().trace.apply(loc_logging, loc_processArguments(arguments));
+			loc_getLogging().trace.apply(loc_logging, loc_processArguments(arguments));
 		},
 		debug : function(){			
-//			loc_getLogging().debug.apply(loc_logging, loc_processArguments(arguments));
+			loc_getLogging().debug.apply(loc_logging, loc_processArguments(arguments));
 		},
 		info : function(){			
-//			loc_getLogging().info.apply(loc_logging, loc_processArguments(arguments));
+			loc_getLogging().info.apply(loc_logging, loc_processArguments(arguments));
 		},
 		warn : function(){			
-//			loc_getLogging().warn.apply(loc_logging, loc_processArguments(arguments));
+			loc_getLogging().warn.apply(loc_logging, loc_processArguments(arguments));
 		},
 		error : function(){			
-//			loc_getLogging().error.apply(loc_logging, loc_processArguments(arguments));
+			loc_getLogging().error.apply(loc_logging, loc_processArguments(arguments));
 		},
 		fatal : function(){			
-//			loc_getLogging().fatal.apply(loc_logging, loc_processArguments(arguments));
+			loc_getLogging().fatal.apply(loc_logging, loc_processArguments(arguments));
 		},
 	};
 	

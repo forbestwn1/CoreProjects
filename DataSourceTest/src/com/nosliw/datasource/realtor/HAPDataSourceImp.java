@@ -49,7 +49,7 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 		Set<String> buildTypeParm = new HashSet<String>();
 		JSONArray buildTypeParJson = (JSONArray)parms.get("buildingType").getValue();
 		for(int i=0; i<buildTypeParJson.length(); i++) {
-			buildTypeParm.add(buildTypeParJson.getJSONObject(i).getString("value")+"");
+			buildTypeParm.add(((JSONObject)buildTypeParJson.getJSONObject(i).getJSONObject("value")).getString("value"));
 		}
 		
 		int bedroomsParm = ((Integer)parms.get("bedrooms").getValue()).intValue();
@@ -103,7 +103,11 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 				if(Integer.valueOf(bedroom1.trim()) < bedroomsParm)  continue;
 				
 				String buildingType = jsonBuilding.optString("Type");
-				outHome.put("buildingType", createJSONData("test.string;1.0.0", buildingType));
+				JSONObject buildingTypeOptionJson = new JSONObject();
+				buildingTypeOptionJson.put("value", buildingType);
+				buildingTypeOptionJson.put("optionsId", "buildingType");
+				
+				outHome.put("buildingType", createJSONData("test.optiosn;1.0.0", buildingType));
 				if(!buildTypeParm.contains(buildingType))  continue;
 				
 				JSONObject outGeoValue = new JSONObject();

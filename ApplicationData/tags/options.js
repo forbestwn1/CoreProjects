@@ -42,14 +42,17 @@
 		var loc_getViewData = function(){
 			return {
 				dataTypeId: "test.options;1.0.0",
-				value: loc_view.val()
+				value: {
+					value : loc_view.val(),
+					optionsId : loc_env.getAttributeValue("id")
+				}
 			};
 		};
 
 		var loc_updateView = function(){
 			env.executeDataOperationRequestGet(loc_dataVariable, "", {
 				success : function(requestInfo, data){
-					loc_view.val(data.value.value);
+					loc_view.val(data.value.value.value);
 				}
 			});
 		};

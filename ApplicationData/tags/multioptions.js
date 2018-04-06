@@ -48,8 +48,11 @@
 			var selValues = loc_view.val();
 			_.each(selValues, function(value, index){
 				out.value.push(					{
-						dataTypeId: "test.string;1.0.0",
-						value: value
+						dataTypeId: "test.options;1.0.0",
+						value: {
+							value : value,
+							optionsId : loc_env.getAttributeValue("id")
+						}
 					});
 			});
 			return out;
@@ -60,7 +63,7 @@
 				success : function(requestInfo, arrayData){
 					var values = [];
 					_.each(arrayData.value.value, function(data, index){
-						values.push(data.value);
+						values.push(data.value.value);
 //						loc_view.val(data.value).prop('selected', true);
 					});
 					loc_view.val(values);

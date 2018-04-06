@@ -9,7 +9,10 @@
 			criteria : "test.options;1.0.0",
 			default :{
 				dataTypeId: "test.options;1.0.0",
-				value: "public"
+				value: {
+					value : "public",
+					optionsId : "schoolType"
+				}
 			},
 		},
 		{
@@ -22,10 +25,13 @@
 		},
 		{
 			name : "buildingType",
-			criteria : "test.optons;1.0.0",
+			criteria : "test.options;1.0.0",
 			default :{
 				dataTypeId: "test.options;1.0.0",
-				value: "house"
+				value: {
+					value : "house",
+					optionsId : "buildingType"
+				}
 			},
 		}
 	],

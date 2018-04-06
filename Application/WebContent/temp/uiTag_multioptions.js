@@ -25,7 +25,12 @@ function (env) {
         var out = {dataTypeId: "test.array;1.0.0", value: []};
         var selValues = loc_view.val();
         _.each(selValues, function (value, index) {
-            out.value.push({dataTypeId: "test.string;1.0.0", value: value});
+            out.value.push({dataTypeId: "test.options;1.0.0", 
+            	value: {
+            		value : value,
+            		optionsId : loc_env.getAttributeValue("id")
+            	}
+            });
         });
         return out;
     };

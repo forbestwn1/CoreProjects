@@ -11,8 +11,11 @@
 				dataTypeId: "test.array;1.0.0",
 				value: [
 					{
-						dataTypeId: "test.string;1.0.0",
-						value: "House"
+						dataTypeId: "test.options;1.0.0",
+						value: {
+							value : "House",
+							"optionsId" : "buildingType"
+						}
 					},
 				]
 			},
