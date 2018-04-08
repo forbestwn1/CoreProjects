@@ -9,7 +9,7 @@ var dataTypeDefinition = nosliw.getDataTypeDefinition("test.url","1.0.0");
 dataTypeDefinition.requires = {
 };
 
-dataTypeDefinition.convertTo = {
+dataTypeDefinition.convert = {
 		//defined operation
 		//in operation can access all the required resources by name through context
 		operation : function(data, toDataType, context){

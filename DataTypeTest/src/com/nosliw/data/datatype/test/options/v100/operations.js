@@ -41,14 +41,26 @@ dataTypeDefinition.operations['all'] = {
 };
 
 
-dataTypeDefinition.convertTo = {
+dataTypeDefinition.convert = {
 		//defined operation
 		//in operation can access all the required resources by name through context
-		operation : function(data, toDataType, context){
-			return {
-				dataTypeId : "test.string;1.0.0",
-				value : data.value.value
-			};
+		operation : function(data, toDataType, reverse, context){
+			if(reverse){
+				//from string
+				return {
+					dataTypeId : "test.options;1.0.0",
+					value : {
+						value : data.value
+					}
+				};
+			}
+			else{
+				//to string
+				return {
+					dataTypeId : "test.string;1.0.0",
+					value : data.value.value
+				};
+			}
 		} 
 };
 

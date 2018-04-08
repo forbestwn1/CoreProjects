@@ -140,17 +140,10 @@ public class HAPJSImporter {
 			}
 			
 			//convert to
-			NativeObject convertToObjJS = (NativeObject)dataTypeObjJS.get(HAPConstant.DATAOPERATION_TYPE_CONVERTTO);
-			if(convertToObjJS!=null){
-				HAPJSResourceDependency toDep = this.processOperationObject(convertToObjJS, dataTypeId, HAPConstant.DATAOPERATION_TYPE_CONVERTTO, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER);
-				this.m_jsRuntimeDataAccess.saveEntity(toDep);
-			}
-			
-			//convert from
-			NativeObject convertFromObjJS = (NativeObject)dataTypeObjJS.get(HAPConstant.DATAOPERATION_TYPE_CONVERTFROM);
-			if(convertFromObjJS!=null){
-				HAPJSResourceDependency fromDep = this.processOperationObject(convertFromObjJS, dataTypeId, HAPConstant.DATAOPERATION_TYPE_CONVERTFROM, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER);
-				this.m_jsRuntimeDataAccess.saveEntity(fromDep);
+			NativeObject convertObjJS = (NativeObject)dataTypeObjJS.get(HAPConstant.DATAOPERATION_TYPE_CONVERT);
+			if(convertObjJS!=null){
+				HAPJSResourceDependency convertDep = this.processOperationObject(convertObjJS, dataTypeId, HAPConstant.DATAOPERATION_TYPE_CONVERT, dataTypeResources, HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER);
+				this.m_jsRuntimeDataAccess.saveEntity(convertDep);
 			}
         }
     }
@@ -167,7 +160,7 @@ public class HAPJSImporter {
     		this.m_jsRuntimeDataAccess.saveEntity(new HAPResourceDataJSOperationImp(script, operationId, dataTypeId, operationName));
     		break;
     	case HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER:
-    		this.m_jsRuntimeDataAccess.saveEntity(new HAPResourceDataJSConverterImp(script, dataTypeId, operationName));
+    		this.m_jsRuntimeDataAccess.saveEntity(new HAPResourceDataJSConverterImp(script, dataTypeId));
     		break;
     	}
     	
@@ -198,7 +191,7 @@ public class HAPJSImporter {
     		baseResourceId = HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPOperationId(dataTypeId, operationName));
     		break;
     	case HAPConstant.RUNTIME_RESOURCE_TYPE_CONVERTER:
-    		baseResourceId = HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPDataTypeConverter(dataTypeId, operationName));
+    		baseResourceId = HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPDataTypeConverter(dataTypeId));
     		break;
     	}
     	HAPJSResourceDependency dep = new HAPJSResourceDependency(baseResourceId, new ArrayList(operationResources));

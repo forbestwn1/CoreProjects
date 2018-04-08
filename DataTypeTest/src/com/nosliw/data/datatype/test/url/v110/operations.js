@@ -104,7 +104,7 @@ dataTypeDefinition.operations['url_normal3'] = {
 	} 
 };
 
-dataTypeDefinition.convertTo = {
+dataTypeDefinition.convert = {
 		//define required resources for operation
 		requires:{
 			"operation" : { 

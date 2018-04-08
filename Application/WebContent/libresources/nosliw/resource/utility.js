@@ -42,9 +42,9 @@ var node_utility =
 			return out;
 		},
 
-		createConverterToResourceId : function(dataTypeId){
+		createConverterResourceId : function(dataTypeId){
 			var out = {};
-			out[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = node_namingConvensionUtility.cascadeLevel1(dataTypeId, node_COMMONCONSTANT.DATAOPERATION_TYPE_CONVERTTO); 
+			out[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = node_namingConvensionUtility.cascadeLevel1(dataTypeId); 
 			out[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONVERTER; 
 			return out;
 		},

@@ -96,7 +96,8 @@ var node_utility = {
 				_.each(contextDef, function(contextDefRootObj, eleName, list){
 					var info = {
 						contextType : contextType,
-						matchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_MATCHERS]
+						matchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_MATCHERS],
+						reverseMatchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_REVERSEMATCHERS]
 					};
 					var type = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
 					if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_ABSOLUTE){

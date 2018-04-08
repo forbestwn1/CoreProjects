@@ -23,6 +23,9 @@ import com.nosliw.data.core.HAPRelationship;
 public class HAPMatcher extends HAPSerializableImp{
 
 	@HAPAttribute
+	public static String REVERSE = "reverse";
+	
+	@HAPAttribute
 	public static String DATATYPEID = "dataTypeId";
 
 	@HAPAttribute
@@ -30,6 +33,8 @@ public class HAPMatcher extends HAPSerializableImp{
 	
 	@HAPAttribute
 	public static String SUBMATCHERS = "subMatchers";
+	
+	private boolean m_reverse = false;
 	
 	private HAPDataTypeId m_dataTypeId;
 	
@@ -40,6 +45,11 @@ public class HAPMatcher extends HAPSerializableImp{
 	public HAPMatcher(HAPDataTypeId dataTypeId, HAPRelationship relationship){
 		this.m_dataTypeId = dataTypeId;
 		this.m_relationship = relationship;
+	}
+
+	public HAPMatcher(HAPDataTypeId dataTypeId, HAPRelationship relationship, boolean reverse){
+		this(dataTypeId, relationship);
+		this.m_reverse = reverse;
 	}
 	
 	public boolean isVoid(){
@@ -72,5 +82,7 @@ public class HAPMatcher extends HAPSerializableImp{
 		jsonMap.put(DATATYPEID, HAPSerializeManager.getInstance().toStringValue(this.m_dataTypeId, HAPSerializationFormat.LITERATE));
 		jsonMap.put(RELATIONSHIP, HAPSerializeManager.getInstance().toStringValue(this.m_relationship, HAPSerializationFormat.JSON));
 		jsonMap.put(SUBMATCHERS, HAPSerializeManager.getInstance().toStringValue(this.m_subMatchers, HAPSerializationFormat.JSON));
+		jsonMap.put(REVERSE, this.m_reverse+"");
+		typeJsonMap.put(REVERSE, Boolean.class);
 	}
 }

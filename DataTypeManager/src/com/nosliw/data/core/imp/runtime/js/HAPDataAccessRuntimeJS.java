@@ -18,7 +18,7 @@ public class HAPDataAccessRuntimeJS extends HAPDataAccess{
 	}
 
 	public HAPResourceDataJSConverterImp getDataTypeConverter(HAPDataTypeConverter converter){
-		return (HAPResourceDataJSConverterImp)this.queryEntityFromDB(HAPResourceDataJSConverterImp._VALUEINFO_NAME, "dataTypeName=? AND converterType=?", new Object[]{converter.getFullName(), converter.getOperation()}, this.getConnection());
+		return (HAPResourceDataJSConverterImp)this.queryEntityFromDB(HAPResourceDataJSConverterImp._VALUEINFO_NAME, "dataTypeName=?", new Object[]{converter.getFullName()}, this.getConnection());
 	}
 
 	public HAPResourceDataHelperImp getResourceHelper(String id){

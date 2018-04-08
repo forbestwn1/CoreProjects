@@ -57,7 +57,7 @@ var node_utility =
 			return operationResult;
 		},
 
-		executeConvertToResource : function(resourceId, data, targetDataTypeId, resourcesTree){
+		executeConvertResource : function(resourceId, data, dataTypeId, reverse, resourcesTree){
 			var dataOperationResource = node_resourceUtility.getResourceFromTree(resourcesTree, resourceId);
 			var dataOperationFun = dataOperationResource.resourceData;
 			
@@ -65,7 +65,7 @@ var node_utility =
 			var operationContext = new node_OperationContext(resourcesTree, dataOperationResource.resourceInfo[node_COMMONATRIBUTECONSTANT.RESOURCEINFO_DEPENDENCY]);
 			
 			//data is "this" in operation function
-			var result = dataOperationFun.call(data, data, targetDataTypeId, operationContext);
+			var result = dataOperationFun.call(data, data, dataTypeId, reverse, operationContext);
 			return result;
 		},
 		

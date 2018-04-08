@@ -84,7 +84,7 @@ var node_createContext = function(elementInfosArray, request){
 		return variable;
 	};
 	
-	var loc_buildAdapterVariableFromMatchers = function(rootName, path, matchers){
+	var loc_buildAdapterVariableFromMatchers = function(rootName, path, matchers, reverseMatchers){
 		var contextVar = node_createContextVariableInfo(rootName, path);
 		var adapter = {
 			getInValueRequest : function(value, handlers, request){
@@ -95,10 +95,17 @@ var node_createContext = function(elementInfosArray, request){
 //				}, handlers, request);
 			},
 			getOutValueRequest : function(value, handlers, request){
-				return node_createServiceRequestInfoSimple({}, function(request){
-					value.value = value.value.substring(10);
-					return value;
-				}, handlers, request);
+//				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, reverseMatchers, handlers, request);
+				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, reverseMatchers, {
+					success : function(request, data){
+						var kkkk = 5555;
+						kkkk++;
+					}
+				}, request);
+//				return node_createServiceRequestInfoSimple({}, function(request){
+//					value.value = value.value.substring(10);
+//					return value;
+//				}, handlers, request);
 			},
 		};
 		var variable = loc_createVariableFromContextVariableInfo(contextVar, {
@@ -142,7 +149,7 @@ var node_createContext = function(elementInfosArray, request){
 			
 			//get all adapters from elementInfo
 			_.each(elementInfo.info.matchers, function(matchers, path){
-				loc_out.prv_adapters[node_dataUtility.combinePath(elementInfo.name, path)] = loc_buildAdapterVariableFromMatchers(elementInfo.name, path, matchers);
+				loc_out.prv_adapters[node_dataUtility.combinePath(elementInfo.name, path)] = loc_buildAdapterVariableFromMatchers(elementInfo.name, path, matchers, elementInfo.info.reverseMatchers[path]);
 			});
 		});
 	};

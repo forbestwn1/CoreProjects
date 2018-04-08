@@ -237,7 +237,7 @@
 			<definition type="space"/>
 			<definition name="DATAOPERATION_TYPE_NORMAL" value="normal" description="Called by user, inheritable, normal operation"/>
 			<definition name="DATAOPERATION_TYPE_NEW" value="new" description="Call by user, not inheritable, build data"/>
-			<definition name="DATAOPERATION_TYPE_CONVERTTO" value="convertTo" description="Called by system, not inheritable, convert to different data type"/>
+			<definition name="DATAOPERATION_TYPE_CONVERT" value="convert" description="Called by system, not inheritable, convert to different data type"/>
 			<definition name="DATAOPERATION_TYPE_CONVERTFROM" value="convertFrom" description="Called by system, not inheritable, convert from different data type"/>
 			<definition name="DATAOPERATION_TYPE_TOFORMAT" value="toFormat" description="Called by system, not inheritable, convert to different format(literate, json)"/>
 			<definition type="space"/>

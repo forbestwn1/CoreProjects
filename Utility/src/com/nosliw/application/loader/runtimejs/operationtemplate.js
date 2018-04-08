@@ -40,13 +40,9 @@ if(nosliw==undefined){
 				}
 				
 				//process converter
-				if(dataTypeDef.convertTo!=undefined){
-					dataType.convertTo = this.processOperation(dataTypeDef.convertTo, localRequires);
+				if(dataTypeDef.convert!=undefined){
+					dataType.convert = this.processOperation(dataTypeDef.convert, localRequires);
 				}
-				if(dataTypeDef.convertFrom!=undefined){
-					dataType.convertFrom = this.processOperation(dataTypeDef.convertFrom, localRequires);
-				}
-				
 			},
 			
 			processOperation : function(operationDef, localRequires){

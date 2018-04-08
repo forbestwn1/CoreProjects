@@ -87,7 +87,7 @@ public class HAPConstant {
 
 		public static final String DATAOPERATION_TYPE_NORMAL = "normal";
 		public static final String DATAOPERATION_TYPE_NEW = "new";
-		public static final String DATAOPERATION_TYPE_CONVERTTO = "convertTo";
+		public static final String DATAOPERATION_TYPE_CONVERT = "convert";
 		public static final String DATAOPERATION_TYPE_CONVERTFROM = "convertFrom";
 		public static final String DATAOPERATION_TYPE_TOFORMAT = "toFormat";
 

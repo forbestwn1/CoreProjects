@@ -9,10 +9,5 @@ public interface HAPResourceDataJSConverter extends HAPResourceDataJSValue{
 	@HAPAttribute
 	public static String DATATYPENAME = "dataTypeName";
 
-	@HAPAttribute
-	public static String CONVERTERTYPE = "converterType";
-	
 	HAPDataTypeId getDataTypeName();
-	
-	String getConverterType();
 }

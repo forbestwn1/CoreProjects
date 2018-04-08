@@ -10,19 +10,14 @@ public class HAPResourceDataJSConverterImp extends HAPStringableValueEntityWithI
 	
 	public HAPResourceDataJSConverterImp(){}
 	
-	public HAPResourceDataJSConverterImp(String script, HAPDataTypeId dataTypeName, String conerterType){
+	public HAPResourceDataJSConverterImp(String script, HAPDataTypeId dataTypeName){
 		this.setValue(script);
-		this.setConverterType(conerterType);
 		this.setDataTypeName(dataTypeName);
 	}
 	
 	@Override
 	public HAPDataTypeId getDataTypeName() {	return (HAPDataTypeId)this.getAtomicAncestorValueObject(DATATYPENAME, HAPDataTypeId.class);	}
 	public void setDataTypeName(HAPDataTypeId dataTypeName){ this.updateAtomicChildObjectValue(DATATYPENAME, dataTypeName); }
-
-	@Override
-	public String getConverterType() {  return this.getAtomicAncestorValueString(CONVERTERTYPE); }
-	public void setConverterType(String type){  this.updateAtomicChildStrValue(CONVERTERTYPE, type);  }
 
 	@Override
 	public String getValue(){  return this.getAtomicAncestorValueString(VALUE);  }

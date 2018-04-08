@@ -17,6 +17,14 @@ public class HAPRelationshipPath extends HAPSerializableImp{
 		this.m_segments = new ArrayList<HAPRelationshipPathSegment>();
 	}
 
+	public HAPRelationshipPath reverse() {
+		HAPRelationshipPath out = new HAPRelationshipPath();
+		for(HAPRelationshipPathSegment seg : this.m_segments) {
+			out.m_segments.add(0, seg);
+		}
+		return out;
+	}
+	
 	public List<HAPRelationshipPathSegment> getSegments(){
 		return this.m_segments;
 	}
