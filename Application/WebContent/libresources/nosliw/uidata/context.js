@@ -95,13 +95,13 @@ var node_createContext = function(elementInfosArray, request){
 //				}, handlers, request);
 			},
 			getOutValueRequest : function(value, handlers, request){
-//				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, reverseMatchers, handlers, request);
-				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, reverseMatchers, {
-					success : function(request, data){
-						var kkkk = 5555;
-						kkkk++;
-					}
-				}, request);
+				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, reverseMatchers, handlers, request);
+//				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, reverseMatchers, {
+//					success : function(request, data){
+//						var kkkk = 5555;
+//						kkkk++;
+//					}
+//				}, request);
 //				return node_createServiceRequestInfoSimple({}, function(request){
 //					value.value = value.value.substring(10);
 //					return value;

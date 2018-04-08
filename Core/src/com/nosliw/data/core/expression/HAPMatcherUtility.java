@@ -16,7 +16,7 @@ public class HAPMatcherUtility {
 			
 			HAPDataTypeId matcherDataTypeId = originalMatcher.getRelationship().getTarget();
 			
-			HAPRelationshipImp relationship = new HAPRelationshipImp(originalMatcher.getRelationship().getTarget(), originalMatcher.getRelationship().getSource(), originalMatcher.getRelationship().getPath().reverse());
+			HAPRelationshipImp relationship = new HAPRelationshipImp(originalMatcher.getRelationship().getTarget(), originalMatcher.getRelationship().getSource(), originalMatcher.getRelationship().getPath().reverse(originalMatcher.getRelationship().getSource(), originalMatcher.getRelationship().getTarget()));
 			
 			HAPMatcher matcher = new HAPMatcher(matcherDataTypeId, relationship, true);
 			

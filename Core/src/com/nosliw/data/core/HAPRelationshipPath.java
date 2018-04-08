@@ -11,17 +11,27 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPRelationshipPath extends HAPSerializableImp{
 
-	protected List<HAPRelationshipPathSegment> m_segments = null;
+	private HAPDataTypeId m_source;
+	private HAPDataTypeId m_target;
 	
+	protected List<HAPRelationshipPathSegment> m_segments = null;
+
 	public HAPRelationshipPath(){
 		this.m_segments = new ArrayList<HAPRelationshipPathSegment>();
 	}
 
-	public HAPRelationshipPath reverse() {
+	public HAPRelationshipPath(HAPDataTypeId source, HAPDataTypeId target){
+		this.m_segments = new ArrayList<HAPRelationshipPathSegment>();
+		this.m_source = source;
+		this.m_target = target;
+	}
+
+	public HAPRelationshipPath reverse(HAPDataTypeId source, HAPDataTypeId target) {
 		HAPRelationshipPath out = new HAPRelationshipPath();
-		for(HAPRelationshipPathSegment seg : this.m_segments) {
-			out.m_segments.add(0, seg);
+		for(int i=this.m_segments.size()-2; i>=0; i--) {
+			out.m_segments.add(this.m_segments.get(i));
 		}
+		out.m_segments.add(new HAPRelationshipPathSegment(source));
 		return out;
 	}
 	
