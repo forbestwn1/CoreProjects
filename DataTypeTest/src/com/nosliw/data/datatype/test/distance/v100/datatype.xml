@@ -1,6 +1,6 @@
 <definition name="test.distance;1.0.0">
 	
-	<info description="Data type for integer."/>
+	<info description="Data type for distance"/>
 
 	<operations>
 		<operation name="shorterThan" >

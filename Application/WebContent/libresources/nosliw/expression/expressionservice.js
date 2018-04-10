@@ -380,29 +380,6 @@ var node_createExpressionService = function(){
 		});
 		out.addRequest(getResourceRequest);
 		return out;
-		
-//		var out = node_createServiceRequestInfoService(new node_ServiceInfo("ExecuteConverter", {"data":data, "targetDataTypeId":targetDataTypeId}), handlers, requestInfo);
-//		
-//		var converterResourceId = node_resourceUtility.createConverterResourceId(data[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID]);
-//		var getResourceRequest = nosliw.runtime.getResourceService().getGetResourcesRequest([converterResourceId]);
-//		
-//		var resourceRequestDependency = new node_DependentServiceRequestInfo(getResourceRequest, {
-//			success : function(requestInfo, resourcesTree){
-//				var dataTypeId;
-//				if(reverse){
-//					dataTypeId = data.dataTypeId;
-//				}
-//				else{
-//					dataTypeId = targetDataTypeId;
-//				}
-//				return node_expressionUtility.executeConvertResource(converterResourceId, data, dataTypeId, resourcesTree);
-//			}
-//		});
-//		
-//		out.setDependentService(resourceRequestDependency);
-//		return out;
-		
-		
 	};
 	
 	//execute data operation

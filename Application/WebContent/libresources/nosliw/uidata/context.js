@@ -89,23 +89,9 @@ var node_createContext = function(elementInfosArray, request){
 		var adapter = {
 			getInValueRequest : function(value, handlers, request){
 				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, matchers, handlers, request);
-//				return node_createServiceRequestInfoSimple({}, function(request){
-//					value.value = "0123456789" + value.value;
-//					return value;
-//				}, handlers, request);
 			},
 			getOutValueRequest : function(value, handlers, request){
 				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, reverseMatchers, handlers, request);
-//				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, reverseMatchers, {
-//					success : function(request, data){
-//						var kkkk = 5555;
-//						kkkk++;
-//					}
-//				}, request);
-//				return node_createServiceRequestInfoSimple({}, function(request){
-//					value.value = value.value.substring(10);
-//					return value;
-//				}, handlers, request);
 			},
 		};
 		var variable = loc_createVariableFromContextVariableInfo(contextVar, {

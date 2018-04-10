@@ -1,6 +1,6 @@
 <definition name="test.geo;1.0.0">
 	
-	<info description="Data type for integer."/>
+	<info description="Data type for geo loaction"/>
 
 	<operations>
 		<operation name="distance" >
