@@ -13,6 +13,11 @@
 	<br>
 
 	<br>
+	From:<nosliw-price data="criteria.fromPrice"/>
+	<br>
+	To:<nosliw-price data="criteria.toPrice"/>
+	
+	<br>
 	BuildingType:<nosliw-multioptions id="buildingType" data="criteria.buildingType"/>
 	<br>
 

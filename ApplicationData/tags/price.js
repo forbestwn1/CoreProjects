@@ -3,16 +3,7 @@
 	description : "",
 	attributes : [
 		{
-			name : "fromPrice"
-		},
-		{
-			name : "toPrice"
-		},
-		{
-			name : "min"
-		},
-		{
-			name : "max"
+			name : "data"
 		}
 	],
 	context: {
@@ -21,12 +12,8 @@
 			
 		},
 		private : {
-			internal_fromPrice: {
-				path : "<%=&(fromPrice)&%>",
-				definition : "test.price;1.0.0"
-			},
-			internal_toPrice: {
-				path : "<%=&(toPrice)&%>",
+			internal_data: {
+				path : "<%=&(data)&%>",
 				definition : "test.price;1.0.0"
 			}
 		}
@@ -35,12 +22,14 @@
 		
 	},
 	requires:{
+		"operation" : { 
+			op1: "test.integer;1.0.0;add",
+		},
 	},
 	script : function(env){
 
 		var loc_env = env;
-		var loc_fromPriceVariable = env.createVariable("internal_fromPrice");
-		var loc_toPriceVariable = env.createVariable("internal_toPrice");
+		var loc_dataVariable = env.createVariable("internal_data");
 		var loc_view;
 		
 		var loc_revertChange = function(){
@@ -48,16 +37,20 @@
 		};
 
 		var loc_getViewData = function(){
+			var value = loc_view.val();
 			return {
-				dataTypeId: "test.double;1.0.0",
-				value: parseFloat(loc_view.val())
+				dataTypeId: "test.price;1.0.0",
+				value: {
+					currency : value.substring(0, 1),
+					price : value.substring(1)
+				}
 			};
 		};
 
 		var loc_updateView = function(){
 			env.executeDataOperationRequestGet(loc_dataVariable, "", {
 				success : function(requestInfo, data){
-					loc_view.val(data.value.value);
+					loc_view.val(data.value.value.currency + data.value.value.price);
 				}
 			});
 		};

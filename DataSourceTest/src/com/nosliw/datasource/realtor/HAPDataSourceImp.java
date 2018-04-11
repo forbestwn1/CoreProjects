@@ -53,8 +53,10 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 		}
 		
 		int bedroomsParm = ((Integer)parms.get("bedrooms").getValue()).intValue();
-		double fromPriceParm = ((Double)parms.get("fromPrice").getValue()).doubleValue();
-		double toPriceParm = ((Double)parms.get("toPrice").getValue()).doubleValue();
+		double fromPriceParm = ((JSONObject)parms.get("fromPrice").getValue()).getDouble("price"); 
+				
+//				((Double)parms.get("fromPrice").getValue()).doubleValue();
+		double toPriceParm = ((JSONObject)parms.get("toPrice").getValue()).getDouble("price");
 		
 		JSONArray homeArrayData = new JSONArray();
 		
