@@ -13,6 +13,10 @@
 	<br>
 
 	<br>
+	SchoolRating:<nosliw-floatinput data="criteria.schoolRating"/>  
+	<br>
+
+	<br>
 	From:<nosliw-price data="criteria.fromPrice"/>
 	<br>
 	To:<nosliw-price data="criteria.toPrice"/>
@@ -20,10 +24,8 @@
 	<br>
 	BuildingType:<nosliw-multioptions id="buildingType" data="criteria.buildingType"/>
 	<br>
-
-	<br>
-<!--	Price: <nosliw-price from="criteria.fromPrice" to="criteria.toPrice" min="1000" max="2000000"/>  -->
-	<br>
+	
+	<nosliw-debug/>
 	
 </body>
 
@@ -48,7 +50,7 @@
 					},
 					schoolRating : {
 						dataTypeId: "test.float;1.0.0",
-						value: 5.0
+						value: 9.0
 					},
 					buildingType : {
 						dataTypeId: "test.array;1.0.0",

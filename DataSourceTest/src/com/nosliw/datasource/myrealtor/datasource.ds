@@ -5,7 +5,7 @@
 	"output" : "test.array;1.0.0%||element:test.map;1.0.0%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0,url:test.url;1.0.0||%||%",
 	"parms" : [ 
 		{
-			name : "schooltype",
+			name : "schoolType",
 			criteria : "test.options;1.0.0",
 			default :{
 				dataTypeId: "test.options;1.0.0",
@@ -25,15 +25,42 @@
 		},
 		{
 			name : "buildingType",
-			criteria : "test.options;1.0.0",
+			criteria : "test.array;1.0.0%||element:test.options;1.0.0||%",
 			default :{
-				dataTypeId: "test.options;1.0.0",
+				dataTypeId: "test.array;1.0.0",
+				value: [
+					{
+						dataTypeId: "test.options;1.0.0",
+						value: {
+							value : "House",
+							"optionsId" : "buildingType"
+						}
+					},
+				]
+			},
+		},
+		{
+			name : "fromPrice",
+			criteria : "test.price;1.0.0",
+			default :{
+				dataTypeId: "test.price;1.0.0",
 				value: {
-					value : "house",
-					optionsId : "buildingType"
+					price : 400000.0,
+					currency : "$"
 				}
 			},
-		}
+		},
+		{
+			name : "toPrice",
+			criteria : "test.price;1.0.0",
+			default :{
+				dataTypeId: "test.price;1.0.0",
+				value: {
+					price : 1000000.0,
+					currency : "$"
+				}
+			},
+		},
 	],
 	"configure" : {
 		"tasks": [
@@ -58,7 +85,7 @@
 					
 					{
 						"name" : "main3",
-						"description": "create output array",
+						"description": "create empty output array",
 						"type": "expression",
 						"expression": "!(test.array)!.emptyArray()",
 						"outputVariable": "output"
@@ -66,7 +93,7 @@
 					
 					{
 						"name" : "main4",
-						"description": "loop element",
+						"description": "loop through house data and add matched house to output",
 						"type": "loop",
 						"container": "?(houseData)?",
 						"elementVariable": "house",
@@ -77,10 +104,15 @@
 				"references": {
 					"school": {
 						"variablesMap": {
+							schoolType : "schoolType",
+							schoolRating : "schoolRating"
 						}
 					},
 					"house": {
 						"variablesMap": {
+							buildingType : "buildingType",
+							fromPrice : "fromPrice",
+							toPrice : "toPrice"
 						}
 					},
 					"processHouse": {
@@ -104,7 +136,7 @@
 				}
 			},
 			{
-				"description" : "process single house, if is valid house, attach school information to it",
+				"description" : "process single house, if house has valid school, attach school information to it",
 				"name" : "processHouse",
 				"type" : "expression",
 				"steps" : [
@@ -119,7 +151,7 @@
 				
 					{
 						"name" : "processHouse2",
-						"description": "loop element",
+						"description": "loop through all schools to find ",
 						"type": "loop",
 						"container": "?(schoolData)?",
 						"elementVariable": "school",
@@ -242,19 +274,24 @@
 				}
 			},
 			{
-				"description" : "get school data",
+				"description" : "get school data from school data source",
 				"name" : "school",
 				"type" : "dataSource",
 				"dataSource" : "school",
 				"parms" : {
+					schoolType : "?(schoolType)?",
+					schoolRating : "?(schoolRating)?"
 				}
 			},
 			{
-				"description" : "get house data",
+				"description" : "get house data from realtor data source",
 				"name" : "house",
 				"type" : "dataSource",
 				"dataSource" : "realtor",
 				"parms" : {
+					buildingType : "?(buildingType)?",
+					fromPrice : "?(fromPrice)?",
+					toPrice : "?(toPrice)?"
 				}
 			},
 		],

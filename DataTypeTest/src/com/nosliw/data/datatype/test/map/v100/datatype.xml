@@ -1,6 +1,6 @@
 <definition name="test.map;1.0.0" isComplex="true">
 	
-	<info description="container for list of data" isComplex="true"/>
+	<info description="" isComplex="true"/>
 
 	<operations>
 	

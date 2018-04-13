@@ -118,6 +118,7 @@ public class HAPRhinoRuntimeUtility {
 	public static void loadScript(String script, Scriptable scope, String name){
 		Context context = Context.enter();
 		try{
+//ppppp			
 //			String folder = getScriptTempFolder();
 //			String scriptTempFile = folder + "/" + String.format("%03d", index++) + "_" + name+".js";
 //			HAPFileUtility.writeFile(scriptTempFile, script);

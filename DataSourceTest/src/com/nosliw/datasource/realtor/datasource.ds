@@ -6,7 +6,7 @@
 	"parms" : [ 
 		{
 			name : "buildingType",
-			criteria : "test.array;1.0.0%||element:test.string;1.0.0||%",
+			criteria : "test.array;1.0.0%||element:test.options;1.0.0||%",
 			default :{
 				dataTypeId: "test.array;1.0.0",
 				value: [

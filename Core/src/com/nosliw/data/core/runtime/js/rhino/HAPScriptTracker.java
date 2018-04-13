@@ -23,7 +23,7 @@ public class HAPScriptTracker {
 	}
 	
 	public void addScript(String script){
-//		this.m_scripts.add(script);
+		this.m_scripts.add(script);
 	}
 	
 	public void addFile(String file){
@@ -31,28 +31,28 @@ public class HAPScriptTracker {
 	}
 	
 	public void export(){
-//		StringBuffer scriptContent = new StringBuffer();
-//		
-//		for(String file : this.m_files){
-//			scriptContent.append("<script src=\""+file+"\"></script>\n");
-//		}
-//
-//		scriptContent.append("\n");
-//		scriptContent.append("\n");
-//		scriptContent.append("<script>\n");
-//
-//		for(String script : this.m_scripts){
-//			scriptContent.append(script);
-//			scriptContent.append("\n");
-//		}
-//		
-//		scriptContent.append("\n</script>\n");
-//		
-//		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-//		templateParms.put("script", scriptContent.toString());
-//		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPScriptTracker.class, "scriptTracker.temp");
-//		String out = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
-//		
-//		HAPFileUtility.writeFile(exportPath+"1.html", out);
+		StringBuffer scriptContent = new StringBuffer();
+		
+		for(String file : this.m_files){
+			scriptContent.append("<script src=\""+file+"\"></script>\n");
+		}
+
+		scriptContent.append("\n");
+		scriptContent.append("\n");
+		scriptContent.append("<script>\n");
+
+		for(String script : this.m_scripts){
+			scriptContent.append(script);
+			scriptContent.append("\n");
+		}
+		
+		scriptContent.append("\n</script>\n");
+		
+		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+		templateParms.put("script", scriptContent.toString());
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPScriptTracker.class, "scriptTracker.temp");
+		String out = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
+		
+		HAPFileUtility.writeFile(exportPath+"1.html", out);
 	}
 }
