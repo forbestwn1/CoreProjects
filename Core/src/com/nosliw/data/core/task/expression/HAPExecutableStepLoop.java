@@ -1,5 +1,7 @@
 package com.nosliw.data.core.task.expression;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,7 @@ import com.nosliw.data.core.task.HAPUpdateVariable;
 public class HAPExecutableStepLoop extends HAPExecutableStep{
 
 	private HAPOperandWrapper m_containerOperand;
+	private HAPOperandWrapper m_breakOperand;
 	
 	private String m_elementVariable;
 
@@ -34,7 +37,10 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 	public HAPExecutableStepLoop(HAPDefinitionStepLoop loopStepDef, int index, String name) {
 		super(index, name);
 		this.m_containerOperand = loopStepDef.getContainer().getOperand().cloneWrapper();
+		if(loopStepDef.getBreak()!=null)		this.m_breakOperand = loopStepDef.getBreak().getOperand().cloneWrapper();
+		
 		HAPOperandUtility.replaceAttributeOpWithOperationOp(this.m_containerOperand);
+		if(this.m_breakOperand!=null) HAPOperandUtility.replaceAttributeOpWithOperationOp(this.m_breakOperand);
 		
 		this.m_elementVariable = loopStepDef.getElementVariable();
 		this.m_outputVariable = loopStepDef.getOutputVariable();
@@ -43,6 +49,7 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 	}
 
 	public HAPOperandWrapper getContainerOperand() {  return this.m_containerOperand;   }
+	public HAPOperandWrapper getBreakOperand() {  return this.m_breakOperand;   }
 	public String getElementVariable() {  return this.m_elementVariable;   }
 	public String getOutputVariable() {   return this.m_outputVariable;  }
 	public String getExecuteTaskName() {  return this.m_executeTaskName;  }
@@ -58,6 +65,7 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 	@Override
 	public void updateVariable(HAPUpdateVariable updateVar) {
 		HAPOperandUtility.updateVariable(this.m_containerOperand, updateVar);
+		if(this.m_breakOperand!=null)  HAPOperandUtility.updateVariable(this.m_breakOperand, updateVar);
 		this.m_elementVariable = updateVar.getUpdatedVariable(this.m_elementVariable);
 		this.m_outputVariable = updateVar.getUpdatedVariable(this.m_outputVariable);
 		if(this.m_executeTask!=null)		this.m_executeTask.updateVariable(updateVar);
@@ -75,7 +83,8 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 			oldVarsInfo.putAll(varsInfo);
 			
 			varsInfo = HAPOperandUtility.discover(new HAPOperand[] {this.m_containerOperand.getOperand()}, oldVarsInfo, expectOutputCriteria, context);
-			varsInfo.put(this.m_elementVariable, new HAPVariableInfo(HAPCriteriaUtility.getElementCriteria(this.m_containerOperand.getOperand().getOutputCriteria())));
+			if(this.m_containerOperand!=null)  varsInfo.put(this.m_elementVariable, new HAPVariableInfo(HAPCriteriaUtility.getElementCriteria(this.m_containerOperand.getOperand().getOutputCriteria())));
+			if(this.m_breakOperand!=null)  varsInfo = HAPOperandUtility.discover(new HAPOperand[] {this.m_breakOperand.getOperand()}, varsInfo, expectOutputCriteria, context);
 			
 			this.m_executeTask.discoverVariable(varsInfo, expectOutputCriteria, context); 
 //					HAPOperandUtility.discover(new HAPOperand[] {this.m_executeOperand.getOperand()}, varsInfo1, expectOutputCriteria, context);
@@ -89,10 +98,20 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 	}
 
 	@Override
-	public List<HAPResourceId> getResourceDependency() {		return this.m_containerOperand.getOperand().getResources();	}
+	public List<HAPResourceId> getResourceDependency() {
+		List<HAPResourceId> out = new ArrayList<HAPResourceId>();
+		out.addAll(this.m_containerOperand.getOperand().getResources());
+		if(this.m_breakOperand!=null)		out.addAll(this.m_breakOperand.getOperand().getResources());
+		return out;
+	}
 
 	@Override
-	public Set<String> getReferences() {  return HAPOperandUtility.discoverReferences(this.m_containerOperand);  }
+	public Set<String> getReferences() {
+		Set<String> out = new HashSet<String>();
+		out.addAll(HAPOperandUtility.discoverReferences(this.m_containerOperand));  
+		if(this.m_breakOperand!=null)   out.addAll(HAPOperandUtility.discoverReferences(this.m_breakOperand));
+		return out;
+	}
 
 	@Override
 	public Set<String> getVariables() {  return this.m_variablesInfo.keySet();  }

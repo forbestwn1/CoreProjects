@@ -30,20 +30,19 @@ public class HAPRuntimeTaskExecuteExpressionRhino extends HAPRuntimeTaskExecuteE
 		try{
 			HAPRuntimeImpRhino rhinoRuntime = (HAPRuntimeImpRhino)runtime;
 			
-//			//prepare resources for expression in the runtime (resource and dependency)
-//			//execute expression after load required resources
-//			List<HAPExecuteExpression> expressions = new ArrayList<HAPExecuteExpression>();
-//			expressions.add(this.getExpression());
-//			List<HAPResourceInfo> resourcesId =	HAPExpressionUtility.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager());
-//			
-//			HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
-//			loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));
-//			return loadResourcesTask;
+			//prepare resources for expression in the runtime (resource and dependency)
+			//execute expression after load required resources
+			List<HAPExecuteExpression> expressions = new ArrayList<HAPExecuteExpression>();
+			expressions.add(this.getExpression());
+			List<HAPResourceInfo> resourcesId =	HAPExpressionUtility.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager());
 			
-			HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForExecuteExpressionTask(this, rhinoRuntime);
-			rhinoRuntime.loadTaskScript(scriptInfo, this.getTaskId());
-
-			
+			HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
+			loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));
+			return loadResourcesTask;
+	
+//pppp			
+//			HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForExecuteExpressionTask(this, rhinoRuntime);
+//			rhinoRuntime.loadTaskScript(scriptInfo, this.getTaskId());
 		}
 		catch(Exception e){
 			this.finish(HAPServiceData.createFailureData(e, ""));

@@ -3,6 +3,12 @@
 	<info description="Data type for integer."/>
 
 	<operations>
+		<operation name="opposite" >
+			<parms>
+				<parm name="base" criteria="test.boolean"  isBase="true"/>
+			</parms>
+			<output criteria="test.boolean"/>
+		</operation>
 	
 	</operations>
 

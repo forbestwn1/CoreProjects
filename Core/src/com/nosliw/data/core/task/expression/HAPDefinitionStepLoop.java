@@ -7,6 +7,7 @@ import java.util.Set;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 
@@ -24,6 +25,9 @@ public class HAPDefinitionStepLoop extends HAPDefinitionStep{
 	@HAPAttribute 
 	public static String OUTPUTVARIABLE = "outputVariable";
 	
+	@HAPAttribute
+	public static String BREAK = "break";
+	
 	private HAPDefinitionExpression m_container;
 	
 	private String m_elementVariable;
@@ -31,6 +35,8 @@ public class HAPDefinitionStepLoop extends HAPDefinitionStep{
 	private String m_executeTask;
 	
 	private String m_outputVariable;
+	
+	private HAPDefinitionExpression m_break;
 	
 	@Override
 	public String getType() {  return HAPConstant.EXPRESSIONTASK_STEPTYPE_LOOP;	}
@@ -42,7 +48,9 @@ public class HAPDefinitionStepLoop extends HAPDefinitionStep{
 	public String getExecuteTask() {   return this.m_executeTask;   }
 	
 	public String getOutputVariable() {   return this.m_outputVariable;  }
-	
+
+	public HAPDefinitionExpression getBreak() {  return this.m_break;   }
+
 	@Override
 	public Set<String> getVariableNames() {
 		Set<String> out = new HashSet<String>();
@@ -68,6 +76,7 @@ public class HAPDefinitionStepLoop extends HAPDefinitionStep{
 			this.m_container = new HAPDefinitionExpression(jsonObj.getString(CONTAINER));
 			this.m_executeTask = jsonObj.getString(EXECUTETASK);
 			this.m_outputVariable = jsonObj.getString(OUTPUTVARIABLE);
+			if(HAPBasicUtility.isStringNotEmpty(jsonObj.optString(BREAK)))	this.m_break = new HAPDefinitionExpression(jsonObj.optString(BREAK));
 			return true;  
 		}
 		catch(Exception e){

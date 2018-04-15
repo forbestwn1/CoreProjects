@@ -156,7 +156,7 @@
 						"container": "?(schoolData)?",
 						"elementVariable": "school",
 						"executeTask": "houseSchoolMatch",
-						"outputVariable": "validSchool"
+						"outputVariable": "validSchool",
 					},
 					{
 						"name" : "processHouse3",

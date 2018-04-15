@@ -70,6 +70,10 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		this.m_tasks = new LinkedHashMap<String, HAPRuntimeTask>();
 	}
 	
+	private synchronized String generateTaskId() {
+		return this.m_idIndex+++"";
+	}
+	
 	/**
 	 * embed gateway point into rhino env which provide different gateway by name. 
 	 * @param name
@@ -125,7 +129,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	@Override
 	public void executeTask(HAPRuntimeTask task){
 		//prepare expression id
-		task.setId(this.m_idIndex+++"");
+		task.setId(generateTaskId());
 
 		this.m_tasks.put(task.getTaskId(), task);
 
