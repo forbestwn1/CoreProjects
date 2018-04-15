@@ -157,6 +157,7 @@
 						"elementVariable": "school",
 						"executeTask": "houseSchoolMatch",
 						"outputVariable": "validSchool",
+						"break" : "?(validSchool)?.isEmpty().opposite()"
 					},
 					{
 						"name" : "processHouse3",
