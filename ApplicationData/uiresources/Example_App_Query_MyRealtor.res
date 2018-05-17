@@ -5,7 +5,7 @@
 ************************************   Query  **************************************
 
 	<br>
-	SchoolType:<nosliw-textinput data="criteria.schoolType"/>  
+	SchoolType:<nosliw-textinput id="schoolType" data="criteria.schoolType"/>
 	<br>
 
 	<br>

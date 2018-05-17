@@ -292,7 +292,10 @@ var COMMONCONSTANT=
   "RUNTIME_LANGUAGE_JS_GATEWAY": "runtime.gateway",
   "CATEGARY_NAME": "CATEGARY_NAME",
   "DATATASK_TYPE_EXPRESSION": "expression",
-  "EXPRESSIONTASK_STEPTYPE_EXPRESSION": "expression"
+  "DATATASK_TYPE_DATASOURCE": "dataSource",
+  "EXPRESSIONTASK_STEPTYPE_EXPRESSION": "expression",
+  "EXPRESSIONTASK_STEPTYPE_BRANCH": "branch",
+  "EXPRESSIONTASK_STEPTYPE_LOOP": "loop"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

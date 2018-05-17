@@ -64,7 +64,7 @@
 								price : {
 									dataTypeId: "test.price;1.0.0",
 									value: {
-										"price" : 500000,
+										"price" : 900000,
 										"currency" : "$"
 									}
 								},

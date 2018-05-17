@@ -22,6 +22,8 @@ public class HAPManagerTask {
 	//all expression definition suites
 	private Map<String, HAPDefinitionTaskSuite> m_taskDefinitionSuites;
 
+	private Map<String, HAPExecutableTask> m_executables; 
+	
 	//used to generate id
 	private int m_idIndex;
 	
@@ -31,8 +33,10 @@ public class HAPManagerTask {
 	}
 
 	private void init(){
+		
 		HAPValueInfoManager.getInstance().importFromClassFolder(this.getClass());
 		
+		this.m_executables = new LinkedHashMap<String, HAPExecutableTask>();
 		this.m_taskDefinitionSuites = new LinkedHashMap<String, HAPDefinitionTaskSuite>();
 		this.m_idIndex = 1;
 		
@@ -44,17 +48,31 @@ public class HAPManagerTask {
 		return this.executeTask(taskName, this.getTaskDefinitionSuite(suite), parms, logger);
 	}
 	
+	
 	public HAPData executeTask(String taskName, HAPDefinitionTaskSuite suite, Map<String, HAPData> parms, HAPLogTask logger) {
+		
+		long start = System.currentTimeMillis();
 		
 		//compile task
 		HAPProcessContext  processContext = new HAPProcessContext();
-		HAPExecutableTask executableTask = this.compileTask(this.generateId(), suite.getTask(taskName), suite.getAllTasks(), suite.getVariables(), suite.getConstants(), null, suite.getConfigure(), processContext);
+
+		String bufName = suite.getName()+"_" +suite.getTask(taskName).getName();
+		HAPExecutableTask executableTask = this.m_executables.get(bufName);
+		if(executableTask==null) {
+			executableTask = this.compileTask(this.generateId(), suite.getTask(taskName), suite.getAllTasks(), suite.getVariables(), suite.getConstants(), null, suite.getConfigure(), processContext);
+			if(HAPRuntime.isDemo) {
+				this.m_executables.put(bufName, executableTask);
+			}
+		}
 		
 		//convert parms
 		
 		//execute task
 		HAPTaskReferenceCache cache = new HAPTaskReferenceCache();
 		HAPData out = this.executeTask(executableTask, parms, cache, logger);
+
+		long end = System.currentTimeMillis();
+		System.out.println(bufName + " " + (end-start));
 		
 		return out;
 	}

@@ -538,6 +538,8 @@
 
 			<definition type="space"/>
 			<definition name="EXPRESSIONTASK_STEPTYPE_EXPRESSION" value="expression"/>
+			<definition name="EXPRESSIONTASK_STEPTYPE_BRANCH" value="branch"/>
+			<definition name="EXPRESSIONTASK_STEPTYPE_LOOP" value="loop"/>
 
 		</definitions>
 	</constants>

@@ -151,7 +151,7 @@
 				
 					{
 						"name" : "processHouse2",
-						"description": "loop through all schools to find ",
+						"description": "loop through all schools to find matched school",
 						"type": "loop",
 						"container": "?(schoolData)?",
 						"elementVariable": "school",

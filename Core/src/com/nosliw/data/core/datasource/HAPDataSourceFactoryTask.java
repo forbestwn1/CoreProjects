@@ -26,6 +26,7 @@ public class HAPDataSourceFactoryTask implements HAPDataSourceFactory{
 		JSONObject configJson = (JSONObject)dataSourceDefinition.getConfigure();
 		HAPDefinitionTaskSuite taskSuite = new HAPDefinitionTaskSuite(this.m_taskManager);
 		taskSuite.buildObject(configJson, HAPSerializationFormat.JSON);
+		taskSuite.setName(dataSourceDefinition.getName());
 		
 		for(String parmName : dataSourceDefinition.getParms().keySet())
 		{
