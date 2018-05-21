@@ -8,8 +8,6 @@
         <script src="libresources/external/Backbone/1.1.2/backbone.js"></script>
         <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
         <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
-        <script src="libresources/nosliw/core/nosliw.js"></script>
-        <script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
         
 </head>
 
@@ -21,6 +19,7 @@
 
 </body>
 
+<script src="libresources/nosliw/core/nosliw.js"></script>
 <script>
 nosliw.registerNodeEvent("runtime", "active", function(eventName, nodeName){
 	
@@ -40,7 +39,7 @@ nosliw.registerNodeEvent("runtime", "active", function(eventName, nodeName){
 			}
 	);
 });
-
 </script>
+<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
 
 </html>

@@ -314,7 +314,7 @@ var node_createVariable = function(data1, data2, adapterInfo){
 				
 				if(operationService.command==node_CONSTANT.WRAPPER_OPERATION_SET && loc_out.prv_isBase==true){
 					//for set root data
-					return loc_out.prv_getSetBaseDataRequest(operationService.value, operationService.dataType, handlers, requestInfo);
+					return loc_out.prv_getSetBaseDataRequest(operationService.value, operationService.dataType, handlers, requester_parent);
 				}
 				
 				if(this.prv_wrapper!=undefined){

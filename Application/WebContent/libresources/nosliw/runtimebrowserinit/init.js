@@ -1,9 +1,5 @@
 //
 var libNames = [
-//	"external.Underscore;1.6.0",
-//	"external.Backbone;1.1.2",
-//	"external.log4javascript;1.0.0",
-//	"nosliw.core",
 	"nosliw.constant",
 	"nosliw.logging",
 	"nosliw.common",
@@ -18,6 +14,7 @@ var libNames = [
 	"nosliw.runtimebrowser",
 	"nosliw.uiexpression",
 	"nosliw.uiresource",
+	"nosliw.miniapp",
 	"nosliw.runtimebrowsertest",
 ];
 

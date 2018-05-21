@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_requestServiceProcessor;
 	var node_createUIResourceViewFactory;
+	var node_createServiceRequestInfoSimple;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUIResourceService = function(){
@@ -70,11 +71,24 @@ var node_createUIResourceService = function(){
 				}));
 				return out;
 			},	
-			
 			executeCreateUIResourceViewRequest : function(name, handlers, requester_parent){
 				var requestInfo = this.getCreateUIResourceViewRequest(name, handlers, requester_parent);
 				node_requestServiceProcessor.processRequest(requestInfo);
-			}
+			},
+			
+			getGenerateUIResourceViewRequest : function(uiResource, handlers, requester_parent){
+				var requestInfo = loc_out.getRequestInfo(requester_parent);
+				var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("GenerateUIResourceView", {"uiResource":uiResource}), 
+					function(requestInfo){
+						return loc_uiResourceViewFactory.createUIResourceView(uiResource, loc_getResourceViewId(), undefined, undefined, undefined);
+					}, 
+					handlers, requestInfo);
+				return out;
+			},	
+			executeGenerateUIResourceViewRequest : function(uiResource, handlers, requester_parent){
+				var requestInfo = this.getGenerateUIResourceViewRequest(uiResource, handlers, requester_parent);
+				node_requestServiceProcessor.processRequest(requestInfo);
+			},
 	};
 
 	loc_out = node_buildServiceProvider(loc_out, "uiResourceService");
@@ -94,6 +108,7 @@ nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.createUIResourceViewFactory", function(){node_createUIResourceViewFactory = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIResourceService", node_createUIResourceService); 

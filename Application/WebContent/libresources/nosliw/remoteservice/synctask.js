@@ -198,7 +198,7 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 			nosliw.logging.trace(loc_moduleName, loc_name, "info", "		"+"task:"+loc_syncTasks.length +"  queue:"+loc_syncTaskQueue.length);
 			nosliw.logging.trace(loc_moduleName, loc_name, "tasks", "		");
 			nosliw.logging.trace(loc_moduleName, loc_name, "queue", "		");
-			for(var i=0 in loc_syncTaskQueue){
+			for(var i in loc_syncTaskQueue){
 				nosliw.logging.trace(loc_moduleName, loc_name, "		", loc_syncTaskQueue[i].requestId, JSON.stringify(loc_syncTaskQueue[i].service));
 			}
 			nosliw.logging.trace(loc_moduleName, loc_name, "*********************** info end ***********************" );

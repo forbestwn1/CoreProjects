@@ -15,6 +15,7 @@ var packageObj = library;
 	var node_createRemoteService;
 	var node_createGatewayService;
 	var node_node_createUIResourceService;
+	var node_createMiniAppService;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -40,39 +41,27 @@ var node_createRuntime = function(name){
 	
 	var loc_uiResourceService;
 	
+	var loc_miniAppService;
+	
 	var loc_out = {
 		
-		start : function(){
+		start : function(){	},
+		
+		getIdService(){		return loc_idService;		},
+		
+		getResourceService(){			return loc_resourceService;		},
+		
+		getExpressionService(){			return loc_expressionService;		},
 			
-		},
+		getName(){			return loc_name;		},
 		
-		getIdService(){
-			return loc_idService;
-		},
-		
-		getResourceService(){
-			return loc_resourceService;
-		},
-		
-		getExpressionService(){
-			return loc_expressionService;
-		},
-			
-		getName(){
-			return loc_name;
-		},
-		
-		getRemoteService(){
-			return loc_remoteService;
-		},
+		getRemoteService(){			return loc_remoteService;		},
 
-		getGatewayService(){
-			return loc_gatewayService;
-		},
+		getGatewayService(){		return loc_gatewayService;		},
 		
-		getUIResourceService(){
-			return loc_uiResourceService;
-		}
+		getUIResourceService(){		return loc_uiResourceService;		},
+		
+		getMiniAppService(){  return loc_miniAppService; },
 	};
 	
 	var lifecycleCallback = {};
@@ -85,6 +74,7 @@ var node_createRuntime = function(name){
 		loc_remoteService.interfaceObjectLifecycle.init();
 		loc_gatewayService = node_createGatewayService();
 		loc_uiResourceService = node_createUIResourceService();
+		loc_miniAppService = node_createMiniAppService();
 		
 		//set sortcut for object
 		 nosliw.runtime = loc_out;
@@ -118,6 +108,7 @@ nosliw.registerSetNodeDataEvent("resource.createResourceService", function(){nod
 nosliw.registerSetNodeDataEvent("remote.createRemoteService", function(){node_createRemoteService = this.getData();});
 nosliw.registerSetNodeDataEvent("runtime.createGatewayService", function(){node_createGatewayService = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.createUIResourceService", function(){node_createUIResourceService = this.getData();});
+nosliw.registerSetNodeDataEvent("miniapp.service.createMiniAppService", function(){node_createMiniAppService = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

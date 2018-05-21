@@ -102,37 +102,6 @@ var node_createGatewayService = function(){
 				return out;
 			},	
 			
-			
-		getExecuteGatewayCommandRequest1 : function(gatewayId, command, parms, handlers, requester_parent){
-			var requestInfo = loc_out.getRequestInfo(requester_parent);
-			var out = node_createServiceRequestInfoService(new node_ServiceInfo("RequestGatewayService", {"gatewayId":gatewayId,"command":command,"parms":parms}), handlers, requestInfo);
-
-			var remoteServiceRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(gatewayId+";"+command, parms), undefined, {}, requestInfo);
-			out.setDependentService(new node_DependentServiceRequestInfo(remoteServiceRequest, {
-				success : function(requestInfo, gatewayOutput){
-					var gatewayOutputData = gatewayOutput[node_COMMONATRIBUTECONSTANT.GATEWAYOUTPUT_DATA];
-					var gatewayOutputScripts = gatewayOutput[node_COMMONATRIBUTECONSTANT.GATEWAYOUTPUT_SCRIPTS];
-
-					//process script info output 
-					_.each(gatewayOutputScripts, function(scriptInfo, i, list){
-						var file = scriptInfo[node_COMMONATRIBUTECONSTANT.JSSCRIPTINFO_FILE];
-						if(file!=undefined){
-							var script = document.createElement('script');
-							script.setAttribute('src', file);
-							script.setAttribute('type', 'text/javascript');
-//							script.onload = callBack;
-							document.getElementsByTagName("head")[0].appendChild(script);
-						}
-						else{
-							eval(scriptInfo[node_COMMONATRIBUTECONSTANT.JSSCRIPTINFO_SCRIPT]);
-						}
-					});
-					return gatewayOutputData;
-				}
-			}));
-			return out;
-		},	
-			
 		executeExecuteGatewayCommandRequest : function(gatewayId, command, parms, handlers, requester_parent){
 			var requestInfo = this.getExecuteGatewayCommandRequest(gatewayId, command, parms, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);

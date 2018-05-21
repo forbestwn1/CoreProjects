@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<title>First Mobile Example</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="libresources/external/jQuery_Mobile/jquery.mobile-1.4.5.min.css" />
+        <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
+		<script type="text/javascript" src="libresources/external/jQuery_Mobile/jquery.mobile-1.4.5.min.js"></script>
+
+        <script src="libresources/external/Underscore/1.6.0/underscore.js"></script>
+        <script src="libresources/external/Backbone/1.1.2/backbone.js"></script>
+        <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
+    <style>
+		/* Swipe works with mouse as well but often causes text selection. */
+		#demo-page * {
+		    -webkit-user-select: none;
+		    -moz-user-select: none;
+		    -ms-user-select: none;
+		    -o-user-select: none;
+		    user-select: none;
+		}
+		/* Arrow only buttons in the header. */
+		#demo-page .ui-header .ui-btn {
+		    background: none;
+		    border: none;
+		    top: 9px;
+		}
+		#demo-page .ui-header .ui-btn-inner {
+		    border: none;
+		}
+		/* Content styling. */
+		dl { font-family: "Times New Roman", Times, serif; padding: 1em; }
+		dt { font-size: 2em; font-weight: bold; }
+		dt span { font-size: .5em; color: #777; margin-left: .5em; }
+		dd { font-size: 1.25em; margin: 1em 0 0; padding-bottom: 1em; border-bottom: 1px solid #eee; }
+		.back-btn { float: right; margin: 0 2em 1em 0; }        
+	</style>
+</head>
+
+<body>
+
+	<div data-role="page" id="demo-page" data-theme="d" data-url="demo-page">
+	    <div data-role="header" data-theme="b">
+	        <h1>Swipe left or right</h1>
+	        <a href="#left-panel" data-theme="d" data-icon="arrow-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc">Open left panel</a>
+	        <a href="#right-panel" data-theme="d" data-icon="arrow-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc">Open right panel</a>
+	    </div><!-- /header -->
+	    <div data-role="content" id="content">
+	    </div><!-- /content -->
+	    <div data-role="panel" id="left-panel" data-theme="b">
+			<ul data-role="listview" id="miniAppList"></ul>
+	    </div><!-- /panel -->
+	    <div data-role="panel" id="right-panel" data-display="push" data-position="right" data-theme="c">
+	        <p>Right push panel.</p>
+	        <a href="#" data-rel="close" data-role="button" data-mini="true" data-inline="true" data-icon="delete" data-iconpos="right">Close</a>
+	    </div><!-- /panel -->
+	</div>
+
+</body>
+
+
+<script>
+	$(document).on("pageinit", "#demo-page", function() {
+		$(document).on("swipeleft swiperight", "#demo-page", function(e) {
+			if ($.mobile.activePage.jqmData("panel") !== "open") {
+				if (e.type === "swipeleft") {
+					$("#right-panel").panel("open");
+				} else if (e.type === "swiperight") {
+					$("#left-panel").panel("open");
+				}
+			}
+		});
+	});
+</script>
+
+<script src="libresources/nosliw/core/nosliw.js"></script>
+<script>
+	var showContent = function(page){
+		$('#content').empty();
+		nosliw.runtime.getUIResourceService()
+		.executeCreateUIResourceViewRequest(
+				page,
+				{
+					success : function(requestInfo,
+							uiResourceView) {
+						nosliw.logging.info(JSON
+								.stringify(uiResourceView));
+
+						uiResourceView.appendTo($('#content'));
+					}
+				});
+		
+	};
+	
+	var showSetting = function(setting){
+		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+		$('#right-panel').empty();
+		var uiResource = setting[node_COMMONATRIBUTECONSTANT.MINIAPPSETTING_UIMODULE][node_COMMONATRIBUTECONSTANT.UIMODULE_UIRESOURCE];
+		nosliw.runtime.getUIResourceService().executeGenerateUIResourceViewRequest(uiResource, 
+			{
+				success : function(requestInfo, uiResourceView){
+					var parms = setting[node_COMMONATRIBUTECONSTANT.MINIAPPSETTING_PARMS];
+					_.each(parms, function(parm, name){
+						uiResourceView.executeDataOperationRequestSet(name, parm, undefined, requestInfo);
+					});
+					uiResourceView.appendTo($('#right-panel'));
+				}
+			}
+		);
+	};
+	
+	var showApp = function(miniAppId){
+		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+		var miniAppService = nosliw.runtime.getMiniAppService();
+		miniAppService.executeLoadMiniAppRequest(miniAppId, {
+			success : function(requestInfo, miniAppInfo){
+				var setting = miniAppInfo[node_COMMONATRIBUTECONSTANT.MINIAPPINFO_SETTING];
+				showSetting(setting);
+			}
+		});
+		return false;
+	};
+
+	var onClickMiniApp = function(viewId, miniAppId){
+		$("#"+viewId).click(function(e) {
+			showApp(miniAppId);
+			e.preventDefault();
+		});
+	}
+	
+	var showUserInfo = function(userInfo){
+		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+		var listView = $("#miniAppList");
+		_.each(userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_MINIAPPINFO], function(miniAppInfo, index){
+			var miniAppId = miniAppInfo[node_COMMONATRIBUTECONSTANT.MINIAPPINFO_ID];
+			var viewId = "miniAppId_" + miniAppId;
+			var mininAppView = $("<li><a id=\""+viewId+"\" href=\"#\">"+miniAppInfo[node_COMMONATRIBUTECONSTANT.MINIAPPINFO_NAME]+"</a></li>");
+			listView.append(mininAppView);
+			onClickMiniApp(viewId, miniAppId);
+		});
+		$("#miniAppList").listview('refresh');
+	};
+	
+	
+	
+	nosliw.registerNodeEvent("runtime", "active",
+		function(eventName, nodeName) {
+			var miniAppService = nosliw.runtime.getMiniAppService();
+			miniAppService.executeLoginRequest({}, {
+				success : function(requestInfo, userInfo){
+					showUserInfo(userInfo);
+				}
+			});
+		
+			showContent("Example_App_Query_MyRealtor");
+			
+			
+			
+		}
+	);
+</script>
+<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+
+</html>
