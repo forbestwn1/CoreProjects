@@ -90,24 +90,38 @@
 						uiResourceView.appendTo($('#content'));
 					}
 				});
-		
 	};
 	
 	var showSetting = function(setting){
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
+		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 		$('#right-panel').empty();
-		var uiResource = setting[node_COMMONATRIBUTECONSTANT.MINIAPPSETTING_UIMODULE][node_COMMONATRIBUTECONSTANT.UIMODULE_UIRESOURCE];
+		var uiResources = setting[node_COMMONATRIBUTECONSTANT.MINIAPPSETTING_UIMODULE][node_COMMONATRIBUTECONSTANT.UIMODULE_UIRESOURCEIDS];
+		nosliw.runtime.getUIResourceService().executeCreateUIResourceViewRequest(uiResources[0], 
+				{
+					success : function(requestInfo, uiResourceView){
+						uiResourceView.appendTo($('#right-panel'));
+						var parms = setting[node_COMMONATRIBUTECONSTANT.MINIAPPSETTING_PARMS];
+						_.each(parms, function(parm, name){
+							uiResourceView.executeDataOperationRequestSet(name, parm.value, parm.dataTypeInfo, requestInfo);
+						});
+					}
+				});
+		
+/*		
 		nosliw.runtime.getUIResourceService().executeGenerateUIResourceViewRequest(uiResource, 
 			{
 				success : function(requestInfo, uiResourceView){
+					uiResourceView.appendTo($('#right-panel'));
 					var parms = setting[node_COMMONATRIBUTECONSTANT.MINIAPPSETTING_PARMS];
 					_.each(parms, function(parm, name){
-						uiResourceView.executeDataOperationRequestSet(name, parm, undefined, requestInfo);
+						uiResourceView.executeDataOperationRequestSet(name, parm.value, parm.dataTypeInfo, requestInfo);
 					});
-					uiResourceView.appendTo($('#right-panel'));
 				}
 			}
 		);
+*/		
 	};
 	
 	var showApp = function(miniAppId){
@@ -153,7 +167,7 @@
 				}
 			});
 		
-			showContent("Example_App_Query_MyRealtor");
+//			showContent("Example_App_Query_MyRealtor");
 			
 			
 			

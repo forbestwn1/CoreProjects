@@ -34,14 +34,22 @@ public class HAPAppManager {
 		HAPMiniAppSetting setting = new HAPMiniAppSetting();
 		
 		HAPUIModule settingUIModule = new HAPUIModule();
-		settingUIModule.setUiResource(this.m_uiResourceManager.getUIResource("Example_App_Query_MyRealtor_mobile"));
+		settingUIModule.addUiResource("Example_App_Query_MyRealtor_mobile");
 		setting.setUIModule(settingUIModule);
 		
 		JSONObject dataValue = new JSONObject();
 		dataValue.put("value", "Private");
 		dataValue.put("optionsId", "schoolType");
-		HAPDataWrapper data = new HAPDataWrapper(new HAPDataTypeId("test.options;1.0.0"), dataValue);
-		setting.addParm("schoolType", data);
+
+		JSONObject data = new JSONObject();
+		data.put("value", dataValue);
+		data.put("dataTypeId", "test.options;1.0.0");
+
+		JSONObject parmAppData = new JSONObject();
+		parmAppData.put("value", data);
+		parmAppData.put("dataTypeInfo", "appdata");
+		
+		setting.addParm("schoolType", parmAppData);
 		
 		out.setSetting(setting);
 		return out;

@@ -21,6 +21,8 @@ function (env) {
     var loc_markers = [];
     var loc_id = 0;
     var loc_map;
+    var loc_infowindow;
+    var loc_currentChildView;
     var loc_generateId = function () {
         loc_id++;
         return loc_id + "";
@@ -60,8 +62,12 @@ function (env) {
             var marker = new google.maps.Marker({position: {lat: data.value.value.latitude, lng: data.value.value.longitude}, map: loc_map});
             loc_markers.splice(index, 0, marker);
             marker.addListener("click", function () {
-                var infowindow = new google.maps.InfoWindow({content: loc_childResourceViews[index].get(0)});
-                infowindow.open(loc_map, marker);
+                if (loc_currentChildView != undefined) {
+                    loc_currentChildView.detachViews();
+                }
+                loc_currentChildView = loc_childResourceViews[index];
+                loc_currentChildView.appendTo(loc_infowindow.getContent());
+                loc_infowindow.open(loc_map, marker);
             });
         }});
         loc_childResourceViews.splice(index, 0, resourceView);
@@ -74,7 +80,8 @@ function (env) {
     };
     function initMap() {
         var uluru = {lat: 43.751319, lng: -79.407853};
-        loc_map = new google.maps.Map(loc_view.get(0), {zoom: 8, center: uluru});
+        loc_map = new google.maps.Map(loc_view.get(0), {zoom: 11, center: uluru});
+        loc_infowindow = new google.maps.InfoWindow({content: $("<div style=\"height:100px;width:200px;\">").get(0)});
     }
     var loc_out = {prv_deleteEle: function (index, requestInfo) {
         var view = loc_childResourceViews[index];
@@ -89,7 +96,7 @@ function (env) {
         initMap();
         loc_updateView();
     }, initViews: function (requestInfo) {
-        loc_view = $("<div id=\"map\" style=\"height:400px;width:100%;\"></div>");
+        loc_view = $("<div id=\"map\" style=\"height:600px;width:100%;\"></div>");
         return loc_view;
     }, destroy: function () {
         loc_containerVariable.release();
@@ -102,6 +109,7 @@ function (env) {
         _.each(loc_markers, function (marker, index) {
             marker.setMap(null);
         });
+        loc_currentChildView = undefined;
     }};
     return loc_out;
 }

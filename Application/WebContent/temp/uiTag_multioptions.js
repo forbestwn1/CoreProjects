@@ -3,10 +3,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"multioptions",
 "type":"uiTag"
 },
 "children":[],
-"dependency":{"op1":{"id":"test.integer;1.0.0;add",
-"type":"operation"
-}
-},
+"dependency":{},
 "info":{}
 }, {"name":"multioptions",
 "context":{"inherit":false,
@@ -25,12 +22,7 @@ function (env) {
         var out = {dataTypeId: "test.array;1.0.0", value: []};
         var selValues = loc_view.val();
         _.each(selValues, function (value, index) {
-            out.value.push({dataTypeId: "test.options;1.0.0", 
-            	value: {
-            		value : value,
-            		optionsId : loc_env.getAttributeValue("id")
-            	}
-            });
+            out.value.push({dataTypeId: "test.options;1.0.0", value: {value: value, optionsId: loc_env.getAttributeValue("id")}});
         });
         return out;
     };
@@ -38,7 +30,7 @@ function (env) {
         env.executeDataOperationRequestGet(loc_dataVariable, "", {success: function (requestInfo, arrayData) {
             var values = [];
             _.each(arrayData.value.value, function (data, index) {
-                values.push(data.value);
+                values.push(data.value.value);
             });
             loc_view.val(values);
         }});

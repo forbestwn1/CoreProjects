@@ -46,7 +46,7 @@ var node_CONSTANT=
 	  "WRAPPER_TYPE_ENTITY" : "entity",
 
 	  "DATA_TYPE_OBJECT" : "object",
-	  "DATA_TYPE_APPDATA" : "appata",
+	  "DATA_TYPE_APPDATA" : "appdata",
 	  
 	  //context events
 	  "CONTEXT_EVENT_BEFOREUPDATE" : "NOSLIWCONSTANT.LIFECYCLE_CONTEXT_EVENT_BEFOREUPDATE",

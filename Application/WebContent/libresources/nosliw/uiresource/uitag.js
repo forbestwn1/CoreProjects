@@ -145,6 +145,17 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		//create uiTagObject
 		var uiTagResourceId = node_uiResourceUtility.createTagResourceId(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME]);
 		var uiTagResourceObj = nosliw.runtime.getResourceService().getResource(uiTagResourceId);
+		
+		if(uiTagResourceId.id=="textinput"){
+			var kkkk = 5555;
+			kkkk++;
+		}
+		
+		if(uiTagResourceObj==undefined){
+			var kkkk = 5555;
+			kkkk++;
+		}
+		
 		loc_uiTagObj = uiTagResourceObj[node_COMMONATRIBUTECONSTANT.RESOURCE_RESOURCEDATA][node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_envObj);
 		
 		//overriden method before view is attatched to dom

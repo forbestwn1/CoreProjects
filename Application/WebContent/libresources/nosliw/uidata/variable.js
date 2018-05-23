@@ -224,7 +224,12 @@ var node_createVariable = function(data1, data2, adapterInfo){
 			prv_getWrapper : function(){return this.prv_wrapper;},
 
 			//has to be base variable
-			prv_getSetBaseDataRequest : function(parm1, parm2, handlers, requestInfo){	
+			prv_getSetBaseDataRequest : function(parm1, parm2, handlers, requestInfo){
+				if(parm1==null || parm2==null){
+					var kkkk = 5555;
+					kkkk++;
+				}
+				
 				loc_destroyWrapper(requestInfo);
 				
 				//create empty wrapper fist
@@ -314,7 +319,7 @@ var node_createVariable = function(data1, data2, adapterInfo){
 				
 				if(operationService.command==node_CONSTANT.WRAPPER_OPERATION_SET && loc_out.prv_isBase==true){
 					//for set root data
-					return loc_out.prv_getSetBaseDataRequest(operationService.value, operationService.dataType, handlers, requester_parent);
+					return loc_out.prv_getSetBaseDataRequest(operationService.parms.value, operationService.parms.dataType, handlers, requester_parent);
 				}
 				
 				if(this.prv_wrapper!=undefined){

@@ -24,17 +24,17 @@ public class HAPMiniAppSetting extends HAPSerializableImp{
 	@HAPAttribute
 	public static String UIMODULE = "uiModule";
 
-	private Map<String, HAPData> m_parms;
+	private Map<String, Object> m_parms;
 
 	private HAPUIModule m_uiModule;
 	
 	public HAPMiniAppSetting() {
-		this.m_parms = new LinkedHashMap<String, HAPData>();
+		this.m_parms = new LinkedHashMap<String, Object>();
 	}
 	
 	public void setUIModule(HAPUIModule uiModule) { this.m_uiModule = uiModule;  }
 	
-	public void addParm(String name, HAPData data) {  this.m_parms.put(name, data);   }
+	public void addParm(String name, Object appData) {  this.m_parms.put(name, appData);   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

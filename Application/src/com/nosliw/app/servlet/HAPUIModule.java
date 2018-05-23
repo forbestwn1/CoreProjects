@@ -1,5 +1,7 @@
 package com.nosliw.app.servlet;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -15,24 +17,27 @@ import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
 public class HAPUIModule extends HAPSerializableImp{
 
 	@HAPAttribute
-	public static String UIRESOURCE = "uiResource";
+	public static String UIRESOURCEIDS = "uiResources";
 
-	private HAPUIDefinitionUnitResource m_uiResource; 
-
+	private List<String> m_resourceIds;
 	
-	public void setUiResource(HAPUIDefinitionUnitResource uiResource) {
-		this.m_uiResource = uiResource;
+	
+	public HAPUIModule() {
+		this.m_resourceIds = new ArrayList<String>();
+	}
+	
+	public void addUiResource(String uiResourceId) {
+		this.m_resourceIds.add(uiResourceId);
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(UIRESOURCE, HAPSerializeManager.getInstance().toStringValue(this.m_uiResource, HAPSerializationFormat.JSON));
+		jsonMap.put(UIRESOURCEIDS, HAPSerializeManager.getInstance().toStringValue(this.m_resourceIds, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
 	protected boolean buildObjectByFullJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_uiResource = (HAPUIDefinitionUnitResource)HAPSerializeManager.getInstance().buildObject(HAPUIDefinitionUnitResource.class.getName(), jsonObj.opt(UIRESOURCE), HAPSerializationFormat.JSON);
 		return true;
 	}
 

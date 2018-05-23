@@ -1,29 +1,31 @@
 
-nosliw.runtime.getResourceService().importResource({"id":{"id":"options",
+nosliw.runtime.getResourceService().importResource({"id":{"id":"floatinput",
 "type":"uiTag"
 },
 "children":[],
-"dependency":{},
+"dependency":{"op1":{"id":"test.integer;1.0.0;add",
+"type":"operation"
+}
+},
 "info":{}
-}, {"name":"options",
+}, {"name":"floatinput",
 "context":{"inherit":false,
 "public":{}
 },
 "attributes":{},
 "script":
 function (env) {
-    var node_OperationParm = nosliw.getNodeData("expression.entity.OperationParm");
     var loc_env = env;
     var loc_dataVariable = env.createVariable("internal_data");
     var loc_view;
     var loc_revertChange = function () {
     };
     var loc_getViewData = function () {
-        return {dataTypeId: "test.options;1.0.0", value: {value: loc_view.val(), optionsId: loc_env.getAttributeValue("id")}};
+        return {dataTypeId: "test.float;1.0.0", value: parseFloat(loc_view.val())};
     };
     var loc_updateView = function () {
         env.executeDataOperationRequestGet(loc_dataVariable, "", {success: function (requestInfo, data) {
-            loc_view.val(data.value.value.value);
+            loc_view.val(data.value.value + "");
         }});
     };
     var loc_setupUIEvent = function () {
@@ -33,21 +35,15 @@ function (env) {
     };
     var loc_out = {preInit: function () {
     }, initViews: function (requestInfo) {
-        loc_view = $("<select/>");
-        var operationParms = [];
-        operationParms.push(new node_OperationParm({dataTypeId: "test.string;1.0.0", value: loc_env.getAttributeValue("id")}, "optionsId"));
-        loc_env.executeExecuteOperationRequest("test.options;1.0.0", "all", operationParms, {success: function (request, optionsValueArray) {
-            _.each(optionsValueArray.value, function (optionsValue, i) {
-                loc_view.append($("<option>", {value: optionsValue.value, text: optionsValue.value}));
-            });
-            loc_updateView();
-        }});
+        loc_view = $("<input type=\"text\"/>");
         return loc_view;
     }, postInit: function () {
+        loc_updateView();
         loc_setupUIEvent();
         loc_dataVariable.registerDataOperationEventListener(undefined, function () {
             loc_updateView();
         }, this);
+    }, processAttribute: function (name, value) {
     }, destroy: function () {
         loc_dataVariable.release();
         loc_view.remove();
