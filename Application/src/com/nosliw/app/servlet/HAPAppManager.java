@@ -5,31 +5,43 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import com.nosliw.data.core.HAPDataTypeId;
-import com.nosliw.data.core.HAPDataWrapper;
-import com.nosliw.uiresource.HAPUIResourceManager;
+import com.nosliw.data.core.imp.io.HAPDBSource;
 
 public class HAPAppManager {
 
-	private HAPUIResourceManager m_uiResourceManager;
+	private HAPDataAccess m_dataAccess;
 	
-	public HAPAppManager(HAPUIResourceManager resourceMan) {
-		this.m_uiResourceManager = resourceMan;
+	public HAPAppManager() {
+		this.m_dataAccess = new HAPDataAccess(HAPDBSource.getDefaultDBSource());
+	}
+	
+	public HAPUserInfo createUser() {
+		HAPUserInfo out = new HAPUserInfo();
+		HAPUser user = this.m_dataAccess.createUser();
+		out.setUser(user);
+		this.m_dataAccess.createSampleDataForUser(user.getId());
+		return out;
 	}
 	
 	public HAPUserInfo getUserInfo(String id) {
-		HAPUserInfo out = new HAPUserInfo();
-		out.setId(id);
-		out.addMiniAppInfo(this.getUserMiniAppInfos(id));
+		HAPUserInfo out = null;
+		HAPUser user = this.m_dataAccess.getUserById(id);
+		if(user!=null) {
+			out = new HAPUserInfo();
+			user.addGroups(this.m_dataAccess.getUserGroups(user.getId()));
+			out.setUser(user);
+			this.m_dataAccess.updateUserInfoWithMiniApp(out);
+		}
+		
 		return out;
 	}
 
-	public HAPMiniAppInfo getMiniAppInfo(String id) {
+	public HAPMiniAppInstance getMiniAppInstance(String userId) {
 		return this.getMyRealtorAppInfo();
 	}
 	
-	private HAPMiniAppInfo getMyRealtorAppInfo() {
-		HAPMiniAppInfo out = new HAPMiniAppInfo();
+	private HAPMiniAppInstance getMyRealtorAppInfo() {
+		HAPMiniAppInstance out = new HAPMiniAppInstance();
 
 		HAPMiniAppSetting setting = new HAPMiniAppSetting();
 		
@@ -55,12 +67,12 @@ public class HAPAppManager {
 		return out;
 	}
 	
-	private List<HAPMiniAppInfo> getUserMiniAppInfos(String userId) {
-		List<HAPMiniAppInfo> out = new ArrayList<HAPMiniAppInfo>();
-		out.add(new HAPMiniAppInfo("id1", "app1"));
-		out.add(new HAPMiniAppInfo("id2", "app2"));
-		out.add(new HAPMiniAppInfo("id3", "app3"));
-		out.add(new HAPMiniAppInfo("id4", "app4"));
+	private List<HAPMiniAppInstance> getUserMiniAppInfos(String userId) {
+		List<HAPMiniAppInstance> out = new ArrayList<HAPMiniAppInstance>();
+		out.add(new HAPMiniAppInstance("id1", "app1"));
+		out.add(new HAPMiniAppInstance("id2", "app2"));
+		out.add(new HAPMiniAppInstance("id3", "app3"));
+		out.add(new HAPMiniAppInstance("id4", "app4"));
 		
 		return out;
 	}

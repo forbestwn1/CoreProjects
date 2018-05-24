@@ -34,19 +34,30 @@ public class HAPAppServlet extends HAPServiceServlet{
 		switch(command){
 		case COMMAND_LOGIN:
 		{
-			String userId = ((HAPUserInfo)HAPSerializeManager.getInstance().buildObject(HAPUserInfo.class.getName(), parms, HAPSerializationFormat.JSON)).getId();
-			if(HAPBasicUtility.isStringEmpty(userId)) {
-				//not provide id, create one
-				userId = System.currentTimeMillis()+"";
+			String userId = null;
+			if(parms!=null) {
+				HAPUserInfo inUserInfo = ((HAPUserInfo)HAPSerializeManager.getInstance().buildObject(HAPUserInfo.class.getName(), parms, HAPSerializationFormat.JSON));
+				HAPUser user = inUserInfo.getUser();
+				if(user!=null) {
+					userId = user.getId();
+				}
 			}
-			HAPUserInfo userInfo = miniAppMan.getUserInfo(userId);
+			
+			HAPUserInfo userInfo = null;
+			if(HAPBasicUtility.isStringEmpty(userId)) {
+				userInfo = miniAppMan.createUser();
+			}
+			else {
+				userInfo = miniAppMan.getUserInfo(userId);
+				if(userInfo==null)  userInfo = miniAppMan.createUser();
+			}
 			out = HAPServiceData.createSuccessData(userInfo);
 			break;
 		}
 		case COMMAND_LOADMINIAPP:
 		{
 			String miniAppId = parms.optString(COMMAND_LOADMINIAPP_ID);
-			HAPMiniAppInfo miniAppInfo = miniAppMan.getMiniAppInfo(miniAppId);
+			HAPMiniAppInstance miniAppInfo = miniAppMan.getMiniAppInstance(miniAppId);
 			out = HAPServiceData.createSuccessData(miniAppInfo);
 			break;
 		}

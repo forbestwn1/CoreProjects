@@ -104,7 +104,7 @@
 						uiResourceView.appendTo($('#right-panel'));
 						var parms = setting[node_COMMONATRIBUTECONSTANT.MINIAPPSETTING_PARMS];
 						_.each(parms, function(parm, name){
-							uiResourceView.executeDataOperationRequestSet(name, parm.value, parm.dataTypeInfo, requestInfo);
+//							uiResourceView.executeDataOperationRequestSet(name, parm.value, parm.dataTypeInfo, requestInfo);
 						});
 					}
 				});
@@ -141,28 +141,44 @@
 			showApp(miniAppId);
 			e.preventDefault();
 		});
-	}
+	};
 	
 	var showUserInfo = function(userInfo){
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 		var listView = $("#miniAppList");
-		_.each(userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_MINIAPPINFO], function(miniAppInfo, index){
-			var miniAppId = miniAppInfo[node_COMMONATRIBUTECONSTANT.MINIAPPINFO_ID];
-			var viewId = "miniAppId_" + miniAppId;
-			var mininAppView = $("<li><a id=\""+viewId+"\" href=\"#\">"+miniAppInfo[node_COMMONATRIBUTECONSTANT.MINIAPPINFO_NAME]+"</a></li>");
+		_.each(userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_MINIAPPINSTANCES], function(miniAppInstance, index){
+			var miniAppInstanceId = miniAppInstance[node_COMMONATRIBUTECONSTANT.MINIAPPINSTANCE_ID];
+			var viewId = "miniAppInstanceId_" + miniAppInstanceId;
+			var mininAppView = $("<li><a id=\""+viewId+"\" href=\"#\">"+miniAppInstance[node_COMMONATRIBUTECONSTANT.MINIAPPINSTANCE_NAME]+"</a></li>");
 			listView.append(mininAppView);
-			onClickMiniApp(viewId, miniAppId);
+			onClickMiniApp(viewId, miniAppInstanceId);
 		});
+		
+		var aaa = "<li>"
+		aaa = aaa+"<div data-role='collapsible' id='aaaa' data-collapsed='true'><h4>Heading</h4><ul data-role='listview'><li><a href='#'>List item 1</a></li><li><ahref='#'>List item 2</a></li><li><a href='#'>List item 3</a></li></ul></div>";
+		aaa = aaa+"</li>";
+		var mininAppView = $(aaa);
+		listView.append(mininAppView);
+		
+		$("#aaaa").collapsible();
+		
+		
 		$("#miniAppList").listview('refresh');
 	};
-	
 	
 	
 	nosliw.registerNodeEvent("runtime", "active",
 		function(eventName, nodeName) {
 			var miniAppService = nosliw.runtime.getMiniAppService();
-			miniAppService.executeLoginRequest({}, {
+			var userInfo = {};
+			var userId = localStorage.userId;
+			if(userId!=undefined){
+				userInfo.user = {};
+				userInfo.user.id = userId;
+			}
+			miniAppService.executeLoginRequest(userInfo, {
 				success : function(requestInfo, userInfo){
+					localStorage.userId = userInfo.user.id;
 					showUserInfo(userInfo);
 				}
 			});
