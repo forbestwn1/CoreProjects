@@ -12,6 +12,7 @@
 		<project>UIResource</project>
 		<project>DataSource</project>
 		<project>DataSourceTest</project>
+		<project>MiniApp</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

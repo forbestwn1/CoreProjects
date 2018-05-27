@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.definition;
+package com.nosliw.uiresource.page;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 
 public class HAPUIResourceServlet  extends HAPServiceServlet{
 

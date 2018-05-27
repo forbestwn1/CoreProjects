@@ -104,7 +104,7 @@
 						uiResourceView.appendTo($('#right-panel'));
 						var parms = setting[node_COMMONATRIBUTECONSTANT.MINIAPPSETTING_PARMS];
 						_.each(parms, function(parm, name){
-//							uiResourceView.executeDataOperationRequestSet(name, parm.value, parm.dataTypeInfo, requestInfo);
+							uiResourceView.executeDataOperationRequestSet(name, parm.value, parm.dataTypeInfo, requestInfo);
 						});
 					}
 				});
@@ -129,7 +129,7 @@
 		var miniAppService = nosliw.runtime.getMiniAppService();
 		miniAppService.executeLoadMiniAppRequest(miniAppId, {
 			success : function(requestInfo, miniAppInfo){
-				var setting = miniAppInfo[node_COMMONATRIBUTECONSTANT.MINIAPPINFO_SETTING];
+				var setting = miniAppInfo[node_COMMONATRIBUTECONSTANT.MINIAPPINSTANCE_SETTING];
 				showSetting(setting);
 			}
 		});
@@ -147,25 +147,41 @@
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 		var listView = $("#miniAppList");
 		_.each(userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_MINIAPPINSTANCES], function(miniAppInstance, index){
-			var miniAppInstanceId = miniAppInstance[node_COMMONATRIBUTECONSTANT.MINIAPPINSTANCE_ID];
-			var viewId = "miniAppInstanceId_" + miniAppInstanceId;
-			var mininAppView = $("<li><a id=\""+viewId+"\" href=\"#\">"+miniAppInstance[node_COMMONATRIBUTECONSTANT.MINIAPPINSTANCE_NAME]+"</a></li>");
-			listView.append(mininAppView);
-			onClickMiniApp(viewId, miniAppInstanceId);
+			appendMiniAppInstance(listView, miniAppInstance);
 		});
-		
-		var aaa = "<li>"
-		aaa = aaa+"<div data-role='collapsible' id='aaaa' data-collapsed='true'><h4>Heading</h4><ul data-role='listview'><li><a href='#'>List item 1</a></li><li><ahref='#'>List item 2</a></li><li><a href='#'>List item 3</a></li></ul></div>";
-		aaa = aaa+"</li>";
-		var mininAppView = $(aaa);
-		listView.append(mininAppView);
-		
-		$("#aaaa").collapsible();
-		
+
+		_.each(userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_GROUPMINIAPPINSTANCES], function(groupMiniAppInstance, index){
+			appendMiniAppGroup(listView, groupMiniAppInstance);
+		});
 		
 		$("#miniAppList").listview('refresh');
 	};
 	
+	var appendMiniAppInstance = function(parentView, miniAppInstance){
+		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+		var miniAppInstanceId = miniAppInstance[node_COMMONATRIBUTECONSTANT.MINIAPPINSTANCE_ID];
+		var viewId = "miniAppInstanceId_" + miniAppInstanceId;
+		var mininAppItemView = $("<li><a id=\""+viewId+"\" href=\"#\">"+miniAppInstance[node_COMMONATRIBUTECONSTANT.MINIAPPINSTANCE_NAME]+"</a></li>");
+		parentView.append(mininAppItemView);
+		onClickMiniApp(viewId, miniAppInstanceId);
+	};
+	
+	var appendMiniAppGroup = function(parentView, groupMiniAppInstance){
+		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+		var groupId = groupMiniAppInstance[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPPINSTANCES_GROUP][node_COMMONATRIBUTECONSTANT.GROUP_ID];
+		var groupName = groupMiniAppInstance[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPPINSTANCES_GROUP][node_COMMONATRIBUTECONSTANT.GROUP_NAME];
+		var groupViewId = "groupMiniAppInstanceId_" + groupId;
+		
+		var groupView = $("<li><div data-role='collapsible' id='collapsible_"+groupViewId+"' data-collapsed='true'><h4>"+groupName+"</h4><ul data-role='listview' id='"+groupViewId+"'></ul></div></li>");
+		parentView.append(groupView);
+		
+		_.each(groupMiniAppInstance[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPPINSTANCES_MINIAPPINSTANCES], function(miniAppInstance, index){
+			appendMiniAppInstance($("#"+groupViewId), miniAppInstance);
+		});
+		$("#"+groupViewId).listview();
+		$("#collapsible_"+groupViewId).collapsible();
+		
+	};
 	
 	nosliw.registerNodeEvent("runtime", "active",
 		function(eventName, nodeName) {

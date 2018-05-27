@@ -10,7 +10,7 @@ import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManagerImp;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 
 public class HAPResourceManagerUIResource extends HAPResourceManagerImp{
 

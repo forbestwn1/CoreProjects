@@ -1,4 +1,4 @@
-package com.nosliw.app.servlet;
+package com.nosliw.miniapp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +36,13 @@ public class HAPAppManager {
 		return out;
 	}
 
-	public HAPMiniAppInstance getMiniAppInstance(String userId) {
-		return this.getMyRealtorAppInfo();
+	public HAPMiniAppInstance getMiniAppInstance(String instanceId) {
+		return this.getMyRealtorAppInfo(instanceId);
 	}
 	
-	private HAPMiniAppInstance getMyRealtorAppInfo() {
+	private HAPMiniAppInstance getMyRealtorAppInfo(String instanceId) {
 		HAPMiniAppInstance out = new HAPMiniAppInstance();
+		out.setId(instanceId);
 
 		HAPMiniAppSetting setting = new HAPMiniAppSetting();
 		

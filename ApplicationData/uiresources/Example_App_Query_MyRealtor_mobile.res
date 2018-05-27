@@ -2,10 +2,7 @@
 <html>
 <body>
 	<br>
-************************************   Query  **************************************
-
-	<br>
-	SchoolType:<nosliw-textinput id="schoolType" data="schoolType"/>
+	SchoolType:<nosliw-options id="schoolType" data="schoolType"/>
 	<br>
 
 </body>

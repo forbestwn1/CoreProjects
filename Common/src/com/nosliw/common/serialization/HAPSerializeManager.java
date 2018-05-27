@@ -58,6 +58,7 @@ public class HAPSerializeManager {
 	}
 	
 	public HAPSerializable buildObject(String className, Object value, HAPSerializationFormat format){
+		if(value==null)   return null;
 		HAPSerializable out = null;
 		try {
 			Class cs = this.m_classMaps.get(className);

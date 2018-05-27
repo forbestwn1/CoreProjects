@@ -1,4 +1,4 @@
-package com.nosliw.app.servlet;
+package com.nosliw.miniapp;
 
 import java.util.Map;
 
@@ -39,6 +39,11 @@ public class HAPMiniAppInstance extends HAPSerializableImp{
 		this.m_id = id;
 		this.m_name = name;
 	}
+	
+	public String getId() {  return this.m_id;   }
+	public String getName() {  return this.m_name;  }
+	public void setId(String id) {  this.m_id = id;  }
+	public void setName(String name) {  this.m_name = name;  }
 	
 	public void setSetting(HAPMiniAppSetting setting) {  this.m_setting = setting;     }
 	

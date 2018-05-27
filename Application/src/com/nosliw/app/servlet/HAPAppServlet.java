@@ -8,6 +8,10 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.miniapp.HAPAppManager;
+import com.nosliw.miniapp.HAPMiniAppInstance;
+import com.nosliw.miniapp.HAPUser;
+import com.nosliw.miniapp.HAPUserInfo;
 import com.nosliw.servlet.HAPServiceServlet;
 
 @HAPEntityWithAttribute
@@ -56,9 +60,9 @@ public class HAPAppServlet extends HAPServiceServlet{
 		}
 		case COMMAND_LOADMINIAPP:
 		{
-			String miniAppId = parms.optString(COMMAND_LOADMINIAPP_ID);
-			HAPMiniAppInstance miniAppInfo = miniAppMan.getMiniAppInstance(miniAppId);
-			out = HAPServiceData.createSuccessData(miniAppInfo);
+			String miniAppInstanceId = parms.optString(COMMAND_LOADMINIAPP_ID);
+			HAPMiniAppInstance miniAppInstance = miniAppMan.getMiniAppInstance(miniAppInstanceId);
+			out = HAPServiceData.createSuccessData(miniAppInstance);
 			break;
 		}
 		}

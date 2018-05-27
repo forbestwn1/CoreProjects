@@ -1,4 +1,4 @@
-package com.nosliw.app.servlet;
+package com.nosliw.miniapp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 
 @HAPEntityWithAttribute
 public class HAPUIModule extends HAPSerializableImp{

@@ -3,10 +3,10 @@ package com.nosliw.servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-import com.nosliw.app.servlet.HAPAppManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
+import com.nosliw.miniapp.HAPAppManager;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.resource.HAPResourceManagerUIResource;
 import com.nosliw.uiresource.resource.HAPResourceManagerUITag;

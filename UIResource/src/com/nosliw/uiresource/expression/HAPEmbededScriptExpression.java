@@ -17,7 +17,7 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
-import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInAttribute;
+import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInAttribute;
 
 /**
  * This class represent all string value that contains script expressions 

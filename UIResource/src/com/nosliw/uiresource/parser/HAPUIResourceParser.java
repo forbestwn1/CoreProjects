@@ -31,15 +31,15 @@ import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.context.HAPContextGroup;
 import com.nosliw.uiresource.context.HAPContextNodeRootAbsolute;
 import com.nosliw.uiresource.context.HAPContextParser;
-import com.nosliw.uiresource.definition.HAPConstantDef;
-import com.nosliw.uiresource.definition.HAPElementEvent;
-import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInAttribute;
-import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInContent;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
 import com.nosliw.uiresource.expression.HAPScriptExpressionUtility;
+import com.nosliw.uiresource.page.HAPConstantDef;
+import com.nosliw.uiresource.page.HAPElementEvent;
+import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInAttribute;
+import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInContent;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
 
 /*
  * This is a utility class that process ui resource file and create ui resource object

@@ -1,4 +1,4 @@
-package com.nosliw.app.servlet;
+package com.nosliw.miniapp;
 
 import java.util.ArrayList;
 import java.util.List;

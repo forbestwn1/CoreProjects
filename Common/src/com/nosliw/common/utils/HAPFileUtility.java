@@ -29,6 +29,7 @@ public class HAPFileUtility {
 	public static String getResourceTempFileFolder(){  return getJSFolder() + "temp/";  }
 	public static String getJSFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/Application/WebContent/";  }
 	public static String getUIResourceFolder(){  return getApplicationDataFolder() + "uiresources/";  }
+	public static String getUIModuleFolder(){  return getApplicationDataFolder() + "uimodules/";  }
 	
     public static Set<File> getAllFiles(String path) {
     	Set<File> out = new HashSet<File>();

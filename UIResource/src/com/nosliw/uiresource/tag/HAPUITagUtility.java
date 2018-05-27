@@ -16,10 +16,10 @@ import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.context.HAPContextGroup;
 import com.nosliw.uiresource.context.HAPContextNodeRoot;
 import com.nosliw.uiresource.context.HAPContextParser;
-import com.nosliw.uiresource.definition.HAPConstantUtility;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitUtility;
+import com.nosliw.uiresource.page.HAPConstantUtility;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnitUtility;
 import com.nosliw.uiresource.parser.HAPUIResourceParser;
 
 public class HAPUITagUtility {
@@ -37,7 +37,7 @@ public class HAPUITagUtility {
 		String contextMapName = includeTagResource.getAttributes().get(HAPConstant.UITAG_NAME_INCLUDE_PARM_CONTEXT);
 
 		//build include tag
-		HAPUIDefinitionUnitResource uiResource = uiResourceMan.getUIResourceDefinitionByName(includeResourceName);
+		HAPUIDefinitionUnitResource uiResource = uiResourceMan.getUIResourceDefinitionById(includeResourceName);
 		uiResourceParser.parseContent(includeTagResource, uiResource.getSource());
 		HAPConstantUtility.calculateConstantDefs(includeTagResource, null, idGengerator, expressionManager, runtime);
 

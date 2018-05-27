@@ -3,7 +3,7 @@ package com.nosliw.uiresource.resource;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.js.HAPResourceDataJSValue;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 
 public class HAPResourceDataUIResource extends HAPSerializableImp implements HAPResourceDataJSValue{
 

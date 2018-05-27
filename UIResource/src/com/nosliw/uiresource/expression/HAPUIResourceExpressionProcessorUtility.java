@@ -9,11 +9,11 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInAttribute;
-import com.nosliw.uiresource.definition.HAPEmbededScriptExpressionInContent;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
+import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInAttribute;
+import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInContent;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
 
 public class HAPUIResourceExpressionProcessorUtility {
 

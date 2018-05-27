@@ -3,7 +3,7 @@
 	<body>
 	
 	<br>
-	<nosliw-submit title="Submit" datasource="myrealtor" parms="schoolType:schoolType;schoolRating:schoolRating;buildingType:buildingType;fromPrice:fromPrice;toPrice:toPrice" output="result"/>  
+	<nosliw-submit title="Submit" datasource="myrealtor" parms="schoolType:schoolType" output="result"/>  
 	<br>
 
 	<div>

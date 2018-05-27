@@ -14,8 +14,8 @@ import org.jsoup.select.Elements;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnit;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitTag;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
 
 public class HAPUIResourceParserUtility {
 

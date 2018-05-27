@@ -12,9 +12,9 @@ import org.json.JSONObject;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.uiresource.HAPIdGenerator;
-import com.nosliw.uiresource.definition.HAPConstantDef;
-import com.nosliw.uiresource.definition.HAPConstantUtility;
-import com.nosliw.uiresource.definition.HAPUIDefinitionUnitResource;
+import com.nosliw.uiresource.page.HAPConstantDef;
+import com.nosliw.uiresource.page.HAPConstantUtility;
+import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 
 public class HAPUIResourceConstantTest {
 
