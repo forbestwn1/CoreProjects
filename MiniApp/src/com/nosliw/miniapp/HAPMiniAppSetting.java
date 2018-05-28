@@ -26,13 +26,13 @@ public class HAPMiniAppSetting extends HAPSerializableImp{
 
 	private Map<String, Object> m_parms;
 
-	private HAPUIModule m_uiModule;
+	private HAPUIModule111 m_uiModule;
 	
 	public HAPMiniAppSetting() {
 		this.m_parms = new LinkedHashMap<String, Object>();
 	}
 	
-	public void setUIModule(HAPUIModule uiModule) { this.m_uiModule = uiModule;  }
+	public void setUIModule(HAPUIModule111 uiModule) { this.m_uiModule = uiModule;  }
 	
 	public void addParm(String name, Object appData) {  this.m_parms.put(name, appData);   }
 	
@@ -46,7 +46,7 @@ public class HAPMiniAppSetting extends HAPSerializableImp{
 	protected boolean buildObjectByFullJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_parms = HAPSerializeUtility.buildMapFromJsonObject(HAPDataWrapper.class.getName(), jsonObj.optJSONObject(PARMS));
-		this.m_uiModule = (HAPUIModule)HAPSerializeManager.getInstance().buildObject(HAPUIModule.class.getName(), jsonObj.optJSONObject(UIMODULE), HAPSerializationFormat.JSON);
+		this.m_uiModule = (HAPUIModule111)HAPSerializeManager.getInstance().buildObject(HAPUIModule111.class.getName(), jsonObj.optJSONObject(UIMODULE), HAPSerializationFormat.JSON);
 		return true;
 	}
 

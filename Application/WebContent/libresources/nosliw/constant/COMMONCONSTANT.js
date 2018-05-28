@@ -295,7 +295,8 @@ var COMMONCONSTANT=
   "DATATASK_TYPE_DATASOURCE": "dataSource",
   "EXPRESSIONTASK_STEPTYPE_EXPRESSION": "expression",
   "EXPRESSIONTASK_STEPTYPE_BRANCH": "branch",
-  "EXPRESSIONTASK_STEPTYPE_LOOP": "loop"
+  "EXPRESSIONTASK_STEPTYPE_LOOP": "loop",
+  "MINIAPPSERVICE_TYPE_DATASOURCE": "dataSource"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

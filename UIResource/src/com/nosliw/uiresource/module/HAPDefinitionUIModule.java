@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionUIModule  extends HAPSerializableImp{
+public class HAPDefinitionUIModule extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ID = "id";
@@ -29,6 +29,9 @@ public class HAPDefinitionUIModule  extends HAPSerializableImp{
 	
 	private Map<String, HAPDefinitionUIModuleEntry> m_moduleEntries;
 
+	public String getId() {   return this.m_id;   }
+	public void setId(String id) {  this.m_id = id;   }
+	
 	public Map<String, String> getPages(){  return this.m_pages;   }
 	
 	public HAPDefinitionUIModuleEntry getModuleEntry(String name) {  return this.m_moduleEntries.get(name);   }

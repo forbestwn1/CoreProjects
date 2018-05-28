@@ -460,4 +460,8 @@ public class HAPConstant {
 		public static final String EXPRESSIONTASK_STEPTYPE_LOOP = "loop";
 
 
+
+		public static final String MINIAPPSERVICE_TYPE_DATASOURCE = "dataSource";
+
+
 }

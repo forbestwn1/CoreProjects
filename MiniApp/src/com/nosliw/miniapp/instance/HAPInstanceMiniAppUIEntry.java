@@ -1,5 +1,6 @@
-package com.nosliw.miniapp;
+package com.nosliw.miniapp.instance;
 
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -9,9 +10,12 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.miniapp.HAPMiniAppResult;
+import com.nosliw.miniapp.HAPMiniAppSetting;
+import com.nosliw.uiresource.module.HAPInstanceUIModule;
 
 @HAPEntityWithAttribute
-public class HAPMiniAppInstance extends HAPSerializableImp{
+public class HAPInstanceMiniAppUIEntry extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String ID = "id";
@@ -27,15 +31,19 @@ public class HAPMiniAppInstance extends HAPSerializableImp{
 	
 	private String m_id;
 	
+	private Map<String, HAPInstanceUIModule> m_uiModules;
+	
+	private List<HAPInstanceUIModuleSetting> m_uiModulesSetting;
+	
+	
 	private String m_name;
 
-	private HAPMiniAppSetting m_setting;
-	
-	private HAPMiniAppResult m_app;
+//	private HAPMiniAppSetting m_setting;
+//	private HAPMiniAppResult m_app;
 
-	public HAPMiniAppInstance() {}
+	public HAPInstanceMiniAppUIEntry() {}
 
-	public HAPMiniAppInstance(String id, String name) {
+	public HAPInstanceMiniAppUIEntry(String id, String name) {
 		this.m_id = id;
 		this.m_name = name;
 	}

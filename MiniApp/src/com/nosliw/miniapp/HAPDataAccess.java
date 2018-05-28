@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.data.core.imp.io.HAPDBSource;
+import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
 
 public class HAPDataAccess {
 
@@ -128,7 +129,7 @@ public class HAPDataAccess {
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()) {
 				String miniAppInstanceId = resultSet.getString("appid");
-				HAPMiniAppInstance appInstance = new HAPMiniAppInstance(miniAppInstanceId, resultSet.getString("appname"));
+				HAPInstanceMiniAppUIEntry appInstance = new HAPInstanceMiniAppUIEntry(miniAppInstanceId, resultSet.getString("appname"));
 				String groupId = resultSet.getString("groupid");
 				if(groupId==null) {
 					userInfo.addMiniAppInstance(appInstance);

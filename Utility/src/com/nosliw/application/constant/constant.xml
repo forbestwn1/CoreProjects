@@ -541,6 +541,9 @@
 			<definition name="EXPRESSIONTASK_STEPTYPE_BRANCH" value="branch"/>
 			<definition name="EXPRESSIONTASK_STEPTYPE_LOOP" value="loop"/>
 
+			<definition type="space"/>
+			<definition name="MINIAPPSERVICE_TYPE_DATASOURCE" value="dataSource"/>
+
 		</definitions>
 	</constants>
 </root>

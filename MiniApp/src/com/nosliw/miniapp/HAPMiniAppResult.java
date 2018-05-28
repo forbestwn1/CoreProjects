@@ -23,7 +23,7 @@ public class HAPMiniAppResult extends HAPSerializableImp{
 
 	private Map<String, HAPData> m_result;
 
-	private HAPUIModule m_uiModule;
+	private HAPUIModule111 m_uiModule;
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -35,7 +35,7 @@ public class HAPMiniAppResult extends HAPSerializableImp{
 	protected boolean buildObjectByFullJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_result = HAPSerializeUtility.buildMapFromJsonObject(HAPDataWrapper.class.getName(), jsonObj.optJSONObject(RESULT));
-		this.m_uiModule = (HAPUIModule)HAPSerializeManager.getInstance().buildObject(HAPUIModule.class.getName(), jsonObj.optJSONObject(UIMODULE), HAPSerializationFormat.JSON);
+		this.m_uiModule = (HAPUIModule111)HAPSerializeManager.getInstance().buildObject(HAPUIModule111.class.getName(), jsonObj.optJSONObject(UIMODULE), HAPSerializationFormat.JSON);
 		return true;
 	}
 

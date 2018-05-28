@@ -1,11 +1,18 @@
 package com.nosliw.miniapp;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.io.HAPDBSource;
+import com.nosliw.miniapp.definition.HAPDefinitionMiniApp;
+import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
+import com.nosliw.uiresource.module.HAPDefinitionUIModule;
 
 public class HAPAppManager {
 
@@ -13,6 +20,13 @@ public class HAPAppManager {
 	
 	public HAPAppManager() {
 		this.m_dataAccess = new HAPDataAccess(HAPDBSource.getDefaultDBSource());
+	}
+	
+	public HAPDefinitionMiniApp getMinAppDefinition(String minAppDefId) {
+		String file = HAPFileUtility.getMiniAppFolder()+minAppDefId+".res";
+		HAPDefinitionMiniApp out = (HAPDefinitionMiniApp)HAPSerializeManager.getInstance().buildObject(HAPDefinitionMiniApp.class.getName(), new JSONObject(HAPFileUtility.readFile(new File(file))), HAPSerializationFormat.JSON);
+		out.setId(minAppDefId);
+		return out;
 	}
 	
 	public HAPUserInfo createUser() {
@@ -36,17 +50,23 @@ public class HAPAppManager {
 		return out;
 	}
 
-	public HAPMiniAppInstance getMiniAppInstance(String instanceId) {
+	public HAPInstanceMiniAppUIEntry getMiniAppInstanceUIEntiry(String userId, String miniAppId, String uiEntry) {
 		return this.getMyRealtorAppInfo(instanceId);
 	}
 	
-	private HAPMiniAppInstance getMyRealtorAppInfo(String instanceId) {
-		HAPMiniAppInstance out = new HAPMiniAppInstance();
+	
+	
+	public HAPInstanceMiniAppUIEntry getMiniAppInstance(String instanceId) {
+		return this.getMyRealtorAppInfo(instanceId);
+	}
+	
+	private HAPInstanceMiniAppUIEntry getMyRealtorAppInfo(String instanceId) {
+		HAPInstanceMiniAppUIEntry out = new HAPInstanceMiniAppUIEntry();
 		out.setId(instanceId);
 
 		HAPMiniAppSetting setting = new HAPMiniAppSetting();
 		
-		HAPUIModule settingUIModule = new HAPUIModule();
+		HAPUIModule111 settingUIModule = new HAPUIModule111();
 		settingUIModule.addUiResource("Example_App_Query_MyRealtor_mobile");
 		setting.setUIModule(settingUIModule);
 		
@@ -68,12 +88,12 @@ public class HAPAppManager {
 		return out;
 	}
 	
-	private List<HAPMiniAppInstance> getUserMiniAppInfos(String userId) {
-		List<HAPMiniAppInstance> out = new ArrayList<HAPMiniAppInstance>();
-		out.add(new HAPMiniAppInstance("id1", "app1"));
-		out.add(new HAPMiniAppInstance("id2", "app2"));
-		out.add(new HAPMiniAppInstance("id3", "app3"));
-		out.add(new HAPMiniAppInstance("id4", "app4"));
+	private List<HAPInstanceMiniAppUIEntry> getUserMiniAppInfos(String userId) {
+		List<HAPInstanceMiniAppUIEntry> out = new ArrayList<HAPInstanceMiniAppUIEntry>();
+		out.add(new HAPInstanceMiniAppUIEntry("id1", "app1"));
+		out.add(new HAPInstanceMiniAppUIEntry("id2", "app2"));
+		out.add(new HAPInstanceMiniAppUIEntry("id3", "app3"));
+		out.add(new HAPInstanceMiniAppUIEntry("id4", "app4"));
 		
 		return out;
 	}

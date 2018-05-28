@@ -4,13 +4,13 @@ import java.util.Map;
 
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 
-public class HAPUIModule {
+public class HAPInstanceUIModule {
 
 	private String m_entryPage;
 	
 	private Map<String, HAPUIDefinitionUnitResource> m_pages;
 	
-	public HAPUIModule(String entryPage) {
+	public HAPInstanceUIModule(String entryPage) {
 		this.m_entryPage = entryPage;
 	}
 

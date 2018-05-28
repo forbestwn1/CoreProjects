@@ -13,6 +13,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPSerializeUtility;
+import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
 
 @HAPEntityWithAttribute
 public class HAPUserGroupMiniAppInstances  extends HAPSerializableImp{
@@ -25,14 +26,14 @@ public class HAPUserGroupMiniAppInstances  extends HAPSerializableImp{
 
 	private HAPGroup m_group;
 	
-	private List<HAPMiniAppInstance> m_miniAppInstances;
+	private List<HAPInstanceMiniAppUIEntry> m_miniAppInstances;
 
 	public HAPUserGroupMiniAppInstances(HAPGroup group) {
 		this.m_group = group;
-		this.m_miniAppInstances = new ArrayList<HAPMiniAppInstance>();
+		this.m_miniAppInstances = new ArrayList<HAPInstanceMiniAppUIEntry>();
 	}
 
-	public void addMiniAppInstance(HAPMiniAppInstance miniAppInstance) {	this.m_miniAppInstances.add(miniAppInstance);	}
+	public void addMiniAppInstance(HAPInstanceMiniAppUIEntry miniAppInstance) {	this.m_miniAppInstances.add(miniAppInstance);	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -45,7 +46,7 @@ public class HAPUserGroupMiniAppInstances  extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		JSONObject groupJsonObj = jsonObj.optJSONObject(GROUP);
 		this.m_group = (HAPGroup)HAPSerializeManager.getInstance().buildObject(HAPGroup.class.getName(), groupJsonObj, HAPSerializationFormat.JSON);
-		this.m_miniAppInstances = HAPSerializeUtility.buildListFromJsonArray(HAPMiniAppInstance.class.getName(), jsonObj.optJSONArray(MINIAPPINSTANCES));
+		this.m_miniAppInstances = HAPSerializeUtility.buildListFromJsonArray(HAPInstanceMiniAppUIEntry.class.getName(), jsonObj.optJSONArray(MINIAPPINSTANCES));
 		return true;
 	}
 

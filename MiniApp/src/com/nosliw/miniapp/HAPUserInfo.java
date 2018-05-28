@@ -13,6 +13,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPSerializeUtility;
+import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
 
 @HAPEntityWithAttribute
 public class HAPUserInfo extends HAPSerializableImp{
@@ -28,21 +29,21 @@ public class HAPUserInfo extends HAPSerializableImp{
 
 	private HAPUser m_user;
 	
-	private List<HAPMiniAppInstance> m_miniAppInstances;
+	private List<HAPInstanceMiniAppUIEntry> m_miniAppInstances;
 	
 	private List<HAPUserGroupMiniAppInstances> m_groupMiniAppInstances;
 	
 	
 	public HAPUserInfo() {
-		this.m_miniAppInstances = new ArrayList<HAPMiniAppInstance>();
+		this.m_miniAppInstances = new ArrayList<HAPInstanceMiniAppUIEntry>();
 		this.m_groupMiniAppInstances = new ArrayList<HAPUserGroupMiniAppInstances>();
 	}
 	
 	public HAPUser getUser() {  return this.m_user;   }
 	public void setUser(HAPUser user) {   this.m_user = user;    }
 	
-	public void addMiniAppInstances(List<HAPMiniAppInstance> miniAppInstances) {	this.m_miniAppInstances.addAll(miniAppInstances);	}
-	public void addMiniAppInstance(HAPMiniAppInstance miniAppInstance) {	this.m_miniAppInstances.add(miniAppInstance);	}
+	public void addMiniAppInstances(List<HAPInstanceMiniAppUIEntry> miniAppInstances) {	this.m_miniAppInstances.addAll(miniAppInstances);	}
+	public void addMiniAppInstance(HAPInstanceMiniAppUIEntry miniAppInstance) {	this.m_miniAppInstances.add(miniAppInstance);	}
 	
 	public void addGroupMiniAppInstances(HAPUserGroupMiniAppInstances groupMiniAppInstance) {this.m_groupMiniAppInstances.add(groupMiniAppInstance);}
 	
@@ -60,7 +61,7 @@ public class HAPUserInfo extends HAPSerializableImp{
 		if(userJsonObj!=null) {
 			this.m_user = (HAPUser)HAPSerializeManager.getInstance().buildObject(HAPUser.class.getName(), userJsonObj, HAPSerializationFormat.JSON);
 		}
-		this.m_miniAppInstances = HAPSerializeUtility.buildListFromJsonArray(HAPMiniAppInstance.class.getName(), jsonObj.optJSONArray(MINIAPPINSTANCES));
+		this.m_miniAppInstances = HAPSerializeUtility.buildListFromJsonArray(HAPInstanceMiniAppUIEntry.class.getName(), jsonObj.optJSONArray(MINIAPPINSTANCES));
 		this.m_groupMiniAppInstances = HAPSerializeUtility.buildListFromJsonArray(HAPUserGroupMiniAppInstances.class.getName(), jsonObj.optJSONArray(GROUPMINIAPPINSTANCES));
 		return true;
 	}

@@ -16,7 +16,7 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.context.HAPContextGroup;
 import com.nosliw.uiresource.context.HAPContextUtility;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionProcessorUtility;
-import com.nosliw.uiresource.module.HAPUIModule;
+import com.nosliw.uiresource.module.HAPInstanceUIModule;
 import com.nosliw.uiresource.module.HAPDefinitionUIModule;
 import com.nosliw.uiresource.module.HAPDefinitionUIModuleEntry;
 import com.nosliw.uiresource.page.HAPConstantUtility;
@@ -57,10 +57,10 @@ public class HAPUIResourceManager {
 	}
 
 	
-	public HAPUIModule getUIModule(String moduleId, String entry) {
+	public HAPInstanceUIModule getUIModule(String moduleId, String entry) {
 		HAPDefinitionUIModule moduleDef = this.getUIModuleById(moduleId);
 		
-		HAPUIModule out = new HAPUIModule(entry);
+		HAPInstanceUIModule out = new HAPInstanceUIModule(entry);
 		
 		HAPDefinitionUIModuleEntry moduleEntry = moduleDef.getModuleEntry(entry);
 		
@@ -75,6 +75,7 @@ public class HAPUIResourceManager {
 	private HAPDefinitionUIModule getUIModuleById(String moduleId) {
 		String file = HAPFileUtility.getUIResourceFolder()+moduleId+".res";
 		HAPDefinitionUIModule out = (HAPDefinitionUIModule)HAPSerializeManager.getInstance().buildObject(HAPDefinitionUIModule.class.getName(), new JSONObject(HAPFileUtility.readFile(new File(file))), HAPSerializationFormat.JSON);
+		out.setId(moduleId);
 		return out;
 	}
 	

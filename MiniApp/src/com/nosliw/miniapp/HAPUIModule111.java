@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 
 @HAPEntityWithAttribute
-public class HAPUIModule extends HAPSerializableImp{
+public class HAPUIModule111 extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String UIRESOURCEIDS = "uiResources";
@@ -22,7 +22,7 @@ public class HAPUIModule extends HAPSerializableImp{
 	private List<String> m_resourceIds;
 	
 	
-	public HAPUIModule() {
+	public HAPUIModule111() {
 		this.m_resourceIds = new ArrayList<String>();
 	}
 	
