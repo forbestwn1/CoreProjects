@@ -37,6 +37,10 @@ public class HAPDefinitionMiniApp extends HAPSerializableImp{
 	
 	public void setId(String id) {  this.m_id = id;   }
 	
+	public HAPDefinitionMiniAppUIEntry getUIEntry(String uiEntry) {  return this.m_uiEntries.get(uiEntry);  }
+
+	public String getModuleIdByName(String moduleName) {  return this.m_uiModules.get(moduleName);   }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(UIMODULES, HAPJsonUtility.buildJson(this.m_uiModules, HAPSerializationFormat.JSON));

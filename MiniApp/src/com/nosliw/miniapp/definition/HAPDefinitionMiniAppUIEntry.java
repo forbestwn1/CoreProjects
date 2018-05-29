@@ -19,7 +19,7 @@ public class HAPDefinitionMiniAppUIEntry  extends HAPSerializableImp{
 
 	private Map<String, HAPDefinitionMiniAppModuleEntry> m_uiModuleEntries;
 
-	
+	public Map<String, HAPDefinitionMiniAppModuleEntry> getUIModuleEntries(){  return this.m_uiModuleEntries;  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

@@ -1,4 +1,4 @@
-package com.nosliw.miniapp;
+package com.nosliw.miniapp.user;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
+import com.nosliw.miniapp.HAPGroup;
 
 @HAPEntityWithAttribute
 public class HAPUser extends HAPSerializableImp{

@@ -57,7 +57,7 @@ public class HAPUIResourceManager {
 	}
 
 	
-	public HAPInstanceUIModule getUIModule(String moduleId, String entry) {
+	public HAPInstanceUIModule getUIModuleInstance(String moduleId, String entry) {
 		HAPDefinitionUIModule moduleDef = this.getUIModuleById(moduleId);
 		
 		HAPInstanceUIModule out = new HAPInstanceUIModule(entry);

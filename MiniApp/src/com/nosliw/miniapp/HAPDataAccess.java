@@ -11,6 +11,10 @@ import java.util.Map;
 
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
+import com.nosliw.miniapp.user.HAPUser;
+import com.nosliw.miniapp.user.HAPUserGroupMiniApp;
+import com.nosliw.miniapp.user.HAPUserInfo;
+import com.nosliw.miniapp.user.HAPUserMiniAppInfo;
 
 public class HAPDataAccess {
 
@@ -45,6 +49,10 @@ public class HAPDataAccess {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	public void updateInstanceMiniAppUIEntry(HAPInstanceMiniAppUIEntry miniAppUIEntry, String userId, String appId, String uiEntry) {
 		
 	}
 	
@@ -118,9 +126,9 @@ public class HAPDataAccess {
 
 	public void updateUserInfoWithMiniApp(HAPUserInfo userInfo) {
 		
-		Map<String, HAPUserGroupMiniAppInstances> groupById = new LinkedHashMap<String, HAPUserGroupMiniAppInstances>();
+		Map<String, HAPUserGroupMiniApp> groupById = new LinkedHashMap<String, HAPUserGroupMiniApp>();
 		for(HAPGroup group : userInfo.getUser().getGroups()) {
-			groupById.put(group.getId(), new HAPUserGroupMiniAppInstances(group));
+			groupById.put(group.getId(), new HAPUserGroupMiniApp(group));
 		}
 		
 		PreparedStatement statement;
@@ -128,18 +136,18 @@ public class HAPDataAccess {
 			statement = this.getConnection().prepareStatement("SELECT * FROM miniapp_userapp where userid='"+userInfo.getUser().getId()+"';");
 			ResultSet resultSet = statement.executeQuery();
 			while(resultSet.next()) {
-				String miniAppInstanceId = resultSet.getString("appid");
-				HAPInstanceMiniAppUIEntry appInstance = new HAPInstanceMiniAppUIEntry(miniAppInstanceId, resultSet.getString("appname"));
+				String miniAppId = resultSet.getString("appid");
+				HAPUserMiniAppInfo miniApp = new HAPUserMiniAppInfo(miniAppId, resultSet.getString("appname"));
 				String groupId = resultSet.getString("groupid");
 				if(groupId==null) {
-					userInfo.addMiniAppInstance(appInstance);
+					userInfo.addMiniApp(miniApp);
 				}
 				else {
-					groupById.get(groupId).addMiniAppInstance(appInstance);
+					groupById.get(groupId).addMiniApp(miniApp);
 				}
 			}
 			for(String groupId : groupById.keySet()) {
-				userInfo.addGroupMiniAppInstances(groupById.get(groupId));
+				userInfo.addGroupMiniApps(groupById.get(groupId));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

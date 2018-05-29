@@ -3,6 +3,7 @@ package com.nosliw.miniapp;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -11,12 +12,20 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniApp;
+import com.nosliw.miniapp.definition.HAPDefinitionMiniAppModuleEntry;
+import com.nosliw.miniapp.definition.HAPDefinitionMiniAppUIEntry;
 import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
+import com.nosliw.miniapp.user.HAPUser;
+import com.nosliw.miniapp.user.HAPUserInfo;
+import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.module.HAPDefinitionUIModule;
+import com.nosliw.uiresource.module.HAPInstanceUIModule;
 
 public class HAPAppManager {
 
 	private HAPDataAccess m_dataAccess;
+	
+	private HAPUIResourceManager m_uiResourceMan;
 	
 	public HAPAppManager() {
 		this.m_dataAccess = new HAPDataAccess(HAPDBSource.getDefaultDBSource());
@@ -51,11 +60,25 @@ public class HAPAppManager {
 	}
 
 	public HAPInstanceMiniAppUIEntry getMiniAppInstanceUIEntiry(String userId, String miniAppId, String uiEntry) {
-		return this.getMyRealtorAppInfo(instanceId);
+		HAPInstanceMiniAppUIEntry out = new HAPInstanceMiniAppUIEntry();
+		
+		HAPDefinitionMiniApp minAppDef = this.getMinAppDefinition(miniAppId);
+		HAPDefinitionMiniAppUIEntry miniAppUIEntry = minAppDef.getUIEntry(uiEntry);
+		
+		Map<String, HAPDefinitionMiniAppModuleEntry> moduleEntries = miniAppUIEntry.getUIModuleEntries();
+		for(String entryName : moduleEntries.keySet()) {
+			HAPDefinitionMiniAppModuleEntry moduleEntryDef = moduleEntries.get(entryName);
+			HAPInstanceUIModule uiModuleInstance = this.m_uiResourceMan.getUIModuleInstance(minAppDef.getModuleIdByName(moduleEntryDef.getModule()), moduleEntryDef.getEntry());
+			out.addUIModuleInstance(entryName, uiModuleInstance);
+		}
+		
+		this.m_dataAccess.updateInstanceMiniAppUIEntry(out, userId, miniAppId, uiEntry);
+		
+		return out;
 	}
 	
 	
-	
+/*	
 	public HAPInstanceMiniAppUIEntry getMiniAppInstance(String instanceId) {
 		return this.getMyRealtorAppInfo(instanceId);
 	}
@@ -97,5 +120,5 @@ public class HAPAppManager {
 		
 		return out;
 	}
-
+*/
 }

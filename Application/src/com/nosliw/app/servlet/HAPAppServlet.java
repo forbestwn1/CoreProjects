@@ -9,9 +9,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.miniapp.HAPAppManager;
-import com.nosliw.miniapp.HAPUser;
-import com.nosliw.miniapp.HAPUserInfo;
 import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
+import com.nosliw.miniapp.user.HAPUser;
+import com.nosliw.miniapp.user.HAPUserInfo;
 import com.nosliw.servlet.HAPServiceServlet;
 
 @HAPEntityWithAttribute
