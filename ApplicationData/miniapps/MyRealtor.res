@@ -3,7 +3,10 @@
 		main : {
 			setting : {
 				module : "settingModule",
-				entry : "main"
+				entry : "main",
+				data : {
+					"appSetting" : "appSetting"
+				}
 			},
 			application : {
 				module : "applicationModule",
@@ -18,11 +21,6 @@
 		}
 	},
 	
-	uiModules : {
-		"settingModule" : "MyRealtor_Setting",
-		"applicationModule" : "MyRealtor_App"
-	},
-	
 	uiModuleEntries : {
 		setting : {
 			module : "settingModule",
@@ -32,6 +30,22 @@
 			module : "applicationModule",
 			entry : "main"
 		}
+	},
+	
+	datas : {
+		appSetting : {
+			type : "setting",
+			status : "",
+			name : ""
+		},
+		crunSetting : {
+		
+		}
+	},
+	
+	uiModules : {
+		"settingModule" : "MyRealtor_Setting",
+		"applicationModule" : "MyRealtor_App"
 	},
 	
 	services : {

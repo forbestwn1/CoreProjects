@@ -21,7 +21,9 @@ public class HAPDefinitionMiniAppModuleEntry extends HAPSerializableImp{
 	
 	private String m_entry;
 	
-
+	private Map<String, String> m_data; 
+	
+	
 	public String getModule() {   return this.m_module;   }
 	
 	public String getEntry() {   return this.m_entry;    }
@@ -37,6 +39,7 @@ public class HAPDefinitionMiniAppModuleEntry extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_module = (String)jsonObj.opt(MODULE);
 		this.m_entry = (String)jsonObj.opt(ENTRY);
+		
 		return true;
 	}
 

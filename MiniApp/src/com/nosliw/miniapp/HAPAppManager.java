@@ -19,7 +19,7 @@ import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserInfo;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.module.HAPDefinitionUIModule;
-import com.nosliw.uiresource.module.HAPInstanceUIModule;
+import com.nosliw.uiresource.module.HAPInstanceUIModuleEntry;
 
 public class HAPAppManager {
 
@@ -68,7 +68,7 @@ public class HAPAppManager {
 		Map<String, HAPDefinitionMiniAppModuleEntry> moduleEntries = miniAppUIEntry.getUIModuleEntries();
 		for(String entryName : moduleEntries.keySet()) {
 			HAPDefinitionMiniAppModuleEntry moduleEntryDef = moduleEntries.get(entryName);
-			HAPInstanceUIModule uiModuleInstance = this.m_uiResourceMan.getUIModuleInstance(minAppDef.getModuleIdByName(moduleEntryDef.getModule()), moduleEntryDef.getEntry());
+			HAPInstanceUIModuleEntry uiModuleInstance = this.m_uiResourceMan.getUIModuleInstance(minAppDef.getModuleIdByName(moduleEntryDef.getModule()), moduleEntryDef.getEntry());
 			out.addUIModuleInstance(entryName, uiModuleInstance);
 		}
 		

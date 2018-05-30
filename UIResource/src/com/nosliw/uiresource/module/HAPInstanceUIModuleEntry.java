@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 
 @HAPEntityWithAttribute
-public class HAPInstanceUIModule extends HAPSerializableImp{
+public class HAPInstanceUIModuleEntry extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ENTRYPAGE = "entryPage";
@@ -25,7 +25,7 @@ public class HAPInstanceUIModule extends HAPSerializableImp{
 	
 	private Map<String, HAPUIDefinitionUnitResource> m_pages;
 	
-	public HAPInstanceUIModule(String entryPage) {
+	public HAPInstanceUIModuleEntry(String entryPage) {
 		this.m_entryPage = entryPage;
 	}
 

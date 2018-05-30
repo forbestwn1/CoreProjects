@@ -1,5 +1,6 @@
 package com.nosliw.miniapp.instance;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -22,20 +23,35 @@ public class HAPInstanceUIModuleSetting  extends HAPSerializableImp{
 	public static String NAME = "name";
 
 	@HAPAttribute
-	public static String SETTING = "setting";
+	public static String SETTINGS = "settings";
 
 	private String m_id;
 	
 	private String m_name;
 	
-	private Map<String, Map<String, Object>> m_setting;
+	private Map<String, Map<String, Object>> m_settings;
 
+	public HAPInstanceUIModuleSetting() {
+		this.m_settings = new LinkedHashMap<String, Map<String, Object>>();
+	}
+	
+	public void setId(String id) {   this.m_id = id;  }
+	public void setName(String name) {  this.m_name = name;   }
+	
+	public void addSettingData(String module, String settingName, Object data) {
+		Map<String, Object> moduleSettingData = this.m_settings.get(module);
+		if(moduleSettingData==null) {
+			moduleSettingData = new LinkedHashMap<String, Object>();
+			this.m_settings.put(module, moduleSettingData);
+		}
+		moduleSettingData.put(settingName, data);
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(NAME, this.m_name);
-		jsonMap.put(SETTING, HAPJsonUtility.buildJson(this.m_setting, HAPSerializationFormat.JSON));
+		jsonMap.put(SETTINGS, HAPJsonUtility.buildJson(this.m_settings, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -43,7 +59,7 @@ public class HAPInstanceUIModuleSetting  extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_id = (String)jsonObj.opt(ID);
 		this.m_name = (String)jsonObj.opt(NAME);
-		this.m_setting = HAPSerializeUtility.buildMapFromJsonObject(HAPDataWrapper.class.getName(), jsonObj.optJSONObject(SETTING));
+		this.m_settings = HAPSerializeUtility.buildMapFromJsonObject(HAPDataWrapper.class.getName(), jsonObj.optJSONObject(SETTINGS));
 		return true;
 	}
 

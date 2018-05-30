@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.data.core.imp.io.HAPDBSource;
+import com.nosliw.miniapp.data.HAPInstanceMiniAppDataSetting;
 import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
+import com.nosliw.miniapp.instance.HAPInstanceUIModuleSetting;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserGroupMiniApp;
 import com.nosliw.miniapp.user.HAPUserInfo;
@@ -52,8 +55,26 @@ public class HAPDataAccess {
 		
 	}
 	
-	public void updateInstanceMiniAppUIEntry(HAPInstanceMiniAppUIEntry miniAppUIEntry, String userId, String appId, String uiEntry) {
-		
+	public void updateInstanceMiniAppUIEntryWithSettingData(HAPInstanceMiniAppUIEntry miniAppUIEntry, String userId, String appId, Set<String> dataNames) {
+		try {
+			for(String dataName : dataNames) {
+				PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM MINIAPP_UIENTRYMODULESETTING where userid='"+userId+"' AND appid='"+appId+"' AND dataname='"+dataName+";");
+				ResultSet resultSet = statement.executeQuery();
+				while(resultSet.next()) {
+					HAPInstanceMiniAppDataSetting data = new HAPInstanceMiniAppDataSetting();
+					
+					data.setVersion(resultSet.getString("version"));
+					data.setStatus(resultSet.getString("status"));
+					data.setData(resultSet.getString("data"));
+					
+					miniAppUIEntry.addData(dataName, data);
+					break;
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

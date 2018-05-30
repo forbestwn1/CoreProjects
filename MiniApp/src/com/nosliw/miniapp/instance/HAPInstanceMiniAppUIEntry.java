@@ -1,5 +1,6 @@
 package com.nosliw.miniapp.instance;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,8 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPSerializeUtility;
-import com.nosliw.uiresource.module.HAPInstanceUIModule;
+import com.nosliw.miniapp.data.HAPInstanceMiniAppData;
+import com.nosliw.uiresource.module.HAPInstanceUIModuleEntry;
 
 @HAPEntityWithAttribute
 public class HAPInstanceMiniAppUIEntry extends HAPSerializableImp{
@@ -23,13 +25,13 @@ public class HAPInstanceMiniAppUIEntry extends HAPSerializableImp{
 	public static String UIMODULES = "uiModules";
 	
 	@HAPAttribute
-	public static String UIMODULESETTINGS = "uiModuleSettings";
+	public static final String DATA = "data";
 	
 	private String m_id;
 	
-	private Map<String, HAPInstanceUIModule> m_uiModules;
-	
-	private List<HAPInstanceUIModuleSetting> m_uiModuleSettings;
+	private Map<String, HAPInstanceUIModuleEntry> m_uiModules;
+
+	private Map<String, List<HAPInstanceMiniAppData>> m_data;
 	
 	public HAPInstanceMiniAppUIEntry() {}
 
@@ -40,26 +42,26 @@ public class HAPInstanceMiniAppUIEntry extends HAPSerializableImp{
 	public String getId() {  return this.m_id;   }
 	public void setId(String id) {  this.m_id = id;  }
 	
-	public void addUIModuleInstance(String name, HAPInstanceUIModule uiModuleInstance) {
-		this.m_uiModules.put(name, uiModuleInstance);
+	public void addUIModuleInstance(String name, HAPInstanceUIModuleEntry uiModuleInstance) {		this.m_uiModules.put(name, uiModuleInstance);	}
+	public HAPInstanceUIModuleEntry getUIModuleInstance(String moduleName) {  return this.m_uiModules.get(moduleName);  }
+	
+	public void addData(String dataName, HAPInstanceMiniAppData data) {
+		List<HAPInstanceMiniAppData> dataByName = this.m_data.get(dataName);
+		if(dataByName==null) {
+			dataByName = new ArrayList<HAPInstanceMiniAppData>();
+			this.m_data.put(dataName, dataByName);
+		}
+		dataByName.add(data);
 	}
+	
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(UIMODULES, HAPSerializeManager.getInstance().toStringValue(this.m_uiModules, HAPSerializationFormat.JSON));
-		jsonMap.put(UIMODULESETTINGS, HAPSerializeManager.getInstance().toStringValue(this.m_uiModuleSettings, HAPSerializationFormat.JSON));
+		jsonMap.put(DATA, HAPSerializeManager.getInstance().toStringValue(this.m_data, HAPSerializationFormat.JSON));
 	}
 	
-	@Override
-	protected boolean buildObjectByFullJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
-		this.m_id = jsonObj.optString(ID);
-		this.m_uiModules =  HAPSerializeUtility.buildMapFromJsonObject(HAPInstanceUIModule.class.getName(), jsonObj.optJSONObject(UIMODULES));
-		this.m_uiModuleSettings =  HAPSerializeUtility.buildListFromJsonArray(HAPInstanceUIModuleSetting.class.getName(), jsonObj.optJSONArray(UIMODULESETTINGS));
-		return true;
-	}
-
 	@Override
 	protected boolean buildObjectByJson(Object json){		return this.buildObjectByFullJson(json);	}
 }
