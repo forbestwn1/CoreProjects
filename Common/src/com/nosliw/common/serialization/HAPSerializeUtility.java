@@ -14,7 +14,13 @@ public class HAPSerializeUtility {
 		List out = new ArrayList();
 		if(jsonArray!=null) {
 			for(int i=0; i<jsonArray.length(); i++){
-				Object ele = HAPSerializeManager.getInstance().buildObject(className, jsonArray.opt(i), HAPSerializationFormat.JSON);
+				Object ele = null;
+				if(String.class.getName().equals(className)) {
+					ele = jsonArray.opt(i);
+				}
+				else {
+					ele = HAPSerializeManager.getInstance().buildObject(className, jsonArray.opt(i), HAPSerializationFormat.JSON);
+				}
 				out.add(ele);
 			}
 		}
@@ -26,7 +32,13 @@ public class HAPSerializeUtility {
 		Map out = new LinkedHashMap();
 		if(jsonObj!=null) {
 			for(Object key : jsonObj.keySet()) {
-				Object ele = HAPSerializeManager.getInstance().buildObject(className, jsonObj.opt((String)key), HAPSerializationFormat.JSON);
+				Object ele = null;
+				if(String.class.getName().equals(className)) {
+					ele = jsonObj.opt((String)key);
+				}
+				else {
+					ele = HAPSerializeManager.getInstance().buildObject(className, jsonObj.opt((String)key), HAPSerializationFormat.JSON);
+				}
 				out.put(key, ele);
 			}
 		}

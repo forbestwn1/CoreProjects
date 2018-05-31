@@ -26,7 +26,23 @@ public class HAPAppServlet extends HAPServiceServlet{
 	public static final String COMMAND_LOADMINIAPP = "loadMiniApp";
 	
 	@HAPAttribute
-	public static final String COMMAND_LOADMINIAPP_ID = "id";
+	public static final String COMMAND_LOADMINIAPP_APPID = "appId";
+	@HAPAttribute
+	public static final String COMMAND_LOADMINIAPP_USERID = "userId";
+	@HAPAttribute
+	public static final String COMMAND_LOADMINIAPP_ENTRY = "entry";
+
+	@HAPAttribute
+	public static final String COMMAND_SAVEDATA = "saveData";
+	@HAPAttribute
+	public static final String COMMAND_SAVEDATA_USERID = "userId";
+	@HAPAttribute
+	public static final String COMMAND_SAVEDATA_APPID = "appId";
+	@HAPAttribute
+	public static final String COMMAND_SAVEDATA_DATANAME = "dataName";
+	@HAPAttribute
+	public static final String COMMAND_SAVEDATA_DATA = "data";
+
 	
 	@Override
 	protected HAPServiceData processServiceRequest(String command, JSONObject parms) {
@@ -60,10 +76,16 @@ public class HAPAppServlet extends HAPServiceServlet{
 		}
 		case COMMAND_LOADMINIAPP:
 		{
-			String miniAppInstanceId = parms.optString(COMMAND_LOADMINIAPP_ID);
-			HAPInstanceMiniAppUIEntry miniAppInstance = miniAppMan.getMiniAppInstance(miniAppInstanceId);
+			String appId = parms.optString(COMMAND_LOADMINIAPP_APPID);
+			String userId = parms.optString(COMMAND_LOADMINIAPP_USERID);
+			String appEntry = parms.optString(COMMAND_LOADMINIAPP_ENTRY);
+			HAPInstanceMiniAppUIEntry miniAppInstance = miniAppMan.getMiniAppInstanceUIEntiry(userId, appId, appEntry);
 			out = HAPServiceData.createSuccessData(miniAppInstance);
 			break;
+		}
+		case COMMAND_SAVEDATA:
+		{
+			
 		}
 		}
 		

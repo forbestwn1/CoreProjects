@@ -13,7 +13,7 @@ import java.util.Set;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.miniapp.data.HAPInstanceMiniAppDataSetting;
 import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
-import com.nosliw.miniapp.instance.HAPInstanceUIModuleSetting;
+import com.nosliw.miniapp.user.HAPGroup;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserGroupMiniApp;
 import com.nosliw.miniapp.user.HAPUserInfo;
@@ -52,6 +52,18 @@ public class HAPDataAccess {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public HAPInstanceMiniAppDataSetting addSettingData(String userId, String appId, String dataName, HAPInstanceMiniAppDataSetting data) {
+		HAPInstanceMiniAppDataSetting out = data;
+		out.setId(this.generateId());
+		try {
+			PreparedStatement statement = this.getConnection().prepareStatement("INSERT INTO MINIAPP_UIENTRYMODULESETTING (ID,USERID,APPID,DATANAME,VERSION,STATUS,DATA) VALUES ('"+out.getId()+"', '"+out.getId()+"');");
+			statement.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return out;
 		
 	}
 	

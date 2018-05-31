@@ -1,6 +1,7 @@
 package com.nosliw.miniapp.definition;
 
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -21,12 +22,14 @@ public class HAPDefinitionMiniAppModuleEntry extends HAPSerializableImp{
 	
 	private String m_entry;
 	
-	private Map<String, String> m_data; 
+	private Set<String> m_data; 
 	
 	
 	public String getModule() {   return this.m_module;   }
 	
 	public String getEntry() {   return this.m_entry;    }
+	
+	public Set<String> getData(){   return this.m_data;  } 
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

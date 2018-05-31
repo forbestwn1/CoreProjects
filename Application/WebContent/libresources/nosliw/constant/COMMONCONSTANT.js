@@ -296,7 +296,9 @@ var COMMONCONSTANT=
   "EXPRESSIONTASK_STEPTYPE_EXPRESSION": "expression",
   "EXPRESSIONTASK_STEPTYPE_BRANCH": "branch",
   "EXPRESSIONTASK_STEPTYPE_LOOP": "loop",
-  "MINIAPPSERVICE_TYPE_DATASOURCE": "dataSource"
+  "MINIAPPSERVICE_TYPE_DATASOURCE": "dataSource",
+  "MINIAPPDATA_TYPE_SETTING": "setting",
+  "MINIAPPUIENTRY_NAME_MAINMOBILE": "main_mobile"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

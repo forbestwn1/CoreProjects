@@ -544,6 +544,12 @@
 			<definition type="space"/>
 			<definition name="MINIAPPSERVICE_TYPE_DATASOURCE" value="dataSource"/>
 
+			<definition type="space"/>
+			<definition name="MINIAPPDATA_TYPE_SETTING" value="setting"/>
+
+			<definition type="space"/>
+			<definition name="MINIAPPUIENTRY_NAME_MAINMOBILE" value="main_mobile"/>
+			
 		</definitions>
 	</constants>
 </root>

@@ -1,4 +1,4 @@
-package com.nosliw.miniapp.definition;
+package com.nosliw.miniapp.service;
 
 import java.util.Map;
 
@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstant;
 
-public class HAPMiniAppTaskDataSource extends HAPSerializableImp implements HAPDefinitionMiniAppService{
+public class HAPMiniAppTaskDataSource extends HAPDefinitionMiniAppService{
 
 	@HAPAttribute
 	public static final String DATASOURCEID = "dataSourceId";

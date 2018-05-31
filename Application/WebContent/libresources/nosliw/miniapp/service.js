@@ -37,10 +37,12 @@ var node_createMiniAppService = function(){
 			node_requestServiceProcessor.processRequest(remoteRequest);
 		},
 
-		executeLoadMiniAppRequest : function(miniAppId, handlers, requester_parent){
+		executeLoadMiniAppUIEntryRequest : function(userId, miniAppId, uiEntry, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var parms = {};
-			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_LOADMINIAPP_ID] = miniAppId;
+			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_LOADMINIAPP_APPID] = miniAppId;
+			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_LOADMINIAPP_USERID] = userId;
+			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_LOADMINIAPP_ENTRY] = uiEntry;
 			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_LOADMINIAPP, parms), undefined, handlers, requestInfo);
 			node_requestServiceProcessor.processRequest(remoteRequest);
 		},

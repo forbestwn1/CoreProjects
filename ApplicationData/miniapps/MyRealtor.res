@@ -1,12 +1,10 @@
 {
 	uiEntries : {
-		main : {
+		main_mobile : {
 			setting : {
 				module : "settingModule",
 				entry : "main",
-				data : {
-					"appSetting" : "appSetting"
-				}
+				data : ["appSetting"]
 			},
 			application : {
 				module : "applicationModule",

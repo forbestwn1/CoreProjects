@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONObject;
-
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.miniapp.data.HAPInstanceMiniAppData;
 import com.nosliw.uiresource.module.HAPInstanceUIModuleEntry;
 

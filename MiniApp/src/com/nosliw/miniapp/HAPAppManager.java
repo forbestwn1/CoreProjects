@@ -2,15 +2,20 @@ package com.nosliw.miniapp;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.io.HAPDBSource;
+import com.nosliw.miniapp.data.HAPDefinitionMiniAppData;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniApp;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniAppModuleEntry;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniAppUIEntry;
@@ -65,15 +70,33 @@ public class HAPAppManager {
 		HAPDefinitionMiniApp minAppDef = this.getMinAppDefinition(miniAppId);
 		HAPDefinitionMiniAppUIEntry miniAppUIEntry = minAppDef.getUIEntry(uiEntry);
 		
+		Set<String> appEntryData = new HashSet<String>();
 		Map<String, HAPDefinitionMiniAppModuleEntry> moduleEntries = miniAppUIEntry.getUIModuleEntries();
 		for(String entryName : moduleEntries.keySet()) {
 			HAPDefinitionMiniAppModuleEntry moduleEntryDef = moduleEntries.get(entryName);
+			appEntryData.addAll(moduleEntryDef.getData());
 			HAPInstanceUIModuleEntry uiModuleInstance = this.m_uiResourceMan.getUIModuleInstance(minAppDef.getModuleIdByName(moduleEntryDef.getModule()), moduleEntryDef.getEntry());
 			out.addUIModuleInstance(entryName, uiModuleInstance);
 		}
+
+		Map<String, Set<String>> appEntryDataByType = new LinkedHashMap<String, Set<String>>();
+		for(String dataName : appEntryData) {
+			HAPDefinitionMiniAppData dataDef = minAppDef.getData(dataName);
+			Set<String> datas = appEntryDataByType.get(dataDef.getType());
+			if(datas==null) {
+				datas = new HashSet<String>();
+				appEntryDataByType.put(dataDef.getType(), datas);
+			}
+			datas.add(dataName);
+		}
 		
-		this.m_dataAccess.updateInstanceMiniAppUIEntry(out, userId, miniAppId, uiEntry);
-		
+		for(String dataType : appEntryDataByType.keySet()) {
+			switch(dataType) {
+			case HAPConstant.MINIAPPDATA_TYPE_SETTING:
+				this.m_dataAccess.updateInstanceMiniAppUIEntryWithSettingData(out, userId, miniAppId, appEntryDataByType.get(dataType));
+				break;
+			}
+		}
 		return out;
 	}
 	

@@ -464,4 +464,12 @@ public class HAPConstant {
 		public static final String MINIAPPSERVICE_TYPE_DATASOURCE = "dataSource";
 
 
+
+		public static final String MINIAPPDATA_TYPE_SETTING = "setting";
+
+
+
+		public static final String MINIAPPUIENTRY_NAME_MAINMOBILE = "main_mobile";
+
+
 }

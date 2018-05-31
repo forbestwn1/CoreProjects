@@ -13,7 +13,6 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPSerializeUtility;
-import com.nosliw.miniapp.HAPGroup;
 
 @HAPEntityWithAttribute
 public class HAPUserGroupMiniApp extends HAPSerializableImp{

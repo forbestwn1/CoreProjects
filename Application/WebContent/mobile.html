@@ -124,11 +124,11 @@
 */		
 	};
 	
-	var showApp = function(miniAppId){
+	var showApp = function(userId, miniAppId, appEntry){
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 		var miniAppService = nosliw.runtime.getMiniAppService();
-		miniAppService.executeLoadMiniAppRequest(miniAppId, {
-			success : function(requestInfo, miniAppInfo){
+		miniAppService.executeLoadMiniAppUIEntryRequest(userId, miniAppId, appEntry, {
+			success : function(requestInfo, miniAppInstance){
 				var setting = miniAppInfo[node_COMMONATRIBUTECONSTANT.MINIAPPINSTANCE_SETTING];
 				showSetting(setting);
 			}
@@ -136,9 +136,10 @@
 		return false;
 	};
 
-	var onClickMiniApp = function(viewId, miniAppId){
+	var onClickMiniApp = function(viewId, miniAppId, userId){
+		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 		$("#"+viewId).click(function(e) {
-			showApp(miniAppId);
+			showApp(userId, miniAppId, node_COMMONCONSTANT.MINIAPPUIENTRY_NAME_MAINMOBILE);
 			e.preventDefault();
 		});
 	};
@@ -146,37 +147,37 @@
 	var showUserInfo = function(userInfo){
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 		var listView = $("#miniAppList");
-		_.each(userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_MINIAPPINSTANCES], function(miniAppInstance, index){
-			appendMiniAppInstance(listView, miniAppInstance);
+		_.each(userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_MINIAPPS], function(miniApp, index){
+			appendMiniApp(listView, miniApp, userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_USER][node_COMMONATRIBUTECONSTANT.USER_ID]);
 		});
 
-		_.each(userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_GROUPMINIAPPINSTANCES], function(groupMiniAppInstance, index){
+		_.each(userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_GROUPMINIAPP], function(groupMiniAppInstance, index){
 			appendMiniAppGroup(listView, groupMiniAppInstance);
 		});
 		
 		$("#miniAppList").listview('refresh');
 	};
 	
-	var appendMiniAppInstance = function(parentView, miniAppInstance){
+	var appendMiniApp = function(parentView, miniApp, userId){
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-		var miniAppInstanceId = miniAppInstance[node_COMMONATRIBUTECONSTANT.MINIAPPINSTANCE_ID];
-		var viewId = "miniAppInstanceId_" + miniAppInstanceId;
-		var mininAppItemView = $("<li><a id=\""+viewId+"\" href=\"#\">"+miniAppInstance[node_COMMONATRIBUTECONSTANT.MINIAPPINSTANCE_NAME]+"</a></li>");
+		var miniAppId = miniApp[node_COMMONATRIBUTECONSTANT.USERMINIAPPINFO_APPID];
+		var viewId = "miniAppInstanceId_" + miniAppId;
+		var mininAppItemView = $("<li><a id=\""+viewId+"\" href=\"#\">"+miniApp[node_COMMONATRIBUTECONSTANT.USERMINIAPPINFO_APPNAME]+"</a></li>");
 		parentView.append(mininAppItemView);
-		onClickMiniApp(viewId, miniAppInstanceId);
+		onClickMiniApp(viewId, miniAppId, userId);
 	};
 	
-	var appendMiniAppGroup = function(parentView, groupMiniAppInstance){
+	var appendMiniAppGroup = function(parentView, miniAppGroup, userId){
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-		var groupId = groupMiniAppInstance[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPPINSTANCES_GROUP][node_COMMONATRIBUTECONSTANT.GROUP_ID];
-		var groupName = groupMiniAppInstance[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPPINSTANCES_GROUP][node_COMMONATRIBUTECONSTANT.GROUP_NAME];
-		var groupViewId = "groupMiniAppInstanceId_" + groupId;
+		var groupId = miniAppGroup[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPP_GROUP][node_COMMONATRIBUTECONSTANT.GROUP_ID];
+		var groupName = miniAppGroup[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPP_GROUP][node_COMMONATRIBUTECONSTANT.GROUP_NAME];
+		var groupViewId = "groupMiniAppId_" + groupId;
 		
 		var groupView = $("<li><div data-role='collapsible' id='collapsible_"+groupViewId+"' data-collapsed='true'><h4>"+groupName+"</h4><ul data-role='listview' id='"+groupViewId+"'></ul></div></li>");
 		parentView.append(groupView);
 		
-		_.each(groupMiniAppInstance[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPPINSTANCES_MINIAPPINSTANCES], function(miniAppInstance, index){
-			appendMiniAppInstance($("#"+groupViewId), miniAppInstance);
+		_.each(miniAppGroup[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPP_MINIAPPS], function(miniApp, index){
+			appendMiniApp($("#"+groupViewId), miniApp, userId);
 		});
 		$("#"+groupViewId).listview();
 		$("#collapsible_"+groupViewId).collapsible();
