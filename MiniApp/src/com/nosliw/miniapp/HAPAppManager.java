@@ -15,6 +15,7 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.io.HAPDBSource;
+import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.miniapp.data.HAPDefinitionMiniAppData;
 import com.nosliw.miniapp.data.HAPInstanceMiniAppData;
 import com.nosliw.miniapp.data.HAPInstanceMiniAppDataSetting;
@@ -99,6 +100,13 @@ public class HAPAppManager {
 			appEntryData.addAll(moduleEntryDef.getData());
 			HAPInstanceUIModuleEntry uiModuleInstance = this.m_uiResourceMan.getUIModuleInstance(minAppDef.getModuleIdByName(moduleEntryDef.getModule()), moduleEntryDef.getEntry());
 			out.addUIModuleInstance(entryName, uiModuleInstance);
+			
+			//dependent resource
+			for(String pageName : uiModuleInstance.getPages().keySet()) {
+				for(HAPResourceDependent resourceDep : uiModuleInstance.getPages().get(pageName).getResourceDependency()) {
+					out.addDependentResourceId(resourceDep.getId());
+				}
+			}
 		}
 
 		Map<String, Set<String>> appEntryDataByType = new LinkedHashMap<String, Set<String>>();

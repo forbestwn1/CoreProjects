@@ -4,7 +4,15 @@
 			setting : {
 				module : "settingModule",
 				entry : "main",
-				data : ["appSetting"]
+				data : [
+					"status" : "appSetting",
+					"statusComplex" : {
+						schoolType : {
+							data : "appSetting",
+							parm: "schoolType"
+						}
+					}
+				]
 			},
 			application : {
 				module : "applicationModule",

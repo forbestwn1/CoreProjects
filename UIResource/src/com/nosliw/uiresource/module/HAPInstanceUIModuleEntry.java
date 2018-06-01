@@ -1,5 +1,6 @@
 package com.nosliw.uiresource.module;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -27,14 +28,14 @@ public class HAPInstanceUIModuleEntry extends HAPSerializableImp{
 	
 	public HAPInstanceUIModuleEntry(String entryPage) {
 		this.m_entryPage = entryPage;
+		this.m_pages = new LinkedHashMap<String, HAPUIDefinitionUnitResource>();
 	}
 
 	public String getEntryPage() {   return this.m_entryPage;   }
 	
-	public void addPage(String pageName, HAPUIDefinitionUnitResource page) {
-		this.m_pages.put(pageName, page);
-	}
-
+	public void addPage(String pageName, HAPUIDefinitionUnitResource page) {	this.m_pages.put(pageName, page);	}
+	public Map<String, HAPUIDefinitionUnitResource> getPages(){ return this.m_pages;   }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ENTRYPAGE, this.m_entryPage);

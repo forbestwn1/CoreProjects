@@ -92,7 +92,7 @@
 				});
 	};
 	
-	var showSetting = function(setting){
+	var showSetting = function(settingUIModule, data){
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
 		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
@@ -126,11 +126,13 @@
 	
 	var showApp = function(userId, miniAppId, appEntry){
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 		var miniAppService = nosliw.runtime.getMiniAppService();
 		miniAppService.executeLoadMiniAppUIEntryRequest(userId, miniAppId, appEntry, {
 			success : function(requestInfo, minAppEntry){
-				var setting = miniAppInfo[node_COMMONATRIBUTECONSTANT.MINIAPPINSTANCE_SETTING];
-				showSetting(setting);
+				var settingUIModule = minAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPENTRY_UIMODULES][node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_MODULE_SETTING];
+				var data = minAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPENTRY_DATA]
+				showSetting(settingUIModule, data);
 			}
 		});
 		return false;

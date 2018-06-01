@@ -39,6 +39,10 @@ var node_createMiniAppService = function(){
 
 		executeLoadMiniAppUIEntryRequest : function(userId, miniAppId, uiEntry, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
+			
+			
+			
+			
 			var parms = {};
 			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_LOADMINIAPP_APPID] = miniAppId;
 			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_LOADMINIAPP_USERID] = userId;
