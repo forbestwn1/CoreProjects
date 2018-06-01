@@ -54,19 +54,30 @@ public class HAPDataAccess {
 		}
 	}
 
-	public HAPInstanceMiniAppDataSetting addSettingData(String userId, String appId, String dataName, HAPInstanceMiniAppDataSetting data) {
-		HAPInstanceMiniAppDataSetting out = data;
+	public HAPInstanceMiniAppDataSetting addSettingData(String userId, String appId, String dataName, HAPInstanceMiniAppDataSetting dataInfo) {
+		HAPInstanceMiniAppDataSetting out = dataInfo;
 		out.setId(this.generateId());
 		try {
-			PreparedStatement statement = this.getConnection().prepareStatement("INSERT INTO MINIAPP_UIENTRYMODULESETTING (ID,USERID,APPID,DATANAME,VERSION,STATUS,DATA) VALUES ('"+out.getId()+"', '"+out.getId()+"');");
+			PreparedStatement statement = this.getConnection().prepareStatement("INSERT INTO MINIAPP_UIENTRYMODULESETTING (ID,USERID,APPID,DATANAME,VERSION,STATUS,DATA) VALUES ('"+
+						out.getId()+"', '"+userId+"', '"+appId+"', '"+dataName+"', '"+dataInfo.getVersion()+"', '"+dataInfo.getStatus()+"', '"+dataInfo.getData()+"');");
 			statement.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return out;
-		
 	}
-	
+
+	public HAPInstanceMiniAppDataSetting updateSettingData(String id, HAPInstanceMiniAppDataSetting dataInfo) {
+		HAPInstanceMiniAppDataSetting out = dataInfo;
+		try {
+			PreparedStatement statement = this.getConnection().prepareStatement("UPDATE MINIAPP_UIENTRYMODULESETTING SET VERSION='"+dataInfo.getVersion()+"',STATUS='"+dataInfo.getStatus()+"', DATA='"+dataInfo.getDataStr()+"'  WHERE ID='"+id+"'");
+			statement.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
+
 	public void updateInstanceMiniAppUIEntryWithSettingData(HAPInstanceMiniAppUIEntry miniAppUIEntry, String userId, String appId, Set<String> dataNames) {
 		try {
 			for(String dataName : dataNames) {

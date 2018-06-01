@@ -33,16 +33,27 @@ public class HAPAppServlet extends HAPServiceServlet{
 	public static final String COMMAND_LOADMINIAPP_ENTRY = "entry";
 
 	@HAPAttribute
-	public static final String COMMAND_SAVEDATA = "saveData";
+	public static final String COMMAND_CREATEDATA = "saveData";
 	@HAPAttribute
-	public static final String COMMAND_SAVEDATA_USERID = "userId";
+	public static final String COMMAND_CREATEDATA_USERID = "userId";
 	@HAPAttribute
-	public static final String COMMAND_SAVEDATA_APPID = "appId";
+	public static final String COMMAND_CREATEDATA_APPID = "appId";
 	@HAPAttribute
-	public static final String COMMAND_SAVEDATA_DATANAME = "dataName";
+	public static final String COMMAND_CREATEDATA_DATANAME = "dataName";
 	@HAPAttribute
-	public static final String COMMAND_SAVEDATA_DATA = "data";
+	public static final String COMMAND_CREATEDATA_DATAINFO = "dataInfo";
 
+	@HAPAttribute
+	public static final String COMMAND_UPDATEDATA = "updateData";
+	@HAPAttribute
+	public static final String COMMAND_UPDATEDATA_ID = "id";
+	@HAPAttribute
+	public static final String COMMAND_UPDATEDATA_DATAINFO = "dataInfo";
+
+	@HAPAttribute
+	public static final String COMMAND_SERVICE = "service";
+	@HAPAttribute
+	public static final String COMMAND_SERVICE_PARMS = "parms";
 	
 	@Override
 	protected HAPServiceData processServiceRequest(String command, JSONObject parms) {
@@ -83,7 +94,7 @@ public class HAPAppServlet extends HAPServiceServlet{
 			out = HAPServiceData.createSuccessData(miniAppInstance);
 			break;
 		}
-		case COMMAND_SAVEDATA:
+		case COMMAND_CREATEDATA:
 		{
 			
 		}

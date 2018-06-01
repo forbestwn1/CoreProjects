@@ -128,7 +128,7 @@
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 		var miniAppService = nosliw.runtime.getMiniAppService();
 		miniAppService.executeLoadMiniAppUIEntryRequest(userId, miniAppId, appEntry, {
-			success : function(requestInfo, miniAppInstance){
+			success : function(requestInfo, minAppEntry){
 				var setting = miniAppInfo[node_COMMONATRIBUTECONSTANT.MINIAPPINSTANCE_SETTING];
 				showSetting(setting);
 			}

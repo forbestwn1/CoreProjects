@@ -1,5 +1,7 @@
 package com.nosliw.miniapp.data;
 
+import com.nosliw.common.utils.HAPConstant;
+
 public class HAPInstanceMiniAppDataSetting extends HAPInstanceMiniAppData{
 
 	private String m_status;
@@ -8,6 +10,8 @@ public class HAPInstanceMiniAppDataSetting extends HAPInstanceMiniAppData{
 	
 	private String m_id;
 	
+	@Override
+	public String getType() {  return HAPConstant.MINIAPPDATA_TYPE_SETTING;  }
 
 	public String getStatus() {  return this.m_status;  }
 	public void setStatus(String status) {  this.m_status = status;   }

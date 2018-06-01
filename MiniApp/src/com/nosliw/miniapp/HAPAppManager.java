@@ -16,6 +16,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.miniapp.data.HAPDefinitionMiniAppData;
+import com.nosliw.miniapp.data.HAPInstanceMiniAppData;
+import com.nosliw.miniapp.data.HAPInstanceMiniAppDataSetting;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniApp;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniAppModuleEntry;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniAppUIEntry;
@@ -64,6 +66,26 @@ public class HAPAppManager {
 		return out;
 	}
 
+	public HAPInstanceMiniAppData createMiniAppData(String userId, String appId, String dataName, HAPInstanceMiniAppData dataInfo) {
+		HAPInstanceMiniAppData out = null;
+		switch(dataInfo.getType()) {
+		case HAPConstant.MINIAPPDATA_TYPE_SETTING:
+			out = this.m_dataAccess.addSettingData(userId, appId, dataName, (HAPInstanceMiniAppDataSetting)dataInfo);
+			break;
+		}
+		return out;
+	}
+	
+	public HAPInstanceMiniAppData updateMiniAppData(String id, HAPInstanceMiniAppData dataInfo) {
+		HAPInstanceMiniAppData out = null;
+		switch(dataInfo.getType()) {
+		case HAPConstant.MINIAPPDATA_TYPE_SETTING:
+			out = this.m_dataAccess.updateSettingData(id, (HAPInstanceMiniAppDataSetting)dataInfo);
+			break;
+		}
+		return out;
+	}
+	
 	public HAPInstanceMiniAppUIEntry getMiniAppInstanceUIEntiry(String userId, String miniAppId, String uiEntry) {
 		HAPInstanceMiniAppUIEntry out = new HAPInstanceMiniAppUIEntry();
 		
