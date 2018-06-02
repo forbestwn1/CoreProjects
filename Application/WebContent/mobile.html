@@ -97,8 +97,9 @@
 		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
 		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 		$('#right-panel').empty();
-		var uiResources = setting[node_COMMONATRIBUTECONSTANT.MINIAPPSETTING_UIMODULE][node_COMMONATRIBUTECONSTANT.UIMODULE_UIRESOURCEIDS];
-		nosliw.runtime.getUIResourceService().executeCreateUIResourceViewRequest(uiResources[0], 
+		var entryPage = settingUIModule[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULEENTRY_ENTRYPAGE];
+		var uiResource = settingUIModule[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULEENTRY_UIMODULES][entryPage];
+		nosliw.runtime.getUIResourceService().executeCreateUIResourceViewRequest(uiResources, 
 				{
 					success : function(requestInfo, uiResourceView){
 						uiResourceView.appendTo($('#right-panel'));
@@ -130,7 +131,7 @@
 		var miniAppService = nosliw.runtime.getMiniAppService();
 		miniAppService.executeLoadMiniAppUIEntryRequest(userId, miniAppId, appEntry, {
 			success : function(requestInfo, minAppEntry){
-				var settingUIModule = minAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPENTRY_UIMODULES][node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_MODULE_SETTING];
+				var settingUIModule = minAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_UIMODULES][node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_MODULE_SETTING];
 				var data = minAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPENTRY_DATA]
 				showSetting(settingUIModule, data);
 			}

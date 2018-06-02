@@ -70,11 +70,22 @@ public class HAPDefinitionMiniApp extends HAPSerializableImp{
 		this.m_uiModules =  HAPSerializeUtility.buildMapFromJsonObject(String.class.getName(), jsonObj.optJSONObject(UIMODULES));
 		this.m_uiEntries =  HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionMiniAppUIEntry.class.getName(), jsonObj.optJSONObject(UIENTRIES));
 		JSONObject servicesJsonObj = jsonObj.optJSONObject(SERVICES);
-		for(Object key : servicesJsonObj.keySet()) {
-			String serviceName = (String)key; 
-			HAPDefinitionMiniAppService service = HAPDefinitionMiniAppService.buildObject(servicesJsonObj.getJSONObject(serviceName));
-			this.m_services.put(serviceName, service);
+		if(servicesJsonObj!=null) {
+			for(Object key : servicesJsonObj.keySet()) {
+				String serviceName = (String)key; 
+				HAPDefinitionMiniAppService service = HAPDefinitionMiniAppService.buildObject(servicesJsonObj.getJSONObject(serviceName));
+				this.m_services.put(serviceName, service);
+			}
 		}
+		JSONObject dataJsonObj = jsonObj.optJSONObject(DATA);
+		if(dataJsonObj!=null) {
+			for(Object key : dataJsonObj.keySet()) {
+				String dataName = (String)key; 
+				HAPDefinitionMiniAppData dataDef = HAPDefinitionMiniAppData.buildObject(servicesJsonObj.getJSONObject(dataName));
+				this.m_data.put(dataName, dataDef);
+			}
+		}
+
 		return true;
 	}
 

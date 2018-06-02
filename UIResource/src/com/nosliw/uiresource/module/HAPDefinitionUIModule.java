@@ -48,7 +48,7 @@ public class HAPDefinitionUIModule extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_id = (String)jsonObj.opt(ID);
 		this.m_pages =  HAPSerializeUtility.buildMapFromJsonObject(String.class.getName(), jsonObj.optJSONObject(PAGES));
-		this.m_moduleEntries =  HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionUIModuleEntry.class.getName(), jsonObj.optJSONObject(PAGES));
+		this.m_moduleEntries =  HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionUIModuleEntry.class.getName(), jsonObj.optJSONObject(MODULEENTRIES));
 		return true;
 	}
 

@@ -74,7 +74,7 @@ public class HAPUIResourceManager {
 	}
 	
 	private HAPDefinitionUIModule getUIModuleById(String moduleId) {
-		String file = HAPFileUtility.getUIResourceFolder()+moduleId+".res";
+		String file = HAPFileUtility.getUIModuleFolder()+moduleId+".res";
 		HAPDefinitionUIModule out = (HAPDefinitionUIModule)HAPSerializeManager.getInstance().buildObject(HAPDefinitionUIModule.class.getName(), new JSONObject(HAPFileUtility.readFile(new File(file))), HAPSerializationFormat.JSON);
 		out.setId(moduleId);
 		return out;

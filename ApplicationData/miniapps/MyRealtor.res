@@ -1,28 +1,35 @@
 {
 	uiEntries : {
 		main_mobile : {
-			setting : {
-				module : "settingModule",
-				entry : "main",
-				data : [
-					"status" : "appSetting",
-					"statusComplex" : {
-						schoolType : {
-							data : "appSetting",
-							parm: "schoolType"
+			uiModuleEntries:{
+				setting : {
+					module : "settingModule",
+					entry : "main",
+					data : {
+						"status" : "appSetting",
+					},
+					data1 : {
+						"status" : "appSetting",
+						"statusComplex" : {
+							schoolType : {
+								data : "appSetting",
+								parm: "schoolType"
+							}
 						}
 					}
-				]
-			},
-			application : {
-				module : "applicationModule",
-				entry : "main"
+				},
+				application : {
+					module : "applicationModule",
+					entry : "main"
+				}
 			}
 		},
 		notification : {
-			application : {
-				module : "applicationModule",
-				entry : "main"
+			uiModuleEntries:{
+				application : {
+					module : "applicationModule",
+					entry : "main"
+				}
 			}
 		}
 	},

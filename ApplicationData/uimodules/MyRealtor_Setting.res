@@ -2,12 +2,9 @@
 	pages : {
 		"setting" : "Example_App_Query_MyRealtor_mobile"
 	},
-	
-	"moduleEntries: {
-	
-		"main" : {
+	moduleEntries: {
+		main : {
 			page : "setting"
 		}
-	
 	}
 }

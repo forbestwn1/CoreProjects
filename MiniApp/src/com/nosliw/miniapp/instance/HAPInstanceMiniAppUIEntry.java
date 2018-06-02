@@ -44,6 +44,7 @@ public class HAPInstanceMiniAppUIEntry extends HAPSerializableImp{
 	public HAPInstanceMiniAppUIEntry() {
 		this.m_resourcesId = new HashSet<HAPResourceId>();
 		this.m_data = new LinkedHashMap<String, List<HAPInstanceMiniAppData>>();
+		this.m_uiModules = new LinkedHashMap<String, HAPInstanceUIModuleEntry>();
 	}
 
 	public HAPInstanceMiniAppUIEntry(String id) {		this.m_id = id;	}

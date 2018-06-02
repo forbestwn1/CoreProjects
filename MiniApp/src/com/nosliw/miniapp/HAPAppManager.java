@@ -1,10 +1,8 @@
 package com.nosliw.miniapp;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,7 +24,6 @@ import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserInfo;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.module.HAPDefinitionUIModule;
 import com.nosliw.uiresource.module.HAPInstanceUIModuleEntry;
 
 public class HAPAppManager {
@@ -35,8 +32,9 @@ public class HAPAppManager {
 	
 	private HAPUIResourceManager m_uiResourceMan;
 	
-	public HAPAppManager() {
+	public HAPAppManager(HAPUIResourceManager resourceMan) {
 		this.m_dataAccess = new HAPDataAccess(HAPDBSource.getDefaultDBSource());
+		this.m_uiResourceMan = resourceMan;
 	}
 	
 	public HAPDefinitionMiniApp getMinAppDefinition(String minAppDefId) {
@@ -97,7 +95,7 @@ public class HAPAppManager {
 		Map<String, HAPDefinitionMiniAppModuleEntry> moduleEntries = miniAppUIEntry.getUIModuleEntries();
 		for(String entryName : moduleEntries.keySet()) {
 			HAPDefinitionMiniAppModuleEntry moduleEntryDef = moduleEntries.get(entryName);
-			appEntryData.addAll(moduleEntryDef.getData());
+			appEntryData.addAll(moduleEntryDef.getData().values());
 			HAPInstanceUIModuleEntry uiModuleInstance = this.m_uiResourceMan.getUIModuleInstance(minAppDef.getModuleIdByName(moduleEntryDef.getModule()), moduleEntryDef.getEntry());
 			out.addUIModuleInstance(entryName, uiModuleInstance);
 			
@@ -120,6 +118,7 @@ public class HAPAppManager {
 			datas.add(dataName);
 		}
 		
+		//get data for ui entry
 		for(String dataType : appEntryDataByType.keySet()) {
 			switch(dataType) {
 			case HAPConstant.MINIAPPDATA_TYPE_SETTING:

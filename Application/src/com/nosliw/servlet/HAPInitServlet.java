@@ -34,7 +34,7 @@ public class HAPInitServlet  extends HttpServlet{
 
 			runtimeEnvironment.getGatewayManager().registerGateway("options", new HAPGatewayOptions());
 			
-			this.getServletContext().setAttribute("minAppMan", new HAPAppManager());
+			this.getServletContext().setAttribute("minAppMan", new HAPAppManager(uiResourceMan));
 			
 			
 //			String file = HAPFileUtility.getFileNameOnClassPath(HAPInitServlet.class, "Example1.res");

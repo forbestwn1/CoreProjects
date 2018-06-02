@@ -1,13 +1,10 @@
 {
 	pages : {
-		"app" : "Example_App_Result_MyRealtor"
+		app : "Example_App_Result_MyRealtor"
 	},
-	
-	"moduleEntries: {
-	
-		"main" : {
+	moduleEntries: {
+		main : {
 			page : "app"
 		}
-	
 	}
 }
