@@ -58,7 +58,7 @@ public class HAPDataAccess {
 		HAPInstanceMiniAppDataSetting out = dataInfo;
 		out.setId(this.generateId());
 		try {
-			PreparedStatement statement = this.getConnection().prepareStatement("INSERT INTO MINIAPP_UIENTRYMODULESETTING (ID,USERID,APPID,DATANAME,VERSION,STATUS,DATA) VALUES ('"+
+			PreparedStatement statement = this.getConnection().prepareStatement("INSERT INTO MINIAPP_INSTANCEDATA_SETTING (ID,USERID,APPID,DATANAME,VERSION,STATUS,DATA) VALUES ('"+
 						out.getId()+"', '"+userId+"', '"+appId+"', '"+dataName+"', '"+dataInfo.getVersion()+"', '"+dataInfo.getStatus()+"', '"+dataInfo.getData()+"');");
 			statement.execute();
 		} catch (Exception e) {
@@ -70,7 +70,7 @@ public class HAPDataAccess {
 	public HAPInstanceMiniAppDataSetting updateSettingData(String id, HAPInstanceMiniAppDataSetting dataInfo) {
 		HAPInstanceMiniAppDataSetting out = dataInfo;
 		try {
-			PreparedStatement statement = this.getConnection().prepareStatement("UPDATE MINIAPP_UIENTRYMODULESETTING SET VERSION='"+dataInfo.getVersion()+"',STATUS='"+dataInfo.getStatus()+"', DATA='"+dataInfo.getDataStr()+"'  WHERE ID='"+id+"'");
+			PreparedStatement statement = this.getConnection().prepareStatement("UPDATE MINIAPP_INSTANCEDATA_SETTING SET VERSION='"+dataInfo.getVersion()+"',STATUS='"+dataInfo.getStatus()+"', DATA='"+dataInfo.getDataStr()+"'  WHERE ID='"+id+"'");
 			statement.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,7 +81,7 @@ public class HAPDataAccess {
 	public void updateInstanceMiniAppUIEntryWithSettingData(HAPInstanceMiniAppUIEntry miniAppUIEntry, String userId, String appId, Set<String> dataNames) {
 		try {
 			for(String dataName : dataNames) {
-				PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM MINIAPP_UIENTRYMODULESETTING where userid='"+userId+"' AND appid='"+appId+"' AND dataname='"+dataName+";");
+				PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM MINIAPP_INSTANCEDATA_SETTING where userid='"+userId+"' AND appid='"+appId+"' AND dataname='"+dataName+"';");
 				ResultSet resultSet = statement.executeQuery();
 				while(resultSet.next()) {
 					HAPInstanceMiniAppDataSetting data = new HAPInstanceMiniAppDataSetting();

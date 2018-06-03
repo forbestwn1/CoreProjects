@@ -61,9 +61,8 @@ public class HAPUIResourceManager {
 	public HAPInstanceUIModuleEntry getUIModuleInstance(String moduleId, String entry) {
 		HAPDefinitionUIModule moduleDef = this.getUIModuleById(moduleId);
 		
-		HAPInstanceUIModuleEntry out = new HAPInstanceUIModuleEntry(entry);
-		
 		HAPDefinitionUIModuleEntry moduleEntry = moduleDef.getModuleEntry(entry);
+		HAPInstanceUIModuleEntry out = new HAPInstanceUIModuleEntry(moduleEntry.getPage());
 		
 		Map<String, String> pages = moduleDef.getPages();
 		for(String pageName : pages.keySet()) {

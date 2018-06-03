@@ -98,8 +98,8 @@
 		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 		$('#right-panel').empty();
 		var entryPage = settingUIModule[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULEENTRY_ENTRYPAGE];
-		var uiResource = settingUIModule[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULEENTRY_UIMODULES][entryPage];
-		nosliw.runtime.getUIResourceService().executeCreateUIResourceViewRequest(uiResources, 
+		var uiResource = settingUIModule[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULEENTRY_PAGES][entryPage];
+		nosliw.runtime.getUIResourceService().executeGenerateUIResourceViewRequest(uiResource, 
 				{
 					success : function(requestInfo, uiResourceView){
 						uiResourceView.appendTo($('#right-panel'));

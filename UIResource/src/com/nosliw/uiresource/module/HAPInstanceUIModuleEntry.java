@@ -32,6 +32,7 @@ public class HAPInstanceUIModuleEntry extends HAPSerializableImp{
 	}
 
 	public String getEntryPage() {   return this.m_entryPage;   }
+	public void setEntryPage(String entryPage) {    this.m_entryPage = entryPage;    }
 	
 	public void addPage(String pageName, HAPUIDefinitionUnitResource page) {	this.m_pages.put(pageName, page);	}
 	public Map<String, HAPUIDefinitionUnitResource> getPages(){ return this.m_pages;   }

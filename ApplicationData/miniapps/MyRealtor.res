@@ -34,25 +34,14 @@
 		}
 	},
 	
-	uiModuleEntries : {
-		setting : {
-			module : "settingModule",
-			entry : "main"
-		},
-		application : {
-			module : "applicationModule",
-			entry : "main"
-		}
-	},
-	
-	datas : {
+	data : {
 		appSetting : {
 			type : "setting",
 			status : "",
 			name : ""
 		},
 		crunSetting : {
-		
+			type : "setting",
 		}
 	},
 	

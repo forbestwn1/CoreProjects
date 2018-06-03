@@ -6,15 +6,16 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 
-public abstract class HAPDefinitionMiniAppData {
+public abstract class HAPDefinitionMiniAppData extends HAPSerializableImp{
 
 	public abstract String getType();
 	
-
 	@HAPAttribute
 	public static final String TYPE = "type";
 	
@@ -30,5 +31,11 @@ public abstract class HAPDefinitionMiniAppData {
 		HAPDefinitionMiniAppData out = (HAPDefinitionMiniAppData)HAPSerializeManager.getInstance().buildObject(m_dataDefClasses.get(type).getName(), jsonObj, HAPSerializationFormat.JSON);
 		return out;
 	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(TYPE, this.getType());
+	}
+	
 	
 }

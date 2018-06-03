@@ -62,6 +62,7 @@ public class HAPDefinitionMiniApp extends HAPSerializableImp{
 		jsonMap.put(UIMODULES, HAPJsonUtility.buildJson(this.m_uiModules, HAPSerializationFormat.JSON));
 		jsonMap.put(UIENTRIES, HAPJsonUtility.buildJson(this.m_uiEntries, HAPSerializationFormat.JSON));
 		jsonMap.put(SERVICES, HAPJsonUtility.buildJson(this.m_services, HAPSerializationFormat.JSON));
+		jsonMap.put(DATA, HAPJsonUtility.buildJson(this.m_data, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -81,7 +82,7 @@ public class HAPDefinitionMiniApp extends HAPSerializableImp{
 		if(dataJsonObj!=null) {
 			for(Object key : dataJsonObj.keySet()) {
 				String dataName = (String)key; 
-				HAPDefinitionMiniAppData dataDef = HAPDefinitionMiniAppData.buildObject(servicesJsonObj.getJSONObject(dataName));
+				HAPDefinitionMiniAppData dataDef = HAPDefinitionMiniAppData.buildObject(dataJsonObj.getJSONObject(dataName));
 				this.m_data.put(dataName, dataDef);
 			}
 		}
