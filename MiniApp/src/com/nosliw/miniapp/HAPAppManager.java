@@ -21,10 +21,11 @@ import com.nosliw.miniapp.definition.HAPDefinitionMiniApp;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniAppModuleEntry;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniAppUIEntry;
 import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
+import com.nosliw.miniapp.instance.HAPInstanceUIModule;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserInfo;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.module.HAPInstanceUIModuleEntry;
+import com.nosliw.uiresource.module.HAPUIModuleEntry;
 
 public class HAPAppManager {
 
@@ -96,7 +97,9 @@ public class HAPAppManager {
 		for(String entryName : moduleEntries.keySet()) {
 			HAPDefinitionMiniAppModuleEntry moduleEntryDef = moduleEntries.get(entryName);
 			appEntryData.addAll(moduleEntryDef.getData().values());
-			HAPInstanceUIModuleEntry uiModuleInstance = this.m_uiResourceMan.getUIModuleInstance(minAppDef.getModuleIdByName(moduleEntryDef.getModule()), moduleEntryDef.getEntry());
+			HAPUIModuleEntry uiModule = this.m_uiResourceMan.getUIModuleInstance(minAppDef.getModuleIdByName(moduleEntryDef.getModule()), moduleEntryDef.getEntry());
+			HAPInstanceUIModule uiModuleInstance = new HAPInstanceUIModule(uiModule);
+			uiModuleInstance.setData(moduleEntryDef.getData());
 			out.addUIModuleInstance(entryName, uiModuleInstance);
 			
 			//dependent resource

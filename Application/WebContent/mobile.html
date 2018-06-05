@@ -11,6 +11,8 @@
         <script src="libresources/external/Underscore/1.6.0/underscore.js"></script>
         <script src="libresources/external/Backbone/1.1.2/backbone.js"></script>
         <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
+        <script src="libresources/external/handlebars/handlebars-v4.0.11.js"></script>
+        
     <style>
 		/* Swipe works with mouse as well but often causes text selection. */
 		#demo-page * {
@@ -55,6 +57,20 @@
 	        <p>Right push panel.</p>
 	        <a href="#" data-rel="close" data-role="button" data-mini="true" data-inline="true" data-icon="delete" data-iconpos="right">Close</a>
 	    </div><!-- /panel -->
+	    
+	    <div data-role="popup" id="p" data-position-to="window" data-transition="turn"><p>This is a completely basic popup, no options set.</p></div>
+	    
+	    <div data-role="popup" id="settingNameForm" data-theme="a" class="ui-corner-all">
+		    <form>
+		        <div style="padding:10px 20px;">
+		            <h3>Setting Name</h3>
+		            <label for="un" class="ui-hidden-accessible">Username:</label>
+		            <input type="text" id="settingNameInput" value="" placeholder="setting name" data-theme="a">
+		            <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left">Submit</button>
+		        </div>
+		    </form>
+		</div>
+	    
 	</div>
 
 </body>
@@ -76,6 +92,9 @@
 
 <script src="libresources/nosliw/core/nosliw.js"></script>
 <script>
+
+	var setting = [];
+
 	var showContent = function(page){
 		$('#content').empty();
 		nosliw.runtime.getUIResourceService()
@@ -92,37 +111,146 @@
 				});
 	};
 	
-	var showSetting = function(settingUIModule, data){
+	var showSetting = function(userId, appId, parentView, uiModuleInstance, appData){
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
 		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
-		$('#right-panel').empty();
-		var entryPage = settingUIModule[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULEENTRY_ENTRYPAGE];
-		var uiResource = settingUIModule[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULEENTRY_PAGES][entryPage];
-		nosliw.runtime.getUIResourceService().executeGenerateUIResourceViewRequest(uiResource, 
-				{
-					success : function(requestInfo, uiResourceView){
-						uiResourceView.appendTo($('#right-panel'));
-						var parms = setting[node_COMMONATRIBUTECONSTANT.MINIAPPSETTING_PARMS];
-						_.each(parms, function(parm, name){
-							uiResourceView.executeDataOperationRequestSet(name, parm.value, parm.dataTypeInfo, requestInfo);
-						});
-					}
-				});
+		
+		parentView.empty();
+		var collapsibleSet = $("<div data-role='collapsibleset' data-theme='a' data-content-theme='a'></div>");
+		parentView.append(collapsibleSet);
+		
+		var uiModule = uiModuleInstance[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULE_UIMODULEENTRY];
+		var entryPage = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_ENTRYPAGE];
+		var uiResource = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_PAGES][entryPage];
+		
+		var moduleDataDef = uiModule[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULE_DATA];
+		var moduleDataName = moduleDataDef[node_CONSTANT.MINIAPPUIENTRY_MAINMOBILE_DATA_MAIN];
+		var moduleData =  appData==undefined?undefined : appData[moduleDataName];
+		if(moduleData!=undefined){
+			_.each(moduleData, function(moduleData, list){
+				
+			});
+		}
+	
+		addSetting({
+			id : "11111",
+			userId : userId,
+			appId : appId,
+			dataName : moduleDataName,
+			title: "Setting",
+			isNew : true,
+			dataInfo : {
+			},
+			uiResource : uiResource,
+		}, collapsibleSet);
+		
 		
 /*		
 		nosliw.runtime.getUIResourceService().executeGenerateUIResourceViewRequest(uiResource, 
-			{
-				success : function(requestInfo, uiResourceView){
-					uiResourceView.appendTo($('#right-panel'));
-					var parms = setting[node_COMMONATRIBUTECONSTANT.MINIAPPSETTING_PARMS];
-					_.each(parms, function(parm, name){
-						uiResourceView.executeDataOperationRequestSet(name, parm.value, parm.dataTypeInfo, requestInfo);
-					});
-				}
-			}
-		);
+				{
+					success : function(requestInfo, uiResourceView){
+						var singleDataView = $("<div data-role='collapsible'><h3>Section 1 <a href='#'>Save</a></h3><p></p></div>");
+						collapsibleSet.append(singleDataView);
+						uiResourceView.appendTo(collapsibleSet);
+						collapsibleSet.append("<a>Execute</a>");
+						
+						$("#"+viewId).click(function(e) {
+							showApp(userId, miniAppId, node_COMMONCONSTANT.MINIAPPUIENTRY_NAME_MAINMOBILE);
+							e.preventDefault();
+						});
+						
+						
+//						uiResourceView.appendTo($('#right-panel'));
+//						var parms = setting[node_COMMONATRIBUTECONSTANT.MINIAPPSETTING_PARMS];
+//						_.each(parms, function(parm, name){
+//							uiResourceView.executeDataOperationRequestSet(name, parm.value, parm.dataTypeInfo, requestInfo);
+//						});
+					}
+				});
 */		
+	};
+	
+	var addSetting = function(settingData, collapsibleSet){
+		
+		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+		var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+		
+		nosliw.runtime.getUIResourceService().executeGenerateUIResourceViewRequest(settingData.uiResource, 
+				{
+					success : function(requestInfo, uiResourceView){
+						var template = Handlebars.compile(document.getElementById("setting-template").innerHTML);
+						var singleDataView = template(settingData);
+						collapsibleSet.append(singleDataView);
+						
+						uiResourceView.appendTo(collapsibleSet);
+						
+						$("#settingSave_"+settingData.id).click(function(e) {
+							
+							
+							var out = node_createServiceRequestInfoSequence({}, {
+								success : function(requestInfo){
+																		
+								}
+							});
+							out.addRequest(getDataFromUIResourceViewRequest(uiResourceView, {
+								success : function(requestInfo, data){
+									settingData.dataInfo.data = data;
+									settingData.dataInfo.version = "aaa";
+									settingData.dataInfo.type = "setting";
+									var miniAppService = nosliw.runtime.getMiniAppService();
+									return miniAppService.getSaveDataRequest(settingData.userId, settingData.appId, settingData.dataName, settingData.dataInfo);
+								}
+							}));
+							node_requestServiceProcessor.processRequest(out);
+							
+							
+							
+//							$("#settingNameForm").popup("open"); 
+							
+							e.preventDefault();
+						});
+						
+					}
+				});
+			
+	};
+	
+	var getDataFromUIResourceViewRequest = function(uiResourceView, handlers, requestInfo){
+		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+		var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
+		var node_createUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createUIDataOperationRequest");
+		var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
+		var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
+
+		var setRequest = node_createServiceRequestInfoSet({}, {
+			success : function(requestInfo, result){
+				var out = {};
+				_.each(result.getResults(), function(contextData, name){
+					out[name] = contextData.value;
+				});
+				return out;
+			}
+		}, requestInfo);
+		_.each(uiResourceView.getContext().getElementsName(), function(eleName, index){
+			setRequest.addRequest(eleName, node_createUIDataOperationRequest(uiResourceView.getContext(), new node_UIDataOperation(eleName, node_uiDataOperationServiceUtility.createGetOperationService())));
+		});
+
+		var outRequest = node_createServiceRequestInfoSequence({}, handlers, requestInfo);
+		outRequest.addRequest(setRequest);		
+
+		return outRequest;
+	};
+	
+	
+	
+	var onSaveEvent = function(){
+		
+		
+	}; 
+	
+	var saveData = function(){
+		
 	};
 	
 	var showApp = function(userId, miniAppId, appEntry){
@@ -133,7 +261,7 @@
 			success : function(requestInfo, minAppEntry){
 				var settingUIModule = minAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_UIMODULES][node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_MODULE_SETTING];
 				var data = minAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPENTRY_DATA]
-				showSetting(settingUIModule, data);
+				showSetting(userId, miniAppId, $('#right-panel'), settingUIModule, data);
 			}
 		});
 		return false;
@@ -211,5 +339,12 @@
 	);
 </script>
 <script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+
+<script id="setting-template" type="text/x-handlebars-template">
+	<div id='setting_{{id}}' data-role='collapsible'>
+		<h3>{{title}}<a id='settingSave_{{id}}' href='#'>Save</a></h3><p></p>
+		<a>Execute</a>
+	</div>
+</script>
 
 </html>

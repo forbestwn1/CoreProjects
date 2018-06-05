@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 
 @HAPEntityWithAttribute
-public class HAPInstanceUIModuleEntry extends HAPSerializableImp{
+public class HAPUIModuleEntry extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ENTRYPAGE = "entryPage";
@@ -22,13 +22,19 @@ public class HAPInstanceUIModuleEntry extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String PAGES = "pages";
 	
+	@HAPAttribute
+	public static final String DATA = "data";
+
 	private String m_entryPage;
 	
 	private Map<String, HAPUIDefinitionUnitResource> m_pages;
 	
-	public HAPInstanceUIModuleEntry(String entryPage) {
+	private Map<String, String> m_data; 
+	
+	public HAPUIModuleEntry(String entryPage) {
 		this.m_entryPage = entryPage;
 		this.m_pages = new LinkedHashMap<String, HAPUIDefinitionUnitResource>();
+		this.m_data = new LinkedHashMap<String, String>();
 	}
 
 	public String getEntryPage() {   return this.m_entryPage;   }
@@ -41,6 +47,7 @@ public class HAPInstanceUIModuleEntry extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ENTRYPAGE, this.m_entryPage);
 		jsonMap.put(PAGES, HAPJsonUtility.buildJson(this.m_pages, HAPSerializationFormat.JSON));
+		jsonMap.put(DATA, HAPJsonUtility.buildJson(this.m_data, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -48,6 +55,7 @@ public class HAPInstanceUIModuleEntry extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_entryPage = (String)jsonObj.opt(ENTRYPAGE);
 		this.m_pages = HAPSerializeUtility.buildMapFromJsonObject(HAPUIDefinitionUnitResource.class.getName(), jsonObj.optJSONObject(PAGES));
+		this.m_data =  HAPSerializeUtility.buildMapFromJsonObject(String.class.getName(), jsonObj.optJSONObject(DATA));
 		return true;
 	}
 

@@ -9,6 +9,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.miniapp.HAPAppManager;
+import com.nosliw.miniapp.data.HAPInstanceMiniAppData;
 import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserInfo;
@@ -96,7 +97,14 @@ public class HAPAppServlet extends HAPServiceServlet{
 		}
 		case COMMAND_CREATEDATA:
 		{
+			String userId = parms.optString(COMMAND_CREATEDATA_USERID);
+			String appId = parms.optString(COMMAND_CREATEDATA_APPID);
+			String dataName = parms.optString(COMMAND_CREATEDATA_DATANAME);
 			
+			JSONObject dataInfoJson = parms.optJSONObject(COMMAND_CREATEDATA_DATAINFO);
+			HAPInstanceMiniAppData dataInfo = HAPInstanceMiniAppData.buildObject(dataInfoJson);
+			HAPInstanceMiniAppData newDataInfo = miniAppMan.createMiniAppData(userId, appId, dataName, dataInfo);
+			out = HAPServiceData.createSuccessData(newDataInfo);
 		}
 		}
 		

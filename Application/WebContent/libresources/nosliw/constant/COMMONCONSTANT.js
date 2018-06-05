@@ -299,7 +299,8 @@ var COMMONCONSTANT=
   "MINIAPPSERVICE_TYPE_DATASOURCE": "dataSource",
   "MINIAPPDATA_TYPE_SETTING": "setting",
   "MINIAPPUIENTRY_NAME_MAINMOBILE": "main_mobile",
-  "MINIAPPUIENTRY_MAINMOBILE_MODULE_SETTING": "setting"
+  "MINIAPPUIENTRY_MAINMOBILE_MODULE_SETTING": "setting",
+  "MINIAPPUIENTRY_MAINMOBILE_DATA_MAIN": "main"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

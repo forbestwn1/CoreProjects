@@ -65,7 +65,23 @@ var node_createMiniAppService = function(){
 			var requestInfo = this.getLoadMiniAppUIEntryRequest(userId, miniAppId, uiEntry, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
-		
+
+		getSaveDataRequest : function(userId, appId, dataName, dataInfo, handlers, requester_parent){
+			var requestInfo = loc_out.getRequestInfo(requester_parent);
+			var parms = {};
+			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_CREATEDATA_USERID] = userId;
+			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_CREATEDATA_APPID] = appId;
+			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_CREATEDATA_DATANAME] = dataName;
+			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_CREATEDATA_DATAINFO] = dataInfo;
+			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_CREATEDATA, parms), undefined, handlers, requestInfo);
+			return remoteRequest;
+		},
+
+		executeSaveDataRequest : function(userId, appId, dataName, dataInfo, handlers, requester_parent){
+			var requestInfo = this.getSaveDataRequest(userId, appId, dataName, dataInfo, handlers, requester_parent);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		}
+
 	};
 	
 	loc_out = node_buildServiceProvider(loc_out, "miniAppService");

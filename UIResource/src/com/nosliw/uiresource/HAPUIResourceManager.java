@@ -17,7 +17,7 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.context.HAPContextGroup;
 import com.nosliw.uiresource.context.HAPContextUtility;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionProcessorUtility;
-import com.nosliw.uiresource.module.HAPInstanceUIModuleEntry;
+import com.nosliw.uiresource.module.HAPUIModuleEntry;
 import com.nosliw.uiresource.module.HAPDefinitionUIModule;
 import com.nosliw.uiresource.module.HAPDefinitionUIModuleEntry;
 import com.nosliw.uiresource.page.HAPConstantUtility;
@@ -58,11 +58,11 @@ public class HAPUIResourceManager {
 	}
 
 	
-	public HAPInstanceUIModuleEntry getUIModuleInstance(String moduleId, String entry) {
+	public HAPUIModuleEntry getUIModuleInstance(String moduleId, String entry) {
 		HAPDefinitionUIModule moduleDef = this.getUIModuleById(moduleId);
 		
 		HAPDefinitionUIModuleEntry moduleEntry = moduleDef.getModuleEntry(entry);
-		HAPInstanceUIModuleEntry out = new HAPInstanceUIModuleEntry(moduleEntry.getPage());
+		HAPUIModuleEntry out = new HAPUIModuleEntry(moduleEntry.getPage());
 		
 		Map<String, String> pages = moduleDef.getPages();
 		for(String pageName : pages.keySet()) {

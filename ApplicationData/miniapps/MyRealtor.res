@@ -6,7 +6,7 @@
 					module : "settingModule",
 					entry : "main",
 					data : {
-						"status" : "appSetting",
+						"main" : "appSetting",
 					},
 					data1 : {
 						"status" : "appSetting",

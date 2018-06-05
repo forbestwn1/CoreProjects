@@ -471,6 +471,7 @@ public class HAPConstant {
 
 		public static final String MINIAPPUIENTRY_NAME_MAINMOBILE = "main_mobile";
 		public static final String MINIAPPUIENTRY_MAINMOBILE_MODULE_SETTING = "setting";
+		public static final String MINIAPPUIENTRY_MAINMOBILE_DATA_MAIN = "main";
 
 
 }

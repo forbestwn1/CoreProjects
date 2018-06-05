@@ -550,6 +550,8 @@
 			<definition type="space"/>
 			<definition name="MINIAPPUIENTRY_NAME_MAINMOBILE" value="main_mobile"/>
 			<definition name="MINIAPPUIENTRY_MAINMOBILE_MODULE_SETTING" value="setting"/>
+			<definition name="MINIAPPUIENTRY_MAINMOBILE_DATA_MAIN" value="main"/>
+
 			
 		</definitions>
 	</constants>
