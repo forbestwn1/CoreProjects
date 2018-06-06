@@ -38,7 +38,7 @@ var requestLoadLibraryResources = function(resourceIds, callBackFunction){
 			var result = serviceData.data.data;
 			
 			//temperary solution for map
-//			result.push("https://maps.googleapis.com/maps/api/js?key=AIzaSyBCcQbzlVgvSWsXexpcAMXkjPgtfVbPiBE");
+			result.push("https://maps.googleapis.com/maps/api/js?key=AIzaSyBCcQbzlVgvSWsXexpcAMXkjPgtfVbPiBE");
 			
 			var fileNumber = result.length;
 			var count = 0;

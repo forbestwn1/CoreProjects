@@ -115,6 +115,7 @@
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
 		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 		
 		parentView.empty();
 		var collapsibleSet = $("<div data-role='collapsibleset' data-theme='a' data-content-theme='a'></div>");
@@ -124,27 +125,44 @@
 		var entryPage = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_ENTRYPAGE];
 		var uiResource = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_PAGES][entryPage];
 		
-		var moduleDataDef = uiModule[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULE_DATA];
-		var moduleDataName = moduleDataDef[node_CONSTANT.MINIAPPUIENTRY_MAINMOBILE_DATA_MAIN];
+		var moduleDataDef = uiModuleInstance[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULE_DATA];
+		var moduleDataName = moduleDataDef[node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_DATA_MAIN];
 		var moduleData =  appData==undefined?undefined : appData[moduleDataName];
 		if(moduleData!=undefined){
 			_.each(moduleData, function(moduleData, list){
-				
+				var settingData = {
+					id : moduleData[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_ID],
+					userId : userId,
+					appId : appId,
+					dataName : moduleDataName,
+					isNew : false,
+					dataInfo : {
+					},
+					uiResource : uiResource,
+				};
+				settingData.dataInfo[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_VERSION] = moduleData[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_VERSION];
+				settingData.dataInfo[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_DATA] = moduleData[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_DATA];
+				setting.push(settingData);
 			});
 		}
-	
-		addSetting({
-			id : "11111",
+/*
+		setting.push({
+			id : "aaaa",
 			userId : userId,
 			appId : appId,
 			dataName : moduleDataName,
-			title: "Setting",
 			isNew : true,
 			dataInfo : {
+				version : "Setting"
 			},
 			uiResource : uiResource,
-		}, collapsibleSet);
-		
+		});
+*/	
+
+
+		_.each(setting, function(settingData, index){
+			addSetting(settingData, collapsibleSet);
+		});
 		
 /*		
 		nosliw.runtime.getUIResourceService().executeGenerateUIResourceViewRequest(uiResource, 
@@ -185,9 +203,13 @@
 						
 						uiResourceView.appendTo(collapsibleSet);
 						
+						
 						$("#settingSave_"+settingData.id).click(function(e) {
-							
-							
+							_.each(settingData.dataInfo.data, function(parm, name){
+								uiResourceView.executeDataOperationRequestSet(name, parm.value, parm.dataTypeInfo);
+							});
+
+/*							
 							var out = node_createServiceRequestInfoSequence({}, {
 								success : function(requestInfo){
 																		
@@ -196,14 +218,13 @@
 							out.addRequest(getDataFromUIResourceViewRequest(uiResourceView, {
 								success : function(requestInfo, data){
 									settingData.dataInfo.data = data;
-									settingData.dataInfo.version = "aaa";
 									settingData.dataInfo.type = "setting";
 									var miniAppService = nosliw.runtime.getMiniAppService();
 									return miniAppService.getSaveDataRequest(settingData.userId, settingData.appId, settingData.dataName, settingData.dataInfo);
 								}
 							}));
 							node_requestServiceProcessor.processRequest(out);
-							
+							*/							
 							
 							
 //							$("#settingNameForm").popup("open"); 
@@ -227,7 +248,8 @@
 			success : function(requestInfo, result){
 				var out = {};
 				_.each(result.getResults(), function(contextData, name){
-					out[name] = contextData.value;
+//					out[name] = contextData.value;
+					out[name] = contextData;
 				});
 				return out;
 			}
@@ -260,7 +282,7 @@
 		miniAppService.executeLoadMiniAppUIEntryRequest(userId, miniAppId, appEntry, {
 			success : function(requestInfo, minAppEntry){
 				var settingUIModule = minAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_UIMODULES][node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_MODULE_SETTING];
-				var data = minAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPENTRY_DATA]
+				var data = minAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_DATA]
 				showSetting(userId, miniAppId, $('#right-panel'), settingUIModule, data);
 			}
 		});
@@ -342,7 +364,7 @@
 
 <script id="setting-template" type="text/x-handlebars-template">
 	<div id='setting_{{id}}' data-role='collapsible'>
-		<h3>{{title}}<a id='settingSave_{{id}}' href='#'>Save</a></h3><p></p>
+		<h3>{{dataInfo.version}}<a id='settingSave_{{id}}' href='#'>Save</a></h3><p></p>
 		<a>Execute</a>
 	</div>
 </script>

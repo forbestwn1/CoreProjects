@@ -258,7 +258,7 @@ var node_createVariable = function(data1, data2, adapterInfo){
 			//update data when parent's wrapper changed
 			prv_updateRelativeData : function(requestInfo){
 				//create new wrapper based on wrapper in parent and path
-				loc_destroyWrapper(requestInfo);
+//				loc_destroyWrapper(requestInfo);
 				loc_updateWrapperByParent(requestInfo);
 				loc_updateChildrenData(requestInfo);
 			},

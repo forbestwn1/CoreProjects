@@ -89,6 +89,7 @@ public class HAPDataAccess {
 					data.setVersion(resultSet.getString("version"));
 					data.setStatus(resultSet.getString("status"));
 					data.setData(resultSet.getString("data"));
+					data.setId(resultSet.getString("id"));
 					
 					miniAppUIEntry.addData(dataName, data);
 					break;

@@ -423,10 +423,8 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 		
 		destroy : function(requestInfo){  node_getLifecycleInterface(loc_out).destroy(requestInfo);  },
 		
-		getDataOperationSet : function(target, path, value, dataTypeInfo){  
-			return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createSetOperationService(path, value, dataTypeInfo)); 
-		},
-		getDataOperationRequestSet : function(target, value, dataTypeInfo, handlers, request){	return node_createUIDataOperationRequest(loc_context, this.getDataOperationSet(target, "", value, dataTypeInfo), handlers, request);	},
+		getDataOperationSet : function(target, path, value, dataTypeInfo){  return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createSetOperationService(path, value, dataTypeInfo)); },
+		getDataOperationRequestSet : function(target, value, dataTypeInfo, handlers, request){	return node_createUIDataOperationRequest(loc_context, this.getDataOperationSet(target, undefined, value, dataTypeInfo), handlers, request);	},
 		executeDataOperationRequestSet : function(target, value, dataTypeInfo, handlers, request){	return node_requestServiceProcessor.processRequest(this.getDataOperationRequestSet(target, value, dataTypeInfo, handlers, request));	},
 	};
 
