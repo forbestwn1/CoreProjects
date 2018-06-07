@@ -32,14 +32,6 @@ nosliw.registerNodeEvent("runtime", "active", function(eventName, nodeName){
 					
 					uiResourceView.appendTo($('#testDiv'));
 					
-					uiResourceView.executeDataOperationRequestSet("schoolType", {
-						dataTypeId: "test.options;1.0.0",
-						value: {
-							value : "Private",
-							optionsId : "schoolType"
-						}
-					}, "appdata");
-					
 					
 //					var views = uiResourceView.getViews();
 //					$('#testDiv').append(views.children());

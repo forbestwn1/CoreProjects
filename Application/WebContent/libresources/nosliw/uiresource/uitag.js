@@ -121,9 +121,9 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		},
 		
 		//---------------------------------other request
-		getGatewayCommandRequest : function(gatewayId, command, parms, requestInfo){	return nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, requestInfo);	},
-		executeGatewayCommandRequest : function(gatewayId, command, parms, requestInfo){	return nosliw.runtime.getGatewayService().executeExecuteGatewayCommandRequest(gatewayId, command, parms, requestInfo);	},
-		executeGatewayCommand : function(gatewayId, command, parms){	return nosliw.runtime.getGatewayService().executeGatewayCommand(gatewayId, command, parms);	}
+		getGatewayCommandRequest : function(gatewayId, command, parms, handlers, requestInfo){	return nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(gatewayId, command, parms, handlers, requestInfo);	},
+		executeGatewayCommandRequest : function(gatewayId, command, parms, handlers, requestInfo){	return nosliw.runtime.getGatewayService().executeExecuteGatewayCommandRequest(gatewayId, command, parms, handlers, requestInfo);	},
+		executeGatewayCommand : function(gatewayId, command, parms, handlers, requestInfo){	return nosliw.runtime.getGatewayService().executeGatewayCommand(gatewayId, command, parms, handlers, requestInfo);	}
 	};
 	
 	var lifecycleCallback = {};
@@ -145,16 +145,6 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		//create uiTagObject
 		var uiTagResourceId = node_uiResourceUtility.createTagResourceId(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME]);
 		var uiTagResourceObj = nosliw.runtime.getResourceService().getResource(uiTagResourceId);
-		
-		if(uiTagResourceId.id=="textinput"){
-			var kkkk = 5555;
-			kkkk++;
-		}
-		
-		if(uiTagResourceObj==undefined){
-			var kkkk = 5555;
-			kkkk++;
-		}
 		
 		loc_uiTagObj = uiTagResourceObj[node_COMMONATRIBUTECONSTANT.RESOURCE_RESOURCEDATA][node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_envObj);
 		

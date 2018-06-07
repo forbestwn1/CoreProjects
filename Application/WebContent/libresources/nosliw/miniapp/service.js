@@ -80,6 +80,19 @@ var node_createMiniAppService = function(){
 		executeSaveDataRequest : function(userId, appId, dataName, dataInfo, handlers, requester_parent){
 			var requestInfo = this.getSaveDataRequest(userId, appId, dataName, dataInfo, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+		
+		getExecuteServiceRequest : function(serviceName, serviceInfo, parms, handlers, requestInfo){
+			var commandParms = {
+					name : serviceInfo[serviceName][node_COMMONATRIBUTECONSTANT.DEFINITIONMINIAPPSERVICEDATASOURCE_DATASOURCEID],
+					parms : parms
+				};
+			return nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest("dataSource", "getData", commandParms, handlers, requestInfo);
+		},
+		
+		executeExecuteServiceRequest : function(serviceName, serviceInfo, parms){
+			var requestInfo = this.getExecuteServiceRequest(serviceName, serviceInfo, parms);
+			node_requestServiceProcessor.processRequest(requestInfo);
 		}
 
 	};

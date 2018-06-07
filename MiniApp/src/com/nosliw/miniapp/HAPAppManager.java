@@ -100,6 +100,11 @@ public class HAPAppManager {
 			HAPUIModuleEntry uiModule = this.m_uiResourceMan.getUIModuleInstance(minAppDef.getModuleIdByName(moduleEntryDef.getModule()), moduleEntryDef.getEntry());
 			HAPInstanceUIModule uiModuleInstance = new HAPInstanceUIModule(uiModule);
 			uiModuleInstance.setData(moduleEntryDef.getData());
+			
+			for(String serviceName : moduleEntryDef.getService().keySet()) {
+				uiModuleInstance.addService(serviceName, minAppDef.getService(moduleEntryDef.getService().get(serviceName)));
+			}
+			
 			out.addUIModuleInstance(entryName, uiModuleInstance);
 			
 			//dependent resource

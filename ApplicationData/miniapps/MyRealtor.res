@@ -8,6 +8,9 @@
 					data : {
 						"main" : "appSetting",
 					},
+					service : {
+						"main" : "query"
+					},
 					data1 : {
 						"status" : "appSetting",
 						"statusComplex" : {
@@ -46,14 +49,14 @@
 	},
 	
 	uiModules : {
-		"settingModule" : "MyRealtor_Setting",
-		"applicationModule" : "MyRealtor_App"
+		"settingModule" : "School_Setting",
+		"applicationModule" : "School_Result"
 	},
 	
 	services : {
 		query : {
 			type : "dataSource",
-			dataSourceId : "myrealtor"
+			dataSourceId : "school"
 		}
 	
 	}

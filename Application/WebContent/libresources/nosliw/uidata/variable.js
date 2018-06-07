@@ -225,11 +225,6 @@ var node_createVariable = function(data1, data2, adapterInfo){
 
 			//has to be base variable
 			prv_getSetBaseDataRequest : function(parm1, parm2, handlers, requestInfo){
-				if(parm1==null || parm2==null){
-					var kkkk = 5555;
-					kkkk++;
-				}
-				
 				loc_destroyWrapper(requestInfo);
 				
 				//create empty wrapper fist

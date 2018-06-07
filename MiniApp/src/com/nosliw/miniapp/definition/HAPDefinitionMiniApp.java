@@ -57,6 +57,8 @@ public class HAPDefinitionMiniApp extends HAPSerializableImp{
 	
 	public HAPDefinitionMiniAppData getData(String name) {  return this.m_data.get(name);   }
 	
+	public HAPDefinitionMiniAppService getService(String serviceName) {  return this.m_services.get(serviceName);  }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(UIMODULES, HAPJsonUtility.buildJson(this.m_uiModules, HAPSerializationFormat.JSON));

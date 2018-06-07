@@ -21,6 +21,9 @@ var node_dataUtility;
 var node_createServiceRequestInfoSimple;
 var node_createVariableWrapper;
 var node_getHandleEachElementRequest;
+var node_createServiceRequestInfoSequence;
+var node_createServiceRequestInfoSet;
+var node_uiDataOperationServiceUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 /*
@@ -173,6 +176,24 @@ var node_createContext = function(elementInfosArray, request){
 
 		destroy : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
 		
+		getValueAsParmsRequest : function(handlers, requestInfo){
+			var outRequest = node_createServiceRequestInfoSequence({}, handlers, requestInfo);
+			var setRequest = node_createServiceRequestInfoSet({}, {
+				success : function(requestInfo, result){
+					var out = {};
+					_.each(result.getResults(), function(contextData, name){
+						out[name] = contextData.value;
+					});
+					return out;
+				}
+			});
+			_.each(this.getElementsName(), function(eleName, index){
+				setRequest.addRequest(eleName, loc_out.getDataOperationRequest(eleName, node_uiDataOperationServiceUtility.createGetOperationService()));
+			});
+			outRequest.addRequest(setRequest);
+			return outRequest;
+		}
+		
 		/*
 		 * update context wrappers
 		 * elements: 
@@ -230,6 +251,9 @@ nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtili
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.orderedcontainer.getHandleEachElementRequest", function(){node_getHandleEachElementRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 
 
 //Register Node by Name

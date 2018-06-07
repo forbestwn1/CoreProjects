@@ -92,7 +92,6 @@ public class HAPDataAccess {
 					data.setId(resultSet.getString("id"));
 					
 					miniAppUIEntry.addData(dataName, data);
-					break;
 				}
 			}
 			

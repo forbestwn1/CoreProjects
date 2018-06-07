@@ -58,16 +58,14 @@
 	        <a href="#" data-rel="close" data-role="button" data-mini="true" data-inline="true" data-icon="delete" data-iconpos="right">Close</a>
 	    </div><!-- /panel -->
 	    
-	    <div data-role="popup" id="p" data-position-to="window" data-transition="turn"><p>This is a completely basic popup, no options set.</p></div>
-	    
-	    <div data-role="popup" id="settingNameForm" data-theme="a" class="ui-corner-all">
+	    <div data-role="popup" id="settingNameForm" data-theme="a" class="ui-corner-all" data-dismissible="false">
 		    <form>
 		        <div style="padding:10px 20px;">
 		            <h3>Setting Name</h3>
 		            <label for="un" class="ui-hidden-accessible">Username:</label>
 		            <input type="text" id="settingNameInput" value="" placeholder="setting name" data-theme="a">
-		            <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left">Submit</button>
-		        </div>
+					<a href="#" id="settingNameSubmit" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b">Submit</a>
+        			<a href="#" id="settingNameCancel" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-transition="flow">Cancel</a>		        </div>
 		    </form>
 		</div>
 	    
@@ -87,6 +85,15 @@
 				}
 			}
 		});
+		$("#settingNameCancel").click(function(e){
+			$("#settingNameForm").popup("close"); 
+		});
+		$("#settingNameSubmit").click(function(e){
+			var id = $("#settingNameForm").popup("option", "settingId");
+			var settingName = $("#settingNameInput").val();
+			createSetting(id, settingName);
+			$("#settingNameForm").popup("close"); 
+		});
 	});
 </script>
 
@@ -95,6 +102,65 @@
 
 	var setting = [];
 
+	var createSetting = function(id, settingName){
+		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
+		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+		var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+
+		var settingData = getSettingById(id);
+		
+		var out = node_createServiceRequestInfoSequence({}, {
+			success : function(requestInfo){
+													
+			}
+		});
+		out.addRequest(getDataFromUIResourceViewRequest(settingData.uiResourceView, {
+			success : function(requestInfo, data){
+				settingData.dataInfo.version = settingName;
+				settingData.dataInfo.data = data;
+				settingData.dataInfo.type = "setting";
+				settingData.isNew = false;
+				return nosliw.runtime.getMiniAppService().getSaveDataRequest(settingData.userId, settingData.appId, settingData.dataName, settingData.dataInfo, {
+					success : function(requestInfo, instanceData){
+						settingData.dataId = instanceData[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_ID];
+						$("#settingVersion_"+id).text(settingName);
+						
+						
+						var newSettingData = {
+							id : nosliw.generateId(),
+							userId : settingData.userId,
+							appId : settingData.appId,
+							dataName : settingData.dataName,
+							isNew : true,
+							dataInfo : {
+								version : "Setting"
+							},
+							uiResource : settingData.uiResource,
+							service : settingData.service,
+							parentView : settingData.parentView,
+							miniAppEntry : settingData.miniAppEntry
+						};
+						
+						addSetting(newSettingData, newSettingData.parentView, newSettingData.miniAppEntry);
+					}
+				});
+			}
+		}));
+		node_requestServiceProcessor.processRequest(out);
+		
+	};
+	
+	var getSettingById = function(id){
+		var out;
+		_.each(setting, function(s){
+			if(s.id==id) out = s;  
+		});
+		return out;
+	};
+	
 	var showContent = function(page){
 		$('#content').empty();
 		nosliw.runtime.getUIResourceService()
@@ -110,8 +176,26 @@
 					}
 				});
 	};
+
+	var showAppResult = function(parentView, uiModuleInstance, appData){
+		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
+		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+
+		var uiModule = uiModuleInstance[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULE_UIMODULEENTRY];
+		var entryPage = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_ENTRYPAGE];
+		var uiResource = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_PAGES][entryPage];
+		nosliw.runtime.getUIResourceService().executeGenerateUIResourceViewRequest(uiResource, {
+			success : function(requestInfo, uiResourceView){
+				uiResourceView.appendTo(parentView);
+				uiResourceView.executeDefaultDataOperationRequestSet(appData, node_CONSTANT.DATA_TYPE_APPDATA);
+			}
+		}); 
+
+	};
 	
-	var showSetting = function(userId, appId, parentView, uiModuleInstance, appData){
+	var showSetting = function(userId, appId, parentView, uiModuleInstance, appData, miniAppEntry){
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
 		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
@@ -126,12 +210,14 @@
 		var uiResource = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_PAGES][entryPage];
 		
 		var moduleDataDef = uiModuleInstance[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULE_DATA];
+		var moduleServiceDef = uiModuleInstance[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULE_SERVICE];
 		var moduleDataName = moduleDataDef[node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_DATA_MAIN];
 		var moduleData =  appData==undefined?undefined : appData[moduleDataName];
 		if(moduleData!=undefined){
 			_.each(moduleData, function(moduleData, list){
 				var settingData = {
-					id : moduleData[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_ID],
+					id : nosliw.generateId(),	
+					dataId : moduleData[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_ID],
 					userId : userId,
 					appId : appId,
 					dataName : moduleDataName,
@@ -139,15 +225,16 @@
 					dataInfo : {
 					},
 					uiResource : uiResource,
+					service : moduleServiceDef
 				};
 				settingData.dataInfo[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_VERSION] = moduleData[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_VERSION];
 				settingData.dataInfo[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_DATA] = moduleData[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_DATA];
 				setting.push(settingData);
 			});
 		}
-/*
+
 		setting.push({
-			id : "aaaa",
+			id : nosliw.generateId(),
 			userId : userId,
 			appId : appId,
 			dataName : moduleDataName,
@@ -156,79 +243,66 @@
 				version : "Setting"
 			},
 			uiResource : uiResource,
+			service : moduleServiceDef
 		});
-*/	
-
 
 		_.each(setting, function(settingData, index){
-			addSetting(settingData, collapsibleSet);
+			addSetting(settingData, collapsibleSet, miniAppEntry);
 		});
 		
-/*		
-		nosliw.runtime.getUIResourceService().executeGenerateUIResourceViewRequest(uiResource, 
-				{
-					success : function(requestInfo, uiResourceView){
-						var singleDataView = $("<div data-role='collapsible'><h3>Section 1 <a href='#'>Save</a></h3><p></p></div>");
-						collapsibleSet.append(singleDataView);
-						uiResourceView.appendTo(collapsibleSet);
-						collapsibleSet.append("<a>Execute</a>");
-						
-						$("#"+viewId).click(function(e) {
-							showApp(userId, miniAppId, node_COMMONCONSTANT.MINIAPPUIENTRY_NAME_MAINMOBILE);
-							e.preventDefault();
-						});
-						
-						
-//						uiResourceView.appendTo($('#right-panel'));
-//						var parms = setting[node_COMMONATRIBUTECONSTANT.MINIAPPSETTING_PARMS];
-//						_.each(parms, function(parm, name){
-//							uiResourceView.executeDataOperationRequestSet(name, parm.value, parm.dataTypeInfo, requestInfo);
-//						});
-					}
-				});
-*/		
 	};
 	
-	var addSetting = function(settingData, collapsibleSet){
+	var addSetting = function(settingData, collapsibleSet, miniAppEntry){
 		
 		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 		var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+
+		settingData.parentView = collapsibleSet;
+		settingData.miniAppEntry = miniAppEntry; 
 		
 		nosliw.runtime.getUIResourceService().executeGenerateUIResourceViewRequest(settingData.uiResource, 
 				{
 					success : function(requestInfo, uiResourceView){
+						settingData.uiResourceView = uiResourceView;
 						var template = Handlebars.compile(document.getElementById("setting-template").innerHTML);
 						var singleDataView = template(settingData);
 						collapsibleSet.append(singleDataView);
 						
 						uiResourceView.appendTo(collapsibleSet);
 						
-						
-						$("#settingSave_"+settingData.id).click(function(e) {
+						if(settingData.dataInfo.data!=undefined){
 							_.each(settingData.dataInfo.data, function(parm, name){
 								uiResourceView.executeDataOperationRequestSet(name, parm.value, parm.dataTypeInfo);
 							});
-
-/*							
-							var out = node_createServiceRequestInfoSequence({}, {
-								success : function(requestInfo){
-																		
+						}
+						
+						$("#settingSubmit_"+settingData.id).click(function(e) {
+							var request = node_createServiceRequestInfoSequence({}, {});
+							
+							var getParmsRequest = uiResourceView.getContext().getValueAsParmsRequest({
+								success : function(requestInfo, parms){
+									var serviceName = node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_SERVICE_MAIN;
+									return nosliw.runtime.getMiniAppService().getExecuteServiceRequest(serviceName, settingData.service, parms, {
+										success : function(requestInfo, resultData){
+											var appUIModule = miniAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_UIMODULES][node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_MODULE_APPLICATION];
+											showAppResult($('#CONTENT'), appUIModule, resultData);
+										}
+									});
 								}
 							});
-							out.addRequest(getDataFromUIResourceViewRequest(uiResourceView, {
-								success : function(requestInfo, data){
-									settingData.dataInfo.data = data;
-									settingData.dataInfo.type = "setting";
-									var miniAppService = nosliw.runtime.getMiniAppService();
-									return miniAppService.getSaveDataRequest(settingData.userId, settingData.appId, settingData.dataName, settingData.dataInfo);
-								}
-							}));
-							node_requestServiceProcessor.processRequest(out);
-							*/							
 							
-							
-//							$("#settingNameForm").popup("open"); 
-							
+							request.addRequest(getParmsRequest);
+							node_requestServiceProcessor.processRequest(request);
+							e.preventDefault();
+						});
+
+						
+						$("#settingSave_"+settingData.id).click(function(e) {
+							$("#settingNameForm").popup( "option", "settingId", settingData.id );
+							$("#settingNameForm").popup("open"); 
 							e.preventDefault();
 						});
 						
@@ -280,10 +354,10 @@
 		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 		var miniAppService = nosliw.runtime.getMiniAppService();
 		miniAppService.executeLoadMiniAppUIEntryRequest(userId, miniAppId, appEntry, {
-			success : function(requestInfo, minAppEntry){
-				var settingUIModule = minAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_UIMODULES][node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_MODULE_SETTING];
-				var data = minAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_DATA]
-				showSetting(userId, miniAppId, $('#right-panel'), settingUIModule, data);
+			success : function(requestInfo, miniAppEntry){
+				var settingUIModule = miniAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_UIMODULES][node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_MODULE_SETTING];
+				var data = miniAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_DATA]
+				showSetting(userId, miniAppId, $('#right-panel'), settingUIModule, data, miniAppEntry);
 			}
 		});
 		return false;
@@ -353,6 +427,7 @@
 				}
 			});
 		
+			
 //			showContent("Example_App_Query_MyRealtor");
 			
 			
@@ -364,8 +439,8 @@
 
 <script id="setting-template" type="text/x-handlebars-template">
 	<div id='setting_{{id}}' data-role='collapsible'>
-		<h3>{{dataInfo.version}}<a id='settingSave_{{id}}' href='#'>Save</a></h3><p></p>
-		<a>Execute</a>
+		<h3><span id=settingVersion_{{id}}>{{dataInfo.version}}</span><a id='settingSave_{{id}}' href='#'>Save</a></h3><p></p>
+		<a id='settingSubmit_{{id}}' href='#'>Execute</a>
 	</div>
 </script>
 

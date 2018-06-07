@@ -54,6 +54,8 @@ public class HAPAppServlet extends HAPServiceServlet{
 	@HAPAttribute
 	public static final String COMMAND_SERVICE = "service";
 	@HAPAttribute
+	public static final String COMMAND_SERVICE_ID = "id";
+	@HAPAttribute
 	public static final String COMMAND_SERVICE_PARMS = "parms";
 	
 	@Override

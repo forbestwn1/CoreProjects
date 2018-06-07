@@ -5,7 +5,7 @@
 		<br>
 		Sum:<%=#|?(result)?.length()|#.value%>
 		<br>
-		
+<!--		
 		<nosliw-map data="result" element="ele" index="index">
 			<div style="height:40px;width:200px;">
 				<br>
@@ -14,7 +14,7 @@
 				Rating: <%=?(ele.schoolRating)?.value%>   
 			</div>
 		</nosliw-map>
-		
+		-->
 </body>
 
 

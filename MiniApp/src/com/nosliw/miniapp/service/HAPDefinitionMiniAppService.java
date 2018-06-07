@@ -23,7 +23,7 @@ public abstract class HAPDefinitionMiniAppService extends HAPSerializableImp{
 	public static Map<String, Class> m_serviceClasses = new LinkedHashMap<String, Class>();
 	
 	static {
-		m_serviceClasses.put(HAPConstant.MINIAPPSERVICE_TYPE_DATASOURCE, HAPMiniAppTaskDataSource.class);
+		m_serviceClasses.put(HAPConstant.MINIAPPSERVICE_TYPE_DATASOURCE, HAPDefinitionMiniAppServiceDataSource.class);
 	}
 	
 	public static HAPDefinitionMiniAppService buildObject(Object obj) {
@@ -33,4 +33,13 @@ public abstract class HAPDefinitionMiniAppService extends HAPSerializableImp{
 		return out;
 	}
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(TYPE, this.getType());
+	}
+
+	@Override
+	protected boolean buildObjectByFullJson(Object json){
+		return true;
+	}
 }
