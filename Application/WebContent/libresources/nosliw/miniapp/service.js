@@ -82,6 +82,21 @@ var node_createMiniAppService = function(){
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		
+		getDeleteDataRequest : function(dataId, dataType, handlers, requester_parent){
+			var requestInfo = loc_out.getRequestInfo(requester_parent);
+			var parms = {};
+			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_DELETEDATA_ID] = dataId;
+			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_DELETEDATA_DATATYPE] = dataType;
+			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_DELETEDATA, parms), undefined, handlers, requestInfo);
+			return remoteRequest;
+		},
+
+		executeDeleteDataRequest : function(dataId, dataType, handlers, requester_parent){
+			var requestInfo = this.getDeleteDataRequest(dataId, dataType, handlers, requester_parent);	
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+
+		
 		getExecuteServiceRequest : function(serviceName, serviceInfo, parms, handlers, requestInfo){
 			var commandParms = {
 					name : serviceInfo[serviceName][node_COMMONATRIBUTECONSTANT.DEFINITIONMINIAPPSERVICEDATASOURCE_DATASOURCEID],

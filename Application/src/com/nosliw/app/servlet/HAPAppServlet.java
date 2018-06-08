@@ -8,6 +8,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.miniapp.HAPAppManager;
 import com.nosliw.miniapp.data.HAPInstanceMiniAppData;
 import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
@@ -52,11 +53,11 @@ public class HAPAppServlet extends HAPServiceServlet{
 	public static final String COMMAND_UPDATEDATA_DATAINFO = "dataInfo";
 
 	@HAPAttribute
-	public static final String COMMAND_SERVICE = "service";
+	public static final String COMMAND_DELETEDATA = "deleteData";
 	@HAPAttribute
-	public static final String COMMAND_SERVICE_ID = "id";
+	public static final String COMMAND_DELETEDATA_DATATYPE = "dataType";
 	@HAPAttribute
-	public static final String COMMAND_SERVICE_PARMS = "parms";
+	public static final String COMMAND_DELETEDATA_ID = "id";
 	
 	@Override
 	protected HAPServiceData processServiceRequest(String command, JSONObject parms) {
@@ -107,6 +108,14 @@ public class HAPAppServlet extends HAPServiceServlet{
 			HAPInstanceMiniAppData dataInfo = HAPInstanceMiniAppData.buildObject(dataInfoJson);
 			HAPInstanceMiniAppData newDataInfo = miniAppMan.createMiniAppData(userId, appId, dataName, dataInfo);
 			out = HAPServiceData.createSuccessData(newDataInfo);
+		}
+		case COMMAND_DELETEDATA:
+		{
+			String id = parms.optString(COMMAND_DELETEDATA_ID);
+			String dataType = parms.optString(COMMAND_DELETEDATA_DATATYPE);
+			if(HAPBasicUtility.isStringEmpty(dataType))  dataType = HAPConstant.MINIAPPDATA_TYPE_SETTING; 
+			miniAppMan.deleteMiniAppData(id, dataType);
+			out = HAPServiceData.createSuccessData();
 		}
 		}
 		

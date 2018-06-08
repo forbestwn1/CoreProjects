@@ -67,6 +67,15 @@ public class HAPDataAccess {
 		return out;
 	}
 
+	public void deleteSettingData(String dataId) {
+		try {
+			PreparedStatement statement = this.getConnection().prepareStatement("DELETE FROM MINIAPP_INSTANCEDATA_SETTING WHERE ID='"+dataId+"';");
+			statement.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public HAPInstanceMiniAppDataSetting updateSettingData(String id, HAPInstanceMiniAppDataSetting dataInfo) {
 		HAPInstanceMiniAppDataSetting out = dataInfo;
 		try {

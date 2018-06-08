@@ -28,15 +28,6 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>uiresourceServlet</servlet-name>
-    <servlet-class>com.nosliw.servlet.HAPUIResourceServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>uiresourceServlet</servlet-name>
-    <url-pattern>/uiresource</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
     <servlet-name>appServlet</servlet-name>
     <servlet-class>com.nosliw.app.servlet.HAPAppServlet</servlet-class>
   </servlet>

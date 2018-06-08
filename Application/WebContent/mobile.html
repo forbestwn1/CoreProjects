@@ -102,6 +102,20 @@
 
 	var setting = [];
 
+	var deleteSetting = function(id){
+		var settingData = getSettingById(id);
+		var settingIndex = getSettingIndexById(id);
+		
+		nosliw.runtime.getMiniAppService().executeDeleteDataRequest(settingData.dataId, undefined, {
+			success : function(requestInfo){
+//				settingData.uiResourceView.detachViews();
+				$(settingData.uiContainer).remove();
+//				settingData.uiContainer.parentNode.removeChild(settingData.uiContainer);
+				setting.splice(settingIndex, 1);
+			}
+		});
+	};
+	
 	var createSetting = function(id, settingName){
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
@@ -160,6 +174,15 @@
 		});
 		return out;
 	};
+
+	var getSettingIndexById = function(id){
+		var out;
+		_.each(setting, function(s, index){
+			if(s.id==id) out = index;  
+		});
+		return out;
+	};
+
 	
 	var showContent = function(page){
 		$('#content').empty();
@@ -202,7 +225,7 @@
 		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 		
 		parentView.empty();
-		var collapsibleSet = $("<div data-role='collapsibleset' data-theme='a' data-content-theme='a'></div>");
+		var collapsibleSet = $("<div id='settingContainer' data-role='collapsibleset' data-theme='a' data-content-theme='a'></div>");
 		parentView.append(collapsibleSet);
 		
 		var uiModule = uiModuleInstance[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULE_UIMODULEENTRY];
@@ -250,6 +273,7 @@
 			addSetting(settingData, collapsibleSet, miniAppEntry);
 		});
 		
+		$("#settingContainer").collapsibleset();
 	};
 	
 	var addSetting = function(settingData, collapsibleSet, miniAppEntry){
@@ -269,9 +293,10 @@
 						settingData.uiResourceView = uiResourceView;
 						var template = Handlebars.compile(document.getElementById("setting-template").innerHTML);
 						var singleDataView = template(settingData);
+						settingData.uiContainer = singleDataView;
 						collapsibleSet.append(singleDataView);
 						
-						uiResourceView.appendTo(collapsibleSet);
+						uiResourceView.appendTo($("#settingContent_"+settingData.id));
 						
 						if(settingData.dataInfo.data!=undefined){
 							_.each(settingData.dataInfo.data, function(parm, name){
@@ -303,6 +328,11 @@
 						$("#settingSave_"+settingData.id).click(function(e) {
 							$("#settingNameForm").popup( "option", "settingId", settingData.id );
 							$("#settingNameForm").popup("open"); 
+							e.preventDefault();
+						});
+						
+						$("#settingDelete_"+settingData.id).click(function(e) {
+							deleteSetting(settingData.id);
 							e.preventDefault();
 						});
 						
@@ -439,7 +469,12 @@
 
 <script id="setting-template" type="text/x-handlebars-template">
 	<div id='setting_{{id}}' data-role='collapsible'>
-		<h3><span id=settingVersion_{{id}}>{{dataInfo.version}}</span><a id='settingSave_{{id}}' href='#'>Save</a></h3><p></p>
+		<h3><span id=settingVersion_{{id}}>{{dataInfo.version}}</span>
+			<a id='settingSave_{{id}}' href='#'>Save</a>
+			<a id='settingDelete_{{id}}' href='#'>Delete</a>
+		</h3>
+		<div id=settingContent_{{id}}></div>
+		<p></p>
 		<a id='settingSubmit_{{id}}' href='#'>Execute</a>
 	</div>
 </script>

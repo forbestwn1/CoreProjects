@@ -76,6 +76,14 @@ public class HAPAppManager {
 		return out;
 	}
 	
+	public void deleteMiniAppData(String dataId, String dataType) {
+		switch(dataType) {
+		case HAPConstant.MINIAPPDATA_TYPE_SETTING:
+			this.m_dataAccess.deleteSettingData(dataId);
+			break;
+		}
+	}
+	
 	public HAPInstanceMiniAppData updateMiniAppData(String id, HAPInstanceMiniAppData dataInfo) {
 		HAPInstanceMiniAppData out = null;
 		switch(dataInfo.getType()) {

@@ -2,8 +2,6 @@
 <html>
 <body>
 	<br>
-************************************   Query  **************************************
-
 	<br>
 	SchoolRating:<nosliw-floatinput data="criteria.schoolRating"/>  
 	<br>
