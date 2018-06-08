@@ -109,7 +109,8 @@
 		nosliw.runtime.getMiniAppService().executeDeleteDataRequest(settingData.dataId, undefined, {
 			success : function(requestInfo){
 //				settingData.uiResourceView.detachViews();
-				$(settingData.uiContainer).remove();
+//				$(settingData.uiContainer).remove();
+				$("#setting_"+id).remove();
 //				settingData.uiContainer.parentNode.removeChild(settingData.uiContainer);
 				setting.splice(settingIndex, 1);
 			}
@@ -150,7 +151,8 @@
 							dataName : settingData.dataName,
 							isNew : true,
 							dataInfo : {
-								version : "Setting"
+								version : "Setting",
+								type : "setting"
 							},
 							uiResource : settingData.uiResource,
 							service : settingData.service,
@@ -159,6 +161,8 @@
 						};
 						
 						addSetting(newSettingData, newSettingData.parentView, newSettingData.miniAppEntry);
+						$("#settingContainer").collapsibleset();
+
 					}
 				});
 			}
@@ -246,6 +250,7 @@
 					dataName : moduleDataName,
 					isNew : false,
 					dataInfo : {
+						type : "setting"
 					},
 					uiResource : uiResource,
 					service : moduleServiceDef
@@ -263,7 +268,8 @@
 			dataName : moduleDataName,
 			isNew : true,
 			dataInfo : {
-				version : "Setting"
+				version : "Setting",
+				type : "setting"
 			},
 			uiResource : uiResource,
 			service : moduleServiceDef
@@ -326,8 +332,32 @@
 
 						
 						$("#settingSave_"+settingData.id).click(function(e) {
-							$("#settingNameForm").popup( "option", "settingId", settingData.id );
-							$("#settingNameForm").popup("open"); 
+							if(settingData.isNew==true){
+								$("#settingNameForm").popup( "option", "settingId", settingData.id );
+								$("#settingNameForm").popup("open"); 
+							}
+							else{
+								var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+								var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
+								var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+								var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+								var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+								var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+
+								var out = node_createServiceRequestInfoSequence({}, {});
+								out.addRequest(getDataFromUIResourceViewRequest(settingData.uiResourceView, {
+									success : function(requestInfo, data){
+										settingData.dataInfo.data = data;
+										return nosliw.runtime.getMiniAppService().getUpdateDataRequest(settingData.dataId, settingData.dataInfo, {
+											success : function(requestInfo, instanceData){
+											}
+										});
+									}
+								}));
+								node_requestServiceProcessor.processRequest(out);
+								
+							}							
+							
 							e.preventDefault();
 						});
 						

@@ -1,26 +1,23 @@
-package com.nosliw.app.servlet;
+package com.nosliw.miniapp;
 
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.miniapp.HAPAppManager;
+import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 import com.nosliw.miniapp.data.HAPInstanceMiniAppData;
 import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserInfo;
-import com.nosliw.servlet.HAPServiceServlet;
 
-@HAPEntityWithAttribute
-public class HAPAppServlet extends HAPServiceServlet{
+public class HAPGatewayMiniApp extends HAPGatewayImp{
 
-	private static final long serialVersionUID = 3449216679929442927L;
-
+	private HAPAppManager m_miniAppMan;
+	
 	@HAPAttribute
 	public static final String COMMAND_LOGIN = "login";
 
@@ -35,7 +32,7 @@ public class HAPAppServlet extends HAPServiceServlet{
 	public static final String COMMAND_LOADMINIAPP_ENTRY = "entry";
 
 	@HAPAttribute
-	public static final String COMMAND_CREATEDATA = "createData";
+	public static final String COMMAND_CREATEDATA = "saveData";
 	@HAPAttribute
 	public static final String COMMAND_CREATEDATA_USERID = "userId";
 	@HAPAttribute
@@ -59,10 +56,12 @@ public class HAPAppServlet extends HAPServiceServlet{
 	@HAPAttribute
 	public static final String COMMAND_DELETEDATA_ID = "id";
 	
+	public HAPGatewayMiniApp(HAPAppManager miniAppMan) {
+		this.m_miniAppMan = miniAppMan;
+	}
+	
 	@Override
-	protected HAPServiceData processServiceRequest(String command, JSONObject parms) {
-		
-		HAPAppManager miniAppMan = (HAPAppManager)this.getServletContext().getAttribute("minAppMan");
+	public HAPServiceData command(String command, JSONObject parms) {
 		
 		HAPServiceData out = null;
 
@@ -80,11 +79,11 @@ public class HAPAppServlet extends HAPServiceServlet{
 			
 			HAPUserInfo userInfo = null;
 			if(HAPBasicUtility.isStringEmpty(userId)) {
-				userInfo = miniAppMan.createUser();
+				userInfo = m_miniAppMan.createUser();
 			}
 			else {
-				userInfo = miniAppMan.getUserInfo(userId);
-				if(userInfo==null)  userInfo = miniAppMan.createUser();
+				userInfo = m_miniAppMan.getUserInfo(userId);
+				if(userInfo==null)  userInfo = m_miniAppMan.createUser();
 			}
 			out = HAPServiceData.createSuccessData(userInfo);
 			break;
@@ -94,7 +93,7 @@ public class HAPAppServlet extends HAPServiceServlet{
 			String appId = parms.optString(COMMAND_LOADMINIAPP_APPID);
 			String userId = parms.optString(COMMAND_LOADMINIAPP_USERID);
 			String appEntry = parms.optString(COMMAND_LOADMINIAPP_ENTRY);
-			HAPInstanceMiniAppUIEntry miniAppInstance = miniAppMan.getMiniAppInstanceUIEntiry(userId, appId, appEntry);
+			HAPInstanceMiniAppUIEntry miniAppInstance = m_miniAppMan.getMiniAppInstanceUIEntiry(userId, appId, appEntry);
 			out = HAPServiceData.createSuccessData(miniAppInstance);
 			break;
 		}
@@ -106,30 +105,21 @@ public class HAPAppServlet extends HAPServiceServlet{
 			
 			JSONObject dataInfoJson = parms.optJSONObject(COMMAND_CREATEDATA_DATAINFO);
 			HAPInstanceMiniAppData dataInfo = HAPInstanceMiniAppData.buildObject(dataInfoJson);
-			HAPInstanceMiniAppData newDataInfo = miniAppMan.createMiniAppData(userId, appId, dataName, dataInfo);
+			HAPInstanceMiniAppData newDataInfo = m_miniAppMan.createMiniAppData(userId, appId, dataName, dataInfo);
 			out = HAPServiceData.createSuccessData(newDataInfo);
-			break;
-		}
-		case COMMAND_UPDATEDATA:
-		{
-			String id = parms.optString(COMMAND_UPDATEDATA_ID);
-			JSONObject dataInfoJson = parms.optJSONObject(COMMAND_UPDATEDATA_DATAINFO);
-			HAPInstanceMiniAppData dataInfo = HAPInstanceMiniAppData.buildObject(dataInfoJson);
-			HAPInstanceMiniAppData newDataInfo = miniAppMan.updateMiniAppData(id, dataInfo);
-			out = HAPServiceData.createSuccessData(newDataInfo);
-			break;
 		}
 		case COMMAND_DELETEDATA:
 		{
 			String id = parms.optString(COMMAND_DELETEDATA_ID);
 			String dataType = parms.optString(COMMAND_DELETEDATA_DATATYPE);
 			if(HAPBasicUtility.isStringEmpty(dataType))  dataType = HAPConstant.MINIAPPDATA_TYPE_SETTING; 
-			miniAppMan.deleteMiniAppData(id, dataType);
+			m_miniAppMan.deleteMiniAppData(id, dataType);
 			out = HAPServiceData.createSuccessData();
-			break;
 		}
 		}
 		
 		return out;
 	}
+	
+	
 }

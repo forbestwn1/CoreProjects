@@ -23,7 +23,7 @@ public class HAPDataAccess {
 
 	private HAPDBSource m_dbSource;
 
-	private int i = 0;
+	private long i = System.currentTimeMillis();
 	
 	public HAPDataAccess(HAPDBSource dbSource) {
 		this.m_dbSource = dbSource;

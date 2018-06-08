@@ -81,6 +81,20 @@ var node_createMiniAppService = function(){
 			var requestInfo = this.getSaveDataRequest(userId, appId, dataName, dataInfo, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
+
+		getUpdateDataRequest : function(dataId, dataInfo, handlers, requester_parent){
+			var requestInfo = loc_out.getRequestInfo(requester_parent);
+			var parms = {};
+			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_UPDATEDATA_ID] = dataId;
+			parms[node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_UPDATEDATA_DATAINFO] = dataInfo;
+			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.APPSERVLET_COMMAND_UPDATEDATA, parms), undefined, handlers, requestInfo);
+			return remoteRequest;
+		},
+
+		executeUpdateDataRequest : function(dataId, dataInfo, handlers, requester_parent){
+			var requestInfo = this.getUpdateDataRequest(dataId, dataInfo, handlers, requester_parent);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
 		
 		getDeleteDataRequest : function(dataId, dataType, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
