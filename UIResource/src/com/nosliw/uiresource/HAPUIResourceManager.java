@@ -67,6 +67,7 @@ public class HAPUIResourceManager {
 		Map<String, String> pages = moduleDef.getPages();
 		for(String pageName : pages.keySet()) {
 			out.addPage(pageName, this.getUIResource(pages.get(pageName)));
+			out.addPageUIResourceName(pageName, pages.get(pageName));
 		}
 		
 		return out;

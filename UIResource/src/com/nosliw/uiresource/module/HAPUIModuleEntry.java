@@ -21,6 +21,8 @@ public class HAPUIModuleEntry extends HAPSerializableImp{
 	
 	@HAPAttribute
 	public static final String PAGES = "pages";
+	@HAPAttribute
+	public static final String UIRESOURCEPAGES = "uiResourcePages";
 	
 	@HAPAttribute
 	public static final String DATA = "data";
@@ -28,6 +30,7 @@ public class HAPUIModuleEntry extends HAPSerializableImp{
 	private String m_entryPage;
 	
 	private Map<String, HAPUIDefinitionUnitResource> m_pages;
+	private Map<String, String> m_uiResourcePages;
 	
 	private Map<String, String> m_data; 
 	
@@ -35,18 +38,21 @@ public class HAPUIModuleEntry extends HAPSerializableImp{
 		this.m_entryPage = entryPage;
 		this.m_pages = new LinkedHashMap<String, HAPUIDefinitionUnitResource>();
 		this.m_data = new LinkedHashMap<String, String>();
+		this.m_uiResourcePages = new LinkedHashMap<String, String>();
 	}
 
 	public String getEntryPage() {   return this.m_entryPage;   }
 	public void setEntryPage(String entryPage) {    this.m_entryPage = entryPage;    }
 	
 	public void addPage(String pageName, HAPUIDefinitionUnitResource page) {	this.m_pages.put(pageName, page);	}
+	public void addPageUIResourceName(String pageName, String uiResourceName) {	this.m_uiResourcePages.put(pageName, uiResourceName);	}
 	public Map<String, HAPUIDefinitionUnitResource> getPages(){ return this.m_pages;   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ENTRYPAGE, this.m_entryPage);
 		jsonMap.put(PAGES, HAPJsonUtility.buildJson(this.m_pages, HAPSerializationFormat.JSON));
+		jsonMap.put(UIRESOURCEPAGES, HAPJsonUtility.buildJson(this.m_uiResourcePages, HAPSerializationFormat.JSON));
 		jsonMap.put(DATA, HAPJsonUtility.buildJson(this.m_data, HAPSerializationFormat.JSON));
 	}
 	
@@ -55,6 +61,7 @@ public class HAPUIModuleEntry extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_entryPage = (String)jsonObj.opt(ENTRYPAGE);
 		this.m_pages = HAPSerializeUtility.buildMapFromJsonObject(HAPUIDefinitionUnitResource.class.getName(), jsonObj.optJSONObject(PAGES));
+		this.m_uiResourcePages =  HAPSerializeUtility.buildMapFromJsonObject(String.class.getName(), jsonObj.optJSONObject(UIRESOURCEPAGES));
 		this.m_data =  HAPSerializeUtility.buildMapFromJsonObject(String.class.getName(), jsonObj.optJSONObject(DATA));
 		return true;
 	}
