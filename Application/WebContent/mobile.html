@@ -235,7 +235,8 @@
 		nosliw.runtime.getUIResourceService().executeCreateUIResourceViewRequest(uiResourceName, {
 			success : function(requestInfo, uiResourceView){
 				uiResourceView.appendTo(parentView);
-				uiResourceView.executeDefaultDataOperationRequestSet(appData, node_CONSTANT.DATA_TYPE_APPDATA);
+//				uiResourceView.executeDefaultDataOperationRequestSet(appData, node_CONSTANT.DATA_TYPE_APPDATA);
+				uiResourceView.executeDataOperationRequestSet("result", appData, node_CONSTANT.DATA_TYPE_APPDATA);
 			}
 		}); 
 
@@ -249,7 +250,7 @@
 		var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
 		var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 
-		parentView.empty();
+		var aaaaa = parentView.empty();
 		var collapsibleSet = $("<div id='settingContainer' data-role='collapsibleset' data-theme='a' data-content-theme='a'></div>");
 		parentView.append(collapsibleSet);
 		

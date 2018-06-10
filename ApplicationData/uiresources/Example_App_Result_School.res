@@ -3,6 +3,10 @@
 <body>
 		<br>
 		Sum:<%=#|?(result)?.length()|#.value%>
+
+		Sum:<%=#|?(result)?.1.schoolName|#.value%>
+
+/*		
 		<br>
 		<nosliw-map data="result" element="ele" index="index">
 			<div style="height:40px;width:200px;">
@@ -12,6 +16,8 @@
 				Rating: <%=?(ele.schoolRating)?.value%>   
 			</div>
 		</nosliw-map>
+*/		
+		
 </body>
 
 
