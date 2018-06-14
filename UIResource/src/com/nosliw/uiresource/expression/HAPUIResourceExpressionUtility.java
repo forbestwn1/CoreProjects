@@ -111,8 +111,8 @@ public class HAPUIResourceExpressionUtility {
 					String[] pathSegs = HAPNamingConversionUtility.parsePaths(path.substring(name.length()+1));
 					for(String pathSeg : pathSegs){
 						List<HAPParmInOperationOperand> parms = new ArrayList<HAPParmInOperationOperand>();
-						parms.add(new HAPParmInOperationOperand("name", new HAPOperandConstant("#string:simple:"+pathSeg)));
-						operand = new HAPOperandOperation(operand, "getChild", parms);
+						parms.add(new HAPParmInOperationOperand(HAPConstant.DATAOPERATION_COMPLEX_GETCHILDDATA_NAME, new HAPOperandConstant("#string:simple:"+pathSeg)));
+						operand = new HAPOperandOperation(operand, HAPConstant.DATAOPERATION_COMPLEX_GETCHILDDATA, parms);
 					}
 					attrInfo.lastAttrOperand.setOperand(operand);
 					break;

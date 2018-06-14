@@ -12,11 +12,11 @@ import com.nosliw.data.core.expression.HAPMatchers;
 
 /**
  * Context element that based on context element on parent
- * When tag has its own variable definition which is differnt from defintion from parent, 
- * we should treat through two variables as different variables 
+ * When tag has its own variable definition which is different from definition from parent, 
+ * we should treat those two variables as different variables 
  * And matcher is needed to do convert between these two variables  
  */
-public class HAPContextNodeRootRelative extends HAPContextNode implements HAPContextNodeRoot{
+public class HAPContextNodeRootRelative extends HAPContextNodeRoot{
 
 	@HAPAttribute
 	public static final String PATH = "path";
@@ -30,7 +30,7 @@ public class HAPContextNodeRootRelative extends HAPContextNode implements HAPCon
 	//relative path from parent context
 	private HAPContextPath m_path;
 
-	//variable full name --- matchers
+	//context node full name --- matchers
 	//used to convert data from parent to data within uiTag
 	private Map<String, HAPMatchers> m_matchers;
 

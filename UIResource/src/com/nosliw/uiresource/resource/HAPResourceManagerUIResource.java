@@ -28,7 +28,7 @@ public class HAPResourceManagerUIResource extends HAPResourceManagerImp{
 		HAPResourceDataUIResource resourceData = new HAPResourceDataUIResource(uiResource);
 		Map<String, Object> info = new LinkedHashMap<String, Object>();
 		info.put(HAPRuntimeJSUtility.RESOURCE_LOADPATTERN, HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE);
-		return new HAPResource(resourceId, resourceData, info);
+		return new HAPResource(resourceId, resourceData, null);
 	}
 
 	@Override

@@ -66,9 +66,11 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	private HAPScript m_scriptFunction;
 	
 	//expressions used in script expression
+	//element index ---- processed expression
 	private Map<String, HAPExecuteExpression> m_expressions;
 
 	//variables used in script expression
+	//it include variable in data expression and js expression
 	private Set<String> m_variableNames;
 	
 	//when script expression does not contain any variable
@@ -110,7 +112,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	
 	//process all expression definitions in script expression
 	public void processExpressions(HAPUIResourceExpressionContext expressionContext, Map<String, String> configure){
-		//preprocess attributes operand in expressions
+		//preprocess attributes operand in expressions, some attributes operand can be combine into one variable operand
 		for(HAPDefinitionExpression expDef : this.getExpressionDefinitions()){
 			HAPUIResourceExpressionUtility.processAttributeOperandInExpression(expDef, expressionContext.getVariables());
 		}

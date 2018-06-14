@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
 
-public class HAPContextNodeRootAbsolute extends HAPContextNode implements HAPContextNodeRoot{
+public class HAPContextNodeRootAbsolute extends HAPContextNodeRoot{
 
 	@HAPAttribute
 	public static final String DEFAULT = "default";

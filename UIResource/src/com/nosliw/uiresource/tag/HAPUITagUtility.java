@@ -34,7 +34,6 @@ public class HAPUITagUtility {
 	
 	private static void processIncludeTag(HAPUIDefinitionUnitTag includeTagResource, HAPUIDefinitionUnitResource rootResource, HAPUIResourceManager uiResourceMan, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager, HAPUIResourceParser uiResourceParser, HAPIdGenerator idGengerator){
 		String includeResourceName = includeTagResource.getAttributes().get(HAPConstant.UITAG_NAME_INCLUDE_PARM_SOURCE);
-		String contextMapName = includeTagResource.getAttributes().get(HAPConstant.UITAG_NAME_INCLUDE_PARM_CONTEXT);
 
 		//build include tag
 		HAPUIDefinitionUnitResource uiResource = uiResourceMan.getUIResourceDefinitionById(includeResourceName);
@@ -42,7 +41,9 @@ public class HAPUITagUtility {
 		HAPConstantUtility.calculateConstantDefs(includeTagResource, null, idGengerator, expressionManager, runtime);
 
 		//get context mapping definition
+		String contextMapName = includeTagResource.getAttributes().get(HAPConstant.UITAG_NAME_INCLUDE_PARM_CONTEXT);
 		HAPUITagDefinitionContext contextDef = null;
+		//context mapping defined as constant
 		JSONObject contextMappingJson = (JSONObject)rootResource.getConstantValues().get(contextMapName);
 		if(contextMappingJson!=null){
 			contextDef = new HAPUITagDefinitionContext();

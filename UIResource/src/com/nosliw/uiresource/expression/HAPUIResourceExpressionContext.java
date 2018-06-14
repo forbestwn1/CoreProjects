@@ -10,6 +10,7 @@ import com.nosliw.data.core.expressionsuite.HAPDefinitionExpressionSuite;
 //every ui resource/tag has its own context for processing expressions: 
 //		supporting expression in suite
 //		variables criteria
+//		constants
 public class HAPUIResourceExpressionContext {
 
 	//every unit has its own expression definition suite

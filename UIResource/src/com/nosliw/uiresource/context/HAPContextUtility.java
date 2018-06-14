@@ -1,7 +1,9 @@
 package com.nosliw.uiresource.context;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
@@ -9,6 +11,8 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
@@ -33,14 +37,16 @@ public class HAPContextUtility {
 
 		HAPUIResourceExpressionContext expContext = uiDefinition.getExpressionContext();
 
-		//find all data variables 
+		//find all data variables from context definition 
 		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getPublicContext()));
 		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getInternalContext()));
 		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getExcludedContext()));
 		
+		//parent expression context
 		HAPUIResourceExpressionContext parentExpContext = parent==null?null:parent.getExpressionContext();
 		
-		//build data constants
+		//build data constants from local and parent
+		//local constants override parent constants
 		if(parent!=null)	expContext.addConstants(parentExpContext.getConstants());
 		Map<String, HAPConstantDef> constantDefs = uiDefinition.getConstantDefs();
 		for(String name : constantDefs.keySet()){
@@ -48,8 +54,8 @@ public class HAPContextUtility {
 			if(data!=null)		expContext.addConstant(name, data);
 		}
 		
-		//get all expressions definitions
-		//expression from parent first
+		//get all support expressions definitions from local and parent
+		//local expression override expression from parent
 		if(parent!=null){
 			Map<String, HAPDefinitionExpression> parentExpDefs = parentExpContext.getExpressionDefinitions();
 			for(String id : parentExpDefs.keySet()) {
@@ -68,6 +74,7 @@ public class HAPContextUtility {
 		}
 	}
 	
+	//build context for ui Tag
 	private static void buildUITagContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnitTag uiTag, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
 		//get contextDef from uiTag first
 		HAPUITagDefinitionContext contextDefinition = uiTag.getContextDefinition();
@@ -99,7 +106,7 @@ public class HAPContextUtility {
 	private static Map<String, HAPVariableInfo> discoverDataVariablesInContext(HAPContext context){
 		Map<String, HAPVariableInfo> out = new LinkedHashMap<String, HAPVariableInfo>();
 		for(String rootName : context.getElements().keySet()){
-			processCriteria(rootName, (HAPContextNode)context.getElements().get(rootName), out);
+			discoverCriteriaInContextNode(rootName, (HAPContextNode)context.getElements().get(rootName), out);
 		}
 		return out;
 	}
@@ -120,6 +127,7 @@ public class HAPContextUtility {
 		return out;
 	}
 	
+	//build context node with solid name
 	private static void buildSolidContextNode(HAPContextNode def, HAPContextNode solid, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
 		solid.setDefinition(def.getDefinition());
 		for(String name : def.getChildren().keySet()){
@@ -130,21 +138,63 @@ public class HAPContextUtility {
 		}
 	}
 	
+	//go through different context group type to find referenced node in parent. 
 	private static HAPContextNode getReferencedParentContextNode(HAPContextPath path, HAPUIDefinitionUnit parentUnit){
 		String[] contextTypes = {
 				HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC,
 				HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL,
 				HAPConstant.UIRESOURCE_CONTEXTTYPE_EXCLUDED
 				};
-		HAPContextNode parentNode = null;
+		//find candidates, path similar
+		List<Object[]> candidates = new ArrayList<Object[]>();
 		for(String contextType : contextTypes){
-			parentNode = parentUnit.getContext().getContext(contextType).getChild(path);
-			if(parentNode!=null)   break;
+			Object[] nodeInfo = parentUnit.getContext().getContext(contextType).discoverChild(path);
+			if(nodeInfo[0]!=null)   candidates.add(nodeInfo);
 		}
+
+		//find best node from candidate
+		//remaining path is shortest
+		Object[] parentNodeInfo = null;
+		int length = 99999;
+		for(Object[] candidate : candidates) {
+			String remainingPath = (String)candidate[1];
+			if(remainingPath==null) {
+				parentNodeInfo = candidate;
+				break;
+			}
+			else {
+				if(remainingPath.length()<length) {
+					length = remainingPath.length();
+					parentNodeInfo = candidate;
+				}
+			}
+		}
+		
+		HAPContextNode parentNode = null;
+		if(parentNodeInfo!=null) {
+			if(parentNodeInfo[1]==null) {
+				//exactly match with path
+				parentNode = (HAPContextNode)parentNodeInfo[0];
+			}
+			else {
+				//nof exactly match with path
+				HAPContextNode candidateNode = (HAPContextNode)parentNodeInfo[0];
+				HAPContextNodeCriteria nodeCriteria = candidateNode.getDefinition();
+				if(nodeCriteria!=null) {
+					//data type node
+					HAPDataTypeCriteria parentCriteria = HAPCriteriaUtility.getChildCriteriaByPath(nodeCriteria.getValue(), (String)parentNodeInfo[1]);
+					if(parentCriteria!=null) {
+						parentNode = new HAPContextNode(); 
+						parentNode.setDefinition(new HAPContextNodeCriteria(parentCriteria));
+					}
+				}
+			}
+		}
+		
 		return parentNode;
 	}
 	
-	//convert context element in ui tag to context element in ui resource/tag
+	//convert context element definition in ui tag to context element in ui resource/tag
 	private static HAPContextNodeRoot processUITagDefinitionContextElement(String defRootEleName, HAPUITagDefinitionContextElment defContextElement, HAPUIDefinitionUnit parentUnit, HAPDataTypeHelper dataTypeHelper, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
 		String type = defContextElement.getType();
 		switch(type){
@@ -177,12 +227,17 @@ public class HAPContextUtility {
 					}
 					out.setMatchers(noVoidMatchers);
 				}
+				else{
+					throw new RuntimeException();
+				}
 				return out;
 			}	
 		}
 		return null;
 	}
 	
+	//merge parent context def with child context def to another context out
+	//also generate matchers from parent to child
 	private static void merge(HAPContextNode parent, HAPContextNode def, HAPContextNode out, Map<String, HAPMatchers> matchers, HAPContextPath path, HAPDataTypeHelper dataTypeHelper){
 		HAPContextNodeCriteria parentDefinition = parent.getDefinition();
 		if(parentDefinition!=null){
@@ -209,8 +264,10 @@ public class HAPContextUtility {
 		}
 	}
 	
-	
-	private static void processCriteria(String path, HAPContextNode node, Map<String, HAPVariableInfo> criterias){
+	//discover data type criteria defined in context node
+	//the purpose is to find variables related with data type criteria
+	//the data type criteria name is full name in path, for instance, a.b.c.d
+	private static void discoverCriteriaInContextNode(String path, HAPContextNode node, Map<String, HAPVariableInfo> criterias){
 		HAPContextNodeCriteria definition = node.getDefinition();
 		if(definition!=null){
 			criterias.put(path, new HAPVariableInfo(definition.getValue()));
@@ -219,7 +276,7 @@ public class HAPContextUtility {
 			Map<String, HAPContextNode> children = node.getChildren();
 			for(String childName : children.keySet()){
 				String childPath = HAPNamingConversionUtility.cascadeComponentPath(path, childName);
-				processCriteria(childPath, children.get(childName), criterias);
+				discoverCriteriaInContextNode(childPath, children.get(childName), criterias);
 			}
 		}
 	}

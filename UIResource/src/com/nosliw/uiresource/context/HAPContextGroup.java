@@ -9,6 +9,8 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 
+//a group of context
+//normally contexts are grouped according to type : public, private, ...
 @HAPEntityWithAttribute
 public class HAPContextGroup extends HAPSerializableImp{
 	

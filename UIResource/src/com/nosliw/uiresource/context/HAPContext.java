@@ -34,14 +34,37 @@ public class HAPContext extends HAPSerializableImp{
 	}
 
 	public HAPContextNode getChild(HAPContextPath path){
-		HAPContextNode out = (HAPContextNode)this.m_elements.get(path.getRootElementName());
-		if(out!=null){
+		Object[] out = this.discoverChild(path);
+		return (HAPContextNode)out[0];
+	}
+
+	//discover child node according to path
+	//may not find exact match child node according to path
+	//   return[0]   closest child node
+	//   return[1]   remaining path
+	public Object[] discoverChild(HAPContextPath path){
+		Object[] out = new Object[2];
+		String remainingPath = null;
+		HAPContextNode outNode = (HAPContextNode)this.m_elements.get(path.getRootElementName());
+		if(outNode!=null){
 			String[] pathSegs = path.getPathSegments();
 			for(String pathSeg : pathSegs){
-				out = out.getChildren().get(pathSeg);
-				if(out==null)  break;
+				if(remainingPath==null) {
+					HAPContextNode node = outNode.getChildren().get(pathSeg);
+					if(node==null) {
+						remainingPath = pathSeg;
+					}
+					else {
+						outNode = node;
+					}
+				}
+				else {
+					remainingPath = remainingPath + "." + pathSeg;
+				}
 			}
 		}
+		out[0] = outNode;
+		out[1] = remainingPath;
 		return out;
 	}
 	

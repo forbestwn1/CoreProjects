@@ -72,6 +72,7 @@ public class HAPConstant {
 		public static final String DATAOPERATION_PARSELITERAL = "parseLiteral";
 		public static final String DATAOPERATION_COMPLEX_GETCHILDRENNAMES = "getChildrenNames";
 		public static final String DATAOPERATION_COMPLEX_GETCHILDDATA = "getChildData";
+		public static final String DATAOPERATION_COMPLEX_GETCHILDDATA_NAME = "name";
 		public static final String DATAOPERATION_COMPLEX_GETCHILDDATABYINDEX = "getChildDataByIndex";
 		public static final String DATAOPERATION_COMPLEX_SETCHILDDATA = "setChildData";
 		public static final String DATAOPERATION_COMPLEX_ISACCESSCHILDBYID = "isAccessChildById";

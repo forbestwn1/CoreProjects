@@ -9,6 +9,13 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
+/**
+ * Node in context definition
+ * One node either 
+ * 		has data type  -- a leaf
+ *   or has children -- a branch
+ * cannot be both
+ */
 @HAPEntityWithAttribute
 public class HAPContextNode extends HAPSerializableImp{
 
@@ -18,6 +25,7 @@ public class HAPContextNode extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String CHILDREN  = "children";
 	
+	//child node
 	private Map<String, HAPContextNode> m_children;
 	
 	//context definition of that node (criteria)

@@ -63,6 +63,8 @@ public class HAPUIResourceParser {
 		this.m_criteriaParser = HAPCriteriaParser.getInstance();
 	}
 	
+	//resourceUnit : target ui resource object
+	//content : html content
 	public void parseContent(HAPUIDefinitionUnit resourceUnit, String content){
 		try{
 			Document doc = Jsoup.parse(content, "UTF-8");

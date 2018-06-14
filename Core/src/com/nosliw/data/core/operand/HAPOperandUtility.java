@@ -11,21 +11,16 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionManager;
-import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.task.HAPExecutableTask;
 import com.nosliw.data.core.task.HAPUpdateVariable;
 
 public class HAPOperandUtility {
 
-	static public final String OPERATION_GETCHILDDATA = "getChildData";
-	static public final String OPERATION_GETCHILDDATA_NAME = "name";
-	
 	static public void replaceAttributeOpWithOperationOp(HAPOperandWrapper operand) {
 		List<HAPOperandWrapper> attrOperands = new ArrayList<HAPOperandWrapper>();
 		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
@@ -46,8 +41,8 @@ public class HAPOperandUtility {
 			HAPOperandAttribute attrOp = (HAPOperandAttribute)attrOpWrapper.getOperand();
 			
 			List<HAPParmInOperationOperand> parms = new ArrayList<HAPParmInOperationOperand>();
-			parms.add(new HAPParmInOperationOperand(OPERATION_GETCHILDDATA_NAME, new HAPOperandConstant(new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), attrOp.getAttribute()))));
-			HAPOperandOperation opOperand = new HAPOperandOperation(attrOp.getBase().getOperand(), OPERATION_GETCHILDDATA, parms);
+			parms.add(new HAPParmInOperationOperand(HAPConstant.DATAOPERATION_COMPLEX_GETCHILDDATA_NAME, new HAPOperandConstant(new HAPDataWrapper(new HAPDataTypeId("test.string;1.0.0"), attrOp.getAttribute()))));
+			HAPOperandOperation opOperand = new HAPOperandOperation(attrOp.getBase().getOperand(), HAPConstant.DATAOPERATION_COMPLEX_GETCHILDDATA, parms);
 			attrOpWrapper.setOperand(opOperand);
 		}
 	}

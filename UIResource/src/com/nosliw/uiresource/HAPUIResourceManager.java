@@ -11,7 +11,6 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.context.HAPContextGroup;
@@ -128,6 +127,7 @@ public class HAPUIResourceManager {
 	
 	private void processUIResource(HAPUIDefinitionUnitResource uiResource) {
 		//process include tags
+		//process included ui resource and convert it into standard include tag
 		HAPUITagUtility.processIncludeTags(uiResource, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, getUIResourceParser(), this.m_idGengerator);
 		
 		//build expression context

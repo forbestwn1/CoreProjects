@@ -69,7 +69,7 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 	 * transform string to data object
 	 * the string can be in different format: 
 	 * 		json : start with { 
-	 * 		literal : #type:categary:value
+	 * 		literal : #type:value
 	 * 		otherwise, treat as simple text
 	 */
 	@Override

@@ -2,22 +2,29 @@
 <html>
 <body>
 		<br>
-		Sum:<%=#|?(result)?.length()|#.value%>
+<!--		Sum:<%=#|?(result)?.length()|#.value%>  -->
 
-		Sum:<%=#|?(result)?.1.schoolName|#.value%>
-
-/*		
 		<br>
+
+		<nosliw-loop data="result" element="ele" index="index">  
+			<br>
+			SchoolName: <%=#|?(ele)?.getChildData(name:&(schoolAttribute)&)|#.value%>   
+			<br>
+		</nosliw-loop>
+
+		
+<!--
 		<nosliw-map data="result" element="ele" index="index">
 			<div style="height:40px;width:200px;">
 				<br>
-				SchoolName: <%=?(ele.schoolName)?.value%>   
+				SchoolName: <%=#|?(ele)?.getChildData(name:&(schoolAttribute)&)|#.value%>   
 				<br>
-				Rating: <%=?(ele.schoolRating)?.value%>   
+<!--				SchoolName: <%=?(ele.schoolName)?.value%>   ->
+				<br>
+<!--				Rating: <%=?(ele.schoolRating)?.value%>   ->
 			</div>
 		</nosliw-map>
-*/		
-		
+-->		
 </body>
 
 
@@ -30,6 +37,10 @@
 	
 	<constants>
 	{
+		schoolAttribute : {
+			dataTypeId: "test.string;1.0.0",
+			value: "schoolName"
+		}
 	}
 	</constants>
 	
@@ -40,7 +51,7 @@
 	{
 		public : {
 			result : {
-				definition : "test.array;1.0.0",
+				definition : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
 				default : {
 					dataTypeId: "test.array;1.0.0",
 					value: [

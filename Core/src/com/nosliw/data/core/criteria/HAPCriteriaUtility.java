@@ -1,5 +1,6 @@
 package com.nosliw.data.core.criteria;
 
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 public class HAPCriteriaUtility {
@@ -12,6 +13,17 @@ public class HAPCriteriaUtility {
 		HAPDataTypeCriteria out = HAPCriteriaParser.getInstance().parseCriteria(str);
 		if(criteria instanceof HAPDataTypeCriteriaAbstract) {
 			((HAPDataTypeCriteriaAbstract)out).setSolidCriteria(((HAPDataTypeCriteriaAbstract)criteria).getSoldCriteria());
+		}
+		return out;
+	}
+
+	public static HAPDataTypeCriteria getChildCriteriaByPath(HAPDataTypeCriteria criteria, String path) {
+		HAPDataTypeCriteria out = criteria;
+		HAPPath pathObj = new HAPPath(path);
+		for(String pathSeg : pathObj.getPathSegs()) {
+			if(out!=null) {
+				out = getChildCriteria(out, pathSeg);
+			}
 		}
 		return out;
 	}

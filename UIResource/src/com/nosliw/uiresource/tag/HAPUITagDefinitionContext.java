@@ -9,7 +9,9 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-
+/**
+ * Represent definition of context according to relationship with parent 
+ */
 @HAPEntityWithAttribute
 public class HAPUITagDefinitionContext extends HAPSerializableImp{
 

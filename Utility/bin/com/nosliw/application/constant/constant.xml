@@ -225,6 +225,7 @@
 			<definition name="DATAOPERATION_PARSELITERAL" value="parseLiteral"/>
 			<definition name="DATAOPERATION_COMPLEX_GETCHILDRENNAMES" value="getChildrenNames" description="operation for get all children names. it is only defined in complex data"/>
 			<definition name="DATAOPERATION_COMPLEX_GETCHILDDATA" value="getChildData" description="operation for get all child by name. it is only defined in complex data"/>
+			<definition name="DATAOPERATION_COMPLEX_GETCHILDDATA_NAME" value="name" description="parm"/>
 			<definition name="DATAOPERATION_COMPLEX_GETCHILDDATABYINDEX" value="getChildDataByIndex" description="operation for get child by index. it is only defined in complex data"/>
 			
 			<definition name="DATAOPERATION_COMPLEX_SETCHILDDATA" value="setChildData" description="operation for get all children names. it is only defined in complex data"/>
