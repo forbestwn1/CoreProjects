@@ -2,7 +2,7 @@
 <html>
 <body>
 		<br>
-<!--		Sum:<%=#|?(result)?.length()|#.value%>  -->
+		Sum:<%=#|?(result)?.length()|#.value%>  
 
 		<br>
 

@@ -9,6 +9,8 @@
 	SchoolType:<nosliw-options id="schoolType" data="schoolType"/>
 	<br>
 
+	<nosliw-debug/>
+	
 </body>
 
 	<context>
@@ -27,10 +29,8 @@
 			schoolRating : {
 				definition : "test.float;1.0.0",
 				default : {
-					schoolRating : {
-						dataTypeId: "test.float;1.0.0",
-						value: 9.0
-					},
+					dataTypeId: "test.float;1.0.0",
+					value: 9.0
 				}
 			},
 		}
