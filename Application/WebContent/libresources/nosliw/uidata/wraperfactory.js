@@ -7,6 +7,7 @@ var node_CONSTANT;
 var node_getObjectType;
 var node_createWraperCommon;
 var node_getObjectId;
+var node_basicUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_wrapperFactory = function(){
@@ -27,31 +28,37 @@ var node_wrapperFactory = function(){
 			});
 		},
 		
+
 		/*
 		 * parent wrapper + path
-		 * data + path 
+		 * data
+		 * value + dataType 
 		 */	
-		createWrapper : function(parm1, path){
+		createWrapper : function(parm1, parm2, requestInfo){
 			var wrapperParm1;
 			var dataType = undefined;
+			var path = undefined;
 			
 			var entityType = node_getObjectType(parm1);
 			if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
 				dataType = parm1.getDataType();
 				wrapperParm1 = parm1;
+				path = parm2;
 			}
 			else if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_DATA){
 				dataType = parm1.dataTypeInfo;
 				wrapperParm1 = parm1.value;
 			}
 			else if(dataType==node_CONSTANT.TYPEDOBJECT_TYPE_VALUE){
-				dataType = node_CONSTANT.DATA_TYPE_OBJECT;
+				dataType = parm2;
 				wrapperParm1 = parm1;
 			}
 			else{
-				dataType = node_CONSTANT.DATA_TYPE_OBJECT;
+				dataType = parm2;
 				wrapperParm1 = parm1;
 			}
+			
+			if(node_basicUtility.isStringEmpty(dataType))   dataType = node_CONSTANT.DATA_TYPE_OBJECT;
 			
 			var out = node_createWraperCommon(wrapperParm1, path, loc_factoryFuns[dataType].call(), dataType);
 			
@@ -88,7 +95,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.wrapper.createWraperCommon", function(){node_createWraperCommon = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithid.getObjectId", function(){node_getObjectId = this.getData();});
-
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("wrapperFactory", node_wrapperFactory); 
