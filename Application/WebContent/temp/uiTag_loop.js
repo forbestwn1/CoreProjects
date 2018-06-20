@@ -31,6 +31,28 @@ function (env) {
     var loc_updateView = function (requestInfo) {
         loc_containerVariable = undefined;
         var index = 0;
+        loc_env.executeGetHandleEachElementRequest("internal_data", "", function (eleVar, indexVar) {
+            loc_addEle(eleVar, indexVar, index);
+            index++;
+        }, {success: function (requestInfo, containerVar) {
+            loc_containerVariable = containerVar;
+            loc_containerVariable.registerDataOperationEventListener(undefined, function (event, eventData, requestInfo) {
+                if (event == "EVENT_WRAPPER_SET") {
+                    loc_out.destroy();
+                    loc_updateView();
+                }
+                if (event == "EVENT_WRAPPER_NEWELEMENT") {
+                    loc_addEle(eventData.getElement(), eventData.getIndex(), 0);
+                }
+                if (event == "WRAPPER_EVENT_DESTROY") {
+                    loc_out.prv_deleteEle(loc_getElementContextVariable(eventData.index));
+                }
+            }, this);
+        }});
+    };
+    var loc_updateView1 = function (requestInfo) {
+        loc_containerVariable = undefined;
+        var index = 0;
         loc_env.executeGetHandleEachElementRequest("internal_data", "", function (containerVar, eleVar, indexVar) {
             if (loc_containerVariable == undefined) {
                 loc_containerVariable = containerVar;

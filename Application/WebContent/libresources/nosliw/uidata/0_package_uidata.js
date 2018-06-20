@@ -27,6 +27,9 @@ var library = nosliw.getPackage("uidata");
  * 					this DELETE event should not be processed by variable, it should only be delivered to responding children  
  *  
  * variable: 
+ * 		variable can contain wrapper 
+ * 		
+ * 
  * 			a variable that can contain wrapper that can be set to differen value
  * 			variable only listen to data operation event from wrapper, NO lifecycle event. 
  * 			It is because all the all the wrapper lifecycle is driven by variable
@@ -41,9 +44,10 @@ var library = nosliw.getPackage("uidata");
  * 				DELETEELEMENT	
  * 
  * variable wrapper : 
- * 			wrapper of variable
- *			only variable wrapper is exposed to user
- *			no lifecycle event exposed, only data operation event exposed
+ * 		wrapper of variable
+ *		only variable wrapper is exposed to user, no data wrapper or variable
+ *		no lifecycle event exposed, only data operation event exposed
+ *		whoever create variable wrapper, please release it
  * 
  * context : 
  * 			a set of normal variables wrappers

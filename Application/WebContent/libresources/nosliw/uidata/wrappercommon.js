@@ -31,6 +31,7 @@ var node_RelativeEntityInfo;
  * dataType : object data / appdata
  */
 var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
+	//whether this wrapper is live or destroyed
 	var loc_isLive = true;
 	
 	var loc_resourceLifecycleObj = {};
@@ -64,7 +65,9 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 		//in this case, isValidData is true
 		loc_out.prv_toBeDoneWrapperOperations = [];
 		
-		//whether the data need to calculated from parent
+		//whether the data need to calculated from parent, or sync with parent 
+		//true : data is not dirty
+		//false : data is dirty
 		loc_out.prv_isValidData = false;
 
 		//adapter for converting value
@@ -72,7 +75,9 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 		//this converting job can transform the wrapper value during read and set
 		loc_out.prv_valueAdapter;
 		
-		//path adapter for child
+		//path adapter is for 
+		//1. calculate real path from parent when do data operation
+		//2. calculate path from real path 
 		loc_out.prv_pathAdapter;
 		
 		//whether data based or wrapper based
@@ -95,12 +100,17 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){  loc_destroy();  };
 
+	//destroy resources in wrapper
+	//lifecycle event trigued
 	var loc_destroy = function(requestInfo){
 		if(loc_isLive){
 			nosliw.logging.info("************************  wrapper destroying   ************************");
 			nosliw.logging.info("ID: " + loc_out.prv_id);
 			nosliw.logging.info("***************************************************************");
 
+			//forward the lifecycle event
+			loc_trigueLifecycleEvent(node_CONSTANT.WRAPPER_EVENT_CLEARUP, {}, requestInfo);
+			
 			loc_isLive = false;
 			
 			//clear up event source
@@ -125,7 +135,8 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 	var loc_lifecycleEventProcessor = function(event, eventData, requestInfo){
 		if(loc_isLive){
 			if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP){
-				loc_out.destroy(requestInfo);
+				//if parent destroyed, destroy itself
+				loc_destroy(requestInfo);
 			}				
 		}
 	};
@@ -153,8 +164,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 					//inform the change of wrapper
 					eventData.path = "";
 					if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
-						loc_trigueDataOperationEvent(event, eventData, requestInfo);
-						loc_destroy(requestInfo);
+						loc_responseToDeleteEvent(event, eventData, requestInfo);
 					}
 					else if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
 						//store data operation event
@@ -197,8 +207,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 					//something happens in the middle between parent and this
 					if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
 						eventData.path = "";
-						loc_trigueDataOperationEvent(event, eventData, requestInfo);
-						loc_destroy(requestInfo);
+						loc_responseToDeleteEvent(event, eventData, requestInfo);
 					}
 					else if(event==node_CONSTANT.WRAPPER_EVENT_SET){
 						loc_invalidateData(requestInfo);
@@ -219,7 +228,14 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 		}
 
 	};
-	
+
+	//do something after delete event
+	var loc_responseToDeleteEvent = function(event, eventData, requestInfo){
+		//trigue data opration first
+		loc_trigueDataOperationEvent(event, eventData, requestInfo);
+		//destory current wrapper
+		loc_destroy(requestInfo);
+	};
 	
 	//get value of current wrapper request
 	var loc_getGetValueRequest = function(handlers, requester_parent){
@@ -231,12 +247,13 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 		}
 		else{
 			if(loc_out.prv_isValidData==false){
-				//calculate data
+				//data is dirty, then calculate data, sync data
 				out = node_createServiceRequestInfoSequence(operationService, handlers, requester_parent);
 				//get parent data first
 				var calParentDataRequest = loc_out.prv_relativeWrapperInfo.parent.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
 					success : function(request, parentData){
 						//calculate current value from parent
+						//path from parent to calculate child value
 						var childPath = loc_out.prv_relativeWrapperInfo.parent.toRealPath(loc_out.prv_relativeWrapperInfo.path); 
 
 						return loc_out.prv_typeHelper.getChildValueRequest(parentData.value, childPath, {
@@ -262,6 +279,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 				out.addRequest(calParentDataRequest);
 			}
 			else{
+				//if data is not dirty, apply all the operation
 				if(loc_out.prv_toBeDoneWrapperOperations.length>0){
 					//calculate current value 
 					out = node_createServiceRequestInfoSequence(operationService, handlers, requester_parent);
@@ -482,8 +500,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 			setValueAdapter : function(valueAdapter){  this.prv_valueAdapter = valueAdapter;  },
 
 			destroy : function(requestInfo){
-				//forward the event
-				loc_trigueLifecycleEvent(node_CONSTANT.WRAPPER_EVENT_CLEARUP, {}, requestInfo);
 				loc_destroy(requestInfo);
 			},
 			

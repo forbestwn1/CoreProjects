@@ -62,24 +62,6 @@ var node_wrapperFactory = function(){
 			
 			var out = node_createWraperCommon(wrapperParm1, path, loc_factoryFuns[dataType].call(), dataType);
 			
-//			if(out.pri_isDataBased()){
-//				nosliw.logging.debug("create wrapper", node_getObjectId(out), "dataBased", JSON.stringify(out.pri_getPath()), JSON.stringify(out.pri_getRootData()));
-//			}
-//			else{
-//				nosliw.logging.debug("create wrapper", node_getObjectId(out), "parentBased", out.pri_getPath(), node_getObjectId(out.pri_getParent()));
-//			}
-			
-//			out.registerDataOperationEventListener(undefined, function(eventName, data){
-//				nosliw.logging.info("---------------------  Wrapper data change event  ----------------");
-//				nosliw.logging.info("Path : " + out.pri_path);
-//				nosliw.logging.info("FullPath : " + out.getFullPath());
-//				nosliw.logging.info("EventName : " + eventName);
-//				nosliw.logging.info("Data : " + JSON.stringify(data));
-//				nosliw.logging.info("---------------------    ----------------");
-//				
-//			}, out);
-			
-			
 			return out;
 		}
 			

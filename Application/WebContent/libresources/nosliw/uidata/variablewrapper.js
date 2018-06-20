@@ -20,7 +20,11 @@ var node_uiDataOperationServiceUtility;
 var node_createVariable;
 var node_getHandleEachElementRequest;
 
-//*******************************************   Start Node Definition  ************************************** 	
+//*******************************************   Start Node Definition  **************************************
+//input model:
+//	variable
+//	variable wrapper + path
+//	same as variable input
 var node_createVariableWrapper = function(data1, data2, adapterInfo){
 	
 	var loc_resourceLifecycleObj = {};
@@ -57,17 +61,13 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo){
 		
 		prv_getVariable : function(){	return loc_out.prv_variable;	},
 			
-		createChildVariable : function(path, adapterInfo){	
-			return node_createVariableWrapper(loc_out.prv_variable.createChildVariable(path).variable, undefined, adapterInfo);  
-		}, 
+		createChildVariable : function(path, adapterInfo){		return node_createVariableWrapper(loc_out.prv_variable.createChildVariable(path).variable, undefined, adapterInfo);		}, 
 		
 		release : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
 		
 		getDataOperationRequest : function(operationService, handlers, request){	return loc_out.prv_variable.getDataOperationRequest(operationService, handlers, request);	},
 		
-		getHandleEachElementRequest : function(elementHandleRequestFactory, handlers, request){		
-			return node_getHandleEachElementRequest(loc_out, "", elementHandleRequestFactory, handlers, request);		
-		},
+		getHandleEachElementRequest : function(elementHandleRequestFactory, handlers, request){		return node_getHandleEachElementRequest(loc_out, "", elementHandleRequestFactory, handlers, request);		},
 		
 		registerDataOperationEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);},
 		getDataOperationEventObject : function(){   return this.prv_dataOperationEventObject;   },

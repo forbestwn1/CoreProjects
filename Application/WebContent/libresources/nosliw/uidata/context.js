@@ -163,7 +163,7 @@ var node_createContext = function(elementInfosArray, request){
 		
 		getHandleEachElementRequest : function(name, path, elementHandleRequestFactory, handlers, request){
 			var eleVar = loc_out.prv_elements[name].variable;
-			return node_getHandleEachElementRequest(eleVar, path, elementHandleRequestFactory, handlers, request)
+			return node_getHandleEachElementRequest(eleVar, path, elementHandleRequestFactory, handlers, request);
 		},
 		
 		getElementsName : function(){
