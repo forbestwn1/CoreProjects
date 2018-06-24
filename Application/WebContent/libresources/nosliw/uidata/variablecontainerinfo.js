@@ -45,12 +45,6 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 	//   index : position in container
 	//   id : id of the element, optional
 	var loc_addElement = function(index, id){
-		
-		if(loc_orderChildrenInfo==undefined){
-			var kkkkk = 5555;
-			kkkkk++;
-		}
-		
 		//add element to order child info
 		var eleInfo = loc_orderChildrenInfo.insertElement(index, id);
 		//create child variable according to path provided by orderChildrenInfo

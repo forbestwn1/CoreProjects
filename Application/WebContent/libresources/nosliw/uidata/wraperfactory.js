@@ -62,12 +62,6 @@ var node_wrapperFactory = function(){
 			
 			var out = node_createWraperCommon(wrapperParm1, path, this.getDataTypeHelper(dataType), dataType);
 
-			var e = node_getObjectType(out);
-			if(e!=node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
-				var kkkk = 5555;
-				kkkk++;
-			}			
-			
 			return out;
 		},
 		

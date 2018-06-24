@@ -33,11 +33,6 @@ var node_RelativeEntityInfo;
  */
 var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 	
-	if(typeHelper==undefined){
-		var kkkk = 5555;
-		kkkk++;
-	}
-	
 	var loc_resourceLifecycleObj = {};
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(parm1, path, typeHelper, dataType){
 		//whether this wrapper is live or destroyed
@@ -165,13 +160,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 	//data operation event processor
 	var loc_dataOperationEventProcessor = function(event, eventData, requestInfo){
 		if(loc_out.prv_isLive){
-			
-			if(loc_out.prv_eventAdapter!=undefined){
-				var kkkkk = 5555;
-				kkkkk++;
-			}
-
-			
 			if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD){
 				//for forward event, expand it
 				event = eventData.event;

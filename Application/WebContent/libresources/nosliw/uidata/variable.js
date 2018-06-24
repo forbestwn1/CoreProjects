@@ -43,16 +43,6 @@ var node_createVariable = function(data1, data2, adapterInfo){
 
 		//every variable has a id, it is for debuging purpose
 		loc_out.prv_id = nosliw.runtime.getIdService().generateId();
-
-		if(this.prv_id=="105"){
-			var kkkk = 5555;
-			kkkk++;
-		}
-		
-		if(adapterInfo!=undefined){
-			var kkkk = 5555;
-			kkkk++;
-		}
 		
 		//adapter that will apply to value of wrapper
 		loc_out.prv_valueAdapter = adapterInfo==undefined ? undefined : adapterInfo.valueAdapter;
@@ -262,25 +252,8 @@ var node_createVariable = function(data1, data2, adapterInfo){
 		
 		
 		var entityType = node_getObjectType(wrapper);
-		if(entityType!=node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
-			var kkkkk = 5555;
-			kkkkk++;
-		}
-		
-		
-		if(loc_out.prv_id=="100"){
-			var kkkk = 5555;
-			kkkk++;
-		}
-		
 		if(loc_out.prv_isWrapperExists()){
 			//adapter
-			
-			if(loc_out.prv_pathAdapter!=undefined){
-				var kkkk = 555;
-				kkkk++;
-			}
-			
 			loc_out.prv_wrapper.setValueAdapter(loc_out.prv_valueAdapter);
 			loc_out.prv_wrapper.setPathAdapter(loc_out.prv_pathAdapter);
 			loc_out.prv_wrapper.setEventAdapter(loc_out.prv_eventAdapter);
@@ -308,18 +281,7 @@ var node_createVariable = function(data1, data2, adapterInfo){
 				else loc_setWrapper(undefined, requestInfo);
 			},
 			
-			prv_getWrapper : function(){
-				
-				var entityType = node_getObjectType(this.prv_wrapper);
-				if(entityType!=node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
-					var kkkkk = 5555;
-					kkkkk++;
-				}
-				
-				
-				
-				return this.prv_wrapper;
-			},
+			prv_getWrapper : function(){	return this.prv_wrapper;	},
 
 			prv_isWrapperExists : function(){
 				if(this.prv_wrapper==null)   return false;
@@ -384,13 +346,6 @@ var node_createVariable = function(data1, data2, adapterInfo){
 			//     variable : child variable 
 			//     path : key in child container for child variable
 			createChildVariable : function(path, adapterInfo){
-				
-				if(this.prv_id=="100"){
-					var kkkk = 555;
-					kkkk++;
-				}
-
-				
 				var out;
 				if(adapterInfo==undefined){
 					//normal child, try to reuse existing one
@@ -466,11 +421,6 @@ var node_createVariable = function(data1, data2, adapterInfo){
 					else{
 						out = this.prv_wrapper.getDataOperationRequest(operationService, handlers, requester_parent);
 					}
-				}
-				
-				if(out==undefined){
-					var kkkk = 5555;
-					kkkk++;
 				}
 				
 				out.setRequestProcessors({
