@@ -38,6 +38,8 @@
 		var loc_childVaraibles = [];
 		
 		var loc_id = 0;
+
+		var loc_handleEachElementProcessor;
 		
 		var loc_generateId = function(){
 			loc_id++;
@@ -51,6 +53,20 @@
 		};
 
 		var loc_updateView = function(requestInfo){
+			_.each(loc_childResourceViews, function(resourceView, id){
+				resourceView.destroy();
+			});
+			loc_childResourceViews = [];
+			
+			var index = 0;
+			loc_handleEachElementProcessor.executeLoopRequest(function(eleVar, indexVar){
+				loc_addEle(eleVar, indexVar, index);
+				index++;
+			});
+		};
+		
+		
+		var loc_updateView1 = function(requestInfo){
 			loc_containerVariable = undefined;
 			var index = 0;
 			loc_env.executeGetHandleEachElementRequest("internal_data", "", 
@@ -100,7 +116,7 @@
 				}
 			}, this);
 		};
-		
+
 		var loc_out = 
 		{
 			
@@ -113,18 +129,17 @@
 			},
 			
 			postInit : function(requestInfo){
+				loc_handleEachElementProcessor = loc_env.createHandleEachElementProcessor("internal_data", "");
+				loc_handleEachElementProcessor.registerEventListener(undefined, function(event){
+					loc_updateView();
+				});
+					
+				
 				loc_updateView();
 			},
 
 			destroy : function(){
-				loc_containerVariable.release();
-				_.each(loc_childResourceViews, function(resourceView, id){
-					resourceView.destroy();
-				});
-				_.each(loc_childVaraibles, function(variable, path){
-					variable.release();
-				});
-				
+				loc_handleEachElementProcessor.destroy();
 			}
 		};
 		return loc_out;

@@ -34,9 +34,12 @@ nosliw.registerNodeEvent("runtime", "active", function(eventName, nodeName){
 					nosliw.logging.info(JSON.stringify(uiResourceView));
 					
 					uiResourceView.appendTo($('#testDiv'));
+
+//					return;
 					
-//					uiResourceView.getContext().
+					myVar = setTimeout(
 					
+					function(){
 					uiResourceView.executeDataOperationRequestSet("result", {
 						
 						dataTypeId: "test.array;1.0.0",
@@ -86,7 +89,7 @@ nosliw.registerNodeEvent("runtime", "active", function(eventName, nodeName){
 								value: {
 									schoolName : {
 										dataTypeId: "test.string;1.0.0",
-										value: "School3"
+										value: "School6"
 									},
 									schoolRating : {
 										dataTypeId: "test.float;1.0.0",
@@ -104,7 +107,7 @@ nosliw.registerNodeEvent("runtime", "active", function(eventName, nodeName){
 						]						
 						
 					}, node_CONSTANT.DATA_TYPE_APPDATA);
-
+					}, 2000);
 					
 					
 //					var views = uiResourceView.getViews();

@@ -36,6 +36,17 @@ var node_buildInterface = function(baseObject, name, newInterfaceObj){
 		return baseObject;
 	};
 
+	
+	if(baseObject["interfaceObject"+node_basicUtility.capitalizeFirstLetter(name)]!=undefined || interfaceBase[name]!=undefined){
+		var kkkkk = 5555;
+		kkkkk++;
+	}
+	
+	if(newInterfaceObj==undefined){
+		var kkkk = 5555;
+		kkkk++;
+	}
+	
 	//store interface object as attribute of baseObject
 	baseObject["interfaceObject"+node_basicUtility.capitalizeFirstLetter(name)] = newInterfaceObj;
 	

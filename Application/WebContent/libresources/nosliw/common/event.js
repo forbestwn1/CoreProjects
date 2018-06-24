@@ -12,6 +12,11 @@ var packageObj = library.getChildPackage("event");
 
 	var INTERFACENAME = "EVENT";
 
+	var node_EventInfo = function(eventName, eventData){
+		this.eventName = eventName;
+		this.eventData = eventData;
+	};
+	
 	var node_createEventObject = function(){
 		var loc_backboneEventObj = _.extend({}, Backbone.Events);
 		var loc_listeners = [];
@@ -189,5 +194,6 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 packageObj.createChildNode("createEventObject", node_createEventObject); 
 packageObj.createChildNode("getEventInterface", node_getEventInterface); 
 packageObj.createChildNode("utility", node_utility); 
+packageObj.createChildNode("EventInfo", node_EventInfo); 
 
 })(packageObj);

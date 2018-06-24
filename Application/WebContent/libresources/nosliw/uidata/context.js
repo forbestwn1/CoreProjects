@@ -161,9 +161,9 @@ var node_createContext = function(elementInfosArray, request){
 			return baseVariable.variable.getDataOperationRequest(operationService, handlers, request);
 		},
 		
-		getHandleEachElementRequest : function(name, path, elementHandleRequestFactory, handlers, request){
+		createHandleEachElementProcessor : function(name, path){
 			var eleVar = loc_out.prv_elements[name].variable;
-			return node_getHandleEachElementRequest(eleVar, path, elementHandleRequestFactory, handlers, request);
+			return node_createHandleEachElementProcessor(eleVar, path);
 		},
 		
 		getElementsName : function(){
@@ -250,7 +250,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.orderedcontainer.getHandleEachElementRequest", function(){node_getHandleEachElementRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.orderedcontainer.createHandleEachElementProcessor", function(){node_createHandleEachElementProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});

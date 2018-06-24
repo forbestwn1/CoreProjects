@@ -33,7 +33,6 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo){
 
 		if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE && node_basicUtility.isStringEmpty(data2) && adapterInfo==undefined){
 			loc_out.prv_variable = data1;
-			
 		}
 		else{
 			if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLEWRAPPER)	data1 = data1.prv_getVariable();
@@ -52,24 +51,29 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo){
 	};	
 
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
-		loc_out.prv_variable.release();
 		//take care of release event 
 		loc_out.prv_dataOperationEventObject.clearup();
+		loc_out.prv_dataOperationEventObject=undefined;
+		//release variable
+		loc_out.prv_variable.release();
+		loc_out.prv_variable=undefined;
 	};	
 	
 	var loc_out = {
 		
-		prv_getVariable : function(){	return loc_out.prv_variable;	},
+		prv_getVariable : function(){	return this.prv_variable;	},
 			
-		createChildVariable : function(path, adapterInfo){		return node_createVariableWrapper(loc_out.prv_variable.createChildVariable(path).variable, undefined, adapterInfo);		}, 
+		createChildVariable : function(path, adapterInfo){	
+//			return node_createVariableWrapper(this.prv_variable.createChildVariable(path).variable, undefined, adapterInfo);
+			return node_createVariableWrapper(this, path, adapterInfo);
+		}, 
 		
 		release : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
 		
-		getDataOperationRequest : function(operationService, handlers, request){	return loc_out.prv_variable.getDataOperationRequest(operationService, handlers, request);	},
-		
-		getHandleEachElementRequest : function(elementHandleRequestFactory, handlers, request){		return node_getHandleEachElementRequest(loc_out, "", elementHandleRequestFactory, handlers, request);		},
+		getDataOperationRequest : function(operationService, handlers, request){	return this.prv_variable.getDataOperationRequest(operationService, handlers, request);	},
 		
 		registerDataOperationEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);},
+		unregisterDataOperationEventListener : function(listenerEventObj){return this.prv_dataOperationEventObject.unregister(listenerEventObj);},
 		getDataOperationEventObject : function(){   return this.prv_dataOperationEventObject;   },
 		
 	};

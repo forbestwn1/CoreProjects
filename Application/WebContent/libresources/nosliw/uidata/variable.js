@@ -35,14 +35,25 @@ var node_requestServiceProcessor;
  *      3. value + value type
  */
 var node_createVariable = function(data1, data2, adapterInfo){
-	//whether this variable is live or destroyed
-	var loc_isLive = true;
 	 
 	var loc_resourceLifecycleObj = {};
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(data1, data2, adapterInfo){
+		//whether this variable is live or destroyed
+		loc_out.prv_isLive = true;
+
 		//every variable has a id, it is for debuging purpose
 		loc_out.prv_id = nosliw.runtime.getIdService().generateId();
 
+		if(this.prv_id=="105"){
+			var kkkk = 5555;
+			kkkk++;
+		}
+		
+		if(adapterInfo!=undefined){
+			var kkkk = 5555;
+			kkkk++;
+		}
+		
 		//adapter that will apply to value of wrapper
 		loc_out.prv_valueAdapter = adapterInfo==undefined ? undefined : adapterInfo.valueAdapter;
 
@@ -84,8 +95,11 @@ var node_createVariable = function(data1, data2, adapterInfo){
 			loc_out.prv_isBase = false;
 			loc_out.prv_relativeVariableInfo = new node_RelativeEntityInfo(data1, data2);
 			
+			//add current variable as child of data1 variable
+			loc_out.prv_parentPath = data1.prv_addChildVariable(loc_out, data2, adapterInfo);
+			
 			//build wrapper relationship with parent
-			loc_updateWrapperByParent();
+			loc_out.prv_updateWrapperInRelativeVariable();
 		}
 		else{
 			//for object/data
@@ -93,40 +107,54 @@ var node_createVariable = function(data1, data2, adapterInfo){
 			var r = loc_out.prv_getSetBaseDataRequest(data1, data2);
 			node_requestServiceProcessor.processRequest(r);
 		}
+		
+		nosliw.logging.info("************************  variable created   ************************");
+		nosliw.logging.info("ID: " + loc_out.prv_id);
+		if(loc_out.prv_relativeVariableInfo!=undefined){
+			nosliw.logging.info("Parent: " + loc_out.prv_relativeVariableInfo.parent.prv_id);
+			nosliw.logging.info("Parent Path: " + loc_out.prv_relativeVariableInfo.path);
+		}
+		nosliw.logging.info("***************************************************************");
+
+		if(loc_out.prv_id=="249"||loc_out.prv_id=="254"||loc_out.prv_id=="260"||loc_out.prv_id=="265"){
+			var kkkk = 5555;
+			kkkk++;
+		}
+		
 	};
 	
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){loc_destroy();};
 	
 	//destroy variable and trigue lifecycle event 
 	var loc_destroy = function(requestInfo){
-		if(loc_isLive){
+		if(loc_out.prv_isLive){
 			nosliw.logging.info("************************  variable destroying   ************************");
 			nosliw.logging.info("ID: " + loc_out.prv_id);
 			nosliw.logging.info("***************************************************************");
 			
 			//trigger lifecycle event
-			loc_out.prv_lifecycleEventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_CLEARUP, {}, requestInfo);
+			loc_out.prv_lifecycleEventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_CLEARUP_BEFORE, {}, requestInfo);
 
-			loc_isLive = false;
+			loc_out.prv_isLive = false;
 			
 			//clean up event object
 			loc_out.prv_dataOperationEventObject.clearup();
-			loc_out.prv_lifecycleEventObject.clearup();
 	
 			//clean up adapter
 			if(loc_out.prv_destoryAdapter!=undefined)   loc_out.prv_destoryAdapter();
 	
 			//clear children variable first
-			for (var key in loc_out.prv_childrenVariable){
-			    if (loc_out.prv_childrenVariable.hasOwnProperty(key)){
-			    	loc_out.prv_childrenVariable[key].destroy(requestInfo);
-			        delete loc_out.prv_childrenVariable[key];
-			    }
-			}	
-	
+			_.each(loc_out.prv_childrenVariable, function(childVar, path){		childVar.destroy(requestInfo);	});
+			loc_out.prv_childrenVariable = {};
+			_.each(loc_out.prv_extraChildrenVariable, function(childVar, path){		childVar.destroy(requestInfo);	});
+			loc_out.prv_extraChildrenVariable = {};
+			
 			//destroy wrapper 
 			loc_destroyWrapper(requestInfo);
 	
+			//trigger lifecycle event
+			loc_out.prv_lifecycleEventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_CLEARUP_AFTER, {}, requestInfo);
+			loc_out.prv_lifecycleEventObject.clearup();
 			for (var key in loc_out){
 			    if (loc_out.hasOwnProperty(key)){
 			    	//don't delete function
@@ -135,6 +163,7 @@ var node_createVariable = function(data1, data2, adapterInfo){
 			    	}
 			    }
 			}
+			loc_out.prv_isLive = false;
 		}
 	};
 	
@@ -146,39 +175,29 @@ var node_createVariable = function(data1, data2, adapterInfo){
 	 */
 	var loc_destroyWrapper = function(requestInfo){
 		//if no wrapper, no effect
-		if(loc_out.prv_wrapper==undefined)   return;
-
-		//unregister listener from wrapper
-		loc_out.prv_wrapper.unregisterDataOperationEventListener(loc_out.prv_dataOperationEventObject);
-		
-		//destroy wrapper
-		loc_out.prv_wrapper.destroy(requestInfo);
-
+		if(loc_out.prv_isWrapperExists()){
+			//unregister listener from wrapper
+			loc_out.prv_wrapper.unregisterDataOperationEventListener(loc_out.prv_dataOperationEventObject);
+			
+			//destroy wrapper
+			loc_out.prv_wrapper.destroy(requestInfo);
+		}
 		loc_out.prv_wrapper = undefined;
 	};
 	
-	//set new wrapper according to parent variable 
-	var loc_updateWrapperByParent = function(requestInfo){
-		var parentWrapper = loc_out.prv_relativeVariableInfo.parent.prv_getWrapper();
-		if(parentWrapper!=undefined)   loc_setWrapper(node_wrapperFactory.createWrapper(parentWrapper, loc_out.prv_relativeVariableInfo.path), requestInfo);
-		else loc_setWrapper(undefined, requestInfo);
-	};
-	
-
-	//set new wrapper
-	var loc_setWrapper = function(wrapper, requestInfo){
-		loc_out.prv_wrapper = wrapper;
-		if(loc_out.prv_wrapper!=undefined){
-			loc_out.prv_wrapper.setValueAdapter(loc_out.prv_valueAdapter);
-			loc_out.prv_wrapper.setPathAdapter(loc_out.prv_pathAdapter);
-			loc_registerWrapperDataOperationEvent();
-		}
-	};
-
 	//listen to wrapper data operation event
 	var loc_registerWrapperDataOperationEvent = function(){
 		if(loc_out.prv_wrapper==undefined)  return;
 		loc_out.prv_wrapper.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, function(event, eventData, requestInfo){
+			loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, requestInfo);
+			
+//			if(eventInfo.event==node_CONSTANT.WRAPPER_EVENT_DELETE && node_basicUtility.isStringEmpty(eventInfo.value)){
+			if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
+				//lifecycle
+				loc_out.destroy();
+			}
+			
+/*			
 			var events = [{
 				event : event,
 				value : eventData
@@ -192,11 +211,13 @@ var node_createVariable = function(data1, data2, adapterInfo){
 				//process data event first
 				loc_out.prv_dataOperationEventObject.triggerEvent(eventInfo.event, eventInfo.value, requestInfo);
 				
-				if(eventInfo.event==node_CONSTANT.WRAPPER_EVENT_DELETE && node_basicUtility.isStringEmpty(eventInfo.value)){
+//				if(eventInfo.event==node_CONSTANT.WRAPPER_EVENT_DELETE && node_basicUtility.isStringEmpty(eventInfo.value)){
+				if(eventInfo.event==node_CONSTANT.WRAPPER_EVENT_DELETE){
 					//lifecycle
 					loc_out.destroy();
 				}
 			});
+*/			
 		});
 	};
 
@@ -225,30 +246,92 @@ var node_createVariable = function(data1, data2, adapterInfo){
 //			}
 //		});
 		childVar.registerLifecycleEventListener(loc_out.prv_lifecycleEventObject, function(event, eventData, request){
-			if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP){
+			if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP_BEFORE){
 				childVar.unregisterLifecycleEventListener(loc_out.prv_lifecycleEventObject);
 				delete container[path];
 			}
 		});
 	};
 	
-	//when parent wrapper get changed, update children accordingly 
-	var loc_updateChildrenData = function(requestInfo){
+	//set new wrapper
+	var loc_setWrapper = function(wrapper, requestInfo){
+		//destroy old wrapper first
+		loc_destroyWrapper(requestInfo);
+		//set wrapper
+		loc_out.prv_wrapper = wrapper;
+		
+		
+		var entityType = node_getObjectType(wrapper);
+		if(entityType!=node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
+			var kkkkk = 5555;
+			kkkkk++;
+		}
+		
+		
+		if(loc_out.prv_id=="100"){
+			var kkkk = 5555;
+			kkkk++;
+		}
+		
+		if(loc_out.prv_isWrapperExists()){
+			//adapter
+			
+			if(loc_out.prv_pathAdapter!=undefined){
+				var kkkk = 555;
+				kkkk++;
+			}
+			
+			loc_out.prv_wrapper.setValueAdapter(loc_out.prv_valueAdapter);
+			loc_out.prv_wrapper.setPathAdapter(loc_out.prv_pathAdapter);
+			loc_out.prv_wrapper.setEventAdapter(loc_out.prv_eventAdapter);
+			//event listener
+			loc_registerWrapperDataOperationEvent();
+		}
+		//update wrapper in children variable accordingly
 		_.each(loc_out.prv_childrenVariable, function(childVariable, path){
-			childVariable.prv_updateRelativeData(requestInfo);
+			childVariable.prv_updateWrapperInRelativeVariable(requestInfo);
 		});
+		
+		_.each(loc_out.prv_extraChildrenVariable, function(childVariable, path){
+			childVariable.prv_updateWrapperInRelativeVariable(requestInfo);
+		});
+		
 	};
-	
+
 	var loc_out = {
 	
-			prv_getWrapper : function(){return this.prv_wrapper;},
+			//update wrapper when parent's wrapper changed
+			prv_updateWrapperInRelativeVariable : function(requestInfo){
+				var parentVar = this.prv_relativeVariableInfo.parent;
+				var parentWrapper = parentVar.prv_getWrapper();
+				if(parentVar.prv_isWrapperExists())   loc_setWrapper(node_wrapperFactory.createWrapper(parentWrapper, this.prv_relativeVariableInfo.path), requestInfo);
+				else loc_setWrapper(undefined, requestInfo);
+			},
+			
+			prv_getWrapper : function(){
+				
+				var entityType = node_getObjectType(this.prv_wrapper);
+				if(entityType!=node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
+					var kkkkk = 5555;
+					kkkkk++;
+				}
+				
+				
+				
+				return this.prv_wrapper;
+			},
 
+			prv_isWrapperExists : function(){
+				if(this.prv_wrapper==null)   return false;
+				return this.prv_wrapper.prv_isLive;
+			},
+			
+			
+			
 			//has to be base variable
 			//   data 
 			//   value + dataTypeInfo
 			prv_getSetBaseDataRequest : function(parm1, parm2, handlers, requestInfo){
-				loc_destroyWrapper(requestInfo);
-				
 				//create empty wrapper fist
 				var wrapperValue;      //store the value
 				var entityType = node_getObjectType(parm1);
@@ -266,20 +349,10 @@ var node_createVariable = function(data1, data2, adapterInfo){
 				}
 				var wrapper = node_wrapperFactory.createWrapper(parm1, parm2, requestInfo);
 				loc_setWrapper(wrapper, requestInfo);
-				//update children's wrapper according to base wrapper changes
-				loc_updateChildrenData(requestInfo);
 				//set new value
 				return wrapper.getDataOperationRequest(node_uiDataOperationServiceUtility.createSetOperationService("", wrapperValue), handlers, requestInfo);
 			},
 
-			//update data when parent's wrapper changed
-			prv_updateRelativeData : function(requestInfo){
-				//create new wrapper based on wrapper in parent and path
-//				loc_destroyWrapper(requestInfo);
-				loc_updateWrapperByParent(requestInfo);
-				loc_updateChildrenData(requestInfo);
-			},
-			
 			setValueAdapter : function(valueAdapter){  
 				this.prv_valueAdapter = valueAdapter;
 				if(this.prv_wrapper!=undefined)		this.prv_wrapper.setValueAdapter(valueAdapter);
@@ -290,14 +363,56 @@ var node_createVariable = function(data1, data2, adapterInfo){
 				if(this.prv_wrapper!=undefined)		this.prv_wrapper.setPathAdapter(pathAdapter);
 			},
 
-			setEventAdapter : function(eventAdapter){	this.prv_eventAdapter = eventAdapter;	},
+			setEventAdapter : function(eventAdapter){	
+				this.prv_eventAdapter = eventAdapter;	
+				if(this.prv_wrapper!=undefined)		this.prv_wrapper.setEventAdapter(eventAdapter);
+			},
 			
+			prv_addChildVariable : function(childVar, path, adapterInfo){
+				var out;
+				if(adapterInfo==undefined){
+					out = loc_addNormalChildVariable(childVar, path);
+				}
+				else{
+					out = loc_addChildVariableWithAdapter(childVar, path);
+				}
+				return out;
+			},
 			
 			//create child variable, if exist, then reuse it
 			//return child variable info : {}
 			//     variable : child variable 
 			//     path : key in child container for child variable
 			createChildVariable : function(path, adapterInfo){
+				
+				if(this.prv_id=="100"){
+					var kkkk = 555;
+					kkkk++;
+				}
+
+				
+				var out;
+				if(adapterInfo==undefined){
+					//normal child, try to reuse existing one
+					var childVar = loc_out.prv_childrenVariable[path];
+					if(childVar==undefined){
+						var childVar = node_createVariable(loc_out, path, adapterInfo);
+						out = childVar.prv_parentPath;
+					}
+					else{
+						out = {
+							variable : childVar,
+							path : path
+						}
+					}
+				}
+				else{
+					//child with extra info
+					var childVar = node_createVariable(loc_out, path, adapterInfo);
+					out = childVar.prv_parentPath;
+				}
+				
+/*				
 				var out;
 				if(adapterInfo==undefined){
 					//normal child, try to reuse existing one
@@ -317,7 +432,7 @@ var node_createVariable = function(data1, data2, adapterInfo){
 					//child with extra info
 					out = loc_addChildVariableWithAdapter(node_createVariable(loc_out, path, adapterInfo), path);
 				}
-
+*/
 				return out;
 			},
 
@@ -351,6 +466,11 @@ var node_createVariable = function(data1, data2, adapterInfo){
 					else{
 						out = this.prv_wrapper.getDataOperationRequest(operationService, handlers, requester_parent);
 					}
+				}
+				
+				if(out==undefined){
+					var kkkk = 5555;
+					kkkk++;
 				}
 				
 				out.setRequestProcessors({

@@ -26,7 +26,7 @@ var node_parsePathSegment;
 var node_createServiceRequestInfoSimple;
 var node_createServiceRequestInfoSet;
 //*******************************************   Start Node Definition  ************************************** 	
-var node_createWraperData = function(){
+var node_createDataTypeHelperData = function(){
 	
 	var loc_getDirectChildValueRequest = function(parentValue, path, handlers, request){
 		var operationParms = [];
@@ -260,11 +260,11 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", f
 
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
 	//register wrapper faction
-	this.getData().registerWrapperFactoryByDataType([node_CONSTANT.DATA_TYPE_APPDATA], node_createWraperData);
+	this.getData().registerDataTypeHelper([node_CONSTANT.DATA_TYPE_APPDATA], node_createDataTypeHelperData());
 });
 
 
 //Register Node by Name
-packageObj.createChildNode("createWraperData", node_createWraperData); 
+//packageObj.createChildNode("createWraperData", node_createWraperData); 
 
 })(packageObj);

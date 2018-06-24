@@ -102,9 +102,8 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		getDataOperationRequestSet : function(target, path, value, handler, request){	return node_createUIDataOperationRequest(loc_context, this.getDataOperationSet(target, path, value), handler, request);	},
 		executeDataOperationRequestSet : function(target, path, value, handler, request){	return this.processRequest(this.getDataOperationRequestSet(target, path, value, handler, request));	},
 
-		getHandleEachElementRequest : function(name, path, elementHandleRequestFactory, handlers, request){	return this.getContext().getHandleEachElementRequest(name, path, elementHandleRequestFactory, handlers, request);},
-		executeGetHandleEachElementRequest : function(name, path, elementHandleRequestFactory, handlers){	return this.processRequest(this.getHandleEachElementRequest(name, path, elementHandleRequestFactory, handlers));	},
-
+		createHandleEachElementProcessor : function(name, path){  return this.getContext().createHandleEachElementProcessor(name, path);  },
+		
 		getBatchDataOperationRequest : function(operations){
 			var requestInfo = node_createBatchUIDataOperationRequest(loc_context);
 			_.each(operations, function(operation, i){

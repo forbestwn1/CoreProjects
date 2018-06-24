@@ -12,7 +12,7 @@ var node_basicUtility;
 
 var node_wrapperFactory = function(){
 	
-	var loc_factoryFuns = {};
+	var loc_dataTypeHelpers = {};
 	
 	var loc_out = {
 		
@@ -22,9 +22,9 @@ var node_wrapperFactory = function(){
 		 * One wrapper type may support different data type
 		 * For instance: object, data
 		 */	
-		registerWrapperFactoryByDataType : function(dataTypeIds, factoryFun){
+		registerDataTypeHelper : function(dataTypeIds, dataTypeHelper){
 			_.each(dataTypeIds, function(dataTypeId, index){
-				loc_factoryFuns[dataTypeId] = factoryFun;
+				loc_dataTypeHelpers[dataTypeId] = dataTypeHelper;
 			});
 		},
 		
@@ -49,7 +49,7 @@ var node_wrapperFactory = function(){
 				dataType = parm1.dataTypeInfo;
 				wrapperParm1 = parm1.value;
 			}
-			else if(dataType==node_CONSTANT.TYPEDOBJECT_TYPE_VALUE){
+			else if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VALUE){
 				dataType = parm2;
 				wrapperParm1 = parm1;
 			}
@@ -60,10 +60,20 @@ var node_wrapperFactory = function(){
 			
 			if(node_basicUtility.isStringEmpty(dataType))   dataType = node_CONSTANT.DATA_TYPE_OBJECT;
 			
-			var out = node_createWraperCommon(wrapperParm1, path, loc_factoryFuns[dataType].call(), dataType);
+			var out = node_createWraperCommon(wrapperParm1, path, this.getDataTypeHelper(dataType), dataType);
+
+			var e = node_getObjectType(out);
+			if(e!=node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
+				var kkkk = 5555;
+				kkkk++;
+			}			
 			
 			return out;
-		}
+		},
+		
+		getDataTypeHelper : function(dataTypeInfo){
+			return loc_dataTypeHelpers[dataTypeInfo];
+		},
 			
 	};
 	

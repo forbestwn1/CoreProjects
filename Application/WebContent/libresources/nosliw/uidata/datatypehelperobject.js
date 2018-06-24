@@ -18,7 +18,7 @@ var node_createServiceRequestInfoSimple;
 var node_ServiceInfo;
 var node_parseSegment;
 //*******************************************   Start Node Definition  ************************************** 	
-var node_createWraperObject = function(){
+var node_createDataTypeHelperObject = function(){
 	
 	/*
 	 * get attribute value according to the path
@@ -216,10 +216,10 @@ nosliw.registerSetNodeDataEvent("common.segmentparser.parseSegment", function(){
 
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
 	//register wrapper faction
-	this.getData().registerWrapperFactoryByDataType([node_CONSTANT.DATA_TYPE_OBJECT], node_createWraperObject);
+	this.getData().registerDataTypeHelper([node_CONSTANT.DATA_TYPE_OBJECT], node_createDataTypeHelperObject());
 });
 
 //Register Node by Name
-packageObj.createChildNode("createWraperObject", node_createWraperObject); 
+//packageObj.createChildNode("createWraperObject", node_createWraperObject); 
 
 })(packageObj);
