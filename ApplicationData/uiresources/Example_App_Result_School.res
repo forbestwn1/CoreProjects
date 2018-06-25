@@ -7,11 +7,9 @@
 		<br>
 
 		<nosliw-loop data="result" element="ele" index="index">  
-<!--
 			<br>
 			SchoolName: <%=#|?(ele)?.getChildData(name:&(schoolAttribute)&)|#.value%>   
 			<br>
--->		
 		</nosliw-loop>
 
 		

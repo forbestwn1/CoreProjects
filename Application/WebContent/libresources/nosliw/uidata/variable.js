@@ -27,15 +27,33 @@ var node_uiDataOperationServiceUtility;
 var node_dataUtility;
 var node_requestServiceProcessor;
 
-//*******************************************   Start Node Definition  ************************************** 	
+//*******************************************   Start Node Definition  **************************************
+
 /**
+ * create variable
+ * maybe reuse existing variable
+ */
+var node_createVariable = function(data1, data2, adapterInfo){
+	
+	var data1Type = node_getObjectType(data1);
+	if(data1Type==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE){
+		//if data1 is variable, then use crete child variable 
+		return data1.createChildVariable(data2, adapterInfo).variable;
+	}
+	else{
+		return node_newVariable(data1, data2, adapterInfo);
+	}
+};
+
+
+/**
+ * new variable
  * input model : 
  * 		1. parent variable + path from parent
  *      2. data + undefined
  *      3. value + value type
  */
-var node_createVariable = function(data1, data2, adapterInfo){
-	 
+var node_newVariable = function(data1, data2, adapterInfo){
 	var loc_resourceLifecycleObj = {};
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(data1, data2, adapterInfo){
 		//whether this variable is live or destroyed
@@ -105,12 +123,6 @@ var node_createVariable = function(data1, data2, adapterInfo){
 			nosliw.logging.info("Parent Path: " + loc_out.prv_relativeVariableInfo.path);
 		}
 		nosliw.logging.info("***************************************************************");
-
-		if(loc_out.prv_id=="249"||loc_out.prv_id=="254"||loc_out.prv_id=="260"||loc_out.prv_id=="265"){
-			var kkkk = 5555;
-			kkkk++;
-		}
-		
 	};
 	
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){loc_destroy();};
@@ -250,6 +262,11 @@ var node_createVariable = function(data1, data2, adapterInfo){
 		//set wrapper
 		loc_out.prv_wrapper = wrapper;
 		
+		nosliw.logging.info("************************  set wrapper to variable   ************************");
+		nosliw.logging.info("variable: " + loc_out.prv_id);
+		if(loc_out.prv_wrapper!=undefined)		nosliw.logging.info("wrapper: " + loc_out.prv_wrapper.prv_id);
+		else  nosliw.logging.info("wrapper: " + undefined);
+		nosliw.logging.info("***************************************************************");
 		
 		var entityType = node_getObjectType(wrapper);
 		if(loc_out.prv_isWrapperExists()){
@@ -351,7 +368,7 @@ var node_createVariable = function(data1, data2, adapterInfo){
 					//normal child, try to reuse existing one
 					var childVar = loc_out.prv_childrenVariable[path];
 					if(childVar==undefined){
-						var childVar = node_createVariable(loc_out, path, adapterInfo);
+						var childVar = node_newVariable(loc_out, path, adapterInfo);
 						out = childVar.prv_parentPath;
 					}
 					else{
@@ -363,7 +380,7 @@ var node_createVariable = function(data1, data2, adapterInfo){
 				}
 				else{
 					//child with extra info
-					var childVar = node_createVariable(loc_out, path, adapterInfo);
+					var childVar = node_newVariable(loc_out, path, adapterInfo);
 					out = childVar.prv_parentPath;
 				}
 				
