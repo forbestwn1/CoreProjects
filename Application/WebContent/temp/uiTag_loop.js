@@ -82,15 +82,19 @@ function (env) {
     }, postInit: function (requestInfo) {
         loc_handleEachElementProcessor = loc_env.createHandleEachElementProcessor("internal_data", "");
         loc_handleEachElementProcessor.registerEventListener(undefined, function (event, eventData) {
-            if (event == "EACHELEMENTCONTAINER_EVENT_NEWELEMENT") {
-                eventData.indexVar.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {success: function (request, data) {
-                    loc_addEle(eventData.elementVar, eventData.indexVar, data.value.getValue());
-                }});
+            if (event == "EACHELEMENTCONTAINER_EVENT_RESET") {
+                loc_updateView();
             } else {
-                if (event == "EACHELEMENTCONTAINER_EVENT_DELETEELEMENT") {
-                    eventData.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {success: function (request, data) {
-                        loc_out.prv_deleteEle(data.value.getValue());
+                if (event == "EACHELEMENTCONTAINER_EVENT_NEWELEMENT") {
+                    eventData.indexVar.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {success: function (request, data) {
+                        loc_addEle(eventData.elementVar, eventData.indexVar, data.value.getValue());
                     }});
+                } else {
+                    if (event == "EACHELEMENTCONTAINER_EVENT_DELETEELEMENT") {
+                        eventData.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {success: function (request, data) {
+                            loc_out.prv_deleteEle(data.value.getValue());
+                        }});
+                    }
                 }
             }
         });

@@ -328,13 +328,6 @@ var node_createContainerOrderInfo = function(){
 			this.prv_elementsInfo.splice(index, 1);
 			
 			loc_trigueIndexChange(index);
-			
-//			for(var i in this.prv_elementsInfo){
-//				if(this.prv_elementsInfo[i].path==path){
-//					this.prv_elementsInfo.splice(i, 1);
-//					break;
-//				}
-//			}
 		},
 		
 		getElements : function(){		return loc_out.prv_elementsInfo;	},

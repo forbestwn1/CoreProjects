@@ -139,7 +139,10 @@
 			postInit : function(requestInfo){
 				loc_handleEachElementProcessor = loc_env.createHandleEachElementProcessor("internal_data", "");
 				loc_handleEachElementProcessor.registerEventListener(undefined, function(event, eventData){
-					if(event=="EACHELEMENTCONTAINER_EVENT_NEWELEMENT"){
+					if(event=="EACHELEMENTCONTAINER_EVENT_RESET"){
+						loc_updateView();
+					}
+					else if(event=="EACHELEMENTCONTAINER_EVENT_NEWELEMENT"){
 						eventData.indexVar.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
 							success : function(request, data){
 								loc_addEle(eventData.elementVar, eventData.indexVar, data.value.getValue());
