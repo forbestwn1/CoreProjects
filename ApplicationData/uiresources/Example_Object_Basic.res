@@ -23,6 +23,7 @@
 		<br>
 		<nosliw-loop data="business.a.cc" element="ele" index="index">  
 			<br>
+			Index: <%=?(index)?%>
 			<br>
 			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
 			<br>

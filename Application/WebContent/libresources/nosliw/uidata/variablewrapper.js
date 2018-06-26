@@ -19,6 +19,7 @@ var node_createServiceRequestInfoSequence;
 var node_uiDataOperationServiceUtility;
 var node_createVariable;
 var node_getHandleEachElementRequest;
+var node_requestServiceProcessor;
 
 //*******************************************   Start Node Definition  **************************************
 //input model:
@@ -71,7 +72,11 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo){
 		release : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
 		
 		getDataOperationRequest : function(operationService, handlers, request){	return this.prv_variable.getDataOperationRequest(operationService, handlers, request);	},
-		
+		executeDataOperationRequest : function(operationService, handlers, request){
+			var requestInfo = this.getDataOperationRequest(operationService, handlers, request);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+
 		registerDataOperationEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);},
 		unregisterDataOperationEventListener : function(listenerEventObj){return this.prv_dataOperationEventObject.unregister(listenerEventObj);},
 		getDataOperationEventObject : function(){   return this.prv_dataOperationEventObject;   },
@@ -106,6 +111,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.createVariable", function(){node_createVariable = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.orderedcontainer.getHandleEachElementRequest", function(){node_getHandleEachElementRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createVariableWrapper", node_createVariableWrapper); 

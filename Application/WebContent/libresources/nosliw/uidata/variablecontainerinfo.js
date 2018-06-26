@@ -70,8 +70,7 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 		var i = 0;
 		var handleElementsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("HandleElements", {"elements":loc_orderChildrenInfo.getElements()}), handlers, request);
 		_.each(loc_orderChildrenInfo.getElements(), function(ele, index){
-			var elementHandlerResult = elementHandler.call(loc_out, loc_elementsVariable[ele.path]);
-//			var elementHandlerResult = elementHandler.call(loc_out, loc_elementsVariable[ele.path], node_createVariableWrapper(ele.indexVariable));
+			var elementHandlerResult = elementHandler.call(loc_out, loc_elementsVariable[ele.path], ele.indexVariable);
 			//output of elementHandleRequestFactory method maybe request, maybe just object
 			if(node_getObjectType(elementHandlerResult)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
 				//add child request from factory
@@ -113,7 +112,8 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 		
 		loc_containerVariable.registerDataOperationEventListener(undefined, function(event, eventData, requestInfo){
 			if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
-				loc_trigueEvent(node_CONSTANT.EACHELEMENTCONTAINER_EVENT_NEWELEMENT, loc_addElement(eventData.index, eventData.id));
+				var newEventData = loc_addElement(eventData.index, eventData.id);
+				loc_trigueEvent(node_CONSTANT.EACHELEMENTCONTAINER_EVENT_NEWELEMENT, newEventData);
 			}
 		}, this);
 		
@@ -249,7 +249,7 @@ var node_createContainerOrderInfo = function(){
 		var loc_path = path;
 		var loc_eventObject = node_createEventObject();
 		
-		return node_dataUtility.createDataOfDynamic(function(){
+		return node_createVariableWrapper(node_dataUtility.createDataOfDynamic(function(){
 			
 			var out = {
 			
@@ -272,7 +272,7 @@ var node_createContainerOrderInfo = function(){
 				
 			};
 			return out;
-		}());
+		}()));
 	};
 	
 	var loc_out = {

@@ -129,7 +129,7 @@ var node_utility = function(){
 			var dataTypeInfo = data.dataTypeInfo;
 			var out = data.value;
 			if(dataTypeInfo==node_CONSTANT.DATA_TYPE_DYNAMIC){
-				out = data.getValue();
+				out = out.getValue();
 			}
 			return out;
 		}

@@ -14,6 +14,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"loop",
 function (env) {
     var node_namingConvensionUtility = nosliw.getNodeData("common.namingconvension.namingConvensionUtility");
     var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+    var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
     var loc_env = env;
     var loc_containerVariable;
     var loc_childResourceViews = [];
@@ -63,7 +64,7 @@ function (env) {
         }});
     };
     var loc_addEle = function (eleVar, indexVar, index, requestInfo) {
-        var eleContext = loc_env.createExtendedContext([loc_env.createContextElementInfo(loc_env.getAttributeValue("element"), eleVar)], requestInfo);
+        var eleContext = loc_env.createExtendedContext([loc_env.createContextElementInfo(loc_env.getAttributeValue("element"), eleVar), loc_env.createContextElementInfo(loc_env.getAttributeValue("index"), indexVar)], requestInfo);
         var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId() + "." + loc_generateId(), eleContext, requestInfo);
         if (index == 0) {
             resourceView.insertAfter(loc_env.getStartElement());
@@ -86,8 +87,12 @@ function (env) {
         loc_childVaraibles.splice(index, 1);
     }, postInit: function (requestInfo) {
         loc_handleEachElementProcessor = loc_env.createHandleEachElementProcessor("internal_data", "");
-        loc_handleEachElementProcessor.registerEventListener(undefined, function (event) {
-            loc_updateView();
+        loc_handleEachElementProcessor.registerEventListener(undefined, function (event, eventData) {
+            if (event == "EACHELEMENTCONTAINER_EVENT_NEWELEMENT") {
+                eventData.indexVar.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {success: function (request, data) {
+                    loc_addEle(eventData.elementVar, eventData.indexVar, data.value.getValue());
+                }});
+            }
         });
         loc_updateView();
     }, destroy: function () {

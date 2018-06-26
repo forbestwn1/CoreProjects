@@ -29,7 +29,9 @@
 
 		var node_namingConvensionUtility = nosliw.getNodeData("common.namingconvension.namingConvensionUtility");
 		var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+		var node_uiDataOperationServiceUtility  = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
 
+		
 		var loc_env = env;
 		//container data variable
 		var loc_containerVariable;
@@ -101,7 +103,7 @@
 
 			var eleContext = loc_env.createExtendedContext([
 				loc_env.createContextElementInfo(loc_env.getAttributeValue("element"), eleVar),
-//				loc_env.createContextElementInfo(loc_env.getAttributeValue("index"), indexVar)
+				loc_env.createContextElementInfo(loc_env.getAttributeValue("index"), indexVar)
 			], requestInfo);
 			
 			var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId()+"."+loc_generateId(), eleContext, requestInfo);
@@ -130,8 +132,14 @@
 			
 			postInit : function(requestInfo){
 				loc_handleEachElementProcessor = loc_env.createHandleEachElementProcessor("internal_data", "");
-				loc_handleEachElementProcessor.registerEventListener(undefined, function(event){
-					loc_updateView();
+				loc_handleEachElementProcessor.registerEventListener(undefined, function(event, eventData){
+					if(event=="EACHELEMENTCONTAINER_EVENT_NEWELEMENT"){
+						eventData.indexVar.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
+							success : function(request, data){
+								loc_addEle(eventData.elementVar, eventData.indexVar, data.value.getValue());
+							}
+						});
+					}
 				});
 					
 				

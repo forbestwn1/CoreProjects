@@ -383,28 +383,6 @@ var node_newVariable = function(data1, data2, adapterInfo){
 					var childVar = node_newVariable(loc_out, path, adapterInfo);
 					out = childVar.prv_parentPath;
 				}
-				
-/*				
-				var out;
-				if(adapterInfo==undefined){
-					//normal child, try to reuse existing one
-					var childVar = loc_out.prv_childrenVariable[path];
-					if(childVar==undefined){
-						childVar = node_createVariable(loc_out, path);
-						out = loc_addNormalChildVariable(childVar, path);
-					}
-					else{
-						out = {
-							variable : childVar,
-							path : path
-						}
-					}
-				}
-				else{
-					//child with extra info
-					out = loc_addChildVariableWithAdapter(node_createVariable(loc_out, path, adapterInfo), path);
-				}
-*/
 				return out;
 			},
 
@@ -455,6 +433,11 @@ var node_newVariable = function(data1, data2, adapterInfo){
 				});
 				
 				return out;
+			},
+			
+			executeDataOperationRequest : function(operationService, handlers, request){
+				var requestInfo = this.getDataOperationRequest(operationService, handlers, request);
+				node_requestServiceProcessor.processRequest(requestInfo);
 			},
 			
 			use : function(){	
