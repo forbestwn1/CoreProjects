@@ -188,6 +188,8 @@ var node_createDataTypeHelperObject = function(){
 				}, handlers, request);
 			}, 
 			
+			destroyValue : function(value){},
+			
 			getWrapperType : function(){	return node_CONSTANT.DATA_TYPE_OBJECT;		},
 	
 	};
@@ -218,8 +220,5 @@ nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
 	//register wrapper faction
 	this.getData().registerDataTypeHelper([node_CONSTANT.DATA_TYPE_OBJECT], node_createDataTypeHelperObject());
 });
-
-//Register Node by Name
-//packageObj.createChildNode("createWraperObject", node_createWraperObject); 
 
 })(packageObj);

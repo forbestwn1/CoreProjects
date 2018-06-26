@@ -50,6 +50,7 @@ var node_CONSTANT=
 
 	  "DATA_TYPE_OBJECT" : "object",
 	  "DATA_TYPE_APPDATA" : "appdata",
+	  "DATA_TYPE_DYNAMIC" : "dynamic",
 	  
 	  //context events
 	  "CONTEXT_EVENT_BEFOREUPDATE" : "NOSLIWCONSTANT.LIFECYCLE_CONTEXT_EVENT_BEFOREUPDATE",

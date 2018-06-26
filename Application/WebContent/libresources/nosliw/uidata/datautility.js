@@ -83,6 +83,10 @@ var node_utility = function(){
 			return out;
 		},
 		
+		createDataOfDynamic : function(obj){
+			var out = node_createData(obj, node_CONSTANT.DATA_TYPE_DYNAMIC);
+			return out;
+		},
 	
 		/*
 		 * create object data by value
@@ -120,6 +124,15 @@ var node_utility = function(){
 			if(data.dataTypeInfo==undefined)  return true;
 			return false;
 		},
+		
+		getValueOfData : function(data){
+			var dataTypeInfo = data.dataTypeInfo;
+			var out = data.value;
+			if(dataTypeInfo==node_CONSTANT.DATA_TYPE_DYNAMIC){
+				out = data.getValue();
+			}
+			return out;
+		}
 		
 	};	
 }();

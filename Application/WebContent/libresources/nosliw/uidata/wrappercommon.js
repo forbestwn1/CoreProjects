@@ -100,6 +100,14 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 			//data based
 			loc_out.prv_dataBased = true;
 			loc_out.prv_value = parm1;
+			
+			if(dataType==node_CONSTANT.DATA_TYPE_DYNAMIC && loc_out.prv_value!=undefined){
+				//for dynamic data, listen for event 
+				loc_out.prv_value.registerListener(loc_out.prv_dataOperationEventObject, function(event, eventData, requestInfo){
+					loc_trigueDataOperationEvent(event, eventData, requestInfo);
+				});
+			}
+			
 		}
 		
 		nosliw.logging.info("************************  wrapper created   ************************");
@@ -392,6 +400,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 	 * mark data as invalid so that it would be recalculated
 	 */
 	var loc_invalidateData = function(requestInfo){
+		loc_out.prv_typeHelper.destroyValue(loc_out.prv_value);
 		loc_out.prv_isValidData = false;
 		loc_out.prv_value = undefined;
 		loc_out.prv_toBeDoneWrapperOperations = [];

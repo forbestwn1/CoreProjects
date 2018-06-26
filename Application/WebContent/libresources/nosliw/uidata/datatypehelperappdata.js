@@ -226,6 +226,8 @@ var node_createDataTypeHelperData = function(){
 				return out;
 			}, 
 			
+			destroyValue : function(value){},
+			
 			getWrapperType : function(){	return node_CONSTANT.DATA_TYPE_APPDATA;		},
 	};
 	
@@ -262,9 +264,5 @@ nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){
 	//register wrapper faction
 	this.getData().registerDataTypeHelper([node_CONSTANT.DATA_TYPE_APPDATA], node_createDataTypeHelperData());
 });
-
-
-//Register Node by Name
-//packageObj.createChildNode("createWraperData", node_createWraperData); 
 
 })(packageObj);

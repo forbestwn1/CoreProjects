@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_uiDataOperationServiceUtility;
 	var node_UIDataOperation
 	var node_createUIDataOperationRequest
+	var node_dataUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -91,7 +92,7 @@ var packageObj = library;
 						success : function(request, varsValue){
 							var variableParms = {};
 							_.each(varsValue.getResults(), function(varData, varName){
-								variableParms[varName] = varData.value;
+								variableParms[varName] = node_dataUtility.getValueOfData(varData);
 							});
 							return nosliw.runtime.getExpressionService().getExecuteScriptRequest(loc_scriptFunction, loc_expressions, variableParms, loc_constants);
 						}
@@ -168,7 +169,8 @@ var packageObj = library;
 	nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 	nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
 	nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
-	
+	nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
+
 	//Register Node by Name
 	packageObj.createChildNode("createUIResourceScriptExpression", node_createUIResourceScriptExpression); 
 

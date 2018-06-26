@@ -21,6 +21,7 @@ var node_createServiceRequestInfoSet;
 var node_createVariableWrapper;
 var node_requestServiceProcessor;
 var node_wrapperFactory;
+var node_dataUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -53,10 +54,10 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 		//data operation event handle for child variable 
 		eleVariable.registerDataOperationEventListener(loc_eventObject, function(event, eventData, request){
 			if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
-				loc_trigueEvent(node_CONSTANT.node_CONSTANT.EACHELEMENTCONTAINER_EVENT_DELETEELEMENT, eleInfo.indexVariable);
+				loc_trigueEvent(node_CONSTANT.EACHELEMENTCONTAINER_EVENT_DELETEELEMENT, eleInfo.indexVariable);
 				eleVariable.release();
 				loc_orderChildrenInfo.deleteElement(eleInfo.path);
-				delete loc_elementsVariable(eleInfo.path);
+				delete loc_elementsVariable[eleInfo.path];
 			}
 		});
 		return new node_OrderedContainerElementInfo(eleVariable, eleInfo.indexVariable);
@@ -69,8 +70,8 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 		var i = 0;
 		var handleElementsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("HandleElements", {"elements":loc_orderChildrenInfo.getElements()}), handlers, request);
 		_.each(loc_orderChildrenInfo.getElements(), function(ele, index){
-//			var elementHandlerResult = elementHandler.call(loc_out, loc_elementsVariable[ele.path], node_createVariableWrapper(ele.indexVariable));
 			var elementHandlerResult = elementHandler.call(loc_out, loc_elementsVariable[ele.path]);
+//			var elementHandlerResult = elementHandler.call(loc_out, loc_elementsVariable[ele.path], node_createVariableWrapper(ele.indexVariable));
 			//output of elementHandleRequestFactory method maybe request, maybe just object
 			if(node_getObjectType(elementHandlerResult)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
 				//add child request from factory
@@ -101,21 +102,6 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 				}
 				return true;
 			},
-			eventAdapter1 : function(event, eventData, request){
-				var events = [];
-				events.push({
-					event: event,
-					value : eventData
-				});
-				
-				if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
-					events.push({
-						event : node_CONSTANT.WRAPPER_EVENT_NEWELEMENT,
-						value : loc_addElement(eventData.index, eventData.id)
-					});
-				}
-				return events;
-			},
 			destroyAdapter : function(){
 //				loc_lifecycleEventObject.clearup();
 //				loc_dataOperationEventObject.clearup();
@@ -127,7 +113,7 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 		
 		loc_containerVariable.registerDataOperationEventListener(undefined, function(event, eventData, requestInfo){
 			if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
-				loc_trigueEvent(node_CONSTANT.node_CONSTANT.EACHELEMENTCONTAINER_EVENT_NEWELEMENT, loc_addElement(eventData.index, eventData.id));
+				loc_trigueEvent(node_CONSTANT.EACHELEMENTCONTAINER_EVENT_NEWELEMENT, loc_addElement(eventData.index, eventData.id));
 			}
 		}, this);
 		
@@ -259,10 +245,49 @@ var node_createContainerOrderInfo = function(){
 	};
 
 	//create variable for index
-	var loc_createIndexVariable = function(){
+	var loc_createIndexVariable = function(path){
+		var loc_path = path;
+		var loc_eventObject = node_createEventObject();
+		
+		return node_dataUtility.createDataOfDynamic(function(){
+			
+			var out = {
+			
+				getValue : function(){
+					var index = loc_out.prv_getIndexByPath(loc_path);
+					return index;
+				},	
+					
+				registerListener : function(eventObj, handler, thisContext){
+					loc_eventObject.registerListener(undefined, eventObj, handler, thisContext);
+				},
+
+				trigueEvent : function(){
+					loc_eventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, undefined, undefined);
+				},
+				
+				destroy : function(){
+					loc_eventObject.clearup();
+				},
+				
+			};
+			return out;
+		}());
 	};
 	
 	var loc_out = {
+			
+		prv_getIndexByPath : function(path){
+			var out;
+			_.some(this.prv_elementsInfo, function(eleInfo, index){
+				if(eleInfo.path==path){
+					out = index;
+					return true;
+				}
+			});
+			return out;
+		},	
+			
 		//index : position to insert element
 		//id : something to identify element with data
 		insertElement : function(index, id){
@@ -276,8 +301,13 @@ var node_createContainerOrderInfo = function(){
 			if(id!=undefined)  loc_out.prv_idByPath[path] = id;
 			
 			//generate element info
-			var eleInfo = new node_ContainerElementInfo(path, loc_createIndexVariable());
+			var eleInfo = new node_ContainerElementInfo(path, loc_createIndexVariable(path));
 			loc_out.prv_elementsInfo.splice(index, 0, eleInfo);
+			
+			//trigue index change event
+			for(var i=index+1; i<loc_out.prv_elementsInfo.length; i++){
+				loc_out.prv_elementsInfo[i].indexVariable.trigueEvent();
+			}
 			return eleInfo;
 		},
 		
@@ -304,11 +334,7 @@ var node_createContainerOrderInfo = function(){
 			var realElePath = loc_out.prv_idByPath[elePath];       //has id for this path
 			if(realElePath==undefined){
 				//not provided, then use index as path, can be improved using index variable
-				_.each(loc_out.prv_elementsInfo, function(eleInfo, index){
-					if(eleInfo.path==elePath){
-						realElePath = index + "";
-					}
-				});
+				realElePath = loc_out.prv_getIndexByPath(elePath) + "";
 			}
 			
 			//build full path again
@@ -349,7 +375,8 @@ var node_createContainerOrderInfo = function(){
 		destroy : function(){
 			
 		},
-		
+
+		/*
 		//kkkk
 		populateDeleteElementOperationData : function(operationData){
 			//try to find the missing part id/index
@@ -376,6 +403,7 @@ var node_createContainerOrderInfo = function(){
 				if(eleInfo==childPath)  operationData.index = index;
 			});
 		}
+		*/
 	};
 	
 	loc_out = node_makeObjectWithLifecycle(loc_out, loc_resourceLifecycleObj, loc_out);
@@ -408,6 +436,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", f
 nosliw.registerSetNodeDataEvent("uidata.variable.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 
 //Register Node by Name
 
