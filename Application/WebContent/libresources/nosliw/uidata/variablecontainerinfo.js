@@ -275,6 +275,18 @@ var node_createContainerOrderInfo = function(){
 		}()));
 	};
 	
+	var loc_trigueIndexChange = function(startIndex){
+		for(var i=startIndex; i<loc_out.prv_elementsInfo.length; i++){
+			loc_out.prv_elementsInfo[i].indexVariable.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
+				success : function(request, data){
+					data.value.trigueEvent();
+				}
+			});
+			
+//			loc_out.prv_elementsInfo[i].indexVariable.trigueEvent();
+		}
+	};
+	
 	var loc_out = {
 			
 		prv_getIndexByPath : function(path){
@@ -305,20 +317,24 @@ var node_createContainerOrderInfo = function(){
 			loc_out.prv_elementsInfo.splice(index, 0, eleInfo);
 			
 			//trigue index change event
-			for(var i=index+1; i<loc_out.prv_elementsInfo.length; i++){
-				loc_out.prv_elementsInfo[i].indexVariable.trigueEvent();
-			}
+			loc_trigueIndexChange(index+1);
 			return eleInfo;
 		},
 		
 		deleteElement : function(path){
 			delete this.prv_idByPath[path];
-			for(var i in this.prv_elementsInfo){
-				if(this.prv_elementsInfo[i].path==path){
-					this.prv_elementsInfo.splice(i, 1);
-					break;
-				}
-			}
+			
+			var index = this.prv_getIndexByPath(path);
+			this.prv_elementsInfo.splice(index, 1);
+			
+			loc_trigueIndexChange(index);
+			
+//			for(var i in this.prv_elementsInfo){
+//				if(this.prv_elementsInfo[i].path==path){
+//					this.prv_elementsInfo.splice(i, 1);
+//					break;
+//				}
+//			}
 		},
 		
 		getElements : function(){		return loc_out.prv_elementsInfo;	},
@@ -373,37 +389,11 @@ var node_createContainerOrderInfo = function(){
 		},
 		
 		destroy : function(){
-			
+			_.each(this.prv_elementsInfo, function(eleInfo, index){
+				eleInfo.indexVariable.release();
+			});
 		},
 
-		/*
-		//kkkk
-		populateDeleteElementOperationData : function(operationData){
-			//try to find the missing part id/index
-			var index = operationData.index;
-			var id = operationData.id;
-			if(id==undefined){
-				var path = this.prv_elementsInfo[index].path;
-				id = this.prv_idByPath[path];
-			}
-			else if(index==undefined){
-				var path;
-				_.each(this.prv_idByPath, function(id1, path1){	if(id==id1)  path = path1;	});
-				_.each(this.prv_elementsInfo, function(eleInfo, index1){  if(eleInfo.path==path1) index = index1; });
-			}
-			
-			operationData.index = index;
-			operationData.id = id;
-		},
-		
-		//kkkk
-		populateDeleteElementOperationDataByPath : function(operationData, childPath){
-			operationData.id = this.prv_idByPath[childPath];
-			_.each(this.prv_elementsInfo, function(eleInfo, index){
-				if(eleInfo==childPath)  operationData.index = index;
-			});
-		}
-		*/
 	};
 	
 	loc_out = node_makeObjectWithLifecycle(loc_out, loc_resourceLifecycleObj, loc_out);

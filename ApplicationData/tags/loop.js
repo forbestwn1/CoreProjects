@@ -111,12 +111,18 @@
 			else	resourceView.insertAfter(loc_childResourceViews[index-1].getEndElement());
 				
 			loc_childResourceViews.splice(index, 0, resourceView);
+/*
 			loc_childVaraibles.splice(index, 0, eleVar);
 			eleVar.registerDataOperationEventListener(undefined, function(event, dataOperation, requestInfo){
 				if(event=="EVENT_WRAPPER_DELETE"){
-					loc_out.prv_deleteEle(index);
+					indexVar.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
+						success : function(request, data){
+							loc_out.prv_deleteEle(data.value.getValue());
+						}
+					});
 				}
 			}, this);
+*/			
 		};
 
 		var loc_out = 
@@ -139,6 +145,14 @@
 								loc_addEle(eventData.elementVar, eventData.indexVar, data.value.getValue());
 							}
 						});
+					}
+					else if(event=="EACHELEMENTCONTAINER_EVENT_DELETEELEMENT"){
+						eventData.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
+							success : function(request, data){
+								loc_out.prv_deleteEle(data.value.getValue());
+							}
+						});
+						
 					}
 				});
 					

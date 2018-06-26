@@ -103,7 +103,7 @@
 			};
 
 			var requestInfo = node_createBatchUIDataOperationRequest(this.getContext());
-			var uiDataOperation = new node_UIDataOperation(node_createContextVariableInfo("business.a.cc"), node_uiDataOperationServiceUtility.createAddElementOperationService("", eleData, 2));
+			var uiDataOperation = new node_UIDataOperation(node_createContextVariableInfo("business.a.cc"), node_uiDataOperationServiceUtility.createAddElementOperationService("", eleData, 1));
 			requestInfo.addUIDataOperation(uiDataOperation);						
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},

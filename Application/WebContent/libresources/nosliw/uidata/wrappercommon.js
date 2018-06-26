@@ -99,15 +99,12 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 		else{
 			//data based
 			loc_out.prv_dataBased = true;
-			loc_out.prv_value = parm1;
 			
-			if(dataType==node_CONSTANT.DATA_TYPE_DYNAMIC && loc_out.prv_value!=undefined){
-				//for dynamic data, listen for event 
-				loc_out.prv_value.registerListener(loc_out.prv_dataOperationEventObject, function(event, eventData, requestInfo){
-					loc_trigueDataOperationEvent(event, eventData, requestInfo);
-				});
-			}
+			loc_setValue(parm1);
+//			loc_out.prv_value = parm1;
 			
+			//listen for event from data
+//			loc_registerListenerForDynamicValue();
 		}
 		
 		nosliw.logging.info("************************  wrapper created   ************************");
@@ -369,6 +366,8 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 		//then store value
 		loc_out.prv_isValidData = true;
 		loc_out.prv_value = value;
+		
+		loc_registerListenerForDynamicValue();
 	};
 	
 	//add to be done operation
@@ -455,6 +454,18 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 		}
 	};
 
+	//for dynamic data, listen for event from data 
+	loc_registerListenerForDynamicValue = function(){
+		if(dataType==node_CONSTANT.DATA_TYPE_DYNAMIC){
+			if(loc_out.prv_value!=undefined){
+				loc_out.prv_value.registerListener(loc_out.prv_dataOperationEventObject, function(event, eventData, requestInfo){
+					loc_trigueDataOperationEvent(event, eventData, requestInfo);
+				});
+			}
+		}
+	};
+	
+	
 	var loc_out = {
 			getDataOperationRequest : function(operationService, handlers, requester_parent){
 				var that = this;
@@ -485,7 +496,12 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 						//operate on root value
 						if(command==node_CONSTANT.WRAPPER_OPERATION_SET && node_basicUtility.isStringEmpty(opService.parms.path)){
 							//if set to base, then just set directly
-							out = node_createServiceRequestInfoSimple(operationService,	function(){	loc_out.prv_value=operationService.parms.value;  }, handlers, requester_parent);
+							out = node_createServiceRequestInfoSimple(operationService,	function(){
+								loc_setValue(operationService.parms.value);
+
+//								loc_out.prv_value=operationService.parms.value;  
+//								loc_registerListenerForDynamicValue();
+							}, handlers, requester_parent);
 						}
 						else{
 							out = this.prv_typeHelper.getDataOperationRequest(loc_out.prv_value, opService, handlers, requester_parent);
