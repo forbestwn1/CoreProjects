@@ -30,7 +30,7 @@ var node_createRequestEventGroupHandler = function(eventHandler, thisContext){
 	//all elements
 	var loc_elements = {};
 	
-	//all active requesters 
+	//all active root requesters 
 	var loc_requesters = {};
 
 	var loc_size = 0;
@@ -50,25 +50,43 @@ var node_createRequestEventGroupHandler = function(eventHandler, thisContext){
 		}
 		
 		//all processing is based on root request
-		var requestInfo = request.getRootRequest();
-		var requestId = requestInfo.getId();
-		var requestStatus = requestInfo.getStatus();
-		if(requestStatus==node_CONSTANT.REQUEST_STATUS_DONE){
-			loc_eventHandler.call(loc_thisContext, requestInfo);
-			delete loc_requesters[requestId];
-		}
-		else{
-			var request = loc_requesters[requestId];
-			if(request==undefined){
-				loc_requesters[requestId] = requestInfo;
-				requestInfo.registerEventListener(loc_eventObject, function(e, data, req){
-					if(e==node_CONSTANT.REQUEST_EVENT_DONE){
-						loc_eventHandler.call(loc_thisContext, requestInfo);
+		var rootRequest = request.getRootRequest();
+		var requestId = rootRequest.getId();
+		var request = loc_requesters[requestId];
+		if(request==undefined){
+			loc_requesters[requestId] = rootRequest;
+			rootRequest.registerEventListener(loc_eventObject, function(e, data, req){
+				if(e==node_CONSTANT.REQUEST_EVENT_ALMOSTDONE){
+					if(loc_requesters[requestId]!=undefined){
 						delete loc_requesters[requestId];
+						loc_eventHandler.call(loc_thisContext, rootRequest);
 					}
-				});
-			}
+				}
+				else if(e==node_CONSTANT.REQUEST_EVENT_DONE){
+				}
+			});
 		}
+		
+		
+//		var requestInfo = request.getRootRequest();
+//		var requestId = requestInfo.getId();
+//		var requestStatus = requestInfo.getStatus();
+//		if(requestStatus==node_CONSTANT.REQUEST_STATUS_DONE){
+//			loc_eventHandler.call(loc_thisContext, requestInfo);
+//			delete loc_requesters[requestId];
+//		}
+//		else{
+//			var request = loc_requesters[requestId];
+//			if(request==undefined){
+//				loc_requesters[requestId] = requestInfo;
+//				requestInfo.registerEventListener(loc_eventObject, function(e, data, req){
+//					if(e==node_CONSTANT.REQUEST_EVENT_DONE){
+//						loc_eventHandler.call(loc_thisContext, requestInfo);
+//						delete loc_requesters[requestId];
+//					}
+//				});
+//			}
+//		}
 	};
 	
 	var loc_resourceLifecycleObj = {};

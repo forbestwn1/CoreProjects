@@ -9,9 +9,50 @@ var node_requestServiceProcessor = function(){
 
 	var loc_moduleName = "requestManager";
 	
+	//store all the live requests
+	//request organized according to root request
+	//{root request id  -- {  current request id --- request  }  } 
+	var loc_requests = {};
+	var loc_requestsSum = 0;
+	
+	var loc_addRequest = function(request){
+		var id = request.getId();
+		var requestsById = loc_requests[id];
+		if(requestsById==undefined){
+			requestsById = {};
+			loc_requests[id] = requestsById;
+			requestsById.requestsSum = 0;
+			requestsById.rootRequest = request.getRootRequest();
+		}
+		requestsById[request.getInnerId()] = request;
+		requestsById.requestsSum++;
+		loc_requestsSum++;
+	};
+	
+	//when request finished, remove it
+	var loc_removeRequest = function(request){
+		var id = request.getId();
+		var requestsById = loc_requests[id];
+		delete requestsById[request.getInnerId()];
+		requestsById.requestsSum--;
+		loc_requestsSum--;
+		if(requestsById.requestsSum==0){
+			//when no child request under root request, it means root request alomost done
+			//almost done with root request
+			requestsById.rootRequest.almostDone();
+			if(requestsById.requestsSum==0){
+				//if no more child request created, then done with root request
+				requestsById.rootRequest.done();
+				delete loc_requests[id];
+			}
+		}
+	};
+	
 	var loc_processRequest = function(requestInfo, processRemote){
 		
 		nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Start request : ", requestInfo.getService());
+		
+		loc_addRequest(requestInfo);
 		
 		//add request processor in order to logging the result
 		requestInfo.setRequestProcessors({
@@ -21,16 +62,19 @@ var node_requestServiceProcessor = function(){
 			success : function(requestInfo, data){
 				nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Success handler : ", data);
 //				nosliw.logging.trace(loc_moduleName, requestInfo.getInnerId(), "Data ", data);
+				loc_removeRequest(requestInfo);
 				return data;
 			}, 
 			error : function(requestInfo, data){
 				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Error handler : ", data);
 //				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Data ", data);
+				loc_removeRequest(requestInfo);
 				return data;
 			}, 
 			exception : function(requestInfo, data){
 				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Exception handler : ", data);
 //				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Data ", data);
+				loc_removeRequest(requestInfo);
 				return data;
 			}, 
 		});

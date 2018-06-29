@@ -282,8 +282,6 @@ var node_createContainerOrderInfo = function(){
 					data.value.trigueEvent();
 				}
 			});
-			
-//			loc_out.prv_elementsInfo[i].indexVariable.trigueEvent();
 		}
 	};
 	

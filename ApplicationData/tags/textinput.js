@@ -43,12 +43,12 @@
 			};
 		};
 
-		var loc_updateView = function(){
+		var loc_updateView = function(request){
 			env.executeDataOperationRequestGet(loc_dataVariable, "", {
 				success : function(requestInfo, data){
 					loc_view.val(data.value.value);
 				}
-			});
+			}, request);
 		};
 
 		var loc_setupUIEvent = function(){
@@ -72,8 +72,8 @@
 				loc_updateView();
 				loc_setupUIEvent();
 
-				loc_dataVariable.registerDataOperationEventListener(undefined, function(){
-					loc_updateView();
+				loc_dataVariable.registerDataOperationEventListener(undefined, function(event, eventData, request){
+					loc_updateView(request);
 				}, this);
 			},
 

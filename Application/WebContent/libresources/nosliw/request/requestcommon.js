@@ -33,7 +33,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 		loc_out.setParentRequest(parent);
 		
 		//unique id for this request sequence
-		loc_out.pri_id = nosliw.generateId();
+		if(loc_out.pri_id==undefined)		loc_out.pri_id = nosliw.generateId();
 		//unique id for each request, so that we can trace each request in log
 		loc_out.pri_innerId = nosliw.generateId();
 		//what want to do 
@@ -157,12 +157,16 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_DONE);
 		loc_out.setResult(data);
 		
-		loc_out.pri_metaData.pri_eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_DONE, {}, loc_out);
+//		loc_out.pri_metaData.pri_eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_DONE, {}, loc_out);
 
 		//unregister all listeners
-		loc_out.pri_metaData.pri_eventObject.clearup();
+//		loc_out.pri_metaData.pri_eventObject.clearup();
 	};
 	
+	var loc_destroy = function(){
+		loc_out.pri_metaData.pri_eventObject.clearup();
+	};
+
 	var loc_out = {
 			
 			getId : function(){return this.pri_id;},
@@ -354,9 +358,19 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			getInput : function(){  return this.pri_metaData.pri_input; },
 			setInput : function(input){  this.pri_metaData.pri_input = input; },
 			
-			registerEventListener : function(listener, handler, thisContext){
-				node_eventUtility.registerListener(listener, this.pri_metaData.pri_eventObject, undefined, handler, thisContext)
+			//it is for root request only
+			registerEventListener : function(listener, handler, thisContext){	this.pri_metaData.pri_eventObject.registerListener(undefined, listener, handler, thisContext);	},
+			unregisterEventListener : function(listener, handler, thisContext){	this.pri_metaData.pri_eventObject.unregisterListener(listener);	},
+			trigueEvent : function(event, eventData){	this.pri_metaData.pri_eventObject.triggerEvent(event, eventData, this);	},
+
+			//it is for root request only
+			almostDone : function(){	this.trigueEvent(node_CONSTANT.REQUEST_EVENT_ALMOSTDONE);		},
+			done : function(){
+				this.trigueEvent(node_CONSTANT.REQUEST_EVENT_DONE);
+				loc_destroy();
 			},
+			
+			
 	};
 	
 	loc_constructor(service, handlers, requester_parent);
