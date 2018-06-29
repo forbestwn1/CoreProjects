@@ -3,12 +3,10 @@
 <body>
 
 	<br>
-	Content:<%=?(business.a.aa)?.value + '   6666 ' %>
-	<br>
 	TextInput:<nosliw-textinput data="business.a.aa"/>  
 	<br>
 	
-	
+	<nosliw-debug/>
 
 </body>
 

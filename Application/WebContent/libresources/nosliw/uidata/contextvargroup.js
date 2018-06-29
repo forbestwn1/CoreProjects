@@ -33,7 +33,7 @@ var node_createContextVariableInfosGroup = function(context, contextVariableInfo
 	var loc_addElement = function(contextVariableInfo){
 		var variable = loc_context.createVariable(contextVariableInfo);
 		loc_variables[contextVariableInfo.key] = variable;
-		loc_requestEventGroupHandler.addElement(variable.getDataOperationEventObject(), contextVariableInfo.key);
+		loc_requestEventGroupHandler.addElement(variable.getDataChangeEventObject(), contextVariableInfo.key);
 	};
 	
 	var loc_resourceLifecycleObj = {};

@@ -23,10 +23,10 @@ function (env) {
     var loc_getViewData = function () {
         return {dataTypeId: "test.string;1.0.0", value: loc_view.val()};
     };
-    var loc_updateView = function () {
+    var loc_updateView = function (request) {
         env.executeDataOperationRequestGet(loc_dataVariable, "", {success: function (requestInfo, data) {
             loc_view.val(data.value.value);
-        }});
+        }}, request);
     };
     var loc_setupUIEvent = function () {
         loc_view.bind("change", function () {
@@ -40,8 +40,8 @@ function (env) {
     }, postInit: function () {
         loc_updateView();
         loc_setupUIEvent();
-        loc_dataVariable.registerDataOperationEventListener(undefined, function () {
-            loc_updateView();
+        loc_dataVariable.registerDataOperationEventListener(undefined, function (event, eventData, request) {
+            loc_updateView(request);
         }, this);
     }, processAttribute: function (name, value) {
     }, destroy: function () {

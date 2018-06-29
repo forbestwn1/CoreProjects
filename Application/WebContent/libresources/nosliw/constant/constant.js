@@ -19,7 +19,8 @@ var node_CONSTANT=
 	  "WRAPPER_EVENT_ADDELEMENT" : "EVENT_WRAPPER_ADDELEMENT",          //element is added to container
 	  "WRAPPER_EVENT_DELETEELEMENT" : "EVENT_WRAPPER_DELETEELEMENT",    //element is removed from container.
 	  "WRAPPER_EVENT_FORWARD" : "EVENT_WRAPPER_FORWARD",				//forward original event information to child
-	  "WRAPPER_EVENT_CHANGE" : "EVENT_WRAPPER_CHANGE",					//indicate something changes, need to update data 
+	  "WRAPPER_EVENT_CHANGE" : "EVENT_WRAPPER_CHANGE",					//indicate something changes on itself, need to update data 
+	  "WRAPPER_EVENT_REFRESH" : "EVENT_WRAPPER_REFRESH",				//indicate children or itself has some change, sometimes need to refresh 
 	  "WRAPPER_EVENT_DELETE" : "EVENT_WRAPPER_DELETE",                //delete means the path does not exist anymore. all the resources related with this wrapper should be destroy (variable, child wrapper)
 	  "WRAPPER_EVENT_CLEARUP_BEFORE" : "EVENT_WRAPPER_CLEARUP_BEFORE",                //clear up means release resource
 	  "WRAPPER_EVENT_CLEARUP_AFTER" : "EVENT_WRAPPER_CLEARUP_AFTER",                //clear up means release resource

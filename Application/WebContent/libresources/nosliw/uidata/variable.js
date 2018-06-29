@@ -79,6 +79,8 @@ var node_newVariable = function(data1, data2, adapterInfo){
 		loc_out.prv_lifecycleEventObject = node_createEventObject();
 		//data operation event object
 		loc_out.prv_dataOperationEventObject = node_createEventObject();
+		//data change event object, it means child or itself changed
+		loc_out.prv_dataChangeEventObject = node_createEventObject();
 
 		//wrapper object
 		loc_out.prv_wrapper = undefined;
@@ -141,6 +143,7 @@ var node_newVariable = function(data1, data2, adapterInfo){
 			
 			//clean up event object
 			loc_out.prv_dataOperationEventObject.clearup();
+			loc_out.prv_dataChangeEventObject.clearup();
 	
 			//clean up adapter
 			if(loc_out.prv_destoryAdapter!=undefined)   loc_out.prv_destoryAdapter();
@@ -180,6 +183,7 @@ var node_newVariable = function(data1, data2, adapterInfo){
 		if(loc_out.prv_isWrapperExists()){
 			//unregister listener from wrapper
 			loc_out.prv_wrapper.unregisterDataOperationEventListener(loc_out.prv_dataOperationEventObject);
+			loc_out.prv_wrapper.unregisterDataChangeEventListener(loc_out.prv_dataChangeEventObject);
 			
 			//destroy wrapper
 			loc_out.prv_wrapper.destroy(requestInfo);
@@ -193,36 +197,21 @@ var node_newVariable = function(data1, data2, adapterInfo){
 		loc_out.prv_wrapper.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, function(event, eventData, requestInfo){
 			loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, requestInfo);
 			
-//			if(eventInfo.event==node_CONSTANT.WRAPPER_EVENT_DELETE && node_basicUtility.isStringEmpty(eventInfo.value)){
 			if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
-				//lifecycle
+				//data operation event turn to lifecycle event
 				loc_out.destroy();
 			}
-			
-/*			
-			var events = [{
-				event : event,
-				value : eventData
-			}];
-			if(loc_out.prv_eventAdapter!=undefined){
-				//if have eventAdapter, then apply eventAdapter to wrapper event
-				events = loc_out.prv_eventAdapter(event, eventData, requestInfo);
-			}
-			
-			_.each(events, function(eventInfo, index){
-				//process data event first
-				loc_out.prv_dataOperationEventObject.triggerEvent(eventInfo.event, eventInfo.value, requestInfo);
-				
-//				if(eventInfo.event==node_CONSTANT.WRAPPER_EVENT_DELETE && node_basicUtility.isStringEmpty(eventInfo.value)){
-				if(eventInfo.event==node_CONSTANT.WRAPPER_EVENT_DELETE){
-					//lifecycle
-					loc_out.destroy();
-				}
-			});
-*/			
 		});
 	};
 
+	var loc_registerWrapperDataChangeEvent = function(){
+		if(loc_out.prv_wrapper==undefined)  return;
+		loc_out.prv_wrapper.registerDataChangeEventListener(loc_out.prv_dataChangeEventObject, function(event, eventData, requestInfo){
+			loc_out.prv_dataChangeEventObject.triggerEvent(event, eventData, requestInfo);
+		});
+	};
+
+	
 	var loc_addNormalChildVariable = function(childVar, path){
 		loc_addChildVariable(loc_out.prv_childrenVariable, childVar, path);
 		return {
@@ -242,11 +231,6 @@ var node_newVariable = function(data1, data2, adapterInfo){
 	
 	var loc_addChildVariable = function(container, childVar, path){
 		container[path] = childVar;
-//		childVar.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, function(event, eventData, request){
-//			if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
-//				delete container[path];
-//			}
-//		});
 		childVar.registerLifecycleEventListener(loc_out.prv_lifecycleEventObject, function(event, eventData, request){
 			if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP_BEFORE){
 				childVar.unregisterLifecycleEventListener(loc_out.prv_lifecycleEventObject);
@@ -276,6 +260,7 @@ var node_newVariable = function(data1, data2, adapterInfo){
 			loc_out.prv_wrapper.setEventAdapter(loc_out.prv_eventAdapter);
 			//event listener
 			loc_registerWrapperDataOperationEvent();
+			loc_registerWrapperDataChangeEvent();
 		}
 		//update wrapper in children variable accordingly
 		_.each(loc_out.prv_childrenVariable, function(childVariable, path){
@@ -390,8 +375,11 @@ var node_newVariable = function(data1, data2, adapterInfo){
 			 * register handler for operation event
 			 */
 			registerDataOperationEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
+			registerDataChangeEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataChangeEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);		},
 			unregisterDataOperationEventListener : function(listenerEventObj){		this.prv_dataOperationEventObject.unregister(listenerEventObj);		},
+			unregisterDataChangeEventListener : function(listenerEventObj){		this.prv_dataChangeEventObject.unregister(listenerEventObj);		},
 			getDataOperationEventObject : function(){   return this.prv_dataOperationEventObject;   },
+			getDataChangeEventObject : function(){   return this.prv_dataChangeEventObject;   },
 			
 			/*
 			 * register handler for event of communication between parent and child variables

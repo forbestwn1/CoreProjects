@@ -45,16 +45,20 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo){
 		
 		//event source for event that communicate operation information with outsiders
 		loc_out.prv_dataOperationEventObject = node_createEventObject();
+		loc_out.prv_dataChangeEventObject = node_createEventObject();
 
 		//receive event from variable and trigue new same event
 		//the purpose of re-trigue the new event is for release the resources after this variable wrapper is released
 		loc_out.prv_variable.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, function(event, eventData, request){loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, request);}, loc_out);
+		loc_out.prv_variable.registerDataOperationEventListener(loc_out.prv_dataChangeEventObject, function(event, eventData, request){loc_out.prv_dataChangeEventObject.triggerEvent(event, eventData, request);}, loc_out);
 	};	
 
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
 		//take care of release event 
 		loc_out.prv_dataOperationEventObject.clearup();
+		loc_out.prv_dataChangeEventObject.clearup();
 		loc_out.prv_dataOperationEventObject=undefined;
+		loc_out.prv_dataChangeEventObject=undefined;
 		//release variable
 		loc_out.prv_variable.release();
 		loc_out.prv_variable=undefined;
@@ -78,8 +82,11 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo){
 		},
 
 		registerDataOperationEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);},
+		registerDataChangeEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataChangeEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);},
 		unregisterDataOperationEventListener : function(listenerEventObj){return this.prv_dataOperationEventObject.unregister(listenerEventObj);},
+		unregisterDataChangeEventListener : function(listenerEventObj){return this.prv_dataChangeEventObject.unregister(listenerEventObj);},
 		getDataOperationEventObject : function(){   return this.prv_dataOperationEventObject;   },
+		getDataChangeEventObject : function(){   return this.prv_dataChangeEventObject;   },
 		
 	};
 	

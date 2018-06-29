@@ -59,6 +59,7 @@ var node_createRequestEventGroupHandler = function(eventHandler, thisContext){
 				if(e==node_CONSTANT.REQUEST_EVENT_ALMOSTDONE){
 					if(loc_requesters[requestId]!=undefined){
 						delete loc_requesters[requestId];
+						rootRequest.unregisterEventListener(loc_eventObject);
 						loc_eventHandler.call(loc_thisContext, rootRequest);
 					}
 				}
@@ -66,27 +67,6 @@ var node_createRequestEventGroupHandler = function(eventHandler, thisContext){
 				}
 			});
 		}
-		
-		
-//		var requestInfo = request.getRootRequest();
-//		var requestId = requestInfo.getId();
-//		var requestStatus = requestInfo.getStatus();
-//		if(requestStatus==node_CONSTANT.REQUEST_STATUS_DONE){
-//			loc_eventHandler.call(loc_thisContext, requestInfo);
-//			delete loc_requesters[requestId];
-//		}
-//		else{
-//			var request = loc_requesters[requestId];
-//			if(request==undefined){
-//				loc_requesters[requestId] = requestInfo;
-//				requestInfo.registerEventListener(loc_eventObject, function(e, data, req){
-//					if(e==node_CONSTANT.REQUEST_EVENT_DONE){
-//						loc_eventHandler.call(loc_thisContext, requestInfo);
-//						delete loc_requesters[requestId];
-//					}
-//				});
-//			}
-//		}
 	};
 	
 	var loc_resourceLifecycleObj = {};
