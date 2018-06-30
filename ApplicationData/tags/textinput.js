@@ -68,8 +68,8 @@
 				return loc_view;
 			},
 				
-			postInit : function(){
-				loc_updateView();
+			postInit : function(requestInfo){
+				loc_updateView(requestInfo);
 				loc_setupUIEvent();
 
 				loc_dataVariable.registerDataOperationEventListener(undefined, function(event, eventData, request){

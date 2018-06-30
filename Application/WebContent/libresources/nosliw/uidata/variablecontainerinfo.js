@@ -113,7 +113,7 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 		loc_containerVariable.registerDataOperationEventListener(undefined, function(event, eventData, requestInfo){
 			if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
 				var newEventData = loc_addElement(eventData.index, eventData.id, requestInfo);
-				loc_trigueEvent(node_CONSTANT.EACHELEMENTCONTAINER_EVENT_NEWELEMENT, newEventData);
+				loc_trigueEvent(node_CONSTANT.EACHELEMENTCONTAINER_EVENT_NEWELEMENT, newEventData, requestInfo);
 			}
 		}, this);
 		
@@ -262,8 +262,8 @@ var node_createContainerOrderInfo = function(){
 					loc_eventObject.registerListener(undefined, eventObj, handler, thisContext);
 				},
 
-				trigueEvent : function(){
-					loc_eventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, undefined, undefined);
+				trigueEvent : function(requestInfo){
+					loc_eventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, undefined, requestInfo);
 				},
 				
 				destroy : function(){
@@ -275,13 +275,13 @@ var node_createContainerOrderInfo = function(){
 		}()), undefined, undefined, requestInfo);
 	};
 	
-	var loc_trigueIndexChange = function(startIndex){
+	var loc_trigueIndexChange = function(startIndex, requestInfo){
 		for(var i=startIndex; i<loc_out.prv_elementsInfo.length; i++){
 			loc_out.prv_elementsInfo[i].indexVariable.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
 				success : function(request, data){
-					data.value.trigueEvent();
+					data.value.trigueEvent(request);
 				}
-			});
+			}, requestInfo);
 		}
 	};
 	

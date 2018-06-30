@@ -45,7 +45,7 @@ var node_createRequestEventGroupHandler = function(eventHandler, thisContext){
 		request = node_requestUtility.getRequestInfoFromFunctionArguments(arguments);
 		if(request==undefined){
 			//no request
-			loc_eventHandler.call(loc_thisContext);
+			loc_eventHandler.call(loc_thisContext, request);
 			return;
 		}
 		

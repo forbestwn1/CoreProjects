@@ -120,7 +120,7 @@
 							success : function(request, data){
 								loc_addEle(eventData.elementVar, eventData.indexVar, data.value.getValue(), request);
 							}
-						});
+						}, requestInfo);
 					}
 					else if(event=="EACHELEMENTCONTAINER_EVENT_DELETEELEMENT"){
 						eventData.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {

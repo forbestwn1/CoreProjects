@@ -29,7 +29,7 @@
 		
 		var loc_contextVariableGroup = {};
 		
-		var loc_updateView = function(){
+		var loc_updateView = function(requestInfo){
 			var contextContent = {};
 			var setRequest = node_createServiceRequestInfoSet({}, {
 				success : function(requestInfo, result){
@@ -38,7 +38,7 @@
 					});
 					loc_view.val(JSON.stringify(contextContent, null, 4));
 				}
-			});
+			}, requestInfo);
 			var eleVars = loc_contextVariableGroup.getVariables();
 			_.each(eleVars, function(eleVar, eleName){
 				setRequest.addRequest(eleName, loc_env.getDataOperationRequestGet(eleVar));
@@ -48,9 +48,9 @@
 
 		var loc_out = 
 		{
-			preInit : function(){
-				loc_contextVariableGroup = node_createContextVariablesGroup(loc_env.getContext(), undefined, function(){
-					loc_updateView();
+			preInit : function(requestInfo){
+				loc_contextVariableGroup = node_createContextVariablesGroup(loc_env.getContext(), undefined, function(request){
+					loc_updateView(request);
 				});
 				_.each(loc_env.getContext().getElementsName(), function(eleName, index){
 					loc_contextVariableGroup.addVariable(node_createContextVariableInfo(eleName));
@@ -62,8 +62,8 @@
 				return loc_view;
 			},
 				
-			postInit : function(){
-				loc_updateView();
+			postInit : function(requestInfo){
+				loc_updateView(requestInfo);
 			},
 
 			processAttribute : function(name, value){},
