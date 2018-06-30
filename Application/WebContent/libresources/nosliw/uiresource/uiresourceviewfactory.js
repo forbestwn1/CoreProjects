@@ -179,7 +179,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 		//build context element first
 		var parentContext;
 		if(parent!=undefined)   parentContext = parent.getContext();
-		if(loc_context==undefined)	loc_context = node_uiResourceUtility.buildContext(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT], parentContext);
+		if(loc_context==undefined)	loc_context = node_uiResourceUtility.buildContext(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT], parentContext, requestInfo);
 		
 		//wrap html by start and end element
 		var resourceStartId = "-resource-start";
@@ -219,7 +219,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 		//init customer tags
 		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_UITAGS], function(uiTagResource, tagUiId, list){
 			var uiTagId = loc_out.prv_getUpdateUIId(tagUiId);
-			var uiTag = node_createUITag(uiTagId, uiTagResource, loc_out);
+			var uiTag = node_createUITag(uiTagId, uiTagResource, loc_out, requestInfo);
 			loc_uiTags[uiTagId] =  uiTag;
 		});
 

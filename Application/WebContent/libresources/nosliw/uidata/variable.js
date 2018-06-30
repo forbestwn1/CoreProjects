@@ -33,15 +33,15 @@ var node_requestServiceProcessor;
  * create variable
  * maybe reuse existing variable
  */
-var node_createVariable = function(data1, data2, adapterInfo){
+var node_createVariable = function(data1, data2, adapterInfo, requestInfo){
 	
 	var data1Type = node_getObjectType(data1);
 	if(data1Type==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE){
 		//if data1 is variable, then use crete child variable 
-		return data1.createChildVariable(data2, adapterInfo).variable;
+		return data1.createChildVariable(data2, adapterInfo, requestInfo).variable;
 	}
 	else{
-		return node_newVariable(data1, data2, adapterInfo);
+		return node_newVariable(data1, data2, adapterInfo, requestInfo);
 	}
 };
 
@@ -53,9 +53,9 @@ var node_createVariable = function(data1, data2, adapterInfo){
  *      2. data + undefined
  *      3. value + value type
  */
-var node_newVariable = function(data1, data2, adapterInfo){
+var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 	var loc_resourceLifecycleObj = {};
-	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(data1, data2, adapterInfo){
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(data1, data2, adapterInfo, requestInfo){
 		//whether this variable is live or destroyed
 		loc_out.prv_isLive = true;
 
@@ -114,7 +114,7 @@ var node_newVariable = function(data1, data2, adapterInfo){
 		else{
 			//for object/data
 			loc_out.prv_isBase = true;
-			var r = loc_out.prv_getSetBaseDataRequest(data1, data2);
+			var r = loc_out.prv_getSetBaseDataRequest(data1, data2, {}, requestInfo);
 			node_requestServiceProcessor.processRequest(r);
 		}
 		
@@ -347,13 +347,13 @@ var node_newVariable = function(data1, data2, adapterInfo){
 			//return child variable info : {}
 			//     variable : child variable 
 			//     path : key in child container for child variable
-			createChildVariable : function(path, adapterInfo){
+			createChildVariable : function(path, adapterInfo, requestInfo){
 				var out;
 				if(adapterInfo==undefined){
 					//normal child, try to reuse existing one
 					var childVar = loc_out.prv_childrenVariable[path];
 					if(childVar==undefined){
-						var childVar = node_newVariable(loc_out, path, adapterInfo);
+						var childVar = node_newVariable(loc_out, path, adapterInfo, requestInfo);
 						out = childVar.prv_parentPath;
 					}
 					else{
@@ -365,7 +365,7 @@ var node_newVariable = function(data1, data2, adapterInfo){
 				}
 				else{
 					//child with extra info
-					var childVar = node_newVariable(loc_out, path, adapterInfo);
+					var childVar = node_newVariable(loc_out, path, adapterInfo, requestInfo);
 					out = childVar.prv_parentPath;
 				}
 				return out;
@@ -450,7 +450,7 @@ var node_newVariable = function(data1, data2, adapterInfo){
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE);
 	loc_out = node_makeObjectWithId(loc_out, nosliw.generateId());
 	
-	node_getLifecycleInterface(loc_out).init(data1, data2, adapterInfo);
+	node_getLifecycleInterface(loc_out).init(data1, data2, adapterInfo, requestInfo);
 	return loc_out;
 };
 

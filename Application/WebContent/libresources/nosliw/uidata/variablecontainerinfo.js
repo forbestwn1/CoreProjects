@@ -45,9 +45,9 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 	//add element to container
 	//   index : position in container
 	//   id : id of the element, optional
-	var loc_addElement = function(index, id){
+	var loc_addElement = function(index, id, requestInfo){
 		//add element to order child info
-		var eleInfo = loc_orderChildrenInfo.insertElement(index, id);
+		var eleInfo = loc_orderChildrenInfo.insertElement(index, id, requestInfo);
 		//create child variable according to path provided by orderChildrenInfo
 		var eleVariable = loc_containerVariable.createChildVariable(eleInfo.path);
 		loc_elementsVariable[eleInfo.path] = eleVariable;
@@ -56,7 +56,7 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 			if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
 				loc_trigueEvent(node_CONSTANT.EACHELEMENTCONTAINER_EVENT_DELETEELEMENT, eleInfo.indexVariable);
 				eleVariable.release();
-				loc_orderChildrenInfo.deleteElement(eleInfo.path);
+				loc_orderChildrenInfo.deleteElement(eleInfo.path, requestInfo);
 				delete loc_elementsVariable[eleInfo.path];
 			}
 		});
@@ -89,13 +89,13 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 		//prepare adapter for container variable
 		var adapterInfo = {
 			pathAdapter : loc_orderChildrenInfo,
-			eventAdapter : function(event, eventData, pathPosition){
+			eventAdapter : function(event, eventData, pathPosition, requestInfo){
 				if(event==node_CONSTANT.WRAPPER_EVENT_CHANGE||(pathPosition==0 && event==node_CONSTANT.WRAPPER_EVENT_SET)){
 					//when container value was changed
 					//delete element data first
 					loc_destroyContainerVariable();
 					//trigue event
-					loc_trigueEvent(node_CONSTANT.EACHELEMENTCONTAINER_EVENT_RESET);
+					loc_trigueEvent(node_CONSTANT.EACHELEMENTCONTAINER_EVENT_RESET, undefined, requestInfo);
 					//no event to child
 					return false;
 				}
@@ -112,14 +112,14 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 		
 		loc_containerVariable.registerDataOperationEventListener(undefined, function(event, eventData, requestInfo){
 			if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
-				var newEventData = loc_addElement(eventData.index, eventData.id);
+				var newEventData = loc_addElement(eventData.index, eventData.id, requestInfo);
 				loc_trigueEvent(node_CONSTANT.EACHELEMENTCONTAINER_EVENT_NEWELEMENT, newEventData);
 			}
 		}, this);
 		
 	};
 	
-	var loc_destroyContainerVariable = function(){
+	var loc_destroyContainerVariable = function(requestInfo){
 		if(loc_orderChildrenInfo!=undefined){
 			loc_orderChildrenInfo.destroy();
 			loc_orderChildrenInfo = undefined;
@@ -160,7 +160,7 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 							success : function(request, valueElements){
 								//create child variables
 								_.each(valueElements, function(valueEle, index){
-									loc_addElement(index, valueEle.id);
+									loc_addElement(index, valueEle.id, request);
 								});
 								return loc_getHandleEachElementOfOrderContainerRequest(elementHandler);
 							}
@@ -186,9 +186,9 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 		},
 		
 		//destroy 
-		destroy : function(){
+		destroy : function(requestInfo){
 			loc_eventObject.clearup();
-			loc_destroyContainerVariable();
+			loc_destroyContainerVariable(requestInfo);
 		},
 	};
 	
@@ -245,7 +245,7 @@ var node_createContainerOrderInfo = function(){
 	};
 
 	//create variable for index
-	var loc_createIndexVariable = function(path){
+	var loc_createIndexVariable = function(path, requestInfo){
 		var loc_path = path;
 		var loc_eventObject = node_createEventObject();
 		
@@ -272,7 +272,7 @@ var node_createContainerOrderInfo = function(){
 				
 			};
 			return out;
-		}()));
+		}()), undefined, undefined, requestInfo);
 	};
 	
 	var loc_trigueIndexChange = function(startIndex){
@@ -300,7 +300,7 @@ var node_createContainerOrderInfo = function(){
 			
 		//index : position to insert element
 		//id : something to identify element with data
-		insertElement : function(index, id){
+		insertElement : function(index, id, requestInfo){
 			//path is something that won't change
 			//if id for element is provided, use id as path
 			//otherwise, generate id as path
@@ -311,21 +311,21 @@ var node_createContainerOrderInfo = function(){
 			if(id!=undefined)  loc_out.prv_idByPath[path] = id;
 			
 			//generate element info
-			var eleInfo = new node_ContainerElementInfo(path, loc_createIndexVariable(path));
+			var eleInfo = new node_ContainerElementInfo(path, loc_createIndexVariable(path, requestInfo));
 			loc_out.prv_elementsInfo.splice(index, 0, eleInfo);
 			
 			//trigue index change event
-			loc_trigueIndexChange(index+1);
+			loc_trigueIndexChange(index+1, requestInfo);
 			return eleInfo;
 		},
 		
-		deleteElement : function(path){
+		deleteElement : function(path, requestInfo){
 			delete this.prv_idByPath[path];
 			
 			var index = this.prv_getIndexByPath(path);
 			this.prv_elementsInfo.splice(index, 1);
 			
-			loc_trigueIndexChange(index);
+			loc_trigueIndexChange(index, requestInfo);
 		},
 		
 		getElements : function(){		return loc_out.prv_elementsInfo;	},

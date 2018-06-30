@@ -66,7 +66,7 @@ var node_createUIResourceService = function(){
 				out.setDependentService(new node_DependentServiceRequestInfo(getUIResourceRequest, {
 					success : function(requestInfo, uiResources){
 						var uiResource = uiResources[name];
-						return loc_uiResourceViewFactory.createUIResourceView(uiResource, loc_getResourceViewId(), undefined, undefined, undefined);
+						return loc_uiResourceViewFactory.createUIResourceView(uiResource, loc_getResourceViewId(), undefined, undefined, requestInfo);
 					}
 				}));
 				return out;

@@ -26,10 +26,10 @@ var node_requestServiceProcessor;
 //	variable
 //	variable wrapper + path
 //	same as variable input
-var node_createVariableWrapper = function(data1, data2, adapterInfo){
+var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo){
 	
 	var loc_resourceLifecycleObj = {};
-	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(data1, data2, adapterInfo){
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(data1, data2, adapterInfo, requestInfo){
 		var entityType = node_getObjectType(data1);
 
 		if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE && node_basicUtility.isStringEmpty(data2) && adapterInfo==undefined){
@@ -37,7 +37,7 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo){
 		}
 		else{
 			if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLEWRAPPER)	data1 = data1.prv_getVariable();
-			loc_out.prv_variable = node_createVariable(data1, data2, adapterInfo);
+			loc_out.prv_variable = node_createVariable(data1, data2, adapterInfo, requestInfo);
 		}
 		
 		//use variable when created
@@ -94,7 +94,7 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo){
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLEWRAPPER);
 	loc_out = node_makeObjectWithId(loc_out, nosliw.generateId());
 
-	node_getLifecycleInterface(loc_out).init(data1, data2, adapterInfo);
+	node_getLifecycleInterface(loc_out).init(data1, data2, adapterInfo, requestInfo);
 	
 	return loc_out;
 };

@@ -86,7 +86,7 @@ var node_utility = {
 		},
 		
 		//build context according to context definition and parent context
-		buildContext : function(contextGroupDef, parentContext){
+		buildContext : function(contextGroupDef, parentContext, requestInfo){
 			//build context element first
 			var contextElementInfosArray = [];
 			
@@ -124,7 +124,7 @@ var node_utility = {
 				});
 			});
 			
-			var context = node_createContext(contextElementInfosArray);
+			var context = node_createContext(contextElementInfosArray, requestInfo);
 			return context;
 		}
 		

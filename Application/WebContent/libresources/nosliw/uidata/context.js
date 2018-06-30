@@ -79,9 +79,9 @@ var node_createContext = function(elementInfosArray, request){
 		return contextEle.variable;
 	};
 	
-	var loc_createVariableFromContextVariableInfo = function(contextVariableInfo, adapterInfo){
+	var loc_createVariableFromContextVariableInfo = function(contextVariableInfo, adapterInfo, requestInfo){
 		var baseVar = loc_findBaseVariable(contextVariableInfo);
-		var variable = baseVar.variable.createChildVariable(baseVar.path, adapterInfo); 
+		var variable = baseVar.variable.createChildVariable(baseVar.path, adapterInfo, requestInfo); 
 		//add extra attribute "contextPath" to variable for variables name under context
 		variable.contextPath = contextVariableInfo.getFullPath();
 		return variable;
@@ -148,8 +148,8 @@ var node_createContext = function(elementInfosArray, request){
 		/*
 		 * create context variable
 		 */
-		createVariable : function(contextVariableInfo){
-			return loc_createVariableFromContextVariableInfo(contextVariableInfo);
+		createVariable : function(contextVariableInfo, requestInfo){
+			return loc_createVariableFromContextVariableInfo(contextVariableInfo, requestInfo);
 		},
 		
 		getDataOperationRequest : function(eleName, operationService, handlers, request){

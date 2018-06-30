@@ -108,7 +108,7 @@ var node_createContextElementInfo = function(name, data1, data2, adapterInfo, in
  * 		variable
  * 		info
  */
-var node_createContextElement = function(elementInfo){
+var node_createContextElement = function(elementInfo, requestInfo){
 	var loc_out = {
 		name : elementInfo.name,
 		info : elementInfo.info,
@@ -119,10 +119,10 @@ var node_createContextElement = function(elementInfo){
 	if(elementInfo.context!=undefined){
 		var context = elementInfo.context;
 		var contextVar = elementInfo.contextVariable;
-		loc_out.variable = context.createVariable(contextVar, adapterInfo);
+		loc_out.variable = context.createVariable(contextVar, adapterInfo, requestInfo);
 	}
-	else if(elementInfo.variable!=undefined)		loc_out.variable = node_createVariableWrapper(elementInfo.variable, elementInfo.path, adapterInfo);
-	else		loc_out.variable = node_createVariableWrapper(elementInfo.data1, elementInfo.data2, adapterInfo);
+	else if(elementInfo.variable!=undefined)		loc_out.variable = node_createVariableWrapper(elementInfo.variable, elementInfo.path, adapterInfo, requestInfo);
+	else		loc_out.variable = node_createVariableWrapper(elementInfo.data1, elementInfo.data2, adapterInfo, requestInfo);
 	
 	//get context type(public, internal, private)
 	var contextType = node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC;

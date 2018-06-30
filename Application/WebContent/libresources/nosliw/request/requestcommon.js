@@ -36,6 +36,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 		if(loc_out.pri_id==undefined)		loc_out.pri_id = nosliw.generateId();
 		//unique id for each request, so that we can trace each request in log
 		loc_out.pri_innerId = nosliw.generateId();
+		
 		//what want to do 
 		loc_out.pri_service = service;
 		//original request handlers
@@ -156,11 +157,6 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 	var loc_finishRequest = function(data){
 		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_DONE);
 		loc_out.setResult(data);
-		
-//		loc_out.pri_metaData.pri_eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_DONE, {}, loc_out);
-
-		//unregister all listeners
-//		loc_out.pri_metaData.pri_eventObject.clearup();
 	};
 	
 	var loc_destroy = function(){

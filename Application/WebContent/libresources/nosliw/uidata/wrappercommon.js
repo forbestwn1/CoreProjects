@@ -259,7 +259,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 			var trigueEvent = true;
 			if(loc_out.prv_eventAdapter!=undefined){
 				//apply trigue
-				trigueEvent = loc_out.prv_eventAdapter(event, eventData, pathPosition);
+				trigueEvent = loc_out.prv_eventAdapter(event, eventData, pathPosition, requestInfo);
 			}
 			//trigue event
 			if(trigueEvent==true){
