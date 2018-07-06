@@ -4,28 +4,40 @@ var packageObj = library.getChildPackage("segmentparser");
 (function(packageObj){
 	//get used node
 	var node_basicUtility;
+	var node_COMMONCONSTANT;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-
+var parsePathSegment = function(path, first, lastReverse){
+	return parseSegment(path, undefined, first, lastReverse);
+};
+	
 /*
  * parse the path information
  */
-var parseSegment = function(path, sep){
+var parseSegment = function(path, sep, first, lastReverse){
 	
 	var loc_segments = [];
 	var loc_seperator = undefined;
 	var loc_isEmpty = false;
 	var loc_index = 0;
 
+	//start and end index to iterate
+	var loc_firstIndex = first;
+	var loc_lastIndex ;
+	
 	var seperator = sep;
-	if(node_basicUtility.isStringEmpty(seperator))   seperator = NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_PATH; 
+	if(node_basicUtility.isStringEmpty(seperator))   seperator = node_COMMONCONSTANT.SEPERATOR_PATH; 
 	if(node_basicUtility.isStringEmpty(path))  loc_isEmpty = true;
 	else{
 		loc_seperator = seperator;
-//		if(seperator==".")  seperator="\\.";
 		loc_segments = path.split(seperator);
-		loc_index = 0;
+		
+		if(loc_firstIndex==undefined)   loc_firstIndex = 0;
+		
+		if(lastReverse==undefined)   loc_lastIndex = loc_segments.length-1;
+		else  loc_lastIndex = loc_segments.length-1-lastReverse;
+		loc_index = loc_firstIndex;
 	}
 		
 	var loc_out = {
@@ -40,7 +52,7 @@ var parseSegment = function(path, sep){
 	
 		hasNext : function(){
 			if(this.isEmpty())  return false;
-			if(loc_index>=this.getSegmentSize())  return false;
+			if(loc_index>loc_lastIndex)  return false;
 			return true;
 		},
 		
@@ -79,14 +91,13 @@ var parseSegment = function(path, sep){
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+
 //Register Node by Name
-packageObj.createNode("parseSegment", parseSegment); 
-
-	var module = {
-		start : function(packageObj){
-			node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
-
+packageObj.createChildNode("parseSegment", parseSegment); 
+packageObj.createChildNode("parsePathSegment", parsePathSegment); 
+	
 })(packageObj);

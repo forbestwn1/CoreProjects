@@ -22,17 +22,18 @@ var libNames = [
 var requestLoadLibraryResources = function(resourceIds, callBackFunction){
 	var data = {
 		command : "requestLoadLibraryResources",
-		data : {
+		parms : JSON.stringify({
 			"resourceIds" : resourceIds
-		}
+		})
 	};
 	
 	$.ajax({
-		url : "loadlib",
+		url : "http://localhost:8082/Application/loadlib",
 		type : "POST",
 		dataType: "json",
-		contentType: "application/json; charset=utf-8",
-		data : JSON.stringify(data),
+//		contentType: "application/json; charset=utf-8",
+//		data : JSON.stringify(data),
+		data : data,
 		async : true,
 		success : function(serviceData, status){
 			var result = serviceData.data.data;
@@ -48,7 +49,7 @@ var requestLoadLibraryResources = function(resourceIds, callBackFunction){
 				var url = result[count];
 				
 				var script = document.createElement('script');
-				script.setAttribute('src', url);
+				script.setAttribute('src', "http://localhost:8082/Application/"+url);
 				script.setAttribute('defer', "defer");
 				script.setAttribute('type', 'text/javascript');
 

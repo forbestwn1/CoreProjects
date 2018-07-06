@@ -56,15 +56,11 @@ var node_getInterface = function(baseObject, name){
 };
 
 //*******************************************   End Node Definition  ************************************** 	
-//Register Node by Name
-packageObj.createNode("buildInterface", node_buildInterface); 
-packageObj.createNode("getInterface", node_getInterface); 
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
-var module = {
-		start : function(packageObj){
-			node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
-		}
-};
-nosliw.registerModule(module, packageObj);
+//Register Node by Name
+packageObj.createChildNode("buildInterface", node_buildInterface); 
+packageObj.createChildNode("getInterface", node_getInterface); 
 
 })(packageObj);

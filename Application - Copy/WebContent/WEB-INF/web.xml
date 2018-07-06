@@ -5,52 +5,36 @@
   </welcome-file-list>
   <servlet>
     <servlet-name>init</servlet-name>
-    <servlet-class>com.nosliw.app.servlet.HAPInitServlet</servlet-class>
+    <servlet-class>com.nosliw.servlet.HAPInitServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
 
   <servlet>
-    <servlet-name>gatewayservlet</servlet-name>
-    <servlet-class>com.nosliw.app.servlet.HAPBrowserGatewayServlet</servlet-class>
+    <servlet-name>loadLibServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.HAPBrowserGatewayServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>gatewayservlet</servlet-name>
+    <servlet-name>loadLibServlet</servlet-name>
+    <url-pattern>/loadlib</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>gatewayServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.HAPGatewayServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>gatewayServlet</servlet-name>
     <url-pattern>/gateway</url-pattern>
   </servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>loginservlet</servlet-name>
-    <url-pattern>/login</url-pattern>
-  </servlet-mapping>
   <servlet>
-    <servlet-name>loginservlet</servlet-name>
-    <servlet-class>com.nosliw.app.servlet.HAPLoginServlet</servlet-class>
+    <servlet-name>appServlet</servlet-name>
+    <servlet-class>com.nosliw.app.servlet.HAPAppServlet</servlet-class>
   </servlet>
+  <servlet-mapping>
+    <servlet-name>appServlet</servlet-name>
+    <url-pattern>/miniApp</url-pattern>
+  </servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>serviceservlet</servlet-name>
-    <url-pattern>/service</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>serviceservlet</servlet-name>
-    <servlet-class>com.nosliw.app.servlet.HAPServiceServlet</servlet-class>
-  </servlet>
 
-  <servlet-mapping>
-    <servlet-name>loadscript</servlet-name>
-    <url-pattern>/loadScript</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>loadscript</servlet-name>
-    <servlet-class>com.nosliw.app.servlet.HAPLoadScriptServlet</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>restartservlet</servlet-name>
-    <url-pattern>/restart</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>restartservlet</servlet-name>
-    <servlet-class>com.test.business.servlet.RestartServlet</servlet-class>
-  </servlet>
 </web-app>

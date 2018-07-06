@@ -1,8 +1,21 @@
+//get/create package
+var packageObj = library.getChildPackage("entity");    
+
+(function(packageObj){
+//get used node
+var node_COMMONATRIBUTECONSTANT;
+var node_COMMONCONSTANT;
+var node_CONSTANT;
+var node_remoteServiceErrorUtility;
+var node_remoteServiceUtility;
+var node_errorUtility;
+//*******************************************   Start Node Definition  ************************************** 	
+
+
 /**
  * 
  */
-
-var nosliwCreateRemoteSyncTask = function(name, remoteServiceMan, setting){
+var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 	var loc_moduleName = "syncTask";
 	
 	//reference to remote service manager obj
@@ -26,105 +39,117 @@ var nosliwCreateRemoteSyncTask = function(name, remoteServiceMan, setting){
 	 * 		service : url service
 	 * 		command : command to use
 	 */
-	function loc_syncRemoteCall(){
+	var loc_syncRemoteCall = function(){
 		//set flag so that no new processing allowed before this function is finished
 		loc_syncReady = false;
+
+		//id for this remote call
+		loc_id = nosliw.runtime.getIdService().generateId();
 		
 		//prepare remote request and do ajax call
+		nosliw.logging.info("************************  Remote AJAX Request   ************************");
+		nosliw.logging.info("Syntask: " + loc_name);
+		nosliw.logging.info("Remote call Id: " + loc_id);
+		
 		var serviceTaskRequests = [];
 		for(var i in loc_syncTasks){
-			serviceTaskRequests.push(loc_syncTasks[i].getRemoteServiceRequest());
+			var remoteRequest = loc_syncTasks[i].getRemoteServiceRequest();
+			serviceTaskRequests.push(remoteRequest);
+			nosliw.logging.info("Task ID: " + loc_syncTasks[i].id);
 		}
-		var serviceRequests = {};
-		serviceRequests[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_SERVLETPARMS_CLIENTID] = nosliw.getClientId();
-		serviceRequests[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_SERVLETPARMS_COMMAND] = loc_setting.getConfigure(NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_SERVLETPARMS_COMMAND);
-		serviceRequests[NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_SERVLETPARMS_PARMS] = JSON.stringify(serviceTaskRequests);
+		nosliw.logging.info("***************************************************************");
+		
+		var remoteRequestData = {};
+//		remoteRequestData[node_COMMONATRIBUTECONSTANT.SERVLETPARMS_CLIENTID] = nosliw.getClientId();
+		remoteRequestData[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND] = loc_setting.getConfigure(node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND);
+		remoteRequestData[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_PARMS] = JSON.stringify(serviceTaskRequests);
 	
-		$.ajax({
-			url : loc_setting.getConfigure(NOSLIWATCOMMONTRIBUTECONSTANT.ATTR_SERVLETPARMS_SERVICE),
-			type : "POST",
-			dataType: "json",
-			data : serviceRequests,
-			async : true,
+		$.ajax(_.extend({
+			data : remoteRequestData,
 			success : function(serviceDataResult, status){
-				if(nosliwErrorUtility.isSuccess(serviceDataResult)==true){
-					nosliwLogging.info(loc_moduleName, loc_name, "Success remote processing");
-					
+				var syncTasks = loc_syncTasks;
+				//clear tasks
+				loc_syncTasks = [];
+				//ready to process new task
+				loc_syncReady = true;
+
+				if(node_errorUtility.isSuccess(serviceDataResult)==true){
 					var serviceDatas = serviceDataResult.data;
 					//processed normally
 					for(var j in serviceDatas){
 						var serviceData = serviceDatas[j];
-						var task = loc_syncTasks[j];
+						var task = syncTasks[j];
 						var taskType = task.type;
 
-						if(taskType==NOSLIWCOMMONCONSTANT.CONS_REMOTESERVICE_TASKTYPE_GROUP){
+						if(taskType==node_COMMONCONSTANT.REMOTESERVICE_TASKTYPE_GROUP){
 							//for group task, handle child task first
 							for(var k in task.children)		loc_handleServiceResult(task.children[k], serviceData.data[k]);
 						}
 						//handle task
 						loc_handleServiceResult(task, serviceData);
 					}
-					//empty synTasks
-					loc_syncTasks = [];
 				}
 				else{
-					nosliwLogging.error(loc_moduleName, loc_name, "System error when processing tasks in snycTask :", serviceDataResult);
+					nosliw.logging.error(loc_moduleName, loc_name, "System error when processing tasks in snycTask :", serviceDataResult);
 					loc_processSyncRequestSystemError(serviceDataResult);
 				}
 				
-				//clear tasks
-				loc_syncTasks = [];
-				//ready to process new task
-				loc_syncReady = true;
+				nosliw.logging.info("************************  Remote AJAX Request Finish  ************************");
+				nosliw.logging.info("Syntask: " + loc_name);
+				nosliw.logging.info("Remote call Id: " + loc_id);
+				nosliw.logging.info("Syn status: " + loc_syncReady);
+				nosliw.logging.info("***************************************************************");
+				
 				//process sync task again
 				loc_processTasks();
+
 			},
 			error: function(obj, textStatus, errorThrown){
-				nosliwLogging.error(loc_moduleName, loc_name, "Exception when processing tasks in snycTask ", textStatus, errorThrown);
+				nosliw.logging.error(loc_moduleName, loc_name, "Exception when processing tasks in snycTask ", textStatus, errorThrown);
 
 				//when ajax error happened, which may be caused by network error, server is down or server internal error
 				//remote service manager is put into suspend status
 				//the service request is not removed
-				var serviceData = nosliwRemoteServiceErrorUtility.createRemoteServiceExceptionServiceData(obj, textStatus, errorThrown); 
+				var serviceData = node_remoteServiceErrorUtility.createRemoteServiceExceptionServiceData(obj, textStatus, errorThrown); 
 				
-				nosliwRemoteServiceUtility.handleServiceTask(loc_syncTasks, function(serviceTask){
+				node_remoteServiceUtility.handleServiceTask(loc_syncTasks, function(serviceTask){
 					loc_handleServiceResult(serviceTask, serviceData);
-					serviceTask.status = NOSLIWCONSTANT.REMOTESERVICE_SERVICESTATUS_FAIL;
+					serviceTask.status = node_CONSTANT.REMOTESERVICE_SERVICESTATUS_FAIL;
 				});
 				
 				//suspend the system
-				loc_remoteServiceMan.suspend();
+				loc_remoteServiceMan.interfaceObjectLifecycle.suspend();
 				//finish processing, so that ready to process again
 				loc_syncReady = true;
 			},
-		});
+		}, loc_setting.getConfiguresObject()));
 	};
-
+	
 	/*
 	 * process the system error (invalid client id, ...) 
 	 */
 	var loc_processSyncRequestSystemError = function(serviceData){
 		
-	}
+	};
 	
 	/*
 	 * call the responding handler according to service data
 	 */
 	var loc_handleServiceResult = function(serviceTask, serviceData){
-		var resultStatus = nosliwErrorUtility.getServiceDataStatus(serviceData);
+		var resultStatus = node_errorUtility.getServiceDataStatus(serviceData);
 		switch(resultStatus){
-		case NOSLIWCONSTANT.REMOTESERVICE_RESULT_SUCCESS:
-			nosliwLogging.info(loc_moduleName, loc_name, serviceTask.requestId, "Success handler");
-			nosliwLogging.trace(loc_moduleName, loc_name, serviceTask.requestId, "Data", serviceData.data);
-			return nosliwRemoteServiceUtility.executeServiceTaskSuccessHandler(serviceTask, serviceData.data, serviceTask);
+		case node_CONSTANT.REMOTESERVICE_RESULT_SUCCESS:
+			nosliw.logging.info(loc_moduleName, loc_name, serviceTask.requestId, "Success handler");
+			nosliw.logging.trace(loc_moduleName, loc_name, serviceTask.requestId, "Data", serviceData.data);
+			return node_remoteServiceUtility.executeServiceTaskSuccessHandler(serviceTask, serviceData.data, serviceTask);
 			break;
-		case NOSLIWCONSTANT.REMOTESERVICE_RESULT_EXCEPTION:
-			nosliwLogging.error(loc_moduleName, loc_name, serviceTask.requestId, "Error handler with data", serviceData);
-			return nosliwRemoteServiceUtility.executeServiceTaskExceptionHandler(serviceTask, serviceData, serviceTask);
+		case node_CONSTANT.REMOTESERVICE_RESULT_EXCEPTION:
+			nosliw.logging.error(loc_moduleName, loc_name, serviceTask.requestId, "Error handler with data", serviceData);
+			return node_remoteServiceUtility.executeServiceTaskExceptionHandler(serviceTask, serviceData, serviceTask);
 			break;
-		case NOSLIWCONSTANT.REMOTESERVICE_RESULT_ERROR:
-			nosliwLogging.error(loc_moduleName, loc_name, serviceTask.requestId, "Exception handler with data", serviceData);
-			return nosliwRemoteServiceUtility.executeServiceTaskErrorHandler(serviceTask, serviceData, serviceTask);
+		case node_CONSTANT.REMOTESERVICE_RESULT_ERROR:
+			nosliw.logging.error(loc_moduleName, loc_name, serviceTask.requestId, "Exception handler with data", serviceData);
+			return node_remoteServiceUtility.executeServiceTaskErrorHandler(serviceTask, serviceData, serviceTask);
 			break;
 		}
 	};
@@ -136,7 +161,7 @@ var nosliwCreateRemoteSyncTask = function(name, remoteServiceMan, setting){
 		if(loc_syncReady==true){
 			//if ready to process
 			if(loc_isEmpty()==false){
-				nosliwLogging.info(loc_moduleName, loc_name, "Start remote processing tasks in snycTask ");
+				nosliw.logging.info(loc_moduleName, loc_name, "Start remote processing tasks in snycTask ");
 				//if not empty 
 				//put all tasks in queue into tasks array and process all tasks in it
 				for(var i in loc_syncTaskQueue){
@@ -164,19 +189,19 @@ var nosliwCreateRemoteSyncTask = function(name, remoteServiceMan, setting){
 		 */
 		addTask : function(task){	
 			loc_syncTaskQueue.push(task);	
-			nosliwLogging.info(loc_moduleName,  task.requestId, "New remote task is added to sync task: ", JSON.stringify(task.service));
-			this.logSyncTask();
+			nosliw.logging.info(loc_moduleName,  task.requestId, "New remote task is added to sync task ", loc_name, task.id, task.service.command, ":", JSON.stringify(task.service.parms));
+//			this.logSyncTask();
 		},
 		
 		logSyncTask : function(){
-			nosliwLogging.trace(loc_moduleName, loc_name, "***********************  info start ***********************" );
-			nosliwLogging.trace(loc_moduleName, loc_name, "info", "		"+"task:"+loc_syncTasks.length +"  queue:"+loc_syncTaskQueue.length);
-			nosliwLogging.trace(loc_moduleName, loc_name, "tasks", "		");
-			nosliwLogging.trace(loc_moduleName, loc_name, "queue", "		");
-			for(var i=0 in loc_syncTaskQueue){
-				nosliwLogging.trace(loc_moduleName, loc_name, "		", loc_syncTaskQueue[i].requestId, JSON.stringify(loc_syncTaskQueue[i].service));
+			nosliw.logging.trace(loc_moduleName, loc_name, "***********************  info start ***********************" );
+			nosliw.logging.trace(loc_moduleName, loc_name, "info", "		"+"task:"+loc_syncTasks.length +"  queue:"+loc_syncTaskQueue.length);
+			nosliw.logging.trace(loc_moduleName, loc_name, "tasks", "		");
+			nosliw.logging.trace(loc_moduleName, loc_name, "queue", "		");
+			for(var i in loc_syncTaskQueue){
+				nosliw.logging.trace(loc_moduleName, loc_name, "		", loc_syncTaskQueue[i].requestId, JSON.stringify(loc_syncTaskQueue[i].service));
 			}
-			nosliwLogging.trace(loc_moduleName, loc_name, "*********************** info end ***********************" );
+			nosliw.logging.trace(loc_moduleName, loc_name, "*********************** info end ***********************" );
 		},
 	
 		/*
@@ -197,3 +222,20 @@ var nosliwCreateRemoteSyncTask = function(name, remoteServiceMan, setting){
 	
 	return loc_out;
 };
+
+//*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("remote.errorUtility", function(){node_remoteServiceErrorUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("remote.utility", function(){node_remoteServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
+
+
+//Register Node by Name
+packageObj.createChildNode("createRemoteSyncTask", node_createRemoteSyncTask); 
+
+})(packageObj);
+

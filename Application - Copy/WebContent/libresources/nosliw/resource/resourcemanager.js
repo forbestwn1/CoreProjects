@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("resourcemanager");    
+var packageObj = library;    
 
 (function(packageObj){
 	//get used node
@@ -50,15 +50,12 @@ var node_createResourceManager = function(){
 };	
 
 //*******************************************   End Node Definition  ************************************** 	
-//Register Node by Name
-packageObj.createNode("createResourceManager", node_createResourceManager); 
 
-	var module = {
-		start : function(packageObj){
-			node_Resource = packageObj.getNodeData("resource.entity.Resource");
-			node_resourceUtility = packageObj.getNodeData("resource.resourceUtility");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("resource.entity.Resource", function(){node_Resource = this.getData();});
+nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
+
+//Register Node by Name
+packageObj.createChildNode("createResourceManager", node_createResourceManager); 
 
 })(packageObj);

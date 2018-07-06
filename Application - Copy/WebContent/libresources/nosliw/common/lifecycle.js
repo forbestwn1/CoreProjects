@@ -19,6 +19,11 @@ var node_makeObjectWithLifecycle = function(baseObject, lifecycleCallback, thisC
 	return node_buildInterface(baseObject, INTERFACENAME, loc_createResourceLifecycle(thisContext==undefined?baseObject:thisContext, lifecycleCallback));
 };
 	
+var node_getLifecycleInterface = function(baseObject){
+	return node_getInterface(baseObject, INTERFACENAME);
+};
+
+
 /**
  * create resource lifecycle object which provide basic lifecycle method and status
  * all the thisContext for life cycle method is either loc_thisContext or this
@@ -205,7 +210,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 		getResourceStatus : function(){return loc_status;},
 
 		registerEventListener : function(listener, handler){
-			node_eventUtility.registerEvent(listener, loc_out.getBaseObject(), node_CONSTANT.EVENT_EVENTNAME_ALL, handler);
+			node_eventUtility.registerListener(listener, loc_out.getBaseObject(), node_CONSTANT.EVENT_EVENTNAME_ALL, handler);
 		},
 
 		unregisterEventListener : function(listener){
@@ -236,18 +241,15 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 };
 
 //*******************************************   End Node Definition  ************************************** 	
-//Register Node by Name
-packageObj.createNode("makeObjectWithLifecycle", node_makeObjectWithLifecycle); 
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithname.getObjectName", function(){node_getObjectName = this.getData();});
 
-var module = {
-	start : function(packageObj){
-		node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-		node_buildInterface = packageObj.getNodeData("common.interface.buildInterface");
-		node_getInterface = packageObj.getNodeData("common.interface.getInterface");
-		node_eventUtility = packageObj.getNodeData("common.event.utility");
-		node_getObjectName = packageObj.getNodeData("common.objectwithname.getObjectName");
-	}
-};
-nosliw.registerModule(module, packageObj);
+//Register Node by Name
+packageObj.createChildNode("getLifecycleInterface", node_getLifecycleInterface); 
+packageObj.createChildNode("makeObjectWithLifecycle", node_makeObjectWithLifecycle); 
 
 })(packageObj);

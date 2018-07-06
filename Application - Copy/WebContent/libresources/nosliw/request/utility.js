@@ -6,7 +6,7 @@ var packageObj = library;
 	var node_eventUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var utility = function(){
+var node_utility = function(){
 	var loc_out = {
 			/**
 			 * last one in argus should be request info
@@ -149,14 +149,11 @@ var utility = function(){
 }();
 
 //*******************************************   End Node Definition  ************************************** 	
-//Register Node by Name
-packageObj.createNode("utility", utility); 
 
-	var module = {
-		start : function(packageObj){
-			node_eventUtility = packageObj.getNodeData("common.event.utility");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
+
+//Register Node by Name
+packageObj.createChildNode("utility", node_utility); 
 
 })(packageObj);

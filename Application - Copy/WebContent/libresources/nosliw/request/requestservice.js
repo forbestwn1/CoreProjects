@@ -24,10 +24,10 @@ var node_createServiceRequestInfoService = function(service, handlers, requester
 	var loc_buildDependentRequestHandler = function(hanlderName){
 			return function(dependentRequestInfo, data){
 				var parentHandler = loc_out.getHandlers()[hanlderName];
-				var dependentResultProcessor = loc_out.pri_dependentService.processors[hanlderName];
+				var dependentResultProcessor = loc_out.pri_dependentService.processors==undefined?undefined : loc_out.pri_dependentService.processors[hanlderName];
 				var parentRequestInfo = dependentRequestInfo.getParentRequest();
 				
-				var out = undefined;
+				var out = data;
 				if(dependentResultProcessor!=undefined){
 					out = dependentResultProcessor.call(dependentRequestInfo, dependentRequestInfo, data);
 				}
@@ -55,10 +55,16 @@ var node_createServiceRequestInfoService = function(service, handlers, requester
 	 */
 	var loc_processRequestWithDependentRequest = function(reqeustInfo){
 		var dependentRequest = reqeustInfo.getDependentServiceRequestInfo();
-		return node_requestProcessor.processRequest(dependentRequest, false);
+		return node_requestProcessor.processRequest(dependentRequest);
 	};
 	
 	var loc_out = {
+			ovr_afterSetId : function(){
+				//change all children's id
+				var id = this.getId();
+				loc_out.pri_dependentService.requestInfo.setId(id);
+			},
+			
 			getDependentServiceRequestInfo : function(){
 				var dependentService = this.pri_dependentService;
 				if(dependentService!=undefined){
@@ -106,18 +112,16 @@ var node_DependentServiceRequestInfo = function(requestInfo, processors){
 
 
 //*******************************************   End Node Definition  ************************************** 	
-//Register Node by Name
-packageObj.createNode("createServiceRequestInfoService", node_createServiceRequestInfoService); 
-packageObj.createNode("entity.DependentServiceRequestInfo", node_DependentServiceRequestInfo); 
 
-	var module = {
-		start : function(packageObj){
-			node_requestProcessor = packageObj.getNodeData("request.requestServiceProcessor");
-			node_ServiceRequestExecuteInfo = packageObj.getNodeData("request.entity.ServiceRequestExecuteInfo");
-			node_createServiceRequestInfoCommon = packageObj.getNodeData("request.request.createServiceRequestInfoCommon");
-			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("request.entity.ServiceRequestExecuteInfo", function(){node_ServiceRequestExecuteInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon", function(){node_createServiceRequestInfoCommon = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+
+
+//Register Node by Name
+packageObj.createChildNode("createServiceRequestInfoService", node_createServiceRequestInfoService); 
+packageObj.createChildNode("entity.DependentServiceRequestInfo", node_DependentServiceRequestInfo); 
 
 })(packageObj);

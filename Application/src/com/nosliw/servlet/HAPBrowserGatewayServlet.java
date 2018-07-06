@@ -2,7 +2,6 @@ package com.nosliw.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,38 +32,28 @@ public class HAPBrowserGatewayServlet  extends HttpServlet{
 			HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		HAPRequestInfo requestInfo = this.getRequestInfo(request);
+		HAPRequestInfo requestInfo = new HAPRequestInfo(request);
 		HAPServiceData serviceData = this.getRuntimeEnvironment().getGatewayManager().executeGateway(
 				HAPRuntimeEnvironmentImpBrowser.GATEWAY_LOADLIBRARIES, 
 				HAPGatewayBrowserLoadLibrary.COMMAND_LOADLIBRARY, 
-				(JSONObject)requestInfo.getData());
+				new JSONObject(requestInfo.getParms()));
 		String content = serviceData.toStringValue(HAPSerializationFormat.JSON);
 		content = HAPJsonUtility.formatJson(content);
 		
 		response.setContentType("text/javascript");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 	    PrintWriter writer = response.getWriter();
 	    writer.println(content);		
 	}
 	
-
-	private HAPRequestInfo getRequestInfo(HttpServletRequest request){
-		HAPRequestInfo out = null;
-		
-		try {
-			String requestDataStr = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-			JSONObject requestJson = new JSONObject(requestDataStr);
-			
-			String command = requestJson.optString(HAPRequestInfo.COMMAND);
-			String clientId = requestJson.optString(HAPRequestInfo.CLIENTID);
-			Object data = requestJson.opt(HAPRequestInfo.DATA);
-			out = new HAPRequestInfo(clientId, command, data);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return out;
-	}
-
+	 @Override
+	  protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
+	          throws ServletException, IOException {
+		 resp.addHeader("Access-Control-Allow-Origin", "*");
+		 resp.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+	      resp.setStatus(HttpServletResponse.SC_OK);
+	  }
+	 
 	private HAPRuntimeEnvironmentImpBrowser getRuntimeEnvironment(){		return (HAPRuntimeEnvironmentImpBrowser)this.getServletContext().getAttribute("runtime");  }
 
-	
 }

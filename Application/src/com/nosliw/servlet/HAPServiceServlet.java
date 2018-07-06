@@ -24,12 +24,12 @@ import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrows
 @HAPEntityWithAttribute
 public abstract class HAPServiceServlet  extends HttpServlet{
 
-	@HAPAttribute
-	public static final String SERVLETPARMS_COMMAND = "command";
-	@HAPAttribute
-	public static final String SERVLETPARMS_CLIENTID = "clientId";
-	@HAPAttribute
-	public static final String SERVLETPARMS_PARMS = "parms";
+//	@HAPAttribute
+//	public static final String SERVLETPARMS_COMMAND = "command";
+//	@HAPAttribute
+//	public static final String SERVLETPARMS_CLIENTID = "clientId";
+//	@HAPAttribute
+//	public static final String SERVLETPARMS_PARMS = "parms";
 	
 	@HAPAttribute
 	public static final String REQUEST_TYPE = "type";
@@ -47,11 +47,12 @@ public abstract class HAPServiceServlet  extends HttpServlet{
 	public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HAPServiceData out = null;
 		try{
-			String command = request.getParameter(SERVLETPARMS_COMMAND);
-			String clientId = request.getParameter(SERVLETPARMS_CLIENTID);
-			if(HAPConstant.SERVICECOMMAND_GROUPREQUEST.equals(command)){
-				String groupRequest = request.getParameter(SERVLETPARMS_PARMS);
-				JSONArray jsonGroupReqs = new JSONArray(groupRequest);
+			HAPRequestInfo requestInfo = new HAPRequestInfo(request);
+//			String command = request.getParameter(SERVLETPARMS_COMMAND);
+//			String clientId = request.getParameter(SERVLETPARMS_CLIENTID);
+			if(HAPConstant.SERVICECOMMAND_GROUPREQUEST.equals(requestInfo.getCommand())){
+//				String groupRequest = request.getParameter(SERVLETPARMS_PARMS);
+				JSONArray jsonGroupReqs = new JSONArray(requestInfo.getParms());
 
 				List<String> requestsResult = new ArrayList<String>();
 				for(int i=0; i<jsonGroupReqs.length(); i++){
@@ -68,15 +69,37 @@ public abstract class HAPServiceServlet  extends HttpServlet{
 			out = HAPServiceData.createFailureData(null, "Exceptione during process gateway service request!!!!");
 		}
 
+		//build response
 		String content = out.toStringValue(HAPSerializationFormat.JSON_FULL);
-
 		response.setContentType("application/json");
-	    PrintWriter writer = response.getWriter();
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		   PrintWriter writer = response.getWriter();
+		try {
+//		    System.out.println(HAPJsonUtility.formatJson(content));
+		    writer.println(HAPJsonUtility.formatJson(content));		
+//		    writer.println(content);		
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			writer.flush();
+			writer.close();
+        }  
 	    
-//	    System.out.println(HAPJsonUtility.formatJson(content));
-	    writer.println(HAPJsonUtility.formatJson(content));		
-//	    writer.println(content);		
-}
+	}
+	
+	 @Override
+	  protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
+	          throws ServletException, IOException {
+		 resp.addHeader("Access-Control-Allow-Origin", "*");
+		 resp.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+	      resp.setStatus(HttpServletResponse.SC_OK);
+	  }
+	
+	private void processCrossDomain(HttpServletRequest request, HttpServletResponse response) {
+		response.addHeader("Access-Control-Allow-Origin", "*");
+	}
 	
 	// process one request object
 	private HAPServiceData processRequest(JSONObject req) throws Exception{
@@ -118,17 +141,17 @@ public abstract class HAPServiceServlet  extends HttpServlet{
 	}
 	
 	private HAPServiceData processRequest(HAPServiceInfo serviceInfo){
-//		System.out.println("*********************** Start Service ************************");
-//		System.out.println(HAPServiceInfo.SERVICE_COMMAND + "  " + serviceInfo.getCommand());
-//		System.out.println(HAPServiceInfo.SERVICE_PARMS + "   " + serviceInfo.getParms().toString());
+		System.out.println("*********************** Start Service ************************");
+		System.out.println(HAPServiceInfo.SERVICE_COMMAND + "  " + serviceInfo.getCommand());
+		System.out.println(HAPServiceInfo.SERVICE_PARMS + "   " + serviceInfo.getParms().toString());
 		
 		HAPServiceData serviceData = processServiceRequest(serviceInfo.getCommand(), serviceInfo.getParms());
 		
 		String content = serviceData.toStringValue(HAPSerializationFormat.JSON_FULL);
 		content = HAPJsonUtility.formatJson(content);
 		
-//		System.out.println("return: \n" + content);
-//		System.out.println("*********************** End Service ************************");
+		System.out.println("return: \n" + content);
+		System.out.println("*********************** End Service ************************");
 		return serviceData;
 	}
 	

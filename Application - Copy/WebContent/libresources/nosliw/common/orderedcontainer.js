@@ -5,10 +5,11 @@ var packageObj = library.getChildPackage("orderedcontainer");
 	//get used node
 //*******************************************   Start Node Definition  ************************************** 	
 
+	
 /**
  * 
  */
-var newOrderedContainerGeneral = function(dataArray, keyName){
+var node_newOrderedContainerGeneral = function(dataArray, keyName){
 	this.keyArray = [];
 	this.dataMap = {};
 	this.keyName = keyName;
@@ -104,7 +105,7 @@ var prototype = {
 };
 
 
-var handleDataContainerEachElement = function(dataContainerWraper, handler){
+var node_handleDataContainerEachElement = function(dataContainerWraper, handler){
 	if(dataContainerWraper==undefined)   return;
 	var dataContainer = dataContainerWraper.container;
 	var childDataType = dataContainerWraper.childDataType;
@@ -117,14 +118,12 @@ var handleDataContainerEachElement = function(dataContainerWraper, handler){
 }
 
 //*******************************************   End Node Definition  ************************************** 	
-//Register Node by Name
-packageObj.createNode("OrderedContainer.newEntity", newOrderedContainerGeneral); 
-packageObj.createNode("utils.handleDataContainerEachElement", handleDataContainerEachElement); 
 
-	var module = {
-		start : function(packageObj){
-		}
-	};
-	nosliw.registerModule(module, packageObj);
+//populate dependency node data
+
+
+//Register Node by Name
+packageObj.createChildNode("OrderedContainer.newEntity", node_newOrderedContainerGeneral); 
+packageObj.createChildNode("utils.handleDataContainerEachElement", node_handleDataContainerEachElement); 
 
 })(packageObj);

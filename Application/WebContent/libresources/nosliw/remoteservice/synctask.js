@@ -60,9 +60,9 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 		nosliw.logging.info("***************************************************************");
 		
 		var remoteRequestData = {};
-//		remoteRequestData[node_COMMONATRIBUTECONSTANT.SERVLETPARMS_CLIENTID] = nosliw.getClientId();
-		remoteRequestData[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND] = loc_setting.getConfigure(node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND);
-		remoteRequestData[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_PARMS] = JSON.stringify(serviceTaskRequests);
+//		remoteRequestData[node_COMMONATRIBUTECONSTANT.REQUESTINFO_COMMAND_CLIENTID] = nosliw.getClientId();
+		remoteRequestData[node_COMMONATRIBUTECONSTANT.REQUESTINFO_COMMAND] = loc_setting.getConfigure(node_COMMONATRIBUTECONSTANT.REQUESTINFO_COMMAND);
+		remoteRequestData[node_COMMONATRIBUTECONSTANT.REQUESTINFO_PARMS] = JSON.stringify(serviceTaskRequests);
 	
 		$.ajax(_.extend({
 			data : remoteRequestData,

@@ -64,6 +64,10 @@ var node_createConfigures = function(configures){
 			return loc_configures[name];
 		},
 		
+		setConfigure : function(name, value){
+			loc_configures[name] = value;
+		},
+		
 		mergeWith : function(configures){
 			var configuresObj = node_basicUtility.mergeObjects(loc_configures, configures.getConfiguresObject());
 			return node_createConfigures(configuresObj);

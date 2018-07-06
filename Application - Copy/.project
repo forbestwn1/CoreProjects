@@ -5,11 +5,14 @@
 	<projects>
 		<project>DataTypeManager</project>
 		<project>ExpressionParser</project>
-		<project>UIResource</project>
-		<project>DataTypeTest</project>
 		<project>Common</project>
 		<project>Core</project>
-		<project>DataType</project>
+		<project>DataTypeTest</project>
+		<project>CriteriaParser</project>
+		<project>UIResource</project>
+		<project>DataSource</project>
+		<project>DataSourceTest</project>
+		<project>MiniApp</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

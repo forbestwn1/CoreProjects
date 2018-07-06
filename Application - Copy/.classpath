@@ -3,8 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Entity"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/UIResource"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ExpressionParser"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Common"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Core"/>
@@ -14,11 +12,15 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_91">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_161">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataType"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataTypeTest"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/UIResource"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataSource"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataSourceTest"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/MiniApp"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

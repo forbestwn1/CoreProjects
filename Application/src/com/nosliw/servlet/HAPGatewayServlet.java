@@ -10,6 +10,9 @@ import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.browser.HAPRuntimeBrowserUtility;
 
+/**
+ * Servlet for gateway
+ */
 @HAPEntityWithAttribute
 public class HAPGatewayServlet extends HAPServiceServlet{
 

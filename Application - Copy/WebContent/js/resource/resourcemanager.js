@@ -8,8 +8,8 @@ var nosliwCreateResourceManager = function(){
 	var loc_out = {
 		
 		getResource : function(resourceId){
-			var type = resourceId[NOSLIWATCOMMONTRIBUTECONSTANT.RESOURCEID_TYPE];
-			var id = resourceId[NOSLIWATCOMMONTRIBUTECONSTANT.RESOURCEID_ID];
+			var type = resourceId[NOSLIWATCOMMONATRIBUTECONSTANT.RESOURCEID_TYPE];
+			var id = resourceId[NOSLIWATCOMMONATRIBUTECONSTANT.RESOURCEID_ID];
 			var typeResources = loc_resources[type];
 			var resourceWrapper = typeResources[id];
 			var resource = resourceWrapper.resource;
@@ -18,7 +18,7 @@ var nosliwCreateResourceManager = function(){
 		
 		getResourceData : function(resourceId){
 			var resource = this.getResource(resourceId);
-			return resource[NOSLIWATCOMMONTRIBUTECONSTANT.RESOURCE_RESORUCEDATA];
+			return resource[NOSLIWATCOMMONATRIBUTECONSTANT.RESOURCE_RESORUCEDATA];
 		},
 		
 		resourceExists : function(resourceId){
@@ -38,9 +38,9 @@ var nosliwCreateResourceManager = function(){
 		},
 		
 		addResource : function(resource){
-			var resourceId = resource[NOSLIWATCOMMONTRIBUTECONSTANT.RESOURCE_ID];
-			var type = resourceId[NOSLIWATCOMMONTRIBUTECONSTANT.RESOURCEID_TYPE];
-			var id = resourceId[NOSLIWATCOMMONTRIBUTECONSTANT.RESOURCEID_ID];
+			var resourceId = resource[NOSLIWATCOMMONATRIBUTECONSTANT.RESOURCE_ID];
+			var type = resourceId[NOSLIWATCOMMONATRIBUTECONSTANT.RESOURCEID_TYPE];
+			var id = resourceId[NOSLIWATCOMMONATRIBUTECONSTANT.RESOURCEID_ID];
 			
 			var typeResources = loc_resources[type];
 			if(typeResources===undefined){

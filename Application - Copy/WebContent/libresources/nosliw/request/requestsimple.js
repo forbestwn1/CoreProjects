@@ -38,16 +38,14 @@ var node_createServiceRequestInfoSimple = function(service, processor, handlers,
 };
 
 //*******************************************   End Node Definition  ************************************** 	
-//Register Node by Name
-packageObj.createNode("createServiceRequestInfoSimple", node_createServiceRequestInfoSimple); 
 
-	var module = {
-		start : function(packageObj){
-			node_ServiceRequestExecuteInfo = packageObj.getNodeData("request.entity.ServiceRequestExecuteInfo");
-			node_createServiceRequestInfoCommon = packageObj.getNodeData("request.request.createServiceRequestInfoCommon");
-			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("request.entity.ServiceRequestExecuteInfo", function(){node_ServiceRequestExecuteInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon", function(){node_createServiceRequestInfoCommon = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+
+
+//Register Node by Name
+packageObj.createChildNode("createServiceRequestInfoSimple", node_createServiceRequestInfoSimple); 
 
 })(packageObj);

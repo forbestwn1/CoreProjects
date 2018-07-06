@@ -8,8 +8,13 @@ var packageObj = library.getChildPackage("entity");
 	var node_expressionUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_OperationParm = function(value, name, isBase){
+var node_Data = function(dataTypeId, value){
+	this.dataTypeId = dataTypeId;
 	this.value = value;
+};	
+	
+var node_OperationParm = function(data, name, isBase){
+	this.data = data;
 	this.name = name;
 	this.isBase = isBase==undefined?false:isBase;
 };	
@@ -20,7 +25,7 @@ var node_OperationParms = function(parmsArray){
 	_.each(parmsArray, function(parm, index, list){
 		var parmName = parm.name;
 		if(parmName==undefined)		parmName = node_COMMONCONSTANT.DATAOPERATION_PARM_BASENAME;
-		this.pri_parmsMap[parmName] = parm.value;
+		this.pri_parmsMap[parmName] = parm.data;
 		if(parm.isBase===true)   this.baseParm = parmName;
 	}, this);
 };
@@ -61,22 +66,25 @@ node_OperationContext.prototype = {
 		var dataOperationResourceId = node_resourceUtility.createOperationResourceId(dataTypeId, operation);
 		return node_expressionUtility.executeOperationResource(dataOperationResourceId, parmArray, this.pri_resourcesTree);
 	},
+	
+	executeExpression : function(expression, parms){
+		
+	}
 };
 
 
 //*******************************************   End Node Definition  ************************************** 	
-//Register Node by Name
-packageObj.createNode("OperationParm", node_OperationParm); 
-packageObj.createNode("OperationParms", node_OperationParms); 
-packageObj.createNode("OperationContext", node_OperationContext); 
 
-	var module = {
-		start : function(packageObj){
-			node_COMMONCONSTANT = packageObj.getNodeData("constant.COMMONCONSTANT");
-			node_resourceUtility = packageObj.getNodeData("resource.resourceUtility");
-			node_expressionUtility = packageObj.getNodeData("expression.expressionUtility");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
+
+
+//Register Node by Name
+packageObj.createChildNode("Data", node_Data); 
+packageObj.createChildNode("OperationParm", node_OperationParm); 
+packageObj.createChildNode("OperationParms", node_OperationParms); 
+packageObj.createChildNode("OperationContext", node_OperationContext); 
 
 })(packageObj);

@@ -4,22 +4,38 @@
         <meta charset="utf-8" />
         <title>Nosliw Go Go !!</title>
 
-        <script src="libresources/runtimebrowser/gateway.js"></script>
-        <script src="libresources/runtimebrowser/init.js"></script>
-
+        <script src="libresources/external/Underscore/1.6.0/underscore.js"></script>
+        <script src="libresources/external/Backbone/1.1.2/backbone.js"></script>
+        <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
+        <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
         
 </head>
 
 <body>
-	    aaaaa
+	 <div id="map"></div>
 
 	<div id="testDiv">
 	</div>
 
 </body>
 
+<script src="libresources/nosliw/core/nosliw.js"></script>
 <script>
+nosliw.registerNodeEvent("runtime", "active", function(eventName, nodeName){
 	
-	
+	var currentSearchString = window.location.search;
+	var page = currentSearchString.substring(currentSearchString.indexOf("=")+1);
+	nosliw.runtime.getUIResourceService().executeCreateUIResourceViewRequest(page, 
+			{
+				success : function(requestInfo, uiResourceView){
+					nosliw.logging.info(JSON.stringify(uiResourceView));
+					
+					uiResourceView.appendTo($('#testDiv'));
+				}
+			}
+	);
+});
 </script>
+<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+
 </html>

@@ -49,9 +49,10 @@ var node_createRemoteService = function(){
 		var setting = {
 			type : "POST",
 			dataType: "json",
+//			contentType: "application/json; charset=utf-8",
 			async : true,
 		};
-		setting[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND] = node_COMMONCONSTANT.SERVICECOMMAND_GROUPREQUEST;
+		setting[node_COMMONATRIBUTECONSTANT.REQUESTINFO_COMMAND] = node_COMMONCONSTANT.SERVICECOMMAND_GROUPREQUEST;
 		return node_createConfiguresBase(setting);
 	}();
 
@@ -144,6 +145,7 @@ var node_createRemoteService = function(){
 		 */
 		registerSyncTaskConfigure : function(name, configure){
 			var newConfigure = loc_syncTaskBaseConfigure.createConfigures(configure);
+			newConfigure.setConfigure("url", "http://localhost:8082/Application/"+newConfigure.getConfigure("url"));
 			loc_syncTaskConfigures[name] = newConfigure;
 		},
 		

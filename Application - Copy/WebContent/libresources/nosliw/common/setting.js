@@ -14,11 +14,11 @@ var packageObj = library.getChildPackage("setting");
  */
 var node_createConfiguresBase = function(baseConfigures){
 	
-	var loc_baseConfigures = createConfigures(baseConfigures);
+	var loc_baseConfigures = node_createConfigures(baseConfigures);
 	
 	var loc_out = {
 			createConfigures : function(configures){
-				return loc_baseConfigures.mergeWith(createConfigures(configures));
+				return loc_baseConfigures.mergeWith(node_createConfigures(configures));
 			},
 			
 			getBaseConfigures : function(){
@@ -39,15 +39,15 @@ var node_createConfigures = function(configures){
 	var loc_configures = {};
 	if(_.isString(configures)){
 		//literal
-		var pairs = configures.split(node_NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_ELEMENT);
+		var pairs = configures.split(node_NOSLIWCOMMONCONSTANT.SEPERATOR_ELEMENT);
 		for(var i in pairs){
 			var pair = pairs[i];
-			var segs = pair.split(NOSLIWCOMMONCONSTANT.CONS_SEPERATOR_PART); 
+			var segs = pair.split(NOSLIWCOMMONCONSTANT.SEPERATOR_PART); 
 			loc_configures[seg[0]] = sets[1];
 		}
 	}
 	else if(_.isObject(configures)){
-		if(getObjectTypeNode.getData()(configures)===node_CONSTANT.TYPEDOBJECT_TYPE_CONFIGURES){
+		if(node_getObjectType(configures)===node_CONSTANT.TYPEDOBJECT_TYPE_CONFIGURES){
 			return configures;
 		}
 		else{
@@ -56,7 +56,7 @@ var node_createConfigures = function(configures){
 	}
 	
 	var loc_out = {
-		prv_getConfiguresObject : function(){
+		getConfiguresObject : function(){
 			return loc_configures;
 		},
 			
@@ -65,30 +65,27 @@ var node_createConfigures = function(configures){
 		},
 		
 		mergeWith : function(configures){
-			var configuresObj = basicUtilityNode.getData().mergeObjects(loc_configures, configures.prv_getConfiguresObject());
-			return createConfigures(configuresObj);
+			var configuresObj = node_basicUtility.mergeObjects(loc_configures, configures.getConfiguresObject());
+			return node_createConfigures(configuresObj);
 		},
 	};
 	
-	loc_out = makeObjectWithTypeNode.getData()(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_CONFIGURES);
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_CONFIGURES);
 	
 	return loc_out;
 };
 
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+
 //Register Node by Name
-packageObj.createNode("createConfiguresBase", node_createConfiguresBase); 
-packageObj.createNode("createConfigures", node_createConfigures); 
-
-	var module = {
-		start : function(packageObj){
-			node_basicUtilityNode = packageObj.getNodeData("common.utility.basicUtility");
-			node_makeObjectWithTypeNode = packageObj.getNodeData("common.objectwithtype.makeObjectWithType");
-			node_getObjectTypeNode = packageObj.getNodeData("common.objectwithtype.getObjectType");
-			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
-
+packageObj.createChildNode("createConfiguresBase", node_createConfiguresBase);  
+packageObj.createChildNode("createConfigures", node_createConfigures); 
+	
 })(packageObj);

@@ -3,6 +3,7 @@ var packageObj = library.getChildPackage("loggingservice");
 
 (function(packageObj){
 	//get used node
+	var node_runtimeName;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -14,24 +15,22 @@ var node_createLoggingService = function(){
 	var loc_buildMessage = function(arguments){
 		var out = "";
 		for(var i in arguments){
-			var part = arguments[i]==undefined?"undefined":JSON.stringify(arguments[i]);
-			out = out + " " + part;
+			out = out + " " + arguments[i];
 		}
 		return out;
 	}
 	
 	var loc_rhinoLogFun = function(){
-		java.lang.System.out.println(loc_buildMessage(arguments));
+//		java.lang.System.out.println(loc_buildMessage(arguments));
 	}
 
 	var loc_rhinoErrorFun = function(){
-		java.lang.System.err.println(loc_buildMessage(arguments));
+//		java.lang.System.err.println(loc_buildMessage(arguments));
 	}
 	
 	var loc_getLogging = function(){
 		if(loc_logging==undefined){
-			var runtimeName = nosliw.runtimeName;
-			if(runtimeName=="rhino"){
+			if(node_runtimeName=="rhino"){
 				loc_logging = {
 					trace : loc_rhinoLogFun,
 					debug : loc_rhinoLogFun,
@@ -50,24 +49,36 @@ var node_createLoggingService = function(){
 		return loc_logging;
 	}
 	
+	var loc_processArguments = function(args){
+		var out = [];
+		for(var i in args){
+			try{
+				out.push(JSON.stringify(args[i]==undefined?"undefined":args[i]));
+			}
+			catch(err){
+			}
+		}
+		return out;
+	}
+	
 	loc_out = {
 		trace : function(){
-			loc_getLogging().trace.apply(loc_logging, arguments);
+			loc_getLogging().trace.apply(loc_logging, loc_processArguments(arguments));
 		},
 		debug : function(){			
-			loc_getLogging().debug.apply(loc_logging, arguments);
+			loc_getLogging().debug.apply(loc_logging, loc_processArguments(arguments));
 		},
 		info : function(){			
-			loc_getLogging().info.apply(loc_logging, arguments);
+			loc_getLogging().info.apply(loc_logging, loc_processArguments(arguments));
 		},
 		warn : function(){			
-			loc_getLogging().warn.apply(loc_logging, arguments);
+			loc_getLogging().warn.apply(loc_logging, loc_processArguments(arguments));
 		},
 		error : function(){			
-			loc_getLogging().error.apply(loc_logging, arguments);
+			loc_getLogging().error.apply(loc_logging, loc_processArguments(arguments));
 		},
 		fatal : function(){			
-			loc_getLogging().fatal.apply(loc_logging, arguments);
+			loc_getLogging().fatal.apply(loc_logging, loc_processArguments(arguments));
 		},
 	};
 	
@@ -75,13 +86,11 @@ var node_createLoggingService = function(){
 };
 
 //*******************************************   End Node Definition  ************************************** 	
-//Register Node by Name
-packageObj.createNode("createLoggingService", node_createLoggingService); 
 
-	var module = {
-		start : function(packageObj){
-		}
-	};
-	nosliw.registerModule(module, packageObj);
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("runtime.name", function(){node_runtimeName = this.getData();});
+
+//Register Node by Name
+packageObj.createChildNode("createLoggingService", node_createLoggingService); 
 
 })(packageObj);

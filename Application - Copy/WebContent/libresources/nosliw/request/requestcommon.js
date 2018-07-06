@@ -8,8 +8,9 @@ var packageObj = library.getChildPackage("request");
 	var node_CONSTANT;
 	var node_requestUtility;
 	var node_eventUtility;
-	var node_requestUtility;
 	var node_basicUtility;
+	var node_errorUtility;
+	var node_createEventObject;
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -32,9 +33,10 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 		loc_out.setParentRequest(parent);
 		
 		//unique id for this request sequence
-		loc_out.pri_id = nosliw.generateId();
+		if(loc_out.pri_id==undefined)		loc_out.pri_id = nosliw.generateId();
 		//unique id for each request, so that we can trace each request in log
 		loc_out.pri_innerId = nosliw.generateId();
+		
 		//what want to do 
 		loc_out.pri_service = service;
 		//original request handlers
@@ -61,10 +63,10 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			pri_status : node_CONSTANT.REQUEST_STATUS_INIT,
 			//request process result
 			pri_result : undefined,
-			//event source
-			pri_eventSource : {},
-			//event listeners
-			pri_eventListeners : [],
+			//request process input, it is for runtime input which cannot be determined during request creation 
+			pri_input : undefined,
+			//event object
+			pri_eventObject : node_createEventObject(),
 		};
 		
 		//construct handlers
@@ -131,7 +133,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 	var loc_initRequest = function(){
 		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_INIT);
 		loc_out.setResult();
-		node_requestUtility.triggerEventWithRequest(loc_out.pri_metaData.pri_eventSource, node_CONSTANT.REQUEST_EVENT_NEW, {}, loc_out);
+		loc_out.pri_metaData.pri_eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_NEW, {}, loc_out);
 	};
 	
 	/*
@@ -143,7 +145,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 	var loc_startRequest = function(){
 		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_PROCESSING);
 		loc_out.setResult();
-		node_requestUtility.triggerEventWithRequest(loc_out.pri_metaData.pri_eventSource, node_CONSTANT.REQUEST_EVENT_ACTIVE, {}, loc_out);
+		loc_out.pri_metaData.pri_eventObject.triggerEvent(node_CONSTANT.REQUEST_EVENT_ACTIVE, {}, loc_out);
 	};
 	
 	/*
@@ -155,15 +157,12 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 	var loc_finishRequest = function(data){
 		loc_out.setStatus(node_CONSTANT.REQUEST_STATUS_DONE);
 		loc_out.setResult(data);
-		
-		node_requestUtility.triggerEventWithRequest(loc_out.pri_metaData.pri_eventSource, node_CONSTANT.REQUEST_EVENT_DONE, data, loc_out);
-
-		//unregister all listeners
-		_.each(loc_out.pri_metaData.pri_eventListeners, function(listener, key, list){
-			node_eventUtilty.unregister(listener);
-		}, this);
 	};
 	
+	var loc_destroy = function(){
+		loc_out.pri_metaData.pri_eventObject.clearup();
+	};
+
 	var loc_out = {
 			
 			getId : function(){return this.pri_id;},
@@ -211,6 +210,22 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 				this.pri_metaData.pri_postProcessors.push(processor); 
 			},
 			
+			exectueHandlerByServiceData : function(serviceData, thisContext){
+				var resultStatus = node_errorUtility.getServiceDataStatus(serviceData);
+				switch(resultStatus){
+				case node_CONSTANT.REMOTESERVICE_RESULT_SUCCESS:
+					return this.executeSuccessHandler(serviceData.data, thisContext);
+					break;
+				case node_CONSTANT.REMOTESERVICE_RESULT_EXCEPTION:
+					return this.executeErrorHandler(serviceData, thisContext);
+					break;
+				case node_CONSTANT.REMOTESERVICE_RESULT_ERROR:
+					return this.executeExceptionHandler(serviceData, thisContext);
+					break;
+				}
+				
+			},
+			
 			executeHandler : function(type, thisContext, data){
 				if(type=="start")		return this.executeStartHandler(thisContext);
 				if(type=="success")		return this.executeSuccessHandler(data, thisContext);
@@ -219,7 +234,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			},
 			
 			executeStartHandler : function(thisContext){
-				nosliw.logging.info(loc_moduleName, this.getInnerId(), "Start handler");
+//				nosliw.logging.info(loc_moduleName, this.getInnerId(), "Start handler");
 				var out = undefined;
 				//internal handler
 				var handler = this.getHandlers().start;
@@ -228,8 +243,8 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			},
 			
 			executeSuccessHandler : function(data, thisContext){
-				nosliw.logging.info(loc_moduleName, this.getInnerId(), "Success handler");
-				nosliw.logging.trace(loc_moduleName, this.getInnerId(), "Data ", data);
+//				nosliw.logging.info(loc_moduleName, this.getInnerId(), "Success handler");
+//				nosliw.logging.trace(loc_moduleName, this.getInnerId(), "Data ", data);
 
 				var out = undefined;
 				//internal handler
@@ -239,8 +254,8 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			},
 			
 			executeErrorHandler : function(serviceData, thisContext){
-				nosliw.logging.error(loc_moduleName, this.getInnerId(), "Error handler");
-				nosliw.logging.trace(loc_moduleName, this.getInnerId(), serviceData);
+//				nosliw.logging.error(loc_moduleName, this.getInnerId(), "Error handler");
+//				nosliw.logging.trace(loc_moduleName, this.getInnerId(), serviceData);
 
 				var out = undefined;
 				//internal handler
@@ -250,8 +265,8 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			},
 
 			executeExceptionHandler : function(serviceData, thisContext){
-				nosliw.logging.error(loc_moduleName, this.getInnerId(), "Exception handler");
-				nosliw.logging.trace(loc_moduleName, this.getInnerId(), serviceData);
+//				nosliw.logging.error(loc_moduleName, this.getInnerId(), "Exception handler");
+//				nosliw.logging.trace(loc_moduleName, this.getInnerId(), serviceData);
 
 				var out = undefined;
 				//internal handler
@@ -335,12 +350,23 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			
 			getResult : function(){  return this.pri_metaData.pri_result; },
 			setResult : function(result){  this.pri_metaData.pri_result = result; },
+
+			getInput : function(){  return this.pri_metaData.pri_input; },
+			setInput : function(input){  this.pri_metaData.pri_input = input; },
 			
-			registerEventListener : function(handler){
-				var listener = node_requestUtility.registerEventWithRequest(this.pri_metaData.pri_eventSource, node_CONSTANT.EVENT_EVENTNAME_ALL, handler, this);
-				this.pri_metaData.pri_eventListeners.push(listener);
-				return listener;
+			//it is for root request only
+			registerEventListener : function(listener, handler, thisContext){	this.pri_metaData.pri_eventObject.registerListener(undefined, listener, handler, thisContext);	},
+			unregisterEventListener : function(listener, handler, thisContext){	this.pri_metaData.pri_eventObject.unregister(listener);	},
+			trigueEvent : function(event, eventData){	this.pri_metaData.pri_eventObject.triggerEvent(event, eventData, this);	},
+
+			//it is for root request only
+			almostDone : function(){	this.trigueEvent(node_CONSTANT.REQUEST_EVENT_ALMOSTDONE);		},
+			done : function(){
+				this.trigueEvent(node_CONSTANT.REQUEST_EVENT_DONE);
+				loc_destroy();
 			},
+			
+			
 	};
 	
 	loc_constructor(service, handlers, requester_parent);
@@ -351,20 +377,19 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 };
 
 //*******************************************   End Node Definition  ************************************** 	
-//Register Node by Name
-packageObj.createNode("createServiceRequestInfoCommon", node_createServiceRequestInfoCommon); 
 
-	var module = {
-		start : function(packageObj){
-			node_makeObjectWithType = packageObj.getNodeData("common.objectwithtype.makeObjectWithType");
-			node_getObjectType = packageObj.getNodeData("common.objectwithtype.getObjectType");
-			node_CONSTANT = packageObj.getNodeData("constant.CONSTANT");
-			node_requestUtility = packageObj.getNodeData("request.utility");
-			node_eventUtility = packageObj.getNodeData("common.event.utility");
-			node_requestUtility = packageObj.getNodeData("request.utility");
-			node_basicUtility = packageObj.getNodeData("common.utility.basicUtility");
-		}
-	};
-	nosliw.registerModule(module, packageObj);
+//populate dependency node data
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+
+
+//Register Node by Name
+packageObj.createChildNode("createServiceRequestInfoCommon", node_createServiceRequestInfoCommon); 
 
 })(packageObj);

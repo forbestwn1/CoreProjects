@@ -11,12 +11,12 @@ var node_createConfigures;
 var node_utility = function(){
 	
 	return {
-		createRemoteServiceConfigures : function(service, command){
-			var configuresObj = {};
-			configuresObj[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND] = command;
-			configuresObj[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_SERVICE] = service;
-			return node_createConfigures(configuresObj);
-		},
+//		createRemoteServiceConfigures : function(service, command){
+//			var configuresObj = {};
+//			configuresObj[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_COMMAND] = command;
+//			configuresObj[node_COMMONATRIBUTECONSTANT.SERVICESERVLET_SERVLETPARMS_SERVICE] = service;
+//			return node_createConfigures(configuresObj);
+//		},
 		
 		/*
 		 * data is serviceData.data 

@@ -35,14 +35,11 @@ node_ServiceRequestExecuteInfo.prototype = {
 
 
 //*******************************************   End Node Definition  ************************************** 	
-//Register Node by Name
-packageObj.createNode("Requester", node_Requester); 
-packageObj.createNode("ServiceRequestExecuteInfo", node_ServiceRequestExecuteInfo); 
 
-	var module = {
-		start : function(packageObj){
-		}
-	};
-	nosliw.registerModule(module, packageObj);
+//populate dependency node data
+
+//Register Node by Name
+packageObj.createChildNode("Requester", node_Requester); 
+packageObj.createChildNode("ServiceRequestExecuteInfo", node_ServiceRequestExecuteInfo); 
 
 })(packageObj);

@@ -27,12 +27,11 @@ var node_basicUtility =
 			
 			var out = {};
 			_.each(defaultOne, function(attr, name, list){
-				if(specificOne===undefined || specificOne[name]===undefined){
-					out[name] = attr;
-				}
-				else{
-					out[name] = specificOne[name];
-				}
+				out[name] = attr;
+			});
+
+			_.each(specificOne, function(attr, name, list){
+				out[name] = attr;
 			});
 			return out;
 		},
@@ -73,13 +72,11 @@ var node_basicUtility =
 };
 
 //*******************************************   End Node Definition  ************************************** 	
+
+//populate dependency node data
+
+
 //Register Node by Name
-packageObj.createNode("basicUtility", node_basicUtility); 
-
-	var module = {
-		start : function(packageObj){
-		}
-	};
-	nosliw.registerModule(module, packageObj);
-
+packageObj.createChildNode("basicUtility", node_basicUtility); 
+	
 })(packageObj);
