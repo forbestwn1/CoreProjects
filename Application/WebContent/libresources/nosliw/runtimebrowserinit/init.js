@@ -28,11 +28,9 @@ var requestLoadLibraryResources = function(resourceIds, callBackFunction){
 	};
 	
 	$.ajax({
-		url : "http://localhost:8082/Application/loadlib",
+		url : nosliw.serverBase+"loadlib",
 		type : "POST",
 		dataType: "json",
-//		contentType: "application/json; charset=utf-8",
-//		data : JSON.stringify(data),
 		data : data,
 		async : true,
 		success : function(serviceData, status){
@@ -49,7 +47,7 @@ var requestLoadLibraryResources = function(resourceIds, callBackFunction){
 				var url = result[count];
 				
 				var script = document.createElement('script');
-				script.setAttribute('src', "http://localhost:8082/Application/"+url);
+				script.setAttribute('src', nosliw.serverBase+url);
 				script.setAttribute('defer', "defer");
 				script.setAttribute('type', 'text/javascript');
 

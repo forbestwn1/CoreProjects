@@ -88,6 +88,7 @@
 <script src="http://localhost:8082/Application/libresources/nosliw/core/nosliw.js"></script>
 
 <script>	
+	nosliw.serverBase = "http://localhost:8082/Application/";
 	nosliw.registerNodeEvent("runtime", "active",
 		function(eventName, nodeName) {
 			var miniAppService = nosliw.runtime.getMiniAppService();

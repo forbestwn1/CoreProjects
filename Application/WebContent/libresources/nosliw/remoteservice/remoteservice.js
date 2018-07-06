@@ -49,7 +49,6 @@ var node_createRemoteService = function(){
 		var setting = {
 			type : "POST",
 			dataType: "json",
-//			contentType: "application/json; charset=utf-8",
 			async : true,
 		};
 		setting[node_COMMONATRIBUTECONSTANT.REQUESTINFO_COMMAND] = node_COMMONCONSTANT.SERVICECOMMAND_GROUPREQUEST;
@@ -145,7 +144,7 @@ var node_createRemoteService = function(){
 		 */
 		registerSyncTaskConfigure : function(name, configure){
 			var newConfigure = loc_syncTaskBaseConfigure.createConfigures(configure);
-			newConfigure.setConfigure("url", "http://localhost:8082/Application/"+newConfigure.getConfigure("url"));
+			newConfigure.setConfigure("url", nosliw.serverBase+newConfigure.getConfigure("url"));
 			loc_syncTaskConfigures[name] = newConfigure;
 		},
 		

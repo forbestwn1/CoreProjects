@@ -11,7 +11,7 @@
 
   <servlet>
     <servlet-name>loadLibServlet</servlet-name>
-    <servlet-class>com.nosliw.servlet.HAPBrowserGatewayServlet</servlet-class>
+    <servlet-class>com.nosliw.servlet.HAPLoadLibServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>loadLibServlet</servlet-name>

@@ -1,8 +1,6 @@
 package com.nosliw.servlet;
 
-import javax.servlet.http.HttpServlet;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,18 +17,10 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 
 @HAPEntityWithAttribute
-public abstract class HAPServiceServlet  extends HttpServlet{
+public abstract class HAPServiceServlet extends HAPBaseServlet{
 
-//	@HAPAttribute
-//	public static final String SERVLETPARMS_COMMAND = "command";
-//	@HAPAttribute
-//	public static final String SERVLETPARMS_CLIENTID = "clientId";
-//	@HAPAttribute
-//	public static final String SERVLETPARMS_PARMS = "parms";
-	
 	@HAPAttribute
 	public static final String REQUEST_TYPE = "type";
 	@HAPAttribute
@@ -39,19 +29,13 @@ public abstract class HAPServiceServlet  extends HttpServlet{
 	public static final String REQUEST_MODE = "mode";
 	@HAPAttribute
 	public static final String REQUEST_CHILDREN = "children";
-	
-	public void doPost (HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException {
-		this.doGet(request, response);
-	}
-	
+
+	@Override
 	public void doGet (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HAPServiceData out = null;
 		try{
 			HAPRequestInfo requestInfo = new HAPRequestInfo(request);
-//			String command = request.getParameter(SERVLETPARMS_COMMAND);
-//			String clientId = request.getParameter(SERVLETPARMS_CLIENTID);
 			if(HAPConstant.SERVICECOMMAND_GROUPREQUEST.equals(requestInfo.getCommand())){
-//				String groupRequest = request.getParameter(SERVLETPARMS_PARMS);
 				JSONArray jsonGroupReqs = new JSONArray(requestInfo.getParms());
 
 				List<String> requestsResult = new ArrayList<String>();
@@ -70,35 +54,7 @@ public abstract class HAPServiceServlet  extends HttpServlet{
 		}
 
 		//build response
-		String content = out.toStringValue(HAPSerializationFormat.JSON_FULL);
-		response.setContentType("application/json");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		   PrintWriter writer = response.getWriter();
-		try {
-//		    System.out.println(HAPJsonUtility.formatJson(content));
-		    writer.println(HAPJsonUtility.formatJson(content));		
-//		    writer.println(content);		
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		finally {
-			writer.flush();
-			writer.close();
-        }  
-	    
-	}
-	
-	 @Override
-	  protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
-	          throws ServletException, IOException {
-		 resp.addHeader("Access-Control-Allow-Origin", "*");
-		 resp.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-	      resp.setStatus(HttpServletResponse.SC_OK);
-	  }
-	
-	private void processCrossDomain(HttpServletRequest request, HttpServletResponse response) {
-		response.addHeader("Access-Control-Allow-Origin", "*");
+		this.printContent(out, response);
 	}
 	
 	// process one request object
@@ -157,5 +113,4 @@ public abstract class HAPServiceServlet  extends HttpServlet{
 	
 	abstract protected HAPServiceData processServiceRequest(String command, JSONObject parms);
 	
-	protected HAPRuntimeEnvironmentImpBrowser getRuntimeEnvironment(){		return (HAPRuntimeEnvironmentImpBrowser)this.getServletContext().getAttribute("runtime");  }
 }
