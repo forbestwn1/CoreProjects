@@ -1,6 +1,9 @@
 if(nosliw===undefined) 
 {
-var nosliw = function(){
+	var nosliw = {};
+}
+
+_.extend(nosliw, function(){
 	
 	var loc_moduleName = "nosliw";
 	
@@ -164,5 +167,5 @@ var nosliw = function(){
 	loc_out.registerSetNodeDataEvent("service.loggingservice.createLoggingService", function(){	nosliw.logging = this.getData()();	});
 	
 	return loc_out;
-}();
-}
+}());
+
