@@ -28,13 +28,22 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>appServlet</servlet-name>
-    <servlet-class>com.nosliw.app.servlet.HAPAppServlet</servlet-class>
+    <servlet-name>miniappServlet</servlet-name>
+    <servlet-class>com.nosliw.miniapp.servlet.HAPMiniAppServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>appServlet</servlet-name>
+    <servlet-name>miniappServlet</servlet-name>
     <url-pattern>/miniApp</url-pattern>
   </servlet-mapping>
 
+
+	<filter>
+	    <filter-name>SetCacheControl</filter-name>
+	    <filter-class>com.nosliw.servlet.HAPCacheControlFilter</filter-class>
+	</filter>                       
+	<filter-mapping>
+	    <filter-name>SetCacheControl</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 </web-app>

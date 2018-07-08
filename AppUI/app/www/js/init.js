@@ -6,7 +6,7 @@ var init = function(baseServer, callBackFunction){
 	var libs = [
         "libresources/external/Underscore/1.6.0/underscore.js",
         "libresources/external/Backbone/1.1.2/backbone.js",
-        "libresources/external/log4javascript/1.0.0/log4javascript.js",
+//        "libresources/external/log4javascript/1.0.0/log4javascript.js",
         "libresources/external/handlebars/handlebars-v4.0.11.js",
         "libresources/nosliw/runtimebrowserinit/init.js"
 	];

@@ -9,7 +9,6 @@ nosliw.init = function(serverBase){
 	];
 
 	var libNames2 = [
-		"nosliw.core",
 		"nosliw.constant",
 		"nosliw.logging",
 		"nosliw.common",

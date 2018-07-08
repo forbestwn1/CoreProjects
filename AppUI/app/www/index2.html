@@ -11,10 +11,7 @@
 
 		<title>First Mobile Example</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- 		<meta http-equiv="Content-Security-Policy" content="default-src 'self' localhost">  -->
-<!--  		<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">-->
 		<link rel="stylesheet" href="js/jQuery_Mobile/jquery.mobile-1.4.5.min.css" />
-<!--   <script src="http://localhost:8082/Application/libresources/external/jQuery/2.1.0/jquery.js"></script>-->  
  		<script type="text/javascript" src="js/jQuery/2.1.0/jquery.js"></script>
 		<script type="text/javascript" src="js/jQuery_Mobile/jquery.mobile-1.4.5.min.js"></script>
 
@@ -88,7 +85,7 @@
 </body>
 
 <script>
-	init("http://localhost:8082/Application/");
+	init("http://10.43.2.42:8082/Application/");
 	$(document).on("nosliwActive", function(){
 		var miniAppService = nosliw.runtime.getMiniAppService();
 		var userInfo = {};

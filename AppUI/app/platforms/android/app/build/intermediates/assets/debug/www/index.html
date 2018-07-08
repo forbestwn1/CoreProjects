@@ -11,17 +11,12 @@
 
 		<title>First Mobile Example</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- 		<meta http-equiv="Content-Security-Policy" content="default-src 'self' localhost">  -->
-<!--  		<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">-->
 		<link rel="stylesheet" href="js/jQuery_Mobile/jquery.mobile-1.4.5.min.css" />
-<!--   <script src="http://localhost:8082/Application/libresources/external/jQuery/2.1.0/jquery.js"></script>-->  
  		<script type="text/javascript" src="js/jQuery/2.1.0/jquery.js"></script>
 		<script type="text/javascript" src="js/jQuery_Mobile/jquery.mobile-1.4.5.min.js"></script>
 
-        <script src="http://10.43.2.64:8082/Application/libresources/external/Underscore/1.6.0/underscore.js"></script>
-        <script src="http://10.43.2.64:8082/Application/libresources/external/Backbone/1.1.2/backbone.js"></script>
-        <script src="http://10.43.2.64:8082/Application/libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
-        <script src="http://10.43.2.64:8082/Application/libresources/external/handlebars/handlebars-v4.0.11.js"></script>
+		<script type="text/javascript" src="js/init.js"></script>
+
         
     <style>
 		/* Swipe works with mouse as well but often causes text selection. */
@@ -58,11 +53,11 @@
 	<div data-role="page" id="demo-page" data-theme="d" data-url="demo-page">
 	    <div data-role="header" data-theme="b">
 	        <h1><span id='miniAppTitle'></span></h1>
-	        <a href="#left-panel" data-theme="d" data-icon="arrow-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc">33333Open left panel</a>
+	        <a href="#left-panel" data-theme="d" data-icon="arrow-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc">555555Open left panel</a>
 	        <a href="#right-panel" data-theme="d" data-icon="arrow-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc">1111Open right panel</a>
 	    </div><!-- /header -->
 	    <div data-role="content" id="content">
-	    <br>3333333<br>
+	    <br>5555555<br>
 	    
 	    
 	    </div><!-- /content -->
@@ -89,35 +84,24 @@
 
 </body>
 
-<script src="http://localhost:8082/Application/libresources/nosliw/core/nosliw.js"></script>
-
-<script>	
-	nosliw.serverBase = "http://localhost:8082/Application/";
-	nosliw.registerNodeEvent("runtime", "active",
-		function(eventName, nodeName) {
-			var miniAppService = nosliw.runtime.getMiniAppService();
-			var userInfo = {};
-			var userId = localStorage.userId;
-			if(userId!=undefined){
-				userInfo.user = {};
-				userInfo.user.id = userId;
-			}
-			miniAppService.executeLoginRequest(userInfo, {
-				success : function(requestInfo, userInfo){
-					localStorage.userId = userInfo.user.id;
-					showUserInfo(userInfo);
-				}
-			});
-		
-			
-//			showContent("Example_App_Query_MyRealtor");
-			
-			
-			
+<script>
+	init("http://10.43.2.42:8082/Application/");
+	$(document).on("nosliwActive", function(){
+		var miniAppService = nosliw.runtime.getMiniAppService();
+		var userInfo = {};
+		var userId = localStorage.userId;
+		if(userId!=undefined){
+			userInfo.user = {};
+			userInfo.user.id = userId;
 		}
-	);
+		miniAppService.executeLoginRequest(userInfo, {
+			success : function(requestInfo, userInfo){
+				localStorage.userId = userInfo.user.id;
+				showUserInfo(userInfo);
+			}
+		});
+	});
 </script>
-<script src="http://localhost:8082/Application/libresources/nosliw/runtimebrowserinit/init.js"></script>
 
 
 <script>

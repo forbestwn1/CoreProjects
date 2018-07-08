@@ -28,21 +28,28 @@ var node_createLoggingService = function(){
 //		java.lang.System.err.println(loc_buildMessage(arguments));
 	}
 	
+	var loc_getDefaultLogging = function(){
+		return  {
+				trace : loc_rhinoLogFun,
+				debug : loc_rhinoLogFun,
+				info : loc_rhinoLogFun,
+				warn : loc_rhinoLogFun,
+				error : loc_rhinoLogFun,
+				fatal : loc_rhinoLogFun
+			};
+	};
+	
 	var loc_getLogging = function(){
 		if(loc_logging==undefined){
 			if(node_runtimeName=="rhino"){
-				loc_logging = {
-					trace : loc_rhinoLogFun,
-					debug : loc_rhinoLogFun,
-					info : loc_rhinoLogFun,
-					warn : loc_rhinoLogFun,
-					error : loc_rhinoLogFun,
-					fatal : loc_rhinoLogFun
-				};
+				loc_logging = loc_getDefaultLogging(); 
 			}
 			else{
 				if (typeof log4javascript !== 'undefined') {
 					loc_logging = log4javascript.getDefaultLogger();
+				}
+				else{
+					loc_logging = loc_getDefaultLogging(); 
 				}
 			}
 		}
