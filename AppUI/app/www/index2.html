@@ -18,10 +18,8 @@
  		<script type="text/javascript" src="js/jQuery/2.1.0/jquery.js"></script>
 		<script type="text/javascript" src="js/jQuery_Mobile/jquery.mobile-1.4.5.min.js"></script>
 
-        <script src="http://localhost:8082/Application/libresources/external/Underscore/1.6.0/underscore.js"></script>
-        <script src="http://localhost:8082/Application/libresources/external/Backbone/1.1.2/backbone.js"></script>
-        <script src="http://localhost:8082/Application/libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
-        <script src="http://localhost:8082/Application/libresources/external/handlebars/handlebars-v4.0.11.js"></script>
+		<script type="text/javascript" src="js/init.js"></script>
+
         
     <style>
 		/* Swipe works with mouse as well but often causes text selection. */
@@ -58,11 +56,11 @@
 	<div data-role="page" id="demo-page" data-theme="d" data-url="demo-page">
 	    <div data-role="header" data-theme="b">
 	        <h1><span id='miniAppTitle'></span></h1>
-	        <a href="#left-panel" data-theme="d" data-icon="arrow-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc">33333Open left panel</a>
+	        <a href="#left-panel" data-theme="d" data-icon="arrow-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc">555555Open left panel</a>
 	        <a href="#right-panel" data-theme="d" data-icon="arrow-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc">1111Open right panel</a>
 	    </div><!-- /header -->
 	    <div data-role="content" id="content">
-	    <br>3333333<br>
+	    <br>5555555<br>
 	    
 	    
 	    </div><!-- /content -->
@@ -89,8 +87,8 @@
 
 </body>
 
-<script src="http://localhost:8082/Application/libresources/nosliw/runtimebrowserinit/init.js"></script>
-<script>	
+<script>
+	init("http://localhost:8082/Application/");
 	$(document).on("nosliwActive", function(){
 		var miniAppService = nosliw.runtime.getMiniAppService();
 		var userInfo = {};
@@ -106,7 +104,6 @@
 			}
 		});
 	});
-	nosliw.init("http://localhost:8082/Application/");
 </script>
 
 
