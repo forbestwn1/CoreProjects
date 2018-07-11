@@ -5,6 +5,8 @@ nosliw.init = function(serverBase){
 	nosliw.serverBase = serverBase==undefined?"":serverBase;
 
 	var libNames1 = [
+		"external.Underscore;1.6.0",
+		"external.Backbone;1.1.2",
 		"nosliw.core",
 	];
 
@@ -23,7 +25,7 @@ nosliw.init = function(serverBase){
 		"nosliw.runtimebrowser",
 		"nosliw.uiexpression",
 		"nosliw.uiresource",
-		"nosliw.miniapp",
+//		"nosliw.miniapp",
 		"nosliw.runtimebrowsertest",
 	];
 

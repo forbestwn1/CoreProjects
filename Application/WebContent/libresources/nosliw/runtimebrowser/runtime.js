@@ -41,8 +41,6 @@ var node_createRuntime = function(name){
 	
 	var loc_uiResourceService;
 	
-	var loc_miniAppService;
-	
 	var loc_out = {
 		
 		start : function(){	},
@@ -61,7 +59,6 @@ var node_createRuntime = function(name){
 		
 		getUIResourceService(){		return loc_uiResourceService;		},
 		
-		getMiniAppService(){  return loc_miniAppService; },
 	};
 	
 	var lifecycleCallback = {};
@@ -74,7 +71,6 @@ var node_createRuntime = function(name){
 		loc_remoteService.interfaceObjectLifecycle.init();
 		loc_gatewayService = node_createGatewayService();
 		loc_uiResourceService = node_createUIResourceService();
-		loc_miniAppService = node_createMiniAppService();
 		
 		//set sortcut for object
 		 nosliw.runtime = loc_out;

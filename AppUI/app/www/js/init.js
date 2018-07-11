@@ -2,43 +2,60 @@
  * 
  */
 var init = function(baseServer, callBackFunction){
-	
-	var libs = [
-        "libresources/external/Underscore/1.6.0/underscore.js",
-        "libresources/external/Backbone/1.1.2/backbone.js",
-//        "libresources/external/log4javascript/1.0.0/log4javascript.js",
-        "libresources/external/handlebars/handlebars-v4.0.11.js",
-        "libresources/nosliw/runtimebrowserinit/init.js"
-	];
-	
-	var count = 0;
-	var fileNumber = libs.length;
 
-	var loadScriptInOrder = function(){
-		var url = libs[count];
+	//load lib utility function
+	var loadLibrary = function(libs, callBackFunction){
+		var count = 0;
+		var fileNumber = libs.length;
+
+		var loadScriptInOrder = function(){
+			var url = libs[count];
+			
+			var script = document.createElement('script');
+			script.setAttribute('src', url);
+			script.setAttribute('defer', "defer");
+			script.setAttribute('type', 'text/javascript');
+
+			script.onload = callBack;
+			document.getElementsByTagName("head")[0].appendChild(script);
+		};
 		
-		var script = document.createElement('script');
-		script.setAttribute('src', baseServer+url);
-		script.setAttribute('defer', "defer");
-		script.setAttribute('type', 'text/javascript');
+		var callBack = function(){
+			count++;
+			if(count==fileNumber){
+				if(callBackFunction!=undefined)		callBackFunction.call();
+			}
+			else{
+				loadScriptInOrder();
+			}
+		};
 
-		script.onload = callBack;
-		document.getElementsByTagName("head")[0].appendChild(script);
-	};
-	
-	var callBack = function(){
-		count++;
-		if(count==fileNumber){
-			nosliw.init(baseServer);
-			if(callBackFunction!=undefined)		callBackFunction.call();
-		}
-		else{
-			loadScriptInOrder();
-		}
+		loadScriptInOrder();
 	};
 
-	loadScriptInOrder();
+	//when nosliw active
+	$(document).on("nosliwActive", function(){
+		//load mini libs
+		loadLibrary([
+			"js/miniapp/0_package_service.js",
+			"js/miniapp/service.js",
+			"js/miniapp/miniapp.js",
+		], function(){
+			//create miniapp
+			var minapp = nosliw.getNodeData("miniapp.createMiniApp")();
+			nosliw.miniapp = minapp;
+			nosliw.createNode("miniapp", minapp);
+			minapp.interfaceObjectLifecycle.init();
+		});
+	});
+
+	//nosliw init first
+	loadLibrary([
+	//  "libresources/external/log4javascript/1.0.0/log4javascript.js",
+		baseServer+"libresources/nosliw/runtimebrowserinit/init.js",
+	], function(){
+		nosliw.init(baseServer);
+	});
+
 };
-
-
 

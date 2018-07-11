@@ -1,4 +1,4 @@
-#Sun Jul 08 09:52:43 EDT 2018
+#Mon Jul 09 09:43:53 EDT 2018
 base.0=C\:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\AppUI\\app\\platforms\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 renamed.0=classes.dex
 file.0=C\:\\Users\\ewaniwa\\Desktop\\MyWork\\CoreProjects\\AppUI\\app\\platforms\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0\\classes.dex

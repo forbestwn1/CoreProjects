@@ -36,7 +36,6 @@
     <url-pattern>/miniApp</url-pattern>
   </servlet-mapping>
 
-
 	<filter>
 	    <filter-name>SetCacheControl</filter-name>
 	    <filter-class>com.nosliw.servlet.HAPCacheControlFilter</filter-class>
@@ -45,5 +44,4 @@
 	    <filter-name>SetCacheControl</filter-name>
 	    <url-pattern>/*</url-pattern>
 	</filter-mapping>
-
 </web-app>
