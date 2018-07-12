@@ -3,7 +3,9 @@ var packageObj = library;
 
 (function(packageObj){
 	//get used node
+	var node_CONSTANT;
 	var node_eventUtility;
+	var node_getObjectType;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function(){
@@ -12,7 +14,15 @@ var node_utility = function(){
 			 * last one in argus should be request info
 			 */
 			getRequestInfoFromFunctionArguments : function(argsArray){
-				return argsArray[argsArray.length-1];
+				var out = argsArray[argsArray.length-1];
+				var entityType = node_getObjectType(out);
+				if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType)		return out;
+				return;
+			},
+
+			getHandlersFromFunctionArguments : function(argsArray){
+				if(this.getRequestInfoFromFunctionArguments(argsArray)!=undefined)		return argsArray[argsArray.length-2];
+				else return argsArray[argsArray.length-1];
 			},
 			
 			/*
@@ -151,7 +161,9 @@ var node_utility = function(){
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

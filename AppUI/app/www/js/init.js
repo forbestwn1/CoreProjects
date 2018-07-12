@@ -1,7 +1,7 @@
 /**
  * 
  */
-var init = function(baseServer, callBackFunction){
+var init = function(baseServer, callBackFunction, requestInfo){
 
 	//load lib utility function
 	var loadLibrary = function(libs, callBackFunction){
@@ -40,18 +40,24 @@ var init = function(baseServer, callBackFunction){
 			"js/miniapp/0_package_service.js",
 			"js/miniapp/service.js",
 			"js/miniapp/miniapp.js",
+			"js/miniapp/userapps/userapps.js",
 		], function(){
 			//create miniapp
 			var minapp = nosliw.getNodeData("miniapp.createMiniApp")();
 			nosliw.miniapp = minapp;
 			nosliw.createNode("miniapp", minapp);
-			minapp.interfaceObjectLifecycle.init();
+			var miniappInitRequest = minapp.interfaceObjectLifecycle.initRequest({
+				success : function(requestInfo, data){
+			  		$(document).trigger("miniappActive");
+				}
+			});
+			nosliw.getNodeData("request.requestServiceProcessor").processRequest(miniappInitRequest);
 		});
 	});
 
 	//nosliw init first
 	loadLibrary([
-	//  "libresources/external/log4javascript/1.0.0/log4javascript.js",
+		baseServer+"libresources/external/log4javascript/1.0.0/log4javascript.js",
 		baseServer+"libresources/nosliw/runtimebrowserinit/init.js",
 	], function(){
 		nosliw.init(baseServer);

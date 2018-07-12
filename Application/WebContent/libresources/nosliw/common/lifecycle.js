@@ -8,6 +8,12 @@ var packageObj = library.getChildPackage("lifecycle");
 	var node_getInterface;
 	var node_eventUtility;
 	var node_getObjectName;
+	var node_getObjectType;
+	var node_requestUtility;
+	var node_createServiceRequestInfoSequence;
+	var node_ServiceInfo;
+	var node_createServiceRequestInfoSimple;
+
 //*******************************************   Start Node Definition  ************************************** 	
 
 var INTERFACENAME = "lifecycle";
@@ -62,7 +68,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	};
 	
 	//method for init event
-	var loc_onResourceInit = function(){
+	var loc_onResourceInit = function(args, handlers, requestInfo){
 		//if resource has been inited, then just do nothing
 		if(loc_status!=node_CONSTANT.LIFECYCLE_RESOURCE_STATUS_START)   return;
 		//if in transit, do nothing
@@ -72,11 +78,38 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 		var that = loc_getThisContext();
 		var fun = loc_lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT];
 		var initResult = true;      
-		if(fun!=undefined)	initResult = fun.apply(that, arguments);
+		if(fun!=undefined)	initResult = fun.apply(that, args);
+		
+		return loc_processStatuesResult(initResult, loc_out.finishInit, handlers, requestInfo);
+		
 		//if return false, then waiting until finishInit is called
-		if(initResult!=false)		loc_out.finishInit();
+//		if(initResult!=false)		loc_out.finishInit();
 	};
 
+	
+	var loc_processStatuesResult = function(result, switchFun, handlers, requestInfo){
+		if(result==true || result==undefined){
+			//success finish
+			switchFun.call(loc_out);
+			return true;
+		}
+		if(result==false)   return  false;           //not finish, wait for finish method get called
+		
+		var entityType = node_getObjectType(result);
+		if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType){
+			//if return request, then build wrapper request
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ProcessLifecycleResult", {}), handlers, requestInfo);
+			out.addRequest(result);
+			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("LifecycleStateTransit", {}), 
+				function(requestInfo){
+					switchFun.call(loc_out);
+				}));
+			return out;
+		}
+		//fallback: not switch status
+		return false;
+	};
+	
 	//method for init event
 	var loc_onResourceDeactive = function(){
 		//if resource is START OR DEAD, then just do nothing
@@ -137,8 +170,13 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	};
 	
 	var loc_out = {
-		init : function(){
-			loc_onResourceInit.apply(this, arguments);
+		init : function(){	loc_onResourceInit.apply(this, arguments);	},
+
+		//must have handlers and requestInfo as last two parms
+		initRequest : function(){	
+			return loc_onResourceInit.apply(this, [arguments, 
+				node_requestUtility.getHandlersFromFunctionArguments(arguments), 
+				node_requestUtility.getRequestInfoFromFunctionArguments(arguments)]);	
 		},
 		
 		finishInit : function(){
@@ -247,6 +285,11 @@ nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){no
 nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithname.getObjectName", function(){node_getObjectName = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("getLifecycleInterface", node_getLifecycleInterface); 

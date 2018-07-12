@@ -161,13 +161,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 	
 	//data operation event processor
 	var loc_dataOperationEventProcessor = function(event, eventData, requestInfo){
-		
-		if(loc_out.prv_id=="77"||loc_out.prv_id=="82"){
-			var kkkk = 5555;
-			kkkk++;
-		}
-		
-		
 		if(loc_out.prv_isLive){
 			if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD){
 				//for forward event, expand it
