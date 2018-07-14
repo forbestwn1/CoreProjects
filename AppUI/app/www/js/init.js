@@ -1,7 +1,7 @@
 /**
  * 
  */
-var init = function(baseServer, callBackFunction, requestInfo){
+var init = function(baseServer, callBackFunction){
 
 	//load lib utility function
 	var loadLibrary = function(libs, callBackFunction){
@@ -38,9 +38,11 @@ var init = function(baseServer, callBackFunction, requestInfo){
 		//load mini libs
 		loadLibrary([
 			"js/miniapp/0_package_service.js",
+			"js/miniapp/utility.js",
 			"js/miniapp/service.js",
 			"js/miniapp/miniapp.js",
 			"js/miniapp/userapps/userapps.js",
+			"js/miniapp/main/main.js",
 		], function(){
 			//create miniapp
 			var minapp = nosliw.getNodeData("miniapp.createMiniApp")();
@@ -50,7 +52,7 @@ var init = function(baseServer, callBackFunction, requestInfo){
 				success : function(requestInfo, data){
 			  		$(document).trigger("miniappActive");
 				}
-			});
+			}, undefined);
 			nosliw.getNodeData("request.requestServiceProcessor").processRequest(miniappInitRequest);
 		});
 	});

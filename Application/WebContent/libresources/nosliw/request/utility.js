@@ -14,15 +14,11 @@ var node_utility = function(){
 			 * last one in argus should be request info
 			 */
 			getRequestInfoFromFunctionArguments : function(argsArray){
-				var out = argsArray[argsArray.length-1];
-				var entityType = node_getObjectType(out);
-				if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType)		return out;
-				return;
+				return argsArray[argsArray.length-1];
 			},
 
 			getHandlersFromFunctionArguments : function(argsArray){
-				if(this.getRequestInfoFromFunctionArguments(argsArray)!=undefined)		return argsArray[argsArray.length-2];
-				else return argsArray[argsArray.length-1];
+				return argsArray[argsArray.length-2];
 			},
 			
 			/*

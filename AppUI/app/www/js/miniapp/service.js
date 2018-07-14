@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("service");    
+var packageObj = library.getChildPackage();    
 
 (function(packageObj){
 	//get used node

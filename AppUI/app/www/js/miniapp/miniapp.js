@@ -20,6 +20,16 @@ var node_createMiniApp = function(){
 	
 	var loc_miniAppService;
 	
+	var loc_modulesInfo = [{
+		name : "userApps",
+		factory : "miniapp.module.userapps.createModuleUserApps",
+		handlers : {
+			success : function(requestInfo, data){
+				$("#leftpanel").append(data);
+			}
+		}
+	}];
+	var loc_modules = {};
 	
 	var loc_userappsModule;
 	
@@ -30,12 +40,19 @@ var node_createMiniApp = function(){
 
 		var out = node_createServiceRequestInfoSet(new node_ServiceInfo("InitMiniAppModules", {})); 
 
-		loc_userappsModule = node_createModuleUserApps();
-		out.addRequest("userapps", loc_userappsModule.interfaceObjectLifecycle.initRequest());
+		_.each(loc_modulesInfo, function(moduleInfo, index){
+			var module = nosliw.getNodeData(moduleInfo.factory)();
+			loc_modules[moduleInfo.name] = module;
+			out.addRequest(moduleInfo.name, module.interfaceObjectLifecycle.initRequest(moduleInfo.handlers, undefined));
+		});
 		
 		return out;
 	};
 
+	var loc_refreshRequest = function(userInfo){
+		return loc_modules["userApps"].refreshRequest(userInfo);
+	};
+	
 	var loc_out = {
 
 		getMiniAppService(){  return loc_miniAppService; },
@@ -53,12 +70,17 @@ var node_createMiniApp = function(){
 			out.addRequest(loc_miniAppService.getLoginRequest(userInfo, {
 				success : function(requestInfo, userInfo){
 					localStorage.userId = userInfo.user.id;
-					return userInfo;
+					return loc_refreshRequest(userInfo);
+//					return userInfo;
 				}
 			}));
 			return out;
 		},
-		executeLoginRequest(userInfo, handlers, requestInfo){	node_requestServiceProcessor.processRequest(this.getLoginRequest(userInfo, handlers, requestInfo));	}
+		executeLoginRequest(userInfo, handlers, requestInfo){	node_requestServiceProcessor.processRequest(this.getLoginRequest(userInfo, handlers, requestInfo));	},
+		
+		getRefreshRequest(userInfo){
+			
+		},
 		
 	};
 	
@@ -80,7 +102,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithname.makeObjectWithName", function(){node_makeObjectWithName = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
-nosliw.registerSetNodeDataEvent("miniapp.service.createMiniAppService", function(){node_createMiniAppService = this.getData();});
+nosliw.registerSetNodeDataEvent("miniapp.createMiniAppService", function(){node_createMiniAppService = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.module.userapps.createModuleUserApps", function(){node_createModuleUserApps = this.getData();});
 
 
