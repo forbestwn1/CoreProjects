@@ -28,6 +28,14 @@ var node_createModuleUserApps = function(){
 		{
 			name : "main",
 			file : "js/miniapp/userapps/userapps.html"
+		},
+		{
+			name : "appitem",
+			file : "js/miniapp/userapps/appitem.html"
+		},
+		{
+			name : "appgroup",
+			file : "js/miniapp/userapps/appgroup.html"
 		}
 	];
 	
@@ -38,26 +46,16 @@ var node_createModuleUserApps = function(){
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(handlers, requestInfo){
-
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("userAppsInit", {}), handlers, requestInfo);
+
+		//build templates
+		out.addRequest(node_miniAppUtility.getBuildTemplateRequest(loc_templatesInfo, {
+			success : function(requestInfo, templates){
+				loc_templates = templates;
+			}
+		}));
 		
-		var templatesFile = [];
-		var templatesInfoByFile = {};
-		_.each(loc_templatesInfo, function(templateInfo, index){
-			templatesFile.push(templateInfo.file);
-			templatesInfoByFile[templateInfo.file] = templateInfo;
-			loc_templates[templateInfo.name] = templateInfo;
-		});
-		
-		var loadTemplatesRequest = node_miniAppUtility.loadTemplateRequest(templatesFile, {
-				success : function(requestInfo, templateSources){
-					_.each(templateSources, function(source, fileName){
-						loc_templates[templatesInfoByFile[fileName].name].template = Handlebars.compile(source); 
-					});
-				}
-		}, requestInfo);
-		out.addRequest(loadTemplatesRequest);
-		
+		//init ui
 		out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("UIInit", {}), 
 			function(requestInfo){
 				loc_view = $(loc_templates.main.template());
@@ -66,39 +64,29 @@ var node_createModuleUserApps = function(){
 			}, 
 		));
 		
-//		
-//		var out = node_createServiceRequestInfoCommon(new node_ServiceInfo("LoadTemplate", {}), handlers, requestInfo);
-//		out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
-//			$.get("js/miniapp/userapps/userapps.html")
-//			  .done((source) => {
-//				  loc_template = Handlebars.compile(source);
-//				  loc_view = loc_template();
-//				  requestInfo.executeSuccessHandler(loc_view, out);
-//			});
-//		}, this));
-		
 		return out;
 	};
 
-	
 	var showUserInfo = function(userInfo){
-		var listView = $("#miniAppList");
 		_.each(userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_MINIAPPS], function(miniApp, index){
-			appendMiniApp(listView, miniApp, userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_USER][node_COMMONATRIBUTECONSTANT.USER_ID]);
+			appendMiniApp(loc_view, miniApp, userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_USER][node_COMMONATRIBUTECONSTANT.USER_ID]);
 		});
 
 		_.each(userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_GROUPMINIAPP], function(groupMiniAppInstance, index){
-			appendMiniAppGroup(listView, groupMiniAppInstance);
+			appendMiniAppGroup(loc_view, groupMiniAppInstance);
 		});
-		
-//		$("#miniAppList").listview('refresh');
 	};
 	
 	var appendMiniApp = function(parentView, miniApp, userId){
 		var miniAppId = miniApp[node_COMMONATRIBUTECONSTANT.USERMINIAPPINFO_APPID];
 		var viewId = "miniAppInstanceId_" + miniAppId;
 		var miniAppName = miniApp[node_COMMONATRIBUTECONSTANT.USERMINIAPPINFO_APPNAME];
-		var mininAppItemView = $("<li><a id=\""+viewId+"\" href=\"#\">"+miniAppName+"</a></li>");
+		
+		var mininAppItemView = $(loc_templates.appitem.template({
+			viewId : viewId,
+			miniAppName : miniAppName
+		}));
+		
 		parentView.append(mininAppItemView);
 //		onClickMiniApp(viewId, miniAppId, userId, miniAppName);
 	};
@@ -108,7 +96,10 @@ var node_createModuleUserApps = function(){
 		var groupName = miniAppGroup[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPP_GROUP][node_COMMONATRIBUTECONSTANT.GROUP_NAME];
 		var groupViewId = "groupMiniAppId_" + groupId;
 		
-		var groupView = $("<li><div data-role='collapsible' id='collapsible_"+groupViewId+"' data-collapsed='true'><h4>"+groupName+"</h4><ul data-role='listview' id='"+groupViewId+"'></ul></div></li>");
+		var groupView = $(loc_templates.appgroup.template({
+			groupViewId : groupViewId,
+			groupName : groupName,
+		}));
 		parentView.append(groupView);
 		
 		_.each(miniAppGroup[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPP_MINIAPPS], function(miniApp, index){

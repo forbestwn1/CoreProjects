@@ -7,7 +7,9 @@ var packageObj = library.getChildPackage();
 	var node_createServiceRequestInfoCommon;
 	var node_ServiceInfo;
 	var node_ServiceRequestExecuteInfo;
-	
+	var node_createServiceRequestInfoService;
+	var node_DependentServiceRequestInfo;
+
 //*******************************************   Start Node Definition  ************************************** 	
 
 /**
@@ -17,7 +19,7 @@ var node_utility = function(){
 
 	loc_out = {
 			
-		loadTemplateRequest : function(files, handlers, requestInfo){
+		getLoadTemplateRequest : function(files, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSet(new node_ServiceInfo("LoadTemplates", {"files":files}), handlers, requestInfo); 
 			
 			_.each(files, function(file, index){
@@ -36,10 +38,31 @@ var node_utility = function(){
 					return resultSet.getResults();
 				}
 			});
-			
 			return out;
+		},
+		
+		getBuildTemplateRequest : function(templatesInfo, handlers, requestInfo){
+			var templates = {};
+			var templatesFile = [];
+			var templatesInfoByFile = {};
+			_.each(templatesInfo, function(templateInfo, index){
+				templatesFile.push(templateInfo.file);
+				templatesInfoByFile[templateInfo.file] = templateInfo;
+				templates[templateInfo.name] = templateInfo;
+			});
+			
+			var out = node_createServiceRequestInfoService(new node_ServiceInfo("BuildTemplate", {}), handlers, requestInfo);
+			var requestDependency = new node_DependentServiceRequestInfo(this.getLoadTemplateRequest(templatesFile), {
+				success : function(requestInfo, templateSources){
+					_.each(templateSources, function(source, fileName){
+						templates[templatesInfoByFile[fileName].name].template = Handlebars.compile(source); 
+					});
+					return templates;
+				}
+			});
+			out.setDependentService(requestDependency);
+			return out; 
 		}
-
 	};
 	
 	return loc_out;
@@ -52,6 +75,8 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", f
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon", function(){node_createServiceRequestInfoCommon = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.entity.ServiceRequestExecuteInfo", function(){node_ServiceRequestExecuteInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService", function(){node_createServiceRequestInfoService = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 
