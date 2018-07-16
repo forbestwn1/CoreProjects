@@ -38,13 +38,18 @@ public class HAPContextGroup extends HAPSerializableImp{
 	public HAPContext getPrivateContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);  }
 	public HAPContext getExcludedContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_EXCLUDED);  }
 
-	public void addElement(String name, HAPContextNodeRoot rootEle, String type){
-		this.getContext(type).addElement(name, rootEle);
-	}
+	public void addPublicElement(String name, HAPContextNodeRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);  }
+	public void addInternalElement(String name, HAPContextNodeRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL);  }
+	public void addPrivateElement(String name, HAPContextNodeRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);  }
+	public void addExcludedElement(String name, HAPContextNodeRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_EXCLUDED);  }
+
+	public Map<String, HAPContextNodeRoot> getElements(String contextType){  return this.getContext(contextType).getElements();  }
 	
-	public HAPContext getContext(String type){
-		return this.m_contexts.get(type);
-	}
+	public void addElement(String name, HAPContextNodeRoot rootEle, String type){	this.getContext(type).addElement(name, rootEle);	}
+	
+	public HAPContext getContext(String type){		return this.m_contexts.get(type);	}
+	
+	public HAPContextNodeRoot getContextNode(String type, String name) {  return this.m_contexts.get(type).getElement(name);   }
 	
 	public void hardMergeWith(HAPContextGroup contextGroup){
 		for(String type : this.m_contexts.keySet()){

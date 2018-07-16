@@ -6,69 +6,59 @@ import org.json.JSONObject;
 
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContext;
-import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElementAbsolute;
-import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElment;
-import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElmentRelative;
 
 public class HAPContextParser {
 
-	public static HAPContextNodeRootAbsolute parseContextRootElementInUIResource(JSONObject eleDefJson){
-		HAPContextNodeRootAbsolute contextEle = new HAPContextNodeRootAbsolute();
-		buildContextRootElementAbsolute(eleDefJson, contextEle);
-		return contextEle;
-	}
-	
+	//parse 
 	public static void parseContextInTagDefinition(JSONObject contextJson, HAPUITagDefinitionContext contextOut){
 		Boolean inherit = (Boolean)contextJson.opt(HAPUITagDefinitionContext.INHERIT);
 		if(inherit!=null)  contextOut.setInherit(inherit);
-		
-		for(String contextType : HAPContextGroup.getContextTypes()){
-			parseContextInTagDefinition(contextJson, contextOut, contextType);
-		}
+		parseContextGroup(contextJson, contextOut);
 	}
-	
-	private static void parseContextInTagDefinition(JSONObject contextJson, HAPUITagDefinitionContext contextOut, String type){
-		JSONObject contextEleJson = contextJson.optJSONObject(type);
-		if(contextEleJson!=null){
-			Iterator<String> it = contextEleJson.keys();
-			while(it.hasNext()){
-				String eleName = it.next();
-				JSONObject eleDefJson = contextEleJson.optJSONObject(eleName);
-				HAPUITagDefinitionContextElment tagDefContextEle = parseContextRootElementInTagDefinition(eleDefJson);
-				contextOut.addElement(eleName, tagDefContextEle, type);
+
+	//parse context group
+	public static void parseContextGroup(JSONObject contextGroupJson, HAPContextGroup contextGroup) {
+		for(String contextType : HAPContextGroup.getContextTypes()){
+			JSONObject contextEleJson = contextGroupJson.optJSONObject(contextType);
+			if(contextEleJson!=null){
+				Iterator<String> it = contextEleJson.keys();
+				while(it.hasNext()){
+					String eleName = it.next();
+					JSONObject eleDefJson = contextEleJson.optJSONObject(eleName);
+					HAPContextNodeRoot tagDefContextEle = parseContextRootFromJson(eleDefJson);
+					contextGroup.addElement(eleName, tagDefContextEle, contextType);
+				}
 			}
 		}
 	}
 	
-	private static HAPUITagDefinitionContextElment parseContextRootElementInTagDefinition(JSONObject eleDefJson){
-		HAPUITagDefinitionContextElment out = null;
-		String path = (String)eleDefJson.opt(HAPUITagDefinitionContextElmentRelative.PATH);
+	//parse context root
+	private static HAPContextNodeRoot parseContextRootFromJson(JSONObject eleDefJson){
+		HAPContextNodeRoot out = null;
+		String path = (String)eleDefJson.opt(HAPContextNodeRootRelative.PATH);
 		if(path!=null){
 			//relative
-			out = new HAPUITagDefinitionContextElmentRelative();
-			((HAPUITagDefinitionContextElmentRelative)out).setPath(path);
-			Object defJson = eleDefJson.opt(HAPContextNode.DEFINITION);
-			if(defJson!=null){
-				parseContextNodeFromJson(defJson, (HAPUITagDefinitionContextElmentRelative)out);
-			}
+			out = new HAPContextNodeRootRelative();
+			((HAPContextNodeRootRelative)out).setPath(path);
 		}
 		else{
 			//absolute
-			out = new HAPUITagDefinitionContextElementAbsolute();
-			buildContextRootElementAbsolute(eleDefJson, (HAPUITagDefinitionContextElementAbsolute)out);
+			out = new HAPContextNodeRootAbsolute();
+		}
+
+		//default value
+		Object d = eleDefJson.opt(HAPContextNodeRootAbsolute.DEFAULT);
+		if(d!=null)		out.setDefaultValue(d);
+
+		//definition
+		Object defObj = eleDefJson.opt(HAPContextNode.DEFINITION);
+		if(defObj!=null) {
+			parseContextNodeFromJson(defObj, out);
 		}
 		
 		return out;
 	}
-	
-	private static void buildContextRootElementAbsolute(JSONObject eleDefJson, HAPContextNodeRootAbsolute contextEle){
-		Object d = eleDefJson.opt(HAPContextNodeRootAbsolute.DEFAULT);
-		if(d!=null)		contextEle.setDefaultValue(d);
 
-		Object defObj = eleDefJson.opt(HAPContextNode.DEFINITION);
-		parseContextNodeFromJson(defObj, contextEle);
-	}
-	
 	public static void parseContextNodeFromJson(Object json, HAPContextNode contextNode){
 		if(json instanceof String){
 			contextNode.setDefinition(new HAPContextNodeCriteria(HAPCriteriaParser.getInstance().parseCriteria((String)json)));
@@ -84,6 +74,4 @@ public class HAPContextParser {
 			}
 		}
 	}
-	
-	
 }

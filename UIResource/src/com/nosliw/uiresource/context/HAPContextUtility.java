@@ -25,9 +25,6 @@ import com.nosliw.uiresource.page.HAPConstantDef;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContext;
-import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElementAbsolute;
-import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElment;
-import com.nosliw.uiresource.tag.HAPUITagDefinitionContextElmentRelative;
 import com.nosliw.uiresource.tag.HAPUITagId;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
@@ -87,7 +84,7 @@ public class HAPContextUtility {
 		if(contextDefinition.isInherit()){
 			//add public context from parent
 			for(String rootEleName : parent.getContext().getPublicContext().getElements().keySet()){
-				HAPUITagDefinitionContextElmentRelative relativeEle = new HAPUITagDefinitionContextElmentRelative();
+				HAPContextNodeRootRelative relativeEle = new HAPContextNodeRootRelative();
 				relativeEle.setPath(rootEleName);
 				uiTag.getContext().getPublicContext().addElement(rootEleName, processUITagDefinitionContextElement(rootEleName, relativeEle, parent, dataTypeHelper, uiTag, runtime, expressionManager));
 			}
@@ -95,7 +92,7 @@ public class HAPContextUtility {
 
 		//element defined in tag definition
 		for(String contextType : HAPContextGroup.getContextTypes()){
-			Map<String, HAPUITagDefinitionContextElment> defEles = contextDefinition.getElements(contextType);
+			Map<String, HAPContextNodeRoot> defEles = contextDefinition.getElements(contextType);
 			for(String name : defEles.keySet()){
 				String realName = getSolidName(name, uiTag, runtime, expressionManager);
 				uiTag.getContext().addElement(realName, processUITagDefinitionContextElement(realName, defEles.get(name), parent, dataTypeHelper, uiTag, runtime, expressionManager), contextType);
@@ -196,12 +193,12 @@ public class HAPContextUtility {
 	}
 	
 	//convert context element definition in ui tag to context element in ui resource/tag
-	private static HAPContextNodeRoot processUITagDefinitionContextElement(String defRootEleName, HAPUITagDefinitionContextElment defContextElement, HAPUIDefinitionUnit parentUnit, HAPDataTypeHelper dataTypeHelper, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
+	private static HAPContextNodeRoot processUITagDefinitionContextElement(String defRootEleName, HAPContextNodeRoot defContextElement, HAPUIDefinitionUnit parentUnit, HAPDataTypeHelper dataTypeHelper, HAPUIDefinitionUnit uiDefinition, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
 		String type = defContextElement.getType();
 		switch(type){
 			case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
 			{
-				HAPUITagDefinitionContextElementAbsolute defContextElementAbsolute = (HAPUITagDefinitionContextElementAbsolute)defContextElement;
+				HAPContextNodeRootAbsolute defContextElementAbsolute = (HAPContextNodeRootAbsolute)defContextElement;
 				HAPContextNodeRootAbsolute out = new HAPContextNodeRootAbsolute();
 				out.setDefaultValue(defContextElementAbsolute.getDefaultValue());
 				buildSolidContextNode(defContextElementAbsolute, out, uiDefinition, runtime, expressionManager);
@@ -209,7 +206,7 @@ public class HAPContextUtility {
 			}
 			case HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE:
 			{
-				HAPUITagDefinitionContextElmentRelative defContextElementRelative = (HAPUITagDefinitionContextElmentRelative)defContextElement;
+				HAPContextNodeRootRelative defContextElementRelative = (HAPContextNodeRootRelative)defContextElement;
 				HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
 				HAPContextPath path = new HAPContextPath(getSolidName(defContextElementRelative.getPathStr(), uiDefinition, runtime, expressionManager));
 				out.setPath(path);

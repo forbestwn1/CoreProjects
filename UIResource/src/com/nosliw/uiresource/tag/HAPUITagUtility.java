@@ -59,8 +59,8 @@ public class HAPUITagUtility {
 			HAPContext context = contextGroup.getContext(contextType);
 			Map<String, HAPContextNodeRoot> elements = context.getElements();
 			for(String eleName : elements.keySet()){
-				HAPUITagDefinitionContextElment defEle = null;
-				if(contextDef!=null)	defEle = contextDef.getElements(contextType).get(eleName);
+				HAPContextNodeRoot defEle = null;
+				if(contextDef!=null)	defEle = contextDef.getContextNode(contextType, eleName);
 				if(defEle==null){
 					//not mapped, add to root context
 					HAPContextNodeRoot rootNode = elements.get(eleName);

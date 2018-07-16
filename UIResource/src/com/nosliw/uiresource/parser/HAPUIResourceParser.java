@@ -149,11 +149,7 @@ public class HAPUIResourceParser {
 		
 		for(Element childEle : childEles){
 			try {
-				String content = childEle.html();
-				JSONObject defsJson = new JSONObject(content);
-				for(String contextType : HAPContextGroup.getContextTypes()){
-					parseContext(defsJson.optJSONObject(contextType), resourceUnit.getContext().getContext(contextType));
-				}
+				HAPContextParser.parseContextGroup(new JSONObject(childEle.html()), resourceUnit.getContext());
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -161,17 +157,6 @@ public class HAPUIResourceParser {
 		}
 		
 		for(Element childEle : childEles)  childEle.remove();
-	}
-	
-	private void parseContext(JSONObject contextDefJson, HAPContext context){
-		if(contextDefJson==null)   return;
-		Iterator<String> defNames = contextDefJson.keys();
-		while(defNames.hasNext()){
-			String eleName = defNames.next();
-			JSONObject eleDefJson = contextDefJson.optJSONObject(eleName);
-			HAPContextNodeRootAbsolute contextEle = HAPContextParser.parseContextRootElementInUIResource(eleDefJson);
-			context.addElement(eleName, contextEle);
-		}
 	}
 	
 	private void parseChildExpressionBlocks(Element ele, HAPUIDefinitionUnit resource){

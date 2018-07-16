@@ -25,6 +25,7 @@ public class HAPContext extends HAPSerializableImp{
 	}
 
 	public Map<String, HAPContextNodeRoot> getElements(){  return this.m_elements;  }
+	public HAPContextNodeRoot getElement(String name) {  return this.m_elements.get(name);   }
 	
 	public void hardMergeWith(HAPContext context){
 		Map<String, HAPContextNodeRoot> eles = context.getElements();

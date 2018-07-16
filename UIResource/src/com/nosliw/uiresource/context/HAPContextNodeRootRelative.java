@@ -76,8 +76,7 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRoot{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(PATH, this.m_path.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(PATH, this.getPath().toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_matchers!=null && !this.m_matchers.isEmpty()){
 			jsonMap.put(MATCHERS, HAPJsonUtility.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
 			jsonMap.put(REVERSEMATCHERS, HAPJsonUtility.buildJson(this.m_reverseMatchers, HAPSerializationFormat.JSON));
