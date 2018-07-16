@@ -45,7 +45,8 @@ public class HAPContextParser {
 		String path = (String)eleDefJson.opt(HAPUITagDefinitionContextElmentRelative.PATH);
 		if(path!=null){
 			//relative
-			out = new HAPUITagDefinitionContextElmentRelative(path);
+			out = new HAPUITagDefinitionContextElmentRelative();
+			((HAPUITagDefinitionContextElmentRelative)out).setPath(path);
 			Object defJson = eleDefJson.opt(HAPContextNode.DEFINITION);
 			if(defJson!=null){
 				parseContextNodeFromJson(defJson, (HAPUITagDefinitionContextElmentRelative)out);

@@ -87,7 +87,8 @@ public class HAPContextUtility {
 		if(contextDefinition.isInherit()){
 			//add public context from parent
 			for(String rootEleName : parent.getContext().getPublicContext().getElements().keySet()){
-				HAPUITagDefinitionContextElmentRelative relativeEle = new HAPUITagDefinitionContextElmentRelative(rootEleName);
+				HAPUITagDefinitionContextElmentRelative relativeEle = new HAPUITagDefinitionContextElmentRelative();
+				relativeEle.setPath(rootEleName);
 				uiTag.getContext().getPublicContext().addElement(rootEleName, processUITagDefinitionContextElement(rootEleName, relativeEle, parent, dataTypeHelper, uiTag, runtime, expressionManager));
 			}
 		}
