@@ -10,6 +10,10 @@
 	SchoolType:<nosliw-options id="schoolType" data="criteria.schoolType"/>
 	<br>
 
+<!--
+<nosliw-debug/>
+-->
+
 </body>
 
 	<context>

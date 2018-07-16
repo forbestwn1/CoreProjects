@@ -81,9 +81,6 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 		if(fun!=undefined)	initResult = fun.apply(that, args);
 		
 		return loc_processStatuesResult(initResult, loc_out.finishInit, handlers, requestInfo);
-		
-		//if return false, then waiting until finishInit is called
-//		if(initResult!=false)		loc_out.finishInit();
 	};
 
 	
@@ -170,7 +167,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	};
 	
 	var loc_out = {
-		init : function(){	loc_onResourceInit.apply(this, arguments);	},
+		init : function(){	loc_onResourceInit.call(this, arguments);	},
 
 		//must have handlers and requestInfo as last two parms
 		initRequest : function(){	

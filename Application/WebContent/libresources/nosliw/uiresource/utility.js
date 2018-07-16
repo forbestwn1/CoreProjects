@@ -101,7 +101,7 @@ var node_utility = {
 					};
 					var type = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
 					if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_ABSOLUTE){
-						var defaultValue = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFAULT];
+						var defaultValue = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_DEFAULT];
 						if(contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFINITION]!=undefined){
 							//app data
 							var defaultValueData = defaultValue;

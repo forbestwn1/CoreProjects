@@ -12,19 +12,6 @@
 			<br>
 		</nosliw-loop>
 
-		
-<!--
-		<nosliw-map data="result" element="ele" index="index">
-			<div style="height:40px;width:200px;">
-				<br>
-				SchoolName: <%=#|?(ele)?.getChildData(name:&(schoolAttribute)&)|#.value%>   
-				<br>
-<!--				SchoolName: <%=?(ele.schoolName)?.value%>   ->
-				<br>
-<!--				Rating: <%=?(ele.schoolRating)?.value%>   ->
-			</div>
-		</nosliw-map>
--->		
 </body>
 
 

@@ -12,15 +12,31 @@
 	Status : {
 		{
 			name : "Main",
+			type : "list",
 			page : "page1",
 			event : {
 				"event1" : {
-					action : "nextPage",
-					
-					
+					action : "information",
+					status : "Info"
+					data : 
 				}
 			}
 		
+		},
+		{
+			name : "Info",
+			type : "info",
+			page : "page2",
+			
 		}
 	}
 }
+
+
+
+information
+confirm
+input
+
+next
+
