@@ -17,7 +17,6 @@ import org.jsoup.select.Elements;
 
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.serialization.HAPScript;
-import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;

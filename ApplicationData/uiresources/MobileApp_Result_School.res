@@ -14,7 +14,7 @@
 
 </body>
 
-	<event>
+	<events>
 	[
 		{
 			eventName : "eventName",
@@ -28,7 +28,7 @@
 	]
 	</event>
 	
-	<service>
+	<services>
 	[
 		{
 			serviceName : "serviceName",
@@ -46,7 +46,7 @@
 	]
 	</service>
 
-	<command>
+	<commands>
 	[
 		{
 			commandName : "commandName",

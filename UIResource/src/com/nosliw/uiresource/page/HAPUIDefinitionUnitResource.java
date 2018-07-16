@@ -1,18 +1,26 @@
 package com.nosliw.uiresource.page;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 
 public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 
+	@HAPAttribute
+	public static final String COMMANDS = "commands";
+	
 	//source code of resource definition
 	private String m_source;
 	
+	private Map<String, HAPCommandDefinition> m_commandsDefinition;
 	
 	private boolean m_processed = false;
 	
@@ -23,12 +31,15 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 		super(id);
 		this.m_source = source;
 		this.m_resourceDependency = new ArrayList<HAPResourceDependent>();
+		this.m_commandsDefinition = new LinkedHashMap<String, HAPCommandDefinition>();
 	}
 	
 	public String getSource(){   return this.m_source;   }
 	
 	public boolean isProcessed(){  return this.m_processed;  }
 	public void processed(){  this.m_processed = true;  }
+	
+	public void addCommandDefinition(HAPCommandDefinition commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
 	
 	public List<HAPResourceDependent> getResourceDependency(){  return this.m_resourceDependency;  }
 
@@ -40,6 +51,7 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(COMMANDS, HAPJsonUtility.buildJson(this.m_commandsDefinition, HAPSerializationFormat.JSON));
 	}
 
 	@Override

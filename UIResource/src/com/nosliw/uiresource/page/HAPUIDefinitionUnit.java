@@ -64,7 +64,9 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String EXPRESSIONS = "expressions";
 	@HAPAttribute
-	public static String EXPRESSIONUNIT = "expressionUnit";
+	public static final String EVENTS = "events";
+	@HAPAttribute
+	public static final String SERVICES = "services";
 
 	
 	//for tag, it is tag id within resource
@@ -111,7 +113,11 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	//the script factory name for creating script object for ui resource view
 	private String m_scriptFactoryName;
 	
+	
 	private Map<String, HAPDefinitionExpression> m_expressionDefinitions;
+	
+	private Map<String, HAPEventDefinition> m_eventsDefinition;
+	private Map<String, HAPServiceDefinition> m_servicesDefinition;
 	
 	//expression unit
 	private HAPUIResourceExpressionContext m_expressionContext;
@@ -130,6 +136,8 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		this.m_constantValues = new LinkedHashMap<String, Object>();
 		this.m_expressionDefinitions = new LinkedHashMap<String, HAPDefinitionExpression>();
 		this.m_expressionContext = new HAPUIResourceExpressionContext();
+		this.m_eventsDefinition = new LinkedHashMap<String, HAPEventDefinition>();
+		this.m_servicesDefinition = new LinkedHashMap<String, HAPServiceDefinition>();
 	}
 	
 	abstract public String getType(); 
@@ -195,6 +203,8 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		}
 		jsonMap.put(CONSTANTS, HAPJsonUtility.buildMapJson(constantsJsons));
 	
+		jsonMap.put(EVENTS, HAPJsonUtility.buildJson(this.m_eventsDefinition, HAPSerializationFormat.JSON));
+		jsonMap.put(SERVICES, HAPJsonUtility.buildJson(this.m_servicesDefinition, HAPSerializationFormat.JSON));
 	}
 
 	
@@ -229,6 +239,9 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public void setExpressionContext(HAPUIResourceExpressionContext context){  this.m_expressionContext = context;   }
 	
 	public void addExpressionDefinition(String name, HAPDefinitionExpression expressionDef){		this.m_expressionDefinitions.put(name, expressionDef);	}
+
+	public void addEventDefinition(HAPEventDefinition def) {  this.m_eventsDefinition.put(def.getName(), def);   }
+	public void addServiceDefinition(HAPServiceDefinition def) {  this.m_servicesDefinition.put(def.getName(), def);   }
 	
 	/*
 	 * process attributes
