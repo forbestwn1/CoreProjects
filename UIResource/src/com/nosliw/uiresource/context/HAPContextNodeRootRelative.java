@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPMatcherUtility;
 import com.nosliw.data.core.expression.HAPMatchers;
@@ -29,7 +30,8 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRoot{
 	
 	//relative path from parent context
 	private HAPContextPath m_path;
-
+	private String m_pathStr;
+	
 	//context node full name --- matchers
 	//used to convert data from parent to data within uiTag
 	private Map<String, HAPMatchers> m_matchers;
@@ -45,7 +47,21 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRoot{
 	public String getType() {		return HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE;	}
 
 	public void setPath(HAPContextPath path){
-		this.m_path = path;
+		this.m_path = path;	
+	}
+	public void setPath(String path) {  this.m_pathStr = path;   }
+
+	public HAPContextPath getPath() {
+		if(this.m_path==null && HAPBasicUtility.isStringNotEmpty(m_pathStr)) {
+			this.m_path = new HAPContextPath(this.m_pathStr);
+		}
+		return this.m_path;
+	}
+	public String getPathStr() {
+		if(this.m_path!=null && HAPBasicUtility.isStringEmpty(m_pathStr)) {
+			this.m_pathStr = this.m_path.getFullPath();
+		}
+		return this.m_pathStr;
 	}
 	
 	public void setMatchers(Map<String, HAPMatchers> matchers){

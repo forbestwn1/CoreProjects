@@ -210,7 +210,7 @@ public class HAPContextUtility {
 			{
 				HAPUITagDefinitionContextElmentRelative defContextElementRelative = (HAPUITagDefinitionContextElmentRelative)defContextElement;
 				HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
-				HAPContextPath path = new HAPContextPath(getSolidName(defContextElementRelative.getPath(), uiDefinition, runtime, expressionManager));
+				HAPContextPath path = new HAPContextPath(getSolidName(defContextElementRelative.getPathStr(), uiDefinition, runtime, expressionManager));
 				out.setPath(path);
 				
 				HAPContextNode parentNode = getReferencedParentContextNode(path, parentUnit);

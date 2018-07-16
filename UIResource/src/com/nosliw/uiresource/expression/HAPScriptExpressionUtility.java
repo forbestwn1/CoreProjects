@@ -36,6 +36,12 @@ public class HAPScriptExpressionUtility {
 			HAPExpressionSuiteManager expressionMan){
 		List<Object> out = new ArrayList<Object>();
 		int i = 0;
+		
+		if(text==null) {
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		int start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
 		while(start != -1){
 			if(start>0)   out.add(text.substring(0, start));
