@@ -15,7 +15,6 @@ import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.context.HAPContextGroup;
 import com.nosliw.uiresource.context.HAPContextNodeRoot;
-import com.nosliw.uiresource.context.HAPContextParser;
 import com.nosliw.uiresource.page.HAPConstantUtility;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
@@ -47,7 +46,7 @@ public class HAPUITagUtility {
 		JSONObject contextMappingJson = (JSONObject)rootResource.getConstantValues().get(contextMapName);
 		if(contextMappingJson!=null){
 			contextDef = new HAPUITagDefinitionContext();
-			HAPContextParser.parseContextInTagDefinition(contextMappingJson, contextDef);
+			HAPUITagDefinitionParser.parseContextInTagDefinition(contextMappingJson, contextDef);
 			//then apply it in include context
 			includeTagResource.setContextDefinition(contextDef);
 		}

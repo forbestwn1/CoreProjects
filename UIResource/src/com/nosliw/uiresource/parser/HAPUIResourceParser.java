@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -17,6 +18,7 @@ import org.jsoup.select.Elements;
 
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.serialization.HAPScript;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -36,6 +38,7 @@ import com.nosliw.uiresource.page.HAPConstantDef;
 import com.nosliw.uiresource.page.HAPElementEvent;
 import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInContent;
+import com.nosliw.uiresource.page.HAPEventDefinition;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
@@ -144,8 +147,31 @@ public class HAPUIResourceParser {
 		
 	}
 	
+	private void parseChildEventBlocks(Element ele, HAPUIDefinitionUnit resourceUnit) {
+		List<Element> childEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, HAPUIDefinitionUnit.EVENTS);
+		
+		for(Element childEle : childEles){
+			try {
+				JSONArray eventListJson = new JSONArray(childEle.html());
+				for(int i=0; i<eventListJson.length(); i++) {
+					JSONObject eventJson = eventListJson.getJSONObject(i);
+					HAPEventDefinition eventDef = new HAPEventDefinition();
+					eventDef.buildObject(eventJson, HAPSerializationFormat.JSON);
+					resourceUnit.addEventDefinition(eventDef);
+				}
+				break;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		for(Element childEle : childEles)  childEle.remove();
+	
+		
+	}
+	
 	private void parseChildContextBlocks(Element ele, HAPUIDefinitionUnit resourceUnit){
-		List<Element> childEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, HAPUIDefinitionUnitResource.CONTEXT);
+		List<Element> childEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, HAPUIDefinitionUnit.CONTEXT);
 		
 		for(Element childEle : childEles){
 			try {

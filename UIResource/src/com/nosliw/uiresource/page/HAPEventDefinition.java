@@ -2,11 +2,14 @@ package com.nosliw.uiresource.page;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.uiresource.context.HAPContext;
+import com.nosliw.uiresource.context.HAPContextParser;
 
 //ui resource unit event
 //		it can be within resource or tag
@@ -23,6 +26,9 @@ public class HAPEventDefinition extends HAPSerializableImp{
 	
 	private HAPContext m_eventData;
 	
+	public HAPEventDefinition() {
+		this.m_eventData = new HAPContext();
+	}
 	
 	public String getName() {   return this.m_name;  }
 	
@@ -33,5 +39,12 @@ public class HAPEventDefinition extends HAPSerializableImp{
 		jsonMap.put(NAME, this.m_name);
 		jsonMap.put(EVENTDATA, this.m_eventData.toStringValue(HAPSerializationFormat.JSON));
 	}
-	
+
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		this.m_name = jsonObj.optString(NAME);
+		HAPContextParser.parseContext(jsonObj.optJSONObject(EVENTDATA), this.m_eventData);
+		return true;  
+	}
 }

@@ -35,7 +35,7 @@ public class HAPUITagDefinitionParser {
 			HAPUITagDefinitionContext context = out.getContext();
 			NativeObject contextObj = (NativeObject)defObjJS.get(HAPUITagDefinition.CONTEXT);
 			JSONObject contextJson = (JSONObject)HAPRhinoDataUtility.toJson(contextObj);
-			HAPContextParser.parseContextInTagDefinition(contextJson, context);
+			HAPUITagDefinitionParser.parseContextInTagDefinition(contextJson, context);
 			
 			//parse dependency
 			NativeObject requiresObj = (NativeObject)defObjJS.get(HAPUITagDefinition.REQUIRES);
@@ -70,4 +70,12 @@ public class HAPUITagDefinitionParser {
 		return out;
 	}
 	
+	//parse 
+	public static void parseContextInTagDefinition(JSONObject contextJson, HAPUITagDefinitionContext contextOut){
+		Boolean inherit = (Boolean)contextJson.opt(HAPUITagDefinitionContext.INHERIT);
+		if(inherit!=null)  contextOut.setInherit(inherit);
+		HAPContextParser.parseContextGroup(contextJson, contextOut);
+	}
+
+
 }
