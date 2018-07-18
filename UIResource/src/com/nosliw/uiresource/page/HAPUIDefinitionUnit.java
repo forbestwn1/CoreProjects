@@ -117,8 +117,8 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	
 	private Map<String, HAPDefinitionExpression> m_expressionDefinitions;
 	
-	private Map<String, HAPEventDefinition> m_eventsDefinition;
-	private Map<String, HAPServiceDefinition> m_servicesDefinition;
+	private Map<String, HAPContextEntity> m_eventsDefinition;
+	private Map<String, HAPContextEntity> m_servicesDefinition;
 	
 	//expression unit
 	private HAPUIResourceExpressionContext m_expressionContext;
@@ -138,8 +138,8 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		this.m_constantValues = new LinkedHashMap<String, Object>();
 		this.m_expressionDefinitions = new LinkedHashMap<String, HAPDefinitionExpression>();
 		this.m_expressionContext = new HAPUIResourceExpressionContext();
-		this.m_eventsDefinition = new LinkedHashMap<String, HAPEventDefinition>();
-		this.m_servicesDefinition = new LinkedHashMap<String, HAPServiceDefinition>();
+		this.m_eventsDefinition = new LinkedHashMap<String, HAPContextEntity>();
+		this.m_servicesDefinition = new LinkedHashMap<String, HAPContextEntity>();
 	}
 	
 	abstract public String getType(); 
@@ -243,9 +243,12 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	
 	public void addExpressionDefinition(String name, HAPDefinitionExpression expressionDef){		this.m_expressionDefinitions.put(name, expressionDef);	}
 
-	public void addEventDefinition(HAPEventDefinition def) {  this.m_eventsDefinition.put(def.getName(), def);   }
-	public void addServiceDefinition(HAPServiceDefinition def) {  this.m_servicesDefinition.put(def.getName(), def);   }
+	public void addEventDefinition(HAPContextEntity def) {  this.m_eventsDefinition.put(def.getName(), def);   }
+	public void addServiceDefinition(HAPContextEntity def) {  this.m_servicesDefinition.put(def.getName(), def);   }
 
+	public Map<String, HAPContextEntity> getEventDefinition() {   return this.m_eventsDefinition;  }
+	public Map<String, HAPContextEntity> getServiceDefinition() {   return this.m_servicesDefinition;  }
+	
 	public HAPContextGroup getContext(){  return this.m_context;   }
 	
 	/*

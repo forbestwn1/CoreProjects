@@ -31,13 +31,11 @@ import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.context.HAPContextParser;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
 import com.nosliw.uiresource.expression.HAPScriptExpressionUtility;
-import com.nosliw.uiresource.page.HAPCommandDefinition;
 import com.nosliw.uiresource.page.HAPConstantDef;
+import com.nosliw.uiresource.page.HAPContextEntity;
 import com.nosliw.uiresource.page.HAPElementEvent;
 import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInContent;
-import com.nosliw.uiresource.page.HAPEventDefinition;
-import com.nosliw.uiresource.page.HAPServiceDefinition;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
@@ -161,7 +159,7 @@ public class HAPUIResourceParser {
 				JSONArray eventListJson = new JSONArray(childEle.html());
 				for(int i=0; i<eventListJson.length(); i++) {
 					JSONObject eventJson = eventListJson.getJSONObject(i);
-					HAPEventDefinition eventDef = new HAPEventDefinition();
+					HAPContextEntity eventDef = new HAPContextEntity();
 					eventDef.buildObject(eventJson, HAPSerializationFormat.JSON);
 					resourceUnit.addEventDefinition(eventDef);
 				}
@@ -180,7 +178,7 @@ public class HAPUIResourceParser {
 				JSONArray serviceListJson = new JSONArray(childEle.html());
 				for(int i=0; i<serviceListJson.length(); i++) {
 					JSONObject serviceJson = serviceListJson.getJSONObject(i);
-					HAPServiceDefinition serviceDef = new HAPServiceDefinition();
+					HAPContextEntity serviceDef = new HAPContextEntity();
 					serviceDef.buildObject(serviceJson, HAPSerializationFormat.JSON);
 					resourceUnit.addServiceDefinition(serviceDef);
 				}
@@ -199,7 +197,7 @@ public class HAPUIResourceParser {
 				JSONArray commandListJson = new JSONArray(childEle.html());
 				for(int i=0; i<commandListJson.length(); i++) {
 					JSONObject commandJson = commandListJson.getJSONObject(i);
-					HAPCommandDefinition commandDef = new HAPCommandDefinition();
+					HAPContextEntity commandDef = new HAPContextEntity();
 					commandDef.buildObject(commandJson, HAPSerializationFormat.JSON);
 					resourceUnit.addCommandDefinition(commandDef);
 				}

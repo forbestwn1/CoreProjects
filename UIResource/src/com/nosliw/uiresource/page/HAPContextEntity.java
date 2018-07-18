@@ -11,39 +11,47 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.context.HAPContextParser;
 
-//service definition which provide function for ui unit
 @HAPEntityWithAttribute
-public class HAPServiceDefinition extends HAPSerializableImp{
+public class HAPContextEntity  extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String NAME = "name";
 
 	@HAPAttribute
-	public static String PARMS = "parms";
+	public static String CONTEXTDEFINITION = "contextDefinition";
+	
+	@HAPAttribute
+	public static String CONTEXT = "context";
 
 	private String m_name;
 	
-	private HAPContext m_parms;
-
-	public HAPServiceDefinition() {
-		this.m_parms = new HAPContext();
-	}
+	private HAPContext m_contextDefinition;
 	
+	private HAPContext m_context;
+
+	public HAPContextEntity() {
+		this.m_context = new HAPContext();
+		this.m_contextDefinition = new HAPContext();
+	}
+
 	public String getName() {   return this.m_name;  }
 	
-	public HAPContext getParms() {  return this.m_parms;   }
+	public HAPContext getContextDefinition() {  return this.m_contextDefinition;   }
+
+	public HAPContext getContext() {  return this.m_context;   }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(NAME, this.m_name);
-		jsonMap.put(PARMS, this.m_parms.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_name = jsonObj.optString(NAME);
-		HAPContextParser.parseContext(jsonObj.optJSONObject(PARMS), this.m_parms);
+		HAPContextParser.parseContext(jsonObj.optJSONObject(CONTEXTDEFINITION), this.m_contextDefinition);
+		HAPContextParser.parseContext(jsonObj.optJSONObject(CONTEXT), this.m_context);
 		return true;  
 	}
 }

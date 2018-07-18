@@ -20,7 +20,7 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	//source code of resource definition
 	private String m_source;
 	
-	private Map<String, HAPCommandDefinition> m_commandsDefinition;
+	private Map<String, HAPContextEntity> m_commandsDefinition;
 	
 	private boolean m_processed = false;
 	
@@ -31,7 +31,7 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 		super(id);
 		this.m_source = source;
 		this.m_resourceDependency = new ArrayList<HAPResourceDependent>();
-		this.m_commandsDefinition = new LinkedHashMap<String, HAPCommandDefinition>();
+		this.m_commandsDefinition = new LinkedHashMap<String, HAPContextEntity>();
 	}
 	
 	public String getSource(){   return this.m_source;   }
@@ -39,8 +39,9 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	public boolean isProcessed(){  return this.m_processed;  }
 	public void processed(){  this.m_processed = true;  }
 	
-	public void addCommandDefinition(HAPCommandDefinition commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
-	
+	public void addCommandDefinition(HAPContextEntity commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
+	public Map<String, HAPContextEntity> getCommandDefinition() {   return this.m_commandsDefinition;  }
+
 	public List<HAPResourceDependent> getResourceDependency(){  return this.m_resourceDependency;  }
 
 	@Override

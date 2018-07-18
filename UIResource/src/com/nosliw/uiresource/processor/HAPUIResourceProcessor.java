@@ -10,7 +10,6 @@ import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.parser.HAPUIResourceParser;
 import com.nosliw.uiresource.resource.HAPResourceUtility;
 import com.nosliw.uiresource.tag.HAPUITagManager;
-import com.nosliw.uiresource.tag.HAPUITagUtility;
 
 public class HAPUIResourceProcessor {
 
@@ -31,6 +30,8 @@ public class HAPUIResourceProcessor {
 		//build expression context
 		HAPUIResourceContextProcessor.processContext(null, uiResource, dataTypeHelper, uiTagMan, runtime, expressionMan);
 
+		HAPUIResourceContextEntityProcessor.processContext(null, uiResource, dataTypeHelper, uiTagMan, runtime, expressionMan);
+		
 		//process expression definition
 		HAPUIResourceExpressionProcessorUtility.processExpressions(uiResource, runtime, resourceMan);
 		
