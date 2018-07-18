@@ -45,11 +45,7 @@
 
 		var loc_setupUIEvent = function(){
 			loc_view.bind('click', function(){
-				var out = node_createServiceRequestInfoSequence({}, {
-					success : function(requestInfo, data){
-						loc_env.executeDataOperationRequestSet(loc_env.getAttributeValue("output"), "", data);
-					}
-				});
+				var out = node_createServiceRequestInfoSequence({}, {});
 				
 				var getParmsRequest = node_createServiceRequestInfoSet({}, {
 					success : function(requestInfo, result){
@@ -61,7 +57,11 @@
 							name : loc_env.getAttributeValue("datasource"),
 							parms : parms
 						};
-						return loc_env.getGatewayCommandRequest("dataSource", "getData", commandParms);
+						return loc_env.getGatewayCommandRequest("dataSource", "getData", commandParms, {
+							success: function(requestInfo, data){
+								return loc_env.getDataOperationRequestSet(loc_env.getAttributeValue("output"), "", data);
+							}
+						});
 					}
 				});
 
