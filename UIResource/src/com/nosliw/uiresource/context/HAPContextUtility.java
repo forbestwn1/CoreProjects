@@ -1,102 +1,25 @@
 package com.nosliw.uiresource.context;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPMatchers;
-import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.expression.HAPEmbededScriptExpression;
 import com.nosliw.uiresource.expression.HAPRuntimeTaskExecuteEmbededExpression;
-import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
-import com.nosliw.uiresource.page.HAPConstantDef;
-import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
-import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
-import com.nosliw.uiresource.tag.HAPUITagDefinitionContext;
-import com.nosliw.uiresource.tag.HAPUITagId;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPContextUtility {
-
-	public static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
-
-		HAPUIResourceExpressionContext expContext = uiDefinition.getExpressionContext();
-
-		//find all data variables from context definition 
-		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getPublicContext()));
-		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getInternalContext()));
-		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getExcludedContext()));
-		
-		//parent expression context
-		HAPUIResourceExpressionContext parentExpContext = parent==null?null:parent.getExpressionContext();
-		
-		//build data constants from local and parent
-		//local constants override parent constants
-		if(parent!=null)	expContext.addConstants(parentExpContext.getConstants());
-		Map<String, HAPConstantDef> constantDefs = uiDefinition.getConstantDefs();
-		for(String name : constantDefs.keySet()){
-			HAPData data = constantDefs.get(name).getDataValue();
-			if(data!=null)		expContext.addConstant(name, data);
-		}
-		
-		//get all support expressions definitions from local and parent
-		//local expression override expression from parent
-		if(parent!=null){
-			Map<String, HAPDefinitionExpression> parentExpDefs = parentExpContext.getExpressionDefinitions();
-			for(String id : parentExpDefs.keySet()) {
-				expContext.addExpressionDefinition(id, parentExpDefs.get(id));
-			}
-		}
-		//expression from current
-		for(String expName : uiDefinition.getOtherExpressionDefinitions().keySet())	expContext.addExpressionDefinition(expName, uiDefinition.getOtherExpressionDefinitions().get(expName));
-		
-		//children ui tags
-		Iterator<HAPUIDefinitionUnitTag> its = uiDefinition.getUITags().iterator();
-		while(its.hasNext()){
-			HAPUIDefinitionUnitTag uiTag = its.next();
-			buildUITagContext(uiDefinition.getContext(), uiTag, dataTypeHelper, uiTagMan, runtime, expressionManager);
-			processExpressionContext(uiDefinition, uiTag, dataTypeHelper, uiTagMan, runtime, expressionManager);
-		}
-	}
 	
-	//build context for ui Tag
-	private static void buildUITagContext(HAPContextGroup parentContext, HAPUIDefinitionUnitTag uiTag, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
-		//get contextDef from uiTag first
-		HAPUITagDefinitionContext contextDefinition = uiTag.getContextDefinition();
-		//if not exist, then from tag definition
-		if(contextDefinition==null){
-			contextDefinition = uiTagMan.getUITagDefinition(new HAPUITagId(uiTag.getTagName())).getContext();
-			uiTag.setContextDefinition(contextDefinition);
-		}
-
-		Map<String, String> constants = uiTag.getAttributes();
-		
-		if(contextDefinition.isInherit()){
-			//add public context from parent
-			for(String rootEleName : parentContext.getPublicContext().getElements().keySet()){
-				HAPContextNodeRootRelative relativeEle = new HAPContextNodeRootRelative();
-				relativeEle.setPath(rootEleName);
-				uiTag.getContext().getPublicContext().addElement(rootEleName, processContextDefinitionElement(rootEleName, relativeEle, parentContext, dataTypeHelper, constants, runtime, expressionManager));
-			}
-		}
-
-		//element defined in tag definition
-		processContextDefinition(parentContext, contextDefinition, uiTag.getContext(), constants, dataTypeHelper, uiTagMan, runtime, expressionManager);
-	}
-	
-	public static void processContextDefinition(HAPContextGroup parentContext, HAPContextGroup defContext, HAPContextGroup outContext, Map<String, String> constants, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager) {
+	public static void processContextGroupDefinition(HAPContextGroup parentContext, HAPContextGroup defContext, HAPContextGroup outContext, Map<String, String> constants, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager) {
 		for(String contextType : HAPContextGroup.getContextTypes()){
 			Map<String, HAPContextNodeRoot> defEles = defContext.getElements(contextType);
 			for(String name : defEles.keySet()){
@@ -106,9 +29,16 @@ public class HAPContextUtility {
 		}
 	}
 	
+	public static void processContextDefinition(HAPContextGroup parentContext, HAPContext defContext, HAPContext outContext, Map<String, String> constants, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager) {
+		Map<String, HAPContextNodeRoot> defEles = defContext.getElements();
+		for(String name : defEles.keySet()){
+			String realName = getSolidName(name, constants, runtime, expressionManager);
+			outContext.addElement(realName, processContextDefinitionElement(realName, defEles.get(name), parentContext, dataTypeHelper, constants, runtime, expressionManager));
+		}
+	}
 	
 	//convert context definition to context 
-	private static HAPContextNodeRoot processContextDefinitionElement(String defRootEleName, HAPContextNodeRoot defContextElement, HAPContextGroup parentContext, HAPDataTypeHelper dataTypeHelper, Map<String, String> constants, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
+	public static HAPContextNodeRoot processContextDefinitionElement(String defRootEleName, HAPContextNodeRoot defContextElement, HAPContextGroup parentContext, HAPDataTypeHelper dataTypeHelper, Map<String, String> constants, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
 		String type = defContextElement.getType();
 		switch(type){
 			case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
@@ -149,15 +79,6 @@ public class HAPContextUtility {
 		return null;
 	}
 	
-	//find all data variables in context 
-	private static Map<String, HAPVariableInfo> discoverDataVariablesInContext(HAPContext context){
-		Map<String, HAPVariableInfo> out = new LinkedHashMap<String, HAPVariableInfo>();
-		for(String rootName : context.getElements().keySet()){
-			discoverCriteriaInContextNode(rootName, (HAPContextNode)context.getElements().get(rootName), out);
-		}
-		return out;
-	}
-
 	//evaluate embeded script expression
 	private static String getSolidName(String name, Map<String, String> constants, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
 		HAPEmbededScriptExpression se = new HAPEmbededScriptExpression(null, name, expressionManager);
@@ -261,23 +182,6 @@ public class HAPContextUtility {
 					defChild = def.getChildren().get(name);
 				}
 				merge(parent.getChildren().get(name), defChild, outChild, matchers, path.appendSegment(name), dataTypeHelper);
-			}
-		}
-	}
-	
-	//discover data type criteria defined in context node
-	//the purpose is to find variables related with data type criteria
-	//the data type criteria name is full name in path, for instance, a.b.c.d
-	private static void discoverCriteriaInContextNode(String path, HAPContextNode node, Map<String, HAPVariableInfo> criterias){
-		HAPContextNodeCriteria definition = node.getDefinition();
-		if(definition!=null){
-			criterias.put(path, new HAPVariableInfo(definition.getValue()));
-		}
-		else{
-			Map<String, HAPContextNode> children = node.getChildren();
-			for(String childName : children.keySet()){
-				String childPath = HAPNamingConversionUtility.cascadeComponentPath(path, childName);
-				discoverCriteriaInContextNode(childPath, children.get(childName), criterias);
 			}
 		}
 	}

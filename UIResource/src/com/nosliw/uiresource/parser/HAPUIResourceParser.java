@@ -28,17 +28,16 @@ import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.uiresource.HAPIdGenerator;
-import com.nosliw.uiresource.context.HAPContext;
-import com.nosliw.uiresource.context.HAPContextGroup;
-import com.nosliw.uiresource.context.HAPContextNodeRootAbsolute;
 import com.nosliw.uiresource.context.HAPContextParser;
 import com.nosliw.uiresource.expression.HAPScriptExpression;
 import com.nosliw.uiresource.expression.HAPScriptExpressionUtility;
+import com.nosliw.uiresource.page.HAPCommandDefinition;
 import com.nosliw.uiresource.page.HAPConstantDef;
 import com.nosliw.uiresource.page.HAPElementEvent;
 import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.page.HAPEventDefinition;
+import com.nosliw.uiresource.page.HAPServiceDefinition;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
@@ -70,7 +69,7 @@ public class HAPUIResourceParser {
 	public void parseContent(HAPUIDefinitionUnit resourceUnit, String content){
 		try{
 			Document doc = Jsoup.parse(content, "UTF-8");
-			parseUIResourceUnit(resourceUnit, doc.body(), null);
+			parseUIDefinitionUnit(resourceUnit, doc.body(), null);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -82,7 +81,8 @@ public class HAPUIResourceParser {
 		HAPUIDefinitionUnitResource resource = new HAPUIDefinitionUnitResource(resourceId, content);
 		try{
 			Document doc = Jsoup.parse(content, "UTF-8");
-			parseUIResourceUnit(resource, doc.body(), null);
+			parseUIDefinitionResource(resource, doc.body());
+			parseUIDefinitionUnit(resource, doc.body(), null);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -100,7 +100,8 @@ public class HAPUIResourceParser {
 			resource = new HAPUIDefinitionUnitResource(resourceId, source);
 			
 			Document doc = Jsoup.parse(input, "UTF-8");
-			parseUIResourceUnit(resource, doc.body(), null);
+			parseUIDefinitionResource(resource, doc.body());
+			parseUIDefinitionUnit(resource, doc.body(), null);
 			
 		}
 		catch(Exception e){
@@ -109,8 +110,11 @@ public class HAPUIResourceParser {
 		return resource;
 	}
 
+	private void parseUIDefinitionResource(HAPUIDefinitionUnitResource uiResourceUnit, Element ele){
+		this.parseChildCommandBlocks(ele, uiResourceUnit);
+	}	
 	
-	private void parseUIResourceUnit(HAPUIDefinitionUnit uiResourceUnit, Element ele, HAPUIDefinitionUnit parentUIResourceUnit){
+	private void parseUIDefinitionUnit(HAPUIDefinitionUnit uiResourceUnit, Element ele, HAPUIDefinitionUnit parentUIResourceUnit){
 		//process script block
 		this.parseChildScriptBlocks(ele, uiResourceUnit);
 		//process constant block
@@ -119,6 +123,9 @@ public class HAPUIResourceParser {
 		this.parseChildContextBlocks(ele, uiResourceUnit);
 		//process expression block
 		this.parseChildExpressionBlocks(ele, uiResourceUnit);
+		
+		this.parseChildEventBlocks(ele, uiResourceUnit);
+		this.parseChildServiceBlocks(ele, uiResourceUnit);
 		
 		//process key attribute
 		parseKeyAttribute(ele, parentUIResourceUnit, true);
@@ -149,7 +156,6 @@ public class HAPUIResourceParser {
 	
 	private void parseChildEventBlocks(Element ele, HAPUIDefinitionUnit resourceUnit) {
 		List<Element> childEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, HAPUIDefinitionUnit.EVENTS);
-		
 		for(Element childEle : childEles){
 			try {
 				JSONArray eventListJson = new JSONArray(childEle.html());
@@ -164,10 +170,45 @@ public class HAPUIResourceParser {
 				e.printStackTrace();
 			}
 		}
-		
 		for(Element childEle : childEles)  childEle.remove();
-	
-		
+	}
+
+	private void parseChildServiceBlocks(Element ele, HAPUIDefinitionUnit resourceUnit) {
+		List<Element> childEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, HAPUIDefinitionUnit.SERVICES);
+		for(Element childEle : childEles){
+			try {
+				JSONArray serviceListJson = new JSONArray(childEle.html());
+				for(int i=0; i<serviceListJson.length(); i++) {
+					JSONObject serviceJson = serviceListJson.getJSONObject(i);
+					HAPServiceDefinition serviceDef = new HAPServiceDefinition();
+					serviceDef.buildObject(serviceJson, HAPSerializationFormat.JSON);
+					resourceUnit.addServiceDefinition(serviceDef);
+				}
+				break;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		for(Element childEle : childEles)  childEle.remove();
+	}
+
+	private void parseChildCommandBlocks(Element ele, HAPUIDefinitionUnitResource resourceUnit) {
+		List<Element> childEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, HAPUIDefinitionUnitResource.COMMANDS);
+		for(Element childEle : childEles){
+			try {
+				JSONArray commandListJson = new JSONArray(childEle.html());
+				for(int i=0; i<commandListJson.length(); i++) {
+					JSONObject commandJson = commandListJson.getJSONObject(i);
+					HAPCommandDefinition commandDef = new HAPCommandDefinition();
+					commandDef.buildObject(commandJson, HAPSerializationFormat.JSON);
+					resourceUnit.addCommandDefinition(commandDef);
+				}
+				break;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		for(Element childEle : childEles)  childEle.remove();
 	}
 	
 	private void parseChildContextBlocks(Element ele, HAPUIDefinitionUnit resourceUnit){
@@ -306,7 +347,7 @@ public class HAPUIResourceParser {
 			//process custome tag
 			String uiId = HAPUIResourceParserUtility.getUIId(ele); 
 			HAPUIDefinitionUnitTag uiTag = new HAPUIDefinitionUnitTag(customTag, uiId);
-			parseUIResourceUnit(uiTag, ele, resource);
+			parseUIDefinitionUnit(uiTag, ele, resource);
 			resource.addUITag(uiTag);
 		}
 		else{

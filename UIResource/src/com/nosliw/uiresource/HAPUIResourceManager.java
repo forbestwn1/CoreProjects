@@ -14,17 +14,14 @@ import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.context.HAPContextGroup;
-import com.nosliw.uiresource.context.HAPContextUtility;
-import com.nosliw.uiresource.expression.HAPUIResourceExpressionProcessorUtility;
 import com.nosliw.uiresource.module.HAPUIModuleEntry;
 import com.nosliw.uiresource.module.HAPDefinitionUIModule;
 import com.nosliw.uiresource.module.HAPDefinitionUIModuleEntry;
 import com.nosliw.uiresource.page.HAPConstantUtility;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.parser.HAPUIResourceParser;
-import com.nosliw.uiresource.resource.HAPResourceUtility;
+import com.nosliw.uiresource.processor.HAPUIResourceProcessor;
 import com.nosliw.uiresource.tag.HAPUITagManager;
-import com.nosliw.uiresource.tag.HAPUITagUtility;
 
 public class HAPUIResourceManager {
 
@@ -126,23 +123,7 @@ public class HAPUIResourceManager {
 	}
 	
 	private void processUIResource(HAPUIDefinitionUnitResource uiResource) {
-		//process include tags
-		//process included ui resource and convert it into standard include tag
-		HAPUITagUtility.processIncludeTags(uiResource, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, getUIResourceParser(), this.m_idGengerator);
-		
-		//build expression context
-		HAPContextUtility.processExpressionContext(null, uiResource, this.m_dataTypeHelper, this.m_uiTagMan, this.m_runtime, this.m_expressionMan);
-
-		//process expression definition
-		HAPUIResourceExpressionProcessorUtility.processExpressions(uiResource, m_runtime, m_resourceMan);
-		
-		//discovery resources required
-		HAPResourceUtility.processResourceDependency(uiResource, m_resourceMan);
-		uiResource.processed();
-		
-//		System.out.println("********************** "+  name  +"  ******************************");
-//		System.out.println(uiResource);
-//		System.out.println("**********************   ******************************");
+		HAPUIResourceProcessor.processUIResource(uiResource, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.getUIResourceParser(), m_idGengerator);
 	}
 	
 	private HAPUIDefinitionUnitResource readUiResourceDefinitionFromFile(String file) {

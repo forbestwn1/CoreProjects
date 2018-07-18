@@ -10,29 +10,31 @@
 			<br>
 			SchoolName: <%=#|?(ele)?.getChildData(name:&(schoolAttribute)&)|#.value%>   
 			<br>
+			<events>
+			[
+				{
+					name : "eventName",
+					eventData : {
+						data1 : {
+							definition : ""
+							default: {}
+						}
+					}
+				}
+			]
+			</events>
 		</nosliw-loop>
 
 </body>
 
 	<events>
-	[
-		{
-			eventName : "eventName",
-			eventData : {
-				data1 : {
-					definition : ""
-					default: {}
-				}
-			}
-		}
-	]
 	</event>
 	
 	<services>
 	[
 		{
-			serviceName : "serviceName",
-			serviceParm : {
+			name : "serviceName",
+			parms : {
 				parm1 : {
 					definition : ""
 					default: {}
@@ -49,8 +51,8 @@
 	<commands>
 	[
 		{
-			commandName : "commandName",
-			commandParm : {
+			name : "commandName",
+			parms : {
 				parm1 : {
 					definition : ""
 					default: {}

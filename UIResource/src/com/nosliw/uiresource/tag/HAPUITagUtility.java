@@ -15,6 +15,8 @@ import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.context.HAPContextGroup;
 import com.nosliw.uiresource.context.HAPContextNodeRoot;
+import com.nosliw.uiresource.context.HAPContextNodeRootRelative;
+import com.nosliw.uiresource.context.HAPContextUtility;
 import com.nosliw.uiresource.page.HAPConstantUtility;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
@@ -69,4 +71,29 @@ public class HAPUITagUtility {
 		}
 	}
 
+	
+	//build context for ui Tag
+	public static void buildUITagContext(HAPContextGroup parentContext, HAPUIDefinitionUnitTag uiTag, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
+		//get contextDef from uiTag first
+		HAPUITagDefinitionContext contextDefinition = uiTag.getContextDefinition();
+		//if not exist, then from tag definition
+		if(contextDefinition==null){
+			contextDefinition = uiTagMan.getUITagDefinition(new HAPUITagId(uiTag.getTagName())).getContext();
+			uiTag.setContextDefinition(contextDefinition);
+		}
+
+		Map<String, String> constants = uiTag.getAttributes();
+		
+		if(contextDefinition.isInherit()){
+			//add public context from parent
+			for(String rootEleName : parentContext.getPublicContext().getElements().keySet()){
+				HAPContextNodeRootRelative relativeEle = new HAPContextNodeRootRelative();
+				relativeEle.setPath(rootEleName);
+				uiTag.getContext().getPublicContext().addElement(rootEleName, HAPContextUtility.processContextDefinitionElement(rootEleName, relativeEle, parentContext, dataTypeHelper, constants, runtime, expressionManager));
+			}
+		}
+
+		//element defined in tag definition
+		HAPContextUtility.processContextGroupDefinition(parentContext, contextDefinition, uiTag.getContext(), constants, dataTypeHelper, uiTagMan, runtime, expressionManager);
+	}
 }
