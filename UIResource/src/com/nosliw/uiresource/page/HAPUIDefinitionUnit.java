@@ -100,9 +100,10 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	//all the events related with regular tag
 	private Set<HAPElementEvent> m_elementEvents;
 
-	//context group
+	//context def
+	private HAPContextGroup m_contextDefinition;
+	//context after processed
 	private HAPContextGroup m_context;
-	
 	
 	//all the events related with customer tag
 	private Set<HAPElementEvent> m_tagEvents;
@@ -125,6 +126,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public HAPUIDefinitionUnit(String id){
 		this.m_id = id;
 		this.m_context = new HAPContextGroup();
+		this.m_contextDefinition = new HAPContextGroup();
 		this.m_scriptExpressionsInAttribute = new HashSet<HAPEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInContent = new HashSet<HAPEmbededScriptExpressionInContent>();
@@ -211,7 +213,8 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public String getId(){return this.m_id;}
 	public String getContent(){return this.m_content;}
 	public void setContent(String content){	this.m_content = content;	}
-	public HAPContextGroup getContext(){  return this.m_context;   }
+	public HAPContextGroup getContextDefinition(){  return this.m_contextDefinition;   }
+	public void setContextDefinition(HAPContextGroup contextGroup) {  this.m_contextDefinition=contextGroup;    }
 	
 	public void addScriptExpressionInAttribute(HAPEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInAttribute.add(eAttr);	}
 	public void addScriptExpressionInTagAttribute(HAPEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInTagAttribute.add(eAttr);	}
@@ -242,6 +245,8 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 
 	public void addEventDefinition(HAPEventDefinition def) {  this.m_eventsDefinition.put(def.getName(), def);   }
 	public void addServiceDefinition(HAPServiceDefinition def) {  this.m_servicesDefinition.put(def.getName(), def);   }
+
+	public HAPContextGroup getContext(){  return this.m_context;   }
 	
 	/*
 	 * process attributes

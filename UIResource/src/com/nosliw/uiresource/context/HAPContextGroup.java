@@ -33,6 +33,12 @@ public class HAPContextGroup extends HAPSerializableImp{
 		return contextTypes;
 	}
 	
+	public void empty() {
+		for(String type : getContextTypes()) {
+			this.getContext(type).empty();
+		}
+	}
+	
 	public HAPContext getPublicContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);  }
 	public HAPContext getInternalContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL);  }
 	public HAPContext getPrivateContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);  }

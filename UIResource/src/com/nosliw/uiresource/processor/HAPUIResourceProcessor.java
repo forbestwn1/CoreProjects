@@ -26,7 +26,7 @@ public class HAPUIResourceProcessor {
 			HAPIdGenerator idGengerator) {
 		//process include tags
 		//process included ui resource and convert it into standard include tag
-		HAPUITagUtility.processIncludeTags(uiResource, uiResourceMan, dataTypeHelper, uiTagMan, runtime, expressionMan, uiResourceParser, idGengerator);
+		HAPUIResourceIncludeTagProcessor.processIncludeTags(uiResource, uiResourceMan, dataTypeHelper, uiTagMan, runtime, expressionMan, uiResourceParser, idGengerator);
 		
 		//build expression context
 		HAPUIResourceContextProcessor.processContext(null, uiResource, dataTypeHelper, uiTagMan, runtime, expressionMan);

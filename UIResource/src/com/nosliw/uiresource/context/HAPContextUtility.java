@@ -104,6 +104,8 @@ public class HAPContextUtility {
 	
 	//go through different context group type to find referenced node in parent. 
 	private static HAPContextNode getReferencedParentContextNode(HAPContextPath path, HAPContextGroup parentContext){
+		if(parentContext==null)   return null;
+		
 		String[] contextTypes = {
 				HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC,
 				HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL,

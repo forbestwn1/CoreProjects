@@ -14,6 +14,7 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.context.HAPContextNode;
 import com.nosliw.uiresource.context.HAPContextNodeCriteria;
+import com.nosliw.uiresource.context.HAPContextUtility;
 import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
 import com.nosliw.uiresource.page.HAPConstantDef;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
@@ -25,6 +26,9 @@ public class HAPUIResourceContextProcessor {
 
 	public static void processContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
 
+		//process context defined within unit
+		HAPContextUtility.processContextGroupDefinition(parent==null?null:parent.getContext(), uiDefinition.getContextDefinition(), uiDefinition.getContext(), uiDefinition.getAttributes(), dataTypeHelper, uiTagMan, runtime, expressionManager);
+		
 		processExpressionContext(parent, uiDefinition, dataTypeHelper, uiTagMan, runtime, expressionManager);
 
 		//children ui tags

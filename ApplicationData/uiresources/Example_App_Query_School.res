@@ -5,14 +5,13 @@
 	<br>
 	SchoolRating:<nosliw-floatinput data="criteria.schoolRating"/>  
 	<br>
+	<br>
+	SchoolRating:<nosliw-floatinput data="criteria.schoolRating"/>  
+	<br>
 
 	<br>
 	SchoolType:<nosliw-options id="schoolType" data="criteria.schoolType"/>
 	<br>
-
-<!--
-<nosliw-debug/>
--->
 
 </body>
 

@@ -18,9 +18,10 @@
 	<nosliw-include source="Example_App_Result_School"/> 
 	</div>
 
-	<nosliw-debug/>
-	
 	<br>
+
+<nosliw-debug/>
+
 	</body>
 
 	<script>

@@ -216,7 +216,7 @@ public class HAPUIResourceParser {
 		
 		for(Element childEle : childEles){
 			try {
-				HAPContextParser.parseContextGroup(new JSONObject(childEle.html()), resourceUnit.getContext());
+				HAPContextParser.parseContextGroup(new JSONObject(childEle.html()), resourceUnit.getContextDefinition());
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();

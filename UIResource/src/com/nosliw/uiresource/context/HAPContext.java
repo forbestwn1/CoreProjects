@@ -17,8 +17,10 @@ public class HAPContext extends HAPSerializableImp{
 	private Map<String, HAPContextNodeRoot> m_elements;
 	
 	public HAPContext(){
-		this.m_elements = new LinkedHashMap<String, HAPContextNodeRoot>();
+		this.empty();
 	}
+	
+	public void empty() {this.m_elements = new LinkedHashMap<String, HAPContextNodeRoot>();}
 	
 	public void addElement(String name, HAPContextNodeRoot rootEle){
 		this.m_elements.put(name, rootEle);

@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.uiresource.tag.HAPUITagDefinitionContext;
 
 public class HAPUIDefinitionUnitTag extends HAPUIDefinitionUnit{
 
@@ -14,17 +13,10 @@ public class HAPUIDefinitionUnitTag extends HAPUIDefinitionUnit{
 	//name of this customer tag
 	private String m_tagName;
 
-	//tag context definition
-	private HAPUITagDefinitionContext m_contextDefinition;
-	
 	public HAPUIDefinitionUnitTag(String tagName, String id){
 		super(id);
 		this.m_tagName = tagName;
 	}
-	
-	public void setContextDefinition(HAPUITagDefinitionContext contextDefinition){		this.m_contextDefinition = contextDefinition;	}
-
-	public HAPUITagDefinitionContext getContextDefinition(){  return this.m_contextDefinition;	}
 	
 	public String getTagName(){	return this.m_tagName;}
 	
