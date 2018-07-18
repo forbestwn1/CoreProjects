@@ -24,7 +24,7 @@ import com.nosliw.uiresource.tag.HAPUITagUtility;
 
 public class HAPUIResourceContextProcessor {
 
-	public static void processContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
+	public static void process(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
 
 		//process context defined within unit
 		HAPContextUtility.processContextGroupDefinition(parent==null?null:parent.getContext(), uiDefinition.getContextDefinition(), uiDefinition.getContext(), uiDefinition.getAttributes(), dataTypeHelper, uiTagMan, runtime, expressionManager);
@@ -36,7 +36,7 @@ public class HAPUIResourceContextProcessor {
 		while(its.hasNext()){
 			HAPUIDefinitionUnitTag uiTag = its.next();
 			HAPUITagUtility.buildUITagContext(uiDefinition.getContext(), uiTag, dataTypeHelper, uiTagMan, runtime, expressionManager);
-			processContext(uiDefinition, uiTag, dataTypeHelper, uiTagMan, runtime, expressionManager);
+			process(uiDefinition, uiTag, dataTypeHelper, uiTagMan, runtime, expressionManager);
 		}
 	}
 	

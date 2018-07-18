@@ -8,7 +8,6 @@ import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.parser.HAPUIResourceParser;
-import com.nosliw.uiresource.resource.HAPResourceUtility;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPUIResourceProcessor {
@@ -25,18 +24,18 @@ public class HAPUIResourceProcessor {
 			HAPIdGenerator idGengerator) {
 		//process include tags
 		//process included ui resource and convert it into standard include tag
-		HAPUIResourceIncludeTagProcessor.processIncludeTags(uiResource, uiResourceMan, dataTypeHelper, uiTagMan, runtime, expressionMan, uiResourceParser, idGengerator);
+		HAPUIResourceIncludeTagProcessor.process(uiResource, uiResourceMan, dataTypeHelper, uiTagMan, runtime, expressionMan, uiResourceParser, idGengerator);
 		
 		//build expression context
-		HAPUIResourceContextProcessor.processContext(null, uiResource, dataTypeHelper, uiTagMan, runtime, expressionMan);
+		HAPUIResourceContextProcessor.process(null, uiResource, dataTypeHelper, uiTagMan, runtime, expressionMan);
 
-		HAPUIResourceContextEntityProcessor.processContext(null, uiResource, dataTypeHelper, uiTagMan, runtime, expressionMan);
+		HAPUIResourceContextEntityProcessor.process(null, uiResource, dataTypeHelper, uiTagMan, runtime, expressionMan);
 		
 		//process expression definition
-		HAPUIResourceExpressionProcessorUtility.processExpressions(uiResource, runtime, resourceMan);
+		HAPUIResourceExpressionProcessor.process(uiResource, runtime, resourceMan);
 		
 		//discovery resources required
-		HAPResourceUtility.processResourceDependency(uiResource, resourceMan);
+		HAPResourceDependencyProcessor.process(uiResource, resourceMan);
 		uiResource.processed();
 	}
 }

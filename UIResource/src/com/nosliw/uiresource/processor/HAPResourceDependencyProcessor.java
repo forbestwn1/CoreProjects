@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.resource;
+package com.nosliw.uiresource.processor;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
@@ -21,11 +20,12 @@ import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
+import com.nosliw.uiresource.resource.HAPResourceIdUITag;
 import com.nosliw.uiresource.tag.HAPUITagId;
 
-public class HAPResourceUtility {
+public class HAPResourceDependencyProcessor {
 
-	public static void processResourceDependency(HAPUIDefinitionUnitResource uiResource, HAPResourceManagerRoot resourceMan){
+	public static void process(HAPUIDefinitionUnitResource uiResource, HAPResourceManagerRoot resourceMan){
 		 Set<HAPResourceId> dependencyResourceIds = new LinkedHashSet();
 		
 		//resources need by expression

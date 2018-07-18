@@ -18,9 +18,9 @@ import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
 
-public class HAPUIResourceExpressionProcessorUtility {
+public class HAPUIResourceExpressionProcessor {
 
-	public static void processExpressions(HAPUIDefinitionUnitResource uiResource, HAPRuntime runtime, HAPResourceManagerRoot resourceMan){
+	public static void process(HAPUIDefinitionUnitResource uiResource, HAPRuntime runtime, HAPResourceManagerRoot resourceMan){
 		
 		//process all script expressions in resource
 		processScriptExpression(uiResource, runtime);

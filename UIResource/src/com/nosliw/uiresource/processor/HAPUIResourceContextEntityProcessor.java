@@ -15,7 +15,7 @@ import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPUIResourceContextEntityProcessor {
 
-	public static void processContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
+	public static void process(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
 
 		Map<String, HAPContextEntity> serviceDefs = uiDefinition.getServiceDefinition();
 		for(String name : serviceDefs.keySet()) {
@@ -41,7 +41,7 @@ public class HAPUIResourceContextEntityProcessor {
 		Iterator<HAPUIDefinitionUnitTag> its = uiDefinition.getUITags().iterator();
 		while(its.hasNext()){
 			HAPUIDefinitionUnitTag uiTag = its.next();
-			processContext(uiDefinition, uiTag, dataTypeHelper, uiTagMan, runtime, expressionManager);
+			process(uiDefinition, uiTag, dataTypeHelper, uiTagMan, runtime, expressionManager);
 		}
 	}
 	
