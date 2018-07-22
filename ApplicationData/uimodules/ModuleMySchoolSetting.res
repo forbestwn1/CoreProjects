@@ -1,6 +1,6 @@
 {
 	pages : {
-		setting : "Example_App_Query_School_mobile"
+		setting : "PageMySchoolSettingMain"
 	},
 	moduleEntries: {
 		main : {

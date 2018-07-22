@@ -5,9 +5,8 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.uiresource.expression.HAPEmbededScriptExpression;
 
-public class HAPEmbededScriptExpressionInAttribute extends HAPEmbededScriptExpression{
+public class HAPEmbededScriptExpressionInAttribute extends HAPEmbededScriptExpressionElement{
 
 	@HAPAttribute
 	public static final String ATTRIBUTE = "attribute";

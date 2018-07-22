@@ -11,15 +11,14 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPMatchers;
+import com.nosliw.data.core.expressionscript.HAPEmbededScriptExpression;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.uiresource.expression.HAPEmbededScriptExpression;
-import com.nosliw.uiresource.expression.HAPRuntimeTaskExecuteEmbededExpression;
-import com.nosliw.uiresource.tag.HAPUITagManager;
+import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteEmbededExpression;
 
 public class HAPContextUtility {
 	
-	public static void processContextGroupDefinition(HAPContextGroup parentContext, HAPContextGroup defContext, HAPContextGroup outContext, Map<String, String> constants, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager) {
+	public static void processContextGroupDefinition(HAPContextGroup parentContext, HAPContextGroup defContext, HAPContextGroup outContext, Map<String, String> constants, HAPDataTypeHelper dataTypeHelper, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager) {
 		for(String contextType : HAPContextGroup.getContextTypes()){
 			Map<String, HAPContextNodeRoot> defEles = defContext.getElements(contextType);
 			for(String name : defEles.keySet()){
@@ -29,7 +28,7 @@ public class HAPContextUtility {
 		}
 	}
 	
-	public static void processContextDefinition(HAPContextGroup parentContext, HAPContext defContext, HAPContext outContext, Map<String, String> constants, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager) {
+	public static void processContextDefinition(HAPContextGroup parentContext, HAPContext defContext, HAPContext outContext, Map<String, String> constants, HAPDataTypeHelper dataTypeHelper, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager) {
 		Map<String, HAPContextNodeRoot> defEles = defContext.getElements();
 		for(String name : defEles.keySet()){
 			String realName = getSolidName(name, constants, runtime, expressionManager);
@@ -81,7 +80,7 @@ public class HAPContextUtility {
 	
 	//evaluate embeded script expression
 	private static String getSolidName(String name, Map<String, String> constants, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
-		HAPEmbededScriptExpression se = new HAPEmbededScriptExpression(null, name, expressionManager);
+		HAPEmbededScriptExpression se = new HAPEmbededScriptExpression(name, expressionManager);
 		HAPRuntimeTaskExecuteEmbededExpression task = new HAPRuntimeTaskExecuteEmbededExpression(se, null, new LinkedHashMap<String, Object>(constants));
 		HAPServiceData serviceData = runtime.executeTaskSync(task);
 		if(serviceData.isSuccess())   return (String)serviceData.getData();

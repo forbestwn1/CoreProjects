@@ -7,11 +7,11 @@ import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
+import com.nosliw.data.core.expressionscript.HAPScriptExpression;
+import com.nosliw.data.core.expressionscript.HAPContextExpressionProcess;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.uiresource.expression.HAPRuntimeTaskExecuteScriptExpression;
-import com.nosliw.uiresource.expression.HAPScriptExpression;
-import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
+import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
 import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
@@ -62,7 +62,7 @@ public class HAPUIResourceExpressionProcessor {
 	}
 
 	private static void processScriptExpression(List<HAPScriptExpression> scriptExpressions, HAPUIDefinitionUnit uiDefinitionUnit, HAPRuntime runtime){
-		HAPUIResourceExpressionContext expContext = uiDefinitionUnit.getExpressionContext();
+		HAPContextExpressionProcess expContext = uiDefinitionUnit.getExpressionContext();
 		for(HAPScriptExpression scriptExpression : scriptExpressions){
 			scriptExpression.processExpressions(expContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
 			scriptExpression.discoverVarialbes();

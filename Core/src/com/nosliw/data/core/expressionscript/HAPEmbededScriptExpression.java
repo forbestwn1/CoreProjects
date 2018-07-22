@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.expression;
+package com.nosliw.data.core.expressionscript;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -17,7 +17,6 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
-import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInAttribute;
 
 /**
  * This class represent all string value that contains script expressions 
@@ -26,15 +25,8 @@ import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInAttribute;
 public class HAPEmbededScriptExpression extends HAPSerializableImp{
 
 	@HAPAttribute
-	public static final String UIID = "uiId";
-	
-	@HAPAttribute
 	public static final String SCRIPTEXPRESSIONS = "scriptExpressions";
 	
-	@HAPAttribute
-	public static final String SCRIPTFUNCTION = "scriptFunction";
-	
-	private String m_uiId;
 	
 	//a list of elements
 	//   string 
@@ -44,29 +36,23 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 	//all script expressions
 	private Map<String, HAPScriptExpression> m_scriptExpressions;
 	
-	//javascript function to execute script expression 
-	private HAPScript m_scriptFunction;
-
 	private HAPExpressionSuiteManager m_expressionManager;
 	
-	public HAPEmbededScriptExpression(String uiId, HAPScriptExpression scriptExpression, HAPExpressionSuiteManager expressionManager){
+	public HAPEmbededScriptExpression(HAPScriptExpression scriptExpression, HAPExpressionSuiteManager expressionManager){
 		this.m_expressionManager = expressionManager;
-		this.m_uiId = uiId;
 		this.m_elements = new ArrayList<Object>();
 		this.m_elements.add(scriptExpression);
 		this.init();
 	}
 	
-	public HAPEmbededScriptExpression(String uiId, List<Object> elements, HAPExpressionSuiteManager expressionManager){
+	public HAPEmbededScriptExpression(List<Object> elements, HAPExpressionSuiteManager expressionManager){
 		this.m_expressionManager = expressionManager;
-		this.m_uiId = uiId;
 		this.m_elements = elements;
 		this.init();
 	}
 
-	public HAPEmbededScriptExpression(String uiId, String content, HAPExpressionSuiteManager expressionManager){
+	public HAPEmbededScriptExpression(String content, HAPExpressionSuiteManager expressionManager){
 		this.m_expressionManager = expressionManager;
-		this.m_uiId = uiId;
 		this.m_elements = HAPScriptExpressionUtility.discoverUIExpressionInText(content, this.m_expressionManager);
 		this.init();
 	}
@@ -80,29 +66,31 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 			}
 		}
 
-		//build javascript function to execute the script
-		String scriptExpressionDataParmName = "scriptExpressionData"; 
-		StringBuffer funScript = new StringBuffer();
-		Map<String, HAPExpression> expressions = new LinkedHashMap<String, HAPExpression>();
-		int i = 0;
-		for(Object ele : this.m_elements){
-			if(i>0)  funScript.append("+");
-			if(ele instanceof String){
-				funScript.append("\""+ele+"\"");
-			}
-			else if(ele instanceof HAPScriptExpression){
-				HAPScriptExpression scriptExpression = (HAPScriptExpression)ele;
-				funScript.append(scriptExpressionDataParmName+"[\""+scriptExpression.getId()+"\"]");
-			}
-			i++;
-		}
-		
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPEmbededScriptExpressionInAttribute.class, "EmbededScriptExpressionFunction.temp");
-		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("functionScript", funScript.toString());
-		templateParms.put("scriptExpressionData", scriptExpressionDataParmName);
-		this.m_scriptFunction = new HAPScript(HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms));
+//		//build javascript function to execute the script
+//		String scriptExpressionDataParmName = "scriptExpressionData"; 
+//		StringBuffer funScript = new StringBuffer();
+//		Map<String, HAPExpression> expressions = new LinkedHashMap<String, HAPExpression>();
+//		int i = 0;
+//		for(Object ele : this.m_elements){
+//			if(i>0)  funScript.append("+");
+//			if(ele instanceof String){
+//				funScript.append("\""+ele+"\"");
+//			}
+//			else if(ele instanceof HAPScriptExpression){
+//				HAPScriptExpression scriptExpression = (HAPScriptExpression)ele;
+//				funScript.append(scriptExpressionDataParmName+"[\""+scriptExpression.getId()+"\"]");
+//			}
+//			i++;
+//		}
+//		
+//		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPEmbededScriptExpressionInAttribute.class, "EmbededScriptExpressionFunction.temp");
+//		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+//		templateParms.put("functionScript", funScript.toString());
+//		templateParms.put("scriptExpressionData", scriptExpressionDataParmName);
+//		this.m_scriptFunction = new HAPScript(HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms));
 	}
+	
+	public List<Object> getElements(){  return this.m_elements;  }
 	
 	public boolean isConstant(){
 		boolean out = true;
@@ -145,20 +133,19 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 		}
 		return out;
 	}
-	public String getUIId(){   return this.m_uiId;   }
-	public HAPScript getScriptFunction(){   return this.m_scriptFunction;  }
+//	public String getUIId(){   return this.m_uiId;   }
+//	public HAPScript getScriptFunction(){   return this.m_scriptFunction;  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(UIID, this.m_uiId);
 		jsonMap.put(SCRIPTEXPRESSIONS, HAPJsonUtility.buildJson(m_scriptExpressions, HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(UIID, this.m_uiId);
+//		jsonMap.put(UIID, this.m_uiId);
 		jsonMap.put(SCRIPTEXPRESSIONS, HAPJsonUtility.buildJson(m_scriptExpressions, HAPSerializationFormat.JSON_FULL));
-		jsonMap.put(SCRIPTFUNCTION, m_scriptFunction.toStringValue(HAPSerializationFormat.JSON_FULL));
-		typeJsonMap.put(SCRIPTFUNCTION, m_scriptFunction.getClass());
+//		jsonMap.put(SCRIPTFUNCTION, m_scriptFunction.toStringValue(HAPSerializationFormat.JSON_FULL));
+//		typeJsonMap.put(SCRIPTFUNCTION, m_scriptFunction.getClass());
 	}
 }

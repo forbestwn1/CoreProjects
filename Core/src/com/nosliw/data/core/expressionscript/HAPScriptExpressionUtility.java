@@ -1,14 +1,15 @@
-package com.nosliw.uiresource.expression;
+package com.nosliw.data.core.expressionscript;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandAttribute;
 import com.nosliw.data.core.operand.HAPOperandConstant;
@@ -19,7 +20,42 @@ import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.operand.HAPParmInOperationOperand;
 
-public class HAPUIResourceExpressionUtility {
+public class HAPScriptExpressionUtility {
+
+	public static final String UIEXPRESSION_TOKEN_OPEN = "<%=";
+	public static final String UIEXPRESSION_TOKEN_CLOSE = "%>";
+	
+	/**
+	 * parse text to discover script expression in it
+	 * @param text
+	 * @param idGenerator
+	 * @param expressionMan
+	 * @return a list of text and ui expression object
+	 */
+	public static List<Object> discoverUIExpressionInText(
+			String text, 
+			HAPExpressionSuiteManager expressionMan){
+		List<Object> out = new ArrayList<Object>();
+		int i = 0;
+		
+		int start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
+		while(start != -1){
+			if(start>0)   out.add(text.substring(0, start));
+			int expEnd = text.indexOf(UIEXPRESSION_TOKEN_CLOSE, start);
+			int end = expEnd + UIEXPRESSION_TOKEN_CLOSE.length();
+			String expression = text.substring(start+UIEXPRESSION_TOKEN_OPEN.length(), expEnd);
+			HAPScriptExpression uiExpression = new HAPScriptExpression(i+"", expression, expressionMan);
+			out.add(uiExpression);
+			//keep searching the rest
+			text=text.substring(end);
+			start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
+			i++;
+		}
+		if(!HAPBasicUtility.isStringEmpty(text)){
+			out.add(text);
+		}
+		return out;
+	}
 
 	//process variables in expression, 
 	//	for attribute operation a.b.c.d which have responding definition in context, 

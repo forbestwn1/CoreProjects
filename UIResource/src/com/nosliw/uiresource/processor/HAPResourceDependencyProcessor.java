@@ -9,12 +9,12 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
+import com.nosliw.data.core.expressionscript.HAPEmbededScriptExpression;
+import com.nosliw.data.core.expressionscript.HAPScriptExpression;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
-import com.nosliw.uiresource.expression.HAPEmbededScriptExpression;
-import com.nosliw.uiresource.expression.HAPScriptExpression;
 import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnit;

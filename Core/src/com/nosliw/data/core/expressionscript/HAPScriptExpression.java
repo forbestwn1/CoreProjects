@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.expression;
+package com.nosliw.data.core.expressionscript;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,13 +10,11 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
@@ -63,7 +61,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	private List<Object> m_elements;
 
 	//javascript function to execute script expression 
-	private HAPScript m_scriptFunction;
+//	private HAPScript m_scriptFunction;
 	
 	//expressions used in script expression
 	//element index ---- processed expression
@@ -90,7 +88,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		this.m_expressionManager = expressionMan;
 		this.m_definition = content;
 		this.parseDefinition();
-		this.m_scriptFunction = new HAPScript(HAPScriptExpressionUtility.buildScriptExpressionJSFunction(this));
+//		this.m_scriptFunction = new HAPScript(HAPScriptExpressionUtility.buildScriptExpressionJSFunction(this));
 		this.m_isConstant = false;
 	}
 
@@ -98,7 +96,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	
 	public List<Object> getElements(){  return this.m_elements;   }
 	
-	public HAPScript getScriptFunction(){  return this.m_scriptFunction;  }
+//	public HAPScript getScriptFunction(){  return this.m_scriptFunction;  }
 	
 	public String getDefinition(){  return this.m_definition;  } 
 
@@ -111,10 +109,10 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	public void setValue(Object value){  this.m_value = value;   }
 	
 	//process all expression definitions in script expression
-	public void processExpressions(HAPUIResourceExpressionContext expressionContext, Map<String, String> configure){
+	public void processExpressions(HAPContextExpressionProcess expressionContext, Map<String, String> configure){
 		//preprocess attributes operand in expressions, some attributes operand can be combine into one variable operand
 		for(HAPDefinitionExpression expDef : this.getExpressionDefinitions()){
-			HAPUIResourceExpressionUtility.processAttributeOperandInExpression(expDef, expressionContext.getVariables());
+			HAPScriptExpressionUtility.processAttributeOperandInExpression(expDef, expressionContext.getVariables());
 		}
 
 		this.m_expressions = new LinkedHashMap<String, HAPExecuteExpression>();
@@ -198,7 +196,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(SCRIPTFUNCTION, m_scriptFunction.toStringValue(HAPSerializationFormat.JSON_FULL));
-		typeJsonMap.put(SCRIPTFUNCTION, this.m_scriptFunction.getClass());
+//		jsonMap.put(SCRIPTFUNCTION, m_scriptFunction.toStringValue(HAPSerializationFormat.JSON_FULL));
+//		typeJsonMap.put(SCRIPTFUNCTION, this.m_scriptFunction.getClass());
 	}
 }

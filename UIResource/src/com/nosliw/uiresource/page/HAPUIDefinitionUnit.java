@@ -17,8 +17,8 @@ import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
+import com.nosliw.data.core.expressionscript.HAPContextExpressionProcess;
 import com.nosliw.uiresource.context.HAPContextGroup;
-import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
 
 /*
  * ui resource basic class for both ui resource and custom tag
@@ -121,7 +121,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	private Map<String, HAPContextEntity> m_servicesDefinition;
 	
 	//expression unit
-	private HAPUIResourceExpressionContext m_expressionContext;
+	private HAPContextExpressionProcess m_expressionContext;
 	
 	public HAPUIDefinitionUnit(String id){
 		this.m_id = id;
@@ -137,7 +137,7 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 		this.m_constantDefs = new LinkedHashMap<String, HAPConstantDef>();
 		this.m_constantValues = new LinkedHashMap<String, Object>();
 		this.m_expressionDefinitions = new LinkedHashMap<String, HAPDefinitionExpression>();
-		this.m_expressionContext = new HAPUIResourceExpressionContext();
+		this.m_expressionContext = new HAPContextExpressionProcess();
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPContextEntity>();
 		this.m_servicesDefinition = new LinkedHashMap<String, HAPContextEntity>();
 	}
@@ -238,8 +238,8 @@ public abstract class HAPUIDefinitionUnit extends HAPSerializableImp{
 	public Set<HAPEmbededScriptExpressionInAttribute> getScriptExpressionsInAttributes(){return this.m_scriptExpressionsInAttribute;}
 	public Set<HAPEmbededScriptExpressionInAttribute> getScriptExpressionsInTagAttributes(){return this.m_scriptExpressionsInTagAttribute;}
 
-	public HAPUIResourceExpressionContext getExpressionContext(){   return this.m_expressionContext;   }
-	public void setExpressionContext(HAPUIResourceExpressionContext context){  this.m_expressionContext = context;   }
+	public HAPContextExpressionProcess getExpressionContext(){   return this.m_expressionContext;   }
+	public void setExpressionContext(HAPContextExpressionProcess context){  this.m_expressionContext = context;   }
 	
 	public void addExpressionDefinition(String name, HAPDefinitionExpression expressionDef){		this.m_expressionDefinitions.put(name, expressionDef);	}
 

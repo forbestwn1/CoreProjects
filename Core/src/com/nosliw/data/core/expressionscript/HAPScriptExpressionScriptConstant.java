@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.expression;
+package com.nosliw.data.core.expressionscript;
 
 public class HAPScriptExpressionScriptConstant {
 

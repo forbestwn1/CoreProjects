@@ -44,6 +44,6 @@ public class HAPUITagUtility {
 		}
 
 		//element defined in tag definition
-		HAPContextUtility.processContextGroupDefinition(parentContext, tagContextDefinition, uiTag.getContext(), constants, dataTypeHelper, uiTagMan, runtime, expressionManager);
+		HAPContextUtility.processContextGroupDefinition(parentContext, tagContextDefinition, uiTag.getContext(), constants, dataTypeHelper, runtime, expressionManager);
 	}
 }

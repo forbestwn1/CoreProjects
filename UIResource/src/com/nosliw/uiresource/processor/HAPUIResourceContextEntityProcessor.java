@@ -20,20 +20,20 @@ public class HAPUIResourceContextEntityProcessor {
 		Map<String, HAPContextEntity> serviceDefs = uiDefinition.getServiceDefinition();
 		for(String name : serviceDefs.keySet()) {
 			HAPContextEntity contextDef = serviceDefs.get(name);
-			HAPContextUtility.processContextDefinition(parent.getContext(), contextDef.getContextDefinition(), contextDef.getContext(), null, dataTypeHelper, uiTagMan, runtime, expressionManager);
+			HAPContextUtility.processContextDefinition(parent.getContext(), contextDef.getContextDefinition(), contextDef.getContext(), null, dataTypeHelper, runtime, expressionManager);
 		}
 	
 		Map<String, HAPContextEntity> eventDefs = uiDefinition.getEventDefinition();
 		for(String name : eventDefs.keySet()) {
 			HAPContextEntity contextDef = eventDefs.get(name);
-			HAPContextUtility.processContextDefinition(parent.getContext(), contextDef.getContextDefinition(), contextDef.getContext(), null, dataTypeHelper, uiTagMan, runtime, expressionManager);
+			HAPContextUtility.processContextDefinition(parent.getContext(), contextDef.getContextDefinition(), contextDef.getContext(), null, dataTypeHelper, runtime, expressionManager);
 		}
 
 		if(uiDefinition instanceof HAPUIDefinitionUnitResource) {
 			Map<String, HAPContextEntity> commandDefs = ((HAPUIDefinitionUnitResource)uiDefinition).getCommandDefinition();
 			for(String name : commandDefs.keySet()) {
 				HAPContextEntity contextDef = commandDefs.get(name);
-				HAPContextUtility.processContextDefinition(parent.getContext(), contextDef.getContextDefinition(), contextDef.getContext(), null, dataTypeHelper, uiTagMan, runtime, expressionManager);
+				HAPContextUtility.processContextDefinition(parent.getContext(), contextDef.getContextDefinition(), contextDef.getContext(), null, dataTypeHelper, runtime, expressionManager);
 			}
 		}
 		

@@ -9,13 +9,13 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.expressionscript.HAPContextExpressionProcess;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.context.HAPContext;
 import com.nosliw.uiresource.context.HAPContextNode;
 import com.nosliw.uiresource.context.HAPContextNodeCriteria;
 import com.nosliw.uiresource.context.HAPContextUtility;
-import com.nosliw.uiresource.expression.HAPUIResourceExpressionContext;
 import com.nosliw.uiresource.page.HAPConstantDef;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
@@ -27,7 +27,7 @@ public class HAPUIResourceContextProcessor {
 	public static void process(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
 
 		//process context defined within unit
-		HAPContextUtility.processContextGroupDefinition(parent==null?null:parent.getContext(), uiDefinition.getContextDefinition(), uiDefinition.getContext(), uiDefinition.getAttributes(), dataTypeHelper, uiTagMan, runtime, expressionManager);
+		HAPContextUtility.processContextGroupDefinition(parent==null?null:parent.getContext(), uiDefinition.getContextDefinition(), uiDefinition.getContext(), uiDefinition.getAttributes(), dataTypeHelper, runtime, expressionManager);
 		
 		processExpressionContext(parent, uiDefinition, dataTypeHelper, uiTagMan, runtime, expressionManager);
 
@@ -42,7 +42,7 @@ public class HAPUIResourceContextProcessor {
 	
 	private static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
 
-		HAPUIResourceExpressionContext expContext = uiDefinition.getExpressionContext();
+		HAPContextExpressionProcess expContext = uiDefinition.getExpressionContext();
 
 		//find all data variables from context definition 
 		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getPublicContext()));
@@ -50,7 +50,7 @@ public class HAPUIResourceContextProcessor {
 		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getExcludedContext()));
 		
 		//parent expression context
-		HAPUIResourceExpressionContext parentExpContext = parent==null?null:parent.getExpressionContext();
+		HAPContextExpressionProcess parentExpContext = parent==null?null:parent.getExpressionContext();
 		
 		//build data constants from local and parent
 		//local constants override parent constants

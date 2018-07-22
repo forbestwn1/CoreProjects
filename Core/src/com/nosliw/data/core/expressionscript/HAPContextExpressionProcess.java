@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.expression;
+package com.nosliw.data.core.expressionscript;
 
 import java.util.Map;
 
@@ -11,13 +11,13 @@ import com.nosliw.data.core.expressionsuite.HAPDefinitionExpressionSuite;
 //		supporting expression in suite
 //		variables criteria
 //		constants
-public class HAPUIResourceExpressionContext {
+public class HAPContextExpressionProcess {
 
 	//every unit has its own expression definition suite
 	//it includes expression definition and constants from parent and its own
 	private HAPDefinitionExpressionSuite m_expressionDefinitionSuite;
 
-	public HAPUIResourceExpressionContext(){
+	public HAPContextExpressionProcess(){
 		this.m_expressionDefinitionSuite = new HAPDefinitionExpressionSuite();
 	}
 	

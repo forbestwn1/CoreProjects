@@ -10,7 +10,7 @@ import com.nosliw.data.core.HAPOperationParm;
 
 public interface HAPRuntime {
 
-	public static final boolean isDemo = true;
+	public static final boolean isDemo = false;
 	
 	//async request
 	void executeTask(HAPRuntimeTask task);

@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.expression;
+package com.nosliw.data.core.runtime.js.rhino.task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,18 +6,18 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
+import com.nosliw.data.core.expressionscript.HAPScriptExpression;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
+import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
-import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeTaskLoadResourcesRhino;
 
-public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTaskExecuteExpression{
+public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTaskExecuteScriptExpressionAbstract{
 
 	final public static String TASK = "ExecuteScriptExpression"; 
 	
@@ -47,7 +47,7 @@ public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTaskExecute
 	public String getTaskType() {		return TASK;	}
 
 	@Override
-	public String getScriptFunction() {		return HAPScriptExpressionUtility.buildScriptExpressionJSFunction(this.m_scriptExpression);	}
+	public String getScriptFunction() {		return HAPRuntimeJSScriptUtility.buildScriptExpressionJSFunction(this.m_scriptExpression);	}
 	@Override
 	public Map<String, HAPExecuteExpression> getExpressions(){  return this.m_scriptExpression.getExpressions(); }
 	@Override
@@ -92,7 +92,7 @@ public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTaskExecute
 			if(resourceTaskResult.isSuccess()){
 				//after resource loaded, execute expression
 				try{
-					HAPJSScriptInfo scriptInfo = HAPScriptExpressionUtility.buildRequestScriptForExecuteScriptExpressionTask(this.m_parent, this.m_runtime);
+					HAPJSScriptInfo scriptInfo = HAPRuntimeJSScriptUtility.buildRequestScriptForExecuteScriptExpressionTask(this.m_parent, this.m_runtime);
 					this.m_runtime.loadTaskScript(scriptInfo, m_parent.getTaskId());
 				}
 				catch(Exception e){

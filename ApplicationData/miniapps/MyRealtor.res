@@ -42,9 +42,6 @@
 			type : "setting",
 			status : "",
 			name : ""
-		},
-		crunSetting : {
-			type : "setting",
 		}
 	},
 	

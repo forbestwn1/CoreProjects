@@ -14,14 +14,14 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
+import com.nosliw.data.core.expressionscript.HAPScriptExpression;
+import com.nosliw.data.core.expressionscript.HAPScriptExpressionScriptSegment;
+import com.nosliw.data.core.expressionscript.HAPScriptExpressionUtility;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
 import com.nosliw.uiresource.HAPIdGenerator;
-import com.nosliw.uiresource.expression.HAPRuntimeTaskExecuteScriptExpression;
-import com.nosliw.uiresource.expression.HAPScriptExpression;
-import com.nosliw.uiresource.expression.HAPScriptExpressionScriptSegment;
-import com.nosliw.uiresource.expression.HAPScriptExpressionUtility;
 
 public class HAPConstantUtility {
 

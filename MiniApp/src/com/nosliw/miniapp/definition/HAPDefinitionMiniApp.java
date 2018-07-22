@@ -21,10 +21,10 @@ public class HAPDefinitionMiniApp extends HAPSerializableImp{
 	public static final String ID = "id";
 	
 	@HAPAttribute
-	public static final String UIMODULES = "uiModules";
+	public static final String UIENTRIES = "uiEntries";
 	
 	@HAPAttribute
-	public static final String UIENTRIES = "uiEntries";
+	public static final String UIMODULES = "uiModules";
 	
 	@HAPAttribute
 	public static final String DATA = "data";
@@ -34,10 +34,10 @@ public class HAPDefinitionMiniApp extends HAPSerializableImp{
 
 	private String m_id;
 	
-	private Map<String, String> m_uiModules;
-
 	private Map<String, HAPDefinitionMiniAppUIEntry> m_uiEntries;
 	
+	private Map<String, String> m_uiModules;
+
 	private Map<String, HAPDefinitionMiniAppData> m_data;
 	
 	private Map<String, HAPDefinitionMiniAppService> m_services;

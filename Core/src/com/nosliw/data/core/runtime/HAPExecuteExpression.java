@@ -11,6 +11,7 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 
+//entity that can is runnable within runtime environment
 @HAPEntityWithAttribute(baseName="EXPRESSION")
 public interface HAPExecuteExpression extends HAPSerializable{
 
