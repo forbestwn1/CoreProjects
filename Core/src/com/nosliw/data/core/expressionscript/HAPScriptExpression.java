@@ -60,9 +60,6 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	//		data expression : HAPExpressionDefinition
 	private List<Object> m_elements;
 
-	//javascript function to execute script expression 
-//	private HAPScript m_scriptFunction;
-	
 	//expressions used in script expression
 	//element index ---- processed expression
 	private Map<String, HAPExecuteExpression> m_expressions;
@@ -88,15 +85,12 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		this.m_expressionManager = expressionMan;
 		this.m_definition = content;
 		this.parseDefinition();
-//		this.m_scriptFunction = new HAPScript(HAPScriptExpressionUtility.buildScriptExpressionJSFunction(this));
 		this.m_isConstant = false;
 	}
 
 	public String getId(){   return this.m_id;  }
 	
 	public List<Object> getElements(){  return this.m_elements;   }
-	
-//	public HAPScript getScriptFunction(){  return this.m_scriptFunction;  }
 	
 	public String getDefinition(){  return this.m_definition;  } 
 
@@ -196,7 +190,5 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
-//		jsonMap.put(SCRIPTFUNCTION, m_scriptFunction.toStringValue(HAPSerializationFormat.JSON_FULL));
-//		typeJsonMap.put(SCRIPTFUNCTION, this.m_scriptFunction.getClass());
 	}
 }

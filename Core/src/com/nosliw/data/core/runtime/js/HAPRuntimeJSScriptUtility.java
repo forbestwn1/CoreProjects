@@ -44,7 +44,6 @@ public class HAPRuntimeJSScriptUtility {
 			out.addAll(buildScriptInfoForLibrary(resource));
 		}
 		
-		
 		if(HAPRuntimeImpRhino.ADDTORESOURCEMANAGER.equals(resourceInfo.getInfo().getValue(HAPRuntimeImpRhino.ADDTORESOURCEMANAGER)))  return out;
 		
 		//build script for resource with data

@@ -177,12 +177,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiResource, id, parent, context, requestInfo){
 		
-		if(uiResource==undefined){
-			var kkkk = 5555;
-			kkkk++;
-		}
-		
-		
 		//build context element first
 		var parentContext;
 		if(parent!=undefined)   parentContext = parent.getContext();

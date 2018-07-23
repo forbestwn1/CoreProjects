@@ -22,7 +22,6 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String SCRIPTEXPRESSIONS = "scriptExpressions";
 	
-	
 	//a list of elements
 	//   string 
 	//   script expression
@@ -60,29 +59,6 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 				this.m_scriptExpressions.put(scriptExp.getId(), scriptExp);
 			}
 		}
-
-//		//build javascript function to execute the script
-//		String scriptExpressionDataParmName = "scriptExpressionData"; 
-//		StringBuffer funScript = new StringBuffer();
-//		Map<String, HAPExpression> expressions = new LinkedHashMap<String, HAPExpression>();
-//		int i = 0;
-//		for(Object ele : this.m_elements){
-//			if(i>0)  funScript.append("+");
-//			if(ele instanceof String){
-//				funScript.append("\""+ele+"\"");
-//			}
-//			else if(ele instanceof HAPScriptExpression){
-//				HAPScriptExpression scriptExpression = (HAPScriptExpression)ele;
-//				funScript.append(scriptExpressionDataParmName+"[\""+scriptExpression.getId()+"\"]");
-//			}
-//			i++;
-//		}
-//		
-//		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPEmbededScriptExpressionInAttribute.class, "EmbededScriptExpressionFunction.temp");
-//		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-//		templateParms.put("functionScript", funScript.toString());
-//		templateParms.put("scriptExpressionData", scriptExpressionDataParmName);
-//		this.m_scriptFunction = new HAPScript(HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms));
 	}
 	
 	public List<Object> getElements(){  return this.m_elements;  }
@@ -129,8 +105,6 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 		}
 		return out;
 	}
-//	public String getUIId(){   return this.m_uiId;   }
-//	public HAPScript getScriptFunction(){   return this.m_scriptFunction;  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -139,9 +113,6 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-//		jsonMap.put(UIID, this.m_uiId);
 		jsonMap.put(SCRIPTEXPRESSIONS, HAPJsonUtility.buildJson(m_scriptExpressions, HAPSerializationFormat.JSON_FULL));
-//		jsonMap.put(SCRIPTFUNCTION, m_scriptFunction.toStringValue(HAPSerializationFormat.JSON_FULL));
-//		typeJsonMap.put(SCRIPTFUNCTION, m_scriptFunction.getClass());
 	}
 }
