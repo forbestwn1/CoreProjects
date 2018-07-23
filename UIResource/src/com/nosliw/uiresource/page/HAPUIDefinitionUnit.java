@@ -16,9 +16,9 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.context.HAPContextGroup;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expressionscript.HAPContextExpressionProcess;
-import com.nosliw.uiresource.context.HAPContextGroup;
 
 /*
  * ui resource basic class for both ui resource and custom tag

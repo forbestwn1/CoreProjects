@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.context;
+package com.nosliw.data.context;
 
 import java.util.Map;
 

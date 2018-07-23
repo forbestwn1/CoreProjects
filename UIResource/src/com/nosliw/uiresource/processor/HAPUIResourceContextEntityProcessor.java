@@ -3,10 +3,10 @@ package com.nosliw.uiresource.processor;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.nosliw.data.context.HAPContextUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.uiresource.context.HAPContextUtility;
 import com.nosliw.uiresource.page.HAPContextEntity;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;

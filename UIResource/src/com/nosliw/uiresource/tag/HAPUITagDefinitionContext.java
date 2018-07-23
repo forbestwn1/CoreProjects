@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.uiresource.context.HAPContextGroup;
+import com.nosliw.data.context.HAPContextGroup;
 /**
  * Represent definition of context according to relationship with parent 
  */

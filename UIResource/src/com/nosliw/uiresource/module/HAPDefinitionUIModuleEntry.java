@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.uiresource.context.HAPContext;
+import com.nosliw.data.context.HAPContext;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionUIModuleEntry  extends HAPSerializableImp{
