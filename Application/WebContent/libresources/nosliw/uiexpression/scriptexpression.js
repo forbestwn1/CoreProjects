@@ -28,7 +28,7 @@ var packageObj = library;
 	 * type: 
 	 * 		text, attribute, tagAttribute
 	 */
-	var node_createUIResourceScriptExpression = function(scriptExpression, constants, context, requestInfo){
+	var node_createUIResourceScriptExpression = function(scriptExpression, scriptFun, constants, context, requestInfo){
 		
 		var loc_constants = {};
 		
@@ -59,12 +59,13 @@ var packageObj = library;
 		}
 		
 		var lifecycleCallback = {};
-		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(scriptExpression, constants, context, requestInfo){
+		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(scriptExpression, scriptFun, constants, context, requestInfo){
 			loc_constants = constants;
 			
 			loc_expressions = scriptExpression[node_COMMONATRIBUTECONSTANT.SCRIPTEXPRESSION_EXPRESSIONS];
 			
-			loc_scriptFunction = scriptExpression[node_COMMONATRIBUTECONSTANT.SCRIPTEXPRESSION_SCRIPTFUNCTION];
+			loc_scriptFunction = scriptFun; 
+//				scriptExpression[node_COMMONATRIBUTECONSTANT.SCRIPTEXPRESSION_SCRIPTFUNCTION];
 
 			var varNames = scriptExpression[node_COMMONATRIBUTECONSTANT.SCRIPTEXPRESSION_VARIABLENAMES];
 			var contextVariables = [];
@@ -145,7 +146,7 @@ var packageObj = library;
 
 		//append resource and object life cycle method to out obj
 		loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
-		node_getLifecycleInterface(loc_out).init(scriptExpression, constants, context, requestInfo);
+		node_getLifecycleInterface(loc_out).init(scriptExpression, scriptFun, constants, context, requestInfo);
 		return loc_out;
 	};
 

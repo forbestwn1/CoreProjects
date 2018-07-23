@@ -81,7 +81,7 @@ public class HAPResourceDependencyProcessor {
 	
 	private static Set<HAPExecuteExpression> getExpressions(HAPEmbededScriptExpression embededScriptExpression){
 		Set<HAPExecuteExpression> out = new HashSet<HAPExecuteExpression>();
-		for(HAPScriptExpression scriptExpression : embededScriptExpression.getScriptExpressions()){
+		for(HAPScriptExpression scriptExpression : embededScriptExpression.getScriptExpressionsList()){
 			out.addAll(scriptExpression.getExpressions().values());
 		}
 		return out;

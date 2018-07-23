@@ -386,7 +386,7 @@ public class HAPUIResourceParser {
 			//replace express attribute value with; create ExpressEle object
 
 			HAPEmbededScriptExpressionInAttribute eAttr = new HAPEmbededScriptExpressionInAttribute(eleAttrKey, uiId, eleAttr.getValue(), this.m_expressionManager);
-			if(!eAttr.getScriptExpressions().isEmpty()){
+			if(!eAttr.getScriptExpressionsList().isEmpty()){
 				if(isCustomerTag)  resource.addScriptExpressionInTagAttribute(eAttr);
 				else  resource.addScriptExpressionInAttribute(eAttr);
 				ele.attr(eleAttrKey, "");

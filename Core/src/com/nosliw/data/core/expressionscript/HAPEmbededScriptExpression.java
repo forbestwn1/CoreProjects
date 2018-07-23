@@ -1,6 +1,5 @@
 package com.nosliw.data.core.expressionscript;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -8,13 +7,9 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
 
@@ -125,10 +120,11 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 		}
 	}
 	
-	public List<HAPScriptExpression> getScriptExpressions(){		return new ArrayList(this.m_scriptExpressions.values());	}
+	public List<HAPScriptExpression> getScriptExpressionsList(){		return new ArrayList(this.m_scriptExpressions.values());	}
+	public Map<String, HAPScriptExpression> getScriptExpressions(){  return this.m_scriptExpressions;  }
 	public List<HAPExecuteExpression> getExpressions(){
 		List<HAPExecuteExpression> out = new ArrayList<HAPExecuteExpression>();
-		for(HAPScriptExpression scriptExpression : this.getScriptExpressions()){
+		for(HAPScriptExpression scriptExpression : this.getScriptExpressionsList()){
 			out.addAll(scriptExpression.getExpressions().values());
 		}
 		return out;

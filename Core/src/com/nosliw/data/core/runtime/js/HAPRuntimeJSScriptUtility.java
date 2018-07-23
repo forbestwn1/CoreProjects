@@ -240,7 +240,7 @@ public class HAPRuntimeJSScriptUtility {
 		String scriptExpressionParmName = "scriptExpressionData";
 
 		StringBuffer scriptExpressionFunScript = new StringBuffer(); 
-		List<HAPScriptExpression> scriptExpressions = embedScriptExpression.getScriptExpressions();
+		List<HAPScriptExpression> scriptExpressions = embedScriptExpression.getScriptExpressionsList();
 		for(HAPScriptExpression scriptExpression : scriptExpressions){
 			scriptExpressionFunScript.append(scriptExpressionParmName +  "["+ scriptExpression.getId()  + "]="  +buildScriptExpressionJSFunction(scriptExpression) + "("+expressionsDataParmName+","+constantsDataParmName+","+variablesDataParmName+");");
 		}
@@ -261,7 +261,7 @@ public class HAPRuntimeJSScriptUtility {
 	}
 	
 	
-	private static String buildMainScriptEmbededScriptExpression(HAPEmbededScriptExpression embededScriptExp) {
+	public static String buildMainScriptEmbededScriptExpression(HAPEmbededScriptExpression embededScriptExp) {
 		//build javascript function to execute the script
 		String scriptExpressionDataParmName = "scriptExpressionData"; 
 		StringBuffer funScript = new StringBuffer();

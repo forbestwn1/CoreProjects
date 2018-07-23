@@ -30,7 +30,8 @@ var packageObj = library;
 			loc_scriptFunction = embededScriptExpression[node_COMMONATRIBUTECONSTANT.EMBEDEDSCRIPTEXPRESSION_SCRIPTFUNCTION];
 			
 			_.each(embededScriptExpression[node_COMMONATRIBUTECONSTANT.EMBEDEDSCRIPTEXPRESSION_SCRIPTEXPRESSIONS], function(scriptExpression, id){
-				var scriptExprssionObj = node_createUIResourceScriptExpression(scriptExpression, constants, context, requestInfo);
+				var scriptFun = embededScriptExpression[node_COMMONATRIBUTECONSTANT.EMBEDEDSCRIPTEXPRESSION_SCRIPTEXPRESSIONSCRIPTFUNCTION][id];
+				var scriptExprssionObj = node_createUIResourceScriptExpression(scriptExpression, scriptFun, constants, context, requestInfo);
 				loc_scriptExpressions[id] = scriptExprssionObj;
 				scriptExprssionObj.registerListener(loc_dataEventObject, function(eventName, data){
 					switch(eventName){

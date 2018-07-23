@@ -51,9 +51,9 @@ public class HAPUIResourceExpressionProcessor {
 	private static void processScriptExpression(HAPUIDefinitionUnit uiDefinitionUnit, HAPRuntime runtime){
 		List<HAPScriptExpression> scriptExpressions = new ArrayList<HAPScriptExpression>();
 		
-		for(HAPEmbededScriptExpressionInContent scriptExpressionInConent : uiDefinitionUnit.getScriptExpressionsInContent())  scriptExpressions.addAll(scriptExpressionInConent.getScriptExpressions());
-		for(HAPEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInAttributes())  scriptExpressions.addAll(scriptExpressionInAttribute.getScriptExpressions()); 
-		for(HAPEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInTagAttributes())  scriptExpressions.addAll(scriptExpressionInAttribute.getScriptExpressions()); 
+		for(HAPEmbededScriptExpressionInContent scriptExpressionInConent : uiDefinitionUnit.getScriptExpressionsInContent())  scriptExpressions.addAll(scriptExpressionInConent.getScriptExpressionsList());
+		for(HAPEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInAttributes())  scriptExpressions.addAll(scriptExpressionInAttribute.getScriptExpressionsList()); 
+		for(HAPEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInTagAttributes())  scriptExpressions.addAll(scriptExpressionInAttribute.getScriptExpressionsList()); 
 		processScriptExpression(scriptExpressions, uiDefinitionUnit, runtime);
 
 		for(HAPUIDefinitionUnit child : uiDefinitionUnit.getUITags()){
