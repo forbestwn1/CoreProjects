@@ -98,11 +98,13 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 
 		//find all reference infos in task
 		Map<String, HAPReferenceInfo> referencesInfo = new LinkedHashMap<String, HAPReferenceInfo>();
+		//from step first
 		for(HAPDefinitionStep step : taskDefExp.getSteps()) {
 			for(String refName : step.getReferenceNames()) {
 				referencesInfo.put(refName, null);
 			}
 		}
+		//then from task definition
 		referencesInfo.putAll(out.getReferencesInfo());
 		
 		for(String refName : referencesInfo.keySet()) {

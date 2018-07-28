@@ -25,8 +25,10 @@ public class HAPContextEntity  extends HAPSerializableImp{
 
 	private String m_name;
 	
+	//context defintion
 	private HAPContext m_contextDefinition;
 	
+	//absolute context
 	private HAPContext m_context;
 
 	public HAPContextEntity() {
