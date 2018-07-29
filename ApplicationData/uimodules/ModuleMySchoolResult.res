@@ -1,5 +1,5 @@
 {
-	resource : {
+	pages : {
 		schoolList : "Page_MySchool_Result_List",
 		schoolInfo : "Page_MySchool_Result_Info",
 	},
@@ -14,7 +14,7 @@
 	
 	init : [
 		{
-			name:"presentUI"
+			name:"presentSchoolList",
 			type:"presentUI",
 			ui : "schoolListUI"
 		}, 
@@ -36,6 +36,9 @@
 			name : "schoolListUI",
 			type : "list",
 			page : "schoolList",
+			service : {
+			
+			},
 			event : {
 				"selectSchool : {
 					task : [
