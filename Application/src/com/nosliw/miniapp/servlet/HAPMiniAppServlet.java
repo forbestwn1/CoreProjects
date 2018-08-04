@@ -10,8 +10,8 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.miniapp.HAPAppManager;
-import com.nosliw.miniapp.data.HAPInstanceMiniAppData;
-import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
+import com.nosliw.miniapp.data.HAPInstanceData;
+import com.nosliw.miniapp.instance.HAPInstanceMiniAppEntry;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserInfo;
 import com.nosliw.servlet.HAPServiceServlet;
@@ -94,7 +94,7 @@ public class HAPMiniAppServlet extends HAPServiceServlet{
 			String appId = parms.optString(COMMAND_LOADMINIAPP_APPID);
 			String userId = parms.optString(COMMAND_LOADMINIAPP_USERID);
 			String appEntry = parms.optString(COMMAND_LOADMINIAPP_ENTRY);
-			HAPInstanceMiniAppUIEntry miniAppInstance = miniAppMan.getMiniAppInstanceUIEntiry(userId, appId, appEntry);
+			HAPInstanceMiniAppEntry miniAppInstance = miniAppMan.getMiniAppInstanceUIEntiry(userId, appId, appEntry);
 			out = HAPServiceData.createSuccessData(miniAppInstance);
 			break;
 		}
@@ -105,8 +105,8 @@ public class HAPMiniAppServlet extends HAPServiceServlet{
 			String dataName = parms.optString(COMMAND_CREATEDATA_DATANAME);
 			
 			JSONObject dataInfoJson = parms.optJSONObject(COMMAND_CREATEDATA_DATAINFO);
-			HAPInstanceMiniAppData dataInfo = HAPInstanceMiniAppData.buildObject(dataInfoJson);
-			HAPInstanceMiniAppData newDataInfo = miniAppMan.createMiniAppData(userId, appId, dataName, dataInfo);
+			HAPInstanceData dataInfo = HAPInstanceData.buildObject(dataInfoJson);
+			HAPInstanceData newDataInfo = miniAppMan.createMiniAppData(userId, appId, dataName, dataInfo);
 			out = HAPServiceData.createSuccessData(newDataInfo);
 			break;
 		}
@@ -114,8 +114,8 @@ public class HAPMiniAppServlet extends HAPServiceServlet{
 		{
 			String id = parms.optString(COMMAND_UPDATEDATA_ID);
 			JSONObject dataInfoJson = parms.optJSONObject(COMMAND_UPDATEDATA_DATAINFO);
-			HAPInstanceMiniAppData dataInfo = HAPInstanceMiniAppData.buildObject(dataInfoJson);
-			HAPInstanceMiniAppData newDataInfo = miniAppMan.updateMiniAppData(id, dataInfo);
+			HAPInstanceData dataInfo = HAPInstanceData.buildObject(dataInfoJson);
+			HAPInstanceData newDataInfo = miniAppMan.updateMiniAppData(id, dataInfo);
 			out = HAPServiceData.createSuccessData(newDataInfo);
 			break;
 		}

@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
 
 @HAPEntityWithAttribute
-public abstract class HAPInstanceMiniAppData extends HAPSerializableImp{
+public abstract class HAPInstanceData extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String TYPE = "type";
@@ -32,13 +32,13 @@ public abstract class HAPInstanceMiniAppData extends HAPSerializableImp{
 	public static Map<String, Class> m_dataInstanceClasses = new LinkedHashMap<String, Class>();
 	
 	static {
-		m_dataInstanceClasses.put(HAPConstant.MINIAPPDATA_TYPE_SETTING, HAPInstanceMiniAppDataSetting.class);
+		m_dataInstanceClasses.put(HAPConstant.MINIAPPDATA_TYPE_SETTING, HAPInstanceDataSetting.class);
 	}
 	
-	public static HAPInstanceMiniAppData buildObject(Object obj) {
+	public static HAPInstanceData buildObject(Object obj) {
 		JSONObject jsonObj = (JSONObject)obj;
 		String type = (String)jsonObj.get(TYPE);
-		HAPInstanceMiniAppData out = (HAPInstanceMiniAppData)HAPSerializeManager.getInstance().buildObject(m_dataInstanceClasses.get(type).getName(), jsonObj, HAPSerializationFormat.JSON);
+		HAPInstanceData out = (HAPInstanceData)HAPSerializeManager.getInstance().buildObject(m_dataInstanceClasses.get(type).getName(), jsonObj, HAPSerializationFormat.JSON);
 		return out;
 	}
 	

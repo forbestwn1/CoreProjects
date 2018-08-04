@@ -2,64 +2,50 @@
 <html>
 <body>
 		<br>
-		Sum:<%=#|?(result)?.length()|#.value%>  
+		Sum:<%=#|?(schoolList)?.length()|#.value%>  
 
 		<br>
 
-		<nosliw-loop data="result" element="ele" index="index">  
+		<nosliw-loop data="schoolList" element="ele" index="index">  
 			<br>
 			SchoolName: <%=#|?(ele)?.getChildData(name:&(schoolAttribute)&)|#.value%>   
 			<br>
-			<events>
+			<event>
 			[
 				{
-					name : "eventName",
-					eventData : {
-						data1 : {
-							definition : ""
-							default: {}
+					name : "selectSchool",
+					parms : {
+						schoolData : {
+							path: "ele"
 						}
-					}
+					},
 				}
 			]
-			</events>
+			</event>
 		</nosliw-loop>
 
 </body>
 
-	<events>
-	</event>
-	
-	<services>
+	<event>
 	[
 		{
-			name : "serviceName",
+			name : "selectSchool",
 			parms : {
-				parm1 : {
-					definition : ""
-					default: {}
+				schoolData : {
+					path: "schoolList.element"
 				}
 			},
-			serviceReturn : {
-				definition : ""
-				default: {}
-			}
 		}
+	]
+	</event>
+	
+	<service>
+	[
 	]
 	</service>
 
-	<commands>
+	<command>
 	[
-		{
-			name : "commandName",
-			parms : {
-				parm1 : {
-					definition : ""
-					default: {}
-				}
-			}
-		}
-	
 	]
 	</command>
 
@@ -84,7 +70,7 @@
 	<context>
 	{
 		public : {
-			result : {
+			schoolList : {
 				definition : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
 				default : {
 					dataTypeId: "test.array;1.0.0",

@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
 
-public class HAPInstanceMiniAppDataSetting extends HAPInstanceMiniAppData{
+public class HAPInstanceDataSetting extends HAPInstanceData{
 
 	@HAPAttribute
 	public static final String ID = "id";

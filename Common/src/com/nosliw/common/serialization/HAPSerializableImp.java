@@ -88,5 +88,5 @@ public abstract class HAPSerializableImp implements HAPSerializable{
 
 	protected String buildJson(){ return null; }
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-	}	
+	}
 }

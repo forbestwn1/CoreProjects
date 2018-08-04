@@ -2,7 +2,6 @@ package com.nosliw.data.core.imp.runtime.js.browser;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.datasource.HAPDataSourceManager;
 import com.nosliw.data.core.datasource.HAPGatewayDataSource;
 import com.nosliw.data.core.expression.HAPExpressionManager;
@@ -16,6 +15,8 @@ import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.browser.HAPGatewayBrowserLoadLibrary;
 import com.nosliw.data.core.runtime.js.browser.HAPGatewayLoadTestExpression;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
+import com.nosliw.data.core.service.HAPGatewayService;
+import com.nosliw.data.core.service.HAPManagerService;
 import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 
@@ -30,6 +31,8 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 	@HAPAttribute
 	public static final String GATEWAY_DATASOURCE = "dataSource";
 	
+	@HAPAttribute
+	public static final String GATEWAY_SERVICE = "service";
 	
 	HAPModuleRuntimeJS m_runtimeJSModule;
 	
@@ -49,16 +52,19 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPExpressionSuiteManager expressionManager = new HAPExpressionSuiteManager(); 		
 		HAPManagerTask taskManager = new HAPManagerTask(runtime);
 		HAPDataSourceManager dataSourceManager = new HAPDataSourceManager();
+		HAPManagerService serviceManager = new HAPManagerService();
 		
 		init(resourceMan,
 			taskManager,
 			expressionManager,
 			gatewayManager,
 			dataSourceManager,
+			serviceManager,
 			runtime
 		);
 		
 		this.getGatewayManager().registerGateway(GATEWAY_DATASOURCE, new HAPGatewayDataSource(this.getDataSourceManager()));
+		this.getGatewayManager().registerGateway(GATEWAY_SERVICE, new HAPGatewayService(this.getServiceManager()));
 		
 		this.getGatewayManager().registerGateway(GATEWAY_LOADLIBRARIES, new HAPGatewayBrowserLoadLibrary(this.getGatewayManager()));
 		this.getGatewayManager().registerGateway(GATEWAY_TESTEXPRESSION, new HAPGatewayLoadTestExpression());

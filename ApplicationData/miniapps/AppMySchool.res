@@ -6,6 +6,30 @@
 					role : "setting",
 					name : "setting",
 					module : "ModuleMySchoolSetting",
+					configure : {
+						settingData : {
+							criteria : settingData
+						},
+						service : {
+							name : "queryService",
+							parm : {
+								schoolScore : criteria.schoolScore,
+								schoolType : criteria.schoolType
+							},
+							out : [
+								{
+									name : "",
+									type : "moduleCommand",
+									moduel : "application",
+									command : "refresh",
+									parm: {
+										schools : out.output
+									}
+								}
+							]
+						},
+						
+					},
 					parm : {}
 				},
 				application : {
@@ -22,41 +46,29 @@
 	},
 	
 	require : {
+		page : {
+			query : "Resource_MySchool_Query",
+			schoolList : "Resource_MySchool_SchoolList",
+			schoolInfo : "Resource_MySchool_SchoolData"
+		},
+	
 		data : {
 			settingData : {
 				type : "setting",
 				status : "",
-				name : "MySchool_Data_Setting",
-				context : {
-					definition: {
-						a : {
-							aa : "test.string;1.0.0",
-							bb : "test.array;1.0.0%||element:@||!(test.expression)!.outputCriteria(&(expression)&;;&(parms)&)||@||%",
-							cc : {
-								element : "test.string;1.0.0"
-							}
-						}
-					},
-					default: {
-						a : {
-							aa : {
-								dataTypeId: "test.string;1.0.0",
-								value: "This is my world!"
-							},
-							dd : "HELLO!!!!",
-							cc : [
-								{
-									dataTypeId: "test.string;1.0.0",
-									value: "This is my world 1111!"
-								},
-								{
-									dataTypeId: "test.string;1.0.0",
-									value: "This is my world 2222!"
-								},
-							]
+				definition: {
+					a : {
+						aa : "test.string;1.0.0",
+						bb : "test.array;1.0.0%||element:@||!(test.expression)!.outputCriteria(&(expression)&;;&(parms)&)||@||%",
+						cc : {
+							element : "test.string;1.0.0"
 						}
 					}
-				}
+				},
+			},
+			
+			result : {
+				type : "variable"
 			}
 		},
 		

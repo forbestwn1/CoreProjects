@@ -53,7 +53,7 @@ public class HAPExecutableTask{
 		this.m_steps = new ArrayList<HAPExecutableStep>();
 		this.m_stepsByName = new LinkedHashMap<String, HAPExecutableStep>();
 		this.m_varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		this.m_varsInfo.putAll(taskDef.getVariables());
+		this.m_varsInfo.putAll(taskDef.getDataContext());
 		this.m_executeReferences = new LinkedHashMap<String, HAPExecutableTask>();
 		this.m_varsMatchers = new LinkedHashMap<String, HAPMatchers>();
 		

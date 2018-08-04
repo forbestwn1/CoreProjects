@@ -1,10 +1,26 @@
 {
-	pages : {
-		setting : "PageMySchoolSettingMain"
+	context : {
+		criteria : {
+			path : "uis.query.criteria"
+		},
 	},
-	moduleEntries: {
-		main : {
-			page : "setting"
-		}
-	}
+	constants : {
+	
+	},
+	
+	init : [
+		{
+			name:"presentSchoolQuery",
+			type:"presentUI",
+			ui : "schoolQueryUI"
+		}, 
+	],
+	uis : [
+		{
+			name : "schoolQueryUI",
+			type : "setting",
+			page : "query",
+			service : {},
+		},
+	]
 }

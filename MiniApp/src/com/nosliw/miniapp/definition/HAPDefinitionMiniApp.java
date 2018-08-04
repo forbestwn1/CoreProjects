@@ -32,25 +32,25 @@ public class HAPDefinitionMiniApp extends HAPSerializableImp{
 	private String m_name;
 
 	//one mini app may have different entry for different senario. 
-	private Map<String, HAPDefinitionMiniAppEntry> m_entry;
+	private Map<String, HAPDefinitionMiniAppEntry> m_entries;
 
 	//require (data, service)
 	private HAPRequireMiniApp m_require;
 
 	public HAPDefinitionMiniApp() {
-		this.m_entry = new LinkedHashMap<String, HAPDefinitionMiniAppEntry>();
+		this.m_entries = new LinkedHashMap<String, HAPDefinitionMiniAppEntry>();
 		this.m_require = new HAPRequireMiniApp();
 	}
 	
 	public void setId(String id) {  this.m_id = id;   }
 	
-	public HAPDefinitionMiniAppEntry getUIEntry(String uiEntry) {  return this.m_entry.get(uiEntry);  }
+	public HAPDefinitionMiniAppEntry getEntry(String entry) {  return this.m_entries.get(entry);  }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(NAME, m_name);
 		jsonMap.put(ID, m_id);
-		jsonMap.put(ENTRY, HAPJsonUtility.buildJson(this.m_entry, HAPSerializationFormat.JSON));
+		jsonMap.put(ENTRY, HAPJsonUtility.buildJson(this.m_entries, HAPSerializationFormat.JSON));
 		jsonMap.put(REQUIRE, HAPJsonUtility.buildJson(this.m_require, HAPSerializationFormat.JSON));
 	}
 	
@@ -59,7 +59,7 @@ public class HAPDefinitionMiniApp extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_id = jsonObj.optString(ID);
 		this.m_name = jsonObj.optString(NAME);
-		this.m_entry =  HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionMiniAppEntry.class.getName(), jsonObj.optJSONObject(ENTRY));
+		this.m_entries =  HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionMiniAppEntry.class.getName(), jsonObj.optJSONObject(ENTRY));
 		this.m_require.buildObjectByJson(jsonObj.optJSONObject(REQUIRE));
 		return true;
 	}

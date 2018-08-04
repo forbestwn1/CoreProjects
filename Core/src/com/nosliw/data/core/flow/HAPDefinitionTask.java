@@ -31,7 +31,6 @@ public class HAPDefinitionTask extends HAPDefinitionComponent{
 	@HAPAttribute
 	public static String INFO = "info";
 
-	//all the information for references to other task, for instance, variable mapping
 	@HAPAttribute
 	public static String REFERENCES = "references";
 	
@@ -39,6 +38,7 @@ public class HAPDefinitionTask extends HAPDefinitionComponent{
 	
 	private List<HAPDefinitionStep> m_steps;
 
+	//all the information for references to other task, for instance, variable mapping
 	private Map<String, HAPReferenceInfo> m_referencesInfo;
 	
 	//dependent resources

@@ -10,8 +10,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.miniapp.data.HAPDefinitionMiniAppData;
-import com.nosliw.miniapp.service.HAPDefinitionMiniAppService;
+import com.nosliw.miniapp.data.HAPDefinitionData;
+import com.nosliw.miniapp.service.HAPDefinitionService;
 
 @HAPEntityWithAttribute
 public class HAPRequireMiniApp extends HAPSerializableImp{
@@ -23,19 +23,19 @@ public class HAPRequireMiniApp extends HAPSerializableImp{
 	public static final String SERVICE = "service";
 
 	//stateful data definition (the data that can retrieve next time you use the app)
-	private Map<String, HAPDefinitionMiniAppData> m_data;
+	private Map<String, HAPDefinitionData> m_data;
 	
 	//service needed
-	private Map<String, HAPDefinitionMiniAppService> m_service;
+	private Map<String, HAPDefinitionService> m_service;
 	
 	public HAPRequireMiniApp() {
-		this.m_data = new LinkedHashMap<String, HAPDefinitionMiniAppData>();
-		this.m_service = new LinkedHashMap<String, HAPDefinitionMiniAppService>();
+		this.m_data = new LinkedHashMap<String, HAPDefinitionData>();
+		this.m_service = new LinkedHashMap<String, HAPDefinitionService>();
 	}
 
-	public HAPDefinitionMiniAppData getData(String name) {  return this.m_data.get(name);   }
+	public HAPDefinitionData getData(String name) {  return this.m_data.get(name);   }
 	
-	public HAPDefinitionMiniAppService getService(String serviceName) {  return this.m_service.get(serviceName);  }
+	public HAPDefinitionService getService(String serviceName) {  return this.m_service.get(serviceName);  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -50,7 +50,7 @@ public class HAPRequireMiniApp extends HAPSerializableImp{
 		if(servicesJsonObj!=null) {
 			for(Object key : servicesJsonObj.keySet()) {
 				String serviceName = (String)key; 
-				HAPDefinitionMiniAppService service = HAPDefinitionMiniAppService.buildObject(servicesJsonObj.getJSONObject(serviceName));
+				HAPDefinitionService service = HAPDefinitionService.buildObject(servicesJsonObj.getJSONObject(serviceName));
 				this.m_service.put(serviceName, service);
 			}
 		}
@@ -58,7 +58,7 @@ public class HAPRequireMiniApp extends HAPSerializableImp{
 		if(dataJsonObj!=null) {
 			for(Object key : dataJsonObj.keySet()) {
 				String dataName = (String)key; 
-				HAPDefinitionMiniAppData dataDef = HAPDefinitionMiniAppData.buildObject(dataJsonObj.getJSONObject(dataName));
+				HAPDefinitionData dataDef = HAPDefinitionData.buildObject(dataJsonObj.getJSONObject(dataName));
 				this.m_data.put(dataName, dataDef);
 			}
 		}

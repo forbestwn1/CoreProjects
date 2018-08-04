@@ -2,6 +2,7 @@ package com.nosliw.data.core.runtime;
 
 import com.nosliw.data.core.datasource.HAPDataSourceManager;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
+import com.nosliw.data.core.service.HAPManagerService;
 import com.nosliw.data.core.task.HAPManagerTask;
 
 /**
@@ -23,6 +24,8 @@ public interface HAPRuntimeEnvironment {
 	HAPGatewayManager getGatewayManager();
 
 	HAPDataSourceManager getDataSourceManager();
+
+	HAPManagerService getServiceManager();
 	
 	HAPRuntime getRuntime();
 	

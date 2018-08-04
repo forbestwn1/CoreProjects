@@ -14,16 +14,17 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
-import com.nosliw.miniapp.data.HAPDefinitionMiniAppData;
-import com.nosliw.miniapp.data.HAPInstanceMiniAppData;
-import com.nosliw.miniapp.data.HAPInstanceMiniAppDataSetting;
+import com.nosliw.miniapp.data.HAPDefinitionData;
+import com.nosliw.miniapp.data.HAPInstanceData;
+import com.nosliw.miniapp.data.HAPInstanceDataSetting;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniApp;
-import com.nosliw.miniapp.definition.HAPDefinitionMiniAppModuleEntry;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniAppEntry;
-import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
-import com.nosliw.miniapp.instance.HAPInstanceUIModule;
+import com.nosliw.miniapp.instance.HAPInstanceMiniAppEntry;
+import com.nosliw.miniapp.instance.HAPInstanceModule;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserInfo;
+import com.nosliw.uiresource.HAPDefinitionUIModule;
+import com.nosliw.uiresource.HAPDefinitionUIModuleEntry;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.module.HAPUIModuleEntry;
 
@@ -66,11 +67,11 @@ public class HAPAppManager {
 		return out;
 	}
 
-	public HAPInstanceMiniAppData createMiniAppData(String userId, String appId, String dataName, HAPInstanceMiniAppData dataInfo) {
-		HAPInstanceMiniAppData out = null;
+	public HAPInstanceData createMiniAppData(String userId, String appId, String dataName, HAPInstanceData dataInfo) {
+		HAPInstanceData out = null;
 		switch(dataInfo.getType()) {
 		case HAPConstant.MINIAPPDATA_TYPE_SETTING:
-			out = this.m_dataAccess.addSettingData(userId, appId, dataName, (HAPInstanceMiniAppDataSetting)dataInfo);
+			out = this.m_dataAccess.addSettingData(userId, appId, dataName, (HAPInstanceDataSetting)dataInfo);
 			break;
 		}
 		return out;
@@ -84,29 +85,29 @@ public class HAPAppManager {
 		}
 	}
 	
-	public HAPInstanceMiniAppData updateMiniAppData(String id, HAPInstanceMiniAppData dataInfo) {
-		HAPInstanceMiniAppData out = null;
+	public HAPInstanceData updateMiniAppData(String id, HAPInstanceData dataInfo) {
+		HAPInstanceData out = null;
 		switch(dataInfo.getType()) {
 		case HAPConstant.MINIAPPDATA_TYPE_SETTING:
-			out = this.m_dataAccess.updateSettingData(id, (HAPInstanceMiniAppDataSetting)dataInfo);
+			out = this.m_dataAccess.updateSettingData(id, (HAPInstanceDataSetting)dataInfo);
 			break;
 		}
 		return out;
 	}
 	
-	public HAPInstanceMiniAppUIEntry getMiniAppInstanceUIEntiry(String userId, String miniAppId, String uiEntry) {
-		HAPInstanceMiniAppUIEntry out = new HAPInstanceMiniAppUIEntry();
+	public HAPInstanceMiniAppEntry getMiniAppInstanceUIEntiry(String userId, String miniAppId, String entry) {
+		HAPInstanceMiniAppEntry out = new HAPInstanceMiniAppEntry();
 		
 		HAPDefinitionMiniApp minAppDef = this.getMinAppDefinition(miniAppId);
-		HAPDefinitionMiniAppEntry miniAppUIEntry = minAppDef.getUIEntry(uiEntry);
+		HAPDefinitionMiniAppEntry miniAppEntry = minAppDef.getEntry(entry);
 		
 		Set<String> appEntryData = new HashSet<String>();
-		Map<String, HAPDefinitionMiniAppModuleEntry> moduleEntries = miniAppUIEntry.getUIModuleEntries();
+		Map<String, HAPDefinitionMiniAppModuleEntry> moduleEntries = miniAppEntry.getUIModuleEntries();
 		for(String entryName : moduleEntries.keySet()) {
 			HAPDefinitionMiniAppModuleEntry moduleEntryDef = moduleEntries.get(entryName);
 			appEntryData.addAll(moduleEntryDef.getData().values());
 			HAPUIModuleEntry uiModule = this.m_uiResourceMan.getUIModuleInstance(minAppDef.getModuleIdByName(moduleEntryDef.getModule()), moduleEntryDef.getEntry());
-			HAPInstanceUIModule uiModuleInstance = new HAPInstanceUIModule(uiModule);
+			HAPInstanceModule uiModuleInstance = new HAPInstanceModule(uiModule);
 			uiModuleInstance.setData(moduleEntryDef.getData());
 			
 			for(String serviceName : moduleEntryDef.getService().keySet()) {
@@ -125,7 +126,7 @@ public class HAPAppManager {
 
 		Map<String, Set<String>> appEntryDataByType = new LinkedHashMap<String, Set<String>>();
 		for(String dataName : appEntryData) {
-			HAPDefinitionMiniAppData dataDef = minAppDef.getData(dataName);
+			HAPDefinitionData dataDef = minAppDef.getData(dataName);
 			Set<String> datas = appEntryDataByType.get(dataDef.getType());
 			if(datas==null) {
 				datas = new HashSet<String>();
@@ -145,7 +146,29 @@ public class HAPAppManager {
 		return out;
 	}
 	
+	public HAPUIModuleEntry getUIModuleInstance(String moduleId, String entry) {
+		HAPDefinitionUIModule moduleDef = this.getUIModuleById(moduleId);
+		
+		HAPDefinitionUIModuleEntry moduleEntry = moduleDef.getModuleEntry(entry);
+		HAPUIModuleEntry out = new HAPUIModuleEntry(moduleEntry.getPage());
+		
+		Map<String, String> pages = moduleDef.getPages();
+		for(String pageName : pages.keySet()) {
+			out.addPage(pageName, this.getUIResource(pages.get(pageName)));
+			out.addPageUIResourceName(pageName, pages.get(pageName));
+		}
+		
+		return out;
+	}
 	
+	private HAPDefinitionUIModule getUIModuleById(String moduleId) {
+		String file = HAPFileUtility.getUIModuleFolder()+moduleId+".res";
+		HAPDefinitionUIModule out = (HAPDefinitionUIModule)HAPSerializeManager.getInstance().buildObject(HAPDefinitionUIModule.class.getName(), new JSONObject(HAPFileUtility.readFile(new File(file))), HAPSerializationFormat.JSON);
+		out.setId(moduleId);
+		return out;
+	}
+	
+
 /*	
 	public HAPInstanceMiniAppUIEntry getMiniAppInstance(String instanceId) {
 		return this.getMyRealtorAppInfo(instanceId);

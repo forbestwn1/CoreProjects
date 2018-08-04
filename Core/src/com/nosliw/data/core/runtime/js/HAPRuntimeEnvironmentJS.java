@@ -14,6 +14,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayCriteriaOperation;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayExpressionDiscovery;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
+import com.nosliw.data.core.service.HAPManagerService;
 import com.nosliw.data.core.task.HAPManagerTask;
 
 @HAPEntityWithAttribute(baseName="RUNTIME")
@@ -41,6 +42,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPDataSourceManager m_dataSourceManager;
 	
+	private HAPManagerService m_serviceManager;
+	
 	private HAPRuntime m_runtime;
 	
 	public HAPRuntimeEnvironmentJS(){}
@@ -50,9 +53,10 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 									HAPExpressionSuiteManager expressionSuiteManager,
 								    HAPGatewayManager gatewayManager,
 								    HAPDataSourceManager dataSourceManager,
+								    HAPManagerService serviceManager,
 								    HAPRuntime runtime){
 		super();
-		this.init(resourceMan, taskManager, expressionSuiteManager, gatewayManager, dataSourceManager, runtime);
+		this.init(resourceMan, taskManager, expressionSuiteManager, gatewayManager, dataSourceManager, serviceManager, runtime);
 	}
 	
 	protected void init(HAPResourceManagerRoot resourceMan,
@@ -60,11 +64,13 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 						HAPExpressionSuiteManager expressionSuiteManager,
 					    HAPGatewayManager gatewayManager,
 					    HAPDataSourceManager dataSourceManager,
+					    HAPManagerService serviceManager,
 					    HAPRuntime runtime){ 
 		this.m_resourceManager = resourceMan;
 		this.m_taskManager = taskManager;
 		this.m_expressionSuiteManager = expressionSuiteManager;
 		this.m_dataSourceManager = dataSourceManager;
+		this.m_serviceManager = serviceManager;
 
 		this.m_dataSourceManager.registerDataSourceFactory(HAPDataSourceFactoryTask.FACTORY_TYPE, new HAPDataSourceFactoryTask(this.getTaskManager()));
 
@@ -96,6 +102,10 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	@Override
 	public HAPDataSourceManager getDataSourceManager() {  return this.m_dataSourceManager;  }
 
+	@Override
+	public HAPManagerService getServiceManager() {  return this.m_serviceManager;   }
+
+	
 	@Override
 	public HAPRuntime getRuntime() {		return this.m_runtime;	}
 

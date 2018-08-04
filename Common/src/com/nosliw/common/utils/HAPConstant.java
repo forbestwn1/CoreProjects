@@ -181,6 +181,7 @@ public class HAPConstant {
 
 		public static final String UIRESOURCE_ROOTTYPE_RELATIVE = "relative";
 		public static final String UIRESOURCE_ROOTTYPE_ABSOLUTE = "absolute";
+		public static final String UIRESOURCE_ROOTTYPE_CONSTANT = "constant";
 
 
 
@@ -462,7 +463,7 @@ public class HAPConstant {
 
 
 
-		public static final String MINIAPPSERVICE_TYPE_DATASOURCE = "dataSource";
+		public static final String MINIAPPSERVICE_TYPE_SERVICE = "service";
 
 
 

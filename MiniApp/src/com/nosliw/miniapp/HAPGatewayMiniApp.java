@@ -9,8 +9,8 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
-import com.nosliw.miniapp.data.HAPInstanceMiniAppData;
-import com.nosliw.miniapp.instance.HAPInstanceMiniAppUIEntry;
+import com.nosliw.miniapp.data.HAPInstanceData;
+import com.nosliw.miniapp.instance.HAPInstanceMiniAppEntry;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserInfo;
 
@@ -93,7 +93,7 @@ public class HAPGatewayMiniApp extends HAPGatewayImp{
 			String appId = parms.optString(COMMAND_LOADMINIAPP_APPID);
 			String userId = parms.optString(COMMAND_LOADMINIAPP_USERID);
 			String appEntry = parms.optString(COMMAND_LOADMINIAPP_ENTRY);
-			HAPInstanceMiniAppUIEntry miniAppInstance = m_miniAppMan.getMiniAppInstanceUIEntiry(userId, appId, appEntry);
+			HAPInstanceMiniAppEntry miniAppInstance = m_miniAppMan.getMiniAppInstanceUIEntiry(userId, appId, appEntry);
 			out = HAPServiceData.createSuccessData(miniAppInstance);
 			break;
 		}
@@ -104,8 +104,8 @@ public class HAPGatewayMiniApp extends HAPGatewayImp{
 			String dataName = parms.optString(COMMAND_CREATEDATA_DATANAME);
 			
 			JSONObject dataInfoJson = parms.optJSONObject(COMMAND_CREATEDATA_DATAINFO);
-			HAPInstanceMiniAppData dataInfo = HAPInstanceMiniAppData.buildObject(dataInfoJson);
-			HAPInstanceMiniAppData newDataInfo = m_miniAppMan.createMiniAppData(userId, appId, dataName, dataInfo);
+			HAPInstanceData dataInfo = HAPInstanceData.buildObject(dataInfoJson);
+			HAPInstanceData newDataInfo = m_miniAppMan.createMiniAppData(userId, appId, dataName, dataInfo);
 			out = HAPServiceData.createSuccessData(newDataInfo);
 		}
 		case COMMAND_DELETEDATA:

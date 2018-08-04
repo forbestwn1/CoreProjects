@@ -14,11 +14,10 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.miniapp.data.HAPInstanceMiniAppData;
-import com.nosliw.uiresource.module.HAPUIModuleEntry;
+import com.nosliw.miniapp.data.HAPInstanceData;
 
 @HAPEntityWithAttribute
-public class HAPInstanceMiniAppUIEntry extends HAPSerializableImp{
+public class HAPInstanceMiniAppEntry extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String ID = "id";
@@ -34,33 +33,33 @@ public class HAPInstanceMiniAppUIEntry extends HAPSerializableImp{
 	
 	private String m_id;
 	
-	private Map<String, HAPInstanceUIModule> m_uiModules;
+	private Map<String, HAPInstanceModule> m_uiModules;
 
 	//dependent resources
 	private Set<HAPResourceId> m_resourcesId;
 	
-	private Map<String, List<HAPInstanceMiniAppData>> m_data;
+	private Map<String, List<HAPInstanceData>> m_data;
 	
-	public HAPInstanceMiniAppUIEntry() {
+	public HAPInstanceMiniAppEntry() {
 		this.m_resourcesId = new HashSet<HAPResourceId>();
-		this.m_data = new LinkedHashMap<String, List<HAPInstanceMiniAppData>>();
-		this.m_uiModules = new LinkedHashMap<String, HAPInstanceUIModule>();
+		this.m_data = new LinkedHashMap<String, List<HAPInstanceData>>();
+		this.m_uiModules = new LinkedHashMap<String, HAPInstanceModule>();
 	}
 
-	public HAPInstanceMiniAppUIEntry(String id) {		this.m_id = id;	}
+	public HAPInstanceMiniAppEntry(String id) {		this.m_id = id;	}
 	
 	public String getId() {  return this.m_id;   }
 	public void setId(String id) {  this.m_id = id;  }
 	
 	public void addDependentResourceId(HAPResourceId resourceId) {   this.m_resourcesId.add(resourceId);  }
 	
-	public void addUIModuleInstance(String name, HAPInstanceUIModule uiModuleInstance) {		this.m_uiModules.put(name, uiModuleInstance);	}
-	public HAPInstanceUIModule getUIModuleInstance(String moduleName) {  return this.m_uiModules.get(moduleName);  }
+	public void addUIModuleInstance(String name, HAPInstanceModule uiModuleInstance) {		this.m_uiModules.put(name, uiModuleInstance);	}
+	public HAPInstanceModule getUIModuleInstance(String moduleName) {  return this.m_uiModules.get(moduleName);  }
 	
-	public void addData(String dataName, HAPInstanceMiniAppData data) {
-		List<HAPInstanceMiniAppData> dataByName = this.m_data.get(dataName);
+	public void addData(String dataName, HAPInstanceData data) {
+		List<HAPInstanceData> dataByName = this.m_data.get(dataName);
 		if(dataByName==null) {
-			dataByName = new ArrayList<HAPInstanceMiniAppData>();
+			dataByName = new ArrayList<HAPInstanceData>();
 			this.m_data.put(dataName, dataByName);
 		}
 		dataByName.add(data);

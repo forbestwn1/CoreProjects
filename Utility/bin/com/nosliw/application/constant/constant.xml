@@ -309,6 +309,7 @@
 			<definition type="space"/>
 			<definition name="UIRESOURCE_ROOTTYPE_RELATIVE" value="relative"/>
 			<definition name="UIRESOURCE_ROOTTYPE_ABSOLUTE" value="absolute"/>
+			<definition name="UIRESOURCE_ROOTTYPE_CONSTANT" value="constant"/>
 			<definition type="space"/>
 			<definition name="ENTITY_CRITICALVALUE_OTHER" value="other"/>
 			<definition type="space"/>
@@ -543,7 +544,7 @@
 			<definition name="EXPRESSIONTASK_STEPTYPE_LOOP" value="loop"/>
 
 			<definition type="space"/>
-			<definition name="MINIAPPSERVICE_TYPE_DATASOURCE" value="dataSource"/>
+			<definition name="MINIAPPSERVICE_TYPE_SERVICE" value="service"/>
 
 			<definition type="space"/>
 			<definition name="MINIAPPDATA_TYPE_SETTING" value="setting"/>
