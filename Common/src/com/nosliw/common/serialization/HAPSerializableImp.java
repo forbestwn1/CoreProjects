@@ -7,6 +7,7 @@ public abstract class HAPSerializableImp implements HAPSerializable{
 
 	@Override
 	public boolean buildObject(Object value, HAPSerializationFormat format){
+		if(value==null)   return true;
 		boolean out = false;
 		switch(format){
 		case JSON_FULL:

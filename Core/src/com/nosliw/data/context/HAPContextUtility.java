@@ -16,7 +16,7 @@ import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteEmbededEx
 public class HAPContextUtility {
 	
 	public static void processContextGroupDefinition(HAPContextGroup parentContext, HAPContextGroup defContext, HAPContextGroup outContext, Map<String, String> constants, HAPEnvContextProcessor contextProcessorEnv) {
-		for(String contextType : HAPContextGroup.getContextTypes()){
+		for(String contextType : HAPContextGroup.getAllContextTypes()){
 			Map<String, HAPContextNodeRoot> defEles = defContext.getElements(contextType);
 			for(String name : defEles.keySet()){
 				String realName = getSolidName(name, constants, contextProcessorEnv);
@@ -132,14 +132,9 @@ public class HAPContextUtility {
 	private static HAPContextNode getReferencedParentContextNode(HAPContextPath path, HAPContextGroup parentContext){
 		if(parentContext==null)   return null;
 		
-		String[] contextTypes = {
-				HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC,
-				HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL,
-				HAPConstant.UIRESOURCE_CONTEXTTYPE_EXCLUDED
-				};
 		//find candidates, path similar
 		List<Object[]> candidates = new ArrayList<Object[]>();
-		for(String contextType : contextTypes){
+		for(String contextType : HAPContextGroup.getVisibleContextTypes()){
 			Object[] nodeInfo = parentContext.getContext(contextType).discoverChild(path);
 			if(nodeInfo[0]!=null)   candidates.add(nodeInfo);
 		}

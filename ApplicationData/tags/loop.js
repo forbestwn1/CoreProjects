@@ -19,9 +19,12 @@
 				path : "<%=&(data)&%>"
 			}
 		},
-		excluded : {
+		protected : {
 			"<%=&(element)&%>" : {
-				path : "<%=&(data)&%>.element"
+				path : "<%=&(data)&%>.element",
+				info:{
+					mode : "manual"
+				}
 			}		
 		}
 	},

@@ -56,7 +56,7 @@ public class HAPUIResourceIncludeTagProcessor {
 		//loop through all context elements in included resource
 		//if context element cannot find mapping, then it should be escalated to context in root resource
 		HAPContextGroup contextGroup = includeTagResource.getContextDefinition();
-		for(String contextType : contextGroup.getContextTypes()){
+		for(String contextType : contextGroup.getAllContextTypes()){
 			HAPContext context = contextGroup.getContext(contextType);
 			Map<String, HAPContextNodeRoot> elements = context.getElements();
 			for(String eleName : elements.keySet()){

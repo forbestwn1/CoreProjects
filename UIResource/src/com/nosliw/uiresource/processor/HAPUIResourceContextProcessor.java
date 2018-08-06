@@ -44,6 +44,7 @@ public class HAPUIResourceContextProcessor {
 
 		//find all data variables from context definition 
 		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getPublicContext()));
+		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getProtectedContext()));
 		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getInternalContext()));
 		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getExcludedContext()));
 		

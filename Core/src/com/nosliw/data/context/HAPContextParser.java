@@ -4,13 +4,14 @@ import java.util.Iterator;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 
 public class HAPContextParser {
 
 	//parse context group
 	public static void parseContextGroup(JSONObject contextGroupJson, HAPContextGroup contextGroup) {
-		for(String contextType : HAPContextGroup.getContextTypes()){
+		for(String contextType : HAPContextGroup.getAllContextTypes()){
 			JSONObject contextEleJson = contextGroupJson.optJSONObject(contextType);
 			HAPContext context = contextGroup.getContext(contextType);
 			parseContext(contextEleJson, context);
@@ -33,10 +34,9 @@ public class HAPContextParser {
 	private static HAPContextNodeRoot parseContextRootFromJson(JSONObject eleDefJson){
 		HAPContextNodeRoot out = null;
 		String path = (String)eleDefJson.opt(HAPContextNodeRootRelative.PATH);
-		String name = (String)eleDefJson.opt(HAPContextNodeRootRelative.NAME);
-		String description = (String)eleDefJson.opt(HAPContextNodeRootRelative.DESCRIPTION);
 		Object defJsonObj = eleDefJson.opt(HAPContextNode.DEFINITION);
-		Object defaultJsonObj = eleDefJson.opt(HAPContextNodeRootAbsolute.DEFAULT);
+		Object defaultJsonObj = eleDefJson.opt(HAPContextNodeRoot.DEFAULT);
+		
 		if(path!=null){
 			//relative
 			out = new HAPContextNodeRootRelative();
@@ -46,9 +46,12 @@ public class HAPContextParser {
 			if(defJsonObj!=null)	out = new HAPContextNodeRootAbsolute();   //absolute
 			else   out = new HAPContextNodeRootConstant();   //constant
 		}
+		String name = (String)eleDefJson.opt(HAPContextNodeRoot.NAME);
 		out.setName(name);
+		String description = (String)eleDefJson.opt(HAPContextNodeRoot.DESCRIPTION);
 		out.setDescription(description);
-
+		out.getInfo().buildObject(eleDefJson.opt(HAPContextNodeRoot.INFO), HAPSerializationFormat.JSON);
+		
 		//default value
 		if(defaultJsonObj!=null)		out.setDefaultValue(defaultJsonObj);
 

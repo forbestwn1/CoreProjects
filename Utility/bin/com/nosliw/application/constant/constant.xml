@@ -402,9 +402,10 @@
 			<definition name="UIRESOURCE_FUNCTION_EXCECUTEEXPRESSION" value="excecuteExpression"/>
 			<definition name="UIRESOURCE_UIEXPRESSIONFUNCTION_PREFIX" value="expression"/>
 			<definition type="space"/>
-			<definition name="UIRESOURCE_CONTEXTTYPE_PUBLIC" value="public" description="context that is visible to content and can be inherited by child content"/>
-			<definition name="UIRESOURCE_CONTEXTTYPE_INTERNAL" value="internal" description="context that is visible to content, but cannot be inherited by child content"/>
-			<definition name="UIRESOURCE_CONTEXTTYPE_PRIVATE" value="private" description="context that is not visible to content. It is used by tag definition"/>
+			<definition name="UIRESOURCE_CONTEXTTYPE_PUBLIC" value="public" description="		visible to external,	visible to content,		inherited by child content"/>
+			<definition name="UIRESOURCE_CONTEXTTYPE_PROTECTED" value="protected" description="	UNvisible to external,	visible to content,		inherited by child content"/>
+			<definition name="UIRESOURCE_CONTEXTTYPE_INTERNAL" value="internal" description="	UNvisible to external,	visible to content, 	UNinherited by child content"/>
+			<definition name="UIRESOURCE_CONTEXTTYPE_PRIVATE" value="private" description="		UNvisible to external,	UNvisible to content,	UNinherited by child content, used by tag definition"/>
 			<definition name="UIRESOURCE_CONTEXTTYPE_EXCLUDED" value="excluded" description="context that is ignored when building context for tag context. It's purpose is for variable criteria info"/>
 			<definition type="space"/>
 			<definition name="UIRESOURCEMAN_SETTINGNAME_SCRIPTLOCATION" value="temp.scriptLocation"/>

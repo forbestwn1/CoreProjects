@@ -2,6 +2,7 @@ package com.nosliw.uiresource.tag;
 
 import java.util.Map;
 
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.context.HAPContextGroup;
 import com.nosliw.data.context.HAPContextNodeRootRelative;
 import com.nosliw.data.context.HAPContextUtility;
@@ -19,11 +20,13 @@ public class HAPUITagUtility {
 		Map<String, String> constants = uiTag.getAttributes();
 		
 		if(tagContextDefinition.isInherit()){
-			//add public context from parent
-			for(String rootEleName : parentContext.getPublicContext().getElements().keySet()){
-				HAPContextNodeRootRelative relativeEle = new HAPContextNodeRootRelative();
-				relativeEle.setPath(rootEleName);
-				uiTag.getContext().getPublicContext().addElement(rootEleName, HAPContextUtility.processContextDefinitionElement(rootEleName, relativeEle, parentContext, constants, contextProcessorEnv));
+			//add inheriable context from parent
+			for(String contextType : HAPContextGroup.getInheritableContextTypes()) {
+				for(String rootEleName : parentContext.getElements(contextType).keySet()){
+					HAPContextNodeRootRelative relativeEle = new HAPContextNodeRootRelative();
+					relativeEle.setPath(rootEleName);
+					uiTag.getContext().addElement(rootEleName, HAPContextUtility.processContextDefinitionElement(rootEleName, relativeEle, parentContext, constants, contextProcessorEnv), contextType);
+				}
 			}
 		}
 
