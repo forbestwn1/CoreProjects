@@ -17,10 +17,6 @@ public class HAPManagerFlowTask {
 		this.m_stepPlugins = new LinkedHashMap<String, HAPPluginStep>();
 	}
 	
-	public void registerStepPlugin(String stepType, HAPPluginStep plugin) {
-		this.m_stepPlugins.put(stepType, plugin);
-	}
-	
 	public HAPExecutableTask compileTask(
 			String id,
 			HAPDefinitionTask taskDefinition, 
@@ -47,6 +43,10 @@ public class HAPManagerFlowTask {
 		return out;
 	}
 
+	public void registerStepPlugin(String stepType, HAPPluginStep plugin) {
+		this.m_stepPlugins.put(stepType, plugin);
+	}
+	
 	public HAPPluginStep getStepPlugin(String stepType) {
 		return this.m_stepPlugins.get(stepType);
 	}

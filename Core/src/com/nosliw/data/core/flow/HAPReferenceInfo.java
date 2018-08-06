@@ -14,7 +14,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.context.HAPContext;
 
 /**
- * The information used to define reference in expression
+ * The information used to define reference to another task
  * 		reference : the name of expression
  * 		variableMap: the mapping from variable in parent expression to variable in referenced expression 
  */
@@ -28,6 +28,7 @@ public class HAPReferenceInfo extends HAPSerializableImp{
 	
 	private String m_reference;
 	
+	//mapping information : from 
 	private HAPContext m_variableMap;
 	
 	public HAPReferenceInfo(){

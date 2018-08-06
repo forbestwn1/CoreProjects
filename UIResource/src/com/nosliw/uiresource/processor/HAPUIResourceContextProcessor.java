@@ -9,13 +9,11 @@ import com.nosliw.data.context.HAPContext;
 import com.nosliw.data.context.HAPContextNode;
 import com.nosliw.data.context.HAPContextNodeCriteria;
 import com.nosliw.data.context.HAPContextUtility;
+import com.nosliw.data.context.HAPEnvContextProcessor;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.expressionscript.HAPContextExpressionProcess;
-import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.uiresource.page.HAPConstantDef;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
@@ -24,23 +22,23 @@ import com.nosliw.uiresource.tag.HAPUITagUtility;
 
 public class HAPUIResourceContextProcessor {
 
-	public static void process(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
+	public static void process(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 
 		//process context defined within unit
-		HAPContextUtility.processContextGroupDefinition(parent==null?null:parent.getContext(), uiDefinition.getContextDefinition(), uiDefinition.getContext(), uiDefinition.getAttributes(), dataTypeHelper, runtime, expressionManager);
+		HAPContextUtility.processContextGroupDefinition(parent==null?null:parent.getContext(), uiDefinition.getContextDefinition(), uiDefinition.getContext(), uiDefinition.getAttributes(), contextProcessorEnv);
 		
-		processExpressionContext(parent, uiDefinition, dataTypeHelper, uiTagMan, runtime, expressionManager);
+		processExpressionContext(parent, uiDefinition, uiTagMan, contextProcessorEnv);
 
 		//children ui tags
 		Iterator<HAPUIDefinitionUnitTag> its = uiDefinition.getUITags().iterator();
 		while(its.hasNext()){
 			HAPUIDefinitionUnitTag uiTag = its.next();
-			HAPUITagUtility.buildUITagContext(uiDefinition.getContext(), uiTag, dataTypeHelper, uiTagMan, runtime, expressionManager);
-			process(uiDefinition, uiTag, dataTypeHelper, uiTagMan, runtime, expressionManager);
+			HAPUITagUtility.buildUITagContext(uiDefinition.getContext(), uiTag, uiTagMan, contextProcessorEnv);
+			process(uiDefinition, uiTag, uiTagMan, contextProcessorEnv);
 		}
 	}
 	
-	private static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPDataTypeHelper dataTypeHelper, HAPUITagManager uiTagMan, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
+	private static void processExpressionContext(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 
 		HAPContextExpressionProcess expContext = uiDefinition.getExpressionContext();
 

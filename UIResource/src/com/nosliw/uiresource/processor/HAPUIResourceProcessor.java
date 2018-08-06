@@ -1,5 +1,6 @@
 package com.nosliw.uiresource.processor;
 
+import com.nosliw.data.context.HAPEnvContextProcessor;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
@@ -27,9 +28,9 @@ public class HAPUIResourceProcessor {
 		HAPUIResourceIncludeTagProcessor.process(uiResource, uiResourceMan, dataTypeHelper, uiTagMan, runtime, expressionMan, uiResourceParser, idGengerator);
 		
 		//build expression context
-		HAPUIResourceContextProcessor.process(null, uiResource, dataTypeHelper, uiTagMan, runtime, expressionMan);
+		HAPUIResourceContextProcessor.process(null, uiResource, uiTagMan, new HAPEnvContextProcessor(dataTypeHelper, runtime, expressionMan));
 
-		HAPUIResourceContextEntityProcessor.process(null, uiResource, dataTypeHelper, uiTagMan, runtime, expressionMan);
+		HAPUIResourceContextEntityProcessor.process(null, uiResource, uiTagMan, new HAPEnvContextProcessor(dataTypeHelper, runtime, expressionMan));
 		
 		//process expression definition
 		HAPUIResourceExpressionProcessor.process(uiResource, runtime, resourceMan);

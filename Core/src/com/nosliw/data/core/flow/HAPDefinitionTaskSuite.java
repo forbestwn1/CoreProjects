@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 public class HAPDefinitionTaskSuite extends HAPDefinitionComponent{
 
 	@HAPAttribute
-	public static String TASKS = "tasks";
+	public static String TASK = "task";
 
 	private List<HAPDefinitionTask> m_tasks;
 	

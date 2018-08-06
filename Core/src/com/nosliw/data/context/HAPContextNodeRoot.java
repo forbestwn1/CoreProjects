@@ -15,7 +15,19 @@ public abstract class HAPContextNodeRoot extends HAPContextNode{
 	public static final String TYPE = "type";
 
 	@HAPAttribute
+	public static final String NAME = "name";
+	
+	@HAPAttribute
+	public static final String DESCRIPTION = "description";
+	
+	@HAPAttribute
 	public static final String DEFAULT = "default";
+	
+	//name of context. it is just for display purpose
+	private String m_name;
+	
+	//description of context, it is just for display purpose
+	private String m_description;
 	
 	//default value for the root, used in runtime when no value is set
 	private Object m_defaultValue;
@@ -26,6 +38,9 @@ public abstract class HAPContextNodeRoot extends HAPContextNode{
 
 	public Object getDefaultValue(){   return this.m_defaultValue;  }
 
+	public void setName(String name) {  this.m_name = name;    }
+	public void setDescription(String description) {   this.m_description = description;   }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);

@@ -33,6 +33,8 @@ public class HAPContextParser {
 	private static HAPContextNodeRoot parseContextRootFromJson(JSONObject eleDefJson){
 		HAPContextNodeRoot out = null;
 		String path = (String)eleDefJson.opt(HAPContextNodeRootRelative.PATH);
+		String name = (String)eleDefJson.opt(HAPContextNodeRootRelative.NAME);
+		String description = (String)eleDefJson.opt(HAPContextNodeRootRelative.DESCRIPTION);
 		Object defJsonObj = eleDefJson.opt(HAPContextNode.DEFINITION);
 		Object defaultJsonObj = eleDefJson.opt(HAPContextNodeRootAbsolute.DEFAULT);
 		if(path!=null){
@@ -44,6 +46,8 @@ public class HAPContextParser {
 			if(defJsonObj!=null)	out = new HAPContextNodeRootAbsolute();   //absolute
 			else   out = new HAPContextNodeRootConstant();   //constant
 		}
+		out.setName(name);
+		out.setDescription(description);
 
 		//default value
 		if(defaultJsonObj!=null)		out.setDefaultValue(defaultJsonObj);
