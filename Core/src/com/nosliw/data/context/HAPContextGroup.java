@@ -29,7 +29,6 @@ public class HAPContextGroup extends HAPSerializableImp{
 			HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED,
 			HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL,
 			HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE,
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_EXCLUDED
 		};
 		return contextTypes;
 	}
@@ -62,13 +61,11 @@ public class HAPContextGroup extends HAPSerializableImp{
 	public HAPContext getProtectedContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED);  }
 	public HAPContext getInternalContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL);  }
 	public HAPContext getPrivateContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);  }
-	public HAPContext getExcludedContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_EXCLUDED);  }
 
 	public void addPublicElement(String name, HAPContextNodeRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);  }
 	public void addProtectedElement(String name, HAPContextNodeRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED);  }
 	public void addInternalElement(String name, HAPContextNodeRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL);  }
 	public void addPrivateElement(String name, HAPContextNodeRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);  }
-	public void addExcludedElement(String name, HAPContextNodeRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_EXCLUDED);  }
 
 	public Map<String, HAPContextNodeRoot> getElements(String contextType){  return this.getContext(contextType).getElements();  }
 	

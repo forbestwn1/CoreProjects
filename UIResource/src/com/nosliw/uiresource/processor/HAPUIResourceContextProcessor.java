@@ -46,7 +46,6 @@ public class HAPUIResourceContextProcessor {
 		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getPublicContext()));
 		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getProtectedContext()));
 		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getInternalContext()));
-		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getExcludedContext()));
 		
 		//parent expression context
 		HAPContextExpressionProcess parentExpContext = parent==null?null:parent.getExpressionContext();

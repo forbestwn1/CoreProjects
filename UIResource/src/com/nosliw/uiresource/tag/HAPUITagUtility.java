@@ -2,7 +2,6 @@ package com.nosliw.uiresource.tag;
 
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.context.HAPContextGroup;
 import com.nosliw.data.context.HAPContextNodeRootRelative;
 import com.nosliw.data.context.HAPContextUtility;

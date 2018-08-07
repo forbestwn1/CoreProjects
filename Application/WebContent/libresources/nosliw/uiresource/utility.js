@@ -106,6 +106,7 @@ var node_utility = {
 					};
 					var type = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
 					var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_INFO];
+					//if context.info.model===manual, context does not need to create in the framework
 					if(contextInfo.mode!='manual'){
 						if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_ABSOLUTE){
 							var defaultValue = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_DEFAULT];

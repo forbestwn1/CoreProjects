@@ -296,7 +296,6 @@ public class HAPConstant {
 		public static final String UIRESOURCE_CONTEXTTYPE_PROTECTED = "protected";
 		public static final String UIRESOURCE_CONTEXTTYPE_INTERNAL = "internal";
 		public static final String UIRESOURCE_CONTEXTTYPE_PRIVATE = "private";
-		public static final String UIRESOURCE_CONTEXTTYPE_EXCLUDED = "excluded";
 
 
 
