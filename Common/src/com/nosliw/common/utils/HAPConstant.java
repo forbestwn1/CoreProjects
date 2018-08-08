@@ -477,5 +477,8 @@ public class HAPConstant {
 		public static final String MINIAPPUIENTRY_MAINMOBILE_DATA_MAIN = "main";
 		public static final String MINIAPPUIENTRY_MAINMOBILE_SERVICE_MAIN = "main";
 
+		
+		public static final String CONTEXTNODE_INFO_MODE = "mode";
+		public static final String CONTEXTNODE_INFO_PARENTCONTEXTCATEGARY = "parentContextCategary";
 
 }

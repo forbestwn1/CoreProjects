@@ -23,6 +23,9 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRoot{
 	public static final String PATH = "path";
 
 	@HAPAttribute
+	public static final String PARENTCATEGARY = "parentCategary";
+	
+	@HAPAttribute
 	public static final String MATCHERS = "matchers";
 
 	@HAPAttribute
@@ -31,6 +34,8 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRoot{
 	//relative path from parent context
 	private HAPContextPath m_path;
 	private String m_pathStr;
+	
+	private String m_parentCategary;
 	
 	//context node full name --- matchers
 	//used to convert data from parent to data within uiTag
@@ -46,8 +51,7 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRoot{
 	@Override
 	public String getType() {		return HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE;	}
 
-	public void setPath(HAPContextPath path){
-		this.m_path = path;	
+	public void setPath(HAPContextPath path){	this.m_path = path;
 	}
 	public void setPath(String path) {  this.m_pathStr = path;   }
 
@@ -64,6 +68,9 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRoot{
 		return this.m_pathStr;
 	}
 	
+	public String getParentCategary() {  return this.m_parentCategary;   }
+	public void setParentCategary(String parentCategary) {  this.m_parentCategary = parentCategary;   }
+	
 	public void setMatchers(Map<String, HAPMatchers> matchers){
 		this.m_matchers.clear();
 		this.m_matchers.putAll(matchers);
@@ -77,6 +84,7 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRoot{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PATH, this.getPath().toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(PARENTCATEGARY, this.m_parentCategary);
 		if(this.m_matchers!=null && !this.m_matchers.isEmpty()){
 			jsonMap.put(MATCHERS, HAPJsonUtility.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
 			jsonMap.put(REVERSEMATCHERS, HAPJsonUtility.buildJson(this.m_reverseMatchers, HAPSerializationFormat.JSON));

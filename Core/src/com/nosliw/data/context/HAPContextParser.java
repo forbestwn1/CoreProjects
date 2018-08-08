@@ -16,6 +16,7 @@ public class HAPContextParser {
 			HAPContext context = contextGroup.getContext(contextType);
 			parseContext(contextEleJson, context);
 		}
+		contextGroup.getInfo().buildObject(contextGroupJson.opt(HAPContextGroup.INFO), HAPSerializationFormat.JSON);
 	}
 	
 	public static void parseContext(JSONObject contextJson, HAPContext context) {
@@ -40,6 +41,7 @@ public class HAPContextParser {
 		if(path!=null){
 			//relative
 			out = new HAPContextNodeRootRelative();
+			((HAPContextNodeRootRelative)out).setParentCategary((String)eleDefJson.opt(HAPContextNodeRootRelative.PARENTCATEGARY));
 			((HAPContextNodeRootRelative)out).setPath(path);
 		}
 		else{

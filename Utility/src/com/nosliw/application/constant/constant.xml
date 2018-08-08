@@ -407,6 +407,9 @@
 			<definition name="UIRESOURCE_CONTEXTTYPE_INTERNAL" value="internal" description="	UNvisible to external,	visible to content, 	UNinherited by child content"/>
 			<definition name="UIRESOURCE_CONTEXTTYPE_PRIVATE" value="private" description="		UNvisible to external,	UNvisible to content,	UNinherited by child content, used by tag definition"/>
 			<definition type="space"/>
+			<definition name="CONTEXTNODE_INFO_MODE" value="mode" description="used in ui tag definition. manual value indicate the context should not be created by framework, leave it to tag implementation"/>
+			<definition name="CONTEXTNODE_INFO_PARENTCONTEXTCATEGARY" value="parentContextCategary" description="which categary relative context reference to, this for same categary"/>
+			<definition type="space"/>
 			<definition name="UIRESOURCEMAN_SETTINGNAME_SCRIPTLOCATION" value="temp.scriptLocation"/>
 			<definition type="space"/>
 			<definition name="DATATYPEMAN_SETTINGNAME_SCRIPTLOCATION" value="temp.scriptLocation"/>

@@ -26,6 +26,9 @@
 					mode : "manual"
 				}
 			}		
+		},
+		info : {
+			inherit : true
 		}
 	},
 	script : function(env){

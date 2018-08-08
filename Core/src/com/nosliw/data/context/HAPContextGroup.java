@@ -3,7 +3,10 @@ package com.nosliw.data.context;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -13,10 +16,15 @@ import com.nosliw.common.utils.HAPConstant;
 //normally contexts are grouped according to type : public, private, ...
 @HAPEntityWithAttribute
 public class HAPContextGroup extends HAPSerializableImp{
+
+	@HAPAttribute
+	public static final String INFO = "info";
 	
 	private Map<String, HAPContext> m_contexts;
+	private HAPInfo m_info;
 	
 	public HAPContextGroup(){
+		this.m_info = new HAPInfoImpSimple(); 
 		this.m_contexts = new LinkedHashMap<String, HAPContext>();
 		for(String type : getAllContextTypes()){
 			this.m_contexts.put(type, new HAPContext());
@@ -56,6 +64,8 @@ public class HAPContextGroup extends HAPSerializableImp{
 			this.getContext(type).empty();
 		}
 	}
+	
+	public HAPInfo getInfo() {  return this.m_info;  }
 	
 	public HAPContext getPublicContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);  }
 	public HAPContext getProtectedContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED);  }

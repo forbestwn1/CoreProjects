@@ -25,7 +25,7 @@ public class HAPUIResourceContextProcessor {
 	public static void process(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 
 		//process context defined within unit
-		HAPContextUtility.processContextGroupDefinition(parent==null?null:parent.getContext(), uiDefinition.getContextDefinition(), uiDefinition.getContext(), uiDefinition.getAttributes(), contextProcessorEnv);
+		HAPContextUtility.processContextGroupDefinition(uiDefinition.getContextDefinition(), parent==null?null:parent.getContext(), uiDefinition.getContext(), uiDefinition.getAttributes(), contextProcessorEnv);
 		
 		processExpressionContext(parent, uiDefinition, uiTagMan, contextProcessorEnv);
 
