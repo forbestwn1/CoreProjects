@@ -59,6 +59,12 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 		return true;
 	}
 	
+	public HAPInfoImpSimple clone() {
+		HAPInfoImpSimple out = new HAPInfoImpSimple();
+		out.m_values.putAll(this.m_values);
+		return out;
+	}
+	
 	@Override
 	protected String buildLiterate(){
 		List<String> segs = new ArrayList<String>();

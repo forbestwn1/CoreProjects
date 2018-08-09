@@ -72,8 +72,6 @@ public class HAPUITagDefinitionParser {
 	
 	//parse 
 	public static void parseContextInTagDefinition(JSONObject contextJson, HAPUITagDefinitionContext contextOut){
-		Boolean inherit = (Boolean)contextJson.opt(HAPUITagDefinitionContext.INHERIT);
-		if(inherit!=null)  contextOut.setInherit(inherit);
 		HAPContextParser.parseContextGroup(contextJson, contextOut);
 	}
 

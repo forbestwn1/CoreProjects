@@ -16,7 +16,6 @@
 		},
 	],
 	context: {
-		inherit : true,
 		public : {
 			
 		},

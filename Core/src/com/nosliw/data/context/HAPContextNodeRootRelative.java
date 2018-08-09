@@ -51,8 +51,7 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRoot{
 	@Override
 	public String getType() {		return HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE;	}
 
-	public void setPath(HAPContextPath path){	this.m_path = path;
-	}
+	public void setPath(HAPContextPath path){	this.m_path = path;	}
 	public void setPath(String path) {  this.m_pathStr = path;   }
 
 	public HAPContextPath getPath() {
@@ -80,6 +79,15 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRoot{
 		}
 	}
 
+	@Override
+	public HAPContextNodeRoot toSolidContextNode(Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
+		HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
+		this.toSolidContextNode(out, constants, contextProcessorEnv);
+		out.m_pathStr = HAPContextUtility.getSolidName(this.m_pathStr, constants, contextProcessorEnv);
+		out.m_parentCategary = this.m_parentCategary;
+		return out;
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);

@@ -10,7 +10,6 @@
 		}
 	],
 	context: {
-		inherit : false,
 		public : {
 			
 		},
@@ -19,6 +18,9 @@
 				path : "<%=&(data)&%>",
 				definition : "test.array;1.0.0"
 			}
+		},
+		info : {
+			inherit : "false"
 		}
 	},
 	events : {

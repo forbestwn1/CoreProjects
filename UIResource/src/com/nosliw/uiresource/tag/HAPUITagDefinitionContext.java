@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.data.context.HAPConfigureContextProcessor;
 import com.nosliw.data.context.HAPContextGroup;
 /**
  * Represent definition of context according to relationship with parent 
@@ -14,20 +15,17 @@ public class HAPUITagDefinitionContext extends HAPContextGroup{
 	@HAPAttribute
 	public static final String INHERIT = "inherit";
 
-	//whether interit the context from parent
-	private boolean m_inherit;
-
 	public HAPUITagDefinitionContext(){
-		this.m_inherit = true;
 	}
 
-	public boolean isInherit(){  return this.m_inherit;  }
-	public void setInherit(boolean inherit){  this.m_inherit = inherit;   } 
-
+	public String getInheritMode() {  
+		String out = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;
+		if("false".equals(this.getInfo().getValue(INHERIT)))  out = HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE;
+		return out;				
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(INHERIT, this.m_inherit+"");
-		typeJsonMap.put(INHERIT, Boolean.class);
 	}	
 }

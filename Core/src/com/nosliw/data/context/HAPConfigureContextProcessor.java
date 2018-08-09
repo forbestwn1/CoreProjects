@@ -14,15 +14,15 @@ public class HAPConfigureContextProcessor {
 	//inheritable, but child unaffected for same name
 	public static String VALUE_INHERITMODE_CHILD = "child";
 	//UNheritable
-	public static String VALUE_INHERITMODE_NON = "non";
+	public static String VALUE_INHERITMODE_NONE = "none";
 
 	//how to find referenced parent node
-	public String relativeResolveMode;
+	public String relativeResolveMode = VALUE_RESOLVEPARENTMODE_BEST;
 	//context categary to find referenced parent node 
 	public String[] parentCategary;
 	
 	//
-	public String inheritMode;
+	public String inheritMode = VALUE_INHERITMODE_CHILD;
 	
 	
 }

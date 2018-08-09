@@ -28,7 +28,7 @@
 			}		
 		},
 		info : {
-			inherit : true
+			inherit : "true"
 		}
 	},
 	script : function(env){

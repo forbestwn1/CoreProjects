@@ -13,7 +13,6 @@
 		}	
 	],
 	context: {
-		inherit : true,
 		private : {
 			"internal_data": {
 				path : "<%=&(data)&%>"

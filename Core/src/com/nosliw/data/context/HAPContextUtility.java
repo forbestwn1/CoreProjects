@@ -16,40 +16,49 @@ import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteEmbededEx
 
 public class HAPContextUtility {
 
-	public static void processContextGroupDefinition(HAPContextGroup defContext, HAPContextGroup parentContext, HAPContextGroup outContext, HAPConfigureContextProcessor configure, Map<String, String> constants, HAPEnvContextProcessor contextProcessorEnv) {
-		for(String contextType : HAPContextGroup.getInheritableContextTypes()){
+	public static void processContextGroupDefinition(HAPContextGroup defContext, HAPContextGroup parentContext, HAPContextGroup outContext, HAPConfigureContextProcessor configure, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
+		for(String contextType : HAPContextGroup.getAllContextTypes()){
 			processContextDefinition(defContext.getContext(contextType), contextType, parentContext, outContext.getContext(contextType), configure, constants, contextProcessorEnv);
 		}
 	}
 
-	public static void processContextDefinition(HAPContext defContext, String contextCategary, HAPContextGroup parentContextGroup, HAPContext outContext, HAPConfigureContextProcessor configure, Map<String, String> constants, HAPEnvContextProcessor contextProcessorEnv) {
-		//process inherate first
-		HAPContext parentContext = parentContextGroup.getContext(contextCategary);
-		Map<String, HAPContextNodeRoot> parentEles = parentContext.getElements();
-		for(String eleName : parentEles.keySet()) {
-			if(HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT.equals(configure.inheritMode)) {
-				//parent override child
-				processInheritedElement(parentContextGroup, contextCategary, eleName, outContext, configure, constants, contextProcessorEnv);
-			}
-			else if(HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD.equals(configure.inheritMode)) {
-				//child override parent
-				if(defContext.getElement(eleName)==null) {
+	public static void processContextDefinitionWithoutInhert(HAPContext defContext, HAPContextGroup parentContextGroup, HAPContext outContext, HAPConfigureContextProcessor configure, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
+		configure.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE;
+		processContextDefinition(defContext, null, parentContextGroup, outContext, configure, constants, contextProcessorEnv);
+	}
+	
+	public static void processContextDefinition(HAPContext context, String contextCategary, HAPContextGroup parentContextGroup, HAPContext outContext, HAPConfigureContextProcessor configure, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
+		HAPContext solidContext = buildSolidContext(context, constants, contextProcessorEnv);
+		if(parentContextGroup!=null && !HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(configure.inheritMode) && Arrays.asList(HAPContextGroup.getInheritableContextTypes()).contains(contextCategary)) {
+			//process inherate first
+			HAPContext parentContext = parentContextGroup.getContext(contextCategary);
+			Map<String, HAPContextNodeRoot> parentEles = parentContext.getElements();
+			for(String eleName : parentEles.keySet()) {
+				if(HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT.equals(configure.inheritMode)) {
+					//parent override child
 					processInheritedElement(parentContextGroup, contextCategary, eleName, outContext, configure, constants, contextProcessorEnv);
+				}
+				else if(HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD.equals(configure.inheritMode)) {
+					//child override parent
+					if(solidContext.getElement(eleName)==null) {
+						processInheritedElement(parentContextGroup, contextCategary, eleName, outContext, configure, constants, contextProcessorEnv);
+					}
 				}
 			}
 		}
 
 		//process remaining element in child context
-		Map<String, HAPContextNodeRoot> childEles = defContext.getElements();
+		Map<String, HAPContextNodeRoot> childEles = solidContext.getElements();
 		for(String eleName : childEles.keySet()) {
 			if(outContext.getElement(eleName)==null) {
 				HAPContextNodeRoot childEle = childEles.get(eleName);
-				HAPContextNodeRoot outChildEle;
+				HAPContextNodeRoot outChildEle = null;
 				String type = childEle.getType();
 				switch(type){
 					case HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT:
 					{
 						outChildEle = childEle;
+						break;
 					}
 					case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
 					{
@@ -58,19 +67,22 @@ public class HAPContextUtility {
 						absEle.setDefaultValue(defContextElementAbsolute.getDefaultValue());
 						buildSolidContextNode(defContextElementAbsolute, absEle, constants, contextProcessorEnv);
 						outChildEle = absEle;
+						break;
 					}
 					case HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE:
 					{
 						outChildEle = processRelativeContextDefinitionElement(eleName, (HAPContextNodeRootRelative)childEle, parentContextGroup, configure, constants, contextProcessorEnv);
+						break;
 					}	
 				}
+				outContext.addElement(eleName, outChildEle);
 			}
 		}
 		
 	}
 	
 	//process element that inherited from parent
-	private static void processInheritedElement(HAPContextGroup parentContextGroup, String contextCategary, String eleName, HAPContext outContext, HAPConfigureContextProcessor configure, Map<String, String> constants, HAPEnvContextProcessor contextProcessorEnv) {
+	private static void processInheritedElement(HAPContextGroup parentContextGroup, String contextCategary, String eleName, HAPContext outContext, HAPConfigureContextProcessor configure, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
 		HAPContextNodeRoot outEle = null;
 		HAPContextNodeRoot parentEle = parentContextGroup.getContextNode(contextCategary, eleName);
 		if(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT.equals(parentEle.getType())) {
@@ -82,7 +94,7 @@ public class HAPContextUtility {
 			HAPContextNodeRootRelative relativeEle = new HAPContextNodeRootRelative();
 			relativeEle.setPath(eleName);
 			relativeEle.setParentCategary(contextCategary);
-			outContext.addElement(eleName, HAPContextUtility.processRelativeContextDefinitionElement(eleName, relativeEle, parentContextGroup, configure, constants, contextProcessorEnv));
+			outEle = HAPContextUtility.processRelativeContextDefinitionElement(eleName, relativeEle, parentContextGroup, configure, constants, contextProcessorEnv);
 		}
 		outContext.addElement(eleName, outEle);
 	}
@@ -126,7 +138,8 @@ public class HAPContextUtility {
 //		return null;
 //	}
 
-	private static HAPContextNodeRootRelative processRelativeContextDefinitionElement(String defRootEleName, HAPContextNodeRootRelative defContextElementRelative, HAPContextGroup parentContext, HAPConfigureContextProcessor configure, Map<String, String> constants, HAPEnvContextProcessor contextProcessorEnv){
+	private static HAPContextNodeRootRelative processRelativeContextDefinitionElement(String defRootEleName, HAPContextNodeRootRelative defContextElementRelative, HAPContextGroup parentContext, HAPConfigureContextProcessor configure, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv){
+		if(parentContext==null)  throw new RuntimeException();
 		List<String> categaryes = new ArrayList<String>();
 		if(defContextElementRelative.getParentCategary()!=null) categaryes.add(defContextElementRelative.getParentCategary());
 		else if(configure.parentCategary==null)   categaryes.addAll(Arrays.asList(HAPContextGroup.getVisibleContextTypes()));
@@ -134,7 +147,7 @@ public class HAPContextUtility {
 		return processRelativeContextDefinitionElement(defRootEleName, defContextElementRelative, parentContext, categaryes.toArray(new String[0]), configure.relativeResolveMode, constants, contextProcessorEnv);
 	}
 	
-	private static HAPContextNodeRootRelative processRelativeContextDefinitionElement(String defRootEleName, HAPContextNodeRootRelative defContextElementRelative, HAPContextGroup parentContext, String[] categaryes, String mode, Map<String, String> constants, HAPEnvContextProcessor contextProcessorEnv){
+	private static HAPContextNodeRootRelative processRelativeContextDefinitionElement(String defRootEleName, HAPContextNodeRootRelative defContextElementRelative, HAPContextGroup parentContext, String[] categaryes, String mode, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv){
 		HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
 		HAPContextPath path = new HAPContextPath(getSolidName(defContextElementRelative.getPathStr(), constants, contextProcessorEnv));
 		out.setPath(path);
@@ -156,15 +169,25 @@ public class HAPContextUtility {
 			out.setMatchers(noVoidMatchers);
 		}
 		else{
+			//not find parent node, throw exception
 			throw new RuntimeException();
+		}
+		return out;
+	}
+
+	private static HAPContext buildSolidContext(HAPContext context, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
+		HAPContext out = new HAPContext();
+		for(String name : context.getElements().keySet()) {
+			String solidName = getSolidName(name, constants, contextProcessorEnv);
+			out.addElement(solidName, context.getElement(name).toSolidContextNode(constants, contextProcessorEnv));
 		}
 		return out;
 	}
 	
 	//evaluate embeded script expression
-	private static String getSolidName(String name, Map<String, String> constants, HAPEnvContextProcessor contextProcessorEnv){
+	public static String getSolidName(String name, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv){
 		HAPEmbededScriptExpression se = new HAPEmbededScriptExpression(name, contextProcessorEnv.expressionManager);
-		HAPRuntimeTaskExecuteEmbededExpression task = new HAPRuntimeTaskExecuteEmbededExpression(se, null, new LinkedHashMap<String, Object>(constants));
+		HAPRuntimeTaskExecuteEmbededExpression task = new HAPRuntimeTaskExecuteEmbededExpression(se, null, constants);
 		HAPServiceData serviceData = contextProcessorEnv.runtime.executeTaskSync(task);
 		if(serviceData.isSuccess())   return (String)serviceData.getData();
 		else return null;
@@ -173,7 +196,7 @@ public class HAPContextUtility {
 	//build context node with solid name
 	//def : original node
 	//solid : out, sold node
-	private static void buildSolidContextNode(HAPContextNode def, HAPContextNode solid, Map<String, String> constants, HAPEnvContextProcessor contextProcessorEnv){
+	public static void buildSolidContextNode(HAPContextNode def, HAPContextNode solid, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv){
 		solid.setDefinition(def.getDefinition());
 		for(String name : def.getChildren().keySet()){
 			String solidName = getSolidName(name, constants, contextProcessorEnv);

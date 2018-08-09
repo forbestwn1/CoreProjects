@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.data.context.HAPConfigureContextProcessor;
 import com.nosliw.data.context.HAPContext;
 import com.nosliw.data.context.HAPContextNode;
 import com.nosliw.data.context.HAPContextNodeCriteria;
@@ -25,7 +26,7 @@ public class HAPUIResourceContextProcessor {
 	public static void process(HAPUIDefinitionUnit parent, HAPUIDefinitionUnit uiDefinition, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 
 		//process context defined within unit
-		HAPContextUtility.processContextGroupDefinition(uiDefinition.getContextDefinition(), parent==null?null:parent.getContext(), uiDefinition.getContext(), uiDefinition.getAttributes(), contextProcessorEnv);
+		HAPContextUtility.processContextGroupDefinition(uiDefinition.getContextDefinition(), parent==null?null:parent.getContext(), uiDefinition.getContext(), new HAPConfigureContextProcessor(), new LinkedHashMap<String, Object>(uiDefinition.getAttributes()), contextProcessorEnv);
 		
 		processExpressionContext(parent, uiDefinition, uiTagMan, contextProcessorEnv);
 

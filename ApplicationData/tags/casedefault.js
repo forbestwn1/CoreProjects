@@ -4,7 +4,6 @@
 	attributes : [
 	],
 	context: {
-		inherit : true,
 		public : {
 		},
 		private : {

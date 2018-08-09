@@ -39,7 +39,7 @@ public abstract class HAPContextNodeRoot extends HAPContextNode{
 	//default value for the root, used in runtime when no value is set
 	private Object m_defaultValue;
 
-	private HAPInfo m_info;
+	private HAPInfoImpSimple m_info;
 	
 	public HAPContextNodeRoot() {
 		this.m_info = new HAPInfoImpSimple(); 
@@ -55,10 +55,22 @@ public abstract class HAPContextNodeRoot extends HAPContextNode{
 	public void setName(String name) {  this.m_name = name;    }
 	public void setDescription(String description) {   this.m_description = description;   }
 	
+	public abstract HAPContextNodeRoot toSolidContextNode(Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv);
+	
+	protected void toSolidContextNode(HAPContextNodeRoot solidRootNode, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
+		solidRootNode.m_name = this.m_name;
+		solidRootNode.m_description = this.m_description;
+		solidRootNode.m_defaultValue = this.m_defaultValue;
+		solidRootNode.m_info = this.m_info.clone();
+		HAPContextUtility.buildSolidContextNode(this, solidRootNode, constants, contextProcessorEnv);
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(NAME, this.m_name);
+		jsonMap.put(DESCRIPTION, this.m_description);
 		if(this.m_defaultValue!=null){
 			jsonMap.put(DEFAULT, this.m_defaultValue.toString());
 			typeJsonMap.put(DEFAULT, this.m_defaultValue.getClass());

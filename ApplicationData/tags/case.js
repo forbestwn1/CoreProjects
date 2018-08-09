@@ -7,7 +7,6 @@
 		}
 	],
 	context: {
-		inherit : true,
 		public : {
 		},
 		private : {

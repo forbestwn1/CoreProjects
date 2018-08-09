@@ -96,5 +96,6 @@ public class HAPContextGroup extends HAPSerializableImp{
 		for(String type : this.m_contexts.keySet()){
 			jsonMap.put(type, HAPJsonUtility.buildJson(this.m_contexts.get(type), HAPSerializationFormat.JSON));
 		}
+		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_info, HAPSerializationFormat.JSON));
 	}
 }
