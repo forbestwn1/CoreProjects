@@ -62,11 +62,7 @@ public class HAPContextUtility {
 					}
 					case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
 					{
-						HAPContextNodeRootAbsolute defContextElementAbsolute = (HAPContextNodeRootAbsolute)childEle;
-						HAPContextNodeRootAbsolute absEle = new HAPContextNodeRootAbsolute();
-						absEle.setDefaultValue(defContextElementAbsolute.getDefaultValue());
-						buildSolidContextNode(defContextElementAbsolute, absEle, constants, contextProcessorEnv);
-						outChildEle = absEle;
+						outChildEle = childEle;
 						break;
 					}
 					case HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE:
@@ -99,45 +95,6 @@ public class HAPContextUtility {
 		outContext.addElement(eleName, outEle);
 	}
 	
-	
-//	public static void processContextGroupDefinition(HAPContextGroup defContext, HAPContextGroup parentContext, HAPContextGroup outContext, Map<String, String> constants, HAPEnvContextProcessor contextProcessorEnv) {
-//		for(String contextType : HAPContextGroup.getAllContextTypes()){
-//			Map<String, HAPContextNodeRoot> defEles = defContext.getElements(contextType);
-//			for(String name : defEles.keySet()){
-//				String realName = getSolidName(name, constants, contextProcessorEnv);
-//				outContext.addElement(realName, processContextDefinitionElement(realName, defEles.get(name), parentContext, constants, contextProcessorEnv), contextType);
-//			}
-//		}
-//	}
-//	
-//	public static void processContextDefinition(HAPContext defContext, HAPContextGroup parentContext, HAPContext outContext, Map<String, String> constants, HAPEnvContextProcessor contextProcessorEnv) {
-//		Map<String, HAPContextNodeRoot> defEles = defContext.getElements();
-//		for(String name : defEles.keySet()){
-//			String realName = getSolidName(name, constants, contextProcessorEnv);
-//			outContext.addElement(realName, processContextDefinitionElement(realName, defEles.get(name), parentContext, constants, contextProcessorEnv));
-//		}
-//	}
-//	
-//	//convert context definition to context 
-//	public static HAPContextNodeRoot processContextDefinitionElement(String defRootEleName, HAPContextNodeRoot defContextElement, HAPContextGroup parentContext, Map<String, String> constants, HAPEnvContextProcessor contextProcessorEnv){
-//		String type = defContextElement.getType();
-//		switch(type){
-//			case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
-//			{
-//				HAPContextNodeRootAbsolute defContextElementAbsolute = (HAPContextNodeRootAbsolute)defContextElement;
-//				HAPContextNodeRootAbsolute out = new HAPContextNodeRootAbsolute();
-//				out.setDefaultValue(defContextElementAbsolute.getDefaultValue());
-//				buildSolidContextNode(defContextElementAbsolute, out, constants, contextProcessorEnv);
-//				return out;
-//			}
-//			case HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE:
-//			{
-//				return processRelativeContextDefinitionElement(defRootEleName, (HAPContextNodeRootRelative)defContextElement, parentContext, constants, contextProcessorEnv);
-//			}	
-//		}
-//		return null;
-//	}
-
 	private static HAPContextNodeRootRelative processRelativeContextDefinitionElement(String defRootEleName, HAPContextNodeRootRelative defContextElementRelative, HAPContextGroup parentContext, HAPConfigureContextProcessor configure, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv){
 		if(parentContext==null)  throw new RuntimeException();
 		List<String> categaryes = new ArrayList<String>();
@@ -149,7 +106,7 @@ public class HAPContextUtility {
 	
 	private static HAPContextNodeRootRelative processRelativeContextDefinitionElement(String defRootEleName, HAPContextNodeRootRelative defContextElementRelative, HAPContextGroup parentContext, String[] categaryes, String mode, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv){
 		HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
-		HAPContextPath path = new HAPContextPath(getSolidName(defContextElementRelative.getPathStr(), constants, contextProcessorEnv));
+		HAPContextPath path = defContextElementRelative.getPath(); 
 		out.setPath(path);
 		
 		HAPInfoRelativeContextResolve resolveInfo = resolveReferencedParentContextNode(path, parentContext, categaryes, mode);
