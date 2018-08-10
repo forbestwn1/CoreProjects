@@ -19,11 +19,6 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPOperationParm;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExpression;
-import com.nosliw.data.core.expressionscript.HAPEmbededScriptExpression;
-import com.nosliw.data.core.expressionscript.HAPScriptExpression;
-import com.nosliw.data.core.expressionscript.HAPScriptExpressionScriptConstant;
-import com.nosliw.data.core.expressionscript.HAPScriptExpressionScriptSegment;
-import com.nosliw.data.core.expressionscript.HAPScriptExpressionScriptVariable;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskLoadResources;
 import com.nosliw.data.core.runtime.HAPResource;
@@ -34,6 +29,11 @@ import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSLibrary;
 import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpressionAbstract;
+import com.nosliw.data.core.script.expressionscript.HAPEmbededScriptExpression;
+import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
+import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionScriptConstant;
+import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionScriptSegment;
+import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionScriptVariable;
 
 public class HAPRuntimeJSScriptUtility {
 

@@ -3,10 +3,10 @@ package com.nosliw.uiresource.tag;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.data.context.HAPConfigureContextProcessor;
-import com.nosliw.data.context.HAPContextGroup;
-import com.nosliw.data.context.HAPContextUtility;
-import com.nosliw.data.context.HAPEnvContextProcessor;
+import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
+import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPContextUtility;
+import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
 
 public class HAPUITagUtility {

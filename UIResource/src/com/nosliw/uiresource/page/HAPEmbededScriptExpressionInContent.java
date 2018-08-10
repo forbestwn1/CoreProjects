@@ -1,8 +1,8 @@
 package com.nosliw.uiresource.page;
 
-import com.nosliw.data.core.expressionscript.HAPEmbededScriptExpression;
-import com.nosliw.data.core.expressionscript.HAPScriptExpression;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
+import com.nosliw.data.core.script.expressionscript.HAPEmbededScriptExpression;
+import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
 
 /*
  * class for script expression part in html content

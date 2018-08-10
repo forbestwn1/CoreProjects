@@ -3,9 +3,9 @@ package com.nosliw.uiresource.processor;
 import java.util.Iterator;
 import java.util.Map;
 
-import com.nosliw.data.context.HAPConfigureContextProcessor;
-import com.nosliw.data.context.HAPContextUtility;
-import com.nosliw.data.context.HAPEnvContextProcessor;
+import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
+import com.nosliw.data.core.script.context.HAPContextUtility;
+import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 import com.nosliw.uiresource.page.HAPContextEntity;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;

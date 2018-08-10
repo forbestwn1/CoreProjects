@@ -1,4 +1,4 @@
-package com.nosliw.data.core.expressionscript;
+package com.nosliw.data.core.script.expressionscript;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;

@@ -4,14 +4,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.context.HAPContextGroup;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.uiresource.page.HAPConstantUtility;
+import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.parser.HAPUIResourceParser;
+import com.nosliw.uiresource.processor.HAPConstantProcessor;
 import com.nosliw.uiresource.processor.HAPUIResourceProcessor;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
@@ -73,7 +73,7 @@ public class HAPUIResourceManager {
 		String baseContent = this.getUIResourceDefinitionById(definitionId).getSource();
 		//build resource using base resource
 		HAPUIDefinitionUnitResource resource = this.getUIResourceParser().parseContent(resourceId, baseContent);
-		HAPConstantUtility.calculateConstantDefs(resource, null, m_idGengerator, m_expressionMan, m_runtime);
+		HAPConstantProcessor.processConstantDefs(resource, null, m_expressionMan, m_runtime);
 		
 		//update context with new context
 		resource.getContext().hardMergeWith(context);
@@ -97,7 +97,7 @@ public class HAPUIResourceManager {
 	
 	private HAPUIDefinitionUnitResource readUiResourceDefinitionFromFile(String file) {
 		HAPUIDefinitionUnitResource uiResource = this.getUIResourceParser().parseFile(file);
-		HAPConstantUtility.calculateConstantDefs(uiResource, null, m_idGengerator, m_expressionMan, m_runtime);
+		HAPConstantProcessor.processConstantDefs(uiResource, null, m_expressionMan, m_runtime);
 		return uiResource;
 	}
 	

@@ -1,4 +1,4 @@
-package com.nosliw.data.context;
+package com.nosliw.data.core.script.context;
 
 public class HAPConfigureContextProcessor {
 

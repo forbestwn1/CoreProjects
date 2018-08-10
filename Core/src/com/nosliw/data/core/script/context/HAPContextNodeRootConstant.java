@@ -1,17 +1,17 @@
-package com.nosliw.data.context;
+package com.nosliw.data.core.script.context;
 
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
 
-public class HAPContextNodeRootAbsolute extends HAPContextNodeRoot{
+public class HAPContextNodeRootConstant  extends HAPContextNodeRoot{
 
 	@Override
-	public String getType() {		return HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE;	}
+	public String getType() {		return HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT;	}
 
 	@Override
 	public HAPContextNodeRoot toSolidContextNode(Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
-		HAPContextNodeRootAbsolute out = new HAPContextNodeRootAbsolute();
+		HAPContextNodeRootConstant out = new HAPContextNodeRootConstant();
 		this.toSolidContextNode(out, constants, contextProcessorEnv);
 		return out;
 	}

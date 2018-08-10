@@ -1,4 +1,4 @@
-package com.nosliw.data.context;
+package com.nosliw.data.core.script.context;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializable;

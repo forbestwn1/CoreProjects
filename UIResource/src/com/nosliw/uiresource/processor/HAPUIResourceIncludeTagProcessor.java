@@ -7,16 +7,15 @@ import java.util.Set;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.context.HAPContext;
-import com.nosliw.data.context.HAPContextGroup;
-import com.nosliw.data.context.HAPContextNodeRoot;
-import com.nosliw.data.context.HAPContextParser;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPContextNodeRoot;
+import com.nosliw.data.core.script.context.HAPContextParser;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.page.HAPConstantUtility;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitUtility;
@@ -39,7 +38,7 @@ public class HAPUIResourceIncludeTagProcessor {
 		//build include tag
 		HAPUIDefinitionUnitResource uiResource = uiResourceMan.getUIResourceDefinitionById(includeResourceName);
 		uiResourceParser.parseContent(includeTagResource, uiResource.getSource());
-		HAPConstantUtility.calculateConstantDefs(includeTagResource, null, idGengerator, expressionManager, runtime);
+		HAPConstantProcessor.processConstantDefs(includeTagResource, null, expressionManager, runtime);
 
 		//get context mapping definition
 		String contextMapName = includeTagResource.getAttributes().get(HAPConstant.UITAG_NAME_INCLUDE_PARM_CONTEXT);

@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.page;
+package com.nosliw.data.core.script.constant;
 
 import java.util.Map;
 
@@ -9,7 +9,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
 
 @HAPEntityWithAttribute
-public class HAPConstantDef extends HAPSerializableImp{
+public class HAPConstantDef  extends HAPSerializableImp{
 	@HAPAttribute
 	public static String LITERATE = "literate";
 

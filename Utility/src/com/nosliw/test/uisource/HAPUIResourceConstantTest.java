@@ -11,10 +11,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
+import com.nosliw.data.core.script.constant.HAPConstantDef;
 import com.nosliw.uiresource.HAPIdGenerator;
-import com.nosliw.uiresource.page.HAPConstantDef;
-import com.nosliw.uiresource.page.HAPConstantUtility;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
+import com.nosliw.uiresource.processor.HAPConstantProcessor;
 
 public class HAPUIResourceConstantTest {
 
@@ -48,7 +48,7 @@ public class HAPUIResourceConstantTest {
 		HAPIdGenerator idGenerator = new HAPIdGenerator(1);
 		HAPUIDefinitionUnitResource uiResource = new HAPUIDefinitionUnitResource(null, null);
 		uiResource.setConstantDefs(constantsDef);
-		HAPConstantUtility.processConstantDefs(uiResource, idGenerator, runtimeEnvironment.getExpressionSuiteManager(), runtimeEnvironment.getRuntime());
+		HAPConstantProcessor.processConstantDefs(uiResource, null, runtimeEnvironment.getExpressionSuiteManager(), runtimeEnvironment.getRuntime());
 		//compare output
 		for(String name : constantsDef.keySet()){
 			HAPConstantDef constantDef = constantsDef.get(name);

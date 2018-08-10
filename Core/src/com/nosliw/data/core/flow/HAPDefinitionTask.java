@@ -14,9 +14,9 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.context.HAPContext;
-import com.nosliw.data.context.HAPContextParser;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
+import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextParser;
 
 /**
  * Task is unit that can execute 

@@ -4,10 +4,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPProcessContext;
-import com.nosliw.data.context.HAPContext;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.script.context.HAPContext;
 
 public class HAPManagerFlowTask {
 

@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.page;
+package com.nosliw.data.core.script.constant;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -11,86 +11,50 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
-import com.nosliw.data.core.expressionscript.HAPScriptExpression;
-import com.nosliw.data.core.expressionscript.HAPScriptExpressionScriptSegment;
-import com.nosliw.data.core.expressionscript.HAPScriptExpressionUtility;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
-import com.nosliw.uiresource.HAPIdGenerator;
+import com.nosliw.data.core.script.expressionscript.HAPContextExpressionProcess;
+import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
+import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionScriptSegment;
+import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionUtility;
 
 public class HAPConstantUtility {
 
-	/**
-	 * Calculate all the constant values in ConstantDef
-	 * @param parentConstants
-	 * @param idGenerator
-	 * @param expressionMan
-	 * @param runtime
-	 */
-	public static void calculateConstantDefs(
-			HAPUIDefinitionUnit uiDefinitionUnit,
-			Map<String, HAPConstantDef> parentConstants,
-			HAPIdGenerator idGenerator, 
-			HAPExpressionSuiteManager expressionMan, 
-			HAPRuntime runtime){
-		//build constants by merging parent with current
-		Map<String, HAPConstantDef> contextConstants = new LinkedHashMap<String, HAPConstantDef>();
-		if(parentConstants!=null)   contextConstants.putAll(parentConstants);
-		contextConstants.putAll(uiDefinitionUnit.getConstantDefs());
-		uiDefinitionUnit.setConstantDefs(contextConstants);
-		
-		//process all constants defined in this domain
-		HAPConstantUtility.processConstantDefs(uiDefinitionUnit, idGenerator, expressionMan, runtime);
-		
-		//process constants in child
-		for(HAPUIDefinitionUnitTag tag : uiDefinitionUnit.getUITags()){
-			calculateConstantDefs(tag, contextConstants, idGenerator, expressionMan, runtime);
-		}
-	}
-	
 	/**
 	 * process all constants defs to get data of constant
 	 * it will keep the json structure and only calculate the leaf value 
 	 * 		constantDefs : all available constants
 	 */
 	static public void processConstantDefs(
-			HAPUIDefinitionUnit uiDefinitionUnit,
-			HAPIdGenerator idGenerator, 
+			Map<String, HAPConstantDef> constantDefs,
 			HAPExpressionSuiteManager expressionMan, 
 			HAPRuntime runtime){
-		Map<String, HAPConstantDef> constantDefs = uiDefinitionUnit.getConstantDefs();
 		for(String name : constantDefs.keySet()){
 			HAPConstantDef constantDef = constantDefs.get(name);
 			if(!constantDef.isProcessed()){
-				processConstantDef(name, uiDefinitionUnit, idGenerator, expressionMan, runtime);
+				processConstantDef(name, constantDefs, expressionMan, runtime);
 			}
-			uiDefinitionUnit.addConstant(name, constantDef.getValue());
 		}
 	}
 
-	static private void processConstantDef(
+	static HAPConstantDef processConstantDef(
 			String name, 
-			HAPUIDefinitionUnit uiDefinitionUnit,
-			HAPIdGenerator idGenerator, 
+			Map<String, HAPConstantDef> constantDefs,
 			HAPExpressionSuiteManager expressionMan, 
 			HAPRuntime runtime){
-		Map<String, HAPConstantDef> constantDefs = uiDefinitionUnit.getConstantDefs();
 		HAPConstantDef constantDef = constantDefs.get(name);
 		if(!constantDef.isProcessed()){
 			//calculate the value
-			Object data = processConstantDefJsonNode(constantDef.getDefinitionValue(), uiDefinitionUnit, idGenerator, expressionMan, runtime);
+			Object data = processConstantDefJsonNode(constantDef.getDefinitionValue(), constantDefs, expressionMan, runtime);
 			if(data==null)   data = constantDef.getDefinitionValue();	
 			constantDef.setValue(data);
-			//add constant value to expression context if it is data value
-			HAPData dataValue = constantDef.getDataValue();
-			if(dataValue!=null)    uiDefinitionUnit.getExpressionContext().addConstant(name, dataValue);
 			constantDef.processed();
 		}
+		return constantDef;
 	}
 	
 	/**
@@ -104,11 +68,9 @@ public class HAPConstantUtility {
 	 */
 	static private Object processConstantDefJsonNode(
 			Object node,
-			HAPUIDefinitionUnit uiDefinitionUnit,
-			HAPIdGenerator idGenerator, 
+			Map<String, HAPConstantDef> constantDefs,
 			HAPExpressionSuiteManager expressionMan, 
 			HAPRuntime runtime){
-		Map<String, HAPConstantDef> constantDefs = uiDefinitionUnit.getConstantDefs();
 		Object out = null;
 		try{
 			if(node instanceof JSONObject){
@@ -118,7 +80,7 @@ public class HAPConstantUtility {
 				while(keys.hasNext()){
 					String key = keys.next();
 					Object childNode = jsonObj.get(key);
-					Object data = processConstantDefJsonNode(childNode, uiDefinitionUnit, idGenerator, expressionMan, runtime);
+					Object data = processConstantDefJsonNode(childNode, constantDefs, expressionMan, runtime);
 					if(data!=null)   leafDatas.put(key, data);
 				}
 				for(String key : leafDatas.keySet()){
@@ -130,12 +92,12 @@ public class HAPConstantUtility {
 				JSONArray jsonArray = (JSONArray)node;
 				for(int i=0; i<jsonArray.length(); i++){
 					Object childNode = jsonArray.get(i);
-					Object data = processConstantDefJsonNode(childNode, uiDefinitionUnit, idGenerator, expressionMan, runtime);
+					Object data = processConstantDefJsonNode(childNode, constantDefs, expressionMan, runtime);
 					if(data!=null)   jsonArray.put(i, data);
 				}
 			}
 			else{
-				out = processConstantDefLeaf(node, uiDefinitionUnit, idGenerator, expressionMan, runtime);
+				out = processConstantDefLeaf(node, constantDefs, expressionMan, runtime);
 			}
 		}
 		catch(Exception e){
@@ -159,13 +121,10 @@ public class HAPConstantUtility {
 	 */
 	static private Object processConstantDefLeaf(
 			Object leafData,
-			HAPUIDefinitionUnit uiDefinitionUnit,
-			HAPIdGenerator idGenerator, 
+			Map<String, HAPConstantDef> constantDefs,
 			HAPExpressionSuiteManager expressionMan, 
 			HAPRuntime runtime){
 
-		Map<String, HAPConstantDef> constantDefs = uiDefinitionUnit.getConstantDefs();
-		
 		//if leafData is a script expression, then use valueObj to respect the type of return value
 		Object valueObj = null;
 		//otherwise, if leafData contains both script expression and plain text, then build string value instead
@@ -176,42 +135,31 @@ public class HAPConstantUtility {
 			if(segment instanceof HAPScriptExpression){
 				//only process script expression
 				HAPScriptExpression sciptExpression = (HAPScriptExpression)segment;
+
 				//find all required constants names in script expressions
 				Set<String> expConstantNames = new HashSet<String>();
 				Set<String> scriptConstantNames = new HashSet<String>();
-				
-				List<Object> uiExpEles = sciptExpression.getElements();
-				for(Object uiExpEle : uiExpEles){
-					if(uiExpEle instanceof HAPDefinitionExpression){
-						HAPDefinitionExpression expDef = (HAPDefinitionExpression)uiExpEle;
-						expConstantNames.addAll(HAPOperandUtility.discoveryUnsolvedConstants(expDef.getOperand()));
-					}
-					else if(uiExpEle instanceof HAPScriptExpressionScriptSegment){
-						HAPScriptExpressionScriptSegment scriptSegment = (HAPScriptExpressionScriptSegment)uiExpEle;
-						scriptConstantNames.addAll(scriptSegment.getConstantNames());
-					}
+				for(Object uiExpEle : sciptExpression.getElements()){
+					if(uiExpEle instanceof HAPDefinitionExpression)		expConstantNames.addAll(HAPOperandUtility.discoveryUnsolvedConstants(((HAPDefinitionExpression)uiExpEle).getOperand()));
+					else if(uiExpEle instanceof HAPScriptExpressionScriptSegment)		scriptConstantNames.addAll(((HAPScriptExpressionScriptSegment)uiExpEle).getConstantNames());
 				}
 				
 				//build constants data required by expression
-				Map<String, HAPData> expParms = new LinkedHashMap<String, HAPData>();
+				HAPContextExpressionProcess expProcessContext = new HAPContextExpressionProcess();
 				for(String constantName : expConstantNames){
-					HAPConstantDef constantDef = constantDefs.get(constantName);
-					processConstantDef(constantName, uiDefinitionUnit, idGenerator, expressionMan, runtime);
-					HAPData parm = constantDef.getDataValue();
-					expParms.put(constantName, parm);
+					HAPConstantDef constantDef = processConstantDef(constantName, constantDefs, expressionMan, runtime);
+					expProcessContext.addConstant(constantName, constantDef.getDataValue());
 				}
 				
 				//build constants required by script
 				Map<String, Object> scriptConstants = new LinkedHashMap<String, Object>();
 				for(String scriptConstantName : scriptConstantNames){
-					HAPConstantDef constantDef = constantDefs.get(scriptConstantName);
-					processConstantDef(scriptConstantName, uiDefinitionUnit, idGenerator, expressionMan, runtime);
-					Object constant = constantDef.getValue();
-					scriptConstants.put(scriptConstantName, constant);
+					HAPConstantDef constantDef = processConstantDef(scriptConstantName, constantDefs, expressionMan, runtime);
+					scriptConstants.put(scriptConstantName, constantDef.getValue());
 				}
 				
 				//process expression in scriptExpression
-				sciptExpression.processExpressions(uiDefinitionUnit.getExpressionContext(), HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
+				sciptExpression.processExpressions(expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
 				
 				//execute script expression
 				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(sciptExpression, null, scriptConstants);
@@ -244,5 +192,5 @@ public class HAPConstantUtility {
 			return valueStr.toString();
 		}
 	}
-
+	
 }
