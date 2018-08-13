@@ -7,6 +7,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.constant.HAPConstantDef;
+import com.nosliw.data.core.script.constant.HAPConstantUtility;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
 import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
 
@@ -30,7 +31,7 @@ public class HAPConstantProcessor {
 		contextConstants.putAll(uiDefinitionUnit.getConstantDefs());
 		
 		//process all constants defined in this domain
-		com.nosliw.data.core.script.constant.HAPConstantUtility.processConstantDefs(contextConstants, expressionMan, runtime);
+		HAPConstantUtility.processConstantDefs(contextConstants, expressionMan, runtime);
 		uiDefinitionUnit.setConstantDefs(contextConstants);
 
 		for(String constantName : contextConstants.keySet()) {

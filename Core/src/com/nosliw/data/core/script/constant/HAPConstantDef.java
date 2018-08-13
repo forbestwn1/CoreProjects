@@ -1,6 +1,10 @@
 package com.nosliw.data.core.script.constant;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -25,8 +29,12 @@ public class HAPConstantDef  extends HAPSerializableImp{
 	
 	private boolean m_isProcessed = false;
 	
+	//name of other constants that reference to this constant
+	private Set<String> m_referenced; 
+	
 	public HAPConstantDef(Object defObj){
 		this.m_definitionObj = defObj;
+		this.m_referenced = new HashSet<String>();
 	}
 
 	public Object getDefinitionValue(){  return this.m_definitionObj;   }
@@ -53,6 +61,9 @@ public class HAPConstantDef  extends HAPSerializableImp{
 		else return null;
 	}
 
+	public void addReferenced(String name) {    this.m_referenced.add(name);  }
+	public Set<String> getReferenced() {   return this.m_referenced;  }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(LITERATE, this.m_definitionObj.toString());

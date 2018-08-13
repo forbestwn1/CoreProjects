@@ -41,7 +41,7 @@ public class HAPConstantUtility {
 		}
 	}
 
-	static HAPConstantDef processConstantDef(
+	static private HAPConstantDef processConstantDef(
 			String name, 
 			Map<String, HAPConstantDef> constantDefs,
 			HAPExpressionSuiteManager expressionMan, 
@@ -49,7 +49,7 @@ public class HAPConstantUtility {
 		HAPConstantDef constantDef = constantDefs.get(name);
 		if(!constantDef.isProcessed()){
 			//calculate the value
-			Object data = processConstantDefJsonNode(constantDef.getDefinitionValue(), constantDefs, expressionMan, runtime);
+			Object data = processConstantDefJsonNode(name, constantDef.getDefinitionValue(), constantDefs, expressionMan, runtime);
 			if(data==null)   data = constantDef.getDefinitionValue();	
 			constantDef.setValue(data);
 			constantDef.processed();
@@ -60,6 +60,7 @@ public class HAPConstantUtility {
 	/**
 	 * Process any json node
 	 * @param node  
+	 * @param refConstants   reference constants
 	 * @param constantDefs
 	 * @param idGenerator
 	 * @param expressionMan
@@ -67,6 +68,7 @@ public class HAPConstantUtility {
 	 * @return
 	 */
 	static private Object processConstantDefJsonNode(
+			String constantName,
 			Object node,
 			Map<String, HAPConstantDef> constantDefs,
 			HAPExpressionSuiteManager expressionMan, 
@@ -80,7 +82,7 @@ public class HAPConstantUtility {
 				while(keys.hasNext()){
 					String key = keys.next();
 					Object childNode = jsonObj.get(key);
-					Object data = processConstantDefJsonNode(childNode, constantDefs, expressionMan, runtime);
+					Object data = processConstantDefJsonNode(constantName, childNode, constantDefs, expressionMan, runtime);
 					if(data!=null)   leafDatas.put(key, data);
 				}
 				for(String key : leafDatas.keySet()){
@@ -92,12 +94,12 @@ public class HAPConstantUtility {
 				JSONArray jsonArray = (JSONArray)node;
 				for(int i=0; i<jsonArray.length(); i++){
 					Object childNode = jsonArray.get(i);
-					Object data = processConstantDefJsonNode(childNode, constantDefs, expressionMan, runtime);
+					Object data = processConstantDefJsonNode(constantName, childNode, constantDefs, expressionMan, runtime);
 					if(data!=null)   jsonArray.put(i, data);
 				}
 			}
 			else{
-				out = processConstantDefLeaf(node, constantDefs, expressionMan, runtime);
+				out = processConstantDefLeaf(constantName, node, constantDefs, expressionMan, runtime);
 			}
 		}
 		catch(Exception e){
@@ -120,6 +122,7 @@ public class HAPConstantUtility {
 	 * 		if leafData contains a script expression only, then return the result value of sript expression
 	 */
 	static private Object processConstantDefLeaf(
+			String cstName,
 			Object leafData,
 			Map<String, HAPConstantDef> constantDefs,
 			HAPExpressionSuiteManager expressionMan, 
@@ -149,6 +152,7 @@ public class HAPConstantUtility {
 				for(String constantName : expConstantNames){
 					HAPConstantDef constantDef = processConstantDef(constantName, constantDefs, expressionMan, runtime);
 					expProcessContext.addConstant(constantName, constantDef.getDataValue());
+					constantDef.addReferenced(constantName);
 				}
 				
 				//build constants required by script
@@ -156,6 +160,7 @@ public class HAPConstantUtility {
 				for(String scriptConstantName : scriptConstantNames){
 					HAPConstantDef constantDef = processConstantDef(scriptConstantName, constantDefs, expressionMan, runtime);
 					scriptConstants.put(scriptConstantName, constantDef.getValue());
+					constantDef.addReferenced(scriptConstantName);
 				}
 				
 				//process expression in scriptExpression
@@ -192,5 +197,4 @@ public class HAPConstantUtility {
 			return valueStr.toString();
 		}
 	}
-	
 }
