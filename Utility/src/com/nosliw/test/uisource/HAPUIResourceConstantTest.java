@@ -13,7 +13,7 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.script.constant.HAPConstantDef;
 import com.nosliw.uiresource.HAPIdGenerator;
-import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
 import com.nosliw.uiresource.processor.HAPConstantProcessor;
 
 public class HAPUIResourceConstantTest {
@@ -46,7 +46,7 @@ public class HAPUIResourceConstantTest {
 		
 		//process constant defs
 		HAPIdGenerator idGenerator = new HAPIdGenerator(1);
-		HAPUIDefinitionUnitResource uiResource = new HAPUIDefinitionUnitResource(null, null);
+		HAPDefinitionUIUnitResource uiResource = new HAPDefinitionUIUnitResource(null, null);
 		uiResource.setConstantDefs(constantsDef);
 		HAPConstantProcessor.processConstantDefs(uiResource, null, runtimeEnvironment.getExpressionSuiteManager(), runtimeEnvironment.getRuntime());
 		//compare output

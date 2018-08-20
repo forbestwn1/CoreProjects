@@ -1,11 +1,10 @@
-package com.nosliw.uiresource.parser;
+package com.nosliw.uiresource.page.definition;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
@@ -14,33 +13,10 @@ import org.jsoup.select.Elements;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
-import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
 
 public class HAPUIResourceParserUtility {
 
 	public static final String CUSTOMTAG_PREFIX = "nosliw-";
-	
-	/*
-	 * check whether attribute have expression value
-	 * yes, return expression string
-	 * else return null
-	 */
-	public static String isExpressionAttribute(Attribute attr){
-		String out = null;
-		String value = attr.getValue();
-		
-//		int start = value.indexOf(HAPUIResourceParser.UIEXPRESSION_TOKEN_OPEN);
-//		if(start!=-1) {
-//			int expEnd = value.indexOf(HAPUIResourceParser.UIEXPRESSION_TOKEN_CLOSE, start);
-//			if(expEnd!=-1){
-//				int expStart = start + HAPUIResourceParser.UIEXPRESSION_TOKEN_OPEN.length();
-//				out = value.substring(expStart, expEnd);
-//			}
-//		}
-		return out;
-	}
-	
 	
 	/*
 	 * build expression function name based on id
@@ -86,7 +62,7 @@ public class HAPUIResourceParserUtility {
 	/*
 	 * try to get UI id of this element
 	 */
-	public static String getUIId(Element ele){	return ele.attr(HAPConstant.UIRESOURCE_ATTRIBUTE_UIID);	}
+	public static String getUIIdInElement(Element ele){	return ele.attr(HAPConstant.UIRESOURCE_ATTRIBUTE_UIID);	}
 	
 	public static String spanText(String text){
 		return "<span>"+text+"</span>";
@@ -140,8 +116,8 @@ public class HAPUIResourceParserUtility {
 	/*
 	 * find all child customer tags
 	 */
-	public static void getAllChildTags(HAPUIDefinitionUnit resource, Set<HAPUIDefinitionUnitTag> tags){
-		for(HAPUIDefinitionUnitTag tag : resource.getUITags()){
+	public static void getAllChildTags(HAPDefinitionUIUnit uiUnit, Set<HAPDefinitionUIUnitTag> tags){
+		for(HAPDefinitionUIUnitTag tag : uiUnit.getUITags()){
 			tags.add(tag);
 			getAllChildTags(tag, tags);
 		}

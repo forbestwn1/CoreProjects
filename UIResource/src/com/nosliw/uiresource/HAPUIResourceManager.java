@@ -9,15 +9,15 @@ import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
-import com.nosliw.uiresource.parser.HAPUIResourceParser;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
+import com.nosliw.uiresource.page.definition.HAPUIResourceParser;
 import com.nosliw.uiresource.processor.HAPConstantProcessor;
 import com.nosliw.uiresource.processor.HAPUIResourceProcessor;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPUIResourceManager {
 
-	private Map<String, HAPUIDefinitionUnitResource> m_uiResourceDefinitions;
+	private Map<String, HAPDefinitionUIUnitResource> m_uiResourceDefinitions;
 	
 	private HAPExpressionSuiteManager m_expressionMan; 
 	
@@ -41,20 +41,20 @@ public class HAPUIResourceManager {
 		this.m_expressionMan = expressionMan;
 		this.m_resourceMan = resourceMan;
 		this.m_runtime = runtime;
-		this.m_uiResourceDefinitions = new LinkedHashMap<String, HAPUIDefinitionUnitResource>();
+		this.m_uiResourceDefinitions = new LinkedHashMap<String, HAPDefinitionUIUnitResource>();
 		this.m_dataTypeHelper = dataTypeHelper;
 	}
 
 	
     //Add resource definition from file 
-	public HAPUIDefinitionUnitResource addUIResourceDefinition(String file){
-		HAPUIDefinitionUnitResource resource = this.readUiResourceDefinitionFromFile(file);
+	public HAPDefinitionUIUnitResource addUIResourceDefinition(String file){
+		HAPDefinitionUIUnitResource resource = this.readUiResourceDefinitionFromFile(file);
 		this.m_uiResourceDefinitions.put(resource.getId(), resource);
 		return resource;
 	}
 	
-	public HAPUIDefinitionUnitResource getUIResourceDefinitionById(String id){
-		HAPUIDefinitionUnitResource uiResource = this.m_uiResourceDefinitions.get(id);
+	public HAPDefinitionUIUnitResource getUIResourceDefinitionById(String id){
+		HAPDefinitionUIUnitResource uiResource = this.m_uiResourceDefinitions.get(id);
 		if(uiResource==null){
 			//if not registered, then process uiResource on the fly
 			String file = HAPFileUtility.getUIResourceFolder()+id+".res";
@@ -69,10 +69,10 @@ public class HAPUIResourceManager {
 	 * @param context  new context to apply
 	 * @return
 	 */
-	public HAPUIDefinitionUnitResource getUIResource(String resourceId, String definitionId, HAPContextGroup context){
+	public HAPDefinitionUIUnitResource getUIResource(String resourceId, String definitionId, HAPContextGroup context){
 		String baseContent = this.getUIResourceDefinitionById(definitionId).getSource();
 		//build resource using base resource
-		HAPUIDefinitionUnitResource resource = this.getUIResourceParser().parseContent(resourceId, baseContent);
+		HAPDefinitionUIUnitResource resource = this.getUIResourceParser().parseContent(resourceId, baseContent);
 		HAPConstantProcessor.processConstantDefs(resource, null, m_expressionMan, m_runtime);
 		
 		//update context with new context
@@ -83,20 +83,20 @@ public class HAPUIResourceManager {
 		return resource;
 	}
 	
-	public HAPUIDefinitionUnitResource getUIResource(String id){
-		HAPUIDefinitionUnitResource uiResource = this.getUIResourceDefinitionById(id);
+	public HAPDefinitionUIUnitResource getUIResource(String id){
+		HAPDefinitionUIUnitResource uiResource = this.getUIResourceDefinitionById(id);
 		if(!uiResource.isProcessed()){
 			this.processUIResource(uiResource);
 		}
 		return uiResource;
 	}
 	
-	private void processUIResource(HAPUIDefinitionUnitResource uiResource) {
+	private void processUIResource(HAPDefinitionUIUnitResource uiResource) {
 		HAPUIResourceProcessor.processUIResource(uiResource, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.getUIResourceParser(), m_idGengerator);
 	}
 	
-	private HAPUIDefinitionUnitResource readUiResourceDefinitionFromFile(String file) {
-		HAPUIDefinitionUnitResource uiResource = this.getUIResourceParser().parseFile(file);
+	private HAPDefinitionUIUnitResource readUiResourceDefinitionFromFile(String file) {
+		HAPDefinitionUIUnitResource uiResource = this.getUIResourceParser().parseFile(file);
 		HAPConstantProcessor.processConstantDefs(uiResource, null, m_expressionMan, m_runtime);
 		return uiResource;
 	}

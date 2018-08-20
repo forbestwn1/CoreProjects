@@ -24,6 +24,11 @@ public class HAPContextNodeCriteria implements HAPSerializable{
 		return this.m_criteria;
 	}
 
+	public HAPContextNodeCriteria clone() {
+		HAPContextNodeCriteria out = new HAPContextNodeCriteria(this.m_criteria);
+		return out;
+	}
+	
 	@Override
 	public String toStringValue(HAPSerializationFormat format) {
 		return HAPSerializeManager.getInstance().toStringValue(m_criteria, HAPSerializationFormat.LITERATE);

@@ -43,6 +43,15 @@ public class HAPContextNode extends HAPSerializableImp{
 	
 	public void addChild(String name, HAPContextNode nodeBranch){		this.m_children.put(name, nodeBranch);	}
 	
+	public void toContextNode(HAPContextNode node) {
+		if(this.m_definition!=null)		node.m_definition = this.m_definition.clone();
+		for(String childName : this.m_children.keySet()) {
+			HAPContextNode newNode = new HAPContextNode();
+			this.m_children.get(childName).toContextNode(newNode);
+			node.m_children.put(childName, newNode);
+		}
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		if(this.m_children!=null)		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(m_children, HAPSerializationFormat.JSON));

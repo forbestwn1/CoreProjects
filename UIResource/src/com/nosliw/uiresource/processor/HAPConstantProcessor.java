@@ -3,13 +3,15 @@ package com.nosliw.uiresource.processor;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.constant.HAPConstantDef;
 import com.nosliw.data.core.script.constant.HAPConstantUtility;
-import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
-import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
+import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
 
 public class HAPConstantProcessor {
 
@@ -20,33 +22,28 @@ public class HAPConstantProcessor {
 	 * @param expressionMan
 	 * @param runtime
 	 */
-	public static void processConstantDefs(
-			HAPUIDefinitionUnit uiDefinitionUnit,
-			Map<String, HAPConstantDef> parentConstants,
+	public static HAPContextGroup processConstantContext(
+			HAPContextGroup contextGroup,
+			HAPContextGroup parentContextGroup,
 			HAPExpressionSuiteManager expressionMan, 
 			HAPRuntime runtime){
-		//build constants by merging parent with current
-		Map<String, HAPConstantDef> contextConstants = new LinkedHashMap<String, HAPConstantDef>();
-		if(parentConstants!=null)   contextConstants.putAll(parentConstants);
-		contextConstants.putAll(uiDefinitionUnit.getConstantDefs());
+
+		HAPContextGroup out = contextGroup.clone();
+		//merge constants with parent
+		for(String contextCategary : HAPContextGroup.getInheritableContextTypes()) {
+			for(String name : parentContextGroup.getContext(contextCategary).getElementNames()) {
+				if(parentContextGroup.getElement(contextCategary, name).getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
+					if(contextGroup.getElement(contextCategary, name)==null) {
+						out.addElement(name, contextGroup.getElement(contextCategary, name).cloneContextNodeRoot(), contextCategary);
+					}
+				}
+			}
+		}
 		
-		//process all constants defined in this domain
-		HAPConstantUtility.processConstantDefs(contextConstants, expressionMan, runtime);
-		uiDefinitionUnit.setConstantDefs(contextConstants);
-
-		for(String constantName : contextConstants.keySet()) {
-			HAPConstantDef constantDef = contextConstants.get(constantName);
-			uiDefinitionUnit.addConstant(constantName, constantDef.getValue());
-
-			//add constant value to expression context if it is data value
-			HAPData dataValue = constantDef.getDataValue();
-			if(dataValue!=null)    uiDefinitionUnit.getExpressionContext().addConstant(constantName, dataValue);
-		}
-
-		//process constants in child
-		for(HAPUIDefinitionUnitTag tag : uiDefinitionUnit.getUITags()){
-			processConstantDefs(tag, contextConstants, expressionMan, runtime);
-		}
+		//solid constant
+	
+		
+		return out;
 	}
 
 }

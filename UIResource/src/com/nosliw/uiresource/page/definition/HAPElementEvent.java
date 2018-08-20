@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.page;
+package com.nosliw.uiresource.page.definition;
 
 import java.util.Map;
 

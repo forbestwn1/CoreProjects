@@ -12,15 +12,15 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
 import com.nosliw.data.core.script.expressionscript.HAPContextExpressionProcess;
 import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
-import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInAttribute;
-import com.nosliw.uiresource.page.HAPEmbededScriptExpressionInContent;
-import com.nosliw.uiresource.page.HAPUIDefinitionUnit;
-import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
-import com.nosliw.uiresource.page.HAPUIDefinitionUnitTag;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
+import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInAttribute;
+import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInContent;
 
 public class HAPUIResourceExpressionProcessor {
 
-	public static void process(HAPUIDefinitionUnitResource uiResource, HAPRuntime runtime, HAPResourceManagerRoot resourceMan){
+	public static void process(HAPDefinitionUIUnitResource uiResource, HAPRuntime runtime, HAPResourceManagerRoot resourceMan){
 		
 		//process all script expressions in resource
 		processScriptExpression(uiResource, runtime);
@@ -31,37 +31,37 @@ public class HAPUIResourceExpressionProcessor {
 	}
 	
 	//when a embeded in tag attribute turn out to be constant, then replace constant value with embeded  
-	private static void processConstantExpressionInAttributeTag(HAPUIDefinitionUnit uiDefinitionUnit){
-		Set<HAPEmbededScriptExpressionInAttribute> removed = new HashSet<HAPEmbededScriptExpressionInAttribute>();
-		Set<HAPEmbededScriptExpressionInAttribute> all = uiDefinitionUnit.getScriptExpressionsInTagAttributes();
-		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : all){
+	private static void processConstantExpressionInAttributeTag(HAPDefinitionUIUnit uiDefinitionUnit){
+		Set<HAPUIEmbededScriptExpressionInAttribute> removed = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
+		Set<HAPUIEmbededScriptExpressionInAttribute> all = uiDefinitionUnit.getScriptExpressionsInTagAttributes();
+		for(HAPUIEmbededScriptExpressionInAttribute embededScriptExpression : all){
 			if(embededScriptExpression.isConstant()){
 				String value = embededScriptExpression.getValue();
-				HAPUIDefinitionUnitTag tag = uiDefinitionUnit.getUITagesByName().get(embededScriptExpression.getUIId());
+				HAPDefinitionUIUnitTag tag = uiDefinitionUnit.getUITagesByName().get(embededScriptExpression.getUIId());
 				tag.addAttribute(embededScriptExpression.getAttribute(), value);
 				removed.add(embededScriptExpression);
 			}
 		}
 		
-		for(HAPEmbededScriptExpressionInAttribute embededScriptExpression : removed)	all.remove(embededScriptExpression);
+		for(HAPUIEmbededScriptExpressionInAttribute embededScriptExpression : removed)	all.remove(embededScriptExpression);
 		
-		for(HAPUIDefinitionUnit childTag : uiDefinitionUnit.getUITags())		processConstantExpressionInAttributeTag(childTag);
+		for(HAPDefinitionUIUnit childTag : uiDefinitionUnit.getUITags())		processConstantExpressionInAttributeTag(childTag);
 	}
 	
-	private static void processScriptExpression(HAPUIDefinitionUnit uiDefinitionUnit, HAPRuntime runtime){
+	private static void processScriptExpression(HAPDefinitionUIUnit uiDefinitionUnit, HAPRuntime runtime){
 		List<HAPScriptExpression> scriptExpressions = new ArrayList<HAPScriptExpression>();
 		
-		for(HAPEmbededScriptExpressionInContent scriptExpressionInConent : uiDefinitionUnit.getScriptExpressionsInContent())  scriptExpressions.addAll(scriptExpressionInConent.getScriptExpressionsList());
-		for(HAPEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInAttributes())  scriptExpressions.addAll(scriptExpressionInAttribute.getScriptExpressionsList()); 
-		for(HAPEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInTagAttributes())  scriptExpressions.addAll(scriptExpressionInAttribute.getScriptExpressionsList()); 
+		for(HAPUIEmbededScriptExpressionInContent scriptExpressionInConent : uiDefinitionUnit.getScriptExpressionsInContent())  scriptExpressions.addAll(scriptExpressionInConent.getScriptExpressionsList());
+		for(HAPUIEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInAttributes())  scriptExpressions.addAll(scriptExpressionInAttribute.getScriptExpressionsList()); 
+		for(HAPUIEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInTagAttributes())  scriptExpressions.addAll(scriptExpressionInAttribute.getScriptExpressionsList()); 
 		processScriptExpression(scriptExpressions, uiDefinitionUnit, runtime);
 
-		for(HAPUIDefinitionUnit child : uiDefinitionUnit.getUITags()){
+		for(HAPDefinitionUIUnit child : uiDefinitionUnit.getUITags()){
 			processScriptExpression(child, runtime);
 		}
 	}
 
-	private static void processScriptExpression(List<HAPScriptExpression> scriptExpressions, HAPUIDefinitionUnit uiDefinitionUnit, HAPRuntime runtime){
+	private static void processScriptExpression(List<HAPScriptExpression> scriptExpressions, HAPDefinitionUIUnit uiDefinitionUnit, HAPRuntime runtime){
 		HAPContextExpressionProcess expContext = uiDefinitionUnit.getExpressionContext();
 		for(HAPScriptExpression scriptExpression : scriptExpressions){
 			scriptExpression.processExpressions(expContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));

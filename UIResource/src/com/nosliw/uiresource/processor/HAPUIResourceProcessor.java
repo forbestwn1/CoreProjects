@@ -7,14 +7,14 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.page.HAPUIDefinitionUnitResource;
-import com.nosliw.uiresource.parser.HAPUIResourceParser;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
+import com.nosliw.uiresource.page.definition.HAPUIResourceParser;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPUIResourceProcessor {
 
 	public static void processUIResource(
-			HAPUIDefinitionUnitResource uiResource, 
+			HAPDefinitionUIUnitResource uiResource, 
 			HAPUIResourceManager uiResourceMan,
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPUITagManager uiTagMan, 

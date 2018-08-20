@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.page;
+package com.nosliw.uiresource.page.execute;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,7 +13,7 @@ import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 import com.nosliw.data.core.script.expressionscript.HAPEmbededScriptExpression;
 import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
 
-public class HAPEmbededScriptExpressionElement extends HAPEmbededScriptExpression{
+public class HAPUIEmbededScriptExpression extends HAPEmbededScriptExpression{
 
 	@HAPAttribute
 	public static final String UIID = "uiId";
@@ -30,20 +30,20 @@ public class HAPEmbededScriptExpressionElement extends HAPEmbededScriptExpressio
 	//javascript function to execute script expression 
 	private HAPScript m_scriptFunction;
 
-	public HAPEmbededScriptExpressionElement(String uiId, HAPScriptExpression scriptExpression, HAPExpressionSuiteManager expressionManager){
-		super(scriptExpression, expressionManager);
+	public HAPUIEmbededScriptExpression(String uiId, HAPScriptExpression scriptExpression){
+		super(scriptExpression);
 		this.m_uiId = uiId;
 		this.init();
 	}
 	
-	public HAPEmbededScriptExpressionElement(String uiId, List<Object> elements, HAPExpressionSuiteManager expressionManager){
-		super(elements, expressionManager);
+	public HAPUIEmbededScriptExpression(String uiId, List<Object> elements){
+		super(elements);
 		this.m_uiId = uiId;
 		this.init();
 	}
 
-	public HAPEmbededScriptExpressionElement(String uiId, String content, HAPExpressionSuiteManager expressionManager){
-		super(content, expressionManager);
+	public HAPUIEmbededScriptExpression(String uiId, String content){
+		super(content);
 		this.m_uiId = uiId;
 		this.init();
 	}

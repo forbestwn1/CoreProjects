@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.page;
+package com.nosliw.data.core.script.context;
 
 import java.util.Map;
 
@@ -8,8 +8,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextParser;
 
 @HAPEntityWithAttribute
 public class HAPContextEntity  extends HAPSerializableImp{
@@ -18,28 +16,19 @@ public class HAPContextEntity  extends HAPSerializableImp{
 	public static String NAME = "name";
 
 	@HAPAttribute
-	public static String CONTEXTDEFINITION = "contextDefinition";
-	
-	@HAPAttribute
 	public static String CONTEXT = "context";
 
 	private String m_name;
 	
-	//context defintion
-	private HAPContext m_contextDefinition;
-	
-	//absolute context
+	//context
 	private HAPContext m_context;
-
+	
 	public HAPContextEntity() {
 		this.m_context = new HAPContext();
-		this.m_contextDefinition = new HAPContext();
 	}
 
 	public String getName() {   return this.m_name;  }
 	
-	public HAPContext getContextDefinition() {  return this.m_contextDefinition;   }
-
 	public HAPContext getContext() {  return this.m_context;   }
 
 	@Override
@@ -52,7 +41,6 @@ public class HAPContextEntity  extends HAPSerializableImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_name = jsonObj.optString(NAME);
-		HAPContextParser.parseContext(jsonObj.optJSONObject(CONTEXTDEFINITION), this.m_contextDefinition);
 		HAPContextParser.parseContext(jsonObj.optJSONObject(CONTEXT), this.m_context);
 		return true;  
 	}

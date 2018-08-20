@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.page;
+package com.nosliw.uiresource.page.definition;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -11,8 +11,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
+import com.nosliw.data.core.script.context.HAPContextEntity;
 
-public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
+public class HAPUIDefinitionUnitResource1 extends HAPDefinitionUIUnit{
 
 	@HAPAttribute
 	public static final String COMMANDS = "commands";
@@ -27,7 +28,7 @@ public class HAPUIDefinitionUnitResource extends HAPUIDefinitionUnit{
 	//all dependency resources
 	private List<HAPResourceDependent> m_resourceDependency;
 	
-	public HAPUIDefinitionUnitResource(String id, String source){
+	public HAPUIDefinitionUnitResource1(String id, String source){
 		super(id);
 		this.m_source = source;
 		this.m_resourceDependency = new ArrayList<HAPResourceDependent>();

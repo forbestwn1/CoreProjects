@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.page;
+package com.nosliw.uiresource.page.execute;
 
 import java.util.List;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 
-public class HAPEmbededScriptExpressionInAttribute extends HAPEmbededScriptExpressionElement{
+public class HAPUIEmbededScriptExpressionInAttribute extends HAPUIEmbededScriptExpression{
 
 	@HAPAttribute
 	public static final String ATTRIBUTE = "attribute";
@@ -14,13 +14,13 @@ public class HAPEmbededScriptExpressionInAttribute extends HAPEmbededScriptExpre
 	//attribute name
 	private String m_attribute;
 
-	public HAPEmbededScriptExpressionInAttribute(String attr, String uiId, List<Object> elements, HAPExpressionSuiteManager expressionManager){
-		super(uiId, elements, expressionManager);
+	public HAPUIEmbededScriptExpressionInAttribute(String attr, String uiId, List<Object> elements){
+		super(uiId, elements);
 		this.m_attribute = attr;
 	}
 
-	public HAPEmbededScriptExpressionInAttribute(String attr, String uiId, String content, HAPExpressionSuiteManager expressionManager){
-		super(uiId, content, expressionManager);
+	public HAPUIEmbededScriptExpressionInAttribute(String attr, String uiId, String content){
+		super(uiId, content);
 		this.m_attribute = attr;
 	}
 	

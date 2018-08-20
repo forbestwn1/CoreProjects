@@ -36,31 +36,36 @@ public class HAPContextParser {
 		HAPContextNodeRoot out = null;
 		String path = (String)eleDefJson.opt(HAPContextNodeRootRelative.PATH);
 		Object defJsonObj = eleDefJson.opt(HAPContextNode.DEFINITION);
-		Object defaultJsonObj = eleDefJson.opt(HAPContextNodeRoot.DEFAULT);
+		Object defaultJsonObj = eleDefJson.opt(HAPContextNodeRootVariable.DEFAULT);
 		
 		if(path!=null){
 			//relative
 			out = new HAPContextNodeRootRelative();
 			((HAPContextNodeRootRelative)out).setParentCategary((String)eleDefJson.opt(HAPContextNodeRootRelative.PARENTCATEGARY));
 			((HAPContextNodeRootRelative)out).setPath(path);
+			if(defaultJsonObj!=null)		((HAPContextNodeRootRelative)out).setDefaultValue(defaultJsonObj);
+			if(defJsonObj!=null) 	parseContextNodeFromJson(defJsonObj, (HAPContextNodeRootRelative)out);
+		}
+		else if(defJsonObj!=null) {
+			//absolute
+			out = new HAPContextNodeRootAbsolute();   
+			//default value
+			if(defaultJsonObj!=null)		((HAPContextNodeRootAbsolute)out).setDefaultValue(defaultJsonObj);
+			if(defJsonObj!=null) 	parseContextNodeFromJson(defJsonObj, (HAPContextNodeRootAbsolute)out);
 		}
 		else{
-			if(defJsonObj!=null)	out = new HAPContextNodeRootAbsolute();   //absolute
-			else   out = new HAPContextNodeRootConstant();   //constant
+			//constant
+			out = new HAPContextNodeRootConstant();   
+			
 		}
-		String name = (String)eleDefJson.opt(HAPContextNodeRoot.NAME);
-		out.setName(name);
-		String description = (String)eleDefJson.opt(HAPContextNodeRoot.DESCRIPTION);
-		out.setDescription(description);
+		String name = (String)eleDefJson.opt(HAPContextNodeRootInfo.DISPLAYNAME);
+		out.getInfo().setDisplayName(name);
+		String description = (String)eleDefJson.opt(HAPContextNodeRootInfo.DESCRIPTION);
+		out.getInfo().setDescription(description);
 		out.getInfo().buildObject(eleDefJson.opt(HAPContextNodeRoot.INFO), HAPSerializationFormat.JSON);
 		
-		//default value
-		if(defaultJsonObj!=null)		out.setDefaultValue(defaultJsonObj);
 
 		//definition
-		if(defJsonObj!=null) {
-			parseContextNodeFromJson(defJsonObj, out);
-		}
 		
 		return out;
 	}

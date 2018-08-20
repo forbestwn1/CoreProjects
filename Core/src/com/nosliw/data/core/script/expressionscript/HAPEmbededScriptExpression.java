@@ -10,7 +10,6 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
 
 /**
@@ -30,24 +29,19 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 	//all script expressions
 	private Map<String, HAPScriptExpression> m_scriptExpressions;
 	
-	private HAPExpressionSuiteManager m_expressionManager;
-	
-	public HAPEmbededScriptExpression(HAPScriptExpression scriptExpression, HAPExpressionSuiteManager expressionManager){
-		this.m_expressionManager = expressionManager;
+	public HAPEmbededScriptExpression(HAPScriptExpression scriptExpression){
 		this.m_elements = new ArrayList<Object>();
 		this.m_elements.add(scriptExpression);
 		this.init();
 	}
 	
-	public HAPEmbededScriptExpression(List<Object> elements, HAPExpressionSuiteManager expressionManager){
-		this.m_expressionManager = expressionManager;
+	public HAPEmbededScriptExpression(List<Object> elements){
 		this.m_elements = elements;
 		this.init();
 	}
 
-	public HAPEmbededScriptExpression(String content, HAPExpressionSuiteManager expressionManager){
-		this.m_expressionManager = expressionManager;
-		this.m_elements = HAPScriptExpressionUtility.discoverUIExpressionInText(content, this.m_expressionManager);
+	public HAPEmbededScriptExpression(String content){
+		this.m_elements = HAPScriptExpressionUtility.discoverScriptExpressionInTextkkkkk(content);
 		this.init();
 	}
 	

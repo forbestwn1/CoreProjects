@@ -24,17 +24,13 @@ public class HAPScriptExpressionUtility {
 
 	public static final String UIEXPRESSION_TOKEN_OPEN = "<%=";
 	public static final String UIEXPRESSION_TOKEN_CLOSE = "%>";
-	
+
 	/**
 	 * parse text to discover script expression in it
 	 * @param text
-	 * @param idGenerator
-	 * @param expressionMan
-	 * @return a list of text and ui expression object
+	 * @return a list of text and script expression definition
 	 */
-	public static List<Object> discoverUIExpressionInText(
-			String text, 
-			HAPExpressionSuiteManager expressionMan){
+	public static List<Object> discoverEmbededScript(String text){
 		List<Object> out = new ArrayList<Object>();
 		int i = 0;
 		
@@ -44,7 +40,7 @@ public class HAPScriptExpressionUtility {
 			int expEnd = text.indexOf(UIEXPRESSION_TOKEN_CLOSE, start);
 			int end = expEnd + UIEXPRESSION_TOKEN_CLOSE.length();
 			String expression = text.substring(start+UIEXPRESSION_TOKEN_OPEN.length(), expEnd);
-			HAPScriptExpression uiExpression = new HAPScriptExpression(i+"", expression, expressionMan);
+			HAPDefinitionEmbededScript uiExpression = new HAPDefinitionEmbededScript(i+"", expression);
 			out.add(uiExpression);
 			//keep searching the rest
 			text=text.substring(end);
@@ -53,6 +49,29 @@ public class HAPScriptExpressionUtility {
 		}
 		if(!HAPBasicUtility.isStringEmpty(text)){
 			out.add(text);
+		}
+		return out;
+	}
+
+	
+	/**
+	 * parse text to discover script expression in it
+	 * @param text
+	 * @param idGenerator
+	 * @param expressionMan
+	 * @return a list of text and ui expression object
+	 */
+	public static List<Object> discoverEmbededScriptExpression(String text){
+		List<Object> out = new ArrayList<Object>();
+
+		List<Object> segs = discoverEmbededScript(text);
+		for(Object seg : segs) {
+			if(seg instanceof String)   out.add(seg);
+			if(seg instanceof HAPDefinitionEmbededScript) {
+				HAPDefinitionEmbededScript scriptSeg = (HAPDefinitionEmbededScript)seg;
+				HAPScriptExpression uiExpression = new HAPScriptExpression(scriptSeg.getId(), scriptSeg.getDefinition());
+				out.add(uiExpression);
+			}
 		}
 		return out;
 	}

@@ -74,15 +74,11 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	private boolean m_isConstant;
 	private Object m_value;
 	
-	private HAPExpressionSuiteManager m_expressionManager;
-	
-	
-	public HAPScriptExpression(String id, String content, HAPExpressionSuiteManager expressionMan){
+	public HAPScriptExpression(String id, String content){
 		this.m_id = id;
 		this.m_variableNames = new HashSet<String>();
 		this.m_elements = new ArrayList<Object>();
 		this.m_expressions = new LinkedHashMap<String, HAPExecuteExpression>();
-		this.m_expressionManager = expressionMan;
 		this.m_definition = content;
 		this.parseDefinition();
 		this.m_isConstant = false;

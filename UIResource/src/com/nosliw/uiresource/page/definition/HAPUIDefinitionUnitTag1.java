@@ -1,11 +1,11 @@
-package com.nosliw.uiresource.page;
+package com.nosliw.uiresource.page.definition;
 
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
 
-public class HAPUIDefinitionUnitTag extends HAPUIDefinitionUnit{
+public class HAPUIDefinitionUnitTag1 extends HAPDefinitionUIUnit{
 
 	@HAPAttribute
 	public static final String TAGNAME = "tagName";
@@ -13,7 +13,7 @@ public class HAPUIDefinitionUnitTag extends HAPUIDefinitionUnit{
 	//name of this customer tag
 	private String m_tagName;
 
-	public HAPUIDefinitionUnitTag(String tagName, String id){
+	public HAPUIDefinitionUnitTag1(String tagName, String id){
 		super(id);
 		this.m_tagName = tagName;
 	}

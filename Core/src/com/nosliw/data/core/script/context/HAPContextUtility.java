@@ -80,7 +80,7 @@ public class HAPContextUtility {
 	//process element that inherited from parent
 	private static void processInheritedElement(HAPContextGroup parentContextGroup, String contextCategary, String eleName, HAPContext outContext, HAPConfigureContextProcessor configure, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
 		HAPContextNodeRoot outEle = null;
-		HAPContextNodeRoot parentEle = parentContextGroup.getContextNode(contextCategary, eleName);
+		HAPContextNodeRoot parentEle = parentContextGroup.getElement(contextCategary, eleName);
 		if(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT.equals(parentEle.getType())) {
 			//for constant
 			outEle = parentEle;
@@ -136,7 +136,7 @@ public class HAPContextUtility {
 		HAPContext out = new HAPContext();
 		for(String name : context.getElements().keySet()) {
 			String solidName = getSolidName(name, constants, contextProcessorEnv);
-			out.addElement(solidName, context.getElement(name).toSolidContextNode(constants, contextProcessorEnv));
+			out.addElement(solidName, context.getElement(name).toSolidContextNodeRoot(constants, contextProcessorEnv));
 		}
 		return out;
 	}

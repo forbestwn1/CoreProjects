@@ -17,7 +17,7 @@ import com.nosliw.data.core.expression.HAPMatchers;
  * we should treat those two variables as different variables 
  * And matcher is needed to do convert between these two variables  
  */
-public class HAPContextNodeRootRelative extends HAPContextNodeRoot{
+public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 
 	@HAPAttribute
 	public static final String PATH = "path";
@@ -80,7 +80,16 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRoot{
 	}
 
 	@Override
-	public HAPContextNodeRoot toSolidContextNode(Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
+	public HAPContextNodeRoot cloneContextNodeRoot() {
+		HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
+		this.toContextNodeRootVariable(out);
+		out.m_pathStr = this.m_pathStr; 
+		out.m_parentCategary = this.m_parentCategary;
+		return out;
+	}
+	
+	@Override
+	public HAPContextNodeRoot toSolidContextNodeRoot(Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
 		HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
 		this.toSolidContextNode(out, constants, contextProcessorEnv);
 		out.m_pathStr = HAPContextUtility.getSolidName(this.m_pathStr, constants, contextProcessorEnv);
@@ -98,4 +107,5 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRoot{
 			jsonMap.put(REVERSEMATCHERS, HAPJsonUtility.buildJson(this.m_reverseMatchers, HAPSerializationFormat.JSON));
 		}
 	}
+
 }

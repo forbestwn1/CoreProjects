@@ -21,7 +21,7 @@ public class HAPContextGroup extends HAPSerializableImp{
 	public static final String INFO = "info";
 	
 	private Map<String, HAPContext> m_contexts;
-	private HAPInfo m_info;
+	private HAPInfoImpSimple m_info;
 	
 	public HAPContextGroup(){
 		this.m_info = new HAPInfoImpSimple(); 
@@ -50,11 +50,12 @@ public class HAPContextGroup extends HAPSerializableImp{
 		return contextTypes;
 	}
 
+	//visible to child
 	public static String[] getVisibleContextTypes(){
 		String[] contextTypes = {
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC,
-			HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED,
 			HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL,
+			HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED,
+			HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC,
 		};
 		return contextTypes;
 	}
@@ -83,7 +84,20 @@ public class HAPContextGroup extends HAPSerializableImp{
 	
 	public HAPContext getContext(String type){		return this.m_contexts.get(type);	}
 	
-	public HAPContextNodeRoot getContextNode(String type, String name) {  return this.m_contexts.get(type).getElement(name);   }
+	public HAPContextNodeRoot getElement(HAPContextRootNodeId nodeId) {  return this.getElement(nodeId.getCategary(), nodeId.getName());   }
+	public HAPContextNodeRoot getElement(String type, String name) {  return this.m_contexts.get(type).getElement(name);   }
+	
+	public HAPContextGroup clone() {
+		HAPContextGroup out = new HAPContextGroup();
+		out.m_info = this.m_info.clone();
+		for(String categary : this.m_contexts.keySet()) {
+			HAPContext context = this.m_contexts.get(categary);
+			for(String name : context.getElements().keySet()) {
+				out.addElement(name, this.getElement(categary, name).cloneContextNodeRoot(), categary);
+			}
+		}
+		return out;
+	}
 	
 	public void hardMergeWith(HAPContextGroup contextGroup){
 		for(String type : this.m_contexts.keySet()){

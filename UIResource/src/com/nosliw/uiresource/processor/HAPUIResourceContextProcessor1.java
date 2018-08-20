@@ -21,7 +21,7 @@ import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 import com.nosliw.uiresource.tag.HAPUITagUtility;
 
-public class HAPUIResourceContextProcessor {
+public class HAPUIResourceContextProcessor1 {
 
 	public static void process(HAPDefinitionUIUnit parent, HAPDefinitionUIUnit uiDefinition, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 
