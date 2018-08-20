@@ -92,7 +92,7 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 	public HAPContextNodeRoot toSolidContextNodeRoot(Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
 		HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
 		this.toSolidContextNode(out, constants, contextProcessorEnv);
-		out.m_pathStr = HAPContextUtility.getSolidName(this.m_pathStr, constants, contextProcessorEnv);
+		out.m_pathStr = HAPProcessorContextSolidate.getSolidName(this.m_pathStr, constants, contextProcessorEnv);
 		out.m_parentCategary = this.m_parentCategary;
 		return out;
 	}

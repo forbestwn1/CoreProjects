@@ -46,7 +46,7 @@ public class HAPContextNodeRootInfo extends HAPSerializableImp{
 	
 	public HAPContextNodeRootInfo toSolidContextNode(Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
 		HAPContextNodeRootInfo out = new HAPContextNodeRootInfo();
-		out.m_displayName = HAPContextUtility.getSolidName(this.m_displayName, constants, contextProcessorEnv); 
+		out.m_displayName = HAPProcessorContextSolidate.getSolidName(this.m_displayName, constants, contextProcessorEnv); 
 		out.m_description = this.m_description;
 		out.m_info = this.m_info.clone();
 		return out;

@@ -31,6 +31,13 @@ public class HAPContextGroup extends HAPSerializableImp{
 		}
 	}
 
+	public HAPContextGroup(HAPInfo info){
+		this();
+		for(String name : info.getNames()) {
+			this.m_info.setValue(name, info.getValue(name));
+		}
+	}
+	
 	public static String[] getAllContextTypes(){
 		String[] contextTypes = {
 			HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC,

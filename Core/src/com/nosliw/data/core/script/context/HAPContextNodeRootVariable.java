@@ -30,7 +30,7 @@ public abstract class HAPContextNodeRootVariable extends HAPContextNode implemen
 	protected void toSolidContextNode(HAPContextNodeRootVariable solidRootNode, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
 		solidRootNode.m_info = this.m_info.toSolidContextNode(constants, contextProcessorEnv);
 		solidRootNode.m_defaultValue = this.m_defaultValue;
-		HAPContextUtility.buildSolidContextNode(this, solidRootNode, constants, contextProcessorEnv);
+		HAPProcessorContextSolidate.buildSolidContextNode(this, solidRootNode, constants, contextProcessorEnv);
 	}
 	
 	protected void toContextNodeRootVariable(HAPContextNodeRootVariable rootNode) {

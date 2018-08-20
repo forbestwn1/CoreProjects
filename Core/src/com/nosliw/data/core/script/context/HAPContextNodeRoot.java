@@ -17,6 +17,11 @@ public interface HAPContextNodeRoot extends HAPSerializable{
 
 	@HAPAttribute
 	public static final String INFO = "info";
+
+	//
+	public static final String INHERIT_MODE = "inherit";
+	public static final String INHERIT_MODE_FINAL = "final";
+	
 	
 	String getType();
 	

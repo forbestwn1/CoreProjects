@@ -23,5 +23,8 @@ public class HAPContextRootNodeId {
 	public void setCategary(String categary) {  this.m_categary = categary;    }
 	
 	public String getName() {   return this.m_name;   }
+
+	@Override
+	public String toString() {   return HAPNamingConversionUtility.cascadeLevel1(new String[] {this.m_name, this.m_categary});	}
 	
 }
