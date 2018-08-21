@@ -99,7 +99,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	public void setValue(Object value){  this.m_value = value;   }
 	
 	//process all expression definitions in script expression
-	public void processExpressions(HAPContextExpressionProcess expressionContext, Map<String, String> configure){
+	public void processExpressions(HAPContextExpressionProcess expressionContext, Map<String, String> configure, HAPExpressionSuiteManager expressionManager){
 		//preprocess attributes operand in expressions, some attributes operand can be combine into one variable operand
 		for(HAPDefinitionExpression expDef : this.getExpressionDefinitions()){
 			HAPScriptExpressionUtility.processAttributeOperandInExpression(expDef, expressionContext.getVariables());
@@ -110,7 +110,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 			Object element = this.m_elements.get(i);
 			if(element instanceof HAPDefinitionExpression){
 				HAPProcessContext context = new HAPProcessContext(); 
-				m_expressions.put(i+"", this.m_expressionManager.compileExpression(null, (HAPDefinitionExpression)element, expressionContext.getExpressionDefinitionSuite(), null, configure, context));
+				m_expressions.put(i+"", expressionManager.compileExpression(null, (HAPDefinitionExpression)element, expressionContext.getExpressionDefinitionSuite(), null, configure, context));
 			}
 		}
 	}

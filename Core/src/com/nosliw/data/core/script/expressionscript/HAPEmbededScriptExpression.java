@@ -41,7 +41,7 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 	}
 
 	public HAPEmbededScriptExpression(String content){
-		this.m_elements = HAPScriptExpressionUtility.discoverScriptExpressionInTextkkkkk(content);
+		this.m_elements = HAPScriptExpressionUtility.discoverEmbededScriptExpression(content);
 		this.init();
 	}
 	

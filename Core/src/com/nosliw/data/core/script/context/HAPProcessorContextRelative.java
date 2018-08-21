@@ -154,3 +154,14 @@ public class HAPProcessorContextRelative {
 		}
 	}
 }
+
+class HAPInfoRelativeContextResolve{
+	//which categary parent belong to
+	public String parentCategary;
+	//original refered node
+	public HAPContextNode referedNode;
+	//unmatched path part
+	public String remainPath;
+	//apply unmatched path, find the resolvedNode
+	public HAPContextNode resolvedNode;
+}

@@ -11,13 +11,12 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.data.core.script.constant.HAPConstantDef;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
 import com.nosliw.uiresource.processor.HAPConstantProcessor;
 
 public class HAPUIResourceConstantTest {
-
+/*
 	public static void main(String[] agrs) throws JSONException{
 
 		//module init
@@ -77,5 +76,5 @@ public class HAPUIResourceConstantTest {
 		System.out.println();
 		System.out.println();
 	}
-	
+*/	
 }

@@ -201,7 +201,7 @@ public class HAPProcessorContextConstant {
 				}
 				
 				//process expression in scriptExpression
-				sciptExpression.processExpressions(expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
+				sciptExpression.processExpressions(expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessorEnv.expressionManager);
 				
 				//execute script expression
 				HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(sciptExpression, null, scriptConstants);
