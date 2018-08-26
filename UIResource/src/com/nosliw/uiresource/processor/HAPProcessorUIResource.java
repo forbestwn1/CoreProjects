@@ -9,12 +9,13 @@ import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
 import com.nosliw.uiresource.page.definition.HAPUIResourceParser;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
-public class HAPUIResourceProcessor {
+public class HAPProcessorUIResource {
 
-	public static void processUIResource(
-			HAPDefinitionUIUnitResource uiResource, 
+	public static HAPExecutableUIUnitResource processUIResource(
+			HAPDefinitionUIUnitResource uiResourceDef, 
 			HAPUIResourceManager uiResourceMan,
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPUITagManager uiTagMan, 
@@ -24,6 +25,20 @@ public class HAPUIResourceProcessor {
 			HAPUIResourceParser uiResourceParser,
 			HAPIdGenerator idGengerator) {
 		
+		HAPEnvContextProcessor contextProcessorEnv = new HAPEnvContextProcessor(dataTypeHelper, runtime, expressionMan);
+		
+		HAPExecutableUIUnitResource out = new HAPExecutableUIUnitResource(uiResourceDef);
+		
+		HAPProcessorCompile.compile(out);
+		
+		HAPProcessorUIContext.processUIUnitContext(out, null, uiTagMan, contextProcessorEnv);
+		
+		
+		
+		
+		
+		
+		return out;
 		
 		
 		

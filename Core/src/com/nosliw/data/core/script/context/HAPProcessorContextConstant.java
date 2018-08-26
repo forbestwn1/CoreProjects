@@ -16,7 +16,7 @@ import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
-import com.nosliw.data.core.script.expressionscript.HAPContextExpressionProcess;
+import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
 import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
 import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionScriptSegment;
 import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionUtility;
@@ -183,7 +183,7 @@ public class HAPProcessorContextConstant {
 				}
 				
 				//build constants data required by expression
-				HAPContextExpressionProcess expProcessContext = new HAPContextExpressionProcess();
+				HAPContextScriptExpressionProcess expProcessContext = new HAPContextScriptExpressionProcess();
 				for(String constantName : expConstantNames){
 					HAPContextRootNodeId refNodeId = solveReferencedNodeId(new HAPContextRootNodeId(constantName), originalContextGroup);
 					HAPContextNodeRootConstant node = (HAPContextNodeRootConstant)targetContextGroup.getElement(refNodeId);

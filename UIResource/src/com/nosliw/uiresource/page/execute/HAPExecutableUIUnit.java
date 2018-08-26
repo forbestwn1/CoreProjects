@@ -1,6 +1,7 @@
 package com.nosliw.uiresource.page.execute;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
 import com.nosliw.uiresource.page.definition.HAPElementEvent;
@@ -65,6 +67,14 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	//context after processed
 	private HAPContextGroup m_context;
 
+	//store all the constant attribute for this domain
+	//for customer tag, they are the tag's attribute
+	//for resource, they are the attribute of body
+	private Map<String, String> m_attributes;
+	
+	//expression unit
+	private HAPContextScriptExpressionProcess m_expressionContext;
+	
 	//all the customer tag within the domain
 	private Map<String, HAPExecutableUIUnitTag> m_uiTags; 
 	
@@ -82,13 +92,40 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	
 	public HAPExecutableUIUnit(HAPDefinitionUIUnit uiUnitDefinition) {
 		this.m_uiUnitDefinition = uiUnitDefinition;
+		this.m_expressionContext = new HAPContextScriptExpressionProcess();
+		this.m_uiTags = new LinkedHashMap<String, HAPExecutableUIUnitTag>();
+		this.m_context = new HAPContextGroup();
+		this.m_attributes = new LinkedHashMap<String, String>();
+		
+		//build tag trees according to definition
+		for(HAPDefinitionUIUnitTag tag : uiUnitDefinition.getUITags()) {
+			this.m_uiTags.put(tag.getId(), new HAPExecutableUIUnitTag(tag));
+		}
 	}
 	
 	public String getType() {  return this.m_uiUnitDefinition.getType();  }
 	public HAPContextGroup getContext(){  return this.m_context;   }
+	public void setContext(HAPContextGroup context) {  this.m_context = context;   }
 	
-	protected HAPDefinitionUIUnit getUIUnitDefinition() {	return this.m_uiUnitDefinition;	}
+	public Map<String, String> getAttributes(){   return this.m_attributes;    }
+	public void addAttribute(String name, String value) {   this.m_attributes.put(name, value);   }
+
+	public HAPDefinitionUIUnit getUIUnitDefinition() {	return this.m_uiUnitDefinition;	}
 	
+	public HAPContextScriptExpressionProcess getExpressionContext(){   return this.m_expressionContext;   }
+	public void setExpressionContext(HAPContextScriptExpressionProcess context){  this.m_expressionContext = context;   }
+
+	public Collection<HAPExecutableUIUnitTag> getUITags(){return this.m_uiTags.values();} 
+	public HAPExecutableUIUnitTag getUITag(String id){return this.m_uiTags.get(id);} 
+	
+	public void addScriptExpressionsInContent(HAPUIEmbededScriptExpressionInContent se) {this.m_scriptExpressionsInContent.add(se);}
+	public void addScriptExpressionsInAttribute(HAPUIEmbededScriptExpressionInAttribute se) { this.m_scriptExpressionsInAttribute.add(se);   }
+	public void addScriptExpressionsInTagAttribute(HAPUIEmbededScriptExpressionInAttribute se) { this.m_scriptExpressionsInTagAttribute.add(se);   }
+
+	public Set<HAPUIEmbededScriptExpressionInContent> getScriptExpressionsInContent() {  return this.m_scriptExpressionsInContent;  }
+	public Set<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionsInAttribute() {  return this.m_scriptExpressionsInAttribute;   }
+	public Set<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionsInTagAttribute() {  return this.m_scriptExpressionsInTagAttribute;   }
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		this.buildMyJsonMap(jsonMap, typeJsonMap, HAPSerializationFormat.JSON);

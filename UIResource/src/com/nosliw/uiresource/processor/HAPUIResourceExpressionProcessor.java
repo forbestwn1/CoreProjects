@@ -10,7 +10,7 @@ import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
-import com.nosliw.data.core.script.expressionscript.HAPContextExpressionProcess;
+import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
 import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
@@ -62,7 +62,7 @@ public class HAPUIResourceExpressionProcessor {
 	}
 
 	private static void processScriptExpression(List<HAPScriptExpression> scriptExpressions, HAPDefinitionUIUnit uiDefinitionUnit, HAPRuntime runtime){
-		HAPContextExpressionProcess expContext = uiDefinitionUnit.getExpressionContext();
+		HAPContextScriptExpressionProcess expContext = uiDefinitionUnit.getExpressionContext();
 		for(HAPScriptExpression scriptExpression : scriptExpressions){
 			scriptExpression.processExpressions(expContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null));
 			scriptExpression.discoverVarialbes();

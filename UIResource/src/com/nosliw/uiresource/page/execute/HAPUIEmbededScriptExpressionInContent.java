@@ -1,7 +1,7 @@
 package com.nosliw.uiresource.page.execute;
 
-import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.script.expressionscript.HAPEmbededScriptExpression;
+import java.util.List;
+
 import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
 
 /*
@@ -13,4 +13,11 @@ public class HAPUIEmbededScriptExpressionInContent extends HAPUIEmbededScriptExp
 		super(uiId, scriptExpression);
 	}
 
+	public HAPUIEmbededScriptExpressionInContent(String uiId, List<Object> elements){
+		super(uiId, elements);
+	}
+	
+	public HAPUIEmbededScriptExpressionInContent(String uiId, String content){
+		super(uiId, content);
+	}
 }

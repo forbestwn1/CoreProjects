@@ -15,7 +15,7 @@ import com.nosliw.data.core.script.context.HAPContextNode;
 import com.nosliw.data.core.script.context.HAPContextNodeCriteria;
 import com.nosliw.data.core.script.context.HAPContextUtility;
 import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
-import com.nosliw.data.core.script.expressionscript.HAPContextExpressionProcess;
+import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
 import com.nosliw.uiresource.tag.HAPUITagManager;
@@ -41,7 +41,7 @@ public class HAPUIResourceContextProcessor1 {
 	
 	private static void processExpressionContext(HAPDefinitionUIUnit parent, HAPDefinitionUIUnit uiDefinition, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 
-		HAPContextExpressionProcess expContext = uiDefinition.getExpressionContext();
+		HAPContextScriptExpressionProcess expContext = uiDefinition.getExpressionContext();
 
 		//find all data variables from context definition 
 		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getPublicContext()));
@@ -49,7 +49,7 @@ public class HAPUIResourceContextProcessor1 {
 		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getInternalContext()));
 		
 		//parent expression context
-		HAPContextExpressionProcess parentExpContext = parent==null?null:parent.getExpressionContext();
+		HAPContextScriptExpressionProcess parentExpContext = parent==null?null:parent.getExpressionContext();
 		
 		//build data constants from local and parent
 		//local constants override parent constants

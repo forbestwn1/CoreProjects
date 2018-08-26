@@ -20,6 +20,11 @@ public class HAPContextNodeRootConstant extends HAPSerializableImp implements HA
 	public HAPContextNodeRootConstant() {
 		this.m_info = new HAPContextNodeRootInfo();
 	}
+
+	public HAPContextNodeRootConstant(Object value) {
+		this.m_info = new HAPContextNodeRootInfo();
+		this.m_value = value;
+	}
 	
 	@Override
 	public String getType() {		return HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT;	}

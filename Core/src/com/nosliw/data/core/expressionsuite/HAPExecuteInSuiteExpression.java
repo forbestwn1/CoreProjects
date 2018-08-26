@@ -19,7 +19,7 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
 
 @HAPEntityWithAttribute(baseName="EXPRESSION")
-public class HAPExecuteExpressionSuite extends HAPSerializableImp implements HAPExecuteExpression{
+public class HAPExecuteInSuiteExpression extends HAPSerializableImp implements HAPExecuteExpression{
 
 	@HAPAttribute
 	public static String VARIABLEINFOS = "variableInfos";
@@ -32,7 +32,7 @@ public class HAPExecuteExpressionSuite extends HAPSerializableImp implements HAP
 
 	private Map<String, HAPMatchers> m_varsMatchers;
 	
-	public HAPExecuteExpressionSuite(String id, HAPOperand operand) {
+	public HAPExecuteInSuiteExpression(String id, HAPOperand operand) {
 		this.m_operand = new HAPOperandWrapper(operand);
 		this.m_id = id;
 		this.m_localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();

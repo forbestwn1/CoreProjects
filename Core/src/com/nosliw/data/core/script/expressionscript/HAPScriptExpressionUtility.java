@@ -61,10 +61,13 @@ public class HAPScriptExpressionUtility {
 	 * @return a list of text and ui expression object
 	 */
 	public static List<Object> discoverEmbededScriptExpression(String text){
-		List<Object> out = new ArrayList<Object>();
-
 		List<Object> segs = discoverEmbededScript(text);
-		for(Object seg : segs) {
+		return toExeEmbedElement(segs);
+	}
+	
+	public static List<Object> toExeEmbedElement(List<Object> eles){
+		List<Object> out = new ArrayList<Object>();
+		for(Object seg : eles) {
 			if(seg instanceof String)   out.add(seg);
 			if(seg instanceof HAPDefinitionEmbededScript) {
 				HAPDefinitionEmbededScript scriptSeg = (HAPDefinitionEmbededScript)seg;
@@ -84,9 +87,9 @@ public class HAPScriptExpressionUtility {
 		processAttributeOperandInExpressionOperand(expressionDefinition.getOperand(), varsInfo);
 	}
 	
-	private static void processAttributeOperandInExpressionOperand(HAPOperandWrapper operand, final Map<String, HAPVariableInfo> varCriterias){
+	private static void processAttributeOperandInExpressionOperand(HAPOperandWrapper orgOperand, final Map<String, HAPVariableInfo> varCriterias){
 		List<HAPAttributeOperandChainInfo> data = new ArrayList<HAPAttributeOperandChainInfo>();
-		HAPOperandUtility.processAllOperand(operand, data, new HAPOperandTask(){
+		HAPOperandUtility.processAllOperand(orgOperand, data, new HAPOperandTask(){
 			@Override
 			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 				List<HAPAttributeOperandChainInfo> stack = (List<HAPAttributeOperandChainInfo>)data;

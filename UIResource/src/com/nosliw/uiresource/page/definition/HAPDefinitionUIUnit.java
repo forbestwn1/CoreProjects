@@ -94,6 +94,10 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	public void setContent(String content){	this.m_content = content;	}
 	public HAPContextGroup getContextDefinition(){  return this.m_contextDefinition;   }
 	public Collection<HAPDefinitionUIUnitTag> getUITags(){return this.m_uiTags.values();} 
+
+	public Set<HAPDefinitionUIEmbededScriptExpressionInContent> getScriptExpressionsInContent(){   return this.m_scriptExpressionsInContent;   }
+	public Set<HAPDefinitionUIEmbededScriptExpressionInAttribute> getScriptExpressionsInAttribute(){   return this.m_scriptExpressionsInAttribute;    }
+	public Set<HAPDefinitionUIEmbededScriptExpressionInAttribute> getScriptExpressionsInTagAttribute(){   return this.m_scriptExpressionsInTagAttribute;   }
 	
 	public void addEventDefinition(HAPContextEntity def) {  this.m_eventsDefinition.put(def.getName(), def);   }
 	public void addServiceDefinition(HAPContextEntity def) {  this.m_servicesDefinition.put(def.getName(), def);   }

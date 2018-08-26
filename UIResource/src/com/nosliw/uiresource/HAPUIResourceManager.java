@@ -11,7 +11,7 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
 import com.nosliw.uiresource.page.definition.HAPUIResourceParser;
-import com.nosliw.uiresource.processor.HAPConstantProcessor;
+import com.nosliw.uiresource.processor.HAPProcessorUIConstant;
 import com.nosliw.uiresource.processor.HAPUIResourceProcessor;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
@@ -73,7 +73,7 @@ public class HAPUIResourceManager {
 		String baseContent = this.getUIResourceDefinitionById(definitionId).getSource();
 		//build resource using base resource
 		HAPDefinitionUIUnitResource resource = this.getUIResourceParser().parseContent(resourceId, baseContent);
-		HAPConstantProcessor.processConstantDefs(resource, null, m_expressionMan, m_runtime);
+		HAPProcessorUIConstant.processConstantDefs(resource, null, m_expressionMan, m_runtime);
 		
 		//update context with new context
 		resource.getContext().hardMergeWith(context);
@@ -97,7 +97,7 @@ public class HAPUIResourceManager {
 	
 	private HAPDefinitionUIUnitResource readUiResourceDefinitionFromFile(String file) {
 		HAPDefinitionUIUnitResource uiResource = this.getUIResourceParser().parseFile(file);
-		HAPConstantProcessor.processConstantDefs(uiResource, null, m_expressionMan, m_runtime);
+		HAPProcessorUIConstant.processConstantDefs(uiResource, null, m_expressionMan, m_runtime);
 		return uiResource;
 	}
 	

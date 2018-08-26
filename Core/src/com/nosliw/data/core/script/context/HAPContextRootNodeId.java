@@ -24,7 +24,9 @@ public class HAPContextRootNodeId {
 	
 	public String getName() {   return this.m_name;   }
 
+	public String getFullName() {  return HAPNamingConversionUtility.cascadeLevel1(new String[] {this.m_name, this.m_categary});   }
+	
 	@Override
-	public String toString() {   return HAPNamingConversionUtility.cascadeLevel1(new String[] {this.m_name, this.m_categary});	}
+	public String toString() {   return this.getFullName();	}
 	
 }

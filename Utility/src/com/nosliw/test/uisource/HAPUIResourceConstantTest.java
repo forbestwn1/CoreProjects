@@ -13,7 +13,7 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
-import com.nosliw.uiresource.processor.HAPConstantProcessor;
+import com.nosliw.uiresource.processor.HAPProcessorUIConstant;
 
 public class HAPUIResourceConstantTest {
 /*

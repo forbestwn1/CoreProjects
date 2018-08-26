@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 
 public class HAPUIEmbededScriptExpressionInAttribute extends HAPUIEmbededScriptExpression{
 

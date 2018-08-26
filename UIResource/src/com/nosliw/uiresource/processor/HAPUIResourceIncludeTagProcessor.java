@@ -38,7 +38,7 @@ public class HAPUIResourceIncludeTagProcessor {
 		//build include tag
 		HAPDefinitionUIUnitResource uiResource = uiResourceMan.getUIResourceDefinitionById(includeResourceName);
 		uiResourceParser.parseContent(includeTagResource, uiResource.getSource());
-		HAPConstantProcessor.processConstantDefs(includeTagResource, null, expressionManager, runtime);
+		HAPProcessorUIConstant.processConstantDefs(includeTagResource, null, expressionManager, runtime);
 
 		//get context mapping definition
 		String contextMapName = includeTagResource.getAttributes().get(HAPConstant.UITAG_NAME_INCLUDE_PARM_CONTEXT);

@@ -10,6 +10,7 @@ public class HAPDefinitionUIEmbededScriptExpression {
 
 	private String m_uiId;
 
+	// string or HAPDefinitionEmbededScript
 	private List<Object> m_elements;
 
 	public HAPDefinitionUIEmbededScriptExpression(String uiId, HAPDefinitionEmbededScript scriptExpression) {

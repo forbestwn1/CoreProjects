@@ -42,6 +42,8 @@ public class HAPScriptExpressionScriptSegment {
 	public List<String> getConstantNames(){  return this.m_constants;  }
 	public List<String> getVariableNames(){  return this.m_variableNames;  }
 	
+	public void updateVariables(Map<String, String>) {}
+	
 	private void processSegments(){
 		try{
 			String content = this.m_orignalScript;
