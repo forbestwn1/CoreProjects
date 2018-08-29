@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
@@ -17,7 +18,6 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.task.HAPExecutableTask;
-import com.nosliw.data.core.task.HAPUpdateVariable;
 
 public class HAPOperandUtility {
 
@@ -61,7 +61,7 @@ public class HAPOperandUtility {
 		});	
 	}
 	
-	static public void updateVariable(HAPOperandWrapper operand, HAPUpdateVariable updateVar) {
+	static public void updateVariable(HAPOperandWrapper operand, HAPUpdateName updateVar) {
 		//update variable operand
 		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
 			@Override
@@ -69,7 +69,7 @@ public class HAPOperandUtility {
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
 					HAPOperandVariable variableChild = (HAPOperandVariable)operand.getOperand();
-					String newName = updateVar.getUpdatedVariable(variableChild.getVariableName()); 
+					String newName = updateVar.getUpdatedName(variableChild.getVariableName()); 
 					if(newName!=null)	variableChild.setVariableName(newName);
 				}
 				return true;

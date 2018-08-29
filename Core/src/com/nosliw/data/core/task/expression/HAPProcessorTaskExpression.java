@@ -3,6 +3,7 @@ package com.nosliw.data.core.task.expression;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.updatename.HAPUpdateNameMap;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPData;
@@ -10,7 +11,6 @@ import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.task.HAPProcessorTask;
 import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.core.task.HAPUpdateVariableDomain;
-import com.nosliw.data.core.task.HAPUpdateVariableMap;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutableTask;
 
@@ -57,7 +57,7 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 			}
 		}
 		//update variable in task
-		out.updateVariable(new HAPUpdateVariableMap(domainedVariableMap));
+		out.updateVariable(new HAPUpdateNameMap(domainedVariableMap));
 		
 		return out;
 	}

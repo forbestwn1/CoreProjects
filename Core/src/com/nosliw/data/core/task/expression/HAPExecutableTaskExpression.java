@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
@@ -18,7 +19,6 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task.HAPExecutableTask;
-import com.nosliw.data.core.task.HAPUpdateVariable;
 
 public class HAPExecutableTaskExpression implements HAPExecutableTask{
 
@@ -106,11 +106,11 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 	public HAPDataTypeCriteria getOutput() {  return this.m_output;  }
 
 	@Override
-	public void updateVariable(HAPUpdateVariable updateVar) {
+	public void updateVariable(HAPUpdateName updateVar) {
 		//update variables in variable info def
 		Map<String, HAPVariableInfo> updatedVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		for(String varName : this.m_varsInfo.keySet()) {
-			updatedVarsInfo.put(updateVar.getUpdatedVariable(varName), this.m_varsInfo.get(varName));
+			updatedVarsInfo.put(updateVar.getUpdatedName(varName), this.m_varsInfo.get(varName));
 		}
 		this.m_varsInfo = updatedVarsInfo;
 		

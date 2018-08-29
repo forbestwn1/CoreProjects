@@ -3,7 +3,9 @@ package com.nosliw.data.core.script.expressionscript;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 
 /**
@@ -20,14 +22,10 @@ public class HAPScriptExpressionScriptSegment {
 	//   script variable
 	private List<Object> m_elements;
 
-	private List<String> m_constants = new ArrayList<String>();
-	
-	private List<String> m_variableNames = new ArrayList<String>();
-	
 	//define the segment parsing infor
 	private Object[][] m_definitions = {
-			{"&(", ")&", HAPScriptExpressionScriptConstant.class, m_constants}, 
-			{"?(", ")?", HAPScriptExpressionScriptVariable.class, m_variableNames}
+			{"&(", ")&", HAPScriptExpressionScriptConstant.class}, 
+			{"?(", ")?", HAPScriptExpressionScriptVariable.class}
 	};
 	
 
@@ -39,10 +37,43 @@ public class HAPScriptExpressionScriptSegment {
 	
 	public List<Object> getElements(){	return this.m_elements;	}
 	
-	public List<String> getConstantNames(){  return this.m_constants;  }
-	public List<String> getVariableNames(){  return this.m_variableNames;  }
+	public List<String> getConstantNames(){
+		List<String> out = new ArrayList<String>();
+		for(Object ele : this.m_elements) {
+			if(ele instanceof HAPScriptExpressionScriptConstant) {
+				out.add(((HAPScriptExpressionScriptConstant)ele).getConstantName());
+			}
+		}
+		return out;  
+	}
 	
-	public void updateVariables(Map<String, String>) {}
+	public List<String> getVariableNames(){
+		List<String> out = new ArrayList<String>();
+		for(Object ele : this.m_elements) {
+			if(ele instanceof HAPScriptExpressionScriptVariable) {
+				out.add(((HAPScriptExpressionScriptVariable)ele).getVariableName());
+			}
+		}
+		return out;  
+	}
+	
+	public void updateVariableNames(HAPUpdateName nameUpdate) {
+		for(Object ele : this.m_elements) {
+			if(ele instanceof HAPScriptExpressionScriptVariable) {
+				HAPScriptExpressionScriptVariable varEle = (HAPScriptExpressionScriptVariable)ele;
+				varEle.updateName(nameUpdate);
+			}
+		}
+	}
+
+	public void updateConstantNames(HAPUpdateName nameUpdate) {
+		for(Object ele : this.m_elements) {
+			if(ele instanceof HAPScriptExpressionScriptConstant) {
+				HAPScriptExpressionScriptConstant constantEle = (HAPScriptExpressionScriptConstant)ele;
+				constantEle.updateName(nameUpdate);
+			}
+		}
+	}
 	
 	private void processSegments(){
 		try{
@@ -61,7 +92,6 @@ public class HAPScriptExpressionScriptSegment {
 				Constructor cons = cs.getConstructor(String.class);
 				String name = content.substring(startIndex+startToken.length(), endIndex);
 				this.m_elements.add(cons.newInstance(name));
-				((List<String>)this.m_definitions[type][3]).add(name);
 				content = content.substring(endIndex+endToken.length());
 				indexs = this.index(content);
 			}

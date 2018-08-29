@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -14,7 +15,6 @@ import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task.HAPExecutableTask;
-import com.nosliw.data.core.task.HAPUpdateVariable;
 
 public class HAPExecutableStepBranch extends HAPExecutableStep{
 
@@ -47,7 +47,7 @@ public class HAPExecutableStepBranch extends HAPExecutableStep{
 	public HAPDataTypeCriteria getOutput() {   return null;  }
 
 	@Override
-	public void updateVariable(HAPUpdateVariable updateVar) {
+	public void updateVariable(HAPUpdateName updateVar) {
 		HAPOperandUtility.updateVariable(this.m_expression, updateVar);
 		this.m_trueResult.updateVariable(updateVar);
 		this.m_falseResult.updateVariable(updateVar);

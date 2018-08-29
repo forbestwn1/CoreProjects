@@ -10,8 +10,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.data.core.task.HAPUpdateVariable;
 
 /**
  * The information used to define reference in expression
@@ -56,10 +56,10 @@ public class HAPReferenceInfo extends HAPSerializableImp{
 		return out;
 	}
 
-	public void upateVariableName(HAPUpdateVariable updateVar) {
+	public void upateVariableName(HAPUpdateName updateVar) {
 		Map<String, String> varMap = new LinkedHashMap<String, String>();
 		for(String name : this.m_variableMap.keySet()) {
-			varMap.put(updateVar.getUpdatedVariable(name), this.m_variableMap.get(name));
+			varMap.put(updateVar.getUpdatedName(name), this.m_variableMap.get(name));
 		}
 		this.m_variableMap.clear();
 		this.m_variableMap.putAll(varMap);

@@ -8,6 +8,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -22,7 +23,6 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task.HAPExecutableTask;
-import com.nosliw.data.core.task.HAPUpdateVariable;
 
 public class HAPExecutableStepExpression extends HAPExecutableStep implements HAPExecuteExpression{
 
@@ -109,9 +109,9 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 	public HAPDataTypeCriteria getOutput() {	return this.m_operand.getOperand().getOutputCriteria();	}
 
 	@Override
-	public void updateVariable(HAPUpdateVariable updateVar) {
+	public void updateVariable(HAPUpdateName updateVar) {
 		
-		if(this.m_outputVariable!=null) this.m_outputVariable = updateVar.getUpdatedVariable(this.m_outputVariable);
+		if(this.m_outputVariable!=null) this.m_outputVariable = updateVar.getUpdatedName(this.m_outputVariable);
 		HAPOperandUtility.updateVariable(this.getOperand(), updateVar);
 	}
 

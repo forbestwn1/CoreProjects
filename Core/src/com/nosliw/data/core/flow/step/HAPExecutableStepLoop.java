@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
@@ -18,7 +19,6 @@ import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task.HAPExecutableTask;
-import com.nosliw.data.core.task.HAPUpdateVariable;
 
 public class HAPExecutableStepLoop extends HAPExecutableStep{
 
@@ -63,11 +63,11 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 	public HAPDataTypeCriteria getOutput() {		return null;	}
 
 	@Override
-	public void updateVariable(HAPUpdateVariable updateVar) {
+	public void updateVariable(HAPUpdateName updateVar) {
 		HAPOperandUtility.updateVariable(this.m_containerOperand, updateVar);
 		if(this.m_breakOperand!=null)  HAPOperandUtility.updateVariable(this.m_breakOperand, updateVar);
-		this.m_elementVariable = updateVar.getUpdatedVariable(this.m_elementVariable);
-		this.m_outputVariable = updateVar.getUpdatedVariable(this.m_outputVariable);
+		this.m_elementVariable = updateVar.getUpdatedName(this.m_elementVariable);
+		this.m_outputVariable = updateVar.getUpdatedName(this.m_outputVariable);
 		if(this.m_executeTask!=null)		this.m_executeTask.updateVariable(updateVar);
 	}
 

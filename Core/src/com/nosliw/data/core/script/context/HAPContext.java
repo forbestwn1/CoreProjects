@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
@@ -38,8 +39,8 @@ public class HAPContext extends HAPSerializableImp{
 		}
 	}
 
-	public HAPContextNode getChild(HAPContextPath path){
-		Object[] out = this.discoverChild(path);
+	public HAPContextNode getChild(String rootName, String path){
+		Object[] out = this.discoverChild(rootName, path);
 		return (HAPContextNode)out[0];
 	}
 
@@ -47,12 +48,12 @@ public class HAPContext extends HAPSerializableImp{
 	//may not find exact match child node according to path
 	//   return[0]   closest child node
 	//   return[1]   remaining path
-	public Object[] discoverChild(HAPContextPath path){
+	public Object[] discoverChild(String rootName, String path){
 		Object[] out = new Object[2];
 		String remainingPath = null;
-		HAPContextNode outNode = (HAPContextNode)this.m_elements.get(path.getRootElementName());
+		HAPContextNode outNode = (HAPContextNode)this.m_elements.get(rootName);
 		if(outNode!=null){
-			String[] pathSegs = path.getPathSegments();
+			String[] pathSegs = HAPNamingConversionUtility.parseComponentPaths(path);
 			for(String pathSeg : pathSegs){
 				if(remainingPath==null) {
 					HAPContextNode node = outNode.getChildren().get(pathSeg);
@@ -64,7 +65,7 @@ public class HAPContext extends HAPSerializableImp{
 					}
 				}
 				else {
-					remainingPath = remainingPath + "." + pathSeg;
+					remainingPath = HAPNamingConversionUtility.cascadePath(remainingPath, pathSeg);
 				}
 			}
 		}

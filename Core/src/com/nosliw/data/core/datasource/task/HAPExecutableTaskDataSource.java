@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
@@ -24,7 +25,6 @@ import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
 import com.nosliw.data.core.task.HAPExecutableTask;
-import com.nosliw.data.core.task.HAPUpdateVariable;
 
 public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 
@@ -59,7 +59,7 @@ public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 	public String getType() {	return HAPConstant.DATATASK_TYPE_DATASOURCE;	}
 
 	@Override
-	public void updateVariable(HAPUpdateVariable updateVar) {
+	public void updateVariable(HAPUpdateName updateVar) {
 		for(String parmName : this.m_parmsOperand.keySet()) {
 			HAPOperandUtility.updateVariable(this.m_parmsOperand.get(parmName), updateVar);
 		}
