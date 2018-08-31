@@ -17,7 +17,7 @@ public class HAPProcessorContextInheritance {
 					Map<String, HAPContextNodeRoot> parentEles = parentContext.getElements();
 					for(String eleName : parentEles.keySet()) {
 						if(isInheritable(out, parentContextGroup, categary, eleName, configure.inheritMode)) {
-							out.addElement(eleName, createInheritedElement(parentContextGroup, categary, eleName), categary);
+							out.addElement(eleName, HAPUtilityContext.createInheritedElement(parentContextGroup, categary, eleName), categary);
 						}
 					}
 				}
@@ -35,22 +35,6 @@ public class HAPProcessorContextInheritance {
 					node.getInfo().getInfo().setValue(HAPContextNodeRoot.INHERIT_MODE, HAPContextNodeRoot.INHERIT_MODE_FINAL);
 				}
 			}
-		}
-		return out;
-	}
-	
-	//process element that inherited from parent
-	private static HAPContextNodeRoot createInheritedElement(HAPContextGroup parentContextGroup, String contextCategary, String eleName) {
-		HAPContextNodeRoot out = null;
-		HAPContextNodeRoot node = parentContextGroup.getElement(contextCategary, eleName);
-		if(node.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
-			out = node.cloneContextNodeRoot();
-		}
-		else {
-			HAPContextNodeRootRelative relativeEle = new HAPContextNodeRootRelative();
-			relativeEle.setPath(eleName);
-			relativeEle.setParentCategary(contextCategary);
-			out = relativeEle;
 		}
 		return out;
 	}

@@ -48,7 +48,7 @@ public class HAPExecutableStepBranch extends HAPExecutableStep{
 
 	@Override
 	public void updateVariable(HAPUpdateName updateVar) {
-		HAPOperandUtility.updateVariable(this.m_expression, updateVar);
+		HAPOperandUtility.updateVariableName(this.m_expression, updateVar);
 		this.m_trueResult.updateVariable(updateVar);
 		this.m_falseResult.updateVariable(updateVar);
 	}

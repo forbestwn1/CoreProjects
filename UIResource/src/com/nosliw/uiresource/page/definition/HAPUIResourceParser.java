@@ -273,8 +273,7 @@ public class HAPUIResourceParser {
 				Iterator<String> defNames = defsJson.keys();
 				while(defNames.hasNext()){
 					String defName = defNames.next();
-					HAPDefinitionExpression expDef = new HAPDefinitionExpression(defsJson.optString(defName));
-					resource.addExpressionDefinition(defName, expDef);
+					resource.addExpressionDefinition(defName, defsJson.optString(defName));
 				}
 				break;
 			} catch (JSONException e) {

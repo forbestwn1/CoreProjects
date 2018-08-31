@@ -15,6 +15,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
@@ -67,6 +68,8 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	//context after processed
 	private HAPContextGroup m_context;
 
+	private HAPContext m_flatContext;
+	
 	//store all the constant attribute for this domain
 	//for customer tag, they are the tag's attribute
 	//for resource, they are the attribute of body
@@ -104,8 +107,11 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	}
 	
 	public String getType() {  return this.m_uiUnitDefinition.getType();  }
+	
 	public HAPContextGroup getContext(){  return this.m_context;   }
 	public void setContext(HAPContextGroup context) {  this.m_context = context;   }
+	public HAPContext getFlatContext() { return this.m_flatContext;  }
+	public void setFlatContext(HAPContext context) {  this.m_flatContext = context;   }
 	
 	public Map<String, String> getAttributes(){   return this.m_attributes;    }
 	public void addAttribute(String name, String value) {   this.m_attributes.put(name, value);   }

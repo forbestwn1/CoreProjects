@@ -11,6 +11,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
+import com.nosliw.data.core.script.context.HAPContext;
 
 /**
  * This class represent all string value that contains script expressions 
@@ -68,6 +69,15 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 		}
 		return out;
 	}
+	
+	public void updateWithConstantsValue(Map<String, Object> constantsValue) {
+		for(Object ele : this.m_elements){
+			if(ele instanceof HAPScriptExpression){
+				((HAPScriptExpression)ele).updateWithConstantsValue(constantsValue);
+			}
+		}
+	}
+
 	
 	public String getValue(){
 		if(this.isConstant()){

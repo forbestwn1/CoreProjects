@@ -46,6 +46,7 @@ public class HAPDefinitionExpressionSuite  extends HAPSerializableImp{
 	public void addConstant(String name, HAPData constant) {  this.m_constants.put(name, constant);    }
 	
 	public void addExpressionDefinition(String name, HAPDefinitionExpression expDef) {  this.m_expressions.put(name, expDef);   }
+	public void addExpressionDefinition(Map<String, HAPDefinitionExpression> expDef) {  this.m_expressions.putAll(expDef);   }
 	public Map<String, HAPDefinitionExpression> getExpressionDefinitions(){   return this.m_expressions;   }
 	
 	@Override

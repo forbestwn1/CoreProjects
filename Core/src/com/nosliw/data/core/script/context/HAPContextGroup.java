@@ -48,6 +48,16 @@ public class HAPContextGroup extends HAPSerializableImp{
 		return contextTypes;
 	}
 
+	public static String[] getContextTypesWithPriority(){
+		String[] contextTypes = {
+			HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE,
+			HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL,
+			HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED,
+			HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC,
+		};
+		return contextTypes;
+	}
+
 	//context type that can be inherited by child
 	public static String[] getInheritableContextTypes(){
 		String[] contextTypes = {

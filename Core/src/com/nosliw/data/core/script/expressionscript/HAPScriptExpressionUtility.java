@@ -1,12 +1,14 @@
 package com.nosliw.data.core.script.expressionscript;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperand;
@@ -24,6 +26,16 @@ public class HAPScriptExpressionUtility {
 	public static final String UIEXPRESSION_TOKEN_OPEN = "<%=";
 	public static final String UIEXPRESSION_TOKEN_CLOSE = "%>";
 
+	public static Map<String, HAPData> getConstantData(Map<String, Object> constantsValue){
+		Map<String, HAPData> constantsData = new LinkedHashMap<String, HAPData>();
+		for(String name : constantsValue.keySet()) {
+			if(constantsValue.get(name) instanceof HAPData) {
+				constantsData.put(name, (HAPData)constantsValue.get(name));
+			}
+		}
+		return constantsData;
+	}
+	
 	/**
 	 * parse text to discover script expression in it
 	 * @param text

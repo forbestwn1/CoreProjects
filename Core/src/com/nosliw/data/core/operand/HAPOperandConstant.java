@@ -46,6 +46,7 @@ public class HAPOperandConstant extends HAPOperandImp{
 	}
 
 	public String getName(){  return this.m_name;  }
+	public void setName(String name) {  this.m_name = name;   }
 	
 	public HAPData getData(){  return this.m_data;  }
 	

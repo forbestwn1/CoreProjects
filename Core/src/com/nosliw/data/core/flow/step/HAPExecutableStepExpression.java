@@ -112,7 +112,7 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 	public void updateVariable(HAPUpdateName updateVar) {
 		
 		if(this.m_outputVariable!=null) this.m_outputVariable = updateVar.getUpdatedName(this.m_outputVariable);
-		HAPOperandUtility.updateVariable(this.getOperand(), updateVar);
+		HAPOperandUtility.updateVariableName(this.getOperand(), updateVar);
 	}
 
 	@Override

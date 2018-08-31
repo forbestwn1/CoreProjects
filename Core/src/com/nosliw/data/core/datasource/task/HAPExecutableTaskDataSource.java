@@ -61,7 +61,7 @@ public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 	@Override
 	public void updateVariable(HAPUpdateName updateVar) {
 		for(String parmName : this.m_parmsOperand.keySet()) {
-			HAPOperandUtility.updateVariable(this.m_parmsOperand.get(parmName), updateVar);
+			HAPOperandUtility.updateVariableName(this.m_parmsOperand.get(parmName), updateVar);
 		}
 	}
 

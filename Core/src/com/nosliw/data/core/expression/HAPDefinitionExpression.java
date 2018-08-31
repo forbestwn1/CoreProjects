@@ -9,6 +9,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.updatename.HAPEntityWithName;
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeOperation;
@@ -19,7 +21,7 @@ import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 
-public class HAPDefinitionExpression  extends HAPSerializableImp{
+public class HAPDefinitionExpression  extends HAPSerializableImp implements HAPEntityWithName{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
@@ -33,22 +35,12 @@ public class HAPDefinitionExpression  extends HAPSerializableImp{
 	@HAPAttribute
 	public static String REFERENCENAMES = "referenceNames";
 
-	
 	private String m_expression;
 	
 	private HAPOperandWrapper m_operand;
 
-	//all variables defined in expression
-	private Set<String> m_variableNames;
-
-	//all references defined in expression
-	private Set<String> m_referenceNames;
-	
-	
 	public HAPDefinitionExpression(String expression) {
 		this.m_expression = expression;
-		this.m_variableNames = new HashSet<String>();
-		this.m_referenceNames = new HashSet<String>();
 		this.process();
 	}
 	
@@ -56,20 +48,28 @@ public class HAPDefinitionExpression  extends HAPSerializableImp{
 	
 	public HAPOperandWrapper getOperand() {  return this.m_operand;    }
 	
-	public Set<String> getVariableNames() {		return this.m_variableNames;	}
+	@Override
+	public Set<String> getVariableNames() {		return HAPOperandUtility.discoverVariables(this.m_operand);	}
 
-	public Set<String> getReferenceNames() {		return this.m_referenceNames;	}
+	@Override
+	public Set<String> getConstantNames() {		return HAPOperandUtility.discoveryUnsolvedConstants(this.m_operand);	}
+	
+	public Set<String> getReferenceNames() {		return HAPOperandUtility.discoverReferences(this.m_operand);	}
 
-	
-	
+	@Override
+	public void updateVariableNames(HAPUpdateName nameUpdate) {
+		HAPOperandUtility.updateVariableName(this.m_operand, nameUpdate);
+	}
+
+	@Override
+	public void updateConstantNames(HAPUpdateName nameUpdate) {
+		HAPOperandUtility.updateConstantName(this.m_operand, nameUpdate);
+	}
+
 	private void process() {
 		//parse expression
 		this.m_operand = new HAPOperandWrapper(HAPExpressionManager.expressionParser.parseExpression(this.m_expression));
 
-		this.m_variableNames.addAll(HAPOperandUtility.discoverVariables(this.m_operand));
-		
-		this.m_referenceNames.addAll(HAPOperandUtility.discoverReferences(this.m_operand));
-		
 		this.processDefaultAnonomousParmInOperation();
 		
 	}
@@ -112,8 +112,8 @@ public class HAPDefinitionExpression  extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(EXPRESSION, this.m_expression);
-		jsonMap.put(VARIABLENAMES, HAPJsonUtility.buildJson(this.m_variableNames, HAPSerializationFormat.JSON));
-		jsonMap.put(REFERENCENAMES, HAPJsonUtility.buildJson(this.m_referenceNames, HAPSerializationFormat.JSON));
+		jsonMap.put(VARIABLENAMES, HAPJsonUtility.buildJson(this.getVariableNames(), HAPSerializationFormat.JSON));
+		jsonMap.put(REFERENCENAMES, HAPJsonUtility.buildJson(this.getReferenceNames(), HAPSerializationFormat.JSON));
 		jsonMap.put(OPERAND, HAPJsonUtility.buildJson(this.m_operand, HAPSerializationFormat.JSON));
 	}
 

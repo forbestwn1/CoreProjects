@@ -18,7 +18,7 @@ public class HAPContextPath extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String PATH  = "path";
 	
-	private String m_rootEleName;
+	private HAPContextRootNodeId m_rootNodeId;
 	
 	private String m_path;
 	
@@ -27,31 +27,43 @@ public class HAPContextPath extends HAPSerializableImp{
 	public HAPContextPath(String fullPath){
 		int index = fullPath.indexOf(HAPConstant.SEPERATOR_PATH);
 		if(index==-1){
-			this.m_rootEleName = fullPath;
+			this.m_rootNodeId = new HAPContextRootNodeId(fullPath);
 		}
 		else{
-			this.m_rootEleName = fullPath.substring(0, index);
+			this.m_rootNodeId = new HAPContextRootNodeId(fullPath.substring(0, index));
 			this.m_path = fullPath.substring(index+1);
 		}
 	}
 	
-	public HAPContextPath(String rootEleName, String path){
-		this.m_rootEleName = rootEleName;
+	public HAPContextPath(String categary, String path){
+		int index = path.indexOf(HAPConstant.SEPERATOR_PATH);
+		if(index==-1){
+			this.m_rootNodeId = new HAPContextRootNodeId(categary, path);
+		}
+		else{
+			this.m_rootNodeId = new HAPContextRootNodeId(categary, path.substring(0, index));
+			this.m_path = path.substring(index+1);
+		}
+	}
+
+	public HAPContextPath(String contextCategary, String rootEleName, String path){
+		this.m_rootNodeId = new HAPContextRootNodeId(contextCategary, rootEleName);
 		this.m_path = path;
 	}
-	
+
 	public HAPContextPath appendSegment(String seg){
 		HAPContextPath out = new HAPContextPath();
-		out.m_rootEleName = this.m_rootEleName;
+		out.m_rootNodeId = this.m_rootNodeId.clone();
 		out.m_path = HAPNamingConversionUtility.cascadeComponentPath(m_path, seg);
 		return out;
 	}
 	
-	public String getRootElementName(){  return this.m_rootEleName;  }
+//	public String getRootElementName(){  return this.m_rootNodeId.getName();  }
+	public HAPContextRootNodeId getRootElementId() {  return this.m_rootNodeId;   }
 	
 	public String getPath(){		return this.m_path==null?"":this.m_path;	}
 	
-	public String getFullPath(){  return HAPNamingConversionUtility.cascadeComponentPath(this.m_rootEleName, this.m_path);   }
+	public String getFullPath(){  return HAPNamingConversionUtility.cascadeComponentPath(this.m_rootNodeId.getFullName(), this.m_path);   }
 	
 	public String[] getPathSegments(){
 		if(HAPBasicUtility.isStringEmpty(m_path))  return new String[0];
@@ -60,7 +72,7 @@ public class HAPContextPath extends HAPSerializableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(ROOTNAME, this.m_rootEleName);
+		jsonMap.put(ROOTNAME, this.m_rootNodeId.getFullName());
 		jsonMap.put(PATH, this.m_path);
 	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.script.expressionscript.HAPDefinitionEmbededScript;
 import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
 import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionUtility;
@@ -11,13 +12,14 @@ import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpress
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInContent;
 
 //compile expression definition to expression
 public class HAPProcessorCompile {
 
-	public static void compile(HAPExecutableUIUnit exeUnit) {
+	public static void compile(HAPExecutableUIUnit exeUnit, HAPExecutableUIUnit parentUnit) {
 		
 		HAPDefinitionUIUnit uiUnitDef = exeUnit.getUIUnitDefinition();
 		
@@ -38,6 +40,24 @@ public class HAPProcessorCompile {
 		Map<String, String> attrs = uiUnitDef.getAttributes();
 		for(String attrName : attrs.keySet()) {
 			exeUnit.addAttribute(attrName, attrs.get(attrName));
+		}
+
+		//expression
+		if(parentUnit!=null) {
+			//from parent
+			Map<String, String> parentExps = parentUnit.getUIUnitDefinition().getExpressionDefinitions();
+			for(String name : parentExps.keySet()) 		exeUnit.getExpressionContext().addExpressionDefinition(name, new HAPDefinitionExpression(parentExps.get(name)));
+			
+			//it self
+			Map<String, String> expressions = uiUnitDef.getExpressionDefinitions();
+			for(String name : expressions.keySet()) 		exeUnit.getExpressionContext().addExpressionDefinition(name, new HAPDefinitionExpression(expressions.get(name)));
+		}
+		
+
+		
+		//child tag
+		for(HAPExecutableUIUnitTag childTag : exeUnit.getUITags()) {
+			compile(childTag, exeUnit);
 		}
 		
 	}

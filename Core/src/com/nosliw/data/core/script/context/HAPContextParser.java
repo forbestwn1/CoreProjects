@@ -41,8 +41,7 @@ public class HAPContextParser {
 		if(path!=null){
 			//relative
 			out = new HAPContextNodeRootRelative();
-			((HAPContextNodeRootRelative)out).setParentCategary((String)eleDefJson.opt(HAPContextNodeRootRelative.PARENTCATEGARY));
-			((HAPContextNodeRootRelative)out).setPath(path);
+			((HAPContextNodeRootRelative)out).setPath((String)eleDefJson.opt(HAPContextNodeRootRelative.PARENTCATEGARY), path);
 			if(defaultJsonObj!=null)		((HAPContextNodeRootRelative)out).setDefaultValue(defaultJsonObj);
 			if(defJsonObj!=null) 	parseContextNodeFromJson(defJsonObj, (HAPContextNodeRootRelative)out);
 		}

@@ -61,3 +61,79 @@ var library = nosliw.getPackage("uidata");
  * 			name + path to describe the variable
  * 
  */
+
+
+/*
+wrapper:
+wrapper is about data operation, get value
+adapter :   provided by variable
+	value adapter 
+	path adapter
+	
+
+data operation event : (listened by variable, child wrapper)
+all data operation is converted to data operation on root data, then trigue data operation event 	
+root wrapper event trigue by data operation:	
+	WRAPPER_EVENT_SET : WRAPPER_OPERATION_SET
+	WRAPPER_EVENT_ADDELEMENT: WRAPPER_OPERATION_ADDELEMENT
+	WRAPPER_EVENT_DELETEELEMENT:  WRAPPER_OPERATION_DELETEELEMENT
+	WRAPPER_EVENT_DELETE :  WRAPPER_OPERATION_DELETE
+	
+leaf wrapper 
+	WRAPPER_EVENT_CHANGE : inform child that the data is dirty
+	WRAPPER_EVENT_FORWARD : event happened on child node, just forward event to child who maybe response to this event
+	
+	WRAPPER_EVENT_DELETE : when got WRAPPER_EVENT_DELETE event from parent, or grand parent ...
+	WRAPPER_EVENT_ADDELEMENT : when got WRAPPER_EVENT_ADDELEMENT event from parent
+	WRAPPER_EVENT_DELETEELEMENT : when got WRAPPER_EVENT_DELETEELEMENT event from parent
+	WRAPPER_EVENT_SET : when got WRAPPER_EVENT_SET event from parent
+	
+lifecycle event : (listened by child wrapper only)
+	WRAPPER_EVENT_CLEARUP    when wrapper is destroyed (which may trigued by destroy method call or parent CLEARUP event)
+
+internal event : (listened by child wrapper only)
+	WRAPPER_EVENT_DELETE	 when wrapper is informed by WRAPPER_EVENT_DELETEELEMENT to delete element within this wrapper, trigue delete event with path on child wrapper
+
+when wrapper data is deleted, wrapper will trigue two event:
+	DELETE
+	CLEARUP
+	
+	
+variable :
+	variable is about 
+	not like wrapper which only reference to parent wrapper, variable also contains child variables (loop through child)
+	the reason containing child variable is that when create child variable, parent can reuse variable
+	
+adapter : 
+	valueAdapter
+	pathAdapter
+	eventAdapter
+	destroyAdapter
+	dataOperationAdapter
+	
+variable only listen to operation event from wrapper, not lifecycle event, not internal event
+variable does not need to listen to lifecycle event from wrapper, because 
+	variable will determine lifecycle of wrapper (either by variable.destory or delete operation)
+
+communication between parent variable and child variable is only about two event related with delete: WRAPPER_EVENT_DELETE, WRAPPER_EVENT_CLEARUP
+	
+lifecycle event: (listened by parent variable only, so that parent can remove child from itself)
+	WRAPPER_EVENT_CLEARUP	when child variable is destroyed, 
+	when parent variable is destroyed, parent will destroy all children
+	
+data operation event : (listened by variable wrapper)
+	any data operation event from wrapper
+	
+	
+	
+for wrapper with any adapter (pathAdapter) does not allow child wrapper with empty path
+it will cause issue when operate on child wrapper 	
+	
+	
+	
+	
+	
+	 * 
+ */
+
+

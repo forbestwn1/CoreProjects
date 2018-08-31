@@ -14,10 +14,12 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
+import com.nosliw.data.core.script.context.HAPContext;
 
 /**
  * Represent script expression
@@ -96,7 +98,24 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	
 	public boolean isConstant(){  return this.m_isConstant;  }
 	public Object getValue(){  return this.m_value;  }
-	public void setValue(Object value){  this.m_value = value;   }
+	public void setValue(Object value){  
+		this.m_value = value;
+		this.m_isConstant = true;
+	}
+
+	//update script constant information 
+	public void updateWithConstantsValue(Map<String, Object> constantsValue) {
+		for(Object ele : this.m_elements){
+			if(ele instanceof HAPDefinitionExpression){
+				HAPDefinitionExpression expDef = (HAPDefinitionExpression)ele;
+				HAPOperandUtility.updateConstantData(expDef.getOperand(), HAPScriptExpressionUtility.getConstantData(constantsValue));
+			}
+			else if(ele instanceof HAPScriptExpressionScriptSegment){
+				HAPScriptExpressionScriptSegment scriptSegment = (HAPScriptExpressionScriptSegment)ele;
+				scriptSegment.updateConstantValue(constantsValue);
+			}
+		}
+	}
 	
 	//process all expression definitions in script expression
 	public void processExpressions(HAPContextScriptExpressionProcess expressionContext, Map<String, String> configure, HAPExpressionSuiteManager expressionManager){

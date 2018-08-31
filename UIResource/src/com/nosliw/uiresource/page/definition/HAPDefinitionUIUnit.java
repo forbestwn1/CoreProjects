@@ -31,7 +31,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	private HAPScript m_script;
 
 	//expression definition within this unit
-	private Map<String, HAPDefinitionExpression> m_expressionDefinitions;
+	private Map<String, String> m_expressionDefinitions;
 
 	//html content after compilation
 	private String m_content; 
@@ -73,7 +73,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 		this.m_normalTagEvents = new HashSet<HAPElementEvent>();
 		this.m_customTagEvents = new HashSet<HAPElementEvent>();
 		this.m_attributes = new LinkedHashMap<String, String>();
-		this.m_expressionDefinitions = new LinkedHashMap<String, HAPDefinitionExpression>();
+		this.m_expressionDefinitions = new LinkedHashMap<String, String>();
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPContextEntity>();
 		this.m_servicesDefinition = new LinkedHashMap<String, HAPContextEntity>();
 	}
@@ -89,6 +89,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	public String getContent() {  return this.m_content;  }
 	public Map<String, HAPContextEntity> getEventDefinitions(){  return this.m_eventsDefinition;    }
 	public Map<String, HAPContextEntity> getServiceDefinitions(){  return this.m_servicesDefinition;   }
+	public Map<String, String> getExpressionDefinitions(){  return this.m_expressionDefinitions;   }
 	
 	public void setJSBlock(HAPScript jsBlock){this.m_script = jsBlock;}
 	public void setContent(String content){	this.m_content = content;	}
@@ -101,7 +102,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	
 	public void addEventDefinition(HAPContextEntity def) {  this.m_eventsDefinition.put(def.getName(), def);   }
 	public void addServiceDefinition(HAPContextEntity def) {  this.m_servicesDefinition.put(def.getName(), def);   }
-	public void addExpressionDefinition(String name, HAPDefinitionExpression expressionDef){		this.m_expressionDefinitions.put(name, expressionDef);	}
+	public void addExpressionDefinition(String name, String expressionDef){		this.m_expressionDefinitions.put(name, expressionDef);	}
 	public void addScriptExpressionInAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInAttribute.add(eAttr);	}
 	public void addScriptExpressionInTagAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInTagAttribute.add(eAttr);	}
 	public void addScriptExpressionInContent(HAPDefinitionUIEmbededScriptExpressionInContent scriptExpressionInContent){	this.m_scriptExpressionsInContent.add(scriptExpressionInContent);	}

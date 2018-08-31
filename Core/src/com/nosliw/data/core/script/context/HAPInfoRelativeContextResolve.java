@@ -2,10 +2,8 @@ package com.nosliw.data.core.script.context;
 
 //store result for resolve reference path
 public class HAPInfoRelativeContextResolve{
-	//which categary parent belong to
-	public HAPContextRootNodeId parentNodeId;
-	//
-	public String path;
+	//parent reference pat
+	public HAPContextPath contextPath;
 	//original refered node
 	public HAPContextNode referedNode;
 	//unmatched path part

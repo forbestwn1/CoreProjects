@@ -35,13 +35,13 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 	private HAPContextPath m_path;
 	private String m_pathStr;
 	
-	private String m_parentCategary;
-	
 	//context node full name --- matchers
 	//used to convert data from parent to data within uiTag
 	private Map<String, HAPMatchers> m_matchers;
 
 	private Map<String, HAPMatchers> m_reverseMatchers;
+	
+	private boolean m_processed = false;
 	
 	public HAPContextNodeRootRelative() {
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
@@ -51,8 +51,25 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 	@Override
 	public String getType() {		return HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE;	}
 
-	public void setPath(HAPContextPath path){	this.m_path = path;	}
-	public void setPath(String path) {  this.m_pathStr = path;   }
+	public void processed() {   this.m_processed = true;   }
+	public boolean isProcessed() {  return this.m_processed;   }
+	
+	public void setPath(HAPContextPath path){	
+		this.m_path = path;
+		this.m_pathStr = null;
+	}
+	public void setPath(String path) {  
+		this.m_pathStr = path;
+		this.m_path = null;
+	}
+	public void setPath(String categary, String path) {  
+		this.m_path = new HAPContextPath(categary, path);
+		this.m_pathStr = null;
+	}
+	public void setPath(String categary, String rootNodeName, String path) {  
+		this.m_path = new HAPContextPath(categary, rootNodeName, path);    
+		this.m_pathStr = null;
+	}
 
 	public HAPContextPath getPath() {
 		if(this.m_path==null && HAPBasicUtility.isStringNotEmpty(m_pathStr)) {
@@ -67,8 +84,7 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 		return this.m_pathStr;
 	}
 	
-	public String getParentCategary() {  return this.m_parentCategary;   }
-	public void setParentCategary(String parentCategary) {  this.m_parentCategary = parentCategary;   }
+	public String getParentCategary() {  return this.getPath().getRootElementId().getCategary();   }
 	
 	public void setMatchers(Map<String, HAPMatchers> matchers){
 		this.m_matchers.clear();
@@ -83,8 +99,9 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 	public HAPContextNodeRoot cloneContextNodeRoot() {
 		HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
 		this.toContextNodeRootVariable(out);
-		out.m_pathStr = this.m_pathStr; 
-		out.m_parentCategary = this.m_parentCategary;
+		out.m_pathStr = this.m_pathStr;
+		for(String name : this.m_matchers.keySet()) 	out.m_matchers.put(name, this.m_matchers.get(name).cloneMatchers());
+		for(String name : this.m_reverseMatchers.keySet())   out.m_reverseMatchers.put(name, this.m_reverseMatchers.get(name).cloneMatchers());
 		return out;
 	}
 	
@@ -93,7 +110,6 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 		HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
 		this.toSolidContextNode(out, constants, contextProcessorEnv);
 		out.m_pathStr = HAPProcessorContextSolidate.getSolidName(this.m_pathStr, constants, contextProcessorEnv);
-		out.m_parentCategary = this.m_parentCategary;
 		return out;
 	}
 	
@@ -101,7 +117,6 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PATH, this.getPath().toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(PARENTCATEGARY, this.m_parentCategary);
 		if(this.m_matchers!=null && !this.m_matchers.isEmpty()){
 			jsonMap.put(MATCHERS, HAPJsonUtility.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
 			jsonMap.put(REVERSEMATCHERS, HAPJsonUtility.buildJson(this.m_reverseMatchers, HAPSerializationFormat.JSON));

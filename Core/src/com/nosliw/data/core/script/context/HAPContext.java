@@ -9,6 +9,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPData;
 
 @HAPEntityWithAttribute
 public class HAPContext extends HAPSerializableImp{
@@ -44,6 +46,20 @@ public class HAPContext extends HAPSerializableImp{
 		return (HAPContextNode)out[0];
 	}
 
+	public Map<String, Object> getConstantValue(){
+		Map<String, Object> out = new LinkedHashMap<String, Object>();
+		for(String name : this.m_elements.keySet()) {
+			HAPContextNodeRoot rootNode = this.getElement(name);
+			if(rootNode.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
+				HAPContextNodeRootConstant constantRootNode = (HAPContextNodeRootConstant)rootNode;
+				Object value = constantRootNode.getDataValue();
+				if(value==null)   value = constantRootNode.getValue();
+				out.put(name, value);
+			}
+		}
+		return out;
+	}
+	
 	//discover child node according to path
 	//may not find exact match child node according to path
 	//   return[0]   closest child node

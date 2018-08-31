@@ -61,7 +61,7 @@ public class HAPOperandUtility {
 		});	
 	}
 	
-	static public void updateVariable(HAPOperandWrapper operand, HAPUpdateName updateVar) {
+	static public void updateVariableName(HAPOperandWrapper operand, HAPUpdateName updateVar) {
 		//update variable operand
 		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
 			@Override
@@ -71,6 +71,24 @@ public class HAPOperandUtility {
 					HAPOperandVariable variableChild = (HAPOperandVariable)operand.getOperand();
 					String newName = updateVar.getUpdatedName(variableChild.getVariableName()); 
 					if(newName!=null)	variableChild.setVariableName(newName);
+				}
+				return true;
+			}
+		});	
+	}
+
+	static public void updateConstantName(HAPOperandWrapper operand, HAPUpdateName updateVar) {
+		//update variable operand
+		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
+			@Override
+			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_CONSTANT)){
+					HAPOperandConstant constantChild = (HAPOperandConstant)operand.getOperand();
+					if(HAPBasicUtility.isStringNotEmpty(constantChild.getName())){
+						String newName = updateVar.getUpdatedName(constantChild.getName()); 
+						constantChild.setName(newName);
+					}
 				}
 				return true;
 			}
@@ -159,6 +177,15 @@ public class HAPOperandUtility {
 							String constantName = constantOperand.getName();
 							HAPData constantData = contextConstants.get(constantName);
 							constantOperand.setData(constantData);
+						}
+					}
+					else if(opType.equals(HAPConstant.EXPRESSION_OPERAND_VARIABLE)){
+						HAPOperandVariable varOperand = (HAPOperandVariable)operand.getOperand();
+						HAPData cstData = contextConstants.get(varOperand.getVariableName());
+						if(cstData!=null) {
+							//find constant value for variable, replace with constant
+							HAPOperandConstant constantOperand = new HAPOperandConstant(cstData);
+							operand.setOperand(constantOperand);
 						}
 					}
 					return true;

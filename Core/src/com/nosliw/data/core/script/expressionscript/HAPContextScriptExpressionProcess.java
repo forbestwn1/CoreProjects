@@ -33,6 +33,7 @@ public class HAPContextScriptExpressionProcess {
 		}
 	}
 	public void addExpressionDefinition(String name, HAPDefinitionExpression expressionDefinition){  this.m_expressionDefinitionSuite.addExpressionDefinition(name, expressionDefinition);  }
+	public void addExpressionDefinition(Map<String, HAPDefinitionExpression> expressions){	this.m_expressionDefinitionSuite.addExpressionDefinition(expressions);	}
 	public void addVariables(Map<String, HAPVariableInfo> variables){
 		for(String varName : variables.keySet()) {
 			this.m_expressionDefinitionSuite.addVariableInfo(varName, variables.get(varName));
