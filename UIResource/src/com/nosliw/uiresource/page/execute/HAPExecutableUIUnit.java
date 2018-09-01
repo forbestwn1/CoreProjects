@@ -15,6 +15,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -70,6 +71,8 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 
 	private HAPContext m_flatContext;
 	
+	private Map<String, Object> m_constants;
+	
 	//store all the constant attribute for this domain
 	//for customer tag, they are the tag's attribute
 	//for resource, they are the attribute of body
@@ -99,6 +102,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 		this.m_uiTags = new LinkedHashMap<String, HAPExecutableUIUnitTag>();
 		this.m_context = new HAPContextGroup();
 		this.m_attributes = new LinkedHashMap<String, String>();
+		this.m_constants = new LinkedHashMap<String, Object>();
 		
 		//build tag trees according to definition
 		for(HAPDefinitionUIUnitTag tag : uiUnitDefinition.getUITags()) {
@@ -112,6 +116,14 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	public void setContext(HAPContextGroup context) {  this.m_context = context;   }
 	public HAPContext getFlatContext() { return this.m_flatContext;  }
 	public void setFlatContext(HAPContext context) {  this.m_flatContext = context;   }
+	
+	public Map<String, Object> getConstantsValue(){   return this.m_constants;    }
+	public void addConstantValue(String name, Object value) {
+		this.m_constants.put(name, value);
+		if(value instanceof HAPData) {
+			this.m_expressionContext.addConstant(name, (HAPData)value);
+		}
+	}
 	
 	public Map<String, String> getAttributes(){   return this.m_attributes;    }
 	public void addAttribute(String name, String value) {   this.m_attributes.put(name, value);   }
@@ -184,11 +196,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 		htmlContent = htmlContent.replaceAll("(\\r|\\n)", "");
 		jsonMap.put(HTML, htmlContent);
 		
-		Map<String, String> constantsJsons = new LinkedHashMap<String, String>();
-		for(String name : this.m_constantDefs.keySet()){
-			constantsJsons.put(name, this.m_constantDefs.get(name).toStringValue(HAPSerializationFormat.JSON));
-		}
-		jsonMap.put(CONSTANTS, HAPJsonUtility.buildMapJson(constantsJsons));
+		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_constants, HAPSerializationFormat.JSON));
 	
 		jsonMap.put(EVENTS, HAPJsonUtility.buildJson(this.m_eventsDefinition, HAPSerializationFormat.JSON));
 		jsonMap.put(SERVICES, HAPJsonUtility.buildJson(this.m_servicesDefinition, HAPSerializationFormat.JSON));

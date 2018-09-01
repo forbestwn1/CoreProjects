@@ -53,16 +53,5 @@ public class HAPProcessorCompile {
 			for(String name : expressions.keySet()) 		exeUnit.getExpressionContext().addExpressionDefinition(name, new HAPDefinitionExpression(expressions.get(name)));
 		}
 		
-
-		
-		//child tag
-		for(HAPExecutableUIUnitTag childTag : exeUnit.getUITags()) {
-			compile(childTag, exeUnit);
-		}
-		
 	}
-	
-	
-	
-	
 }

@@ -32,7 +32,7 @@ public class HAPUtilityContext {
 	//the data type criteria name is full name in path, for instance, a.b.c.d
 	private static void discoverCriteriaInContextNode(String path, HAPContextNode node, Map<String, HAPVariableInfo> criterias){
 		HAPContextNodeCriteria definition = node.getDefinition();
-		if(definition!=null){
+		if(definition!=null){ 
 			criterias.put(path, new HAPVariableInfo(definition.getValue()));
 		}
 		else{

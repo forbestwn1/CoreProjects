@@ -9,7 +9,9 @@ import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
 import com.nosliw.uiresource.page.definition.HAPUIResourceParser;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPProcessorUIResource {
@@ -25,37 +27,38 @@ public class HAPProcessorUIResource {
 			HAPUIResourceParser uiResourceParser,
 			HAPIdGenerator idGengerator) {
 		
-		HAPEnvContextProcessor contextProcessorEnv = new HAPEnvContextProcessor(dataTypeHelper, runtime, expressionMan);
-		
 		HAPExecutableUIUnitResource out = new HAPExecutableUIUnitResource(uiResourceDef);
-		
-		HAPProcessorCompile.compile(out);
-		
-		HAPProcessorUIContext.processUIUnitContext(out, null, uiTagMan, contextProcessorEnv);
-		
-		
-		
-		
-		
+
+		processUIUnitExe(out, null, uiResourceMan, dataTypeHelper, uiTagMan, runtime, expressionMan, resourceMan, uiResourceParser, idGengerator);			
 		
 		return out;
-		
-		
-		
-		//process include tags
-		//process included ui resource and convert it into standard include tag
-		HAPUIResourceIncludeTagProcessor.process(uiResource, uiResourceMan, dataTypeHelper, uiTagMan, runtime, expressionMan, uiResourceParser, idGengerator);
-		
-		//build expression context
-		HAPProcessorUIContext.process(null, uiResource, uiTagMan, new HAPEnvContextProcessor(dataTypeHelper, runtime, expressionMan));
+	}
 
-		HAPUIResourceContextEntityProcessor.process(null, uiResource, uiTagMan, new HAPEnvContextProcessor(dataTypeHelper, runtime, expressionMan));
+
+	private static void processUIUnitExe(
+			HAPExecutableUIUnit uiUnitExe, 
+			HAPExecutableUIUnit parentUIUnitExe, 
+			HAPUIResourceManager uiResourceMan,
+			HAPDataTypeHelper dataTypeHelper, 
+			HAPUITagManager uiTagMan, 
+			HAPRuntime runtime, 
+			HAPExpressionSuiteManager expressionMan, 
+			HAPResourceManagerRoot resourceMan, 
+			HAPUIResourceParser uiResourceParser,
+			HAPIdGenerator idGengerator) {
+
+		HAPProcessorCompile.compile(uiUnitExe, parentUIUnitExe);
 		
-		//process expression definition
-		HAPUIResourceExpressionProcessor.process(uiResource, runtime, resourceMan);
+		HAPEnvContextProcessor contextProcessorEnv = new HAPEnvContextProcessor(dataTypeHelper, runtime, expressionMan);
+		HAPProcessorUIContext.processUIUnitContext(uiUnitExe, parentUIUnitExe==null?null:parentUIUnitExe.getContext(), uiTagMan, contextProcessorEnv);
 		
-		//discovery resources required
-		HAPResourceDependencyProcessor.process(uiResource, resourceMan);
-		uiResource.processed();
+		HAPProcessorUIConstant.resolve(uiUnitExe);
+		
+		HAPProcessorUIExpression.processUIExpression(uiUnitExe, runtime, expressionMan);
+		
+		//child tag
+		for(HAPExecutableUIUnitTag childTag : uiUnitExe.getUITags()) {
+			processUIUnitExe(childTag, uiUnitExe, uiResourceMan, dataTypeHelper, uiTagMan, runtime, expressionMan, resourceMan, uiResourceParser, idGengerator);			
+		}
 	}
 }

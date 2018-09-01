@@ -35,25 +35,27 @@ public class HAPProcessorUIContext {
 
 	public static void processUIUnitContext(HAPExecutableUIUnit uiExe, HAPContextGroup parentContext, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 		
+		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
+			parentContext = buildUITagContext((HAPExecutableUIUnitTag)uiExe, parentContext, uiTagMan, contextProcessorEnv);
+		}
+		
 		HAPContextGroup extContextGroup = HAPProcessorContext.processContext(uiExe.getUIUnitDefinition().getContextDefinition(), parentContext, new HAPConfigureContextProcessor(), contextProcessorEnv);
 		uiExe.setContext(extContextGroup);
 
 		//build flat context
 		HAPContext flatContext = buildFlatContext(uiExe.getContext());
 		uiExe.setFlatContext(flatContext);
+
+		Map<String, Object> constantsValue = flatContext.getConstantValue();
+		for(String name : constantsValue.keySet()) {
+			Object constantValue = constantsValue.get(name);
+			uiExe.addConstantValue(name, constantValue);
+		}
 		
 		//build variables
 		Map<String, HAPVariableInfo> varsInfo = HAPUtilityContext.discoverDataVariablesInContext(flatContext);
 		for(String varName : varsInfo.keySet()) {
 			uiExe.getExpressionContext().addVariable(varName, varsInfo.get(varName));
-		}
-		
-		//children ui tags
-		Iterator<HAPExecutableUIUnitTag> its = uiExe.getUITags().iterator();
-		while(its.hasNext()){
-			HAPExecutableUIUnitTag uiTag = its.next();
-			HAPContextGroup tagContext = buildUITagContext(uiTag, extContextGroup, uiTagMan, contextProcessorEnv);
-			processUIUnitContext(uiTag, tagContext, uiTagMan, contextProcessorEnv);
 		}
 	}
 	
