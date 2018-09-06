@@ -54,8 +54,7 @@ public class HAPContextParser {
 		}
 		else{
 			//constant
-			out = new HAPContextNodeRootConstant();   
-			
+			out = new HAPContextNodeRootConstant(eleDefJson.opt(HAPContextNodeRootConstant.VALUE));   
 		}
 		String name = (String)eleDefJson.opt(HAPContextNodeRootInfo.DISPLAYNAME);
 		out.getInfo().setDisplayName(name);

@@ -86,6 +86,47 @@
 					}
 				}
 			},
+			aaaa : {
+				value : "<%=5+6+7%>"
+			},
+			bbbb : {
+				value : "<%=(5+6+7)>5%>"
+			},
+			cccc : {
+				value : {
+					a : 12345,
+					b : true,
+					c : "good",
+					d : "<%=5+6+7%>"
+				}
+			},
+			dddd : {
+				value : "<%=&(cccc)&.a+6%>"
+			},
+			ffff : {
+				value : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>"
+			},
+			eeee : {
+				value : "<%=#|&(ffff)&.subString(from:&(#test##integer___3)&,to:&(#test##integer___7)&)|#%>"
+			},
+			base: {
+				value : {
+					dataTypeId: "test.string",
+					value: "This is my world!"
+				}
+			},
+			from: {
+				value : {
+					dataTypeId: "test.integer",
+					value: 3
+				}
+			},
+			to: {
+				value : {
+					dataTypeId: "test.integer",
+					value: 7
+				}
+			}
 		}
 	}
 	</context>

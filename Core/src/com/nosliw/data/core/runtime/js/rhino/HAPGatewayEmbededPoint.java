@@ -8,6 +8,8 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.json.JsonParser;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
@@ -51,6 +53,11 @@ public class HAPGatewayEmbededPoint {
 			else  outServiceData = serviceData;
 		}
 		catch(Exception e){
+			System.out.println("*************************Error Info**********************************");
+			System.out.println("gatewayId : " + gatewayId);
+			System.out.println("command : " + command);
+			System.out.println("parmsObj : " + new GsonBuilder().create().toJson(parmsObj));
+			System.out.println("***********************************************************");
 			e.printStackTrace();
 			outServiceData = HAPServiceData.createFailureData(null, "Exception during process command result!!");
 		}

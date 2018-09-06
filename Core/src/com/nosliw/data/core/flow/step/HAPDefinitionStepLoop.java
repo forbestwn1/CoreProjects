@@ -11,7 +11,9 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 
-public class HAPDefinitionStepLoop extends HAPDefinitionStep{
+public class HAPDefinitionStepLoop{
+/*
+extends HAPDefinitionStep{
 
 	@HAPAttribute
 	public static String CONTAINER = "container";
@@ -89,4 +91,5 @@ public class HAPDefinitionStepLoop extends HAPDefinitionStep{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 	}
+*/	
 }

@@ -23,27 +23,29 @@ import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionUtility;
 
 public class HAPProcessorContextConstant {
 
-	static public HAPContextGroup processConstantDefs(
+	static public HAPContextGroup process(
 			HAPContextGroup originalContextGroup,
 			HAPContextGroup parentContextGroup,
 			HAPEnvContextProcessor contextProcessorEnv){
 
-		HAPContextGroup merged = mergeConstantContext(originalContextGroup, parentContextGroup);
+		HAPContextGroup merged = merge(originalContextGroup, parentContextGroup);
 		
 		return solidateConstantDefs(merged, contextProcessorEnv);
 	}
 
 	//merge constant with parent
-	private static HAPContextGroup mergeConstantContext(
+	private static HAPContextGroup merge(
 			HAPContextGroup contextGroup,
 			HAPContextGroup parentContextGroup){
 		HAPContextGroup out = contextGroup.clone();
-		//merge constants with parent
-		for(String contextCategary : HAPContextGroup.getInheritableContextTypes()) {
-			for(String name : parentContextGroup.getContext(contextCategary).getElementNames()) {
-				if(parentContextGroup.getElement(contextCategary, name).getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
-					if(contextGroup.getElement(contextCategary, name)==null) {
-						out.addElement(name, contextGroup.getElement(contextCategary, name).cloneContextNodeRoot(), contextCategary);
+		if(parentContextGroup!=null) {
+			//merge constants with parent
+			for(String contextCategary : HAPContextGroup.getInheritableContextTypes()) {
+				for(String name : parentContextGroup.getContext(contextCategary).getElementNames()) {
+					if(parentContextGroup.getElement(contextCategary, name).getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
+						if(contextGroup.getElement(contextCategary, name)==null) {
+							out.addElement(name, parentContextGroup.getElement(contextCategary, name).cloneContextNodeRoot(), contextCategary);
+						}
 					}
 				}
 			}
@@ -65,6 +67,11 @@ public class HAPProcessorContextConstant {
 			for(String name : nodes.keySet()) {
 				HAPContextNodeRoot node = nodes.get(name);
 				if(node.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
+					if(name.equals("eeee")) {
+						int kkkk = 5555;
+						kkkk++;
+					}
+					
 					solidateConstantNode(new HAPContextRootNodeId(categary, name), originalContextGroup, out, contextProcessorEnv);
 				}
 				else {

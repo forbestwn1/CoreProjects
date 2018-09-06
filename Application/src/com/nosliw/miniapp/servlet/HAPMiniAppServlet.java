@@ -9,16 +9,15 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.miniapp.HAPAppManager;
-import com.nosliw.miniapp.data.HAPInstanceData;
-import com.nosliw.miniapp.instance.HAPInstanceMiniAppEntry;
-import com.nosliw.miniapp.user.HAPUser;
-import com.nosliw.miniapp.user.HAPUserInfo;
+//import com.nosliw.miniapp.HAPAppManager;
+//import com.nosliw.miniapp.data.HAPInstanceData;
+//import com.nosliw.miniapp.instance.HAPInstanceMiniAppEntry;
+//import com.nosliw.miniapp.user.HAPUser;
+//import com.nosliw.miniapp.user.HAPUserInfo;
 import com.nosliw.servlet.HAPServiceServlet;
 
 @HAPEntityWithAttribute
 public class HAPMiniAppServlet extends HAPServiceServlet{
-
 	private static final long serialVersionUID = 3449216679929442927L;
 
 	@HAPAttribute
@@ -61,10 +60,12 @@ public class HAPMiniAppServlet extends HAPServiceServlet{
 	
 	@Override
 	protected HAPServiceData processServiceRequest(String command, JSONObject parms) {
+		HAPServiceData out = null;
+		
+		/*
 		
 		HAPAppManager miniAppMan = (HAPAppManager)this.getServletContext().getAttribute("minAppMan");
 		
-		HAPServiceData out = null;
 
 		switch(command){
 		case COMMAND_LOGIN:
@@ -129,6 +130,7 @@ public class HAPMiniAppServlet extends HAPServiceServlet{
 			break;
 		}
 		}
+*/	
 		
 		return out;
 	}

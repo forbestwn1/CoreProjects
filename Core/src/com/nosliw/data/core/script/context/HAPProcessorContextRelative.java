@@ -12,7 +12,7 @@ import com.nosliw.data.core.expression.HAPMatchers;
 
 public class HAPProcessorContextRelative {
 
-	public static HAPContextGroup processRelativeContextNode(HAPContextGroup contextGroup, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
+	public static HAPContextGroup process(HAPContextGroup contextGroup, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
 		HAPContextGroup out = new HAPContextGroup(contextGroup.getInfo());
 		for(String categary : HAPContextGroup.getAllContextTypes()){
 			Map<String, HAPContextNodeRoot> eles = contextGroup.getElements(categary);

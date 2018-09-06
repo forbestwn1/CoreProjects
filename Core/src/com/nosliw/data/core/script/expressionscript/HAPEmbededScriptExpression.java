@@ -70,6 +70,17 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 		return out;
 	}
 	
+	public boolean isString() {
+		boolean out = true;
+		for(Object ele : this.m_elements) {
+			if(!(ele instanceof String)) {
+				out = false;
+				break;
+			}
+		}
+		return out;
+	}
+	
 	public void updateWithConstantsValue(Map<String, Object> constantsValue) {
 		for(Object ele : this.m_elements){
 			if(ele instanceof HAPScriptExpression){

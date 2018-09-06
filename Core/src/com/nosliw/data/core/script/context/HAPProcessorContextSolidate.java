@@ -4,13 +4,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.exception.HAPServiceDataException;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteEmbededExpression;
 import com.nosliw.data.core.script.expressionscript.HAPEmbededScriptExpression;
 
 public class HAPProcessorContextSolidate {
 
-	static public HAPContextGroup solidateContext(
+	static public HAPContextGroup process(
 			HAPContextGroup originalContextGroup,
 			HAPEnvContextProcessor contextProcessorEnv){
 		//find all constants
@@ -52,10 +53,16 @@ public class HAPProcessorContextSolidate {
 	//evaluate embeded script expression
 	public static String getSolidName(String name, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv){
 		HAPEmbededScriptExpression se = new HAPEmbededScriptExpression(name);
-		HAPRuntimeTaskExecuteEmbededExpression task = new HAPRuntimeTaskExecuteEmbededExpression(se, null, constants);
-		HAPServiceData serviceData = contextProcessorEnv.runtime.executeTaskSync(task);
-		if(serviceData.isSuccess())   return (String)serviceData.getData();
-		else return null;
+		if(se.isString())  return name;
+		else {
+			HAPRuntimeTaskExecuteEmbededExpression task = new HAPRuntimeTaskExecuteEmbededExpression(se, null, constants);
+			HAPServiceData serviceData = contextProcessorEnv.runtime.executeTaskSync(task);
+			if(serviceData.isSuccess())   return (String)serviceData.getData();
+			else{
+				System.err.println("Fail to solidate name : " + name);
+				return null;
+			}
+		}
 	}
 
 	//build context node with solid name

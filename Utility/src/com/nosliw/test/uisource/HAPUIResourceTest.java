@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPUIResourceTest {
@@ -18,7 +18,7 @@ public class HAPUIResourceTest {
 
 		String file = HAPFileUtility.getFileNameOnClassPath(HAPUIResourceTest.class, "Example1.res");
 		uiResourceMan.addUIResourceDefinition(file);
-		HAPDefinitionUIUnitResource resource = uiResourceMan.getUIResource("Example1");
+		HAPExecutableUIUnitResource resource = uiResourceMan.getUIResource("Example1");
 		System.out.println(resource);
 		
 	}

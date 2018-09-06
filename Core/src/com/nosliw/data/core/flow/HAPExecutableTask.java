@@ -48,19 +48,19 @@ public class HAPExecutableTask{
 	private Map<String, HAPMatchers> m_varsMatchers;
 	
 	public HAPExecutableTask(HAPDefinitionTask taskDef, String domain) {
-		this.m_taskDefinition = taskDef;
-		this.m_domain = domain;
-		this.m_steps = new ArrayList<HAPExecutableStep>();
-		this.m_stepsByName = new LinkedHashMap<String, HAPExecutableStep>();
-		this.m_varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		this.m_varsInfo.putAll(taskDef.getDataContext());
-		this.m_executeReferences = new LinkedHashMap<String, HAPExecutableTask>();
-		this.m_varsMatchers = new LinkedHashMap<String, HAPMatchers>();
-		
-		this.m_referencesInfo = new LinkedHashMap<String, HAPReferenceInfo>();
-		for(String refName : taskDef.getReferences().keySet()) {
-			this.m_referencesInfo.put(refName, taskDef.getReferences().get(refName).clone());
-		}
+//		this.m_taskDefinition = taskDef;
+//		this.m_domain = domain;
+//		this.m_steps = new ArrayList<HAPExecutableStep>();
+//		this.m_stepsByName = new LinkedHashMap<String, HAPExecutableStep>();
+//		this.m_varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+//		this.m_varsInfo.putAll(taskDef.getDataContext());
+//		this.m_executeReferences = new LinkedHashMap<String, HAPExecutableTask>();
+//		this.m_varsMatchers = new LinkedHashMap<String, HAPMatchers>();
+//		
+//		this.m_referencesInfo = new LinkedHashMap<String, HAPReferenceInfo>();
+//		for(String refName : taskDef.getReferences().keySet()) {
+//			this.m_referencesInfo.put(refName, taskDef.getReferences().get(refName).clone());
+//		}
 	}
 	
 	public void setId(String id) {  this.m_id = id;   }

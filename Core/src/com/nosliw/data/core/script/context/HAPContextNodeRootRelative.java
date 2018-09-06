@@ -55,18 +55,34 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 	public boolean isProcessed() {  return this.m_processed;   }
 	
 	public void setPath(HAPContextPath path){	
+		if(path==null) {
+			int kkkk = 5555;
+			kkkk++;
+		}
 		this.m_path = path;
 		this.m_pathStr = null;
 	}
 	public void setPath(String path) {  
+		if(path==null) {
+			int kkkk = 5555;
+			kkkk++;
+		}
 		this.m_pathStr = path;
 		this.m_path = null;
 	}
 	public void setPath(String categary, String path) {  
+		if(path==null) {
+			int kkkk = 5555;
+			kkkk++;
+		}
 		this.m_path = new HAPContextPath(categary, path);
 		this.m_pathStr = null;
 	}
 	public void setPath(String categary, String rootNodeName, String path) {  
+		if(path==null) {
+			int kkkk = 5555;
+			kkkk++;
+		}
 		this.m_path = new HAPContextPath(categary, rootNodeName, path);    
 		this.m_pathStr = null;
 	}
@@ -84,7 +100,13 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 		return this.m_pathStr;
 	}
 	
-	public String getParentCategary() {  return this.getPath().getRootElementId().getCategary();   }
+	public String getParentCategary() {
+		if(this.getPath()==null || this.getPath().getRootElementId()==null || this.getPath().getRootElementId().getCategary()==null) {
+			int kkkk = 5555;
+			kkkk++;
+		}
+		return this.getPath().getRootElementId().getCategary();   
+	}
 	
 	public void setMatchers(Map<String, HAPMatchers> matchers){
 		this.m_matchers.clear();
@@ -100,6 +122,7 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 		HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
 		this.toContextNodeRootVariable(out);
 		out.m_pathStr = this.m_pathStr;
+		if(this.m_path!=null)	out.m_path = this.m_path.clone();
 		for(String name : this.m_matchers.keySet()) 	out.m_matchers.put(name, this.m_matchers.get(name).cloneMatchers());
 		for(String name : this.m_reverseMatchers.keySet())   out.m_reverseMatchers.put(name, this.m_reverseMatchers.get(name).cloneMatchers());
 		return out;
@@ -109,7 +132,8 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 	public HAPContextNodeRoot toSolidContextNodeRoot(Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
 		HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
 		this.toSolidContextNode(out, constants, contextProcessorEnv);
-		out.m_pathStr = HAPProcessorContextSolidate.getSolidName(this.m_pathStr, constants, contextProcessorEnv);
+		out.m_pathStr = HAPProcessorContextSolidate.getSolidName(this.getPathStr(), constants, contextProcessorEnv);
+		out.m_path = null;
 		return out;
 	}
 	

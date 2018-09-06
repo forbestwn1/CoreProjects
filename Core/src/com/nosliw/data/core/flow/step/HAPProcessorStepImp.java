@@ -6,7 +6,9 @@ import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 
-public abstract class HAPProcessorStepImp implements HAPProcessorStep{
+public abstract class HAPProcessorStepImp{
+/*
+implements HAPProcessorStep{
 
 	@Override
 	public void postProcess(HAPExecutableStep executableStep, 
@@ -16,5 +18,5 @@ public abstract class HAPProcessorStepImp implements HAPProcessorStep{
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
 			HAPProcessContext context) {
 	}
-
+*/
 }

@@ -237,11 +237,16 @@ public class HAPJSImporter {
 			resourceId = new HAPResourceIdDataType(dataTypeIdLiterate);
 			break;
 		case HAPConstant.RUNTIME_RESOURCE_TYPE_JSHELPER:
-			String helperScript = new HAPRhinoDataUtility().toJson(resourceObjJS)+""; 
-			helperScript = HAPJsonUtility.unescape(helperScript);
-			HAPResourceDataHelperImp helperResource = new HAPResourceDataHelperImp(helperScript);
-			helperResource = (HAPResourceDataHelperImp)this.m_jsRuntimeDataAccess.saveEntity(helperResource);
-			resourceId = new HAPResourceIdJSHelper(helperResource.getId());
+			try {
+				String helperScript = new HAPRhinoDataUtility().toJson(resourceObjJS)+""; 
+				helperScript = HAPJsonUtility.unescape(helperScript);
+				HAPResourceDataHelperImp helperResource = new HAPResourceDataHelperImp(helperScript);
+				helperResource = (HAPResourceDataHelperImp)this.m_jsRuntimeDataAccess.saveEntity(helperResource);
+				resourceId = new HAPResourceIdJSHelper(helperResource.getId());
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 			break;
 		case HAPConstant.RUNTIME_RESOURCE_TYPE_JSGATEWAY:
 			String gatewayIdLiterate = (String)resourceObjJS;

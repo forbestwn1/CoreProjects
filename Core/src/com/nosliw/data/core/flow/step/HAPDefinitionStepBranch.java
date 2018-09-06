@@ -8,9 +8,11 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
+import com.nosliw.data.core.flow.HAPDefinitionStep;
 
-public class HAPDefinitionStepBranch extends HAPDefinitionStep{
-
+public class HAPDefinitionStepBranch{
+//extends HAPDefinitionStep{
+/*
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
 	
@@ -63,5 +65,5 @@ public class HAPDefinitionStepBranch extends HAPDefinitionStep{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 	}
-	
+	*/
 }

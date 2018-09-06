@@ -13,7 +13,10 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 
-public class HAPDefinitionStepExpression extends HAPDefinitionStep{
+public class HAPDefinitionStepExpression{ 
+	
+/*
+extends HAPDefinitionStep{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
@@ -73,4 +76,5 @@ public class HAPDefinitionStepExpression extends HAPDefinitionStep{
 		jsonMap.put(EXPRESSION, HAPJsonUtility.buildJson(this.m_expression, HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTVARIABLE, this.m_outputVariable);
 	}
+*/	
 }

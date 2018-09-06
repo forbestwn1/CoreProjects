@@ -14,7 +14,7 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
-public class HAPUIResourceParserUtility {
+public class HAPUtilityUIResourceParser {
 
 	public static final String CUSTOMTAG_PREFIX = "nosliw-";
 	

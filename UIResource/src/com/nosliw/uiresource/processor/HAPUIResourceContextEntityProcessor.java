@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextEntity;
-import com.nosliw.data.core.script.context.HAPContextUtility;
 import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
@@ -13,7 +12,7 @@ import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPUIResourceContextEntityProcessor {
-
+/*
 	public static void process(HAPDefinitionUIUnit parent, HAPDefinitionUIUnit uiDefinition, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
@@ -45,5 +44,5 @@ public class HAPUIResourceContextEntityProcessor {
 			process(uiDefinition, uiTag, uiTagMan, contextProcessorEnv);
 		}
 	}
-	
+*/	
 }

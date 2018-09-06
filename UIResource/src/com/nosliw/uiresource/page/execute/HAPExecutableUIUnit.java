@@ -2,6 +2,7 @@ package com.nosliw.uiresource.page.execute;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,6 +99,9 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	
 	public HAPExecutableUIUnit(HAPDefinitionUIUnit uiUnitDefinition) {
 		this.m_uiUnitDefinition = uiUnitDefinition;
+		this.m_scriptExpressionsInContent = new HashSet<HAPUIEmbededScriptExpressionInContent>();
+		this.m_scriptExpressionsInAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
+		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
 		this.m_expressionContext = new HAPContextScriptExpressionProcess();
 		this.m_uiTags = new LinkedHashMap<String, HAPExecutableUIUnitTag>();
 		this.m_context = new HAPContextGroup();
@@ -135,6 +139,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 
 	public Collection<HAPExecutableUIUnitTag> getUITags(){return this.m_uiTags.values();} 
 	public HAPExecutableUIUnitTag getUITag(String id){return this.m_uiTags.get(id);} 
+	public Map<String, HAPExecutableUIUnitTag> getUITagesByName(){   return this.m_uiTags;   }
 	
 	public void addScriptExpressionsInContent(HAPUIEmbededScriptExpressionInContent se) {this.m_scriptExpressionsInContent.add(se);}
 	public void addScriptExpressionsInAttribute(HAPUIEmbededScriptExpressionInAttribute se) { this.m_scriptExpressionsInAttribute.add(se);   }

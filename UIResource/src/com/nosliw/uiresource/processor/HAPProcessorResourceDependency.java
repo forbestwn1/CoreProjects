@@ -15,17 +15,18 @@ import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.script.expressionscript.HAPEmbededScriptExpression;
 import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.resource.HAPResourceIdUITag;
 import com.nosliw.uiresource.tag.HAPUITagId;
 
-public class HAPResourceDependencyProcessor {
-/*
-	public static void process(HAPDefinitionUIUnitResource uiResource, HAPResourceManagerRoot resourceMan){
+public class HAPProcessorResourceDependency {
+
+	public static void process(HAPExecutableUIUnitResource uiResource, HAPResourceManagerRoot resourceMan){
 		 Set<HAPResourceId> dependencyResourceIds = new LinkedHashSet();
 		
 		//resources need by expression
@@ -47,35 +48,35 @@ public class HAPResourceDependencyProcessor {
 		}
 	}
 	
-	private static void discoverUITagsInUIUnit(HAPDefinitionUIUnit uiUnit, Set<String> names){
-		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(uiUnit.getType())){
-			names.add(((HAPDefinitionUIUnitTag)uiUnit).getTagName());
+	private static void discoverUITagsInUIUnit(HAPExecutableUIUnit exeUIUnit, Set<String> names){
+		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(exeUIUnit.getType())){
+			names.add(((HAPDefinitionUIUnitTag)exeUIUnit.getUIUnitDefinition()).getTagName());
 		}
-		for(HAPDefinitionUIUnitTag childUiUnit : uiUnit.getUITags()){
+		for(HAPExecutableUIUnitTag childUiUnit : exeUIUnit.getUITags()){
 			discoverUITagsInUIUnit(childUiUnit, names);
 		}
 	}
 	
-	private static List<HAPExecuteExpression> discoverExpressionsInUIResource(HAPDefinitionUIUnitResource uiResource){
+	private static List<HAPExecuteExpression> discoverExpressionsInUIResource(HAPExecutableUIUnitResource exeUIResource){
 		List<HAPExecuteExpression> out = new ArrayList<HAPExecuteExpression>();
-		discoverExpressionsInUIResourceUnit(uiResource, out);		
+		discoverExpressionsInUIResourceUnit(exeUIResource, out);		
 		return out;
 	}
 	
-	private static void discoverExpressionsInUIResourceUnit(HAPDefinitionUIUnit uiResourceUnit, List<HAPExecuteExpression> out){
-		out.addAll(getExpressions(uiResourceUnit));
+	private static void discoverExpressionsInUIResourceUnit(HAPExecutableUIUnit exeUIUnit, List<HAPExecuteExpression> out){
+		out.addAll(getExpressions(exeUIUnit));
 		
-		Iterator<HAPDefinitionUIUnitTag> it = uiResourceUnit.getUITags().iterator();
+		Iterator<HAPExecutableUIUnitTag> it = exeUIUnit.getUITags().iterator();
 		while(it.hasNext()){
 			discoverExpressionsInUIResourceUnit(it.next(), out);
 		}
 	}
 	
-	private static Set<HAPExecuteExpression> getExpressions(HAPDefinitionUIUnit uiDefinitionUnit){
+	private static Set<HAPExecuteExpression> getExpressions(HAPExecutableUIUnit uiExeUnit){
 		Set<HAPExecuteExpression> all = new HashSet<HAPExecuteExpression>();
-		for(HAPUIEmbededScriptExpressionInContent scriptExpressionInContent : uiDefinitionUnit.getScriptExpressionsInContent())		all.addAll(getExpressions(scriptExpressionInContent));
-		for(HAPUIEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInAttributes())    all.addAll(getExpressions(scriptExpressionInAttribute));
-		for(HAPUIEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiDefinitionUnit.getScriptExpressionsInTagAttributes())		all.addAll(getExpressions(scriptExpressionInAttribute));
+		for(HAPUIEmbededScriptExpressionInContent scriptExpressionInContent : uiExeUnit.getScriptExpressionsInContent())		all.addAll(getExpressions(scriptExpressionInContent));
+		for(HAPUIEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiExeUnit.getScriptExpressionsInAttribute())    all.addAll(getExpressions(scriptExpressionInAttribute));
+		for(HAPUIEmbededScriptExpressionInAttribute scriptExpressionInAttribute : uiExeUnit.getScriptExpressionsInTagAttribute())		all.addAll(getExpressions(scriptExpressionInAttribute));
 		return all;
 	}
 	
@@ -86,5 +87,5 @@ public class HAPResourceDependencyProcessor {
 		}
 		return out;
 	}
-	*/
+	
 }

@@ -13,6 +13,7 @@ import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInContent;
+import com.nosliw.uiresource.page.execute.HAPUtilityExecutable;
 
 public class HAPProcessorUIExpression {
 
@@ -21,16 +22,8 @@ public class HAPProcessorUIExpression {
 	}
 	
 	private static void processScriptExpression(HAPExecutableUIUnit exeUnit, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
-		List<HAPScriptExpression> scriptExpressions = new ArrayList<HAPScriptExpression>();
-		
-		for(HAPUIEmbededScriptExpressionInContent scriptExpressionInConent : exeUnit.getScriptExpressionsInContent())  scriptExpressions.addAll(scriptExpressionInConent.getScriptExpressionsList());
-		for(HAPUIEmbededScriptExpressionInAttribute scriptExpressionInAttribute : exeUnit.getScriptExpressionsInAttribute())  scriptExpressions.addAll(scriptExpressionInAttribute.getScriptExpressionsList()); 
-		for(HAPUIEmbededScriptExpressionInAttribute scriptExpressionInAttribute : exeUnit.getScriptExpressionsInTagAttribute())  scriptExpressions.addAll(scriptExpressionInAttribute.getScriptExpressionsList()); 
-		processScriptExpression(scriptExpressions, exeUnit, runtime, expressionManager);
+		List<HAPScriptExpression> scriptExpressions = HAPUtilityExecutable.getScriptExpressionFromExeUnit(exeUnit);
 
-	}
-
-	private static void processScriptExpression(List<HAPScriptExpression> scriptExpressions, HAPExecutableUIUnit exeUnit, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
 		HAPContextScriptExpressionProcess expContext = exeUnit.getExpressionContext();
 		for(HAPScriptExpression scriptExpression : scriptExpressions){
 			scriptExpression.processExpressions(expContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), expressionManager);

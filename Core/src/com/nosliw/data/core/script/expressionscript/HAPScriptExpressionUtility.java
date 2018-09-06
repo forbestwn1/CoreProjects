@@ -43,8 +43,10 @@ public class HAPScriptExpressionUtility {
 	 */
 	public static List<Object> discoverEmbededScript(String text){
 		List<Object> out = new ArrayList<Object>();
-		int i = 0;
 		
+		if(text==null) return out;
+		
+		int i = 0;
 		int start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
 		while(start != -1){
 			if(start>0)   out.add(text.substring(0, start));
@@ -77,11 +79,12 @@ public class HAPScriptExpressionUtility {
 		return toExeEmbedElement(segs);
 	}
 	
+	//convert list of definition elements to executable elements 
 	public static List<Object> toExeEmbedElement(List<Object> eles){
 		List<Object> out = new ArrayList<Object>();
 		for(Object seg : eles) {
 			if(seg instanceof String)   out.add(seg);
-			if(seg instanceof HAPDefinitionEmbededScript) {
+			else if(seg instanceof HAPDefinitionEmbededScript) {
 				HAPDefinitionEmbededScript scriptSeg = (HAPDefinitionEmbededScript)seg;
 				HAPScriptExpression uiExpression = new HAPScriptExpression(scriptSeg.getId(), scriptSeg.getDefinition());
 				out.add(uiExpression);

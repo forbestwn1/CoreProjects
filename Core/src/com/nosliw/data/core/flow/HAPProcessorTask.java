@@ -54,7 +54,7 @@ public class HAPProcessorTask{
 	private static void processReferencedTasks(HAPExecutableTask out, HAPDefinitionTask taskDef,
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
 			HAPProcessContext context, HAPManagerFlowTask flowTaskMan) {
-
+/*
 		//find all reference infos in task
 		Map<String, HAPReferenceInfo> referencesInfo = new LinkedHashMap<String, HAPReferenceInfo>();
 		for(HAPDefinitionStep step : taskDef.getSteps()) {
@@ -82,6 +82,7 @@ public class HAPProcessorTask{
 			out.addReferencedExecute(refName, executable);
 			
 		}
+*/		
 	}
 
 	private static void processSteps(HAPExecutableTask out, HAPDefinitionTask taskDefinition, Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants, HAPProcessContext processContext, HAPManagerFlowTask flowTaskMan) {
@@ -105,8 +106,8 @@ public class HAPProcessorTask{
 
 	private static Map<String, HAPData> getContextConstantsForTask(HAPDefinitionTask taskDefExp, Map<String, HAPData> contextConstants){
 		Map<String, HAPData> out = new LinkedHashMap<String, HAPData>();
-		out.putAll(contextConstants);
-		out.putAll(taskDefExp.getConstants());
+//		out.putAll(contextConstants);
+//		out.putAll(taskDefExp.getConstants());
 		return out;
 	}
 }

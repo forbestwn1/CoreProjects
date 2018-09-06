@@ -7,7 +7,9 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 
-public class HAPProcessorStepExpression extends HAPProcessorStepImp{
+public class HAPProcessorStepExpression{
+/*
+extends HAPProcessorStepImp{
 
 	@Override
 	public HAPExecutableStep process(HAPDefinitionStep stepDefinition,
@@ -25,5 +27,5 @@ public class HAPProcessorStepExpression extends HAPProcessorStepImp{
 		
 		return out;
 	}
-
+*/
 }

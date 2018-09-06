@@ -16,7 +16,9 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task.HAPExecutableTask;
 
-public class HAPExecutableStepBranch extends HAPExecutableStep{
+public class HAPExecutableStepBranch{
+/*
+extends HAPExecutableStep{
 
 	private HAPOperandWrapper m_expression;
 	
@@ -80,4 +82,5 @@ public class HAPExecutableStepBranch extends HAPExecutableStep{
 	public void updateReferencedExecute(Map<String, HAPExecutableTask> references) {
 		HAPOperandUtility.updateReferencedExecute(this.m_expression, references);
 	}
+*/	
 }

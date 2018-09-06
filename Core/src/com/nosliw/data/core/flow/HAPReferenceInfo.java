@@ -43,42 +43,44 @@ public class HAPReferenceInfo extends HAPSerializableImp{
 	public String getReference(){  return this.m_reference;	}
 	
 	public HAPContext getVariablesMap(){  return this.m_variableMap;  }
-	public void addVariableMap(String name, String mapped) { 	this.m_variableMap.put(name, mapped);	}
+	public void addVariableMap(String name, String mapped) {
+//		this.m_variableMap.put(name, mapped);	
+	}
 	
 	public void setVariableMap(Map<String, String> varsMap) {
-		this.m_variableMap.clear();
-		this.m_variableMap.putAll(varsMap);
+//		this.m_variableMap.clear();
+//		this.m_variableMap.putAll(varsMap);
 	}
 	
 	public HAPReferenceInfo clone() {
 		HAPReferenceInfo out = new HAPReferenceInfo();
-		out.m_reference = this.m_reference;
-		out.m_variableMap.putAll(this.m_variableMap);
+//		out.m_reference = this.m_reference;
+//		out.m_variableMap.putAll(this.m_variableMap);
 		return out;
 	}
 
 	public void upateVariableName(HAPUpdateVariable updateVar) {
-		Map<String, String> varMap = new LinkedHashMap<String, String>();
-		for(String name : this.m_variableMap.keySet()) {
-			varMap.put(updateVar.getUpdatedVariable(name), this.m_variableMap.get(name));
-		}
-		this.m_variableMap.clear();
-		this.m_variableMap.putAll(varMap);
+//		Map<String, String> varMap = new LinkedHashMap<String, String>();
+//		for(String name : this.m_variableMap.keySet()) {
+//			varMap.put(updateVar.getUpdatedVariable(name), this.m_variableMap.get(name));
+//		}
+//		this.m_variableMap.clear();
+//		this.m_variableMap.putAll(varMap);
 	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
-		this.m_reference = jsonObj.optString(REFERENCE);
-		if(HAPBasicUtility.isStringEmpty(this.m_reference))   this.m_reference = null;
-		
-		JSONObject mapsObj = jsonObj.getJSONObject(VARIABLESMAP);
-		Iterator<String> its = mapsObj.keys();
-		while(its.hasNext()){
-			String name = its.next();
-			String map = mapsObj.optString(name);
-			this.m_variableMap.put(name, map);
-		}
+//		JSONObject jsonObj = (JSONObject)json;
+//		this.m_reference = jsonObj.optString(REFERENCE);
+//		if(HAPBasicUtility.isStringEmpty(this.m_reference))   this.m_reference = null;
+//		
+//		JSONObject mapsObj = jsonObj.getJSONObject(VARIABLESMAP);
+//		Iterator<String> its = mapsObj.keys();
+//		while(its.hasNext()){
+//			String name = its.next();
+//			String map = mapsObj.optString(name);
+//			this.m_variableMap.put(name, map);
+//		}
 		return true;  
 	}
 

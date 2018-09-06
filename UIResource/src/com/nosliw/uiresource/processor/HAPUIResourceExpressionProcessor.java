@@ -19,7 +19,7 @@ import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInAttribut
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInContent;
 
 public class HAPUIResourceExpressionProcessor {
-
+/*
 	public static void process(HAPDefinitionUIUnitResource uiResource, HAPRuntime runtime, HAPResourceManagerRoot resourceMan){
 		
 		//process all script expressions in resource
@@ -76,4 +76,5 @@ public class HAPUIResourceExpressionProcessor {
 			}
 		}
 	}
+*/	
 }

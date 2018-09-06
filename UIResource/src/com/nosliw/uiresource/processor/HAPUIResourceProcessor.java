@@ -8,11 +8,11 @@ import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
-import com.nosliw.uiresource.page.definition.HAPUIResourceParser;
+import com.nosliw.uiresource.page.definition.HAPParserUIResource;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPUIResourceProcessor {
-
+/*
 	public static void processUIResource(
 			HAPDefinitionUIUnitResource uiResource, 
 			HAPUIResourceManager uiResourceMan,
@@ -21,7 +21,7 @@ public class HAPUIResourceProcessor {
 			HAPRuntime runtime, 
 			HAPExpressionSuiteManager expressionMan, 
 			HAPResourceManagerRoot resourceMan, 
-			HAPUIResourceParser uiResourceParser,
+			HAPParserUIResource uiResourceParser,
 			HAPIdGenerator idGengerator) {
 		
 		
@@ -43,4 +43,5 @@ public class HAPUIResourceProcessor {
 		HAPResourceDependencyProcessor.process(uiResource, resourceMan);
 		uiResource.processed();
 	}
+*/
 }

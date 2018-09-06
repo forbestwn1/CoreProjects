@@ -1,45 +1,36 @@
 package com.nosliw.uiresource.processor;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPContextNode;
-import com.nosliw.data.core.script.context.HAPContextNodeCriteria;
 import com.nosliw.data.core.script.context.HAPContextNodeRoot;
 import com.nosliw.data.core.script.context.HAPContextNodeRootConstant;
-import com.nosliw.data.core.script.context.HAPContextNodeRootRelative;
 import com.nosliw.data.core.script.context.HAPContextRootNodeId;
 import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContext;
 import com.nosliw.uiresource.tag.HAPUITagId;
 import com.nosliw.uiresource.tag.HAPUITagManager;
-import com.nosliw.uiresource.tag.HAPUITagUtility;
 
 public class HAPProcessorUIContext {
 
-	public static void processUIUnitContext(HAPExecutableUIUnit uiExe, HAPContextGroup parentContext, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
+	//process context information
+	public static void process(HAPExecutableUIUnit uiExe, HAPContextGroup parentContext, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 		
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
+			//for custom, merge parent context with context definition in tag definition first
 			parentContext = buildUITagContext((HAPExecutableUIUnitTag)uiExe, parentContext, uiTagMan, contextProcessorEnv);
 		}
 		
-		HAPContextGroup extContextGroup = HAPProcessorContext.processContext(uiExe.getUIUnitDefinition().getContextDefinition(), parentContext, new HAPConfigureContextProcessor(), contextProcessorEnv);
+		//merge with context defined in tag unit
+		HAPContextGroup extContextGroup = HAPProcessorContext.process(uiExe.getUIUnitDefinition().getContextDefinition(), parentContext, new HAPConfigureContextProcessor(), contextProcessorEnv);
 		uiExe.setContext(extContextGroup);
 
 		//build flat context
@@ -92,46 +83,13 @@ public class HAPProcessorUIContext {
 		
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
 		configure.inheritMode = tagDefinitionContext.getInheritMode();
-		return HAPProcessorContext.processContext(tagContext, parentContext, configure, contextProcessorEnv);
-	}
-	
-	
-	
-	
-	
-	
-	
-	private static void processExpressionContext(HAPDefinitionUIUnit parent, HAPDefinitionUIUnit uiDefinition, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 
-		HAPContextScriptExpressionProcess expContext = uiDefinition.getExpressionContext();
-
-		//find all data variables from context definition 
-		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getPublicContext()));
-		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getProtectedContext()));
-		expContext.addVariables(discoverDataVariablesInContext(uiDefinition.getContext().getInternalContext()));
-		
-		//parent expression context
-		HAPContextScriptExpressionProcess parentExpContext = parent==null?null:parent.getExpressionContext();
-		
-		//build data constants from local and parent
-		//local constants override parent constants
-		if(parent!=null)	expContext.addConstants(parentExpContext.getConstants());
-		Map<String, HAPConstantDef> constantDefs = uiDefinition.getConstantDefs();
-		for(String name : constantDefs.keySet()){
-			HAPData data = constantDefs.get(name).getDataValue();
-			if(data!=null)		expContext.addConstant(name, data);
+		if(uiTag.getUIUnitTagDefinition().getTagName().equals("textinput")){
+			int kkkk = 5555;
+			kkkk++;
 		}
 		
-		//get all support expressions definitions from local and parent
-		//local expression override expression from parent
-		if(parent!=null){
-			Map<String, HAPDefinitionExpression> parentExpDefs = parentExpContext.getExpressionDefinitions();
-			for(String id : parentExpDefs.keySet()) {
-				expContext.addExpressionDefinition(id, parentExpDefs.get(id));
-			}
-		}
-		//expression from current
-		for(String expName : uiDefinition.getOtherExpressionDefinitions().keySet())	expContext.addExpressionDefinition(expName, uiDefinition.getOtherExpressionDefinitions().get(expName));
+		
+		return HAPProcessorContext.process(tagContext, parentContext, configure, contextProcessorEnv);
 	}
-	
 }

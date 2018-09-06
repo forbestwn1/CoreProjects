@@ -10,7 +10,9 @@ import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutableTask;
 import com.nosliw.data.core.task.HAPManagerTask;
 
-public class HAPProcessorStepLoop implements HAPProcessorStep{
+public class HAPProcessorStepLoop{ 
+/*
+implements HAPProcessorStep{
 
 	private HAPManagerTask m_managerTask;
 	
@@ -51,5 +53,5 @@ public class HAPProcessorStepLoop implements HAPProcessorStep{
 		stepExeLoop.setExecuteTask(executable);
 		
 	}
-
+*/
 }

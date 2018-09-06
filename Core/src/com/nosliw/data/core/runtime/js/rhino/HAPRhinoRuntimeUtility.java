@@ -74,6 +74,9 @@ public class HAPRhinoRuntimeUtility {
 				errorFun.call(context, scope, null, new Object[]{null, context.javaToJS(serviceData, scope)});
 			}
 		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 		finally{
 			Context.exit();
 		}

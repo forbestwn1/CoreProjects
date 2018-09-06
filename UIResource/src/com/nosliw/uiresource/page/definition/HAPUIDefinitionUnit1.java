@@ -17,7 +17,6 @@ import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.script.constant.HAPConstantDef;
 import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
@@ -32,7 +31,7 @@ import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInContent;
  */
 @HAPEntityWithAttribute(baseName="UIRESOURCEDEFINITION111")
 public abstract class HAPUIDefinitionUnit1 extends HAPSerializableImp{
-
+/*
 	@HAPAttribute
 	public static final String ID = "id";
 	@HAPAttribute
@@ -255,11 +254,11 @@ public abstract class HAPUIDefinitionUnit1 extends HAPSerializableImp{
 	
 	public HAPContextGroup getContext(){  return this.m_context;   }
 	
-	/*
-	 * process attributes
-	 */
+	
+	 //process attributes
 	public void addAttribute(String name, String value){		this.m_attributes.put(name, value);	}
 
 	public void postRead(){
 	}
+	*/
 }

@@ -24,7 +24,9 @@ import com.nosliw.data.core.runtime.HAPExecuteExpression;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task.HAPExecutableTask;
 
-public class HAPExecutableStepExpression extends HAPExecutableStep implements HAPExecuteExpression{
+public class HAPExecutableStepExpression{
+/*
+extends HAPExecutableStep implements HAPExecuteExpression{
 
 	//Operand to represent the expression
 	private HAPOperandWrapper m_operand;
@@ -125,5 +127,5 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		HAPExecuteExpression.buildJsonMap(this, jsonMap, typeJsonMap);
 	}
-
+*/
 }

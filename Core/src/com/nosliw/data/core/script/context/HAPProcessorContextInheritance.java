@@ -8,7 +8,7 @@ import com.nosliw.common.utils.HAPConstant;
 public class HAPProcessorContextInheritance {
 
 	//merge with parent through inheritance
-	public static HAPContextGroup processContextInheritance(HAPContextGroup orgContext, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
+	public static HAPContextGroup process(HAPContextGroup orgContext, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
 		HAPContextGroup out = processConstant(orgContext);
 		if(!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(configure.inheritMode)) {
 			for(String categary : HAPContextGroup.getAllContextTypes()){

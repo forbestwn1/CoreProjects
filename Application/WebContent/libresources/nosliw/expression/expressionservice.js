@@ -108,7 +108,6 @@ var node_createExpressionService = function(){
 						return requestInfo.getService().parms.references[refName];
 					}, 
 					handlers, requestInfo);
-//			out = loc_getExecuteExpressionRequest(expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_REFERENCES][operand[node_COMMONATRIBUTECONSTANT.OPERAND_REFERENCENAME]], variables, handlers, requestInfo);
 			break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_DATASOURCE:
 			out = loc_getExecuteDataSourceOperandRequest(expression, operand, variables, handlers, requestInfo);

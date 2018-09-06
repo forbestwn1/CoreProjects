@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +35,7 @@ import com.nosliw.uiresource.HAPIdGenerator;
  * This is a utility class that process ui resource file and create ui resource object
  * the id index start with 1 every processing start so that for same ui resource, we would get same result
  */
-public class HAPUIResourceParser {
+public class HAPParserUIResource {
 
 	public static final String EVENT = "event";
 	public static final String SERVICE = "service";
@@ -48,7 +49,7 @@ public class HAPUIResourceParser {
 	//configuration object
 	private HAPConfigure m_setting;
 	
-	public HAPUIResourceParser(HAPConfigure setting, HAPIdGenerator idGenerator){
+	public HAPParserUIResource(HAPConfigure setting, HAPIdGenerator idGenerator){
 		this.m_idGenerator = idGenerator;
 		this.m_setting = setting;
 	}
@@ -133,7 +134,7 @@ public class HAPUIResourceParser {
 		parseChildScriptExpressionInContent(unitEle, uiUnit);
 		parseDescendantTags(unitEle, uiUnit);
 		
-		HAPUIResourceParserUtility.addSpanToText(unitEle);
+		HAPUtilityUIResourceParser.addSpanToText(unitEle);
 		
 		uiUnit.postRead();
 		
@@ -147,7 +148,7 @@ public class HAPUIResourceParser {
 		List<Element> removes = new ArrayList<Element>();
 		Elements eles = ele.children();
 		for(Element e : eles){
-			if(HAPBasicUtility.isStringEmpty(HAPUIResourceParserUtility.getUIIdInElement(e))){
+			if(HAPBasicUtility.isStringEmpty(HAPUtilityUIResourceParser.getUIIdInElement(e))){
 				//if tag have no ui id, then create ui id for it
 				String id = this.m_idGenerator.createId();
 				e.attr(HAPConstant.UIRESOURCE_ATTRIBUTE_UIID, id);
@@ -168,10 +169,10 @@ public class HAPUIResourceParser {
 	 * 		  false : this element should not be removed after processiong
 	 */
 	private boolean parseTag(Element ele, HAPDefinitionUIUnit parentUnit){
-		String customTag = HAPUIResourceParserUtility.isCustomTag(ele);
+		String customTag = HAPUtilityUIResourceParser.isCustomTag(ele);
 		if(customTag!=null){
 			//process custome tag
-			String uiId = HAPUIResourceParserUtility.getUIIdInElement(ele); 
+			String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
 			HAPDefinitionUIUnitTag uiTag = new HAPDefinitionUIUnitTag(customTag, uiId);
 			parseUIDefinitionUnit(uiTag, ele, parentUnit);
 			parentUnit.addUITag(uiTag);
@@ -192,7 +193,7 @@ public class HAPUIResourceParser {
 
 	
 	private void parseUnitEventBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
-		List<Element> childEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, EVENT);
+		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, EVENT);
 		for(Element childEle : childEles){
 			try {
 				JSONArray eventListJson = new JSONArray(childEle.html());
@@ -211,7 +212,7 @@ public class HAPUIResourceParser {
 	}
 
 	private void parseUnitServiceBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
-		List<Element> childEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, SERVICE);
+		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, SERVICE);
 		for(Element childEle : childEles){
 			try {
 				JSONArray serviceListJson = new JSONArray(childEle.html());
@@ -230,7 +231,7 @@ public class HAPUIResourceParser {
 	}
 
 	private void parseChildCommandBlocks(Element ele, HAPDefinitionUIUnitResource resourceUnit) {
-		List<Element> childEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, COMMAND);
+		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, COMMAND);
 		for(Element childEle : childEles){
 			try {
 				JSONArray commandListJson = new JSONArray(childEle.html());
@@ -249,14 +250,15 @@ public class HAPUIResourceParser {
 	}
 	
 	private void parseUnitContextBlocks(Element ele, HAPDefinitionUIUnit resourceUnit){
-		List<Element> childEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, CONTEXT);
+		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, CONTEXT);
 		
 		for(Element childEle : childEles){
 			try {
-				HAPContextParser.parseContextGroup(new JSONObject(childEle.html()), resourceUnit.getContextDefinition());
+				HAPContextParser.parseContextGroup(new JSONObject(StringEscapeUtils.unescapeHtml(childEle.html())), resourceUnit.getContextDefinition());
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();
+				System.out.println(childEle.html());
 			}
 		}
 		
@@ -264,7 +266,7 @@ public class HAPUIResourceParser {
 	}
 	
 	private void parseUnitExpressionBlocks(Element ele, HAPDefinitionUIUnit resource){
-		List<Element> childEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, EXPRESSION);
+		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, EXPRESSION);
 
 		for(Element childEle : childEles){
 			try {
@@ -290,7 +292,7 @@ public class HAPUIResourceParser {
 	private void parseUnitScriptBlocks(Element ele, HAPDefinitionUIUnit resource){
 		List<Element> scirptEles = new ArrayList<Element>();
 		
-		scirptEles = HAPUIResourceParserUtility.getChildElementsByTag(ele, SCRIPT);
+		scirptEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, SCRIPT);
 		for(Element scriptEle : scirptEles){
 			HAPScript jsBlock = new HAPScript(scriptEle.html());
 			resource.setJSBlock(jsBlock);
@@ -341,7 +343,7 @@ public class HAPUIResourceParser {
 	 * process element's attribute that have script expression value
 	 */
 	private void parseScriptExpressionInTagAttribute(Element ele, HAPDefinitionUIUnit resource, boolean isCustomerTag){
-		String uiId = HAPUIResourceParserUtility.getUIIdInElement(ele); 
+		String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
 		
 		//read attributes
 		Attributes eleAttrs = ele.attributes();
@@ -363,12 +365,12 @@ public class HAPUIResourceParser {
 	 * isCustomertag : whether this element is a customer tag
 	 */
 	private void parseKeyAttributeOnTag(Element ele, HAPDefinitionUIUnit resource, boolean isCustomerTag){
-		String uiId = HAPUIResourceParserUtility.getUIIdInElement(ele); 
+		String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
 		Attributes eleAttrs = ele.attributes();
 		for(Attribute eleAttr : eleAttrs){
 			String eleAttrValue = eleAttr.getValue();
 			String eleAttrName = eleAttr.getKey();
-			String keyAttrName = HAPUIResourceParserUtility.isKeyAttribute(eleAttrName);
+			String keyAttrName = HAPUtilityUIResourceParser.isKeyAttribute(eleAttrName);
 			
 			if(keyAttrName!=null){
 				if(keyAttrName.contains(HAPConstant.UIRESOURCE_ATTRIBUTE_EVENT)){

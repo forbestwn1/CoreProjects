@@ -65,6 +65,13 @@ public class HAPContextPath extends HAPSerializableImp{
 	
 	public String getFullPath(){  return HAPNamingConversionUtility.cascadeComponentPath(this.m_rootNodeId.getFullName(), this.m_path);   }
 	
+	public HAPContextPath clone() {
+		HAPContextPath out = new HAPContextPath();
+		out.m_path = this.m_path;
+		out.m_rootNodeId = this.m_rootNodeId.clone();
+		return out;
+	}
+	
 	public String[] getPathSegments(){
 		if(HAPBasicUtility.isStringEmpty(m_path))  return new String[0];
 		else  return HAPNamingConversionUtility.parseComponentPaths(m_path);     

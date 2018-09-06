@@ -8,7 +8,7 @@ import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
-import com.nosliw.uiresource.page.definition.HAPUIResourceParser;
+import com.nosliw.uiresource.page.definition.HAPParserUIResource;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
@@ -24,7 +24,7 @@ public class HAPProcessorUIResource {
 			HAPRuntime runtime, 
 			HAPExpressionSuiteManager expressionMan, 
 			HAPResourceManagerRoot resourceMan, 
-			HAPUIResourceParser uiResourceParser,
+			HAPParserUIResource uiResourceParser,
 			HAPIdGenerator idGengerator) {
 		
 		HAPExecutableUIUnitResource out = new HAPExecutableUIUnitResource(uiResourceDef);
@@ -44,15 +44,16 @@ public class HAPProcessorUIResource {
 			HAPRuntime runtime, 
 			HAPExpressionSuiteManager expressionMan, 
 			HAPResourceManagerRoot resourceMan, 
-			HAPUIResourceParser uiResourceParser,
+			HAPParserUIResource uiResourceParser,
 			HAPIdGenerator idGengerator) {
 
-		HAPProcessorCompile.compile(uiUnitExe, parentUIUnitExe);
+		//turn definition to executable
+		HAPProcessorCompile.process(uiUnitExe, parentUIUnitExe);
 		
 		HAPEnvContextProcessor contextProcessorEnv = new HAPEnvContextProcessor(dataTypeHelper, runtime, expressionMan);
-		HAPProcessorUIContext.processUIUnitContext(uiUnitExe, parentUIUnitExe==null?null:parentUIUnitExe.getContext(), uiTagMan, contextProcessorEnv);
+		HAPProcessorUIContext.process(uiUnitExe, parentUIUnitExe==null?null:parentUIUnitExe.getContext(), uiTagMan, contextProcessorEnv);
 		
-		HAPProcessorUIConstant.resolve(uiUnitExe);
+		HAPProcessorUIConstant.resolveConstants(uiUnitExe, runtime);
 		
 		HAPProcessorUIExpression.processUIExpression(uiUnitExe, runtime, expressionMan);
 		

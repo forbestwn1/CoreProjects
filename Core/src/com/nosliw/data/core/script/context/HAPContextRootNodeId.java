@@ -4,6 +4,8 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 
 public class HAPContextRootNodeId {
 
+	public static final String SEPERATOR = "___";
+	
 	private String m_categary;
 	
 	private String m_name;
@@ -14,7 +16,7 @@ public class HAPContextRootNodeId {
 	}
 	
 	public HAPContextRootNodeId(String name) {
-		String[] segs = HAPNamingConversionUtility.parseLevel1(name);
+		String[] segs = HAPNamingConversionUtility.splitTextByComponents(name, SEPERATOR);
 		this.m_name = segs[0];
 		if(segs.length>=2)   this.m_categary = segs[1];
 	}
@@ -24,7 +26,7 @@ public class HAPContextRootNodeId {
 	
 	public String getName() {   return this.m_name;   }
 
-	public String getFullName() {  return HAPNamingConversionUtility.cascadeLevel1(new String[] {this.m_name, this.m_categary});   }
+	public String getFullName() {  return HAPNamingConversionUtility.cascadeElements(new String[] {this.m_name, this.m_categary}, SEPERATOR);   }
 
 	public HAPContextRootNodeId clone() {
 		HAPContextRootNodeId out = new HAPContextRootNodeId(this.m_categary, this.m_name);

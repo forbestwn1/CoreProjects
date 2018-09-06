@@ -6,20 +6,13 @@ import java.util.Map;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.script.constant.HAPConstantDef;
-import com.nosliw.data.core.script.constant.HAPConstantUtility;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
 
 public class HAPConstantProcessor1 {
-
-	/**
-	 * Calculate all the constant values in ConstantDef
-	 * @param parentConstants
-	 * @param idGenerator
-	 * @param expressionMan
-	 * @param runtime
-	 */
+/*
+	
+//	 * Calculate all the constant values in ConstantDef
 	public static void processConstantDefs(
 			HAPDefinitionUIUnit uiDefinitionUnit,
 			Map<String, HAPConstantDef> parentConstants,
@@ -48,5 +41,5 @@ public class HAPConstantProcessor1 {
 			processConstantDefs(tag, contextConstants, expressionMan, runtime);
 		}
 	}
-
+*/
 }

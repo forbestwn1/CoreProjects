@@ -8,21 +8,19 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPVariableInfo;
-import com.nosliw.data.core.script.constant.HAPConstantDef;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextNode;
 import com.nosliw.data.core.script.context.HAPContextNodeCriteria;
-import com.nosliw.data.core.script.context.HAPContextUtility;
 import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
 import com.nosliw.uiresource.tag.HAPUITagManager;
-import com.nosliw.uiresource.tag.HAPUITagUtility;
+import com.nosliw.uiresource.tag.HAPUITagUtility1;
 
 public class HAPUIResourceContextProcessor1 {
-
+/*
 	public static void process(HAPDefinitionUIUnit parent, HAPDefinitionUIUnit uiDefinition, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 
 		//process context defined within unit
@@ -34,7 +32,7 @@ public class HAPUIResourceContextProcessor1 {
 		Iterator<HAPDefinitionUIUnitTag> its = uiDefinition.getUITags().iterator();
 		while(its.hasNext()){
 			HAPDefinitionUIUnitTag uiTag = its.next();
-			HAPUITagUtility.buildUITagContext(uiDefinition.getContext(), uiTag, uiTagMan, contextProcessorEnv);
+			HAPUITagUtility1.buildUITagContext(uiDefinition.getContext(), uiTag, uiTagMan, contextProcessorEnv);
 			process(uiDefinition, uiTag, uiTagMan, contextProcessorEnv);
 		}
 	}
@@ -97,5 +95,5 @@ public class HAPUIResourceContextProcessor1 {
 			}
 		}
 	}
-	
+*/	
 }
