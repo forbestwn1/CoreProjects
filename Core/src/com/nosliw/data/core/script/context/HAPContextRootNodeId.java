@@ -26,7 +26,7 @@ public class HAPContextRootNodeId {
 	
 	public String getName() {   return this.m_name;   }
 
-	public String getFullName() {  return HAPNamingConversionUtility.cascadeElements(new String[] {this.m_name, this.m_categary}, SEPERATOR);   }
+	public String getFullName() {  return HAPNamingConversionUtility.cascadeElements(new String[] {this.m_categary, this.m_name}, SEPERATOR);   }
 
 	public HAPContextRootNodeId clone() {
 		HAPContextRootNodeId out = new HAPContextRootNodeId(this.m_categary, this.m_name);

@@ -54,7 +54,7 @@ public class HAPContextPath extends HAPSerializableImp{
 	public HAPContextPath appendSegment(String seg){
 		HAPContextPath out = new HAPContextPath();
 		out.m_rootNodeId = this.m_rootNodeId.clone();
-		out.m_path = HAPNamingConversionUtility.cascadeComponentPath(m_path, seg);
+		out.m_path = HAPNamingConversionUtility.cascadePath(m_path, seg);
 		return out;
 	}
 	
@@ -63,7 +63,7 @@ public class HAPContextPath extends HAPSerializableImp{
 	
 	public String getPath(){		return this.m_path==null?"":this.m_path;	}
 	
-	public String getFullPath(){  return HAPNamingConversionUtility.cascadeComponentPath(this.m_rootNodeId.getFullName(), this.m_path);   }
+	public String getFullPath(){  return HAPNamingConversionUtility.cascadePath(this.m_rootNodeId.getFullName(), this.m_path);   }
 	
 	public HAPContextPath clone() {
 		HAPContextPath out = new HAPContextPath();

@@ -55,7 +55,7 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 	public boolean isProcessed() {  return this.m_processed;   }
 	
 	public void setPath(HAPContextPath path){	
-		if(path==null) {
+		if(path!=null && path.getPath()!=null && path.getPath().contains("a.aa")) {
 			int kkkk = 5555;
 			kkkk++;
 		}
@@ -63,15 +63,17 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 		this.m_pathStr = null;
 	}
 	public void setPath(String path) {  
-		if(path==null) {
+		
+		if(path!=null && path.contains("a.aa")) {
 			int kkkk = 5555;
 			kkkk++;
 		}
+		
 		this.m_pathStr = path;
 		this.m_path = null;
 	}
 	public void setPath(String categary, String path) {  
-		if(path==null) {
+		if(path!=null && path.contains("a.aa")) {
 			int kkkk = 5555;
 			kkkk++;
 		}
@@ -79,7 +81,7 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 		this.m_pathStr = null;
 	}
 	public void setPath(String categary, String rootNodeName, String path) {  
-		if(path==null) {
+		if(path!=null && path.contains("a.aa")) {
 			int kkkk = 5555;
 			kkkk++;
 		}

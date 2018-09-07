@@ -113,7 +113,7 @@ public class HAPUtilityContext {
 		}
 		
 		if(out!=null) {
-			if(out.remainPath==null) {
+			if(HAPBasicUtility.isStringEmpty(out.remainPath)) {
 				//exactly match with path
 				out.resolvedNode = out.referedNode;
 			}
