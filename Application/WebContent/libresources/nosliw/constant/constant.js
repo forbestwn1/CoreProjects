@@ -118,6 +118,7 @@ var node_CONSTANT=
 	  "REMOTESERVICE_SERVICESTATUS_SUCCESS" : 2,				//processed and get success result     		
 	  "REMOTESERVICE_SERVICESTATUS_EXCEPTION" : 3,					//processed and get exception result     		
 	  "REMOTESERVICE_SERVICESTATUS_QUEUE" : 4,					//service waiting for process     		
+	  "REMOTESERVICE_SERVICESTATUS_FAIL" : 5,				//
 	  
 	  //remote service type
 	  "REMOTESERVICE_TASKTYPE_NORMAL" : "normal",     		//single service

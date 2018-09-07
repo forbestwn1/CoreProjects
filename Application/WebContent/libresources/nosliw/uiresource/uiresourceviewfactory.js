@@ -53,9 +53,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 	//name space make sure of it as different ui resource view have different name space
 	var loc_idNameSpace = id;
 
-	//resource definition
-	var loc_uiResourceDefinition = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCE_RESOURCEDEFINITION];
-	
 	//all constants defined. they are used in expression
 	var loc_constants = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONSTANTS];
 	

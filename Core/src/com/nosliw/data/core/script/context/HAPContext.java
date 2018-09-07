@@ -10,7 +10,6 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.HAPData;
 
 @HAPEntityWithAttribute
 public class HAPContext extends HAPSerializableImp{
@@ -55,6 +54,17 @@ public class HAPContext extends HAPSerializableImp{
 				Object value = constantRootNode.getDataValue();
 				if(value==null)   value = constantRootNode.getValue();
 				out.put(name, value);
+			}
+		}
+		return out;
+	}
+	
+	public HAPContext getVariableContext() {
+		HAPContext out = new HAPContext();
+		for(String name : this.m_elements.keySet()) {
+			HAPContextNodeRoot rootNode = this.getElement(name);
+			if(rootNode.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE) || rootNode.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE)) {
+				out.addElement(name, rootNode.cloneContextNodeRoot());
 			}
 		}
 		return out;

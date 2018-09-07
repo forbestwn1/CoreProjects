@@ -14,12 +14,10 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPProcessContext;
-import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
-import com.nosliw.data.core.script.context.HAPContext;
 
 /**
  * Represent script expression
@@ -48,8 +46,8 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String EXPRESSIONS = "expressions";
 	
-//	@HAPAttribute
-//	public static final String VARIABLENAMES = "variableNames";
+	@HAPAttribute
+	public static final String VARIABLENAMES = "variableNames";
 	
 	//id of script expression
 	private String m_id;
@@ -198,7 +196,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(DEFINITION, this.m_definition);
-//		jsonMap.put(VARIABLENAMES, HAPJsonUtility.buildJson(this.m_variableNames, HAPSerializationFormat.JSON));
+		jsonMap.put(VARIABLENAMES, HAPJsonUtility.buildJson(this.getVariableNames(), HAPSerializationFormat.JSON));
 		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildJson(m_expressions, HAPSerializationFormat.JSON));
 	}
 

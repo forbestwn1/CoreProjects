@@ -36,7 +36,7 @@ var node_utility = {
 			var contextElementsInf = [];
 			
 			//get element info from resource definition
-			var resourceAttrs = uiResource[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_ATTRIBUTES];
+			var resourceAttrs = uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_ATTRIBUTES];
 			if(resourceAttrs!=undefined){
 				var contextStr = resourceAttrs.contexts;
 				var contextSegs = nosliwCreateSegmentParser(contextStr, node_COMMONCONSTANT.SEPERATOR_ELEMENT);
@@ -101,8 +101,8 @@ var node_utility = {
 				_.each(contextDef, function(contextDefRootObj, eleName, list){
 					var info = {
 						contextType : contextType,
-						matchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_MATCHERS],
-						reverseMatchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_REVERSEMATCHERS]
+						matchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_MATCHERS],
+						reverseMatchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_REVERSEMATCHERS]
 					};
 					var type = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
 					var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_INFO];

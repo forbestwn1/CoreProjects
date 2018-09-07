@@ -120,6 +120,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	public void setContext(HAPContextGroup context) {  this.m_context = context;   }
 	public HAPContext getFlatContext() { return this.m_flatContext;  }
 	public void setFlatContext(HAPContext context) {  this.m_flatContext = context;   }
+	public HAPContext getVariableContext() {  return this.m_flatContext.getVariableContext();  }
 	
 	public Map<String, Object> getConstantsValue(){   return this.m_constants;    }
 	public void addConstantValue(String name, Object value) {
@@ -168,7 +169,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 		jsonMap.put(ID, this.m_uiUnitDefinition.getId());
 		jsonMap.put(TYPE, String.valueOf(this.getType()));
 
-		jsonMap.put(CONTEXT, this.getContext().toStringValue(format));
+		jsonMap.put(CONTEXT, this.getVariableContext().toStringValue(format));
 		
 		List<String> expressionContentJsons = new ArrayList<String>();
 		for(HAPUIEmbededScriptExpressionInContent expressionContent : this.m_scriptExpressionsInContent)  expressionContentJsons.add(expressionContent.toStringValue(format));
