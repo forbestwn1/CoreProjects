@@ -67,10 +67,6 @@ public class HAPOperandConstant extends HAPOperandImp{
 			HAPDataTypeHelper dataTypeHelper) {
 		//set output criteria
 		if(this.getOutputCriteria()==null){
-			if(this.m_data==null) {
-				int kkkk =5555;
-				kkkk++;
-			}
 			HAPDataTypeCriteria criteria = dataTypeHelper.getDataTypeCriteriaByData(m_data);
 			this.setOutputCriteria(criteria);
 		}

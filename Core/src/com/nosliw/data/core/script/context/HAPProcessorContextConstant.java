@@ -67,11 +67,6 @@ public class HAPProcessorContextConstant {
 			for(String name : nodes.keySet()) {
 				HAPContextNodeRoot node = nodes.get(name);
 				if(node.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
-					if(name.equals("eeee")) {
-						int kkkk = 5555;
-						kkkk++;
-					}
-					
 					solidateConstantNode(new HAPContextRootNodeId(categary, name), originalContextGroup, out, contextProcessorEnv);
 				}
 				else {

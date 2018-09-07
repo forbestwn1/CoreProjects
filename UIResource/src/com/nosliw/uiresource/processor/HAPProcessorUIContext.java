@@ -83,13 +83,6 @@ public class HAPProcessorUIContext {
 		
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
 		configure.inheritMode = tagDefinitionContext.getInheritMode();
-
-		if(uiTag.getUIUnitTagDefinition().getTagName().equals("textinput")){
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
-		
 		return HAPProcessorContext.process(tagContext, parentContext, configure, contextProcessorEnv);
 	}
 }

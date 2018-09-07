@@ -31,6 +31,8 @@ public class HAPProcessorUIResource {
 
 		processUIUnitExe(out, null, uiResourceMan, dataTypeHelper, uiTagMan, runtime, expressionMan, resourceMan, uiResourceParser, idGengerator);			
 		
+		HAPProcessorResourceDependency.process(out, resourceMan);
+		
 		return out;
 	}
 

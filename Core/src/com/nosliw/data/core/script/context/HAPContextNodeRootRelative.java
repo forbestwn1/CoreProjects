@@ -55,36 +55,18 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 	public boolean isProcessed() {  return this.m_processed;   }
 	
 	public void setPath(HAPContextPath path){	
-		if(path!=null && path.getPath()!=null && path.getPath().contains("a.aa")) {
-			int kkkk = 5555;
-			kkkk++;
-		}
 		this.m_path = path;
 		this.m_pathStr = null;
 	}
 	public void setPath(String path) {  
-		
-		if(path!=null && path.contains("a.aa")) {
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		this.m_pathStr = path;
 		this.m_path = null;
 	}
 	public void setPath(String categary, String path) {  
-		if(path!=null && path.contains("a.aa")) {
-			int kkkk = 5555;
-			kkkk++;
-		}
 		this.m_path = new HAPContextPath(categary, path);
 		this.m_pathStr = null;
 	}
 	public void setPath(String categary, String rootNodeName, String path) {  
-		if(path!=null && path.contains("a.aa")) {
-			int kkkk = 5555;
-			kkkk++;
-		}
 		this.m_path = new HAPContextPath(categary, rootNodeName, path);    
 		this.m_pathStr = null;
 	}
@@ -103,10 +85,6 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 	}
 	
 	public String getParentCategary() {
-		if(this.getPath()==null || this.getPath().getRootElementId()==null || this.getPath().getRootElementId().getCategary()==null) {
-			int kkkk = 5555;
-			kkkk++;
-		}
 		return this.getPath().getRootElementId().getCategary();   
 	}
 	

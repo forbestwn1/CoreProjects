@@ -3,18 +3,17 @@ package com.nosliw.uiresource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
 import com.nosliw.uiresource.page.definition.HAPParserUIResource;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
-import com.nosliw.uiresource.processor.HAPProcessorUIConstant;
 import com.nosliw.uiresource.processor.HAPProcessorUIResource;
-import com.nosliw.uiresource.processor.HAPUIResourceProcessor;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPUIResourceManager {
@@ -53,6 +52,17 @@ public class HAPUIResourceManager {
 			HAPDefinitionUIUnitResource def = getUIResourceDefinitionById(id);
 			out = this.processUIResource(def);
 		}
+
+		System.out.println();
+		System.out.println();
+		System.out.println("*********************** UI Resource ************************");
+		String content = out.toStringValue(HAPSerializationFormat.JSON);
+		content = HAPJsonUtility.formatJson(content);
+		System.out.println(content);
+		System.out.println("*********************** UI Resource ************************");
+		System.out.println();
+		System.out.println();
+		
 		return out;
 	}
 	
@@ -64,31 +74,11 @@ public class HAPUIResourceManager {
 		return exeUiResource;
 	}
 	
-	public HAPDefinitionUIUnitResource getUIResourceDefinitionById(String id){
+	private HAPDefinitionUIUnitResource getUIResourceDefinitionById(String id){
 		String file = HAPFileUtility.getUIResourceFolder()+id+".res";
 		HAPDefinitionUIUnitResource exeUiResource = this.readUiResourceDefinitionFromFile(file);
 		return exeUiResource;
 	}
-	
-	/**
-	 * Add resource definition by overriding the existing context 
-	 * @param definitionId     name of base definition
-	 * @param context  new context to apply
-	 * @return
-	 */
-//	public HAPExecutableUIUnitResource getUIResource(String resourceId, String definitionId, HAPContextGroup context){
-//		String baseContent = this.getUIResourceDefinitionById(definitionId).getSource();
-//		//build resource using base resource
-//		HAPDefinitionUIUnitResource resource = this.getUIResourceParser().parseContent(resourceId, baseContent);
-//		HAPProcessorUIConstant.processConstantDefs(resource, null, m_expressionMan, m_runtime);
-//		
-//		//update context with new context
-//		resource.getContext().hardMergeWith(context);
-//
-//		this.processUIResource(resource);
-//		
-//		return resource;
-//	}
 	
 	private HAPExecutableUIUnitResource processUIResource(HAPDefinitionUIUnitResource uiResource) {
 		return HAPProcessorUIResource.processUIResource(uiResource, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.getUIResourceParser(), m_idGengerator);
