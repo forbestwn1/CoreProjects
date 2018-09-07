@@ -7,7 +7,17 @@
 	constants : {
 	
 	},
+	command : [
+		{
+			name : "init",
+			parm : {
+				
+			
+			}
+		
+		}
 	
+	],
 	init : [
 		{
 			name:"presentSchoolQuery",

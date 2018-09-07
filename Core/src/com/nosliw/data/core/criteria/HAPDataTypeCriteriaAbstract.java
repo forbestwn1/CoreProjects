@@ -26,6 +26,11 @@ public abstract class HAPDataTypeCriteriaAbstract extends HAPDataTypeCriteriaImp
 
 	@Override
 	public Set<HAPDataTypeCriteriaId> getValidDataTypeCriteriaId(HAPDataTypeHelper dataTypeHelper) {
+		if(this.getSoldCriteria()==null) {
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		return this.getSoldCriteria().getValidDataTypeCriteriaId(dataTypeHelper);
 	}
 
