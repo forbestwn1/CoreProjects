@@ -139,7 +139,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		//create context
 		var parentContext;
 		if(parentUIResourceView!=undefined)   parentContext = parentUIResourceView.getContext();
-		loc_context = node_uiResourceUtility.buildContext(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT], parentContext);
+		loc_context = node_uiResourceUtility.buildContext(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGCONTEXT], parentContext);
 		
 		//create uiTagObject
 		var uiTagResourceId = node_uiResourceUtility.createTagResourceId(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME]);

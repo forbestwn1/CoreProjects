@@ -4,7 +4,10 @@
 
 	Content:<%=?(business.a.aa)?.value + '   6666 ' %>
 		
-	
+		<br>
+	TextInput:<nosliw-textinput data="business.a.aa"/>  
+	<br>
+
 
 </body>
 
@@ -52,10 +55,10 @@
 	
 		<!-- This part can be used to define expressions
 		-->
-	<expressions>
+	<expression>
 	{
 	}
-	</expressions>
+	</expression>
 	
 </html>
 

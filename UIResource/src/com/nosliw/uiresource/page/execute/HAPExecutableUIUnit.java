@@ -67,9 +67,8 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	
 	private HAPDefinitionUIUnit m_uiUnitDefinition;
 
-	//context after processed
+	//context for content
 	private HAPContextGroup m_context;
-
 	private HAPContext m_flatContext;
 	
 	private Map<String, Object> m_constants;

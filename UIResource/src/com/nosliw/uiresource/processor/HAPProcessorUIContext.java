@@ -25,8 +25,12 @@ public class HAPProcessorUIContext {
 	public static void process(HAPExecutableUIUnit uiExe, HAPContextGroup parentContext, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 		
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
-			//for custom, merge parent context with context definition in tag definition first
-			parentContext = buildUITagContext((HAPExecutableUIUnitTag)uiExe, parentContext, uiTagMan, contextProcessorEnv);
+			//for custom tag, build context for tag first : merge parent context with context definition in tag definition first
+			HAPExecutableUIUnitTag uiTagExe = (HAPExecutableUIUnitTag)uiExe;
+			parentContext = buildUITagContext(uiTagExe, parentContext, uiTagMan, contextProcessorEnv);
+			uiTagExe.setTagContext(parentContext);
+			//flat it
+			uiTagExe.setFlatTagContext(buildFlatContext(uiTagExe.getTagContext()));
 		}
 		
 		//merge with context defined in tag unit
