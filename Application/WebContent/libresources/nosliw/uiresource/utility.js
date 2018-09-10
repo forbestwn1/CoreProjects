@@ -91,7 +91,69 @@ var node_utility = {
 		},
 		
 		//build context according to context definition and parent context
-		buildContext : function(contextGroupDef, parentContext, requestInfo){
+		buildContext : function(contextDef, parentContext, requestInfo){
+			//build context element first
+			var contextElementInfosArray = [];
+			
+			_.each(contextDef, function(contextDefRootObj, eleName){
+				var info = {
+					matchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_MATCHERS],
+					reverseMatchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_REVERSEMATCHERS]
+				};
+				var type = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
+				var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_INFO];
+				//if context.info.model===manual, context does not need to create in the framework
+				if(contextInfo[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOTINFO_INFO].mode!='manual'){
+					if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_ABSOLUTE){
+						var defaultValue = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_DEFAULT];
+						if(contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFINITION]!=undefined){
+							//app data
+							var defaultValueData = defaultValue;
+							if(defaultValueData!=undefined){
+								defaultValueData = node_dataUtility.createDataOfAppData(defaultValue);
+							}
+							contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValueData, "", undefined, info));
+						}
+						else{
+							//object
+							contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValue, "", undefined, info));
+						}
+					}
+					else if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_RELATIVE && contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_ISTOPARENT]==true){
+						var pathObj = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_PATH];
+						var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
+						var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
+						contextElementInfosArray.push(node_createContextElementInfo(eleName, parentContext, node_createContextVariableInfo(rootName, path), undefined, info));
+					}
+				}
+			});	
+				
+			var context = node_createContext(contextElementInfosArray, requestInfo);
+
+			_.each(contextDef, function(contextDefRootObj, eleName){
+				var info = {
+					matchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_MATCHERS],
+					reverseMatchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_REVERSEMATCHERS]
+				};
+				var type = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
+				var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_INFO];
+				//if context.info.model===manual, context does not need to create in the framework
+				if(contextInfo[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOTINFO_INFO].mode!='manual'){
+					if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_RELATIVE && contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_ISTOPARENT]==false){
+						var pathObj = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_PATH];
+						var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
+						var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
+						context.addContextElement(node_createContextElementInfo(eleName, context, node_createContextVariableInfo(rootName, path), undefined, info));
+					}
+				}
+			});	
+			
+			return context;
+		},
+		
+
+		//build context according to context definition and parent context
+		buildContext1 : function(contextGroupDef, parentContext, requestInfo){
 			//build context element first
 			var contextElementInfosArray = [];
 			
@@ -136,7 +198,6 @@ var node_utility = {
 			var context = node_createContext(contextElementInfosArray, requestInfo);
 			return context;
 		}
-		
 };
 
 //*******************************************   End Node Definition  ************************************** 	

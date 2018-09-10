@@ -22,6 +22,10 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 	@HAPAttribute
 	public static final String PATH = "path";
 
+	//whether related to parent context or just to sibling root
+	@HAPAttribute
+	public static final String ISTOPARENT = "isToParent";
+
 	@HAPAttribute
 	public static final String PARENTCATEGARY = "parentCategary";
 	
@@ -84,9 +88,9 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 		return this.m_pathStr;
 	}
 	
-	public String getParentCategary() {
-		return this.getPath().getRootElementId().getCategary();   
-	}
+	public String getParentCategary() {		return this.getPath().getRootElementId().getCategary();	}
+	
+	public boolean isRelativeToParent() {	return !HAPBasicUtility.isStringEmpty(this.getPath().getRootElementId().getCategary());	}
 	
 	public void setMatchers(Map<String, HAPMatchers> matchers){
 		this.m_matchers.clear();
@@ -121,6 +125,8 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PATH, this.getPath().toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(ISTOPARENT, this.isRelativeToParent()+"");
+		typeJsonMap.put(ISTOPARENT, Boolean.class);
 		if(this.m_matchers!=null && !this.m_matchers.isEmpty()){
 			jsonMap.put(MATCHERS, HAPJsonUtility.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
 			jsonMap.put(REVERSEMATCHERS, HAPJsonUtility.buildJson(this.m_reverseMatchers, HAPSerializationFormat.JSON));

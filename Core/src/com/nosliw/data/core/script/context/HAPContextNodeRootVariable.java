@@ -4,6 +4,8 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute(parent="com.nosliw.data.core.script.context.HAPContextNodeRoot")
 public abstract class HAPContextNodeRootVariable extends HAPContextNode implements HAPContextNodeRoot{
@@ -42,6 +44,8 @@ public abstract class HAPContextNodeRootVariable extends HAPContextNode implemen
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_info, HAPSerializationFormat.JSON));
 		if(this.m_defaultValue!=null){
 			jsonMap.put(DEFAULT, this.m_defaultValue.toString());
 			typeJsonMap.put(DEFAULT, this.m_defaultValue.getClass());

@@ -35,6 +35,10 @@ var node_createContext = function(elementInfosArray, request){
 	//according to contextVariableInfo, find the base variable from Context
 	//base variable contains two info: 1. variable,  2. path from variable
 	var loc_findBaseVariable = function(contextVariableInfo){
+		if(contextVariableInfo==null){
+			var kkkk = 5555;
+			kkkk++;
+		}
 		var fullPath = contextVariableInfo.getFullPath();
 		
 		//get parent var from adapter first
@@ -60,6 +64,10 @@ var node_createContext = function(elementInfosArray, request){
 		
 		//not found, use variable from elements
 		if(parentVar==undefined){
+			if(loc_out.prv_elements[contextVariableInfo.name]==undefined){
+				var kkkkk = 5555;
+				kkkkk++;
+			}
 			parentVar = loc_out.prv_elements[contextVariableInfo.name].variable;
 			varPath = contextVariableInfo.path;
 		}
@@ -122,29 +130,36 @@ var node_createContext = function(elementInfosArray, request){
 		//adapter variables by path
 		loc_out.prv_adapters = {};
 		
+		//process refer to parent first
 		_.each(elementInfosArray, function(elementInfo, key){
-			//create empty wrapper variable for each element
-			var contextEle = node_createContextElement(elementInfo, request);
-			loc_out.prv_elements[elementInfo.name] = contextEle;
-			
-			var eleVar = contextEle.variable;
-			nosliw.logging.info("************************  Named variable creation  ************************");
-			nosliw.logging.info("Name: " + contextEle.name);
-			nosliw.logging.info("ID: " + eleVar.prv_id);
-			nosliw.logging.info("Wrapper: " + (eleVar.prv_wrapper==undefined?"":eleVar.prv_wrapper.prv_id));
-			nosliw.logging.info("Parent: " , ((eleVar.prv_relativeVariableInfo==undefined)?"":eleVar.prv_relativeVariableInfo.parent.prv_id));
-			nosliw.logging.info("ParentPath: " , ((eleVar.prv_relativeVariableInfo==undefined)?"":eleVar.prv_relativeVariableInfo.path)); 
-			nosliw.logging.info("***************************************************************");
-			
-			//get all adapters from elementInfo
-			_.each(elementInfo.info.matchers, function(matchers, path){
-				loc_out.prv_adapters[node_dataUtility.combinePath(elementInfo.name, path)] = loc_buildAdapterVariableFromMatchers(elementInfo.name, path, matchers, elementInfo.info.reverseMatchers[path]);
-			});
+			loc_addContextElement(elementInfo, request);
+		});
+	};
+
+	var loc_addContextElement = function(elementInfo, request){
+		//create empty wrapper variable for each element
+		var contextEle = node_createContextElement(elementInfo, request);
+		loc_out.prv_elements[elementInfo.name] = contextEle;
+		
+		var eleVar = contextEle.variable;
+		nosliw.logging.info("************************  Named variable creation  ************************");
+		nosliw.logging.info("Name: " + contextEle.name);
+		nosliw.logging.info("ID: " + eleVar.prv_id);
+		nosliw.logging.info("Wrapper: " + (eleVar.prv_wrapper==undefined?"":eleVar.prv_wrapper.prv_id));
+		nosliw.logging.info("Parent: " , ((eleVar.prv_relativeVariableInfo==undefined)?"":eleVar.prv_relativeVariableInfo.parent.prv_id));
+		nosliw.logging.info("ParentPath: " , ((eleVar.prv_relativeVariableInfo==undefined)?"":eleVar.prv_relativeVariableInfo.path)); 
+		nosliw.logging.info("***************************************************************");
+		
+		//get all adapters from elementInfo
+		_.each(elementInfo.info.matchers, function(matchers, path){
+			loc_out.prv_adapters[node_dataUtility.combinePath(elementInfo.name, path)] = loc_buildAdapterVariableFromMatchers(elementInfo.name, path, matchers, elementInfo.info.reverseMatchers[path]);
 		});
 	};
 	
 	var loc_out = {
 		
+		addContextElement : function(elementInfo, request){		loc_addContextElement(elementInfo, request);		},	
+			
 		/*
 		 * create context variable
 		 */

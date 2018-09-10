@@ -52,7 +52,7 @@ public class HAPProcessorUIContext {
 	
 	private static HAPContext buildFlatContext(HAPContextGroup context) {
 		HAPContext out = new HAPContext();
-		for(String categary : context.getContextTypesWithPriority()) {
+		for(String categary : HAPContextGroup.getContextTypesWithPriority()) {
 			Map<String, HAPContextNodeRoot> eles = context.getElements(categary);
 			for(String name : eles.keySet()) {
 				String updatedName = new HAPContextRootNodeId(categary, name).getFullName();

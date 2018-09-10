@@ -3,12 +3,14 @@ package com.nosliw.data.core.script.context;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
+@HAPEntityWithAttribute
 public class HAPContextNodeRootInfo extends HAPSerializableImp{
 
 	@HAPAttribute
