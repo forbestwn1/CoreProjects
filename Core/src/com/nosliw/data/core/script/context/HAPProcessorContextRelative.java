@@ -17,8 +17,17 @@ public class HAPProcessorContextRelative {
 		for(String categary : HAPContextGroup.getAllContextTypes()){
 			Map<String, HAPContextNodeRoot> eles = contextGroup.getElements(categary);
 			for(String eleName : eles.keySet()) {
+				if(eleName.equals("ele")) {
+					int kkkk = 5555;
+					kkkk++;
+				}
+				
 				HAPContextNodeRoot node = eles.get(eleName);
 				if(node.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE)) {
+					if(((HAPContextNodeRootRelative)node).getPath().getFullPath().contains("business")){
+						int kkkk = 5555;
+						kkkk++;
+					}
 					out.addElement(eleName, processRelativeContextDefinitionElement((HAPContextNodeRootRelative)node, parentContextGroup, configure, contextProcessorEnv), categary);
 				}
 				else {
@@ -29,7 +38,7 @@ public class HAPProcessorContextRelative {
 		return out;
 	}
 	
-	private static HAPContextNodeRootRelative processRelativeContextDefinitionElement(HAPContextNodeRootRelative defContextElementRelative, HAPContextGroup parentContext, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv){
+	private static HAPContextNodeRoot processRelativeContextDefinitionElement(HAPContextNodeRootRelative defContextElementRelative, HAPContextGroup parentContext, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv){
 		if(defContextElementRelative.isProcessed())   return (HAPContextNodeRootRelative)defContextElementRelative.cloneContextNodeRoot();
 		
 		if(parentContext==null)  throw new RuntimeException();
@@ -40,33 +49,47 @@ public class HAPProcessorContextRelative {
 		return processRelativeContextDefinitionElement(defContextElementRelative, parentContext, categaryes.toArray(new String[0]), configure.relativeResolveMode, contextProcessorEnv);
 	}
 	
-	private static HAPContextNodeRootRelative processRelativeContextDefinitionElement(HAPContextNodeRootRelative defContextElementRelative, HAPContextGroup parentContext, String[] categaryes, String mode, HAPEnvContextProcessor contextProcessorEnv){
-		HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
+	private static HAPContextNodeRoot processRelativeContextDefinitionElement(HAPContextNodeRootRelative defContextElementRelative, HAPContextGroup parentContext, String[] categaryes, String mode, HAPEnvContextProcessor contextProcessorEnv){
 		HAPContextPath path = defContextElementRelative.getPath(); 
-		
 		HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(path, parentContext, categaryes, mode);
-		path.getRootElementId().setCategary(resolveInfo.contextPath.getRootElementId().getCategary());
-		out.setPath(path);
-		
-		HAPContextNode parentNode = resolveInfo.resolvedNode; 
-		if(parentNode!=null){
-			Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
-			merge(parentNode, defContextElementRelative, out, matchers, null, contextProcessorEnv);
-			//remove all the void matchers
-			Map<String, HAPMatchers> noVoidMatchers = new LinkedHashMap<String, HAPMatchers>();
-			for(String p : matchers.keySet()){
-				HAPMatchers match = matchers.get(p);
-				if(!match.isVoid()){
-					noVoidMatchers.put(p, match);
+
+		if(resolveInfo.rootNode==null)  throw new RuntimeException();
+
+		switch(resolveInfo.rootNode.getType()) {
+		case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
+		case HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE:
+		{
+			HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
+			path.getRootElementId().setCategary(resolveInfo.path.getRootElementId().getCategary());
+			out.setPath(path);
+			
+			HAPContextNode parentNode = resolveInfo.resolvedNode; 
+			if(parentNode!=null){
+				Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
+				merge(parentNode, defContextElementRelative, out, matchers, null, contextProcessorEnv);
+				//remove all the void matchers
+				Map<String, HAPMatchers> noVoidMatchers = new LinkedHashMap<String, HAPMatchers>();
+				for(String p : matchers.keySet()){
+					HAPMatchers match = matchers.get(p);
+					if(!match.isVoid()){
+						noVoidMatchers.put(p, match);
+					}
 				}
+				out.setMatchers(noVoidMatchers);
 			}
-			out.setMatchers(noVoidMatchers);
+			else{
+				//not find parent node, throw exception
+				throw new RuntimeException();
+			}
+			return out;
 		}
-		else{
-			//not find parent node, throw exception
-			throw new RuntimeException();
+		case HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT:
+			HAPContextNodeRootConstant out = new HAPContextNodeRootConstant();
+			
+			return out;
 		}
-		return out;
+		
+		return null;
 	}
 
 	//merge parent context def with child context def to another context out

@@ -123,10 +123,7 @@
 				definition: {
 					a : {
 						aa : "test.string;1.0.0",
-						bb : "test.array;1.0.0%||element:@||!(test.expression)!.outputCriteria(&(expression)&;;&(parms)&)||@||%",
-						cc : {
-							element : "test.string;1.0.0"
-						}
+						cc : "test.array;1.0.0%||element:test.array;1.0.0||%",
 					}
 				},
 				default: {
@@ -149,6 +146,47 @@
 					}
 				}
 			},
+			aaaa : {
+				value : "<%=5+6+7%>",
+			},
+			bbbb : {
+				value : "<%=(5+6+7)>5%>"
+			},
+			cccc : {
+				value : {
+					a : 12345,
+					b : true,
+					c : "good",
+					d : "<%=5+6+7%>"
+				}
+			},
+			dddd : {
+				value : "<%=&(cccc)&.a+6%>"
+			},
+			ffff : {
+				value : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>"
+			},
+			eeee : {
+				value : "<%=#|&(ffff)&.subString(from:&(#test##integer___3)&,to:&(#test##integer___7)&)|#%>"
+			},
+			base: {
+				value : {
+					dataTypeId: "test.string",
+					value: "This is my world!"
+				}
+			},
+			from: {
+				value : {
+					dataTypeId: "test.integer",
+					value: 3
+				}
+			},
+			to: {
+				value : {
+					dataTypeId: "test.integer",
+					value: 7
+				}
+			},
 		}
 	}
 	</context>
@@ -160,45 +198,4 @@
 	}
 	</expressions>
 	
-	<constants>
-	{
-			aaaa : "<%=5+6+7%>",
-			bbbb : "<%=(5+6+7)>5%>",
-			cccc : {
-						a : 12345,
-						b : true,
-						c : "good",
-						d : "<%=5+6+7%>"
-					},
-			dddd : "<%=&(cccc)&.a+6%>",
-
-			ffff : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>",
-			eeee : "<%=#|&(ffff)&.subString(from:&(#test##integer___3)&,to:&(#test##integer___7)&)|#%>",
-			
-				base: {
-					dataTypeId: "test.string",
-					value: "This is my world!"
-				},
-				from: {
-					dataTypeId: "test.integer",
-					value: 3
-				},
-				to: {
-					dataTypeId: "test.integer",
-					value: 7
-				},
-				
-				childResource: {
-					inherit : true,
-					public : {
-						name : {
-							path : "business.a.aa"
-						}
-					}
-				}
-			
-	}
-	</constants>
-	
 </html>
-

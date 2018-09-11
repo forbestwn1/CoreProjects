@@ -83,12 +83,10 @@ public class HAPUtilityContext {
 		//find candidates, path similar
 		List<HAPInfoRelativeContextResolve> candidates = new ArrayList<HAPInfoRelativeContextResolve>();
 		for(String contextType : categaryCandidates){
-			Object[] nodeInfo = parentContext.getContext(contextType).discoverChild(refNodeId.getName(), refPath);
-			if(nodeInfo[0]!=null) {
-				HAPInfoRelativeContextResolve resolved = new HAPInfoRelativeContextResolve();
-				resolved.referedNode = (HAPContextNode)nodeInfo[0];
-				resolved.remainPath = (String)nodeInfo[1];
-				resolved.contextPath = new HAPContextPath(contextType, refNodeId.getName(), refPath);
+			HAPInfoRelativeContextResolve resolved = new HAPInfoRelativeContextResolve();
+			parentContext.getContext(contextType).discoverChild(refNodeId.getName(), refPath, resolved);
+			if(resolved.rootNode!=null) {
+				resolved.path = new HAPContextPath(contextType, refNodeId.getName(), refPath);
 				candidates.add(resolved);
 			}
 			if(HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_FIRST.equals(mode))   break;
@@ -112,7 +110,7 @@ public class HAPUtilityContext {
 			}
 		}
 		
-		if(out!=null) {
+		if(out!=null && !out.rootNode.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
 			if(HAPBasicUtility.isStringEmpty(out.remainPath)) {
 				//exactly match with path
 				out.resolvedNode = out.referedNode;

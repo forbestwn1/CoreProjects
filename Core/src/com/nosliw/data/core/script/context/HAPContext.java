@@ -40,11 +40,6 @@ public class HAPContext extends HAPSerializableImp{
 		}
 	}
 
-	public HAPContextNode getChild(String rootName, String path){
-		Object[] out = this.discoverChild(rootName, path);
-		return (HAPContextNode)out[0];
-	}
-
 	public Map<String, Object> getConstantValue(){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
 		for(String name : this.m_elements.keySet()) {
@@ -72,33 +67,44 @@ public class HAPContext extends HAPSerializableImp{
 	
 	//discover child node according to path
 	//may not find exact match child node according to path
-	//   return[0]   closest child node
-	//   return[1]   remaining path
-	public Object[] discoverChild(String rootName, String path){
-		Object[] out = new Object[2];
-		String remainingPath = null;
-		HAPContextNode outNode = (HAPContextNode)this.m_elements.get(rootName);
-		if(outNode!=null){
-			String[] pathSegs = HAPNamingConversionUtility.parseComponentPaths(path);
-			for(String pathSeg : pathSegs){
-				if(remainingPath==null) {
-					HAPContextNode node = outNode.getChildren().get(pathSeg);
-					if(node==null) {
-						remainingPath = pathSeg;
+	//   return[0]   base node
+	//   return[1]   closest child node
+	//   return[2]   remaining path
+	public void discoverChild(String rootName, String path, HAPInfoRelativeContextResolve resolved){
+		HAPContextNodeRoot rootNodeNode = this.m_elements.get(rootName);
+		resolved.rootNode = rootNodeNode;
+		if(rootNodeNode!=null) {
+			switch(rootNodeNode.getType()) {
+			case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
+			case HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE:
+				HAPContextNode outNode = (HAPContextNode)rootNodeNode;
+				String remainingPath = null;
+				String[] pathSegs = HAPNamingConversionUtility.parseComponentPaths(path);
+				for(String pathSeg : pathSegs){
+					if(remainingPath==null) {
+						HAPContextNode node = outNode.getChildren().get(pathSeg);
+						if(node==null) {
+							remainingPath = pathSeg;
+						}
+						else {
+							outNode = node;
+						}
 					}
 					else {
-						outNode = node;
+						remainingPath = HAPNamingConversionUtility.cascadePath(remainingPath, pathSeg);
 					}
 				}
-				else {
-					remainingPath = HAPNamingConversionUtility.cascadePath(remainingPath, pathSeg);
-				}
+				resolved.referedNode = outNode;
+				resolved.remainPath = remainingPath;
+				break;
+			case HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT:
+				resolved.referedNode = null;
+				resolved.remainPath = path;
+				break;
 			}
 		}
-		out[0] = outNode;
-		out[1] = remainingPath;
-		return out;
 	}
+
 	
 	public HAPContext clone() {
 		HAPContext out = new HAPContext();

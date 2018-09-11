@@ -6,8 +6,11 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"debug",
 "dependency":{},
 "info":{}
 }, {"name":"debug",
-"context":{"inherit":true,
-"public":{}
+"context":{"public":{},
+"protected":{},
+"internal":{},
+"private":{},
+"info":{}
 },
 "attributes":{},
 "script":

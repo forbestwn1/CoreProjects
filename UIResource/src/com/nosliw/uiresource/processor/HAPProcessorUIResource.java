@@ -55,6 +55,8 @@ public class HAPProcessorUIResource {
 		HAPEnvContextProcessor contextProcessorEnv = new HAPEnvContextProcessor(dataTypeHelper, runtime, expressionMan);
 		HAPProcessorUIContext.process(uiUnitExe, parentUIUnitExe==null?null:parentUIUnitExe.getContext(), uiTagMan, contextProcessorEnv);
 		
+		HAPPorcessorResolveName.resolve(uiUnitExe);
+		
 		HAPProcessorUIConstant.resolveConstants(uiUnitExe, runtime);
 		
 		HAPProcessorUIExpression.processUIExpression(uiUnitExe, runtime, expressionMan);

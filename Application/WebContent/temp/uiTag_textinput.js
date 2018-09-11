@@ -9,8 +9,21 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"textinput",
 },
 "info":{}
 }, {"name":"textinput",
-"context":{"inherit":false,
-"public":{}
+"context":{"public":{},
+"protected":{},
+"internal":{},
+"private":{"internal_data":{"children":{},
+"definition":"test.string;1.0.0",
+"type":"relative",
+"info":{"info":{}
+},
+"path":{"rootEleName":"<%=&(data)&%>"
+},
+"isToParent":false
+}
+},
+"info":{"inherit":"false"
+}
 },
 "attributes":{},
 "script":
