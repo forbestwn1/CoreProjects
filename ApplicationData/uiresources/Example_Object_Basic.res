@@ -18,7 +18,6 @@
 	<br>
 	<nosliw-debug/>
 	
-		
 		<br>
 		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 		<br>
@@ -72,13 +71,12 @@
 						}
 					}));
 					node_requestServiceProcessor.processRequest(requestInfo, false);
-*/					
 				}
 			}
 			</script>
 			
 		</nosliw-loop>
-
+-->
 
 	<br>
 	

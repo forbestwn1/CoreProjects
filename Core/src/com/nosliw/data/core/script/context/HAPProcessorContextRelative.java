@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.value.HAPJsonDataUtility;
 import com.nosliw.data.core.expression.HAPMatchers;
 
 public class HAPProcessorContextRelative {
@@ -17,17 +18,8 @@ public class HAPProcessorContextRelative {
 		for(String categary : HAPContextGroup.getAllContextTypes()){
 			Map<String, HAPContextNodeRoot> eles = contextGroup.getElements(categary);
 			for(String eleName : eles.keySet()) {
-				if(eleName.equals("ele")) {
-					int kkkk = 5555;
-					kkkk++;
-				}
-				
 				HAPContextNodeRoot node = eles.get(eleName);
 				if(node.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE)) {
-					if(((HAPContextNodeRootRelative)node).getPath().getFullPath().contains("business")){
-						int kkkk = 5555;
-						kkkk++;
-					}
 					out.addElement(eleName, processRelativeContextDefinitionElement((HAPContextNodeRootRelative)node, parentContextGroup, configure, contextProcessorEnv), categary);
 				}
 				else {
@@ -85,7 +77,8 @@ public class HAPProcessorContextRelative {
 		}
 		case HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT:
 			HAPContextNodeRootConstant out = new HAPContextNodeRootConstant();
-			
+			Object constantValue = ((HAPContextNodeRootConstant)resolveInfo.rootNode).getValue();
+			out.setValue(HAPJsonDataUtility.getValue(constantValue, path.getPath()));
 			return out;
 		}
 		

@@ -440,12 +440,6 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 	@Override
 	public HAPDataTypeCriteriaId getDataTypeCriteriaByData(HAPData data) {
-		
-		if(data==null) {
-			int kkkk = 5555;
-			kkkk++;
-		}
-		
 		HAPDataTypeId dataTypeId = data.getDataTypeId();
 		HAPDataTypeImp dataType = this.m_dataAccess.getDataType(dataTypeId);
 //		HAPInfo info = dataType.getInfo();

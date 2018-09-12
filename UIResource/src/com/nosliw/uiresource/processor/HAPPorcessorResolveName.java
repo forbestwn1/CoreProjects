@@ -50,10 +50,6 @@ public class HAPPorcessorResolveName {
 		Map<String, String> varMapping = new LinkedHashMap<String, String>();
 		for(String varName : entityWithName.getVariableNames()) {
 			HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(varName), context, null, HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_BEST);
-			if(resolveInfo==null || resolveInfo.path==null) {
-				int kkkk = 5555;
-				kkkk++;
-			}
 			varMapping.put(varName, resolveInfo.path.getFullPath());
 		}
 		entityWithName.updateVariableNames(new HAPUpdateNameMap(varMapping));
@@ -61,10 +57,6 @@ public class HAPPorcessorResolveName {
 		Map<String, String> constantMapping = new LinkedHashMap<String, String>();
 		for(String constantName : entityWithName.getConstantNames()) {
 			HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(constantName), context, null, HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_BEST);
-			if(resolveInfo==null || resolveInfo.path==null) {
-				int kkkk = 5555;
-				kkkk++;
-			}
 			constantMapping.put(constantName, resolveInfo.path.getFullPath());
 		}
 		entityWithName.updateConstantNames(new HAPUpdateNameMap(constantMapping));

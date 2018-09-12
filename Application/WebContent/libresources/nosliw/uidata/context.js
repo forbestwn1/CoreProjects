@@ -35,10 +35,6 @@ var node_createContext = function(elementInfosArray, request){
 	//according to contextVariableInfo, find the base variable from Context
 	//base variable contains two info: 1. variable,  2. path from variable
 	var loc_findBaseVariable = function(contextVariableInfo){
-		if(contextVariableInfo==null){
-			var kkkk = 5555;
-			kkkk++;
-		}
 		var fullPath = contextVariableInfo.getFullPath();
 		
 		//get parent var from adapter first
@@ -64,10 +60,6 @@ var node_createContext = function(elementInfosArray, request){
 		
 		//not found, use variable from elements
 		if(parentVar==undefined){
-			if(loc_out.prv_elements[contextVariableInfo.name]==undefined){
-				var kkkkk = 5555;
-				kkkkk++;
-			}
 			parentVar = loc_out.prv_elements[contextVariableInfo.name].variable;
 			varPath = contextVariableInfo.path;
 		}
@@ -111,6 +103,17 @@ var node_createContext = function(elementInfosArray, request){
 		return variable;
 	};
 	
+	var loc_flatArray = function(valueArray, out){
+		if(Array.isArray(valueArray)){
+			_.each(valueArray, function(value, index){
+				loc_flatArray(value, out);
+			});
+		}
+		else{
+			out.push(valueArray);
+		}
+	};
+	
 	var loc_resourceLifecycleObj = {};
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
 		_.each(loc_out.prv_elements, function(element, name){
@@ -131,7 +134,9 @@ var node_createContext = function(elementInfosArray, request){
 		loc_out.prv_adapters = {};
 		
 		//process refer to parent first
-		_.each(elementInfosArray, function(elementInfo, key){
+		var flatedelEmentInfosArray = [];
+		loc_flatArray(elementInfosArray, flatedelEmentInfosArray);
+		_.each(flatedelEmentInfosArray, function(elementInfo, key){
 			loc_addContextElement(elementInfo, request);
 		});
 	};

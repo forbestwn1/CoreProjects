@@ -24,7 +24,14 @@
 				info:{
 					mode : "manual"
 				}
+			},
+			"<%=&(index)&%>" : {
+				definition : "test.integer;1.0.0",
+				info:{
+					mode : "manual"
+				}
 			}		
+			
 		},
 		info : {
 			inherit : "true"

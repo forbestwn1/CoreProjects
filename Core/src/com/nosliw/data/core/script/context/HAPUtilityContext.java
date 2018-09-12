@@ -15,6 +15,26 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPUtilityContext {
 
+	public static HAPContextFlat buildFlatContext(HAPContextGroup context) {
+		HAPContextFlat out = new HAPContextFlat();
+		for(String categary : HAPContextGroup.getContextTypesWithPriority()) {
+			Map<String, HAPContextNodeRoot> eles = context.getElements(categary);
+			for(String name : eles.keySet()) {
+				String updatedName = new HAPContextRootNodeId(categary, name).getFullName();
+				out.addElement(updatedName, eles.get(name));
+				
+				//
+				out.addNameMapping(name, updatedName);
+				
+				//
+				HAPContextNodeRoot newEle = HAPUtilityContext.createInheritedElement(eles.get(name), null, updatedName);
+				out.addElement(name, newEle);
+			}
+		}
+		return out;
+	}
+	
+	
 	//find all data variables in context 
 	public static Map<String, HAPVariableInfo> discoverDataVariablesInContext(HAPContext context){
 		Map<String, HAPVariableInfo> out = new LinkedHashMap<String, HAPVariableInfo>();

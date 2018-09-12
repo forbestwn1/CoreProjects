@@ -11,9 +11,9 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.runtime.js.rhino.HAPRhinoDataUtility;
 import com.nosliw.data.core.script.context.HAPContextParser;
 
 public class HAPUITagDefinitionParser {

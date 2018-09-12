@@ -10,12 +10,13 @@
 	Attribute:<span  style="color:<%=#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value=='s isfff'?'red':'blue'%>">Phone Number : </span> 
 	<br>
 
-	<br>
 	
 		<br>
 		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 		<br>
 		<br>
+
+		
 		<nosliw-loop data="business.a.cc" element="ele" index="index">  
 			<nosliw-debug/>
 		
@@ -24,7 +25,7 @@
 			<br>
 			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
 			<br>
-<!--			TextInput:<nosliw-textinput data="ele"/>  -->
+			TextInput:<nosliw-textinput data="ele"/> 
 			<br>
 			<script>
 			{
@@ -70,7 +71,7 @@
 			</script>
 			
 		</nosliw-loop>
-
+  
 
 </body>
 

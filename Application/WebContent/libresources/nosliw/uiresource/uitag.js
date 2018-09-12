@@ -46,12 +46,22 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 	var loc_attributes = {};
 
 	var loc_tagName = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME];
+	var loc_varNameMapping = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_NAMEMAPPING];
 	
 	var loc_context;
 	
 	//boundary element for this tag
 	var loc_startEle = undefined;
 	var loc_endEle = undefined;
+	
+	//related name: name, name with categary
+	var loc_getRelatedName = function(name){
+		var out = [];
+		out.push(name);
+		var mappedName = loc_varNameMapping[name];
+		if(mappedName!=undefined)  out.push(mappedName);
+		return out;
+	};
 	
 	//runtime env for uiTagObj
 	//include : basic info, utility method
@@ -79,8 +89,16 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		},
 		
 		//---------------------------------build context
-		createContextElementInfo : function(name, data1, data2, adapterInfo, info){  return node_createContextElementInfo(name, data1, data2, adapterInfo, info);  },
-		createContextElementInfoFromContext : function(name, contextEle, path){	 return node_createContextElementInfo(name, loc_context, node_createContextVariableInfo(contextEle, path));	},
+		createContextElementInfo : function(name, data1, data2, adapterInfo, info){
+			var out = [];
+			_.each(loc_getRelatedName(name), function(name, index){
+				out.push(node_createContextElementInfo(name, data1, data2, adapterInfo, info));  
+			});
+			return out;
+		},
+		createContextElementInfoFromContext : function(name, contextEle, path){	 
+			return node_createContextElementInfo(name, loc_context, node_createContextVariableInfo(contextEle, path));	
+		},
 		createExtendedContext : function(extendedEleInfos, requestInfo){
 			var contextElesInfo = [];
 			var that  = this;
@@ -139,7 +157,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		//create context
 		var parentContext;
 		if(parentUIResourceView!=undefined)   parentContext = parentUIResourceView.getContext();
-		loc_context = node_uiResourceUtility.buildContext(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGCONTEXT], parentContext);
+		loc_context = node_uiResourceUtility.buildContext(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT], parentContext);
 		
 		//create uiTagObject
 		var uiTagResourceId = node_uiResourceUtility.createTagResourceId(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME]);

@@ -21,6 +21,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeVersion;
@@ -41,7 +42,6 @@ import com.nosliw.data.core.runtime.js.resource.HAPResourceIdDataType;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSGateway;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSHelper;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSLibrary;
-import com.nosliw.data.core.runtime.js.rhino.HAPRhinoDataUtility;
 
 public class HAPJSImporter {
 

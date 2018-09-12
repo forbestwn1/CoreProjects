@@ -15,6 +15,12 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"loop",
 "path":"element"
 },
 "isToParent":false
+},
+"<%=&(index)&%>":{"children":{},
+"definition":"test.integer;1.0.0",
+"type":"absolute",
+"info":{"info":{}
+}
 }
 },
 "internal":{},

@@ -1,11 +1,13 @@
 package com.nosliw.uiresource.processor;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextNodeRoot;
 import com.nosliw.data.core.script.context.HAPContextNodeRootConstant;
@@ -27,17 +29,10 @@ public class HAPProcessorUIContext {
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
 			//for custom tag, build context for tag first : merge parent context with context definition in tag definition first
 			HAPExecutableUIUnitTag uiTagExe = (HAPExecutableUIUnitTag)uiExe;
-			
-			if(uiTagExe.getUIUnitTagDefinition().getTagName().equals("loop")) {
-				int kkkk = 5555;
-				kkkk++;
-			}
-			
-			
 			parentContext = buildUITagContext(uiTagExe, parentContext, uiTagMan, contextProcessorEnv);
 			uiTagExe.setTagContext(parentContext);
 			//flat it
-			uiTagExe.setFlatTagContext(buildFlatContext(uiTagExe.getTagContext()));
+			uiTagExe.setFlatTagContext(HAPUtilityContext.buildFlatContext(uiTagExe.getTagContext()));
 		}
 		
 		//merge with context defined in tag unit
@@ -45,7 +40,7 @@ public class HAPProcessorUIContext {
 		uiExe.setContext(extContextGroup);
 
 		//build flat context
-		HAPContext flatContext = buildFlatContext(uiExe.getContext());
+		HAPContextFlat flatContext = HAPUtilityContext.buildFlatContext(uiExe.getContext());
 		uiExe.setFlatContext(flatContext);
 
 		Map<String, Object> constantsValue = flatContext.getConstantValue();
@@ -55,26 +50,10 @@ public class HAPProcessorUIContext {
 		}
 		
 		//build variables
-		Map<String, HAPVariableInfo> varsInfo = HAPUtilityContext.discoverDataVariablesInContext(flatContext);
+		Map<String, HAPVariableInfo> varsInfo = HAPUtilityContext.discoverDataVariablesInContext(flatContext.getContext());
 		for(String varName : varsInfo.keySet()) {
 			uiExe.getExpressionContext().addVariable(varName, varsInfo.get(varName));
 		}
-	}
-	
-	private static HAPContext buildFlatContext(HAPContextGroup context) {
-		HAPContext out = new HAPContext();
-		for(String categary : HAPContextGroup.getContextTypesWithPriority()) {
-			Map<String, HAPContextNodeRoot> eles = context.getElements(categary);
-			for(String name : eles.keySet()) {
-				String updatedName = new HAPContextRootNodeId(categary, name).getFullName();
-				out.addElement(updatedName, eles.get(name));
-				
-				//
-				HAPContextNodeRoot newEle = HAPUtilityContext.createInheritedElement(eles.get(name), null, updatedName);
-				out.addElement(name, newEle);
-			}
-		}
-		return out;
 	}
 	
 

@@ -19,6 +19,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextEntity;
+import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
@@ -69,7 +70,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 
 	//context for content
 	private HAPContextGroup m_context;
-	private HAPContext m_flatContext;
+	private HAPContextFlat m_flatContext;
 	
 	private Map<String, Object> m_constants;
 	
@@ -117,9 +118,9 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	
 	public HAPContextGroup getContext(){  return this.m_context;   }
 	public void setContext(HAPContextGroup context) {  this.m_context = context;   }
-	public HAPContext getFlatContext() { return this.m_flatContext;  }
-	public void setFlatContext(HAPContext context) {  this.m_flatContext = context;   }
-	public HAPContext getVariableContext() {  return this.m_flatContext.getVariableContext();  }
+	public HAPContextFlat getFlatContext() { return this.m_flatContext;  }
+	public void setFlatContext(HAPContextFlat context) {  this.m_flatContext = context;   }
+	public HAPContextFlat getVariableContext() {  return this.m_flatContext.getVariableContext();  }
 	
 	public Map<String, Object> getConstantsValue(){   return this.m_constants;    }
 	public void addConstantValue(String name, Object value) {
