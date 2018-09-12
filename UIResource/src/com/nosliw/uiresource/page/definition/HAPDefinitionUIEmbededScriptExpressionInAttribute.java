@@ -9,12 +9,12 @@ public class HAPDefinitionUIEmbededScriptExpressionInAttribute extends HAPDefini
 	//attribute name
 	private String m_attribute;
 
-	public HAPDefinitionUIEmbededScriptExpressionInAttribute(String uiId, String attribute, HAPDefinitionEmbededScript scriptExpression) {
+	public HAPDefinitionUIEmbededScriptExpressionInAttribute(String attribute, String uiId, HAPDefinitionEmbededScript scriptExpression) {
 		super(uiId, scriptExpression);
 		this.m_attribute = attribute;
 	}
 
-	public HAPDefinitionUIEmbededScriptExpressionInAttribute(String uiId, String attribute, String content) {
+	public HAPDefinitionUIEmbededScriptExpressionInAttribute(String attribute, String uiId, String content) {
 		super(uiId, content);
 		this.m_attribute = attribute;
 	}

@@ -9,6 +9,10 @@
 	<br>
 	Attribute:<span  style="color:<%=#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value=='s isfff'?'red':'blue'%>">Phone Number : </span> 
 	<br>
+	<br>
+	TextInput:<nosliw-textinput data="business.a.aa"/>  
+	<br>
+	TextInput: <nosliw-textinput data="business.a.aa"/>  
 
 	
 		<br>
@@ -18,8 +22,6 @@
 
 		
 		<nosliw-loop data="business.a.cc" element="ele" index="index">  
-			<nosliw-debug/>
-		
 			<br>
 			Index: <%=?(index)?%>
 			<br>
