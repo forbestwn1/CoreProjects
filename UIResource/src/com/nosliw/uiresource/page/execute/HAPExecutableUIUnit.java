@@ -68,6 +68,8 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	
 	private HAPDefinitionUIUnit m_uiUnitDefinition;
 
+	private HAPExecutableUIUnit m_parent;
+	
 	//context for content
 	private HAPContextGroup m_context;
 	private HAPContextFlat m_flatContext;
@@ -110,12 +112,16 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 		
 		//build tag trees according to definition
 		for(HAPDefinitionUIUnitTag tag : uiUnitDefinition.getUITags()) {
-			this.m_uiTags.put(tag.getId(), new HAPExecutableUIUnitTag(tag));
+			HAPExecutableUIUnitTag exeTag = new HAPExecutableUIUnitTag(tag);
+			this.m_uiTags.put(tag.getId(), exeTag);
+			exeTag.setParent(this);
 		}
 	}
 	
 	public String getType() {  return this.m_uiUnitDefinition.getType();  }
-	
+
+	public HAPExecutableUIUnit getParent() {  return this.m_parent;   }
+	public void setParent(HAPExecutableUIUnit parent) {  this.m_parent = parent;  }
 	public HAPContextGroup getContext(){  return this.m_context;   }
 	public void setContext(HAPContextGroup context) {  this.m_context = context;   }
 	public HAPContextFlat getFlatContext() { return this.m_flatContext;  }
@@ -129,7 +135,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 			this.m_expressionContext.addConstant(name, (HAPData)value);
 		}
 	}
-	
+
 	public Map<String, String> getAttributes(){   return this.m_attributes;    }
 	public void addAttribute(String name, String value) {   this.m_attributes.put(name, value);   }
 

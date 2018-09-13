@@ -23,6 +23,9 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	//for resource, it is resource name
 	private String m_id;
 
+	//parent ui unit
+	private HAPDefinitionUIUnit m_parent;
+	
 	//context definition within this unit
 	private HAPContextGroup m_contextDefinition;
 	
@@ -79,7 +82,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	
 	abstract public String getType(); 
 
-
+	public HAPDefinitionUIUnit getParent() {   return this.m_parent;  }
 	public String getId(){return this.m_id;}
 	public HAPScript getScriptBlock() {  return this.m_script;  }
 	public Set<HAPElementEvent> getNormalTagEvents(){  return this.m_normalTagEvents;   }
@@ -90,6 +93,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	public Map<String, HAPContextEntity> getServiceDefinitions(){  return this.m_servicesDefinition;   }
 	public Map<String, String> getExpressionDefinitions(){  return this.m_expressionDefinitions;   }
 	
+	public void setParent(HAPDefinitionUIUnit parent) {  this.m_parent = parent;  }
 	public void setJSBlock(HAPScript jsBlock){this.m_script = jsBlock;}
 	public void setContent(String content){	this.m_content = content;	}
 	public HAPContextGroup getContextDefinition(){  return this.m_contextDefinition;   }
@@ -105,7 +109,10 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	public void addScriptExpressionInAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInAttribute.add(eAttr);	}
 	public void addScriptExpressionInTagAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInTagAttribute.add(eAttr);	}
 	public void addScriptExpressionInContent(HAPDefinitionUIEmbededScriptExpressionInContent scriptExpressionInContent){	this.m_scriptExpressionsInContent.add(scriptExpressionInContent);	}
-	public void addUITag(HAPDefinitionUIUnitTag uiTag){	this.m_uiTags.put(uiTag.getId(), uiTag);	}
+	public void addUITag(HAPDefinitionUIUnitTag uiTag){	
+		this.m_uiTags.put(uiTag.getId(), uiTag);	
+		uiTag.setParent(uiTag);
+	}
 	public void addTagEvent(HAPElementEvent event){this.m_customTagEvents.add(event);}
 	public void addElementEvent(HAPElementEvent event){this.m_normalTagEvents.add(event);}
 	public void addAttribute(String name, String value){		this.m_attributes.put(name, value);	}

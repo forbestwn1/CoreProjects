@@ -74,10 +74,11 @@ public class HAPUIResourceManager {
 		return exeUiResource;
 	}
 	
-	private HAPDefinitionUIUnitResource getUIResourceDefinitionById(String id){
+	public HAPDefinitionUIUnitResource getUIResourceDefinitionById(String id){
 		String file = HAPFileUtility.getUIResourceFolder()+id+".res";
-		HAPDefinitionUIUnitResource exeUiResource = this.readUiResourceDefinitionFromFile(file);
-		return exeUiResource;
+		HAPDefinitionUIUnitResource uiResourceDef = this.readUiResourceDefinitionFromFile(file);
+		uiResourceDef = this.getUIResourceParser().processInclude(uiResourceDef, this);
+		return uiResourceDef;
 	}
 	
 	private HAPExecutableUIUnitResource processUIResource(HAPDefinitionUIUnitResource uiResource) {

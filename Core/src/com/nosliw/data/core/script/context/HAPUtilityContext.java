@@ -104,12 +104,18 @@ public class HAPUtilityContext {
 		List<HAPInfoRelativeContextResolve> candidates = new ArrayList<HAPInfoRelativeContextResolve>();
 		for(String contextType : categaryCandidates){
 			HAPInfoRelativeContextResolve resolved = new HAPInfoRelativeContextResolve();
+			
+			if(parentContext==null || parentContext.getContext(contextType)==null || refNodeId==null) {
+				int kkkk = 5555;
+				kkkk++;
+			}
+			
 			parentContext.getContext(contextType).discoverChild(refNodeId.getName(), refPath, resolved);
 			if(resolved.rootNode!=null) {
 				resolved.path = new HAPContextPath(contextType, refNodeId.getName(), refPath);
 				candidates.add(resolved);
+				if(HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_FIRST.equals(mode))   break;
 			}
-			if(HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_FIRST.equals(mode))   break;
 		}
 
 		//find best node from candidate

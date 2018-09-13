@@ -33,6 +33,11 @@ public class HAPContextPath extends HAPSerializableImp{
 			this.m_rootNodeId = new HAPContextRootNodeId(fullPath.substring(0, index));
 			this.m_path = fullPath.substring(index+1);
 		}
+		
+		if("index".equals(this.m_rootNodeId.getCategary())) {
+			int kkkk = 5555;
+			kkkk++;
+		}
 	}
 	
 	public HAPContextPath(String categary, String path){
@@ -44,11 +49,21 @@ public class HAPContextPath extends HAPSerializableImp{
 			this.m_rootNodeId = new HAPContextRootNodeId(categary, path.substring(0, index));
 			this.m_path = path.substring(index+1);
 		}
+
+		if("index".equals(this.m_rootNodeId.getCategary())) {
+			int kkkk = 5555;
+			kkkk++;
+		}
 	}
 
 	public HAPContextPath(String contextCategary, String rootEleName, String path){
 		this.m_rootNodeId = new HAPContextRootNodeId(contextCategary, rootEleName);
 		this.m_path = path;
+
+		if("index".equals(this.m_rootNodeId.getCategary())) {
+			int kkkk = 5555;
+			kkkk++;
+		}
 	}
 
 	public HAPContextPath appendSegment(String seg){

@@ -14,7 +14,9 @@
 		},
 		private : {
 		},
-		
+		info : {
+			inherit : "true"
+		}
 	},
 	script : function(env){
 		var loc_env = env;

@@ -6,8 +6,12 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"include",
 "dependency":{},
 "info":{}
 }, {"name":"include",
-"context":{"inherit":true,
-"public":{}
+"context":{"public":{},
+"protected":{},
+"internal":{},
+"private":{},
+"info":{"inherit":"true"
+}
 },
 "attributes":{},
 "script":
