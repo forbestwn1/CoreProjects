@@ -1,6 +1,5 @@
 package com.nosliw.uiresource.processor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.exception.HAPServiceData;
@@ -11,14 +10,17 @@ import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExp
 import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
 import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
-import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInAttribute;
-import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInContent;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.execute.HAPUtilityExecutable;
 
 public class HAPProcessorUIExpression {
 
 	public static void processUIExpression(HAPExecutableUIUnit exeUnit, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){
 		processScriptExpression(exeUnit, runtime, expressionManager);
+		//child tag
+		for(HAPExecutableUIUnitTag childTag : exeUnit.getUITags()) {
+			processUIExpression(childTag, runtime, expressionManager);			
+		}
 	}
 	
 	private static void processScriptExpression(HAPExecutableUIUnit exeUnit, HAPRuntime runtime, HAPExpressionSuiteManager expressionManager){

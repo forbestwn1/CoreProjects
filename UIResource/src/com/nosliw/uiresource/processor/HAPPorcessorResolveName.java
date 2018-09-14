@@ -15,6 +15,7 @@ import com.nosliw.data.core.script.expressionscript.HAPEmbededScriptExpression;
 import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
 import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionScriptSegment;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInContent;
 
@@ -29,7 +30,11 @@ public class HAPPorcessorResolveName {
 		
 		for(HAPUIEmbededScriptExpressionInAttribute embededTagAttribute : exeUnit.getScriptExpressionsInTagAttribute()) {	resolveEmbededScriptExpression(embededTagAttribute, exeUnit.getContext());	}
 		
-		
+		//child tag
+		for(HAPExecutableUIUnitTag childTag : exeUnit.getUITags()) {
+			resolve(childTag);			
+		}
+
 	}
 	
 

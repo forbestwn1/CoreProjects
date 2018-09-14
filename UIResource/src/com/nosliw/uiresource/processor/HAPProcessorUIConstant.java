@@ -57,5 +57,11 @@ public class HAPProcessorUIConstant {
 			}
 		}
 		for(HAPUIEmbededScriptExpressionInAttribute embededScriptExpression : removed)	all.remove(embededScriptExpression);
+		
+		//child tag
+		for(HAPExecutableUIUnitTag childTag : exeUnit.getUITags()) {
+			resolveConstants(childTag, runtime);			
+		}
+		
 	}
 }

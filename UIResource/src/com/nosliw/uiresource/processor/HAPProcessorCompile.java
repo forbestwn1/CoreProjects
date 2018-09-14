@@ -8,6 +8,7 @@ import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpress
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInContent;
 
@@ -46,6 +47,11 @@ public class HAPProcessorCompile {
 			//it self
 			Map<String, String> expressions = uiUnitDef.getExpressionDefinitions();
 			for(String name : expressions.keySet()) 		exeUnit.getExpressionContext().addExpressionDefinition(name, new HAPDefinitionExpression(expressions.get(name)));
+		}
+	
+		//child tag
+		for(HAPExecutableUIUnitTag childTag : exeUnit.getUITags()) {
+			process(childTag, exeUnit);			
 		}
 		
 	}
