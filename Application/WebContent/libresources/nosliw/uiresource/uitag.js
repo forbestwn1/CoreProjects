@@ -63,6 +63,11 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		return out;
 	};
 	
+	var loc_createContextForTagResource = function(){
+		var context = node_uiResourceUtility.buildContext(loc_uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT], loc_context);
+		return context;
+	}
+	
 	//runtime env for uiTagObj
 	//include : basic info, utility method
 	var loc_envObj = {
@@ -85,7 +90,8 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		},
 
 		createDefaultUIResourceView : function(requestInfo){
-			return node_createUIResourceViewFactory().createUIResourceView(loc_uiTagResource, loc_id, loc_parentResourceView, loc_context, requestInfo);
+			var context = loc_createContextForTagResource();
+			return node_createUIResourceViewFactory().createUIResourceView(loc_uiTagResource, loc_id, loc_parentResourceView, context, requestInfo);
 		},
 		
 		//---------------------------------build context
@@ -100,15 +106,11 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 			return node_createContextElementInfo(name, loc_context, node_createContextVariableInfo(contextEle, path));	
 		},
 		createExtendedContext : function(extendedEleInfos, requestInfo){
-			var contextElesInfo = [];
-			var that  = this;
-			_.each(loc_context.getElementsName(), function(elementName, index){
-				contextElesInfo.push(that.createContextElementInfoFromContext(elementName, elementName));
-			});
+			var context = loc_createContextForTagResource();
 			_.each(extendedEleInfos, function(eleInfo, index){
-				contextElesInfo.push(eleInfo);
+				context.addContextElement(eleInfo);
 			});
-			return node_createContext(contextElesInfo, requestInfo);
+			return context;
 		},
 		
 		//---------------------------------operation request

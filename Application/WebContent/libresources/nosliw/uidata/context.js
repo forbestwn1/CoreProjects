@@ -60,13 +60,6 @@ var node_createContext = function(elementInfosArray, request){
 		
 		//not found, use variable from elements
 		if(parentVar==undefined){
-			
-			if(loc_out.prv_elements[contextVariableInfo.name]==undefined){
-				var kkkk = 5555;
-				kkkk++;
-			}
-				
-			
 			parentVar = loc_out.prv_elements[contextVariableInfo.name].variable;
 			varPath = contextVariableInfo.path;
 		}
@@ -170,7 +163,13 @@ var node_createContext = function(elementInfosArray, request){
 	
 	var loc_out = {
 		
-		addContextElement : function(elementInfo, request){		loc_addContextElement(elementInfo, request);		},	
+		addContextElement : function(elementInfo, request){		
+			var flatedelEmentInfosArray = [];
+			loc_flatArray(elementInfo, flatedelEmentInfosArray);
+			_.each(flatedelEmentInfosArray, function(elementInfo, key){
+				loc_addContextElement(elementInfo, request);
+			});
+		},	
 			
 		/*
 		 * create context variable
