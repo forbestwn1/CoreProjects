@@ -93,7 +93,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	public Map<String, HAPContextEntity> getServiceDefinitions(){  return this.m_servicesDefinition;   }
 	public Map<String, String> getExpressionDefinitions(){  return this.m_expressionDefinitions;   }
 	
-	public void setParent(HAPDefinitionUIUnit parent) {  this.m_parent = parent;  }
+	public void setParent(HAPDefinitionUIUnit parent) {	this.m_parent = parent;	}
 	public void setJSBlock(HAPScript jsBlock){this.m_script = jsBlock;}
 	public void setContent(String content){	this.m_content = content;	}
 	public HAPContextGroup getContextDefinition(){  return this.m_contextDefinition;   }

@@ -8,15 +8,15 @@ import com.nosliw.common.utils.HAPConstant;
 public class HAPProcessorContextInheritance {
 
 	//merge with parent through inheritance
-	public static HAPContextGroup process(HAPContextGroup orgContext, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
+	public static HAPContextGroup process(HAPContextGroup orgContext, HAPContextGroup parentContextGroup, String inheritMode, HAPEnvContextProcessor contextProcessorEnv) {
 		HAPContextGroup out = processConstant(orgContext);
-		if(!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(configure.inheritMode)) {
+		if(!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(inheritMode)) {
 			for(String categary : HAPContextGroup.getAllContextTypes()){
 				if(parentContextGroup!=null && Arrays.asList(HAPContextGroup.getInheritableContextTypes()).contains(categary)) {
 					HAPContext parentContext = parentContextGroup.getContext(categary);
 					Map<String, HAPContextNodeRoot> parentEles = parentContext.getElements();
 					for(String eleName : parentEles.keySet()) {
-						if(isInheritable(out, parentContextGroup, categary, eleName, configure.inheritMode)) {
+						if(isInheritable(out, parentContextGroup, categary, eleName, inheritMode)) {
 							out.addElement(eleName, HAPUtilityContext.createInheritedElement(parentContextGroup, categary, eleName), categary);
 						}
 					}

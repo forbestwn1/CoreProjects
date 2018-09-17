@@ -26,9 +26,10 @@ public class HAPProcessorContextConstant {
 	static public HAPContextGroup process(
 			HAPContextGroup originalContextGroup,
 			HAPContextGroup parentContextGroup,
+			String inheritMode,
 			HAPEnvContextProcessor contextProcessorEnv){
 
-		HAPContextGroup merged = merge(originalContextGroup, parentContextGroup);
+		HAPContextGroup merged = merge(originalContextGroup, parentContextGroup, inheritMode);
 		
 		return solidateConstantDefs(merged, contextProcessorEnv);
 	}
@@ -36,15 +37,18 @@ public class HAPProcessorContextConstant {
 	//merge constant with parent
 	private static HAPContextGroup merge(
 			HAPContextGroup contextGroup,
-			HAPContextGroup parentContextGroup){
+			HAPContextGroup parentContextGroup,
+			String inheritMode){
 		HAPContextGroup out = contextGroup.clone();
-		if(parentContextGroup!=null) {
-			//merge constants with parent
-			for(String contextCategary : HAPContextGroup.getInheritableContextTypes()) {
-				for(String name : parentContextGroup.getContext(contextCategary).getElementNames()) {
-					if(parentContextGroup.getElement(contextCategary, name).getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
-						if(contextGroup.getElement(contextCategary, name)==null) {
-							out.addElement(name, parentContextGroup.getElement(contextCategary, name).cloneContextNodeRoot(), contextCategary);
+		if(!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(inheritMode)) {
+			if(parentContextGroup!=null) {
+				//merge constants with parent
+				for(String contextCategary : HAPContextGroup.getInheritableContextTypes()) {
+					for(String name : parentContextGroup.getContext(contextCategary).getElementNames()) {
+						if(parentContextGroup.getElement(contextCategary, name).getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
+							if(contextGroup.getElement(contextCategary, name)==null) {
+								out.addElement(name, parentContextGroup.getElement(contextCategary, name).cloneContextNodeRoot(), contextCategary);
+							}
 						}
 					}
 				}

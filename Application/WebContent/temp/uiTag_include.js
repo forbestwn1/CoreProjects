@@ -10,7 +10,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"include",
 "protected":{},
 "internal":{},
 "private":{},
-"info":{"inherit":"true"
+"info":{"inherit":"false"
 }
 },
 "attributes":{},

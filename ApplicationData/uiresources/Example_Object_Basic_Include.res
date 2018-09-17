@@ -30,7 +30,7 @@
 					value: 100
 				}
 			},
-			element : {
+			element111 : {
 				definition: "test.string;1.0.0",
 				default: {
 					dataTypeId: "test.string;1.0.0",

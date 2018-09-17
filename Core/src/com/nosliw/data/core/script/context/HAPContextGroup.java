@@ -20,8 +20,13 @@ public class HAPContextGroup extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String INFO = "info";
 	
+	@HAPAttribute
+	public static final String INFO_INHERIT = "inherit";
+	
 	private Map<String, HAPContext> m_contexts;
 	private HAPInfoImpSimple m_info;
+	
+	private HAPContextGroup m_parent;;
 	
 	public HAPContextGroup(){
 		this.m_info = new HAPInfoImpSimple(); 
@@ -83,6 +88,9 @@ public class HAPContextGroup extends HAPSerializableImp{
 		}
 	}
 	
+	public void setParent(HAPContextGroup parent) {  this.m_parent = parent;  }
+	public HAPContextGroup getParent() {   return this.m_parent;    }
+	
 	public HAPInfo getInfo() {  return this.m_info;  }
 	
 	public HAPContext getPublicContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);  }
@@ -106,6 +114,11 @@ public class HAPContextGroup extends HAPSerializableImp{
 	
 	public HAPContextGroup clone() {
 		HAPContextGroup out = new HAPContextGroup();
+		this.cloneTo(out);
+		return out;
+	}
+	
+	public void cloneTo(HAPContextGroup out) {
 		out.m_info = this.m_info.clone();
 		for(String categary : this.m_contexts.keySet()) {
 			HAPContext context = this.m_contexts.get(categary);
@@ -113,7 +126,6 @@ public class HAPContextGroup extends HAPSerializableImp{
 				out.addElement(name, this.getElement(categary, name).cloneContextNodeRoot(), categary);
 			}
 		}
-		return out;
 	}
 	
 	public void hardMergeWith(HAPContextGroup contextGroup){

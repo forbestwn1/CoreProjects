@@ -6,13 +6,13 @@ public class HAPProcessorContext {
 	public static HAPContextGroup process1(HAPContextGroup contextGroup, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
 		
 		//figure out all constant values in context
-		contextGroup = HAPProcessorContextConstant.process(contextGroup, parentContextGroup, contextProcessorEnv);
+		contextGroup = HAPProcessorContextConstant.process(contextGroup, parentContextGroup, configure.inheritMode, contextProcessorEnv);
 		
 		//solidate name in context  
 		contextGroup = HAPProcessorContextSolidate.process(contextGroup, contextProcessorEnv);
 		
 		//process inheritance
-		contextGroup = HAPProcessorContextInheritance.process(contextGroup, parentContextGroup, configure, contextProcessorEnv);
+		contextGroup = HAPProcessorContextInheritance.process(contextGroup, parentContextGroup, configure.inheritMode, contextProcessorEnv);
 		
 		return contextGroup;
 		

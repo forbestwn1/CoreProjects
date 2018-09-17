@@ -15,6 +15,13 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPUtilityContext {
 
+	public static String getContextGroupInheritMode(HAPContextGroup contextGroup) {  
+		String out = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;
+		if("false".equals(contextGroup.getInfo().getValue(HAPContextGroup.INFO_INHERIT)))  out = HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE;
+		return out;				
+	}
+
+	
 	public static HAPContextFlat buildFlatContext(HAPContextGroup context) {
 		HAPContextFlat out = new HAPContextFlat();
 		for(String categary : HAPContextGroup.getContextTypesWithPriority()) {

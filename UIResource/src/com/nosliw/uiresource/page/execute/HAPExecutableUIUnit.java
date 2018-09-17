@@ -68,10 +68,10 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	
 	private HAPDefinitionUIUnit m_uiUnitDefinition;
 
-	private HAPExecutableUIUnit m_parent;
+	protected HAPExecutableUIUnit m_parent;
 	
 	//context for content
-	private HAPContextGroup m_context;
+	private HAPContextGroupInUIResource m_context;
 	private HAPContextFlat m_flatContext;
 	
 	private Map<String, Object> m_constants;
@@ -106,7 +106,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
 		this.m_expressionContext = new HAPContextScriptExpressionProcess();
 		this.m_uiTags = new LinkedHashMap<String, HAPExecutableUIUnitTag>();
-		this.m_context = new HAPContextGroup();
+		this.m_context = new HAPContextGroupInUIResource(this);
 		this.m_attributes = new LinkedHashMap<String, String>();
 		this.m_constants = new LinkedHashMap<String, Object>();
 		
@@ -121,9 +121,12 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	public String getType() {  return this.m_uiUnitDefinition.getType();  }
 
 	public HAPExecutableUIUnit getParent() {  return this.m_parent;   }
-	public void setParent(HAPExecutableUIUnit parent) {  this.m_parent = parent;  }
+	public void setParent(HAPExecutableUIUnit parent) {		this.m_parent = parent;	}
 	public HAPContextGroup getContext(){  return this.m_context;   }
-	public void setContext(HAPContextGroup context) {  this.m_context = context;   }
+	public void setContext(HAPContextGroup context) {
+		this.m_context.clear();
+		this.m_context = new HAPContextGroupInUIResource(this, context);
+	}
 	public HAPContextFlat getFlatContext() { return this.m_flatContext;  }
 	public void setFlatContext(HAPContextFlat context) {  this.m_flatContext = context;   }
 	public HAPContextFlat getVariableContext() {  return this.m_flatContext.getVariableContext();  }
