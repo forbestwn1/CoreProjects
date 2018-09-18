@@ -107,6 +107,7 @@ public class HAPContextNodeRootRelative extends HAPContextNodeRootVariable{
 		this.toContextNodeRootVariable(out);
 		out.m_pathStr = this.m_pathStr;
 		if(this.m_path!=null)	out.m_path = this.m_path.clone();
+		
 		for(String name : this.m_matchers.keySet()) 	out.m_matchers.put(name, this.m_matchers.get(name).cloneMatchers());
 		for(String name : this.m_reverseMatchers.keySet())   out.m_reverseMatchers.put(name, this.m_reverseMatchers.get(name).cloneMatchers());
 		return out;

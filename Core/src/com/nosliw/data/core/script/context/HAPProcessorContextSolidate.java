@@ -36,7 +36,7 @@ public class HAPProcessorContextSolidate {
 
 	private static Map<String, Object> buildConstants(HAPContextGroup originalContextGroup){
 		Map<String, Object> constantsData = new LinkedHashMap<String, Object>();
-		String[] categarys = HAPContextGroup.getVisibleContextTypes(); 
+		String[] categarys = HAPContextGroup.getAllContextTypes(); 
 		for(int i=categarys.length-1; i>=0; i--) {
 			Map<String, HAPContextNodeRoot> nodes = originalContextGroup.getElements(categarys[i]);
 			for(String name : nodes.keySet()) {
