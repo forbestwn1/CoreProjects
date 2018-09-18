@@ -11,7 +11,6 @@ import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextNodeRoot;
-import com.nosliw.data.core.script.context.HAPContextNodeRootAbsolute;
 import com.nosliw.data.core.script.context.HAPContextNodeRootConstant;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
@@ -69,29 +68,21 @@ public class HAPProcessorUIContext {
 				}
 				
 				for(String key : context.getElementNames()) {
-					HAPContextNodeRoot rootNode = context.getElement(key);
-					if(rootNode.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE)) {
-						HAPContextNodeRootAbsolute node = (HAPContextNodeRootAbsolute)rootNode;
-						String mappedName = contextMapping.get(key);
-						
-						Object[] a = elecate(mappedName, uiTagExe.getTagContext(), node, uiTagMan);
-						uiTagExe.getTagContext().addElement(key, (HAPContextNodeRoot)a[0], (String)a[1]);
-						
-						HAPContextNodeRoot newRootNode = HAPUtilityContext.createInheritedElement(uiTagExe.getTagContext(), (String)a[1], key);
-						context.addElement(key, newRootNode);
-						
-						
-//						HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(mappedName), parentContext, null, HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_FIRST);
-//						if(resolveInfo!=null) {
-//							//find matched one
-//							HAPContextNodeRoot newRootNode = HAPUtilityContext.createInheritedElement(resolveInfo.rootNode, resolveInfo.path.getRootElementId().getCategary(), resolveInfo.path.getRootElementId().getName());
-//							context.addElement(key, newRootNode);
-//						}
-//						else {
-//							//not find
-//							
-//						}
-					}
+					
+					HAPUtilityContext.escalate(contextDef, key, contextMapping.get(key), HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
+					
+					
+//					HAPContextNodeRoot rootNode = context.getElement(key);
+//					if(rootNode.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE)) {
+//						HAPContextNodeRootAbsolute node = (HAPContextNodeRootAbsolute)rootNode;
+//						String mappedName = contextMapping.get(key);
+//						
+//						Object[] a = elecate(mappedName, uiTagExe.getTagContext(), node);
+//						uiTagExe.getTagContext().addElement(key, (HAPContextNodeRoot)a[0], (String)a[1]);
+//						
+//						HAPContextNodeRoot newRootNode = HAPUtilityContext.createInheritedElement(uiTagExe.getTagContext(), (String)a[1], key);
+//						context.addElement(key, newRootNode);
+//					}
 				}
 			}
 		}
@@ -102,12 +93,7 @@ public class HAPProcessorUIContext {
 		}
 	}
 
-	private static Object[] elecate(String name, HAPContextGroup contextGroup, HAPContextNodeRoot original, HAPUITagManager uiTagMan) {
-		
-		if("element111".equals(name)) {
-			int kkkk = 5555;
-			kkkk++;
-		}
+	private static Object[] elecate(String name, HAPContextGroup contextGroup, HAPContextNodeRoot original) {
 		
 		Object[] out = new Object[2];
 		HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(name), contextGroup, null, HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_FIRST);
@@ -120,7 +106,7 @@ public class HAPProcessorUIContext {
 		}
 		else {
 			//not find
-			if(isEnd1(contextGroup, uiTagMan)){
+			if(isEnd1(contextGroup)){
 				HAPContextNodeRoot newRootNode = original.cloneContextNodeRoot();
 				contextGroup.addElement(name, newRootNode, HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 //				out[0] = newRootNode;
@@ -129,7 +115,7 @@ public class HAPProcessorUIContext {
 			}
 			else {
 				HAPContextGroup parent = contextGroup.getParent();
-				Object[] a = elecate(name, parent, original, uiTagMan);
+				Object[] a = elecate(name, parent, original);
 				
 				String categary;
 				HAPContextGroup group;
@@ -192,10 +178,10 @@ public class HAPProcessorUIContext {
 		
 	}
 
-	private static boolean isEnd1(HAPContextGroup contextGroup, HAPUITagManager uiTagMan) {
+	private static boolean isEnd1(HAPContextGroup contextGroup) {
 		HAPContextGroup parent = contextGroup.getParent();
 		if(parent==null)   return true;
-		return HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(HAPUtilityContext.getContextGroupInheritMode(parent));
+		return !HAPUtilityContext.getContextGroupEscalateMode(parent);
 	}
 	
 	private static boolean isEnd(HAPExecutableUIUnit uiUnitExe, HAPUITagManager uiTagMan) {

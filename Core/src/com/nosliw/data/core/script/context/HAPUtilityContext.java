@@ -15,12 +15,72 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPUtilityContext {
 
+	//escalte context node to parent, only absolute variable
+	public static void escalate(HAPContextGroup contextGroup, String nodeName, String mappedName, String categaryType) {
+		HAPContextNodeRoot rootNode = contextGroup.getElement(categaryType, nodeName);
+		if(rootNode.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE)) {
+			HAPContextNodeRootAbsolute node = (HAPContextNodeRootAbsolute)rootNode;
+			Object[] a = escalate(mappedName, categaryType, contextGroup.getParent(), node);
+			contextGroup.addElement(nodeName, (HAPContextNodeRoot)a[0], categaryType);
+		}
+	}
+	
+	private static Object[] escalate(String name, String categaryType, HAPContextGroup contextGroup, HAPContextNodeRoot original) {
+		
+		Object[] out = new Object[2];
+		HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(name), contextGroup, null, HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_FIRST);
+		if(resolveInfo!=null) {
+			//find matched one
+			out[0] = HAPUtilityContext.createInheritedElement(resolveInfo.rootNode, resolveInfo.path.getRootElementId().getCategary(), resolveInfo.path.getRootElementId().getName());
+			out[1] = resolveInfo.path.getRootElementId().getCategary();
+			return out;
+		}
+		else {
+			HAPContextGroup parent = contextGroup.getParent();
+			boolean isEnd = false;
+			if(parent==null)   isEnd = true;
+			else  isEnd = !HAPUtilityContext.getContextGroupEscalateMode(parent);
+
+			//not find
+			if(isEnd){
+				HAPContextNodeRoot newRootNode = original.cloneContextNodeRoot();
+				contextGroup.addElement(name, newRootNode, categaryType);
+				return out;
+			}
+			else {
+				Object[] a = escalate(name, categaryType, parent, original);
+				
+				String categary;
+				HAPContextGroup group;
+				if(a[0]!=null) {
+					contextGroup.addElement(name, (HAPContextNodeRoot)a[0], (String)a[1]);
+					group = contextGroup;
+					categary = (String)a[1];
+				}
+				else {
+					contextGroup.addElement(name, HAPUtilityContext.createInheritedElement(parent, categaryType, name), categaryType);
+					group = contextGroup;
+					categary = categaryType;
+				}
+				
+				out[0] = HAPUtilityContext.createInheritedElement(group, categary, name);
+				out[1] = categary;
+				return out;
+			}
+		}
+	}
+	
 	public static String getContextGroupInheritMode(HAPContextGroup contextGroup) {  
 		String out = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;
 		if("false".equals(contextGroup.getInfo().getValue(HAPContextGroup.INFO_INHERIT)))  out = HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE;
 		return out;				
 	}
 
+	public static boolean getContextGroupEscalateMode(HAPContextGroup contextGroup) {  
+		boolean out = true;
+		if("false".equals(contextGroup.getInfo().getValue(HAPContextGroup.INFO_ESCALATE)))  out = false;
+		return out;				
+	} 
 	
 	public static HAPContextFlat buildFlatContext(HAPContextGroup context) {
 		HAPContextFlat out = new HAPContextFlat();

@@ -15,7 +15,8 @@
 		private : {
 		},
 		info : {
-			inherit : "public"
+			inherit : "false",
+			escalate : "true"
 		}
 	},
 	script : function(env){
