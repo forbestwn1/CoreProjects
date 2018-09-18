@@ -15,7 +15,7 @@
 		private : {
 		},
 		info : {
-			inherit : "true"
+			inherit : "public"
 		}
 	},
 	script : function(env){

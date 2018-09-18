@@ -57,7 +57,7 @@ public class HAPProcessorUIContext {
 			String tagName = ((HAPDefinitionUIUnitTag)uiTagExe.getUIUnitDefinition()).getTagName();
 			if(HAPConstant.UITAG_NAME_INCLUDE.equals(tagName)) {
 				//process include tag
-				String includeContextMapping = uiExe.getAttributes().get(HAPConstant.UITAG_NAME_INCLUDE_PARM_CONTEXT);
+				String includeContextMapping = uiTagExe.getAttributes().get(HAPConstant.UITAG_NAME_INCLUDE_PARM_CONTEXT);
 				Map<String, String> contextMapping = HAPNamingConversionUtility.parsePropertyValuePairs(includeContextMapping);
 				
 				contextDef = uiExe.getContext(); 
@@ -75,7 +75,10 @@ public class HAPProcessorUIContext {
 						String mappedName = contextMapping.get(key);
 						
 						Object[] a = elecate(mappedName, uiTagExe.getTagContext(), node, uiTagMan);
-						context.addElement(key, (HAPContextNodeRoot)a[0]);
+						uiTagExe.getTagContext().addElement(key, (HAPContextNodeRoot)a[0], (String)a[1]);
+						
+						HAPContextNodeRoot newRootNode = HAPUtilityContext.createInheritedElement(uiTagExe.getTagContext(), (String)a[1], key);
+						context.addElement(key, newRootNode);
 						
 						
 //						HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(mappedName), parentContext, null, HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_FIRST);
@@ -100,6 +103,12 @@ public class HAPProcessorUIContext {
 	}
 
 	private static Object[] elecate(String name, HAPContextGroup contextGroup, HAPContextNodeRoot original, HAPUITagManager uiTagMan) {
+		
+		if("element111".equals(name)) {
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		Object[] out = new Object[2];
 		HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(name), contextGroup, null, HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_FIRST);
 		if(resolveInfo!=null) {
@@ -121,12 +130,23 @@ public class HAPProcessorUIContext {
 			else {
 				HAPContextGroup parent = contextGroup.getParent();
 				Object[] a = elecate(name, parent, original, uiTagMan);
+				
+				String categary;
+				HAPContextGroup group;
 				if(a[0]!=null) {
 					contextGroup.addElement(name, (HAPContextNodeRoot)a[0], (String)a[1]);
+					group = contextGroup;
+					categary = (String)a[1];
 				}
-				HAPContextNodeRoot newRootNode = HAPUtilityContext.createInheritedElement(contextGroup, (String)a[1], name);
+				else {
+					group = parent;
+					categary = HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC;
+				}
+				
+
+				HAPContextNodeRoot newRootNode = HAPUtilityContext.createInheritedElement(group, categary, name);
 				out[0] = newRootNode;
-				out[1] = a[1];
+				out[1] = categary;
 				return out;
 			}
 		}

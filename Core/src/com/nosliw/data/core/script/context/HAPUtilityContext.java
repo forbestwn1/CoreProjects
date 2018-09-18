@@ -74,6 +74,12 @@ public class HAPUtilityContext {
 	//build interited node from parent
 	public static HAPContextNodeRoot createInheritedElement(HAPContextNodeRoot parentNode, String contextCategary, String eleName) {
 		HAPContextNodeRoot out = null;
+		
+		if(parentNode==null) {
+			int kkkk = 5555;
+			kkkk++;
+		}
+		
 		if(parentNode.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
 			out = parentNode.cloneContextNodeRoot();
 		}
