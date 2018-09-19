@@ -115,7 +115,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 				context : loc_out.getContext()
 			};
 			loc_out.prv_callScriptFunction(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], undefined, info);
-//			loc_scriptObject.callEventFunction(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], undefined, info);
 		});
 		
 		return {
@@ -129,7 +128,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 	 */
 	var loc_initTagEvent = function(tagEvent){
 		var tag = loc_uiTags[loc_out.prv_getUpdateUIId(tagEvent[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_UIID])];
-		var eventName = tagEvent[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_EVENT];
+		var eventName = tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_EVENT];
 		
 		var listener = tag.registerEvent(eventName, function(event, data, requestInfo){
 			var info = {
@@ -137,6 +136,7 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 				tag : tag,
 				requestInfo: requestInfo,
 			};
+			loc_out.prv_callScriptFunction(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], undefined, info);
 			loc_scriptObject.callEventFunction(tagEvent[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_FUNCTION], data, info);
 		});
 		

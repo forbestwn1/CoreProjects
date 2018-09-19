@@ -10,10 +10,12 @@ import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextParser;
 
 public class HAPUITagDefinitionParser {
@@ -56,8 +58,21 @@ public class HAPUITagDefinitionParser {
 
 			//attribute definition
 			NativeArray attributesArrayObj = (NativeArray)defObjJS.get(HAPUITagDefinition.ATTRIBUTES);
+			for(int i=0; i<attributesArrayObj.size(); i++) {
+				JSONObject attrDefJson = (JSONObject)HAPRhinoDataUtility.toJson(attributesArrayObj.get(i));
+				HAPUITagDefinitionAttribute attrDef = new HAPUITagDefinitionAttribute();
+				attrDef.buildObject(attrDefJson, HAPSerializationFormat.JSON);
+				out.addAttributeDefinition(attrDef);
+			}
 			
 			//event definition
+			NativeArray eventDefObjs = (NativeArray)defObjJS.get(HAPUITagDefinition.EVENT);
+			for(int i=0; i<eventDefObjs.size(); i++) {
+				JSONObject eventDefJson = (JSONObject)HAPRhinoDataUtility.toJson(eventDefObjs.get(i));
+				HAPContextEntity eventDef = new HAPContextEntity();
+				eventDef.buildObject(eventDefJson, HAPSerializationFormat.JSON);
+				out.addEventDefinition(eventDef);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,6 +89,4 @@ public class HAPUITagDefinitionParser {
 	public static void parseContextInTagDefinition(JSONObject contextJson, HAPUITagDefinitionContext contextOut){
 		HAPContextParser.parseContextGroup(contextJson, contextOut);
 	}
-
-
 }

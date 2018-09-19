@@ -2,7 +2,8 @@
 <html>
 <body>
 
-	
+		<nosliw-include source="Example_Include_simple" context="" /> 
+		
 
 	<br>
 	Content:<%=?(business.a.aa)?.value + '   6666 ' %>
@@ -11,27 +12,29 @@
 	<br>
 	Attribute:<span  style="color:<%=#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value=='s isfff'?'red':'blue'%>">Phone Number : </span> 
 	<br>
+	<br>
 	TextInput:<nosliw-textinput data="business.a.aa"/>  
 	<br>
 	TextInput: <nosliw-textinput data="business.a.aa"/>  
 
-	<br>
-	<nosliw-debug/>
 	
 		<br>
 		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 		<br>
-
 		<br>
+
+		
 		<nosliw-loop data="business.a.cc" element="ele" index="index">  
+
+				<nosliw-include source="Example_Object_Basic_Include" context="ele=element" /> 
+		
+
 			<br>
 			Index: <%=?(index)?%>
 			<br>
 			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
 			<br>
-			TextInput:<nosliw-textinput data="ele"/>  
-			<br>
-			TextInput:<nosliw-textinput data="ele"/>  
+			TextInput:<nosliw-textinput data="ele"/> 
 			<br>
 			<script>
 			{
@@ -71,16 +74,13 @@
 						}
 					}));
 					node_requestServiceProcessor.processRequest(requestInfo, false);
+*/					
 				}
 			}
 			</script>
 			
 		</nosliw-loop>
--->
-
-	<br>
-	
-	
+  
 
 </body>
 
@@ -114,6 +114,30 @@
 		<!-- This part can be used to define context (variable)
 				it describle data type criteria for each context element and its default value
 		-->
+		
+	<event>
+	[
+		{
+			name : "selectSchool",
+			parms : {
+				schoolData : {
+					path: "schoolList.element"
+				}
+			},
+		}
+	]
+	</event>
+	
+	<service>
+	[
+	]
+	</service>
+
+	<command>
+	[
+	]
+	</command>
+		
 	<context>
 	{
 		public : {
@@ -121,7 +145,7 @@
 				definition: {
 					a : {
 						aa : "test.string;1.0.0",
-						cc : "test.array;1.0.0%||element:test.array;1.0.0||%",
+						cc : "test.array;1.0.0%||element:test.string;1.0.0||%",
 					}
 				},
 				default: {
@@ -191,9 +215,10 @@
 	
 		<!-- This part can be used to define expressions
 		-->
-	<expressions>
+	<expression>
 	{
 	}
-	</expressions>
+	</expression>
 	
 </html>
+

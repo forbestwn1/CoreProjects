@@ -40,6 +40,9 @@ public class HAPProcessorUIContext {
 			//for custom tag, build context for tag first : merge parent context with context definition in tag definition first
 			parentContext = buildUITagContext(uiTagExe, parentContext, uiTagMan, contextProcessorEnv);
 			uiTagExe.setTagContext(parentContext);
+			
+			//process event
+			
 		}
 		
 		//merge with context defined in tag unit

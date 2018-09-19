@@ -20,9 +20,16 @@
 			inherit : "false"
 		}
 	},
-	events : {
-		
-	},
+	event : [
+		{
+			name : "valueChanged",
+			parms : {
+				value : {
+					path: "internal_data"
+				}
+			},
+		}
+	],
 	requires:{
 		"operation" : { 
 			op1: "test.integer;1.0.0;add",

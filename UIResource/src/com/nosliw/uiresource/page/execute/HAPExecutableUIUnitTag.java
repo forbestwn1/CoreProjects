@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
@@ -15,11 +16,16 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 
 	@HAPAttribute
 	public static final String TAGCONTEXT = "tagContext";
+
+	@HAPAttribute
+	public static final String EVENT = "event";
 	
 	//context for tag
 	private HAPContextGroupInUITag m_tagContext;
 	private HAPContextFlat m_flatTagContext;
 
+	private Map<String, HAPContextEntity> m_tagEvent;
+	
 	public HAPExecutableUIUnitTag(HAPDefinitionUIUnitTag uiTagDefinition) {
 		super(uiTagDefinition);
 	}

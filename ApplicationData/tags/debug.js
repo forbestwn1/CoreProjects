@@ -67,7 +67,11 @@
 
 			processAttribute : function(name, value){},
 
-			handleDataEvent : function(name, event, path, data, requestInfo){	},
+			handleDataEvent : function(name, event, path, data, requestInfo){	
+			
+			destroy : function(){	
+			},
+			
 		};
 		return loc_out;
 	}
