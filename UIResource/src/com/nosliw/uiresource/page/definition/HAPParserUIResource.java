@@ -26,7 +26,6 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
-import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextParser;
 import com.nosliw.data.core.script.expressionscript.HAPDefinitionEmbededScript;
@@ -411,36 +410,4 @@ public class HAPParserUIResource {
 			}
 		}
 	}
-
-	
-	
-	/*
-	 * convert all standard descendant tags that have data key attribute to default custom tag 
-	 */
-//	private void adjustDescendantTagAccordToDataBinding(Element ele){
-//		Elements eles = ele.children();
-//		for(Element e : eles){
-//			//for each child element
-//			String tag = e.tagName();
-//			if(HAPUIResourceParserUtility.isCustomTag(e)==null){
-//				//for none custom tag
-//				Attributes attrs = e.attributes();
-//				boolean dataKeyAttr = false;
-//				for(Attribute attr : attrs){
-//					//check if there is any data key attribute, if so, then this tag should be costom tag
-//					//here we cannot just check key attribute as some regular tag may have key attribute for instance "event"
-//					dataKeyAttr = HAPUIResourceParserUtility.isDataKeyAttribute(attr.getKey());
-//					if(dataKeyAttr)	break;
-//				}
-//				if(dataKeyAttr){
-//					//if have data key attribute, then change the standard tag name to default custome tag name
-//					tag = HAPUIResourceParserUtility.makeCustomTagName(tag);
-//					e.tagName(tag);
-//				}
-//			}
-//			//do the same on child element
-//			adjustDescendantTagAccordToDataBinding(e);
-//		}
-//	}
-	
 }

@@ -39,7 +39,7 @@
 	},
 	event : [
 		
-	]
+	],
 	script : function(env){
 
 		var node_namingConvensionUtility = nosliw.getNodeData("common.namingconvension.namingConvensionUtility");

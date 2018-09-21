@@ -67,11 +67,13 @@ public class HAPUITagDefinitionParser {
 			
 			//event definition
 			NativeArray eventDefObjs = (NativeArray)defObjJS.get(HAPUITagDefinition.EVENT);
-			for(int i=0; i<eventDefObjs.size(); i++) {
-				JSONObject eventDefJson = (JSONObject)HAPRhinoDataUtility.toJson(eventDefObjs.get(i));
-				HAPContextEntity eventDef = new HAPContextEntity();
-				eventDef.buildObject(eventDefJson, HAPSerializationFormat.JSON);
-				out.addEventDefinition(eventDef);
+			if(eventDefObjs!=null) {
+				for(int i=0; i<eventDefObjs.size(); i++) {
+					JSONObject eventDefJson = (JSONObject)HAPRhinoDataUtility.toJson(eventDefObjs.get(i));
+					HAPContextEntity eventDef = new HAPContextEntity();
+					eventDef.buildObject(eventDefJson, HAPSerializationFormat.JSON);
+					out.addEventDefinition(eventDef);
+				}
 			}
 			
 		} catch (Exception e) {

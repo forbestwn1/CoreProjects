@@ -15,7 +15,7 @@
 	<br>
 	TextInput:<nosliw-textinput data="business.a.aa"/>  
 	<br>
-	TextInput: <nosliw-textinput data="business.a.aa"/>  
+	TextInput: <nosliw-textinput data="business.a.aa" nosliw-event="valueChanged:textInputValueChanged:"/>  
 
 	
 		<br>
@@ -107,6 +107,10 @@
 			var uiDataOperation = new node_UIDataOperation(node_createContextVariableInfo("business.a.cc"), node_uiDataOperationServiceUtility.createAddElementOperationService("", eleData, 1));
 			requestInfo.addUIDataOperation(uiDataOperation);						
 			node_requestServiceProcessor.processRequest(requestInfo, false);
+		},
+		
+		textInputValueChanged : function(data, info){
+			alert("I am an alert box!");
 		},
 	}
 	</script>

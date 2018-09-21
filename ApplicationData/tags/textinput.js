@@ -62,9 +62,11 @@
 
 		var loc_setupUIEvent = function(){
 			loc_view.bind('change', function(){
+				var data = loc_getViewData();
 				env.executeBatchDataOperationRequest([
-					env.getDataOperationSet(loc_dataVariable, "", loc_getViewData())
+					env.getDataOperationSet(loc_dataVariable, "", data)
 				]);
+				loc_env.trigueEvent("valueChanged", data);
 			});
 		};
 

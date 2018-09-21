@@ -29,6 +29,21 @@ public class HAPProcessorContextRelative {
 		}
 		return out;
 	}
+
+	public static HAPContext process(HAPContext context, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
+		HAPContext out = new HAPContext();
+		Map<String, HAPContextNodeRoot> eles = context.getElements();
+		for(String eleName : eles.keySet()) {
+			HAPContextNodeRoot node = eles.get(eleName);
+			if(node.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE)) {
+				out.addElement(eleName, processRelativeContextDefinitionElement((HAPContextNodeRootRelative)node, parentContextGroup, configure, contextProcessorEnv));
+			}
+			else {
+				out.addElement(eleName, node);
+			}
+		}
+		return out;
+	}
 	
 	private static HAPContextNodeRoot processRelativeContextDefinitionElement(HAPContextNodeRootRelative defContextElementRelative, HAPContextGroup parentContext, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv){
 		if(defContextElementRelative.isProcessed())   return (HAPContextNodeRootRelative)defContextElementRelative.cloneContextNodeRoot();

@@ -8,11 +8,13 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextNodeRootConstant;
 import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
+import com.nosliw.data.core.script.context.HAPProcessorContextRelative;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
@@ -25,7 +27,7 @@ public class HAPProcessorUIContext {
 
 	public static void process(HAPExecutableUIUnit uiExe, HAPExecutableUIUnit parentUIExe, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 		process1(uiExe, parentUIExe, uiTagMan, contextProcessorEnv);			
-		process2(uiExe, parentUIExe, contextProcessorEnv);			
+		processRelative(uiExe, parentUIExe, contextProcessorEnv);			
 		process3(uiExe);
 	}
 	
@@ -40,9 +42,6 @@ public class HAPProcessorUIContext {
 			//for custom tag, build context for tag first : merge parent context with context definition in tag definition first
 			parentContext = buildUITagContext(uiTagExe, parentContext, uiTagMan, contextProcessorEnv);
 			uiTagExe.setTagContext(parentContext);
-			
-			//process event
-			
 		}
 		
 		//merge with context defined in tag unit
@@ -78,7 +77,7 @@ public class HAPProcessorUIContext {
 		}
 	}
 
-	private static void process2(HAPExecutableUIUnit uiExe, HAPExecutableUIUnit parentUIExe, HAPEnvContextProcessor contextProcessorEnv){
+	private static void processRelative(HAPExecutableUIUnit uiExe, HAPExecutableUIUnit parentUIExe, HAPEnvContextProcessor contextProcessorEnv){
 		HAPContextGroup parentContext = parentUIExe==null?null:parentUIExe.getContext();
 		
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
@@ -88,6 +87,16 @@ public class HAPProcessorUIContext {
 			uiTagExe.setTagContext(HAPProcessorContext.process2(uiTagExe.getTagContext(), parentContext, configure, contextProcessorEnv));
 			
 			parentContext = uiTagExe.getTagContext();
+			
+			//process event
+			Map<String, HAPContextEntity> eventsDef = uiTagExe.getUIUnitTagDefinition().getEventDefinitions();
+			for(String name : eventsDef.keySet()) {
+				HAPContextEntity processedEventDef = new HAPContextEntity();
+				eventsDef.get(name).cloneBasicTo(processedEventDef);
+				HAPContext eventContext = eventsDef.get(name).getContext();
+				processedEventDef.setContext(HAPProcessorContextRelative.process(eventContext, uiTagExe.getTagContext(), null, contextProcessorEnv));
+				uiTagExe.addTagEvent(name, processedEventDef);
+			}
 		}
 		
 		//merge with context defined in tag unit
@@ -95,7 +104,7 @@ public class HAPProcessorUIContext {
 
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : uiExe.getUITags()) {
-			process2(childTag, uiExe, contextProcessorEnv);			
+			processRelative(childTag, uiExe, contextProcessorEnv);			
 		}
 		
 	}	

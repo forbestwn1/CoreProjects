@@ -111,8 +111,8 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 		subEle.bind(eventName, function(event){
 			var info = {
 				event : event, 
-				element : subEle,
-				context : loc_out.getContext()
+				source : this,
+				context : loc_out.getContext(),
 			};
 			loc_out.prv_callScriptFunction(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], undefined, info);
 		});
@@ -127,17 +127,20 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 	 * init ui tag event object
 	 */
 	var loc_initTagEvent = function(tagEvent){
-		var tag = loc_uiTags[loc_out.prv_getUpdateUIId(tagEvent[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_UIID])];
+		var tag = loc_uiTags[loc_out.prv_getUpdateUIId(tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_UIID])];
 		var eventName = tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_EVENT];
 		
-		var listener = tag.registerEvent(eventName, function(event, data, requestInfo){
-			var info = {
-				event : event,
-				tag : tag,
-				requestInfo: requestInfo,
-			};
-			loc_out.prv_callScriptFunction(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], undefined, info);
-			loc_scriptObject.callEventFunction(tagEvent[NOSLIWATCOMMONATRIBUTECONSTANT.ATTR_ELEMENTEVENT_FUNCTION], data, info);
+		var listener = tag.registerEventListener(loc_eventSource, function(event, eventData, requestInfo){
+			if(event==eventName){
+				var info = {
+					event : event,
+					eventData : eventData,
+					source : tag,
+					context : loc_out.getContext(),
+					requestInfo: requestInfo,
+				};
+				loc_out.prv_callScriptFunction(tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], undefined, info);
+			}
 		});
 		
 		return {
@@ -221,6 +224,11 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 			loc_uiTags[uiTagId] =  uiTag;
 		});
 
+		//init customer tag event
+		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGEVENTS], function(tagEvent, key, list){
+			loc_tagEvents.push(loc_initTagEvent(tagEvent));
+		});
+		
 		
 		
 		
@@ -241,11 +249,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 		});
 		
 
-		//init customer tag event
-		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.ATTR_UIRESOURCE_TAGEVENTS], function(tagEvent, key, list){
-			loc_tagEvents.push(loc_initTagEvent(tagEvent));
-		});
-		
 		//call init funtion in uiresource definitio
 //		loc_out.prv_getScriptObject().prv_callLocalFunction(node_COMMONCONSTANT.UIRESOURCE_FUNCTION_INIT);
 		
