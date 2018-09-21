@@ -21,7 +21,7 @@ var packageObj = library;
 	var node_UIDataOperation;
 	var node_uiDataOperationServiceUtility;
 	var node_createBatchUIDataOperationRequest;
-	var node_createUIResourceViewFactory;
+	var node_createUIViewFactory;
 	var node_createEventObject;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -55,7 +55,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 	var loc_startEle = undefined;
 	var loc_endEle = undefined;
 	
-	var loc_eventObject = node_createEventObject();
+	var loc_tagEventObject = node_createEventObject();
 	
 	//related name: name, name with categary
 	var loc_getRelatedName = function(name){
@@ -88,13 +88,13 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		processRequest : function(requestInfo){   node_requestServiceProcessor.processRequest(requestInfo);  },
 		
 		//---------------------------------ui resource view
-		createUIResourceViewWithId : function(id, context, requestInfo){
-			return node_createUIResourceViewFactory().createUIResourceView(loc_uiTagResource, id, loc_parentResourceView, context, requestInfo);
+		createUIViewWithId : function(id, context, requestInfo){
+			return node_createUIViewFactory().createUIView(loc_uiTagResource, id, loc_parentResourceView, context, requestInfo);
 		},
 
-		createDefaultUIResourceView : function(requestInfo){
+		createDefaultUIView : function(requestInfo){
 			var context = loc_createContextForTagResource();
-			return node_createUIResourceViewFactory().createUIResourceView(loc_uiTagResource, loc_id, loc_parentResourceView, context, requestInfo);
+			return node_createUIViewFactory().createUIView(loc_uiTagResource, loc_id, loc_parentResourceView, context, requestInfo);
 		},
 		
 		//---------------------------------build context
@@ -148,7 +148,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		executeGatewayCommand : function(gatewayId, command, parms, handlers, requestInfo){	return nosliw.runtime.getGatewayService().executeGatewayCommand(gatewayId, command, parms, handlers, requestInfo);	},
 	
 		//--------------------------------- event
-		trigueEvent : function(event, eventData, requestInfo){   loc_eventObject.triggerEvent(event, eventData, requestInfo);  },
+		trigueEvent : function(event, eventData, requestInfo){   loc_tagEventObject.triggerEvent(event, eventData, requestInfo);  },
 	
 	};
 	
@@ -207,7 +207,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 			if(loc_uiTagObj.processAttribute!=undefined)  loc_uiTagObj.processAttribute(name, value);  
 		},
 		
-		registerEventListener : function(listenerEventObj, handler, thisContext){	loc_eventObject.registerListener(undefined, listenerEventObj, handler, thisContext);	},
+		registerTagEventListener : function(eventName, handler, thisContext){	return loc_tagEventObject.registerListener(eventName, undefined, handler, thisContext);	},
 	};
 	
 	//append resource and object life cycle method to out obj
@@ -241,7 +241,7 @@ nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createUIDataOperationReq
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createBatchUIDataOperationRequest", function(){node_createBatchUIDataOperationRequest  = this.getData();});
-nosliw.registerSetNodeDataEvent("uiresource.createUIResourceViewFactory", function(){node_createUIResourceViewFactory = this.getData();});
+nosliw.registerSetNodeDataEvent("uiresource.createUIViewFactory", function(){node_createUIViewFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 
 //Register Node by Name

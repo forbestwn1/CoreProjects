@@ -94,7 +94,7 @@
 				loc_env.createContextElementInfo(loc_env.getAttributeValue("index"), indexVar)
 			], requestInfo);
 			
-			var resourceView = loc_env.createUIViewWithId(loc_env.getId()+"."+loc_generateId(), eleContext, requestInfo);
+			var resourceView = loc_env.createUIResourceViewWithId(loc_env.getId()+"."+loc_generateId(), eleContext, requestInfo);
 			if(index==0)	resourceView.insertAfter(loc_env.getStartElement());
 			else	resourceView.insertAfter(loc_childResourceViews[index-1].getEndElement());
 				

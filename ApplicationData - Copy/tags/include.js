@@ -27,7 +27,7 @@
 		var loc_out = 
 		{
 			initViews : function(requestInfo){
-				loc_resourceView = loc_env.createDefaultUIView(requestInfo);
+				loc_resourceView = loc_env.createDefaultUIResourceView(requestInfo);
 				return loc_resourceView.getViews();
 			},
 			

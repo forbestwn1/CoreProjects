@@ -28,7 +28,7 @@
 		var loc_out = 
 		{
 			ovr_initViews : function(startEle, endEle, requestInfo){
-				loc_resourceView = loc_env.createDefaultUIView(requestInfo);
+				loc_resourceView = loc_env.createDefaultUIResourceView(requestInfo);
 			},
 			
 			ovr_postInit : function(){},

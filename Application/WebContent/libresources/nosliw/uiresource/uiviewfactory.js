@@ -23,11 +23,11 @@ var packageObj = library;
 	var node_UIDataOperation;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_createUIResourceViewFactory = function(){
+var loc_createUIViewFactory = function(){
 	
 	var loc_out = {
-		createUIResourceView : function(uiResource, id, parent, context, requestInfo){
-			return loc_createUIResourceView(uiResource, id, parent, context, requestInfo);
+		createUIView : function(uiResource, id, parent, context, requestInfo){
+			return loc_createUIView(uiResource, id, parent, context, requestInfo);
 		}
 	};
 	
@@ -41,7 +41,11 @@ var loc_createUIResourceViewFactory = function(){
  * 	 	name space id
  * 		parent uiresource
  */
-var loc_createUIResourceView = function(uiResource, id, parent, context, requestInfo){
+var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
+
+	//event source used to register and trigger event
+	var loc_eventSource = node_createEventObject();
+	
 	//temporately store uiResource
 	var loc_uiResource = uiResource;
 
@@ -89,10 +93,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 
 	//if this ui resource is defined within a customer tag, then this object store all the information about that parent tag
 	var loc_parentTagInfo = undefined;
-
-	
-	//event source used to register and trigger event
-	var loc_eventSource = node_createEventObject();
 	
 	/*
 	 * init element event object
@@ -112,9 +112,8 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 			var info = {
 				event : event, 
 				source : this,
-				context : loc_out.getContext(),
 			};
-			loc_out.prv_callScriptFunction(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], undefined, info);
+			loc_out.prv_callScriptFunctionUp(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], undefined, info);
 		});
 		
 		return {
@@ -130,17 +129,14 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 		var tag = loc_uiTags[loc_out.prv_getUpdateUIId(tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_UIID])];
 		var eventName = tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_EVENT];
 		
-		var listener = tag.registerEventListener(loc_eventSource, function(event, eventData, requestInfo){
-			if(event==eventName){
-				var info = {
-					event : event,
-					eventData : eventData,
-					source : tag,
-					context : loc_out.getContext(),
-					requestInfo: requestInfo,
-				};
-				loc_out.prv_callScriptFunction(tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], undefined, info);
-			}
+		var listener = tag.registerTagEventListener(eventName, function(event, eventData, requestInfo){
+			var info = {
+				event : event,
+				eventData : eventData,
+				source : tag,
+				requestInfo: requestInfo,
+			};
+			loc_out.prv_callScriptFunctionUp(tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], undefined, info);
 		});
 		
 		return {
@@ -333,11 +329,62 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 		
 		prv_callScriptFunction : function(funName){   
 			var fun = loc_scriptObject[funName];
+			var env = {
+					context : loc_out.getContext(),
+					uiUnit : loc_out,
+			};
+			return fun.apply(this, Array.prototype.slice.call(arguments, 1).push(env));
+		},
+		
+		prv_callScriptFunctionUp : function(funName){   
+			var find = this.prv_findFunctionUp(funName);
+			return find.uiUnit.prv_callScriptFunction.apply(find.uiUnit, arguments);
+		},
+
+		prv_callScriptFunctionDown : function(funName){
+			var find = this.prv_findFunctionDown(funName);
+			return find.uiUnit.prv_callScriptFunction.apply(find.uiUnit, arguments);
+		},
+
+		prv_findFunctionDown : function(funName){
+			var fun = loc_scriptObject[funName];
 			if(fun!=undefined){
-				fun.apply(this, Array.prototype.slice.call(arguments, 1));
+				return {
+					fun : fun,
+					uiUnit : loc_out,
+				};
 			}
 			else{
-				loc_parentResourveView.prv_callScriptFunction.apply(loc_parentResourveView, arguments);
+				for (var id in loc_uiTags) {
+				    // skip loop if the property is from prototype
+				    if (!loc_uiTags.hasOwnProperty(id)) continue;
+				    var childUITag = loc_uiTags[id];
+				    var find = childUITag.prv_findFunctionDown(funName);
+				    if(find!=undefined)  return find;
+				}				
+			}
+		},
+
+		prv_findFunctionUp : function(funName){
+			var fun = loc_scriptObject[funName];
+			if(fun!=undefined){
+				return {
+					fun : fun,
+					uiUnit : loc_out,
+				};
+			}
+			else{
+				return loc_parentResourveView.prv_findFunctionUp(funName);
+			}
+		},
+		
+		prv_callScriptFunction : function(funName){   
+			var fun = loc_scriptObject[funName];
+			if(fun!=undefined){
+				return fun.apply(this, Array.prototype.slice.call(arguments, 1));
+			}
+			else{
+				return loc_parentResourveView.prv_callScriptFunction.apply(loc_parentResourveView, arguments);
 			}
 		},
 		
@@ -357,13 +404,6 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 
 		//remove all elements from outsiders parents and put them back under parentView
 		detachViews : function(){	loc_parentView.append(loc_getViews());		},
-
-		//trigue event from this ui resource view
-		trigueEvent : function(eventName, data, requestInfo){	
-			//for all the child resource view, it will use root resource view to trigue the event 
-			this.prv_getRootResourceView().triggerEvent(eventName, data, requestInfo); 
-		},
-		registerEvent : function(handler, thisContext){	return loc_eventSource.registerEventHandler(handler, thisContext);},
 
 		
 		//return dom element
@@ -431,12 +471,24 @@ var loc_createUIResourceView = function(uiResource, id, parent, context, request
 		getDefaultOperationRequestSet : function(value, dataTypeInfo, handlers, request){	return this.getDataOperationRequestSet(this.getContext().getElementsName()[0], value, dataTypeInfo, handlers, request);	},
 		executeDefaultDataOperationRequestSet : function(value, dataTypeInfo, handlers, request){	return node_requestServiceProcessor.processRequest(this.getDefaultOperationRequestSet(value, dataTypeInfo, handlers, request));	},
 	
+		//trigue event from this ui resource view
+		trigueUIResourceEvent : function(eventName, data, requestInfo){	
+			//for all the child resource view, it will use root resource view to trigue the event 
+			this.prv_getRootResourceView().triggerEvent(eventName, data, requestInfo); 
+		},
+		trigueEvent : function(eventName, data, requestInfo){  		loc_eventSource.triggerEvent(eventName, data, requestInfo);  },	
+		registerEvent : function(handler, thisContext){	return loc_eventSource.registerListener(undefined, undefined, handler, thisContext); },
+
+		command : function(command, data, requestInfo){
+			return prv_callScriptFunctionDown("command_"+command, data, requestInfo);
+		},
+		
 	};
 
 	
 	//append resource and object life cycle method to out obj
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
-	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIRESOURCEVIEW);
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIVIEW);
 
 	node_getLifecycleInterface(loc_out).init(uiResource, id, parent, context, requestInfo);
 	
@@ -467,6 +519,6 @@ nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", functi
 
 
 //Register Node by Name
-packageObj.createChildNode("createUIResourceViewFactory", loc_createUIResourceViewFactory); 
+packageObj.createChildNode("createUIViewFactory", loc_createUIViewFactory); 
 
 })(packageObj);
