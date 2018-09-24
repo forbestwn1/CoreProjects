@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -15,6 +16,22 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPUtilityContext {
 
+	public static void processEscalate(HAPContextGroup contextGroup, Set<String> categarys, Map<String, String> cm) {
+		for(String categary : categarys) {
+			HAPContext context = contextGroup.getContext(categary);
+
+			Map<String, String> contextMapping = new LinkedHashMap<String, String>();
+			contextMapping.putAll(cm);
+			for(String key : context.getElementNames()) {
+				if(HAPBasicUtility.isStringEmpty(contextMapping.get(key)))			contextMapping.put(key, key);
+			}
+			
+			for(String key : context.getElementNames()) {
+				HAPUtilityContext.escalate(contextGroup, key, contextMapping.get(key), categary);
+			}
+		}
+	}
+	
 	//escalte context node to parent, only absolute variable
 	public static void escalate(HAPContextGroup contextGroup, String nodeName, String mappedName, String categaryType) {
 		HAPContextNodeRoot rootNode = contextGroup.getElement(categaryType, nodeName);
@@ -39,7 +56,7 @@ public class HAPUtilityContext {
 			HAPContextGroup parent = contextGroup.getParent();
 			boolean isEnd = false;
 			if(parent==null)   isEnd = true;
-			else  isEnd = !HAPUtilityContext.getContextGroupEscalateMode(parent);
+			else  isEnd = !HAPUtilityContext.getContextGroupPopupMode(parent);
 
 			//not find
 			if(isEnd){
@@ -76,9 +93,15 @@ public class HAPUtilityContext {
 		return out;				
 	}
 
-	public static boolean getContextGroupEscalateMode(HAPContextGroup contextGroup) {  
+	public static boolean getContextGroupPopupMode(HAPContextGroup contextGroup) {  
 		boolean out = true;
-		if("false".equals(contextGroup.getInfo().getValue(HAPContextGroup.INFO_ESCALATE)))  out = false;
+		if("false".equals(contextGroup.getInfo().getValue(HAPContextGroup.INFO_POPUP)))  out = false;
+		return out;				
+	} 
+
+	public static boolean getContextGroupEscalateMode(HAPContextGroup contextGroup) {  
+		boolean out = false;
+		if("true".equals(contextGroup.getInfo().getValue(HAPContextGroup.INFO_ESCALATE)))  out = true;
 		return out;				
 	} 
 	

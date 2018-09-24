@@ -49,6 +49,8 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 	var loc_tagName = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME];
 	var loc_varNameMapping = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_NAMEMAPPING];
 	
+	var loc_eventNameMapping = uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_EVENTMAPPING];
+	
 	var loc_context;
 	
 	//boundary element for this tag
@@ -56,6 +58,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 	var loc_endEle = undefined;
 	
 	var loc_tagEventObject = node_createEventObject();
+	var loc_eventObject = node_createEventObject();
 	
 	//related name: name, name with categary
 	var loc_getRelatedName = function(name){
@@ -70,6 +73,13 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		var context = node_uiResourceUtility.buildContext(loc_uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT], loc_context);
 		return context;
 	};
+	
+	var loc_processChildUIViewEvent = function(eventName, eventData, requestInfo){
+		var en = loc_eventNameMapping[eventName];
+		if(en==undefined)  en = eventName;
+		loc_eventObject.triggerEvent(en, eventData, requestInfo);
+	};
+	
 	
 	//runtime env for uiTagObj
 	//include : basic info, utility method
@@ -89,12 +99,16 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		
 		//---------------------------------ui resource view
 		createUIViewWithId : function(id, context, requestInfo){
-			return node_createUIViewFactory().createUIView(loc_uiTagResource, id, loc_parentResourceView, context, requestInfo);
+			var out = node_createUIViewFactory().createUIView(loc_uiTagResource, id, loc_parentResourceView, context, requestInfo);
+			out.registerEventListener(loc_processChildUIViewEvent, loc_out);
+			return out;
 		},
 
 		createDefaultUIView : function(requestInfo){
 			var context = loc_createContextForTagResource();
-			return node_createUIViewFactory().createUIView(loc_uiTagResource, loc_id, loc_parentResourceView, context, requestInfo);
+			var out = node_createUIViewFactory().createUIView(loc_uiTagResource, loc_id, loc_parentResourceView, context, requestInfo);
+			out.registerEventListener(loc_processChildUIViewEvent, loc_out);
+			return out;
 		},
 		
 		//---------------------------------build context
@@ -208,6 +222,8 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		},
 		
 		registerTagEventListener : function(eventName, handler, thisContext){	return loc_tagEventObject.registerListener(eventName, undefined, handler, thisContext);	},
+		registerEventListener : function(handler, thisContext){	return loc_eventObject.registerListener(undefined, undefined, handler, thisContext);	},
+		
 	};
 	
 	//append resource and object life cycle method to out obj

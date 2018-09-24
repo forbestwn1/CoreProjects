@@ -7,7 +7,7 @@
 			<br>
 			<%=?(element111)?.value + '   7777 ' %>   
 			<br>
-			TextInput:<nosliw-textinput data="element111"/> 
+			TextInput:<nosliw-textinput data="element111" nosliw-event="valueChanged:textInputValueChanged:"/>
 			<br>
 			*************************************
 
@@ -15,6 +15,9 @@
 
 	<script>
 	{
+		textInputValueChanged : function(info, env){
+			env.trigueEvent("changeInputTextIncludeBasic", info.eventData);
+		},
 	}
 	</script>
 	
@@ -38,6 +41,19 @@
 	{
 	}
 	</expression>
+	
+	<event>
+	[
+		{
+			name : "changeInputTextIncludeBasic",
+			parms : {
+				data : {
+					path: "element111"
+				}
+			},
+		}
+	]
+	</event>
 	
 </html>
 

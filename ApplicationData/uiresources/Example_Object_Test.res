@@ -86,7 +86,7 @@
 
 	<script>
 	{
-		newElementInLoop : function(data, info){
+		newElementInLoop : function(data, info, env){
 
 			event.preventDefault();
 
@@ -109,10 +109,13 @@
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},
 		
-		textInputValueChanged : function(data, info){
-			alert("I am an alert box!");
+		textInputValueChanged : function(info, env){
+			env.trigueEvent("changeInputText", info.eventData);
 		},
 		
+			command_Start(data, env){
+			alert(JSON.stringify(data));
+		},
 	}
 	</script>
 	
@@ -200,6 +203,20 @@
 	{
 	}
 	</expression>
+	
+	<event>
+	[
+		{
+			name : "changeInputText",
+			parms : {
+				data : {
+					path: "business.a.aa"
+				}
+			},
+		}
+	]
+	</event>
+
 	
 </html>
 

@@ -95,7 +95,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 
 	//event definition 
 	private Map<String, HAPContextEntity> m_eventsDefinition;
-	//service requirment definition
+	//service requirement definition
 	private Map<String, HAPContextEntity> m_servicesDefinition;
 	
 	public HAPExecutableUIUnit(HAPDefinitionUIUnit uiUnitDefinition) {
@@ -158,6 +158,12 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	public Set<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionsInAttribute() {  return this.m_scriptExpressionsInAttribute;   }
 	public Set<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionsInTagAttribute() {  return this.m_scriptExpressionsInTagAttribute;   }
 
+	public Map<String, HAPContextEntity> getEventDefinitions(){  return this.m_eventsDefinition;    }
+	public HAPContextEntity getEventDefinition(String name) {   return this.m_eventsDefinition.get(name);  }
+	public void addEventDefinition(String name, HAPContextEntity eventDef) {  this.m_eventsDefinition.put(name, eventDef);    }
+	
+	public Map<String, HAPContextEntity> getServiceDefinitions(){  return this.m_servicesDefinition;   }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		this.buildMyJsonMap(jsonMap, typeJsonMap, HAPSerializationFormat.JSON);

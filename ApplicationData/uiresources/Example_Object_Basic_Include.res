@@ -48,5 +48,18 @@
 	}
 	</expression>
 	
+	<event>
+	[
+		{
+			name : "changeInputTextInclude",
+			parms : {
+				data : {
+					path: "element"
+				}
+			},
+		}
+	]
+	</event>
+	
 </html>
 

@@ -24,6 +24,9 @@ public class HAPContextGroup extends HAPSerializableImp{
 	public static final String INFO_INHERIT = "inherit";
 
 	@HAPAttribute
+	public static final String INFO_POPUP = "popup";
+
+	@HAPAttribute
 	public static final String INFO_ESCALATE = "escalate";
 	
 	private Map<String, HAPContext> m_contexts;

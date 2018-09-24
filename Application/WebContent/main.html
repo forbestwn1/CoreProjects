@@ -31,6 +31,13 @@ $(document).on("nosliwActive", function(){
 					nosliw.logging.info(JSON.stringify(uiResourceView));
 					
 					uiResourceView.appendTo($('#testDiv'));
+					
+					uiResourceView.command("Start", "Hello");
+					
+					uiResourceView.registerEventListener(function(eventName, eventData, requestInfo){
+						alert(eventName + "  _______  " +JSON.stringify(eventData));
+					});
+					
 				}
 			}
 	);

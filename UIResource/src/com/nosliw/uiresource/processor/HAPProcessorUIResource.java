@@ -38,6 +38,8 @@ public class HAPProcessorUIResource {
 		
 		HAPProcessorUIExpression.processUIExpression(out, runtime, expressionMan);
 		
+		HAPProcessorUIEvent.process(out);
+		
 		HAPProcessorResourceDependency.process(out, resourceMan);
 		
 		return out;

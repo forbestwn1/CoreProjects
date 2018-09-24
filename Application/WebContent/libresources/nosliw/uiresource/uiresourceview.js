@@ -16,14 +16,13 @@ var node_createUIResourceView = function(uiView){
 	//event source used to register and trigger event
 	var loc_eventSource = node_createEventObject();
 
-	
-	var loc_viewEventListener = loc_uiView.registerEvent(function(event, eventData, requestInfo){
-		loc_eventSource.triggerEvent(event, eventData, requestInfo);
-	});
+	var loc_viewEventListener;
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiView){
-		
+		loc_viewEventListener = loc_uiView.registerEventListener(function(event, eventData, requestInfo){
+			loc_eventSource.triggerEvent(event, eventData, requestInfo);
+		});
 	};	
 	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
@@ -41,7 +40,7 @@ var node_createUIResourceView = function(uiView){
 		//remove all elements from outsiders parents and put them back under parentView
 		detachViews : function(){	loc_uiView.detachViews();		},
 
-		registerEvent : function(handler, thisContext){	return loc_eventSource.registerListener(undefined, undefined, handler, thisContext);},
+		registerEventListener : function(handler, thisContext){	return loc_eventSource.registerListener(undefined, undefined, handler, thisContext);},
 
 		command : function(command, data, requestInfo){	 return loc_uiView.command(command, data, requestInfo);		}
 		

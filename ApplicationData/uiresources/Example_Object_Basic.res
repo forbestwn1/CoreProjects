@@ -86,7 +86,7 @@
 
 	<script>
 	{
-		newElementInLoop : function(data, info){
+		newElementInLoop : function(data, info, env){
 
 			event.preventDefault();
 
@@ -109,8 +109,12 @@
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},
 		
-		textInputValueChanged : function(data, info){
-			alert("I am an alert box!");
+		textInputValueChanged : function(data, info, env){
+			alert(JSON.stringify(data));
+		},
+		
+		command_Start(data, env){
+			alert(JSON.stringify(data));
 		},
 	}
 	</script>
