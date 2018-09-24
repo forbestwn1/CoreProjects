@@ -73,6 +73,7 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	public File getSourceFile(){  return this.m_sourceFile;   }
 	public void setSourceFile(File file){   this.m_sourceFile = file;   }
 	
+	public List<HAPContextEntity> getEventDefinition(){  return this.m_eventsDefinition;   }
 	public void addEventDefinition(HAPContextEntity eventDef) {   this.m_eventsDefinition.add(eventDef);    }
 	
 	public void addAttributeDefinition(HAPUITagDefinitionAttribute attrDef) {   this.m_attributes.put(attrDef.getName(), attrDef);   }

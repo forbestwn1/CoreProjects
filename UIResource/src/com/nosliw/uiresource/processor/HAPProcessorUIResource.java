@@ -38,7 +38,7 @@ public class HAPProcessorUIResource {
 		
 		HAPProcessorUIExpression.processUIExpression(out, runtime, expressionMan);
 		
-		HAPProcessorUIEvent.process(out);
+		HAPProcessorUIEvent.process(out, uiTagMan);
 		
 		HAPProcessorResourceDependency.process(out, resourceMan);
 		

@@ -2,7 +2,7 @@
 <html>
 <body>
 
-		<nosliw-include source="Example_Include_simple" context="" /> 
+		<nosliw-include source="Example_Include_simple" context="" event="changeInputTextIncludeBasic=changeInputTextIncludeBasicMapped"/> 
 		
 
 	<br>
@@ -109,11 +109,11 @@
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},
 		
-		textInputValueChanged : function(data, info, env){
-			alert(JSON.stringify(data));
+		textInputValueChanged : function(info, env){
+			env.trigueEvent("changeInputText", info.eventData);
 		},
 		
-		command_Start(data, env){
+			command_Start(data, env){
 			alert(JSON.stringify(data));
 		},
 	}
@@ -122,30 +122,6 @@
 		<!-- This part can be used to define context (variable)
 				it describle data type criteria for each context element and its default value
 		-->
-		
-	<event>
-	[
-		{
-			name : "selectSchool",
-			parms : {
-				schoolData : {
-					path: "schoolList.element"
-				}
-			},
-		}
-	]
-	</event>
-	
-	<service>
-	[
-	]
-	</service>
-
-	<command>
-	[
-	]
-	</command>
-		
 	<context>
 	{
 		public : {
@@ -227,6 +203,20 @@
 	{
 	}
 	</expression>
+	
+	<event>
+	[
+		{
+			name : "changeInputText",
+			parms : {
+				data : {
+					path: "business.a.aa"
+				}
+			},
+		}
+	]
+	</event>
+
 	
 </html>
 

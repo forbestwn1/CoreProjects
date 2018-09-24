@@ -7,6 +7,9 @@
 		},
 		{
 			name : "context"
+		},
+		{
+			name : "event"
 		}
 	],
 	context: {

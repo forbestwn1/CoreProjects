@@ -109,6 +109,9 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 		this.m_attributes = new LinkedHashMap<String, String>();
 		this.m_constants = new LinkedHashMap<String, Object>();
 		
+		this.m_eventsDefinition = new LinkedHashMap<String, HAPContextEntity>();
+		this.m_servicesDefinition = new LinkedHashMap<String, HAPContextEntity>();
+		
 		//build tag trees according to definition
 		for(HAPDefinitionUIUnitTag tag : uiUnitDefinition.getUITags()) {
 			HAPExecutableUIUnitTag exeTag = new HAPExecutableUIUnitTag(tag);

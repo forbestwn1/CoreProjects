@@ -13,9 +13,11 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextParser;
 
 /**
@@ -24,7 +26,16 @@ import com.nosliw.data.core.script.context.HAPContextParser;
  * Task is a sequence of steps
  */
 @HAPEntityWithAttribute
-public class HAPDefinitionTask extends HAPDefinitionComponent{
+public class HAPDefinitionTask extends HAPSerializableImp{
+
+	@HAPAttribute
+	public static String NAME = "name";
+
+	@HAPAttribute
+	public static String DESCRIPTION = "description";
+
+	@HAPAttribute
+	public static String DATACONTEXT = "context";
 
 	@HAPAttribute
 	public static String STEP = "step";
@@ -35,7 +46,14 @@ public class HAPDefinitionTask extends HAPDefinitionComponent{
 	@HAPAttribute
 	public static String RESULT = "result";
 	
+	private String m_name;
+	
+	private String m_description;
+	
 	private List<HAPDefinitionStep> m_steps;
+
+	//data context, variable definition(absolute, relative), constants
+	private HAPContextGroup m_dataContext;
 
 	//result of task
 	//result have different type of result(success, failure, ...)
@@ -53,6 +71,8 @@ public class HAPDefinitionTask extends HAPDefinitionComponent{
 		this.m_result = new HAPContext();
 	}
 
+	public String getName() {  return this.m_name;  }
+	
 	//steps within task
 	public List<HAPDefinitionStep> getSteps(){  return this.m_steps;  }
 	

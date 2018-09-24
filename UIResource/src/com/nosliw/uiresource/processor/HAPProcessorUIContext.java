@@ -27,7 +27,7 @@ public class HAPProcessorUIContext {
 
 	public static void process(HAPExecutableUIUnit uiExe, HAPExecutableUIUnit parentUIExe, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 		process1(uiExe, parentUIExe, uiTagMan, contextProcessorEnv);			
-		processRelative(uiExe, parentUIExe, contextProcessorEnv);			
+		processRelative(uiExe, parentUIExe, uiTagMan, contextProcessorEnv);			
 		process3(uiExe);
 	}
 	
@@ -69,7 +69,7 @@ public class HAPProcessorUIContext {
 		}
 	}
 	
-	private static void processRelative(HAPExecutableUIUnit uiExe, HAPExecutableUIUnit parentUIExe, HAPEnvContextProcessor contextProcessorEnv){
+	private static void processRelative(HAPExecutableUIUnit uiExe, HAPExecutableUIUnit parentUIExe, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 		HAPContextGroup parentContext = parentUIExe==null?null:parentUIExe.getContext();
 		
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
@@ -80,14 +80,21 @@ public class HAPProcessorUIContext {
 			
 			parentContext = uiTagExe.getTagContext();
 			
-			//process event
+			//process event in tag resource
 			Map<String, HAPContextEntity> eventsDef = uiTagExe.getUIUnitTagDefinition().getEventDefinitions();
 			for(String name : eventsDef.keySet()) {
 				HAPContextEntity processedEventDef = new HAPContextEntity();
 				eventsDef.get(name).cloneBasicTo(processedEventDef);
-				HAPContext eventContext = eventsDef.get(name).getContext();
-				processedEventDef.setContext(HAPProcessorContextRelative.process(eventContext, uiTagExe.getTagContext(), null, contextProcessorEnv));
-				uiTagExe.addTagEvent(name, processedEventDef);
+				processedEventDef.setContext(HAPProcessorContextRelative.process(eventsDef.get(name).getContext(), uiTagExe.getContext(), null, contextProcessorEnv));
+				uiTagExe.addEventDefinition(name, processedEventDef);
+			}
+
+			//process event in tag
+			for(HAPContextEntity eventDef : uiTagMan.getUITagDefinition(new HAPUITagId(uiTagExe.getUIUnitTagDefinition().getTagName())).getEventDefinition()) {
+				HAPContextEntity processedEventDef = new HAPContextEntity();
+				eventDef.cloneBasicTo(processedEventDef);
+				processedEventDef.setContext(HAPProcessorContextRelative.process(eventDef.getContext(), uiTagExe.getTagContext(), null, contextProcessorEnv));
+				uiTagExe.addTagEvent(eventDef.getName(), processedEventDef);
 			}
 		}
 		
@@ -96,7 +103,7 @@ public class HAPProcessorUIContext {
 
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : uiExe.getUITags()) {
-			processRelative(childTag, uiExe, contextProcessorEnv);			
+			processRelative(childTag, uiExe, uiTagMan, contextProcessorEnv);			
 		}
 		
 	}	
