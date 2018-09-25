@@ -18,6 +18,9 @@
 		textInputValueChanged : function(info, env){
 			env.trigueEvent("changeInputTextIncludeBasic", info.eventData);
 		},
+		command_Include : function(data, env){
+			return data.data + "   Include";
+		},
 	}
 	</scripts>
 	
@@ -41,6 +44,19 @@
 	{
 	}
 	</expressions>
+	
+	<commands>
+	[
+		{
+			name : "Include",
+			parms : {
+				data : {
+					path: "element111"
+				}
+			},
+		}
+	]
+	</commands>
 	
 	<events>
 	[

@@ -352,11 +352,11 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		},
 
 		prv_callScriptFunctionDown : function(funName){
-			var find = this.prv_findFunctionDown(funName);
+			var find = this.findFunctionDown(funName);
 			return find.uiUnit.prv_callScriptFunction.apply(find.uiUnit, arguments);
 		},
 
-		prv_findFunctionDown : function(funName){
+		findFunctionDown : function(funName){
 			var fun = loc_scriptObject[funName];
 			if(fun!=undefined){
 				return {
@@ -366,11 +366,10 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 			}
 			else{
 				for (var id in loc_uiTags) {
-				    // skip loop if the property is from prototype
 				    if (!loc_uiTags.hasOwnProperty(id)) continue;
 				    var childUITag = loc_uiTags[id];
-				    var find = childUITag.prv_findFunctionDown(funName);
-				    if(find!=undefined)  return find;
+			    	var funInfo = childUITag.getTagObject().findFunctionDown(funName);
+			    	if(funInfo!=undefined)  return funInfo;
 				}				
 			}
 		},
@@ -387,16 +386,6 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 				return loc_parentResourveView.prv_findFunctionUp(funName);
 			}
 		},
-		
-//		prv_callScriptFunction : function(funName){   
-//			var fun = loc_scriptObject[funName];
-//			if(fun!=undefined){
-//				return fun.apply(this, Array.prototype.slice.call(arguments, 1));
-//			}
-//			else{
-//				return loc_parentResourveView.prv_callScriptFunction.apply(loc_parentResourveView, arguments);
-//			}
-//		},
 		
 		getContext : function(){return loc_context;},
 		updateContext : function(wrappers, requestInfo){		loc_context.updateContext(wrappers, requestInfo);		},

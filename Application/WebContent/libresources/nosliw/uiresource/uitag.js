@@ -186,7 +186,14 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		var uiTagResourceId = node_uiResourceUtility.createTagResourceId(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME]);
 		var uiTagResourceObj = nosliw.runtime.getResourceService().getResource(uiTagResourceId);
 		
-		loc_uiTagObj = uiTagResourceObj[node_COMMONATRIBUTECONSTANT.RESOURCE_RESOURCEDATA][node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_envObj);
+		loc_uiTagObj = _.extend({
+			findFunctionDown : function(name){},	
+			initViews : function(requestInfo){},
+			postInit : function(){},
+			preInit : function(){},
+			destroy : function(){},
+		}, uiTagResourceObj[node_COMMONATRIBUTECONSTANT.RESOURCE_RESOURCEDATA][node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPT].call(loc_out, loc_envObj));
+		
 		
 		//overriden method before view is attatched to dom
 		if(loc_uiTagObj.preInit!=undefined)  loc_uiTagObj.preInit(requestInfo);

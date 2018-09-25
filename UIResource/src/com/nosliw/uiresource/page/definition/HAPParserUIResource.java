@@ -87,7 +87,8 @@ public class HAPParserUIResource {
 		HAPDefinitionUIUnitResource resource = new HAPDefinitionUIUnitResource(resourceId, content);
 		try{
 			Document doc = Jsoup.parse(content, "UTF-8");
-			parseUIDefinitionResource(resource, doc.body());
+			this.parseUIDefinitionUnit(resource, doc.body(), null);
+
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -107,13 +108,6 @@ public class HAPParserUIResource {
 		return uiResourceDef; 
 	}
 
-	
-	//parse resource
-	private void parseUIDefinitionResource(HAPDefinitionUIUnitResource uiResourceUnit, Element resourceEle){
-		this.parseChildCommandBlocks(resourceEle, uiResourceUnit);
-		this.parseUIDefinitionUnit(uiResourceUnit, resourceEle, null);
-	}	
-	
 	//parse unit (resource, tag)
 	private void parseUIDefinitionUnit(HAPDefinitionUIUnit uiUnit, Element unitEle, HAPDefinitionUIUnit parentUIUnit){
 		//process script block
@@ -127,6 +121,8 @@ public class HAPParserUIResource {
 		this.parseUnitEventBlocks(unitEle, uiUnit);
 		//parse service definition block
 		this.parseUnitServiceBlocks(unitEle, uiUnit);
+		//parse command definition block
+		this.parseChildCommandBlocks(unitEle, uiUnit);
 		
 		//process key attribute
 		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(uiUnit.getType()))   parseKeyAttributeOnTag(unitEle, parentUIUnit, true);

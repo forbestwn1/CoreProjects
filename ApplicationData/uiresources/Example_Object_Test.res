@@ -112,8 +112,8 @@
 			env.trigueEvent("changeInputText", info.eventData);
 		},
 		
-		command_Start(data, env){
-			alert(JSON.stringify(data));
+		command_Start :function(data, env){
+			return data.data + "   Start";
 		},
 	}
 	</scripts>

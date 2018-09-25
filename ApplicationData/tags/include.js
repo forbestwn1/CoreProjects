@@ -29,6 +29,10 @@
 		
 		var loc_out = 
 		{
+			findFunctionDown : function(name){
+				return loc_resourceView.findFunctionDown(name);
+			},	
+			
 			initViews : function(requestInfo){
 				loc_resourceView = loc_env.createDefaultUIView(requestInfo);
 				return loc_resourceView.getViews();
