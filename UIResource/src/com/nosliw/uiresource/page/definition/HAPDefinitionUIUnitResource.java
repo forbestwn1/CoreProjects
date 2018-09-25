@@ -12,19 +12,13 @@ public class HAPDefinitionUIUnitResource extends HAPDefinitionUIUnit{
 	//source code of resource definition
 	private String m_source;
 	
-	private Map<String, HAPContextEntity> m_commandsDefinition;
-	
 	public HAPDefinitionUIUnitResource(String id, String source){
 		super(id);
 		this.m_source = source;
-		this.m_commandsDefinition = new LinkedHashMap<String, HAPContextEntity>();
 	}
 	
 	public String getSource(){   return this.m_source;   }
 	
-	public void addCommandDefinition(HAPContextEntity commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
-	public Map<String, HAPContextEntity> getCommandDefinition() {   return this.m_commandsDefinition;  }
-
 	@Override
 	public String getType() {	return HAPConstant.UIRESOURCE_TYPE_RESOURCE;	}
 

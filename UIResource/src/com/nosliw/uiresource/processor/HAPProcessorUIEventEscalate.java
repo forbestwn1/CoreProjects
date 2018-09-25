@@ -12,7 +12,7 @@ import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.tag.HAPUITagId;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
-public class HAPProcessorUIEvent {
+public class HAPProcessorUIEventEscalate {
 
 	public static void process(HAPExecutableUIUnit exeUnit, HAPUITagManager uiTagMan) {
 

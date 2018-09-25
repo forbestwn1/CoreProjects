@@ -13,15 +13,15 @@
 
 </body>
 
-	<script>
+	<scripts>
 	{
 		textInputValueChanged : function(info, env){
 			env.trigueEvent("changeInputTextIncludeBasic", info.eventData);
 		},
 	}
-	</script>
+	</scripts>
 	
-	<context>
+	<contexts>
 	{
 		public : {
 			element111 : {
@@ -33,16 +33,16 @@
 			}
 		}
 	}
-	</context>
+	</contexts>
 	
 		<!-- This part can be used to define expressions
 		-->
-	<expression>
+	<expressions>
 	{
 	}
-	</expression>
+	</expressions>
 	
-	<event>
+	<events>
 	[
 		{
 			name : "changeInputTextIncludeBasic",
@@ -53,7 +53,7 @@
 			},
 		}
 	]
-	</event>
+	</events>
 	
 </html>
 

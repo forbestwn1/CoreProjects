@@ -39,12 +39,12 @@ import com.nosliw.uiresource.HAPUIResourceManager;
  */
 public class HAPParserUIResource {
 
-	public static final String EVENT = "event";
-	public static final String SERVICE = "service";
-	public static final String CONTEXT = "context";
-	public static final String COMMAND = "command";
-	public static final String EXPRESSION = "expression";
-	public static final String SCRIPT = "script";
+	public static final String EVENT = "events";
+	public static final String SERVICE = "services";
+	public static final String CONTEXT = "contexts";
+	public static final String COMMAND = "commands";
+	public static final String EXPRESSION = "expressions";
+	public static final String SCRIPT = "scripts";
 	
 	//for creating ui id
 	private HAPIdGenerator m_idGenerator;
@@ -245,7 +245,7 @@ public class HAPParserUIResource {
 		for(Element childEle : childEles)  childEle.remove();
 	}
 
-	private void parseChildCommandBlocks(Element ele, HAPDefinitionUIUnitResource resourceUnit) {
+	private void parseChildCommandBlocks(Element ele, HAPDefinitionUIUnit resourceUnit) {
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, COMMAND);
 		for(Element childEle : childEles){
 			try {

@@ -8,7 +8,6 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -77,18 +76,8 @@ public class HAPProcessorUIContext {
 			
 			HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
 			uiTagExe.setTagContext(HAPProcessorContext.process2(uiTagExe.getTagContext(), parentContext, configure, contextProcessorEnv));
-			
 			parentContext = uiTagExe.getTagContext();
 			
-			//process event in tag resource
-			Map<String, HAPContextEntity> eventsDef = uiTagExe.getUIUnitTagDefinition().getEventDefinitions();
-			for(String name : eventsDef.keySet()) {
-				HAPContextEntity processedEventDef = new HAPContextEntity();
-				eventsDef.get(name).cloneBasicTo(processedEventDef);
-				processedEventDef.setContext(HAPProcessorContextRelative.process(eventsDef.get(name).getContext(), uiTagExe.getContext(), null, contextProcessorEnv));
-				uiTagExe.addEventDefinition(name, processedEventDef);
-			}
-
 			//process event in tag
 			for(HAPContextEntity eventDef : uiTagMan.getUITagDefinition(new HAPUITagId(uiTagExe.getUIUnitTagDefinition().getTagName())).getEventDefinition()) {
 				HAPContextEntity processedEventDef = new HAPContextEntity();
@@ -96,11 +85,31 @@ public class HAPProcessorUIContext {
 				processedEventDef.setContext(HAPProcessorContextRelative.process(eventDef.getContext(), uiTagExe.getTagContext(), null, contextProcessorEnv));
 				uiTagExe.addTagEvent(eventDef.getName(), processedEventDef);
 			}
+			
 		}
-		
-		//merge with context defined in tag unit
+
+		//merge with context defined in resource
 		uiExe.setContext(HAPProcessorContext.process2(uiExe.getContext(), parentContext, new HAPConfigureContextProcessor(), contextProcessorEnv));
 
+		//process event defined in resoruce
+		Map<String, HAPContextEntity> eventsDef = uiExe.getUIUnitDefinition().getEventDefinitions();
+		for(String name : eventsDef.keySet()) {
+			HAPContextEntity processedEventDef = new HAPContextEntity();
+			eventsDef.get(name).cloneBasicTo(processedEventDef);
+			processedEventDef.setContext(HAPProcessorContextRelative.process(eventsDef.get(name).getContext(), uiExe.getContext(), null, contextProcessorEnv));
+			uiExe.addEventDefinition(name, processedEventDef);
+		}
+
+		//process command defined in resource
+		Map<String, HAPContextEntity> commandsDef = uiExe.getUIUnitDefinition().getCommandDefinition();
+		for(String name : commandsDef.keySet()) {
+			HAPContextEntity processedEventDef = new HAPContextEntity();
+			commandsDef.get(name).cloneBasicTo(processedEventDef);
+			processedEventDef.setContext(HAPProcessorContextRelative.process(commandsDef.get(name).getContext(), uiExe.getContext(), null, contextProcessorEnv));
+			uiExe.addEventDefinition(name, processedEventDef);
+		}
+		
+		
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : uiExe.getUITags()) {
 			processRelative(childTag, uiExe, uiTagMan, contextProcessorEnv);			

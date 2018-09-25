@@ -64,7 +64,9 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	public static final String EVENTS = "events";
 	@HAPAttribute
 	public static final String SERVICES = "services";
-	
+	@HAPAttribute
+	public static final String COMMANDS = "commands";
+
 	private HAPDefinitionUIUnit m_uiUnitDefinition;
 
 	protected HAPExecutableUIUnit m_parent;
@@ -97,6 +99,8 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	private Map<String, HAPContextEntity> m_eventsDefinition;
 	//service requirement definition
 	private Map<String, HAPContextEntity> m_servicesDefinition;
+	private Map<String, HAPContextEntity> m_commandsDefinition;
+	
 	
 	public HAPExecutableUIUnit(HAPDefinitionUIUnit uiUnitDefinition) {
 		this.m_uiUnitDefinition = uiUnitDefinition;
@@ -111,7 +115,8 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 		
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPContextEntity>();
 		this.m_servicesDefinition = new LinkedHashMap<String, HAPContextEntity>();
-		
+		this.m_commandsDefinition = new LinkedHashMap<String, HAPContextEntity>();
+
 		//build tag trees according to definition
 		for(HAPDefinitionUIUnitTag tag : uiUnitDefinition.getUITags()) {
 			HAPExecutableUIUnitTag exeTag = new HAPExecutableUIUnitTag(tag);
@@ -166,7 +171,10 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	public void addEventDefinition(String name, HAPContextEntity eventDef) {  this.m_eventsDefinition.put(name, eventDef);    }
 	
 	public Map<String, HAPContextEntity> getServiceDefinitions(){  return this.m_servicesDefinition;   }
-	
+
+	public void addCommandDefinition(HAPContextEntity commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
+	public Map<String, HAPContextEntity> getCommandDefinitions() {   return this.m_commandsDefinition;  }
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		this.buildMyJsonMap(jsonMap, typeJsonMap, HAPSerializationFormat.JSON);
@@ -223,6 +231,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	
 		jsonMap.put(EVENTS, HAPJsonUtility.buildJson(this.m_eventsDefinition, HAPSerializationFormat.JSON));
 		jsonMap.put(SERVICES, HAPJsonUtility.buildJson(this.m_servicesDefinition, HAPSerializationFormat.JSON));
+		jsonMap.put(COMMANDS, HAPJsonUtility.buildJson(this.m_commandsDefinition, HAPSerializationFormat.JSON));
 	}
 
 }

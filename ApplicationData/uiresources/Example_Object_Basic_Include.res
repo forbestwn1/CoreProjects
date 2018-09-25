@@ -15,12 +15,12 @@
 
 </body>
 
-	<script>
+	<scripts>
 	{
 	}
-	</script>
+	</scripts>
 	
-	<context>
+	<contexts>
 	{
 		public : {
 			index : {
@@ -39,16 +39,16 @@
 			}
 		}
 	}
-	</context>
+	</contexts>
 	
 		<!-- This part can be used to define expressions
 		-->
-	<expression>
+	<expressions>
 	{
 	}
-	</expression>
+	</expressions>
 	
-	<event>
+	<events>
 	[
 		{
 			name : "changeInputTextInclude",
@@ -59,7 +59,7 @@
 			},
 		}
 	]
-	</event>
+	</events>
 	
 </html>
 

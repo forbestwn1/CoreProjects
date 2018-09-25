@@ -60,7 +60,7 @@ public class HAPProcessorContextRelative {
 		HAPContextPath path = defContextElementRelative.getPath(); 
 		HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(path, parentContext, categaryes, mode);
 		
-		if(resolveInfo.rootNode==null) 
+		if(resolveInfo==null || resolveInfo.rootNode==null) 
 			throw new RuntimeException();
 
 		switch(resolveInfo.rootNode.getType()) {

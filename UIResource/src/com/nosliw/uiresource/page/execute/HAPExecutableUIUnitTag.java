@@ -36,12 +36,14 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 
 	private Map<String, String> m_eventMapping;
 	private Map<String, String> m_contextMapping;
+	private Map<String, String> m_commandMapping;
 	
 	public HAPExecutableUIUnitTag(HAPDefinitionUIUnitTag uiTagDefinition) {
 		super(uiTagDefinition);
 		this.m_tagEvent = new LinkedHashMap<String, HAPContextEntity>();
 		this.m_eventMapping = new LinkedHashMap<String, String>();
 		this.m_contextMapping = new LinkedHashMap<String, String>();
+		this.m_commandMapping = new LinkedHashMap<String, String>();
 	}
 
 	public HAPContextGroup getTagContext(){  return this.m_tagContext;   }
@@ -62,6 +64,7 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	
 	public void setEventMapping(Map<String, String> mapping) {  this.m_eventMapping.putAll(mapping);  }
 	public void setContextMapping(Map<String, String> mapping) {  this.m_contextMapping.putAll(mapping);  }
+	public void setCommandMapping(Map<String, String> mapping) {  this.m_commandMapping.putAll(mapping);  }
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
