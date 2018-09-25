@@ -352,11 +352,11 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		},
 
 		prv_callScriptFunctionDown : function(funName){
-			var find = this.findFunctionDown(funName);
+			var find = this.prv_findFunctionDown(funName);
 			return find.uiUnit.prv_callScriptFunction.apply(find.uiUnit, arguments);
 		},
 
-		findFunctionDown : function(funName){
+		prv_findFunctionDown : function(funName){
 			var fun = loc_scriptObject[funName];
 			if(fun!=undefined){
 				return {
@@ -473,7 +473,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		registerEventListener : function(handler, thisContext){	return loc_eventSource.registerListener(undefined, undefined, handler, thisContext); },
 
 		command : function(command, data, requestInfo){			return this.prv_callScriptFunctionDown("command_"+command, data, requestInfo);		},
-		
+		findFunctionDown : function(funName){  return this.prv_findFunctionDown(funName);  }
 	};
 
 	

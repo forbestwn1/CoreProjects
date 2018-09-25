@@ -38,10 +38,6 @@
 				return loc_resourceView.getViews();
 			},
 			
-			postInit : function(){	},
-
-			preInit : function(){	},
-			
 			destroy : function(){	
 				loc_resourceView.detachViews();
 				loc_resourceView.destroy();

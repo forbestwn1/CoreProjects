@@ -64,14 +64,6 @@
 			postInit : function(requestInfo){
 				loc_updateView(requestInfo);
 			},
-
-			processAttribute : function(name, value){},
-
-			handleDataEvent : function(name, event, path, data, requestInfo){	
-			
-			destroy : function(){	
-			},
-			
 		};
 		return loc_out;
 	}

@@ -72,8 +72,6 @@
 
 		var loc_out = 
 		{
-			preInit : function(){	},
-				
 			initViews : function(requestInfo){	
 				loc_view = $('<input type="text"/>');	
 				return loc_view;
@@ -87,8 +85,6 @@
 					loc_updateView(request);
 				}, this);
 			},
-
-			processAttribute : function(name, value){},
 
 			destroy : function(){	
 				loc_dataVariable.release();	
