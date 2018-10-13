@@ -1,0 +1,177 @@
+{
+	"name": "expression",
+	"description": "task with expression step",
+	"context" : {
+	
+	},
+	"task": [
+		{
+			"name": "main",
+			"context" : {
+				"public" : {
+					baseVar : {
+						definition : "",
+						default : {
+							dataTypeId: "test.string",
+							value: "This is my world!"
+						}
+					},
+					fromVar : {
+						definition : "",
+						default : {
+							dataTypeId: "test.integer",
+							value: 3
+						}
+					},
+					toVar : {
+						definition : "",
+						default : {
+							dataTypeId: "test.integer",
+							value: 7
+						}
+					}
+				}
+			
+			},
+			"step": [
+				{
+					"name" : "callTask",
+					"type" : "task",
+					"taskName" : "referenced",
+					"inMapping" : {
+						"baseVar1" : {
+							"path" : "baseVar"
+						},
+						"fromVar1" : {
+							"value" : {
+							
+							}
+						},
+						"toVar1" : ""
+					},
+					"outMapping" : {
+						"success" : "success",
+						"fail" : "fail"
+					},
+					"result" : {
+						"success" : {
+							"next" : "exit",
+							"export"{
+								"error.code" : "errorCode",
+								"error.data" : "errorData"
+							}   
+						},
+						"fail" : {
+							"next" : "fail",
+							"export"{
+								"error.code" : "errorCode",
+								"error.data" : "errorData"
+							}   
+						}
+					}
+				},
+				{
+					"name" : "",
+					"type" : "expression",
+					"expression": "!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)",
+					"result" : {
+						"success" : {
+							"next" : "exit",
+							"output" : "expressionResult"  
+						},
+						"fail" : {
+							"next" : "fail",
+							"output" : "errorInfo"
+						}
+					}
+				},
+				{
+					"name" : "exit",
+					"type" : "exit",
+					"result" : {
+						name : "success",
+						output : {
+							"result" : "expressionResult"
+						}
+					},
+				},
+				{
+					"name" : "fail",
+					"type" : "exit",
+					"result" : {
+						name : "fail",
+						output : {
+							"result" : ""
+						}
+					},
+				},
+			],
+		},
+		{
+			"name": "referenced",
+			"context" : {
+				"public" : {
+					baseVar1 : {
+						definition : "",
+						default : {
+							dataTypeId: "test.string",
+							value: "This is my world!"
+						}
+					},
+					fromVar1 : {
+						definition : "",
+						default : {
+							dataTypeId: "test.integer",
+							value: 3
+						}
+					},
+					toVar1 : {
+						definition : "",
+						default : {
+							dataTypeId: "test.integer",
+							value: 7
+						}
+					}
+				}
+			
+			},
+			"step": [
+				{
+					"name" : "",
+					"type" : "expression",
+					"expression": "!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)",
+					"result" : {
+						"success" : {
+							"next" : "exit",
+							"output" : "expressionResult"  
+						},
+						"fail" : {
+							"next" : "fail",
+							"output" : "errorInfo"
+						}
+					}
+				},
+				{
+					"name" : "exit",
+					"type" : "exit",
+					"result" : {
+						name : "success",
+						output : {
+							"result" : "expressionResult"
+						}
+					},
+				},
+				{
+					"name" : "fail",
+					"type" : "exit",
+					"result" : {
+						name : "fail",
+						output : {
+							"result" : ""
+						}
+					},
+				},
+			],
+		},
+	],
+}

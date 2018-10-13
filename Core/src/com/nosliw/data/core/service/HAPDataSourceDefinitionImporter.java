@@ -16,7 +16,6 @@ import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPDataSourceDefinitionImporter {
 
-	
 	public static List<HAPDefinitionService> loadDataSourceDefinition() {
 		List<HAPDefinitionService> out = new ArrayList<HAPDefinitionService>();
 		new HAPClassFilter(){
@@ -24,28 +23,6 @@ public class HAPDataSourceDefinitionImporter {
 			protected void process(Class cls, Object data) {
 				HAPDefinitionService dataSourceDef = loadDataSourceDefinition(cls);
 				if(dataSourceDef!=null)		out.add(dataSourceDef);
-//				try {
-//					Path path = HAPFileUtility.getClassFolderPath(cls);
-//					Stream<Path> stream = Files.list(path);
-//					Iterator<Path> it = stream.iterator();
-//					while(it.hasNext()) {
-//						try {
-//							Path filePath = it.next();
-//							if(filePath.toUri().toString().endsWith(".ds")) {
-//								String defContent = HAPFileUtility.readFile(Files.newInputStream(filePath));
-//								HAPDefinition dataSourceDef = new HAPDefinition();
-//								dataSourceDef.buildObjectByJson(new JSONObject(defContent));
-//								out.add(dataSourceDef);
-//							}
-//						}
-//						catch(Exception e) {
-//							e.printStackTrace();
-//						}
-//					}
-//				}
-//				catch(Exception e) {
-//					e.printStackTrace();
-//				}
 			}
 
 			@Override
@@ -66,7 +43,7 @@ public class HAPDataSourceDefinitionImporter {
 	private static HAPDefinitionService loadDataSourceDefinition(Class cls){
 		HAPDefinitionService out = null;
 		try{
-			InputStream inputStream = cls.getResourceAsStream("datasource.ds");
+			InputStream inputStream = cls.getResourceAsStream("service.ds");
 			if(inputStream!=null) {
 				String content = HAPFileUtility.readFile(inputStream);
 				out = new HAPDefinitionService();

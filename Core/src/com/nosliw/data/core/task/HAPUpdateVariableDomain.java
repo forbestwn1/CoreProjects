@@ -1,9 +1,8 @@
 package com.nosliw.data.core.task;
 
-import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 
-public class HAPUpdateVariableDomain implements HAPUpdateName{
+public class HAPUpdateVariableDomain implements HAPUpdateVariable{
 
 	private String m_domain;
 	
@@ -12,7 +11,7 @@ public class HAPUpdateVariableDomain implements HAPUpdateName{
 	}
 	
 	@Override
-	public String getUpdatedName(String varName) {
+	public String getUpdatedVariable(String varName) {
 		return HAPExpressionUtility.buildFullVariableName(this.m_domain, varName);
 	}
 

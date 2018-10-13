@@ -6,6 +6,6 @@ import com.nosliw.data.core.HAPData;
 
 public interface HAPExecutableService {
 
-	Map<String, HAPData> execute(Map<String, HAPData> parms);
+	HAPResultService execute(Map<String, HAPData> parms);
 	
 }

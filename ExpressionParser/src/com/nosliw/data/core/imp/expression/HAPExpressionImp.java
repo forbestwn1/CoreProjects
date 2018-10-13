@@ -23,9 +23,9 @@ import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
-import com.nosliw.data.core.task.HAPDefinitionTask;
-import com.nosliw.data.core.task.expression.HAPExpressionTaskUtility;
-import com.nosliw.data.core.task.expression.HAPReferenceInfo;
+import com.nosliw.data.core.task111.HAPDefinitionTask;
+import com.nosliw.data.core.task111.expression.HAPExpressionTaskUtility;
+import com.nosliw.data.core.task111.expression.HAPReferenceInfo;
 
 /**
  * Parsed expression 

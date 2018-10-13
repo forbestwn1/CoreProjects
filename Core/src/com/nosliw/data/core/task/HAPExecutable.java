@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPVariableInfo;
@@ -18,7 +17,7 @@ public interface HAPExecutable {
 	HAPDataTypeCriteria getOutput();
 	
 	//update variable in executable
-	void updateVariable(HAPUpdateName updateVar);
+	void updateVariable(HAPUpdateVariable updateVar);
 
 	//discover : 
 	//  1. update variable info

@@ -3,7 +3,6 @@
 <body>
 
 		<nosliw-include source="Example_Include_simple" context="" event="changeInputTextIncludeBasic=changeInputTextIncludeBasicMapped"/> 
-		
 
 	<br>
 	Content:<%=?(business.a.aa)?.value + '   6666 ' %>
@@ -36,7 +35,7 @@
 			<br>
 			TextInput:<nosliw-textinput data="ele"/> 
 			<br>
-			<script>
+			<scripts>
 			{
 				deleteElementInLoop : function(data, info){
 					event.preventDefault();
@@ -77,14 +76,14 @@
 */					
 				}
 			}
-			</script>
+			</scripts>
 			
 		</nosliw-loop>
   
 
 </body>
 
-	<script>
+	<scripts>
 	{
 		newElementInLoop : function(data, info, env){
 
@@ -113,16 +112,16 @@
 			env.trigueEvent("changeInputText", info.eventData);
 		},
 		
-			command_Start(data, env){
-			alert(JSON.stringify(data));
+		command_Start :function(data, env){
+			return data.data + "   Start";
 		},
 	}
-	</script>
+	</scripts>
 	
 		<!-- This part can be used to define context (variable)
 				it describle data type criteria for each context element and its default value
 		-->
-	<context>
+	<contexts>
 	{
 		public : {
 			business : {
@@ -195,16 +194,16 @@
 			},
 		}
 	}
-	</context>
+	</contexts>
 	
 		<!-- This part can be used to define expressions
 		-->
-	<expression>
+	<expressions>
 	{
 	}
-	</expression>
+	</expressions>
 	
-	<event>
+	<events>
 	[
 		{
 			name : "changeInputText",
@@ -215,8 +214,19 @@
 			},
 		}
 	]
-	</event>
-
+	</events>
 	
-</html>
+	<commands>
+	[
+		{
+			name : "Start",
+			parms : {
+				data : {
+					path: "business.a.aa"
+				}
+			},
+		}
+	]
+	</commands>
 
+</html>

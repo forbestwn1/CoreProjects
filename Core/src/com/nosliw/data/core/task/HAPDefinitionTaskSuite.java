@@ -1,64 +1,39 @@
 package com.nosliw.data.core.task;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.data.core.script.context.HAPContextGroup;
 
-/**
- * A group of expression definitions 
- */
-@HAPEntityWithAttribute
-public class HAPDefinitionTaskSuite extends HAPDefinitionComponent {
+//application that contains multiple tasks
+public class HAPDefinitionTaskSuite extends HAPSerializableImp{
 
-	HAPManagerTask m_taskManager;
-	
 	@HAPAttribute
-	public static String TASKS = "tasks";
+	public static String NAME = "name";
 
-	//tasks
-	private Map<String, HAPDefinitionTask> m_tasks;
+	@HAPAttribute
+	public static String DESCRIPTION = "description";
+
+	@HAPAttribute
+	public static String DATACONTEXT = "context";
+
+	@HAPAttribute
+	public static String TASK = "task";
+
+	private String m_name;
 	
-	public HAPDefinitionTaskSuite(HAPManagerTask taskManager){
-		this.m_tasks = new LinkedHashMap<String, HAPDefinitionTask>();
-		this.m_taskManager = taskManager;
+	private String m_description;
+	
+	//data context, variable definition(absolute, relative), constants
+	private HAPContextGroup m_dataContext;
+
+	private List<HAPDefinitionTask> m_tasks;
+	
+	private HAPManagerTask m_taskMan;
+	
+	public HAPDefinitionTaskSuite(HAPManagerTask taskManager) {
+		this.m_taskMan = taskManager;
 	}
 	
-	public HAPDefinitionTask getTask(String name){  return this.m_tasks.get(name); }
-
-	//get all expression definitions in suite
-	public Map<String, HAPDefinitionTask> getAllTasks(){  return this.m_tasks;  }
-
-	
-	//configuration for suite
-	public Map<String, String> getConfigure(){  return null;  }
-
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		super.buildObjectByJson(json);
-		try{
-			JSONObject jsonObj = (JSONObject)json;
-			{
-				JSONArray tasksArray = jsonObj.optJSONArray(TASKS);
-				for(int i=0; i<tasksArray.length(); i++){
-					HAPDefinitionTask task = HAPTaskUtility.buildTask(tasksArray.get(i), m_taskManager); 
-					this.m_tasks.put(task.getName(), task);
-				}
-			}
-			return true;  
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		super.buildJsonMap(jsonMap, typeJsonMap);
-	}
 }

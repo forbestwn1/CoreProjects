@@ -6,9 +6,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
-import com.nosliw.data.core.task.HAPLogTask;
-import com.nosliw.data.core.task.HAPManagerTask;
+import com.nosliw.data.core.task111.HAPDefinitionTaskSuite;
+import com.nosliw.data.core.task111.HAPLogTask;
+import com.nosliw.data.core.task111.HAPManagerTask;
 
 public class HAPDataSourceFactoryTask implements HAPDataSourceFactory{
 

@@ -5,7 +5,7 @@ import com.nosliw.data.core.datasource.HAPDefinition;
 import com.nosliw.data.core.datasource.HAPDataSourceDefinitionManager;
 import com.nosliw.data.core.datasource.HAPDataSourceFactory;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.task.HAPManagerTask;
+import com.nosliw.data.core.task111.HAPManagerTask;
 
 public class HAPDataSourceFactorySecondHand implements HAPDataSourceFactory{
 

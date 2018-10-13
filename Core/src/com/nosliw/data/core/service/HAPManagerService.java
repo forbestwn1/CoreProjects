@@ -35,7 +35,7 @@ public class HAPManagerService {
 		this.m_serviceFactorys.put(name, serviceFactory);
 	}
 	
-	public Map<String, HAPData> execute(String serviceId, Map<String, HAPData> parms){
+	public HAPResultService execute(String serviceId, Map<String, HAPData> parms){
 		HAPInstanceService serviceInstance = this.m_serviceInstances.get(serviceId);
 		if(serviceInstance==null){
 			try{
@@ -59,10 +59,10 @@ public class HAPManagerService {
 			if(serviceInstance!=null)   this.registerDataSource(serviceId, serviceInstance);
 		}
 		
-		Map<String, HAPData> out = null;
+		HAPResultService out = null;
 		if(serviceInstance!=null) {
 			Map<String, HAPData> dataSourceParms = new LinkedHashMap<String, HAPData>();
-			Map<String, HAPDefinitionServiceParm> parmsDef = serviceInstance.getDefinition().getServiceInfo().getParms();
+			Map<String, HAPDefinitionServiceParm> parmsDef = serviceInstance.getDefinition().getServiceInfo().getInterface().getParms();
 			for(String parmName : parmsDef.keySet()) {
 				HAPData parmData = parms.get(parmName);
 				if(parmData==null) parmData = parmsDef.get(parmName).getDefault();   //not provide, use default 

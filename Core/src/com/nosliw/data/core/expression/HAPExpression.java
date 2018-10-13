@@ -7,8 +7,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
-import com.nosliw.data.core.task.HAPDefinitionTask;
-import com.nosliw.data.core.task.HAPExecutable;
+import com.nosliw.data.core.task111.HAPDefinitionTask;
+import com.nosliw.data.core.task111.HAPExecutable;
 
 /**
  * Expression object we get after processing HAPExpressionDefinition
