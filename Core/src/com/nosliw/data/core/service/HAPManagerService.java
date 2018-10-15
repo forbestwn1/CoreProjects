@@ -3,16 +3,12 @@ package com.nosliw.data.core.service;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.HAPData;
 
 @HAPEntityWithAttribute
 public class HAPManagerService {
 
-	@HAPAttribute
-	public static final String GATEWAY_DATASOURCE = "dataSource";
-	
 	private Map<String, HAPFactoryService> m_serviceFactorys;
 	
 	private HAPManagerServiceDefinition m_serviceDefinitionManager;
@@ -42,7 +38,7 @@ public class HAPManagerService {
 				//not exists, then create one using factory
 				HAPDefinitionService serviceDef = this.m_serviceDefinitionManager.getDefinition(serviceId);
 				HAPExecutableService serviceExe;
-				String imp = serviceDef.getImplementation();
+				String imp = serviceDef.getRuntimeInfo().getImplementation();
 				if(imp.contains(".")){
 					//it is class name
 					serviceExe = (HAPExecutableService)Class.forName(imp).newInstance();

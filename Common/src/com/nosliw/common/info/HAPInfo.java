@@ -15,5 +15,6 @@ public interface HAPInfo extends HAPSerializable{
 	void setValue(String name, Object value);
 
 	Set<String> getNames();
-	
+
+	HAPInfo cloneInfo();
 }

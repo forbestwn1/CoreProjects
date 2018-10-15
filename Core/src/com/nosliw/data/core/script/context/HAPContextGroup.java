@@ -125,7 +125,7 @@ public class HAPContextGroup extends HAPSerializableImp{
 	}
 	
 	public void cloneTo(HAPContextGroup out) {
-		out.m_info = this.m_info.clone();
+		out.m_info = this.m_info.cloneInfo();
 		for(String categary : this.m_contexts.keySet()) {
 			HAPContext context = this.m_contexts.get(categary);
 			for(String name : context.getElements().keySet()) {

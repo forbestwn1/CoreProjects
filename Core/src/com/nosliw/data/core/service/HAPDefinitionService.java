@@ -13,37 +13,29 @@ public class HAPDefinitionService extends HAPSerializableImp{
 	public static String INFO = "info";
 
 	@HAPAttribute
-	public static String IMPLEMENTATION = "implementation";
-	
-	@HAPAttribute
-	public static String CONFIGURE = "configure";
-	
+	public static String RUNTIME = "runtime";
+
 	private HAPDefinitionServiceInfo m_serviceInfo;
 	
-	//the implementation information for this service(name, class name)
-	private String m_implementation;
-	
-	//configure 
-	private Object m_configure;
-
-	public HAPDefinitionServiceInfo getServiceInfo() {   return this.m_serviceInfo;   }
-	
-	public String getImplementation(){  return this.m_implementation;   }
-	
-	public Object getConfigure(){  return this.m_configure;   }
+	private HAPDefinitionServiceRuntime m_runtimeInfo;
 
 	public HAPDefinitionService(){
 	}
+	
+	public HAPDefinitionServiceInfo getServiceInfo() {   return this.m_serviceInfo;   }
+	
+	public HAPDefinitionServiceRuntime getRuntimeInfo() {  return this.m_runtimeInfo;  }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{
 			JSONObject objJson = (JSONObject)json;
 			this.m_serviceInfo = new HAPDefinitionServiceInfo();
-			this.m_serviceInfo.buildObjectByJson(objJson);
+			this.m_serviceInfo.buildObjectByJson(objJson.optJSONObject(INFO));
 			
-			this.m_implementation = (String)objJson.opt(IMPLEMENTATION);
-			this.m_configure = objJson.opt(CONFIGURE);
+			this.m_runtimeInfo = new HAPDefinitionServiceRuntime();
+			this.m_runtimeInfo.buildObjectByJson(objJson.optJSONObject(RUNTIME));
+
 		}
 		catch(Exception e){
 			e.printStackTrace();

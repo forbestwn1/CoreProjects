@@ -21,6 +21,7 @@ import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
+import com.nosliw.data.core.service.HAPDefinitionServiceInfo;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
 import com.nosliw.uiresource.page.definition.HAPElementEvent;
@@ -97,10 +98,10 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 
 	//event definition 
 	private Map<String, HAPContextEntity> m_eventsDefinition;
-	//service requirement definition
-	private Map<String, HAPContextEntity> m_servicesDefinition;
 	private Map<String, HAPContextEntity> m_commandsDefinition;
 	
+	//service requirement definition
+	private Map<String, HAPDefinitionServiceInfo> m_servicesDefinition;
 	
 	public HAPExecutableUIUnit(HAPDefinitionUIUnit uiUnitDefinition) {
 		this.m_uiUnitDefinition = uiUnitDefinition;
@@ -114,9 +115,10 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 		this.m_constants = new LinkedHashMap<String, Object>();
 		
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPContextEntity>();
-		this.m_servicesDefinition = new LinkedHashMap<String, HAPContextEntity>();
 		this.m_commandsDefinition = new LinkedHashMap<String, HAPContextEntity>();
 
+		this.m_servicesDefinition = new LinkedHashMap<String, HAPDefinitionServiceInfo>();
+		
 		//build tag trees according to definition
 		for(HAPDefinitionUIUnitTag tag : uiUnitDefinition.getUITags()) {
 			HAPExecutableUIUnitTag exeTag = new HAPExecutableUIUnitTag(tag);
@@ -170,7 +172,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	public HAPContextEntity getEventDefinition(String name) {   return this.m_eventsDefinition.get(name);  }
 	public void addEventDefinition(String name, HAPContextEntity eventDef) {  this.m_eventsDefinition.put(name, eventDef);    }
 	
-	public Map<String, HAPContextEntity> getServiceDefinitions(){  return this.m_servicesDefinition;   }
+	public Map<String, HAPDefinitionServiceInfo> getServiceDefinitions(){  return this.m_servicesDefinition;   }
 
 	public void addCommandDefinition(HAPContextEntity commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
 	public Map<String, HAPContextEntity> getCommandDefinitions() {   return this.m_commandsDefinition;  }
@@ -230,8 +232,9 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_constants, HAPSerializationFormat.JSON));
 	
 		jsonMap.put(EVENTS, HAPJsonUtility.buildJson(this.m_eventsDefinition, HAPSerializationFormat.JSON));
-		jsonMap.put(SERVICES, HAPJsonUtility.buildJson(this.m_servicesDefinition, HAPSerializationFormat.JSON));
 		jsonMap.put(COMMANDS, HAPJsonUtility.buildJson(this.m_commandsDefinition, HAPSerializationFormat.JSON));
+
+		jsonMap.put(SERVICES, HAPJsonUtility.buildJson(this.m_servicesDefinition, HAPSerializationFormat.JSON));
 	}
 
 }

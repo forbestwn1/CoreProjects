@@ -23,8 +23,6 @@ public interface HAPRuntimeEnvironment {
 
 	HAPGatewayManager getGatewayManager();
 
-	HAPDataSourceManager getDataSourceManager();
-
 	HAPManagerService getServiceManager();
 	
 	HAPRuntime getRuntime();

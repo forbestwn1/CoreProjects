@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
@@ -13,24 +14,24 @@ public abstract class HAPContextNodeRootVariable extends HAPContextNode implemen
 	@HAPAttribute
 	public static final String DEFAULT = "default";
 
-	private HAPContextNodeRootInfo m_info;
+	private HAPEntityInfo m_info;
 	
 	//default value for the root, used in runtime when no value is set
 	private Object m_defaultValue;
 
 	public HAPContextNodeRootVariable() {
-		this.m_info = new HAPContextNodeRootInfo();
+		this.m_info = new HAPEntityInfo();
 	}
 	
 	@Override
-	public HAPContextNodeRootInfo getInfo() {	return this.m_info; 	}
+	public HAPEntityInfo getInfo() {	return this.m_info; 	}
 	
 	public void setDefaultValue(Object defaultValue){		this.m_defaultValue = defaultValue;	}
 
 	public Object getDefaultValue(){   return this.m_defaultValue;  }
 
 	protected void toSolidContextNode(HAPContextNodeRootVariable solidRootNode, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
-		solidRootNode.m_info = this.m_info.toSolidContextNode(constants, contextProcessorEnv);
+		solidRootNode.m_info = HAPUtilityContext.toSolidEntityInfo(this.m_info, constants, contextProcessorEnv);
 		solidRootNode.m_defaultValue = this.m_defaultValue;
 		HAPProcessorContextSolidate.buildSolidContextNode(this, solidRootNode, constants, contextProcessorEnv);
 	}

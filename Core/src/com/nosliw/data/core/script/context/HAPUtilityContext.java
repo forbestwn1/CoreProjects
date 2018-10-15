@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -15,6 +16,14 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPUtilityContext {
+
+	public static HAPEntityInfo toSolidEntityInfo(HAPEntityInfo input, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
+		HAPEntityInfo out = new HAPEntityInfo();
+		out.setName(input.getName());
+		out.setDescription(input.getDescription());
+		out.setInfo(input.getInfo().cloneInfo());
+		return out;
+	}
 
 	public static void processEscalate(HAPContextGroup contextGroup, Set<String> categarys, Map<String, String> cm) {
 		for(String categary : categarys) {

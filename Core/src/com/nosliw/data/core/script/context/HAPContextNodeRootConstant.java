@@ -3,6 +3,7 @@ package com.nosliw.data.core.script.context;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
@@ -15,14 +16,14 @@ public class HAPContextNodeRootConstant extends HAPSerializableImp implements HA
 
 	private Object m_value;
 	
-	private HAPContextNodeRootInfo m_info;
+	private HAPEntityInfo m_info;
 	
 	public HAPContextNodeRootConstant() {
-		this.m_info = new HAPContextNodeRootInfo();
+		this.m_info = new HAPEntityInfo();
 	}
 
 	public HAPContextNodeRootConstant(Object value) {
-		this.m_info = new HAPContextNodeRootInfo();
+		this.m_info = new HAPEntityInfo();
 		this.m_value = value;
 	}
 	
@@ -30,7 +31,7 @@ public class HAPContextNodeRootConstant extends HAPSerializableImp implements HA
 	public String getType() {		return HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT;	}
 
 	@Override
-	public HAPContextNodeRootInfo getInfo() {	return this.m_info; 	}
+	public HAPEntityInfo getInfo() {	return this.m_info; 	}
 	
 	public void setValue(Object value){		this.m_value = value;	}
 
@@ -52,7 +53,7 @@ public class HAPContextNodeRootConstant extends HAPSerializableImp implements HA
 	public HAPContextNodeRoot toSolidContextNodeRoot(Map<String, Object> constants,
 			HAPEnvContextProcessor contextProcessorEnv) {
 		HAPContextNodeRootConstant out = new HAPContextNodeRootConstant();
-		out.m_info = this.m_info.toSolidContextNode(constants, contextProcessorEnv);
+		out.m_info = HAPUtilityContext.toSolidEntityInfo(this.m_info, constants, contextProcessorEnv);
 		out.m_value = this.m_value;
 		return out;
 	}

@@ -56,13 +56,9 @@ public class HAPContextParser {
 			//constant
 			out = new HAPContextNodeRootConstant(eleDefJson.opt(HAPContextNodeRootConstant.VALUE));   
 		}
-		String name = (String)eleDefJson.opt(HAPContextNodeRootInfo.DISPLAYNAME);
-		out.getInfo().setDisplayName(name);
-		String description = (String)eleDefJson.opt(HAPContextNodeRootInfo.DESCRIPTION);
-		out.getInfo().setDescription(description);
-		out.getInfo().buildObject(eleDefJson.opt(HAPContextNodeRoot.INFO), HAPSerializationFormat.JSON);
 		
-
+		out.getInfo().buildObject(eleDefJson, HAPSerializationFormat.JSON);
+		
 		//definition
 		
 		return out;

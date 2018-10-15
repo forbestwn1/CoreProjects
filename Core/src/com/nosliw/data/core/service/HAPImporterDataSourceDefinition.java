@@ -1,12 +1,8 @@
 package com.nosliw.data.core.service;
 
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.json.JSONObject;
 
@@ -14,7 +10,7 @@ import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 
-public class HAPDataSourceDefinitionImporter {
+public class HAPImporterDataSourceDefinition {
 
 	public static List<HAPDefinitionService> loadDataSourceDefinition() {
 		List<HAPDefinitionService> out = new ArrayList<HAPDefinitionService>();

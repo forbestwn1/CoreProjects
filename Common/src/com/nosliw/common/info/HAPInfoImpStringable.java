@@ -15,4 +15,6 @@ public class HAPInfoImpStringable extends HAPStringableValueEntity implements HA
 	@Override
 	public Set<String> getNames() {  return this.getProperties(); }
 
+	@Override
+	public HAPInfo cloneInfo() { return (HAPInfo)this.clone();	}
 }

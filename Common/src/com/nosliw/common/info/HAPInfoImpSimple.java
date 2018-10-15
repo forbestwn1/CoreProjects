@@ -59,7 +59,8 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 		return true;
 	}
 	
-	public HAPInfoImpSimple clone() {
+	@Override
+	public HAPInfoImpSimple cloneInfo() {
 		HAPInfoImpSimple out = new HAPInfoImpSimple();
 		out.m_values.putAll(this.m_values);
 		return out;

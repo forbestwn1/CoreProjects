@@ -11,7 +11,7 @@ public class HAPManagerServiceDefinition {
 	
 	public HAPManagerServiceDefinition(){
 		this.m_definitions = new LinkedHashMap<String, HAPDefinitionService>();
-		List<HAPDefinitionService> defs = HAPDataSourceDefinitionImporter.loadDataSourceDefinition();
+		List<HAPDefinitionService> defs = HAPImporterDataSourceDefinition.loadDataSourceDefinition();
 		for(HAPDefinitionService def : defs) {
 			this.registerDefinition(def);
 		}

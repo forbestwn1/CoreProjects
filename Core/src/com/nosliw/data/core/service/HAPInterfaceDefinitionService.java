@@ -12,42 +12,41 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionServiceInterface extends HAPSerializableImp{
+public class HAPInterfaceDefinitionService extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String PARM = "parm";
 	
 	@HAPAttribute
-	public static String OUTPUT = "output";
+	public static String RESULT = "result";
 	
 	//service input parms
 	private Map<String, HAPDefinitionServiceParm> m_parms;
 	
 	//service output
-	private Map<String, HAPDefinitionServiceOutput> m_output;
+	private Map<String, HAPDefinitionServiceResult> m_result;
 	
 
-	public HAPDefinitionServiceInterface() {
+	public HAPInterfaceDefinitionService() {
 		this.m_parms = new LinkedHashMap<String, HAPDefinitionServiceParm>();
-		this.m_output = new LinkedHashMap<String, HAPDefinitionServiceOutput>();
+		this.m_result = new LinkedHashMap<String, HAPDefinitionServiceResult>();
 	}
 
 	public Map<String, HAPDefinitionServiceParm> getParms(){  return this.m_parms;   }
 	
-	public Map<String, HAPDefinitionServiceOutput> getOutput(){ return this.m_output;  }
+	public Map<String, HAPDefinitionServiceResult> getOutput(){ return this.m_result;  }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{
 			JSONObject objJson = (JSONObject)json;
 			
-			JSONArray outputArray = objJson.getJSONArray(OUTPUT);
-			for(int i = 0; i<outputArray.length(); i++){
-				HAPDefinitionServiceOutput outputEle = new HAPDefinitionServiceOutput();
-				outputEle.buildObject(outputArray.get(i), HAPSerializationFormat.JSON);
-				this.m_output.put(outputEle.getName(), outputEle);
+			JSONArray resultArray = objJson.getJSONArray(RESULT);
+			for(int i = 0; i<resultArray.length(); i++){
+				HAPDefinitionServiceResult resultEle = new HAPDefinitionServiceResult();
+				resultEle.buildObject(resultArray.get(i), HAPSerializationFormat.JSON);
+				this.m_result.put(resultEle.getName(), resultEle);
 			}
-			
 			
 			JSONArray parmsArray = objJson.getJSONArray(PARM);
 			for(int i = 0; i<parmsArray.length(); i++){

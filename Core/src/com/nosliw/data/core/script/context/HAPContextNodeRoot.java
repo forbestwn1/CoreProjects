@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializable;
 
 /**
@@ -25,7 +26,7 @@ public interface HAPContextNodeRoot extends HAPSerializable{
 	
 	String getType();
 	
-	HAPContextNodeRootInfo getInfo();
+	HAPEntityInfo getInfo();
 	
 	HAPContextNodeRoot toSolidContextNodeRoot(Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv);
 
