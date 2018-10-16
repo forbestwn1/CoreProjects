@@ -6,6 +6,8 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -16,20 +18,29 @@ public class HAPContext extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ELEMENTS = "elements";
+
+	@HAPAttribute
+	public static final String INFO = "info";
 	
 	private Map<String, HAPContextNodeRoot> m_elements;
+	
+	private HAPInfo m_info;
 	
 	public HAPContext(){
 		this.empty();
 	}
 	
-	public void empty() {this.m_elements = new LinkedHashMap<String, HAPContextNodeRoot>();}
+	public void empty() {
+		this.m_elements = new LinkedHashMap<String, HAPContextNodeRoot>();
+		this.m_info = new HAPInfoImpSimple();
+	}
 	
-	public void addElement(String name, HAPContextNodeRoot rootEle){	this.m_elements.put(name, rootEle);	}
-
+	public HAPInfo getInfo() {   return this.m_info;   }
+	
 	public Set<String> getElementNames(){  return this.m_elements.keySet();   }
 	public Map<String, HAPContextNodeRoot> getElements(){  return this.m_elements;  }
 	public HAPContextNodeRoot getElement(String name) {  return this.m_elements.get(name);   }
+	public void addElement(String name, HAPContextNodeRoot rootEle){	this.m_elements.put(name, rootEle);	}
 	
 	public void hardMergeWith(HAPContext context){
 		Map<String, HAPContextNodeRoot> eles = context.getElements();
@@ -117,5 +128,6 @@ public class HAPContext extends HAPSerializableImp{
 		for(String rootName : this.m_elements.keySet()){
 			jsonMap.put(rootName, this.m_elements.get(rootName).toStringValue(HAPSerializationFormat.JSON));
 		}
+		
 	}
 }

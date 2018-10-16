@@ -4,7 +4,9 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
@@ -32,6 +34,8 @@ public class HAPContextNodeRootConstant extends HAPSerializableImp implements HA
 
 	@Override
 	public HAPEntityInfo getInfo() {	return this.m_info; 	}
+
+	public void setInfo(HAPEntityInfo info) {  this.m_info = info;   }
 	
 	public void setValue(Object value){		this.m_value = value;	}
 
@@ -64,6 +68,7 @@ public class HAPContextNodeRootConstant extends HAPSerializableImp implements HA
 		jsonMap.put(TYPE, this.getType());
 		jsonMap.put(VALUE, this.m_value.toString());
 		typeJsonMap.put(VALUE, this.m_value.getClass());
+		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_info, HAPSerializationFormat.JSON));
 	}
 
 	@Override

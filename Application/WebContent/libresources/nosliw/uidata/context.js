@@ -60,6 +60,11 @@ var node_createContext = function(elementInfosArray, request){
 		
 		//not found, use variable from elements
 		if(parentVar==undefined){
+			if(loc_out.prv_elements[contextVariableInfo.name]==undefined){
+				var kkkkk = 5555;
+				kkkkk++;
+			}
+			
 			parentVar = loc_out.prv_elements[contextVariableInfo.name].variable;
 			varPath = contextVariableInfo.path;
 		}

@@ -175,6 +175,7 @@ public class HAPUtilityContext {
 			HAPContextNodeRootRelative relativeEle = new HAPContextNodeRootRelative();
 			relativeEle.setPath(contextCategary, eleName);
 			parentVarNode.toContextNode(relativeEle);
+			relativeEle.setInfo(parentVarNode.getInfo().clone());
 			if(parentVarNode.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE) && ((HAPContextNodeRootRelative)parentVarNode).isProcessed())	relativeEle.processed();
 			out = relativeEle;
 		}

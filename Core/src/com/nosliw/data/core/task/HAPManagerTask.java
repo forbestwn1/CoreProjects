@@ -33,40 +33,40 @@ public class HAPManagerTask {
 	}
 	
 	
-	public HAPExecutableTask compileTask(
-			String taskName, 
-			HAPDefinitionTaskSuite taskSuite,
-			Map<String, String> configure,
-			HAPProcessContext context) {
-
-		
-		HAPExecutableTask task = processTask(taskDefinition, null, null, contextTaskDefinitions, contextConstants, context);
-		task.setId(id);
-		
-		Map<String, HAPVariableInfo> variableInfos = parentVariablesInfo;
-		if(variableInfos==null) 	variableInfos = new LinkedHashMap<String, HAPVariableInfo>();
-		task.discoverVariable(variableInfos, expectOutput, context);
-		
-		return task;
-	}
-	
-	public HAPExecutableTask compileTask(
-			String id,
-			HAPDefinitionTask taskDefinition, 
-			Map<String, HAPDefinitionTask> contextTaskDefinitions,
-			HAPContextGroup suiteContext,
-			Map<String, String> configure,
-			HAPProcessContext context) {
-
-		
-		HAPExecutableTask task = processTask(taskDefinition, null, null, contextTaskDefinitions, contextConstants, context);
-		task.setId(id);
-		
-		Map<String, HAPVariableInfo> variableInfos = parentVariablesInfo;
-		if(variableInfos==null) 	variableInfos = new LinkedHashMap<String, HAPVariableInfo>();
-		task.discoverVariable(variableInfos, expectOutput, context);
-		
-		return task;
-	}
+//	public HAPExecutableTask compileTask(
+//			String taskName, 
+//			HAPDefinitionTaskSuite taskSuite,
+//			Map<String, String> configure,
+//			HAPProcessContext context) {
+//
+//		
+//		HAPExecutableTask task = processTask(taskDefinition, null, null, contextTaskDefinitions, contextConstants, context);
+//		task.setId(id);
+//		
+//		Map<String, HAPVariableInfo> variableInfos = parentVariablesInfo;
+//		if(variableInfos==null) 	variableInfos = new LinkedHashMap<String, HAPVariableInfo>();
+//		task.discoverVariable(variableInfos, expectOutput, context);
+//		
+//		return task;
+//	}
+//	
+//	public HAPExecutableTask compileTask(
+//			String id,
+//			HAPDefinitionTask taskDefinition, 
+//			Map<String, HAPDefinitionTask> contextTaskDefinitions,
+//			HAPContextGroup suiteContext,
+//			Map<String, String> configure,
+//			HAPProcessContext context) {
+//
+//		
+//		HAPExecutableTask task = processTask(taskDefinition, null, null, contextTaskDefinitions, contextConstants, context);
+//		task.setId(id);
+//		
+//		Map<String, HAPVariableInfo> variableInfos = parentVariablesInfo;
+//		if(variableInfos==null) 	variableInfos = new LinkedHashMap<String, HAPVariableInfo>();
+//		task.discoverVariable(variableInfos, expectOutput, context);
+//		
+//		return task;
+//	}
 	
 }

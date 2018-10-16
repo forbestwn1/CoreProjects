@@ -27,7 +27,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.script.context.HAPContextEntity;
-import com.nosliw.data.core.script.context.HAPContextParser;
+import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.expressionscript.HAPDefinitionEmbededScript;
 import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionUtility;
 import com.nosliw.uiresource.HAPIdGenerator;
@@ -265,7 +265,7 @@ public class HAPParserUIResource {
 		
 		for(Element childEle : childEles){
 			try {
-				HAPContextParser.parseContextGroup(new JSONObject(StringEscapeUtils.unescapeHtml(childEle.html())), resourceUnit.getContextDefinition());
+				HAPParserContext.parseContextGroup(new JSONObject(StringEscapeUtils.unescapeHtml(childEle.html())), resourceUnit.getContextDefinition());
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();

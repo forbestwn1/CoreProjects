@@ -67,7 +67,8 @@ public class HAPProcessorContextRelative {
 		case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
 		case HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE:
 		{
-			HAPContextNodeRootRelative out = new HAPContextNodeRootRelative();
+			HAPContextNodeRootRelative out = (HAPContextNodeRootRelative)defContextElementRelative.cloneContextNodeRoot(); 
+//					new HAPContextNodeRootRelative();
 			path.getRootElementId().setCategary(resolveInfo.path.getRootElementId().getCategary());
 			out.setPath(path);
 			

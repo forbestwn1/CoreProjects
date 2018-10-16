@@ -48,7 +48,7 @@ public class HAPContextEntity  extends HAPSerializableImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_name = jsonObj.optString(NAME);
-		HAPContextParser.parseContext(jsonObj.optJSONObject(CONTEXT), this.m_context);
+		HAPParserContext.parseContext(jsonObj.optJSONObject(CONTEXT), this.m_context);
 		return true;  
 	}
 }

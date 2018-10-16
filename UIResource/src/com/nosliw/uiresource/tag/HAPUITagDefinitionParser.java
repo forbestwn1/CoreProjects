@@ -16,7 +16,7 @@ import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextEntity;
-import com.nosliw.data.core.script.context.HAPContextParser;
+import com.nosliw.data.core.script.context.HAPParserContext;
 
 public class HAPUITagDefinitionParser {
 
@@ -89,6 +89,6 @@ public class HAPUITagDefinitionParser {
 	
 	//parse 
 	public static void parseContextInTagDefinition(JSONObject contextJson, HAPUITagDefinitionContext contextOut){
-		HAPContextParser.parseContextGroup(contextJson, contextOut);
+		HAPParserContext.parseContextGroup(contextJson, contextOut);
 	}
 }

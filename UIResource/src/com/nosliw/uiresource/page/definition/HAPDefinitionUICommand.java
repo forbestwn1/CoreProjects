@@ -12,15 +12,20 @@ import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextNodeRoot;
 import com.nosliw.data.core.script.context.HAPParserContext;
 
-public class HAPDefinitionUIEvent extends HAPEntityInfo{
+public class HAPDefinitionUICommand  extends HAPEntityInfo{
 /*
 	@HAPAttribute
-	public static String DATA = "data";
+	public static String PARM = "parm";
+
+	@HAPAttribute
+	public static String RESULT = "result";
 
 	//context
-	private HAPContext m_dataDefinition;
+	private HAPContext m_parms;
 	
-	public HAPDefinitionUIEvent() {
+	private Map<String, HAPContext> m_results;
+	
+	public HAPDefinitionUICommand() {
 		this.m_dataDefinition = new HAPContext();
 	}
 

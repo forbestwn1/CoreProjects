@@ -26,6 +26,8 @@ public abstract class HAPContextNodeRootVariable extends HAPContextNode implemen
 	@Override
 	public HAPEntityInfo getInfo() {	return this.m_info; 	}
 	
+	public void setInfo(HAPEntityInfo info) {  this.m_info = info;   }
+	
 	public void setDefaultValue(Object defaultValue){		this.m_defaultValue = defaultValue;	}
 
 	public Object getDefaultValue(){   return this.m_defaultValue;  }
