@@ -53,7 +53,10 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	}
 	public HAPContextFlat getFlatTagContext() { return this.m_flatTagContext;  }
 	public void setFlatTagContext(HAPContextFlat context) {  this.m_flatTagContext = context;   }
-	public HAPContextFlat getTagVariableContext() {  return this.m_flatTagContext.getVariableContext();  }
+	public HAPContextFlat getTagVariableContext() {
+		if(this.m_flatTagContext!=null)		return this.m_flatTagContext.getVariableContext();
+		else  return new HAPContextFlat();
+	}
 	
 	public void addTagEvent(String name, HAPContextEntity event) {  this.m_tagEvent.put(name, event);  }
 	public Map<String, HAPContextEntity> getTagEvent(){  return this.m_tagEvent;  }

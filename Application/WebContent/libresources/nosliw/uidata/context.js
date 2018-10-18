@@ -60,13 +60,11 @@ var node_createContext = function(elementInfosArray, request){
 		
 		//not found, use variable from elements
 		if(parentVar==undefined){
-			if(loc_out.prv_elements[contextVariableInfo.name]==undefined){
-				var kkkkk = 5555;
-				kkkkk++;
+			if(loc_out.prv_elements[contextVariableInfo.name]!=undefined){
+				parentVar = loc_out.prv_elements[contextVariableInfo.name].variable;
+				varPath = contextVariableInfo.path;
 			}
-			
-			parentVar = loc_out.prv_elements[contextVariableInfo.name].variable;
-			varPath = contextVariableInfo.path;
+			else return;
 		}
 		
 		return {
@@ -86,6 +84,7 @@ var node_createContext = function(elementInfosArray, request){
 	
 	var loc_createVariableFromContextVariableInfo = function(contextVariableInfo, adapterInfo, requestInfo){
 		var baseVar = loc_findBaseVariable(contextVariableInfo);
+		if(baseVar==undefined)   return;
 		var variable = baseVar.variable.createChildVariable(baseVar.path, adapterInfo, requestInfo); 
 		//add extra attribute "contextPath" to variable for variables name under context
 		variable.contextPath = contextVariableInfo.getFullPath();
@@ -149,25 +148,31 @@ var node_createContext = function(elementInfosArray, request){
 	var loc_addContextElement = function(elementInfo, request){
 		//create empty wrapper variable for each element
 		var contextEle = node_createContextElement(elementInfo, request);
-		loc_out.prv_elements[elementInfo.name] = contextEle;
-		
-		var eleVar = contextEle.variable;
-		nosliw.logging.info("************************  Named variable creation  ************************");
-		nosliw.logging.info("Name: " + contextEle.name);
-		nosliw.logging.info("ID: " + eleVar.prv_id);
-		nosliw.logging.info("Wrapper: " + (eleVar.prv_wrapper==undefined?"":eleVar.prv_wrapper.prv_id));
-		nosliw.logging.info("Parent: " , ((eleVar.prv_relativeVariableInfo==undefined)?"":eleVar.prv_relativeVariableInfo.parent.prv_id));
-		nosliw.logging.info("ParentPath: " , ((eleVar.prv_relativeVariableInfo==undefined)?"":eleVar.prv_relativeVariableInfo.path)); 
-		nosliw.logging.info("***************************************************************");
-		
-		//get all adapters from elementInfo
-		_.each(elementInfo.info.matchers, function(matchers, path){
-			loc_out.prv_adapters[node_dataUtility.combinePath(elementInfo.name, path)] = loc_buildAdapterVariableFromMatchers(elementInfo.name, path, matchers, elementInfo.info.reverseMatchers[path]);
-		});
+		if(contextEle!=undefined){
+			loc_out.prv_elements[elementInfo.name] = contextEle;
+			
+			var eleVar = contextEle.variable;
+			nosliw.logging.info("************************  Named variable creation  ************************");
+			nosliw.logging.info("Name: " + contextEle.name);
+			nosliw.logging.info("ID: " + eleVar.prv_id);
+			nosliw.logging.info("Wrapper: " + (eleVar.prv_wrapper==undefined?"":eleVar.prv_wrapper.prv_id));
+			nosliw.logging.info("Parent: " , ((eleVar.prv_relativeVariableInfo==undefined)?"":eleVar.prv_relativeVariableInfo.parent.prv_id));
+			nosliw.logging.info("ParentPath: " , ((eleVar.prv_relativeVariableInfo==undefined)?"":eleVar.prv_relativeVariableInfo.path)); 
+			nosliw.logging.info("***************************************************************");
+			
+			//get all adapters from elementInfo
+			_.each(elementInfo.info.matchers, function(matchers, path){
+				loc_out.prv_adapters[node_dataUtility.combinePath(elementInfo.name, path)] = loc_buildAdapterVariableFromMatchers(elementInfo.name, path, matchers, elementInfo.info.reverseMatchers[path]);
+			});
+		}
 	};
 	
 	var loc_out = {
 		
+		getContextElement : function(name){
+			return loc_getContextElementVariable(name);
+		},
+			
 		addContextElement : function(elementInfo, request){		
 			var flatedelEmentInfosArray = [];
 			loc_flatArray(elementInfo, flatedelEmentInfosArray);
@@ -193,6 +198,11 @@ var node_createContext = function(elementInfosArray, request){
 		},
 		
 		createHandleEachElementProcessor : function(name, path){
+			if(loc_out.prv_elements[name]==undefined){
+				var kkkk = 5555;
+				kkkk++;
+			}
+			
 			var eleVar = loc_out.prv_elements[name].variable;
 			return node_createHandleEachElementProcessor(eleVar, path);
 		},

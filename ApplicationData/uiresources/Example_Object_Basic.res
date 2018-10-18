@@ -25,7 +25,7 @@
 		
 		<nosliw-loop data="business.a.cc" element="ele" index="index">  
 
-				<nosliw-include source="Example_Object_Basic_Include" context="ele=element" /> 
+				<nosliw-include source="Example_Object_Basic_Include" context="element=ele" /> 
 		
 
 			<br>

@@ -5,15 +5,22 @@
 			<br>
 			************************Included:
 			<br>
-			Index: <%=?(index)?%>
-			<br>
-			<%=?(element)?.value + '   7777 ' %>   
+			Index: <%=?(index)?%>  
 			<br>
 			TextInput:<nosliw-textinput data="element"/> 
+			<br>
+			<%=?(element)?.value + '   7777 ' %>   
 			<br>
 			*************************************
 
 </body>
+
+<!--
+			TextInput:<nosliw-textinput data="element"/> 
+			<br>
+
+			Index: <%=?(index)?%>  
+-->
 
 	<scripts>
 	{

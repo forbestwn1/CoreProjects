@@ -34,7 +34,7 @@
 			
 		},
 		info : {
-			inherit : "true"
+			inherit : "true",
 		}
 	},
 	event : [

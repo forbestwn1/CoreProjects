@@ -119,6 +119,12 @@ public class HAPUtilityContext {
 		for(String categary : HAPContextGroup.getContextTypesWithPriority()) {
 			Map<String, HAPContextNodeRoot> eles = context.getElements(categary);
 			for(String name : eles.keySet()) {
+				
+				if(name.equals("ele")) {
+					int kkkkk = 5555;
+					kkkkk++;
+				}
+				
 				String updatedName = new HAPContextRootNodeId(categary, name).getFullName();
 				out.addElement(updatedName, eles.get(name));
 				
@@ -175,7 +181,7 @@ public class HAPUtilityContext {
 			HAPContextNodeRootRelative relativeEle = new HAPContextNodeRootRelative();
 			relativeEle.setPath(contextCategary, eleName);
 			parentVarNode.toContextNode(relativeEle);
-			relativeEle.setInfo(parentVarNode.getInfo().clone());
+//			relativeEle.setInfo(parentVarNode.getInfo().clone());
 			if(parentVarNode.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE) && ((HAPContextNodeRootRelative)parentVarNode).isProcessed())	relativeEle.processed();
 			out = relativeEle;
 		}

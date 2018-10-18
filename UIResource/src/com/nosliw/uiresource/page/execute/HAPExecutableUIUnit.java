@@ -138,7 +138,10 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	}
 	public HAPContextFlat getFlatContext() { return this.m_flatContext;  }
 	public void setFlatContext(HAPContextFlat context) {  this.m_flatContext = context;   }
-	public HAPContextFlat getVariableContext() {  return this.m_flatContext.getVariableContext();  }
+	public HAPContextFlat getVariableContext() {
+		if(this.m_flatContext!=null)		return this.m_flatContext.getVariableContext();
+		else return new HAPContextFlat();
+	}
 	
 	public Map<String, Object> getConstantsValue(){   return this.m_constants;    }
 	public void addConstantValue(String name, Object value) {

@@ -143,7 +143,10 @@ var node_utility = {
 						var pathObj = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_PATH];
 						var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
 						var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
-						context.addContextElement(node_createContextElementInfo(eleName, context, node_createContextVariableInfo(rootName, path), undefined, info));
+						//only process element that parent is created
+						if(context.getContextElement(rootName)!=undefined){
+							context.addContextElement(node_createContextElementInfo(eleName, context, node_createContextVariableInfo(rootName, path), undefined, info));
+						}
 					}
 				}
 			});	

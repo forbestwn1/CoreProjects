@@ -120,6 +120,8 @@ var node_createContextElement = function(elementInfo, requestInfo){
 		var context = elementInfo.context;
 		var contextVar = elementInfo.contextVariable;
 		loc_out.variable = context.createVariable(contextVar, adapterInfo, requestInfo);
+		//cannot create context element variable
+		if(loc_out.variable==undefined)   return;
 	}
 	else if(elementInfo.variable!=undefined)		loc_out.variable = node_createVariableWrapper(elementInfo.variable, elementInfo.path, adapterInfo, requestInfo);
 	else		loc_out.variable = node_createVariableWrapper(elementInfo.data1, elementInfo.data2, adapterInfo, requestInfo);
