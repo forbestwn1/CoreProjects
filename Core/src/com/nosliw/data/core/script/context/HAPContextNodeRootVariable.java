@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
@@ -24,13 +25,19 @@ public abstract class HAPContextNodeRootVariable extends HAPContextNode implemen
 	}
 	
 	@Override
-	public HAPEntityInfo getInfo() {	return this.m_info; 	}
-	
+	public String getName() {	return this.m_info.getName(); 	}
+
+	@Override
+	public String getDescription() {	return this.m_info.getDescription(); 	}
+
+	@Override
+	public HAPInfo getInfo() {	return this.m_info.getInfo(); 	}
+
+	public Object getDefaultValue(){   return this.m_defaultValue;  }
+
 	public void setInfo(HAPEntityInfo info) {  this.m_info = info;   }
 	
 	public void setDefaultValue(Object defaultValue){		this.m_defaultValue = defaultValue;	}
-
-	public Object getDefaultValue(){   return this.m_defaultValue;  }
 
 	protected void toSolidContextNode(HAPContextNodeRootVariable solidRootNode, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
 		solidRootNode.m_info = HAPUtilityContext.toSolidEntityInfo(this.m_info, constants, contextProcessorEnv);
@@ -48,7 +55,11 @@ public abstract class HAPContextNodeRootVariable extends HAPContextNode implemen
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TYPE, this.getType());
-		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_info, HAPSerializationFormat.JSON));
+		
+		jsonMap.put(HAPEntityInfo.NAME, this.m_info.getName());
+		jsonMap.put(HAPEntityInfo.DESCRIPTION, this.m_info.getDescription());
+		jsonMap.put(HAPEntityInfo.INFO, HAPJsonUtility.buildJson(this.m_info.getInfo(), HAPSerializationFormat.JSON));
+
 		if(this.m_defaultValue!=null){
 			jsonMap.put(DEFAULT, this.m_defaultValue.toString());
 			typeJsonMap.put(DEFAULT, this.m_defaultValue.getClass());

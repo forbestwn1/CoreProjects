@@ -49,9 +49,15 @@ public class HAPEntityInfo extends HAPSerializableImp{
 	public void setDescription(String description) {   this.m_description = description;   }
 
 	public HAPEntityInfo clone() {
-		HAPEntityInfo out = new HAPEntityInfo(this.m_name, this.m_description);
-		out.m_info = this.m_info.cloneInfo();
+		HAPEntityInfo out = new HAPEntityInfo();
+		this.cloneToEntityInfo(out);
 		return out;
+	}
+	
+	public void cloneToEntityInfo(HAPEntityInfo entityInfo) {
+		entityInfo.m_info = this.m_info.cloneInfo();
+		entityInfo.m_name = this.m_name;
+		entityInfo.m_description = this.m_description;
 	}
 	
 	@Override

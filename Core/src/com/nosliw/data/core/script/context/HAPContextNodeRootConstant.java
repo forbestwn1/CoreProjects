@@ -4,39 +4,26 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
 
-public class HAPContextNodeRootConstant extends HAPSerializableImp implements HAPContextNodeRoot{
+public class HAPContextNodeRootConstant extends HAPEntityInfo implements HAPContextNodeRoot{
 
 	@HAPAttribute
 	public static final String VALUE = "value";
 
 	private Object m_value;
 	
-	private HAPEntityInfo m_info;
-	
-	public HAPContextNodeRootConstant() {
-		this.m_info = new HAPEntityInfo();
-	}
+	public HAPContextNodeRootConstant() {	}
 
 	public HAPContextNodeRootConstant(Object value) {
-		this.m_info = new HAPEntityInfo();
 		this.m_value = value;
 	}
 	
 	@Override
 	public String getType() {		return HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT;	}
 
-	@Override
-	public HAPEntityInfo getInfo() {	return this.m_info; 	}
-
-	public void setInfo(HAPEntityInfo info) {  this.m_info = info;   }
-	
 	public void setValue(Object value){		this.m_value = value;	}
 
 	public Object getValue(){   return this.m_value;  }
@@ -57,7 +44,7 @@ public class HAPContextNodeRootConstant extends HAPSerializableImp implements HA
 	public HAPContextNodeRoot toSolidContextNodeRoot(Map<String, Object> constants,
 			HAPEnvContextProcessor contextProcessorEnv) {
 		HAPContextNodeRootConstant out = new HAPContextNodeRootConstant();
-		out.m_info = HAPUtilityContext.toSolidEntityInfo(this.m_info, constants, contextProcessorEnv);
+		HAPUtilityContext.toSolidEntityInfo(this, constants, contextProcessorEnv).cloneToEntityInfo(this);;
 		out.m_value = this.m_value;
 		return out;
 	}
@@ -68,15 +55,13 @@ public class HAPContextNodeRootConstant extends HAPSerializableImp implements HA
 		jsonMap.put(TYPE, this.getType());
 		jsonMap.put(VALUE, this.m_value.toString());
 		typeJsonMap.put(VALUE, this.m_value.getClass());
-		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_info, HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	public HAPContextNodeRoot cloneContextNodeRoot() {
 		HAPContextNodeRootConstant out = new HAPContextNodeRootConstant();
-		out.m_info = this.m_info.clone();
+		this.cloneToEntityInfo(out);
 		out.m_value = this.m_value;
 		return out;
 	}
-
 }
