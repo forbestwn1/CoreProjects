@@ -7,11 +7,11 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionServiceResult extends HAPEntityInfo{
+public class HAPDefinitionServiceResult extends HAPEntityInfoImp{
 
 	@HAPAttribute
 	public static String OUTPUT = "output";

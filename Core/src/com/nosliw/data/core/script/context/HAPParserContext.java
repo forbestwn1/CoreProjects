@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 
@@ -39,7 +39,7 @@ public class HAPParserContext {
 		Object defJsonObj = eleDefJson.opt(HAPContextNode.DEFINITION);
 		Object defaultJsonObj = eleDefJson.opt(HAPContextNodeRootVariable.DEFAULT);
 		
-		HAPEntityInfo info = new HAPEntityInfo();
+		HAPEntityInfoImp info = new HAPEntityInfoImp();
 		info.buildObject(eleDefJson, HAPSerializationFormat.JSON);
 		
 		if(path!=null){

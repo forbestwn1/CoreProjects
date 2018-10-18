@@ -3,12 +3,12 @@ package com.nosliw.data.core.script.context;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
 
-public class HAPContextNodeRootConstant extends HAPEntityInfo implements HAPContextNodeRoot{
+public class HAPContextNodeRootConstant extends HAPEntityInfoImp implements HAPContextNodeRoot{
 
 	@HAPAttribute
 	public static final String VALUE = "value";

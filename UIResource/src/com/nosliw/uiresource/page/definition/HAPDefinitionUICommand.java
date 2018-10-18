@@ -5,14 +5,14 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextNodeRoot;
 import com.nosliw.data.core.script.context.HAPParserContext;
 
-public class HAPDefinitionUICommand  extends HAPEntityInfo{
+public class HAPDefinitionUICommand  extends HAPEntityInfoImp{
 /*
 	@HAPAttribute
 	public static String PARM = "parm";

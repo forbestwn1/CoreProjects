@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -15,13 +16,13 @@ public abstract class HAPContextNodeRootVariable extends HAPContextNode implemen
 	@HAPAttribute
 	public static final String DEFAULT = "default";
 
-	private HAPEntityInfo m_info;
+	private HAPEntityInfoImp m_info;
 	
 	//default value for the root, used in runtime when no value is set
 	private Object m_defaultValue;
 
 	public HAPContextNodeRootVariable() {
-		this.m_info = new HAPEntityInfo();
+		this.m_info = new HAPEntityInfoImp();
 	}
 	
 	@Override
@@ -35,7 +36,7 @@ public abstract class HAPContextNodeRootVariable extends HAPContextNode implemen
 
 	public Object getDefaultValue(){   return this.m_defaultValue;  }
 
-	public void setInfo(HAPEntityInfo info) {  this.m_info = info;   }
+	public void setInfo(HAPEntityInfoImp info) {  this.m_info = info;   }
 	
 	public void setDefaultValue(Object defaultValue){		this.m_defaultValue = defaultValue;	}
 

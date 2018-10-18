@@ -4,14 +4,14 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionServiceParm extends HAPEntityInfo{
+public class HAPDefinitionServiceParm extends HAPEntityInfoImp{
 
 	@HAPAttribute
 	public static String CRITERIA = "criteria";
