@@ -103,7 +103,7 @@ var node_utility = {
 				var type = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
 				var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_INFO];
 				//if context.info.model===manual, context does not need to create in the framework
-				if(contextInfo[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOTINFO_INFO].mode!='manual'){
+				if(contextInfo[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO].mode!='manual'){
 					if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_ABSOLUTE){
 						var defaultValue = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_DEFAULT];
 						if(contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFINITION]!=undefined){
@@ -138,7 +138,7 @@ var node_utility = {
 				var type = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
 				var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_INFO];
 				//if context.info.model===manual, context does not need to create in the framework
-				if(contextInfo[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOTINFO_INFO].mode!='manual'){
+				if(contextInfo[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO].mode!='manual'){
 					if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_RELATIVE && contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_ISTOPARENT]==false){
 						var pathObj = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_PATH];
 						var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
