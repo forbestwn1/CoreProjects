@@ -13,12 +13,14 @@
 		}
 	],
 	context: {
-		public : {
-			element : {
+		group : {
+			public : {
+				element : {
+				},
 			},
-		},
-		private : {
-			element : {
+			private : {
+				element : {
+				},
 			},
 		},
 		info : {

@@ -4,11 +4,6 @@
 	attributes : [
 	],
 	context: {
-		public : {
-			
-		},
-		private : {
-		}
 	},
 	events : {
 		

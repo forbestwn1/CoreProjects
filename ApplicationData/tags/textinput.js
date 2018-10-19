@@ -7,16 +7,18 @@
 		}
 	],
 	context: {
-		public : {
-			element : {
+		group : {
+			public : {
+				element : {
+				},
 			},
-		},
-		private : {
-			element : {
-				internal_data: {
-					path : "<%=&(data)&%>",
-					definition : "test.string;1.0.0"
-				}
+			private : {
+				element : {
+					internal_data: {
+						path : "<%=&(data)&%>",
+						definition : "test.string;1.0.0"
+					}
+				},
 			},
 		},
 		info : {

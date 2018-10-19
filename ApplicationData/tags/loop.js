@@ -13,27 +13,29 @@
 		}	
 	],
 	context: {
-		private : {
-			element : {
-				"internal_data": {
-					path : "<%=&(data)&%>"
-				}
-			},
-		},
-		protected : {
-			element : {
-				"<%=&(element)&%>" : {
-					path : "<%=&(data)&%>.element",
-					info:{
-						mode : "manual"
+		group : {
+			private : {
+				element : {
+					"internal_data": {
+						path : "<%=&(data)&%>"
 					}
 				},
-				"<%=&(index)&%>" : {
-					definition : "test.integer;1.0.0",
-					info:{
-						mode : "manual"
-					}
-				}		
+			},
+			protected : {
+				element : {
+					"<%=&(element)&%>" : {
+						path : "<%=&(data)&%>.element",
+						info:{
+							mode : "manual"
+						}
+					},
+					"<%=&(index)&%>" : {
+						definition : "test.integer;1.0.0",
+						info:{
+							mode : "manual"
+						}
+					}		
+				},
 			},
 		},
 		info : {

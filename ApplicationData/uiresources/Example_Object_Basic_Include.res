@@ -29,20 +29,22 @@
 	
 	<contexts>
 	{
-		public : {
-			element : {
-				index : {
-					definition: "test.integer;1.0.0",
-					default: {
-						dataTypeId: "test.integer;1.0.0",
-						value: 100
-					}
-				},
+		group : {
+			public : {
 				element : {
-					definition: "test.string;1.0.0",
-					default: {
-						dataTypeId: "test.string;1.0.0",
-						value: "Include Element!"
+					index : {
+						definition: "test.integer;1.0.0",
+						default: {
+							dataTypeId: "test.integer;1.0.0",
+							value: 100
+						}
+					},
+					element : {
+						definition: "test.string;1.0.0",
+						default: {
+							dataTypeId: "test.string;1.0.0",
+							value: "Include Element!"
+						}
 					}
 				}
 			}

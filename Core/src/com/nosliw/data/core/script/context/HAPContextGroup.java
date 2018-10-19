@@ -18,6 +18,9 @@ import com.nosliw.common.utils.HAPConstant;
 public class HAPContextGroup extends HAPSerializableImp{
 
 	@HAPAttribute
+	public static final String GROUP = "group";
+
+	@HAPAttribute
 	public static final String INFO = "info";
 	
 	@HAPAttribute
@@ -142,9 +145,7 @@ public class HAPContextGroup extends HAPSerializableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		for(String type : this.m_contexts.keySet()){
-			jsonMap.put(type, HAPJsonUtility.buildJson(this.m_contexts.get(type), HAPSerializationFormat.JSON));
-		}
+		jsonMap.put(GROUP, HAPJsonUtility.buildJson(this.m_contexts, HAPSerializationFormat.JSON));
 		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_info, HAPSerializationFormat.JSON));
 	}
 }

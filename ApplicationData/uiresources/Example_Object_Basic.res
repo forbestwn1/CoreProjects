@@ -123,76 +123,78 @@
 		-->
 	<contexts>
 	{
-		public : {
-			element : {
-				business : {
-					definition: {
-						a : {
-							aa : "test.string;1.0.0",
-							cc : "test.array;1.0.0%||element:test.string;1.0.0||%",
+		group : {
+			public : {
+				element : {
+					business : {
+						definition: {
+							a : {
+								aa : "test.string;1.0.0",
+								cc : "test.array;1.0.0%||element:test.string;1.0.0||%",
+							}
+						},
+						default: {
+							a : {
+								aa : {
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world!"
+								},
+								dd : "HELLO!!!!",
+								cc : [
+									{
+										dataTypeId: "test.string;1.0.0",
+										value: "This is my world 1111!"
+									},
+									{
+										dataTypeId: "test.string;1.0.0",
+										value: "This is my world 2222!"
+									},
+								]
+							}
 						}
 					},
-					default: {
-						a : {
-							aa : {
-								dataTypeId: "test.string;1.0.0",
-								value: "This is my world!"
-							},
-							dd : "HELLO!!!!",
-							cc : [
-								{
-									dataTypeId: "test.string;1.0.0",
-									value: "This is my world 1111!"
-								},
-								{
-									dataTypeId: "test.string;1.0.0",
-									value: "This is my world 2222!"
-								},
-							]
+					aaaa : {
+						value : "<%=5+6+7%>",
+					},
+					bbbb : {
+						value : "<%=(5+6+7)>5%>"
+					},
+					cccc : {
+						value : {
+							a : 12345,
+							b : true,
+							c : "good",
+							d : "<%=5+6+7%>"
 						}
-					}
-				},
-				aaaa : {
-					value : "<%=5+6+7%>",
-				},
-				bbbb : {
-					value : "<%=(5+6+7)>5%>"
-				},
-				cccc : {
-					value : {
-						a : 12345,
-						b : true,
-						c : "good",
-						d : "<%=5+6+7%>"
-					}
-				},
-				dddd : {
-					value : "<%=&(cccc)&.a+6%>"
-				},
-				ffff : {
-					value : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>"
-				},
-				eeee : {
-					value : "<%=#|&(ffff)&.subString(from:&(#test##integer___3)&,to:&(#test##integer___7)&)|#%>"
-				},
-				base: {
-					value : {
-						dataTypeId: "test.string",
-						value: "This is my world!"
-					}
-				},
-				from: {
-					value : {
-						dataTypeId: "test.integer",
-						value: 3
-					}
-				},
-				to: {
-					value : {
-						dataTypeId: "test.integer",
-						value: 7
-					}
-				},
+					},
+					dddd : {
+						value : "<%=&(cccc)&.a+6%>"
+					},
+					ffff : {
+						value : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>"
+					},
+					eeee : {
+						value : "<%=#|&(ffff)&.subString(from:&(#test##integer___3)&,to:&(#test##integer___7)&)|#%>"
+					},
+					base: {
+						value : {
+							dataTypeId: "test.string",
+							value: "This is my world!"
+						}
+					},
+					from: {
+						value : {
+							dataTypeId: "test.integer",
+							value: 3
+						}
+					},
+					to: {
+						value : {
+							dataTypeId: "test.integer",
+							value: 7
+						}
+					},
+				}
 			}
 		}
 	}
