@@ -51,5 +51,5 @@ public class HAPDefinitionUIService  extends HAPEntityInfoImp{
 		HAPContextParser.parseContext(jsonObj.optJSONObject(DATA), this.m_dataDefinition);
 		return true;  
 	}
-*/
+*/	
 }

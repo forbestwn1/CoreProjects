@@ -64,8 +64,10 @@
 		{
 			name : "changeInputTextInclude",
 			parms : {
-				data : {
-					path: "element"
+				element : {
+					data : {
+						path: "element"
+					}
 				}
 			},
 		}

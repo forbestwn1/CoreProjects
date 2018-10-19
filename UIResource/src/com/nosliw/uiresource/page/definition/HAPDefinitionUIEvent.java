@@ -8,12 +8,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextNodeRoot;
 import com.nosliw.data.core.script.context.HAPParserContext;
 
 public class HAPDefinitionUIEvent extends HAPEntityInfoImp{
-/*
 	@HAPAttribute
 	public static String DATA = "data";
 
@@ -29,8 +27,8 @@ public class HAPDefinitionUIEvent extends HAPEntityInfoImp{
 	
 	public void addDataElement(String name, HAPContextNodeRoot node) {  this.m_dataDefinition.addElement(name, node);  }
 	
-	public void cloneBasicTo(HAPContextEntity contextEntity) {
-		contextEntity.m_name = this.m_name;
+	public void cloneBasicTo(HAPDefinitionUIEvent event) {
+		this.cloneToEntityInfo(event);
 	}
 	
 	@Override
@@ -43,8 +41,7 @@ public class HAPDefinitionUIEvent extends HAPEntityInfoImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
-		HAPContextParser.parseContext(jsonObj.optJSONObject(DATA), this.m_dataDefinition);
+		HAPParserContext.parseContext(jsonObj.optJSONObject(DATA), this.m_dataDefinition);
 		return true;  
 	}
-*/
 }

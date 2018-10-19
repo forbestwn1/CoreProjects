@@ -212,8 +212,10 @@
 		{
 			name : "changeInputText",
 			parms : {
-				data : {
-					path: "business.a.aa"
+				element : {
+					data : {
+						path: "business.a.aa"
+					}
 				}
 			},
 		}

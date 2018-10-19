@@ -60,7 +60,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	private Map<String, HAPDefinitionUIUnitTag> m_uiTags; 
 
 	//event definition 
-	private Map<String, HAPContextEntity> m_eventsDefinition;
+	private Map<String, HAPDefinitionUIEvent> m_eventsDefinition;
 	//service requirment definition
 	private Map<String, HAPContextEntity> m_servicesDefinition;
 	//command definition
@@ -79,7 +79,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 		this.m_customTagEvents = new HashSet<HAPElementEvent>();
 		this.m_attributes = new LinkedHashMap<String, String>();
 		this.m_expressionDefinitions = new LinkedHashMap<String, String>();
-		this.m_eventsDefinition = new LinkedHashMap<String, HAPContextEntity>();
+		this.m_eventsDefinition = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 		this.m_servicesDefinition = new LinkedHashMap<String, HAPContextEntity>();
 		this.m_commandsDefinition = new LinkedHashMap<String, HAPContextEntity>();
 	}
@@ -93,7 +93,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	public Set<HAPElementEvent> getCustomTagEvents(){   return this.m_customTagEvents;   }
 	public Map<String, String> getAttributes(){   return this.m_attributes;    }
 	public String getContent() {  return this.m_content;  }
-	public Map<String, HAPContextEntity> getEventDefinitions(){  return this.m_eventsDefinition;    }
+	public Map<String, HAPDefinitionUIEvent> getEventDefinitions(){  return this.m_eventsDefinition;    }
 	public Map<String, HAPContextEntity> getServiceDefinitions(){  return this.m_servicesDefinition;   }
 	public Map<String, HAPContextEntity> getCommandDefinition() {   return this.m_commandsDefinition;  }
 	public Map<String, String> getExpressionDefinitions(){  return this.m_expressionDefinitions;   }
@@ -109,7 +109,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	public Set<HAPDefinitionUIEmbededScriptExpressionInAttribute> getScriptExpressionsInTagAttribute(){   return this.m_scriptExpressionsInTagAttribute;   }
 	
 	public void addCommandDefinition(HAPContextEntity commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
-	public void addEventDefinition(HAPContextEntity def) {  this.m_eventsDefinition.put(def.getName(), def);   }
+	public void addEventDefinition(HAPDefinitionUIEvent def) {  this.m_eventsDefinition.put(def.getName(), def);   }
 	public void addServiceDefinition(HAPContextEntity def) {  this.m_servicesDefinition.put(def.getName(), def);   }
 	public void addExpressionDefinition(String name, String expressionDef){		this.m_expressionDefinitions.put(name, expressionDef);	}
 	public void addScriptExpressionInAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInAttribute.add(eAttr);	}

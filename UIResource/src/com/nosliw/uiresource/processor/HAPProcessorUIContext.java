@@ -16,6 +16,7 @@ import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPProcessorContextRelative;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.tag.HAPUITagDefinitionContext;
@@ -92,21 +93,21 @@ public class HAPProcessorUIContext {
 		uiExe.setContext(HAPProcessorContext.process2(uiExe.getContext(), parentContext, new HAPConfigureContextProcessor(), contextProcessorEnv));
 
 		//process event defined in resoruce
-		Map<String, HAPContextEntity> eventsDef = uiExe.getUIUnitDefinition().getEventDefinitions();
+		Map<String, HAPDefinitionUIEvent> eventsDef = uiExe.getUIUnitDefinition().getEventDefinitions();
 		for(String name : eventsDef.keySet()) {
-			HAPContextEntity processedEventDef = new HAPContextEntity();
+			HAPDefinitionUIEvent processedEventDef = new HAPDefinitionUIEvent();
 			eventsDef.get(name).cloneBasicTo(processedEventDef);
-			processedEventDef.setContext(HAPProcessorContextRelative.process(eventsDef.get(name).getContext(), uiExe.getContext(), null, contextProcessorEnv));
-			uiExe.addEventDefinition(name, processedEventDef);
+			processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventsDef.get(name).getDataDefinition(), uiExe.getContext(), null, contextProcessorEnv));
+			uiExe.addEventDefinition(processedEventDef);
 		}
 
 		//process command defined in resource
 		Map<String, HAPContextEntity> commandsDef = uiExe.getUIUnitDefinition().getCommandDefinition();
 		for(String name : commandsDef.keySet()) {
-			HAPContextEntity processedEventDef = new HAPContextEntity();
-			commandsDef.get(name).cloneBasicTo(processedEventDef);
-			processedEventDef.setContext(HAPProcessorContextRelative.process(commandsDef.get(name).getContext(), uiExe.getContext(), null, contextProcessorEnv));
-			uiExe.addEventDefinition(name, processedEventDef);
+			HAPContextEntity processedCommendDef = new HAPContextEntity();
+			commandsDef.get(name).cloneBasicTo(processedCommendDef);
+			processedCommendDef.setContext(HAPProcessorContextRelative.process(commandsDef.get(name).getContext(), uiExe.getContext(), null, contextProcessorEnv));
+			uiExe.addCommandDefinition(processedCommendDef);
 		}
 		
 		

@@ -210,7 +210,7 @@ public class HAPParserUIResource {
 				JSONArray eventListJson = new JSONArray(childEle.html());
 				for(int i=0; i<eventListJson.length(); i++) {
 					JSONObject eventJson = eventListJson.getJSONObject(i);
-					HAPContextEntity eventDef = new HAPContextEntity();
+					HAPDefinitionUIEvent eventDef = new HAPDefinitionUIEvent();
 					eventDef.buildObject(eventJson, HAPSerializationFormat.JSON);
 					resourceUnit.addEventDefinition(eventDef);
 				}

@@ -42,7 +42,7 @@ public class HAPProcessorUICommandEscalate {
 		if(HAPConstant.UIRESOURCE_TYPE_RESOURCE.equals(exeUnit.getType())){
 			for(String eventName : commandsDef.keySet()) {
 				if(exeUnit.getEventDefinition(eventName)==null) {
-					exeUnit.addEventDefinition(eventName, commandsDef.get(eventName));
+					exeUnit.addCommandDefinition(commandsDef.get(eventName));
 				}
 			}
 		}
