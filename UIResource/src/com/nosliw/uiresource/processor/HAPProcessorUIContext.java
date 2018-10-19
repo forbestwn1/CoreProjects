@@ -8,6 +8,7 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
+import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -16,6 +17,7 @@ import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPProcessorContextRelative;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
@@ -102,14 +104,20 @@ public class HAPProcessorUIContext {
 		}
 
 		//process command defined in resource
-		Map<String, HAPContextEntity> commandsDef = uiExe.getUIUnitDefinition().getCommandDefinition();
+		Map<String, HAPDefinitionUICommand> commandsDef = uiExe.getUIUnitDefinition().getCommandDefinition();
 		for(String name : commandsDef.keySet()) {
-			HAPContextEntity processedCommendDef = new HAPContextEntity();
-			commandsDef.get(name).cloneBasicTo(processedCommendDef);
-			processedCommendDef.setContext(HAPProcessorContextRelative.process(commandsDef.get(name).getContext(), uiExe.getContext(), null, contextProcessorEnv));
+			HAPDefinitionUICommand commandDef = commandsDef.get(name);
+			HAPDefinitionUICommand processedCommendDef = new HAPDefinitionUICommand();
+			commandDef.cloneBasicTo(processedCommendDef);
+			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), uiExe.getContext(), null, contextProcessorEnv));
+			
+			Map<String, HAPContext> results = commandDef.getResults();
+			for(String resultName : results.keySet()) {
+				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), uiExe.getContext(), null, contextProcessorEnv));
+			}
+			
 			uiExe.addCommandDefinition(processedCommendDef);
 		}
-		
 		
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : uiExe.getUITags()) {

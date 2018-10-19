@@ -17,11 +17,11 @@ import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
 import com.nosliw.data.core.service.HAPDefinitionServiceInfo;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
@@ -99,7 +99,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 
 	//event definition 
 	private Map<String, HAPDefinitionUIEvent> m_eventsDefinition;
-	private Map<String, HAPContextEntity> m_commandsDefinition;
+	private Map<String, HAPDefinitionUICommand> m_commandsDefinition;
 	
 	//service requirement definition
 	private Map<String, HAPDefinitionServiceInfo> m_servicesDefinition;
@@ -116,7 +116,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 		this.m_constants = new LinkedHashMap<String, Object>();
 		
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPDefinitionUIEvent>();
-		this.m_commandsDefinition = new LinkedHashMap<String, HAPContextEntity>();
+		this.m_commandsDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
 
 		this.m_servicesDefinition = new LinkedHashMap<String, HAPDefinitionServiceInfo>();
 		
@@ -178,8 +178,8 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	
 	public Map<String, HAPDefinitionServiceInfo> getServiceDefinitions(){  return this.m_servicesDefinition;   }
 
-	public void addCommandDefinition(HAPContextEntity commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
-	public Map<String, HAPContextEntity> getCommandDefinitions() {   return this.m_commandsDefinition;  }
+	public void addCommandDefinition(HAPDefinitionUICommand commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
+	public Map<String, HAPDefinitionUICommand> getCommandDefinitions() {   return this.m_commandsDefinition;  }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

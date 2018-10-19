@@ -248,7 +248,7 @@ public class HAPParserUIResource {
 				JSONArray commandListJson = new JSONArray(childEle.html());
 				for(int i=0; i<commandListJson.length(); i++) {
 					JSONObject commandJson = commandListJson.getJSONObject(i);
-					HAPContextEntity commandDef = new HAPContextEntity();
+					HAPDefinitionUICommand commandDef = new HAPDefinitionUICommand();
 					commandDef.buildObject(commandJson, HAPSerializationFormat.JSON);
 					resourceUnit.addCommandDefinition(commandDef);
 				}

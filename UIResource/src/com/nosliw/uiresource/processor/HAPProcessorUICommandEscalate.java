@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.tag.HAPUITagId;
@@ -18,11 +18,11 @@ public class HAPProcessorUICommandEscalate {
 		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
 			HAPExecutableUIUnitTag exeTag = (HAPExecutableUIUnitTag)exeUnit;
 			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeTag.getUIUnitTagDefinition().getTagName())).getContext())) {
-				Map<String, HAPContextEntity> mappedCommandDefs = new LinkedHashMap<String, HAPContextEntity>();
+				Map<String, HAPDefinitionUICommand> mappedCommandDefs = new LinkedHashMap<String, HAPDefinitionUICommand>();
 				
 				Map<String, String> nameMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstant.UITAG_PARM_COMMAND));
 				exeTag.setCommandMapping(nameMapping);
-				Map<String, HAPContextEntity> exeCommandDefs = exeTag.getCommandDefinitions();
+				Map<String, HAPDefinitionUICommand> exeCommandDefs = exeTag.getCommandDefinitions();
 				for(String commandName : exeCommandDefs.keySet()) {
 					String mappedName = nameMapping.get(commandName);
 					if(mappedName==null)   mappedName = commandName;
@@ -38,7 +38,7 @@ public class HAPProcessorUICommandEscalate {
 		}
 	}
 	
-	private static void escalate(HAPExecutableUIUnit exeUnit, Map<String, HAPContextEntity> commandsDef, HAPUITagManager uiTagMan) {
+	private static void escalate(HAPExecutableUIUnit exeUnit, Map<String, HAPDefinitionUICommand> commandsDef, HAPUITagManager uiTagMan) {
 		if(HAPConstant.UIRESOURCE_TYPE_RESOURCE.equals(exeUnit.getType())){
 			for(String eventName : commandsDef.keySet()) {
 				if(exeUnit.getEventDefinition(eventName)==null) {
