@@ -8,13 +8,16 @@
 	],
 	context: {
 		public : {
-			
+			element : {
+			},
 		},
 		private : {
-			internal_data: {
-				path : "<%=&(data)&%>",
-				definition : "test.string;1.0.0"
-			}
+			element : {
+				internal_data: {
+					path : "<%=&(data)&%>",
+					definition : "test.string;1.0.0"
+				}
+			},
 		},
 		info : {
 			inherit : "false"

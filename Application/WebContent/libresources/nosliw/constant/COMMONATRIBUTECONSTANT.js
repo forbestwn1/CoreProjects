@@ -287,7 +287,7 @@ var COMMONATRIBUTECONSTANT=
   "_EMBEDEDEXPRESSION": "embededExpression",
   "_VARIABLESVALUE": "variablesValue",
   "_SCRIPTEXPRESSION": "scriptExpression",
-  "CONTEXT_ELEMENTS": "elements",
+  "CONTEXT_ELEMENT": "element",
   "CONTEXT_INFO": "info",
   "CONTEXTENTITY_NAME": "name",
   "CONTEXTENTITY_CONTEXT": "context",

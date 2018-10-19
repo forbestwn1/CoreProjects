@@ -14,8 +14,12 @@
 	],
 	context: {
 		public : {
+			element : {
+			},
 		},
 		private : {
+			element : {
+			},
 		},
 		info : {
 			inherit : "false",

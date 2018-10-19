@@ -5,6 +5,7 @@ import java.util.Iterator;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
 
@@ -22,12 +23,18 @@ public class HAPParserContext {
 	
 	public static void parseContext(JSONObject contextJson, HAPContext context) {
 		if(contextJson!=null) {
-			Iterator<String> it = contextJson.keys();
+			JSONObject elementsJson = contextJson.optJSONObject(HAPContext.ELEMENT);
+			Iterator<String> it = elementsJson.keys();
 			while(it.hasNext()){
 				String eleName = it.next();
-				JSONObject eleDefJson = contextJson.optJSONObject(eleName);
+				JSONObject eleDefJson = elementsJson.optJSONObject(eleName);
 				HAPContextNodeRoot tagDefContextEle = parseContextRootFromJson(eleDefJson);
 				context.addElement(eleName, tagDefContextEle);
+			}
+			
+			JSONObject infoJson = contextJson.optJSONObject(HAPContext.INFO);
+			if(infoJson!=null) {
+				context.getInfo().buildObject(infoJson, HAPSerializationFormat.JSON);
 			}
 		}
 	}

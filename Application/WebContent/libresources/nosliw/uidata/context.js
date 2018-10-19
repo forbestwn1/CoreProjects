@@ -198,11 +198,6 @@ var node_createContext = function(elementInfosArray, request){
 		},
 		
 		createHandleEachElementProcessor : function(name, path){
-			if(loc_out.prv_elements[name]==undefined){
-				var kkkk = 5555;
-				kkkk++;
-			}
-			
 			var eleVar = loc_out.prv_elements[name].variable;
 			return node_createHandleEachElementProcessor(eleVar, path);
 		},

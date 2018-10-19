@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
@@ -17,7 +18,7 @@ import com.nosliw.common.utils.HAPConstant;
 public class HAPContext extends HAPSerializableImp{
 
 	@HAPAttribute
-	public static final String ELEMENTS = "elements";
+	public static final String ELEMENT = "element";
 
 	@HAPAttribute
 	public static final String INFO = "info";
@@ -125,9 +126,7 @@ public class HAPContext extends HAPSerializableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		for(String rootName : this.m_elements.keySet()){
-			jsonMap.put(rootName, this.m_elements.get(rootName).toStringValue(HAPSerializationFormat.JSON));
-		}
-		
+		jsonMap.put(ELEMENT, HAPJsonUtility.buildJson(m_elements, HAPSerializationFormat.JSON));
+		jsonMap.put(INFO, HAPJsonUtility.buildJson(m_info, HAPSerializationFormat.JSON));
 	}
 }

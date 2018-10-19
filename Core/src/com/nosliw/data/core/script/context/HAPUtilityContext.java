@@ -119,12 +119,6 @@ public class HAPUtilityContext {
 		for(String categary : HAPContextGroup.getContextTypesWithPriority()) {
 			Map<String, HAPContextNodeRoot> eles = context.getElements(categary);
 			for(String name : eles.keySet()) {
-				
-				if(name.equals("ele")) {
-					int kkkkk = 5555;
-					kkkkk++;
-				}
-				
 				String updatedName = new HAPContextRootNodeId(categary, name).getFullName();
 				out.addElement(updatedName, eles.get(name));
 				

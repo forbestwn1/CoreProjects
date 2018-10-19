@@ -415,10 +415,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 	var loc_trigueLifecycleEvent = function(event, eventData, requestInfo){		loc_out.prv_lifecycleEventObject.triggerEvent(event, eventData, requestInfo);	};
 	var loc_trigueInternalEvent = function(event, eventData, requestInfo){		loc_out.prv_internalEventObject.triggerEvent(event, eventData, requestInfo);	};
 	var loc_trigueDataChangeEvent = function(event, eventData, requestInfo){
-		if(loc_out.prv_dataChangeEventObject==undefined){
-			var kkkk = 5555;
-			kkkk++;
-		}
 		loc_out.prv_dataChangeEventObject.triggerEvent(event, eventData, requestInfo);	
 	};
 	

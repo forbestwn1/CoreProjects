@@ -27,11 +27,13 @@
 	<contexts>
 	{
 		public : {
-			element111 : {
-				definition: "test.string;1.0.0",
-				default: {
-					dataTypeId: "test.string;1.0.0",
-					value: "Include Element!"
+			element : {
+				element111 : {
+					definition: "test.string;1.0.0",
+					default: {
+						dataTypeId: "test.string;1.0.0",
+						value: "Include Element!"
+					}
 				}
 			}
 		}
