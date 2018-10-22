@@ -62,7 +62,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	//event definition 
 	private Map<String, HAPDefinitionUIEvent> m_eventsDefinition;
 	//service requirment definition
-	private Map<String, HAPContextEntity> m_servicesDefinition;
+	private Map<String, HAPDefinitionUICommand> m_servicesDefinition;
 	//command definition
 	private Map<String, HAPDefinitionUICommand> m_commandsDefinition;
 	
@@ -80,7 +80,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 		this.m_attributes = new LinkedHashMap<String, String>();
 		this.m_expressionDefinitions = new LinkedHashMap<String, String>();
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPDefinitionUIEvent>();
-		this.m_servicesDefinition = new LinkedHashMap<String, HAPContextEntity>();
+		this.m_servicesDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
 		this.m_commandsDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
 	}
 	
@@ -94,7 +94,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	public Map<String, String> getAttributes(){   return this.m_attributes;    }
 	public String getContent() {  return this.m_content;  }
 	public Map<String, HAPDefinitionUIEvent> getEventDefinitions(){  return this.m_eventsDefinition;    }
-	public Map<String, HAPContextEntity> getServiceDefinitions(){  return this.m_servicesDefinition;   }
+	public Map<String, HAPDefinitionUICommand> getServiceDefinitions(){  return this.m_servicesDefinition;   }
 	public Map<String, HAPDefinitionUICommand> getCommandDefinition() {   return this.m_commandsDefinition;  }
 	public Map<String, String> getExpressionDefinitions(){  return this.m_expressionDefinitions;   }
 	
@@ -110,7 +110,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	
 	public void addCommandDefinition(HAPDefinitionUICommand commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
 	public void addEventDefinition(HAPDefinitionUIEvent def) {  this.m_eventsDefinition.put(def.getName(), def);   }
-	public void addServiceDefinition(HAPContextEntity def) {  this.m_servicesDefinition.put(def.getName(), def);   }
+	public void addServiceDefinition(HAPDefinitionUICommand def) {  this.m_servicesDefinition.put(def.getName(), def);   }
 	public void addExpressionDefinition(String name, String expressionDef){		this.m_expressionDefinitions.put(name, expressionDef);	}
 	public void addScriptExpressionInAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInAttribute.add(eAttr);	}
 	public void addScriptExpressionInTagAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInTagAttribute.add(eAttr);	}

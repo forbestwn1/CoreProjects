@@ -28,6 +28,12 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	@HAPAttribute
 	public static final String CONTEXTMAPPING = "contextMapping";
 
+	@HAPAttribute
+	public static final String COMMANDMAPPING = "commandMapping";
+
+	@HAPAttribute
+	public static final String SERVICEMAPPING = "serviceMapping";
+	
 	//context for tag
 	private HAPContextGroupInUITag m_tagContext;
 	private HAPContextFlat m_flatTagContext;
@@ -37,6 +43,7 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	private Map<String, String> m_eventMapping;
 	private Map<String, String> m_contextMapping;
 	private Map<String, String> m_commandMapping;
+	private Map<String, String> m_serviceMapping;
 	
 	public HAPExecutableUIUnitTag(HAPDefinitionUIUnitTag uiTagDefinition) {
 		super(uiTagDefinition);
@@ -44,6 +51,7 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 		this.m_eventMapping = new LinkedHashMap<String, String>();
 		this.m_contextMapping = new LinkedHashMap<String, String>();
 		this.m_commandMapping = new LinkedHashMap<String, String>();
+		this.m_serviceMapping = new LinkedHashMap<String, String>();
 	}
 
 	public HAPContextGroup getTagContext(){  return this.m_tagContext;   }
@@ -68,14 +76,17 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	public void setEventMapping(Map<String, String> mapping) {  this.m_eventMapping.putAll(mapping);  }
 	public void setContextMapping(Map<String, String> mapping) {  this.m_contextMapping.putAll(mapping);  }
 	public void setCommandMapping(Map<String, String> mapping) {  this.m_commandMapping.putAll(mapping);  }
+	public void setServiceMapping(Map<String, String> mapping) {  this.m_serviceMapping.putAll(mapping);  }
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TAGNAME, this.getUIUnitTagDefinition().getTagName());
 		jsonMap.put(TAGCONTEXT, this.getTagVariableContext().toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(EVENTMAPPING, HAPJsonUtility.buildMapJson(m_eventMapping));
 		jsonMap.put(CONTEXTMAPPING, HAPJsonUtility.buildMapJson(m_contextMapping));
+		jsonMap.put(EVENTMAPPING, HAPJsonUtility.buildMapJson(m_eventMapping));
+		jsonMap.put(COMMANDMAPPING, HAPJsonUtility.buildMapJson(m_commandMapping));
+		jsonMap.put(SERVICEMAPPING, HAPJsonUtility.buildMapJson(m_serviceMapping));
 	}
 	
 	@Override
@@ -85,5 +96,7 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 		jsonMap.put(TAGCONTEXT, this.getTagVariableContext().toStringValue(HAPSerializationFormat.JSON_FULL));
 		jsonMap.put(EVENTMAPPING, HAPJsonUtility.buildMapJson(m_eventMapping));
 		jsonMap.put(CONTEXTMAPPING, HAPJsonUtility.buildMapJson(m_contextMapping));
+		jsonMap.put(COMMANDMAPPING, HAPJsonUtility.buildMapJson(m_commandMapping));
+		jsonMap.put(SERVICEMAPPING, HAPJsonUtility.buildMapJson(m_serviceMapping));
 	}
 }

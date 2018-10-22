@@ -425,6 +425,7 @@ public class HAPConstant {
 		public static final String UITAG_PARM_CONTEXT = "context";
 		public static final String UITAG_PARM_EVENT = "event";
 		public static final String UITAG_PARM_COMMAND = "command";
+		public static final String UITAG_PARM_SERVICE = "service";
 
 
 

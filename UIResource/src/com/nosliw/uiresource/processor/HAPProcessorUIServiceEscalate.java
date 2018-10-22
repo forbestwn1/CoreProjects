@@ -6,29 +6,29 @@ import java.util.Map;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
+import com.nosliw.data.core.service.HAPDefinitionServiceInfo;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.tag.HAPUITagId;
 import com.nosliw.uiresource.tag.HAPUITagManager;
 
-public class HAPProcessorUICommandEscalate {
+public class HAPProcessorUIServiceEscalate {
 
 	public static void process(HAPExecutableUIUnit exeUnit, HAPUITagManager uiTagMan) {
 		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(exeUnit.getType())) {
 			HAPExecutableUIUnitTag exeTag = (HAPExecutableUIUnitTag)exeUnit;
 			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeTag.getUIUnitTagDefinition().getTagName())).getContext())) {
-				Map<String, HAPDefinitionUICommand> mappedCommandDefs = new LinkedHashMap<String, HAPDefinitionUICommand>();
+				Map<String, HAPDefinitionServiceInfo> mappedServiceDefs = new LinkedHashMap<String, HAPDefinitionServiceInfo>();
 				
-				Map<String, String> nameMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstant.UITAG_PARM_COMMAND));
-				exeTag.setCommandMapping(nameMapping);
-				Map<String, HAPDefinitionUICommand> exeCommandDefs = exeTag.getCommandDefinitions();
-				for(String commandName : exeCommandDefs.keySet()) {
-					String mappedName = nameMapping.get(commandName);
-					if(mappedName==null)   mappedName = commandName;
-					mappedCommandDefs.put(mappedName, exeCommandDefs.get(commandName));
+				Map<String, String> nameMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeTag.getAttributes().get(HAPConstant.UITAG_PARM_SERVICE));
+				exeTag.setServiceMapping(nameMapping);
+				Map<String, HAPDefinitionServiceInfo> exeServiceDefs = exeTag.getServiceDefinitions();
+				for(String serviceName : exeServiceDefs.keySet()) {
+					String mappedName = nameMapping.get(serviceName);
+					if(mappedName==null)   mappedName = serviceName;
+					mappedServiceDefs.put(mappedName, exeServiceDefs.get(serviceName));
 				}
-				escalate(exeTag.getParent(), mappedCommandDefs, uiTagMan);
+				escalate(exeTag.getParent(), mappedServiceDefs, uiTagMan);
 			}
 		}
 
@@ -38,17 +38,17 @@ public class HAPProcessorUICommandEscalate {
 		}
 	}
 	
-	private static void escalate(HAPExecutableUIUnit exeUnit, Map<String, HAPDefinitionUICommand> commandsDef, HAPUITagManager uiTagMan) {
+	private static void escalate(HAPExecutableUIUnit exeUnit, Map<String, HAPDefinitionServiceInfo> servicesDef, HAPUITagManager uiTagMan) {
 		if(HAPConstant.UIRESOURCE_TYPE_RESOURCE.equals(exeUnit.getType())){
-			for(String commandName : commandsDef.keySet()) {
-				if(exeUnit.getCommandDefinition(commandName)==null) {
-					exeUnit.addCommandDefinition(commandsDef.get(commandName));
+			for(String serviceName : servicesDef.keySet()) {
+				if(exeUnit.getServiceDefinition(serviceName)==null) {
+					exeUnit.addServiceDefinition(servicesDef.get(serviceName));
 				}
 			}
 		}
 		else {
 			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(((HAPExecutableUIUnitTag)exeUnit).getUIUnitTagDefinition().getTagName())).getContext())) {
-				escalate(exeUnit.getParent(), commandsDef, uiTagMan);
+				escalate(exeUnit.getParent(), servicesDef, uiTagMan);
 			}
 		}
 	}

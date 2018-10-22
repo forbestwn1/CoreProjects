@@ -22,6 +22,8 @@ public class HAPDefinitionServiceResult extends HAPEntityInfoImp{
 		this.m_output = new LinkedHashMap<String, HAPDefinitionServiceOutput>();
 	}
 
+	public void addOutput(String name, HAPDefinitionServiceOutput output) {   this.m_output.put(name, output);   }
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{

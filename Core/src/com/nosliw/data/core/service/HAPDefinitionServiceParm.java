@@ -27,6 +27,10 @@ public class HAPDefinitionServiceParm extends HAPEntityInfoImp{
 	
 	public HAPData getDefault(){   return this.m_default;   }
 	
+	public void setCriteria(HAPDataTypeCriteria criteria) {  this.m_criteria = criteria;   }
+	
+	public void setDefault(HAPData data) { this.m_default = data;   }
+	
 	public HAPDefinitionServiceParm(){	}
 
 	@Override

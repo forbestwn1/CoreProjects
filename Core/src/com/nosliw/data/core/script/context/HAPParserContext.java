@@ -57,7 +57,7 @@ public class HAPParserContext {
 			((HAPContextNodeRootRelative)out).setPath((String)eleDefJson.opt(HAPContextNodeRootRelative.PARENTCATEGARY), path);
 			if(defaultJsonObj!=null)		((HAPContextNodeRootRelative)out).setDefaultValue(defaultJsonObj);
 			if(defJsonObj!=null) 	parseContextNodeFromJson(defJsonObj, (HAPContextNodeRootRelative)out);
-			((HAPContextNodeRootRelative)out).setInfo(info);
+			info.cloneToEntityInfo(out);
 		}
 		else if(defJsonObj!=null) {
 			//absolute
@@ -65,7 +65,7 @@ public class HAPParserContext {
 			//default value
 			if(defaultJsonObj!=null)		((HAPContextNodeRootAbsolute)out).setDefaultValue(defaultJsonObj);
 			if(defJsonObj!=null) 	parseContextNodeFromJson(defJsonObj, (HAPContextNodeRootAbsolute)out);
-			((HAPContextNodeRootAbsolute)out).setInfo(info);
+			info.cloneToEntityInfo(out);
 		}
 		else{
 			//constant

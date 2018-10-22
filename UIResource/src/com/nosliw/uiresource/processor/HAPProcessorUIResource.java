@@ -41,6 +41,8 @@ public class HAPProcessorUIResource {
 		HAPProcessorUIEventEscalate.process(out, uiTagMan);
 		
 		HAPProcessorUICommandEscalate.process(out, uiTagMan);
+
+		HAPProcessorUIServiceEscalate.process(out, uiTagMan);
 		
 		HAPProcessorResourceDependency.process(out, resourceMan);
 		

@@ -22,9 +22,6 @@ public class HAPDefinitionServiceInfo extends HAPEntityInfoImp{
 	public static String TAG = "tag";
 
 	@HAPAttribute
-	public static String INFO = "info";
-
-	@HAPAttribute
 	public static String INTERFACE = "interface";
 	
 	//service definition id
@@ -36,6 +33,7 @@ public class HAPDefinitionServiceInfo extends HAPEntityInfoImp{
 	
 	public HAPDefinitionServiceInfo() {
 		this.m_tags = new ArrayList<String>();
+		this.m_serviceInterface = new HAPInterfaceDefinitionService();
 	}
 
 	public String getId() {   return this.m_id;  }

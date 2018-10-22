@@ -34,10 +34,21 @@ public abstract class HAPContextNodeRootVariable extends HAPContextNode implemen
 	@Override
 	public HAPInfo getInfo() {	return this.m_info.getInfo(); 	}
 
+	@Override
+	public void setName(String name) { this.m_info.setName(name);	}
+
+	@Override
+	public void setDescription(String description) {  this.m_info.setDescription(description);  }
+
+	@Override
+	public void setInfo(HAPInfo info) {   this.m_info.setInfo(info);  }
+
+	@Override
+	public void cloneToEntityInfo(HAPEntityInfo entityInfo) {   this.m_info.cloneToEntityInfo(entityInfo); }
+	
+	
 	public Object getDefaultValue(){   return this.m_defaultValue;  }
 
-	public void setInfo(HAPEntityInfoImp info) {  this.m_info = info;   }
-	
 	public void setDefaultValue(Object defaultValue){		this.m_defaultValue = defaultValue;	}
 
 	protected void toSolidContextNode(HAPContextNodeRootVariable solidRootNode, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {

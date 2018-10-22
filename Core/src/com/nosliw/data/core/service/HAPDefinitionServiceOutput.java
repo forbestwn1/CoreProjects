@@ -18,6 +18,8 @@ public class HAPDefinitionServiceOutput extends HAPEntityInfoImp{
 	
 	public HAPDataTypeCriteria getCriteria(){   return this.m_criteria;   }
 	
+	public void setCriteria(HAPDataTypeCriteria criteria) {   this.m_criteria = criteria;   }
+	
 	public HAPDefinitionServiceOutput(){
 	}
 

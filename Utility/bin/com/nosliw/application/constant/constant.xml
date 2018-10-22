@@ -512,6 +512,7 @@
 			<definition name="UITAG_PARM_CONTEXT" value="context"/>
 			<definition name="UITAG_PARM_EVENT" value="event"/>
 			<definition name="UITAG_PARM_COMMAND" value="command"/>
+			<definition name="UITAG_PARM_SERVICE" value="service"/>
 
 			<definition type="space"/>
 			<definition name="DATAOPERATION_VAR_TYPE_IN" value="parm"/>

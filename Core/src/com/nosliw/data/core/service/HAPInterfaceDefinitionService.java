@@ -24,17 +24,19 @@ public class HAPInterfaceDefinitionService extends HAPSerializableImp{
 	private Map<String, HAPDefinitionServiceParm> m_parms;
 	
 	//service output
-	private Map<String, HAPDefinitionServiceResult> m_result;
+	private Map<String, HAPDefinitionServiceResult> m_results;
 	
 
 	public HAPInterfaceDefinitionService() {
 		this.m_parms = new LinkedHashMap<String, HAPDefinitionServiceParm>();
-		this.m_result = new LinkedHashMap<String, HAPDefinitionServiceResult>();
+		this.m_results = new LinkedHashMap<String, HAPDefinitionServiceResult>();
 	}
 
 	public Map<String, HAPDefinitionServiceParm> getParms(){  return this.m_parms;   }
+	public void addParm(String name, HAPDefinitionServiceParm parm) { this.m_parms.put(name, parm);  }
 	
-	public Map<String, HAPDefinitionServiceResult> getOutput(){ return this.m_result;  }
+	public Map<String, HAPDefinitionServiceResult> getResults(){ return this.m_results;  }
+	public void addResult(String name, HAPDefinitionServiceResult result) {  this.m_results.put(name, result);  }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -45,7 +47,7 @@ public class HAPInterfaceDefinitionService extends HAPSerializableImp{
 			for(int i = 0; i<resultArray.length(); i++){
 				HAPDefinitionServiceResult resultEle = new HAPDefinitionServiceResult();
 				resultEle.buildObject(resultArray.get(i), HAPSerializationFormat.JSON);
-				this.m_result.put(resultEle.getName(), resultEle);
+				this.m_results.put(resultEle.getName(), resultEle);
 			}
 			
 			JSONArray parmsArray = objJson.getJSONArray(PARM);

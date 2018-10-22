@@ -26,7 +26,6 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
-import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.expressionscript.HAPDefinitionEmbededScript;
 import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionUtility;
@@ -229,7 +228,7 @@ public class HAPParserUIResource {
 				JSONArray serviceListJson = new JSONArray(childEle.html());
 				for(int i=0; i<serviceListJson.length(); i++) {
 					JSONObject serviceJson = serviceListJson.getJSONObject(i);
-					HAPContextEntity serviceDef = new HAPContextEntity();
+					HAPDefinitionUICommand serviceDef = new HAPDefinitionUICommand();
 					serviceDef.buildObject(serviceJson, HAPSerializationFormat.JSON);
 					resourceUnit.addServiceDefinition(serviceDef);
 				}

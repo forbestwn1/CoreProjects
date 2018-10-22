@@ -176,10 +176,13 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	public HAPDefinitionUIEvent getEventDefinition(String name) {   return this.m_eventsDefinition.get(name);  }
 	public void addEventDefinition(HAPDefinitionUIEvent eventDef) {  this.m_eventsDefinition.put(eventDef.getName(), eventDef);    }
 	
+	public void addServiceDefinition(HAPDefinitionServiceInfo serviceDef) {   this.m_servicesDefinition.put(serviceDef.getName(), serviceDef);   }
 	public Map<String, HAPDefinitionServiceInfo> getServiceDefinitions(){  return this.m_servicesDefinition;   }
+	public HAPDefinitionServiceInfo getServiceDefinition(String name) {   return this.m_servicesDefinition.get(name);  }
 
 	public void addCommandDefinition(HAPDefinitionUICommand commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
 	public Map<String, HAPDefinitionUICommand> getCommandDefinitions() {   return this.m_commandsDefinition;  }
+	public HAPDefinitionUICommand getCommandDefinition(String name) {   return this.m_commandsDefinition.get(name);  }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

@@ -27,5 +27,4 @@ public class HAPContextNodeRootAbsolute extends HAPContextNodeRootVariable{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 	}
-
 }

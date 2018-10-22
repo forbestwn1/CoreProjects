@@ -12,11 +12,17 @@ import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPContextNodeRoot;
 import com.nosliw.data.core.script.context.HAPContextNodeRootConstant;
+import com.nosliw.data.core.script.context.HAPContextNodeRootVariable;
 import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPProcessorContextRelative;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.service.HAPDefinitionServiceInfo;
+import com.nosliw.data.core.service.HAPDefinitionServiceOutput;
+import com.nosliw.data.core.service.HAPDefinitionServiceParm;
+import com.nosliw.data.core.service.HAPDefinitionServiceResult;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
@@ -118,6 +124,62 @@ public class HAPProcessorUIContext {
 			
 			uiExe.addCommandDefinition(processedCommendDef);
 		}
+		
+		//process service defined in resource
+		Map<String, HAPDefinitionUICommand> servicesDef = uiExe.getUIUnitDefinition().getCommandDefinition();
+		for(String name : servicesDef.keySet()) {
+			HAPDefinitionUICommand serviceDef = servicesDef.get(name);
+			HAPDefinitionServiceInfo processedServiceDef = new HAPDefinitionServiceInfo();
+			
+			serviceDef.cloneToEntityInfo(processedServiceDef);
+			HAPContext processedParmContext = HAPProcessorContextRelative.process(serviceDef.getParms(), uiExe.getContext(), null, contextProcessorEnv);
+			for(String parmName : processedParmContext.getElementNames()) {
+				HAPContextNodeRoot contextParm = processedParmContext.getElement(parmName);
+				HAPDefinitionServiceParm serviceParm = new HAPDefinitionServiceParm(); 
+				contextParm.cloneToEntityInfo(serviceParm);
+				
+				String contextType = contextParm.getType();
+				switch(contextType) {
+				case HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE:
+				case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
+					HAPContextNodeRootVariable varRootNode = (HAPContextNodeRootVariable)contextParm;
+					serviceParm.setCriteria(varRootNode.getDefinition().getValue());
+					break;
+				case HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT:
+					HAPContextNodeRootConstant constantRootNode = (HAPContextNodeRootConstant)contextParm;
+					serviceParm.setDefault(constantRootNode.getDataValue());
+					break;
+				}
+				processedServiceDef.getInterface().addParm(parmName, serviceParm);
+			}
+			
+			Map<String, HAPContext> resultsContext = serviceDef.getResults();
+			for(String resultName : resultsContext.keySet()) {
+				HAPContext processedResultContext = HAPProcessorContextRelative.process(resultsContext.get(resultName), uiExe.getContext(), null, contextProcessorEnv);
+				HAPDefinitionServiceResult result = new HAPDefinitionServiceResult();
+				for(String outputName : processedResultContext.getElementNames()) {
+					HAPContextNodeRoot contextOutput = processedResultContext.getElement(outputName);
+					HAPDefinitionServiceOutput serviceOutput = new HAPDefinitionServiceOutput(); 
+					contextOutput.cloneToEntityInfo(serviceOutput);
+					
+					String contextType = contextOutput.getType();
+					switch(contextType) {
+					case HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE:
+					case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
+						HAPContextNodeRootVariable varRootNode = (HAPContextNodeRootVariable)contextOutput;
+						serviceOutput.setCriteria(varRootNode.getDefinition().getValue());
+						break;
+					case HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT:
+						break;
+					}
+					result.addOutput(outputName, serviceOutput);
+					processedServiceDef.getInterface().addResult(resultName, result);
+				}
+				
+			}
+			uiExe.addServiceDefinition(processedServiceDef);
+		}
+		
 		
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : uiExe.getUITags()) {

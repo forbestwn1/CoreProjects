@@ -38,10 +38,13 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 
 	public Object getInfoValue(String name) {  return this.m_info.getValue(name);   }
 	
-	public void setInfo(HAPInfo info) {  this.m_info = info;  }
+	@Override
+	public void setInfo(HAPInfo info) {  this.m_info = info.cloneInfo();  }
 	
+	@Override
 	public void setName(String name) {  this.m_name = name;    }
 
+	@Override
 	public void setDescription(String description) {   this.m_description = description;   }
 
 	public HAPEntityInfoImp clone() {
@@ -50,10 +53,10 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 		return out;
 	}
 	
-	public void cloneToEntityInfo(HAPEntityInfoImp entityInfo) {
-		entityInfo.m_info = this.m_info.cloneInfo();
-		entityInfo.m_name = this.m_name;
-		entityInfo.m_description = this.m_description;
+	public void cloneToEntityInfo(HAPEntityInfo entityInfo) {
+		entityInfo.setInfo(this.m_info.cloneInfo());
+		entityInfo.setName(this.m_name);
+		entityInfo.setDescription(this.m_description);
 	}
 	
 	@Override

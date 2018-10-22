@@ -21,5 +21,13 @@ public interface HAPEntityInfo extends HAPSerializable{
 	String getName();
 
 	String getDescription();
+
+	void setName(String name);
+	
+	void setDescription(String description);
+	
+	void setInfo(HAPInfo info);
+	
+	void cloneToEntityInfo(HAPEntityInfo entityInfo);
 	
 }
