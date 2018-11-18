@@ -486,4 +486,13 @@ public class HAPConstant {
 		public static final String MINIAPPUIENTRY_MAINMOBILE_SERVICE_MAIN = "main";
 
 
+
+		public static final String ACTIVITY_TYPE_START = "start";
+		public static final String ACTIVITY_TYPE_END = "end";
+		public static final String ACTIVITY_TYPE_EXPRESSION = "expression";
+		public static final String ACTIVITY_TYPE_LOOP = "loop";
+		public static final String ACTIVITY_TYPE_BRANCH = "branch";
+		public static final String ACTIVITY_TYPE_CALLPROCESS = "callProcess";
+
+
 }

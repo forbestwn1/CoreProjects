@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
@@ -124,6 +126,20 @@ public class HAPContext extends HAPSerializableImp{
 		return out;
 	}
 	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		try{
+			super.buildObjectByJson(json);
+			JSONObject jsonObj = (JSONObject)json;
+			HAPParserContext.parseContext(jsonObj, this);
+			return true;  
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ELEMENT, HAPJsonUtility.buildJson(m_elements, HAPSerializationFormat.JSON));

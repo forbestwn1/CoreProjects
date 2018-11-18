@@ -103,12 +103,12 @@ public class HAPRuntimeRhinoMain {
 	}
 	
 	private static void executeSuites(String[] suites, HAPRuntimeEnvironmentImpRhino runtimeEnvironment){
-		for(String suiteName : suites){
-			HAPDefinitionTaskSuiteForTest suite = (HAPDefinitionTaskSuiteForTest)runtimeEnvironment.getTaskManager().getTaskDefinitionSuite(suiteName);
-			HAPLogTask taskLog = new HAPLogTask();
-			HAPData out = runtimeEnvironment.getTaskManager().executeTask("name", suite, suite.getVariableData(), taskLog);
-			processResult(suite, HAPServiceData.createSuccessData(out));
-		}
+//		for(String suiteName : suites){
+//			HAPDefinitionTaskSuiteForTest suite = (HAPDefinitionTaskSuiteForTest)runtimeEnvironment.getTaskManager().getTaskDefinitionSuite(suiteName);
+//			HAPLogTask taskLog = new HAPLogTask();
+//			HAPData out = runtimeEnvironment.getTaskManager().executeTask("name", suite, suite.getVariableData(), taskLog);
+//			processResult(suite, HAPServiceData.createSuccessData(out));
+//		}
 	}
 	
 	public static void main(String[] args){
@@ -116,7 +116,7 @@ public class HAPRuntimeRhinoMain {
 		//module init
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 		
-		HAPTaskDefinitionSuiteImporter.importTaskDefinitionSuiteFromFolder(HAPFileUtility.getClassFolderName(HAPExpressionTest.class), runtimeEnvironment.getTaskManager());
+//		HAPTaskDefinitionSuiteImporter.importTaskDefinitionSuiteFromFolder(HAPFileUtility.getClassFolderName(HAPExpressionTest.class), runtimeEnvironment.getTaskManager());
 		
 		executeSuites(new String[]{
 //				"expression0",

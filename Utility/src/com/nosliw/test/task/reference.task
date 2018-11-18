@@ -1,12 +1,14 @@
 {
-	"name": "expression",
-	"description": "task with expression step",
+	"name": "reference",
+	"description": "task with reference activity",
 	"context" : {
-	
+		"public" : {
+		}
 	},
-	"task": [
+	"process": [
 		{
 			"name": "main",
+			"description": "main process",
 			"context" : {
 				"public" : {
 					baseVar : {
@@ -33,7 +35,7 @@
 				}
 			
 			},
-			"step": [
+			"activity": [
 				{
 					"name" : "callTask",
 					"type" : "task",
@@ -50,18 +52,18 @@
 						"toVar1" : ""
 					},
 					"outMapping" : {
-						"success" : "success",
-						"fail" : "fail"
+						"success" : "success1",
+						"fail" : "fail1"
 					},
 					"result" : {
-						"success" : {
+						"success1" : {
 							"next" : "exit",
 							"export"{
 								"error.code" : "errorCode",
 								"error.data" : "errorData"
 							}   
 						},
-						"fail" : {
+						"fail1" : {
 							"next" : "fail",
 							"export"{
 								"error.code" : "errorCode",
@@ -108,7 +110,7 @@
 			],
 		},
 		{
-			"name": "referenced",
+			"name": "reference",
 			"context" : {
 				"public" : {
 					baseVar1 : {
@@ -135,10 +137,10 @@
 				}
 			
 			},
-			"step": [
+			"activity": [
 				{
 					"name" : "",
-					"type" : "expression",
+					"type" : "reference",
 					"expression": "!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)",
 					"result" : {
 						"success" : {

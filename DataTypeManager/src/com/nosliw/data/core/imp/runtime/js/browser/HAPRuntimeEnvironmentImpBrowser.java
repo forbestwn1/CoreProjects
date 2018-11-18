@@ -7,6 +7,7 @@ import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceManagerJSImp;
+import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
@@ -15,7 +16,6 @@ import com.nosliw.data.core.runtime.js.browser.HAPGatewayLoadTestExpression;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.service1.HAPGatewayService;
 import com.nosliw.data.core.service1.HAPManagerService;
-import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
 
 public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
@@ -45,7 +45,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPRuntimeImpRhino runtime = new HAPRuntimeImpRhino(this); 
 		HAPGatewayManager gatewayManager = new HAPGatewayManager(); 
 		HAPExpressionSuiteManager expressionManager = new HAPExpressionSuiteManager(); 		
-		HAPManagerTask taskManager = new HAPManagerTask(runtime);
+		HAPManagerProcess taskManager = new HAPManagerProcess();
 		HAPManagerService serviceManager = new HAPManagerService();
 		
 		init(resourceMan,

@@ -10,6 +10,12 @@ import com.nosliw.data.core.criteria.HAPCriteriaParser;
 
 public class HAPParserContext {
 
+	public static HAPContextGroup parseContextGroup(JSONObject contextGroupJson) {
+		HAPContextGroup out = new HAPContextGroup();
+		parseContextGroup(contextGroupJson, out);
+		return out;
+	}
+	
 	//parse context group
 	public static void parseContextGroup(JSONObject contextGroupJson, HAPContextGroup contextGroup) {
 		JSONObject groupJson = contextGroupJson.optJSONObject(HAPContextGroup.GROUP);
@@ -21,6 +27,12 @@ public class HAPParserContext {
 			}
 		}
 		contextGroup.getInfo().buildObject(contextGroupJson.opt(HAPContextGroup.INFO), HAPSerializationFormat.JSON);
+	}
+
+	public static HAPContext parseContext(JSONObject contextJson) {
+		HAPContext out = new HAPContext();
+		parseContext(contextJson, out);
+		return out;
 	}
 	
 	public static void parseContext(JSONObject contextJson, HAPContext context) {

@@ -563,6 +563,13 @@
 			<definition name="MINIAPPUIENTRY_MAINMOBILE_DATA_MAIN" value="main"/>
 			<definition name="MINIAPPUIENTRY_MAINMOBILE_SERVICE_MAIN" value="main"/>
 
+			<definition type="space"/>
+			<definition name="ACTIVITY_TYPE_START" value="start"/>
+			<definition name="ACTIVITY_TYPE_END" value="end"/>
+			<definition name="ACTIVITY_TYPE_EXPRESSION" value="expression"/>
+			<definition name="ACTIVITY_TYPE_LOOP" value="loop"/>
+			<definition name="ACTIVITY_TYPE_BRANCH" value="branch"/>
+			<definition name="ACTIVITY_TYPE_CALLPROCESS" value="callProcess"/>
 			
 		</definitions>
 	</constants>

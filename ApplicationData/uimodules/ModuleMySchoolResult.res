@@ -4,10 +4,6 @@
 			definition : "pages.schoolList.schoolList",
 		}
 	},
-	constants : {
-	
-	},
-	
 	init : [
 		{
 			name:"presentSchoolList",

@@ -140,16 +140,19 @@
 									value: "This is my world!"
 								},
 								dd : "HELLO!!!!",
-								cc : [
-									{
-										dataTypeId: "test.string;1.0.0",
-										value: "This is my world 1111!"
-									},
-									{
-										dataTypeId: "test.string;1.0.0",
-										value: "This is my world 2222!"
-									},
-								]
+								cc : {
+									dataTypeId: "test.array;1.0.0",
+									value: [
+										{
+											dataTypeId: "test.string;1.0.0",
+											value: "This is my world 1111!"
+										},
+										{
+											dataTypeId: "test.string;1.0.0",
+											value: "This is my world 2222!"
+										},
+									]
+								},
 							}
 						}
 					},

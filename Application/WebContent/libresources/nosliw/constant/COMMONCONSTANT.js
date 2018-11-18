@@ -309,7 +309,13 @@ var COMMONCONSTANT=
   "MINIAPPUIENTRY_MAINMOBILE_MODULE_SETTING": "setting",
   "MINIAPPUIENTRY_MAINMOBILE_MODULE_APPLICATION": "application",
   "MINIAPPUIENTRY_MAINMOBILE_DATA_MAIN": "main",
-  "MINIAPPUIENTRY_MAINMOBILE_SERVICE_MAIN": "main"
+  "MINIAPPUIENTRY_MAINMOBILE_SERVICE_MAIN": "main",
+  "ACTIVITY_TYPE_START": "start",
+  "ACTIVITY_TYPE_END": "end",
+  "ACTIVITY_TYPE_EXPRESSION": "expression",
+  "ACTIVITY_TYPE_LOOP": "loop",
+  "ACTIVITY_TYPE_BRANCH": "branch",
+  "ACTIVITY_TYPE_CALLPROCESS": "callProcess"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

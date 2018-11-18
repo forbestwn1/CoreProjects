@@ -1,13 +1,14 @@
 {
 	"name": "expression",
-	"description": "task with expression step",
+	"description": "process with expression activity",
 	"context" : {
-	
+		"public" : {
+		}
 	},
-	"task": [
+	"process": [
 		{
 			"name": "main",
-			"description": "step",
+			"description": "main process",
 			"context" : {
 				"public" : {
 					baseVar : {
@@ -30,49 +31,74 @@
 							dataTypeId: "test.integer",
 							value: 7
 						}
-					}
-				}
+					},
+				},
+				"protected" : {
+					expressionResultVar : {
+					},
+					errorCodeVar : {
+					}				
+					errorDataVar : {
+					}				
+				} 
 			
 			},
-			"step": [
+			"activity": [
 				{
-					"name" : "",
+					"id" : "expressionActivityId", 
+					"name" : "expressionActivity", 
 					"type" : "expression",
 					"expression": "!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)",
+					"input" : {
+						element : {
+						},
+						info : {
+						}
+					},
 					"result" : {
 						"success" : {
-							"next" : "exit",
-							"export"{
-								output : "expressionResult"
+							"next" : "successEndId",
+							"output"{
+								expressionResultVar : {
+									"path" : "output"
+								}
 							}   
 						},
 						"fail" : {
-							"next" : "fail",
-							"export"{
-								"error.code" : "errorCode",
-								"error.data" : "errorData"
+							"next" : "failEndId",
+							"output"{
+								"errorCodeVar" : {
+									"path" : "error.code",
+								},
+								"errorDataVar" : {
+									"path" : "error.data",
+								}
 							}   
 						}
 					}
 				},
 				{
-					"name" : "exit",
-					"type" : "exit",
-					"result" : {
-						name : "success",
-						output : "expressionResult"
-					},
+					"id" : "successEndId",
+					"name" : "successEnd",
+					"type" : "end",
+					"output" : {
+						"output" : {
+							path : "expressionResultVar" 
+						}	
+					}
 				},
 				{
-					"name" : "fail",
-					"type" : "exit",
-					"result" : {
-						name : "fail",
-						output : {
-							"errorCode" : "errorCode",
-							"errorData" : "errorData"
+					"id" : "failEndId",
+					"name" : "failEnd",
+					"type" : "end",
+					"output" : {
+						"errorCode" : {
+							path: "errorCodeVar",
 						}
-					},
+						"errorData" : {
+							path : "errorDataVar"
+						}
+					}
 				},
 			],
 		},

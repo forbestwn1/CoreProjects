@@ -40,15 +40,93 @@
 					"container" : "baseVar",
 					"element" : "ele",
 					"elementTask" : {
-						"context" : {
+						task : {
+							"context" : {
+								
+							},
+							"step" : [
 							
+							],		
 						},
-						"step" : [
-						
-						],		
+						"eleinMapping" : {
+							"baseVar1" : {
+								"path" : "baseVar"
+							},
+							"fromVar1" : {
+								"value" : {
+								
+								}
+							},
+							"toVar1" : ""
+						},
+						"eleoutMapping" : {
+							"success" : "success",
+							"fail" : "fail"
+						},
+						"eleresult" : {
+							"success" : {
+								"next" : "exit",
+								"export"{
+									"error.code" : "errorCode",
+									"error.data" : "errorData"
+								}   
+							},
+							"fail" : {
+								"next" : "fail",
+								"export"{
+									"error.code" : "errorCode",
+									"error.data" : "errorData"
+								}   
+							}
+						},
 					},
 					"result" : {
-					
+						next : "",
+						
+					}
+				},
+				{
+					"name" : "loopTask",
+					"type" : "loop",
+					"container" : "baseVar",
+					"element" : "ele",
+					"referenceTask" : {
+						"refTaskName" : "referenced",
+						"inMapping" : {
+							"baseVar1" : {
+								"path" : "baseVar"
+							},
+							"fromVar1" : {
+								"value" : {
+								
+								}
+							},
+							"toVar1" : ""
+						},
+						"outMapping" : {
+							"success" : "success1",
+							"fail" : "fail1"
+						},
+						"result" : {
+							"success1" : {
+								"next" : "exit",
+								"export"{
+									"error.code" : "errorCode",
+									"error.data" : "errorData"
+								}   
+							},
+							"fail1" : {
+								"next" : "fail",
+								"export"{
+									"error.code" : "errorCode",
+									"error.data" : "errorData"
+								}   
+							}
+						}
+					}
+					"result" : {
+						next : "",
+						
 					}
 				},
 				{
