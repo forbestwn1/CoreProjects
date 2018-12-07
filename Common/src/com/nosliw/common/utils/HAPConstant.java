@@ -185,6 +185,14 @@ public class HAPConstant {
 
 
 
+		public static final String CONTEXT_ELEMENTTYPE_RELATIVE = "relative";
+		public static final String CONTEXT_ELEMENTTYPE_DATA = "data";
+		public static final String CONTEXT_ELEMENTTYPE_VALUE = "value";
+		public static final String CONTEXT_ELEMENTTYPE_CONSTANT = "constant";
+		public static final String CONTEXT_ELEMENTTYPE_NODE = "node";
+
+
+
 		public static final String ENTITY_CRITICALVALUE_OTHER = "other";
 
 

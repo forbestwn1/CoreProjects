@@ -25,7 +25,7 @@ public class HAPContext extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String INFO = "info";
 	
-	private Map<String, HAPContextDefinitionRoot> m_elements;
+	private Map<String, HAPContextNodeRoot> m_elements;
 	
 	private HAPInfo m_info;
 	
@@ -34,19 +34,19 @@ public class HAPContext extends HAPSerializableImp{
 	}
 	
 	public void empty() {
-		this.m_elements = new LinkedHashMap<String, HAPContextDefinitionRoot>();
+		this.m_elements = new LinkedHashMap<String, HAPContextNodeRoot>();
 		this.m_info = new HAPInfoImpSimple();
 	}
 	
 	public HAPInfo getInfo() {   return this.m_info;   }
 	
 	public Set<String> getElementNames(){  return this.m_elements.keySet();   }
-	public Map<String, HAPContextDefinitionRoot> getElements(){  return this.m_elements;  }
-	public HAPContextDefinitionRoot getElement(String name) {  return this.m_elements.get(name);   }
-	public void addElement(String name, HAPContextDefinitionRoot rootEle){	this.m_elements.put(name, rootEle);	}
+	public Map<String, HAPContextNodeRoot> getElements(){  return this.m_elements;  }
+	public HAPContextNodeRoot getElement(String name) {  return this.m_elements.get(name);   }
+	public void addElement(String name, HAPContextNodeRoot rootEle){	this.m_elements.put(name, rootEle);	}
 	
 	public void hardMergeWith(HAPContext context){
-		Map<String, HAPContextDefinitionRoot> eles = context.getElements();
+		Map<String, HAPContextNodeRoot> eles = context.getElements();
 		for(String rootName : eles.keySet()){
 			this.m_elements.put(rootName, eles.get(rootName));
 		}
@@ -55,9 +55,9 @@ public class HAPContext extends HAPSerializableImp{
 	public Map<String, Object> getConstantValue(){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
 		for(String name : this.m_elements.keySet()) {
-			HAPContextDefinitionRoot contextRoot = this.getElement(name);
-			if(contextRoot.isConstant()) {
-				HAPContextDefinitionLeafConstant constantRootNode = (HAPContextDefinitionLeafConstant)contextRoot.getDefinition();
+			HAPContextNodeRoot rootNode = this.getElement(name);
+			if(rootNode.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
+				HAPContextNodeRootConstant constantRootNode = (HAPContextNodeRootConstant)rootNode;
 				Object value = constantRootNode.getDataValue();
 				if(value==null)   value = constantRootNode.getValue();
 				out.put(name, value);
@@ -69,10 +69,10 @@ public class HAPContext extends HAPSerializableImp{
 	public HAPContext getVariableContext() {
 		HAPContext out = new HAPContext();
 		for(String name : this.m_elements.keySet()) {
-			HAPContextDefinitionRoot contextRoot = this.getElement(name);
-			if(!contextRoot.isConstant()) {
-				out.addElement(name, contextRoot.cloneContextDefinitionRoot());
-			}			
+			HAPContextNodeRoot rootNode = this.getElement(name);
+			if(rootNode.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE) || rootNode.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE)) {
+				out.addElement(name, rootNode.cloneContextNodeRoot());
+			}
 		}
 		return out;
 	}
@@ -83,30 +83,36 @@ public class HAPContext extends HAPSerializableImp{
 	//   return[1]   closest child node
 	//   return[2]   remaining path
 	public void discoverChild(String rootName, String path, HAPInfoRelativeContextResolve resolved){
-		HAPContextDefinitionRoot contextRoot = this.m_elements.get(rootName);
-		resolved.rootNode = contextRoot;
-		if(contextRoot!=null) {
-			if(contextRoot.isConstant()) {
-				resolved.referedNode = null;
-				resolved.remainPath = path;
-			}
-			else {
-				HAPContextDefinitionElement outEle = contextRoot.getDefinition();
+		HAPContextNodeRoot rootNodeNode = this.m_elements.get(rootName);
+		resolved.rootNode = rootNodeNode;
+		if(rootNodeNode!=null) {
+			switch(rootNodeNode.getType()) {
+			case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
+			case HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE:
+				HAPContextNode outNode = (HAPContextNode)rootNodeNode;
 				String remainingPath = null;
 				String[] pathSegs = HAPNamingConversionUtility.parseComponentPaths(path);
 				for(String pathSeg : pathSegs){
 					if(remainingPath==null) {
-						HAPContextDefinitionElement ele = null;
-						if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(outEle.getType())) 	ele = ((HAPContextDefinitionNode)outEle).getChildren().get(pathSeg);
-						if(ele==null) 		remainingPath = pathSeg;
-						else 	outEle = ele;
+						HAPContextNode node = outNode.getChildren().get(pathSeg);
+						if(node==null) {
+							remainingPath = pathSeg;
+						}
+						else {
+							outNode = node;
+						}
 					}
 					else {
 						remainingPath = HAPNamingConversionUtility.cascadePath(remainingPath, pathSeg);
 					}
 				}
-				resolved.referedNode = outEle;
+				resolved.referedNode = outNode;
 				resolved.remainPath = remainingPath;
+				break;
+			case HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT:
+				resolved.referedNode = null;
+				resolved.remainPath = path;
+				break;
 			}
 		}
 	}
@@ -115,7 +121,7 @@ public class HAPContext extends HAPSerializableImp{
 	public HAPContext clone() {
 		HAPContext out = new HAPContext();
 		for(String name : this.m_elements.keySet()) {
-			out.addElement(name, this.m_elements.get(name).cloneContextDefinitionRoot());
+			out.addElement(name, this.m_elements.get(name).cloneContextNodeRoot());
 		}
 		return out;
 	}

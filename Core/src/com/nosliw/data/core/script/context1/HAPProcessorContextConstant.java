@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.operand.HAPOperandUtility;
@@ -44,9 +45,9 @@ public class HAPProcessorContextConstant {
 				//merge constants with parent
 				for(String contextCategary : HAPContextGroup.getInheritableContextTypes()) {
 					for(String name : parentContextGroup.getContext(contextCategary).getElementNames()) {
-						if(parentContextGroup.getElement(contextCategary, name).isConstant()) {
+						if(parentContextGroup.getElement(contextCategary, name).getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
 							if(contextGroup.getElement(contextCategary, name)==null) {
-								out.addElement(name, parentContextGroup.getElement(contextCategary, name).cloneContextDefinitionRoot(), contextCategary);
+								out.addElement(name, parentContextGroup.getElement(contextCategary, name).cloneContextNodeRoot(), contextCategary);
 							}
 						}
 					}
@@ -66,37 +67,36 @@ public class HAPProcessorContextConstant {
 			HAPEnvContextProcessor contextProcessorEnv){
 		HAPContextGroup out = new HAPContextGroup(originalContextGroup.getInfo());
 		for(String categary : HAPContextGroup.getAllContextTypes()) {
-			Map<String, HAPContextDefinitionRoot> cotextDefRoots = originalContextGroup.getElements(categary);
-			for(String name : cotextDefRoots.keySet()) {
-				HAPContextDefinitionRoot contextDefRoot = cotextDefRoots.get(name);
-				if(contextDefRoot.isConstant()) {
-					solidateConstantDefRoot(new HAPContextDefinitionRootId(categary, name), originalContextGroup, out, contextProcessorEnv);
+			Map<String, HAPContextNodeRoot> nodes = originalContextGroup.getElements(categary);
+			for(String name : nodes.keySet()) {
+				HAPContextNodeRoot node = nodes.get(name);
+				if(node.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
+					solidateConstantNode(new HAPContextRootNodeId(categary, name), originalContextGroup, out, contextProcessorEnv);
 				}
 				else {
 					//other type, just do clone
-					out.addElement(name, contextDefRoot.cloneContextDefinitionRoot(), categary);
+					out.addElement(name, node.cloneContextNodeRoot(), categary);
 				}
 			}
 		}
 		return out;
 	}
 
-	static private HAPContextDefinitionRoot solidateConstantDefRoot(
-			HAPContextDefinitionRootId contextDefRootId, 
+	static private HAPContextNodeRootConstant solidateConstantNode(
+			HAPContextRootNodeId nodeId, 
 			HAPContextGroup originalContextGroup,
 			HAPContextGroup targetContextGroup,
 			HAPEnvContextProcessor contextProcessorEnv) {
 
-		HAPContextDefinitionRoot out = (HAPContextDefinitionRoot)targetContextGroup.getElement(contextDefRootId);
+		HAPContextNodeRootConstant out = (HAPContextNodeRootConstant)targetContextGroup.getElement(nodeId);
 		if(out==null) {
 			//calculate the value 
-			HAPContextDefinitionRoot orgNode = (HAPContextDefinitionRoot)originalContextGroup.getElement(contextDefRootId);
-			out = orgNode.cloneContextDefinitionRoot();
-			HAPContextDefinitionLeafConstant contextDefEle = (HAPContextDefinitionLeafConstant)orgNode.getDefinition();
-			Object data = processConstantDefJsonNode(contextDefEle.getValue(), originalContextGroup, targetContextGroup, contextProcessorEnv);
-			if(data==null)   data = contextDefEle.getValue();
-			contextDefEle.setValue(data);
-			targetContextGroup.addElement(contextDefRootId.getName(), out, contextDefRootId.getCategary());
+			HAPContextNodeRootConstant orgNode = (HAPContextNodeRootConstant)originalContextGroup.getElement(nodeId);
+			out = (HAPContextNodeRootConstant)orgNode.cloneContextNodeRoot();
+			Object data = processConstantDefJsonNode(orgNode.getValue(), originalContextGroup, targetContextGroup, contextProcessorEnv);
+			if(data==null)   data = orgNode.getValue();
+			out.setValue(data);
+			targetContextGroup.addElement(nodeId.getName(), out, nodeId.getCategary());
 		}
 		return out;
 	}
@@ -191,19 +191,19 @@ public class HAPProcessorContextConstant {
 				//build constants data required by expression
 				HAPContextScriptExpressionProcess expProcessContext = new HAPContextScriptExpressionProcess();
 				for(String constantName : expConstantNames){
-					HAPContextDefinitionRootId refNodeId = solveReferencedNodeId(new HAPContextDefinitionRootId(constantName), originalContextGroup);
-					HAPContextDefinitionRoot contextDefRoot = targetContextGroup.getElement(refNodeId);
-					if(contextDefRoot==null) 	contextDefRoot = solidateConstantDefRoot(refNodeId, originalContextGroup, targetContextGroup, contextProcessorEnv);
-					expProcessContext.addConstant(constantName, ((HAPContextDefinitionLeafConstant)contextDefRoot.getDefinition()).getDataValue());
+					HAPContextRootNodeId refNodeId = solveReferencedNodeId(new HAPContextRootNodeId(constantName), originalContextGroup);
+					HAPContextNodeRootConstant node = (HAPContextNodeRootConstant)targetContextGroup.getElement(refNodeId);
+					if(node==null) 	node = solidateConstantNode(refNodeId, originalContextGroup, targetContextGroup, contextProcessorEnv);
+					expProcessContext.addConstant(constantName, node.getDataValue());
 				}
 				
 				//build constants required by script
 				Map<String, Object> scriptConstants = new LinkedHashMap<String, Object>();
 				for(String scriptConstantName : scriptConstantNames){
-					HAPContextDefinitionRootId refNodeId = solveReferencedNodeId(new HAPContextDefinitionRootId(scriptConstantName), originalContextGroup);
-					HAPContextDefinitionRoot contextDefRoot = targetContextGroup.getElement(refNodeId);
-					if(contextDefRoot==null) 	contextDefRoot = solidateConstantDefRoot(refNodeId, originalContextGroup, targetContextGroup, contextProcessorEnv);
-					scriptConstants.put(scriptConstantName, ((HAPContextDefinitionLeafConstant)contextDefRoot.getDefinition()).getValue());
+					HAPContextRootNodeId refNodeId = solveReferencedNodeId(new HAPContextRootNodeId(scriptConstantName), originalContextGroup);
+					HAPContextNodeRootConstant node = (HAPContextNodeRootConstant)targetContextGroup.getElement(refNodeId);
+					if(node==null) 	node = solidateConstantNode(refNodeId, originalContextGroup, targetContextGroup, contextProcessorEnv);
+					scriptConstants.put(scriptConstantName, node.getValue());
 				}
 				
 				//process expression in scriptExpression
@@ -241,12 +241,12 @@ public class HAPProcessorContextConstant {
 		}
 	}
 	
-	private static HAPContextDefinitionRootId solveReferencedNodeId(HAPContextDefinitionRootId nodeId, HAPContextGroup candidateGroup) {
+	private static HAPContextRootNodeId solveReferencedNodeId(HAPContextRootNodeId nodeId, HAPContextGroup candidateGroup) {
 		if(nodeId.getCategary()!=null)   return nodeId;
 		for(String categary : HAPContextGroup.getVisibleContextTypes()) {
-			HAPContextDefinitionRoot contextDefRoot = candidateGroup.getElement(categary, nodeId.getName());
-			if(contextDefRoot!=null && contextDefRoot.isConstant()) {
-				return new HAPContextDefinitionRootId(categary, nodeId.getName());
+			HAPContextNodeRoot node = candidateGroup.getElement(categary, nodeId.getName());
+			if(node!=null && node.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
+				return new HAPContextRootNodeId(categary, nodeId.getName());
 			}
 		}
 		return null;

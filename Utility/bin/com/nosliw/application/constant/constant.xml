@@ -311,6 +311,12 @@
 			<definition name="UIRESOURCE_ROOTTYPE_ABSOLUTE" value="absolute"/>
 			<definition name="UIRESOURCE_ROOTTYPE_CONSTANT" value="constant"/>
 			<definition type="space"/>
+			<definition name="CONTEXT_ELEMENTTYPE_RELATIVE" value="relative"/>
+			<definition name="CONTEXT_ELEMENTTYPE_DATA" value="data"/>
+			<definition name="CONTEXT_ELEMENTTYPE_VALUE" value="value"/>
+			<definition name="CONTEXT_ELEMENTTYPE_CONSTANT" value="constant"/>
+			<definition name="CONTEXT_ELEMENTTYPE_NODE" value="node"/>
+			<definition type="space"/>
 			<definition name="ENTITY_CRITICALVALUE_OTHER" value="other"/>
 			<definition type="space"/>
 			<definition name="ATTRIBUTE_PATH_CRITICAL" value="critical"/>

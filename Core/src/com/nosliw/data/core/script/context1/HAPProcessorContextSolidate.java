@@ -19,16 +19,15 @@ public class HAPProcessorContextSolidate {
 
 		HAPContextGroup out = new HAPContextGroup(originalContextGroup.getInfo());
 		for(String categary : HAPContextGroup.getAllContextTypes()) {
-			Map<String, HAPContextDefinitionRoot> contextDefRoots = originalContextGroup.getElements(categary);
-			for(String name : contextDefRoots.keySet()) {
-				HAPContextDefinitionRoot contextDefRoot = contextDefRoots.get(name);
-				if(!contextDefRoot.isConstant()) {
+			Map<String, HAPContextNodeRoot> nodes = originalContextGroup.getElements(categary);
+			for(String name : nodes.keySet()) {
+				HAPContextNodeRoot node = nodes.get(name);
+				if(node.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE) || node.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE)) {
 					String solidName = getSolidName(name, constantsData, contextProcessorEnv);
-					contextDefRoot.setDefinition(contextDefRoot.getDefinition().toSolidContextDefinitionElement(constantsData, contextProcessorEnv));
-					out.addElement(solidName, contextDefRoot, categary);
+					out.addElement(solidName, node.toSolidContextNodeRoot(constantsData, contextProcessorEnv), categary);
 				}
-				else {
-					out.addElement(name, contextDefRoot, categary);
+				else if(nodes.get(name).getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
+					out.addElement(name, node, categary);
 				}
 			}
 		}
@@ -39,12 +38,12 @@ public class HAPProcessorContextSolidate {
 		Map<String, Object> constantsData = new LinkedHashMap<String, Object>();
 		String[] categarys = HAPContextGroup.getAllContextTypes(); 
 		for(int i=categarys.length-1; i>=0; i--) {
-			Map<String, HAPContextDefinitionRoot> nodes = originalContextGroup.getElements(categarys[i]);
+			Map<String, HAPContextNodeRoot> nodes = originalContextGroup.getElements(categarys[i]);
 			for(String name : nodes.keySet()) {
-				if(nodes.get(name).isConstant()){
-					HAPContextDefinitionLeafConstant constEleDef = (HAPContextDefinitionLeafConstant)nodes.get(name).getDefinition();
-					constantsData.put(name, constEleDef.getValue());
-					constantsData.put(new HAPContextDefinitionRootId(categarys[i], name).toString(), constEleDef.getValue());
+				if(nodes.get(name).getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)){
+					HAPContextNodeRootConstant constNode = (HAPContextNodeRootConstant)nodes.get(name);
+					constantsData.put(name, constNode.getValue());
+					constantsData.put(new HAPContextRootNodeId(categarys[i], name).toString(), constNode.getValue());
 				}
 			}
 		}

@@ -1,8 +1,8 @@
 package com.nosliw.data.core.expression;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+
+import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -13,6 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
@@ -43,20 +44,25 @@ public class HAPVariableInfo extends HAPSerializableImp{
 	
 	public HAPVariableInfo(){
 		this(null);
-		this.m_info = new HAPInfoImpSimple();
 	}	
 	
 	public HAPVariableInfo(HAPDataTypeCriteria criteria, String status){
 		this.m_status = status;
-		this.m_info = new HAPInfoImpSimple();
 		this.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
+		this.initWithDefault();
 	}
 
 	public HAPVariableInfo(HAPDataTypeCriteria criteria){
 		this.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
-		if(criteria==null)   this.m_status = HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN;
-		else   this.m_status = HAPConstant.EXPRESSION_VARIABLE_STATUS_CLOSE;
-		this.m_info = new HAPInfoImpSimple();
+		this.initWithDefault();
+	}
+	
+	private void initWithDefault() {
+		if(this.m_status==null) {
+			if(this.m_criteria==null)   this.m_status = HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN;
+			else   this.m_status = HAPConstant.EXPRESSION_VARIABLE_STATUS_CLOSE;
+		}
+		if(this.m_info==null)	this.m_info = new HAPInfoImpSimple();
 	}
 	
 	public String getStatus(){		return this.m_status;	}
@@ -91,6 +97,31 @@ public class HAPVariableInfo extends HAPSerializableImp{
 		if(this.getCriteria()!=null){
 			jsonMap.put(CRITERIA, HAPSerializeManager.getInstance().toStringValue(this.getCriteria(), HAPSerializationFormat.LITERATE));
 		}
+		jsonMap.put(INFO, this.m_info.toStringValue(HAPSerializationFormat.JSON));
+	}
+	
+	@Override
+	public boolean buildObject(Object value, HAPSerializationFormat format) {
+		if(value instanceof String) {
+			this.m_criteria = HAPCriteriaParser.getInstance().parseCriteria((String)value);
+		}
+		else if(value instanceof JSONObject){
+			JSONObject jsonValue = (JSONObject)value;
+			this.m_status = (String)jsonValue.opt(STATUS);
+			this.m_info = new HAPInfoImpSimple();
+			this.m_info.buildObject(jsonValue.opt(INFO), HAPSerializationFormat.JSON);
+			this.m_criteria = HAPCriteriaParser.getInstance().parseCriteria((String)jsonValue.opt(CRITERIA));
+		}
+		this.initWithDefault();
+		return true;
+	}
+	
+	public HAPVariableInfo cloneVariableInfo() {
+		HAPVariableInfo out = new HAPVariableInfo();
+		out.m_status = this.m_status;
+		out.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(this.m_criteria);
+		out.m_info = this.m_info.cloneInfo();
+		return out;
 	}
 	
 	@Override

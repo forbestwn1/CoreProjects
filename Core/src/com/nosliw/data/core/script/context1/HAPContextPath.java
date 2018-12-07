@@ -18,7 +18,7 @@ public class HAPContextPath extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String PATH  = "path";
 	
-	private HAPContextDefinitionRootId m_rootNodeId;
+	private HAPContextRootNodeId m_rootNodeId;
 	
 	private String m_path;
 	
@@ -27,10 +27,10 @@ public class HAPContextPath extends HAPSerializableImp{
 	public HAPContextPath(String fullPath){
 		int index = fullPath.indexOf(HAPConstant.SEPERATOR_PATH);
 		if(index==-1){
-			this.m_rootNodeId = new HAPContextDefinitionRootId(fullPath);
+			this.m_rootNodeId = new HAPContextRootNodeId(fullPath);
 		}
 		else{
-			this.m_rootNodeId = new HAPContextDefinitionRootId(fullPath.substring(0, index));
+			this.m_rootNodeId = new HAPContextRootNodeId(fullPath.substring(0, index));
 			this.m_path = fullPath.substring(index+1);
 		}
 	}
@@ -38,16 +38,16 @@ public class HAPContextPath extends HAPSerializableImp{
 	public HAPContextPath(String categary, String path){
 		int index = path.indexOf(HAPConstant.SEPERATOR_PATH);
 		if(index==-1){
-			this.m_rootNodeId = new HAPContextDefinitionRootId(categary, path);
+			this.m_rootNodeId = new HAPContextRootNodeId(categary, path);
 		}
 		else{
-			this.m_rootNodeId = new HAPContextDefinitionRootId(categary, path.substring(0, index));
+			this.m_rootNodeId = new HAPContextRootNodeId(categary, path.substring(0, index));
 			this.m_path = path.substring(index+1);
 		}
 	}
 
 	public HAPContextPath(String contextCategary, String rootEleName, String path){
-		this.m_rootNodeId = new HAPContextDefinitionRootId(contextCategary, rootEleName);
+		this.m_rootNodeId = new HAPContextRootNodeId(contextCategary, rootEleName);
 		this.m_path = path;
 	}
 
@@ -59,7 +59,7 @@ public class HAPContextPath extends HAPSerializableImp{
 	}
 	
 //	public String getRootElementName(){  return this.m_rootNodeId.getName();  }
-	public HAPContextDefinitionRootId getRootElementId() {  return this.m_rootNodeId;   }
+	public HAPContextRootNodeId getRootElementId() {  return this.m_rootNodeId;   }
 	
 	public String getPath(){		return this.m_path==null?"":this.m_path;	}
 	

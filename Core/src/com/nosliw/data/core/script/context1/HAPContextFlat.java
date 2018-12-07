@@ -30,7 +30,7 @@ public class HAPContextFlat extends HAPSerializableImp{
 	
 	public HAPContext getContext() {  return this.m_context;  }
 	
-	public void addElement(String name, HAPContextDefinitionRoot rootEle){		this.m_context.addElement(name, rootEle);	}
+	public void addElement(String name, HAPContextNodeRoot rootEle){		this.m_context.addElement(name, rootEle);	}
 	
 	public void addNameMapping(String name, String nameMapping) {		this.m_nameMapping.put(name, nameMapping);	}
 	

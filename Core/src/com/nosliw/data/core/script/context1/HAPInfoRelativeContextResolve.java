@@ -5,11 +5,11 @@ public class HAPInfoRelativeContextResolve{
 	//parent reference path
 	public HAPContextPath path;
 	//parent root node
-	public HAPContextDefinitionRoot rootNode;
+	public HAPContextNodeRoot rootNode;
 	//original refered node
-	public HAPContextDefinitionElement referedNode;
+	public HAPContextNode referedNode;
 	//unmatched path part
 	public String remainPath;
 	//apply unmatched path, find the resolvedNode
-	public HAPContextDefinitionElement resolvedNode;
+	public HAPContextNode resolvedNode;
 }

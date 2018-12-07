@@ -16,9 +16,9 @@ public class HAPProcessorContextRelative {
 	public static HAPContextGroup process(HAPContextGroup contextGroup, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
 		HAPContextGroup out = new HAPContextGroup(contextGroup.getInfo());
 		for(String categary : HAPContextGroup.getAllContextTypes()){
-			Map<String, HAPContextDefinitionRoot> eles = contextGroup.getElements(categary);
+			Map<String, HAPContextNodeRoot> eles = contextGroup.getElements(categary);
 			for(String eleName : eles.keySet()) {
-				HAPContextDefinitionRoot node = eles.get(eleName);
+				HAPContextNodeRoot node = eles.get(eleName);
 				if(node.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE)) {
 					out.addElement(eleName, processRelativeContextDefinitionElement((HAPContextNodeRootRelative)node, parentContextGroup, configure, contextProcessorEnv), categary);
 				}
@@ -32,9 +32,9 @@ public class HAPProcessorContextRelative {
 
 	public static HAPContext process(HAPContext context, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
 		HAPContext out = new HAPContext();
-		Map<String, HAPContextDefinitionRoot> eles = context.getElements();
+		Map<String, HAPContextNodeRoot> eles = context.getElements();
 		for(String eleName : eles.keySet()) {
-			HAPContextDefinitionRoot node = eles.get(eleName);
+			HAPContextNodeRoot node = eles.get(eleName);
 			if(node.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE)) {
 				out.addElement(eleName, processRelativeContextDefinitionElement((HAPContextNodeRootRelative)node, parentContextGroup, configure, contextProcessorEnv));
 			}

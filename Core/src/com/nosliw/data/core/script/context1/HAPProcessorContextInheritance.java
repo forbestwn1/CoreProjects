@@ -14,7 +14,7 @@ public class HAPProcessorContextInheritance {
 			for(String categary : HAPContextGroup.getAllContextTypes()){
 				if(parentContextGroup!=null && Arrays.asList(HAPContextGroup.getInheritableContextTypes()).contains(categary)) {
 					HAPContext parentContext = parentContextGroup.getContext(categary);
-					Map<String, HAPContextDefinitionRoot> parentEles = parentContext.getElements();
+					Map<String, HAPContextNodeRoot> parentEles = parentContext.getElements();
 					for(String eleName : parentEles.keySet()) {
 						if(isInheritable(out, parentContextGroup, categary, eleName, inheritMode)) {
 							out.addElement(eleName, HAPUtilityContext.createInheritedElement(parentContextGroup, categary, eleName), categary);
@@ -30,8 +30,8 @@ public class HAPProcessorContextInheritance {
 		HAPContextGroup out = contextGroup.clone();
 		for(String contextCategary : HAPContextGroup.getAllContextTypes()) {
 			for(String name : out.getContext(contextCategary).getElementNames()) {
-				HAPContextDefinitionRoot node = out.getElement(contextCategary, name);
-				if(node.isConstant()) {
+				HAPContextNodeRoot node = out.getElement(contextCategary, name);
+				if(node.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT)) {
 					node.getInfo().setValue(HAPContextNodeRoot.INHERIT_MODE, HAPContextNodeRoot.INHERIT_MODE_FINAL);
 				}
 			}
@@ -42,7 +42,7 @@ public class HAPProcessorContextInheritance {
 	//whether child can herit from parent element
 	private static boolean isInheritable(HAPContextGroup childContextGroup, HAPContextGroup parentContextGroup, String categary, String eleName, String inheritMode) {
 		boolean out = false;
-		HAPContextDefinitionRoot childNode = childContextGroup.getElement(categary, eleName);
+		HAPContextNodeRoot childNode = childContextGroup.getElement(categary, eleName);
 		if(childNode==null) 		out = true;
 		else {
 			if(HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT.equals(inheritMode)) {

@@ -107,19 +107,19 @@ public class HAPContextGroup extends HAPSerializableImp{
 	public HAPContext getInternalContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL);  }
 	public HAPContext getPrivateContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);  }
 
-	public void addPublicElement(String name, HAPContextDefinitionRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);  }
-	public void addProtectedElement(String name, HAPContextDefinitionRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED);  }
-	public void addInternalElement(String name, HAPContextDefinitionRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL);  }
-	public void addPrivateElement(String name, HAPContextDefinitionRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);  }
+	public void addPublicElement(String name, HAPContextNodeRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);  }
+	public void addProtectedElement(String name, HAPContextNodeRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED);  }
+	public void addInternalElement(String name, HAPContextNodeRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL);  }
+	public void addPrivateElement(String name, HAPContextNodeRoot ele){  this.addElement(name, ele, HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);  }
 
-	public Map<String, HAPContextDefinitionRoot> getElements(String contextType){  return this.getContext(contextType).getElements();  }
+	public Map<String, HAPContextNodeRoot> getElements(String contextType){  return this.getContext(contextType).getElements();  }
 	
-	public void addElement(String name, HAPContextDefinitionRoot rootEle, String type){	this.getContext(type).addElement(name, rootEle);	}
+	public void addElement(String name, HAPContextNodeRoot rootEle, String type){	this.getContext(type).addElement(name, rootEle);	}
 	
 	public HAPContext getContext(String type){		return this.m_contexts.get(type);	}
 	
-	public HAPContextDefinitionRoot getElement(HAPContextDefinitionRootId nodeId) {  return this.getElement(nodeId.getCategary(), nodeId.getName());   }
-	public HAPContextDefinitionRoot getElement(String type, String name) {	return this.m_contexts.get(type).getElement(name);	}
+	public HAPContextNodeRoot getElement(HAPContextRootNodeId nodeId) {  return this.getElement(nodeId.getCategary(), nodeId.getName());   }
+	public HAPContextNodeRoot getElement(String type, String name) {	return this.m_contexts.get(type).getElement(name);	}
 	
 	public HAPContextGroup clone() {
 		HAPContextGroup out = new HAPContextGroup();
@@ -132,7 +132,7 @@ public class HAPContextGroup extends HAPSerializableImp{
 		for(String categary : this.m_contexts.keySet()) {
 			HAPContext context = this.m_contexts.get(categary);
 			for(String name : context.getElements().keySet()) {
-				out.addElement(name, this.getElement(categary, name).cloneContextDefinitionRoot(), categary);
+				out.addElement(name, this.getElement(categary, name).cloneContextNodeRoot(), categary);
 			}
 		}
 	}

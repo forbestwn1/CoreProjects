@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.criteria.HAPCriteriaParser;
+import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPParserContext {
 
@@ -42,8 +43,8 @@ public class HAPParserContext {
 			while(it.hasNext()){
 				String eleName = it.next();
 				JSONObject eleDefJson = elementsJson.optJSONObject(eleName);
-				HAPContextNodeRoot tagDefContextEle = parseContextRootFromJson(eleDefJson);
-				context.addElement(eleName, tagDefContextEle);
+				HAPContextDefinitionRoot contextDefRoot = parseContextRootFromJson(eleDefJson);
+				context.addElement(eleName, contextDefRoot);
 			}
 			
 			JSONObject infoJson = contextJson.optJSONObject(HAPContext.INFO);
@@ -54,43 +55,67 @@ public class HAPParserContext {
 	}
 	
 	//parse context root
-	private static HAPContextNodeRoot parseContextRootFromJson(JSONObject eleDefJson){
-		HAPContextNodeRoot out = null;
-		String path = (String)eleDefJson.opt(HAPContextNodeRootRelative.PATH);
-		Object defJsonObj = eleDefJson.opt(HAPContextNode.DEFINITION);
-		Object defaultJsonObj = eleDefJson.opt(HAPContextNodeRootVariable.DEFAULT);
-		
+	private static HAPContextDefinitionRoot parseContextRootFromJson(JSONObject eleDefJson){
+		HAPContextDefinitionRoot out = new HAPContextDefinitionRoot();
+
+		//info
 		HAPEntityInfoImp info = new HAPEntityInfoImp();
 		info.buildObject(eleDefJson, HAPSerializationFormat.JSON);
+		info.cloneToEntityInfo(out);
+		
+		//definition
+		HAPContextDefinitionElement contextRootDef = parseContextDefinitionElement(eleDefJson);
+		out.setDefinition(contextRootDef);
+		return out;
+	}
+	
+	public static HAPContextDefinitionElement parseContextDefinitionElement(JSONObject eleDefJson) {
+		HAPContextDefinitionElement contextRootDef = null;
+		
+		String path = (String)eleDefJson.opt(HAPContextDefinitionLeafRelative.PATH);
+		JSONObject criteriaJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionLeafData.CRITERIA);
+		Object valueJsonObj = eleDefJson.opt(HAPContextDefinitionLeafConstant.VALUE);
+		JSONObject childrenJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionNode.CHILD);
+		Object defaultJsonObj = eleDefJson.opt(HAPContextDefinitionLeafVariable.DEFAULT);
 		
 		if(path!=null){
 			//relative
-			out = new HAPContextNodeRootRelative();
-			((HAPContextNodeRootRelative)out).setPath((String)eleDefJson.opt(HAPContextNodeRootRelative.PARENTCATEGARY), path);
-			if(defaultJsonObj!=null)		((HAPContextNodeRootRelative)out).setDefaultValue(defaultJsonObj);
-			if(defJsonObj!=null) 	parseContextNodeFromJson(defJsonObj, (HAPContextNodeRootRelative)out);
-			info.cloneToEntityInfo(out);
+			contextRootDef = new HAPContextDefinitionLeafRelative();
+			((HAPContextDefinitionLeafRelative)contextRootDef).setPath((String)eleDefJson.opt(HAPContextDefinitionLeafRelative.PARENTCATEGARY), path);
+			if(defaultJsonObj!=null)		((HAPContextDefinitionLeafRelative)contextRootDef).setDefaultValue(defaultJsonObj);
+			JSONObject definitionJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionLeafRelative.DEFINITION);
+			if(definitionJsonObj!=null)   ((HAPContextDefinitionLeafRelative)contextRootDef).setDefinition(parseContextDefinitionElement(definitionJsonObj));
+			((HAPContextDefinitionLeafVariable)contextRootDef).setDefaultValue(defaultJsonObj);
 		}
-		else if(defJsonObj!=null) {
-			//absolute
-			out = new HAPContextNodeRootAbsolute();   
+		else if(criteriaJsonObj!=null) {
+			//data
+			contextRootDef = new HAPContextDefinitionLeafData();   
 			//default value
-			if(defaultJsonObj!=null)		((HAPContextNodeRootAbsolute)out).setDefaultValue(defaultJsonObj);
-			if(defJsonObj!=null) 	parseContextNodeFromJson(defJsonObj, (HAPContextNodeRootAbsolute)out);
-			info.cloneToEntityInfo(out);
+			((HAPContextDefinitionLeafVariable)contextRootDef).setDefaultValue(defaultJsonObj);
+			HAPVariableInfo criteria = new HAPVariableInfo();
+			criteria.buildObject(criteriaJsonObj, HAPSerializationFormat.JSON);
+			((HAPContextDefinitionLeafData)contextRootDef).setCriteria(criteria);
 		}
-		else{
+		else if(childrenJsonObj!=null) {
+			//node
+			contextRootDef = new HAPContextDefinitionNode();
+			for(Object key : childrenJsonObj.keySet()) {
+				((HAPContextDefinitionNode)contextRootDef).addChild((String)key, parseContextDefinitionElement(childrenJsonObj.getJSONObject((String)key)));
+			}
+		}
+		else if(valueJsonObj!=null){
 			//constant
-			out = new HAPContextNodeRootConstant(eleDefJson.opt(HAPContextNodeRootConstant.VALUE));
-			info.cloneToEntityInfo((HAPContextNodeRootConstant)out);
+			contextRootDef = new HAPContextDefinitionLeafConstant();
+			((HAPContextDefinitionLeafConstant)contextRootDef).setValue(valueJsonObj);
 		}
-		
-		out.getInfo().buildObject(eleDefJson, HAPSerializationFormat.JSON);
-		
-		//definition
-		
-		return out;
+		else {
+			//value
+			contextRootDef = new HAPContextDefinitionLeafValue();
+			((HAPContextDefinitionLeafVariable)contextRootDef).setDefaultValue(defaultJsonObj);
+		}
+		return contextRootDef;
 	}
+	
 
 	public static void parseContextNodeFromJson(Object json, HAPContextNode contextNode){
 		if(json instanceof String){

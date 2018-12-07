@@ -32,7 +32,7 @@ public class HAPContextEntity  extends HAPSerializableImp{
 	public HAPContext getContext() {  return this.m_context;   }
 	public void setContext(HAPContext context) {   this.m_context = context;  }
 	
-	public void addContextElement(String name, HAPContextDefinitionRoot node) {  this.m_context.addElement(name, node);  }
+	public void addContextElement(String name, HAPContextNodeRoot node) {  this.m_context.addElement(name, node);  }
 	
 	public void cloneBasicTo(HAPContextEntity contextEntity) {
 		contextEntity.m_name = this.m_name;
