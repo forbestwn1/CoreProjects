@@ -9,7 +9,6 @@ import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceManagerJSImp;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
-import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.service1.HAPGatewayService;
@@ -33,19 +32,12 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPExpressionManager.dataTypeHelper = new HAPDataTypeHelperImp(this, this.m_runtimeJSModule.getDataTypeDataAccess());
 		HAPExpressionManager.expressionParser = new HAPExpressionParserImp();
 		
-		HAPResourceManagerRoot resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
-		HAPRuntimeImpRhino runtime = new HAPRuntimeImpRhino(this); 
-		HAPGatewayManager gatewayManager = new HAPGatewayManager(); 
-		HAPExpressionSuiteManager expressionManager = new HAPExpressionSuiteManager(); 		
-		HAPManagerProcess processManager = new HAPManagerProcess();
-		HAPManagerService serviceManager = new HAPManagerService();
-
-		init(resourceMan,
-			processManager,
-			expressionManager,
-			gatewayManager,
-			serviceManager,
-			runtime
+		init(new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess()),
+				new HAPManagerProcess(),
+				new HAPExpressionSuiteManager(),
+				new HAPGatewayManager(),
+				new HAPManagerService(),
+				new HAPRuntimeImpRhino(this)
 		);
 
 		this.getGatewayManager().registerGateway(GATEWAY_SERVICE, new HAPGatewayService(this.getServiceManager()));

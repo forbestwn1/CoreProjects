@@ -2,6 +2,7 @@ package com.nosliw.data.core.script.context;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -120,6 +121,8 @@ public class HAPContextGroup extends HAPSerializableImp{
 	
 	public HAPContextDefinitionRoot getElement(HAPContextDefinitionRootId nodeId) {  return this.getElement(nodeId.getCategary(), nodeId.getName());   }
 	public HAPContextDefinitionRoot getElement(String type, String name) {	return this.m_contexts.get(type).getElement(name);	}
+	
+	public Set<String> getContextTypes(){  return this.m_contexts.keySet();   }
 	
 	public HAPContextGroup clone() {
 		HAPContextGroup out = new HAPContextGroup();

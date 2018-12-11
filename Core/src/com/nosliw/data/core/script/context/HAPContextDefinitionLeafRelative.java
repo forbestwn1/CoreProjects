@@ -46,8 +46,6 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 
 	private Map<String, HAPMatchers> m_reverseMatchers;
 	
-	private boolean m_processed = false;
-	
 	public HAPContextDefinitionLeafRelative() {
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
 		this.m_reverseMatchers = new LinkedHashMap<String, HAPMatchers>();
@@ -58,9 +56,6 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 
 	public HAPContextDefinitionElement getDefinition() {   return this.m_definition;   }
 	public void setDefinition(HAPContextDefinitionElement definition) {   this.m_definition = definition;   }
-	
-	public void processed() {   this.m_processed = true;   }
-	public boolean isProcessed() {  return this.m_processed;   }
 	
 	public void setPath(HAPContextPath path){	
 		this.m_path = path;
@@ -105,6 +100,12 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 		}
 	}
 
+	@Override
+	public HAPContextDefinitionElement getChild(String childName) {
+		if(this.isProcessed()&&this.m_definition!=null) 		return this.m_definition.getChild(childName);
+		return null;   
+	}
+	
 	@Override
 	public void toContextDefinitionElement(HAPContextDefinitionElement out) {
 		super.toContextDefinitionElement(out);

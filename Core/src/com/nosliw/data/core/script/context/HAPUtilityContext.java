@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.path.HAPComplexName;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
@@ -17,6 +19,44 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPUtilityContext {
 
+	public static void processContextDefElement(HAPContextDefinitionElement contextDefEle, HAPContextDefEleProcessor processor, Object value) {
+		if(processor.process(contextDefEle, value)) {
+			if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(contextDefEle.getType())) {
+				HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)contextDefEle;
+				for(String childNodeName : nodeEle.getChildren().keySet()) {
+					processContextDefElement(nodeEle.getChild(childNodeName), processor, value);
+				}
+			}
+		}
+		processor.postProcess(contextDefEle, value);
+	}
+	
+	public static HAPContextDefinitionElement getDescendants(HAPContextDefinitionElement contextDefEle, String path) {
+		HAPContextDefinitionElement out = contextDefEle;
+		HAPPath pathObj = new HAPPath(path);
+		for(String pathSeg : pathObj.getPathSegs()) {
+			if(out!=null)			out = out.getChild(pathSeg);
+		}
+		return out;
+	}
+
+	public static HAPContextDefinitionElement getDescendants(HAPContext context, String path) {
+		HAPContextDefinitionElement out = null;
+		HAPComplexName complexName = new HAPComplexName(path);
+		HAPContextDefinitionRoot root = context.getElement(complexName.getSimpleName());
+		if(root!=null) {
+			out = getDescendants(root.getDefinition(), complexName.getPath());
+		}
+		return out;
+	}
+	
+	public static HAPContextDefinitionElement getDescendants(HAPContextGroup contextGroup, String categary, String path) {
+		HAPContextDefinitionElement out = null;
+		HAPContext context = contextGroup.getContext(categary);
+		if(context!=null)   out = getDescendants(context, path);
+		return out;
+	}
+	
 	public static boolean isContextDefinitionElementConstant(HAPContextDefinitionElement ele) {   return HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT.equals(ele.getType());   }
 	
 	public static Map<String, HAPContextDefinitionLeafRelative> isContextDefinitionElementRelative(HAPContextDefinitionElement ele) {

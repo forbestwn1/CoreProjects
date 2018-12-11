@@ -28,6 +28,9 @@ public class HAPContextDefinitionNode extends HAPContextDefinitionLeafVariable{
 	public Map<String, HAPContextDefinitionElement> getChildren(){	return this.m_children;	}
 	
 	public void addChild(String name, HAPContextDefinitionElement nodeBranch){		this.m_children.put(name, nodeBranch);	}
+
+	@Override
+	public HAPContextDefinitionElement getChild(String childName) {   return this.m_children.get(childName);  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
