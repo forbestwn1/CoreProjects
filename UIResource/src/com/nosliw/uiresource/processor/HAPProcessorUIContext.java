@@ -9,6 +9,11 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextDefinitionLeafConstant;
+import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
+import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
+import com.nosliw.data.core.script.context.HAPContextDefinitionLeafVariable;
+import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -134,19 +139,22 @@ public class HAPProcessorUIContext {
 			serviceDef.cloneToEntityInfo(processedServiceDef);
 			HAPContext processedParmContext = HAPProcessorContextRelative.process(serviceDef.getParms(), uiExe.getContext(), null, contextProcessorEnv);
 			for(String parmName : processedParmContext.getElementNames()) {
-				HAPContextNodeRoot contextParm = processedParmContext.getElement(parmName);
+				HAPContextDefinitionRoot contextParm = processedParmContext.getElement(parmName);
 				HAPDefinitionServiceParm serviceParm = new HAPDefinitionServiceParm(); 
 				contextParm.cloneToEntityInfo(serviceParm);
 				
-				String contextType = contextParm.getType();
+				String contextType = contextParm.getDefinition().getType();
 				switch(contextType) {
-				case HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE:
-				case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
-					HAPContextNodeRootVariable varRootNode = (HAPContextNodeRootVariable)contextParm;
-					serviceParm.setCriteria(varRootNode.getDefinition().getValue());
+				case HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE:
+					HAPContextDefinitionLeafRelative relativeRootNode = (HAPContextDefinitionLeafRelative)contextParm.getDefinition();
+//					serviceParm.setCriteria(relativeRootNode.getDefinition().g.getDefinition().getValue());
 					break;
-				case HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT:
-					HAPContextNodeRootConstant constantRootNode = (HAPContextNodeRootConstant)contextParm;
+				case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
+					HAPContextDefinitionLeafData dataRootNode = (HAPContextDefinitionLeafData)contextParm.getDefinition();
+					serviceParm.setCriteria(dataRootNode.getCriteria().getCriteria());
+					break;
+				case HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT:
+					HAPContextDefinitionLeafConstant constantRootNode = (HAPContextDefinitionLeafConstant)contextParm.getDefinition();
 					serviceParm.setDefault(constantRootNode.getDataValue());
 					break;
 				}
@@ -158,18 +166,21 @@ public class HAPProcessorUIContext {
 				HAPContext processedResultContext = HAPProcessorContextRelative.process(resultsContext.get(resultName), uiExe.getContext(), null, contextProcessorEnv);
 				HAPDefinitionServiceResult result = new HAPDefinitionServiceResult();
 				for(String outputName : processedResultContext.getElementNames()) {
-					HAPContextNodeRoot contextOutput = processedResultContext.getElement(outputName);
+					HAPContextDefinitionRoot contextOutput = processedResultContext.getElement(outputName);
 					HAPDefinitionServiceOutput serviceOutput = new HAPDefinitionServiceOutput(); 
 					contextOutput.cloneToEntityInfo(serviceOutput);
 					
-					String contextType = contextOutput.getType();
+					String contextType = contextOutput.getDefinition().getType();
 					switch(contextType) {
-					case HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE:
-					case HAPConstant.UIRESOURCE_ROOTTYPE_ABSOLUTE:
-						HAPContextNodeRootVariable varRootNode = (HAPContextNodeRootVariable)contextOutput;
-						serviceOutput.setCriteria(varRootNode.getDefinition().getValue());
+					case HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE:
+						HAPContextDefinitionLeafRelative relativeRootNode = (HAPContextDefinitionLeafRelative)contextOutput.getDefinition();
+//						serviceOutput.setCriteria(relativeRootNode.getDefinition().getValue());
 						break;
-					case HAPConstant.UIRESOURCE_ROOTTYPE_CONSTANT:
+					case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
+						HAPContextDefinitionLeafData dataRootNode = (HAPContextDefinitionLeafData)contextOutput.getDefinition();
+						serviceOutput.setCriteria(dataRootNode.getCriteria().getCriteria());
+						break;
+					case HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT:
 						break;
 					}
 					result.addOutput(outputName, serviceOutput);
@@ -228,8 +239,8 @@ public class HAPProcessorUIContext {
 		Map<String, String> constants = uiTag.getAttributes();
 		HAPContextGroup tagContext = tagDefinitionContext.clone();
 		for(String cstName : constants.keySet()) {
-			HAPContextNodeRootConstant cstRootNode = new HAPContextNodeRootConstant(constants.get(cstName));
-			tagContext.addElement(cstName, cstRootNode, HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);
+			HAPContextDefinitionLeafConstant cstRootNode = new HAPContextDefinitionLeafConstant(constants.get(cstName));
+			tagContext.addElement(cstName, new HAPContextDefinitionRoot(cstRootNode), HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);
 		}
 		
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();

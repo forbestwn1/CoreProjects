@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextNodeRoot;
+import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPParserContext;
 
 @HAPEntityWithAttribute
@@ -27,7 +27,7 @@ public class HAPDefinitionUIEvent extends HAPEntityInfoImp{
 	public HAPContext getDataDefinition() {  return this.m_dataDefinition;   }
 	public void setDataDefinition(HAPContext dataDef) {   this.m_dataDefinition = dataDef;  }
 	
-	public void addDataElement(String name, HAPContextNodeRoot node) {  this.m_dataDefinition.addElement(name, node);  }
+	public void addDataElement(String name, HAPContextDefinitionRoot node) {  this.m_dataDefinition.addElement(name, node);  }
 	
 	public void cloneBasicTo(HAPDefinitionUIEvent event) {
 		this.cloneToEntityInfo(event);

@@ -2,11 +2,16 @@ package com.nosliw.data.core.script.context;
 
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 
 public class HAPContextDefinitionRoot extends HAPEntityInfoImp{
 
+	@HAPAttribute
+	public static final String DEFINITION = "definition";
+	
 	//context element definition
 	private HAPContextDefinitionElement m_definition;
 	
@@ -14,6 +19,10 @@ public class HAPContextDefinitionRoot extends HAPEntityInfoImp{
 	private Map<String, HAPContextDefinitionLeafRelative> m_relativeEleInfo;
 	
 	public boolean isConstant() {		return HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT.equals(this.m_definition.getType());	}
+	
+	public HAPContextDefinitionRoot() {}
+	
+	public HAPContextDefinitionRoot(HAPContextDefinitionElement definition) {  this.m_definition = definition;  }
 	
 	public Map<String, HAPContextDefinitionLeafRelative> getRelativeInfo() {
 		if(this.isConstant())  return null;
@@ -34,6 +43,12 @@ public class HAPContextDefinitionRoot extends HAPEntityInfoImp{
 	public void toContextDefinitionRoot(HAPContextDefinitionRoot root) {
 		this.cloneToEntityInfo(root);
 		
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(DEFINITION, this.m_definition.toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 	public HAPContextDefinitionRoot cloneContextDefinitionRoot() {

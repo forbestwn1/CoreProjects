@@ -64,7 +64,7 @@ public class HAPParserContext {
 		info.cloneToEntityInfo(out);
 		
 		//definition
-		HAPContextDefinitionElement contextRootDef = parseContextDefinitionElement(eleDefJson);
+		HAPContextDefinitionElement contextRootDef = parseContextDefinitionElement(eleDefJson.optJSONObject(HAPContextDefinitionRoot.DEFINITION));
 		out.setDefinition(contextRootDef);
 		return out;
 	}
@@ -73,7 +73,7 @@ public class HAPParserContext {
 		HAPContextDefinitionElement contextRootDef = null;
 		
 		String path = (String)eleDefJson.opt(HAPContextDefinitionLeafRelative.PATH);
-		JSONObject criteriaJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionLeafData.CRITERIA);
+		String criteriaStr = (String)eleDefJson.opt(HAPContextDefinitionLeafData.CRITERIA);
 		Object valueJsonObj = eleDefJson.opt(HAPContextDefinitionLeafConstant.VALUE);
 		JSONObject childrenJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionNode.CHILD);
 		Object defaultJsonObj = eleDefJson.opt(HAPContextDefinitionLeafVariable.DEFAULT);
@@ -87,13 +87,13 @@ public class HAPParserContext {
 			if(definitionJsonObj!=null)   ((HAPContextDefinitionLeafRelative)contextRootDef).setDefinition(parseContextDefinitionElement(definitionJsonObj));
 			((HAPContextDefinitionLeafVariable)contextRootDef).setDefaultValue(defaultJsonObj);
 		}
-		else if(criteriaJsonObj!=null) {
+		else if(criteriaStr!=null) {
 			//data
 			contextRootDef = new HAPContextDefinitionLeafData();   
 			//default value
 			((HAPContextDefinitionLeafVariable)contextRootDef).setDefaultValue(defaultJsonObj);
 			HAPVariableInfo criteria = new HAPVariableInfo();
-			criteria.buildObject(criteriaJsonObj, HAPSerializationFormat.JSON);
+			criteria.buildObject(criteriaStr, HAPSerializationFormat.LITERATE);
 			((HAPContextDefinitionLeafData)contextRootDef).setCriteria(criteria);
 		}
 		else if(childrenJsonObj!=null) {

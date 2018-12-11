@@ -128,73 +128,95 @@
 				element : {
 					business : {
 						definition: {
-							a : {
-								aa : "test.string;1.0.0",
-								cc : "test.array;1.0.0%||element:test.string;1.0.0||%",
+							child : {
+								a : {
+									child : {
+										aa : {criteria:"test.string;1.0.0"},
+										cc : {criteria:"test.array;1.0.0%||element:test.string;1.0.0||%"}
+									}
+								}
+							},
+							default: {
+								a : {
+									aa : {
+										dataTypeId: "test.string;1.0.0",
+										value: "This is my world!"
+									},
+									dd : "HELLO!!!!",
+									cc : {
+										dataTypeId: "test.array;1.0.0",
+										value: [
+											{
+												dataTypeId: "test.string;1.0.0",
+												value: "This is my world 1111!"
+											},
+											{
+												dataTypeId: "test.string;1.0.0",
+												value: "This is my world 2222!"
+											},
+										]
+									},
+								}
 							}
 						},
-						default: {
-							a : {
-								aa : {
-									dataTypeId: "test.string;1.0.0",
-									value: "This is my world!"
-								},
-								dd : "HELLO!!!!",
-								cc : {
-									dataTypeId: "test.array;1.0.0",
-									value: [
-										{
-											dataTypeId: "test.string;1.0.0",
-											value: "This is my world 1111!"
-										},
-										{
-											dataTypeId: "test.string;1.0.0",
-											value: "This is my world 2222!"
-										},
-									]
-								},
-							}
-						}
 					},
 					aaaa : {
-						value : "<%=5+6+7%>",
+						definition: {
+							value : "<%=5+6+7%>",
+						}
 					},
 					bbbb : {
-						value : "<%=(5+6+7)>5%>"
+						definition: {
+							value : "<%=(5+6+7)>5%>"
+						}
 					},
 					cccc : {
-						value : {
-							a : 12345,
-							b : true,
-							c : "good",
-							d : "<%=5+6+7%>"
+						definition: {
+							value : {
+								a : 12345,
+								b : true,
+								c : "good",
+								d : "<%=5+6+7%>"
+							}
 						}
 					},
 					dddd : {
-						value : "<%=&(cccc)&.a+6%>"
+						definition : {
+							value : "<%=&(cccc)&.a+6%>"
+						}
 					},
 					ffff : {
-						value : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>"
+						definition: {
+							value : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>"
+						}
 					},
 					eeee : {
-						value : "<%=#|&(ffff)&.subString(from:&(#test##integer___3)&,to:&(#test##integer___7)&)|#%>"
+						definition: {
+							value : "<%=#|&(ffff)&.subString(from:&(#test##integer___3)&,to:&(#test##integer___7)&)|#%>"
+						}
 					},
 					base: {
-						value : {
-							dataTypeId: "test.string",
-							value: "This is my world!"
+						definition : {
+							value : {
+								dataTypeId: "test.string",
+								value: "This is my world!"
+							}
 						}
 					},
 					from: {
-						value : {
-							dataTypeId: "test.integer",
-							value: 3
+						definition : {
+							value : {
+								dataTypeId: "test.integer",
+								value: 3
+							}
 						}
 					},
 					to: {
-						value : {
-							dataTypeId: "test.integer",
-							value: 7
+						definition:{
+							value : {
+								dataTypeId: "test.integer",
+								value: 7
+							}
 						}
 					},
 				}
@@ -216,8 +238,11 @@
 			name : "changeInputText",
 			parms : {
 				element : {
-					data : {
-						path: "business.a.aa"
+					data : 
+					{
+						definition : {
+							path: "business.a.aa"
+						}
 					}
 				}
 			},
@@ -231,8 +256,11 @@
 			name : "Start",
 			parms : {
 				element : {
-					data : {
-						path: "business.a.aa"
+					data : 
+					{
+						definition : {
+							path: "business.a.aa"
+						}
 					}
 				}
 			},
