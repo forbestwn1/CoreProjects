@@ -15,8 +15,11 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class HAPFileUtility {
@@ -28,9 +31,22 @@ public class HAPFileUtility {
 	public static String getTaskLogFolder(){  return HAPFileUtility.getTempFolder()+"tasklog/";  }
 	public static String getResourceTempFileFolder(){  return getJSFolder() + "temp/";  }
 	public static String getJSFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/Application/WebContent/";  }
+	public static String getNosliwJSFolder(String lib){  return getJSFolder()+"libresources/nosliw/"+lib+"/";  }
 	public static String getUIResourceFolder(){  return getApplicationDataFolder() + "uiresources/";  }
 	public static String getUIModuleFolder(){  return getApplicationDataFolder() + "uimodules/";  }
 	public static String getMiniAppFolder(){  return getApplicationDataFolder() + "miniapps/";  }
+
+	public static List<File> sortFiles(Set<File> files){
+		List<File> sortedList = new ArrayList<File>(files);
+		Collections.sort(sortedList, new Comparator<File>() {
+
+			@Override
+			public int compare(File arg0, File arg1) {
+				return arg0.getPath().compareTo(arg1.getPath());
+			}
+		});
+		return sortedList;
+	}
 	
     public static Set<File> getAllFiles(String path) {
     	Set<File> out = new HashSet<File>();

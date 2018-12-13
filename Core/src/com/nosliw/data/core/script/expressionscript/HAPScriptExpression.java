@@ -134,8 +134,9 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		for(int i=0; i<this.m_elements.size(); i++) {
 			Object element = this.m_elements.get(i);
 			if(element instanceof HAPDefinitionExpression){
-				HAPProcessContext context = new HAPProcessContext(); 
-				m_expressions.put(i+"", expressionManager.compileExpression(null, (HAPDefinitionExpression)element, expressionContext.getExpressionDefinitionSuite(), null, configure, context));
+				HAPDefinitionExpression expEle = (HAPDefinitionExpression)element;
+				HAPProcessContext context = new HAPProcessContext();
+				m_expressions.put(expEle.getId(), expressionManager.compileExpression(expEle.getId(), expEle, expressionContext.getExpressionDefinitionSuite(), null, configure, context));
 			}
 		}
 	}
@@ -165,7 +166,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 				String expressionStr = content.substring(expStart, expEnd);
 				content = content.substring(expEnd + EXPRESSION_TOKEN_CLOSE.length());
 				//build expression definition
-				HAPDefinitionExpression expressionDefinition = new HAPDefinitionExpression(expressionStr);
+				HAPDefinitionExpression expressionDefinition = new HAPDefinitionExpression(expressionStr, this.m_id+"_"+i);
 				this.m_elements.add(expressionDefinition);
 			}
 			i++;

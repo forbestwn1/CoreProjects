@@ -10,6 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPExecuteExpression;
 import com.nosliw.data.core.script.context.HAPContext;
 
@@ -44,6 +45,12 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 	public HAPEmbededScriptExpression(String content){
 		this.m_elements = HAPScriptExpressionUtility.discoverEmbededScriptExpression(content);
 		this.init();
+	}
+	
+	public void processExpressions(HAPContextScriptExpressionProcess expressionContext, Map<String, String> configure, HAPExpressionSuiteManager expressionManager){
+		for(String scriptExpName : this.m_scriptExpressions.keySet()) {
+			this.m_scriptExpressions.get(scriptExpName).processExpressions(expressionContext, configure, expressionManager);
+		}
 	}
 	
 	private void init(){

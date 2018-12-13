@@ -4,9 +4,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.exception.HAPServiceDataException;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.HAPDataWrapper;
+import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteEmbededExpression;
+import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
 import com.nosliw.data.core.script.expressionscript.HAPEmbededScriptExpression;
 
 public class HAPProcessorContextSolidate {
@@ -56,6 +58,12 @@ public class HAPProcessorContextSolidate {
 		HAPEmbededScriptExpression se = new HAPEmbededScriptExpression(name);
 		if(se.isString())  return name;
 		else {
+			HAPContextScriptExpressionProcess expProcessContext = new HAPContextScriptExpressionProcess();
+			for(String constantName : constants.keySet()) {
+				HAPDataWrapper constantData = HAPDataUtility.buildDataWrapperFromObject(constants.get(constantName));
+				if(constantData!=null)   expProcessContext.addConstant(constantName, constantData);
+			}
+			se.processExpressions(expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessorEnv.expressionManager);
 			HAPRuntimeTaskExecuteEmbededExpression task = new HAPRuntimeTaskExecuteEmbededExpression(se, null, constants);
 			HAPServiceData serviceData = contextProcessorEnv.runtime.executeTaskSync(task);
 			if(serviceData.isSuccess())   return (String)serviceData.getData();

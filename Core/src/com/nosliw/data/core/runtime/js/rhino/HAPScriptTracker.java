@@ -15,8 +15,6 @@ public class HAPScriptTracker {
 	
 	private List<String> m_files;
 	
-	private String exportPath = "c:/temp/scriptexport/";
-	
 	public HAPScriptTracker(){
 		this.m_scripts = new ArrayList<String>();
 		this.m_files = new ArrayList<String>();
@@ -53,6 +51,6 @@ public class HAPScriptTracker {
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPScriptTracker.class, "scriptTracker.temp");
 		String out = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		
-		HAPFileUtility.writeFile(exportPath+"1.html", out);
+		HAPFileUtility.writeFile(HAPRhinoRuntimeUtility.getScriptTempFolder()+"/1.html", out);
 	}
 }

@@ -1,10 +1,14 @@
 package com.nosliw.data.core.runtime.js.rhino;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONObject;
 import org.mozilla.javascript.Context;
@@ -14,6 +18,7 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -139,11 +144,58 @@ public class HAPRhinoRuntimeUtility {
 		}
 	}
 	
-	private static String getScriptTempFolder(){
+	public static String getScriptTempFolder(){
 		File directory = new File(scriptTempFolder);
 	    if (! directory.exists()){
 	    	directory.mkdir();
 	    }
 	    return directory.getAbsolutePath();
 	}
+	
+	public static void exportToHtml() {
+		List<File> files = HAPFileUtility.sortFiles(HAPFileUtility.getAllFiles(getScriptTempFolder()));
+		
+		StringBuffer scriptContent = new StringBuffer();
+		for(File file : files){
+			String fileName = file.getPath();
+			if(fileName.contains("Library__nosliw.runtimerhinoinit;__init.js.js")) {
+				appendScriptToScript(scriptContent, "nosliw.createNode(\"runtime.name\", \"browser\");");
+			}
+			else if(fileName.contains("Library__nosliw.runtimerhino;__gatewayservice.js.js")) {
+				appendLibraryToScript(scriptContent, "remoteservice");
+				appendLibraryToScript(scriptContent, "runtimebrowser");
+				appendScriptToScript(scriptContent, "var runtime = nosliw.getNodeData(\"runtime.createRuntime\")(nosliw.runtimeName);	  runtime.interfaceObjectLifecycle.init();");
+			}
+			else if(fileName.contains("Library__nosliw.runtimerhino;__runtime.js.js")) {
+			}
+			else {
+				appendFileToScript(scriptContent, fileName);
+			}
+		}
+		scriptContent.append("\n");
+		
+		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+		templateParms.put("script", scriptContent.toString());
+		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPScriptTracker.class, "scriptTracker.temp");
+		String out = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
+		
+		HAPFileUtility.writeFile(HAPRhinoRuntimeUtility.getScriptTempFolder()+"/main.html", out);
+
+	}
+	
+	private static void appendFileToScript(StringBuffer scriptContent, String file) {
+		scriptContent.append("<script src=\""+file+"\"></script>\n");
+	}
+
+	private static void appendScriptToScript(StringBuffer scriptContent, String script) {
+		scriptContent.append("<script>"+script+"</script>\n");
+	}
+
+	private static void appendLibraryToScript(StringBuffer scriptContent, String libDir) {
+		List<File> files = HAPFileUtility.sortFiles(HAPFileUtility.getAllFiles(HAPFileUtility.getNosliwJSFolder(libDir)));
+		for(File file : files) {
+			appendFileToScript(scriptContent, file.getAbsolutePath());
+		}
+	}
+	
 }

@@ -299,7 +299,7 @@ public class HAPRuntimeJSScriptUtility {
 		for(Object ele : scriptExpression.getElements()){
 			if(ele instanceof HAPDefinitionExpression){
 				HAPDefinitionExpression expression = (HAPDefinitionExpression)ele;
-				funScript.append(expressionsDataParmName+"[\""+i+"\"]");
+				funScript.append(expressionsDataParmName+"[\""+expression.getId()+"\"]");
 			}
 			else if(ele instanceof HAPScriptExpressionScriptSegment){
 				HAPScriptExpressionScriptSegment scriptSegment = (HAPScriptExpressionScriptSegment)ele;

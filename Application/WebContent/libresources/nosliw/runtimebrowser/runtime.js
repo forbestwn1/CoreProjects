@@ -14,7 +14,7 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_createRemoteService;
 	var node_createGatewayService;
-	var node_node_createUIResourceService;
+	var node_createUIResourceService;
 	var node_createMiniAppService;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -67,10 +67,10 @@ var node_createRuntime = function(name){
 		loc_resourceManager = node_createResourceManager();
 		loc_resourceService = node_createResourceService(loc_resourceManager);
 		loc_expressionService = node_createExpressionService();
-		loc_remoteService = node_createRemoteService();
+		if(node_createRemoteService!=undefined)		loc_remoteService = node_createRemoteService();
 		loc_remoteService.interfaceObjectLifecycle.init();
 		loc_gatewayService = node_createGatewayService();
-		loc_uiResourceService = node_createUIResourceService();
+		if(node_createUIResourceService!=undefined)  loc_uiResourceService = node_createUIResourceService();
 		
 		//set sortcut for object
 		 nosliw.runtime = loc_out;

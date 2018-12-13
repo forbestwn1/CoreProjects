@@ -24,6 +24,9 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 public class HAPDefinitionExpression  extends HAPSerializableImp implements HAPEntityWithName{
 
 	@HAPAttribute
+	public static String ID = "id";
+
+	@HAPAttribute
 	public static String EXPRESSION = "expression";
 	
 	@HAPAttribute
@@ -35,14 +38,23 @@ public class HAPDefinitionExpression  extends HAPSerializableImp implements HAPE
 	@HAPAttribute
 	public static String REFERENCENAMES = "referenceNames";
 
+	private String m_id;
+	
 	private String m_expression;
 	
 	private HAPOperandWrapper m_operand;
 
+	public HAPDefinitionExpression(String expression, String id) {
+		this(expression);
+		this.m_id = id;
+	}
+	
 	public HAPDefinitionExpression(String expression) {
 		this.m_expression = expression;
 		this.process();
 	}
+	
+	public String getId() {   return this.m_id;  }
 	
 	public String getExpression() {  return this.m_expression;  }
 	
@@ -111,6 +123,7 @@ public class HAPDefinitionExpression  extends HAPSerializableImp implements HAPE
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ID, this.m_id);
 		jsonMap.put(EXPRESSION, this.m_expression);
 		jsonMap.put(VARIABLENAMES, HAPJsonUtility.buildJson(this.getVariableNames(), HAPSerializationFormat.JSON));
 		jsonMap.put(REFERENCENAMES, HAPJsonUtility.buildJson(this.getReferenceNames(), HAPSerializationFormat.JSON));

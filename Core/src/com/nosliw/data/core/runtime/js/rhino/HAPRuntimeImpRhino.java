@@ -292,7 +292,8 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 
 	@Override
 	public void close(){
-		this.m_sciprtTracker.export();
+//		this.m_sciprtTracker.export();
+		HAPRhinoRuntimeUtility.exportToHtml();
 		this.m_runtimeEnvironment.getGatewayManager().unregisterGateway(this.getTaskResponseGatewayName());
 	}
 	

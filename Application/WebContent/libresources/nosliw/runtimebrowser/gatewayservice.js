@@ -115,6 +115,12 @@ var node_createGatewayService = function(){
 		
 	};
 	
+	nosliw.createNode(node_COMMONATRIBUTECONSTANT.RUNTIME_NODENAME_GATEWAY, {
+		executeGateway : function(gatewayId, command, parms){
+			
+		}
+	});
+	
 	loc_out = node_buildServiceProvider(loc_out, "gatewayService");
 	
 	return loc_out;
