@@ -43,7 +43,7 @@ public class HAPProcessorContextConstant {
 			HAPContextGroup contextGroup,
 			HAPContextGroup parentContextGroup,
 			String inheritMode){
-		HAPContextGroup out = contextGroup.clone();
+		HAPContextGroup out = contextGroup.cloneContextGroup();
 		if(!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(inheritMode)) {
 			if(parentContextGroup!=null) {
 				//merge constants with parent
@@ -108,7 +108,7 @@ public class HAPProcessorContextConstant {
 	static private HAPContextGroup solidateConstantDefs(
 			HAPContextGroup contextGroup,
 			HAPEnvContextProcessor contextProcessorEnv){
-		HAPContextGroup out = contextGroup.clone();
+		HAPContextGroup out = contextGroup.cloneContextGroup();
 		for(String categary : HAPContextGroup.getAllContextTypes()) {
 			Map<String, HAPContextDefinitionRoot> cotextDefRoots = out.getElements(categary);
 			for(String name : cotextDefRoots.keySet()) {

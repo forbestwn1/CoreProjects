@@ -36,7 +36,7 @@ public class HAPContextGroup extends HAPSerializableImp{
 	private Map<String, HAPContext> m_contexts;
 	private HAPInfoImpSimple m_info;
 	
-	private HAPContextGroup m_parent;;
+	private HAPContextGroup m_parent;
 	
 	public HAPContextGroup(){
 		this.m_info = new HAPInfoImpSimple(); 
@@ -98,10 +98,10 @@ public class HAPContextGroup extends HAPSerializableImp{
 		}
 	}
 	
-	public void setParent(HAPContextGroup parent) {  this.m_parent = parent;  }
-	public HAPContextGroup getParent() {   return this.m_parent;    }
-	
 	public HAPInfo getInfo() {  return this.m_info;  }
+	
+	public HAPContextGroup getParent() {   return this.m_parent;   }
+	public void setParent(HAPContextGroup parent) {  this.m_parent = parent;   }
 	
 	public HAPContext getPublicContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);  }
 	public HAPContext getProtectedContext(){  return this.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED);  }
@@ -124,14 +124,24 @@ public class HAPContextGroup extends HAPSerializableImp{
 	
 	public Set<String> getContextTypes(){  return this.m_contexts.keySet();   }
 	
-	public HAPContextGroup clone() {
+	public HAPContextGroup cloneContextGroup() {
 		HAPContextGroup out = new HAPContextGroup();
 		this.cloneTo(out);
 		return out;
 	}
+
+	public HAPContextGroup cloneContextGroupBase() {
+		HAPContextGroup out = new HAPContextGroup();
+		this.cloneToBase(out);
+		return out;
+	}
+
+	public void cloneToBase(HAPContextGroup out) {
+		out.m_info = this.m_info.cloneInfo();
+	}
 	
 	public void cloneTo(HAPContextGroup out) {
-		out.m_info = this.m_info.cloneInfo();
+		this.cloneToBase(out);
 		for(String categary : this.m_contexts.keySet()) {
 			HAPContext context = this.m_contexts.get(categary);
 			for(String name : context.getElements().keySet()) {

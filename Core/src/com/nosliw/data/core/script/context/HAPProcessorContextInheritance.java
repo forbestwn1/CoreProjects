@@ -3,8 +3,6 @@ package com.nosliw.data.core.script.context;
 import java.util.Arrays;
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPConstant;
-
 public class HAPProcessorContextInheritance {
 
 	//merge with parent through inheritance
@@ -26,8 +24,9 @@ public class HAPProcessorContextInheritance {
 		return out;
 	}
 	
+	//add FINAL to all constant root node, means constant cannot be override by parent 
 	private static HAPContextGroup processConstant(HAPContextGroup contextGroup) {
-		HAPContextGroup out = contextGroup.clone();
+		HAPContextGroup out = contextGroup.cloneContextGroup();
 		for(String contextCategary : HAPContextGroup.getAllContextTypes()) {
 			for(String name : out.getContext(contextCategary).getElementNames()) {
 				HAPContextDefinitionRoot node = out.getElement(contextCategary, name);

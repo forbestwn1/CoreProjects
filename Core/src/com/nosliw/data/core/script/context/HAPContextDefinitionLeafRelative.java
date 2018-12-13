@@ -54,6 +54,12 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 	@Override
 	public String getType() {		return HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE;	}
 
+	@Override
+	public HAPContextDefinitionElement getSolidContextDefinitionElement() {
+		if(this.isProcessed())  return this.m_definition;
+		else return null;  
+	}
+	
 	public HAPContextDefinitionElement getDefinition() {   return this.m_definition;   }
 	public void setDefinition(HAPContextDefinitionElement definition) {   this.m_definition = definition;   }
 	

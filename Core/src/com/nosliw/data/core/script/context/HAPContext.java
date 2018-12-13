@@ -111,9 +111,14 @@ public class HAPContext extends HAPSerializableImp{
 		}
 	}
 
-	
-	public HAPContext clone() {
+	public HAPContext cloneContextBase() {
 		HAPContext out = new HAPContext();
+		out.m_info = this.m_info.cloneInfo(); 
+		return out;
+	}
+	
+	public HAPContext cloneContext() {
+		HAPContext out = this.cloneContextBase();
 		for(String name : this.m_elements.keySet()) {
 			out.addElement(name, this.m_elements.get(name).cloneContextDefinitionRoot());
 		}

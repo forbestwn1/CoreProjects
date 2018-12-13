@@ -237,7 +237,7 @@ public class HAPProcessorUIContext {
 
 		//add attribute constant as part of tagContext
 		Map<String, String> constants = uiTag.getAttributes();
-		HAPContextGroup tagContext = tagDefinitionContext.clone();
+		HAPContextGroup tagContext = tagDefinitionContext.cloneContextGroup();
 		for(String cstName : constants.keySet()) {
 			HAPContextDefinitionLeafConstant cstRootNode = new HAPContextDefinitionLeafConstant(constants.get(cstName));
 			tagContext.addElement(cstName, new HAPContextDefinitionRoot(cstRootNode), HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);
