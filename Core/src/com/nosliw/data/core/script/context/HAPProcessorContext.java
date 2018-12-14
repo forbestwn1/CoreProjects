@@ -4,6 +4,8 @@ public class HAPProcessorContext {
 
 	//merge child context with parent context
 	public static HAPContextGroup process1(HAPContextGroup contextGroup, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
+
+		if(configure==null)  configure = new HAPConfigureContextProcessor();
 		
 		//figure out all constant values in context
 		contextGroup = HAPProcessorContextConstant.process(contextGroup, parentContextGroup, configure.inheritMode, contextProcessorEnv);
@@ -18,7 +20,9 @@ public class HAPProcessorContext {
 		
 	}
 	
-	public static HAPContextGroup process2(HAPContextGroup contextGroup, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
+	public static HAPContextGroup processRelative(HAPContextGroup contextGroup, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
+		
+		if(configure==null)  configure = new HAPConfigureContextProcessor();
 		
 		//resolve relative context
 		contextGroup = HAPProcessorContextRelative.process(contextGroup, parentContextGroup, configure, contextProcessorEnv);

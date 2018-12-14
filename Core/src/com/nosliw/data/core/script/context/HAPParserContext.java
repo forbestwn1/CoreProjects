@@ -46,11 +46,6 @@ public class HAPParserContext {
 				HAPContextDefinitionRoot contextDefRoot = parseContextRootFromJson(eleDefJson);
 				context.addElement(eleName, contextDefRoot);
 			}
-			
-			JSONObject infoJson = contextJson.optJSONObject(HAPContext.INFO);
-			if(infoJson!=null) {
-				context.getInfo().buildObject(infoJson, HAPSerializationFormat.JSON);
-			}
 		}
 	}
 	

@@ -8,8 +8,6 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -22,12 +20,7 @@ public class HAPContext extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 
-	@HAPAttribute
-	public static final String INFO = "info";
-	
 	private Map<String, HAPContextDefinitionRoot> m_elements;
-	
-	private HAPInfo m_info;
 	
 	public HAPContext(){
 		this.empty();
@@ -35,10 +28,7 @@ public class HAPContext extends HAPSerializableImp{
 	
 	public void empty() {
 		this.m_elements = new LinkedHashMap<String, HAPContextDefinitionRoot>();
-		this.m_info = new HAPInfoImpSimple();
 	}
-	
-	public HAPInfo getInfo() {   return this.m_info;   }
 	
 	public Set<String> getElementNames(){  return this.m_elements.keySet();   }
 	public Map<String, HAPContextDefinitionRoot> getElements(){  return this.m_elements;  }
@@ -113,7 +103,6 @@ public class HAPContext extends HAPSerializableImp{
 
 	public HAPContext cloneContextBase() {
 		HAPContext out = new HAPContext();
-		out.m_info = this.m_info.cloneInfo(); 
 		return out;
 	}
 	
@@ -142,6 +131,5 @@ public class HAPContext extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ELEMENT, HAPJsonUtility.buildJson(m_elements, HAPSerializationFormat.JSON));
-		jsonMap.put(INFO, HAPJsonUtility.buildJson(m_info, HAPSerializationFormat.JSON));
 	}
 }

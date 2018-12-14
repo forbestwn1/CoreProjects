@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.path.HAPComplexName;
@@ -19,6 +18,7 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPUtilityContext {
 
+	//traverse through all the context definition element, and process it
 	public static void processContextDefElement(HAPContextDefinitionElement contextDefEle, HAPContextDefEleProcessor processor, Object value) {
 		if(processor.process(contextDefEle, value)) {
 			if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(contextDefEle.getType())) {
@@ -31,7 +31,7 @@ public class HAPUtilityContext {
 		processor.postProcess(contextDefEle, value);
 	}
 	
-	public static HAPContextDefinitionElement getDescendants(HAPContextDefinitionElement contextDefEle, String path) {
+	public static HAPContextDefinitionElement getDescendant(HAPContextDefinitionElement contextDefEle, String path) {
 		HAPContextDefinitionElement out = contextDefEle;
 		HAPPath pathObj = new HAPPath(path);
 		for(String pathSeg : pathObj.getPathSegs()) {
@@ -40,25 +40,26 @@ public class HAPUtilityContext {
 		return out;
 	}
 
-	public static HAPContextDefinitionElement getDescendants(HAPContext context, String path) {
+	public static HAPContextDefinitionElement getDescendant(HAPContext context, String path) {
 		HAPContextDefinitionElement out = null;
 		HAPComplexName complexName = new HAPComplexName(path);
 		HAPContextDefinitionRoot root = context.getElement(complexName.getSimpleName());
 		if(root!=null) {
-			out = getDescendants(root.getDefinition(), complexName.getPath());
+			out = getDescendant(root.getDefinition(), complexName.getPath());
 		}
 		return out;
 	}
 	
-	public static HAPContextDefinitionElement getDescendants(HAPContextGroup contextGroup, String categary, String path) {
+	public static HAPContextDefinitionElement getDescendant(HAPContextGroup contextGroup, String categary, String path) {
 		HAPContextDefinitionElement out = null;
 		HAPContext context = contextGroup.getContext(categary);
-		if(context!=null)   out = getDescendants(context, path);
+		if(context!=null)   out = getDescendant(context, path);
 		return out;
 	}
 	
 	public static boolean isContextDefinitionElementConstant(HAPContextDefinitionElement ele) {   return HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT.equals(ele.getType());   }
 	
+	//discover all the relative elements in context def element
 	public static Map<String, HAPContextDefinitionLeafRelative> isContextDefinitionElementRelative(HAPContextDefinitionElement ele) {
 		Map<String, HAPContextDefinitionLeafRelative> out = new LinkedHashMap<String, HAPContextDefinitionLeafRelative>();
 		discoverRelative(ele, out, null);
@@ -79,7 +80,6 @@ public class HAPUtilityContext {
 		}
 	}
 
-	
 	public static HAPEntityInfoImp toSolidEntityInfo(HAPEntityInfoImp input, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
 		HAPEntityInfoImp out = new HAPEntityInfoImp();
 		out.setName(input.getName());
@@ -88,75 +88,6 @@ public class HAPUtilityContext {
 		return out;
 	}
 
-	public static void processEscalate(HAPContextGroup contextGroup, Set<String> categarys, Map<String, String> cm) {
-		for(String categary : categarys) {
-			HAPContext context = contextGroup.getContext(categary);
-
-			Map<String, String> contextMapping = new LinkedHashMap<String, String>();
-			contextMapping.putAll(cm);
-			for(String key : context.getElementNames()) {
-				if(HAPBasicUtility.isStringEmpty(contextMapping.get(key)))			contextMapping.put(key, key);
-			}
-			
-			for(String key : context.getElementNames()) {
-				HAPUtilityContext.escalate(contextGroup, key, contextMapping.get(key), categary);
-			}
-		}
-	}
-	
-	//escalte context node to parent, only absolute variable
-	public static void escalate(HAPContextGroup contextGroup, String nodeName, String mappedName, String categaryType) {
-		HAPContextDefinitionRoot rootNode = contextGroup.getElement(categaryType, nodeName);
-		if(rootNode.isAbsolute()) {
-			Object[] a = escalate(mappedName, categaryType, contextGroup.getParent(), rootNode);
-			contextGroup.addElement(nodeName, (HAPContextDefinitionRoot)a[0], categaryType);
-		}
-	}
-	
-	private static Object[] escalate(String name, String categaryType, HAPContextGroup contextGroup, HAPContextDefinitionRoot original) {
-		
-		Object[] out = new Object[2];
-		HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(name), contextGroup, null, HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_FIRST);
-		if(resolveInfo!=null) {
-			//find matched one
-			out[0] = HAPUtilityContext.createInheritedElement(resolveInfo.rootNode, resolveInfo.path.getRootElementId().getCategary(), resolveInfo.path.getRootElementId().getName());
-			out[1] = resolveInfo.path.getRootElementId().getCategary();
-			return out;
-		}
-		else {
-			HAPContextGroup parent = contextGroup.getParent();
-			boolean isEnd = false;
-			if(parent==null)   isEnd = true;
-			else  isEnd = !HAPUtilityContext.getContextGroupPopupMode(parent);
-
-			//not find
-			if(isEnd){
-				HAPContextDefinitionRoot newRootNode = original.cloneContextDefinitionRoot();
-				contextGroup.addElement(name, newRootNode, categaryType);
-				return out;
-			}
-			else {
-				Object[] a = escalate(name, categaryType, parent, original);
-				
-				String categary;
-				HAPContextGroup group;
-				if(a[0]!=null) {
-					contextGroup.addElement(name, (HAPContextDefinitionRoot)a[0], (String)a[1]);
-					group = contextGroup;
-					categary = (String)a[1];
-				}
-				else {
-					contextGroup.addElement(name, HAPUtilityContext.createInheritedElement(parent, categaryType, name), categaryType);
-					group = contextGroup;
-					categary = categaryType;
-				}
-				
-				out[0] = HAPUtilityContext.createInheritedElement(group, categary, name);
-				out[1] = categary;
-				return out;
-			}
-		}
-	}
 	
 	public static String getContextGroupInheritMode(HAPContextGroup contextGroup) {  
 		String out = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;

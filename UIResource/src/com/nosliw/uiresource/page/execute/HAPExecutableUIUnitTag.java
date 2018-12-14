@@ -6,9 +6,9 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
 
 public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
@@ -38,7 +38,7 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	private HAPContextGroupInUITag m_tagContext;
 	private HAPContextFlat m_flatTagContext;
 
-	private Map<String, HAPContextEntity> m_tagEvent;
+	private Map<String, HAPDefinitionUIEvent> m_tagEvent;
 
 	private Map<String, String> m_eventMapping;
 	private Map<String, String> m_contextMapping;
@@ -47,7 +47,7 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	
 	public HAPExecutableUIUnitTag(HAPDefinitionUIUnitTag uiTagDefinition) {
 		super(uiTagDefinition);
-		this.m_tagEvent = new LinkedHashMap<String, HAPContextEntity>();
+		this.m_tagEvent = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 		this.m_eventMapping = new LinkedHashMap<String, String>();
 		this.m_contextMapping = new LinkedHashMap<String, String>();
 		this.m_commandMapping = new LinkedHashMap<String, String>();
@@ -66,8 +66,8 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 		else  return new HAPContextFlat();
 	}
 	
-	public void addTagEvent(String name, HAPContextEntity event) {  this.m_tagEvent.put(name, event);  }
-	public Map<String, HAPContextEntity> getTagEvent(){  return this.m_tagEvent;  }
+	public void addTagEvent(String name, HAPDefinitionUIEvent event) {  this.m_tagEvent.put(name, event);  }
+	public Map<String, HAPDefinitionUIEvent> getTagEvent(){  return this.m_tagEvent;  }
 	
 	public HAPDefinitionUIUnitTag getUIUnitTagDefinition() {   return (HAPDefinitionUIUnitTag)this.getUIUnitDefinition();  }
 	

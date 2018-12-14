@@ -4,25 +4,24 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafConstant;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
-import com.nosliw.data.core.script.context.HAPContextDefinitionLeafVariable;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPContextNodeRoot;
-import com.nosliw.data.core.script.context.HAPContextNodeRootConstant;
-import com.nosliw.data.core.script.context.HAPContextNodeRootVariable;
 import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPProcessorContextRelative;
+import com.nosliw.data.core.script.context.HAPProcessorEscalate;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.service.HAPDefinitionServiceInfo;
 import com.nosliw.data.core.service.HAPDefinitionServiceOutput;
@@ -78,110 +77,116 @@ public class HAPProcessorUIContext {
 			categarys.add(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 			Map<String, String> contextMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeUITag.getAttributes().get(HAPConstant.UITAG_PARM_CONTEXT));
 			exeUITag.setContextMapping(contextMapping);
-			HAPUtilityContext.processEscalate(exeUITag.getContext(), categarys, contextMapping);
+			HAPProcessorEscalate.process(exeUITag.getContext(), categarys, contextMapping);
 		}
 	}
 	
 	private static void processRelative(HAPExecutableUIUnit uiExe, HAPExecutableUIUnit parentUIExe, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 		HAPContextGroup parentContext = parentUIExe==null?null:parentUIExe.getContext();
 		
+		HAPConfigureContextProcessor privateConfigure = new HAPConfigureContextProcessor();
+		privateConfigure.parentCategary = HAPContextGroup.getAllContextTypes();
+		
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
 			HAPExecutableUIUnitTag uiTagExe = (HAPExecutableUIUnitTag)uiExe;
-			
-			HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
-			uiTagExe.setTagContext(HAPProcessorContext.process2(uiTagExe.getTagContext(), parentContext, configure, contextProcessorEnv));
+
+			//process relative element in tag context
+			uiTagExe.setTagContext(HAPProcessorContext.processRelative(uiTagExe.getTagContext(), parentContext, new HAPConfigureContextProcessor(), contextProcessorEnv));
 			parentContext = uiTagExe.getTagContext();
 			
-			//process event in tag
-			for(HAPContextEntity eventDef : uiTagMan.getUITagDefinition(new HAPUITagId(uiTagExe.getUIUnitTagDefinition().getTagName())).getEventDefinition()) {
-				HAPContextEntity processedEventDef = new HAPContextEntity();
-				eventDef.cloneBasicTo(processedEventDef);
-				processedEventDef.setContext(HAPProcessorContextRelative.process(eventDef.getContext(), uiTagExe.getTagContext(), null, contextProcessorEnv));
+			//process relative element in event definition in tag
+			for(HAPDefinitionUIEvent eventDef : uiTagMan.getUITagDefinition(new HAPUITagId(uiTagExe.getUIUnitTagDefinition().getTagName())).getEventDefinition()) {
+				HAPDefinitionUIEvent processedEventDef = new HAPDefinitionUIEvent();
+				eventDef.cloneToBase(processedEventDef);
+				processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventDef.getDataDefinition(), uiTagExe.getTagContext(), privateConfigure, contextProcessorEnv));
 				uiTagExe.addTagEvent(eventDef.getName(), processedEventDef);
 			}
-			
 		}
 
 		//merge with context defined in resource
-		uiExe.setContext(HAPProcessorContext.process2(uiExe.getContext(), parentContext, new HAPConfigureContextProcessor(), contextProcessorEnv));
+		uiExe.setContext(HAPProcessorContext.processRelative(uiExe.getContext(), parentContext, new HAPConfigureContextProcessor(), contextProcessorEnv));
 
-		//process event defined in resoruce
+		//process relative element in event defined in resource
 		Map<String, HAPDefinitionUIEvent> eventsDef = uiExe.getUIUnitDefinition().getEventDefinitions();
 		for(String name : eventsDef.keySet()) {
 			HAPDefinitionUIEvent processedEventDef = new HAPDefinitionUIEvent();
-			eventsDef.get(name).cloneBasicTo(processedEventDef);
-			processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventsDef.get(name).getDataDefinition(), uiExe.getContext(), null, contextProcessorEnv));
+			eventsDef.get(name).cloneToBase(processedEventDef);
+			processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventsDef.get(name).getDataDefinition(), uiExe.getContext(), privateConfigure, contextProcessorEnv));
 			uiExe.addEventDefinition(processedEventDef);
 		}
 
-		//process command defined in resource
+		//process relative element in command defined in resource
 		Map<String, HAPDefinitionUICommand> commandsDef = uiExe.getUIUnitDefinition().getCommandDefinition();
 		for(String name : commandsDef.keySet()) {
 			HAPDefinitionUICommand commandDef = commandsDef.get(name);
 			HAPDefinitionUICommand processedCommendDef = new HAPDefinitionUICommand();
 			commandDef.cloneBasicTo(processedCommendDef);
-			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), uiExe.getContext(), null, contextProcessorEnv));
-			
+			//command parms
+			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), uiExe.getContext(), privateConfigure, contextProcessorEnv));
+
+			//command results
 			Map<String, HAPContext> results = commandDef.getResults();
 			for(String resultName : results.keySet()) {
-				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), uiExe.getContext(), null, contextProcessorEnv));
+				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), uiExe.getContext(), privateConfigure, contextProcessorEnv));
 			}
 			
 			uiExe.addCommandDefinition(processedCommendDef);
 		}
 		
 		//process service defined in resource
-		Map<String, HAPDefinitionUICommand> servicesDef = uiExe.getUIUnitDefinition().getCommandDefinition();
+		Map<String, HAPDefinitionUICommand> servicesDef = uiExe.getUIUnitDefinition().getServiceDefinitions();
 		for(String name : servicesDef.keySet()) {
 			HAPDefinitionUICommand serviceDef = servicesDef.get(name);
 			HAPDefinitionServiceInfo processedServiceDef = new HAPDefinitionServiceInfo();
 			
 			serviceDef.cloneToEntityInfo(processedServiceDef);
-			HAPContext processedParmContext = HAPProcessorContextRelative.process(serviceDef.getParms(), uiExe.getContext(), null, contextProcessorEnv);
+			//process parms and convert context root to data type criteria required by service parm
+			HAPContext processedParmContext = HAPProcessorContextRelative.process(serviceDef.getParms(), uiExe.getContext(), privateConfigure, contextProcessorEnv);
 			for(String parmName : processedParmContext.getElementNames()) {
 				HAPContextDefinitionRoot contextParm = processedParmContext.getElement(parmName);
 				HAPDefinitionServiceParm serviceParm = new HAPDefinitionServiceParm(); 
 				contextParm.cloneToEntityInfo(serviceParm);
 				
-				String contextType = contextParm.getDefinition().getType();
+				HAPContextDefinitionElement solidContextParmEle = contextParm.getDefinition().getSolidContextDefinitionElement();
+				String contextType = solidContextParmEle.getType();
 				switch(contextType) {
-				case HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE:
-					HAPContextDefinitionLeafRelative relativeRootNode = (HAPContextDefinitionLeafRelative)contextParm.getDefinition();
-//					serviceParm.setCriteria(relativeRootNode.getDefinition().g.getDefinition().getValue());
-					break;
 				case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
-					HAPContextDefinitionLeafData dataRootNode = (HAPContextDefinitionLeafData)contextParm.getDefinition();
+					HAPContextDefinitionLeafData dataRootNode = (HAPContextDefinitionLeafData)solidContextParmEle;
 					serviceParm.setCriteria(dataRootNode.getCriteria().getCriteria());
 					break;
 				case HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT:
-					HAPContextDefinitionLeafConstant constantRootNode = (HAPContextDefinitionLeafConstant)contextParm.getDefinition();
+					HAPContextDefinitionLeafConstant constantRootNode = (HAPContextDefinitionLeafConstant)solidContextParmEle;
 					serviceParm.setDefault(constantRootNode.getDataValue());
 					break;
+				default:
+					//invalid
+					HAPErrorUtility.invalid("");
 				}
 				processedServiceDef.getInterface().addParm(parmName, serviceParm);
 			}
 			
+			//process results and convert context root to data type criteria required by service result
 			Map<String, HAPContext> resultsContext = serviceDef.getResults();
 			for(String resultName : resultsContext.keySet()) {
-				HAPContext processedResultContext = HAPProcessorContextRelative.process(resultsContext.get(resultName), uiExe.getContext(), null, contextProcessorEnv);
+				HAPContext processedResultContext = HAPProcessorContextRelative.process(resultsContext.get(resultName), uiExe.getContext(), privateConfigure, contextProcessorEnv);
 				HAPDefinitionServiceResult result = new HAPDefinitionServiceResult();
 				for(String outputName : processedResultContext.getElementNames()) {
 					HAPContextDefinitionRoot contextOutput = processedResultContext.getElement(outputName);
 					HAPDefinitionServiceOutput serviceOutput = new HAPDefinitionServiceOutput(); 
 					contextOutput.cloneToEntityInfo(serviceOutput);
 					
-					String contextType = contextOutput.getDefinition().getType();
+					HAPContextDefinitionElement solidContextOutputEle = contextOutput.getDefinition().getSolidContextDefinitionElement();
+					String contextType = solidContextOutputEle.getType();
 					switch(contextType) {
-					case HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE:
-						HAPContextDefinitionLeafRelative relativeRootNode = (HAPContextDefinitionLeafRelative)contextOutput.getDefinition();
-//						serviceOutput.setCriteria(relativeRootNode.getDefinition().getValue());
-						break;
 					case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
-						HAPContextDefinitionLeafData dataRootNode = (HAPContextDefinitionLeafData)contextOutput.getDefinition();
+						HAPContextDefinitionLeafData dataRootNode = (HAPContextDefinitionLeafData)solidContextOutputEle;
 						serviceOutput.setCriteria(dataRootNode.getCriteria().getCriteria());
 						break;
 					case HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT:
 						break;
+					default:
+						//invalid
+						HAPErrorUtility.invalid("");
 					}
 					result.addOutput(outputName, serviceOutput);
 					processedServiceDef.getInterface().addResult(resultName, result);
@@ -190,7 +195,6 @@ public class HAPProcessorUIContext {
 			}
 			uiExe.addServiceDefinition(processedServiceDef);
 		}
-		
 		
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : uiExe.getUITags()) {
@@ -211,6 +215,7 @@ public class HAPProcessorUIContext {
 		HAPContextFlat flatContext = HAPUtilityContext.buildFlatContext(uiExe.getContext());
 		uiExe.setFlatContext(flatContext);
 
+		//constants
 		Map<String, Object> constantsValue = flatContext.getConstantValue();
 		for(String name : constantsValue.keySet()) {
 			Object constantValue = constantsValue.get(name);

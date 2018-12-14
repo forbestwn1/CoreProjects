@@ -29,7 +29,7 @@ public class HAPDefinitionUIEvent extends HAPEntityInfoImp{
 	
 	public void addDataElement(String name, HAPContextDefinitionRoot node) {  this.m_dataDefinition.addElement(name, node);  }
 	
-	public void cloneBasicTo(HAPDefinitionUIEvent event) {
+	public void cloneToBase(HAPDefinitionUIEvent event) {
 		this.cloneToEntityInfo(event);
 	}
 	

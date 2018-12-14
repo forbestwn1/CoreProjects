@@ -15,8 +15,12 @@
 			private : {
 				element : {
 					internal_data: {
-						path : "<%=&(data)&%>",
-						definition : "test.string;1.0.0"
+						definition: {
+							path : "<%=&(data)&%>",
+							definition : {
+								criteria : "test.string;1.0.0"
+							}
+						}
 					}
 				},
 			},
@@ -28,11 +32,15 @@
 	event : [
 		{
 			name : "valueChanged",
-			parms : {
-				value : {
-					path: "internal_data"
+			data : {
+				element : {
+					value : {
+						definition : {
+							path: "internal_data"
+						}
+					}
 				}
-			},
+			}
 		}
 	],
 	requires:{

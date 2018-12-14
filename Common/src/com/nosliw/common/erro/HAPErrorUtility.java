@@ -15,5 +15,9 @@ public class HAPErrorUtility {
 		printWriter.close();
 		return out;
 	}
+
+	public static void invalid(String message) {
+		throw new RuntimeException();
+	}
 	
 }

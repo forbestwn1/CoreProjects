@@ -27,7 +27,9 @@ public class HAPProcessorUIResource {
 		
 		HAPExecutableUIUnitResource out = new HAPExecutableUIUnitResource(uiResourceDef);
 
+		//compile definition to executable
 		HAPProcessorCompile.process(out, null);
+		
 		
 		HAPEnvContextProcessor contextProcessorEnv = new HAPEnvContextProcessor(dataTypeHelper, runtime, expressionMan);
 		HAPProcessorUIContext.process(out, null, uiTagMan, contextProcessorEnv);

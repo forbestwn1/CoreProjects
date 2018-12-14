@@ -6,20 +6,15 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPContextEntity  extends HAPSerializableImp{
-
-	@HAPAttribute
-	public static String NAME = "name";
+public class HAPContextEntity  extends HAPEntityInfoImp{
 
 	@HAPAttribute
 	public static String CONTEXT = "context";
 
-	private String m_name;
-	
 	//context
 	private HAPContext m_context;
 	
@@ -27,27 +22,25 @@ public class HAPContextEntity  extends HAPSerializableImp{
 		this.m_context = new HAPContext();
 	}
 
-	public String getName() {   return this.m_name;  }
-	
 	public HAPContext getContext() {  return this.m_context;   }
 	public void setContext(HAPContext context) {   this.m_context = context;  }
 	
 	public void addContextElement(String name, HAPContextDefinitionRoot node) {  this.m_context.addElement(name, node);  }
 	
-	public void cloneBasicTo(HAPContextEntity contextEntity) {
-		contextEntity.m_name = this.m_name;
+	public void cloneToBase(HAPContextEntity contextEntity) {
+		this.cloneToEntityInfo(contextEntity);
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(NAME, this.m_name);
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_name = jsonObj.optString(NAME);
+		super.buildObjectByJson(json);
 		HAPParserContext.parseContext(jsonObj.optJSONObject(CONTEXT), this.m_context);
 		return true;  
 	}

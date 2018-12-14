@@ -17,6 +17,7 @@ import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPParserContext;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
 public class HAPUITagDefinitionParser {
 
@@ -70,7 +71,7 @@ public class HAPUITagDefinitionParser {
 			if(eventDefObjs!=null) {
 				for(int i=0; i<eventDefObjs.size(); i++) {
 					JSONObject eventDefJson = (JSONObject)HAPRhinoDataUtility.toJson(eventDefObjs.get(i));
-					HAPContextEntity eventDef = new HAPContextEntity();
+					HAPDefinitionUIEvent eventDef = new HAPDefinitionUIEvent();
 					eventDef.buildObject(eventDefJson, HAPSerializationFormat.JSON);
 					out.addEventDefinition(eventDef);
 				}

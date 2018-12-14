@@ -235,7 +235,7 @@ public class HAPProcessorContextConstant {
 				HAPContextScriptExpressionProcess expProcessContext = new HAPContextScriptExpressionProcess();
 				for(String constantName : expConstantNames){
 					HAPContextDefinitionRootId refNodeId = solveReferencedNodeId(new HAPContextDefinitionRootId(constantName), contextGroup);
-					HAPContextDefinitionLeafConstant refContextDefEle = (HAPContextDefinitionLeafConstant)HAPUtilityContext.getDescendants(contextGroup, refNodeId.getCategary(), refNodeId.getName());
+					HAPContextDefinitionLeafConstant refContextDefEle = (HAPContextDefinitionLeafConstant)HAPUtilityContext.getDescendant(contextGroup, refNodeId.getCategary(), refNodeId.getName());
 					solidateConstantDefEle(refContextDefEle, contextGroup, contextProcessorEnv);
 					expProcessContext.addConstant(constantName, refContextDefEle.getDataValue());
 				}
@@ -244,7 +244,7 @@ public class HAPProcessorContextConstant {
 				Map<String, Object> scriptConstants = new LinkedHashMap<String, Object>();
 				for(String scriptConstantName : scriptConstantNames){
 					HAPContextDefinitionRootId refNodeId = solveReferencedNodeId(new HAPContextDefinitionRootId(scriptConstantName), contextGroup);
-					HAPContextDefinitionLeafConstant refContextDefEle = (HAPContextDefinitionLeafConstant)HAPUtilityContext.getDescendants(contextGroup, refNodeId.getCategary(), refNodeId.getName());
+					HAPContextDefinitionLeafConstant refContextDefEle = (HAPContextDefinitionLeafConstant)HAPUtilityContext.getDescendant(contextGroup, refNodeId.getCategary(), refNodeId.getName());
 					solidateConstantDefEle(refContextDefEle, contextGroup, contextProcessorEnv);
 					scriptConstants.put(scriptConstantName, refContextDefEle.getValue());
 				}
@@ -287,7 +287,7 @@ public class HAPProcessorContextConstant {
 	private static HAPContextDefinitionRootId solveReferencedNodeId(HAPContextDefinitionRootId nodeId, HAPContextGroup candidateGroup) {
 		if(nodeId.getCategary()!=null)   return nodeId;
 		for(String categary : HAPContextGroup.getVisibleContextTypes()) {
-			HAPContextDefinitionElement refContextEle = HAPUtilityContext.getDescendants(candidateGroup, categary, nodeId.getName());
+			HAPContextDefinitionElement refContextEle = HAPUtilityContext.getDescendant(candidateGroup, categary, nodeId.getName());
 			if(refContextEle!=null && HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT.equals(refContextEle.getType())) {
 				return new HAPContextDefinitionRootId(categary, nodeId.getName());
 			}

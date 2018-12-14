@@ -25,7 +25,7 @@ public class HAPContextParser {
 		
 		HAPContextGroup contextGroup1 = HAPProcessorContext.process1(contextGroup, null, new HAPConfigureContextProcessor(), processEvn);
 		System.out.println(contextGroup1);
-		HAPContextGroup contextGroup2 = HAPProcessorContext.process2(contextGroup1, null, new HAPConfigureContextProcessor(), processEvn);
+		HAPContextGroup contextGroup2 = HAPProcessorContext.processRelative(contextGroup1, null, new HAPConfigureContextProcessor(), processEvn);
 
 		runtimeEnv.getRuntime().close();
 	

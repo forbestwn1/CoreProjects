@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
-import com.nosliw.data.core.script.context.HAPContextEntity;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
 @HAPEntityWithAttribute
 public class HAPUITagDefinition extends HAPSerializableImp{
@@ -47,7 +47,7 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	//dependency resources
 	private List<HAPResourceDependent> m_resourceDependency;
 
-	private List<HAPContextEntity> m_eventsDefinition;
+	private List<HAPDefinitionUIEvent> m_eventsDefinition;
 	
 	//file name for tag definition, it is mainly used for uploading resource file
 	private File m_sourceFile;
@@ -58,7 +58,7 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 		this.m_attributes = new LinkedHashMap<String, HAPUITagDefinitionAttribute>();
 		this.m_context = new HAPUITagDefinitionContext();
 		this.m_resourceDependency = new ArrayList<HAPResourceDependent>();
-		this.m_eventsDefinition = new ArrayList<HAPContextEntity>();
+		this.m_eventsDefinition = new ArrayList<HAPDefinitionUIEvent>();
 	}
 	
 	public HAPUITagId getName(){return this.m_name;}
@@ -73,8 +73,8 @@ public class HAPUITagDefinition extends HAPSerializableImp{
 	public File getSourceFile(){  return this.m_sourceFile;   }
 	public void setSourceFile(File file){   this.m_sourceFile = file;   }
 	
-	public List<HAPContextEntity> getEventDefinition(){  return this.m_eventsDefinition;   }
-	public void addEventDefinition(HAPContextEntity eventDef) {   this.m_eventsDefinition.add(eventDef);    }
+	public List<HAPDefinitionUIEvent> getEventDefinition(){  return this.m_eventsDefinition;   }
+	public void addEventDefinition(HAPDefinitionUIEvent eventDef) {   this.m_eventsDefinition.add(eventDef);    }
 	
 	public void addAttributeDefinition(HAPUITagDefinitionAttribute attrDef) {   this.m_attributes.put(attrDef.getName(), attrDef);   }
 	

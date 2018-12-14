@@ -117,6 +117,7 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 		super.toContextDefinitionElement(out);
 		HAPContextDefinitionLeafRelative that = (HAPContextDefinitionLeafRelative)out;
 		if(this.m_path!=null)	that.m_path = this.m_path.clone();
+		that.m_pathStr = this.m_pathStr; 
 		if(this.m_definition!=null)  that.m_definition = this.m_definition.cloneContextDefinitionElement();
 		
 		for(String name : this.m_matchers.keySet()) 	that.m_matchers.put(name, this.m_matchers.get(name).cloneMatchers());
