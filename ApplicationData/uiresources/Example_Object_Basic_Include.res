@@ -33,17 +33,21 @@
 			public : {
 				element : {
 					index : {
-						definition: "test.integer;1.0.0",
-						default: {
-							dataTypeId: "test.integer;1.0.0",
-							value: 100
+						definition : {
+							criteria: "test.integer;1.0.0",
+							defaultValue: {
+								dataTypeId: "test.integer;1.0.0",
+								value: 100
+							}
 						}
-					},
+					} 
 					element : {
-						definition: "test.string;1.0.0",
-						default: {
-							dataTypeId: "test.string;1.0.0",
-							value: "Include Element!"
+						definition : {
+							criteria: "test.string;1.0.0",
+							defaultValue: {
+								dataTypeId: "test.string;1.0.0",
+								value: "Include Element!"
+							}
 						}
 					}
 				}
@@ -63,13 +67,15 @@
 	[
 		{
 			name : "changeInputTextInclude",
-			parms : {
+			data : {
 				element : {
 					data : {
-						path: "element"
+						definition : {
+							path: "element"
+						}
 					}
 				}
-			},
+			}
 		}
 	]
 	</events>

@@ -17,20 +17,26 @@
 			private : {
 				element : {
 					"internal_data": {
-						path : "<%=&(data)&%>"
+						definition : {
+							path : "<%=&(data)&%>"
+						}
 					}
 				},
 			},
 			protected : {
 				element : {
 					"<%=&(element)&%>" : {
-						path : "<%=&(data)&%>.element",
+						definition : {
+							path : "<%=&(data)&%>.element",
+						},
 						info:{
 							mode : "manual"
 						}
 					},
 					"<%=&(index)&%>" : {
-						definition : "test.integer;1.0.0",
+						definition : {
+							criteria : "test.integer;1.0.0",
+						}
 						info:{
 							mode : "manual"
 						}

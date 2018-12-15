@@ -30,10 +30,12 @@
 			public : {
 				element : {
 					element111 : {
-						definition: "test.string;1.0.0",
-						default: {
-							dataTypeId: "test.string;1.0.0",
-							value: "Include Element!"
+						definition: {
+							criteria: "test.string;1.0.0",
+							defaultValue: {
+								dataTypeId: "test.string;1.0.0",
+								value: "Include Element!"
+							}
 						}
 					}
 				}
@@ -53,9 +55,13 @@
 	[
 		{
 			name : "Include",
-			parms : {
-				data : {
-					path: "element111"
+			parm : {
+				element : {
+					data : {
+						definition : {
+							path: "element111"
+						}
+					}
 				}
 			},
 		}
@@ -66,13 +72,15 @@
 	[
 		{
 			name : "changeInputTextIncludeBasic",
-			parms : {
+			data : {
 				element : {
 					data : {
-						path: "element111"
+						definition : {
+							path: "element111"
+						}
 					}
 				}
-			},
+			}
 		}
 	]
 	</events>
