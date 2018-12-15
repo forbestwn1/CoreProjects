@@ -65,6 +65,10 @@ _.extend(nosliw, function(){
 				var module = loc_modules[i];
 				module[0].start(module[1]);
 			}
+		},
+		
+		throwError : function(errorData){
+			throw JSON.stringify(errorData);;
 		}
 	};
 	

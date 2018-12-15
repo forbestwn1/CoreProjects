@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -12,7 +11,6 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPMatcherUtility;
 import com.nosliw.data.core.expression.HAPMatchers;
 
-@HAPEntityWithAttribute
 public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVariable{
 
 	@HAPAttribute

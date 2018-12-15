@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 public abstract class HAPContextDefinitionLeafVariable extends HAPContextDefinitionElement{
 
 	@HAPAttribute
-	public static final String DEFAULT = "default";
+	public static final String DEFAULT = "defaultValue";
 
 	//default value for the element, used in runtime when no value is set
 	private Object m_defaultValue;
@@ -28,6 +28,7 @@ public abstract class HAPContextDefinitionLeafVariable extends HAPContextDefinit
 	
 	@Override
 	public void toContextDefinitionElement(HAPContextDefinitionElement out) {
+		super.toContextDefinitionElement(out);
 		((HAPContextDefinitionLeafVariable)out).m_defaultValue = this.m_defaultValue;
 	}
 }

@@ -74,18 +74,4 @@ public class HAPProcessorContextSolidate {
 		}
 	}
 
-	//build context node with solid name
-	//def : original node
-	//solid : out, sold node
-	public static void buildSolidContextNode(HAPContextNode def, HAPContextNode solid, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv){
-		solid.setDefinition(def.getDefinition());
-		for(String name : def.getChildren().keySet()){
-			String solidName = getSolidName(name, constants, contextProcessorEnv);
-			HAPContextNode child = def.getChildren().get(name);
-			HAPContextNode solidChild = new HAPContextNode();
-			buildSolidContextNode(child, solidChild, constants, contextProcessorEnv);
-			solid.addChild(solidName, solidChild);
-		}
-	}
-	
 }

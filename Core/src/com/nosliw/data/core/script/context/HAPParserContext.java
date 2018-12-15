@@ -77,7 +77,6 @@ public class HAPParserContext {
 			//relative
 			contextRootDef = new HAPContextDefinitionLeafRelative();
 			((HAPContextDefinitionLeafRelative)contextRootDef).setPath((String)eleDefJson.opt(HAPContextDefinitionLeafRelative.PARENTCATEGARY), path);
-			if(defaultJsonObj!=null)		((HAPContextDefinitionLeafRelative)contextRootDef).setDefaultValue(defaultJsonObj);
 			JSONObject definitionJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionLeafRelative.DEFINITION);
 			if(definitionJsonObj!=null)   ((HAPContextDefinitionLeafRelative)contextRootDef).setDefinition(parseContextDefinitionElement(definitionJsonObj));
 			((HAPContextDefinitionLeafVariable)contextRootDef).setDefaultValue(defaultJsonObj);
@@ -85,11 +84,11 @@ public class HAPParserContext {
 		else if(criteriaStr!=null) {
 			//data
 			contextRootDef = new HAPContextDefinitionLeafData();   
-			//default value
-			((HAPContextDefinitionLeafVariable)contextRootDef).setDefaultValue(defaultJsonObj);
 			HAPVariableInfo criteria = new HAPVariableInfo();
 			criteria.buildObject(criteriaStr, HAPSerializationFormat.LITERATE);
 			((HAPContextDefinitionLeafData)contextRootDef).setCriteria(criteria);
+			//default value
+			((HAPContextDefinitionLeafVariable)contextRootDef).setDefaultValue(defaultJsonObj);
 		}
 		else if(childrenJsonObj!=null) {
 			//node
@@ -97,6 +96,8 @@ public class HAPParserContext {
 			for(Object key : childrenJsonObj.keySet()) {
 				((HAPContextDefinitionNode)contextRootDef).addChild((String)key, parseContextDefinitionElement(childrenJsonObj.getJSONObject((String)key)));
 			}
+			//default value
+			((HAPContextDefinitionLeafVariable)contextRootDef).setDefaultValue(defaultJsonObj);
 		}
 		else if(valueJsonObj!=null){
 			//constant
@@ -111,20 +112,4 @@ public class HAPParserContext {
 		return contextRootDef;
 	}
 	
-
-	public static void parseContextNodeFromJson(Object json, HAPContextNode contextNode){
-		if(json instanceof String){
-			contextNode.setDefinition(new HAPContextNodeCriteria(HAPCriteriaParser.getInstance().parseCriteria((String)json)));
-		}
-		else if(json instanceof JSONObject){
-			JSONObject childrenObj = (JSONObject)json;
-			Iterator<String> names = childrenObj.keys();
-			while(names.hasNext()){
-				String name = names.next();
-				HAPContextNode childNode = new HAPContextNode();
-				parseContextNodeFromJson(childrenObj.opt(name), childNode);
-				contextNode.addChild(name, childNode);
-			}
-		}
-	}
 }

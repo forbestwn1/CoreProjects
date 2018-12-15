@@ -307,10 +307,6 @@
 			<definition name="UIRESOURCE_TYPE_RESOURCE" value="resource"/>
 			<definition name="UIRESOURCE_TYPE_TAG" value="tag"/>
 			<definition type="space"/>
-			<definition name="UIRESOURCE_ROOTTYPE_RELATIVE" value="relative"/>
-			<definition name="UIRESOURCE_ROOTTYPE_ABSOLUTE" value="absolute"/>
-			<definition name="UIRESOURCE_ROOTTYPE_CONSTANT" value="constant"/>
-			<definition type="space"/>
 			<definition name="CONTEXT_ELEMENTTYPE_RELATIVE" value="relative"/>
 			<definition name="CONTEXT_ELEMENTTYPE_DATA" value="data"/>
 			<definition name="CONTEXT_ELEMENTTYPE_VALUE" value="value"/>

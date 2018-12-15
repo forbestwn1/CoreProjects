@@ -31,7 +31,7 @@ public class HAPProcessorContextInheritance {
 			for(String name : out.getContext(contextCategary).getElementNames()) {
 				HAPContextDefinitionRoot node = out.getElement(contextCategary, name);
 				if(node.isConstant()) {
-					node.getInfo().setValue(HAPContextNodeRoot.INHERIT_MODE, HAPContextNodeRoot.INHERIT_MODE_FINAL);
+					node.getInfo().setValue(HAPContextDefinitionRoot.INHERIT_MODE, HAPContextDefinitionRoot.INHERIT_MODE_FINAL);
 				}
 			}
 		}
@@ -45,7 +45,7 @@ public class HAPProcessorContextInheritance {
 		if(childNode==null) 		out = true;
 		else {
 			if(HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT.equals(inheritMode)) {
-				if(!HAPContextNodeRoot.INHERIT_MODE_FINAL.equals(childNode.getInfo().getValue(HAPContextNodeRoot.INHERIT_MODE_FINAL))) {
+				if(!HAPContextDefinitionRoot.INHERIT_MODE_FINAL.equals(childNode.getInfo().getValue(HAPContextDefinitionRoot.INHERIT_MODE_FINAL))) {
 					out = true;
 				}
 			}

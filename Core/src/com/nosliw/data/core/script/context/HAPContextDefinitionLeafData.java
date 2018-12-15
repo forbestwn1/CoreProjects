@@ -3,12 +3,10 @@ package com.nosliw.data.core.script.context;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 
-@HAPEntityWithAttribute
 public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariable{
 
 	@HAPAttribute

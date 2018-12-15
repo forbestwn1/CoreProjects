@@ -64,6 +64,7 @@ public class HAPContextDefinitionLeafConstant extends HAPContextDefinitionElemen
 
 	@Override
 	public void toContextDefinitionElement(HAPContextDefinitionElement out) {
+		super.toContextDefinitionElement(out);
 		((HAPContextDefinitionLeafConstant)out).m_value = this.m_value;
 	}
 }

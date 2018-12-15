@@ -179,12 +179,6 @@ public class HAPConstant {
 
 
 
-		public static final String UIRESOURCE_ROOTTYPE_RELATIVE = "relative";
-		public static final String UIRESOURCE_ROOTTYPE_ABSOLUTE = "absolute";
-		public static final String UIRESOURCE_ROOTTYPE_CONSTANT = "constant";
-
-
-
 		public static final String CONTEXT_ELEMENTTYPE_RELATIVE = "relative";
 		public static final String CONTEXT_ELEMENTTYPE_DATA = "data";
 		public static final String CONTEXT_ELEMENTTYPE_VALUE = "value";

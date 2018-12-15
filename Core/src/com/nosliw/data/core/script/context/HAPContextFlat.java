@@ -15,6 +15,7 @@ public class HAPContextFlat extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String CONTEXT = "context";
 
+	//used to find related name easily
 	@HAPAttribute
 	public static final String NAMEMAPPING = "nameMapping";
 	

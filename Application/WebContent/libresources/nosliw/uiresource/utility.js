@@ -96,17 +96,29 @@ var node_utility = {
 			var contextElementInfosArray = [];
 			
 			_.each(contextDef, function(contextDefRootObj, eleName){
+				var contextDefRootEle = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION];
+				
 				var info = {
-					matchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_MATCHERS],
-					reverseMatchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_REVERSEMATCHERS]
+					matchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_MATCHERS],
+					reverseMatchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_REVERSEMATCHERS]
 				};
-				var type = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
+				var type = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_TYPE];
 				var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
 				//if context.info.model===manual, context does not need to create in the framework
 				if(contextInfo.mode!='manual'){
-					if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_ABSOLUTE){
-						var defaultValue = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_DEFAULT];
-						if(contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFINITION]!=undefined){
+					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE){
+						if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_ISTOPARENT]==true){
+							//process relative that  refer to element in parent context
+							var pathObj = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_PATH];
+							var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
+							var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
+							contextElementInfosArray.push(node_createContextElementInfo(eleName, parentContext, node_createContextVariableInfo(rootName, path), undefined, info));
+						}
+					}
+					else{
+						//not relative variable
+						var defaultValue = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFAULT];
+						if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]!=undefined){
 							//app data
 							var defaultValueData = defaultValue;
 							if(defaultValueData!=undefined){
@@ -119,28 +131,24 @@ var node_utility = {
 							contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValue, "", undefined, info));
 						}
 					}
-					else if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_RELATIVE && contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_ISTOPARENT]==true){
-						var pathObj = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_PATH];
-						var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
-						var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
-						contextElementInfosArray.push(node_createContextElementInfo(eleName, parentContext, node_createContextVariableInfo(rootName, path), undefined, info));
-					}
 				}
 			});	
 				
 			var context = node_createContext(contextElementInfosArray, requestInfo);
 
+			//for relative which refer to context ele in same context
 			_.each(contextDef, function(contextDefRootObj, eleName){
+				var contextDefRootEle = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION];
 				var info = {
-					matchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_MATCHERS],
-					reverseMatchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_REVERSEMATCHERS]
+						matchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_MATCHERS],
+						reverseMatchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_REVERSEMATCHERS]
 				};
-				var type = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
+				var type = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_TYPE];
 				var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
 				//if context.info.model===manual, context does not need to create in the framework
 				if(contextInfo.mode!='manual'){
-					if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_RELATIVE && contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_ISTOPARENT]==false){
-						var pathObj = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_PATH];
+					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE && contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_ISTOPARENT]==false){
+						var pathObj = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_PATH];
 						var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
 						var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
 						//only process element that parent is created
@@ -153,54 +161,6 @@ var node_utility = {
 			
 			return context;
 		},
-		
-
-		//build context according to context definition and parent context
-		buildContext1 : function(contextGroupDef, parentContext, requestInfo){
-			//build context element first
-			var contextElementInfosArray = [];
-			
-			_.each(this.getContextTypes(), function(contextType, index){
-				var contextDef = contextGroupDef[contextType];
-				
-				_.each(contextDef, function(contextDefRootObj, eleName, list){
-					var info = {
-						contextType : contextType,
-						matchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_MATCHERS],
-						reverseMatchers : contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_REVERSEMATCHERS]
-					};
-					var type = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_TYPE];
-					var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
-					//if context.info.model===manual, context does not need to create in the framework
-					if(contextInfo.mode!='manual'){
-						if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_ABSOLUTE){
-							var defaultValue = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_DEFAULT];
-							if(contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODE_DEFINITION]!=undefined){
-								//app data
-								var defaultValueData = defaultValue;
-								if(defaultValueData!=undefined){
-									defaultValueData = node_dataUtility.createDataOfAppData(defaultValue);
-								}
-								contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValueData, "", undefined, info));
-							}
-							else{
-								//object
-								contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValue, "", undefined, info));
-							}
-						}
-						else if(type==node_COMMONCONSTANT.UIRESOURCE_ROOTTYPE_RELATIVE){
-							var pathObj = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTNODEROOT_PATH];
-							var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
-							var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
-							contextElementInfosArray.push(node_createContextElementInfo(eleName, parentContext, node_createContextVariableInfo(rootName, path), undefined, info));
-						}
-					}
-				});
-			});
-			
-			var context = node_createContext(contextElementInfosArray, requestInfo);
-			return context;
-		}
 };
 
 //*******************************************   End Node Definition  ************************************** 	
