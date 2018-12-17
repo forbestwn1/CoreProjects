@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html>
 <body>
+		
+		<nosliw-loop data="business.a.cc" element="ele" index="index">  
+			<br>
+			Index: <%=?(index)?%>
+			<br>
+		</nosliw-loop>
 
-	<br>
-	Content:<%=?(business.a.aa)?.value + '   6666 ' %>
-	<br>
-	TextInput:<nosliw-textinput data="business.a.aa"/>  
-	<br>
-<!--	
-	<br>
-	Content:<%=#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value + ?(business.a.dd)? + ' 6666 ' %>
-	<br>
--->
 </body>
 
 	<scripts>
 	{
-	
 	}
 	</scripts>
 	
@@ -33,20 +28,26 @@
 							child : {
 								a : {
 									child : {
-										aa : {criteria:"test.string;1.0.0"},
+										cc : {criteria:"test.array;1.0.0%||element:test.string;1.0.0||%"},
 									}
 								}
 							},
 							defaultValue: {
 								a : {
-									aa : {
-										dataTypeId: "test.string;1.0.0",
-										value: "This is my world!"
-									}
+									cc : [
+											{
+												dataTypeId: "test.string;1.0.0",
+												value: "This is my world 1111!"
+											},
+											{
+												dataTypeId: "test.string;1.0.0",
+												value: "This is my world 2222!"
+											}
+									]
 								}
 							}
-						},
-					},
+						}
+					}
 				}
 			}
 		}
@@ -65,4 +66,9 @@
 	]
 	</events>
 	
+	<commands>
+	[
+	]
+	</commands>
+
 </html>

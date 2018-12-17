@@ -27,6 +27,7 @@ public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariab
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_criteria!=null)  	jsonMap.put(CRITERIA, this.m_criteria.toStringValue(HAPSerializationFormat.JSON));
 	}
 

@@ -22,7 +22,7 @@ public abstract class HAPContextDefinitionElement extends HAPSerializableImp{
 
 	abstract public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv);
 
-	public HAPContextDefinitionElement getSolidContextDefinitionElement() {  return this;  }
+	public HAPContextDefinitionElement getSolidContextDefinitionElement() {  return this.cloneContextDefinitionElement();  }
 	
 	public void toContextDefinitionElement(HAPContextDefinitionElement out) {
 		out.m_processed = this.m_processed;

@@ -59,7 +59,7 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 	}
 	
 	public HAPContextDefinitionElement getDefinition() {   return this.m_definition;   }
-	public void setDefinition(HAPContextDefinitionElement definition) {   this.m_definition = definition;   }
+	public void setDefinition(HAPContextDefinitionElement definition) {   this.m_definition = definition.getSolidContextDefinitionElement();   }
 	
 	public void setPath(HAPContextPath path){	
 		this.m_path = path;

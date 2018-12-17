@@ -25,7 +25,7 @@
 		
 		<nosliw-loop data="business.a.cc" element="ele" index="index">  
 
-				<nosliw-include source="Example_Object_Basic_Include" context="element=ele" /> 
+<!--				<nosliw-include source="Example_Object_Basic_Include" context="element=ele" /> -->
 		
 
 			<br>
@@ -142,7 +142,17 @@
 										dataTypeId: "test.string;1.0.0",
 										value: "This is my world!"
 									},
-									cc : {
+									cc : [
+										{
+											dataTypeId: "test.string;1.0.0",
+											value: "This is my world 1111!"
+										},
+										{
+											dataTypeId: "test.string;1.0.0",
+											value: "This is my world 2222!"
+										}
+									],
+									ee : {
 										dataTypeId: "test.array;1.0.0",
 										value: [
 											{

@@ -5,7 +5,7 @@
 			<br>
 			************************Included:
 			<br>
-			Index: <%=?(index)?%>  
+			Index: <%=?(index)?.value%>  
 			<br>
 			TextInput:<nosliw-textinput data="element"/> 
 			<br>
@@ -40,7 +40,7 @@
 								value: 100
 							}
 						}
-					} 
+					},
 					element : {
 						definition : {
 							criteria: "test.string;1.0.0",

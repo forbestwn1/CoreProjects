@@ -173,9 +173,14 @@ public class HAPUtilityContext {
 		}
 		else {
 			out = new HAPContextDefinitionRoot();
+			out.setInfo(parentNode.getInfo().cloneInfo());
 			HAPContextDefinitionLeafRelative relativeEle = new HAPContextDefinitionLeafRelative();
 			relativeEle.setPath(contextCategary, eleName);
-			relativeEle.setDefinition(parentNode.getDefinition().cloneContextDefinitionElement());
+			if(parentNode.getDefinition().isProcessed()) {
+				relativeEle.setDefinition(parentNode.getDefinition().getSolidContextDefinitionElement());
+				relativeEle.processed();
+			}
+//			relativeEle.setDefinition(parentNode.getDefinition().cloneContextDefinitionElement());
 			out.setDefinition(relativeEle);
 /*			
 			HAPContextNodeRootVariable parentVarNode = (HAPContextNodeRootVariable)parentNode;

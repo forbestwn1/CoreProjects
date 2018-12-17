@@ -36,7 +36,7 @@
 					"<%=&(index)&%>" : {
 						definition : {
 							criteria : "test.integer;1.0.0",
-						}
+						},
 						info:{
 							mode : "manual"
 						}

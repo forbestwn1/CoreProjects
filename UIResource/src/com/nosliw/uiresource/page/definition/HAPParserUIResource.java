@@ -20,6 +20,7 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import com.nosliw.common.configure.HAPConfigure;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -264,7 +265,7 @@ public class HAPParserUIResource {
 		
 		for(Element childEle : childEles){
 			try {
-				HAPParserContext.parseContextGroup(new JSONObject(StringEscapeUtils.unescapeHtml(childEle.html())), resourceUnit.getContextDefinition());
+				HAPParserContext.parseContextGroup(HAPJsonUtility.newJsonObject(StringEscapeUtils.unescapeHtml(childEle.html())), resourceUnit.getContextDefinition());
 				break;
 			} catch (JSONException e) {
 				e.printStackTrace();
