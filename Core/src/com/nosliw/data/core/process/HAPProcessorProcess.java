@@ -40,7 +40,7 @@ public class HAPProcessorProcess{
 		//get updated variables map according to domain
 		Map<String, String> domainedVariableMap = new LinkedHashMap<String, String>();
 		for(String varNameInRefTask : variableMap.getElements().keySet()) {
-			String varPath = ((HAPContextNodeRootRelative)variableMap.getElement(varNameInRefTask)).getPath().getFullPath();
+			String varPath = ((HAPContextNodeRootRelative)variableMap.getElement(varNameInRefTask)).getSubPath().getFullPath();
 			domainedVariableMap.put(varNameInRefTask, HAPExpressionUtility.buildFullVariableName(domain, varPath));
 		}
 

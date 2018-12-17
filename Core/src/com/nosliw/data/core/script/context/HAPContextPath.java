@@ -61,7 +61,9 @@ public class HAPContextPath extends HAPSerializableImp{
 //	public String getRootElementName(){  return this.m_rootNodeId.getName();  }
 	public HAPContextDefinitionRootId getRootElementId() {  return this.m_rootNodeId;   }
 	
-	public String getPath(){		return this.m_path==null?"":this.m_path;	}
+	public String getSubPath(){		return this.m_path==null?"":this.m_path;	}
+	
+	public String getPath() { return HAPNamingConversionUtility.cascadePath(this.m_rootNodeId.getName(), this.m_path);  }
 	
 	public String getFullPath(){  return HAPNamingConversionUtility.cascadePath(this.m_rootNodeId.getFullName(), this.m_path);   }
 	

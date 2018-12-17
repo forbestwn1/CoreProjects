@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.path.HAPComplexName;
+import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -42,10 +42,10 @@ public class HAPUtilityContext {
 
 	public static HAPContextDefinitionElement getDescendant(HAPContext context, String path) {
 		HAPContextDefinitionElement out = null;
-		HAPComplexName complexName = new HAPComplexName(path);
-		HAPContextDefinitionRoot root = context.getElement(complexName.getSimpleName());
+		HAPComplexPath complexPath = new HAPComplexPath(path);
+		HAPContextDefinitionRoot root = context.getElement(complexPath.getRootName());
 		if(root!=null) {
-			out = getDescendant(root.getDefinition(), complexName.getPath());
+			out = getDescendant(root.getDefinition(), complexPath.getPath());
 		}
 		return out;
 	}
@@ -120,7 +120,7 @@ public class HAPUtilityContext {
 				out.addNameMapping(name, updatedName);
 				
 				//
-				HAPContextDefinitionRoot newEle = HAPUtilityContext.createInheritedElement(eles.get(name), null, updatedName);
+				HAPContextDefinitionRoot newEle = HAPUtilityContext.createRelativeContextDefinitionRoot(eles.get(name), null, updatedName);
 				out.addElement(name, newEle);
 			}
 		}
@@ -165,7 +165,7 @@ public class HAPUtilityContext {
 
 	
 	//build interited node from parent
-	public static HAPContextDefinitionRoot createInheritedElement(HAPContextDefinitionRoot parentNode, String contextCategary, String eleName) {
+	public static HAPContextDefinitionRoot createRelativeContextDefinitionRoot(HAPContextDefinitionRoot parentNode, String contextCategary, String refPath) {
 		HAPContextDefinitionRoot out = null;
 		
 		if(parentNode.isConstant()) {
@@ -175,7 +175,7 @@ public class HAPUtilityContext {
 			out = new HAPContextDefinitionRoot();
 			out.setInfo(parentNode.getInfo().cloneInfo());
 			HAPContextDefinitionLeafRelative relativeEle = new HAPContextDefinitionLeafRelative();
-			relativeEle.setPath(contextCategary, eleName);
+			relativeEle.setPath(contextCategary, refPath);
 			if(parentNode.getDefinition().isProcessed()) {
 				relativeEle.setDefinition(parentNode.getDefinition().getSolidContextDefinitionElement());
 				relativeEle.processed();
@@ -197,8 +197,8 @@ public class HAPUtilityContext {
 
 
 	//build interited node from parent
-	public static HAPContextDefinitionRoot createInheritedElement(HAPContextGroup parentContextGroup, String contextCategary, String eleName) {
-		return createInheritedElement(parentContextGroup.getElement(contextCategary, eleName), contextCategary, eleName);
+	public static HAPContextDefinitionRoot createRelativeContextDefinitionRoot(HAPContextGroup parentContextGroup, String contextCategary, String refPath) {
+		return createRelativeContextDefinitionRoot(parentContextGroup.getElement(contextCategary, refPath), contextCategary, refPath);
 	}
 
 	//go through different context group categaryes to find referenced node in parent. 
@@ -206,7 +206,7 @@ public class HAPUtilityContext {
 		if(parentContext==null)   return null;
 		
 		HAPContextDefinitionRootId refNodeId = contextPath.getRootElementId(); 
-		String refPath = contextPath.getPath();
+		String refPath = contextPath.getSubPath();
 		
 		//candidate categary
 		List<String> categaryCandidates = new ArrayList<String>();

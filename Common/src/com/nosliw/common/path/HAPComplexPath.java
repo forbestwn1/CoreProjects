@@ -4,40 +4,38 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
-//for name like java class: a.b.c.d.Abcd
-public class HAPComplexName {
+public class HAPComplexPath {
 
 	private String m_fullName;
 
 	private HAPPath m_path;
 	
-	private String m_simpleName;
+	private String m_rootName;
 	
-	public HAPComplexName(String simpleName, String path){
-		this.m_simpleName = simpleName;
+	public HAPComplexPath(String rootName, String path){
+		this.m_rootName = rootName;
 		this.m_path = new HAPPath(path);
-		this.m_fullName = HAPNamingConversionUtility.cascadePath(this.m_path.getPath(), this.m_simpleName);
+		this.m_fullName = HAPNamingConversionUtility.cascadePath(this.m_rootName, this.m_path.getPath());
 	}
 	
-	public HAPComplexName(String fullName){
+	public HAPComplexPath(String fullName){
 		if(HAPBasicUtility.isStringNotEmpty(fullName)){
 			this.m_fullName = fullName;
 			
-			int index = this.m_fullName.lastIndexOf(HAPConstant.SEPERATOR_PATH);
+			int index = this.m_fullName.indexOf(HAPConstant.SEPERATOR_PATH);
 			if(index==-1){
 				//name only
-				this.m_simpleName = this.m_fullName;
+				this.m_rootName = this.m_fullName;
 			}
 			else{
-				this.m_simpleName = this.m_fullName.substring(index+1);
-				String p = this.m_fullName.substring(0, index);
-				this.m_path = new HAPPath(p);
+				this.m_rootName = this.m_fullName.substring(0, index);
+				this.m_path = new HAPPath(this.m_fullName.substring(index+1));
 			}
 		}
 	}
 	
-	public String getSimpleName(){
-		return this.m_simpleName;
+	public String getRootName(){
+		return this.m_rootName;
 	}
 	
 	public String getPath(){

@@ -5,7 +5,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 
+import com.nosliw.common.erro.HAPErrorUtility;
+import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPBasicUtility;
 
 public class HAPProcessorEscalate {
@@ -28,21 +31,22 @@ public class HAPProcessorEscalate {
 	
 	
 	//escalte context node to parent context group, only absolute variable
-	public static void process(HAPContextGroup contextGroup, String contextEleName, String mappedName, String categaryType) {
+	public static void process(HAPContextGroup contextGroup, String contextEleName, String mappedPath, String categaryType) {
 		HAPContextDefinitionRoot rootNode = contextGroup.getElement(categaryType, contextEleName);
 		if(rootNode.isAbsolute()) {
-			Pair<HAPContextDefinitionRoot, String> a = escalate(mappedName, categaryType, contextGroup.getParent(), rootNode);
-			contextGroup.addElement(contextEleName, a.getLeft(), a.getRight());
+			HAPComplexPath complexPath = new HAPComplexPath(mappedPath);
+			Triple<Boolean, HAPContextDefinitionRoot, String> a = escalate(complexPath, categaryType, contextGroup.getParent(), rootNode);
+			if(a.getLeft())		contextGroup.addElement(contextEleName, a.getMiddle(), a.getRight());
 		}
 	}
 	
-	private static Pair<HAPContextDefinitionRoot, String> escalate(String name, String categaryType, HAPContextGroup parentContextGroup, HAPContextDefinitionRoot original) {
+	private static Triple<Boolean, HAPContextDefinitionRoot, String> escalate(HAPComplexPath path, String categaryType, HAPContextGroup parentContextGroup, HAPContextDefinitionRoot original) {
 		
-		Pair<HAPContextDefinitionRoot, String> out = null;
-		HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(name), parentContextGroup, null, HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_FIRST);
+		Triple<Boolean, HAPContextDefinitionRoot, String> out = null;
+		HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(path.getFullName()), parentContextGroup, null, HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_FIRST);
 		if(resolveInfo!=null) {
 			//find matched one
-			out = Pair.of(HAPUtilityContext.createInheritedElement(resolveInfo.rootNode, resolveInfo.path.getRootElementId().getCategary(), resolveInfo.path.getRootElementId().getName()), categaryType);
+			out = Triple.of(true, HAPUtilityContext.createRelativeContextDefinitionRoot(resolveInfo.rootNode, resolveInfo.path.getRootElementId().getCategary(), resolveInfo.path.getPath()), categaryType);
 			return out;
 		}
 		else {
@@ -53,14 +57,26 @@ public class HAPProcessorEscalate {
 
 			//not find
 			if(isEnd){
-				out = Pair.of(original.cloneContextDefinitionRoot(), categaryType);
+				//only root name is valid, mappedPath with path is not valid
+				if(HAPBasicUtility.isStringEmpty(path.getPath())) {
+					out = Triple.of(false, original.cloneContextDefinitionRoot(), categaryType);
+					parentContextGroup.addElement(path.getRootName(), out.getMiddle(), categaryType);
+				}
+				else HAPErrorUtility.invalid("");
 				return out;
 			}
 			else {
-				Pair<HAPContextDefinitionRoot, String> a = escalate(name, categaryType, grandParent, original);
-				
-				parentContextGroup.addElement(name, a.getLeft(), a.getRight());
-				out = Pair.of(HAPUtilityContext.createInheritedElement(parentContextGroup, a.getRight(), name), a.getRight());
+				Triple<Boolean, HAPContextDefinitionRoot, String> a = escalate(path, categaryType, grandParent, original);
+				if(a.getLeft()) {
+					parentContextGroup.addElement(path.getRootName(), a.getMiddle(), a.getRight());
+				}
+				else {
+				}
+
+				out = Triple.of(true, HAPUtilityContext.createRelativeContextDefinitionRoot(parentContextGroup, a.getRight(), path.getRootName()), a.getRight());
+
+//				parentContextGroup.addElement(path.getRootName(), a.getLeft(), a.getRight());
+//				out = Pair.of(HAPUtilityContext.createRelativeContextDefinitionRoot(parentContextGroup, a.getRight(), path.getRootName()), a.getRight());
 				return out;
 			}
 		}
