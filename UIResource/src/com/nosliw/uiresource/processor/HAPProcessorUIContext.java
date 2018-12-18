@@ -241,9 +241,9 @@ public class HAPProcessorUIContext {
 		//add attribute constant as part of tagContext
 		Map<String, String> constants = uiTag.getAttributes();
 		HAPContextGroup tagContext = tagDefinitionContext.cloneContextGroup();
-		for(String cstName : constants.keySet()) {
-			HAPContextDefinitionLeafConstant cstRootNode = new HAPContextDefinitionLeafConstant(constants.get(cstName));
-			tagContext.addElement(cstName, new HAPContextDefinitionRoot(cstRootNode), HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);
+		for(String name : constants.keySet()) {
+			HAPContextDefinitionLeafConstant cstRootNode = new HAPContextDefinitionLeafConstant(constants.get(name));
+			tagContext.addElement(HAPConstant.NOSLIW_RESERVE_ATTRIBUTE + name, new HAPContextDefinitionRoot(cstRootNode), HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);
 		}
 		
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();

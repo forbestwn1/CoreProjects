@@ -80,8 +80,8 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildFullJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TAGNAME, this.getUIUnitTagDefinition().getTagName());
+		super.buildFullJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TAGCONTEXT, this.getTagVariableContext().toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(CONTEXTMAPPING, HAPJsonUtility.buildMapJson(m_contextMapping));
 		jsonMap.put(EVENTMAPPING, HAPJsonUtility.buildMapJson(m_eventMapping));
@@ -91,8 +91,8 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TAGNAME, this.getUIUnitTagDefinition().getTagName());
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TAGCONTEXT, this.getTagVariableContext().toStringValue(HAPSerializationFormat.JSON_FULL));
 		jsonMap.put(EVENTMAPPING, HAPJsonUtility.buildMapJson(m_eventMapping));
 		jsonMap.put(CONTEXTMAPPING, HAPJsonUtility.buildMapJson(m_contextMapping));

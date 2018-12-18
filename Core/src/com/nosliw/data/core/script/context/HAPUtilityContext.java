@@ -2,9 +2,12 @@ package com.nosliw.data.core.script.context;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.path.HAPComplexPath;
@@ -110,11 +113,19 @@ public class HAPUtilityContext {
 	
 	public static HAPContextFlat buildFlatContext(HAPContextGroup context) {
 		HAPContextFlat out = new HAPContextFlat();
-		for(String categary : HAPContextGroup.getContextTypesWithPriority()) {
+		
+		List<String> categarys = Arrays.asList(HAPContextGroup.getContextTypesWithPriority());
+		Collections.reverse(categarys);
+		for(String categary : categarys) {
 			Map<String, HAPContextDefinitionRoot> eles = context.getElements(categary);
 			for(String name : eles.keySet()) {
 				String updatedName = new HAPContextDefinitionRootId(categary, name).getFullName();
 				out.addElement(updatedName, eles.get(name));
+				
+				if(updatedName.equals("index___private")) {
+					int kkkk = 5555;
+					kkkk++;
+				}
 				
 				//
 				out.addNameMapping(name, updatedName);

@@ -84,7 +84,10 @@ var node_createContext = function(elementInfosArray, request){
 	
 	var loc_createVariableFromContextVariableInfo = function(contextVariableInfo, adapterInfo, requestInfo){
 		var baseVar = loc_findBaseVariable(contextVariableInfo);
-		if(baseVar==undefined)   nosliw.error(contextVariableInfo);
+		if(baseVar==undefined){
+			nosliw.error(contextVariableInfo);
+			loc_findBaseVariable(contextVariableInfo);
+		}
 		var variable = baseVar.variable.createChildVariable(baseVar.path, adapterInfo, requestInfo); 
 		//add extra attribute "contextPath" to variable for variables name under context
 		variable.contextPath = contextVariableInfo.getFullPath();
@@ -149,6 +152,11 @@ var node_createContext = function(elementInfosArray, request){
 		//create empty wrapper variable for each element
 		var contextEle = node_createContextElement(elementInfo, request);
 		if(contextEle!=undefined){
+			
+			if(elementInfo.name=="index___private"){
+				var kkkk = 5555;
+				kkkk++;
+			}
 			loc_out.prv_elements[elementInfo.name] = contextEle;
 			
 			var eleVar = contextEle.variable;

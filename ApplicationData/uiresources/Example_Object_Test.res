@@ -1,21 +1,15 @@
 <!DOCTYPE html>
 <html>
 <body>
-		<nosliw-include source="Example_Object_Basic_Include" context="element=business.a.aa" /> 
 
 		<nosliw-loop data="business.a.cc" element="ele" index="index">  
+
+			<br>
+			Index: <%=?(index)?%>
 		</nosliw-loop>
 		
-<!--		
-		<nosliw-include source="Example_Include_simple" context="" event="changeInputTextIncludeBasic=changeInputTextIncludeBasicMapped"/> 
-
-		
-	<br>
-	Content:<%=?(business.a.aa)?.value + '   6666 ' %>
-
-	TextInput:<nosliw-textinput data="business.a.aa"/>  
-	<br>
--->
+		<nosliw-include source="Example_Object_Basic_Include" context="element=business.a.aa" /> 
+	
 	
 </body>
 
@@ -75,6 +69,65 @@
 							}
 						}
 					},
+					aaaa : {
+						definition: {
+							value : "<%=5+6+7%>",
+						}
+					},
+					bbbb : {
+						definition: {
+							value : "<%=(5+6+7)>5%>"
+						}
+					},
+					cccc : {
+						definition: {
+							value : {
+								a : 12345,
+								b : true,
+								c : "good",
+								d : "<%=5+6+7%>"
+							}
+						}
+					},
+					dddd : {
+						definition : {
+							value : "<%=&(cccc)&.a+6%>"
+						}
+					},
+					ffff : {
+						definition: {
+							value : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>"
+						}
+					},
+					eeee : {
+						definition: {
+							value : "<%=#|&(ffff)&.subString(from:&(#test##integer___3)&,to:&(#test##integer___7)&)|#%>"
+						}
+					},
+					base: {
+						definition : {
+							value : {
+								dataTypeId: "test.string",
+								value: "This is my world!"
+							}
+						}
+					},
+					from: {
+						definition : {
+							value : {
+								dataTypeId: "test.integer",
+								value: 3
+							}
+						}
+					},
+					to: {
+						definition:{
+							value : {
+								dataTypeId: "test.integer",
+								value: 7
+							}
+						}
+					}
 				}
 			}
 		}

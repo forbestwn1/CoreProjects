@@ -574,6 +574,9 @@
 			<definition name="ACTIVITY_TYPE_LOOP" value="loop"/>
 			<definition name="ACTIVITY_TYPE_BRANCH" value="branch"/>
 			<definition name="ACTIVITY_TYPE_CALLPROCESS" value="callProcess"/>
+
+			<definition type="space"/>
+			<definition name="NOSLIW_RESERVE_ATTRIBUTE" value="nosliwAttribute_"/>
 			
 		</definitions>
 	</constants>

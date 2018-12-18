@@ -499,4 +499,8 @@ public class HAPConstant {
 		public static final String ACTIVITY_TYPE_CALLPROCESS = "callProcess";
 
 
+
+		public static final String NOSLIW_RESERVE_ATTRIBUTE = "nosliwAttribute_";
+
+
 }

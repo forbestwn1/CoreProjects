@@ -348,12 +348,14 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		
 		prv_callScriptFunctionUp : function(funName){   
 			var find = this.prv_findFunctionUp(funName);
-			return find.uiUnit.prv_callScriptFunction.apply(find.uiUnit, arguments);
+			if(find!=undefined)		return find.uiUnit.prv_callScriptFunction.apply(find.uiUnit, arguments);
+			else  nosliw.error("Cannot find function : " + funName);
 		},
 
 		prv_callScriptFunctionDown : function(funName){
 			var find = this.prv_findFunctionDown(funName);
-			return find.uiUnit.prv_callScriptFunction.apply(find.uiUnit, arguments);
+			if(find!=undefined)		return find.uiUnit.prv_callScriptFunction.apply(find.uiUnit, arguments);
+			else nosliw.error("Cannot find function : " + funName);
 		},
 
 		prv_findFunctionDown : function(funName){

@@ -319,7 +319,8 @@ var COMMONCONSTANT=
   "ACTIVITY_TYPE_EXPRESSION": "expression",
   "ACTIVITY_TYPE_LOOP": "loop",
   "ACTIVITY_TYPE_BRANCH": "branch",
-  "ACTIVITY_TYPE_CALLPROCESS": "callProcess"
+  "ACTIVITY_TYPE_CALLPROCESS": "callProcess",
+  "NOSLIW_RESERVE_ATTRIBUTE": "nosliwAttribute_"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

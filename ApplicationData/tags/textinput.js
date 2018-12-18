@@ -16,7 +16,7 @@
 				element : {
 					internal_data: {
 						definition: {
-							path : "<%=&(data)&%>",
+							path : "<%=&(nosliwAttribute_data)&%>",
 							definition : {
 								criteria : "test.string;1.0.0"
 							}
