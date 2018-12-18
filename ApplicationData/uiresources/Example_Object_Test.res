@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html>
 <body>
+		<nosliw-include source="Example_Object_Basic_Include" context="element=business.a.aa" /> 
+
+		<nosliw-loop data="business.a.cc" element="ele" index="index">  
+		</nosliw-loop>
 		
-		<nosliw-include source="Example_Include_simple" context="element111=business.a.aa" /> 
+<!--		
+		<nosliw-include source="Example_Include_simple" context="" event="changeInputTextIncludeBasic=changeInputTextIncludeBasicMapped"/> 
+
+		
 	<br>
 	Content:<%=?(business.a.aa)?.value + '   6666 ' %>
-	<br>
-	TextInput:<nosliw-textinput data="business.a.aa"/>  
 
+	TextInput:<nosliw-textinput data="business.a.aa"/>  
+	<br>
+-->
+	
 </body>
 
 	<scripts>

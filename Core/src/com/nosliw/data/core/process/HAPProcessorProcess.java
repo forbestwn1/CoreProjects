@@ -94,7 +94,7 @@ public class HAPProcessorProcess{
 		//update constants according to constants in context and in task
 		for(int i=0; i<taskDefinition.getActivities().size(); i++) {
 			HAPDefinitionActivity stepDef = taskDefinition.getActivities().get(i);
-			HAPProcessorActivity stepProcessor = flowTaskMan.getActivityPlugin(stepDef.getType()).getStepProcessor();
+			HAPProcessorActivity stepProcessor = flowTaskMan.getActivityPlugin(stepDef.getType()).getActivityProcessor();
 			HAPExecutableActivity step = stepProcessor.process(stepDef, out, i, stepDef.getName(), contextTaskDefinitions, contextConstants, processContext);
 			out.addStep(step);
 		}
@@ -104,7 +104,7 @@ public class HAPProcessorProcess{
 		//update constants according to constants in context and in task
 		for(int i=0; i<executableTask.getSteps().size(); i++) {
 			HAPExecutableActivity stepExe = executableTask.getSteps().get(i);
-			HAPProcessorActivity stepProcessor = flowTaskMan.getActivityPlugin(stepExe.getType()).getStepProcessor();
+			HAPProcessorActivity stepProcessor = flowTaskMan.getActivityPlugin(stepExe.getType()).getActivityProcessor();
 			stepProcessor.postProcess(stepExe, taskDefinition.getActivities().get(i), executableTask, i, taskDefinition.getActivities().get(i).getName(), contextTaskDefinitions, contextConstants, context);
 		}
 	}

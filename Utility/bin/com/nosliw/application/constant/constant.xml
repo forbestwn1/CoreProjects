@@ -529,6 +529,8 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_JSGATEWAY" value="jsGateway"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UIRESOURCE" value="uiResource"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UITAG" value="uiTag"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_PROCESS" value="process"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN" value="activityPlugin"/>
 
 			<definition name="RUNTIME_RESOURCE_TYPE_MATCHER" value="matcher"/>
 

@@ -1,0 +1,125 @@
+{
+	"name": "all",
+	"description": "process with different activity",
+	"context": {
+		"group": {
+			"public": {
+				"element": {}
+			}
+		}
+	},
+	"process": [{
+			"id": "expressionProcessId",
+			"name": "expression",
+			"description": "process including expression activity",
+			"context": {
+				"group": {
+					"public": {
+						"element": {
+							"baseVar": {
+								"definition": "test.string",
+								"default": {
+									"dataTypeId": "test.string",
+									"value": "This is my world!"
+								}
+							},
+							"fromVar" : {
+								"definition": "test.integer",
+								"default": {
+									"dataTypeId": "test.integer",
+									"value": 3
+								}
+							},
+							"toVar" : {
+								"definition": "test.integer",
+								"default": {
+									"dataTypeId": "test.integer",
+									"value": 7
+								}
+							}
+						}
+					},
+					"protected": {
+						"element": {
+							"expressionResultVar": {},
+							"errorCodeVar": {},
+							"errorDataVar": {}
+						}
+					}
+				}
+			},
+			"activity": [{
+					"id": "startActivityId",
+					"name": "startActivity",
+					"type": "start",
+					"flow": {
+						"target": "expressionActivityId"
+					}
+				}, {
+					"id": "expressionActivityId",
+					"name": "expressionActivity",
+					"type": "expression",
+					"expression": "!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)",
+					"input": {
+						"element": {},
+						"info": {}
+					},
+					"result": {
+						"success": {
+							"flow": {
+								"target": "successEndId"
+							},
+							"output": {
+								"element": {
+									"expressionResultVar": {
+										"path": "output"
+									}
+								}
+							}
+						},
+						"fail": {
+							"flow": {
+								"target": "failEndId"
+							},
+							"output": {
+								"element": {
+									"errorCodeVar": {
+										"path": "error.code"
+									},
+									"errorDataVar": {
+										"path": "error.data"
+									}
+								}
+							}
+						}
+					}
+				}, {
+					"id": "successEndId",
+					"name": "successEnd",
+					"type": "end",
+					"output": {
+						"element": {
+							"output": {
+								"path": "expressionResultVar"
+							}
+						}
+					}
+				}, {
+					"id": "failEndId",
+					"name": "failEnd",
+					"type": "end",
+					"output": {
+						"element": {
+							"errorCode": {
+								"path": "errorCodeVar"
+							},
+							"errorData": {
+								"path": "errorDataVar"
+							}
+						}
+					}
+				}
+			]
+		}	
+	]
+}

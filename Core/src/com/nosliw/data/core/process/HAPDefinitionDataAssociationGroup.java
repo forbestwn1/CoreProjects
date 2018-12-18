@@ -5,4 +5,5 @@ import com.nosliw.data.core.script.context.HAPContext;
 public class HAPDefinitionDataAssociationGroup extends HAPContext{
 
 	
+	
 }

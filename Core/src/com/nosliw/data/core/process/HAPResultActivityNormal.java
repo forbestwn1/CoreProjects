@@ -16,8 +16,10 @@ public class HAPResultActivityNormal extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static String OUTPUT = "output";
 	
+	//associate variable in process to input required by activity 
 	private HAPDefinitionDataAssociationGroup m_output;
 	
+	//next activity
 	private HAPDefinitionSequenceFlow m_flow;
 	
 	

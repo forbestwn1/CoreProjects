@@ -17,6 +17,10 @@ public class HAPManagerProcess {
 		this.m_activityPlugins = new LinkedHashMap<String, HAPPluginActivity>();
 	}
 	
+	public HAPExecutableProcess getProcess(String processId) {
+		
+	}
+	
 	public HAPExecutableProcess compileProcess(
 			String id,
 			HAPDefinitionProcess processDefinition, 
@@ -24,14 +28,15 @@ public class HAPManagerProcess {
 			HAPContext parentContext, 
 			Map<String, String> configure,
 			HAPProcessContext context) {
-		HAPExecutableProcess task = processTask(processDefinition, null, null, contextProcessDefinitions, constants, context);
-		task.setId(id);
-		
-		Map<String, HAPVariableInfo> variableInfos = parentVariablesInfo;
-		if(variableInfos==null) 	variableInfos = new LinkedHashMap<String, HAPVariableInfo>();
-		task.discoverVariable(variableInfos, expectOutput, context);
-		
-		return task;
+//		HAPExecutableProcess task = processTask(processDefinition, null, null, contextProcessDefinitions, constants, context);
+//		task.setId(id);
+//		
+//		Map<String, HAPVariableInfo> variableInfos = parentVariablesInfo;
+//		if(variableInfos==null) 	variableInfos = new LinkedHashMap<String, HAPVariableInfo>();
+//		task.discoverVariable(variableInfos, expectOutput, context);
+//		
+//		return task;
+		return null;
 	}
 	
 	public HAPExecutableProcess processTask(
@@ -40,8 +45,9 @@ public class HAPManagerProcess {
 			HAPContext variableMap,
 			Map<String, HAPDefinitionProcess> contextTaskDefinitions,
 			HAPProcessContext context) {
-		HAPExecutableProcess out = HAPProcessorProcess.process(taskDefinition, domain, variableMap, contextTaskDefinitions, context, this);
-		return out;
+//		HAPExecutableProcess out = HAPProcessorProcess.process(taskDefinition, domain, variableMap, contextTaskDefinitions, context, this);
+//		return out;
+		return null;
 	}
 
 	public void registerActivityPlugin(String activityType, HAPPluginActivity plugin) {		this.m_activityPlugins.put(activityType, plugin);	}

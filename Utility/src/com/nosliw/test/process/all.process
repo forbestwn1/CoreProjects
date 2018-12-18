@@ -181,7 +181,7 @@
 					},
 					"result": {
 						"success": {
-							"next": "successEndId",
+							"flow": "successEndId",
 							"output": {
 								"element": {
 									"callProcessResultVar": {
@@ -191,7 +191,7 @@
 							}
 						},
 						"fail": {
-							"next": "failEndId",
+							"flow": "failEndId",
 							"output": {
 								"element": {
 									"errorCodeVar": {

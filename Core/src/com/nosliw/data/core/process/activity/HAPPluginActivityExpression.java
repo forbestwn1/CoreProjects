@@ -10,10 +10,10 @@ public class HAPPluginActivityExpression implements HAPPluginActivity{
 	private HAPProcessorActivityExpression m_processor;
 	
 	@Override
-	public HAPProcessorActivity getStepProcessor() {		return this.m_processor;	}
+	public HAPProcessorActivity getActivityProcessor() {		return this.m_processor;	}
 
 	@Override
-	public HAPDefinitionActivity buildStepDefinition(Object obj) {
+	public HAPDefinitionActivity buildActivityDefinition(Object obj) {
 		HAPDefinitionActivityExpression out = new HAPDefinitionActivityExpression();
 		out.buildObject(obj, HAPSerializationFormat.JSON);
 		return out;

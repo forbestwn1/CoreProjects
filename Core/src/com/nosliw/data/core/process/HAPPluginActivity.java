@@ -2,8 +2,9 @@ package com.nosliw.data.core.process;
 
 public interface HAPPluginActivity {
 
-	HAPProcessorActivity getStepProcessor();
+	HAPProcessorActivity getActivityProcessor();
 	
-	HAPDefinitionActivity buildStepDefinition(Object obj);
+	HAPDefinitionActivity buildActivityDefinition(Object obj);
 	
+	String getScript();
 }

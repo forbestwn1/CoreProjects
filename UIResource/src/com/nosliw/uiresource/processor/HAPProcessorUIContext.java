@@ -13,9 +13,7 @@ import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafConstant;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
-import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
-import com.nosliw.data.core.script.context.HAPContextEntity;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
@@ -39,10 +37,6 @@ public class HAPProcessorUIContext {
 
 	public static void process(HAPExecutableUIUnit uiExe, HAPExecutableUIUnit parentUIExe, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 		process1(uiExe, parentUIExe, uiTagMan, contextProcessorEnv);		
-		
-		
-//		processEscalate(uiExe, uiTagMan);
-		
 		processRelative(uiExe, parentUIExe, uiTagMan, contextProcessorEnv);			
 		process3(uiExe);
 	}
@@ -73,26 +67,6 @@ public class HAPProcessorUIContext {
 			process1(childTag, uiExe, uiTagMan, contextProcessorEnv);			
 		}
 	}
-
-//	private static void processEscalate(HAPExecutableUIUnit exeUIExe, HAPUITagManager uiTagMan) {
-//
-//		for(HAPExecutableUIUnitTag childTag : exeUIExe.getUITags()) {
-//			processEscalate(childTag, uiTagMan);			
-//		}
-//		
-//		if(exeUIExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
-//			//context
-//			HAPExecutableUIUnitTag exeUITag = (HAPExecutableUIUnitTag)exeUIExe; 
-//			if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeUITag.getUIUnitTagDefinition().getTagName())).getContext())) {
-//				Set<String> categarys = new HashSet<String>();
-//				categarys.add(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
-//				Map<String, String> contextMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeUITag.getAttributes().get(HAPConstant.UITAG_PARM_CONTEXT));
-//				exeUITag.setContextMapping(contextMapping);
-//				HAPProcessorEscalate.process(exeUITag.getContext(), categarys, contextMapping);
-//			}
-//		}
-//	}
-
 	
 	private static void processEscalate(HAPExecutableUIUnitTag exeUITag, HAPUITagManager uiTagMan) {
 		//context

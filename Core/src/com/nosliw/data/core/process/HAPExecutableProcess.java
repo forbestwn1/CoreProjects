@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
@@ -18,7 +19,7 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 
-public class HAPExecutableProcess{
+public class HAPExecutableProcess extends HAPSerializableImp{
 
 	public static final String INFO_LOCALVRIABLE = "localVariable";
 	
@@ -182,7 +183,10 @@ public class HAPExecutableProcess{
 		this.m_output = new HAPDataTypeCriteriaOr(new ArrayList(exitCriterias));
 	}
 
-	public List<HAPResourceId> getResourceDependency() {
+	public List<HAPResourceDependent> getResourceDependency(){  return this.m_resourceDependency;  }
+
+	
+	public List<HAPResourceId> getResourceDependency1() {
 		Set<HAPResourceId> out = new HashSet<HAPResourceId>();
 		//resource for steps
 		for(HAPExecutableActivity step : this.m_steps) {

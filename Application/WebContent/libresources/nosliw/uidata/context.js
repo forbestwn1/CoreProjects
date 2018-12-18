@@ -84,7 +84,7 @@ var node_createContext = function(elementInfosArray, request){
 	
 	var loc_createVariableFromContextVariableInfo = function(contextVariableInfo, adapterInfo, requestInfo){
 		var baseVar = loc_findBaseVariable(contextVariableInfo);
-		if(baseVar==undefined)   nosliw.throwError(contextVariableInfo);
+		if(baseVar==undefined)   nosliw.error(contextVariableInfo);
 		var variable = baseVar.variable.createChildVariable(baseVar.path, adapterInfo, requestInfo); 
 		//add extra attribute "contextPath" to variable for variables name under context
 		variable.contextPath = contextVariableInfo.getFullPath();

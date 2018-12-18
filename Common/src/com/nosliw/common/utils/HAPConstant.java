@@ -444,6 +444,8 @@ public class HAPConstant {
 		public static final String RUNTIME_RESOURCE_TYPE_JSGATEWAY = "jsGateway";
 		public static final String RUNTIME_RESOURCE_TYPE_UIRESOURCE = "uiResource";
 		public static final String RUNTIME_RESOURCE_TYPE_UITAG = "uiTag";
+		public static final String RUNTIME_RESOURCE_TYPE_PROCESS = "process";
+		public static final String RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN = "activityPlugin";
 		public static final String RUNTIME_RESOURCE_TYPE_MATCHER = "matcher";
 
 

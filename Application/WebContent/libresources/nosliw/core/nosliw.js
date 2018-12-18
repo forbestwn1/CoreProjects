@@ -67,8 +67,8 @@ _.extend(nosliw, function(){
 			}
 		},
 		
-		throwError : function(errorData){
-			throw JSON.stringify(errorData);;
+		error : function(errorData){
+			console.error(JSON.stringify(errorData));
 		}
 	};
 	

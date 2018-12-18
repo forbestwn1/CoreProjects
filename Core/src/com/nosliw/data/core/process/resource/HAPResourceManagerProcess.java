@@ -1,0 +1,40 @@
+package com.nosliw.data.core.process.resource;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.nosliw.data.core.process.HAPExecutableProcess;
+import com.nosliw.data.core.process.HAPManagerProcess;
+import com.nosliw.data.core.runtime.HAPResource;
+import com.nosliw.data.core.runtime.HAPResourceDependent;
+import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPResourceManagerImp;
+import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
+
+public class HAPResourceManagerProcess  extends HAPResourceManagerImp{
+
+	private HAPManagerProcess m_processMan;
+	
+	public HAPResourceManagerProcess(HAPManagerProcess processMan){
+		this.m_processMan = processMan;
+	}
+	
+	@Override
+	public HAPResource getResource(HAPResourceId resourceId) {
+		HAPResourceIdProcess processId = new HAPResourceIdProcess(resourceId); 
+		HAPExecutableProcess process = this.m_processMan.getProcess(processId.getId());
+		if(process==null)  return null;
+		HAPResourceDataProcess resourceData = new HAPResourceDataProcess(process);
+		Map<String, Object> info = new LinkedHashMap<String, Object>();
+		info.put(HAPRuntimeJSUtility.RESOURCE_LOADPATTERN, HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE);
+		return new HAPResource(resourceId, resourceData, null);
+	}
+
+	@Override
+	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId){
+		HAPResourceIdProcess processId = new HAPResourceIdProcess(resourceId); 
+		HAPExecutableProcess process = this.m_processMan.getProcess(processId.getId());
+		return process.getResourceDependency();
+	}
+}

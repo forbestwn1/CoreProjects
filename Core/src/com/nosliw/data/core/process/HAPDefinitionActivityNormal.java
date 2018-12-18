@@ -18,8 +18,10 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	@HAPAttribute
 	public static String RESULT = "result";
 
+	//associate variable in process to input required by activity 
 	private HAPDefinitionDataAssociationGroup m_input;
 	
+	//possible result for activity
 	private Map<String, HAPResultActivityNormal> m_results;
 	
 	public HAPDefinitionActivityNormal() {

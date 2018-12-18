@@ -5,8 +5,14 @@ function(||expressionsData||,
 	
 	};
 	
-	||executeScriptExpressions||
+	try{
+		||executeScriptExpressions||
 	
-	return ||embededScriptExpressionFunction||(||scriptExpressionData||);
+		return ||embededScriptExpressionFunction||(||scriptExpressionData||);
+	}
+	catch(e){
+		nosliw.error("");
+		return "";
+	}
 }		
 		

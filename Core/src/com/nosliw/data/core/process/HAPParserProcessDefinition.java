@@ -36,7 +36,7 @@ public class HAPParserProcessDefinition {
 		for(int i=0; i<activityArrayJson.length(); i++) {
 			JSONObject activityObjJson = (JSONObject)activityArrayJson.get(i);
 			String stepType = activityObjJson.getString(HAPDefinitionActivity.TYPE);
-			HAPDefinitionActivity activity = processMan.getActivityPlugin(stepType).buildStepDefinition(activityObjJson);
+			HAPDefinitionActivity activity = processMan.getActivityPlugin(stepType).buildActivityDefinition(activityObjJson);
 			out.addActivity(activity);
 		}
 		return out;
