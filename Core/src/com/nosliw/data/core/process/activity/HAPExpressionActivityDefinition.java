@@ -13,14 +13,14 @@ import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 
-public class HAPDefinitionActivityExpression extends HAPDefinitionActivityNormal{
+public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
 	
 	private HAPDefinitionExpression m_expression;
 	
-	public HAPDefinitionActivityExpression() {
+	public HAPExpressionActivityDefinition() {
 	}
 	
 	@Override

@@ -4,9 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPProcessContext;
-import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.process.activity.HAPEndActivityPlugin;
+import com.nosliw.data.core.process.activity.HAPExpressionActivityPlugin;
+import com.nosliw.data.core.process.activity.HAPStartActivityPlugin;
 import com.nosliw.data.core.script.context.HAPContext;
 
 public class HAPManagerProcess {
@@ -15,10 +15,15 @@ public class HAPManagerProcess {
 	
 	public HAPManagerProcess() {
 		this.m_activityPlugins = new LinkedHashMap<String, HAPPluginActivity>();
+		
+		this.registerActivityPlugin(new HAPStartActivityPlugin());
+		this.registerActivityPlugin(new HAPEndActivityPlugin());
+		this.registerActivityPlugin(new HAPExpressionActivityPlugin());
+		
 	}
 	
 	public HAPExecutableProcess getProcess(String processId) {
-		
+		return null;
 	}
 	
 	public HAPExecutableProcess compileProcess(
@@ -50,7 +55,7 @@ public class HAPManagerProcess {
 		return null;
 	}
 
-	public void registerActivityPlugin(String activityType, HAPPluginActivity plugin) {		this.m_activityPlugins.put(activityType, plugin);	}
+	public void registerActivityPlugin(HAPPluginActivity plugin) {		this.m_activityPlugins.put(plugin.getType(), plugin);	}
 	
 	public HAPPluginActivity getActivityPlugin(String activityType) {		return this.m_activityPlugins.get(activityType);	}
 	

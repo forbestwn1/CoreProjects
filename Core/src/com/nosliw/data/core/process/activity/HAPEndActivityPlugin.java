@@ -1,20 +1,24 @@
 package com.nosliw.data.core.process.activity;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPPluginActivity;
 import com.nosliw.data.core.process.HAPProcessorActivity;
 
-public class HAPPluginActivityExpression implements HAPPluginActivity{
+public class HAPEndActivityPlugin implements HAPPluginActivity{
 
-	private HAPProcessorActivityExpression m_processor;
+	private HAPExpressionActivityProcessor m_processor;
 	
+	@Override
+	public String getType() {		return HAPConstant.ACTIVITY_TYPE_END;	}
+
 	@Override
 	public HAPProcessorActivity getActivityProcessor() {		return this.m_processor;	}
 
 	@Override
 	public HAPDefinitionActivity buildActivityDefinition(Object obj) {
-		HAPDefinitionActivityExpression out = new HAPDefinitionActivityExpression();
+		HAPExpressionActivityDefinition out = new HAPExpressionActivityDefinition();
 		out.buildObject(obj, HAPSerializationFormat.JSON);
 		return out;
 	}

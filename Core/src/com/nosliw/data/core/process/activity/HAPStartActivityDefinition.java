@@ -1,4 +1,4 @@
-package com.nosliw.data.core.process;
+package com.nosliw.data.core.process.activity;
 
 import java.util.Map;
 
@@ -7,15 +7,17 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.process.HAPDefinitionActivity;
+import com.nosliw.data.core.process.HAPDefinitionSequenceFlow;
 
-public class HAPDefinitionActivityStart extends HAPDefinitionActivity{
+public class HAPStartActivityDefinition extends HAPDefinitionActivity{
 
 	@HAPAttribute
 	public static String FLOW = "flow";
 	
 	private HAPDefinitionSequenceFlow m_flow;
 	
-	public HAPDefinitionActivityStart() {}
+	public HAPStartActivityDefinition() {}
 
 	@Override
 	public String getType() {		return HAPConstant.ACTIVITY_TYPE_START;	}

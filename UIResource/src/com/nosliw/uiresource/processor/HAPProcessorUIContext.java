@@ -38,7 +38,7 @@ public class HAPProcessorUIContext {
 	public static void process(HAPExecutableUIUnit uiExe, HAPExecutableUIUnit parentUIExe, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 		process1(uiExe, parentUIExe, uiTagMan, contextProcessorEnv);		
 		processRelative(uiExe, parentUIExe, uiTagMan, contextProcessorEnv);			
-		process3(uiExe);
+		process3(uiExe, contextProcessorEnv.inheritanceExcludedInfo);
 	}
 	
 	//process context information
@@ -59,7 +59,7 @@ public class HAPProcessorUIContext {
 		uiExe.setContext(extContextGroup);
 
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
-			processEscalate((HAPExecutableUIUnitTag)uiExe, uiTagMan);
+			processEscalate((HAPExecutableUIUnitTag)uiExe, uiTagMan, contextProcessorEnv.inheritanceExcludedInfo);
 		}
 		
 		//child tag
@@ -68,14 +68,14 @@ public class HAPProcessorUIContext {
 		}
 	}
 	
-	private static void processEscalate(HAPExecutableUIUnitTag exeUITag, HAPUITagManager uiTagMan) {
+	private static void processEscalate(HAPExecutableUIUnitTag exeUITag, HAPUITagManager uiTagMan, Set<String> inheritanceExcludedInfo) {
 		//context
 		if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeUITag.getUIUnitTagDefinition().getTagName())).getContext())) {
 			Set<String> categarys = new HashSet<String>();
 			categarys.add(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 			Map<String, String> contextMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeUITag.getAttributes().get(HAPConstant.UITAG_PARM_CONTEXT));
 			exeUITag.setContextMapping(contextMapping);
-			HAPProcessorEscalate.process(exeUITag.getContext(), categarys, contextMapping);
+			HAPProcessorEscalate.process(exeUITag.getContext(), categarys, contextMapping, inheritanceExcludedInfo);
 		}
 	}
 	
@@ -201,16 +201,16 @@ public class HAPProcessorUIContext {
 		
 	}	
 	
-	private static void process3(HAPExecutableUIUnit uiExe){
+	private static void process3(HAPExecutableUIUnit uiExe, Set<String> inheritanceExcludedInfo){
 		
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
 			//flat it
 			HAPExecutableUIUnitTag uiTagExe = (HAPExecutableUIUnitTag)uiExe;
-			uiTagExe.setFlatTagContext(HAPUtilityContext.buildFlatContext(uiTagExe.getTagContext()));
+			uiTagExe.setFlatTagContext(HAPUtilityContext.buildFlatContext(uiTagExe.getTagContext(), inheritanceExcludedInfo));
 		}
 		
 		//build flat context
-		HAPContextFlat flatContext = HAPUtilityContext.buildFlatContext(uiExe.getContext());
+		HAPContextFlat flatContext = HAPUtilityContext.buildFlatContext(uiExe.getContext(), inheritanceExcludedInfo);
 		uiExe.setFlatContext(flatContext);
 
 		//constants
@@ -228,7 +228,7 @@ public class HAPProcessorUIContext {
 		
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : uiExe.getUITags()) {
-			process3(childTag);			
+			process3(childTag, inheritanceExcludedInfo);			
 		}
 	}
 	

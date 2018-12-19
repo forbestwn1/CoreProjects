@@ -3,14 +3,9 @@
 <body>
 
 		<nosliw-loop data="business.a.cc" element="ele" index="index">  
-
 			<br>
-			Index: <%=?(index)?%>
-		</nosliw-loop>
-		
-		<nosliw-include source="Example_Object_Basic_Include" context="element=business.a.aa" /> 
-	
-	
+<!--			Index: <%=?(index)?%>  -->
+	</nosliw-loop>
 </body>
 
 	<scripts>
@@ -69,65 +64,6 @@
 							}
 						}
 					},
-					aaaa : {
-						definition: {
-							value : "<%=5+6+7%>",
-						}
-					},
-					bbbb : {
-						definition: {
-							value : "<%=(5+6+7)>5%>"
-						}
-					},
-					cccc : {
-						definition: {
-							value : {
-								a : 12345,
-								b : true,
-								c : "good",
-								d : "<%=5+6+7%>"
-							}
-						}
-					},
-					dddd : {
-						definition : {
-							value : "<%=&(cccc)&.a+6%>"
-						}
-					},
-					ffff : {
-						definition: {
-							value : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>"
-						}
-					},
-					eeee : {
-						definition: {
-							value : "<%=#|&(ffff)&.subString(from:&(#test##integer___3)&,to:&(#test##integer___7)&)|#%>"
-						}
-					},
-					base: {
-						definition : {
-							value : {
-								dataTypeId: "test.string",
-								value: "This is my world!"
-							}
-						}
-					},
-					from: {
-						definition : {
-							value : {
-								dataTypeId: "test.integer",
-								value: 3
-							}
-						}
-					},
-					to: {
-						definition:{
-							value : {
-								dataTypeId: "test.integer",
-								value: 7
-							}
-						}
-					}
 				}
 			}
 		}
@@ -143,11 +79,35 @@
 	
 	<events>
 	[
+		{
+			name : "changeInputText",
+			data : {
+				element : {
+					data : {
+						definition : {
+							path: "business.a.aa"
+						}
+					}
+				}
+			}
+		}
 	]
 	</events>
 	
 	<commands>
 	[
+		{
+			name : "Start",
+			parm : {
+				element : {
+					data : {
+						definition : {
+							path: "business.a.aa"
+						}
+					}
+				}
+			}
+		}
 	]
 	</commands>
 

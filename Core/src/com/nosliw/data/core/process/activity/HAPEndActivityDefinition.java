@@ -1,4 +1,4 @@
-package com.nosliw.data.core.process;
+package com.nosliw.data.core.process.activity;
 
 import java.util.Map;
 
@@ -7,15 +7,17 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.process.HAPDefinitionActivity;
+import com.nosliw.data.core.process.HAPDefinitionDataAssociationGroup;
 
-public class HAPDefinitionActivityEnd extends HAPDefinitionActivity{
+public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 
 	@HAPAttribute
 	public static String OUTPUT = "output";
 	
 	private HAPDefinitionDataAssociationGroup m_output;
 	
-	public HAPDefinitionActivityEnd() {}
+	public HAPEndActivityDefinition() {}
 
 	@Override
 	public String getType() {		return HAPConstant.ACTIVITY_TYPE_END;	}

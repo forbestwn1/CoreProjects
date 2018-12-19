@@ -30,7 +30,7 @@
 							path : "<%=&(nosliwAttribute_data)&%>.element",
 						},
 						info:{
-							mode : "manual"
+							instantiate : "manual"
 						}
 					},
 					"<%=&(nosliwAttribute_index)&%>" : {
@@ -38,7 +38,7 @@
 							criteria : "test.integer;1.0.0",
 						},
 						info:{
-							mode : "manual"
+							instantiate : "manual"
 						}
 					}		
 				},

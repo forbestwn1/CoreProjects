@@ -1,28 +1,22 @@
 package com.nosliw.data.core.process;
 
-import java.util.Map;
-
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 @HAPEntityWithAttribute
 public abstract class HAPExecutableActivity extends HAPSerializableImp implements HAPExecutable{
 
-	private int m_index;
+	private String m_id;
 	
-	private String m_name;
+	private HAPDefinitionActivity m_activityDefinition;
 	
-	public HAPExecutableActivity(int index, String name) {
-		this.m_index = index;
-		this.m_name = name;
+	public HAPExecutableActivity(String id, HAPDefinitionActivity activityDef) {
+		this.m_id = id;
+		this.m_activityDefinition = activityDef;
 	}
 	
-	public int getIndex() { return this.m_index;  }
-	public String getName() {   return this.m_name;   }
+	public String getId() {  return this.m_id;  }
 	
-	public abstract HAPDataTypeCriteria getExitDataTypeCriteria();
-	
-	public abstract void updateReferencedExecute(Map<String, HAPExecutableProcess> references);
+	public HAPDefinitionActivity getActivityDefinition() {   return this.m_activityDefinition;   }
 	
 }

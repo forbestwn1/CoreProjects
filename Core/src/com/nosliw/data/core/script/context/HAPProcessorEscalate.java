@@ -12,7 +12,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 
 public class HAPProcessorEscalate {
 
-	public static void process(HAPContextGroup contextGroup, Set<String> categarys, Map<String, String> cm) {
+	public static void process(HAPContextGroup contextGroup, Set<String> categarys, Map<String, String> cm, Set<String> inheritanceExcludedInfo) {
 		for(String categary : categarys) {
 			HAPContext context = contextGroup.getContext(categary);
 
@@ -23,32 +23,32 @@ public class HAPProcessorEscalate {
 			}
 			
 			for(String key : context.getElementNames()) {
-				process(contextGroup, key, contextMapping.get(key), categary);
+				process(contextGroup, key, contextMapping.get(key), categary, inheritanceExcludedInfo);
 			}
 		}
 	}
 	
 	
 	//escalte context node to parent context group, only absolute variable
-	public static void process(HAPContextGroup contextGroup, String contextEleName, String mappedPath, String categaryType) {
+	public static void process(HAPContextGroup contextGroup, String contextEleName, String mappedPath, String categaryType, Set<String> inheritanceExcludedInfo) {
 		HAPContextDefinitionRoot rootNode = contextGroup.getElement(categaryType, contextEleName);
 		if(rootNode.isAbsolute()) {
 			HAPComplexPath complexPath = new HAPComplexPath(mappedPath);
-			Triple<Boolean, HAPContextDefinitionRoot, String> a = escalate(complexPath, categaryType, contextGroup.getParent(), rootNode);
+			Triple<Boolean, HAPContextDefinitionRoot, String> a = escalate(complexPath, categaryType, contextGroup.getParent(), rootNode, inheritanceExcludedInfo);
 			if(a.getLeft())		contextGroup.addElement(contextEleName, a.getMiddle(), a.getRight());
 			else {
-				contextGroup.addElement(contextEleName, HAPUtilityContext.createRelativeContextDefinitionRoot(a.getMiddle(), a.getRight(), complexPath.getRootName()), a.getRight());
+				contextGroup.addElement(contextEleName, HAPUtilityContext.createRelativeContextDefinitionRoot(a.getMiddle(), a.getRight(), complexPath.getRootName(), inheritanceExcludedInfo), a.getRight());
 			}
 		}
 	}
 	
-	private static Triple<Boolean, HAPContextDefinitionRoot, String> escalate(HAPComplexPath path, String categaryType, HAPContextGroup parentContextGroup, HAPContextDefinitionRoot original) {
+	private static Triple<Boolean, HAPContextDefinitionRoot, String> escalate(HAPComplexPath path, String categaryType, HAPContextGroup parentContextGroup, HAPContextDefinitionRoot original, Set<String> inheritanceExcludedInfo) {
 		
 		Triple<Boolean, HAPContextDefinitionRoot, String> out = null;
 		HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(path.getFullName()), parentContextGroup, null, HAPConfigureContextProcessor.VALUE_RESOLVEPARENTMODE_FIRST);
 		if(resolveInfo!=null) {
 			//find matched one
-			out = Triple.of(true, HAPUtilityContext.createRelativeContextDefinitionRoot(resolveInfo.rootNode, resolveInfo.path.getRootElementId().getCategary(), resolveInfo.path.getPath()), categaryType);
+			out = Triple.of(true, HAPUtilityContext.createRelativeContextDefinitionRoot(resolveInfo.rootNode, resolveInfo.path.getRootElementId().getCategary(), resolveInfo.path.getPath(), inheritanceExcludedInfo), categaryType);
 			return out;
 		}
 		else {
@@ -69,14 +69,14 @@ public class HAPProcessorEscalate {
 				return out;
 			}
 			else {
-				Triple<Boolean, HAPContextDefinitionRoot, String> a = escalate(path, categaryType, grandParent, original);
+				Triple<Boolean, HAPContextDefinitionRoot, String> a = escalate(path, categaryType, grandParent, original, inheritanceExcludedInfo);
 				HAPContextDefinitionRoot b;
 				if(a.getLeft()) {
 					b = a.getMiddle();
 					parentContextGroup.addElement(path.getRootName(), b, a.getRight());
 				}
 				else {
-					b = HAPUtilityContext.createRelativeContextDefinitionRoot(a.getMiddle(), a.getRight(), path.getRootName());
+					b = HAPUtilityContext.createRelativeContextDefinitionRoot(a.getMiddle(), a.getRight(), path.getRootName(), inheritanceExcludedInfo);
 					parentContextGroup.addElement(path.getRootName(), b, a.getRight());
 				}
 

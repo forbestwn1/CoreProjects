@@ -1,5 +1,9 @@
 package com.nosliw.uiresource.processor;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
@@ -30,8 +34,9 @@ public class HAPProcessorUIResource {
 		//compile definition to executable
 		HAPProcessorCompile.process(out, null);
 		
-		
-		HAPEnvContextProcessor contextProcessorEnv = new HAPEnvContextProcessor(dataTypeHelper, runtime, expressionMan);
+		Set<String> inheritanceExcludedInfo = new HashSet<String>();
+		inheritanceExcludedInfo.add(HAPConstant.UIRESOURCE_CONTEXTINFO_INSTANTIATE);
+		HAPEnvContextProcessor contextProcessorEnv = new HAPEnvContextProcessor(dataTypeHelper, runtime, expressionMan, inheritanceExcludedInfo);
 		HAPProcessorUIContext.process(out, null, uiTagMan, contextProcessorEnv);
 
 		HAPPorcessorResolveName.resolve(out);

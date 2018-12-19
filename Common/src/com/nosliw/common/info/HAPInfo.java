@@ -16,5 +16,7 @@ public interface HAPInfo extends HAPSerializable{
 
 	Set<String> getNames();
 
+	HAPInfo cloneInfo(Set<String> excluded);
+
 	HAPInfo cloneInfo();
 }

@@ -15,7 +15,7 @@ public class HAPProcessorContextInheritance {
 					Map<String, HAPContextDefinitionRoot> parentEles = parentContext.getElements();
 					for(String eleName : parentEles.keySet()) {
 						if(isInheritable(out, parentContextGroup, categary, eleName, inheritMode)) {
-							out.addElement(eleName, HAPUtilityContext.createRelativeContextDefinitionRoot(parentContextGroup, categary, eleName), categary);
+							out.addElement(eleName, HAPUtilityContext.createRelativeContextDefinitionRoot(parentContextGroup, categary, eleName, contextProcessorEnv.inheritanceExcludedInfo), categary);
 						}
 					}
 				}

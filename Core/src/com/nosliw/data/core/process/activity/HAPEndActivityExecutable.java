@@ -24,7 +24,7 @@ import com.nosliw.data.core.runtime.HAPExecuteExpression;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task111.HAPExecutableTask;
 
-public class HAPExecutableActivityExpression{
+public class HAPEndActivityExecutable{
 /*
 extends HAPExecutableStep implements HAPExecuteExpression{
 

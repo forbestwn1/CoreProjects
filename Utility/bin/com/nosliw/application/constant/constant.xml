@@ -516,6 +516,10 @@
 			<definition name="UITAG_PARM_COMMAND" value="command"/>
 			<definition name="UITAG_PARM_SERVICE" value="service"/>
 
+			<definition name="UIRESOURCE_CONTEXTINFO_INSTANTIATE" value="instantiate"/>
+			<definition name="UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL" value="manual"/>
+
+
 			<definition type="space"/>
 			<definition name="DATAOPERATION_VAR_TYPE_IN" value="parm"/>
 			<definition name="DATAOPERATION_VAR_TYPE_OUT" value="out"/>

@@ -6,8 +6,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang3.ArrayUtils;
+import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.path.HAPComplexPath;
@@ -111,7 +110,7 @@ public class HAPUtilityContext {
 		return out;				
 	} 
 	
-	public static HAPContextFlat buildFlatContext(HAPContextGroup context) {
+	public static HAPContextFlat buildFlatContext(HAPContextGroup context, Set<String> excludedInfo) {
 		HAPContextFlat out = new HAPContextFlat();
 		
 		List<String> categarys = Arrays.asList(HAPContextGroup.getContextTypesWithPriority());
@@ -119,15 +118,16 @@ public class HAPUtilityContext {
 		for(String categary : categarys) {
 			Map<String, HAPContextDefinitionRoot> eles = context.getElements(categary);
 			for(String name : eles.keySet()) {
-				String updatedName = new HAPContextDefinitionRootId(categary, name).getFullName();
-				out.addElement(updatedName, eles.get(name));
+				//build full name element
+				String fullName = new HAPContextDefinitionRootId(categary, name).getFullName();
+				out.addElement(fullName, eles.get(name));
 				
-				//
-				out.addNameMapping(name, updatedName);
-				
-				//
-				HAPContextDefinitionRoot newEle = HAPUtilityContext.createRelativeContextDefinitionRoot(eles.get(name), null, updatedName);
+				//build simple name element
+				HAPContextDefinitionRoot newEle = HAPUtilityContext.createRelativeContextDefinitionRoot(eles.get(name), null, fullName, excludedInfo);
 				out.addElement(name, newEle);
+
+				//
+				out.addNameMapping(name, fullName);
 			}
 		}
 		return out;
@@ -171,7 +171,7 @@ public class HAPUtilityContext {
 
 	
 	//build interited node from parent
-	public static HAPContextDefinitionRoot createRelativeContextDefinitionRoot(HAPContextDefinitionRoot parentNode, String contextCategary, String refPath) {
+	public static HAPContextDefinitionRoot createRelativeContextDefinitionRoot(HAPContextDefinitionRoot parentNode, String contextCategary, String refPath, Set<String> excludedInfo) {
 		HAPContextDefinitionRoot out = null;
 		
 		if(parentNode.isConstant()) {
@@ -179,7 +179,7 @@ public class HAPUtilityContext {
 		}
 		else {
 			out = new HAPContextDefinitionRoot();
-			out.setInfo(parentNode.getInfo().cloneInfo());
+			out.setInfo(parentNode.getInfo().cloneInfo(excludedInfo));
 			HAPContextDefinitionLeafRelative relativeEle = new HAPContextDefinitionLeafRelative();
 			relativeEle.setPath(contextCategary, refPath);
 			if(parentNode.getDefinition().isProcessed()) {
@@ -203,8 +203,8 @@ public class HAPUtilityContext {
 
 
 	//build interited node from parent
-	public static HAPContextDefinitionRoot createRelativeContextDefinitionRoot(HAPContextGroup parentContextGroup, String contextCategary, String refPath) {
-		return createRelativeContextDefinitionRoot(parentContextGroup.getElement(contextCategary, refPath), contextCategary, refPath);
+	public static HAPContextDefinitionRoot createRelativeContextDefinitionRoot(HAPContextGroup parentContextGroup, String contextCategary, String refPath, Set<String> excludedInfo) {
+		return createRelativeContextDefinitionRoot(parentContextGroup.getElement(contextCategary, refPath), contextCategary, refPath, excludedInfo);
 	}
 
 	//go through different context group categaryes to find referenced node in parent. 

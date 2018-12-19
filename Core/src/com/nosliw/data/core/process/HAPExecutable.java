@@ -13,9 +13,6 @@ public interface HAPExecutable {
 
 	String getType();
 	
-	//get output criteria
-	HAPDataTypeCriteria getOutput();
-	
 	//update variable in executable
 //	void updateVariable(HAPUpdateVariable updateVar);
 
@@ -23,13 +20,13 @@ public interface HAPExecutable {
 	//  1. update variable info
 	//  2. build matcher for variable
 	//  3. find output criteria
-	void discoverVariable(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria, HAPProcessContext context);
+//	void discoverVariable(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria, HAPProcessContext context);
 
 	//resource dependency 
-	List<HAPResourceId> getResourceDependency();
+//	List<HAPResourceId> getResourceDependency();
 
-	Set<String> getReferences();
+//	Set<String> getReferences();
 	
-	Set<String> getVariables();
+//	Set<String> getVariables();
 	
 }

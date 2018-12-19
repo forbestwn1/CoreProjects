@@ -13,14 +13,14 @@ import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.task111.HAPDefinitionTask;
 
-public class HAPProcessorActivityExpression implements HAPProcessorActivity{
+public class HAPEndActivityProcessor implements HAPProcessorActivity{
 
 	@Override
 	public HAPExecutableActivity process(HAPDefinitionActivity activityDefinition, HAPExecutableProcess processExe,
 			Map<String, HAPVariableInfo> variables, String name,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions, HAPProcessContext context) {
 
-		HAPDefinitionActivityExpression expressionActivity = (HAPDefinitionActivityExpression)activityDefinition;
+		HAPExpressionActivityDefinition expressionActivity = (HAPExpressionActivityDefinition)activityDefinition;
 
 		
 		return null;

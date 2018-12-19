@@ -65,6 +65,20 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 		out.m_values.putAll(this.m_values);
 		return out;
 	}
+
+	@Override
+	public HAPInfoImpSimple cloneInfo(Set<String> excluded) {
+		if(excluded==null||excluded.isEmpty())		 return this.cloneInfo();
+		else {
+			HAPInfoImpSimple out = new HAPInfoImpSimple();
+			for(String name : this.getNames()) {
+				if(!excluded.contains(name)) {
+					out.setValue(name, this.getValue(name));
+				}
+			}
+			return out;
+		}
+	}
 	
 	@Override
 	protected String buildLiterate(){
