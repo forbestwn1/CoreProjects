@@ -1,4 +1,4 @@
-package com.nosliw.data.core.process;
+package com.nosliw.data.core.process.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,7 +22,10 @@ import java.util.Set;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
+import com.nosliw.data.core.process.HAPManagerProcess;
 
 public class HAPImporterProcessSuiteDefinition {
 
@@ -71,7 +74,7 @@ public class HAPImporterProcessSuiteDefinition {
 		HAPDefinitionProcessSuite suite = null;
 		try{
 			String content = HAPFileUtility.readFile(inputStream);
-			JSONObject contentJson = new JSONObject(content);
+			JSONObject contentJson = HAPJsonUtility.newJsonObject(content);
 			suite = HAPParserProcessDefinition.parsePocessSuite(contentJson, processManager);
 		}
 		catch(Exception e){

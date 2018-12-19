@@ -5,9 +5,11 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
 //connection between two activity
+@HAPEntityWithAttribute
 public class HAPDefinitionSequenceFlow extends HAPSerializableImp{
 
 	@HAPAttribute

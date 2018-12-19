@@ -2,7 +2,7 @@ package com.nosliw.test.process;
 
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
-import com.nosliw.data.core.process.HAPImporterProcessSuiteDefinition;
+import com.nosliw.data.core.process.util.HAPImporterProcessSuiteDefinition;
 import com.nosliw.test.task.HAPTaskMain;
 
 public class HAPProcessMain {
@@ -11,7 +11,7 @@ public class HAPProcessMain {
 		
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 		
-		HAPDefinitionProcessSuite suite = HAPImporterProcessSuiteDefinition.readProcessSuiteDefinitionFromFile(HAPProcessMain.class.getResourceAsStream("all.process"), runtimeEnvironment.getProcessManager());
+		HAPDefinitionProcessSuite suite = HAPImporterProcessSuiteDefinition.readProcessSuiteDefinitionFromFile(HAPProcessMain.class.getResourceAsStream("expression.process"), runtimeEnvironment.getProcessManager());
 		
 		
 		

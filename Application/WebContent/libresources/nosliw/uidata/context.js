@@ -152,11 +152,6 @@ var node_createContext = function(elementInfosArray, request){
 		//create empty wrapper variable for each element
 		var contextEle = node_createContextElement(elementInfo, request);
 		if(contextEle!=undefined){
-			
-			if(elementInfo.name=="index___private"){
-				var kkkk = 5555;
-				kkkk++;
-			}
 			loc_out.prv_elements[elementInfo.name] = contextEle;
 			
 			var eleVar = contextEle.variable;

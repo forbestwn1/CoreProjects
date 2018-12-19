@@ -17,7 +17,7 @@ public interface HAPExecutable {
 	HAPDataTypeCriteria getOutput();
 	
 	//update variable in executable
-	void updateVariable(HAPUpdateVariable updateVar);
+//	void updateVariable(HAPUpdateVariable updateVar);
 
 	//discover : 
 	//  1. update variable info

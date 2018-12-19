@@ -11,27 +11,35 @@
 			"description": "main process",
 			"context" : {
 				"public" : {
-					baseVar : {
-						definition : "",
-						default : {
-							dataTypeId: "test.string",
-							value: "This is my world!"
+					element : {
+						baseVar : {
+							definition: {
+								criteria : "test.string;1.0.0",
+								defaultValue : {
+									dataTypeId: "test.string",
+									value: "This is my world!"
+								}
+							}
+						},
+						fromVar : {
+							definition: {
+								criteria : "test.integer;1.0.0",
+								defaultValue : {
+									dataTypeId: "test.integer",
+									value: 3
+								}
+							}
+						},
+						toVar : {
+							definition: {
+								criteria : "test.integer;1.0.0",
+								defaultValue : {
+									dataTypeId: "test.integer",
+									value: 7
+								}
+							}
 						}
-					},
-					fromVar : {
-						definition : "",
-						default : {
-							dataTypeId: "test.integer",
-							value: 3
-						}
-					},
-					toVar : {
-						definition : "",
-						default : {
-							dataTypeId: "test.integer",
-							value: 7
-						}
-					},
+					}
 				},
 				"protected" : {
 					expressionResultVar : {
@@ -43,7 +51,14 @@
 				} 
 			
 			},
-			"activity": [
+			"activity": [{
+					"id": "startActivityId",
+					"name": "startActivity",
+					"type": "start",
+					"flow": {
+						"target": "expressionActivityId"
+					}
+				}, 
 				{
 					"id" : "expressionActivityId", 
 					"name" : "expressionActivity", 

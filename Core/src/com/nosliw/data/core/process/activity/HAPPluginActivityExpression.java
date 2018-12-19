@@ -19,4 +19,10 @@ public class HAPPluginActivityExpression implements HAPPluginActivity{
 		return out;
 	}
 
+	@Override
+	public String getScript() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

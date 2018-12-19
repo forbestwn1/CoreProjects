@@ -122,11 +122,6 @@ public class HAPUtilityContext {
 				String updatedName = new HAPContextDefinitionRootId(categary, name).getFullName();
 				out.addElement(updatedName, eles.get(name));
 				
-				if(updatedName.equals("index___private")) {
-					int kkkk = 5555;
-					kkkk++;
-				}
-				
 				//
 				out.addNameMapping(name, updatedName);
 				

@@ -2,9 +2,11 @@ package com.nosliw.data.core.process;
 
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
+@HAPEntityWithAttribute
 public abstract class HAPExecutableActivity extends HAPSerializableImp implements HAPExecutable{
 
 	private int m_index;

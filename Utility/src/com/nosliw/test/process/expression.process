@@ -17,22 +17,28 @@
 					"public": {
 						"element": {
 							"baseVar": {
-								"definition": "test.string",
-								"default": {
+								"definition":{
+									criteria: "test.string",
+								},
+								"defaultValue": {
 									"dataTypeId": "test.string",
 									"value": "This is my world!"
 								}
 							},
 							"fromVar" : {
-								"definition": "test.integer",
-								"default": {
+								"definition": {
+									criteria : "test.integer"
+								},
+								"defaultValue": {
 									"dataTypeId": "test.integer",
 									"value": 3
 								}
 							},
 							"toVar" : {
-								"definition": "test.integer",
-								"default": {
+								"definition": {
+									criteria: "test.integer"
+								} ,
+								"defaultValue": {
 									"dataTypeId": "test.integer",
 									"value": 7
 								}
@@ -72,7 +78,9 @@
 							"output": {
 								"element": {
 									"expressionResultVar": {
-										"path": "output"
+										definition:{
+											"path": "output"
+										}
 									}
 								}
 							}
@@ -84,10 +92,14 @@
 							"output": {
 								"element": {
 									"errorCodeVar": {
-										"path": "error.code"
+										definition: {
+											"path": "error.code"
+										}
 									},
 									"errorDataVar": {
-										"path": "error.data"
+										definition: {
+											"path": "error.data"
+										}
 									}
 								}
 							}
@@ -100,7 +112,9 @@
 					"output": {
 						"element": {
 							"output": {
-								"path": "expressionResultVar"
+								definition: {
+									"path": "expressionResultVar"
+								}
 							}
 						}
 					}
@@ -111,10 +125,14 @@
 					"output": {
 						"element": {
 							"errorCode": {
-								"path": "errorCodeVar"
+								definition:{
+									"path": "errorCodeVar"
+								}
 							},
 							"errorData": {
-								"path": "errorDataVar"
+								definition:{
+									"path": "errorDataVar"
+								}
 							}
 						}
 					}

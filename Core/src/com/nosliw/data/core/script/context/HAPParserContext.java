@@ -59,8 +59,8 @@ public class HAPParserContext {
 		info.cloneToEntityInfo(out);
 		
 		//definition
-		HAPContextDefinitionElement contextRootDef = parseContextDefinitionElement(eleDefJson.optJSONObject(HAPContextDefinitionRoot.DEFINITION));
-		out.setDefinition(contextRootDef);
+		JSONObject defJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionRoot.DEFINITION);
+		if(defJsonObj!=null)  out.setDefinition(parseContextDefinitionElement(defJsonObj));
 		return out;
 	}
 	
