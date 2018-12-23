@@ -11,9 +11,9 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.data.core.script.expressionscript.HAPEmbededScriptExpression;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionScriptSegment;
+import com.nosliw.data.core.script.expression.HAPEmbededScriptExpression;
+import com.nosliw.data.core.script.expression.HAPScriptExpression;
+import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInAttribute;
@@ -41,7 +41,7 @@ public class HAPPorcessorResolveName {
 	private static void resolveEmbededScriptExpression(HAPEmbededScriptExpression embedScriptExpression, HAPContextGroup context) {
 		for(HAPScriptExpression scriptExpression : embedScriptExpression.getScriptExpressionsList()) {
 			//resolve name in script
-			for(HAPScriptExpressionScriptSegment scriptSeg : scriptExpression.getScriptSegments()) {
+			for(HAPScriptInScriptExpression scriptSeg : scriptExpression.getScriptSegments()) {
 				resolveEntityWithName(scriptSeg, context);
 			}
 			

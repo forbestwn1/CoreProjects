@@ -111,7 +111,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		HAPDefinitionExpression expDefinition = new HAPDefinitionExpression(expressionStr); 
 		//build expression obj
 		HAPProcessContext processContext = new HAPProcessContext();
-		HAPExecutableExpression expression = this.getRuntimeEnvironment().getExpressionSuiteManager().compileExpression(null, expDefinition, null, null, null, HAPExpressionProcessConfigureUtil.setDontDiscovery(null), processContext);
+		HAPExecutableExpression expression = this.getRuntimeEnvironment().getExpressionSuiteManager().compileExpression(expDefinition, null, null, null, HAPExpressionProcessConfigureUtil.setDontDiscovery(null), processContext);
 		//execute task
 		HAPRuntimeTask task = new HAPRuntimeTaskExecuteExpressionRhino(expression, parmsData, null);
 		HAPServiceData serviceData = this.executeTaskSync(task);

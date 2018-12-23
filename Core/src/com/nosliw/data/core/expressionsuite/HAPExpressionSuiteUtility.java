@@ -19,7 +19,6 @@ import com.nosliw.data.core.runtime.HAPExecutableExpression;
 public class HAPExpressionSuiteUtility {
 
 	public static HAPExecutableExpression compileExpression(
-			String id,
 			HAPDefinitionExpression expression, 
 			Map<String, HAPDefinitionExpression> contextExpressionDefinitions, 
 			Map<String, HAPVariableInfo> parentVariablesInfo, 
@@ -33,7 +32,7 @@ public class HAPExpressionSuiteUtility {
 		//expand referenced expression
 		processReferencesInOperand(operand, contextExpressionDefinitions);
 		
-		HAPExecutableExpressionInSuite out = new HAPExecutableExpressionInSuite(id, operand.getOperand());
+		HAPExecutableExpressionInSuite out = new HAPExecutableExpressionInSuite(operand.getOperand());
 		
 		//update constant data in expression
 		HAPOperandUtility.updateConstantData(out.getOperand(), contextConstants);

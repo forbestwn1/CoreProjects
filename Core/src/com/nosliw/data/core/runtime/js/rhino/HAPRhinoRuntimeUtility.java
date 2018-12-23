@@ -38,9 +38,6 @@ public class HAPRhinoRuntimeUtility {
 	public static HAPData executeOperandSync(HAPOperandWrapper operand, Map<String, HAPData> parms, Map<String, HAPData> referenceValues, HAPRuntime runtime) {
 		HAPRuntimeTaskExecuteExpressionRhino exeExpTask = new HAPRuntimeTaskExecuteExpressionRhino(new HAPExecutableExpression() {
 			@Override
-			public String getId() {				return "";			}
-
-			@Override
 			public HAPOperandWrapper getOperand() {  return operand;  }
 
 			@Override

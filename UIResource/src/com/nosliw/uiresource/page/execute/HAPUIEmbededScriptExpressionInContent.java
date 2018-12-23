@@ -2,7 +2,7 @@ package com.nosliw.uiresource.page.execute;
 
 import java.util.List;
 
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
+import com.nosliw.data.core.script.expression.HAPScriptExpression;
 
 /*
  * class for script expression part in html content

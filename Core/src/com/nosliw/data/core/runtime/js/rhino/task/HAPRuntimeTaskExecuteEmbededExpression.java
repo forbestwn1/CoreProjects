@@ -1,7 +1,6 @@
 package com.nosliw.data.core.runtime.js.rhino.task;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +15,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
-import com.nosliw.data.core.script.expressionscript.HAPEmbededScriptExpression;
+import com.nosliw.data.core.script.expression.HAPEmbededScriptExpression;
 
 public class HAPRuntimeTaskExecuteEmbededExpression extends HAPRuntimeTaskExecuteScriptExpressionAbstract{
 
@@ -53,11 +52,7 @@ public class HAPRuntimeTaskExecuteEmbededExpression extends HAPRuntimeTaskExecut
 	@Override
 	public Map<String, Object> getScriptConstants(){  return this.m_scriptConstants;  }
 	@Override
-	public Map<String, HAPExecutableExpression> getExpressions(){
-		Map<String, HAPExecutableExpression> out = new LinkedHashMap<String, HAPExecutableExpression>();
-		for(HAPExecutableExpression expression : this.m_embededExpression.getExpressions())	out.put(expression.getId(), expression);
-		return out;
-	}
+	public Map<String, HAPExecutableExpression> getExpressions(){	return this.m_embededExpression.getExpressions();	}
 	
 	@Override
 	public String getScriptFunction() {		return HAPRuntimeJSScriptUtility.buildEmbedScriptExpressionJSFunction(this.m_embededExpression);  }
@@ -69,7 +64,7 @@ public class HAPRuntimeTaskExecuteEmbededExpression extends HAPRuntimeTaskExecut
 			
 			//prepare resources for expression in the runtime (resource and dependency)
 			//execute expression after load required resources
-			List<HAPExecutableExpression> expressions = new ArrayList(this.m_embededExpression.getExpressions());
+			List<HAPExecutableExpression> expressions = new ArrayList(this.m_embededExpression.getExpressions().values());
 			List<HAPResourceInfo> resourcesId =  HAPExpressionUtility.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager());
 			HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
 			loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));

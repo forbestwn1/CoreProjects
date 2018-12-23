@@ -3,8 +3,8 @@ package com.nosliw.uiresource.page.definition;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.data.core.script.expressionscript.HAPDefinitionEmbededScript;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionUtility;
+import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpressionEmbeded;
+import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 
 public class HAPDefinitionUIEmbededScriptExpression {
 
@@ -13,7 +13,7 @@ public class HAPDefinitionUIEmbededScriptExpression {
 	// string or HAPDefinitionEmbededScript
 	private List<Object> m_elements;
 
-	public HAPDefinitionUIEmbededScriptExpression(String uiId, HAPDefinitionEmbededScript scriptExpression) {
+	public HAPDefinitionUIEmbededScriptExpression(String uiId, HAPDefinitionScriptExpressionEmbeded scriptExpression) {
 		this.m_uiId = uiId;
 		this.m_elements = new ArrayList<Object>();
 		this.m_elements.add(scriptExpression);
@@ -22,7 +22,7 @@ public class HAPDefinitionUIEmbededScriptExpression {
 	public HAPDefinitionUIEmbededScriptExpression(String uiId, String content) {
 		this.m_uiId = uiId;
 		this.m_elements = new ArrayList<Object>();
-		this.m_elements.addAll(HAPScriptExpressionUtility.discoverEmbededScript(content));
+		this.m_elements.addAll(HAPUtilityScriptExpression.discoverEmbededScript(content));
 	}
 	
 	public HAPDefinitionUIEmbededScriptExpression(String uiId, List<Object> elements) {
@@ -37,7 +37,7 @@ public class HAPDefinitionUIEmbededScriptExpression {
 
 	public boolean containsScriptExpression() {
 		for(Object ele : m_elements) {
-			if(ele instanceof HAPDefinitionEmbededScript)  return true;
+			if(ele instanceof HAPDefinitionScriptExpressionEmbeded)  return true;
 		}
 		return false;
 	}

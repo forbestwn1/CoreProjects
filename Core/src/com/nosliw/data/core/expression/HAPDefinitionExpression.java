@@ -1,6 +1,5 @@
 package com.nosliw.data.core.expression;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,15 +15,11 @@ import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataTypeOperation;
 import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.operand.HAPOperandOperation;
-import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 
 public class HAPDefinitionExpression  extends HAPSerializableImp implements HAPEntityWithName{
-
-	@HAPAttribute
-	public static String ID = "id";
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
@@ -38,23 +33,14 @@ public class HAPDefinitionExpression  extends HAPSerializableImp implements HAPE
 	@HAPAttribute
 	public static String REFERENCENAMES = "referenceNames";
 
-	private String m_id;
-	
 	private String m_expression;
 	
 	private HAPOperandWrapper m_operand;
 
-	public HAPDefinitionExpression(String expression, String id) {
-		this(expression);
-		this.m_id = id;
-	}
-	
 	public HAPDefinitionExpression(String expression) {
 		this.m_expression = expression;
 		this.process();
 	}
-	
-	public String getId() {   return this.m_id;  }
 	
 	public String getExpression() {  return this.m_expression;  }
 	
@@ -123,7 +109,6 @@ public class HAPDefinitionExpression  extends HAPSerializableImp implements HAPE
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ID, this.m_id);
 		jsonMap.put(EXPRESSION, this.m_expression);
 		jsonMap.put(VARIABLENAMES, HAPJsonUtility.buildJson(this.getVariableNames(), HAPSerializationFormat.JSON));
 		jsonMap.put(REFERENCENAMES, HAPJsonUtility.buildJson(this.getReferenceNames(), HAPSerializationFormat.JSON));

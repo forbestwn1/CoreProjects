@@ -12,13 +12,14 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
+import com.nosliw.data.core.script.expression.HAPScriptExpression;
 
 public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
 	
-	private HAPDefinitionExpression m_expression;
+	private HAPScriptExpression m_expression;
 	
 	public HAPExpressionActivityDefinition() {
 	}
@@ -27,7 +28,7 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 	public String getType() {  return HAPConstant.EXPRESSIONTASK_STEPTYPE_EXPRESSION;	}
 	
 	public String getExpression(){  return this.m_expression.getExpression();    }
-	private void setExpression(String expression) {	this.m_expression = new HAPDefinitionExpression(expression);	}
+	private void setExpression(String expression) {	this.m_expression = new HAPScriptExpression(expression);	}
 
 	public HAPOperandWrapper getOperand() {  return this.m_expression.getOperand();  }
 

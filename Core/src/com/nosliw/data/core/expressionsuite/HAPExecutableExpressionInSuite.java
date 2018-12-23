@@ -23,17 +23,14 @@ public class HAPExecutableExpressionInSuite extends HAPSerializableImp implement
 	@HAPAttribute
 	public static String VARIABLEINFOS = "variableInfos";
 	
-	private String m_id;
-	
 	private HAPOperandWrapper m_operand;
 	
 	private Map<String, HAPVariableInfo> m_localVarsInfo;
 
 	private Map<String, HAPMatchers> m_varsMatchers;
 	
-	public HAPExecutableExpressionInSuite(String id, HAPOperand operand) {
+	public HAPExecutableExpressionInSuite(HAPOperand operand) {
 		this.m_operand = new HAPOperandWrapper(operand);
-		this.m_id = id;
 		this.m_localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		this.m_varsMatchers = new LinkedHashMap<String, HAPMatchers>();
 	}
@@ -57,9 +54,6 @@ public class HAPExecutableExpressionInSuite extends HAPSerializableImp implement
 		
 	}
 
-	@Override
-	public String getId() {		return this.m_id;	}
-	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		return true;

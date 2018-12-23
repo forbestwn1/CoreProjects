@@ -16,10 +16,10 @@ import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
-import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionScriptSegment;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionUtility;
+import com.nosliw.data.core.script.expression.HAPContextScriptExpressionProcess;
+import com.nosliw.data.core.script.expression.HAPScriptExpression;
+import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
+import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 
 public class HAPProcessorContextConstant {
 
@@ -217,7 +217,7 @@ public class HAPProcessorContextConstant {
 		//otherwise, if leafData contains both script expression and plain text, then build string value instead
 		StringBuffer valueStr = new StringBuffer();
 		//try to discover script expression in leaf content 
-		List<Object> segments = HAPScriptExpressionUtility.discoverEmbededScriptExpression(leafData.toString());
+		List<Object> segments = HAPUtilityScriptExpression.discoverEmbededScriptExpression(leafData.toString());
 		for(Object segment : segments){
 			if(segment instanceof HAPScriptExpression){
 				//only process script expression
@@ -228,7 +228,7 @@ public class HAPProcessorContextConstant {
 				Set<String> scriptConstantNames = new HashSet<String>();
 				for(Object uiExpEle : sciptExpression.getElements()){
 					if(uiExpEle instanceof HAPDefinitionExpression)		expConstantNames.addAll(HAPOperandUtility.discoveryUnsolvedConstants(((HAPDefinitionExpression)uiExpEle).getOperand()));
-					else if(uiExpEle instanceof HAPScriptExpressionScriptSegment)		scriptConstantNames.addAll(((HAPScriptExpressionScriptSegment)uiExpEle).getConstantNames());
+					else if(uiExpEle instanceof HAPScriptInScriptExpression)		scriptConstantNames.addAll(((HAPScriptInScriptExpression)uiExpEle).getConstantNames());
 				}
 				
 				//build constants data required by expression

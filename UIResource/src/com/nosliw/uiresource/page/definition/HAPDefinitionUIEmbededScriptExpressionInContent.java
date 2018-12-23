@@ -2,11 +2,11 @@ package com.nosliw.uiresource.page.definition;
 
 import java.util.List;
 
-import com.nosliw.data.core.script.expressionscript.HAPDefinitionEmbededScript;
+import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpressionEmbeded;
 
 public class HAPDefinitionUIEmbededScriptExpressionInContent extends HAPDefinitionUIEmbededScriptExpression{
 
-	public HAPDefinitionUIEmbededScriptExpressionInContent(String uiId, HAPDefinitionEmbededScript scriptExpression) {
+	public HAPDefinitionUIEmbededScriptExpressionInContent(String uiId, HAPDefinitionScriptExpressionEmbeded scriptExpression) {
 		super(uiId, scriptExpression);
 	}
 

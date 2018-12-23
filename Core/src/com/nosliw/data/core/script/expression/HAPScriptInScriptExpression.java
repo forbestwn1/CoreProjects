@@ -1,4 +1,4 @@
-package com.nosliw.data.core.script.expressionscript;
+package com.nosliw.data.core.script.expression;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
  * Segment in script expression for in-line script 
  * it may also contains constants and variables in it
  */
-public class HAPScriptExpressionScriptSegment implements HAPEntityWithName{
+public class HAPScriptInScriptExpression implements HAPEntityWithName{
 
 	private String m_orignalScript;
 
@@ -27,12 +27,12 @@ public class HAPScriptExpressionScriptSegment implements HAPEntityWithName{
 
 	//define the segment parsing infor
 	private Object[][] m_definitions = {
-			{"&(", ")&", HAPScriptExpressionScriptConstant.class}, 
-			{"?(", ")?", HAPScriptExpressionScriptVariable.class}
+			{"&(", ")&", HAPConstantInScript.class}, 
+			{"?(", ")?", HAPVariableInScript.class}
 	};
 	
 
-	public HAPScriptExpressionScriptSegment(String script){
+	public HAPScriptInScriptExpression(String script){
 		this.m_elements = new ArrayList<Object>();
 		this.m_orignalScript = script;
 		this.processSegments();
@@ -44,8 +44,8 @@ public class HAPScriptExpressionScriptSegment implements HAPEntityWithName{
 	public Set<String> getConstantNames(){
 		Set<String> out = new HashSet<String>();
 		for(Object ele : this.m_elements) {
-			if(ele instanceof HAPScriptExpressionScriptConstant) {
-				out.add(((HAPScriptExpressionScriptConstant)ele).getConstantName());
+			if(ele instanceof HAPConstantInScript) {
+				out.add(((HAPConstantInScript)ele).getConstantName());
 			}
 		}
 		return out;  
@@ -55,8 +55,8 @@ public class HAPScriptExpressionScriptSegment implements HAPEntityWithName{
 	public Set<String> getVariableNames(){
 		Set<String> out = new HashSet<String>();
 		for(Object ele : this.m_elements) {
-			if(ele instanceof HAPScriptExpressionScriptVariable) {
-				out.add(((HAPScriptExpressionScriptVariable)ele).getVariableName());
+			if(ele instanceof HAPVariableInScript) {
+				out.add(((HAPVariableInScript)ele).getVariableName());
 			}
 		}
 		return out;  
@@ -65,8 +65,8 @@ public class HAPScriptExpressionScriptSegment implements HAPEntityWithName{
 	@Override
 	public void updateVariableNames(HAPUpdateName nameUpdate) {
 		for(Object ele : this.m_elements) {
-			if(ele instanceof HAPScriptExpressionScriptVariable) {
-				HAPScriptExpressionScriptVariable varEle = (HAPScriptExpressionScriptVariable)ele;
+			if(ele instanceof HAPVariableInScript) {
+				HAPVariableInScript varEle = (HAPVariableInScript)ele;
 				varEle.updateName(nameUpdate);
 			}
 		}
@@ -75,8 +75,8 @@ public class HAPScriptExpressionScriptSegment implements HAPEntityWithName{
 	@Override
 	public void updateConstantNames(HAPUpdateName nameUpdate) {
 		for(Object ele : this.m_elements) {
-			if(ele instanceof HAPScriptExpressionScriptConstant) {
-				HAPScriptExpressionScriptConstant constantEle = (HAPScriptExpressionScriptConstant)ele;
+			if(ele instanceof HAPConstantInScript) {
+				HAPConstantInScript constantEle = (HAPConstantInScript)ele;
 				constantEle.updateName(nameUpdate);
 			}
 		}
@@ -85,19 +85,19 @@ public class HAPScriptExpressionScriptSegment implements HAPEntityWithName{
 	public void updateConstantValue(Map<String, Object> constantsValue) {
 		List<Object> newEles = new ArrayList<Object>();
 		for(Object ele : this.m_elements) {
-			if(ele instanceof HAPScriptExpressionScriptVariable) {
-				HAPScriptExpressionScriptVariable varEle = (HAPScriptExpressionScriptVariable)ele;
+			if(ele instanceof HAPVariableInScript) {
+				HAPVariableInScript varEle = (HAPVariableInScript)ele;
 				Object constantValue = constantsValue.get(varEle.getVariableName());
 				if(constantValue!=null) {
-					HAPScriptExpressionScriptConstant constantEle = new HAPScriptExpressionScriptConstant(varEle.getVariableName());
+					HAPConstantInScript constantEle = new HAPConstantInScript(varEle.getVariableName());
 					constantEle.setValue(constantValue);
 				}
 				else {
 					newEles.add(ele);
 				}
 			}
-			else if(ele instanceof HAPScriptExpressionScriptConstant) {
-				HAPScriptExpressionScriptConstant constantEle = (HAPScriptExpressionScriptConstant)ele;
+			else if(ele instanceof HAPConstantInScript) {
+				HAPConstantInScript constantEle = (HAPConstantInScript)ele;
 				constantEle.setValue(constantsValue.get(constantEle.getConstantName()));
 				newEles.add(constantEle);
 			}

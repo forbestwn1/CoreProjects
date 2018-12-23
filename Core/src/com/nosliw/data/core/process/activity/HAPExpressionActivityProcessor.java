@@ -16,7 +16,7 @@ import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionUtility;
+import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 
 public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 
@@ -50,7 +50,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		//replace variable with full name
 		
 		//process attribute operand
-		HAPScriptExpressionUtility.processAttributeOperandInExpression(expressionDefinition, varsInfo);
+		HAPUtilityScriptExpression.processAttributeOperandInExpression(expressionDefinition, varsInfo);
 		
 		
 		

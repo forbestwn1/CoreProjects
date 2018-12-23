@@ -1,12 +1,12 @@
-package com.nosliw.data.core.script.expressionscript;
+package com.nosliw.data.core.script.expression;
 
 import com.nosliw.common.updatename.HAPUpdateName;
 
-public class HAPScriptExpressionScriptVariable {
+public class HAPVariableInScript {
 
 	private String m_variableName; 
 	
-	public HAPScriptExpressionScriptVariable(String name){
+	public HAPVariableInScript(String name){
 		this.m_variableName = name;
 	}
 	

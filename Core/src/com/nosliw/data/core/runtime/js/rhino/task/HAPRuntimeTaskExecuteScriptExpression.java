@@ -15,7 +15,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
+import com.nosliw.data.core.script.expression.HAPScriptExpression;
 
 public class HAPRuntimeTaskExecuteScriptExpression extends HAPRuntimeTaskExecuteScriptExpressionAbstract{
 

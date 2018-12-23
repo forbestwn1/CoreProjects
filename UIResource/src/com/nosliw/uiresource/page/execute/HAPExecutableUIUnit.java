@@ -19,7 +19,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
+import com.nosliw.data.core.script.expression.HAPContextScriptExpressionProcess;
 import com.nosliw.data.core.service.HAPDefinitionServiceInfo;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;

@@ -28,8 +28,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.script.context.HAPParserContext;
-import com.nosliw.data.core.script.expressionscript.HAPDefinitionEmbededScript;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionUtility;
+import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpressionEmbeded;
+import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
 
@@ -320,14 +320,14 @@ public class HAPParserUIResource {
 		List<TextNode> textNodes = ele.textNodes();
 		for(TextNode textNode : textNodes){
 			String text = textNode.text();
-			List<Object> segments = HAPScriptExpressionUtility.discoverEmbededScript(text);
+			List<Object> segments = HAPUtilityScriptExpression.discoverEmbededScript(text);
 			StringBuffer newText = new StringBuffer();
 			for(Object segment : segments){
 				if(segment instanceof String){
 					newText.append((String)segment);
 				}
-				else if(segment instanceof HAPDefinitionEmbededScript){
-					HAPDefinitionEmbededScript scriptExpression = (HAPDefinitionEmbededScript)segment;
+				else if(segment instanceof HAPDefinitionScriptExpressionEmbeded){
+					HAPDefinitionScriptExpressionEmbeded scriptExpression = (HAPDefinitionScriptExpressionEmbeded)segment;
 					HAPDefinitionUIEmbededScriptExpressionInContent expressionContent = new HAPDefinitionUIEmbededScriptExpressionInContent(this.m_idGenerator.createId(), scriptExpression);
 					newText.append("<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+expressionContent.getUIId()+"></span>");
 					resource.addScriptExpressionInContent(expressionContent);

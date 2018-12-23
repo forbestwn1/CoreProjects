@@ -9,8 +9,8 @@ import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionUtility;
+import com.nosliw.data.core.script.expression.HAPScriptExpression;
+import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInAttribute;
@@ -31,7 +31,7 @@ public class HAPProcessorUIConstant {
 		//expression
 		Map<String, HAPDefinitionExpression> expressions = exeUnit.getExpressionContext().getExpressionDefinitions();
 		for(String name : expressions.keySet()) {
-			HAPOperandUtility.updateConstantData(expressions.get(name).getOperand(), HAPScriptExpressionUtility.getConstantData(constantsValue));
+			HAPOperandUtility.updateConstantData(expressions.get(name).getOperand(), HAPUtilityScriptExpression.getConstantData(constantsValue));
 		}
 		
 		//find constant script expression, and calculate the value

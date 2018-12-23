@@ -8,8 +8,8 @@ import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteEmbededExpression;
-import com.nosliw.data.core.script.expressionscript.HAPContextScriptExpressionProcess;
-import com.nosliw.data.core.script.expressionscript.HAPEmbededScriptExpression;
+import com.nosliw.data.core.script.expression.HAPContextScriptExpressionProcess;
+import com.nosliw.data.core.script.expression.HAPEmbededScriptExpression;
 
 public class HAPProcessorContextSolidate {
 

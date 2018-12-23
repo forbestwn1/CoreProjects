@@ -29,11 +29,12 @@ import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSLibrary;
 import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpressionAbstract;
-import com.nosliw.data.core.script.expressionscript.HAPEmbededScriptExpression;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionScriptConstant;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionScriptSegment;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpressionScriptVariable;
+import com.nosliw.data.core.script.expression.HAPEmbededScriptExpression;
+import com.nosliw.data.core.script.expression.HAPExpressionInScriptExpression;
+import com.nosliw.data.core.script.expression.HAPScriptExpression;
+import com.nosliw.data.core.script.expression.HAPConstantInScript;
+import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
+import com.nosliw.data.core.script.expression.HAPVariableInScript;
 
 public class HAPRuntimeJSScriptUtility {
 
@@ -238,10 +239,10 @@ public class HAPRuntimeJSScriptUtility {
 		String variablesDataParmName = "variablesData"; 
 		String scriptExpressionParmName = "scriptExpressionData";
 
-		StringBuffer scriptExpressionFunScript = new StringBuffer(); 
-		List<HAPScriptExpression> scriptExpressions = embedScriptExpression.getScriptExpressionsList();
-		for(HAPScriptExpression scriptExpression : scriptExpressions){
-			scriptExpressionFunScript.append(scriptExpressionParmName +  "["+ scriptExpression.getId()  + "]="  +buildScriptExpressionJSFunction(scriptExpression) + "("+expressionsDataParmName+","+constantsDataParmName+","+variablesDataParmName+");");
+		StringBuffer scriptExpressionFunScript = new StringBuffer();
+		Map<String, HAPScriptExpression> scriptExpressions = embedScriptExpression.getScriptExpressions();
+		for(String expId : scriptExpressions.keySet()) {
+			scriptExpressionFunScript.append(scriptExpressionParmName +  "["+ expId  + "]="  +buildScriptExpressionJSFunction(scriptExpressions.get(expId)) + "("+expressionsDataParmName+","+constantsDataParmName+","+variablesDataParmName+");");
 		}
 		
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "EmbededScriptExpressionFunction.temp");
@@ -264,7 +265,6 @@ public class HAPRuntimeJSScriptUtility {
 		//build javascript function to execute the script
 		String scriptExpressionDataParmName = "scriptExpressionData"; 
 		StringBuffer funScript = new StringBuffer();
-		Map<String, HAPExpression> expressions = new LinkedHashMap<String, HAPExpression>();
 		int i = 0;
 		for(Object ele : embededScriptExp.getElements()){
 			if(i>0)  funScript.append("+");
@@ -272,8 +272,7 @@ public class HAPRuntimeJSScriptUtility {
 				funScript.append("\""+ele+"\"");
 			}
 			else if(ele instanceof HAPScriptExpression){
-				HAPScriptExpression scriptExpression = (HAPScriptExpression)ele;
-				funScript.append(scriptExpressionDataParmName+"[\""+scriptExpression.getId()+"\"]");
+				funScript.append(scriptExpressionDataParmName+"[\""+embededScriptExp.getScriptExpressionIdByIndex(i)+"\"]");
 			}
 			i++;
 		}
@@ -294,29 +293,26 @@ public class HAPRuntimeJSScriptUtility {
 		
 		//build javascript function to execute the script
 		StringBuffer funScript = new StringBuffer();
-		Map<String, HAPExpression> expressions = new LinkedHashMap<String, HAPExpression>();
-		int i = 0;
 		for(Object ele : scriptExpression.getElements()){
 			if(ele instanceof HAPDefinitionExpression){
-				HAPDefinitionExpression expression = (HAPDefinitionExpression)ele;
+				HAPExpressionInScriptExpression expression = (HAPExpressionInScriptExpression)ele;
 				funScript.append(expressionsDataParmName+"[\""+expression.getId()+"\"]");
 			}
-			else if(ele instanceof HAPScriptExpressionScriptSegment){
-				HAPScriptExpressionScriptSegment scriptSegment = (HAPScriptExpressionScriptSegment)ele;
+			else if(ele instanceof HAPScriptInScriptExpression){
+				HAPScriptInScriptExpression scriptSegment = (HAPScriptInScriptExpression)ele;
 				List<Object> scriptSegmentEles = scriptSegment.getElements();
 				for(Object scriptSegmentEle : scriptSegmentEles){
 					if(scriptSegmentEle instanceof String){
 						funScript.append((String)scriptSegmentEle);
 					}
-					else if(scriptSegmentEle instanceof HAPScriptExpressionScriptConstant){
-						funScript.append(constantsDataParmName + "[\"" + ((HAPScriptExpressionScriptConstant)scriptSegmentEle).getConstantName()+"\"]");
+					else if(scriptSegmentEle instanceof HAPConstantInScript){
+						funScript.append(constantsDataParmName + "[\"" + ((HAPConstantInScript)scriptSegmentEle).getConstantName()+"\"]");
 					}
-					else if(scriptSegmentEle instanceof HAPScriptExpressionScriptVariable){
-						funScript.append(variablesDataParmName + "[\"" + ((HAPScriptExpressionScriptVariable)scriptSegmentEle).getVariableName()+"\"]");
+					else if(scriptSegmentEle instanceof HAPVariableInScript){
+						funScript.append(variablesDataParmName + "[\"" + ((HAPVariableInScript)scriptSegmentEle).getVariableName()+"\"]");
 					}
 				}
 			}
-			i++;
 		}
 		
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ScriptExpressionFunction.temp");

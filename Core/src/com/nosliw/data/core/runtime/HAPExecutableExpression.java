@@ -16,23 +16,17 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 public interface HAPExecutableExpression extends HAPSerializable{
 
 	@HAPAttribute
-	public static String ID = "id";
-	
-	@HAPAttribute
 	public static String OPERAND = "operand";
 	
 	@HAPAttribute
 	public static String VARIABLESMATCHERS = "variablesMatchers";
 
-	String getId();
-	
 	//Operand to represent the expression
 	HAPOperandWrapper getOperand();
 
 	Map<String, HAPMatchers> getVariableMatchers();
 
 	public static void buildJsonMap(HAPExecutableExpression obj, Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		jsonMap.put(ID, obj.getId());
 		jsonMap.put(OPERAND, HAPSerializeManager.getInstance().toStringValue(obj.getOperand(), HAPSerializationFormat.JSON));
 		jsonMap.put(VARIABLESMATCHERS, HAPJsonUtility.buildJson(obj.getVariableMatchers(), HAPSerializationFormat.JSON));
 	}

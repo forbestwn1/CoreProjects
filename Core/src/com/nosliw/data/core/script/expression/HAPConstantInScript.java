@@ -1,14 +1,14 @@
-package com.nosliw.data.core.script.expressionscript;
+package com.nosliw.data.core.script.expression;
 
 import com.nosliw.common.updatename.HAPUpdateName;
 
-public class HAPScriptExpressionScriptConstant {
+public class HAPConstantInScript {
 
 	private String m_constantName; 
 
 	private Object m_value;
 	
-	public HAPScriptExpressionScriptConstant(String name){
+	public HAPConstantInScript(String name){
 		this.m_constantName = name;
 	}
 	

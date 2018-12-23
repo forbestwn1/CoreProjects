@@ -8,10 +8,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
-import com.nosliw.data.core.script.expressionscript.HAPEmbededScriptExpression;
-import com.nosliw.data.core.script.expressionscript.HAPScriptExpression;
+import com.nosliw.data.core.script.expression.HAPEmbededScriptExpression;
+import com.nosliw.data.core.script.expression.HAPScriptExpression;
 
 public class HAPUIEmbededScriptExpression extends HAPEmbededScriptExpression{
 

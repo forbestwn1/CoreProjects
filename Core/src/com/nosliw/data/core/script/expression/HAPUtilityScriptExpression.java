@@ -1,4 +1,4 @@
-package com.nosliw.data.core.script.expressionscript;
+package com.nosliw.data.core.script.expression;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -21,7 +21,7 @@ import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.operand.HAPParmInOperationOperand;
 
-public class HAPScriptExpressionUtility {
+public class HAPUtilityScriptExpression {
 
 	public static final String UIEXPRESSION_TOKEN_OPEN = "<%=";
 	public static final String UIEXPRESSION_TOKEN_CLOSE = "%>";
@@ -46,19 +46,17 @@ public class HAPScriptExpressionUtility {
 		
 		if(text==null) return out;
 		
-		int i = 0;
 		int start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
 		while(start != -1){
 			if(start>0)   out.add(text.substring(0, start));
 			int expEnd = text.indexOf(UIEXPRESSION_TOKEN_CLOSE, start);
 			int end = expEnd + UIEXPRESSION_TOKEN_CLOSE.length();
 			String expression = text.substring(start+UIEXPRESSION_TOKEN_OPEN.length(), expEnd);
-			HAPDefinitionEmbededScript uiExpression = new HAPDefinitionEmbededScript(i+"", expression);
+			HAPDefinitionScriptExpressionEmbeded uiExpression = new HAPDefinitionScriptExpressionEmbeded(expression);
 			out.add(uiExpression);
 			//keep searching the rest
 			text=text.substring(end);
 			start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
-			i++;
 		}
 		if(!HAPBasicUtility.isStringEmpty(text)){
 			out.add(text);
@@ -82,11 +80,12 @@ public class HAPScriptExpressionUtility {
 	//convert list of definition elements to executable elements 
 	public static List<Object> toExeEmbedElement(List<Object> eles){
 		List<Object> out = new ArrayList<Object>();
-		for(Object seg : eles) {
+		for(int i=0; i<eles.size(); i++) {
+			Object seg = eles.get(i);
 			if(seg instanceof String)   out.add(seg);
-			else if(seg instanceof HAPDefinitionEmbededScript) {
-				HAPDefinitionEmbededScript scriptSeg = (HAPDefinitionEmbededScript)seg;
-				HAPScriptExpression uiExpression = new HAPScriptExpression(scriptSeg.getId(), scriptSeg.getDefinition());
+			else if(seg instanceof HAPDefinitionScriptExpressionEmbeded) {
+				HAPDefinitionScriptExpressionEmbeded scriptSeg = (HAPDefinitionScriptExpressionEmbeded)seg;
+				HAPScriptExpression uiExpression = new HAPScriptExpression(scriptSeg.getDefinition());
 				out.add(uiExpression);
 			}
 		}
