@@ -68,7 +68,18 @@ var node_basicUtility =
 				}
 			}
 			return true;
+		},
+		
+		stringify : function(value){
+			try{
+				return JSON.stringify(value);
+			}
+			catch(e){
+				return value.toString();
+			}
 		}
+		
+		
 };
 
 //*******************************************   End Node Definition  ************************************** 	

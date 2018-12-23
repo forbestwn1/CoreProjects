@@ -14,6 +14,22 @@ var node_createVariableWrapper;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
+//extended context is context + extra variables
+var node_createExtendedContext = function(context, exVars){
+	var loc_context = context;
+	var loc_exVars = exVars;
+	
+	var loc_out = {
+		findeVariable : function(eleName){
+			var out = loc_context.getContextElement(eleName);
+			if(out==undefined)  out = exVars[eleName];
+			return out;
+		}
+	};
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_EXTENDEDCONTEXT);
+	return loc_out;
+};
+
 /*
  * entity for context based variable description
  * It contains : 
@@ -79,6 +95,12 @@ var node_createContextElementInfo = function(name, data1, data2, adapterInfo, in
 		//input is context + context variable
 		loc_out.context = data1;
 		loc_out.contextVariable = node_createContextVariableInfo(data2);
+	}
+	else if(type==node_CONSTANT.TYPEDOBJECT_TYPE_EXTENDEDCONTEXT){
+		//input is extended context + context variable
+		var contextVarInfo = node_createContextVariableInfo(data2);
+		loc_out.variable = data1.findeVariable(contextVarInfo.name);
+		loc_out.path = contextVarInfo.path;
 	}
 	else if(type==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE){
 		//input is variable
@@ -152,5 +174,6 @@ nosliw.registerSetNodeDataEvent("uidata.variable.createVariableWrapper", functio
 packageObj.createChildNode("createContextVariableInfo", node_createContextVariableInfo); 
 packageObj.createChildNode("createContextElementInfo", node_createContextElementInfo); 
 packageObj.createChildNode("createContextElement", node_createContextElement); 
+packageObj.createChildNode("createExtendedContext", node_createExtendedContext); 
 
 })(packageObj);

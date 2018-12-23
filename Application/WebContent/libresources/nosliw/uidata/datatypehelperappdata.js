@@ -226,6 +226,7 @@ var node_createDataTypeHelperData = function(){
 				return out;
 			}, 
 			
+			//clean up resource in value
 			destroyValue : function(value){},
 			
 			getWrapperType : function(){	return node_CONSTANT.DATA_TYPE_APPDATA;		},

@@ -216,32 +216,4 @@ public class HAPOperandUtility {
 		return varsInfo;
 	}
 
-//	static public Map<String, HAPMatchers> aaa(){
-//		Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
-//		
-//		//merge back, cal variable matchers, update parent variable
-//		for(String varName : varsInfo.keySet()){
-//			HAPVariableInfo varInfo = varsInfo.get(varName);
-//			HAPVariableInfo parentVarInfo = parentVariablesInfo.get(varName);
-//			if(parentVarInfo==null){
-//				parentVarInfo = new HAPVariableInfo();
-//				parentVarInfo.setCriteria(varInfo.getCriteria());
-//				parentVariablesInfo.put(varName, parentVarInfo);
-//			}
-//			else{
-//				if(parentVarInfo.getStatus().equals(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN)){
-//					HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(varInfo.getCriteria(), parentVarInfo.getCriteria());
-//					parentVarInfo.setCriteria(adjustedCriteria);
-//				}
-//			}
-//
-//			//cal var converters
-//			HAPMatchers varMatchers = dataTypeHelper.buildMatchers(parentVarInfo.getCriteria(), varInfo.getCriteria());
-//			matchers.put(varName, varMatchers);
-//		}
-//		
-//		return matchers;
-//		
-//	}
-	
 }

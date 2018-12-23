@@ -29,7 +29,7 @@ var node_RelativeEntityInfo;
  * parm1 : parent wrapper / value
  * path : valid for relative wrapper, path to parent
  * typeHelper : utility methods according to different data type : object data / app data
- * dataType : object data / appdata
+ * dataType : object data / appdata / dynamic
  */
 var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 	
@@ -41,35 +41,35 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 		//every wrapper has a id, it is for debuging purpose
 		loc_out.prv_id = nosliw.runtime.getIdService().generateId();
 		
-		//helper object that depend on data type in wraper
+		//helper object that depend on data type in wrapper 
 		loc_out.prv_typeHelper = typeHelper;
 		
-		//what kind of data this wrapper represent
+		//what kind of data this wrapper represent(object, appdata or dynamic)
 		loc_out.prv_dataType = dataType;
 		
 		//if true, this wrapper is based on root data, otherwise, this wrapper is based on parent wrapper, 
 		loc_out.prv_dataBased = true;
 
 		//for base wrapper, it is root value
-		//for relative wrapper, it is temperory calculated value based on operation on value 
-		loc_out.prv_value = undefined
-
 		//information for relative wrapper : parent, path
 		loc_out.prv_relativeWrapperInfo = undefined;
 		
 		//event and listener for data operation event
-		loc_out.prv_dataOperationEventObject = node_createEventObject();
-		loc_out.prv_lifecycleEventObject = node_createEventObject();
-		loc_out.prv_internalEventObject = node_createEventObject();
-		loc_out.prv_dataChangeEventObject = node_createEventObject();
+		loc_out.prv_lifecycleEventObject = node_createEventObject();		//life cycle
+		loc_out.prv_dataOperationEventObject = node_createEventObject();    //data operation
+		loc_out.prv_internalEventObject = node_createEventObject();			//internal data operation, it does not expose to variable, only expose to child
+		loc_out.prv_dataChangeEventObject = node_createEventObject();		//when either data operation or internal data operation event trigued, data change event is triggued. it is only for variable
+
+		//for relative wrapper, it is temporarily calculated value got during operation on value, screenshot
+		loc_out.prv_value = undefined
 
 		//a list of wrapper operations that should be applied to wrapper
-		//if this list is not empty, that means we only need to apply all operation, then get data
+		//if this list is not empty, that means we only need to apply all operation first, then get data
 		//in this case, isValidData is true
 		loc_out.prv_toBeDoneWrapperOperations = [];
 		
 		//whether the data need to calculated from parent, or sync with parent 
-		//true : data is not dirty
+		//true : data is not dirty, in order to get data, apply prv_toBeDoneWrapperOperations operations to prv_value
 		//false : data is dirty
 		loc_out.prv_isValidData = false;
 
@@ -90,11 +90,16 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 		if(node_getObjectType(parm1)==node_CONSTANT.TYPEDOBJECT_TYPE_WRAPPER){
 			//wrapper based
 			loc_out.prv_dataBased = false;
+			//relative information
 			loc_out.prv_relativeWrapperInfo = new node_RelativeEntityInfo(parm1, path);
+			//inherit data type from parent
 			loc_out.prv_dataType = loc_out.prv_relativeWrapperInfo.parent.getDataType();
 
+			//listen to parent's life cycle event
 			loc_out.prv_relativeWrapperInfo.parent.registerLifecycleEventListener(loc_out.prv_lifecycleEventObject, loc_lifecycleEventProcessor);
+			//listen to parent's data operation event
 			loc_out.prv_relativeWrapperInfo.parent.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, loc_dataOperationEventProcessor, this);
+			//listen to parents's internal event : similar to data operation event, except that it won't expose to variable
 			loc_out.prv_relativeWrapperInfo.parent.registerInternalEventListener(loc_out.prv_internalEventObject, loc_dataOperationEventProcessor, this);
 		}
 		else{
@@ -146,10 +151,10 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 			    	}
 			    }
 			}		
-			loc_out.prv_isLive = false;
 		}
 	};
 	
+	//process lifecycle event in parent
 	var loc_lifecycleEventProcessor = function(event, eventData, requestInfo){
 		if(loc_out.prv_isLive){
 			if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP_BEFORE){
@@ -159,7 +164,18 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 		}
 	};
 	
-	//data operation event processor
+	//
+	var loc_getAdapterPathFromEventElementPath = function(eventData){
+		var elePath;
+		if(eventData.id!=undefined)  elePath = eventData.id;
+		else if(eventData.index!=undefined)  elePath = eventData.index+"";
+		if(loc_out.prv_pathAdapter!=undefined){
+			elePath = loc_out.prv_pathAdapter.toAdapteredPath(elePath);
+		}
+		return elePath;
+	}
+	
+	//process parent data operation event
 	var loc_dataOperationEventProcessor = function(event, eventData, requestInfo){
 		if(loc_out.prv_isLive){
 			if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD){
@@ -195,23 +211,21 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 						events.dataOperation.push(new node_EventInfo(event, eventData));
 					}
 					else if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
+						var elePath = loc_getAdapterPathFromEventElementPath(eventData);  //kkkk
+						eventData.id = elePath;   //kkkk
 						//store data operation event
 						loc_addToBeDoneDataOperation(event, eventData);
 						//inform outside about change
 						events.dataOperation.push(new node_EventInfo(event, eventData));
 					}
 					else if(event==node_CONSTANT.WRAPPER_EVENT_DELETEELEMENT){
-						//store data operation event
-						loc_addToBeDoneDataOperation(event, eventData);
+						var elePath = loc_getAdapterPathFromEventElementPath(eventData);
 						//transform to delete event, delete event is internal only, means it would not inform to user, use inform child 
-						var elePath;
-						if(eventData.id!=undefined)  elePath = eventData.id;
-						else if(eventData.index!=undefined)  elePath = eventData.index+"";
-						if(loc_out.prv_pathAdapter!=undefined){
-							elePath = loc_out.prv_pathAdapter.toAdapteredPath(elePath);
-						}
 						events.internal.push(loc_triggerForwardEvent(node_CONSTANT.WRAPPER_EVENT_DELETE, node_uiDataOperationServiceUtility.createDeleteOperationService(elePath), requestInfo));
 						
+						eventData.id = elePath;   //kkkk
+						//store data operation event
+						loc_addToBeDoneDataOperation(event, eventData);
 						//inform outside about change
 						events.dataOperation.push(new node_EventInfo(event, eventData));
 					}
@@ -274,7 +288,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 		_.each(events.internal, function(eventInfo){   loc_trigueInternalEvent(eventInfo.eventName, eventInfo.eventData, requestInfo);   });
 		_.each(events.dataOperation, function(eventInfo){
 			loc_trigueDataOperationEvent(eventInfo.eventName, eventInfo.eventData, requestInfo);
-			//when delete, then destroy
+			//when delete, then destroy, triggue lifecycle event
 			if(eventInfo.eventName==node_CONSTANT.WRAPPER_EVENT_DELETE)  loc_destroy(requestInfo)
 		});
 		_.each(events.lifecycle, function(eventInfo){   loc_trigueLifecycleEvent(eventInfo.eventName, eventInfo.eventData, requestInfo); });
@@ -414,9 +428,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 	var loc_trigueDataOperationEvent = function(event, eventData, requestInfo){		loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, requestInfo);	};
 	var loc_trigueLifecycleEvent = function(event, eventData, requestInfo){		loc_out.prv_lifecycleEventObject.triggerEvent(event, eventData, requestInfo);	};
 	var loc_trigueInternalEvent = function(event, eventData, requestInfo){		loc_out.prv_internalEventObject.triggerEvent(event, eventData, requestInfo);	};
-	var loc_trigueDataChangeEvent = function(event, eventData, requestInfo){
-		loc_out.prv_dataChangeEventObject.triggerEvent(event, eventData, requestInfo);	
-	};
+	var loc_trigueDataChangeEvent = function(event, eventData, requestInfo){	loc_out.prv_dataChangeEventObject.triggerEvent(event, eventData, requestInfo);	};
 	
 	var loc_triggerForwardEvent = function(event, eventData, requestInfo){
 		var eData = {
@@ -463,8 +475,8 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 	};
 
 	//for dynamic data, listen for event from data 
-	loc_registerListenerForDynamicValue = function(){
-		if(dataType==node_CONSTANT.DATA_TYPE_DYNAMIC){
+	var loc_registerListenerForDynamicValue = function(){
+		if(loc_out.prv_dataType==node_CONSTANT.DATA_TYPE_DYNAMIC){
 			if(loc_out.prv_value!=undefined){
 				loc_out.prv_value.registerListener(loc_out.prv_dataOperationEventObject, function(event, eventData, requestInfo){
 					loc_trigueDataOperationEvent(event, eventData, requestInfo);
@@ -547,8 +559,8 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 						nosliw.logging.info("ID: " + that.prv_id);
 						nosliw.logging.info("Parent: " , ((that.prv_relativeWrapperInfo==undefined)?"":that.prv_relativeWrapperInfo.parent.prv_id));
 						nosliw.logging.info("ParentPath: " , ((that.prv_relativeWrapperInfo==undefined)?"":that.prv_relativeWrapperInfo.path)); 
-						nosliw.logging.info("Request: " , JSON.stringify(operationService));
-						nosliw.logging.info("Result: " , JSON.stringify(data));
+						nosliw.logging.info("Request: " , node_basicUtility.stringify(operationService));
+						nosliw.logging.info("Result: " , node_basicUtility.stringify(data));
 						nosliw.logging.info("***************************************************************");
 						return data;
 					}
@@ -571,7 +583,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 			unregisterInternalEventListener : function(listenerEventObj){		this.prv_internalEventObject.unregister(listenerEventObj);		},
 			unregisterDataChangeEventListener : function(listenerEventObj){		this.prv_dataChangeEventObject.unregister(listenerEventObj);		},
 			
-			createChildWrapper : function(path, request){		return node_wrapperFactory.createWrapper(this, path, this.prv_typeHelper, this.prv_dataType, request);		},
+			createChildWrapper : function(path, request){		return node_wrapperFactory.createWrapper(this, path, request);		},
 			
 			//path conversion using path adapter
 			setPathAdapter : function(pathAdapter){	this.prv_pathAdapter = pathAdapter;		},

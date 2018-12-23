@@ -22,7 +22,7 @@ import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPExecutableActivity;
-import com.nosliw.data.core.runtime.HAPExecuteExpression;
+import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task111.HAPExecutableTask;
 

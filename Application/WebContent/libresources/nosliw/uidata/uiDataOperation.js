@@ -17,7 +17,6 @@ var node_createUIDataOperationRequest = function(context, uiDataOperation, handl
 	var target = uiDataOperation.target;
 	var targetType = node_getObjectType(target);
 	var operationService = uiDataOperation.operationService;
-	var loc_context = context;
 	var request;
 	switch(targetType)
 	{
@@ -31,14 +30,14 @@ var node_createUIDataOperationRequest = function(context, uiDataOperation, handl
 		request = target.getDataOperationRequest(operationService, handlers, requester_parent);
 		break;
 	case node_CONSTANT.TYPEDOBJECT_TYPE_CONTEXTVARIABLE:
-		operationService.parms.path = node_namingConvensionUtility.cascadePath(target.path, operationService.path);
-		request = loc_context.getDataOperationRequest(target.name, operationService, handlers, requester_parent);
+		operationService.parms.path = node_dataUtility.combinePath(target.path, operationService.parms.path);
+		request = context.getDataOperationRequest(target.name, operationService, handlers, requester_parent);
 		break;
 	default : 
 		//target is context element name
 		var targeContextVar = node_createContextVariableInfo(target);
 		operationService.parms.path = node_dataUtility.combinePath(targeContextVar.path, operationService.parms.path);
-		request = loc_context.getDataOperationRequest(targeContextVar.name, operationService, handlers, requester_parent);
+		request = context.getDataOperationRequest(targeContextVar.name, operationService, handlers, requester_parent);
 	}
 	return request;
 };
@@ -92,11 +91,10 @@ var node_uiDataOperationServiceUtility = function(){
 	
 	var loc_out = {
 			createGetOperationData : function(path){
-				var that = this;
 				return {
 					path : path,
 					clone : function(){
-						return that.createGetOperationData(this.path);
+						return loc_out.createGetOperationData(this.path);
 					}
 				};
 			},
@@ -106,13 +104,12 @@ var node_uiDataOperationServiceUtility = function(){
 			},
 			
 			createSetOperationData : function(path, value, dataType){
-				var that = this;
 				return {
 					path : path,
 					value : value,
 					dataType : dataType,
 					clone : function(){
-						return that.createSetOperationData(this.path, node_dataUtility.cloneValue(this.value), dataType);
+						return loc_out.createSetOperationData(this.path, node_dataUtility.cloneValue(this.value), dataType);
 					}
 				};
 			},
@@ -123,14 +120,13 @@ var node_uiDataOperationServiceUtility = function(){
 
 			//index or id or both
 			createAddElementOperationData : function(path, value, index, id){
-				var that = this;
 				return {
 					path : path,              
 					index : index,            	//index in array, mandatory
 					id : id,					//unchanged path from parent, if not provided, then will generate unique one
 					value : value,
 					clone : function(){
-						return that.createAddElementOperationData(this.path, node_dataUtility.cloneValue(this.value), this.index, this.id);
+						return loc_out.createAddElementOperationData(this.path, node_dataUtility.cloneValue(this.value), this.index, this.id);
 					}
 				};
 			},
@@ -141,13 +137,12 @@ var node_uiDataOperationServiceUtility = function(){
 
 			//index or id, cannot both
 			createDeleteElementOperationData : function(path, index, id){
-				var that = this;
 				return {
 					path : path,
 					index : index,
 					id : id,
 					clone : function(){
-						return that.createDeleteElementOperationData(this.path, this.index, this.id);
+						return loc_out.createDeleteElementOperationData(this.path, this.index, this.id);
 					}
 				};
 			},
@@ -157,11 +152,10 @@ var node_uiDataOperationServiceUtility = function(){
 			},
 
 			createDeleteOperationData : function(path){
-				var that = this;
 				return {
 					path : path,
 					clone : function(){
-						return that.createDeleteOperationData(this.path);
+						return loc_out.createDeleteOperationData(this.path);
 					}
 				};
 			},

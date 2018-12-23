@@ -18,13 +18,13 @@ public abstract class HAPRuntimeTaskExecuteExpression extends HAPRuntimeTask{
 	public static String VARIABLESVALUE = "variablesValue";
 
 	
-	private HAPExecuteExpression m_expression;
+	private HAPExecutableExpression m_expression;
 	
 	private Map<String, HAPData> m_variablesValue;
 
 	private Map<String, HAPData> m_referencesValue;
 	
-	public HAPRuntimeTaskExecuteExpression(HAPExecuteExpression expression, Map<String, HAPData> variablesValue, Map<String, HAPData> referencesValue){
+	public HAPRuntimeTaskExecuteExpression(HAPExecutableExpression expression, Map<String, HAPData> variablesValue, Map<String, HAPData> referencesValue){
 		this.m_expression = expression;
 		this.m_variablesValue = variablesValue; 
 		this.m_referencesValue = referencesValue;
@@ -34,7 +34,7 @@ public abstract class HAPRuntimeTaskExecuteExpression extends HAPRuntimeTask{
 
 	public Map<String, HAPData> getReferencesValue(){  return this.m_referencesValue;  }
 	
-	public HAPExecuteExpression getExpression(){return this.m_expression;}
+	public HAPExecutableExpression getExpression(){return this.m_expression;}
 	
 	public HAPData getExpressionDataResult(){ return (HAPData)this.getResult(); }
 

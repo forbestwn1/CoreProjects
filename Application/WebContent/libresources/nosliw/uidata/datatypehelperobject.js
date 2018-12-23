@@ -188,6 +188,7 @@ var node_createDataTypeHelperObject = function(){
 				}, handlers, request);
 			}, 
 			
+			//clean up resource in value
 			destroyValue : function(value){},
 			
 			getWrapperType : function(){	return node_CONSTANT.DATA_TYPE_OBJECT;		},

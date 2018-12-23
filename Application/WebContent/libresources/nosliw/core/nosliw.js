@@ -68,7 +68,7 @@ _.extend(nosliw, function(){
 		},
 		
 		error : function(errorData){
-			console.error(JSON.stringify(errorData));
+			console.error(this.getNodeData("common.utility.basicUtility").stringify(errorData));
 		}
 	};
 	

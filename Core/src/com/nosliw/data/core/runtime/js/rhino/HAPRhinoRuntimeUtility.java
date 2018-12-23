@@ -3,12 +3,9 @@ package com.nosliw.data.core.runtime.js.rhino;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.json.JSONObject;
 import org.mozilla.javascript.Context;
@@ -26,7 +23,7 @@ import com.nosliw.common.value.HAPRhinoDataUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
-import com.nosliw.data.core.runtime.HAPExecuteExpression;
+import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRuntime;
@@ -39,7 +36,7 @@ public class HAPRhinoRuntimeUtility {
 	private static String scriptTempFolder = HAPFileUtility.getScriptExportFolder() + System.currentTimeMillis() + "/";
 
 	public static HAPData executeOperandSync(HAPOperandWrapper operand, Map<String, HAPData> parms, Map<String, HAPData> referenceValues, HAPRuntime runtime) {
-		HAPRuntimeTaskExecuteExpressionRhino exeExpTask = new HAPRuntimeTaskExecuteExpressionRhino(new HAPExecuteExpression() {
+		HAPRuntimeTaskExecuteExpressionRhino exeExpTask = new HAPRuntimeTaskExecuteExpressionRhino(new HAPExecutableExpression() {
 			@Override
 			public String getId() {				return "";			}
 
@@ -53,7 +50,7 @@ public class HAPRhinoRuntimeUtility {
 			public String toStringValue(HAPSerializationFormat format) {
 				Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
 				Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
-				HAPExecuteExpression.buildJsonMap(this, outJsonMap, typeJsonMap);
+				HAPExecutableExpression.buildJsonMap(this, outJsonMap, typeJsonMap);
 				return HAPJsonUtility.buildMapJson(outJsonMap, typeJsonMap);
 			}
 

@@ -9,6 +9,8 @@ var packageObj = library;
 	var node_makeObjectWithType;
 	var node_createContext;
 	var node_createContextElementInfo;
+	var node_createContextElement;
+	var node_createExtendedContext;
 	var node_dataUtility;
 	var node_uiResourceUtility;
 	var node_createEmbededScriptExpressionInContent;
@@ -69,8 +71,10 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		return out;
 	};
 	
-	var loc_createContextForTagResource = function(){
-		var context = node_uiResourceUtility.buildContext(loc_uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], loc_context);
+	//exContext extra context element used when create context for tag resource
+	var loc_createContextForTagResource = function(exContext){
+		if(exContext==undefined)   exContext = loc_context;
+		var context = node_uiResourceUtility.buildContext(loc_uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], exContext);
 		return context;
 	};
 	
@@ -122,11 +126,26 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		createContextElementInfoFromContext : function(name, contextEle, path){	 
 			return node_createContextElementInfo(name, loc_context, node_createContextVariableInfo(contextEle, path));	
 		},
+		
+		//create extended ui tag resource context : 
 		createExtendedContext : function(extendedEleInfos, requestInfo){
-			var context = loc_createContextForTagResource();
+			var extendedVarEles = {};
 			_.each(extendedEleInfos, function(eleInfo, index){
-				context.addContextElement(eleInfo);
+				if(!Array.isArray(eleInfo))			extendedVarEles[eleInfo.name] = node_createContextElement(eleInfo);
+				else{
+					_.each(eleInfo, function(eleInfo){
+						extendedVarEles[eleInfo.name] = node_createContextElement(eleInfo);
+					});
+				}
 			});
+			var extendedContext = node_createExtendedContext(loc_context, extendedVarEles);
+			var context = loc_createContextForTagResource(extendedContext);
+			
+			
+//			var context = loc_createContextForTagResource();
+//			_.each(extendedEleInfos, function(eleInfo, index){
+//				context.addContextElement(eleInfo);
+//			});
 			return context;
 		},
 		
@@ -252,6 +271,8 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_createContext = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextElement", function(){node_createContextElement = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createExtendedContext", function(){node_createExtendedContext = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.utility", function(){node_uiResourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.createEmbededScriptExpressionInContent", function(){node_createEmbededScriptExpressionInContent = this.getData();});

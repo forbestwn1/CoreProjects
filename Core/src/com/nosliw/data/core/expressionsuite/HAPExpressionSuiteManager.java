@@ -8,14 +8,14 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPVariableInfo;
-import com.nosliw.data.core.runtime.HAPExecuteExpression;
+import com.nosliw.data.core.runtime.HAPExecutableExpression;
 
 public class HAPExpressionSuiteManager {
 
 	public HAPExpressionSuiteManager() {
 	}
 	
-	public HAPExecuteExpression compileExpression(
+	public HAPExecutableExpression compileExpression(
 			String id,
 			HAPDefinitionExpression expression, 
 			Map<String, HAPDefinitionExpression> contextExpressionDefinitions, 
@@ -28,7 +28,7 @@ public class HAPExpressionSuiteManager {
 		return HAPExpressionSuiteUtility.compileExpression(id, expression, contextExpressionDefinitions, parentVariablesInfo, contextConstants, expectOutput, configure, context);
 	}
 
-	public HAPExecuteExpression compileExpression(
+	public HAPExecutableExpression compileExpression(
 			String id,
 			HAPDefinitionExpression expression, 
 			Map<String, HAPVariableInfo> parentVariablesInfo, 
@@ -41,7 +41,7 @@ public class HAPExpressionSuiteManager {
 	}
 
 
-	public HAPExecuteExpression compileExpression(
+	public HAPExecutableExpression compileExpression(
 			String id,
 			HAPDefinitionExpression expression, 
 			HAPDefinitionExpressionSuite contextExpressionDefinitionsSuite, 

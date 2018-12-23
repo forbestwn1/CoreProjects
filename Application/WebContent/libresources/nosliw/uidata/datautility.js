@@ -16,10 +16,47 @@ var node_basicUtility;
 var node_utility = function(){
 	
 	return {
+
+		isCyclic : function(original) {
+			  var seenObjects = [];
+			  var seenPaths = [];
+
+			  function detect (obj, path) {
+			    if (obj && typeof obj === 'object') {
+			    	var index = seenObjects.indexOf(obj);
+			      if ( index!== -1 && path.startsWith(seenPaths[index])) {
+			        return true;
+			      }
+			      seenObjects.push(obj);
+			      seenPaths.push(path);
+			      for (var key in obj) {
+			        if (obj.hasOwnProperty(key) && detect(obj[key], path+"."+key)) {
+			        	console.log(original);
+			        	console.log('cycle at ' + path+"."+key);
+			        	console.log('cycle at ' + seenPaths[seenObjects.indexOf(obj[key])]);
+			        	
+			        	
+			          return true;
+			        }
+			      }
+			    }
+			    return false;
+			  }
+
+			  return detect(original, "");
+		},
 		
 		cloneValue : function(value){
 			if(value==undefined)  return undefined;
-			var copy = JSON.parse(JSON.stringify(value));
+			try{
+				var copy = JSON.parse(node_basicUtility.stringify(value));
+			}
+			catch(e){
+//				this.isCyclic(value);
+				var kkkkk = 5555;
+				kkkkk++;
+				copy = value;
+			}
 			return copy;
 		},
 		

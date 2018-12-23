@@ -9,6 +9,7 @@ var node_CONSTANT;
 var node_remoteServiceErrorUtility;
 var node_remoteServiceUtility;
 var node_errorUtility;
+var node_basicUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 
@@ -62,7 +63,7 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 		var remoteRequestData = {};
 //		remoteRequestData[node_COMMONATRIBUTECONSTANT.REQUESTINFO_COMMAND_CLIENTID] = nosliw.getClientId();
 		remoteRequestData[node_COMMONATRIBUTECONSTANT.REQUESTINFO_COMMAND] = loc_setting.getConfigure(node_COMMONATRIBUTECONSTANT.REQUESTINFO_COMMAND);
-		remoteRequestData[node_COMMONATRIBUTECONSTANT.REQUESTINFO_PARMS] = JSON.stringify(serviceTaskRequests);
+		remoteRequestData[node_COMMONATRIBUTECONSTANT.REQUESTINFO_PARMS] = node_basicUtility.stringify(serviceTaskRequests);
 	
 		$.ajax(_.extend({
 			data : remoteRequestData,
@@ -189,7 +190,7 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 		 */
 		addTask : function(task){	
 			loc_syncTaskQueue.push(task);	
-			nosliw.logging.info(loc_moduleName,  task.requestId, "New remote task is added to sync task ", loc_name, task.id, task.service.command, ":", JSON.stringify(task.service.parms));
+			nosliw.logging.info(loc_moduleName,  task.requestId, "New remote task is added to sync task ", loc_name, task.id, task.service.command, ":", node_basicUtility.stringify(task.service.parms));
 //			this.logSyncTask();
 		},
 		
@@ -199,7 +200,7 @@ var node_createRemoteSyncTask = function(name, remoteServiceMan, setting){
 			nosliw.logging.trace(loc_moduleName, loc_name, "tasks", "		");
 			nosliw.logging.trace(loc_moduleName, loc_name, "queue", "		");
 			for(var i in loc_syncTaskQueue){
-				nosliw.logging.trace(loc_moduleName, loc_name, "		", loc_syncTaskQueue[i].requestId, JSON.stringify(loc_syncTaskQueue[i].service));
+				nosliw.logging.trace(loc_moduleName, loc_name, "		", loc_syncTaskQueue[i].requestId, node_basicUtility.stringify(loc_syncTaskQueue[i].service));
 			}
 			nosliw.logging.trace(loc_moduleName, loc_name, "*********************** info end ***********************" );
 		},
@@ -232,6 +233,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("remote.errorUtility", function(){node_remoteServiceErrorUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("remote.utility", function(){node_remoteServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 
 //Register Node by Name

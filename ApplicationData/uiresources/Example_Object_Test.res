@@ -2,9 +2,18 @@
 <html>
 <body>
 
+	<br>
+	Content:<%=?(business.a.aa)?.value + '   6666 ' %>
+	<br>
+	<br>
+	TextInput:<nosliw-textinput data="business.a.aa"/>  
+
 		<nosliw-loop data="business.a.cc" element="ele" index="index">  
 			<br>
-<!--			Index: <%=?(index)?%>  -->
+			Content:<%=?(ele)?.value + '   6666 ' %>
+			<br>
+			Index: <%=?(index)?.value%>
+			<br>
 	</nosliw-loop>
 </body>
 
@@ -47,7 +56,7 @@
 											value: "This is my world 2222!"
 										}
 									],
-									ee : {
+									cc1 : {
 										dataTypeId: "test.array;1.0.0",
 										value: [
 											{

@@ -13,7 +13,7 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 
 //entity that can is runnable within runtime environment
 @HAPEntityWithAttribute(baseName="EXPRESSION")
-public interface HAPExecuteExpression extends HAPSerializable{
+public interface HAPExecutableExpression extends HAPSerializable{
 
 	@HAPAttribute
 	public static String ID = "id";
@@ -31,7 +31,7 @@ public interface HAPExecuteExpression extends HAPSerializable{
 
 	Map<String, HAPMatchers> getVariableMatchers();
 
-	public static void buildJsonMap(HAPExecuteExpression obj, Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+	public static void buildJsonMap(HAPExecutableExpression obj, Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		jsonMap.put(ID, obj.getId());
 		jsonMap.put(OPERAND, HAPSerializeManager.getInstance().toStringValue(obj.getOperand(), HAPSerializationFormat.JSON));
 		jsonMap.put(VARIABLESMATCHERS, HAPJsonUtility.buildJson(obj.getVariableMatchers(), HAPSerializationFormat.JSON));

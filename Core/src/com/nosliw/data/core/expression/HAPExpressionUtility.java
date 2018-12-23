@@ -20,7 +20,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
-import com.nosliw.data.core.runtime.HAPExecuteExpression;
+import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
@@ -63,15 +63,15 @@ public class HAPExpressionUtility {
 		 * @param expression
 		 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
 		 */
-		static public List<HAPResourceInfo> discoverResourceRequirement(List<HAPExecuteExpression> expressions, HAPResourceManagerRoot resourceMan) {
+		static public List<HAPResourceInfo> discoverResourceRequirement(List<HAPExecutableExpression> expressions, HAPResourceManagerRoot resourceMan) {
 			List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
-			for(HAPExecuteExpression expression : expressions){
+			for(HAPExecutableExpression expression : expressions){
 				resourceIds.addAll(discoverResources(expression));
 			}
 			return resourceMan.discoverResources(new ArrayList<HAPResourceId>(resourceIds));
 		}
 
-		static public List<HAPResourceId> discoverResources(HAPExecuteExpression expression){
+		static public List<HAPResourceId> discoverResources(HAPExecutableExpression expression){
 			Set<HAPResourceId> result = new LinkedHashSet<HAPResourceId>();
 			//get converter resource id from var converter in expression 
 			Map<String, HAPMatchers> matchers = expression.getVariableMatchers();
@@ -123,7 +123,7 @@ public class HAPExpressionUtility {
 		 * @param expression
 		 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
 		 */
-		static private List<HAPResourceId> getResourceRequirement(HAPExecuteExpression expression){
+		static private List<HAPResourceId> getResourceRequirement(HAPExecutableExpression expression){
 			Set<HAPResourceId> result = new LinkedHashSet<HAPResourceId>();
 			HAPOperandUtility.processAllOperand(expression.getOperand(), result, new HAPOperandTask(){
 				@Override

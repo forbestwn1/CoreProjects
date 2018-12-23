@@ -413,8 +413,8 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 						nosliw.logging.info("Wrapper: " + (that.prv_wrapper==undefined?"":that.prv_wrapper.prv_id));
 						nosliw.logging.info("Parent: " , ((that.prv_relativeVariableInfo==undefined)?"":that.prv_relativeVariableInfo.parent.prv_id));
 						nosliw.logging.info("ParentPath: " , ((that.prv_relativeVariableInfo==undefined)?"":that.prv_relativeVariableInfo.path)); 
-						nosliw.logging.info("Request: " , JSON.stringify(operationService));
-						nosliw.logging.info("Result: " , JSON.stringify(data));
+						nosliw.logging.info("Request: " , node_basicUtility.stringify(operationService));
+						nosliw.logging.info("Result: " , node_basicUtility.stringify(data));
 						nosliw.logging.info("***************************************************************");
 						return data;
 					}

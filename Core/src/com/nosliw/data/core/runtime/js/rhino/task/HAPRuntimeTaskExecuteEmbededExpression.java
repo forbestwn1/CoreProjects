@@ -8,7 +8,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
-import com.nosliw.data.core.runtime.HAPExecuteExpression;
+import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntime;
@@ -53,9 +53,9 @@ public class HAPRuntimeTaskExecuteEmbededExpression extends HAPRuntimeTaskExecut
 	@Override
 	public Map<String, Object> getScriptConstants(){  return this.m_scriptConstants;  }
 	@Override
-	public Map<String, HAPExecuteExpression> getExpressions(){
-		Map<String, HAPExecuteExpression> out = new LinkedHashMap<String, HAPExecuteExpression>();
-		for(HAPExecuteExpression expression : this.m_embededExpression.getExpressions())	out.put(expression.getId(), expression);
+	public Map<String, HAPExecutableExpression> getExpressions(){
+		Map<String, HAPExecutableExpression> out = new LinkedHashMap<String, HAPExecutableExpression>();
+		for(HAPExecutableExpression expression : this.m_embededExpression.getExpressions())	out.put(expression.getId(), expression);
 		return out;
 	}
 	
@@ -69,7 +69,7 @@ public class HAPRuntimeTaskExecuteEmbededExpression extends HAPRuntimeTaskExecut
 			
 			//prepare resources for expression in the runtime (resource and dependency)
 			//execute expression after load required resources
-			List<HAPExecuteExpression> expressions = new ArrayList(this.m_embededExpression.getExpressions());
+			List<HAPExecutableExpression> expressions = new ArrayList(this.m_embededExpression.getExpressions());
 			List<HAPResourceInfo> resourcesId =  HAPExpressionUtility.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager());
 			HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
 			loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));

@@ -8,7 +8,6 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPMatchers;
@@ -16,10 +15,10 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
-import com.nosliw.data.core.runtime.HAPExecuteExpression;
+import com.nosliw.data.core.runtime.HAPExecutableExpression;
 
 @HAPEntityWithAttribute(baseName="EXPRESSION")
-public class HAPExecuteInSuiteExpression extends HAPSerializableImp implements HAPExecuteExpression{
+public class HAPExecutableExpressionInSuite extends HAPSerializableImp implements HAPExecutableExpression{
 
 	@HAPAttribute
 	public static String VARIABLEINFOS = "variableInfos";
@@ -32,7 +31,7 @@ public class HAPExecuteInSuiteExpression extends HAPSerializableImp implements H
 
 	private Map<String, HAPMatchers> m_varsMatchers;
 	
-	public HAPExecuteInSuiteExpression(String id, HAPOperand operand) {
+	public HAPExecutableExpressionInSuite(String id, HAPOperand operand) {
 		this.m_operand = new HAPOperandWrapper(operand);
 		this.m_id = id;
 		this.m_localVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
@@ -69,7 +68,7 @@ public class HAPExecuteInSuiteExpression extends HAPSerializableImp implements H
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		HAPExecuteExpression.buildJsonMap(this, jsonMap, typeJsonMap);
+		HAPExecutableExpression.buildJsonMap(this, jsonMap, typeJsonMap);
 		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.m_localVarsInfo, HAPSerializationFormat.JSON));
 
 	}

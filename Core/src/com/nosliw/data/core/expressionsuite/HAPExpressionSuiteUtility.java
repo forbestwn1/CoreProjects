@@ -14,11 +14,11 @@ import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
-import com.nosliw.data.core.runtime.HAPExecuteExpression;
+import com.nosliw.data.core.runtime.HAPExecutableExpression;
 
 public class HAPExpressionSuiteUtility {
 
-	public static HAPExecuteExpression compileExpression(
+	public static HAPExecutableExpression compileExpression(
 			String id,
 			HAPDefinitionExpression expression, 
 			Map<String, HAPDefinitionExpression> contextExpressionDefinitions, 
@@ -29,13 +29,17 @@ public class HAPExpressionSuiteUtility {
 			HAPProcessContext context) {
 		
 		HAPOperandWrapper operand = expression.getOperand().cloneWrapper();
+		
+		//expand referenced expression
 		processReferencesInOperand(operand, contextExpressionDefinitions);
 		
-		HAPExecuteInSuiteExpression out = new HAPExecuteInSuiteExpression(id, operand.getOperand());
+		HAPExecutableExpressionInSuite out = new HAPExecutableExpressionInSuite(id, operand.getOperand());
 		
+		//update constant data in expression
 		HAPOperandUtility.updateConstantData(out.getOperand(), contextConstants);
 		
 		if(HAPExpressionProcessConfigureUtil.isDoDiscovery(configure)){
+			//do discovery
 			out.discover(parentVariablesInfo, expectOutput, context);
 		}
 		

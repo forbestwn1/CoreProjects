@@ -20,11 +20,11 @@ import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
-import com.nosliw.data.core.runtime.HAPExecuteExpression;
+import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task111.HAPExecutableTask;
 
-public class HAPExecutableStepExpression extends HAPExecutableStep implements HAPExecuteExpression{
+public class HAPExecutableStepExpression extends HAPExecutableStep implements HAPExecutableExpression{
 
 	//Operand to represent the expression
 	private HAPOperandWrapper m_operand;
@@ -123,7 +123,7 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		HAPExecuteExpression.buildJsonMap(this, jsonMap, typeJsonMap);
+		HAPExecutableExpression.buildJsonMap(this, jsonMap, typeJsonMap);
 	}
 
 }

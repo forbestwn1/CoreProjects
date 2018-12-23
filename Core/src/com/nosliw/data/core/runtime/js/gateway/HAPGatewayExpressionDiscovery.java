@@ -20,7 +20,7 @@ import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.runtime.HAPExecuteExpression;
+import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteExpressionRhino;
@@ -77,7 +77,7 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 			Map<String, HAPData> constants = HAPDataUtility.buildDataWrapperMapFromJson(constantsJson); 
 			
 			HAPProcessContext processContext = new HAPProcessContext();
-			HAPExecuteExpression expression = this.m_expressionSuiteManager.compileExpression(null, expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), processContext);
+			HAPExecutableExpression expression = this.m_expressionSuiteManager.compileExpression(null, expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), processContext);
 			HAPDataTypeCriteria outCriteria = expression.getOperand().getOperand().getOutputCriteria();
 			out = this.createSuccessWithObject(outCriteria.toStringValue(HAPSerializationFormat.LITERATE));
 			break;
@@ -102,7 +102,7 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 			}
 			
 			HAPProcessContext processContext = new HAPProcessContext();
-			HAPExecuteExpression expression = this.m_expressionSuiteManager.compileExpression(null, expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), processContext);
+			HAPExecutableExpression expression = this.m_expressionSuiteManager.compileExpression(null, expressionDef, varsInfo, constants, null, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), processContext);
 			HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(expression, expressionParms, null);
 			HAPServiceData serviceData = this.m_runtime.executeTaskSync(task);
 			if(serviceData.isSuccess()){

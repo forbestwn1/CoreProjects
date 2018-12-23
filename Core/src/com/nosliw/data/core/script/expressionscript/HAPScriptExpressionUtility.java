@@ -96,7 +96,7 @@ public class HAPScriptExpressionUtility {
 	//process variables in expression, 
 	//	for attribute operation a.b.c.d which have responding definition in context, 
 	//			replace attribute operation with one variable operation
-	//  for attribute operation a.b.c.d which have responding defintion a.b.c in context, 
+	//  for attribute operation a.b.c.d which have responding definition a.b.c in context, 
 	//			replace attribute operation with one variable operation(a.b.c) and getChild operation
 	public static void processAttributeOperandInExpression(HAPDefinitionExpression expressionDefinition, final Map<String, HAPVariableInfo> varsInfo){
 		processAttributeOperandInExpressionOperand(expressionDefinition.getOperand(), varsInfo);

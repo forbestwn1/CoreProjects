@@ -89,7 +89,7 @@ var node_requestServiceProcessor = function(){
 			var remoteTask = execute.execute(requestInfo);
 			//whether submit the remoteTask
 			if(remoteTask==undefined){
-//				nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Finish request locally : ", JSON.stringify(requestInfo.getService()));
+//				nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Finish request locally : ", node_basicUtility.stringify(requestInfo.getService()));
 			}
 			else{
 				if(processRemote!=false){

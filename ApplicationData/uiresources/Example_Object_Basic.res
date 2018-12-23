@@ -32,7 +32,7 @@
 		
 
 			<br>
-			Index: <%=?(index)?%>
+			Index: <%=?(index)?.value%>
 			<br>
 			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
 			<br>

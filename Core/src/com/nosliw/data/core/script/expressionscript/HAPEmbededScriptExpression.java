@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.runtime.HAPExecuteExpression;
+import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.script.context.HAPContext;
 
 /**
@@ -120,8 +120,8 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 	
 	public List<HAPScriptExpression> getScriptExpressionsList(){		return new ArrayList(this.m_scriptExpressions.values());	}
 	public Map<String, HAPScriptExpression> getScriptExpressions(){  return this.m_scriptExpressions;  }
-	public List<HAPExecuteExpression> getExpressions(){
-		List<HAPExecuteExpression> out = new ArrayList<HAPExecuteExpression>();
+	public List<HAPExecutableExpression> getExpressions(){
+		List<HAPExecutableExpression> out = new ArrayList<HAPExecutableExpression>();
 		for(HAPScriptExpression scriptExpression : this.getScriptExpressionsList()){
 			out.addAll(scriptExpression.getExpressions().values());
 		}

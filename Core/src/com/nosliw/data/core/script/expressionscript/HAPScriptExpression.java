@@ -17,7 +17,7 @@ import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.operand.HAPOperandUtility;
-import com.nosliw.data.core.runtime.HAPExecuteExpression;
+import com.nosliw.data.core.runtime.HAPExecutableExpression;
 
 /**
  * Represent script expression
@@ -62,7 +62,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 
 	//expressions used in script expression
 	//element index ---- processed expression
-	private Map<String, HAPExecuteExpression> m_expressions;
+	private Map<String, HAPExecutableExpression> m_expressions;
 
 	//when script expression does not contain any variable
 	//it means that the script expression can be executed and get result during expression processing stage
@@ -73,7 +73,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	public HAPScriptExpression(String id, String content){
 		this.m_id = id;
 		this.m_elements = new ArrayList<Object>();
-		this.m_expressions = new LinkedHashMap<String, HAPExecuteExpression>();
+		this.m_expressions = new LinkedHashMap<String, HAPExecutableExpression>();
 		this.m_definition = content;
 		this.parseDefinition();
 		this.m_isConstant = false;
@@ -85,7 +85,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	
 	public String getDefinition(){  return this.m_definition;  } 
 
-	public Map<String, HAPExecuteExpression> getExpressions(){   return this.m_expressions;    }
+	public Map<String, HAPExecutableExpression> getExpressions(){   return this.m_expressions;    }
 	
 	public Set<String> getVariableNames(){ 
 		Set<String> out = new HashSet<String>();
@@ -130,7 +130,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 			HAPScriptExpressionUtility.processAttributeOperandInExpression(expDef, expressionContext.getVariables());
 		}
 
-		this.m_expressions = new LinkedHashMap<String, HAPExecuteExpression>();
+		this.m_expressions = new LinkedHashMap<String, HAPExecutableExpression>();
 		for(int i=0; i<this.m_elements.size(); i++) {
 			Object element = this.m_elements.get(i);
 			if(element instanceof HAPDefinitionExpression){
