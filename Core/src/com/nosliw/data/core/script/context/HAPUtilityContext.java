@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
@@ -32,7 +33,19 @@ public class HAPUtilityContext {
 		}
 		processor.postProcess(contextDefEle, value);
 	}
-	
+
+	public static void processContextDefElementWithPathInfo(HAPContextDefinitionElement contextDefEle, HAPContextDefEleProcessor processor, String path) {
+		if(processor.process(contextDefEle, path)) {
+			if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(contextDefEle.getType())) {
+				HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)contextDefEle;
+				for(String childNodeName : nodeEle.getChildren().keySet()) {
+					processContextDefElement(nodeEle.getChild(childNodeName), processor, HAPNamingConversionUtility.buildPath(path, childNodeName));
+				}
+			}
+		}
+		processor.postProcess(contextDefEle, path);
+	}
+
 	public static HAPContextDefinitionElement getDescendant(HAPContextDefinitionElement contextDefEle, String path) {
 		HAPContextDefinitionElement out = contextDefEle;
 		HAPPath pathObj = new HAPPath(path);
@@ -91,26 +104,26 @@ public class HAPUtilityContext {
 	}
 
 	
-	public static String getContextGroupInheritMode(HAPContextGroup contextGroup) {  
+	public static String getContextGroupInheritMode(HAPInfo info) {  
 		String out = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;
-		if("false".equals(contextGroup.getInfo().getValue(HAPContextGroup.INFO_INHERIT)))  out = HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE;
+		if("false".equals(info.getValue(HAPContextGroup.INFO_INHERIT)))  out = HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE;
 		return out;				
 	}
  
 	
-	public static boolean getContextGroupPopupMode(HAPContextGroup contextGroup) {  
+	public static boolean getContextGroupPopupMode(HAPInfo info) {  
 		boolean out = true;
-		if("false".equals(contextGroup.getInfo().getValue(HAPContextGroup.INFO_POPUP)))  out = false;
+		if("false".equals(info.getValue(HAPContextGroup.INFO_POPUP)))  out = false;
 		return out;				
 	} 
 
-	public static boolean getContextGroupEscalateMode(HAPContextGroup contextGroup) {  
+	public static boolean getContextGroupEscalateMode(HAPInfo info) {  
 		boolean out = false;
-		if("true".equals(contextGroup.getInfo().getValue(HAPContextGroup.INFO_ESCALATE)))  out = true;
+		if("true".equals(info.getValue(HAPContextGroup.INFO_ESCALATE)))  out = true;
 		return out;				
 	} 
 	
-	public static HAPContextFlat buildFlatContext(HAPContextGroup context, Set<String> excludedInfo) {
+	public static HAPContextFlat buildFlatContextFromContextGroup(HAPContextGroup context, Set<String> excludedInfo) {
 		HAPContextFlat out = new HAPContextFlat();
 		
 		List<String> categarys = Arrays.asList(HAPContextGroup.getContextTypesWithPriority());
@@ -125,14 +138,15 @@ public class HAPUtilityContext {
 				//build simple name element
 				HAPContextDefinitionRoot newEle = HAPUtilityContext.createRelativeContextDefinitionRoot(eles.get(name), null, fullName, excludedInfo);
 				out.addElement(name, newEle);
-
-				//
-				out.addNameMapping(name, fullName);
 			}
 		}
 		return out;
 	}
 	
+	
+	public static HAPContextGroup buildContextGroupFromFlatContext(HAPContextFlat flatContext) {
+		
+	}
 	
 	//find all data variables in context 
 	public static Map<String, HAPVariableInfo> discoverDataVariablesInContext(HAPContext context){
@@ -153,7 +167,7 @@ public class HAPUtilityContext {
 		switch(contextDefEle.getType()) {
 		case HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE:
 			HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)contextDefEle;
-			if(relativeEle.getDefinition()!=null)		discoverCriteriaInContextNode(path, relativeEle.getDefinition(), criterias);
+			if(relativeEle.getDefinition()!=null)		discoverCriteriaInContextNode(path, relativeEle.getSolidContextDefinitionElement(), criterias);
 			break;
 		case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
 			HAPContextDefinitionLeafData dataEle = (HAPContextDefinitionLeafData)contextDefEle;

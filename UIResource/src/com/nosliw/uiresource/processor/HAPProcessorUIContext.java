@@ -70,7 +70,7 @@ public class HAPProcessorUIContext {
 	
 	private static void processEscalate(HAPExecutableUIUnitTag exeUITag, HAPUITagManager uiTagMan, Set<String> inheritanceExcludedInfo) {
 		//context
-		if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeUITag.getUIUnitTagDefinition().getTagName())).getContext())) {
+		if(HAPUtilityContext.getContextGroupEscalateMode(uiTagMan.getUITagDefinition(new HAPUITagId(exeUITag.getUIUnitTagDefinition().getTagName())).getContext().getInfo())) {
 			Set<String> categarys = new HashSet<String>();
 			categarys.add(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 			Map<String, String> contextMapping = HAPNamingConversionUtility.parsePropertyValuePairs(exeUITag.getAttributes().get(HAPConstant.UITAG_PARM_CONTEXT));
@@ -206,11 +206,11 @@ public class HAPProcessorUIContext {
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
 			//flat it
 			HAPExecutableUIUnitTag uiTagExe = (HAPExecutableUIUnitTag)uiExe;
-			uiTagExe.setFlatTagContext(HAPUtilityContext.buildFlatContext(uiTagExe.getTagContext(), inheritanceExcludedInfo));
+			uiTagExe.setFlatTagContext(HAPUtilityContext.buildFlatContextFromContextGroup(uiTagExe.getTagContext(), inheritanceExcludedInfo));
 		}
 		
 		//build flat context
-		HAPContextFlat flatContext = HAPUtilityContext.buildFlatContext(uiExe.getContext(), inheritanceExcludedInfo);
+		HAPContextFlat flatContext = HAPUtilityContext.buildFlatContextFromContextGroup(uiExe.getContext(), inheritanceExcludedInfo);
 		uiExe.setFlatContext(flatContext);
 
 		//constants
@@ -247,7 +247,7 @@ public class HAPProcessorUIContext {
 		}
 		
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
-		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(tagDefinitionContext);
+		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(tagDefinitionContext.getInfo());
 		HAPContextGroup out = HAPProcessorContext.process1(tagContext, parentContext, configure, contextProcessorEnv);
 		return out;
 	}

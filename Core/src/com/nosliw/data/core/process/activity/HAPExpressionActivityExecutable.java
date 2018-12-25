@@ -28,14 +28,21 @@ import com.nosliw.data.core.task111.HAPExecutableTask;
 
 public class HAPExpressionActivityExecutable extends HAPExecutableActivity{
 
+	private Map<String, Object> m_constants;
+
+	
 	public HAPExpressionActivityExecutable(String id, HAPDefinitionActivity activityDef) {
 		super(id, activityDef);
+		this.m_constants = new LinkedHashMap<String, Object>();
 	}
 
 	@Override
 	public String getType() {		return this.getActivityDefinition().getType();		}
 
-
+	public void setConstants(Map<String, Object> constants) {
+		this.m_constants.clear();
+		this.m_constants.putAll(constants);   
+	}
 	
 	
 	

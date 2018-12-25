@@ -8,14 +8,16 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 
+//flat context is 
 @HAPEntityWithAttribute
 public class HAPContextFlat extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String CONTEXT = "context";
 
-	//used to find related name easily
+	//used to map from local (abc) to global name (public_abc)
 	@HAPAttribute
 	public static final String NAMEMAPPING = "nameMapping";
 	
@@ -31,7 +33,18 @@ public class HAPContextFlat extends HAPSerializableImp{
 	
 	public HAPContext getContext() {  return this.m_context;  }
 	
-	public void addElement(String name, HAPContextDefinitionRoot rootEle){		this.m_context.addElement(name, rootEle);	}
+	public void addElement(String name, HAPContextDefinitionRoot rootEle){		
+		this.m_context.addElement(name, rootEle);	
+		
+		HAPContextDefinitionElement contextDefEle = rootEle.getDefinition();
+		if(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE.equals(contextDefEle.getType())) {
+			HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)contextDefEle;
+			if(!relativeEle.isRelativeToParent()) {
+				//for element that relative to another element in this flat context, add mapping for it
+				this.addNameMapping(name, relativeEle.getPath().getRootElementId().getName());
+			}
+		}
+	}
 	
 	public void addNameMapping(String name, String nameMapping) {		this.m_nameMapping.put(name, nameMapping);	}
 	
@@ -44,6 +57,10 @@ public class HAPContextFlat extends HAPSerializableImp{
 		return out;
 	}
 
+	public HAPContextFlat cloneContextFlat() {
+		return null;
+	}
+	
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -51,5 +68,4 @@ public class HAPContextFlat extends HAPSerializableImp{
 		jsonMap.put(NAMEMAPPING, HAPJsonUtility.buildMapJson(this.m_nameMapping));
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
 	}
-	
 }

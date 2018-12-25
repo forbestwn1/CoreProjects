@@ -19,26 +19,60 @@ import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.script.context.HAPContext;
 
 @HAPEntityWithAttribute
 public class HAPExecutableProcess extends HAPSerializableImp{
 
 	public static final String INFO_LOCALVRIABLE = "localVariable";
 	
-	private HAPDefinitionProcess m_taskDefinition;
+	//process definition
+	private HAPDefinitionProcess m_processDefinition;
 	
 	//unique in system
 	private String m_id;
 	
-	private String m_domain;  //?? intermediate value
+	//all activity
+	private Map<String, HAPExecutableActivity> m_activities;
+	
+	//activity to start with in process
+	private String m_startActivityId;
+	
+	//input variables
+	private HAPContext m_input;  
+	
+	//all possible result
+	private Map<String, HAPDefinitionDataAssociationGroup> m_results;
+	
+	
+	public HAPExecutableProcess(HAPDefinitionProcess definition, String id) {
+		this.m_activities = new LinkedHashMap<String, HAPExecutableActivity>();
+		this.m_results = new LinkedHashMap<String, HAPDefinitionDataAssociationGroup>();
+		this.m_processDefinition = definition;
+		this.m_id = id;
+	}
 
+	public void addActivity(String activityId, HAPExecutableActivity activity) {  
+		this.m_activities.put(activityId, activity);
+	}
+	
+	public void setStartActivityId(String id) {   this.m_startActivityId = id;   }
+	
+	
+	
+	
+	
+	
 	//referenced task
 	private Map<String, HAPExecutableProcess> m_executeReferences;
 	
-	private List<HAPExecutableActivity> m_steps;
+	
+	
+	
+	
 	private Map<String, HAPExecutableActivity> m_stepsByName;
 
-	//variable info defined for task
+	//public variable info defined for task
 	private Map<String, HAPVariableInfo> m_varsInfo;
 
 	
@@ -50,7 +84,7 @@ public class HAPExecutableProcess extends HAPSerializableImp{
 	// store all the matchers from variables info to variables defined in task
 	private Map<String, HAPMatchers> m_varsMatchers;
 	
-	public HAPExecutableProcess(HAPDefinitionProcess taskDef, String domain) {
+//	public HAPExecutableProcess(HAPDefinitionProcess taskDef, String domain) {
 //		this.m_taskDefinition = taskDef;
 //		this.m_domain = domain;
 //		this.m_steps = new ArrayList<HAPExecutableStep>();
@@ -64,12 +98,14 @@ public class HAPExecutableProcess extends HAPSerializableImp{
 //		for(String refName : taskDef.getReferences().keySet()) {
 //			this.m_referencesInfo.put(refName, taskDef.getReferences().get(refName).clone());
 //		}
-	}
+//	}
 	
 	public void setId(String id) {  this.m_id = id;   }
 	
 	public void addReferencedExecute(String refName, HAPExecutableProcess execute) {	this.m_executeReferences.put(refName, execute);	}
 	public Map<String, HAPExecutableProcess> getReferencedExecute(){  return this.m_executeReferences;    }
+
+
 	
 	public void addStep(HAPExecutableActivity step) {  
 		this.m_steps.add(step);

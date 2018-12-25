@@ -27,14 +27,11 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 	@Override
 	public String getType() {  return HAPConstant.EXPRESSIONTASK_STEPTYPE_EXPRESSION;	}
 	
-	public String getExpression(){  return this.m_expression.getExpression();    }
+	
+	public HAPScriptExpression getExpression(){  return this.m_expression;    }
 	private void setExpression(String expression) {	this.m_expression = new HAPScriptExpression(expression);	}
 
-	public HAPOperandWrapper getOperand() {  return this.m_expression.getOperand();  }
-
 	public Set<String> getVariableNames() {	return this.m_expression.getVariableNames();	}
-
-	public Set<String> getReferenceNames() {  return this.m_expression.getReferenceNames(); }
 
 	@Override
 	protected boolean buildObjectByJson(Object json){

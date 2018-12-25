@@ -49,7 +49,7 @@ var node_createVariable = function(data1, data2, adapterInfo, requestInfo){
 /**
  * new variable
  * input model : 
- * 		1. parent variable + path from parent
+ *		1. parent variable + path from parent
  *      2. data + undefined
  *      3. value + value type
  */

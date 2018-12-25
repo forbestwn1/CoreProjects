@@ -42,8 +42,32 @@ public class HAPContext extends HAPSerializableImp{
 		}
 	}
 
+	//find all constants in context, including constants defined in leaf
 	public Map<String, Object> getConstantValue(){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
+
+		for(String name : this.m_elements.keySet()) {
+			HAPContextDefinitionRoot contextRoot = this.getElement(name);
+			HAPUtilityContext.processContextDefElementWithPathInfo(contextRoot.getDefinition(), new HAPContextDefEleProcessor() {
+				@Override
+				public boolean process(HAPContextDefinitionElement ele, Object path) {
+					if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT)) {
+						HAPContextDefinitionLeafConstant constantEle = (HAPContextDefinitionLeafConstant)ele;
+						Object value = constantEle.getDataValue();
+						if(value==null)   value = constantEle.getValue();
+						out.put((String)path, value);
+					}
+					return true;
+				}
+
+				@Override
+				public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
+					return true;
+				}
+			}, name);
+		}
+
+		
 		for(String name : this.m_elements.keySet()) {
 			HAPContextDefinitionRoot contextRoot = this.getElement(name);
 			if(contextRoot.isConstant()) {
@@ -56,6 +80,7 @@ public class HAPContext extends HAPSerializableImp{
 		return out;
 	}
 	
+	//build another context which only include variable node in current context
 	public HAPContext getVariableContext() {
 		HAPContext out = new HAPContext();
 		for(String name : this.m_elements.keySet()) {

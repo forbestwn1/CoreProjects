@@ -27,6 +27,10 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	public HAPDefinitionActivityNormal() {
 		this.m_results = new LinkedHashMap<String, HAPResultActivityNormal>();
 	}
+	
+	public HAPDefinitionDataAssociationGroup getInput() {  return this.m_input;   }
+	
+	public Map<String, HAPResultActivityNormal> getResults(){   return this.m_results;  }
 
 	@Override
 	protected boolean buildObjectByJson(Object json){

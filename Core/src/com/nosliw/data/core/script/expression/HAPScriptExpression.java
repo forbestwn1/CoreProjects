@@ -72,6 +72,11 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		this.m_isConstant = false;
 	}
 
+	public boolean isDataExpression() {
+		if(this.m_elements.size()==1 && this.m_elements.get(0) instanceof HAPExpressionInScriptExpression) return true;
+		return false;
+	}
+	
 	public void updateExpressionId(HAPUpdateName update) {
 		for(Object ele : this.m_elements){
 			if(ele instanceof HAPExpressionInScriptExpression){
@@ -87,7 +92,6 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		this.m_expressions.clear();
 		this.m_expressions.putAll(expressions);
 	}
-	
 	
 	public List<Object> getElements(){  return this.m_elements;   }
 	
@@ -109,7 +113,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		}
 		return out;
 	}
-	
+
 	public boolean isConstant(){  return this.m_isConstant;  }
 	public Object getValue(){  return this.m_value;  }
 	public void setValue(Object value){  
@@ -148,7 +152,7 @@ public class HAPScriptExpression extends HAPSerializableImp{
 			}
 		}
 	}
-	
+	 
 	//parse definition to get segments
 	private void parseDefinition(){
 		String content = this.m_definition;

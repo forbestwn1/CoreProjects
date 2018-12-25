@@ -55,7 +55,7 @@ public class HAPProcessorEscalate {
 			HAPContextGroup grandParent = parentContextGroup.getParent();
 			boolean isEnd = false;
 			if(grandParent==null)   isEnd = true;
-			else  isEnd = !HAPUtilityContext.getContextGroupPopupMode(parentContextGroup);
+			else  isEnd = !HAPUtilityContext.getContextGroupPopupMode(parentContextGroup.getInfo());
 
 			//not find
 			if(isEnd){
