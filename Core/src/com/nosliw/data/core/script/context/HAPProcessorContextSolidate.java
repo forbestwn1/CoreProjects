@@ -8,7 +8,9 @@ import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteEmbededExpression;
-import com.nosliw.data.core.script.expression.HAPContextScriptExpressionProcess;
+import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
+import com.nosliw.data.core.script.expression.HAPProcessorScriptExpression;
+import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpression;
 import com.nosliw.data.core.script.expression.HAPEmbededScriptExpression;
 
 public class HAPProcessorContextSolidate {
@@ -55,16 +57,16 @@ public class HAPProcessorContextSolidate {
 	
 	//evaluate embeded script expression
 	public static String getSolidName(String name, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv){
-		HAPEmbededScriptExpression se = new HAPEmbededScriptExpression(name);
-		if(se.isString())  return name;
+		HAPDefinitionEmbededScriptExpression embededScriptExpDef = new HAPDefinitionEmbededScriptExpression(name);
+		if(embededScriptExpDef.isString())  return name;
 		else {
-			HAPContextScriptExpressionProcess expProcessContext = new HAPContextScriptExpressionProcess();
+			HAPProcessContextScriptExpression expProcessContext = new HAPProcessContextScriptExpression();
 			for(String constantName : constants.keySet()) {
 				HAPDataWrapper constantData = HAPDataUtility.buildDataWrapperFromObject(constants.get(constantName));
 				if(constantData!=null)   expProcessContext.addConstant(constantName, constantData);
 			}
-			se.processExpressions(expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessorEnv.expressionManager);
-			HAPRuntimeTaskExecuteEmbededExpression task = new HAPRuntimeTaskExecuteEmbededExpression(se, null, constants);
+			HAPEmbededScriptExpression embededScriptExp = HAPProcessorScriptExpression.processEmbededScriptExpression(embededScriptExpDef, expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessorEnv.expressionManager, contextProcessorEnv.runtime);
+			HAPRuntimeTaskExecuteEmbededExpression task = new HAPRuntimeTaskExecuteEmbededExpression(embededScriptExp, null, constants);
 			HAPServiceData serviceData = contextProcessorEnv.runtime.executeTaskSync(task);
 			if(serviceData.isSuccess())   return (String)serviceData.getData();
 			else{

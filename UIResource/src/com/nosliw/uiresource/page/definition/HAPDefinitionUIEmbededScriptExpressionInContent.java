@@ -1,12 +1,10 @@
 package com.nosliw.uiresource.page.definition;
 
-import java.util.List;
-
-import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpressionEmbeded;
+import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
 
 public class HAPDefinitionUIEmbededScriptExpressionInContent extends HAPDefinitionUIEmbededScriptExpression{
 
-	public HAPDefinitionUIEmbededScriptExpressionInContent(String uiId, HAPDefinitionScriptExpressionEmbeded scriptExpression) {
+	public HAPDefinitionUIEmbededScriptExpressionInContent(String uiId, HAPDefinitionScriptExpression scriptExpression) {
 		super(uiId, scriptExpression);
 	}
 
@@ -14,8 +12,4 @@ public class HAPDefinitionUIEmbededScriptExpressionInContent extends HAPDefiniti
 		super(uiId, content);
 	}
 	
-	public HAPDefinitionUIEmbededScriptExpressionInContent(String uiId, List<Object> elements) {
-		super(uiId, elements);
-	}
-
 }

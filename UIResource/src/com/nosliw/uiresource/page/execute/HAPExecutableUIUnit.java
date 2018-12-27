@@ -16,10 +16,9 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.expression.HAPContextScriptExpressionProcess;
+import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
 import com.nosliw.data.core.service.HAPDefinitionServiceInfo;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
@@ -77,7 +76,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	private HAPContextGroupInUIResource m_context;
 	private HAPContextFlat m_flatContext;
 	
-	private Map<String, Object> m_constants;
+//	private Map<String, Object> m_constants;
 	
 	//store all the constant attribute for this domain
 	//for customer tag, they are the tag's attribute
@@ -85,7 +84,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	private Map<String, String> m_attributes;
 	
 	//expression unit
-	private HAPContextScriptExpressionProcess m_expressionContext;
+	private HAPProcessContextScriptExpression m_scriptExpressionContext;
 	
 	//all the customer tag within the domain
 	private Map<String, HAPExecutableUIUnitTag> m_uiTags; 
@@ -109,11 +108,11 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 		this.m_scriptExpressionsInContent = new HashSet<HAPUIEmbededScriptExpressionInContent>();
 		this.m_scriptExpressionsInAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
-		this.m_expressionContext = new HAPContextScriptExpressionProcess();
+		this.m_scriptExpressionContext = new HAPProcessContextScriptExpression();
 		this.m_uiTags = new LinkedHashMap<String, HAPExecutableUIUnitTag>();
 		this.m_context = new HAPContextGroupInUIResource(this);
 		this.m_attributes = new LinkedHashMap<String, String>();
-		this.m_constants = new LinkedHashMap<String, Object>();
+//		this.m_constants = new LinkedHashMap<String, Object>();
 		
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 		this.m_commandsDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
@@ -144,21 +143,16 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 		else return new HAPContextFlat();
 	}
 	
-	public Map<String, Object> getConstantsValue(){   return this.m_constants;    }
-	public void addConstantValue(String name, Object value) {
-		this.m_constants.put(name, value);
-		if(value instanceof HAPData) {
-			this.m_expressionContext.addConstant(name, (HAPData)value);
-		}
-	}
+	public Map<String, Object> getConstantsValue(){   return this.m_scriptExpressionContext.getConstants();    }
+	public void addConstantValue(String name, Object value) {		this.m_scriptExpressionContext.addConstant(name, value);	}
 
 	public Map<String, String> getAttributes(){   return this.m_attributes;    }
 	public void addAttribute(String name, String value) {   this.m_attributes.put(name, value);   }
 
 	public HAPDefinitionUIUnit getUIUnitDefinition() {	return this.m_uiUnitDefinition;	}
 	
-	public HAPContextScriptExpressionProcess getExpressionContext(){   return this.m_expressionContext;   }
-	public void setExpressionContext(HAPContextScriptExpressionProcess context){  this.m_expressionContext = context;   }
+	public HAPProcessContextScriptExpression getExpressionContext(){   return this.m_scriptExpressionContext;   }
+	public void setExpressionContext(HAPProcessContextScriptExpression context){  this.m_scriptExpressionContext = context;   }
 
 	public Collection<HAPExecutableUIUnitTag> getUITags(){return this.m_uiTags.values();} 
 	public HAPExecutableUIUnitTag getUITag(String id){return this.m_uiTags.get(id);} 
@@ -236,7 +230,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 		htmlContent = htmlContent.replaceAll("(\\r|\\n)", "");
 		jsonMap.put(HTML, htmlContent);
 		
-		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_constants, HAPSerializationFormat.JSON));
+		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_scriptExpressionContext.getConstants(), HAPSerializationFormat.JSON));
 	
 		jsonMap.put(EVENTS, HAPJsonUtility.buildJson(this.m_eventsDefinition, HAPSerializationFormat.JSON));
 		jsonMap.put(COMMANDS, HAPJsonUtility.buildJson(this.m_commandsDefinition, HAPSerializationFormat.JSON));

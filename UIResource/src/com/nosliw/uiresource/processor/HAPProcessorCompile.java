@@ -3,7 +3,6 @@ package com.nosliw.uiresource.processor;
 import java.util.Map;
 
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
@@ -21,15 +20,15 @@ public class HAPProcessorCompile {
 		
 		//embeded script in content
 		for(HAPDefinitionUIEmbededScriptExpressionInContent embededContent : uiUnitDef.getScriptExpressionsInContent()) {
-			exeUnit.addScriptExpressionsInContent(new HAPUIEmbededScriptExpressionInContent(embededContent.getUIId(), HAPUtilityScriptExpression.toExeEmbedElement(embededContent.getElements())));
+			exeUnit.addScriptExpressionsInContent(new HAPUIEmbededScriptExpressionInContent(embededContent));
 		}
 		//embeded script in tag attribute 
 		for(HAPDefinitionUIEmbededScriptExpressionInAttribute embededAttribute : uiUnitDef.getScriptExpressionsInAttribute()) {
-			exeUnit.addScriptExpressionsInAttribute(new HAPUIEmbededScriptExpressionInAttribute(embededAttribute.getAttribute(), embededAttribute.getUIId(), HAPUtilityScriptExpression.toExeEmbedElement(embededAttribute.getElements())));
+			exeUnit.addScriptExpressionsInAttribute(new HAPUIEmbededScriptExpressionInAttribute(embededAttribute));
 		}
 		//embeded script in custom tag attribute
 		for(HAPDefinitionUIEmbededScriptExpressionInAttribute embededAttribute : uiUnitDef.getScriptExpressionsInTagAttribute()) {
-			exeUnit.addScriptExpressionsInTagAttribute(new HAPUIEmbededScriptExpressionInAttribute(embededAttribute.getAttribute(), embededAttribute.getUIId(), HAPUtilityScriptExpression.toExeEmbedElement(embededAttribute.getElements())));
+			exeUnit.addScriptExpressionsInTagAttribute(new HAPUIEmbededScriptExpressionInAttribute(embededAttribute));
 		}
 		
 		//attribute

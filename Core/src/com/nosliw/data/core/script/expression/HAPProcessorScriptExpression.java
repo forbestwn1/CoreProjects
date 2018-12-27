@@ -1,0 +1,77 @@
+package com.nosliw.data.core.script.expression;
+
+import java.util.Map;
+
+import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.data.core.expression.HAPDefinitionExpression;
+import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
+import com.nosliw.data.core.operand.HAPOperandUtility;
+import com.nosliw.data.core.runtime.HAPExecutableExpression;
+import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpression;
+
+public class HAPProcessorScriptExpression {
+
+	public static HAPScriptExpression processScriptExpression(HAPDefinitionScriptExpression scriptExpressionDefinition, HAPProcessContextScriptExpression expressionContext, Map<String, String> configure, HAPExpressionSuiteManager expressionManager, HAPRuntime runtime) {
+		HAPScriptExpression out = new HAPScriptExpression(scriptExpressionDefinition);
+		processScriptExpression(out, expressionContext, configure, expressionManager, runtime);
+		return out;
+	}
+	
+	public static void processScriptExpression(HAPScriptExpression scriptExpressionExe ,HAPProcessContextScriptExpression expressionContext, Map<String, String> configure, HAPExpressionSuiteManager expressionManager, HAPRuntime runtime) {
+		HAPDefinitionScriptExpression scriptExpressionDefinition = scriptExpressionExe.getDefinition();
+		for(int i=0; i<scriptExpressionDefinition.getElements().size(); i++) {
+			Object element = scriptExpressionDefinition.getElements().get(i);
+			if(element instanceof HAPDefinitionExpression){
+				//data expression element
+				HAPDefinitionExpression expEle = ((HAPDefinitionExpression)element).cloneExpression();
+				
+				//preprocess attributes operand in expressions, some attributes operand can be combine into one variable operand
+				HAPUtilityScriptExpression.processAttributeOperandInExpression(expEle, expressionContext.getDataVariables());
+
+				//update with data constant
+				HAPOperandUtility.updateConstantData(expEle.getOperand(), expressionContext.getDataConstants());
+				
+				//process expression
+				HAPProcessContext context = new HAPProcessContext();
+				HAPExecutableExpression exeExpression = expressionManager.compileExpression(expEle, expressionContext.getExpressionDefinitionSuite(), null, configure, context);
+				scriptExpressionExe.addElement(exeExpression);
+			}
+			else if(element instanceof HAPScriptInScriptExpression) {
+				//script element
+				HAPScriptInScriptExpression scriptEle = ((HAPScriptInScriptExpression)element).cloneScriptInScriptExpression();
+				
+				//update with constant value
+				scriptEle.updateConstantValue(expressionContext.getConstants());
+				
+				scriptExpressionExe.addElement(scriptEle);
+			}
+		}
+
+		if(scriptExpressionExe.getVariableNames().isEmpty()){
+			//if script expression has no variable in it, then we can calculate its value
+			//execute script expression
+			HAPRuntimeTaskExecuteScriptExpression task = new HAPRuntimeTaskExecuteScriptExpression(scriptExpressionExe, null, expressionContext.getConstants());
+			HAPServiceData serviceData = runtime.executeTaskSync(task);
+			scriptExpressionExe.setValue(serviceData.getData());
+		}
+	}
+	
+	public static HAPEmbededScriptExpression processEmbededScriptExpression(HAPDefinitionEmbededScriptExpression embededScriptExpressionDefinition, HAPProcessContextScriptExpression expressionContext, Map<String, String> configure, HAPExpressionSuiteManager expressionManager, HAPRuntime runtime) {
+		HAPEmbededScriptExpression out = new HAPEmbededScriptExpression(embededScriptExpressionDefinition);
+		processEmbededScriptExpression(out, expressionContext, configure, expressionManager, runtime);		
+		return out;
+	}
+
+	public static void processEmbededScriptExpression(HAPEmbededScriptExpression embededScriptExpressionDefinitionExe, HAPProcessContextScriptExpression expressionContext, Map<String, String> configure, HAPExpressionSuiteManager expressionManager, HAPRuntime runtime) {
+		HAPDefinitionEmbededScriptExpression embededScriptExpressionDefinition = embededScriptExpressionDefinitionExe.getDefinition();
+		for(Object ele : embededScriptExpressionDefinition.getElements()) {
+			if(ele instanceof String)   embededScriptExpressionDefinitionExe.addElement(ele);
+			else if(ele instanceof HAPDefinitionScriptExpression) {
+				HAPScriptExpression scriptExpression = processScriptExpression((HAPDefinitionScriptExpression)ele, expressionContext, configure, expressionManager, runtime);
+				embededScriptExpressionDefinitionExe.addElement(scriptExpression);
+			}
+		}
+	}
+}

@@ -26,16 +26,29 @@ public class HAPScriptInScriptExpression implements HAPEntityWithName{
 	private List<Object> m_elements;
 
 	//define the segment parsing infor
-	private Object[][] m_definitions = {
+	private static final Object[][] m_definitions = {
 			{"&(", ")&", HAPConstantInScript.class}, 
 			{"?(", ")?", HAPVariableInScript.class}
 	};
 	
 
 	public HAPScriptInScriptExpression(String script){
+		
+		if(script.contains("nosliwAttribute_data")) {
+			int kkkk = 555;
+			kkkk++;
+		}
+		
 		this.m_elements = new ArrayList<Object>();
 		this.m_orignalScript = script;
 		this.processSegments();
+		
+		if(this.m_elements.size()==2) {
+			if(this.m_elements.get(0) instanceof HAPConstantInScript && this.m_elements.get(1) instanceof HAPConstantInScript) {
+				int kkkk = 555;
+				kkkk++;
+			}
+		}
 	}
 	
 	public List<Object> getElements(){	return this.m_elements;	}
@@ -106,6 +119,11 @@ public class HAPScriptInScriptExpression implements HAPEntityWithName{
 			}
 		}
 		this.m_elements = newEles;
+	}
+	
+	public HAPScriptInScriptExpression cloneScriptInScriptExpression() {
+		HAPScriptInScriptExpression out = new HAPScriptInScriptExpression(this.m_orignalScript);
+		return out;
 	}
 	
 	private void processSegments(){

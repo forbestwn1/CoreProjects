@@ -1,23 +1,14 @@
 package com.nosliw.uiresource.page.execute;
 
-import java.util.List;
-
-import com.nosliw.data.core.script.expression.HAPScriptExpression;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInContent;
 
 /*
  * class for script expression part in html content
  */
 public class HAPUIEmbededScriptExpressionInContent extends HAPUIEmbededScriptExpression{
 
-	public HAPUIEmbededScriptExpressionInContent(String uiId, HAPScriptExpression scriptExpression){
-		super(uiId, scriptExpression);
+	public HAPUIEmbededScriptExpressionInContent(HAPDefinitionUIEmbededScriptExpressionInContent uiEmbededScriptExpressionContent){
+		super(uiEmbededScriptExpressionContent);
 	}
 
-	public HAPUIEmbededScriptExpressionInContent(String uiId, List<Object> elements){
-		super(uiId, elements);
-	}
-	
-	public HAPUIEmbededScriptExpressionInContent(String uiId, String content){
-		super(uiId, content);
-	}
 }

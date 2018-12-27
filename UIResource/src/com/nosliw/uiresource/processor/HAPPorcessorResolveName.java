@@ -20,7 +20,7 @@ import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInAttribut
 import com.nosliw.uiresource.page.execute.HAPUIEmbededScriptExpressionInContent;
 
 public class HAPPorcessorResolveName {
-
+/*
 	//resolve the name 
 	public static void resolve(HAPExecutableUIUnit exeUnit) {
 		
@@ -66,6 +66,6 @@ public class HAPPorcessorResolveName {
 		}
 		entityWithName.updateConstantNames(new HAPUpdateNameMap(constantMapping));
 	}
-	
+*/	
 	
 }

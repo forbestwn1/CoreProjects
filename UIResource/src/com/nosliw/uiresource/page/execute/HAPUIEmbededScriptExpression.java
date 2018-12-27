@@ -1,7 +1,6 @@
 package com.nosliw.uiresource.page.execute;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -11,6 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 import com.nosliw.data.core.script.expression.HAPEmbededScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptExpression;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpression;
 
 public class HAPUIEmbededScriptExpression extends HAPEmbededScriptExpression{
 
@@ -29,26 +29,16 @@ public class HAPUIEmbededScriptExpression extends HAPEmbededScriptExpression{
 	//javascript function to execute script expression 
 	private HAPScript m_scriptFunction;
 
-	public HAPUIEmbededScriptExpression(String uiId, HAPScriptExpression scriptExpression){
-		super(scriptExpression);
-		this.m_uiId = uiId;
-		this.init();
+	public HAPUIEmbededScriptExpression(HAPDefinitionUIEmbededScriptExpression uiEmbededScriptExpression){
+		super(uiEmbededScriptExpression);
+		this.m_uiId = uiEmbededScriptExpression.getUIId();
 	}
 	
-	public HAPUIEmbededScriptExpression(String uiId, List<Object> elements){
-		super(elements);
-		this.m_uiId = uiId;
-		this.init();
-	}
-
-	public HAPUIEmbededScriptExpression(String uiId, String content){
-		super(content);
-		this.m_uiId = uiId;
-		this.init();
-	}
-
-	private void init() {
-		this.m_scriptFunction = new HAPScript(HAPRuntimeJSScriptUtility.buildMainScriptEmbededScriptExpression(this));
+	public HAPScript getScriptFunction() {
+		if(this.m_scriptFunction==null) {
+			this.m_scriptFunction = new HAPScript(HAPRuntimeJSScriptUtility.buildMainScriptEmbededScriptExpression(this));
+		}
+		return this.m_scriptFunction;
 	}
 	
 	public String getUIId(){   return this.m_uiId;   }
@@ -63,8 +53,8 @@ public class HAPUIEmbededScriptExpression extends HAPEmbededScriptExpression{
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(UIID, this.m_uiId);
-		jsonMap.put(SCRIPTFUNCTION, m_scriptFunction.toStringValue(HAPSerializationFormat.JSON_FULL));
-		typeJsonMap.put(SCRIPTFUNCTION, m_scriptFunction.getClass());
+		jsonMap.put(SCRIPTFUNCTION, this.getScriptFunction().toStringValue(HAPSerializationFormat.JSON_FULL));
+		typeJsonMap.put(SCRIPTFUNCTION, this.getScriptFunction().getClass());
 		
 		Map<String, String> scriptJsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> scriptTypeJsonMap = new LinkedHashMap<String, Class<?>>();

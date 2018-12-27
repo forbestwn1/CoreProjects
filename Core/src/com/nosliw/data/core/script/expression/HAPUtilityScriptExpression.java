@@ -8,9 +8,11 @@ import java.util.Map;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandAttribute;
 import com.nosliw.data.core.operand.HAPOperandConstant;
@@ -20,11 +22,10 @@ import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.operand.HAPParmInOperationOperand;
+import com.nosliw.data.core.runtime.HAPExecutableExpression;
 
 public class HAPUtilityScriptExpression {
 
-	public static final String UIEXPRESSION_TOKEN_OPEN = "<%=";
-	public static final String UIEXPRESSION_TOKEN_CLOSE = "%>";
 
 	public static Map<String, HAPData> getConstantData(Map<String, Object> constantsValue){
 		Map<String, HAPData> constantsData = new LinkedHashMap<String, HAPData>();
@@ -36,33 +37,6 @@ public class HAPUtilityScriptExpression {
 		return constantsData;
 	}
 	
-	/**
-	 * parse text to discover script expression in it
-	 * @param text
-	 * @return a list of text and script expression definition
-	 */
-	public static List<Object> discoverEmbededScript(String text){
-		List<Object> out = new ArrayList<Object>();
-		
-		if(text==null) return out;
-		
-		int start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
-		while(start != -1){
-			if(start>0)   out.add(text.substring(0, start));
-			int expEnd = text.indexOf(UIEXPRESSION_TOKEN_CLOSE, start);
-			int end = expEnd + UIEXPRESSION_TOKEN_CLOSE.length();
-			String expression = text.substring(start+UIEXPRESSION_TOKEN_OPEN.length(), expEnd);
-			HAPDefinitionScriptExpressionEmbeded uiExpression = new HAPDefinitionScriptExpressionEmbeded(expression);
-			out.add(uiExpression);
-			//keep searching the rest
-			text=text.substring(end);
-			start = text.indexOf(UIEXPRESSION_TOKEN_OPEN);
-		}
-		if(!HAPBasicUtility.isStringEmpty(text)){
-			out.add(text);
-		}
-		return out;
-	}
 
 	
 	/**
@@ -72,25 +46,25 @@ public class HAPUtilityScriptExpression {
 	 * @param expressionMan
 	 * @return a list of text and ui expression object
 	 */
-	public static List<Object> discoverEmbededScriptExpression(String text){
-		List<Object> segs = discoverEmbededScript(text);
-		return toExeEmbedElement(segs);
-	}
+//	public static List<Object> discoverEmbededScriptExpression1(String text){
+//		List<Object> segs = discoverEmbededScript(text);
+//		return toExeEmbedElement(segs);
+//	}
 	
 	//convert list of definition elements to executable elements 
-	public static List<Object> toExeEmbedElement(List<Object> eles){
-		List<Object> out = new ArrayList<Object>();
-		for(int i=0; i<eles.size(); i++) {
-			Object seg = eles.get(i);
-			if(seg instanceof String)   out.add(seg);
-			else if(seg instanceof HAPDefinitionScriptExpressionEmbeded) {
-				HAPDefinitionScriptExpressionEmbeded scriptSeg = (HAPDefinitionScriptExpressionEmbeded)seg;
-				HAPScriptExpression uiExpression = new HAPScriptExpression(scriptSeg.getDefinition());
-				out.add(uiExpression);
-			}
-		}
-		return out;
-	}
+//	public static List<Object> toExeEmbedElement1(List<Object> eles){
+//		List<Object> out = new ArrayList<Object>();
+//		for(int i=0; i<eles.size(); i++) {
+//			Object seg = eles.get(i);
+//			if(seg instanceof String)   out.add(seg);
+//			else if(seg instanceof HAPDefinitionScriptExpression) {
+//				HAPDefinitionScriptExpression scriptSeg = (HAPDefinitionScriptExpression)seg;
+//				HAPScriptExpression uiExpression = new HAPScriptExpression(scriptSeg.getDefinition());
+//				out.add(uiExpression);
+//			}
+//		}
+//		return out;
+//	}
 
 	//process variables in expression, 
 	//	for attribute operation a.b.c.d which have responding definition in context, 

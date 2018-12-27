@@ -28,7 +28,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.script.context.HAPParserContext;
-import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpressionEmbeded;
+import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpression;
+import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
@@ -320,14 +321,14 @@ public class HAPParserUIResource {
 		List<TextNode> textNodes = ele.textNodes();
 		for(TextNode textNode : textNodes){
 			String text = textNode.text();
-			List<Object> segments = HAPUtilityScriptExpression.discoverEmbededScript(text);
+			HAPDefinitionEmbededScriptExpression embededScriptExpressionDef = new HAPDefinitionEmbededScriptExpression(text);
 			StringBuffer newText = new StringBuffer();
-			for(Object segment : segments){
+			for(Object segment : embededScriptExpressionDef.getElements()){
 				if(segment instanceof String){
 					newText.append((String)segment);
 				}
-				else if(segment instanceof HAPDefinitionScriptExpressionEmbeded){
-					HAPDefinitionScriptExpressionEmbeded scriptExpression = (HAPDefinitionScriptExpressionEmbeded)segment;
+				else if(segment instanceof HAPDefinitionScriptExpression){
+					HAPDefinitionScriptExpression scriptExpression = (HAPDefinitionScriptExpression)segment;
 					HAPDefinitionUIEmbededScriptExpressionInContent expressionContent = new HAPDefinitionUIEmbededScriptExpressionInContent(this.m_idGenerator.createId(), scriptExpression);
 					newText.append("<span "+HAPConstant.UIRESOURCE_ATTRIBUTE_UIID+"="+expressionContent.getUIId()+"></span>");
 					resource.addScriptExpressionInContent(expressionContent);
@@ -362,7 +363,7 @@ public class HAPParserUIResource {
 			String eleAttrKey = eleAttr.getKey();
 			//replace express attribute value with; create ExpressEle object
 			HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr = new HAPDefinitionUIEmbededScriptExpressionInAttribute(eleAttrKey, uiId, eleAttr.getValue());
-			if(eAttr.containsScriptExpression()){
+			if(!eAttr.isString()){
 				if(isCustomerTag)  resource.addScriptExpressionInTagAttribute(eAttr);
 				else  resource.addScriptExpressionInAttribute(eAttr);
 				ele.attr(eleAttrKey, "");

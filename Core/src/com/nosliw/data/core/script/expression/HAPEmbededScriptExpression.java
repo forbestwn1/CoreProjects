@@ -11,7 +11,6 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
 
 /**
@@ -23,9 +22,8 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String SCRIPTEXPRESSIONS = "scriptExpressions";
 	
-	//a list of elements
-	//   string 
-	//   script expression
+	private HAPDefinitionEmbededScriptExpression m_definition;
+	
 	private List<Object> m_elements;
 	
 	//all script expressions by id
@@ -34,45 +32,29 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 	//from index in elements to script expression id
 	private Map<Integer, String> m_indexToId;
 	
-	public HAPEmbededScriptExpression(HAPScriptExpression scriptExpression){
+	public HAPEmbededScriptExpression(HAPDefinitionEmbededScriptExpression definition) {
 		this.m_elements = new ArrayList<Object>();
-		this.m_elements.add(scriptExpression);
-		this.init();
-	}
-	
-	public HAPEmbededScriptExpression(List<Object> elements){
-		this.m_elements = elements;
-		this.init();
-	}
-
-	public HAPEmbededScriptExpression(String content){
-		this.m_elements = HAPUtilityScriptExpression.discoverEmbededScriptExpression(content);
-		this.init();
-	}
-	
-	public void processExpressions(HAPContextScriptExpressionProcess expressionContext, Map<String, String> configure, HAPExpressionSuiteManager expressionManager){
-		for(String scriptExpName : this.m_scriptExpressions.keySet()) {
-			this.m_scriptExpressions.get(scriptExpName).processExpressions(expressionContext, configure, expressionManager);
-		}
-	}
-	
-	private void init(){
 		this.m_indexToId = new LinkedHashMap<Integer, String>();
 		this.m_scriptExpressions = new LinkedHashMap<String, HAPScriptExpression>();
-		for(int i=0; i<this.m_elements.size(); i++) {
-			Object element = this.m_elements.get(i);
-			if(element instanceof HAPScriptExpression){
-				HAPScriptExpression scriptExp = (HAPScriptExpression)element;
-				String scriptExpressionId = i + "";
-				//update expression id in script expression 
-				scriptExp.updateExpressionId(new HAPUpdateName() {
-					@Override
-					public String getUpdatedName(String name) {
-						return scriptExpressionId+"_"+name;
-					}});
-				this.m_scriptExpressions.put(scriptExpressionId, scriptExp);
-				this.m_indexToId.put(i, scriptExpressionId);
-			}
+		this.m_definition = definition;
+	}
+	
+	public HAPDefinitionEmbededScriptExpression getDefinition() {   return this.m_definition;    }
+	
+	public void addElement(Object element) {
+		int index = this.m_elements.size();
+		this.m_elements.add(element);
+		if(element instanceof HAPScriptExpression) {
+			HAPScriptExpression scriptExp = (HAPScriptExpression)element;
+			String scriptExpressionId = index + "";
+			//update expression id in script expression 
+			scriptExp.updateExpressionId(new HAPUpdateName() {
+				@Override
+				public String getUpdatedName(String name) {
+					return scriptExpressionId+"_"+name;
+				}});
+			this.m_scriptExpressions.put(scriptExpressionId, scriptExp);
+			this.m_indexToId.put(index, scriptExpressionId);
 		}
 	}
 	
@@ -80,7 +62,7 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 	
 	public boolean isConstant(){
 		boolean out = true;
-		for(Object ele : this.m_elements){
+		for(Object ele : this.m_definition.getElements()){
 			if(ele instanceof HAPScriptExpression){
 				if(!((HAPScriptExpression)ele).isConstant()){
 					out = false;
@@ -90,24 +72,15 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 		return out;
 	}
 	
-	public boolean isString() {
-		boolean out = true;
-		for(Object ele : this.m_elements) {
-			if(!(ele instanceof String)) {
-				out = false;
-				break;
-			}
-		}
-		return out;
-	}
+	public boolean isString() {  return this.m_definition.isString();  }
 	
-	public void updateWithConstantsValue(Map<String, Object> constantsValue) {
-		for(Object ele : this.m_elements){
-			if(ele instanceof HAPScriptExpression){
-				((HAPScriptExpression)ele).updateWithConstantsValue(constantsValue);
-			}
-		}
-	}
+//	public void updateWithConstantsValue(Map<String, Object> constantsValue) {
+//		for(Object ele : this.m_elements){
+//			if(ele instanceof HAPScriptExpression){
+//				((HAPScriptExpression)ele).updateWithConstantsValue(constantsValue);
+//			}
+//		}
+//	}
 
 	
 	public String getValue(){

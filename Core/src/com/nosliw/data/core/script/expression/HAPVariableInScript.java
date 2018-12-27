@@ -18,4 +18,8 @@ public class HAPVariableInScript {
 		this.m_variableName = nameUpdate.getUpdatedName(m_variableName);
 		return this.m_variableName;
 	}
+
+	public HAPVariableInScript cloneVariableInScript() {
+		return new HAPVariableInScript(this.m_variableName);
+	}
 }

@@ -18,9 +18,9 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPOperationParm;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskLoadResources;
+import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteConverter;
@@ -30,7 +30,6 @@ import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpressionAbstract;
 import com.nosliw.data.core.script.expression.HAPEmbededScriptExpression;
-import com.nosliw.data.core.script.expression.HAPExpressionInScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptExpression;
 import com.nosliw.data.core.script.expression.HAPConstantInScript;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
@@ -293,10 +292,10 @@ public class HAPRuntimeJSScriptUtility {
 		
 		//build javascript function to execute the script
 		StringBuffer funScript = new StringBuffer();
+		int i=0;
 		for(Object ele : scriptExpression.getElements()){
-			if(ele instanceof HAPDefinitionExpression){
-				HAPExpressionInScriptExpression expression = (HAPExpressionInScriptExpression)ele;
-				funScript.append(expressionsDataParmName+"[\""+expression.getId()+"\"]");
+			if(ele instanceof HAPExecutableExpression){
+				funScript.append(expressionsDataParmName+"[\""+scriptExpression.getIdByIndex(i)+"\"]");
 			}
 			else if(ele instanceof HAPScriptInScriptExpression){
 				HAPScriptInScriptExpression scriptSegment = (HAPScriptInScriptExpression)ele;
@@ -313,6 +312,7 @@ public class HAPRuntimeJSScriptUtility {
 					}
 				}
 			}
+			i++;
 		}
 		
 		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPRuntimeJSScriptUtility.class, "ScriptExpressionFunction.temp");

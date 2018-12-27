@@ -69,7 +69,6 @@ public class HAPDefinitionExpression  extends HAPSerializableImp implements HAPE
 		this.m_operand = new HAPOperandWrapper(HAPExpressionManager.expressionParser.parseExpression(this.m_expression));
 
 		this.processDefaultAnonomousParmInOperation();
-		
 	}
 	
 	/**
@@ -106,6 +105,12 @@ public class HAPDefinitionExpression  extends HAPSerializableImp implements HAPE
 		});		
 	}
 
+	public HAPDefinitionExpression cloneExpression() {
+		HAPDefinitionExpression out = new HAPDefinitionExpression(this.m_expression);
+		out.m_operand = this.m_operand.cloneWrapper();
+		return out;
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);

@@ -29,7 +29,7 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.data.core.script.expression.HAPContextScriptExpressionProcess;
+import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptExpression;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 
@@ -54,16 +54,13 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		//process input and create flat var context
 		HAPContextFlat varContext = HAPUtilityProcess.processActivityInput(parentContext, expActivityDef.getInput(), envContextProcessor);
 		
-		HAPContextScriptExpressionProcess expProcessContext = new HAPContextScriptExpressionProcess();
+		HAPProcessContextScriptExpression expProcessContext = new HAPProcessContextScriptExpression();
 		//prepare constant value
 		Map<String, Object> constantsValue = varContext.getConstantValue();
 		out.setConstants(constantsValue);
 		//constants for expression		
 		for(String name : constantsValue.keySet()) {
-			Object constantValue = constantsValue.get(name);
-			if(constantValue instanceof HAPData) {
-				expProcessContext.addConstant(name, (HAPData)constantValue);
-			}
+			expProcessContext.addConstant(name, constantsValue.get(name));
 		}
 		
 		//prepare variables 
@@ -84,7 +81,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		}
 		
 		//map back to flat context
-		Map<String, HAPVariableInfo> disVarInfo = expProcessContext.getVariables();
+		Map<String, HAPVariableInfo> disVarInfo = expProcessContext.getDataVariables();
 		for(String varName : disVarInfo.keySet()) {
 			HAPContextDefinitionElement ele = HAPUtilityContext.getDescendant(varContext.getContext(), varName);
 			HAPContextDefinitionElement solidEle = ele.getSolidContextDefinitionElement();

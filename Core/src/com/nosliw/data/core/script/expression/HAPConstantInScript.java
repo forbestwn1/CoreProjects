@@ -21,4 +21,10 @@ public class HAPConstantInScript {
 		this.m_constantName = nameUpdate.getUpdatedName(m_constantName);
 		return this.m_constantName;
 	}
+
+	public HAPConstantInScript cloneConstantInScript() {
+		HAPConstantInScript out = new HAPConstantInScript(this.m_constantName);
+		out.m_value = this.m_value;
+		return out;
+	}
 }

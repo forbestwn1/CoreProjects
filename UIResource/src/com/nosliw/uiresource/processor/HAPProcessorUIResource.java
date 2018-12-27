@@ -39,7 +39,7 @@ public class HAPProcessorUIResource {
 		HAPEnvContextProcessor contextProcessorEnv = new HAPEnvContextProcessor(dataTypeHelper, runtime, expressionMan, inheritanceExcludedInfo);
 		HAPProcessorUIContext.process(out, null, uiTagMan, contextProcessorEnv);
 
-		HAPPorcessorResolveName.resolve(out);
+//		HAPPorcessorResolveName.resolve(out);
 		
 		HAPProcessorUIConstant.resolveConstants(out, runtime);
 		

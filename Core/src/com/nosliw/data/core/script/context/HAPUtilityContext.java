@@ -145,7 +145,7 @@ public class HAPUtilityContext {
 	
 	
 	public static HAPContextGroup buildContextGroupFromFlatContext(HAPContextFlat flatContext) {
-		
+		return null;
 	}
 	
 	//find all data variables in context 
