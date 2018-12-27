@@ -37,12 +37,27 @@ public class HAPProcessorUIContext {
 
 	public static void process(HAPExecutableUIUnit uiExe, HAPExecutableUIUnit parentUIExe, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 		process1(uiExe, parentUIExe, uiTagMan, contextProcessorEnv);		
-		processRelative(uiExe, parentUIExe, uiTagMan, contextProcessorEnv);			
+		processRelative(uiExe, parentUIExe, uiTagMan, contextProcessorEnv);
+		markProcessed(uiExe);
 		process3(uiExe, contextProcessorEnv.inheritanceExcludedInfo);
 	}
 	
+	private static void markProcessed(HAPExecutableUIUnit uiExe) {
+		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
+			HAPExecutableUIUnitTag uiTagExe = (HAPExecutableUIUnitTag)uiExe;
+			uiTagExe.getTagContext().processed();
+		}
+
+		uiExe.getContext().processed();
+		
+		//child tag
+		for(HAPExecutableUIUnitTag childTag : uiExe.getUITags()) {
+			markProcessed(childTag);			
+		}
+	}
+	
 	//process context information
-	public static void process1(HAPExecutableUIUnit uiExe, HAPExecutableUIUnit parentUIExe, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
+	private static void process1(HAPExecutableUIUnit uiExe, HAPExecutableUIUnit parentUIExe, HAPUITagManager uiTagMan, HAPEnvContextProcessor contextProcessorEnv){
 		HAPContextGroup parentContext = parentUIExe==null?null:parentUIExe.getContext();
 		
 		HAPContextGroup contextDef = uiExe.getUIUnitDefinition().getContextDefinition();

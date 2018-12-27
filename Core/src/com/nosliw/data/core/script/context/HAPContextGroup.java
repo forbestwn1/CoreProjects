@@ -100,6 +100,9 @@ public class HAPContextGroup extends HAPSerializableImp{
 	
 	public HAPInfo getInfo() {  return this.m_info;  }
 	
+	//mark all the context root ele in context group as processed
+	public void processed() {		for(HAPContext context : this.m_contexts.values())   context.processed();	}
+	
 	public HAPContextGroup getParent() {   return this.m_parent;   }
 	public void setParent(HAPContextGroup parent) {  this.m_parent = parent;   }
 	

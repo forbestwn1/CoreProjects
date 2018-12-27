@@ -2,19 +2,10 @@
 <html>
 <body>
 
-	<br>
-	Content:<%=?(business.a.aa)?.value + '   6666 ' %>
-	<br>
+	Content:<%=#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value%>
+
 	<br>
 	TextInput:<nosliw-textinput data="business.a.aa"/>  
-
-		<nosliw-loop data="business.a.cc" element="ele" index="index">  
-			<br>
-			Content:<%=?(ele)?.value + '   6666 ' %>
-			<br>
-			Index: <%=?(index)?.value%>
-			<br>
-	</nosliw-loop>
 </body>
 
 	<scripts>
@@ -36,7 +27,6 @@
 								a : {
 									child : {
 										aa : {criteria:"test.string;1.0.0"},
-										cc : {criteria:"test.array;1.0.0%||element:test.string;1.0.0||%"},
 									}
 								}
 							},
@@ -45,34 +35,27 @@
 									aa : {
 										dataTypeId: "test.string;1.0.0",
 										value: "This is my world!"
-									},
-									cc : [
-										{
-											dataTypeId: "test.string;1.0.0",
-											value: "This is my world 1111!"
-										},
-										{
-											dataTypeId: "test.string;1.0.0",
-											value: "This is my world 2222!"
-										}
-									],
-									cc1 : {
-										dataTypeId: "test.array;1.0.0",
-										value: [
-											{
-												dataTypeId: "test.string;1.0.0",
-												value: "This is my world 1111!"
-											},
-											{
-												dataTypeId: "test.string;1.0.0",
-												value: "This is my world 2222!"
-											}
-										]
 									}
 								}
 							}
 						}
 					},
+					from: {
+						definition : {
+							value : {
+								dataTypeId: "test.integer",
+								value: 3
+							}
+						}
+					},
+					to: {
+						definition:{
+							value : {
+								dataTypeId: "test.integer",
+								value: 7
+							}
+						}
+					}
 				}
 			}
 		}
@@ -86,38 +69,4 @@
 	}
 	</expressions>
 	
-	<events>
-	[
-		{
-			name : "changeInputText",
-			data : {
-				element : {
-					data : {
-						definition : {
-							path: "business.a.aa"
-						}
-					}
-				}
-			}
-		}
-	]
-	</events>
-	
-	<commands>
-	[
-		{
-			name : "Start",
-			parm : {
-				element : {
-					data : {
-						definition : {
-							path: "business.a.aa"
-						}
-					}
-				}
-			}
-		}
-	]
-	</commands>
-
 </html>

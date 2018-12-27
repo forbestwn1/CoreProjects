@@ -42,6 +42,8 @@ public class HAPContextFlat extends HAPSerializableImp{
 			if(!relativeEle.isRelativeToParent()) {
 				//for element that relative to another element in this flat context, add mapping for it
 				this.addNameMapping(name, relativeEle.getPath().getRootElementId().getName());
+				//resolve relative
+				relativeEle.setDefinition(this.getContext().getElement(relativeEle.getPath().getRootElementId().getName()).getDefinition());
 			}
 		}
 	}

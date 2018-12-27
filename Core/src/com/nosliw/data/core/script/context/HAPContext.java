@@ -29,6 +29,11 @@ public class HAPContext extends HAPSerializableImp{
 	public void empty() {
 		this.m_elements = new LinkedHashMap<String, HAPContextDefinitionRoot>();
 	}
+
+	//mark all the element in context as processed
+	public void processed() {   
+		for(HAPContextDefinitionRoot ele : this.m_elements.values()) 	ele.getDefinition().processed();
+	}
 	
 	public Set<String> getElementNames(){  return this.m_elements.keySet();   }
 	public Map<String, HAPContextDefinitionRoot> getElements(){  return this.m_elements;  }

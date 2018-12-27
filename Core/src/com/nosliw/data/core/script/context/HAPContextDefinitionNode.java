@@ -27,6 +27,13 @@ public class HAPContextDefinitionNode extends HAPContextDefinitionLeafVariable{
 	
 	public void addChild(String name, HAPContextDefinitionElement nodeBranch){		this.m_children.put(name, nodeBranch);	}
 
+	public void processed() {
+		super.processed();
+		for(HAPContextDefinitionElement child : this.m_children.values()) {
+			child.processed();
+		}
+	}
+	
 	@Override
 	public HAPContextDefinitionElement getChild(String childName) {   return this.m_children.get(childName);  }
 	
@@ -35,7 +42,7 @@ public class HAPContextDefinitionNode extends HAPContextDefinitionLeafVariable{
 		HAPContextDefinitionNode out = new HAPContextDefinitionNode();
 		super.toContextDefinitionElement(out);
 		for(String childName : this.m_children.keySet()) {
-			this.addChild(childName, this.m_children.get(childName).getSolidContextDefinitionElement());
+			out.addChild(childName, this.m_children.get(childName).getSolidContextDefinitionElement());
 		}
 		return out;
 	}

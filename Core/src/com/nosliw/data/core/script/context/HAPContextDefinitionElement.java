@@ -12,6 +12,9 @@ public abstract class HAPContextDefinitionElement extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String TYPE = "type";
 
+	@HAPAttribute
+	public static final String PROCESSED = "processed";
+	
 	private boolean m_processed = false;
 	
 	public HAPContextDefinitionElement(){}
@@ -38,6 +41,7 @@ public abstract class HAPContextDefinitionElement extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(PROCESSED, this.isProcessed()+"");
 	}
 	
 }
