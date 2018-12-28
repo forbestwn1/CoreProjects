@@ -109,7 +109,6 @@ public class HAPProcessorContextRelative {
 			}
 		}
 		}
-		out.processed();
 		return out;
 	}
 

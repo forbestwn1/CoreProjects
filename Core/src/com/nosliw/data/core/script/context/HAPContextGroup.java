@@ -121,6 +121,12 @@ public class HAPContextGroup extends HAPSerializableImp{
 	public void addElement(String name, HAPContextDefinitionRoot rootEle, String type){	this.getContext(type).addElement(name, rootEle);	}
 	
 	public HAPContext getContext(String type){		return this.m_contexts.get(type);	}
+	public void setContext(String type, HAPContext context) {   this.m_contexts.put(type, context);   }
+	public HAPContext removeContext(String type) { 
+		HAPContext out = this.m_contexts.get(type);
+		this.m_contexts.put(type, new HAPContext());
+		return out;
+	}
 	
 	public HAPContextDefinitionRoot getElement(HAPContextDefinitionRootId nodeId) {  return this.getElement(nodeId.getCategary(), nodeId.getName());   }
 	public HAPContextDefinitionRoot getElement(String type, String name) {	return this.m_contexts.get(type).getElement(name);	}

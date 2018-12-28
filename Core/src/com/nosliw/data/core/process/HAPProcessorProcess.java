@@ -23,8 +23,7 @@ public class HAPProcessorProcess{
 		HAPExecutableProcess out = null;
 
 		//merge context with parent
-		HAPContextGroup context = HAPProcessorContext.process1(processDefinition.getContext(), parentContext, null, envContextProcessor);
-		context = HAPProcessorContext.processRelative(context, parentContext, null, envContextProcessor);
+		HAPContextGroup context = HAPProcessorContext.process(processDefinition.getContext(), parentContext, null, envContextProcessor);
 		
 		HAPContextGroup oldContext;
 		do {

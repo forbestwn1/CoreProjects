@@ -46,6 +46,36 @@ public class HAPUtilityContext {
 		processor.postProcess(contextDefEle, path);
 	}
 
+	public static HAPContextDefinitionElement mergeDataElement(HAPContextDefinitionElement original, HAPContextDefinitionElement after) {
+		String eleName = "abc";
+		HAPContext orgContext = new HAPContext();
+		orgContext.addElement(eleName, new HAPContextDefinitionRoot(original));
+		HAPContext aftContext = new HAPContext();
+		aftContext.addElement(eleName, new HAPContextDefinitionRoot(after));
+		
+		if(after.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
+			return after;
+		}
+		else if(after.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_NODE)) {
+			processContextDefElementWithPathInfo(after, new HAPContextDefEleProcessor() {
+				@Override
+				public boolean process(HAPContextDefinitionElement ele, Object value) {
+					if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
+						HAPUtilityContext.setDescendant(orgContext, (String)value, ele);
+					}
+					return true;
+				}
+
+				@Override
+				public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
+					return true;
+				}
+			}, "");
+			return original;
+		}
+		else  return original;
+	}
+
 	public static HAPContextDefinitionElement getDescendant(HAPContextDefinitionElement contextDefEle, String path) {
 		HAPContextDefinitionElement out = contextDefEle;
 		HAPPath pathObj = new HAPPath(path);
@@ -70,6 +100,46 @@ public class HAPUtilityContext {
 		HAPContext context = contextGroup.getContext(categary);
 		if(context!=null)   out = getDescendant(context, path);
 		return out;
+	}
+
+	public static void setDescendant(HAPContextGroup contextGroup, String categary, String path, HAPContextDefinitionElement ele) {
+		setDescendant(contextGroup.getContext(categary), path, ele);
+	}
+	
+	public static void setDescendant(HAPContext context, String path, HAPContextDefinitionElement ele) {
+		HAPComplexPath cpath = new HAPComplexPath(path);
+		HAPContextDefinitionRoot root = context.getElement(cpath.getRootName());
+		if(root==null) {
+			root = new HAPContextDefinitionRoot();
+			context.addElement(cpath.getRootName(), root);
+		}
+		
+		String seg = null;
+		HAPContextDefinitionElement parentEle = root.getDefinition();
+		for(int i=0; i<cpath.getPathSegs().length-1; i++) {
+			if(i==0) {
+				if(parentEle==null) {
+					parentEle = new HAPContextDefinitionNode();
+					root.setDefinition(parentEle);
+				}
+			}
+			String pathSeg = cpath.getPathSegs()[i]; 
+			HAPContextDefinitionElement child = parentEle.getChild(pathSeg);
+			if(child==null) {
+				child = new HAPContextDefinitionNode();
+				((HAPContextDefinitionNode)parentEle).addChild(pathSeg, child);
+			}
+			parentEle = child;
+			seg = cpath.getPathSegs()[i+1];
+		}
+		
+		
+		if(seg!=null) {
+			((HAPContextDefinitionNode)parentEle).addChild(seg, ele);
+		}
+		else {
+			root.setDefinition(ele);
+		}
 	}
 	
 	public static boolean isContextDefinitionElementConstant(HAPContextDefinitionElement ele) {   return HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT.equals(ele.getType());   }
@@ -143,9 +213,15 @@ public class HAPUtilityContext {
 		return out;
 	}
 	
-	
-	public static HAPContextGroup buildContextGroupFromFlatContext(HAPContextFlat flatContext) {
-		return null;
+	//
+	public static HAPContextGroup buildContextGroupFromFlatContext(HAPContextFlat flatContext, Set<String> rootVars) {
+		HAPContextGroup out = new HAPContextGroup();
+		for(String rootName : rootVars) {
+			HAPContextDefinitionRoot root = flatContext.getContext().getElement(rootName);
+			HAPContextDefinitionRootId rootId = new HAPContextDefinitionRootId(flatContext.getSolidName(rootName));
+			out.addElement(rootId.getName(), root, rootId.getCategary());
+		}
+		return out;
 	}
 	
 	//find all data variables in context 
@@ -200,17 +276,7 @@ public class HAPUtilityContext {
 				relativeEle.setDefinition(parentNode.getDefinition().getSolidContextDefinitionElement());
 				relativeEle.processed();
 			}
-//			relativeEle.setDefinition(parentNode.getDefinition().cloneContextDefinitionElement());
 			out.setDefinition(relativeEle);
-/*			
-			HAPContextNodeRootVariable parentVarNode = (HAPContextNodeRootVariable)parentNode;
-			HAPContextNodeRootRelative relativeEle = new HAPContextNodeRootRelative();
-			relativeEle.setPath(contextCategary, eleName);
-			parentVarNode.toContextNode(relativeEle);
-//			relativeEle.setInfo(parentVarNode.getInfo().clone());
-			if(parentVarNode.getType().equals(HAPConstant.UIRESOURCE_ROOTTYPE_RELATIVE) && ((HAPContextNodeRootRelative)parentVarNode).isProcessed())	relativeEle.processed();
-			out = relativeEle;
-			*/
 		}
 		return out;
 	}

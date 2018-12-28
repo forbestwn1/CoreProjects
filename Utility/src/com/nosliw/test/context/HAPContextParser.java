@@ -23,7 +23,7 @@ public class HAPContextParser {
 		HAPRuntimeEnvironmentImpRhino runtimeEnv = new HAPRuntimeEnvironmentImpRhino();
 		HAPEnvContextProcessor processEvn = new HAPEnvContextProcessor(HAPExpressionManager.dataTypeHelper, runtimeEnv.getRuntime(), runtimeEnv.getExpressionSuiteManager());
 		
-		HAPContextGroup contextGroup1 = HAPProcessorContext.process1(contextGroup, null, new HAPConfigureContextProcessor(), processEvn);
+		HAPContextGroup contextGroup1 = HAPProcessorContext.processStatic(contextGroup, null, new HAPConfigureContextProcessor(), processEvn);
 		System.out.println(contextGroup1);
 		HAPContextGroup contextGroup2 = HAPProcessorContext.processRelative(contextGroup1, null, new HAPConfigureContextProcessor(), processEvn);
 

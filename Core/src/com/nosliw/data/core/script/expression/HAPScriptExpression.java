@@ -103,6 +103,8 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		this.m_isConstant = true;
 	}
 
+	public boolean isDataExpression() {		return this.m_definition.isDataExpression();	}
+	
 	public Set<String> getVariableNames(){ 
 		Set<String> out = new HashSet<String>();
 		for(Object ele : this.m_elements){
@@ -118,40 +120,6 @@ public class HAPScriptExpression extends HAPSerializableImp{
 		return out;
 	}
 
-/*	
-	//update script constant information 
-	public void updateWithConstantsValue(Map<String, Object> constantsValue) {
-		for(Object ele : this.m_elements){
-			if(ele instanceof HAPExpressionInScriptExpression){
-				HAPExpressionInScriptExpression expDef = (HAPExpressionInScriptExpression)ele;
-				HAPOperandUtility.updateConstantData(expDef.getOperand(), HAPUtilityScriptExpression.getConstantData(constantsValue));
-			}
-			else if(ele instanceof HAPScriptInScriptExpression){
-				HAPScriptInScriptExpression scriptSegment = (HAPScriptInScriptExpression)ele;
-				scriptSegment.updateConstantValue(constantsValue);
-			}
-		}
-	}
-	
-	//process all expression definitions in script expression
-	public void processExpressions(HAPProcessContextScriptExpression expressionContext, Map<String, String> configure, HAPExpressionSuiteManager expressionManager){
-		//preprocess attributes operand in expressions, some attributes operand can be combine into one variable operand
-		for(HAPExpressionInScriptExpression expDef : this.getExpressionDefinitions()){
-			HAPUtilityScriptExpression.processAttributeOperandInExpression(expDef, expressionContext.getDataVariables());
-		}
-
-		this.m_expressions = new LinkedHashMap<String, HAPExecutableExpression>();
-		for(int i=0; i<this.m_elements.size(); i++) {
-			Object element = this.m_elements.get(i);
-			if(element instanceof HAPExpressionInScriptExpression){
-				HAPExpressionInScriptExpression expEle = (HAPExpressionInScriptExpression)element;
-				HAPProcessContext context = new HAPProcessContext();
-				m_expressions.put(expEle.getId(), expressionManager.compileExpression(expEle, expressionContext.getExpressionDefinitionSuite(), null, configure, context));
-			}
-		}
-	}
-*/	 
-	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(DEFINITION, this.m_definition.getDefinition());

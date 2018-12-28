@@ -2,7 +2,6 @@ package com.nosliw.data.core.script.context;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -143,7 +142,6 @@ public class HAPProcessorContextConstant {
 			Object data = processConstantDefJsonNode(contextDefConstant.getValue(), contextGroup, contextProcessorEnv);
 			if(data==null)   data = contextDefConstant.getValue();
 			contextDefConstant.setValue(data);
-			contextDefConstant.processed();
 		}
 	}
 

@@ -1,12 +1,13 @@
 package com.nosliw.data.core.process.activity;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
-import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expression.HAPVariableInfo;
@@ -20,18 +21,22 @@ import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.process.HAPResultActivityNormal;
 import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
+import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextDefEleProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
+import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
-import com.nosliw.data.core.script.context.HAPProcessorContext;
+import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
 import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
+import com.nosliw.data.core.script.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptExpression;
-import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 
 public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 
@@ -70,39 +75,83 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		}
 		
 		//discover expression
-		HAPScriptExpression scriptExpression = expActivityDef.getExpression();
-		scriptExpression.processExpressions(expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), envContextProcessor.expressionManager);
+		HAPDefinitionScriptExpression scriptExpressionDefinition = expActivityDef.getExpression();
+		HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(scriptExpressionDefinition, expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), envContextProcessor.expressionManager, envContextProcessor.runtime);
 		
 		//result
+		HAPContext outputContext = null;
 		if(scriptExpression.isDataExpression()) {
+			//if script expression is data expression only, then affect result
+			HAPContext internalContext = new HAPContext();
 			HAPExecutableExpression expExe = scriptExpression.getExpressions().values().iterator().next();
 			HAPDataTypeCriteria outputCriteria = expExe.getOperand().getOperand().getOutputCriteria();
+			HAPContextDefinitionLeafData dataEle = new HAPContextDefinitionLeafData();
+			dataEle.setCriteria(new HAPVariableInfo(outputCriteria));
+			HAPContextDefinitionRoot root = new HAPContextDefinitionRoot(dataEle);
+			internalContext.addElement("output", root);
+			
 			HAPResultActivityNormal result = expActivityDef.getResults().get("success");
+			
+			//process output
+			outputContext = HAPUtilityProcess.processActivityOutput(internalContext, result.getOutput(), envContextProcessor);
 		}
 		
-		//map back to flat context
+		//merge variable criteria back to flat context
 		Map<String, HAPVariableInfo> disVarInfo = expProcessContext.getDataVariables();
+		Set<String> relatedVarNames = new HashSet<String>();
 		for(String varName : disVarInfo.keySet()) {
-			HAPContextDefinitionElement ele = HAPUtilityContext.getDescendant(varContext.getContext(), varName);
+			HAPComplexPath cpath = new HAPComplexPath(varName);
+			cpath = new HAPComplexPath(varContext.getSolidName(cpath.getRootName()), cpath.getPath());
+			
+			HAPContextDefinitionElement ele = HAPUtilityContext.getDescendant(varContext.getContext(), cpath.getFullName());
 			HAPContextDefinitionElement solidEle = ele.getSolidContextDefinitionElement();
 			if(solidEle.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
 				HAPContextDefinitionLeafData dataEle = (HAPContextDefinitionLeafData)solidEle;
 				dataEle.getCriteria().setCriteria(disVarInfo.get(varName).getCriteria());
+				relatedVarNames.add(varName);
 			}
 		}
 		
-		//from flat context map back to parent context
-		for(String varName : varContext.getContext().getElementNames()) {
-			String rootName;
-			HAPContextDefinitionRoot root = expActivityDef.getInput().getElement(rootName);
-			if(root!=null) {
-				root.getDefinition().getChildUnilReltive(childPath, parentEle);
-				
-			}
-			else {
-				//
-				parentContext.getAncestor();
-			}
+		Set<String> relatedRootVarNames = new HashSet<String>();
+		for(String name : relatedVarNames) {
+			HAPComplexPath cpath = new HAPComplexPath(name);
+			relatedRootVarNames.add(cpath.getRootName());
+		}
+		
+		//from flat context build context group
+		HAPContextGroup processedContextGroup = HAPUtilityContext.buildContextGroupFromFlatContext(varContext, relatedRootVarNames);
+		
+		//merge back to parent context
+		Map<String, HAPContextDefinitionElement> mapped = new LinkedHashMap<String, HAPContextDefinitionElement>();
+		HAPContext helpContext = processedContextGroup.removeContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);
+		HAPDefinitionDataAssociationGroup inputDataAssocation = expActivityDef.getInput();
+		for(String inputName : inputDataAssocation.getElementNames()) {
+			HAPContextDefinitionRoot root = inputDataAssocation.getElement(inputName);
+			HAPUtilityContext.processContextDefElementWithPathInfo(root.getDefinition(), new HAPContextDefEleProcessor() {
+				@Override
+				public boolean process(HAPContextDefinitionElement ele, Object value) {
+					if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE)) {
+						HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)ele;
+						String path = (String)value;
+						HAPContextDefinitionElement resolvedEle = HAPUtilityContext.getDescendant(helpContext, path).getSolidContextDefinitionElement();
+						HAPInfoRelativeContextResolve resolved = HAPUtilityContext.resolveReferencedParentContextNode(relativeEle.getPath(), processedContextGroup, null, null);
+						mapped.put(resolved.path.getFullPath(), resolvedEle);
+					}
+					return false;
+				}
+
+				@Override
+				public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
+					return false;
+				}} , "");
+		}
+		
+		for(String basePath : mapped.keySet()) {
+			HAPContextDefinitionElement processedEle = mapped.get(basePath);
+			HAPContextPath cpath = new HAPContextPath(basePath);
+			HAPContextDefinitionElement originalEle = HAPUtilityContext.getDescendant(processedContextGroup, cpath.getRootElementId().getCategary(), cpath.getPath());
+			originalEle = HAPUtilityContext.mergeDataElement(originalEle, processedEle);
+			HAPUtilityContext.setDescendant(processedContextGroup, cpath.getRootElementId().getCategary(), cpath.getPath(), originalEle);
 		}
 		
 		return out;

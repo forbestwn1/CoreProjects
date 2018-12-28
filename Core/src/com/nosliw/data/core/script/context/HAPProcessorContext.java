@@ -2,8 +2,15 @@ package com.nosliw.data.core.script.context;
 
 public class HAPProcessorContext {
 
+	public static HAPContextGroup process(HAPContextGroup contextGroup, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
+		HAPContextGroup out = processStatic(contextGroup, parentContextGroup, configure, contextProcessorEnv);
+		out = processStatic(out, parentContextGroup, configure, contextProcessorEnv);
+		return out;
+	}
+	
+	
 	//merge child context with parent context
-	public static HAPContextGroup process1(HAPContextGroup contextGroup, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
+	public static HAPContextGroup processStatic(HAPContextGroup contextGroup, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
 
 		if(configure==null)  configure = new HAPConfigureContextProcessor();
 		

@@ -31,7 +31,23 @@ public class HAPContextFlat extends HAPSerializableImp{
 		this.m_nameMapping = new LinkedHashMap<String, String>();
 	}
 	
+	public String getSolidName(String name) {
+		String out = this.m_nameMapping.get(name);
+		if(out==null)  out = name;
+		return out;
+	}
+	
 	public HAPContext getContext() {  return this.m_context;  }
+	
+	public Map<String, HAPContextDefinitionRoot> getSolidRoots(){
+		Map<String, HAPContextDefinitionRoot> out = new LinkedHashMap<String, HAPContextDefinitionRoot>();
+		for(String elementName : this.m_context.getElementNames()) {
+			if(this.m_nameMapping.get(elementName)==null) {
+				out.put(elementName, this.m_context.getElement(elementName));
+			}
+		}
+		return out;
+	}
 	
 	public void addElement(String name, HAPContextDefinitionRoot rootEle){		
 		this.m_context.addElement(name, rootEle);	

@@ -70,7 +70,7 @@ public class HAPProcessorUIContext {
 		}
 		
 		//merge with context defined in tag unit
-		HAPContextGroup extContextGroup = HAPProcessorContext.process1(contextDef, parentContext, new HAPConfigureContextProcessor(), contextProcessorEnv);
+		HAPContextGroup extContextGroup = HAPProcessorContext.processStatic(contextDef, parentContext, new HAPConfigureContextProcessor(), contextProcessorEnv);
 		uiExe.setContext(extContextGroup);
 
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
@@ -263,7 +263,7 @@ public class HAPProcessorUIContext {
 		
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
 		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(tagDefinitionContext.getInfo());
-		HAPContextGroup out = HAPProcessorContext.process1(tagContext, parentContext, configure, contextProcessorEnv);
+		HAPContextGroup out = HAPProcessorContext.processStatic(tagContext, parentContext, configure, contextProcessorEnv);
 		return out;
 	}
 }

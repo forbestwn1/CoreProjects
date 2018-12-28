@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
+import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptExpression;
 
 public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal{
@@ -19,7 +20,7 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
 	
-	private HAPScriptExpression m_expression;
+	private HAPDefinitionScriptExpression m_expression;
 	
 	public HAPExpressionActivityDefinition() {
 	}
@@ -28,10 +29,10 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 	public String getType() {  return HAPConstant.EXPRESSIONTASK_STEPTYPE_EXPRESSION;	}
 	
 	
-	public HAPScriptExpression getExpression(){  return this.m_expression;    }
-	private void setExpression(String expression) {	this.m_expression = new HAPScriptExpression(expression);	}
+	public HAPDefinitionScriptExpression getExpression(){  return this.m_expression;    }
+	private void setExpression(String expression) {	this.m_expression = new HAPDefinitionScriptExpression(expression);	}
 
-	public Set<String> getVariableNames() {	return this.m_expression.getVariableNames();	}
+//	public Set<String> getVariableNames() {	return this.m_expression.getVariableNames();	}
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
