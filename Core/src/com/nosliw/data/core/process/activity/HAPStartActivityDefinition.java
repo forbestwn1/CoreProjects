@@ -22,6 +22,8 @@ public class HAPStartActivityDefinition extends HAPDefinitionActivity{
 	@Override
 	public String getType() {		return HAPConstant.ACTIVITY_TYPE_START;	}
 	
+	public HAPDefinitionSequenceFlow getFlow() {   return this.m_flow;   }
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{

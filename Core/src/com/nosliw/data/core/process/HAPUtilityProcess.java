@@ -12,8 +12,11 @@ import com.nosliw.data.core.script.context.HAPUtilityContext;
 
 public class HAPUtilityProcess {
 
+
 	//process input configure for activity and generate flat context for activity
-	public static HAPContextFlat processActivityInput(HAPContextGroup parentContext, HAPDefinitionDataAssociationGroup input, HAPEnvContextProcessor contextProcessorEnv) {
+	public static HAPDefinitionDataAssociationGroupExecutable processDataAssociation(HAPContextGroup parentContext, HAPDefinitionDataAssociationGroup input, HAPEnvContextProcessor contextProcessorEnv) {
+		HAPDefinitionDataAssociationGroupExecutable out = new HAPDefinitionDataAssociationGroupExecutable(input);
+		
 		String helpCategary = HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE;
 		
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
@@ -36,10 +39,16 @@ public class HAPUtilityProcess {
 		//process input context
 		context = HAPProcessorContext.process(context, parentContext, configure, contextProcessorEnv);
 		
-		return HAPUtilityContext.buildFlatContextFromContextGroup(context, null);
+		out.setContext(HAPUtilityContext.buildFlatContextFromContextGroup(context, null));
+		
+		return out;
 	}
+
 	
-	public static HAPContext processActivityOutput(HAPContext internalContext, HAPDefinitionDataAssociationGroup output, HAPEnvContextProcessor contextProcessorEnv) {
+	public static HAPDefinitionDataAssociationGroupExecutable processDataAssociation(HAPContext internalContext, HAPDefinitionDataAssociationGroup output, HAPEnvContextProcessor contextProcessorEnv) {
+		
+		HAPDefinitionDataAssociationGroupExecutable out = new HAPDefinitionDataAssociationGroupExecutable(output);
+		
 		String helpCategary = HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE;
 		
 		HAPContextGroup interalContextGroup = new HAPContextGroup();
@@ -53,10 +62,11 @@ public class HAPUtilityProcess {
 		HAPContextGroup processedContextGroup = HAPProcessorContext.process(outputContextGroup, interalContextGroup, configure, contextProcessorEnv);
 		HAPContext processedContext = processedContextGroup.getContext(helpCategary);
 		
-		HAPContext out = consolidateContextRoot(processedContext);
+		out.setContext(new HAPContextFlat(consolidateContextRoot(processedContext)));
+
 		return out;
 	}
-	
+
 	//context root name can be like a.b.c and a.b.d
 	//these two root name can be consolidated to one root name with a and child of b.c and b.d
 	private static HAPContext consolidateContextRoot(HAPContext context) {

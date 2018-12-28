@@ -29,7 +29,7 @@ public class HAPProcessorProcess{
 		do {
 			out = new HAPExecutableProcess(processDefinition, id);
 			oldContext = context.cloneContextGroup();
-			Map<String, HAPDefinitionDataAssociationGroup> results = new LinkedHashMap<String, HAPDefinitionDataAssociationGroup>();
+			Map<String, HAPDefinitionDataAssociationGroupExecutable> results = new LinkedHashMap<String, HAPDefinitionDataAssociationGroupExecutable>();
 			Map<String, HAPDefinitionActivity> activities = processDefinition.getActivities();
 			for(String activityId : activities.keySet()) {
 				HAPDefinitionActivity activity = activities.get(activityId);
@@ -38,7 +38,7 @@ public class HAPProcessorProcess{
 				if(activity.getType().equals(HAPConstant.ACTIVITY_TYPE_START))    out.setStartActivityId(activityId);    
 				
 				//process activity
-				HAPExecutableActivity activityExe = processMan.getActivityPlugin(activity.getType()).getActivityProcessor().process(activity, activityId, out, context, processDefinitionsContext, processMan, envContextProcessor, processContext);
+				HAPExecutableActivity activityExe = processMan.getActivityPlugin(activity.getType()).getActivityProcessor().process(activity, activityId, out, context, results, processDefinitionsContext, processMan, envContextProcessor, processContext);
 				out.addActivity(activityId, activityExe);
 			}
 		}while(!context.equals(oldContext));
