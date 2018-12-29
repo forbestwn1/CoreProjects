@@ -1,6 +1,7 @@
 package com.nosliw.data.core.expressionsuite;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -16,9 +17,11 @@ import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
+import com.nosliw.data.core.runtime.HAPExecutableExpressionImp;
+import com.nosliw.data.core.runtime.HAPResourceDependent;
 
 @HAPEntityWithAttribute(baseName="EXPRESSION")
-public class HAPExecutableExpressionInSuite extends HAPSerializableImp implements HAPExecutableExpression{
+public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 
 	@HAPAttribute
 	public static String VARIABLEINFOS = "variableInfos";
@@ -65,5 +68,11 @@ public class HAPExecutableExpressionInSuite extends HAPSerializableImp implement
 		HAPExecutableExpression.buildJsonMap(this, jsonMap, typeJsonMap);
 		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.m_localVarsInfo, HAPSerializationFormat.JSON));
 
+	}
+
+	@Override
+	public List<HAPResourceDependent> getResourceDependency() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

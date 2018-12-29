@@ -13,7 +13,7 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 
 //entity that can is runnable within runtime environment
 @HAPEntityWithAttribute(baseName="EXPRESSION")
-public interface HAPExecutableExpression extends HAPSerializable{
+public interface HAPExecutableExpression extends HAPSerializable, HAPExecutable{
 
 	@HAPAttribute
 	public static String OPERAND = "operand";

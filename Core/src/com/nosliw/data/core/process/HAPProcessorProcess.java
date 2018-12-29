@@ -43,6 +43,11 @@ public class HAPProcessorProcess{
 			}
 		}while(!context.equals(oldContext));
 		
+		//process resources
+		 for(HAPExecutableActivity activity : out.getActivities().values()) {
+			 out.addResoruceDependency(activity.getResourceDependency());
+		 }
+
 		return out;
 	}
 	

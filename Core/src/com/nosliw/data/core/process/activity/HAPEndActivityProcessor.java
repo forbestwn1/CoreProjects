@@ -10,6 +10,7 @@ import com.nosliw.data.core.process.HAPExecutableActivity;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
+import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 
@@ -24,10 +25,13 @@ public class HAPEndActivityProcessor implements HAPProcessorActivity{
 
 		HAPEndActivityDefinition endActivity = (HAPEndActivityDefinition)activityDefinition;
 		
-		HAPDefinitionDataAssociationGroupExecutable result = null;
+		HAPDefinitionDataAssociationGroupExecutable result = HAPUtilityProcess.processDataAssociation(context, endActivity.getOutput(), envContextProcessor);
 		results.put(endActivity.getName(), result);
 		
-		return null;
+		HAPEndActivityExecutable out = new HAPEndActivityExecutable(id, activityDefinition);
+		out.setOutputName(endActivity.getName());
+		
+		return out;
 	}
 
 }

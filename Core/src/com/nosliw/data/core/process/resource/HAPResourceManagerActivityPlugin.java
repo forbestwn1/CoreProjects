@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPPluginActivity;
 import com.nosliw.data.core.runtime.HAPResource;
@@ -34,5 +33,6 @@ public class HAPResourceManagerActivityPlugin  extends HAPResourceManagerImp{
 
 	@Override
 	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId){
+		return null;
 	}
 }

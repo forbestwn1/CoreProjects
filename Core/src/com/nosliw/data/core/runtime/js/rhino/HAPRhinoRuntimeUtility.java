@@ -24,6 +24,7 @@ import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
+import com.nosliw.data.core.runtime.HAPExecutableExpressionImp;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRuntime;
@@ -36,7 +37,7 @@ public class HAPRhinoRuntimeUtility {
 	private static String scriptTempFolder = HAPFileUtility.getScriptExportFolder() + System.currentTimeMillis() + "/";
 
 	public static HAPData executeOperandSync(HAPOperandWrapper operand, Map<String, HAPData> parms, Map<String, HAPData> referenceValues, HAPRuntime runtime) {
-		HAPRuntimeTaskExecuteExpressionRhino exeExpTask = new HAPRuntimeTaskExecuteExpressionRhino(new HAPExecutableExpression() {
+		HAPRuntimeTaskExecuteExpressionRhino exeExpTask = new HAPRuntimeTaskExecuteExpressionRhino(new HAPExecutableExpressionImp() {
 			@Override
 			public HAPOperandWrapper getOperand() {  return operand;  }
 

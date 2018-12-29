@@ -14,7 +14,9 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.operand.HAPOperandUtility;
+import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
+import com.nosliw.data.core.runtime.HAPResourceDependent;
 
 /**
  * Represent script expression executable
@@ -26,7 +28,7 @@ import com.nosliw.data.core.runtime.HAPExecutableExpression;
  * 		constant definition
  */
 @HAPEntityWithAttribute
-public class HAPScriptExpression extends HAPSerializableImp{
+public class HAPScriptExpression extends HAPSerializableImp implements HAPExecutable{
 
 	@HAPAttribute
 	public static final String DEFINITION = "definition";
@@ -121,6 +123,15 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	}
 
 	@Override
+	public List<HAPResourceDependent> getResourceDependency() {
+		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+		for(HAPExecutableExpression exp : this.getExpressions().values()) {
+			out.addAll(exp.getResourceDependency());
+		}
+		return out;
+	}
+	
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(DEFINITION, this.m_definition.getDefinition());
 		jsonMap.put(VARIABLENAMES, HAPJsonUtility.buildJson(this.getVariableNames(), HAPSerializationFormat.JSON));
@@ -131,4 +142,5 @@ public class HAPScriptExpression extends HAPSerializableImp{
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
 	}
+
 }

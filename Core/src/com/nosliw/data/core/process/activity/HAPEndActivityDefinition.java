@@ -22,6 +22,8 @@ public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 	@Override
 	public String getType() {		return HAPConstant.ACTIVITY_TYPE_END;	}
 	
+	public HAPDefinitionDataAssociationGroup getOutput() {    return this.m_output;   }
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{

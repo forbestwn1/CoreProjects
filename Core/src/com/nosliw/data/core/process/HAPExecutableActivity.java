@@ -6,6 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.runtime.HAPExecutable;
 
 @HAPEntityWithAttribute
 public abstract class HAPExecutableActivity extends HAPSerializableImp implements HAPExecutable{
@@ -25,7 +26,6 @@ public abstract class HAPExecutableActivity extends HAPSerializableImp implement
 		this.m_activityDefinition = activityDef;
 	}
 	
-	@Override
 	public String getType() {   return this.getActivityDefinition().getType();  }
 	
 	public String getId() {  return this.m_id;  }
