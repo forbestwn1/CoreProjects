@@ -35,6 +35,7 @@ public class HAPDefinitionProcessSuite extends HAPEntityInfoImp{
 	
 	public HAPContextGroup getContext() {   return this.m_context;   }
 	
+	public HAPDefinitionProcess getProcess(String processId) {  return this.m_processes.get(processId);   }
 	public Map<String, HAPDefinitionProcess> getProcesses(){   return this.m_processes;   }
 	
 	public void addProcess(String id, HAPDefinitionProcess process) {  this.m_processes.put(id, process);  }

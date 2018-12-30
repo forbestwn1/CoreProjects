@@ -51,7 +51,7 @@ public class HAPContextDefinitionRoot extends HAPEntityInfoImp{
 	}
 
 	public HAPContextDefinitionRoot cloneContextDefinitionRoot() {
-		HAPContextDefinitionRoot out = this.cloneContextDefinitionRootBase(); 
+		HAPContextDefinitionRoot out = this.cloneContextDefinitionRootBase();
 		out.m_definition = this.m_definition.cloneContextDefinitionElement();
 		return out;
 	}

@@ -67,6 +67,8 @@
 					"protected": {
 						"element": {
 							"expressionResultVar": {},
+							"errorCodeVar": {},
+							"errorDataVar": {}
 						}
 					}
 				}
@@ -84,13 +86,7 @@
 					"type": "expression",
 					"expression": "#|!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)|#",
 					"input": {
-						"element": {
-							"inputA" : {
-								"definition" : {
-									"path" : "business.a.aa"
-								}
-							} 
-						},
+						"element": {},
 						"info": {}
 					},
 					"result": [
@@ -108,6 +104,26 @@
 									}
 								}
 							}
+						},
+						{
+							"name" : fail",
+							"flow": {
+								"target": "failEndId"
+							},
+							"output": {
+								"element": {
+									"errorCodeVar": {
+										definition: {
+											"path": "error.code"
+										}
+									},
+									"errorDataVar": {
+										definition: {
+											"path": "error.data"
+										}
+									}
+								}
+							}
 						}
 					]
 				}, {
@@ -119,6 +135,24 @@
 							"output": {
 								definition: {
 									"path": "expressionResultVar"
+								}
+							}
+						}
+					}
+				}, {
+					"id": "failEndId",
+					"name": "failEnd",
+					"type": "end",
+					"output": {
+						"element": {
+							"errorCode": {
+								definition:{
+									"path": "errorCodeVar"
+								}
+							},
+							"errorData": {
+								definition:{
+									"path": "errorDataVar"
 								}
 							}
 						}

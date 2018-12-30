@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPEntityWithName;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
@@ -15,8 +19,14 @@ import com.nosliw.common.utils.HAPBasicUtility;
  * Segment in script expression for in-line script 
  * it may also contains constants and variables in it
  */
-public class HAPScriptInScriptExpression implements HAPEntityWithName{
+public class HAPScriptInScriptExpression extends HAPSerializableImp implements HAPEntityWithName{
 
+	@HAPAttribute
+	public static String SCRIPT = "script";
+
+	@HAPAttribute
+	public static String ELEMENTS = "elements";
+	
 	private String m_orignalScript;
 
 	//store segment elements
@@ -33,22 +43,9 @@ public class HAPScriptInScriptExpression implements HAPEntityWithName{
 	
 
 	public HAPScriptInScriptExpression(String script){
-		
-		if(script.contains("nosliwAttribute_data")) {
-			int kkkk = 555;
-			kkkk++;
-		}
-		
 		this.m_elements = new ArrayList<Object>();
 		this.m_orignalScript = script;
 		this.processSegments();
-		
-		if(this.m_elements.size()==2) {
-			if(this.m_elements.get(0) instanceof HAPConstantInScript && this.m_elements.get(1) instanceof HAPConstantInScript) {
-				int kkkk = 555;
-				kkkk++;
-			}
-		}
 	}
 	
 	public List<Object> getElements(){	return this.m_elements;	}
@@ -178,4 +175,12 @@ public class HAPScriptInScriptExpression implements HAPEntityWithName{
 		}
 		return indexs;
 	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(SCRIPT, this.m_orignalScript);
+		jsonMap.put(ELEMENTS, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON));
+	}
+	
 }

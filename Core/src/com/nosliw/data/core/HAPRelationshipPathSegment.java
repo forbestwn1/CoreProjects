@@ -4,6 +4,7 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
 /**
@@ -31,10 +32,14 @@ public class HAPRelationshipPathSegment extends HAPSerializableImp{
 	public String getType(){		return this.m_type;	}
 	public String getId(){  return this.m_id; }
 	
-	public boolean equals(Object segment){
+	@Override
+	public boolean equals(Object obj){
 		boolean out = false;
-		if(segment instanceof HAPRelationshipPathSegment){
-			out = (segment == this);
+		if(obj instanceof HAPRelationshipPathSegment){
+			HAPRelationshipPathSegment seg = (HAPRelationshipPathSegment)obj;
+			if(!HAPBasicUtility.isEquals(this.m_id, seg.m_id))  return false;
+			if(!HAPBasicUtility.isEquals(this.m_type, seg.m_type))  return false;
+			out = true;
 		}
 		return out;
 	}

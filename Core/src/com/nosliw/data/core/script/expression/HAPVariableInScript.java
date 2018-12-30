@@ -1,9 +1,16 @@
 package com.nosliw.data.core.script.expression;
 
+import java.util.Map;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.updatename.HAPUpdateName;
 
-public class HAPVariableInScript {
+public class HAPVariableInScript extends HAPSerializableImp{
 
+	@HAPAttribute
+	public static String VARIABLENAME = "variableName";
+	
 	private String m_variableName; 
 	
 	public HAPVariableInScript(String name){
@@ -21,5 +28,11 @@ public class HAPVariableInScript {
 
 	public HAPVariableInScript cloneVariableInScript() {
 		return new HAPVariableInScript(this.m_variableName);
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(VARIABLENAME, this.m_variableName);
 	}
 }

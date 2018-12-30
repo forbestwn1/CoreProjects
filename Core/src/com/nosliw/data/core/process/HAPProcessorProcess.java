@@ -41,7 +41,8 @@ public class HAPProcessorProcess{
 				HAPExecutableActivity activityExe = processMan.getActivityPlugin(activity.getType()).getActivityProcessor().process(activity, activityId, out, context, results, processDefinitionsContext, processMan, envContextProcessor, processContext);
 				out.addActivity(activityId, activityExe);
 			}
-		}while(!context.equals(oldContext));
+		}while(false);
+		//while(!context.equals(oldContext));
 		
 		//process resources
 		 for(HAPExecutableActivity activity : out.getActivities().values()) {

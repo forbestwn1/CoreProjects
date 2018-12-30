@@ -18,8 +18,9 @@ public class HAPParserProcessDefinition {
 		out.buildObject(processSuiteJson, HAPSerializationFormat.JSON);
 		JSONArray processesArray = processSuiteJson.getJSONArray(HAPDefinitionProcessSuite.PROCESS);
 		for(int i=0; i<processesArray.length(); i++){
-			HAPDefinitionProcess process = parseProcess(processesArray.getJSONObject(i), processMan);
-			out.addProcess(process);
+			JSONObject processObjJson = processesArray.getJSONObject(i);
+			HAPDefinitionProcess process = parseProcess(processObjJson, processMan);
+			out.addProcess(processObjJson.getString("id"), process);
 		}
 
 		JSONObject contextJson = processSuiteJson.optJSONObject(HAPDefinitionProcessSuite.CONTEXT);
@@ -41,7 +42,7 @@ public class HAPParserProcessDefinition {
 			JSONObject activityObjJson = (JSONObject)activityArrayJson.get(i);
 			String stepType = activityObjJson.getString(HAPDefinitionActivity.TYPE);
 			HAPDefinitionActivity activity = processMan.getActivityPlugin(stepType).buildActivityDefinition(activityObjJson);
-			out.addActivity(activity);
+			out.addActivity(activityObjJson.getString("id"), activity);
 		}
 		return out;
 	}

@@ -27,4 +27,14 @@ public class HAPContextDefinitionLeafValue extends HAPContextDefinitionLeafVaria
 		super.toContextDefinitionElement(out);
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if(!super.equals(obj))  return false;
+
+		boolean out = false;
+		if(obj instanceof HAPContextDefinitionLeafValue) {
+			out = true;
+		}
+		return out;
+	}
 }

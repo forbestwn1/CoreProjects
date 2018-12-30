@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
@@ -66,5 +67,18 @@ public class HAPContextDefinitionLeafConstant extends HAPContextDefinitionElemen
 	public void toContextDefinitionElement(HAPContextDefinitionElement out) {
 		super.toContextDefinitionElement(out);
 		((HAPContextDefinitionLeafConstant)out).m_value = this.m_value;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(!super.equals(obj))  return false;
+
+		boolean out = false;
+		if(obj instanceof HAPContextDefinitionLeafConstant) {
+			HAPContextDefinitionLeafConstant ele = (HAPContextDefinitionLeafConstant)obj;
+			if(!HAPBasicUtility.isEquals(this.m_value, ele.m_value))  return false;
+			out = true;
+		}
+		return out;
 	}
 }

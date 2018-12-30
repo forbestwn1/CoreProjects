@@ -138,10 +138,14 @@ public class HAPContext extends HAPSerializableImp{
 	
 	public HAPContext cloneContext() {
 		HAPContext out = this.cloneContextBase();
+		this.toContext(out);
+		return out;
+	}
+	
+	public void toContext(HAPContext out) {
 		for(String name : this.m_elements.keySet()) {
 			out.addElement(name, this.m_elements.get(name).cloneContextDefinitionRoot());
 		}
-		return out;
 	}
 	
 	@Override
@@ -161,5 +165,20 @@ public class HAPContext extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ELEMENT, HAPJsonUtility.buildJson(m_elements, HAPSerializationFormat.JSON));
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		boolean out = false;
+		if(obj instanceof HAPContext) {
+			HAPContext context = (HAPContext)obj;
+			if(context.getElementNames().equals(this.getElementNames())) {
+				for(String eleName : this.getElementNames()) {
+					out = this.getElement(eleName).equals(context.getElement(eleName));
+					if(!out)  break;
+				}
+			}
+		}
+		return out;
 	}
 }

@@ -15,6 +15,7 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_resourceUtility;
+	var node_ResourceId;
 	var node_DependentServiceRequestInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 	
@@ -193,6 +194,35 @@ var node_createResourceService = function(resourceManager){
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		
+		//getGetResourcesRequest + return resource data by type
+		getGetResourceDataByTypeRequest : function(ids, resourceType, handlers, requester_parent){
+			var requestInfo = loc_out.getRequestInfo(requester_parent);
+			var out = node_createServiceRequestInfoService(new node_ServiceInfo("GetResourceDataByTypeRequest", {"ids":ids, "resourceType":resourceType}), handlers, requestInfo)
+			
+			//get resource request
+			var resourceIds = [];
+			for(var i in ids)		resourceIds.push(new node_ResourceId(resourceType, ids[i]));
+			var loadResourceRequest = this.getGetResourcesRequest(resourceIds);
+			
+			out.setDependentService(new node_DependentServiceRequestInfo(loadResourceRequest, {
+				success : function(requestInfo, resourceTree){
+					//translate tree to resources by id
+					var resourcesData = {};
+					var resources = node_resourceUtility.getResourcesByTypeFromTree(resourceTree, resourceType);
+					_.each(resources, function(resource, id){
+						resourcesData[id] = resource.resourceData;
+					});
+					return resourcesData;
+				}
+			}));
+			return out;
+		},
+		
+		executeGetResourceDataByTypeRequest : function(ids, resourceType, handlers, requester_parent){
+			var requestInfo = this.getGetResourceDataByTypeRequest(ids, resourceType, handlers, requester_parent);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+		
 		/**
 		 * Import resource 
 		 */
@@ -225,6 +255,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){node_ResourceId = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 
 //Register Node by Name

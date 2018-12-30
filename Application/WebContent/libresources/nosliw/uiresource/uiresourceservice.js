@@ -20,50 +20,17 @@ var node_createUIResourceService = function(){
 	
 	var loc_uiResourceViewFactory = node_createUIViewFactory();
 	
-	var loc_buildUIResourceId = function(name){
-		var out = {};
-		out[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = name; 
-		out[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIRESOURCE; 
-		return out;
-	};
-	
 	var loc_getResourceViewId = function(){	return nosliw.generateId();	};
 	
 	var loc_out = {
 
-			getGetUIResourceRequest : function(names, handlers, requester_parent){
-				var requestInfo = loc_out.getRequestInfo(requester_parent);
-				var out = node_createServiceRequestInfoService(new node_ServiceInfo("GetUIResource", {"names":names}), handlers, requestInfo)
-				
-				//get resource request
-				var resourceIds = [];
-				for(var i in names)		resourceIds.push(loc_buildUIResourceId(names[i]));
-				var loadResourceRequest = nosliw.runtime.getResourceService().getGetResourcesRequest(resourceIds);
-				
-				out.setDependentService(new node_DependentServiceRequestInfo(loadResourceRequest, {
-					success : function(requestInfo, resourceTree){
-						//translate tree to resources by id
-						var uiResources = {};
-						var uiResourceResources = node_resourceUtility.getResourcesByTypeFromTree(resourceTree, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIRESOURCE);
-						_.each(uiResourceResources, function(uiResourceResource, name){
-							uiResources[name] = uiResourceResource.resourceData;
-						});
-						return uiResources;
-					}
-				}));
-				return out;
-			},
-			
-			executeGetUIResourceRequest : function(names, handlers, requester_parent){
-				var requestInfo = this.getGetUIResourceRequest(names, handlers, requester_parent);
-				node_requestServiceProcessor.processRequest(requestInfo);
-			},
-			
 			getCreateUIResourceViewRequest : function(name, handlers, requester_parent){
 				var requestInfo = loc_out.getRequestInfo(requester_parent);
 				var out = node_createServiceRequestInfoService(new node_ServiceInfo("CreateUIResourceView", {"name":name}), handlers, requestInfo)
 
-				var getUIResourceRequest = this.getGetUIResourceRequest([name], {});
+				var getUIResourceRequest = nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([name], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIRESOURCE, {});
+				
+				
 				out.setDependentService(new node_DependentServiceRequestInfo(getUIResourceRequest, {
 					success : function(requestInfo, uiResources){
 						var uiResource = uiResources[name];

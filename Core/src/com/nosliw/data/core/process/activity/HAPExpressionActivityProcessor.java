@@ -81,6 +81,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		//discover expression
 		HAPDefinitionScriptExpression scriptExpressionDefinition = expActivityDef.getExpression();
 		HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(scriptExpressionDefinition, expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), envContextProcessor.expressionManager, envContextProcessor.runtime);
+		out.setScriptExpression(scriptExpression);
 		
 		//result
 		HAPDefinitionDataAssociationGroupExecutable outputDataAssociation = null;

@@ -184,6 +184,7 @@ public class HAPConstant {
 		public static final String CONTEXT_ELEMENTTYPE_VALUE = "value";
 		public static final String CONTEXT_ELEMENTTYPE_CONSTANT = "constant";
 		public static final String CONTEXT_ELEMENTTYPE_NODE = "node";
+		public static final String CONTEXT_ELEMENTTYPE_UNKNOW = "unknow";
 
 
 

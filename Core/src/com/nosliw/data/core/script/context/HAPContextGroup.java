@@ -170,4 +170,19 @@ public class HAPContextGroup extends HAPSerializableImp{
 		jsonMap.put(GROUP, HAPJsonUtility.buildJson(this.m_contexts, HAPSerializationFormat.JSON));
 		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_info, HAPSerializationFormat.JSON));
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		boolean out = false;
+		if(obj instanceof HAPContextGroup) {
+			HAPContextGroup contextGroup = (HAPContextGroup)obj;
+			if(contextGroup.getContextTypes().equals(this.getContextTypes())) {
+				for(String categary : this.getContextTypes()) {
+					out = contextGroup.getContext(categary).equals(this.getContext(categary));
+					if(!out)  break;
+				}
+			}
+		}
+		return out;
+	}
 }

@@ -121,6 +121,11 @@ public class HAPProcessorContextRelative {
 			HAPContextDefinitionLeafData dataParent = (HAPContextDefinitionLeafData)parent.getSolidContextDefinitionElement();
 			HAPContextDefinitionLeafData dataDef = (HAPContextDefinitionLeafData)def;
 			//cal matchers
+			if(dataParent==null || dataParent.getCriteria()==null || dataDef==null || dataDef.getCriteria()==null) {
+				int kkkk = 5555;
+				kkkk++;
+			}
+			
 			HAPMatchers matcher = contextProcessorEnv.dataTypeHelper.convertable(dataParent.getCriteria().getCriteria(), dataDef.getCriteria().getCriteria());
 			matchers.put(path, matcher);
 			break;

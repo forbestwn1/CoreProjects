@@ -53,10 +53,7 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 	public String getType() {		return HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE;	}
 
 	@Override
-	public HAPContextDefinitionElement getSolidContextDefinitionElement() {
-		if(this.isProcessed())  return this.m_definition;
-		else return null;  
-	}
+	public HAPContextDefinitionElement getSolidContextDefinitionElement() {	return this.m_definition;	}
 	
 	public HAPContextDefinitionElement getDefinition() {   return this.m_definition;   }
 	public void setDefinition(HAPContextDefinitionElement definition) {   this.m_definition = definition.getSolidContextDefinitionElement();   }
@@ -106,7 +103,7 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 
 	@Override
 	public HAPContextDefinitionElement getChild(String childName) {
-		if(this.isProcessed()&&this.m_definition!=null) 		return this.m_definition.getChild(childName);
+		if(this.m_definition!=null) 		return this.m_definition.getChild(childName);
 		return null;   
 	}
 	
@@ -151,4 +148,20 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 		}
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if(!super.equals(obj))  return false;
+
+		boolean out = false;
+		if(obj instanceof HAPContextDefinitionLeafRelative) {
+			HAPContextDefinitionLeafRelative ele = (HAPContextDefinitionLeafRelative)obj;
+			if(!HAPBasicUtility.isEquals(this.getPathStr(), ele.getPathStr()))  return false;
+			if(!HAPBasicUtility.isEqualMaps(ele.m_matchers, this.m_matchers)) 	return false;
+			if(!HAPBasicUtility.isEqualMaps(ele.m_reverseMatchers, this.m_matchers))  return false;
+			if(!ele.m_definition.equals(this.m_definition))  return false;
+			out = true;
+		}
+		return out;
+	}
+	
 }

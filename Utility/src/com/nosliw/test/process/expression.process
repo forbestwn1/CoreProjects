@@ -16,6 +16,25 @@
 				"group": {
 					"public": {
 						"element": {
+							business : {
+								definition: {
+									child : {
+										a : {
+											child : {
+												aa : {criteria:"test.string;1.0.0"},
+											}
+										}
+									},
+									defaultValue: {
+										a : {
+											aa : {
+												dataTypeId: "test.string;1.0.0",
+												value: "This is my world!"
+											}
+										}
+									}
+								}
+							},
 							"baseVar": {
 								"definition":{
 									criteria: "test.string",
@@ -48,8 +67,6 @@
 					"protected": {
 						"element": {
 							"expressionResultVar": {},
-							"errorCodeVar": {},
-							"errorDataVar": {}
 						}
 					}
 				}
@@ -65,13 +82,20 @@
 					"id": "expressionActivityId",
 					"name": "expressionActivity",
 					"type": "expression",
-					"expression": "!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)",
+					"expression": "#|!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)|#",
 					"input": {
-						"element": {},
+						"element": {
+							"inputA" : {
+								"definition" : {
+									"path" : "business.a.aa"
+								}
+							} 
+						},
 						"info": {}
 					},
-					"result": {
-						"success": {
+					"result": [
+						{
+							"name" : "success",
 							"flow": {
 								"target": "successEndId"
 							},
@@ -84,27 +108,8 @@
 									}
 								}
 							}
-						},
-						"fail": {
-							"flow": {
-								"target": "failEndId"
-							},
-							"output": {
-								"element": {
-									"errorCodeVar": {
-										definition: {
-											"path": "error.code"
-										}
-									},
-									"errorDataVar": {
-										definition: {
-											"path": "error.data"
-										}
-									}
-								}
-							}
 						}
-					}
+					]
 				}, {
 					"id": "successEndId",
 					"name": "successEnd",
@@ -114,24 +119,6 @@
 							"output": {
 								definition: {
 									"path": "expressionResultVar"
-								}
-							}
-						}
-					}
-				}, {
-					"id": "failEndId",
-					"name": "failEnd",
-					"type": "end",
-					"output": {
-						"element": {
-							"errorCode": {
-								definition:{
-									"path": "errorCodeVar"
-								}
-							},
-							"errorData": {
-								definition:{
-									"path": "errorDataVar"
 								}
 							}
 						}

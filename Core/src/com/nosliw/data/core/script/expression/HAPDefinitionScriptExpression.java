@@ -2,17 +2,28 @@ package com.nosliw.data.core.script.expression;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 
 //script expression definition
 //it is used in embeded
-public class HAPDefinitionScriptExpression {
+public class HAPDefinitionScriptExpression extends HAPSerializableImp{
 
 	public static final String EXPRESSION_TOKEN_OPEN = "#|";
 	public static final String EXPRESSION_TOKEN_CLOSE = "|#";
 
+	@HAPAttribute
+	public static String DEFINITION = "definition";
+	
+	@HAPAttribute
+	public static String ELEMENTS = "elements";
+	
 	//definition literate
 	private String m_definition;
 
@@ -87,4 +98,12 @@ public class HAPDefinitionScriptExpression {
 			i++;
 		}
 	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(DEFINITION, this.m_definition);
+		jsonMap.put(ELEMENTS, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON));
+	}
+	
 }

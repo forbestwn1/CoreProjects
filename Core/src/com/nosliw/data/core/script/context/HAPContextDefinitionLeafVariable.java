@@ -3,6 +3,7 @@ package com.nosliw.data.core.script.context;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.utils.HAPBasicUtility;
 
 public abstract class HAPContextDefinitionLeafVariable extends HAPContextDefinitionElement{
 
@@ -30,5 +31,18 @@ public abstract class HAPContextDefinitionLeafVariable extends HAPContextDefinit
 	public void toContextDefinitionElement(HAPContextDefinitionElement out) {
 		super.toContextDefinitionElement(out);
 		((HAPContextDefinitionLeafVariable)out).m_defaultValue = this.m_defaultValue;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(!super.equals(obj))  return false;
+
+		boolean out = false;
+		if(obj instanceof HAPContextDefinitionLeafVariable) {
+			HAPContextDefinitionLeafVariable ele = (HAPContextDefinitionLeafVariable)obj;
+			if(!HAPBasicUtility.isEquals(this.m_defaultValue, ele.m_defaultValue))  return false;
+			out = true;
+		}
+		return out;
 	}
 }

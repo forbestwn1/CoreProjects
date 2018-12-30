@@ -16,6 +16,7 @@ public class HAPUtilityProcess {
 	//process input configure for activity and generate flat context for activity
 	public static HAPDefinitionDataAssociationGroupExecutable processDataAssociation(HAPContextGroup parentContext, HAPDefinitionDataAssociationGroup input, HAPEnvContextProcessor contextProcessorEnv) {
 		HAPDefinitionDataAssociationGroupExecutable out = new HAPDefinitionDataAssociationGroupExecutable(input);
+		input = input.cloneDataAssocationGroup();
 		
 		String helpCategary = HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE;
 		

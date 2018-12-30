@@ -26,6 +26,7 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	
 	public HAPDefinitionActivityNormal() {
 		this.m_results = new LinkedHashMap<String, HAPResultActivityNormal>();
+		this.m_input = new HAPDefinitionDataAssociationGroup();
 	}
 	
 	public HAPDefinitionDataAssociationGroup getInput() {  return this.m_input;   }

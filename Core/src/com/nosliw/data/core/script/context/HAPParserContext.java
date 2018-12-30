@@ -61,6 +61,7 @@ public class HAPParserContext {
 		//definition
 		JSONObject defJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionRoot.DEFINITION);
 		if(defJsonObj!=null)  out.setDefinition(parseContextDefinitionElement(defJsonObj));
+		else out.setDefinition(new HAPContextDefinitionUnknown());
 		return out;
 	}
 	

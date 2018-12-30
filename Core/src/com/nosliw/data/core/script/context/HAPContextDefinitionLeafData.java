@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 
@@ -48,6 +49,19 @@ public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariab
 	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants,
 			HAPEnvContextProcessor contextProcessorEnv) {
 		HAPContextDefinitionElement out = this.cloneContextDefinitionElement();
+		return out;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(!super.equals(obj))  return false;
+
+		boolean out = false;
+		if(obj instanceof HAPContextDefinitionLeafData) {
+			HAPContextDefinitionLeafData ele = (HAPContextDefinitionLeafData)obj;
+			if(!HAPBasicUtility.isEquals(this.m_criteria, ele.m_criteria))  return false;
+			out = true;
+		}
 		return out;
 	}
 }

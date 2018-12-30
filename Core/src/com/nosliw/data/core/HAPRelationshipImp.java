@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPBasicUtility;
 
 public class HAPRelationshipImp extends HAPSerializableImp implements HAPRelationship{
 
@@ -34,4 +35,16 @@ public class HAPRelationshipImp extends HAPSerializableImp implements HAPRelatio
 		jsonMap.put(PATH, HAPSerializeManager.getInstance().toStringValue(this.getPath(), HAPSerializationFormat.LITERATE));
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		boolean out = false;
+		if(obj instanceof HAPRelationshipImp) {
+			HAPRelationshipImp relationship = (HAPRelationshipImp)obj;
+			if(!HAPBasicUtility.isEquals(this.m_source, relationship.m_source))  return false;
+			if(!HAPBasicUtility.isEquals(this.m_taget, relationship.m_taget))  return false;
+			if(!HAPBasicUtility.isEquals(this.m_path, relationship.m_path))  return false;
+			out = true;
+		}
+		return out;
+	}
 }

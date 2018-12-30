@@ -9,6 +9,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPRelationship;
 
@@ -66,6 +67,18 @@ public class HAPMatchers extends HAPSerializableImp{
 		for(HAPDataTypeId dataTypeId : this.m_matchers.keySet()){
 			out.addMatcher(this.m_matchers.get(dataTypeId));
 		}
+		return out;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		boolean out = false;
+		if(obj instanceof HAPMatchers) {
+			HAPMatchers matchers = (HAPMatchers)obj;
+			if(!HAPBasicUtility.isEqualMaps(this.m_matchers, matchers.m_matchers))  return false;
+			out = true;
+		}
+		
 		return out;
 	}
 }

@@ -1,7 +1,6 @@
 package com.nosliw.data.core.process.activity;
 
 import java.util.Map;
-import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -9,11 +8,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
-import com.nosliw.data.core.script.expression.HAPScriptExpression;
 
 public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal{
 

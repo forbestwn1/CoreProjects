@@ -43,5 +43,17 @@ public abstract class HAPContextDefinitionElement extends HAPSerializableImp{
 		jsonMap.put(TYPE, this.getType());
 		jsonMap.put(PROCESSED, this.isProcessed()+"");
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		boolean out = false;
+		if(obj instanceof HAPContextDefinitionElement) {
+			HAPContextDefinitionElement ele = (HAPContextDefinitionElement)obj;
+			if(!ele.getType().equals(this.getType()))  return false;
+			if(!(ele.m_processed==this.m_processed))  return false;
+			out = true;
+		}
+		return out;
+	}
 	
 }

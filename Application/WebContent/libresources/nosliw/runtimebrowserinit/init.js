@@ -15,6 +15,7 @@ nosliw.init = function(serverBase){
 		"nosliw.logging",
 		"nosliw.common",
 		"nosliw.expression",
+		"nosliw.process",
 		"nosliw.request",
 		"nosliw.id",
 		"nosliw.resource",
