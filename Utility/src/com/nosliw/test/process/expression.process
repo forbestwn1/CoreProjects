@@ -85,7 +85,12 @@
 					"expression": "#|!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)|#",
 					"input": {
 						"element": {
-							"inputA" : {
+							"inputA.b.c" : {
+								"definition" : {
+									"path" : "business.a.aa"
+								}
+							}, 
+							"inputA.d.c" : {
 								"definition" : {
 									"path" : "business.a.aa"
 								}

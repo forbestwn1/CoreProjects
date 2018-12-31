@@ -1,5 +1,8 @@
 package com.nosliw.data.core.process;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
@@ -21,7 +24,8 @@ public class HAPUtilityProcess {
 		String helpCategary = HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE;
 		
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
-		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(input.getInfo());
+		configure.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE; 
+//				HAPUtilityContext.getContextGroupInheritMode(input.getInfo());
 
 		//set input context to help categary
 		HAPContextGroup context = new HAPContextGroup();
@@ -39,6 +43,14 @@ public class HAPUtilityProcess {
 
 		//process input context
 		context = HAPProcessorContext.process(context, parentContext, configure, contextProcessorEnv);
+		
+		//build path mapping
+		Map<String, String> pathMapping = new LinkedHashMap<String, String>();
+		HAPContext helpContext1 = context.getContext(helpCategary);
+		for(String eleName : helpContext1.getElementNames()) {
+			pathMapping.putAll(HAPUtilityContext.buildRelativePathMapping(helpContext1.getElement(eleName), eleName));
+		}
+		out.setPathMapping(pathMapping);
 		
 		out.setContext(HAPUtilityContext.buildFlatContextFromContextGroup(context, null));
 		

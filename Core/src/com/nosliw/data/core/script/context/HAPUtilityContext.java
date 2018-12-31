@@ -21,6 +21,31 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPUtilityContext {
 
+	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName){
+		Map<String, String> out = new LinkedHashMap<String, String>();
+		processContextDefElementWithPathInfo(contextRoot.getDefinition(), new HAPContextDefEleProcessor() {
+			@Override
+			public boolean process(HAPContextDefinitionElement ele, Object value) {
+				String path = (String)value;
+				if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE)) {
+					HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)ele;
+					HAPContextPath contextPath = relativeEle.getPath();
+					String from = HAPNamingConversionUtility.buildPath(path, contextPath.getSubPath());
+					String to = contextPath.getFullPath();
+					out.put(from, to);
+					return false;
+				}
+				return true;
+			}
+
+			@Override
+			public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
+				return true;
+			}}, rootName);
+		return out;
+	}
+	
+	
 	//traverse through all the context definition element, and process it
 	public static void processContextDefElement(HAPContextDefinitionElement contextDefEle, HAPContextDefEleProcessor processor, Object value) {
 		if(processor.process(contextDefEle, value)) {
@@ -39,7 +64,7 @@ public class HAPUtilityContext {
 			if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(contextDefEle.getType())) {
 				HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)contextDefEle;
 				for(String childNodeName : nodeEle.getChildren().keySet()) {
-					processContextDefElement(nodeEle.getChild(childNodeName), processor, HAPNamingConversionUtility.buildPath(path, childNodeName));
+					processContextDefElementWithPathInfo(nodeEle.getChild(childNodeName), processor, HAPNamingConversionUtility.buildPath(path, childNodeName));
 				}
 			}
 		}

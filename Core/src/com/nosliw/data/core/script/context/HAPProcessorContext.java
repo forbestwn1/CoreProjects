@@ -4,7 +4,7 @@ public class HAPProcessorContext {
 
 	public static HAPContextGroup process(HAPContextGroup contextGroup, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPEnvContextProcessor contextProcessorEnv) {
 		HAPContextGroup out = processStatic(contextGroup, parentContextGroup, configure, contextProcessorEnv);
-		out = processStatic(out, parentContextGroup, configure, contextProcessorEnv);
+		out = processRelative(out, parentContextGroup, configure, contextProcessorEnv);
 		return out;
 	}
 	
