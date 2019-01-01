@@ -122,6 +122,17 @@ public class HAPScriptExpression extends HAPSerializableImp implements HAPExecut
 		return out;
 	}
 
+	public Set<String> getDataVariableNames(){
+		Set<String> out = new HashSet<String>();
+		for(Object ele : this.m_elements){
+			if(ele instanceof HAPExecutableExpression){
+				HAPExecutableExpression expExe = (HAPExecutableExpression)ele;
+				out.addAll(HAPOperandUtility.discoverVariables(expExe.getOperand()));
+			}
+		}
+		return out;
+	}
+	
 	@Override
 	public List<HAPResourceDependent> getResourceDependency() {
 		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();

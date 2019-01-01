@@ -37,35 +37,6 @@ public class HAPUtilityScriptExpression {
 		return constantsData;
 	}
 	
-
-	
-	/**
-	 * parse text to discover script expression in it
-	 * @param text
-	 * @param idGenerator
-	 * @param expressionMan
-	 * @return a list of text and ui expression object
-	 */
-//	public static List<Object> discoverEmbededScriptExpression1(String text){
-//		List<Object> segs = discoverEmbededScript(text);
-//		return toExeEmbedElement(segs);
-//	}
-	
-	//convert list of definition elements to executable elements 
-//	public static List<Object> toExeEmbedElement1(List<Object> eles){
-//		List<Object> out = new ArrayList<Object>();
-//		for(int i=0; i<eles.size(); i++) {
-//			Object seg = eles.get(i);
-//			if(seg instanceof String)   out.add(seg);
-//			else if(seg instanceof HAPDefinitionScriptExpression) {
-//				HAPDefinitionScriptExpression scriptSeg = (HAPDefinitionScriptExpression)seg;
-//				HAPScriptExpression uiExpression = new HAPScriptExpression(scriptSeg.getDefinition());
-//				out.add(uiExpression);
-//			}
-//		}
-//		return out;
-//	}
-
 	//process variables in expression, 
 	//	for attribute operation a.b.c.d which have responding definition in context, 
 	//			replace attribute operation with one variable operation
@@ -126,12 +97,6 @@ public class HAPUtilityScriptExpression {
 						//find start operand
 						stack.get(stack.size()-1).open = true;
 					}
-					
-//					if(stack.size()>=1 && stack.get(stack.size()-1).open){
-//						HAPAttributeOperandChainInfo attrInfo = stack.get(stack.size()-1);
-//						attrInfo.startOperand = operand;
-//						attrInfo.open = false;
-//					}
 				}
 			}
 		});

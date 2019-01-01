@@ -16,7 +16,10 @@ public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariab
 	//context definition of that node (criteria)
 	private HAPVariableInfo m_criteria;
 	
-	public HAPContextDefinitionLeafData(){
+	private HAPContextDefinitionLeafData() {}
+	
+	public HAPContextDefinitionLeafData(HAPVariableInfo criteria){
+		this.m_criteria = criteria;
 	}
 	
 	@Override

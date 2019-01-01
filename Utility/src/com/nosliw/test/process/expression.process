@@ -82,7 +82,7 @@
 					"id": "expressionActivityId",
 					"name": "expressionActivity",
 					"type": "expression",
-					"expression": "#|!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)|#",
+					"expression": "#|!(test.string)!.subString(?(inputA.b.c)?,from:?(fromVar)?,to:?(toVar)?)|#",
 					"input": {
 						"element": {
 							"inputA.b.c" : {
@@ -108,7 +108,7 @@
 								"element": {
 									"expressionResultVar": {
 										definition:{
-											"path": "output"
+											"path": "nosliw_output"
 										}
 									}
 								}

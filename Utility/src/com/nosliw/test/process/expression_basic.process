@@ -84,9 +84,20 @@
 					"id": "expressionActivityId",
 					"name": "expressionActivity",
 					"type": "expression",
-					"expression": "#|!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)|#",
+					"expression": "#|!(test.string)!.subString(?(inputA.b.c)?,from:?(fromVar)?,to:?(toVar)?)|#",
 					"input": {
-						"element": {},
+						"element": {
+							"inputA.b.c" : {
+								"definition" : {
+									"path" : "business.a.aa"
+								}
+							}, 
+							"inputA.d.c" : {
+								"definition" : {
+									"path" : "business.a.aa"
+								}
+							} 
+						},
 						"info": {}
 					},
 					"result": [
@@ -99,7 +110,7 @@
 								"element": {
 									"expressionResultVar": {
 										definition:{
-											"path": "output"
+											"path": "nosliw_output"
 										}
 									}
 								}

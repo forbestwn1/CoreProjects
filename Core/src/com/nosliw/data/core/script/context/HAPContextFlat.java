@@ -36,9 +36,13 @@ public class HAPContextFlat extends HAPSerializableImp{
 		this.m_nameMapping = new LinkedHashMap<String, String>();
 	}
 	
+	//solid variable name
+	//if item does not exist, then return null
 	public String getSolidName(String name) {
 		String out = this.m_nameMapping.get(name);
-		if(out==null)  out = name;
+		if(out==null) {
+			if(this.m_context.getElement(name)!=null)	out = name;
+		}
 		return out;
 	}
 	

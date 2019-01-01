@@ -1,5 +1,7 @@
 package com.nosliw.data.core.process;
 
+import com.nosliw.data.core.script.context.HAPContextFlat;
+
 public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 
 	private HAPDefinitionDataAssociationGroupExecutable m_input;
@@ -13,6 +15,10 @@ public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 
 	public void setInputDataAssociation(HAPDefinitionDataAssociationGroupExecutable input) {  this.m_input = input;  }
 
+	public HAPContextFlat getInput() {  return this.m_input.getContext();   }
+	
 	public void setOutputDataAssociation(HAPDefinitionDataAssociationGroupExecutable output) {  this.m_output = output;  }
+
+	
 	
 }

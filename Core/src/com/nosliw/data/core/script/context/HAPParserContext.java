@@ -6,7 +6,6 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPParserContext {
@@ -61,7 +60,10 @@ public class HAPParserContext {
 		//definition
 		JSONObject defJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionRoot.DEFINITION);
 		if(defJsonObj!=null)  out.setDefinition(parseContextDefinitionElement(defJsonObj));
-		else out.setDefinition(new HAPContextDefinitionUnknown());
+		else{
+			//if no definition, then treat it as data leaf
+			out.setDefinition(new HAPContextDefinitionLeafData(new HAPVariableInfo()));
+		}
 		return out;
 	}
 	
@@ -84,10 +86,9 @@ public class HAPParserContext {
 		}
 		else if(criteriaStr!=null) {
 			//data
-			contextRootDef = new HAPContextDefinitionLeafData();   
 			HAPVariableInfo criteria = new HAPVariableInfo();
 			criteria.buildObject(criteriaStr, HAPSerializationFormat.LITERATE);
-			((HAPContextDefinitionLeafData)contextRootDef).setCriteria(criteria);
+			contextRootDef = new HAPContextDefinitionLeafData(criteria);   
 			//default value
 			((HAPContextDefinitionLeafVariable)contextRootDef).setDefaultValue(defaultJsonObj);
 		}

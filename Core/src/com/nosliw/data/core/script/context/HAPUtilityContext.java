@@ -21,17 +21,22 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPUtilityContext {
 
+	//each relative context element represent path mapping from input context to output context during runtime
 	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName){
+		return buildRelativePathMapping(contextRoot.getDefinition(), rootName);
+	}
+	
+	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionElement contextDefEle, String rootName){
 		Map<String, String> out = new LinkedHashMap<String, String>();
-		processContextDefElementWithPathInfo(contextRoot.getDefinition(), new HAPContextDefEleProcessor() {
+		processContextDefElementWithPathInfo(contextDefEle, new HAPContextDefEleProcessor() {
 			@Override
 			public boolean process(HAPContextDefinitionElement ele, Object value) {
 				String path = (String)value;
 				if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 					HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)ele;
 					HAPContextPath contextPath = relativeEle.getPath();
-					String from = HAPNamingConversionUtility.buildPath(path, contextPath.getSubPath());
-					String to = contextPath.getFullPath();
+					String from = contextPath.getFullPath();
+					String to = HAPNamingConversionUtility.buildPath(path, contextPath.getSubPath());
 					out.put(from, to);
 					return false;
 				}
@@ -45,6 +50,7 @@ public class HAPUtilityContext {
 		return out;
 	}
 	
+
 	
 	//traverse through all the context definition element, and process it
 	public static void processContextDefElement(HAPContextDefinitionElement contextDefEle, HAPContextDefEleProcessor processor, Object value) {
@@ -238,6 +244,16 @@ public class HAPUtilityContext {
 		return out;
 	}
 	
+	public static HAPContextGroup buildContextGroupFromContext(HAPContext context) {
+		HAPContextGroup out = new HAPContextGroup();
+		for(String rootName : context.getElementNames()) {
+			HAPContextDefinitionRoot root = context.getElement(rootName);
+			HAPContextDefinitionRootId rootId = new HAPContextDefinitionRootId(rootName);
+			out.addElement(rootId.getName(), root, rootId.getCategary());
+		}
+		return out;
+	}
+
 	//
 	public static HAPContextGroup buildContextGroupFromFlatContext(HAPContextFlat flatContext, Set<String> rootVars) {
 		HAPContextGroup out = new HAPContextGroup();
@@ -368,8 +384,7 @@ public class HAPUtilityContext {
 					HAPContextDefinitionLeafData dataLeafEle = (HAPContextDefinitionLeafData)candidateNode;
 					HAPDataTypeCriteria parentCriteria = HAPCriteriaUtility.getChildCriteriaByPath(dataLeafEle.getCriteria().getCriteria(), out.remainPath);
 					if(parentCriteria!=null) {
-						out.resolvedNode = new HAPContextDefinitionLeafData(); 
-						((HAPContextDefinitionLeafData)out.resolvedNode).setCriteria(new HAPVariableInfo(parentCriteria));
+						out.resolvedNode = new HAPContextDefinitionLeafData(new HAPVariableInfo(parentCriteria)); 
 					}
 				}
 			}
