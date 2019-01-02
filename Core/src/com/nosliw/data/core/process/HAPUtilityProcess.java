@@ -1,9 +1,15 @@
 package com.nosliw.data.core.process;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
+import com.nosliw.data.core.process.util.HAPImporterProcessSuiteDefinition;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefEleProcessor;
@@ -123,5 +129,15 @@ public class HAPUtilityProcess {
 	
 	public static String buildOutputVarialbeName(String name) {
 		return "nosliw_" + name;
+	}
+	
+	public static HAPDefinitionProcessSuite getProcessSuite(String id, HAPManagerActivityPlugin activityPluginMan) {
+		HAPDefinitionProcessSuite suite = null;
+		try {
+			suite = HAPImporterProcessSuiteDefinition.readProcessSuiteDefinitionFromFile(new FileInputStream(new File(HAPFileUtility.getProcessFolder()+id+".process")), activityPluginMan);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return suite;
 	}
 }

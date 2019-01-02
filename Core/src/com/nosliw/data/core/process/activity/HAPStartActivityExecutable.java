@@ -7,10 +7,10 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.process.HAPActivityPluginId;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionSequenceFlow;
 import com.nosliw.data.core.process.HAPExecutableActivity;
-import com.nosliw.data.core.process.resource.HAPActivityPluginId;
 import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -38,7 +38,7 @@ public class HAPStartActivityExecutable extends HAPExecutableActivity{
 	@Override
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
-		out.add(new HAPResourceDependent(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstant.ACTIVITY_TYPE_START, runtimeInfo.getLanguage()))));
+		out.add(new HAPResourceDependent(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstant.ACTIVITY_TYPE_START))));
 		return out;
 	}
 	

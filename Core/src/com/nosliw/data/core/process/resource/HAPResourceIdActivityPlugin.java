@@ -3,6 +3,7 @@ package com.nosliw.data.core.process.resource;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.process.HAPActivityPluginId;
 import com.nosliw.data.core.runtime.HAPResourceId;
 
 public class HAPResourceIdActivityPlugin  extends HAPResourceId{

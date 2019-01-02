@@ -7,19 +7,19 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
-import com.nosliw.data.core.process.HAPManagerProcess;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPParserContext;
 
 public class HAPParserProcessDefinition {
 
-	public static HAPDefinitionProcessSuite parsePocessSuite(JSONObject processSuiteJson, HAPManagerProcess processMan) {
+	public static HAPDefinitionProcessSuite parsePocessSuite(JSONObject processSuiteJson, HAPManagerActivityPlugin activityPluginMan) {
 		HAPDefinitionProcessSuite out = new HAPDefinitionProcessSuite();
 		out.buildObject(processSuiteJson, HAPSerializationFormat.JSON);
 		JSONArray processesArray = processSuiteJson.getJSONArray(HAPDefinitionProcessSuite.PROCESS);
 		for(int i=0; i<processesArray.length(); i++){
 			JSONObject processObjJson = processesArray.getJSONObject(i);
-			HAPDefinitionProcess process = parseProcess(processObjJson, processMan);
+			HAPDefinitionProcess process = parseProcess(processObjJson, activityPluginMan);
 			out.addProcess(processObjJson.getString("id"), process);
 		}
 
@@ -31,7 +31,7 @@ public class HAPParserProcessDefinition {
 	}
 
 	
-	public static HAPDefinitionProcess parseProcess(JSONObject processJson, HAPManagerProcess processMan) {
+	public static HAPDefinitionProcess parseProcess(JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
 		HAPDefinitionProcess out = new HAPDefinitionProcess();
 		out.buildObject(processJson, HAPSerializationFormat.JSON);
 		
@@ -41,7 +41,7 @@ public class HAPParserProcessDefinition {
 		for(int i=0; i<activityArrayJson.length(); i++) {
 			JSONObject activityObjJson = (JSONObject)activityArrayJson.get(i);
 			String activityType = activityObjJson.getString(HAPDefinitionActivity.TYPE);
-			HAPDefinitionActivity activity = processMan.getPluginManager().getPlugin(activityType).buildActivityDefinition(activityObjJson);
+			HAPDefinitionActivity activity = activityPluginMan.getPlugin(activityType).buildActivityDefinition(activityObjJson);
 			out.addActivity(activityObjJson.getString("id"), activity);
 		}
 		return out;

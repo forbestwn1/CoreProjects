@@ -17,7 +17,7 @@ public class HAPDataSourceMan {
 		JSONObject parms = new JSONObject();
 		parms.put(HAPGatewayDataSource.COMMAND_GETDATA_NAME, "myrealtor");
 		
-		HAPServiceData serviceData = runtimeEnvironment.getGatewayManager().getGateway(HAPDataSourceManager.GATEWAY_DATASOURCE).command(HAPGatewayDataSource.COMMAND_GETDATA, parms);
+		HAPServiceData serviceData = runtimeEnvironment.getGatewayManager().getGateway(HAPDataSourceManager.GATEWAY_DATASOURCE).command(HAPGatewayDataSource.COMMAND_GETDATA, parms, null);
 		System.out.println(serviceData);
 		
 	}

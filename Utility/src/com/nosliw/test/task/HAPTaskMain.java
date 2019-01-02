@@ -10,7 +10,7 @@ public class HAPTaskMain {
 		
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 		
-		HAPDefinitionProcessSuite suite = HAPImporterProcessSuiteDefinition.readProcessSuiteDefinitionFromFile(HAPTaskMain.class.getResourceAsStream("expression.task"), runtimeEnvironment.getProcessManager());
+//		HAPDefinitionProcessSuite suite = HAPImporterProcessSuiteDefinition.readProcessSuiteDefinitionFromFile(HAPTaskMain.class.getResourceAsStream("expression.task"), runtimeEnvironment.getProcessManager());
 		
 //		runtimeEnvironment.getTaskManager().executeTask("main", suite);
 		

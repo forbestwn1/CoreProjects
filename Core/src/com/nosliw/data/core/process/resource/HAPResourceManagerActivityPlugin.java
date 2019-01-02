@@ -27,7 +27,7 @@ public class HAPResourceManagerActivityPlugin  extends HAPResourceManagerImp{
 		HAPPluginActivity activityPlugin = this.m_pluginMan.getPlugin(activityPluginId.getActivityPlugId().getId());
 		if(activityPlugin==null)  return null;
 		
-		HAPResourceDataActivityPlugin resourceData = new HAPResourceDataActivityPlugin(activityPlugin, activityPluginId.getActivityPlugId().getEnv());
+		HAPResourceDataActivityPlugin resourceData = new HAPResourceDataActivityPlugin(activityPlugin, runtimeInfo.getLanguage());
 		Map<String, Object> info = new LinkedHashMap<String, Object>();
 		info.put(HAPRuntimeJSUtility.RESOURCE_LOADPATTERN, HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE);
 		return new HAPResource(resourceId, resourceData, null);

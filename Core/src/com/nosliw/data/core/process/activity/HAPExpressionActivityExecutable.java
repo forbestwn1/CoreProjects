@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.process.HAPActivityPluginId;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPExecutableActivityNormal;
-import com.nosliw.data.core.process.resource.HAPActivityPluginId;
 import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -40,7 +40,7 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
 		
-		out.add(new HAPResourceDependent(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstant.ACTIVITY_TYPE_EXPRESSION, runtimeInfo.getLanguage()))));
+		out.add(new HAPResourceDependent(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstant.ACTIVITY_TYPE_EXPRESSION))));
 		
 		out.addAll(this.m_scriptExpression.getResourceDependency(runtimeInfo));
 		return out;

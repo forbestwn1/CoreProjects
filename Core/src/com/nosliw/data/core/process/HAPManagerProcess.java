@@ -1,58 +1,33 @@
 package com.nosliw.data.core.process;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
-import com.nosliw.data.core.process.plugin.HAPPluginActivity;
-import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 
 public class HAPManagerProcess {
 	
 	private HAPManagerActivityPlugin m_pluginManager;
 	
-	public HAPManagerProcess(HAPManagerActivityPlugin pluginMan) {
+	private HAPEnvContextProcessor m_contextProcessEnv;
+	
+	public HAPManagerProcess(
+			HAPManagerActivityPlugin pluginMan,
+			HAPDataTypeHelper dataTypeHelper,
+			HAPRuntime runtime,
+			HAPExpressionSuiteManager expressionManager) {
 		this.m_pluginManager = pluginMan;
+		this.m_contextProcessEnv = new HAPEnvContextProcessor(dataTypeHelper, runtime, expressionManager, null);
 	}
 
-	public HAPManagerProcess() {
-		this.m_pluginManager = new HAPManagerActivityPlugin();
-	}
-
-	public HAPExecutableProcess getProcess(String processId) {
-		return null;
+	public HAPExecutableProcess getProcess(HAPIdProcess processId) {
+		HAPDefinitionProcessSuite suite = HAPUtilityProcess.getProcessSuite(processId.getSuiteId(), this.getPluginManager());
+		HAPExecutableProcess out = HAPProcessorProcess.process(processId.getProcessId(), suite, new HAPProcessContext(), this, this.m_contextProcessEnv);
+		return out;
 	}
 	
-	public HAPExecutableProcess compileProcess(
-			String id,
-			HAPDefinitionProcess processDefinition, 
-			Map<String, HAPDefinitionProcess> contextProcessDefinitions, 
-			HAPContext parentContext, 
-			Map<String, String> configure,
-			HAPProcessContext context) {
-//		HAPExecutableProcess task = processTask(processDefinition, null, null, contextProcessDefinitions, constants, context);
-//		task.setId(id);
-//		
-//		Map<String, HAPVariableInfo> variableInfos = parentVariablesInfo;
-//		if(variableInfos==null) 	variableInfos = new LinkedHashMap<String, HAPVariableInfo>();
-//		task.discoverVariable(variableInfos, expectOutput, context);
-//		
-//		return task;
-		return null;
-	}
-	
-	public HAPExecutableProcess processTask(
-			HAPDefinitionProcess taskDefinition, 
-			String domain, 
-			HAPContext variableMap,
-			Map<String, HAPDefinitionProcess> contextTaskDefinitions,
-			HAPProcessContext context) {
-//		HAPExecutableProcess out = HAPProcessorProcess.process(taskDefinition, domain, variableMap, contextTaskDefinitions, context, this);
-//		return out;
-		return null;
-	}
-
 	public HAPManagerActivityPlugin getPluginManager() {   return this.m_pluginManager;    }
 	
 }

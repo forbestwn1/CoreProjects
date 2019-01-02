@@ -1,20 +1,20 @@
 {
-	group : {
-		public : {
-			element : {
-				ffff : {
-					definition: {
-						value : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>"
+	"group" : {
+		"public" : {
+			"element" : {
+				"ffff" : {
+					"definition": {
+						"value" : "<%=#|&(#test##string___Thisismyworldabcdef)&|#%>"
 					}
 				},
-				eeee : {
-					definition: {
-						value : "<%=#|&(#test##string___Hello)&|#%>"
+				"eeee" : {
+					"definition": {
+						"value" : "<%=#|&(#test##string___Hello)&|#%>"
 					}
 				},
 				"<%=#|&(eeee)&|#.value%> ggggg <%=#|&(ffff)&|#.value%>" : {
-					definition: {criteria:"test.string;1.0.0"},
-				},
+					"definition": {"criteria":"test.string;1.0.0"}
+				}
 			}
 		}
 	}

@@ -24,7 +24,7 @@ public class HAPResourceManagerProcess  extends HAPResourceManagerImp{
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPResourceIdProcess processId = new HAPResourceIdProcess(resourceId); 
-		HAPExecutableProcess process = this.m_processMan.getProcess(processId.getId());
+		HAPExecutableProcess process = this.m_processMan.getProcess(processId.getProcessId());
 		if(process==null)  return null;
 		HAPResourceDataProcess resourceData = new HAPResourceDataProcess(process);
 		Map<String, Object> info = new LinkedHashMap<String, Object>();
@@ -35,7 +35,7 @@ public class HAPResourceManagerProcess  extends HAPResourceManagerImp{
 	@Override
 	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
 		HAPResourceIdProcess processId = new HAPResourceIdProcess(resourceId); 
-		HAPExecutableProcess process = this.m_processMan.getProcess(processId.getId());
+		HAPExecutableProcess process = this.m_processMan.getProcess(processId.getProcessId());
 		return process.getResourceDependency(runtimeInfo);
 	}
 }

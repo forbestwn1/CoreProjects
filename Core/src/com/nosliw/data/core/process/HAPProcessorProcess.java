@@ -47,4 +47,14 @@ public class HAPProcessorProcess{
 		return out;
 	}
 	
+	public static HAPExecutableProcess process(
+			String processId, 
+			HAPDefinitionProcessSuite suite, 			
+			HAPProcessContext processContext,
+			HAPManagerProcess processMan,
+			HAPEnvContextProcessor envContextProcessor) {
+		String id = new HAPIdProcess(suite.getId(), processId).getId();
+		return process(suite.getProcess(processId), id, suite.getContext(), suite.getProcesses(), processContext, processMan, envContextProcessor);
+	}
+	
 }
