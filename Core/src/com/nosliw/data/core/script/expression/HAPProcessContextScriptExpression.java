@@ -48,12 +48,12 @@ public class HAPProcessContextScriptExpression {
 	}
 	public void addExpressionDefinition(String name, HAPDefinitionExpression expressionDefinition){  this.m_expressionDefinitionSuite.addExpressionDefinition(name, expressionDefinition);  }
 	public void addExpressionDefinition(Map<String, HAPDefinitionExpression> expressions){	this.m_expressionDefinitionSuite.addExpressionDefinition(expressions);	}
-	public void addVariables(Map<String, HAPVariableInfo> variables){
+	public void addDataVariables(Map<String, HAPVariableInfo> variables){
 		for(String varName : variables.keySet()) {
 			this.m_expressionDefinitionSuite.addVariableInfo(varName, variables.get(varName));
 		}
 	}
-	public void addVariable(String name, HAPVariableInfo varInfo){  
+	public void addDataVariable(String name, HAPVariableInfo varInfo){  
 		this.m_expressionDefinitionSuite.addVariableInfo(name, varInfo);
 	}	
 }

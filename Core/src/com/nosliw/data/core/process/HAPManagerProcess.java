@@ -4,24 +4,22 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPProcessContext;
-import com.nosliw.data.core.process.activity.HAPEndActivityPlugin;
-import com.nosliw.data.core.process.activity.HAPExpressionActivityPlugin;
-import com.nosliw.data.core.process.activity.HAPStartActivityPlugin;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
+import com.nosliw.data.core.process.plugin.HAPPluginActivity;
 import com.nosliw.data.core.script.context.HAPContext;
 
 public class HAPManagerProcess {
-
-	Map<String, HAPPluginActivity> m_activityPlugins;
 	
-	public HAPManagerProcess() {
-		this.m_activityPlugins = new LinkedHashMap<String, HAPPluginActivity>();
-		
-		this.registerActivityPlugin(new HAPStartActivityPlugin());
-		this.registerActivityPlugin(new HAPEndActivityPlugin());
-		this.registerActivityPlugin(new HAPExpressionActivityPlugin());
-		
+	private HAPManagerActivityPlugin m_pluginManager;
+	
+	public HAPManagerProcess(HAPManagerActivityPlugin pluginMan) {
+		this.m_pluginManager = pluginMan;
 	}
-	
+
+	public HAPManagerProcess() {
+		this.m_pluginManager = new HAPManagerActivityPlugin();
+	}
+
 	public HAPExecutableProcess getProcess(String processId) {
 		return null;
 	}
@@ -55,8 +53,6 @@ public class HAPManagerProcess {
 		return null;
 	}
 
-	public void registerActivityPlugin(HAPPluginActivity plugin) {		this.m_activityPlugins.put(plugin.getType(), plugin);	}
-	
-	public HAPPluginActivity getActivityPlugin(String activityType) {		return this.m_activityPlugins.get(activityType);	}
+	public HAPManagerActivityPlugin getPluginManager() {   return this.m_pluginManager;    }
 	
 }

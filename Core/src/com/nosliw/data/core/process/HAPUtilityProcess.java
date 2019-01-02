@@ -93,7 +93,7 @@ public class HAPUtilityProcess {
 					if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 						HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)ele;
 						HAPContextPath contextPath = relativeEle.getPath();
-						relativeEle.setPath(new HAPContextPath(null, contextPath.getPath()));
+						relativeEle.setPath(new HAPContextPath(contextPath.getPath()));
 					}
 					return true;
 				}

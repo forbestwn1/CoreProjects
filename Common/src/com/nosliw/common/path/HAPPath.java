@@ -21,5 +21,4 @@ public class HAPPath {
 		return this.m_pathSegs;
 	}
 	
-	
 }

@@ -50,10 +50,7 @@ public class HAPContextDefinitionLeafConstant extends HAPContextDefinitionElemen
 	}
 
 	@Override
-	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants,
-			HAPEnvContextProcessor contextProcessorEnv) {
-		return this.cloneContextDefinitionElement();
-	}
+	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {  return this; }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

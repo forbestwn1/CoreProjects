@@ -17,10 +17,7 @@ public class HAPContextDefinitionLeafValue extends HAPContextDefinitionLeafVaria
 	}
 
 	@Override
-	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants,
-			HAPEnvContextProcessor contextProcessorEnv) {
-		return this.cloneContextDefinitionElement();
-	}
+	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) { return this; }
 
 	@Override
 	public void toContextDefinitionElement(HAPContextDefinitionElement out) {

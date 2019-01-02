@@ -77,6 +77,19 @@ public class HAPUtilityContext {
 		processor.postProcess(contextDefEle, path);
 	}
 
+	public static void processExpandedContextDefElementWithPathInfo(HAPContextDefinitionElement contextDefEle, HAPContextDefEleProcessor processor, String path) {
+		HAPContextDefinitionElement solidated = contextDefEle.getSolidContextDefinitionElement();
+		if(processor.process(solidated, path)) {
+			if(HAPConstant.CONTEXT_ELEMENTTYPE_NODE.equals(solidated.getType())) {
+				HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)solidated;
+				for(String childNodeName : nodeEle.getChildren().keySet()) {
+					processContextDefElementWithPathInfo(nodeEle.getChild(childNodeName), processor, HAPNamingConversionUtility.buildPath(path, childNodeName));
+				}
+			}
+		}
+		processor.postProcess(solidated, path);
+	}
+	
 	public static HAPContextDefinitionElement mergeDataElement(HAPContextDefinitionElement original, HAPContextDefinitionElement after) {
 		String eleName = "abc";
 		HAPContext orgContext = new HAPContext();

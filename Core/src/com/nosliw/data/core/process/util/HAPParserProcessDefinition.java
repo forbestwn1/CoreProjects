@@ -40,8 +40,8 @@ public class HAPParserProcessDefinition {
 		JSONArray activityArrayJson = processJson.optJSONArray(HAPDefinitionProcess.ACTIVITY);
 		for(int i=0; i<activityArrayJson.length(); i++) {
 			JSONObject activityObjJson = (JSONObject)activityArrayJson.get(i);
-			String stepType = activityObjJson.getString(HAPDefinitionActivity.TYPE);
-			HAPDefinitionActivity activity = processMan.getActivityPlugin(stepType).buildActivityDefinition(activityObjJson);
+			String activityType = activityObjJson.getString(HAPDefinitionActivity.TYPE);
+			HAPDefinitionActivity activity = processMan.getPluginManager().getPlugin(activityType).buildActivityDefinition(activityObjJson);
 			out.addActivity(activityObjJson.getString("id"), activity);
 		}
 		return out;

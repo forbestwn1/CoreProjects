@@ -24,6 +24,11 @@ public class HAPContextPath extends HAPSerializableImp{
 	
 	public HAPContextPath(){}
 	
+	public HAPContextPath(HAPContextDefinitionRootId rootId, String path){
+		this.m_rootNodeId = rootId;
+		this.m_path = path;
+	}
+	
 	public HAPContextPath(String fullPath){
 		int index = fullPath.indexOf(HAPConstant.SEPERATOR_PATH);
 		if(index==-1){

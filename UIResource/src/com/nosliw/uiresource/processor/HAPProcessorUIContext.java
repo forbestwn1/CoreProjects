@@ -238,7 +238,7 @@ public class HAPProcessorUIContext {
 		//build variables
 		Map<String, HAPVariableInfo> varsInfo = HAPUtilityContext.discoverDataVariablesInContext(flatContext.getContext());
 		for(String varName : varsInfo.keySet()) {
-			uiExe.getExpressionContext().addVariable(varName, varsInfo.get(varName));
+			uiExe.getExpressionContext().addDataVariable(varName, varsInfo.get(varName));
 		}
 		
 		//child tag

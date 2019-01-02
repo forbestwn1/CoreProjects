@@ -38,7 +38,7 @@ public class HAPProcessorProcess{
 				if(activity.getType().equals(HAPConstant.ACTIVITY_TYPE_START))    out.setStartActivityId(activityId);    
 				
 				//process activity
-				HAPExecutableActivity activityExe = processMan.getActivityPlugin(activity.getType()).getActivityProcessor().process(activity, activityId, out, context, results, processDefinitionsContext, processMan, envContextProcessor, processContext);
+				HAPExecutableActivity activityExe = processMan.getPluginManager().getPlugin(activity.getType()).process(activity, activityId, out, context, results, processDefinitionsContext, processMan, envContextProcessor, processContext);
 				out.addActivity(activityId, activityExe);
 			}
 		}while(false);

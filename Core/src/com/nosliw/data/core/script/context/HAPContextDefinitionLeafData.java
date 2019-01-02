@@ -49,11 +49,7 @@ public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariab
 	}
 
 	@Override
-	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants,
-			HAPEnvContextProcessor contextProcessorEnv) {
-		HAPContextDefinitionElement out = this.cloneContextDefinitionElement();
-		return out;
-	}
+	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {	return this;}
 
 	@Override
 	public boolean equals(Object obj) {

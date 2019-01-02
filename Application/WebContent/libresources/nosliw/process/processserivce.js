@@ -10,7 +10,22 @@ var packageObj = library;
 
 var node_createProcessService = function(){
 
+	var loc_generateInput = function(context, inputMapping){
+		
+	};
+	
+	var loc_getExecuteActivityRequest = function(activity, context, handlers, requester_parent){
+		
+	};
+	
 	var loc_getExecuteProcessResourceRequest = function(process, input, handlers, requester_parent){
+		//process init
+		
+		
+		//execute activity
+		
+		
+		//generate output
 		
 	};
 	

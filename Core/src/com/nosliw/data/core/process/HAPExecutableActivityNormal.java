@@ -15,10 +15,16 @@ public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 
 	public void setInputDataAssociation(HAPDefinitionDataAssociationGroupExecutable input) {  this.m_input = input;  }
 
-	public HAPContextFlat getInput() {  return this.m_input.getContext();   }
+	public HAPContextFlat getInputContext() {
+		if(this.m_input==null)   return null;
+		return this.m_input.getContext();   
+	}
 	
 	public void setOutputDataAssociation(HAPDefinitionDataAssociationGroupExecutable output) {  this.m_output = output;  }
 
-	
+	public HAPContextFlat getOutputContext() {
+		if(this.m_output==null)   return null;
+		return this.m_output.getContext();
+	}
 	
 }
