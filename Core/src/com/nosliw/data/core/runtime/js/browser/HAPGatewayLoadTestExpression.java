@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 
 @HAPEntityWithAttribute
@@ -24,7 +25,7 @@ public class HAPGatewayLoadTestExpression extends HAPGatewayImp{
 	}
 	
 	@Override
-	public HAPServiceData command(String command, JSONObject parms) throws Exception {
+	public HAPServiceData command(String command, JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception {
 		HAPServiceData out = null;
 		switch(command){
 		case COMMAND_LOADTESTEXPRESSION:

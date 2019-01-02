@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 
 public class HAPGatewayRhinoTaskResponse extends HAPGatewayImp{
@@ -22,7 +23,7 @@ public class HAPGatewayRhinoTaskResponse extends HAPGatewayImp{
 	}
 	
 	@Override
-	public HAPServiceData command(String command, JSONObject parms) throws Exception{
+	public HAPServiceData command(String command, JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception{
 		HAPServiceData serviceData = null;
 		String taskId = parms.getString(PARM_TASKID);
 		Object responseData = parms.opt(PARM_RESPONSEDATA);

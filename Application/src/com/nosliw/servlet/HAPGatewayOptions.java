@@ -3,6 +3,7 @@ package com.nosliw.servlet;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 
 public class HAPGatewayOptions extends HAPGatewayImp{
@@ -12,7 +13,7 @@ public class HAPGatewayOptions extends HAPGatewayImp{
 	
 	
 	@Override
-	public HAPServiceData command(String command, JSONObject parms) throws Exception {
+	public HAPServiceData command(String command, JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception {
 		if(COMMAND_GETVALUES.equals(command)) {
 			String[] values = null;
 			switch(parms.getString(PARMS_GETVALUES_ID)) {

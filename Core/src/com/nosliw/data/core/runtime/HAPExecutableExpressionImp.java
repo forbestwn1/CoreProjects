@@ -12,7 +12,7 @@ public abstract class HAPExecutableExpressionImp extends HAPSerializableImp impl
 	List<HAPResourceDependent> m_resources;
 	
 	@Override
-	public List<HAPResourceDependent> getResourceDependency() {
+	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		if(this.m_resources==null) {
 			List<HAPResourceId> expressionDependency = HAPExpressionUtility.discoverResources(this);
 			this.m_resources = new ArrayList<HAPResourceDependent>();

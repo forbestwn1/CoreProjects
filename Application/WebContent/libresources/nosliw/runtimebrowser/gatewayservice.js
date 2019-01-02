@@ -44,7 +44,7 @@ var node_createGatewayService = function(){
 	});
 	
 	//load file to html page to execute it
-	loc_getLoadResourceFileRequest = function(fileName, handlers, requester_parent){
+	var loc_getLoadResourceFileRequest = function(fileName, handlers, requester_parent){
 		var out = node_createServiceRequestInfoCommon(new node_ServiceInfo("LoadResourceFile", {"fileName":fileName}), handlers, requester_parent);		
 		out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
 			var script = document.createElement('script');
@@ -59,7 +59,7 @@ var node_createGatewayService = function(){
 		return out;
 	};
 	
-	loc_getLoadResourceDataRequest = function(dataStr, handlers, requester_parent){
+	var loc_getLoadResourceDataRequest = function(dataStr, handlers, requester_parent){
 		var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("LoadResourceData", {"dataStr":dataStr}), 
 				function(requestInfo){  
 					eval(requestInfo.getService().parms.dataStr);  

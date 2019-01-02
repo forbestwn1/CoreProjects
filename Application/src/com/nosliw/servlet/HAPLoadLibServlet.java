@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.browser.HAPGatewayBrowserLoadLibrary;
 
 public class HAPLoadLibServlet  extends HAPBaseServlet{
@@ -26,7 +28,8 @@ public class HAPLoadLibServlet  extends HAPBaseServlet{
 		HAPServiceData serviceData = this.getRuntimeEnvironment().getGatewayManager().executeGateway(
 				HAPRuntimeEnvironmentImpBrowser.GATEWAY_LOADLIBRARIES, 
 				HAPGatewayBrowserLoadLibrary.COMMAND_LOADLIBRARY, 
-				new JSONObject(requestInfo.getParms()));
+				new JSONObject(requestInfo.getParms()), 
+				new HAPRuntimeInfo(HAPConstant.RUNTIME_LANGUAGE_JS, HAPConstant.RUNTIME_ENVIRONMENT_BROWSER));
 		this.printContent(serviceData, response);
 	}
 	

@@ -31,7 +31,7 @@ public class HAPRuntimeTaskExecuteConverterRhino extends HAPRuntimeTaskExecuteCo
 			
 			//prepare resources for data operation in the runtime (resource and dependency)
 			//execute expression after load required resources
-			List<HAPResourceInfo> resourcesId =	HAPExpressionUtility.discoverResourceRequirement(this.getMatchers(),rhinoRuntime.getRuntimeEnvironment().getResourceManager());
+			List<HAPResourceInfo> resourcesId =	HAPExpressionUtility.discoverResourceRequirement(this.getMatchers(),rhinoRuntime.getRuntimeEnvironment().getResourceManager(), runtime.getRuntimeInfo());
 			
 			HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
 			loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));

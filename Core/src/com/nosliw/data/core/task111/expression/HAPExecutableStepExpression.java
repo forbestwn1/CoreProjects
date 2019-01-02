@@ -23,6 +23,7 @@ import com.nosliw.data.core.operand.HAPOperandWrapper;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.task111.HAPExecutableTask;
 
 public class HAPExecutableStepExpression extends HAPExecutableStep implements HAPExecutableExpression{
@@ -128,7 +129,7 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 	}
 
 	@Override
-	public List<HAPResourceDependent> getResourceDependency() {
+	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		// TODO Auto-generated method stub
 		return null;
 	}

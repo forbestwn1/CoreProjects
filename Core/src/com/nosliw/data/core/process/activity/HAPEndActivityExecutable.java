@@ -6,8 +6,10 @@ import java.util.List;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPExecutableActivity;
+import com.nosliw.data.core.process.resource.HAPActivityPluginId;
 import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPEndActivityExecutable extends HAPExecutableActivity{
 
@@ -22,9 +24,9 @@ public class HAPEndActivityExecutable extends HAPExecutableActivity{
 	}
 
 	@Override
-	public List<HAPResourceDependent> getResourceDependency() {
+	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
-		out.add(new HAPResourceDependent(new HAPResourceIdActivityPlugin(HAPConstant.ACTIVITY_TYPE_END)));
+		out.add(new HAPResourceDependent(new HAPResourceIdActivityPlugin(new HAPActivityPluginId(HAPConstant.ACTIVITY_TYPE_END, runtimeInfo.getLanguage()))));
 		return out;
 	}
 

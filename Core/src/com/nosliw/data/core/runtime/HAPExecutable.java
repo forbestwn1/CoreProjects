@@ -5,7 +5,7 @@ import java.util.List;
 public interface HAPExecutable {
 
 	//resource dependency 
-	List<HAPResourceDependent> getResourceDependency();
+	List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo);
 
 	
 }

@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
@@ -26,12 +27,12 @@ public class HAPGatewayBrowserLoadLibrary extends HAPGatewayImp{
 	}
 	
 	@Override
-	public HAPServiceData command(String command, JSONObject parms) throws Exception {
+	public HAPServiceData command(String command, JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception {
 		HAPServiceData out = null;
 		
 		switch(command){
 		case COMMAND_LOADLIBRARY:
-			HAPServiceData serviceData = this.m_gatewayManager.executeGateway(HAPRuntimeEnvironmentJS.GATEWAY_RESOURCE, HAPGatewayResource.COMMAND_DISCOVERANDLOADRESOURCES, parms);
+			HAPServiceData serviceData = this.m_gatewayManager.executeGateway(HAPRuntimeEnvironmentJS.GATEWAY_RESOURCE, HAPGatewayResource.COMMAND_DISCOVERANDLOADRESOURCES, parms, runtimeInfo);
 			if(serviceData.isFail())   return serviceData;
 			
 			List<String> fileNames = new ArrayList<String>();

@@ -22,6 +22,8 @@ public class HAPRuntimeInfo extends HAPSerializableImp{
 	private String m_language;
 	
 	private String m_environment;
+
+	public HAPRuntimeInfo(){}
 	
 	public HAPRuntimeInfo(String literate){
 		this.buildObjectByLiterate(literate);

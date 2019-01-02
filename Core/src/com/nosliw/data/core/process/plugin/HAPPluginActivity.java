@@ -2,6 +2,7 @@ package com.nosliw.data.core.process.plugin;
 
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
@@ -15,6 +16,12 @@ import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 
 public interface HAPPluginActivity {
 
+	@HAPAttribute
+	public static String TYPE = "type";
+	
+	@HAPAttribute
+	public static String SCRIPT = "script";
+	
 	String getType();
 	
 	//process activity definition to executable

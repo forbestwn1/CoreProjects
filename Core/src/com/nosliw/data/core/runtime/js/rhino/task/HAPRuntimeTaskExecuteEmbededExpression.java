@@ -65,7 +65,7 @@ public class HAPRuntimeTaskExecuteEmbededExpression extends HAPRuntimeTaskExecut
 			//prepare resources for expression in the runtime (resource and dependency)
 			//execute expression after load required resources
 			List<HAPExecutableExpression> expressions = new ArrayList(this.m_embededExpression.getExpressions().values());
-			List<HAPResourceInfo> resourcesId =  HAPExpressionUtility.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager());
+			List<HAPResourceInfo> resourcesId =  HAPExpressionUtility.discoverResourceRequirement(expressions, rhinoRuntime.getRuntimeEnvironment().getResourceManager(), runtime.getRuntimeInfo());
 			HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);
 			loadResourcesTask.registerListener(new HAPRunTaskEventListenerInner(this, rhinoRuntime));
 			return loadResourcesTask;

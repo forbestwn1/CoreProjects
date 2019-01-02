@@ -4,6 +4,7 @@ import com.nosliw.data.core.imp.runtime.js.HAPDataAccessRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerDataAccess;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPResourceManagerJSHelper extends HAPResourceManagerDataAccess{
 
@@ -12,7 +13,7 @@ public class HAPResourceManagerJSHelper extends HAPResourceManagerDataAccess{
 	}
 	
 	@Override
-	public HAPResource getResource(HAPResourceId resourceId) {
+	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPResourceDataHelperImp helperResource = this.getDataAccess().getResourceHelper(resourceId.getId());
 		if(helperResource!=null)		return new HAPResource(resourceId, helperResource, null);
 		else return null;

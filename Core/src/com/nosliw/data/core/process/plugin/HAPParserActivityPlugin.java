@@ -20,14 +20,14 @@ public class HAPParserActivityPlugin {
 			String content = "var out="+HAPFileUtility.readFile(file) + "; out;";
 			NativeObject defObjJS = (NativeObject)cx.evaluateString(scope, content, file.getName(), 1, null);
 
-			String type = (String)defObjJS.get(HAPPluginActivityImp.NAME);
+			String type = (String)defObjJS.get(HAPPluginActivity.TYPE);
 			out.setType(type);
 			String processorClsName = (String)defObjJS.get(HAPPluginActivityImp.PROCESSOR);
 			out.setProcessorClass(processorClsName);
 			String activityDefName = (String)defObjJS.get(HAPPluginActivityImp.DEFINITION);
 			out.setActivityClass(activityDefName);
 			
-			NativeObject scriptObj = (NativeObject)defObjJS.get(HAPPluginActivityImp.SCRIPT);
+			NativeObject scriptObj = (NativeObject)defObjJS.get(HAPPluginActivity.SCRIPT);
 			for(Object key : scriptObj.keySet()) {
 				String scriptName = (String)key;
 				String script = Context.toString((Function)scriptObj.get(scriptName));

@@ -31,7 +31,7 @@ public class HAPResourceIdActivityPlugin  extends HAPResourceId{
 		this.m_activityPluginId = new HAPActivityPluginId(id);
 	}
 
-	public HAPActivityPluginId getProcessId(){  return this.m_activityPluginId;	}
+	public HAPActivityPluginId getActivityPlugId(){  return this.m_activityPluginId;	}
 	
 	public HAPResourceIdActivityPlugin clone(){
 		HAPResourceIdActivityPlugin out = new HAPResourceIdActivityPlugin();

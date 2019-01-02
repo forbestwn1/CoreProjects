@@ -20,17 +20,11 @@ import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
 public class HAPPluginActivityImp implements HAPPluginActivity{
 
 	@HAPAttribute
-	public static String NAME = "name";
-	
-	@HAPAttribute
 	public static String DEFINITION = "definition";
 	
 	@HAPAttribute
 	public static String PROCESSOR = "processor";
 
-	@HAPAttribute
-	public static String SCRIPT = "script";
-	
 	private String m_type;
 	
 	private Class<?> m_activityClass;

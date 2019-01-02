@@ -83,7 +83,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			//affect sold variable 
 			String solidVarRootName = activityContext.getSolidName(varPath.getRootElementId().getFullName());
 			if(solidVarRootName!=null) {
-				varPath = new HAPContextPath(new HAPContextDefinitionRootId(solidVarRootName), varPath.getPath());
+				varPath = new HAPContextPath(new HAPContextDefinitionRootId(solidVarRootName), varPath.getSubPath());
 				if(HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE.equals(varPath.getRootElementId().getCategary())) {
 					//mapped ele
 					HAPContextDefinitionElement currentEle = activityContext.getContext().getElement(varPath.getRootElementId().getFullName()).getDefinition();

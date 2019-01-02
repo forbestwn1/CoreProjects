@@ -8,7 +8,6 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.json.JsonParser;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -40,7 +39,7 @@ public class HAPGatewayEmbededPoint {
 			else if(parmsObj instanceof JSONObject)		jsonObjParms = (JSONObject)parmsObj;
 			else if(parmsObj instanceof NativeObject)	jsonObjParms = (JSONObject)HAPRhinoDataUtility.toJson(parmsObj);
 
-			HAPServiceData serviceData = this.m_gatewayMan.executeGateway(gatewayId, command, jsonObjParms);
+			HAPServiceData serviceData = this.m_gatewayMan.executeGateway(gatewayId, command, jsonObjParms, this.m_runtime.getRuntimeInfo());
 			if(serviceData.isSuccess()){
 				//if command return success, need to process output, and create new ServiceData
 				//for scripts part, load into tuntime

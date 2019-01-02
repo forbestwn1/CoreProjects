@@ -27,6 +27,7 @@ import com.nosliw.data.core.runtime.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPExpressionUtility {
 
@@ -63,12 +64,12 @@ public class HAPExpressionUtility {
 		 * @param expression
 		 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
 		 */
-		static public List<HAPResourceInfo> discoverResourceRequirement(List<HAPExecutableExpression> expressions, HAPResourceManagerRoot resourceMan) {
+		static public List<HAPResourceInfo> discoverResourceRequirement(List<HAPExecutableExpression> expressions, HAPResourceManagerRoot resourceMan, HAPRuntimeInfo runtimeInfo) {
 			List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 			for(HAPExecutableExpression expression : expressions){
 				resourceIds.addAll(discoverResources(expression));
 			}
-			return resourceMan.discoverResources(new ArrayList<HAPResourceId>(resourceIds));
+			return resourceMan.discoverResources(new ArrayList<HAPResourceId>(resourceIds), runtimeInfo);
 		}
 
 		static public List<HAPResourceId> discoverResources(HAPExecutableExpression expression){
@@ -101,21 +102,21 @@ public class HAPExpressionUtility {
 		 * @param dataOpInfo
 		 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
 		 */
-		static public List<HAPResourceInfo> discoverResourceRequirement(HAPDataTypeId dataTypeId, String operation, HAPResourceManagerRoot resourceMan) {
+		static public List<HAPResourceInfo> discoverResourceRequirement(HAPDataTypeId dataTypeId, String operation, HAPResourceManagerRoot resourceMan, HAPRuntimeInfo runtimeInfo) {
 			HAPOperationId operationId = new HAPOperationId(dataTypeId, operation);
 			HAPResourceId resourceId = new HAPResourceIdOperation(operationId);
 			List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 			resourceIds.add(resourceId);
-			return resourceMan.discoverResources(resourceIds);
+			return resourceMan.discoverResources(resourceIds, runtimeInfo);
 		}
 
-		static public List<HAPResourceInfo> discoverResourceRequirement(HAPMatchers matchers, HAPResourceManagerRoot resourceMan) {
+		static public List<HAPResourceInfo> discoverResourceRequirement(HAPMatchers matchers, HAPResourceManagerRoot resourceMan, HAPRuntimeInfo runtimeInfo) {
 			List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 			Set<HAPDataTypeConverter> converters = HAPResourceUtility.getConverterResourceIdFromRelationship(matchers.discoverRelationships());
 			for(HAPDataTypeConverter converter : converters){
 				resourceIds.add(new HAPResourceIdConverter(converter));
 			}
-			return resourceMan.discoverResources(resourceIds);
+			return resourceMan.discoverResources(resourceIds, runtimeInfo);
 		}
 		
 		/**

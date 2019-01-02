@@ -9,6 +9,7 @@ import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManagerImp;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
 import com.nosliw.uiresource.tag.HAPUITagDefinition;
 import com.nosliw.uiresource.tag.HAPUITagManager;
@@ -22,7 +23,7 @@ public class HAPResourceManagerUITag extends HAPResourceManagerImp{
 	}
 	
 	@Override
-	public HAPResource getResource(HAPResourceId resourceId) {
+	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPResourceIdUITag uiTagResourceId = new HAPResourceIdUITag(resourceId); 
 		HAPUITagDefinition uiTagDefinition = this.m_uiTagMan.getUITagDefinition(uiTagResourceId.getUITagId());
 		if(uiTagDefinition==null)  return null;
@@ -34,7 +35,7 @@ public class HAPResourceManagerUITag extends HAPResourceManagerImp{
 	}
 
 	@Override
-	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId){
+	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
 		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
 		HAPResourceIdUITag uiTagResourceId = new HAPResourceIdUITag(resourceId); 
 		HAPUITagDefinition uiTagDefinition = this.m_uiTagMan.getUITagDefinition(uiTagResourceId.getUITagId());

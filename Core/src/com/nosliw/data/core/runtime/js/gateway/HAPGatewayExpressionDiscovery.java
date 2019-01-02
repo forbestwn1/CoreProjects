@@ -22,6 +22,7 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteExpressionRhino;
 
@@ -56,7 +57,7 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 	}
 	
 	@Override
-	public HAPServiceData command(String command, JSONObject parms) throws Exception {
+	public HAPServiceData command(String command, JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception {
 		HAPServiceData out = null;
 		switch(command){
 		case COMMAND_GETOUTPUTCRITERIA:

@@ -14,6 +14,7 @@ import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 
@@ -25,7 +26,7 @@ public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 	}
 	
 	@Override
-	public HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId) {
+	public HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId, HAPRuntimeInfo runtimeInfo) {
 		//sort out resource by type, so that we can do bulk load resources for one type  
 		Map<String, List<HAPResourceId>> sortedResourcesId = new LinkedHashMap<String, List<HAPResourceId>>();
 		for(HAPResourceId resourceId : resourcesId){
@@ -42,7 +43,7 @@ public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 		Map<String, HAPLoadResourceResponse> resourceResponses = new LinkedHashMap<String, HAPLoadResourceResponse>();
 		for(String resourceType : sortedResourcesId.keySet()){
 			HAPResourceManager resourceMan = this.getResourceManager(resourceType);
-			resourceResponses.put(resourceType, resourceMan.getResources(sortedResourcesId.get(resourceType)));
+			resourceResponses.put(resourceType, resourceMan.getResources(sortedResourcesId.get(resourceType), runtimeInfo));
 		}
 
 		//merge all the response for different type, make sure the response follow the same squence as input
@@ -61,25 +62,25 @@ public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 	}
 	
 	@Override
-	public List<HAPResourceInfo> discoverResources(List<HAPResourceId> resourceIds) {
+	public List<HAPResourceInfo> discoverResources(List<HAPResourceId> resourceIds, HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceInfo> out = new ArrayList<HAPResourceInfo>();
 		Set<HAPResourceId> processedResources = new HashSet<HAPResourceId>();
 	
 		for(HAPResourceId resourceId : resourceIds){
-			this.discoverResource(resourceId, out, processedResources);
+			this.discoverResource(resourceId, out, processedResources, runtimeInfo);
 		}
 		
 		return out;
 	}
 
-	private void discoverResource(HAPResourceId resourceId, List<HAPResourceInfo> resourceInfos, Set<HAPResourceId> processedResourceIds){
+	private void discoverResource(HAPResourceId resourceId, List<HAPResourceInfo> resourceInfos, Set<HAPResourceId> processedResourceIds, HAPRuntimeInfo runtimeInfo){
 		if(!processedResourceIds.contains(resourceId)){
 			processedResourceIds.add(resourceId);
-			HAPResourceInfo resourceInfo = this.getResourceManager(resourceId.getType()).discoverResource(resourceId);
+			HAPResourceInfo resourceInfo = this.getResourceManager(resourceId.getType()).discoverResource(resourceId, runtimeInfo);
 			//add dependency first
 			List<HAPResourceDependent> dependencys = resourceInfo.getDependency();
 			for(HAPResourceDependent dependency : dependencys){
-				this.discoverResource(dependency.getId(), resourceInfos, processedResourceIds);
+				this.discoverResource(dependency.getId(), resourceInfos, processedResourceIds, runtimeInfo);
 			}
 			//then add itself
 			resourceInfos.add(resourceInfo);

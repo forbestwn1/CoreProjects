@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManagerImp;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.resource.HAPJSLibraryId;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSLibrary;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSLibrary;
@@ -21,7 +22,7 @@ public class HAPResourceManagerJSLibrary extends HAPResourceManagerImp{
 	private String m_baseFolder = HAPFileUtility.getJSFolder() + "libresources/";
 
 	@Override
-	public HAPResource getResource(HAPResourceId resourceId) {
+	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPResourceIdJSLibrary resourceLibraryId = new HAPResourceIdJSLibrary(resourceId);
 		HAPJSLibraryId libraryId =  resourceLibraryId.getLibraryId();
 

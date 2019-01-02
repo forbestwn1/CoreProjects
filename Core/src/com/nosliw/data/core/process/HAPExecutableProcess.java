@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContext;
 
 @HAPEntityWithAttribute
@@ -49,8 +50,14 @@ public class HAPExecutableProcess extends HAPSerializableImp implements HAPExecu
 	public void setStartActivityId(String id) {   this.m_startActivityId = id;   }
 
 	@Override
-	public List<HAPResourceDependent> getResourceDependency() {		return this.m_resources;	}
+	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {		
+		//process resources
+		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+		 for(HAPExecutableActivity activity : this.getActivities().values()) {
+			 out.addAll(activity.getResourceDependency(runtimeInfo));
+		 }
 	
-	public void addResoruceDependency(List<HAPResourceDependent> resources) {   this.m_resources.addAll(resources);  }
+		return out;	
+	}
 	
 }

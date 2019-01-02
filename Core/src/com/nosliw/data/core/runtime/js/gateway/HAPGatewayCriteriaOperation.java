@@ -12,6 +12,7 @@ import com.nosliw.data.core.criteria.HAPCriteriaParser;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaWithSubCriteria;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 
 public class HAPGatewayCriteriaOperation extends HAPGatewayImp{
@@ -39,7 +40,7 @@ public class HAPGatewayCriteriaOperation extends HAPGatewayImp{
 	
 	
 	@Override
-	public HAPServiceData command(String command, JSONObject parms) throws Exception {
+	public HAPServiceData command(String command, JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception {
 		HAPServiceData out = null;
 		switch(command){
 		case COMMAND_GETCHILDCRITERIA:

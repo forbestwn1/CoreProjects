@@ -9,7 +9,7 @@ public interface HAPResourceManagerRoot{
 	 * @param resources
 	 * @return a list of resource. here, the position matter as some resources has to be load first
 	 */
-	HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId);
+	HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId, HAPRuntimeInfo runtimeInfo);
 
 	/**
 	 * Discover resource information (dependency)
@@ -17,7 +17,7 @@ public interface HAPResourceManagerRoot{
 	 * @param resource info
 	 * @return
 	 */
-	List<HAPResourceInfo> discoverResources(List<HAPResourceId> resourceIds);
+	List<HAPResourceInfo> discoverResources(List<HAPResourceId> resourceIds, HAPRuntimeInfo runtimeInfo);
 	
 	
 	/**

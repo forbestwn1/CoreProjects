@@ -6,6 +6,7 @@ import java.util.List;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManagerImp;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public abstract class HAPResourceManagerDataAccess extends HAPResourceManagerImp{
 
@@ -16,7 +17,7 @@ public abstract class HAPResourceManagerDataAccess extends HAPResourceManagerImp
 	}
 	
 	@Override
-	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId){
+	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
 		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
 		HAPJSResourceDependency dependency = this.m_dataAccess.getJSResourceDependency(resourceId);
 		if(dependency!=null)  out = dependency.getDependency();

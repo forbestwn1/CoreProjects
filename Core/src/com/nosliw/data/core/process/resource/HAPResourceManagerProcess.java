@@ -10,6 +10,7 @@ import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManagerImp;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
 
 public class HAPResourceManagerProcess  extends HAPResourceManagerImp{
@@ -21,7 +22,7 @@ public class HAPResourceManagerProcess  extends HAPResourceManagerImp{
 	}
 	
 	@Override
-	public HAPResource getResource(HAPResourceId resourceId) {
+	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPResourceIdProcess processId = new HAPResourceIdProcess(resourceId); 
 		HAPExecutableProcess process = this.m_processMan.getProcess(processId.getId());
 		if(process==null)  return null;
@@ -32,9 +33,9 @@ public class HAPResourceManagerProcess  extends HAPResourceManagerImp{
 	}
 
 	@Override
-	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId){
+	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
 		HAPResourceIdProcess processId = new HAPResourceIdProcess(resourceId); 
 		HAPExecutableProcess process = this.m_processMan.getProcess(processId.getId());
-		return process.getResourceDependency();
+		return process.getResourceDependency(runtimeInfo);
 	}
 }

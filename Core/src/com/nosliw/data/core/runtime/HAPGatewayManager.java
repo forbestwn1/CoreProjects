@@ -38,13 +38,13 @@ public class HAPGatewayManager {
 	 * 					NativeObject
 	 * @return
 	 */
-	public HAPServiceData executeGateway(String gatewayId, String command, JSONObject parms){
+	public HAPServiceData executeGateway(String gatewayId, String command, JSONObject parms, HAPRuntimeInfo runtimeInfo){
 		
 		HAPGateway gateway = this.getGateway(gatewayId);
 
 		HAPServiceData commandResult = null;
 		try {
-			commandResult = gateway.command(command, parms);
+			commandResult = gateway.command(command, parms, runtimeInfo);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 			return HAPServiceData.createFailureData(null, "Exception during command " + gatewayId + " : " +command + "!!");

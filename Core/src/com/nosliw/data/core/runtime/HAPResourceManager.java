@@ -10,15 +10,15 @@ public interface HAPResourceManager {
 	 * @param resources
 	 * @return a list of resource. here, the position matter as some resources has to be load first
 	 */
-	HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId);
+	HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId, HAPRuntimeInfo runtimeInfo);
 
-	HAPResource getResource(HAPResourceId resourceId);
+	HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo);
 
 	/**
 	 * Discover resource information (dependency)
 	 * @param resource info
 	 * @return
 	 */
-	HAPResourceInfo discoverResource(HAPResourceId resourceId);
+	HAPResourceInfo discoverResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo);
 
 }

@@ -74,7 +74,10 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	private synchronized String generateTaskId() {
 		return this.m_idIndex+++"";
 	}
-	
+
+	@Override
+	public HAPRuntimeInfo getRuntimeInfo() {		return new HAPRuntimeInfo(HAPConstant.RUNTIME_LANGUAGE_JS, HAPConstant.RUNTIME_ENVIRONMENT_RHINO);	}
+
 	/**
 	 * embed gateway point into rhino env which provide different gateway by name. 
 	 * @param name
@@ -255,7 +258,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 			Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 			
 			jsonMap.put(HAPGatewayResource.COMMAND_LOADRESOURCES_RESOURCEINFOS, HAPSerializeManager.getInstance().toStringValue(resourceInfos, HAPSerializationFormat.JSON));
-			HAPServiceData serviceData = gatewayMan.executeGateway(HAPRuntimeEnvironmentJS.GATEWAY_RESOURCE, HAPGatewayResource.COMMAND_LOADRESOURCES, new JSONObject(HAPJsonUtility.buildMapJson(jsonMap)));
+			HAPServiceData serviceData = gatewayMan.executeGateway(HAPRuntimeEnvironmentJS.GATEWAY_RESOURCE, HAPGatewayResource.COMMAND_LOADRESOURCES, new JSONObject(HAPJsonUtility.buildMapJson(jsonMap)), this.getRuntimeInfo());
 
 			HAPGatewayOutput output = (HAPGatewayOutput)serviceData.getData();
 			List<HAPJSScriptInfo> scripts = output.getScripts();
@@ -288,8 +291,6 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	}
 
 	public void loadTaskScript(HAPJSScriptInfo scriptInfo, String taskId){		this.loadScript(scriptInfo, m_scope);	}
-	
-	public HAPRuntimeInfo getRuntimeInfo() {		return new HAPRuntimeInfo(HAPConstant.RUNTIME_LANGUAGE_JS, HAPConstant.RUNTIME_ENVIRONMENT_RHINO);	}
 
 	@Override
 	public void close(){
