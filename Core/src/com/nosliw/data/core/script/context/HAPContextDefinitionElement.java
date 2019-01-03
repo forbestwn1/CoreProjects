@@ -35,7 +35,6 @@ public abstract class HAPContextDefinitionElement extends HAPSerializableImp{
 	
 	public void processed() {   this.m_processed = true;   }
 	public boolean isProcessed() {  return this.m_processed;   }
-	
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

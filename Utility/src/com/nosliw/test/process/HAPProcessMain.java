@@ -17,7 +17,7 @@ public class HAPProcessMain {
 		
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 		
-		HAPDefinitionProcessSuite suite = HAPUtilityProcess.getProcessSuite("expression.process", runtimeEnvironment.getProcessManager().getPluginManager()); 
+		HAPDefinitionProcessSuite suite = HAPUtilityProcess.getProcessSuite("expression", runtimeEnvironment.getProcessManager().getPluginManager()); 
 		
 		String id = "expressionProcessId";
 		HAPExecutableProcess processed = HAPProcessorProcess.process(id, suite, new HAPProcessContext(), runtimeEnvironment.getProcessManager(), new HAPEnvContextProcessor(HAPExpressionManager.dataTypeHelper, runtimeEnvironment.getRuntime(), runtimeEnvironment.getExpressionSuiteManager(), null));

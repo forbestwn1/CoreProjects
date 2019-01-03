@@ -71,7 +71,7 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 				String varName = it1.next();
 				String criteriaStr = varCriteriasJson.getString(varName);
 				HAPDataTypeCriteria varCriteria = HAPCriteriaParser.getInstance().parseCriteria(criteriaStr);
-				varsInfo.put(varName, new HAPVariableInfo(varCriteria));
+				varsInfo.put(varName, HAPVariableInfo.buildVariableInfo(varCriteria));
 			}
 
 			JSONObject constantsJson = parms.optJSONObject(COMMAND_GETOUTPUTCRITERIA_CONSTANTS);
@@ -99,7 +99,7 @@ public class HAPGatewayExpressionDiscovery extends HAPGatewayImp{
 				JSONObject varDataJson = varValuesJson.getJSONObject(varName);
 				HAPDataWrapper data = HAPDataUtility.buildDataWrapperFromJson(varDataJson);
 				expressionParms.put(varName, data);
-				varsInfo.put(varName, new HAPVariableInfo(new HAPDataTypeCriteriaId(data.getDataTypeId(), null)));
+				varsInfo.put(varName, HAPVariableInfo.buildVariableInfo(new HAPDataTypeCriteriaId(data.getDataTypeId(), null)));
 			}
 			
 			HAPProcessContext processContext = new HAPProcessContext();

@@ -42,20 +42,47 @@ public class HAPVariableInfo extends HAPSerializableImp{
 
 	private HAPInfo m_info;
 	
-	public HAPVariableInfo(){
-		this(null);
-	}	
+	public static HAPVariableInfo buildUndefinedVariableInfo() {
+		return buildVariableInfo(null);
+	}
 	
-	public HAPVariableInfo(HAPDataTypeCriteria criteria, String status){
-		this.m_status = status;
-		this.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
-		this.initWithDefault();
+	public static HAPVariableInfo buildVariableInfoFromObject(Object def) {
+		HAPVariableInfo out = new HAPVariableInfo();
+		out.buildObject(def, null);
+		return out;
 	}
 
-	public HAPVariableInfo(HAPDataTypeCriteria criteria){
-		this.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
-		this.initWithDefault();
+	public static HAPVariableInfo buildVariableInfo(HAPDataTypeCriteria criteria) {
+		HAPVariableInfo out = new HAPVariableInfo();
+		if(criteria!=null)		out.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
+		out.initWithDefault();
+		return out;
 	}
+
+	public static HAPVariableInfo buildVariableInfo(HAPDataTypeCriteria criteria, String status) {
+		HAPVariableInfo out = new HAPVariableInfo();
+		out.m_criteria = criteria;
+		out.m_status = status;
+		out.initWithDefault();
+		return out;
+	}
+	
+	private HAPVariableInfo() {}
+	
+//	public HAPVariableInfo(){
+//		this(null);
+//	}	
+	
+//	private HAPVariableInfo(HAPDataTypeCriteria criteria, String status){
+//		this.m_status = status;
+//		this.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
+//		this.initWithDefault();
+//	}
+//
+//	public HAPVariableInfo(HAPDataTypeCriteria criteria){
+//		this.m_criteria = HAPCriteriaUtility.cloneDataTypeCriteria(criteria);
+//		this.initWithDefault();
+//	}
 	
 	private void initWithDefault() {
 		if(this.m_status==null) {

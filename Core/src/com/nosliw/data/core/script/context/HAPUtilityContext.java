@@ -158,32 +158,31 @@ public class HAPUtilityContext {
 			context.addElement(cpath.getRootName(), root);
 		}
 		
-		String seg = null;
-		HAPContextDefinitionElement parentEle = root.getDefinition();
-		for(int i=0; i<cpath.getPathSegs().length-1; i++) {
-			if(i==0) {
-				if(parentEle==null) {
-					parentEle = new HAPContextDefinitionNode();
-					root.setDefinition(parentEle);
-				}
-			}
-			String pathSeg = cpath.getPathSegs()[i]; 
-			HAPContextDefinitionElement child = parentEle.getChild(pathSeg);
-			if(child==null) {
-				child = new HAPContextDefinitionNode();
-				((HAPContextDefinitionNode)parentEle).addChild(pathSeg, child);
-			}
-			parentEle = child;
-			seg = cpath.getPathSegs()[i+1];
-		}
-		
-		
-		if(seg!=null) {
-			((HAPContextDefinitionNode)parentEle).addChild(seg, ele);
-		}
-		else {
+		if(cpath.getPathSegs().length==0) {
 			root.setDefinition(ele);
 		}
+		else {
+			String seg = cpath.getPathSegs()[0];
+			HAPContextDefinitionElement parentEle = root.getDefinition();
+			for(int i=0; i<cpath.getPathSegs().length-1; i++) {
+				if(i==0) {
+					if(parentEle==null) {
+						parentEle = new HAPContextDefinitionNode();
+						root.setDefinition(parentEle);
+					}
+				}
+				String pathSeg = cpath.getPathSegs()[i]; 
+				HAPContextDefinitionElement child = parentEle.getChild(pathSeg);
+				if(child==null) {
+					child = new HAPContextDefinitionNode();
+					((HAPContextDefinitionNode)parentEle).addChild(pathSeg, child);
+				}
+				parentEle = child;
+				seg = cpath.getPathSegs()[i+1];
+			}
+			((HAPContextDefinitionNode)parentEle).addChild(seg, ele);
+		}
+		
 	}
 	
 	public static boolean isContextDefinitionElementConstant(HAPContextDefinitionElement ele) {   return HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT.equals(ele.getType());   }
@@ -397,7 +396,7 @@ public class HAPUtilityContext {
 					HAPContextDefinitionLeafData dataLeafEle = (HAPContextDefinitionLeafData)candidateNode;
 					HAPDataTypeCriteria parentCriteria = HAPCriteriaUtility.getChildCriteriaByPath(dataLeafEle.getCriteria().getCriteria(), out.remainPath);
 					if(parentCriteria!=null) {
-						out.resolvedNode = new HAPContextDefinitionLeafData(new HAPVariableInfo(parentCriteria)); 
+						out.resolvedNode = new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(parentCriteria)); 
 					}
 				}
 			}

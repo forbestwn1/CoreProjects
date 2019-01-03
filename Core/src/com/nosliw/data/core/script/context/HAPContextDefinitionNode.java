@@ -27,6 +27,7 @@ public class HAPContextDefinitionNode extends HAPContextDefinitionLeafVariable{
 	
 	public void addChild(String name, HAPContextDefinitionElement nodeBranch){		this.m_children.put(name, nodeBranch);	}
 
+	@Override
 	public void processed() {
 		super.processed();
 		for(HAPContextDefinitionElement child : this.m_children.values()) {

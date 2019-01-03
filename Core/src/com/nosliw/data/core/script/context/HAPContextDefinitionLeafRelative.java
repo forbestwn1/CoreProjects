@@ -142,6 +142,7 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 		jsonMap.put(PATH, this.getPath().toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ISTOPARENT, this.isRelativeToParent()+"");
 		typeJsonMap.put(ISTOPARENT, Boolean.class);
+		jsonMap.put(DEFINITION, HAPJsonUtility.buildJson(this.m_definition, HAPSerializationFormat.JSON));
 		if(this.m_matchers!=null && !this.m_matchers.isEmpty()){
 			jsonMap.put(MATCHERS, HAPJsonUtility.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
 			jsonMap.put(REVERSEMATCHERS, HAPJsonUtility.buildJson(this.m_reverseMatchers, HAPSerializationFormat.JSON));

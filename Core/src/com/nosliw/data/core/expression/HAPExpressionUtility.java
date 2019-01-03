@@ -53,7 +53,7 @@ public class HAPExpressionUtility {
 					String name = its.next();
 					String criteriaStr = jsonObj.optString(name);
 					HAPDataTypeCriteria criteria = HAPCriteriaUtility.parseCriteria(criteriaStr);
-					out.put(name, new HAPVariableInfo(criteria));
+					out.put(name, HAPVariableInfo.buildVariableInfo(criteria));
 				}
 		  }
 		  return out;

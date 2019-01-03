@@ -45,7 +45,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 		HAPVariableInfo variableInfo = variablesInfo.get(this.getVariableName());
 		if(variableInfo==null){
 			//found a new variable
-			variableInfo = new HAPVariableInfo();
+			variableInfo = HAPVariableInfo.buildUndefinedVariableInfo();
 			variablesInfo.put(this.getVariableName(), variableInfo);
 		}
 		

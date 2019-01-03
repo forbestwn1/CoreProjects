@@ -82,8 +82,8 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			HAPContextPath varPath = new HAPContextPath(varName);
 			//affect sold variable 
 			String solidVarRootName = activityContext.getSolidName(varPath.getRootElementId().getFullName());
+			varPath = new HAPContextPath(new HAPContextDefinitionRootId(solidVarRootName), varPath.getSubPath());
 			if(solidVarRootName!=null) {
-				varPath = new HAPContextPath(new HAPContextDefinitionRootId(solidVarRootName), varPath.getSubPath());
 				if(HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE.equals(varPath.getRootElementId().getCategary())) {
 					//mapped ele
 					HAPContextDefinitionElement currentEle = activityContext.getContext().getElement(varPath.getRootElementId().getFullName()).getDefinition();
@@ -103,7 +103,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 				}
 				else {
 					//inhereted ele
-					affectedVariablesInfo.put(varName, affectVarInfo);
+					affectedVariablesInfo.put(varPath.getFullPath(), affectVarInfo);
 				}
 			}
 			else {
@@ -128,7 +128,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			HAPContext internalContext = new HAPContext();
 			HAPExecutableExpression expExe = scriptExpression.getExpressions().values().iterator().next();
 			HAPDataTypeCriteria outputCriteria = expExe.getOperand().getOperand().getOutputCriteria();
-			internalContext.addElement(HAPUtilityProcess.buildOutputVarialbeName(VARIABLE_OUTPUT), new HAPContextDefinitionLeafData(new HAPVariableInfo(outputCriteria)));
+			internalContext.addElement(HAPUtilityProcess.buildOutputVarialbeName(VARIABLE_OUTPUT), new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(outputCriteria)));
 			
 			HAPResultActivityNormal result = out.getExpressionActivityDefinition().getResults().get(RESULT_SUCCESS);
 			
