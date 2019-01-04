@@ -26,10 +26,9 @@ public class HAPResourceManagerProcess  extends HAPResourceManagerImp{
 		HAPResourceIdProcess processId = new HAPResourceIdProcess(resourceId); 
 		HAPExecutableProcess process = this.m_processMan.getProcess(processId.getProcessId());
 		if(process==null)  return null;
-		HAPResourceDataProcess resourceData = new HAPResourceDataProcess(process);
 		Map<String, Object> info = new LinkedHashMap<String, Object>();
 		info.put(HAPRuntimeJSUtility.RESOURCE_LOADPATTERN, HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE);
-		return new HAPResource(resourceId, resourceData, null);
+		return new HAPResource(resourceId, process.toResourceData(runtimeInfo), null);
 	}
 
 	@Override

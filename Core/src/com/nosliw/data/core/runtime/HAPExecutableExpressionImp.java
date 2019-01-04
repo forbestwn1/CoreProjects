@@ -23,4 +23,9 @@ public abstract class HAPExecutableExpressionImp extends HAPSerializableImp impl
 		return this.m_resources;
 	}
 
+	@Override
+	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

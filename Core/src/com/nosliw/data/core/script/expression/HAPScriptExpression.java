@@ -16,6 +16,7 @@ import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
+import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -134,6 +135,12 @@ public class HAPScriptExpression extends HAPSerializableImp implements HAPExecut
 		return out;
 	}
 	
+	@Override
+	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	@Override
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();

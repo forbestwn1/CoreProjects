@@ -7,6 +7,7 @@ import java.util.Set;
 import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.updatename.HAPUpdateNameMap;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -150,15 +151,8 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 				nameMapping.put(rootName, resolvedInfo.path.getRootElementId().getFullName());
 			}
 			
-			//add categary infor to output variable
-			Map<String, String> pathMapping = out.getOutputDataAssociation().getPathMapping();
-			Map<String, String> processedPathMapping = new LinkedHashMap<String, String>();
-			for(String p1 : pathMapping.keySet()) {
-				HAPContextPath cPath = new HAPContextPath(pathMapping.get(p1));
-				HAPContextPath cPath1 = new HAPContextPath(new HAPContextDefinitionRootId(nameMapping.get(cPath.getRootElementId().getFullName())), cPath.getSubPath());
-				processedPathMapping.put(p1, cPath1.getFullPath());
-			}
-			out.getOutputDataAssociation().setPathMapping(processedPathMapping);
+			//update variable names in output 
+			out.getOutputDataAssociation().updateOutputRootName(new HAPUpdateNameMap(nameMapping));
 		}
 		
 		return out;

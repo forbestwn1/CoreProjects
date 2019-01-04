@@ -9,5 +9,4 @@ public interface HAPResourceDataJSValue extends HAPResourceData{
 	public static String VALUE = "value";
 	
 	String getValue();
-	
 }

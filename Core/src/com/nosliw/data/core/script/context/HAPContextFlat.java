@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
 
 //flat context is 
@@ -34,6 +35,28 @@ public class HAPContextFlat extends HAPSerializableImp{
 	public HAPContextFlat(HAPContext context) {
 		this.m_context = context;
 		this.m_nameMapping = new LinkedHashMap<String, String>();
+	}
+	
+	public void updateRootName(HAPUpdateName nameUpdate) {
+		HAPContext newContext = new HAPContext();
+		//update context
+		for(String eleName : this.m_context.getElementNames()) {
+			HAPContextDefinitionRoot root = this.m_context.getElement(eleName);
+			if(root.getDefinition() instanceof HAPContextDefinitionLeafRelative) {
+				HAPContextDefinitionLeafRelative relative = (HAPContextDefinitionLeafRelative)root.getDefinition();
+				if(!relative.isRelativeToParent()) {
+					HAPContextPath path = relative.getPath();
+					relative.setPath(new HAPContextPath(new HAPContextDefinitionRootId(path.getRootElementId().getCategary(), nameUpdate.getUpdatedName(path.getRootElementId().getName())), path.getSubPath()));
+				}
+			}
+			newContext.addElement(nameUpdate.getUpdatedName(eleName), root);
+		}
+		
+		Map<String, String> newMapping = new LinkedHashMap<String, String>();
+		for(String name : this.m_nameMapping.keySet()) {
+			newMapping.put(nameUpdate.getUpdatedName(name), nameUpdate.getUpdatedName(this.m_nameMapping.get(name)));
+		}
+		this.m_nameMapping = newMapping;
 	}
 	
 	//solid variable name
