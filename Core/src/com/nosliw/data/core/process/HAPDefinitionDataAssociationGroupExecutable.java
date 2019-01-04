@@ -22,4 +22,5 @@ public class HAPDefinitionDataAssociationGroupExecutable {
 	public void setContext(HAPContextFlat context) {   this.m_context = context;   }
 
 	public void setPathMapping(Map<String, String> mapping) {    this.m_pathMapping = mapping;    }
+	public Map<String, String> getPathMapping() {  return this.m_pathMapping;  }
 }

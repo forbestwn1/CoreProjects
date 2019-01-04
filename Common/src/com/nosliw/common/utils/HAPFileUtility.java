@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.nio.charset.Charset;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -21,6 +22,10 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.commons.io.FileUtils;
+
+import com.nosliw.common.erro.HAPErrorUtility;
 
 public class HAPFileUtility {
 	
@@ -104,6 +109,8 @@ public class HAPFileUtility {
 			fileName = getValidFileName(fileName);
 			File file = new File(fileName);
  
+			FileUtils.writeStringToFile(file, content, Charset.forName("UTF-8"));
+/*			
 			// if file doesnt exists, then create it
 			if (!file.exists()) {
 				try{
@@ -111,6 +118,7 @@ public class HAPFileUtility {
 				}
 				catch(Exception e){
 					e.printStackTrace();
+					HAPErrorUtility.invalid("");
 				}
 			}
  
@@ -118,7 +126,7 @@ public class HAPFileUtility {
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.write(content);
 			bw.close();
- 
+ */
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

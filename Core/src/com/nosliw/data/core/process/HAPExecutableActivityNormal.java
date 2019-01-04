@@ -21,7 +21,8 @@ public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 	}
 	
 	public void setOutputDataAssociation(HAPDefinitionDataAssociationGroupExecutable output) {  this.m_output = output;  }
-
+	public HAPDefinitionDataAssociationGroupExecutable getOutputDataAssociation() {  return this.m_output;   }
+	
 	public HAPContextFlat getOutputContext() {
 		if(this.m_output==null)   return null;
 		return this.m_output.getContext();

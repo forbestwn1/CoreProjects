@@ -10,12 +10,60 @@ var packageObj = library;
 
 var node_createProcessService = function(){
 
-	var loc_generateInput = function(context, inputMapping){
+	var loc_generateInput = function(context, inputMapping, handlers){
 		
 	};
 	
-	var loc_getExecuteActivityRequest = function(activity, context, handlers, requester_parent){
+	var loc_generateOutput = function(out, outputMapping, handlers){
 		
+	}
+	
+	var loc_getExecuteNormalActivityRequest = function(activityId, activities, context, handlers, requester_parent){
+		var activity = activities[activityId];
+		var executeActivityRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteActivity", {"":expression, "variables":variables}), handlers, requestInfo);
+		executeActivityRequest.addReqeust(loc_generateInput(context, activity.input, {
+			success : function(input){
+				resourceService.getResource(activity.type, {
+					success : function(activityPlugin){
+						return activityPlugin.script.getExecuteRequest(input, {
+							success : function(out){
+								return loc_generateOutput(out, activity.outputMapping, {
+									success : function(){
+										return outputContext;
+									}
+								});
+							}
+						});
+					}
+				});
+			}
+		}));
+		
+	};
+
+	var loc_getExecuteEndActivityRequest = function(activityId, activities, context, handlers, requester_parent){
+		
+	};
+
+	var loc_getExecuteStartActivityRequest = function(activityId, activities, context, handlers, requester_parent){
+		
+	};
+
+	var processSuccess = function(nextActivityId, activities){
+		if(isNormal){
+			return loc_getExecuteNormalActivityRequest(aId, activities, {
+				success : function(nextActivityId){
+					return processSuccess(nextActivityId, activities);
+				}
+			});
+		}
+		else if(end){
+			return loc_getExecuteEndActivityRequest(aId, activities, {
+				success : function(output){
+					
+				}
+			});
+		}
 	};
 	
 	var loc_getExecuteProcessResourceRequest = function(process, input, handlers, requester_parent){
@@ -23,7 +71,15 @@ var node_createProcessService = function(){
 		
 		
 		//execute activity
-		
+		var executeFlowRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteFlow", {"":expression, "variables":variables}), handlers, requestInfo);
+		var startActivityId = process[id];
+		var activities = process[activities];
+		var startActivityRequest = loc_getStartExecuteActivityRequest(startActivityId, activities, {
+			success : function(nextActivityId){
+				return processSuccess(nextActivityId, activities);
+			}
+		});
+		executeFlowRequest.addRequest(startActivityRequest);
 		
 		//generate output
 		

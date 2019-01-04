@@ -27,12 +27,12 @@ public class HAPUtilityProcess {
 	private static String helpCategary = HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE;
 
 	//process input configure for activity and generate flat context for activity
-	public static HAPDefinitionDataAssociationGroupExecutable processDataAssociation(HAPContextGroup parentContext, HAPDefinitionDataAssociationGroup input, HAPEnvContextProcessor contextProcessorEnv) {
-		HAPDefinitionDataAssociationGroupExecutable out = new HAPDefinitionDataAssociationGroupExecutable(input);
-		input = input.cloneDataAssocationGroup();
+	public static HAPDefinitionDataAssociationGroupExecutable processDataAssociation(HAPContextGroup inputContext, HAPDefinitionDataAssociationGroup mapping, HAPEnvContextProcessor contextProcessorEnv) {
+		HAPDefinitionDataAssociationGroupExecutable out = new HAPDefinitionDataAssociationGroupExecutable(mapping);
+		mapping = mapping.cloneDataAssocationGroup();
 		
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
-		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(input.getInfo()); 
+		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(mapping.getInfo()); 
 //				HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE; 
 
 		//set input context to help categary
@@ -40,8 +40,8 @@ public class HAPUtilityProcess {
 		
 		//help context to store input context defintion
 		HAPContext helpContext = new HAPContext();
-		for(String eleName : input.getElementNames()) {
-			helpContext.addElement(eleName, input.getElement(eleName));
+		for(String eleName : mapping.getElementNames()) {
+			helpContext.addElement(eleName, mapping.getElement(eleName));
 		}
 		
 		//consolidate context in help context
@@ -50,7 +50,7 @@ public class HAPUtilityProcess {
 		context.setContext(helpCategary, helpContext);
 
 		//process input context
-		context = HAPProcessorContext.process(context, parentContext, configure, contextProcessorEnv);
+		context = HAPProcessorContext.process(context, inputContext, configure, contextProcessorEnv);
 		out.setContext(HAPUtilityContext.buildFlatContextFromContextGroup(context, null));
 		
 		//build path mapping
@@ -65,41 +65,40 @@ public class HAPUtilityProcess {
 	}
 
 	
-	public static HAPDefinitionDataAssociationGroupExecutable processDataAssociation(HAPContext internalContext, HAPDefinitionDataAssociationGroup output, HAPEnvContextProcessor contextProcessorEnv) {
+	public static HAPDefinitionDataAssociationGroupExecutable processDataAssociation(HAPContext inputContext, HAPDefinitionDataAssociationGroup mapping, HAPEnvContextProcessor contextProcessorEnv) {
 		
-		HAPDefinitionDataAssociationGroupExecutable out = new HAPDefinitionDataAssociationGroupExecutable(output);
-		output= output.cloneDataAssocationGroup();
+		HAPDefinitionDataAssociationGroupExecutable out = new HAPDefinitionDataAssociationGroupExecutable(mapping);
+		mapping= mapping.cloneDataAssocationGroup();
 		
 		//build parent context group
-		HAPContextGroup interalContextGroup = new HAPContextGroup();
-		interalContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, internalContext.cloneContext());
+		HAPContextGroup inputContextGroup = new HAPContextGroup();
+		inputContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, inputContext.cloneContext());
 		
 		//build context group to be processed
-		HAPContextGroup outputContextGroup = new HAPContextGroup();
-		outputContextGroup.setContext(helpCategary, output.cloneContext());
+		HAPContextGroup mappingContextGroup = new HAPContextGroup();
+		mappingContextGroup.setContext(helpCategary, mapping.cloneContext());
 		
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
 		configure.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE;
 		//process context to build context
-		HAPContextGroup processedContextGroup = HAPProcessorContext.process(outputContextGroup, interalContextGroup, configure, contextProcessorEnv);
+		HAPContextGroup outputContextGroup = HAPProcessorContext.process(mappingContextGroup, inputContextGroup, configure, contextProcessorEnv);
 
 		//build context
-		HAPContext processedContext = processedContextGroup.getContext(helpCategary);
-		processedContext = consolidateContextRoot(processedContext);
-		out.setContext(new HAPContextFlat(processedContext));
+		HAPContext outputContext = outputContextGroup.getContext(helpCategary);
+		outputContext = consolidateContextRoot(outputContext);
+		out.setContext(new HAPContextFlat(outputContext));
 		
 		//build path mapping
 		Map<String, String> pathMapping = new LinkedHashMap<String, String>();
-		//remove categary info in relative element
-		for(String eleName : processedContext.getElementNames()) {
-			HAPContextDefinitionElement contextDefEle = processedContext.getElement(eleName).getDefinition();
+		for(String eleName : outputContext.getElementNames()) {
+			HAPContextDefinitionElement contextDefEle = outputContext.getElement(eleName).getDefinition();
+			//remove categary info in relative element first
 			HAPUtilityContext.processContextDefElement(contextDefEle, new HAPContextDefEleProcessor() {
 				@Override
 				public boolean process(HAPContextDefinitionElement ele, Object value) {
 					if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 						HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)ele;
-						HAPContextPath contextPath = relativeEle.getPath();
-						relativeEle.setPath(new HAPContextPath(contextPath.getPath()));
+						relativeEle.setPath(new HAPContextPath(relativeEle.getPath().getPath()));
 					}
 					return true;
 				}
