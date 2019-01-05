@@ -8,13 +8,29 @@ var packageObj = library;
 	var node_buildServiceProvider;
 //*******************************************   Start Node Definition  ************************************** 	
 
+ActivityResult = function(resultName, value, context, activities){
+	
+}	
+
+ActivityOutput = function(next, context, activities){
+	
+}
+
+ProcessResult = function(resultName, value){
+	
+}
+
 var node_createProcessService = function(){
 
-	var loc_generateInput = function(context, inputMapping, handlers){
-		
+	var loc_generateInput = function(activity, context, handlers){
+		out = node_createServiceRequestInfoSimple(new node_ServiceInfo("generateInput", {"activity":activity, "context":constants}), 
+				function(requestInfo){
+					return activity.inputScript(context, utilFun);
+				}, 
+				handlers, requestInfo);
 	};
 	
-	var loc_generateOutput = function(out, outputMapping, handlers){
+	var loc_generateOutput = function(activity, activityResult, out, outputMapping, handlers){
 		
 	}
 	
@@ -23,13 +39,13 @@ var node_createProcessService = function(){
 		var executeActivityRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteActivity", {"":expression, "variables":variables}), handlers, requestInfo);
 		executeActivityRequest.addReqeust(loc_generateInput(context, activity.input, {
 			success : function(input){
-				resourceService.getResource(activity.type, {
+				return resourceService.getResourceRequest(activity.type, {
 					success : function(activityPlugin){
 						return activityPlugin.script.getExecuteRequest(input, {
-							success : function(out){
+							success : function(activityResult){
 								return loc_generateOutput(out, activity.outputMapping, {
-									success : function(){
-										return outputContext;
+									success : function(activityOutput){
+										return loc_getExecuteActivityRequest(activityOutput.next, context, activities);
 									}
 								});
 							}
@@ -42,43 +58,56 @@ var node_createProcessService = function(){
 	};
 
 	var loc_getExecuteEndActivityRequest = function(activityId, activities, context, handlers, requester_parent){
-		
+		out = node_createServiceRequestInfoSimple(new node_ServiceInfo("generateInput", {"activity":activity, "context":constants}), 
+				function(requestInfo){
+					var output = process[result][activity[result]];
+					return new ProcessResult(activity[result], output.inputScript(context, utilFun));
+				}, 
+				handlers, requestInfo);
 	};
 
 	var loc_getExecuteStartActivityRequest = function(activityId, activities, context, handlers, requester_parent){
+		var startActivity = activities[activityId];
+		out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteStartActivity", {"activity":activity, "context":constants}), 
+				function(requestInfo){
+					return new ActivityResult(context, activities, startActivity.next);
+				}, 
+				handlers, requestInfo);
 		
 	};
 
-	var processSuccess = function(nextActivityId, activities){
-		if(isNormal){
-			return loc_getExecuteNormalActivityRequest(aId, activities, {
-				success : function(nextActivityId){
-					return processSuccess(nextActivityId, activities);
-				}
-			});
+	var loc_getExecuteActivityRequest = function(activityId, activities, context, handlers, requester_parent){
+		var activity = activities[activityId];
+		var activityType = activity[type];
+		if(activityType==start){
+			return loc_getExecuteActivityRequest(activity.next, activities, context, );
 		}
-		else if(end){
-			return loc_getExecuteEndActivityRequest(aId, activities, {
-				success : function(output){
-					
-				}
-			});
+		else if(activityType==normal){
+			return loc_getExecuteNormalActivityRequest(activityId, activities, context);
+		}
+		else if(activityType==end){
+			return loc_getExecuteEndActivityRequest(activityId, activities, context);
 		}
 	};
+
+
 	
 	var loc_getExecuteProcessResourceRequest = function(process, input, handlers, requester_parent){
-		//process init
-		
+		//init, build context
+		var context = process.init();
+		_.each(input, function(value, name){
+			context[public][name] = value;
+		});
 		
 		//execute activity
-		var executeFlowRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteFlow", {"":expression, "variables":variables}), handlers, requestInfo);
-		var startActivityId = process[id];
-		var activities = process[activities];
-		var startActivityRequest = loc_getStartExecuteActivityRequest(startActivityId, activities, {
-			success : function(nextActivityId){
-				return processSuccess(nextActivityId, activities);
+		var executeFlowRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteProcess", {"process":process, "context":context}), {
+			success : function(processResult){
+				return processResult;
 			}
-		});
+		}, requestInfo);
+		var startActivityId = process[startActivityId];
+		var activities = process[activities];
+		var startActivityRequest = loc_getExecuteActivityRequest(startActivityId, activities, context);
 		executeFlowRequest.addRequest(startActivityRequest);
 		
 		//generate output
