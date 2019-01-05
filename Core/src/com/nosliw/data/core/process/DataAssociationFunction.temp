@@ -1,28 +1,8 @@
-function(input, dataAssociation){
+function(input, utilFunction){
 
 	var output = ||outputInit||;
 	
-	||output||
+	||outputDyanimicValueBuild||
 	
-	return output;
+	return out;
 }
-
-
-function(||expressionsData||, 
-		||constantsData||, 
-		||variablesData||){
-	var ||scriptExpressionData|| = {
-	
-	};
-	
-	try{
-		||executeScriptExpressions||
-	
-		return ||embededScriptExpressionFunction||(||scriptExpressionData||);
-	}
-	catch(e){
-		nosliw.error("");
-		return "";
-	}
-}		
-		
