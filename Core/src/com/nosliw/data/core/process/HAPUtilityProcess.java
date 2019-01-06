@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.updatename.HAPUpdateNameMap;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
@@ -19,6 +20,7 @@ import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
+import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 
@@ -139,4 +141,39 @@ public class HAPUtilityProcess {
 		}
 		return suite;
 	}
+	
+	//process result
+	public static HAPExecutableResultActivityNormal processNormalActivityResult(
+			HAPExecutableActivityNormal activity,
+			String resultName, 
+			HAPContextGroup parentContext,
+			HAPBuilderResultContext resultContextBuilder, 
+			HAPEnvContextProcessor envContextProcessor) {
+		//process success result
+		HAPDefinitionResultActivityNormal resultDef = ((HAPDefinitionActivityNormal)activity.getActivityDefinition()).getResult(resultName);
+		HAPExecutableResultActivityNormal resultExe = new HAPExecutableResultActivityNormal(resultDef); 
+		//result context
+		HAPContext resultContext = resultContextBuilder.buildResultContext(activity);
+		//process output data association  output to variable
+		HAPExecutableDataAssociationGroup outputDataAssociation = HAPUtilityProcess.processDataAssociation(resultContext, resultDef.getOutput(), envContextProcessor);
+		resultExe.setOutputDataAssociation(outputDataAssociation);
+
+		//process result
+		Map<String, String> nameMapping = new LinkedHashMap<String, String>();
+		HAPContext outputContext = outputDataAssociation.getContext().getContext();
+		for(String rootName : outputContext.getElementNames()) {
+			//merge back to parent context
+			HAPInfoRelativeContextResolve resolvedInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(rootName), parentContext, null, null);
+			HAPContextDefinitionElement outputEle = outputContext.getElement(rootName).getDefinition();
+			if(outputEle.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
+				HAPUtilityContext.setDescendant(parentContext, resolvedInfo.path.getRootElementId().getCategary(), rootName, outputEle);
+			}
+			nameMapping.put(rootName, resolvedInfo.path.getRootElementId().getFullName());
+		}
+		
+		//update variable names in output 
+		outputDataAssociation.updateOutputRootName(new HAPUpdateNameMap(nameMapping));
+		return resultExe;
+	}
+	
 }

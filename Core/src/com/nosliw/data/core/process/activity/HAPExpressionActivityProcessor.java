@@ -7,7 +7,6 @@ import java.util.Set;
 import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.updatename.HAPUpdateNameMap;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -15,7 +14,6 @@ import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.process.HAPBuilderResultContext;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
-import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.process.HAPExecutableDataAssociationGroup;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPExecutableActivity;
@@ -24,7 +22,6 @@ import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPExecutableResultActivityNormal;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
-import com.nosliw.data.core.process.HAPDefinitionResultActivityNormal;
 import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.script.context.HAPContext;
@@ -37,7 +34,6 @@ import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
-import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
 import com.nosliw.data.core.script.expression.HAPProcessorScriptExpression;
@@ -127,95 +123,27 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			HAPUtilityContext.setDescendant(parentContext, cpath.getRootElementId().getCategary(), cpath.getPath(), affectedEle);
 		}
 
-		//process success result
-		String resultName = RESULT_SUCCESS;
-		HAPDefinitionResultActivityNormal successResult = out.getExpressionActivityDefinition().getResult(resultName);
-		HAPExecutableResultActivityNormal successResultExe = new HAPExecutableResultActivityNormal(successResult); 
-		HAPContext successResultContext = new HAPContext();
-		if(scriptExpression.isDataExpression()) {
-			//if script expression is data expression only, then affect result
-			HAPExecutableExpression expExe = scriptExpression.getExpressions().values().iterator().next();
-			HAPDataTypeCriteria outputCriteria = expExe.getOperand().getOperand().getOutputCriteria();
-			successResultContext.addElement(HAPUtilityProcess.buildOutputVarialbeName(VARIABLE_OUTPUT), new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(outputCriteria)));
-		}
-		else {
-			successResultContext.addElement(HAPUtilityProcess.buildOutputVarialbeName(VARIABLE_OUTPUT), new HAPContextDefinitionLeafValue());
-		}
-		//process output data association  output to variable
-		HAPExecutableDataAssociationGroup outputDataAssociation = HAPUtilityProcess.processDataAssociation(successResultContext, successResult.getOutput(), envContextProcessor);
-		successResultExe.setOutputDataAssociation(outputDataAssociation);
-		
-		out.addResult(resultName, successResultExe);
-		
-		//process result
-		if(successResultExe.getOutputContext()!=null) {
-			Map<String, String> nameMapping = new LinkedHashMap<String, String>();
-			HAPContext outputContext = out.getOutputContext().getContext();
-			for(String rootName : outputContext.getElementNames()) {
-				//merge back to parent context
-				HAPInfoRelativeContextResolve resolvedInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(rootName), parentContext, null, null);
-//				HAPContextDefinitionElement mergedEle = HAPUtilityContext.mergeDataElement(resolvedInfo.rootNode.getDefinition(), outputContext.getElement(rootName).getDefinition());
-				HAPUtilityContext.setDescendant(parentContext, resolvedInfo.path.getRootElementId().getCategary(), rootName, outputContext.getElement(rootName).getDefinition());
-				
-				nameMapping.put(rootName, resolvedInfo.path.getRootElementId().getFullName());
+		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, RESULT_SUCCESS, parentContext, new HAPBuilderResultContext() {
+			@Override
+			public HAPContext buildResultContext(HAPExecutableActivityNormal activity) {
+				HAPExpressionActivityExecutable expressionActExt = (HAPExpressionActivityExecutable)activity;
+				HAPScriptExpression scriptExpression = expressionActExt.getScriptExpression();
+				HAPContext successResultContext = new HAPContext();
+				if(scriptExpression.isDataExpression()) {
+					//if script expression is data expression only, then affect result
+					HAPExecutableExpression expExe = scriptExpression.getExpressions().values().iterator().next();
+					HAPDataTypeCriteria outputCriteria = expExe.getOperand().getOperand().getOutputCriteria();
+					successResultContext.addElement(HAPUtilityProcess.buildOutputVarialbeName(VARIABLE_OUTPUT), new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(outputCriteria)));
+				}
+				else {
+					successResultContext.addElement(HAPUtilityProcess.buildOutputVarialbeName(VARIABLE_OUTPUT), new HAPContextDefinitionLeafValue());
+				}
+				return successResultContext;
 			}
 			
-			//update variable names in output 
-			out.getOutputDataAssociation().updateOutputRootName(new HAPUpdateNameMap(nameMapping));
-		}
+		}, envContextProcessor);
+		out.addResult(RESULT_SUCCESS, successResultExe);
 		
 		return out;
-	}
-	
-	private HAPContext buildSuccessResultContext(HAPExpressionActivityExecutable expressionActExt) {
-		HAPScriptExpression scriptExpression = expressionActExt.getScriptExpression();
-		HAPContext successResultContext = new HAPContext();
-		if(scriptExpression.isDataExpression()) {
-			//if script expression is data expression only, then affect result
-			HAPExecutableExpression expExe = scriptExpression.getExpressions().values().iterator().next();
-			HAPDataTypeCriteria outputCriteria = expExe.getOperand().getOperand().getOutputCriteria();
-			successResultContext.addElement(HAPUtilityProcess.buildOutputVarialbeName(VARIABLE_OUTPUT), new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(outputCriteria)));
-		}
-		else {
-			successResultContext.addElement(HAPUtilityProcess.buildOutputVarialbeName(VARIABLE_OUTPUT), new HAPContextDefinitionLeafValue());
-		}
-		return successResultContext;
-	}
-	
-	//process result
-	private HAPExecutableResultActivityNormal processResult(HAPExecutableActivityNormal activity, String resultName, HAPBuilderResultContext resultContextBuilder, HAPEnvContextProcessor envContextProcessor) {
-		//process success result
-		HAPDefinitionResultActivityNormal resultDef = ((HAPDefinitionActivityNormal)activity.getActivityDefinition()).getResult(resultName);
-		HAPExecutableResultActivityNormal resultExe = new HAPExecutableResultActivityNormal(resultDef); 
-		//result context
-		HAPContext resultContext = resultContextBuilder.buildResultContext(activity);
-		//process output data association  output to variable
-		HAPExecutableDataAssociationGroup outputDataAssociation = HAPUtilityProcess.processDataAssociation(resultContext, resultDef.getOutput(), envContextProcessor);
-		resultExe.setOutputDataAssociation(outputDataAssociation);
-
-		//process result
-		if(successResultExe.getOutputContext()!=null) {
-			Map<String, String> nameMapping = new LinkedHashMap<String, String>();
-			HAPContext outputContext = out.getOutputContext().getContext();
-			for(String rootName : outputContext.getElementNames()) {
-				//merge back to parent context
-				HAPInfoRelativeContextResolve resolvedInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(rootName), parentContext, null, null);
-//				HAPContextDefinitionElement mergedEle = HAPUtilityContext.mergeDataElement(resolvedInfo.rootNode.getDefinition(), outputContext.getElement(rootName).getDefinition());
-				HAPUtilityContext.setDescendant(parentContext, resolvedInfo.path.getRootElementId().getCategary(), rootName, outputContext.getElement(rootName).getDefinition());
-				
-				nameMapping.put(rootName, resolvedInfo.path.getRootElementId().getFullName());
-			}
-			
-			//update variable names in output 
-			out.getOutputDataAssociation().updateOutputRootName(new HAPUpdateNameMap(nameMapping));
-		}
-		
-		
-		
-		
-		return resultExe;
-		
-		out.addResult(resultName, successResultExe);
-		
 	}
 }
