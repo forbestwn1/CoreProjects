@@ -29,7 +29,7 @@ public class HAPProcessorProcess{
 		do {
 			out = new HAPExecutableProcess(processDefinition, id);
 			oldContext = context.cloneContextGroup();
-			Map<String, HAPDefinitionDataAssociationGroupExecutable> results = new LinkedHashMap<String, HAPDefinitionDataAssociationGroupExecutable>();
+			Map<String, HAPExecutableDataAssociationGroup> results = new LinkedHashMap<String, HAPExecutableDataAssociationGroup>();
 			Map<String, HAPDefinitionActivity> activities = processDefinition.getActivities();
 			for(String activityId : activities.keySet()) {
 				HAPDefinitionActivity activity = activities.get(activityId);

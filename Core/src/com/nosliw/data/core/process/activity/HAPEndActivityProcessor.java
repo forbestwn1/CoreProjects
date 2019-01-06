@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
-import com.nosliw.data.core.process.HAPDefinitionDataAssociationGroupExecutable;
+import com.nosliw.data.core.process.HAPExecutableDataAssociationGroup;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPExecutableActivity;
 import com.nosliw.data.core.process.HAPExecutableProcess;
@@ -19,13 +19,13 @@ public class HAPEndActivityProcessor implements HAPProcessorActivity{
 	@Override
 	public HAPExecutableActivity process(HAPDefinitionActivity activityDefinition, String id,
 			HAPExecutableProcess processExe, HAPContextGroup context,
-			Map<String, HAPDefinitionDataAssociationGroupExecutable> results,
+			Map<String, HAPExecutableDataAssociationGroup> results,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions, HAPManagerProcess processManager,
 			HAPEnvContextProcessor envContextProcessor, HAPProcessContext processContext) {
 
 		HAPEndActivityDefinition endActivity = (HAPEndActivityDefinition)activityDefinition;
 		
-		HAPDefinitionDataAssociationGroupExecutable result = HAPUtilityProcess.processDataAssociation(context, endActivity.getOutput(), envContextProcessor);
+		HAPExecutableDataAssociationGroup result = HAPUtilityProcess.processDataAssociation(context, endActivity.getOutput(), envContextProcessor);
 		results.put(endActivity.getName(), result);
 		
 		HAPEndActivityExecutable out = new HAPEndActivityExecutable(id, activityDefinition);

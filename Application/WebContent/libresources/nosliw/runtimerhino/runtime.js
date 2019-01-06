@@ -96,7 +96,7 @@ nosliw.registerSetNodeDataEvent("resource.createResourceManager", function(){nod
 nosliw.registerSetNodeDataEvent("expression.service.createExpressionService", function(){node_createExpressionService = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.createResourceService", function(){node_createResourceService = this.getData();});
 nosliw.registerSetNodeDataEvent("runtime.createGatewayService", function(){node_createGatewayService = this.getData();});
-nosliw.registerSetNodeDataEvent("process.createProcessService", function(){node_createProcessService = this.getData();});
+nosliw.registerSetNodeDataEvent("process.service.createProcessService", function(){node_createProcessService = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

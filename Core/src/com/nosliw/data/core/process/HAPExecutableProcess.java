@@ -11,7 +11,6 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPExecutable;
-import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -55,11 +54,11 @@ public class HAPExecutableProcess extends HAPSerializableImp implements HAPExecu
 	private HAPContext m_input;  
 	
 	//all possible result
-	private Map<String, HAPDefinitionDataAssociationGroup> m_results;
+	private Map<String, HAPExecutableDataAssociationGroup> m_results;
 	
 	public HAPExecutableProcess(HAPDefinitionProcess definition, String id) {
 		this.m_activities = new LinkedHashMap<String, HAPExecutableActivity>();
-		this.m_results = new LinkedHashMap<String, HAPDefinitionDataAssociationGroup>();
+		this.m_results = new LinkedHashMap<String, HAPExecutableDataAssociationGroup>();
 		this.m_processDefinition = definition;
 		this.m_id = id;
 	}
@@ -92,6 +91,12 @@ public class HAPExecutableProcess extends HAPSerializableImp implements HAPExecu
 			activityJsonMap.put(actId, this.m_activities.get(actId).toResourceData(runtimeInfo).toString());
 		}
 		jsonMap.put(ACTIVITY, HAPJsonUtility.buildMapJson(activityJsonMap));
+		
+		Map<String, String> resultsJsonMap = new LinkedHashMap<String, String>();
+		for(String resultName : this.m_results.keySet()) {
+			jsonMap.put(resultName, this.m_results.get(resultName).toResourceData(runtimeInfo).toString());
+		}
+		jsonMap.put(RESULT, HAPJsonUtility.buildMapJson(resultsJsonMap));
 		
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}

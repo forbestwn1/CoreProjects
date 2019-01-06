@@ -15,7 +15,7 @@ public interface HAPProcessorActivity {
 			String id,
 			HAPExecutableProcess processExe,
 			HAPContextGroup context,
-			Map<String, HAPDefinitionDataAssociationGroupExecutable> results,
+			Map<String, HAPExecutableDataAssociationGroup> results,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions,
 			HAPManagerProcess processManager,
 			HAPEnvContextProcessor envContextProcessor,

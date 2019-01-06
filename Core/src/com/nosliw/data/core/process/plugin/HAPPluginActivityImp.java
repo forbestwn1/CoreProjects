@@ -8,7 +8,7 @@ import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
-import com.nosliw.data.core.process.HAPDefinitionDataAssociationGroupExecutable;
+import com.nosliw.data.core.process.HAPExecutableDataAssociationGroup;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPExecutableActivity;
 import com.nosliw.data.core.process.HAPExecutableProcess;
@@ -64,7 +64,7 @@ public class HAPPluginActivityImp implements HAPPluginActivity{
 	@Override
 	public HAPExecutableActivity process(HAPDefinitionActivity activityDefinition, String id,
 			HAPExecutableProcess processExe, HAPContextGroup context,
-			Map<String, HAPDefinitionDataAssociationGroupExecutable> results,
+			Map<String, HAPExecutableDataAssociationGroup> results,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions, HAPManagerProcess processManager,
 			HAPEnvContextProcessor envContextProcessor, HAPProcessContext processContext) {
 		return this.m_processor.process(activityDefinition, id, processExe, context, results, contextProcessDefinitions, processManager, envContextProcessor, processContext);

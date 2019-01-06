@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPProcessContext;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
-import com.nosliw.data.core.process.HAPDefinitionDataAssociationGroupExecutable;
+import com.nosliw.data.core.process.HAPExecutableDataAssociationGroup;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPExecutableActivity;
 import com.nosliw.data.core.process.HAPExecutableProcess;
@@ -21,7 +21,7 @@ public class HAPStartActivityProcessor implements HAPProcessorActivity{
 			String id,
 			HAPExecutableProcess processExe,
 			HAPContextGroup context,
-			Map<String, HAPDefinitionDataAssociationGroupExecutable> results,
+			Map<String, HAPExecutableDataAssociationGroup> results,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions,
 			HAPManagerProcess processManager,
 			HAPEnvContextProcessor envContextProcessor,

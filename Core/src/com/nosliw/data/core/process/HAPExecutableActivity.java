@@ -17,6 +17,9 @@ import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 public abstract class HAPExecutableActivity extends HAPSerializableImp implements HAPExecutable{
 
 	@HAPAttribute
+	public static String TYPE = "type";
+
+	@HAPAttribute
 	public static String ID = "id";
 
 	@HAPAttribute
@@ -42,6 +45,7 @@ public abstract class HAPExecutableActivity extends HAPSerializableImp implement
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_id);
+		jsonMap.put(TYPE, this.getType());
 		jsonMap.put(DEFINITION, this.m_activityDefinition.toStringValue(HAPSerializationFormat.JSON));
 	}
 

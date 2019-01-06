@@ -111,7 +111,7 @@ nosliw.registerSetNodeDataEvent("remote.createRemoteService", function(){node_cr
 nosliw.registerSetNodeDataEvent("runtime.createGatewayService", function(){node_createGatewayService = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.createUIResourceService", function(){node_createUIResourceService = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.service.createMiniAppService", function(){node_createMiniAppService = this.getData();});
-nosliw.registerSetNodeDataEvent("process.createProcessService", function(){node_createProcessService = this.getData();});
+nosliw.registerSetNodeDataEvent("process.service.createProcessService", function(){node_createProcessService = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

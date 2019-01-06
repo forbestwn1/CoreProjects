@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPActivityPluginId;
@@ -13,6 +14,7 @@ import com.nosliw.data.core.process.HAPExecutableActivityNormal;
 import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptExpression;
 
@@ -20,7 +22,10 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal
 
 	@HAPAttribute
 	public static String SCRIPTEXPRESSION = "scriptExpression";
-	
+
+	@HAPAttribute
+	public static String SCRIPTEXPRESSIONSCRIPT = "scriptExpressionScript";
+
 	private HAPProcessContextScriptExpression m_expressionProcessContext;
 
 	private HAPScriptExpression m_scriptExpression;
@@ -53,4 +58,12 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(SCRIPTEXPRESSION, this.m_scriptExpression.toStringValue(HAPSerializationFormat.JSON));
 	}
+	
+	@Override
+	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
+		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
+		jsonMap.put(SCRIPTEXPRESSIONSCRIPT, HAPRuntimeJSScriptUtility.buildScriptExpressionJSFunction(this.m_scriptExpression));
+		typeJsonMap.put(SCRIPTEXPRESSIONSCRIPT, HAPScript.class);
+	}	
+	
 }

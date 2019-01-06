@@ -27,8 +27,8 @@ public class HAPUtilityProcess {
 	private static String helpCategary = HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE;
 
 	//process input configure for activity and generate flat context for activity
-	public static HAPDefinitionDataAssociationGroupExecutable processDataAssociation(HAPContextGroup inputContext, HAPDefinitionDataAssociationGroup mapping, HAPEnvContextProcessor contextProcessorEnv) {
-		HAPDefinitionDataAssociationGroupExecutable out = new HAPDefinitionDataAssociationGroupExecutable(mapping);
+	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContextGroup inputContext, HAPDefinitionDataAssociationGroup mapping, HAPEnvContextProcessor contextProcessorEnv) {
+		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(mapping);
 		mapping = mapping.cloneDataAssocationGroup();
 		
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
@@ -65,9 +65,9 @@ public class HAPUtilityProcess {
 	}
 
 	
-	public static HAPDefinitionDataAssociationGroupExecutable processDataAssociation(HAPContext inputContext, HAPDefinitionDataAssociationGroup mapping, HAPEnvContextProcessor contextProcessorEnv) {
+	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContext inputContext, HAPDefinitionDataAssociationGroup mapping, HAPEnvContextProcessor contextProcessorEnv) {
 		
-		HAPDefinitionDataAssociationGroupExecutable out = new HAPDefinitionDataAssociationGroupExecutable(mapping);
+		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(mapping);
 		mapping= mapping.cloneDataAssocationGroup();
 		
 		//build parent context group

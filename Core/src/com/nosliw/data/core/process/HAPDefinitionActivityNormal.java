@@ -22,17 +22,18 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	private HAPDefinitionDataAssociationGroup m_input;
 	
 	//possible result for activity
-	private Map<String, HAPResultActivityNormal> m_results;
+	private Map<String, HAPDefinitionResultActivityNormal> m_results;
 	
 	public HAPDefinitionActivityNormal() {
-		this.m_results = new LinkedHashMap<String, HAPResultActivityNormal>();
+		this.m_results = new LinkedHashMap<String, HAPDefinitionResultActivityNormal>();
 		this.m_input = new HAPDefinitionDataAssociationGroup();
 	}
 	
 	public HAPDefinitionDataAssociationGroup getInput() {  return this.m_input;   }
 	
-	public Map<String, HAPResultActivityNormal> getResults(){   return this.m_results;  }
-
+	public Map<String, HAPDefinitionResultActivityNormal> getResults(){   return this.m_results;  }
+	public HAPDefinitionResultActivityNormal getResult(String resultName){   return this.m_results.get(resultName);  }
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{
@@ -48,7 +49,7 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 			JSONArray resultsJson = jsonObj.optJSONArray(RESULT);
 			if(resultsJson!=null) {
 				for(int i=0; i<resultsJson.length(); i++) {
-					HAPResultActivityNormal result = new HAPResultActivityNormal();
+					HAPDefinitionResultActivityNormal result = new HAPDefinitionResultActivityNormal();
 					result.buildObject(resultsJson.get(i), HAPSerializationFormat.JSON);
 					this.m_results.put(result.getName(), result);
 				}

@@ -1,51 +1,78 @@
 //get/create package
-var packageObj = library;    
+var packageObj = library.getChildPackage("service");    
 
 (function(packageObj){
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_buildServiceProvider;
+	var node_createServiceRequestInfoSimple;
+	var node_createServiceRequestInfoSequence;
+	var node_ServiceInfo;
+	var node_objectOperationUtility;
 //*******************************************   Start Node Definition  ************************************** 	
-
-ActivityResult = function(resultName, value, context, activities){
-	
-}	
-
-ActivityOutput = function(next, context, activities){
-	
-}
-
-ProcessResult = function(resultName, value){
-	
-}
 
 var node_createProcessService = function(){
 
-	var loc_generateInput = function(activity, context, handlers){
-		out = node_createServiceRequestInfoSimple(new node_ServiceInfo("generateInput", {"activity":activity, "context":constants}), 
-				function(requestInfo){
-					return activity.inputScript(context, utilFun);
-				}, 
-				handlers, requestInfo);
+	//activity plugin entity 
+	var loc_activityPlugins = {};
+	
+	var loc_getActivityPluginRequest = function(pluginName, handlers, request){
+		var service = new node_ServiceInfo("getActivityPlugin", {"pluginName":pluginName})
+		var plugin = loc_activityPlugins[pluginName];
+		if(plugin!=null){
+			return node_createServiceRequestInfoSimple(service, function(requestInfo){	return plugin;}, handlers, request);
+		}
+		else{
+			var out = node_createServiceRequestInfoSequence(service, handlers, request);
+			out.addReqest(nosliw.getResourceService().getGetResourceDataByTypeRequest([pluginName], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN, {
+				success : function(request, resourceData){
+					var plugin = resourceData[pluginName](nosliw);
+					loc_activityPlugins[pluginName] = plugin;
+					return plugin;
+				}
+			}));
+			return out;
+		}
 	};
 	
-	var loc_generateOutput = function(activity, activityResult, out, outputMapping, handlers){
-		
-	}
+	var loc_dyanimicValueBuild = function(output, outputPathSegs, input, intpuPathSegs){
+		var inputValue = node_objectOperationUtility.getObjectAttributeByPath(input, inputPathSegs);
+		node_objectOperationUtility.operateObjectByPathSegs(output, outputPathSegs, node_CONSTANT.WRAPPER_OPERATION_SET, inputValue);
+		return ouput;
+	};
 	
-	var loc_getExecuteNormalActivityRequest = function(activityId, activities, context, handlers, requester_parent){
+	var loc_getGenerateDataAssociationOutputRequest = function(dataAssociation, input, handlers, request){
+		out = node_createServiceRequestInfoSimple(new node_ServiceInfo("generateDataAssociationOutputRequest", {"dataAssociation":dataAssociation, "input":input}), 
+			function(requestInfo){
+				return dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_CONVERTFUNCTION](input, loc_dyanimicValueBuild);
+			}, 
+			handlers, request);
+	};
+	
+	var loc_getExecuteNormalActivityRequest = function(activityId, activities, context, handlers, request){
 		var activity = activities[activityId];
-		var executeActivityRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteActivity", {"":expression, "variables":variables}), handlers, requestInfo);
-		executeActivityRequest.addReqeust(loc_generateInput(context, activity.input, {
+		var executeActivityRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteNormalActivity", {"ac":expression, "variables":variables}), handlers, requestInfo);
+		//calculate input for activity first
+		executeActivityRequest.addReqeust(loc_getGenerateDataAssociationOutputRequest(activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_INPUT], context, {
 			success : function(input){
-				return resourceService.getResourceRequest(activity.type, {
+				//get activity plugin 
+				return loc_getActivityPluginRequest(activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_TYPE], {
 					success : function(activityPlugin){
-						return activityPlugin.script.getExecuteRequest(input, {
-							success : function(activityResult){
-								return loc_generateOutput(out, activity.outputMapping, {
-									success : function(activityOutput){
-										return loc_getExecuteActivityRequest(activityOutput.next, context, activities);
+						//execute activity plugin
+						return activityPlugin.getExecuteRequest(activity, input, {
+							success : function(activityResult){  //get activity results (result name + result value map)
+								//calculate variable output
+								var activityResultConfig = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULT][activityResult.resultName];
+								var activityResultDataAssociation = activityResultConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_OUTPUT];
+								return loc_getGenerateDataAssociationOutputRequest(activityResultDataAssociation, activityResult.resultValue, {
+									success : function(request, activityOutput){
+										//build new context
+										_.each(activityOutput, function(ele, name){
+											context[name] = ele;
+										});
+										return new node_ActivityOutput(activityResultConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_FLOW][node_COMMONATRIBUTECONSTANT.DEFINITIONSEQUENCEFLOW_TARGET],
+												context);
 									}
 								});
 							}
@@ -54,7 +81,6 @@ var node_createProcessService = function(){
 				});
 			}
 		}));
-		
 	};
 
 	var loc_getExecuteEndActivityRequest = function(activityId, activities, context, handlers, requester_parent){

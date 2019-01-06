@@ -35,7 +35,7 @@ import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextPath;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionDataAssociationGroupExecutable extends HAPSerializableImp implements HAPExecutable{
+public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implements HAPExecutable{
 
 	@HAPAttribute
 	public static String DEFINITION = "definition";
@@ -57,7 +57,7 @@ public class HAPDefinitionDataAssociationGroupExecutable extends HAPSerializable
 	//mapping from in path to out path, it is for runtime 
 	private Map<String, String> m_pathMapping;
 	
-	public HAPDefinitionDataAssociationGroupExecutable(HAPDefinitionDataAssociationGroup definition) {
+	public HAPExecutableDataAssociationGroup(HAPDefinitionDataAssociationGroup definition) {
 		this.m_definition = definition;
 	}
 

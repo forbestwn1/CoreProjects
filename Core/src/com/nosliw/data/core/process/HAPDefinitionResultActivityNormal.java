@@ -10,7 +10,7 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPResultActivityNormal extends HAPEntityInfoImp{
+public class HAPDefinitionResultActivityNormal extends HAPEntityInfoImp{
 
 	@HAPAttribute
 	public static String FLOW = "flow";
