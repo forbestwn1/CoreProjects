@@ -29,7 +29,6 @@ public class HAPEndActivityProcessor implements HAPProcessorActivity{
 		results.put(endActivity.getName(), result);
 		
 		HAPEndActivityExecutable out = new HAPEndActivityExecutable(id, activityDefinition);
-		out.setOutputName(endActivity.getName());
 		
 		return out;
 	}

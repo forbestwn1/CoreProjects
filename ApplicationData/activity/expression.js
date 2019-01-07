@@ -15,7 +15,7 @@
 			var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 			var node_createServiceRequestInfoService = nosliw.getNodeData("request.request.createServiceRequestInfoService");
 			var node_DependentServiceRequestInfo = nosliw.getNodeData("request.request.entity.DependentServiceRequestInfo");
-			var node_ActivityResult = nosliw.getNodeData("process.entity.ActivityResult");
+			var node_NormalActivityResult = nosliw.getNodeData("process.entity.NormalActivityResult");
 
 			var loc_out = {
 				
@@ -35,7 +35,7 @@
 					
 					var executeScriptExpressionRequst = new node_DependentServiceRequestInfo(loc_expressionService.getExecuteScriptRequest(scriptFunction, expressions, input, input， {
 						success：function(requestInfo, scriptExpressionOut){
-							return node_ActivityResult("success", {
+							return node_NormalActivityResult("success", {
 								output : scriptExpressionOut
 							});
 						}

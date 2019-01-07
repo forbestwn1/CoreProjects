@@ -1,0 +1,10 @@
+function(input){
+
+	var output = ||outputInit||;
+	
+	_.each(input, function(value, name){
+		output.public[name] = value;
+	});
+	
+	return output;
+}

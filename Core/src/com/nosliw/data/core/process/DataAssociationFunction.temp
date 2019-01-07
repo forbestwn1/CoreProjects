@@ -4,5 +4,5 @@ function(input, utilFunction){
 	
 	||outputDyanimicValueBuild||
 	
-	return out;
+	return output;
 }

@@ -8,6 +8,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPExecutable;
@@ -16,6 +17,7 @@ import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextGroup;
 
 @HAPEntityWithAttribute
 public class HAPExecutableProcess extends HAPSerializableImp implements HAPExecutable{
@@ -33,11 +35,14 @@ public class HAPExecutableProcess extends HAPSerializableImp implements HAPExecu
 	public static String STARTACTIVITYID = "startActivityId";
 
 	@HAPAttribute
-	public static String INPUT = "input";
+	public static String CONTEXT = "context";
 
 	@HAPAttribute
 	public static String RESULT = "result";
-	
+
+	@HAPAttribute
+	public static String INITSCRIPT = "initScript";
+
 	//process definition
 	private HAPDefinitionProcess m_processDefinition;
 	
@@ -51,7 +56,7 @@ public class HAPExecutableProcess extends HAPSerializableImp implements HAPExecu
 	private String m_startActivityId;
 	
 	//input variables
-	private HAPContext m_input;  
+	private HAPContextGroup m_context;  
 	
 	//all possible result
 	private Map<String, HAPExecutableDataAssociationGroup> m_results;
@@ -69,6 +74,9 @@ public class HAPExecutableProcess extends HAPSerializableImp implements HAPExecu
 	
 	public void setStartActivityId(String id) {   this.m_startActivityId = id;   }
 
+	public HAPContextGroup getContext() {   return this.m_context;  }
+	public void setContext(HAPContextGroup context) {   this.m_context = context;  }
+	
 	@Override
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {		
 		//process resources
@@ -97,6 +105,9 @@ public class HAPExecutableProcess extends HAPSerializableImp implements HAPExecu
 			jsonMap.put(resultName, this.m_results.get(resultName).toResourceData(runtimeInfo).toString());
 		}
 		jsonMap.put(RESULT, HAPJsonUtility.buildMapJson(resultsJsonMap));
+	
+		jsonMap.put(INITSCRIPT, HAPUtilityProcess.buildProcessInitScript(this).getScript());
+		typeJsonMap.put(INITSCRIPT, HAPScript.class);
 		
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
@@ -111,7 +122,7 @@ public class HAPExecutableProcess extends HAPSerializableImp implements HAPExecu
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(DEFINITION, this.m_processDefinition.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(STARTACTIVITYID, this.m_startActivityId);
-		jsonMap.put(INPUT, this.m_input.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
 
 		jsonMap.put(RESULT, HAPJsonUtility.buildJson(this.m_results, HAPSerializationFormat.JSON));
 	}

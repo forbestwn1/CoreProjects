@@ -3,9 +3,15 @@ package com.nosliw.data.core.process;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.json.JSONObject;
+
+import com.nosliw.common.interpolate.HAPStringTemplateUtil;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.updatename.HAPUpdateNameMap;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
@@ -28,6 +34,17 @@ public class HAPUtilityProcess {
 
 	private static String helpCategary = HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE;
 
+	public static HAPScript buildProcessInitScript(HAPExecutableProcess process) {
+		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+		//build init output object 
+		JSONObject output = HAPUtilityContext.buildStaticJsonObject(process.getContext().getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED));
+		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));
+
+		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityProcess.class, "ProcessInitFunction.temp");
+		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
+		return new HAPScript(script);
+	}
+	
 	//process input configure for activity and generate flat context for activity
 	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContextGroup inputContext, HAPDefinitionDataAssociationGroup mapping, HAPEnvContextProcessor contextProcessorEnv) {
 		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(mapping);

@@ -18,21 +18,16 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
-import com.nosliw.data.core.script.context.HAPContextDefinitionLeafConstant;
-import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
-import com.nosliw.data.core.script.context.HAPContextDefinitionNode;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextPath;
+import com.nosliw.data.core.script.context.HAPUtilityContext;
 
 @HAPEntityWithAttribute
 public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implements HAPExecutable{
@@ -104,25 +99,7 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 		
 	private HAPScript buildConvertFunction() {
 		//build init output object 
-		JSONObject output = new JSONObject();
-		HAPContext context = this.m_context.getContext();
-		for(String contextEle : context.getElementNames()) {
-			Object contextEleJson = this.buildJsonValue(context.getElement(contextEle).getDefinition());
-
-			if(contextEleJson!=null) {
-				JSONObject parentJsonObj = output;
-				HAPContextDefinitionRootId rootId = new HAPContextDefinitionRootId(contextEle);
-				String categary = rootId.getCategary();
-				if(HAPBasicUtility.isStringNotEmpty(categary)) {
-					parentJsonObj = output.optJSONObject(categary);
-					if(parentJsonObj==null) {
-						parentJsonObj = new JSONObject();
-						output.put(categary, parentJsonObj);
-					}
-				}
-				parentJsonObj.put(rootId.getName(), contextEleJson);
-			}
-		}
+		JSONObject output = HAPUtilityContext.buildStaticJsonObject(this.m_context.getContext());
 		
 		//build dynamic part 
 		StringBuffer dynamicScript = new StringBuffer();
@@ -151,34 +128,6 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 		return pathSegsStr;
 	}
 	
-	private Object buildJsonValue(HAPContextDefinitionElement contextDefEle) {
-		switch(contextDefEle.getType()) {
-		case HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT:
-		{
-			HAPContextDefinitionLeafConstant constantEle = (HAPContextDefinitionLeafConstant)contextDefEle;
-			return constantEle.getValue();
-		}
-		case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
-		{
-			HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)contextDefEle;
-			JSONObject out = new JSONObject();
-			for(String childName : nodeEle.getChildren().keySet()) {
-				Object childJsonValue = this.buildJsonValue(nodeEle.getChild(childName));
-				if(childJsonValue!=null) {
-					out.put(childName, childJsonValue);
-				}
-			}
-			return out;
-		}
-		case HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE:
-		{
-			HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)contextDefEle;
-			return new JSONObject();
-		}
-		default:
-			return null;
-		}
-	}
 	
 	
 	@Override

@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
@@ -21,6 +23,57 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPUtilityContext {
 
+	public static JSONObject buildStaticJsonObject(HAPContext context) {
+		JSONObject output = new JSONObject();
+		for(String contextEle : context.getElementNames()) {
+			Object contextEleJson = buildJsonValue(context.getElement(contextEle).getDefinition());
+
+			if(contextEleJson!=null) {
+				JSONObject parentJsonObj = output;
+				HAPContextDefinitionRootId rootId = new HAPContextDefinitionRootId(contextEle);
+				String categary = rootId.getCategary();
+				if(HAPBasicUtility.isStringNotEmpty(categary)) {
+					parentJsonObj = output.optJSONObject(categary);
+					if(parentJsonObj==null) {
+						parentJsonObj = new JSONObject();
+						output.put(categary, parentJsonObj);
+					}
+				}
+				parentJsonObj.put(rootId.getName(), contextEleJson);
+			}
+		}
+		return output;
+	}
+	
+	private static Object buildJsonValue(HAPContextDefinitionElement contextDefEle) {
+		switch(contextDefEle.getType()) {
+		case HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT:
+		{
+			HAPContextDefinitionLeafConstant constantEle = (HAPContextDefinitionLeafConstant)contextDefEle;
+			return constantEle.getValue();
+		}
+		case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
+		{
+			HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)contextDefEle;
+			JSONObject out = new JSONObject();
+			for(String childName : nodeEle.getChildren().keySet()) {
+				Object childJsonValue = buildJsonValue(nodeEle.getChild(childName));
+				if(childJsonValue!=null) {
+					out.put(childName, childJsonValue);
+				}
+			}
+			return out;
+		}
+		case HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE:
+		{
+			HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)contextDefEle;
+			return new JSONObject();
+		}
+		default:
+			return null;
+		}
+	}
+	
 	//each relative context element represent path mapping from input context to output context during runtime
 	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName){
 		return buildRelativePathMapping(contextRoot.getDefinition(), rootName);
