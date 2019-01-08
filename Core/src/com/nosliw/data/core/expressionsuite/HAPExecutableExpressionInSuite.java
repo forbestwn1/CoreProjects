@@ -72,15 +72,4 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 
 	}
 
-	@Override
-	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

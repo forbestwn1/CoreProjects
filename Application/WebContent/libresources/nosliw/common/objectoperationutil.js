@@ -49,7 +49,7 @@ var node_objectOperationUtility =
 		 * 		data : data for command
 		 */
 		operateObject : function(obj, prop, command, data){
-			return this.operateObjectByPathSegs(obj, node_parseSegment(prop), command, data);
+			return this.operateObjectByPathSegs(obj, prop.split('.'), command, data);
 		},
 
 		operateObjectByPathSegs : function(obj, pathSegs, command, data){
@@ -65,9 +65,9 @@ var node_objectOperationUtility =
 			}
 			else{
 				var segs = pathSegs;
-				var size = segs.getSegmentSize();
+				var size = segs.length;
 				for(var i=0; i<size-1; i++){
-					var attr = segs.next();
+					var attr = segs[i];
 					var obj = baseObj[attr];
 					if(obj==undefined){
 						obj = {};
@@ -75,7 +75,7 @@ var node_objectOperationUtility =
 					}
 					baseObj = obj;
 				}
-				attribute = segs.next();
+				attribute = segs[i];
 			}
 			
 			if(command==node_CONSTANT.WRAPPER_OPERATION_SET){

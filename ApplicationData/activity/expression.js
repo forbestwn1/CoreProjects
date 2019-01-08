@@ -16,11 +16,12 @@
 			var node_createServiceRequestInfoService = nosliw.getNodeData("request.request.createServiceRequestInfoService");
 			var node_DependentServiceRequestInfo = nosliw.getNodeData("request.request.entity.DependentServiceRequestInfo");
 			var node_NormalActivityResult = nosliw.getNodeData("process.entity.NormalActivityResult");
+			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 
 			var loc_out = {
 				
 				getExecuteRequest : function(activity, input, handlers, request){
-					var out = node_createServiceRequestInfoService(new node_ServiceInfo("ExecuteExpressionActivity", {"activity":activity, "input":input}), handlers, request);
+					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionActivity", {"activity":activity, "input":input}), handlers, request);
 					
 					//execute script expression 
 					var scriptExpression = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_SCRIPTEXPRESSION]; 
@@ -28,19 +29,15 @@
 					var scriptFunction = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_SCRIPTEXPRESSIONSCRIPT]; 
 
 					var varNames = scriptExpression[node_COMMONATRIBUTECONSTANT.SCRIPTEXPRESSION_VARIABLENAMES];
-					var contextVariables = [];
-					_.each(varNames, function(varName, index){
-						contextVariables.push(node_createContextVariableInfo(varName));
-					});
 					
-					var executeScriptExpressionRequst = new node_DependentServiceRequestInfo(loc_expressionService.getExecuteScriptRequest(scriptFunction, expressions, input, input， {
-						success：function(requestInfo, scriptExpressionOut){
-							return node_NormalActivityResult("success", {
-								output : scriptExpressionOut
+					 out.addRequest(loc_expressionService.getExecuteScriptRequest(scriptFunction, expressions, input, input, {
+						success:function(requestInfo, scriptExpressionOut){
+							return new node_NormalActivityResult("success", {
+								nosliw_output:scriptExpressionOut   //kkkkk
 							});
 						}
 					}));
-					out.setDependentService(executeScriptExpressionRequst);
+					return out;
 				}
 			};
 			return loc_out;

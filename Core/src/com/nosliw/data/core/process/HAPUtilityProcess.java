@@ -22,6 +22,7 @@ import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefEleProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
+import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
@@ -32,12 +33,14 @@ import com.nosliw.data.core.script.context.HAPUtilityContext;
 
 public class HAPUtilityProcess {
 
+	public static String INFO_HELPROOT = "helpRoot";
+	
 	private static String helpCategary = HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE;
 
 	public static HAPScript buildProcessInitScript(HAPExecutableProcess process) {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		//build init output object 
-		JSONObject output = HAPUtilityContext.buildStaticJsonObject(process.getContext().getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PROTECTED));
+		JSONObject output = HAPUtilityContext.buildDefaultJsonObject(process.getContext());
 		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));
 
 		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityProcess.class, "ProcessInitFunction.temp");
@@ -47,7 +50,7 @@ public class HAPUtilityProcess {
 	
 	//process input configure for activity and generate flat context for activity
 	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContextGroup inputContext, HAPDefinitionDataAssociationGroup mapping, HAPEnvContextProcessor contextProcessorEnv) {
-		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(mapping);
+		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(mapping, true);
 		mapping = mapping.cloneDataAssocationGroup();
 		
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
@@ -70,23 +73,33 @@ public class HAPUtilityProcess {
 
 		//process input context
 		context = HAPProcessorContext.process(context, inputContext, configure, contextProcessorEnv);
+		
+		//build flat context without help categary
+		helpContext = context.removeContext(helpCategary);
 		out.setContext(HAPUtilityContext.buildFlatContextFromContextGroup(context, null));
+		
+		//then add help context to flat context
+		for(String eleName : helpContext.getElementNames()) {
+			HAPContextDefinitionRoot helpRootEle = helpContext.getElement(eleName);
+			setHelpRoot(helpRootEle);
+			out.getContext().addElement(eleName, helpRootEle);
+		}
 		
 		//build path mapping
 		Map<String, String> pathMapping = new LinkedHashMap<String, String>();
-		HAPContext helpContext1 = context.getContext(helpCategary);
-		for(String eleName : helpContext1.getElementNames()) {
-			pathMapping.putAll(HAPUtilityContext.buildRelativePathMapping(helpContext1.getElement(eleName), eleName));
+//		HAPContext helpContext1 = context.getContext(helpCategary);
+		for(String eleName : helpContext.getElementNames()) {
+			pathMapping.putAll(HAPUtilityContext.buildRelativePathMapping(helpContext.getElement(eleName), eleName));
 		}
 		out.setPathMapping(pathMapping);
 		
 		return out;
 	}
 
-	
 	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContext inputContext, HAPDefinitionDataAssociationGroup mapping, HAPEnvContextProcessor contextProcessorEnv) {
+		HAPUtilityContext.setContextGroupInheritModeNone(mapping.getInfo());
 		
-		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(mapping);
+		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(mapping, false);
 		mapping= mapping.cloneDataAssocationGroup();
 		
 		//build parent context group
@@ -98,13 +111,14 @@ public class HAPUtilityProcess {
 		mappingContextGroup.setContext(helpCategary, mapping.cloneContext());
 		
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
-		configure.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE;
+		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(mapping.getInfo()); 
 		//process context to build context
 		HAPContextGroup outputContextGroup = HAPProcessorContext.process(mappingContextGroup, inputContextGroup, configure, contextProcessorEnv);
 
 		//build context
 		HAPContext outputContext = outputContextGroup.getContext(helpCategary);
 		outputContext = consolidateContextRoot(outputContext);
+		setHelpRoot(outputContext);
 		out.setContext(new HAPContextFlat(outputContext));
 		
 		//build path mapping
@@ -191,6 +205,21 @@ public class HAPUtilityProcess {
 		//update variable names in output 
 		outputDataAssociation.updateOutputRootName(new HAPUpdateNameMap(nameMapping));
 		return resultExe;
+	}
+
+	
+	public static void setHelpRoot(HAPContextDefinitionRoot root) {
+		root.getInfo().setValue(INFO_HELPROOT, "yes");
+	}
+
+	public static boolean isHelpRoot(HAPContextDefinitionRoot root) {
+		return root.getInfo().getValue(INFO_HELPROOT)!=null;
+	}
+
+	private static void setHelpRoot(HAPContext context) {
+		for(String rootName : context.getElementNames()) {
+			setHelpRoot(context.getElement(rootName));
+		}
 	}
 	
 }

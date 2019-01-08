@@ -38,28 +38,28 @@
 							"baseVar": {
 								"definition":{
 									criteria: "test.string",
-								},
-								"defaultValue": {
-									"dataTypeId": "test.string",
-									"value": "This is my world!"
+									"defaultValue": {
+										"dataTypeId": "test.string",
+										"value": "This is my world!"
+									}
 								}
 							},
 							"fromVar" : {
 								"definition": {
-									criteria : "test.integer"
-								},
-								"defaultValue": {
-									"dataTypeId": "test.integer",
-									"value": 3
+									criteria : "test.integer",
+									"defaultValue": {
+										"dataTypeId": "test.integer",
+										"value": 3
+									}
 								}
 							},
 							"toVar" : {
 								"definition": {
-									criteria: "test.integer"
-								} ,
-								"defaultValue": {
-									"dataTypeId": "test.integer",
-									"value": 7
+									criteria: "test.integer",
+									"defaultValue": {
+										"dataTypeId": "test.integer",
+										"value": 7
+									}
 								}
 							}
 						}
@@ -82,7 +82,7 @@
 					"id": "expressionActivityId",
 					"name": "expressionActivity",
 					"type": "expression",
-					"expression": "#|!(test.string)!.subString(?(inputA)?.b.c,from:?(fromVar)?,to:?(toVar)?)|#",
+					"expression": "#|!(test.string)!.subString(?(inputB)?,from:?(fromVar)?,to:?(toVar)?)|#",
 					"input": {
 						"element": {
 							"inputA.b.c" : {
@@ -94,7 +94,12 @@
 								"definition" : {
 									"path" : "business.a.aa"
 								}
-							} 
+							}, 
+							"inputB" : {
+								"definition" : {
+									"path" : "business.a.aa"
+								}
+							}, 
 						},
 						"info": {}
 					},

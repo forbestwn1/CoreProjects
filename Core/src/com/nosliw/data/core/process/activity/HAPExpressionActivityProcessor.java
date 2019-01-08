@@ -29,6 +29,7 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafValue;
+import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -84,11 +85,13 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			HAPContextPath varPath = new HAPContextPath(varName);
 			//affect sold variable 
 			String solidVarRootName = activityContext.getSolidName(varPath.getRootElementId().getFullName());
-			varPath = new HAPContextPath(new HAPContextDefinitionRootId(solidVarRootName), varPath.getSubPath());
 			if(solidVarRootName!=null) {
-				if(HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE.equals(varPath.getRootElementId().getCategary())) {
+				varPath = new HAPContextPath(new HAPContextDefinitionRootId(solidVarRootName), varPath.getSubPath());
+				HAPContextDefinitionRoot currentRootEle = activityContext.getContext().getElement(varPath.getRootElementId().getFullName());
+				if(HAPUtilityProcess.isHelpRoot(currentRootEle)) {
+//				if(HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE.equals(varPath.getRootElementId().getCategary())) {
 					//mapped ele
-					HAPContextDefinitionElement currentEle = activityContext.getContext().getElement(varPath.getRootElementId().getFullName()).getDefinition();
+					HAPContextDefinitionElement currentEle = currentRootEle.getDefinition();
 					String[] pathSegs = new HAPPath(varPath.getSubPath()).getPathSegs();
 					int i = 0;
 					while(!HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE.equals(currentEle.getType())&&currentEle!=null) {

@@ -51,6 +51,7 @@ public class HAPContextFlat extends HAPSerializableImp{
 			}
 			newContext.addElement(nameUpdate.getUpdatedName(eleName), root);
 		}
+		this.m_context = newContext;
 		
 		Map<String, String> newMapping = new LinkedHashMap<String, String>();
 		for(String name : this.m_nameMapping.keySet()) {
@@ -69,6 +70,12 @@ public class HAPContextFlat extends HAPSerializableImp{
 		return out;
 	}
 	
+	public HAPContextDefinitionRoot getSolidRoot(String name) {
+		String solidName = this.getSolidName(name);
+		if(solidName==null)   return null;
+		else return this.m_context.getElement(solidName);
+	}
+	
 	public HAPContext getContext() {  return this.m_context;  }
 	
 	public Map<String, HAPContextDefinitionRoot> getSolidRoots(){
@@ -84,6 +91,9 @@ public class HAPContextFlat extends HAPSerializableImp{
 	public void addElement(String name, HAPContextDefinitionRoot rootEle){		
 		this.m_context.addElement(name, rootEle);	
 		
+		//remove name mapping element whatever
+		this.removeNameMapping(name);
+		
 		HAPContextDefinitionElement contextDefEle = rootEle.getDefinition();
 		if(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE.equals(contextDefEle.getType())) {
 			HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)contextDefEle;
@@ -97,6 +107,7 @@ public class HAPContextFlat extends HAPSerializableImp{
 	}
 	
 	public void addNameMapping(String name, String nameMapping) {		this.m_nameMapping.put(name, nameMapping);	}
+	private void removeNameMapping(String name) {    this.m_nameMapping.remove(name);   }
 	
 	public Map<String, Object> getConstantValue(){		return this.m_context.getConstantValue();	}
 	

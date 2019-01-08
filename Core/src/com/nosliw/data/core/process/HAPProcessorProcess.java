@@ -24,12 +24,12 @@ public class HAPProcessorProcess{
 
 		//merge context with parent
 		HAPContextGroup context = HAPProcessorContext.process(processDefinition.getContext(), parentContext, null, envContextProcessor);
-		
+		Map<String, HAPExecutableDataAssociationGroup> results;
 		HAPContextGroup oldContext;
 		do {
 			out = new HAPExecutableProcess(processDefinition, id);
 			oldContext = context.cloneContextGroup();
-			Map<String, HAPExecutableDataAssociationGroup> results = new LinkedHashMap<String, HAPExecutableDataAssociationGroup>();
+			results = new LinkedHashMap<String, HAPExecutableDataAssociationGroup>();
 			Map<String, HAPDefinitionActivity> activities = processDefinition.getActivities();
 			for(String activityId : activities.keySet()) {
 				HAPDefinitionActivity activity = activities.get(activityId);
@@ -44,6 +44,10 @@ public class HAPProcessorProcess{
 			out.setContext(context);
 		}while(false);
 		//while(!context.equals(oldContext));
+		
+		for(String result : results.keySet()) {
+			out.addResult(result, results.get(result));
+		}
 		
 		return out;
 	}

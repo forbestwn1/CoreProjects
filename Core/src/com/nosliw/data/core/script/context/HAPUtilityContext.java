@@ -15,6 +15,7 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
@@ -23,23 +24,59 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPUtilityContext {
 
-	public static JSONObject buildStaticJsonObject(HAPContext context) {
+	public static JSONObject buildDefaultJsonObject(HAPContextGroup contextGroup) {
+		JSONObject out = new JSONObject();
+		for(String categary : contextGroup.getContextTypes()) {
+			out.put(categary, buildDefaultJsonObject(contextGroup.getContext(categary)));
+		}
+		return out;
+	}
+	
+	public static JSONObject buildDefaultJsonObject(HAPContext context) {
+		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+		for(String contextEleName : context.getElementNames()) {
+			HAPContextDefinitionElement contextEle = context.getElement(contextEleName).getDefinition();
+			Object value = null;
+			if(contextEle.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT)) {
+				HAPContextDefinitionLeafConstant constantEle = (HAPContextDefinitionLeafConstant)contextEle;
+				value = constantEle.getValue();
+			}
+			else {
+				HAPContextDefinitionLeafVariable varEle = (HAPContextDefinitionLeafVariable)contextEle;
+				value = varEle.getDefaultValue();
+			}
+			
+			if(value!=null) {
+				jsonMap.put(contextEleName, value.toString());
+			}
+		}
+		return new JSONObject(HAPJsonUtility.buildMapJson(jsonMap));
+	}
+
+	
+	public static JSONObject buildStaticJsonObject(HAPContext context, boolean flatName) {
 		JSONObject output = new JSONObject();
 		for(String contextEle : context.getElementNames()) {
-			Object contextEleJson = buildJsonValue(context.getElement(contextEle).getDefinition());
+			HAPContextDefinitionElement contextDefEle = context.getElement(contextEle).getDefinition();
+			Object contextEleJson = buildJsonValue(contextDefEle);
 
 			if(contextEleJson!=null) {
 				JSONObject parentJsonObj = output;
-				HAPContextDefinitionRootId rootId = new HAPContextDefinitionRootId(contextEle);
-				String categary = rootId.getCategary();
-				if(HAPBasicUtility.isStringNotEmpty(categary)) {
-					parentJsonObj = output.optJSONObject(categary);
-					if(parentJsonObj==null) {
-						parentJsonObj = new JSONObject();
-						output.put(categary, parentJsonObj);
+				if(!flatName) {
+					HAPContextDefinitionRootId rootId = new HAPContextDefinitionRootId(contextEle);
+					String categary = rootId.getCategary();
+					if(HAPBasicUtility.isStringNotEmpty(categary)) {
+						parentJsonObj = output.optJSONObject(categary);
+						if(parentJsonObj==null) {
+							parentJsonObj = new JSONObject();
+							output.put(categary, parentJsonObj);
+						}
 					}
+					parentJsonObj.put(rootId.getName(), contextEleJson);
 				}
-				parentJsonObj.put(rootId.getName(), contextEleJson);
+				else {
+					parentJsonObj.put(contextEle, contextEleJson);
+				}
 			}
 		}
 		return output;
@@ -89,7 +126,7 @@ public class HAPUtilityContext {
 					HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)ele;
 					HAPContextPath contextPath = relativeEle.getPath();
 					String from = contextPath.getFullPath();
-					String to = HAPNamingConversionUtility.buildPath(path, contextPath.getSubPath());
+					String to = path;  //HAPNamingConversionUtility.buildPath(path, contextPath.getSubPath());
 					out.put(from, to);
 					return false;
 				}
@@ -212,7 +249,12 @@ public class HAPUtilityContext {
 		}
 		
 		if(cpath.getPathSegs().length==0) {
-			root.setDefinition(ele);
+			if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)&&root.getDefinition()!=null&&root.getDefinition().getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
+				((HAPContextDefinitionLeafData)root.getDefinition()).setCriteria(((HAPContextDefinitionLeafData)ele).getCriteria());
+			}
+			else {
+				root.setDefinition(ele);
+			}
 		}
 		else {
 			String seg = cpath.getPathSegs()[0];
@@ -276,6 +318,8 @@ public class HAPUtilityContext {
 		return out;				
 	}
  
+	public static void setContextGroupInheritModeNone(HAPInfo info) {		info.setValue(HAPContextGroup.INFO_INHERIT, "false");	}
+	public static void setContextGroupInheritModeChild(HAPInfo info) {		info.setValue(HAPContextGroup.INFO_INHERIT, "true");	}
 	
 	public static boolean getContextGroupPopupMode(HAPInfo info) {  
 		boolean out = true;

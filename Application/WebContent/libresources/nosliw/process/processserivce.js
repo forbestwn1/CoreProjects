@@ -14,6 +14,9 @@ var packageObj = library.getChildPackage("service");
 	var node_NormalActivityOutput;
 	var node_EndActivityOutput;
 	var node_ProcessResult;
+	var node_createServiceRequestInfoService;
+	var node_DependentServiceRequestInfo;
+	var node_requestServiceProcessor;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -30,9 +33,9 @@ var node_createProcessService = function(){
 		}
 		else{
 			var out = node_createServiceRequestInfoSequence(service, handlers, request);
-			out.addReqest(nosliw.getResourceService().getGetResourceDataByTypeRequest([pluginName], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN, {
+			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([pluginName], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN, {
 				success : function(request, resourceData){
-					var plugin = resourceData[pluginName](nosliw);
+					var plugin = resourceData[pluginName][node_COMMONATRIBUTECONSTANT.PLUGINACTIVITY_SCRIPT](nosliw);
 					loc_activityPlugins[pluginName] = plugin;
 					return plugin;
 				}
@@ -42,30 +45,31 @@ var node_createProcessService = function(){
 	};
 	
 	var loc_dyanimicValueBuild = function(output, outputPathSegs, input, intpuPathSegs){
-		var inputValue = node_objectOperationUtility.getObjectAttributeByPath(input, inputPathSegs);
+		var inputValue = node_objectOperationUtility.getObjectAttributeByPathSegs(input, intpuPathSegs);
 		node_objectOperationUtility.operateObjectByPathSegs(output, outputPathSegs, node_CONSTANT.WRAPPER_OPERATION_SET, inputValue);
-		return ouput;
+		return output;
 	};
 	
 	var loc_getGenerateDataAssociationOutputRequest = function(dataAssociation, input, handlers, request){
-		out = node_createServiceRequestInfoSimple(new node_ServiceInfo("generateDataAssociationOutputRequest", {"dataAssociation":dataAssociation, "input":input}), 
+		var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("generateDataAssociationOutputRequest", {"dataAssociation":dataAssociation, "input":input}), 
 			function(requestInfo){
 				return dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_CONVERTFUNCTION](input, loc_dyanimicValueBuild);
 			}, 
 			handlers, request);
+		return out;
 	};
 	
 	var loc_getExecuteNormalActivityRequest = function(normalActivity, context, handlers, request){
-		var executeActivityRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteNormalActivity", {"ac":expression, "variables":variables}), handlers, request);
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteNormalActivity", {"activity":normalActivity, "context":context}), handlers, request);
 		//calculate input for activity first
-		executeActivityRequest.addReqeust(loc_getGenerateDataAssociationOutputRequest(normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_INPUT], context, {
-			success : function(input){
+		out.addRequest(loc_getGenerateDataAssociationOutputRequest(normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_INPUT], context, {
+			success : function(requestInfo, input){
 				//get activity plugin 
 				return loc_getActivityPluginRequest(normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_TYPE], {
-					success : function(activityPlugin){
+					success : function(requestInfo, activityPlugin){
 						//execute activity plugin
 						return activityPlugin.getExecuteRequest(normalActivity, input, {
-							success : function(activityResult){  //get activity results (result name + result value map)
+							success : function(requestInfo, activityResult){  //get activity results (result name + result value map)
 								//calculate variable output
 								var activityResultConfig = normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULT][activityResult.resultName];
 								var activityResultDataAssociation = activityResultConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_OUTPUT];
@@ -75,7 +79,7 @@ var node_createProcessService = function(){
 										_.each(activityOutput, function(ele, name){
 											context[name] = ele;
 										});
-										return new node_ActivityOutput(activityResultConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_FLOW][node_COMMONATRIBUTECONSTANT.DEFINITIONSEQUENCEFLOW_TARGET],
+										return new node_NormalActivityOutput(activityResultConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_FLOW][node_COMMONATRIBUTECONSTANT.DEFINITIONSEQUENCEFLOW_TARGET],
 												context);
 									}
 								});
@@ -85,6 +89,7 @@ var node_createProcessService = function(){
 				});
 			}
 		}));
+		return out;
 	};
 	
 	var loc_getExecuteStartActivityRequest = function(startActivity, context, handlers, request){
@@ -109,28 +114,28 @@ var node_createProcessService = function(){
 		var activitExecuteRequest;
 		var activity = activities[activityId];
 		var activityType = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_TYPE];
-		if(activityType==COMMONCONSTANT.ACTIVITY_TYPE_START){
+		if(activityType==node_COMMONCONSTANT.ACTIVITY_TYPE_START){
 			activitExecuteRequest = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteStartActivity", {"activity":activity, "context":context}), 
 					function(requestInfo){
 						var nextActivityId = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_FLOW][node_COMMONATRIBUTECONSTANT.DEFINITIONSEQUENCEFLOW_TARGET];
 						return loc_getExecuteActivitySequenceRequest(nextActivityId, activities, context); 
 					});
 		}
-		else if(activityType==COMMONCONSTANT.ACTIVITY_TYPE_NORMAL){
+		else if(activityType==node_COMMONCONSTANT.ACTIVITY_TYPE_END){
+			activitExecuteRequest = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteEndActivity", {"activity":activity, "context":context}), 
+					function(requestInfo){
+						return new node_EndActivityOutput(activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULTNAME], context);
+					}, 
+					handlers, request);
+		}
+		else{
 			activitExecuteRequest = loc_getExecuteNormalActivityRequest(activity, context, {
 				success : function(requestInfo, normalActivityOutput){
 					return loc_getExecuteActivitySequenceRequest(normalActivityOutput.next, activities, normalActivityOutput.context);
 				}
 			}, request);
 		}
-		else if(activityType==COMMONCONSTANT.ACTIVITY_TYPE_END){
-			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteEndActivity", {"activity":activity, "context":context}), 
-					function(requestInfo){
-						return new node_EndActivityOutput(activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULTNAME], context);
-					}, 
-					handlers, requestInfo);
-		}
-		out.addRequest(activitExecuteRequest)
+		out.addRequest(activitExecuteRequest);
 		return out;
 	};
 
@@ -160,16 +165,15 @@ var node_createProcessService = function(){
 
 		getExecuteProcessRequest : function(id, input, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
-			var out = node_createServiceRequestInfoService(new node_ServiceInfo("ExecuteProcessResource", {"id":id, "input":input}), handlers, requester_parent)
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteProcessResource", {"id":id, "input":input}), handlers, requestInfo);
 
-			var getProcessRequest = nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([id], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_PROCESS, {});
-			
-			out.setDependentService(new node_DependentServiceRequestInfo(getProcessRequest, {
+			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([id], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_PROCESS, {
 				success : function(requestInfo, processes){
 					var process = processes[id];
-					return loc_getExecuteProcessRequest(process, input, handlers);
+					return loc_getExecuteProcessRequest(process, input);
 				}
 			}));
+			
 			return out;
 		},
 			
@@ -196,10 +200,13 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();	});
-nosliw.registerSetNodeDataEvent("process.entity.node_NormalActivityResult", function(){node_NormalActivityResult = this.getData();	});
-nosliw.registerSetNodeDataEvent("process.entity.node_NormalActivityOutput", function(){node_NormalActivityOutput = this.getData();	});
-nosliw.registerSetNodeDataEvent("process.entity.node_EndActivityOutput", function(){node_EndActivityOutput = this.getData();	});
-nosliw.registerSetNodeDataEvent("process.entity.node_ProcessResult", function(){node_ProcessResult = this.getData();	});
+nosliw.registerSetNodeDataEvent("process.entity.NormalActivityResult", function(){node_NormalActivityResult = this.getData();	});
+nosliw.registerSetNodeDataEvent("process.entity.NormalActivityOutput", function(){node_NormalActivityOutput = this.getData();	});
+nosliw.registerSetNodeDataEvent("process.entity.EndActivityOutput", function(){node_EndActivityOutput = this.getData();	});
+nosliw.registerSetNodeDataEvent("process.entity.ProcessResult", function(){node_ProcessResult = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService", function(){node_createServiceRequestInfoService = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createProcessService", node_createProcessService); 

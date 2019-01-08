@@ -234,6 +234,9 @@ var node_createExpressionService = function(){
 		var out;
 		if(matcher==undefined){
 			//if converter does not created, then get it
+			//kkkk
+			return node_createServiceRequestInfoSimple(service, function(requestInfo){	return data;}, handlers, requestInfo);
+			
 		}
 		else{
 			var relationship = matcher[node_COMMONATRIBUTECONSTANT.MATCHER_RELATIONSHIP];
@@ -398,8 +401,32 @@ var node_createExpressionService = function(){
 		return out;
 	};	
 
-
 	var loc_getExecuteScriptRequest = function(script, expressions, variables, scriptConstants, handlers, requester_parent){
+		var requestInfo = loc_out.getRequestInfo(requester_parent);
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteScriptExpression", {"script":script, "expressions":expressions, "variables":variables}), handlers, requestInfo);
+
+		//calculate multiple expression
+		var executeMultipleExpressionRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("ExecuteMultipleExpression", {"expressions":expressions, "variables":variables}), {
+			success : function(requestInfo, expressionsResult){
+				var expressionsData = expressionsResult.getResults();
+				return script.call(undefined, expressionsData, scriptConstants, variables);
+			}
+		});
+		_.each(expressions, function(expression, name){
+			//find variable value only for this expression
+			var expVariables = {};
+			_.each(expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS], function(varInfo, name){
+				expVariables[name] = variables[name];
+			});
+			executeMultipleExpressionRequest.addRequest(name, loc_getExecuteExpressionRequest(expression, expVariables, {}, {}));
+		});
+		
+		out.addRequest(executeMultipleExpressionRequest);
+		return out;
+	};
+
+
+	var loc_getExecuteScriptRequest1 = function(script, expressions, variables, scriptConstants, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		//calculate multiple expression
 		var executeMultipleExpressionRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("ExecuteMultipleExpression", {"expressions":expressions, "variables":variables}), {});

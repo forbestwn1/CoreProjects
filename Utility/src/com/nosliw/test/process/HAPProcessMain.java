@@ -21,7 +21,7 @@ public class HAPProcessMain {
 		
 		String id = "expressionProcessId";
 		HAPExecutableProcess processed = HAPProcessorProcess.process(id, suite, new HAPProcessContext(), runtimeEnvironment.getProcessManager(), new HAPEnvContextProcessor(HAPExpressionManager.dataTypeHelper, runtimeEnvironment.getRuntime(), runtimeEnvironment.getExpressionSuiteManager(), null));
-		System.out.println(processed);
+		System.out.println(processed.toResourceData(null));
 	}
 	
 }

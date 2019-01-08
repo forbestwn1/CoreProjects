@@ -43,5 +43,8 @@ nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_
 
 //Register Node by Name
 packageObj.createChildNode("NormalActivityResult", node_NormalActivityResult); 
+packageObj.createChildNode("NormalActivityOutput", node_NormalActivityOutput); 
+packageObj.createChildNode("EndActivityOutput", node_EndActivityOutput); 
+packageObj.createChildNode("ProcessResult", node_ProcessResult); 
 
 })(packageObj);
