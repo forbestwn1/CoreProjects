@@ -6,7 +6,7 @@ import java.util.Map;
 public class HAPProcessorContextInheritance {
 
 	//merge with parent through inheritance
-	public static HAPContextGroup process(HAPContextGroup orgContext, HAPContextGroup parentContextGroup, String inheritMode, HAPEnvContextProcessor contextProcessorEnv) {
+	public static HAPContextGroup process(HAPContextGroup orgContext, HAPContextGroup parentContextGroup, String inheritMode, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPContextGroup out = processConstant(orgContext);
 		if(!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(inheritMode)) {
 			for(String categary : HAPContextGroup.getAllContextTypes()){
@@ -15,7 +15,7 @@ public class HAPProcessorContextInheritance {
 					Map<String, HAPContextDefinitionRoot> parentEles = parentContext.getElements();
 					for(String eleName : parentEles.keySet()) {
 						if(isInheritable(out, parentContextGroup, categary, eleName, inheritMode)) {
-							out.addElement(eleName, HAPUtilityContext.createRelativeContextDefinitionRoot(parentContextGroup, categary, eleName, contextProcessorEnv.inheritanceExcludedInfo), categary);
+							out.addElement(eleName, HAPUtilityContext.createRelativeContextDefinitionRoot(parentContextGroup, categary, eleName, contextProcessRequirement.inheritanceExcludedInfo), categary);
 						}
 					}
 				}

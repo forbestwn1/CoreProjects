@@ -2,7 +2,7 @@ package com.nosliw.data.core.process.activity;
 
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPExecutableDataAssociationGroup;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
@@ -11,7 +11,7 @@ import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
+import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 
 public class HAPStartActivityProcessor implements HAPProcessorActivity{
 
@@ -24,8 +24,8 @@ public class HAPStartActivityProcessor implements HAPProcessorActivity{
 			Map<String, HAPExecutableDataAssociationGroup> results,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions,
 			HAPManagerProcess processManager,
-			HAPEnvContextProcessor envContextProcessor,
-			HAPProcessContext processContext){
+			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPProcessTracker processTracker){
 		
 		HAPStartActivityExecutable out = new HAPStartActivityExecutable(id, activityDefinition);
 		

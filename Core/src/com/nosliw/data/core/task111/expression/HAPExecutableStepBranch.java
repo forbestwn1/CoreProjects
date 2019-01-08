@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.operand.HAPOperand;
@@ -55,8 +55,8 @@ public class HAPExecutableStepBranch extends HAPExecutableStep{
 
 	@Override
 	public void discoverVariable(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria,
-			HAPProcessContext context) {
-		Map<String, HAPVariableInfo> varsInfo = HAPOperandUtility.discover(new HAPOperand[] {this.m_expression.getOperand()}, variablesInfo, expectOutputCriteria, context);
+			HAPProcessTracker processTracker) {
+		Map<String, HAPVariableInfo> varsInfo = HAPOperandUtility.discover(new HAPOperand[] {this.m_expression.getOperand()}, variablesInfo, expectOutputCriteria, processTracker);
 		
 		variablesInfo.clear();
 		variablesInfo.putAll(varsInfo);

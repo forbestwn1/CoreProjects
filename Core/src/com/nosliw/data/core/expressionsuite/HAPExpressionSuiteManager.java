@@ -3,7 +3,7 @@ package com.nosliw.data.core.expressionsuite;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
@@ -22,9 +22,9 @@ public class HAPExpressionSuiteManager {
 			Map<String, HAPData> contextConstants,
 			HAPDataTypeCriteria expectOutput, 
 			Map<String, String> configure,
-			HAPProcessContext context) {
+			HAPProcessTracker processTracker) {
 		
-		return HAPExpressionSuiteUtility.compileExpression(expression, contextExpressionDefinitions, parentVariablesInfo, contextConstants, expectOutput, configure, context);
+		return HAPExpressionSuiteUtility.compileExpression(expression, contextExpressionDefinitions, parentVariablesInfo, contextConstants, expectOutput, configure, processTracker);
 	}
 
 	public HAPExecutableExpression compileExpression(
@@ -33,9 +33,9 @@ public class HAPExpressionSuiteManager {
 			Map<String, HAPData> contextConstants,
 			HAPDataTypeCriteria expectOutput, 
 			Map<String, String> configure,
-			HAPProcessContext context) {
+			HAPProcessTracker processTracker) {
 		
-		return HAPExpressionSuiteUtility.compileExpression(expression, new LinkedHashMap<String, HAPDefinitionExpression>(), parentVariablesInfo, contextConstants, expectOutput, configure, context);
+		return HAPExpressionSuiteUtility.compileExpression(expression, new LinkedHashMap<String, HAPDefinitionExpression>(), parentVariablesInfo, contextConstants, expectOutput, configure, processTracker);
 	}
 
 
@@ -44,8 +44,8 @@ public class HAPExpressionSuiteManager {
 			HAPDefinitionExpressionSuite contextExpressionDefinitionsSuite, 
 			HAPDataTypeCriteria expectOutput, 
 			Map<String, String> configure,
-			HAPProcessContext context) {
-		return this.compileExpression(expression, contextExpressionDefinitionsSuite.getExpressionDefinitions(), contextExpressionDefinitionsSuite.getVariablesInfo(), contextExpressionDefinitionsSuite.getConstants(), expectOutput, configure, context);
+			HAPProcessTracker processTracker) {
+		return this.compileExpression(expression, contextExpressionDefinitionsSuite.getExpressionDefinitions(), contextExpressionDefinitionsSuite.getVariablesInfo(), contextExpressionDefinitionsSuite.getConstants(), expectOutput, configure, processTracker);
 	}	
 	
 }

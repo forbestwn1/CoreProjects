@@ -128,11 +128,11 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 
 	@Override
 	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants,
-			HAPEnvContextProcessor contextProcessorEnv) {
+			HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPContextDefinitionLeafRelative out = (HAPContextDefinitionLeafRelative)this.cloneContextDefinitionElement();
-		out.m_pathStr = HAPProcessorContextSolidate.getSolidName(this.getPathStr(), constants, contextProcessorEnv);
+		out.m_pathStr = HAPProcessorContextSolidate.getSolidName(this.getPathStr(), constants, contextProcessRequirement);
 		out.m_path = null;
-		if(this.m_definition!=null) 	out.m_definition = this.m_definition.toSolidContextDefinitionElement(constants, contextProcessorEnv);
+		if(this.m_definition!=null) 	out.m_definition = this.m_definition.toSolidContextDefinitionElement(constants, contextProcessRequirement);
 		return out;
 	}
 	

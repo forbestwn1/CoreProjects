@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.updatename.HAPUpdateNameMap;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.datasource.HAPDataSourceDefinitionManager;
 import com.nosliw.data.core.datasource.HAPDefinition;
@@ -28,7 +28,7 @@ public class HAPProcessorTaskDataSource implements HAPProcessorTask{
 	@Override
 	public HAPExecutableTask process(HAPDefinitionTask taskDefinition, String domain, Map<String, String> variableMap,
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
-			HAPProcessContext context) {
+			HAPProcessTracker processTracker) {
 
 		HAPDefinitionTaskDataSource dataSourceTaskDef = (HAPDefinitionTaskDataSource)taskDefinition;
 		

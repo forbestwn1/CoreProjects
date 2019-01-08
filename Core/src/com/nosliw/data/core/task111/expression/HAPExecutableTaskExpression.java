@@ -10,7 +10,7 @@ import java.util.Set;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaOr;
 import com.nosliw.data.core.expression.HAPExpressionManager;
@@ -130,7 +130,7 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 	}
 
 	@Override
-	public void discoverVariable(Map<String, HAPVariableInfo> parentVariablesInfo, HAPDataTypeCriteria expectOutputCriteria, HAPProcessContext context) {
+	public void discoverVariable(Map<String, HAPVariableInfo> parentVariablesInfo, HAPDataTypeCriteria expectOutputCriteria, HAPProcessTracker processTracker) {
 		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		varsInfo.putAll(parentVariablesInfo);
 
@@ -138,11 +138,11 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 		do {
 			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 			oldVarsInfo.putAll(varsInfo);
-			context.clear();
+			processTracker.clear();
 
 			for(HAPExecutableStep step : this.m_steps) {
-				step.discoverVariable(varsInfo, expectOutputCriteria, context);
-				if(!context.isSuccess())  break;
+				step.discoverVariable(varsInfo, expectOutputCriteria, processTracker);
+				if(!processTracker.isSuccess())  break;
 			}
 
 			//remove local variables
@@ -154,7 +154,7 @@ public class HAPExecutableTaskExpression implements HAPExecutableTask{
 			}
 			for(String localVar : localVars)   varsInfo.remove(localVar);
 			
-		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
+		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && processTracker.isSuccess());
 
 		//cal variable matchers, update parent variable
 		for(String varName : this.m_varsInfo.keySet()){

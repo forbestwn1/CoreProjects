@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
@@ -90,8 +90,8 @@ public class HAPExecutableStepExpression extends HAPExecutableStep implements HA
 
 	@Override
 	public void discoverVariable(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria,
-			HAPProcessContext context) {
-		Map<String, HAPVariableInfo> varsInfo = HAPOperandUtility.discover(new HAPOperand[]{this.m_operand.getOperand()}, variablesInfo, expectOutputCriteria, context);
+			HAPProcessTracker processTracker) {
+		Map<String, HAPVariableInfo> varsInfo = HAPOperandUtility.discover(new HAPOperand[]{this.m_operand.getOperand()}, variablesInfo, expectOutputCriteria, processTracker);
 		
 		//handle output variable
 		String outVarName = this.m_outputVariable;

@@ -3,7 +3,7 @@ package com.nosliw.data.core.script.expression;
 import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.operand.HAPOperandUtility;
@@ -34,8 +34,8 @@ public class HAPProcessorScriptExpression {
 				HAPOperandUtility.updateConstantData(expEle.getOperand(), expressionContext.getDataConstants());
 				
 				//process expression
-				HAPProcessContext context = new HAPProcessContext();
-				HAPExecutableExpression exeExpression = expressionManager.compileExpression(expEle, expressionContext.getExpressionDefinitionSuite(), null, configure, context);
+				HAPProcessTracker processTracker = new HAPProcessTracker();
+				HAPExecutableExpression exeExpression = expressionManager.compileExpression(expEle, expressionContext.getExpressionDefinitionSuite(), null, configure, processTracker);
 				scriptExpressionExe.addElement(exeExpression);
 			}
 			else if(element instanceof HAPScriptInScriptExpression) {

@@ -7,7 +7,7 @@ import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
+import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 
@@ -21,11 +21,11 @@ public class HAPContextParser {
 		System.out.println(contextGroup);
 		
 		HAPRuntimeEnvironmentImpRhino runtimeEnv = new HAPRuntimeEnvironmentImpRhino();
-		HAPEnvContextProcessor processEvn = new HAPEnvContextProcessor(HAPExpressionManager.dataTypeHelper, runtimeEnv.getRuntime(), runtimeEnv.getExpressionSuiteManager(), null);
+		HAPRequirementContextProcessor contextProcessRequirement = new HAPRequirementContextProcessor(HAPExpressionManager.dataTypeHelper, runtimeEnv.getRuntime(), runtimeEnv.getExpressionSuiteManager(), null);
 		
-		HAPContextGroup contextGroup1 = HAPProcessorContext.processStatic(contextGroup, null, new HAPConfigureContextProcessor(), processEvn);
+		HAPContextGroup contextGroup1 = HAPProcessorContext.processStatic(contextGroup, null, new HAPConfigureContextProcessor(), contextProcessRequirement);
 		System.out.println(contextGroup1);
-		HAPContextGroup contextGroup2 = HAPProcessorContext.processRelative(contextGroup1, null, new HAPConfigureContextProcessor(), processEvn);
+		HAPContextGroup contextGroup2 = HAPProcessorContext.processRelative(contextGroup1, null, new HAPConfigureContextProcessor(), contextProcessRequirement);
 
 		runtimeEnv.getRuntime().close();
 	

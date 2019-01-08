@@ -303,7 +303,7 @@ public class HAPUtilityContext {
 		}
 	}
 
-	public static HAPEntityInfoImp toSolidEntityInfo(HAPEntityInfoImp input, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
+	public static HAPEntityInfoImp toSolidEntityInfo(HAPEntityInfoImp input, Map<String, Object> constants, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPEntityInfoImp out = new HAPEntityInfoImp();
 		out.setName(input.getName());
 		out.setDescription(input.getDescription());

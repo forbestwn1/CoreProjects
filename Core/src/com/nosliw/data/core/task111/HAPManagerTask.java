@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPVariableInfo;
@@ -54,12 +54,12 @@ public class HAPManagerTask {
 		long start = System.currentTimeMillis();
 		
 		//compile task
-		HAPProcessContext  processContext = new HAPProcessContext();
+		HAPProcessTracker  processTracker = new HAPProcessTracker();
 
 		String bufName = suite.getName()+"_" +suite.getTask(taskName).getName();
 		HAPExecutableTask executableTask = this.m_executables.get(bufName);
 		if(executableTask==null) {
-			executableTask = this.compileTask(this.generateId(), suite.getTask(taskName), suite.getAllTasks(), suite.getVariables(), suite.getConstants(), null, suite.getConfigure(), processContext);
+			executableTask = this.compileTask(this.generateId(), suite.getTask(taskName), suite.getAllTasks(), suite.getVariables(), suite.getConstants(), null, suite.getConfigure(), processTracker);
 			if(HAPRuntime.isDemo) {
 				this.m_executables.put(bufName, executableTask);
 			}
@@ -91,22 +91,22 @@ public class HAPManagerTask {
 			Map<String, HAPData> contextConstants,
 			HAPDataTypeCriteria expectOutput,
 			Map<String, String> configure,
-			HAPProcessContext context) {
-		HAPExecutableTask task = processTask(taskDefinition, null, null, contextTaskDefinitions, contextConstants, context);
+			HAPProcessTracker processTracker) {
+		HAPExecutableTask task = processTask(taskDefinition, null, null, contextTaskDefinitions, contextConstants, processTracker);
 		task.setId(id);
 		
 		Map<String, HAPVariableInfo> variableInfos = parentVariablesInfo;
 		if(variableInfos==null) 	variableInfos = new LinkedHashMap<String, HAPVariableInfo>();
-		task.discoverVariable(variableInfos, expectOutput, context);
+		task.discoverVariable(variableInfos, expectOutput, processTracker);
 		
 		return task;
 	}
 	
 	public HAPExecutableTask processTask(HAPDefinitionTask taskDefinition, String domain, Map<String, String> variableMap,
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
-			HAPProcessContext context) {
+			HAPProcessTracker processTracker) {
 		HAPProcessorTask taskProcessor = m_taskManagers.get(taskDefinition.getType()).getTaskProcessor();
-		HAPExecutableTask out = taskProcessor.process(taskDefinition, domain, variableMap, contextTaskDefinitions, contextConstants, context);
+		HAPExecutableTask out = taskProcessor.process(taskDefinition, domain, variableMap, contextTaskDefinitions, contextConstants, processTracker);
 		return out;
 	}
 	

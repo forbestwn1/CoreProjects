@@ -7,7 +7,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializable;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -53,7 +53,7 @@ public interface HAPOperand extends HAPSerializable{
 	 */
 	HAPMatchers discover(Map<String, HAPVariableInfo> variablesInfo,
 							HAPDataTypeCriteria expectCriteria,
-							HAPProcessContext context, 
+							HAPProcessTracker processTracker, 
 							HAPDataTypeHelper dataTypeHelper);
 
 	//operand output data type criteria

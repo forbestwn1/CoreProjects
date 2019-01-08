@@ -3,7 +3,7 @@ package com.nosliw.common.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HAPProcessContext {
+public class HAPProcessTracker {
 
 	public static final String CONFIGURE_DISCOVERY = "discovery";
 	
@@ -13,7 +13,7 @@ public class HAPProcessContext {
 	//error message
 	private List<String> m_messages;
 	
-	public HAPProcessContext(){
+	public HAPProcessTracker(){
 		this.clear();
 	}
 	

@@ -3,7 +3,7 @@ package com.nosliw.data.core.expressionsuite;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
@@ -25,7 +25,7 @@ public class HAPExpressionSuiteUtility {
 			Map<String, HAPData> contextConstants,
 			HAPDataTypeCriteria expectOutput, 
 			Map<String, String> configure,
-			HAPProcessContext context) {
+			HAPProcessTracker processTracker) {
 		
 		HAPOperandWrapper operand = expression.getOperand().cloneWrapper();
 		
@@ -39,7 +39,7 @@ public class HAPExpressionSuiteUtility {
 		
 		if(HAPExpressionProcessConfigureUtil.isDoDiscovery(configure)){
 			//do discovery
-			out.discover(parentVariablesInfo, expectOutput, context);
+			out.discover(parentVariablesInfo, expectOutput, processTracker);
 		}
 		
 		return out;

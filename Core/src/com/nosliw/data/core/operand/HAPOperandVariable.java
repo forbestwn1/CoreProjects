@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPMatchers;
@@ -39,7 +39,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
-			HAPProcessContext context,
+			HAPProcessTracker processTracker,
 			HAPDataTypeHelper dataTypeHelper) {
 		
 		HAPVariableInfo variableInfo = variablesInfo.get(this.getVariableName());
@@ -58,7 +58,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 				else{
 					HAPDataTypeCriteria adjustedCriteria = dataTypeHelper.merge(variableInfo.getCriteria(), expectCriteria);
 					if(adjustedCriteria==null){
-						context.addMessage("error");
+						processTracker.addMessage("error");
 						return null;
 					}
 					else{
@@ -72,7 +72,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 		this.setOutputCriteria(variableInfo.getCriteria());
 
 		//cal converter
-		return this.isMatchable(variableInfo.getCriteria(), expectCriteria, context, dataTypeHelper);
+		return this.isMatchable(variableInfo.getCriteria(), expectCriteria, processTracker, dataTypeHelper);
 	}
 	
 	@Override

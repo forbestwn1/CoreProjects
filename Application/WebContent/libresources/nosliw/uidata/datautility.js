@@ -53,8 +53,6 @@ var node_utility = function(){
 			}
 			catch(e){
 //				this.isCyclic(value);
-				var kkkkk = 5555;
-				kkkkk++;
 				copy = value;
 			}
 			return copy;

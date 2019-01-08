@@ -8,7 +8,7 @@ import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expression.HAPVariableInfo;
@@ -34,7 +34,7 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
-import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
+import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
 import com.nosliw.data.core.script.expression.HAPProcessorScriptExpression;
@@ -56,13 +56,13 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			Map<String, HAPExecutableDataAssociationGroup> processResults,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions,
 			HAPManagerProcess processManager,
-			HAPEnvContextProcessor envContextProcessor,
-			HAPProcessContext processContext) {
+			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPProcessTracker processTracker) {
 		 
 		HAPExpressionActivityExecutable out = new HAPExpressionActivityExecutable(id, (HAPExpressionActivityDefinition)activityDefinition);
 
 		//process input and create flat input context for activity
-		out.setInputDataAssociation(HAPUtilityProcess.processDataAssociation(parentContext, out.getExpressionActivityDefinition().getInput(), envContextProcessor));
+		out.setInputDataAssociation(HAPUtilityProcess.processDataAssociation(parentContext, out.getExpressionActivityDefinition().getInput(), contextProcessRequirement));
 		
 		//input context
 		HAPContextFlat activityContext = out.getInputContext();
@@ -74,7 +74,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		//prepare variables 
 		expProcessContext.addDataVariables(HAPUtilityContext.discoverDataVariablesInContext(activityContext.getContext()));
 		//process expression
-		HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(out.getExpressionActivityDefinition().getExpression(), expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), envContextProcessor.expressionManager, envContextProcessor.runtime);
+		HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(out.getExpressionActivityDefinition().getExpression(), expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
 		out.setScriptExpression(scriptExpression);
 
 		//find affected element to parent context
@@ -144,7 +144,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 				return successResultContext;
 			}
 			
-		}, envContextProcessor);
+		}, contextProcessRequirement);
 		out.addResult(RESULT_SUCCESS, successResultExe);
 		
 		return out;

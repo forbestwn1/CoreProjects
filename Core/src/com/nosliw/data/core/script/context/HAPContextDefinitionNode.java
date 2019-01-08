@@ -71,13 +71,13 @@ public class HAPContextDefinitionNode extends HAPContextDefinitionLeafVariable{
 	}
 	
 	@Override
-	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv) {
+	public HAPContextDefinitionElement toSolidContextDefinitionElement(Map<String, Object> constants, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPContextDefinitionNode solid = new HAPContextDefinitionNode();
 		super.toContextDefinitionElement(solid);
 		for(String name : this.getChildren().keySet()){
-			String solidName = HAPProcessorContextSolidate.getSolidName(name, constants, contextProcessorEnv);
+			String solidName = HAPProcessorContextSolidate.getSolidName(name, constants, contextProcessRequirement);
 			HAPContextDefinitionElement child = this.getChildren().get(name);
-			HAPContextDefinitionElement solidChild = child.toSolidContextDefinitionElement(constants, contextProcessorEnv);
+			HAPContextDefinitionElement solidChild = child.toSolidContextDefinitionElement(constants, contextProcessRequirement);
 			solid.addChild(solidName, solidChild);
 		}
 		return solid;

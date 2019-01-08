@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -65,11 +65,11 @@ public class HAPOperandReference extends HAPOperandImp{
 	public HAPMatchers discover(
 			Map<String, HAPVariableInfo> variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
-			HAPProcessContext context,
+			HAPProcessTracker processTracker,
 			HAPDataTypeHelper dataTypeHelper) {
 		this.setOutputCriteria(this.m_referencedTask.getOutput());
-		this.m_referencedTask.discoverVariable(variablesInfo, expectCriteria, context);
-		return this.isMatchable(this.m_referencedTask.getOutput(), expectCriteria, context, dataTypeHelper);
+		this.m_referencedTask.discoverVariable(variablesInfo, expectCriteria, processTracker);
+		return this.isMatchable(this.m_referencedTask.getOutput(), expectCriteria, processTracker, dataTypeHelper);
 	}
 	
 	@Override

@@ -2,9 +2,9 @@ package com.nosliw.data.core.process;
 
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
+import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 
 public interface HAPProcessorActivity {
 
@@ -18,8 +18,8 @@ public interface HAPProcessorActivity {
 			Map<String, HAPExecutableDataAssociationGroup> results,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions,
 			HAPManagerProcess processManager,
-			HAPEnvContextProcessor envContextProcessor,
-			HAPProcessContext processContext
+			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPProcessTracker processTracker
 	);
 
 }

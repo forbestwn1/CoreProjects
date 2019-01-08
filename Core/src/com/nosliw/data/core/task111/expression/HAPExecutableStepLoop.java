@@ -10,7 +10,7 @@ import java.util.Set;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPVariableInfo;
@@ -73,7 +73,7 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 
 	@Override
 	public void discoverVariable(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria,
-			HAPProcessContext context) {
+			HAPProcessTracker processTracker) {
 		
 		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		Map<String, HAPVariableInfo> oldVarsInfo = null;
@@ -82,9 +82,9 @@ public class HAPExecutableStepLoop extends HAPExecutableStep{
 			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 			oldVarsInfo.putAll(varsInfo);
 			
-			varsInfo = HAPOperandUtility.discover(new HAPOperand[] {this.m_containerOperand.getOperand()}, oldVarsInfo, expectOutputCriteria, context);
+			varsInfo = HAPOperandUtility.discover(new HAPOperand[] {this.m_containerOperand.getOperand()}, oldVarsInfo, expectOutputCriteria, processTracker);
 			if(this.m_containerOperand!=null)  varsInfo.put(this.m_elementVariable, new HAPVariableInfo(HAPCriteriaUtility.getElementCriteria(this.m_containerOperand.getOperand().getOutputCriteria())));
-			if(this.m_breakOperand!=null)  varsInfo = HAPOperandUtility.discover(new HAPOperand[] {this.m_breakOperand.getOperand()}, varsInfo, expectOutputCriteria, context);
+			if(this.m_breakOperand!=null)  varsInfo = HAPOperandUtility.discover(new HAPOperand[] {this.m_breakOperand.getOperand()}, varsInfo, expectOutputCriteria, processTracker);
 			
 			this.m_executeTask.discoverVariable(varsInfo, expectOutputCriteria, context); 
 //					HAPOperandUtility.discover(new HAPOperand[] {this.m_executeOperand.getOperand()}, varsInfo1, expectOutputCriteria, context);

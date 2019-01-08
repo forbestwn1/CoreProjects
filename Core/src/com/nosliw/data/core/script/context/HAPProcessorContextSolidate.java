@@ -17,7 +17,7 @@ public class HAPProcessorContextSolidate {
 
 	static public HAPContextGroup process(
 			HAPContextGroup originalContextGroup,
-			HAPEnvContextProcessor contextProcessorEnv){
+			HAPRequirementContextProcessor contextProcessRequirement){
 		//find all constants
 		Map<String, Object> constantsData = buildConstants(originalContextGroup);
 
@@ -27,8 +27,8 @@ public class HAPProcessorContextSolidate {
 			for(String name : contextDefRoots.keySet()) {
 				HAPContextDefinitionRoot contextDefRoot = contextDefRoots.get(name);
 				if(!contextDefRoot.isConstant()) {
-					String solidName = getSolidName(name, constantsData, contextProcessorEnv);
-					contextDefRoot.setDefinition(contextDefRoot.getDefinition().toSolidContextDefinitionElement(constantsData, contextProcessorEnv));
+					String solidName = getSolidName(name, constantsData, contextProcessRequirement);
+					contextDefRoot.setDefinition(contextDefRoot.getDefinition().toSolidContextDefinitionElement(constantsData, contextProcessRequirement));
 					out.addElement(solidName, contextDefRoot, categary);
 				}
 				else {
@@ -56,7 +56,7 @@ public class HAPProcessorContextSolidate {
 	}
 	
 	//evaluate embeded script expression
-	public static String getSolidName(String name, Map<String, Object> constants, HAPEnvContextProcessor contextProcessorEnv){
+	public static String getSolidName(String name, Map<String, Object> constants, HAPRequirementContextProcessor contextProcessRequirement){
 		HAPDefinitionEmbededScriptExpression embededScriptExpDef = new HAPDefinitionEmbededScriptExpression(name);
 		if(embededScriptExpDef.isString())  return name;
 		else {
@@ -65,9 +65,9 @@ public class HAPProcessorContextSolidate {
 				HAPDataWrapper constantData = HAPDataUtility.buildDataWrapperFromObject(constants.get(constantName));
 				if(constantData!=null)   expProcessContext.addConstant(constantName, constantData);
 			}
-			HAPEmbededScriptExpression embededScriptExp = HAPProcessorScriptExpression.processEmbededScriptExpression(embededScriptExpDef, expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessorEnv.expressionManager, contextProcessorEnv.runtime);
+			HAPEmbededScriptExpression embededScriptExp = HAPProcessorScriptExpression.processEmbededScriptExpression(embededScriptExpDef, expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
 			HAPRuntimeTaskExecuteEmbededExpression task = new HAPRuntimeTaskExecuteEmbededExpression(embededScriptExp, null, constants);
-			HAPServiceData serviceData = contextProcessorEnv.runtime.executeTaskSync(task);
+			HAPServiceData serviceData = contextProcessRequirement.runtime.executeTaskSync(task);
 			if(serviceData.isSuccess())   return (String)serviceData.getData();
 			else{
 				System.err.println("Fail to solidate name : " + name);

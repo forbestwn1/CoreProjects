@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.expression.HAPVariableInfo;
@@ -49,9 +49,9 @@ public class HAPExecutableExpressionInSuite extends HAPExecutableExpressionImp{
 	public void discover(
 			Map<String, HAPVariableInfo> parentVariablesInfo, 
 			HAPDataTypeCriteria expectOutput,
-			HAPProcessContext context) {
+			HAPProcessTracker processTracker) {
 
-		Map<String, HAPVariableInfo> discoveredVarsInf = HAPOperandUtility.discover(new HAPOperand[]{this.getOperand().getOperand()}, parentVariablesInfo, expectOutput, context);
+		Map<String, HAPVariableInfo> discoveredVarsInf = HAPOperandUtility.discover(new HAPOperand[]{this.getOperand().getOperand()}, parentVariablesInfo, expectOutput, processTracker);
 		parentVariablesInfo.clear();
 		parentVariablesInfo.putAll(discoveredVarsInf);
 		this.m_localVarsInfo.clear();

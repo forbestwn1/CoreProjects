@@ -1,139 +1,140 @@
 {
-	page : [
-		{
-			name : "schoolListPage",
-			uiResource : "Resource_MySchool_SchoolList"
-		},
-		{
-			name : "schoolInfoPage",
-			uiResource : "Resource_MySchool_SchoolData"
-		}
-	],
-	
-	context : {
-		public : {
-			element : {
-				schoolList : {
-					definition: {
-						criteria ： "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
-						defaultValue : {
-							dataTypeId: "test.array;1.0.0",
-							value: [
-								{
-									dataTypeId: "test.map;1.0.0",
-									value: {
-										schoolName : {
-											dataTypeId: "test.string;1.0.0",
-											value: "School1"
-										},
-										schoolRating : {
-											dataTypeId: "test.float;1.0.0",
-											value: 6.0
-										},
-										geo : {
-											dataTypeId: "test.geo;1.0.0",
-											value: {
-												"latitude" :  43.651299,
-												"longitude" : -79.579473
-											}
-										}
-									}
-								},
-								{
-									dataTypeId: "test.map;1.0.0",
-									value: {
-										schoolName : {
-											dataTypeId: "test.string;1.0.0",
-											value: "School2"
-										},
-										schoolRating : {
-											dataTypeId: "test.float;1.0.0",
-											value: 8.5
-										},
-										geo : {
-											dataTypeId: "test.geo;1.0.0",
-											value: {
-												"latitude" :  43.649016, 
-												"longitude" : -79.485059
-											}
-										}
-									}
-								}					
-							]
-						}	
-					}									
-				},
-				schoolData: {
-					definition : {
-						criteria : "test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%",
-					}
-				}
+	"name": "all",
+	"description": "process with different activity",
+	"context": {
+		"group": {
+			"public": {
+				"element": {}
 			}
 		}
 	},
-	process : [
-		init : {
-			activity : [
-				{
-					id:"presentSchoolListUI",
-					name:"presentSchoolListUI",
-					type:"presentUI",
-					ui : "schoolListUI"
-				}, 
-				{
-					name: "refreshSchoolList",
-					type: "uiCommand",
-					ui : "schoolListUI"
-					command : "refresh",
-					parms:{
-						schoolData : {
-							definition : {
-								path : "schoolList"
-							}
-						}
-					}
-				},
-			]
-		}
-	],
-	ui : [
-		{
-			name : "schoolListUI",
-			type : "list",
-			page : "schoolListPage",
-			serviceMapping : {
-			
-			},
-			eventHandler : {
-				"selectSchool : {
-					activity : [
-						{
-							id:"presentSchoolDataUI",
-							name:"presentSchoolDataUI",
-							type:"presentUI",
-							ui : "schoolInfoUI"
-						}, 
-						{
-							name: "refreshSchoolInfo",
-							type: "uiCommand",
-							ui : "schoolInfoUI"
-							command : "refresh",
-							parms:{
-								schoolData : {
-									definition : {
-										path: "event.parm.schoolData"
+	"process": [{
+			"id": "expressionProcessId",
+			"name": "expression",
+			"description": "process including expression activity",
+			"context": {
+				"group": {
+					"public": {
+						"element": {
+							business : {
+								definition: {
+									child : {
+										a : {
+											child : {
+												aa : {criteria:"test.string;1.0.0"},
+											}
+										}
+									},
+									defaultValue: {
+										a : {
+											aa : {
+												dataTypeId: "test.string;1.0.0",
+												value: "This is my world!"
+											}
+										}
+									}
+								}
+							},
+							"baseVar": {
+								"definition":{
+									criteria: "test.string",
+									"defaultValue": {
+										"dataTypeId": "test.string",
+										"value": "This is my world!"
+									}
+								}
+							},
+							"fromVar" : {
+								"definition": {
+									criteria : "test.integer",
+									"defaultValue": {
+										"dataTypeId": "test.integer",
+										"value": 3
+									}
+								}
+							},
+							"toVar" : {
+								"definition": {
+									criteria: "test.integer",
+									"defaultValue": {
+										"dataTypeId": "test.integer",
+										"value": 7
 									}
 								}
 							}
-						},
-					]
+						}
+					},
+					"protected": {
+						"element": {
+							"expressionResultVar": {},
+						}
+					}
 				}
-			}
-		},
-		{
-			name : "schoolInfoUI",
-			type : "info",
-			page : "schoolInfoPage",
-		}
+			},
+			"activity": [{
+					"id": "startActivityId",
+					"name": "startActivity",
+					"type": "start",
+					"flow": {
+						"target": "expressionActivityId"
+					}
+				}, {
+					"id": "expressionActivityId",
+					"name": "expressionActivity",
+					"type": "expression",
+					"expression": "#|!(test.string)!.subString(?(inputB)?,from:?(fromVar)?,to:?(toVar)?)|#",
+					"input": {
+						"element": {
+							"inputA.b.c" : {
+								"definition" : {
+									"path" : "business.a.aa"
+								}
+							}, 
+							"inputA.d.c" : {
+								"definition" : {
+									"path" : "business.a.aa"
+								}
+							}, 
+							"inputB" : {
+								"definition" : {
+									"path" : "business.a.aa"
+								}
+							}, 
+						},
+						"info": {}
+					},
+					"result": [
+						{
+							"name" : "success",
+							"flow": {
+								"target": "successEndId"
+							},
+							"output": {
+								"element": {
+									"expressionResultVar": {
+										definition:{
+											"path": "nosliw_output"
+										}
+									}
+								}
+							}
+						}
+					]
+				}, {
+					"id": "successEndId",
+					"name": "successEnd",
+					"type": "end",
+					"output": {
+						"element": {
+							"output": {
+								definition: {
+									"path": "expressionResultVar"
+								}
+							}
+						}
+					}
+				}
+			]
+		}	
 	]
 }

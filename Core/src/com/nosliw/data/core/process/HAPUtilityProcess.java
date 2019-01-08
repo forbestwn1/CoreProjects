@@ -26,7 +26,7 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
-import com.nosliw.data.core.script.context.HAPEnvContextProcessor;
+import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
@@ -49,7 +49,7 @@ public class HAPUtilityProcess {
 	}
 	
 	//process input configure for activity and generate flat context for activity
-	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContextGroup inputContext, HAPDefinitionDataAssociationGroup mapping, HAPEnvContextProcessor contextProcessorEnv) {
+	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContextGroup inputContext, HAPDefinitionDataAssociationGroup mapping, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(mapping, true);
 		mapping = mapping.cloneDataAssocationGroup();
 		
@@ -72,7 +72,7 @@ public class HAPUtilityProcess {
 		context.setContext(helpCategary, helpContext);
 
 		//process input context
-		context = HAPProcessorContext.process(context, inputContext, configure, contextProcessorEnv);
+		context = HAPProcessorContext.process(context, inputContext, configure, contextProcessRequirement);
 		
 		//build flat context without help categary
 		helpContext = context.removeContext(helpCategary);
@@ -96,7 +96,7 @@ public class HAPUtilityProcess {
 		return out;
 	}
 
-	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContext inputContext, HAPDefinitionDataAssociationGroup mapping, HAPEnvContextProcessor contextProcessorEnv) {
+	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContext inputContext, HAPDefinitionDataAssociationGroup mapping, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPUtilityContext.setContextGroupInheritModeNone(mapping.getInfo());
 		
 		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(mapping, false);
@@ -113,7 +113,7 @@ public class HAPUtilityProcess {
 		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
 		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(mapping.getInfo()); 
 		//process context to build context
-		HAPContextGroup outputContextGroup = HAPProcessorContext.process(mappingContextGroup, inputContextGroup, configure, contextProcessorEnv);
+		HAPContextGroup outputContextGroup = HAPProcessorContext.process(mappingContextGroup, inputContextGroup, configure, contextProcessRequirement);
 
 		//build context
 		HAPContext outputContext = outputContextGroup.getContext(helpCategary);
@@ -179,14 +179,14 @@ public class HAPUtilityProcess {
 			String resultName, 
 			HAPContextGroup parentContext,
 			HAPBuilderResultContext resultContextBuilder, 
-			HAPEnvContextProcessor envContextProcessor) {
+			HAPRequirementContextProcessor contextProcessRequirement) {
 		//process success result
 		HAPDefinitionResultActivityNormal resultDef = ((HAPDefinitionActivityNormal)activity.getActivityDefinition()).getResult(resultName);
 		HAPExecutableResultActivityNormal resultExe = new HAPExecutableResultActivityNormal(resultDef); 
 		//result context
 		HAPContext resultContext = resultContextBuilder.buildResultContext(activity);
 		//process output data association  output to variable
-		HAPExecutableDataAssociationGroup outputDataAssociation = HAPUtilityProcess.processDataAssociation(resultContext, resultDef.getOutput(), envContextProcessor);
+		HAPExecutableDataAssociationGroup outputDataAssociation = HAPUtilityProcess.processDataAssociation(resultContext, resultDef.getOutput(), contextProcessRequirement);
 		resultExe.setOutputDataAssociation(outputDataAssociation);
 
 		//process result

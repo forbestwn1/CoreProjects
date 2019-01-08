@@ -10,7 +10,7 @@ import java.util.Set;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataWrapper;
@@ -198,7 +198,7 @@ public class HAPOperandUtility {
 			HAPOperand[] operands, 
 			Map<String, HAPVariableInfo> parentVariablesInfo, 
 			HAPDataTypeCriteria expectOutput,
-			HAPProcessContext context) {
+			HAPProcessTracker processTracker) {
 		//do discovery on operand
 		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		varsInfo.putAll(parentVariablesInfo);
@@ -208,11 +208,11 @@ public class HAPOperandUtility {
 		do{
 			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 			oldVarsInfo.putAll(varsInfo);
-			context.clear();
+			processTracker.clear();
 			for(HAPOperand operand : operands) {
-				operand.discover(varsInfo, expectOutput, context, HAPExpressionManager.dataTypeHelper);
+				operand.discover(varsInfo, expectOutput, processTracker, HAPExpressionManager.dataTypeHelper);
 			}
-		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
+		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && processTracker.isSuccess());
 		return varsInfo;
 	}
 

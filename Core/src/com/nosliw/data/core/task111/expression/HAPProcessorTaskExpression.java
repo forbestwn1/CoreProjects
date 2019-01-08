@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.updatename.HAPUpdateNameMap;
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.task111.HAPDefinitionTask;
@@ -28,7 +28,7 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 	@Override
 	public HAPExecutableTask process(HAPDefinitionTask taskDefinition, String domain, Map<String, String> variableMap, 
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
-			HAPProcessContext context) {
+			HAPProcessTracker processTracker) {
 		HAPDefinitionTaskExpression taskDefExp = (HAPDefinitionTaskExpression)taskDefinition; 
 		
 		HAPExecutableTaskExpression out = new HAPExecutableTaskExpression(taskDefExp, domain);
@@ -37,16 +37,16 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 		Map<String, HAPData> taskContextConstants = this.getContextConstantsForTask(taskDefExp, contextConstants);
 		
 		//process steps
-		this.processSteps(out, taskDefExp, contextTaskDefinitions, taskContextConstants, context);
+		this.processSteps(out, taskDefExp, contextTaskDefinitions, taskContextConstants, processTracker);
 
 		//update variable in task executable : add domain prefix
 		out.updateVariable(new HAPUpdateVariableDomain(domain));
 
 		//process steps
-		this.postProcessSteps(out, taskDefExp, contextTaskDefinitions, taskContextConstants, context);
+		this.postProcessSteps(out, taskDefExp, contextTaskDefinitions, taskContextConstants, processTracker);
 		
 		//process references info
-		this.processReferencedTasks(out, taskDefExp, contextTaskDefinitions, contextConstants, context);
+		this.processReferencedTasks(out, taskDefExp, contextTaskDefinitions, contextConstants, processTracker);
 		this.updateReference(out);
 		
 		//get updated variables map according to domain
@@ -62,20 +62,20 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 		return out;
 	}
 	
-	private void processSteps(HAPExecutableTaskExpression out, HAPDefinitionTaskExpression taskDefExp, Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants, HAPProcessContext context) {
+	private void processSteps(HAPExecutableTaskExpression out, HAPDefinitionTaskExpression taskDefExp, Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants, HAPProcessTracker processTracker) {
 		//update constants according to constants in context and in task
 		for(int i=0; i<taskDefExp.getSteps().length; i++) {
 			HAPDefinitionStep stepDef = taskDefExp.getSteps()[i];
-			HAPExecutableStep step = this.m_expressionTaskManager.processStep(stepDef, out, i, contextTaskDefinitions, contextConstants, context);
+			HAPExecutableStep step = this.m_expressionTaskManager.processStep(stepDef, out, i, contextTaskDefinitions, contextConstants, processTracker);
 			out.addStep(step);
 		}
 	}
 
-	private void postProcessSteps(HAPExecutableTaskExpression executableTask, HAPDefinitionTaskExpression taskDefExp, Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants, HAPProcessContext context) {
+	private void postProcessSteps(HAPExecutableTaskExpression executableTask, HAPDefinitionTaskExpression taskDefExp, Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants, HAPProcessTracker processTracker) {
 		//update constants according to constants in context and in task
 		for(int i=0; i<executableTask.getSteps().size(); i++) {
 			HAPExecutableStep stepExe = executableTask.getSteps().get(i);
-			this.m_expressionTaskManager.postProcessStep(stepExe, taskDefExp.getSteps()[i], executableTask, i, contextTaskDefinitions, contextConstants, context);
+			this.m_expressionTaskManager.postProcessStep(stepExe, taskDefExp.getSteps()[i], executableTask, i, contextTaskDefinitions, contextConstants, processTracker);
 		}
 	}
 
@@ -94,7 +94,7 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 	
 	private void processReferencedTasks(HAPExecutableTaskExpression out, HAPDefinitionTaskExpression taskDefExp,
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
-			HAPProcessContext context) {
+			HAPProcessTracker processTracker) {
 
 		//find all reference infos in task
 		Map<String, HAPReferenceInfo> referencesInfo = new LinkedHashMap<String, HAPReferenceInfo>();
@@ -125,7 +125,7 @@ public class HAPProcessorTaskExpression implements HAPProcessorTask{
 			if(referenceInfo!=null)		refVarMap = referenceInfo.getVariablesMap();
 		
 			//process reference task
-			HAPExecutableTask executable = m_managerTask.processTask(refedTaskDef, refDomain, HAPBasicUtility.reverseMapping(refVarMap), contextTaskDefinitions, contextConstants, context);
+			HAPExecutableTask executable = m_managerTask.processTask(refedTaskDef, refDomain, HAPBasicUtility.reverseMapping(refVarMap), contextTaskDefinitions, contextConstants, processTracker);
 			out.addReferencedExecute(refName, executable);
 			
 		}

@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -77,7 +77,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	 * @param context
 	 * @return
 	 */
-	protected HAPMatchers isMatchable(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessContext context, HAPDataTypeHelper dataTypeHelper){
+	protected HAPMatchers isMatchable(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessTracker processTracker, HAPDataTypeHelper dataTypeHelper){
 		if(expectCriteria==null)   return null;
 		
 		if(expectCriteria==HAPDataTypeCriteriaAny.getCriteria())   expectCriteria = criteria;
@@ -85,7 +85,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 		HAPMatchers out = dataTypeHelper.buildMatchers(criteria, expectCriteria);
 		if(out==null){
 			//not able to match, then error
-			context.setFailure("Error");
+			processTracker.setFailure("Error");
 		}
 		return out;
 	}
@@ -98,7 +98,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	 * @param context
 	 * @return
 	 */
-	protected HAPDataTypeCriteria validate(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessContext context, HAPDataTypeHelper dataTypeHelper){
+	protected HAPDataTypeCriteria validate(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessTracker processTracker, HAPDataTypeHelper dataTypeHelper){
 		HAPDataTypeCriteria out = null;
 		if(criteria==HAPDataTypeCriteriaAny.getCriteria()){
 			//if var is any (not defined)
@@ -109,19 +109,19 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 			out = dataTypeHelper.and(criteria, expectCriteria);
 			if(expectCriteria!=null && out==null){
 				//error
-				context.setFailure("Error");
+				processTracker.setFailure("Error");
 			}
 		}
 		return out;
 	}
 	
-	protected void outputCompatible(HAPDataTypeCriteria targetCriteria, HAPProcessContext context, HAPDataTypeHelper dataTypeHelper){
+	protected void outputCompatible(HAPDataTypeCriteria targetCriteria, HAPProcessTracker processTracker, HAPDataTypeHelper dataTypeHelper){
 		if(targetCriteria != null)
 		{
 			if(!targetCriteria.validate(this.getOutputCriteria(), dataTypeHelper))
 			{
 				this.setStatusInvalid();
-				context.setFailure("Error!!!!");
+				processTracker.setFailure("Error!!!!");
 			}
 		}
 	}

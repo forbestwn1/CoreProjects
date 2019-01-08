@@ -1,88 +1,116 @@
 {
 	page : [
 		{
-			name : "listPage",
+			name : "schoolListPage",
 			uiResource : "Resource_MySchool_SchoolList"
 		},
 		{
-			name : "infoPage",
+			name : "schoolInfoPage",
 			uiResource : "Resource_MySchool_SchoolData"
 		}
 	],
 	
 	context : {
-
-			schoolList : {
-				definition : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
-				default : {
-					dataTypeId: "test.array;1.0.0",
-					value: [
-						{
-							dataTypeId: "test.map;1.0.0",
-							value: {
-								schoolName : {
-									dataTypeId: "test.string;1.0.0",
-									value: "School1"
-								},
-								schoolRating : {
-									dataTypeId: "test.float;1.0.0",
-									value: 6.0
-								},
-								geo : {
-									dataTypeId: "test.geo;1.0.0",
+		public : {
+			element : {
+				schoolList : {
+					definition: {
+						criteria ： "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
+						defaultValue : {
+							dataTypeId: "test.array;1.0.0",
+							value: [
+								{
+									dataTypeId: "test.map;1.0.0",
 									value: {
-										"latitude" :  43.651299,
-										"longitude" : -79.579473
+										schoolName : {
+											dataTypeId: "test.string;1.0.0",
+											value: "School1"
+										},
+										schoolRating : {
+											dataTypeId: "test.float;1.0.0",
+											value: 6.0
+										},
+										geo : {
+											dataTypeId: "test.geo;1.0.0",
+											value: {
+												"latitude" :  43.651299,
+												"longitude" : -79.579473
+											}
+										}
 									}
-								}
-							}
-						},
-						{
-							dataTypeId: "test.map;1.0.0",
-							value: {
-								schoolName : {
-									dataTypeId: "test.string;1.0.0",
-									value: "School2"
 								},
-								schoolRating : {
-									dataTypeId: "test.float;1.0.0",
-									value: 8.5
-								},
-								geo : {
-									dataTypeId: "test.geo;1.0.0",
+								{
+									dataTypeId: "test.map;1.0.0",
 									value: {
-										"latitude" :  43.649016, 
-										"longitude" : -79.485059
+										schoolName : {
+											dataTypeId: "test.string;1.0.0",
+											value: "School2"
+										},
+										schoolRating : {
+											dataTypeId: "test.float;1.0.0",
+											value: 8.5
+										},
+										geo : {
+											dataTypeId: "test.geo;1.0.0",
+											value: {
+												"latitude" :  43.649016, 
+												"longitude" : -79.485059
+											}
+										}
 									}
-								}
-							}
-						}					
-					]
+								}					
+							]
+						}	
+					}									
+				},
+				schoolData: {
+					definition : {
+						criteria : "test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%",
+					}
 				}
-			},
+			}
+		}
 	},
-	init : [
-		{
-			name:"presentSchoolList",
-			type:"presentUI",
-			ui : "schoolListUI"
-		}, 
+	process : [
+		init : {
+			activity : [
+				{
+					id:"presentSchoolListUI",
+					name:"presentSchoolListUI",
+					type:"presentUI",
+					ui : "schoolListUI"
+				}, 
+				{
+					name: "refreshSchoolList",
+					type: "uiCommand",
+					ui : "schoolListUI"
+					command : "refresh",
+					parms:{
+						schoolData : {
+							definition : {
+								path : "schoolList"
+							}
+						}
+					}
+				},
+			]
+		}
 	],
-	uis : [
+	ui : [
 		{
 			name : "schoolListUI",
 			type : "list",
-			page : "schoolList",
-			service : {
+			page : "schoolListPage",
+			serviceMapping : {
 			
 			},
-			event : {
+			eventHandler : {
 				"selectSchool : {
-					task : [
+					activity : [
 						{
-							name:"presentUI",
+							id:"presentSchoolDataUI",
+							name:"presentSchoolDataUI",
 							type:"presentUI",
-							action : "present.information",
 							ui : "schoolInfoUI"
 						}, 
 						{
@@ -91,7 +119,11 @@
 							ui : "schoolInfoUI"
 							command : "refresh",
 							parms:{
-								schoolList : "event.parm.schoolData"
+								schoolData : {
+									definition : {
+										path: "event.parm.schoolData"
+									}
+								}
 							}
 						},
 					]
@@ -101,7 +133,7 @@
 		{
 			name : "schoolInfoUI",
 			type : "info",
-			page : "schoolInfo",
+			page : "schoolInfoPage",
 		}
 	]
 }

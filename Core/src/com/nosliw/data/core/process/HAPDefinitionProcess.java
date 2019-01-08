@@ -43,6 +43,7 @@ public class HAPDefinitionProcess extends HAPEntityInfoImp{
 
 	//steps within task
 	public Map<String, HAPDefinitionActivity> getActivities(){  return this.m_activities;  }
+	public HAPDefinitionActivity getActivityById(String activityId) {  return this.m_activities.get(activityId);   }
 	public void addActivity(String id, HAPDefinitionActivity activity) {  this.m_activities.put(id, activity);    }
 	
 	public Set<HAPResourceDependent> getRequiredResources(){ return this.m_requiredResources;  }

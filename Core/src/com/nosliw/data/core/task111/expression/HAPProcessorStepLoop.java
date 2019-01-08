@@ -3,7 +3,7 @@ package com.nosliw.data.core.task111.expression;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.task111.HAPDefinitionTask;
@@ -23,7 +23,7 @@ public class HAPProcessorStepLoop implements HAPProcessorStep{
 			HAPExecutableTaskExpression taskExpressionExe,
 			int index, String name,
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, 
-			Map<String, HAPData> contextConstants, HAPProcessContext context) {
+			Map<String, HAPData> contextConstants, HAPProcessTracker processTracker) {
 		
 		HAPDefinitionStepLoop stepDefLoop = (HAPDefinitionStepLoop)stepDefinition;
 		
@@ -40,14 +40,14 @@ public class HAPProcessorStepLoop implements HAPProcessorStep{
 			HAPExecutableTaskExpression taskExpressionExe,
 			int index, String name,
 			Map<String, HAPDefinitionTask> contextTaskDefinitions, Map<String, HAPData> contextConstants,
-			HAPProcessContext context) {
+			HAPProcessTracker processTracker) {
 
 		HAPDefinitionStepLoop stepDefLoop = (HAPDefinitionStepLoop)stepDefinition;
 		HAPExecutableStepLoop stepExeLoop = (HAPExecutableStepLoop)executableStep;
 		
 		HAPReferenceInfo refInfo = taskExpressionExe.getReferencesInfo().get(stepExeLoop.getExecuteTaskName());
 		
-		HAPExecutableTask executable = m_managerTask.processTask(contextTaskDefinitions.get(stepDefLoop.getExecuteTask()), null, HAPBasicUtility.reverseMapping(refInfo.getVariablesMap()), contextTaskDefinitions, contextConstants, context);
+		HAPExecutableTask executable = m_managerTask.processTask(contextTaskDefinitions.get(stepDefLoop.getExecuteTask()), null, HAPBasicUtility.reverseMapping(refInfo.getVariablesMap()), contextTaskDefinitions, contextConstants, processTracker);
 		stepExeLoop.setExecuteTask(executable);
 		
 	}

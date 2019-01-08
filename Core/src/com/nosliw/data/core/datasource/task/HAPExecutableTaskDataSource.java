@@ -10,7 +10,7 @@ import java.util.Set;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPProcessContext;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.datasource.HAPDefinition;
@@ -72,7 +72,7 @@ public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 
 	@Override
 	public void discoverVariable(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria,
-			HAPProcessContext context) {
+			HAPProcessTracker processTracker) {
 		
 		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		varsInfo.putAll(variablesInfo);
@@ -81,13 +81,13 @@ public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 		do {
 			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
 			oldVarsInfo.putAll(varsInfo);
-			context.clear();
+			processTracker.clear();
 
 			for(String parmName : this.m_parmsOperand.keySet()) {
-				this.m_parmsOperand.get(parmName).getOperand().discover(varsInfo, this.m_dataSourceDefinition.getParms().get(parmName).getVaraibleInfo().getCriteria(), context, HAPExpressionManager.dataTypeHelper);
-				if(!context.isSuccess())  break;
+				this.m_parmsOperand.get(parmName).getOperand().discover(varsInfo, this.m_dataSourceDefinition.getParms().get(parmName).getVaraibleInfo().getCriteria(), processTracker, HAPExpressionManager.dataTypeHelper);
+				if(!processTracker.isSuccess())  break;
 			}
-		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && context.isSuccess());
+		}while(!HAPBasicUtility.isEqualMaps(varsInfo, oldVarsInfo) && processTracker.isSuccess());
 
 		variablesInfo.clear();
 		variablesInfo.putAll(varsInfo);

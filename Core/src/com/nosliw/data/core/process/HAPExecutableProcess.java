@@ -74,7 +74,7 @@ public class HAPExecutableProcess extends HAPSerializableImp implements HAPExecu
 	
 	public void setStartActivityId(String id) {   this.m_startActivityId = id;   }
 
-	public void addResult(String name, HAPExecutableDataAssociationGroup result) {  this.m_results.put(name, result);   }
+	public void setResults(Map<String, HAPExecutableDataAssociationGroup> results) {   this.m_results.putAll(results);   }
 	
 	public HAPContextGroup getContext() {   return this.m_context;  }
 	public void setContext(HAPContextGroup context) {   this.m_context = context;  }
