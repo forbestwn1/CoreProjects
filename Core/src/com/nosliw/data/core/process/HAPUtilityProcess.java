@@ -66,39 +66,31 @@ public class HAPUtilityProcess {
 			HAPContextGroup parentContext,
 			HAPBuilderResultContext resultContextBuilder, 
 			HAPRequirementContextProcessor contextProcessRequirement) {
-		//process success result
 		HAPDefinitionResultActivityNormal resultDef = ((HAPDefinitionActivityNormal)activity.getActivityDefinition()).getResult(resultName);
 		HAPExecutableResultActivityNormal resultExe = new HAPExecutableResultActivityNormal(resultDef); 
-		//result context
-		HAPContext resultContext = resultContextBuilder.buildResultContext(activity);
-		//process output data association  output to variable
-		HAPExecutableDataAssociationGroup outputDataAssociation = HAPUtilityProcess.processDataAssociation(resultContext, resultDef.getOutput(), contextProcessRequirement);
+		//data association input context
+		HAPContext dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
+		//process data association
+		HAPExecutableDataAssociationGroup outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(dataAssociationInputContext, resultDef.getOutputDataAssociation(), contextProcessRequirement);
 		resultExe.setOutputDataAssociation(outputDataAssociation);
 
 		//process result
 		Map<String, String> nameMapping = new LinkedHashMap<String, String>();
 		HAPContext outputContext = outputDataAssociation.getContext().getContext();
 		for(String rootName : outputContext.getElementNames()) {
-			//merge back to parent context
+			//find matching variable in parent context
 			HAPInfoRelativeContextResolve resolvedInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(rootName), parentContext, null, null);
+			//merge back to parent context
 			HAPContextDefinitionElement outputEle = outputContext.getElement(rootName).getDefinition();
 			if(outputEle.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
-				HAPUtilityContext.updateDataDescendant(parentContext, resolvedInfo.path.getRootElementId().getCategary(), rootName, (HAPContextDefinitionLeafData)outputEle);
+				HAPUtilityContext.updateDataDescendant(parentContext, resolvedInfo.path.getRootElementId().getCategary(), resolvedInfo.path.getRootElementId().getName(), (HAPContextDefinitionLeafData)outputEle);
 			}
+			//root variable name --- root variable full name
 			nameMapping.put(rootName, resolvedInfo.path.getRootElementId().getFullName());
 		}
 		
-		//update variable names in output 
+		//update variable names with full name 
 		outputDataAssociation.updateOutputRootName(new HAPUpdateNameMap(nameMapping));
 		return resultExe;
 	}
-
-	
-
-	public static void setHelpRoot(HAPContext context) {
-		for(String rootName : context.getElementNames()) {
-			markAsMappedRoot(context.getElement(rootName));
-		}
-	}
-	
 }

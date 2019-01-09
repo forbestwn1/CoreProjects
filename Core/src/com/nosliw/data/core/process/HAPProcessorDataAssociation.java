@@ -10,7 +10,6 @@ import com.nosliw.data.core.script.context.HAPContextDefEleProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
-import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
@@ -24,19 +23,21 @@ public class HAPProcessorDataAssociation {
 	private static String helpCategary = HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE;
 
 	//process input configure for activity and generate flat context for activity
-	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContextGroup inputContext, HAPDefinitionDataAssociationGroup dataAssociation, HAPRequirementContextProcessor contextProcessRequirement) {
+	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContextGroup inputContextGroup, HAPDefinitionDataAssociationGroup dataAssociation, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(dataAssociation);
 		
-		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
-		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(dataAssociation.getInfo()); 
-
+		HAPContext mappedContext = processDataAssocationContext(out, inputContextGroup, dataAssociation, contextProcessRequirement);
+		
+/*		
 		//set input context to help categary
 		HAPContextGroup dataAssociationContextGroup = new HAPContextGroup();
 		//consolidate data association context and put it in help context
 		dataAssociationContextGroup.setContext(helpCategary, HAPUtilityContext.consolidateContextRoot(dataAssociation));
 		
 		//process data association context group with input context
-		dataAssociationContextGroup = HAPProcessorContext.process(dataAssociationContextGroup, inputContext, configure, contextProcessRequirement);
+		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
+		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(dataAssociation.getInfo()); 
+		dataAssociationContextGroup = HAPProcessorContext.process(dataAssociationContextGroup, inputContextGroup, configure, contextProcessRequirement);
 		
 		//build flat context without mapped context
 		HAPContext mappedContext = dataAssociationContextGroup.removeContext(helpCategary);
@@ -48,6 +49,7 @@ public class HAPProcessorDataAssociation {
 			markAsMappedRoot(rootEle);
 			out.getContext().addElement(eleName, rootEle);
 		}
+*/
 		
 		//build path mapping according to mapped context
 		Map<String, String> pathMapping = new LinkedHashMap<String, String>();
@@ -59,35 +61,41 @@ public class HAPProcessorDataAssociation {
 		return out;
 	}
 
-	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContext inputContext, HAPDefinitionDataAssociationGroup mapping, HAPRequirementContextProcessor contextProcessRequirement) {
-		HAPUtilityContext.setContextGroupInheritModeNone(mapping.getInfo());
+	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContext inputContext, HAPDefinitionDataAssociationGroup dataAssociation, HAPRequirementContextProcessor contextProcessRequirement) {
+		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(dataAssociation);
 		
-		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(mapping);
-		mapping= mapping.cloneDataAssocationGroup();
-		
-		//build parent context group
+		//build input context group
 		HAPContextGroup inputContextGroup = new HAPContextGroup();
 		inputContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, inputContext.cloneContext());
-		
-		//build context group to be processed
-		HAPContextGroup mappingContextGroup = new HAPContextGroup();
-		mappingContextGroup.setContext(helpCategary, mapping.cloneContext());
-		
-		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
-		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(mapping.getInfo()); 
-		//process context to build context
-		HAPContextGroup outputContextGroup = HAPProcessorContext.process(mappingContextGroup, inputContextGroup, configure, contextProcessRequirement);
 
-		//build context
-		HAPContext outputContext = outputContextGroup.getContext(helpCategary);
-		outputContext = consolidateContextRoot(outputContext);
-		markAsMappedRoot(outputContext);
-		out.setContext(new HAPContextFlat(outputContext));
+		HAPContext mappedContext = processDataAssocationContext(out, inputContextGroup, dataAssociation, contextProcessRequirement);
+
+/*		
+		//build context group to be processed
+		HAPContextGroup dataAssociationContextGroup = new HAPContextGroup();
+		dataAssociationContextGroup.setContext(helpCategary, HAPUtilityContext.consolidateContextRoot(dataAssociation));
+		
+		//process context to build context
+		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
+		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(dataAssociation.getInfo()); 
+		dataAssociationContextGroup = HAPProcessorContext.process(dataAssociationContextGroup, inputContextGroup, configure, contextProcessRequirement);
+
+		//build flat context without mapped context
+		HAPContext mappedContext = dataAssociationContextGroup.removeContext(helpCategary);
+		out.setContext(HAPUtilityContext.buildFlatContextFromContextGroup(dataAssociationContextGroup, null));
+		
+		//then add mapped context to flat context
+		for(String eleName : mappedContext.getElementNames()) {
+			HAPContextDefinitionRoot rootEle = mappedContext.getElement(eleName);
+			markAsMappedRoot(rootEle);
+			out.getContext().addElement(eleName, rootEle);
+		}
+*/		
 		
 		//build path mapping
 		Map<String, String> pathMapping = new LinkedHashMap<String, String>();
-		for(String eleName : outputContext.getElementNames()) {
-			HAPContextDefinitionElement contextDefEle = outputContext.getElement(eleName).getDefinition();
+		for(String eleName : mappedContext.getElementNames()) {
+			HAPContextDefinitionElement contextDefEle = mappedContext.getElement(eleName).getDefinition();
 			//remove categary info in relative element first
 			HAPUtilityContext.processContextDefElement(contextDefEle, new HAPContextDefEleProcessor() {
 				@Override
@@ -110,11 +118,41 @@ public class HAPProcessorDataAssociation {
 		return out;
 	}
 	
+	private static HAPContext processDataAssocationContext(HAPExecutableDataAssociationGroup out, HAPContextGroup inputContextGroup, HAPDefinitionDataAssociationGroup dataAssociation, HAPRequirementContextProcessor contextProcessRequirement) {
+		//build context group to be processed
+		HAPContextGroup dataAssociationContextGroup = new HAPContextGroup();
+		dataAssociationContextGroup.setContext(helpCategary, HAPUtilityContext.consolidateContextRoot(dataAssociation));
+		
+		//process context to build context
+		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
+		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(dataAssociation.getInfo()); 
+		dataAssociationContextGroup = HAPProcessorContext.process(dataAssociationContextGroup, inputContextGroup, configure, contextProcessRequirement);
+
+		//build flat context without mapped context
+		HAPContext mappedContext = dataAssociationContextGroup.removeContext(helpCategary);
+		out.setContext(HAPUtilityContext.buildFlatContextFromContextGroup(dataAssociationContextGroup, null));
+		
+		//then add mapped context to flat context
+		for(String eleName : mappedContext.getElementNames()) {
+			HAPContextDefinitionRoot rootEle = mappedContext.getElement(eleName);
+			markAsMappedRoot(rootEle);
+			out.getContext().addElement(eleName, rootEle);
+		}
+		
+		return mappedContext;
+	}
+	
 	public static void markAsMappedRoot(HAPContextDefinitionRoot root) {
 		root.getInfo().setValue(INFO_MAPPEDROOT, "yes");
 	}
 
 	public static boolean isMappedRoot(HAPContextDefinitionRoot root) {
 		return root.getInfo().getValue(INFO_MAPPEDROOT)!=null;
+	}
+	
+	public static void markAsMappedContext(HAPContext context) {
+		for(String rootName : context.getElementNames()) {
+			markAsMappedRoot(context.getElement(rootName));
+		}
 	}
 }

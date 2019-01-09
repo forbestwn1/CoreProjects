@@ -72,7 +72,7 @@ var node_createProcessService = function(){
 							success : function(requestInfo, activityResult){  //get activity results (result name + result value map)
 								//calculate variable output
 								var activityResultConfig = normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULT][activityResult.resultName];
-								var activityResultDataAssociation = activityResultConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_OUTPUT];
+								var activityResultDataAssociation = activityResultConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_OUTPUTASSOCIATION];
 								return loc_getGenerateDataAssociationOutputRequest(activityResultDataAssociation, activityResult.resultValue, {
 									success : function(request, activityOutput){
 										//build new context

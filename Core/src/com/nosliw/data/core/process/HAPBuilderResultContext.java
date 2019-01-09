@@ -4,6 +4,6 @@ import com.nosliw.data.core.script.context.HAPContext;
 
 public interface HAPBuilderResultContext {
 
-	HAPContext buildResultContext(HAPExecutableActivityNormal activity);
+	HAPContext buildResultContext(String result, HAPExecutableActivityNormal activity);
 
 }

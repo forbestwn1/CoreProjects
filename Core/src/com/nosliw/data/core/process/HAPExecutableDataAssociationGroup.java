@@ -119,7 +119,7 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 		//build init output object
 		HAPContext context = new HAPContext();
 		for(String eleName : this.m_context.getContext().getElementNames()) {
-			if(HAPUtilityProcess.isMappedRoot(this.m_context.getContext().getElement(eleName))) {
+			if(HAPProcessorDataAssociation.isMappedRoot(this.m_context.getContext().getElement(eleName))) {
 				context.addElement(eleName, this.m_context.getContext().getElement(eleName));
 			}
 		}
