@@ -46,6 +46,9 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 	@HAPAttribute
 	public static String CONVERTFUNCTION = "convertFunction";
 	
+	@HAPAttribute
+	public static String FLATOUTPUT = "flatOutput";
+	
 	private HAPDefinitionDataAssociationGroup m_definition;
 	
 	//process purpose
@@ -54,11 +57,8 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 	//mapping from in path to out path, it is for runtime 
 	private Map<String, String> m_pathMapping;
 	
-	private boolean m_outputFlatName = false;
-	
-	public HAPExecutableDataAssociationGroup(HAPDefinitionDataAssociationGroup definition, boolean flatRootName) {
+	public HAPExecutableDataAssociationGroup(HAPDefinitionDataAssociationGroup definition) {
 		this.m_definition = definition;
-		this.m_outputFlatName = flatRootName;
 	}
 
 	public HAPContextFlat getContext() {   return this.m_context;   }
@@ -67,6 +67,8 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 	public void setPathMapping(Map<String, String> mapping) {    this.m_pathMapping = mapping;    }
 	public Map<String, String> getPathMapping() {  return this.m_pathMapping;  }
 
+	public boolean isFlatOutput() {   return this.m_definition.isFlatOutput();  }
+	
 	//update output root name
 	public void updateOutputRootName(HAPUpdateName nameUpdate) {
 		//update path mapping
@@ -88,6 +90,8 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 		jsonMap.put(DEFINITION, this.m_definition.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(PATHMAPPING, HAPJsonUtility.buildMapJson(m_pathMapping));
+		jsonMap.put(FLATOUTPUT, this.isFlatOutput()+"");
+		typeJsonMap.put(FLATOUTPUT, Boolean.class);
 	}
 
 	@Override
@@ -115,12 +119,12 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 		//build init output object
 		HAPContext context = new HAPContext();
 		for(String eleName : this.m_context.getContext().getElementNames()) {
-			if(HAPUtilityProcess.isHelpRoot(this.m_context.getContext().getElement(eleName))) {
+			if(HAPUtilityProcess.isMappedRoot(this.m_context.getContext().getElement(eleName))) {
 				context.addElement(eleName, this.m_context.getContext().getElement(eleName));
 			}
 		}
 		
-		JSONObject output = HAPUtilityContext.buildStaticJsonObject(context, this.m_outputFlatName);
+		JSONObject output = HAPUtilityContext.buildSkeletonJsonObject(context, this.isFlatOutput());
 		
 		//build dynamic part 
 		StringBuffer dynamicScript = new StringBuffer();
@@ -133,7 +137,7 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));
 		templateParms.put("outputDyanimicValueBuild", dynamicScript.toString());
-		templateParms.put("isFlat", this.m_outputFlatName+"");
+		templateParms.put("isFlat", this.isFlatOutput()+"");
 		templateParms.put("isInherit", isInherit);
 		templateParms.put("rootIdSeperator", HAPContextDefinitionRootId.SEPERATOR);
 		
@@ -152,8 +156,6 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 		String pathSegsStr = HAPJsonUtility.buildArrayJson(pathSegs.toArray(new String[0]));
 		return pathSegsStr;
 	}
-	
-	
 	
 	@Override
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {

@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
@@ -24,6 +25,7 @@ import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPUtilityContext {
 
+	//build default value structure for context group
 	public static JSONObject buildDefaultJsonObject(HAPContextGroup contextGroup) {
 		JSONObject out = new JSONObject();
 		for(String categary : contextGroup.getContextTypes()) {
@@ -53,8 +55,8 @@ public class HAPUtilityContext {
 		return new JSONObject(HAPJsonUtility.buildMapJson(jsonMap));
 	}
 
-	
-	public static JSONObject buildStaticJsonObject(HAPContext context, boolean flatName) {
+	//build skeleton, it is used for data mapping operation
+	public static JSONObject buildSkeletonJsonObject(HAPContext context, boolean isFlatRootName) {
 		JSONObject output = new JSONObject();
 		for(String contextEle : context.getElementNames()) {
 			HAPContextDefinitionElement contextDefEle = context.getElement(contextEle).getDefinition();
@@ -62,7 +64,12 @@ public class HAPUtilityContext {
 
 			if(contextEleJson!=null) {
 				JSONObject parentJsonObj = output;
-				if(!flatName) {
+				if(isFlatRootName) {
+					//if flat root name, just use it
+					parentJsonObj.put(contextEle, contextEleJson);
+				}
+				else {
+					//not flat, parse categary and name from root name
 					HAPContextDefinitionRootId rootId = new HAPContextDefinitionRootId(contextEle);
 					String categary = rootId.getCategary();
 					if(HAPBasicUtility.isStringNotEmpty(categary)) {
@@ -73,9 +80,6 @@ public class HAPUtilityContext {
 						}
 					}
 					parentJsonObj.put(rootId.getName(), contextEleJson);
-				}
-				else {
-					parentJsonObj.put(contextEle, contextEleJson);
 				}
 			}
 		}
@@ -126,7 +130,7 @@ public class HAPUtilityContext {
 					HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)ele;
 					HAPContextPath contextPath = relativeEle.getPath();
 					String from = contextPath.getFullPath();
-					String to = path;  //HAPNamingConversionUtility.buildPath(path, contextPath.getSubPath());
+					String to = path; 
 					out.put(from, to);
 					return false;
 				}
@@ -180,36 +184,6 @@ public class HAPUtilityContext {
 		processor.postProcess(solidated, path);
 	}
 	
-	public static HAPContextDefinitionElement mergeDataElement(HAPContextDefinitionElement original, HAPContextDefinitionElement after) {
-		String eleName = "abc";
-		HAPContext orgContext = new HAPContext();
-		orgContext.addElement(eleName, new HAPContextDefinitionRoot(original));
-		HAPContext aftContext = new HAPContext();
-		aftContext.addElement(eleName, new HAPContextDefinitionRoot(after));
-		
-		if(after.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
-			return after;
-		}
-		else if(after.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_NODE)) {
-			processContextDefElementWithPathInfo(after, new HAPContextDefEleProcessor() {
-				@Override
-				public boolean process(HAPContextDefinitionElement ele, Object value) {
-					if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
-						HAPUtilityContext.setDescendant(orgContext, (String)value, ele);
-					}
-					return true;
-				}
-
-				@Override
-				public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
-					return true;
-				}
-			}, "");
-			return original;
-		}
-		else  return original;
-	}
-
 	public static HAPContextDefinitionElement getDescendant(HAPContextDefinitionElement contextDefEle, String path) {
 		HAPContextDefinitionElement out = contextDefEle;
 		HAPPath pathObj = new HAPPath(path);
@@ -236,10 +210,31 @@ public class HAPUtilityContext {
 		return out;
 	}
 
+	public static HAPContextDefinitionElement getDescendant(HAPContextGroup contextGroup, String path) {
+		HAPContextPath contextPath = new HAPContextPath(path);
+		return getDescendant(contextGroup, contextPath.getRootElementId().getCategary(), contextPath.getPath());
+	}
+	
+	public static void updateDataDescendant(HAPContextGroup contextGroup, String categary, String path, HAPContextDefinitionLeafData dataEle) {
+		updateDataDescendant(contextGroup.getContext(categary), path, dataEle);
+	}
+
+	public static void updateDataDescendant(HAPContext context, String path, HAPContextDefinitionLeafData dataEle) {
+		HAPComplexPath cpath = new HAPComplexPath(path);
+		HAPContextDefinitionRoot root = context.getElement(cpath.getRootName());
+		if(cpath.getPathSegs().length==0 && root!=null && root.getDefinition().getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
+			//for data root replacement, not replace whole, just replace criteria
+			((HAPContextDefinitionLeafData)root.getDefinition()).setCriteria(dataEle.getCriteria());
+		}
+		else {
+			setDescendant(context, path, dataEle);
+		}
+	}
+	
 	public static void setDescendant(HAPContextGroup contextGroup, String categary, String path, HAPContextDefinitionElement ele) {
 		setDescendant(contextGroup.getContext(categary), path, ele);
 	}
-	
+
 	public static void setDescendant(HAPContext context, String path, HAPContextDefinitionElement ele) {
 		HAPComplexPath cpath = new HAPComplexPath(path);
 		HAPContextDefinitionRoot root = context.getElement(cpath.getRootName());
@@ -249,12 +244,8 @@ public class HAPUtilityContext {
 		}
 		
 		if(cpath.getPathSegs().length==0) {
-			if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)&&root.getDefinition()!=null&&root.getDefinition().getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
-				((HAPContextDefinitionLeafData)root.getDefinition()).setCriteria(((HAPContextDefinitionLeafData)ele).getCriteria());
-			}
-			else {
-				root.setDefinition(ele);
-			}
+			if(root.getDefinition()!=null && !root.getDefinition().getType().equals(ele.getType()))  HAPErrorUtility.invalid("");  //should be same type
+			root.setDefinition(ele);
 		}
 		else {
 			String seg = cpath.getPathSegs()[0];
@@ -275,9 +266,10 @@ public class HAPUtilityContext {
 				parentEle = child;
 				seg = cpath.getPathSegs()[i+1];
 			}
+			if(((HAPContextDefinitionNode)parentEle).getChild(seg)!=null && !((HAPContextDefinitionNode)parentEle).getChild(seg).getType().equals(ele.getType())) 
+				HAPErrorUtility.invalid("");  //should be same type
 			((HAPContextDefinitionNode)parentEle).addChild(seg, ele);
 		}
-		
 	}
 	
 	public static boolean isContextDefinitionElementConstant(HAPContextDefinitionElement ele) {   return HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT.equals(ele.getType());   }
@@ -302,15 +294,18 @@ public class HAPUtilityContext {
 			break;
 		}
 	}
-
-	public static HAPEntityInfoImp toSolidEntityInfo(HAPEntityInfoImp input, Map<String, Object> constants, HAPRequirementContextProcessor contextProcessRequirement) {
-		HAPEntityInfoImp out = new HAPEntityInfoImp();
-		out.setName(input.getName());
-		out.setDescription(input.getDescription());
-		out.setInfo(input.getInfo().cloneInfo());
+	
+	//context root name can be like a.b.c and a.b.d
+	//these two root name can be consolidated to one root name with a and child of b.c and b.d
+	public static HAPContext consolidateContextRoot(HAPContext context) {
+		HAPContext out = new HAPContext();
+		
+		for(String rootName : context.getElementNames()) {
+			HAPContextDefinitionElement def = context.getElement(rootName).getDefinition();
+			HAPUtilityContext.setDescendant(out, rootName, def);
+		}
 		return out;
 	}
-
 	
 	public static String getContextGroupInheritMode(HAPInfo info) {  
 		String out = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;
@@ -334,20 +329,14 @@ public class HAPUtilityContext {
 	} 
 	
 	public static HAPContextFlat buildFlatContextFromContextGroup(HAPContextGroup context, Set<String> excludedInfo) {
-		HAPContextFlat out = new HAPContextFlat();
+		HAPContextFlat out = new HAPContextFlat(excludedInfo);
 		
 		List<String> categarys = Arrays.asList(HAPContextGroup.getContextTypesWithPriority());
 		Collections.reverse(categarys);
 		for(String categary : categarys) {
 			Map<String, HAPContextDefinitionRoot> eles = context.getElements(categary);
 			for(String name : eles.keySet()) {
-				//build full name element
-				String fullName = new HAPContextDefinitionRootId(categary, name).getFullName();
-				out.addElement(fullName, eles.get(name));
-				
-				//build simple name element
-				HAPContextDefinitionRoot newEle = HAPUtilityContext.createRelativeContextDefinitionRoot(eles.get(name), null, fullName, excludedInfo);
-				out.addElement(name, newEle);
+				out.addElementFromContextGroup(context, categary, name);
 			}
 		}
 		return out;
@@ -363,17 +352,6 @@ public class HAPUtilityContext {
 		return out;
 	}
 
-	//
-	public static HAPContextGroup buildContextGroupFromFlatContext(HAPContextFlat flatContext, Set<String> rootVars) {
-		HAPContextGroup out = new HAPContextGroup();
-		for(String rootName : rootVars) {
-			HAPContextDefinitionRoot root = flatContext.getContext().getElement(rootName);
-			HAPContextDefinitionRootId rootId = new HAPContextDefinitionRootId(flatContext.getSolidName(rootName));
-			out.addElement(rootId.getName(), root, rootId.getCategary());
-		}
-		return out;
-	}
-	
 	//find all data variables in context 
 	public static Map<String, HAPVariableInfo> discoverDataVariablesInContext(HAPContext context){
 		Map<String, HAPVariableInfo> out = new LinkedHashMap<String, HAPVariableInfo>();
@@ -499,5 +477,35 @@ public class HAPUtilityContext {
 			}
 		}
 		return out;
+	}
+	
+	public static HAPContextDefinitionElement mergeDataElement(HAPContextDefinitionElement original, HAPContextDefinitionElement after) {
+		String eleName = "abc";
+		HAPContext orgContext = new HAPContext();
+		orgContext.addElement(eleName, new HAPContextDefinitionRoot(original));
+		HAPContext aftContext = new HAPContext();
+		aftContext.addElement(eleName, new HAPContextDefinitionRoot(after));
+		
+		if(after.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
+			return after;
+		}
+		else if(after.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_NODE)) {
+			processContextDefElementWithPathInfo(after, new HAPContextDefEleProcessor() {
+				@Override
+				public boolean process(HAPContextDefinitionElement ele, Object value) {
+					if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
+						HAPUtilityContext.updateDataDescendant(orgContext, (String)value, (HAPContextDefinitionLeafData)ele);
+					}
+					return true;
+				}
+
+				@Override
+				public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
+					return true;
+				}
+			}, "");
+			return original;
+		}
+		else  return original;
 	}
 }

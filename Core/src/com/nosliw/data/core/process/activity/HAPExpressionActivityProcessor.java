@@ -84,11 +84,11 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			HAPVariableInfo affectVarInfo = out.getScriptExpressionProcessContext().getDataVariables().get(varName);
 			HAPContextPath varPath = new HAPContextPath(varName);
 			//affect sold variable 
-			String solidVarRootName = activityContext.getSolidName(varPath.getRootElementId().getFullName());
+			String solidVarRootName = activityContext.getGlobalName(varPath.getRootElementId().getFullName());
 			if(solidVarRootName!=null) {
 				varPath = new HAPContextPath(new HAPContextDefinitionRootId(solidVarRootName), varPath.getSubPath());
 				HAPContextDefinitionRoot currentRootEle = activityContext.getContext().getElement(varPath.getRootElementId().getFullName());
-				if(HAPUtilityProcess.isHelpRoot(currentRootEle)) {
+				if(HAPUtilityProcess.isMappedRoot(currentRootEle)) {
 //				if(HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE.equals(varPath.getRootElementId().getCategary())) {
 					//mapped ele
 					HAPContextDefinitionElement currentEle = currentRootEle.getDefinition();
@@ -123,7 +123,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		for(String basePath : affectedVariablesInfo.keySet()) {
 			HAPContextPath cpath = new HAPContextPath(basePath);
 			HAPContextDefinitionLeafData affectedEle = new HAPContextDefinitionLeafData(affectedVariablesInfo.get(basePath));
-			HAPUtilityContext.setDescendant(parentContext, cpath.getRootElementId().getCategary(), cpath.getPath(), affectedEle);
+			HAPUtilityContext.updateDataDescendant(parentContext, cpath.getRootElementId().getCategary(), cpath.getPath(), affectedEle);
 		}
 
 		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, RESULT_SUCCESS, parentContext, new HAPBuilderResultContext() {

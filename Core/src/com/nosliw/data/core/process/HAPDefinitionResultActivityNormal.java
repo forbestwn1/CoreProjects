@@ -40,6 +40,7 @@ public class HAPDefinitionResultActivityNormal extends HAPEntityInfoImp{
 			
 			this.m_output = new HAPDefinitionDataAssociationGroup();
 			this.m_output.buildObject(jsonObj.optJSONObject(OUTPUT), HAPSerializationFormat.JSON);
+			this.m_output.setIsFlatOutput(false);
 			return true;  
 		}
 		catch(Exception e){
