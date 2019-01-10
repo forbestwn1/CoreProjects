@@ -13,7 +13,7 @@
 	context : {
 		public : {
 			element : {
-				schoolList : {
+				schoolListInModule : {
 					definition: {
 						criteria ： "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%",
 						defaultValue : {
@@ -62,12 +62,11 @@
 							]
 						}	
 					}									
-				},
-				schoolData: {
-					definition : {
-						criteria : "test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%",
-					}
 				}
+			}
+		},
+		protect : {
+			element : {
 			}
 		}
 	},
@@ -79,20 +78,7 @@
 					name:"presentSchoolListUI",
 					type:"presentUI",
 					ui : "schoolListUI"
-				}, 
-				{
-					name: "refreshSchoolList",
-					type: "uiCommand",
-					ui : "schoolListUI"
-					command : "refresh",
-					parms:{
-						schoolData : {
-							definition : {
-								path : "schoolList"
-							}
-						}
-					}
-				},
+				}
 			]
 		}
 	],
@@ -101,6 +87,15 @@
 			name : "schoolListUI",
 			type : "list",
 			page : "schoolListPage",
+			contextMapping : {
+				element : {
+					"schoolList" : {
+						definition : {
+							path : "schoolListInModule"
+						}
+					}
+				}
+			},
 			serviceMapping : {
 			
 			},
@@ -119,9 +114,11 @@
 							ui : "schoolInfoUI"
 							command : "refresh",
 							parms:{
-								schoolData : {
-									definition : {
-										path: "event.parm.schoolData"
+								inputData :{
+									schoolData : {
+										definition : {
+											path: "event.parm.schoolData"
+										}
 									}
 								}
 							}
@@ -134,6 +131,15 @@
 			name : "schoolInfoUI",
 			type : "info",
 			page : "schoolInfoPage",
+			contextMapping : {
+				element : {
+					"schoolData" : {
+						definition : {
+							path :""
+						}
+					}
+				}
+			}
 		}
 	]
 }

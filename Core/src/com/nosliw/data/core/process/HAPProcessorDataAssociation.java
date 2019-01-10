@@ -26,7 +26,7 @@ public class HAPProcessorDataAssociation {
 	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContextGroup inputContextGroup, HAPDefinitionDataAssociationGroup dataAssociation, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(dataAssociation);
 		
-		HAPContext mappedContext = processDataAssocationContext(out, inputContextGroup, dataAssociation, contextProcessRequirement);
+		processDataAssocationContext(out, inputContextGroup, dataAssociation, contextProcessRequirement);
 		
 /*		
 		//set input context to help categary
@@ -53,8 +53,11 @@ public class HAPProcessorDataAssociation {
 		
 		//build path mapping according to mapped context
 		Map<String, String> pathMapping = new LinkedHashMap<String, String>();
-		for(String eleName : mappedContext.getElementNames()) {
-			pathMapping.putAll(HAPUtilityContext.buildRelativePathMapping(mappedContext.getElement(eleName), eleName));
+		for(String eleName : out.getContext().getContext().getElementNames()) {
+			HAPContextDefinitionRoot root = out.getContext().getContext().getElement(eleName);
+			if(isMappedRoot(root)) {
+				pathMapping.putAll(HAPUtilityContext.buildRelativePathMapping(root, eleName));
+			}
 		}
 		out.setPathMapping(pathMapping);
 		
@@ -68,7 +71,7 @@ public class HAPProcessorDataAssociation {
 		HAPContextGroup inputContextGroup = new HAPContextGroup();
 		inputContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, inputContext.cloneContext());
 
-		HAPContext mappedContext = processDataAssocationContext(out, inputContextGroup, dataAssociation, contextProcessRequirement);
+		processDataAssocationContext(out, inputContextGroup, dataAssociation, contextProcessRequirement);
 
 /*		
 		//build context group to be processed
@@ -94,31 +97,34 @@ public class HAPProcessorDataAssociation {
 		
 		//build path mapping
 		Map<String, String> pathMapping = new LinkedHashMap<String, String>();
-		for(String eleName : mappedContext.getElementNames()) {
-			HAPContextDefinitionElement contextDefEle = mappedContext.getElement(eleName).getDefinition();
-			//remove categary info in relative element first
-			HAPUtilityContext.processContextDefElement(contextDefEle, new HAPContextDefEleProcessor() {
-				@Override
-				public boolean process(HAPContextDefinitionElement ele, Object value) {
-					if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE)) {
-						HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)ele;
-						relativeEle.setPath(new HAPContextPath(relativeEle.getPath().getPath()));
+		for(String eleName : out.getContext().getContext().getElementNames()) {
+			HAPContextDefinitionRoot root = out.getContext().getContext().getElement(eleName);
+			//only root that do mapping
+			if(isMappedRoot(root)) {
+				//remove categary info in relative element first
+				HAPUtilityContext.processContextDefElement(root.getDefinition(), new HAPContextDefEleProcessor() {
+					@Override
+					public boolean process(HAPContextDefinitionElement ele, Object value) {
+						if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE)) {
+							HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)ele;
+							relativeEle.setPath(new HAPContextPath(relativeEle.getPath().getPath()));
+						}
+						return true;
 					}
-					return true;
-				}
 
-				@Override
-				public boolean postProcess(HAPContextDefinitionElement ele, Object value) {		return true;	}
-			}, null);
-			
-			pathMapping.putAll(HAPUtilityContext.buildRelativePathMapping(contextDefEle, eleName));
+					@Override
+					public boolean postProcess(HAPContextDefinitionElement ele, Object value) {		return true;	}
+				}, null);
+				
+				pathMapping.putAll(HAPUtilityContext.buildRelativePathMapping(root, eleName));
+			}
 		}
 		out.setPathMapping(pathMapping);
 
 		return out;
 	}
 	
-	private static HAPContext processDataAssocationContext(HAPExecutableDataAssociationGroup out, HAPContextGroup inputContextGroup, HAPDefinitionDataAssociationGroup dataAssociation, HAPRequirementContextProcessor contextProcessRequirement) {
+	private static void processDataAssocationContext(HAPExecutableDataAssociationGroup out, HAPContextGroup inputContextGroup, HAPDefinitionDataAssociationGroup dataAssociation, HAPRequirementContextProcessor contextProcessRequirement) {
 		//build context group to be processed
 		HAPContextGroup dataAssociationContextGroup = new HAPContextGroup();
 		dataAssociationContextGroup.setContext(helpCategary, HAPUtilityContext.consolidateContextRoot(dataAssociation));
@@ -138,8 +144,6 @@ public class HAPProcessorDataAssociation {
 			markAsMappedRoot(rootEle);
 			out.getContext().addElement(eleName, rootEle);
 		}
-		
-		return mappedContext;
 	}
 	
 	public static void markAsMappedRoot(HAPContextDefinitionRoot root) {
