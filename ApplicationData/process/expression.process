@@ -24,13 +24,13 @@
 												aa : {criteria:"test.string;1.0.0"},
 											}
 										}
-									},
-									defaultValue: {
-										a : {
-											aa : {
-												dataTypeId: "test.string;1.0.0",
-												value: "This is my world!"
-											}
+									}
+								},
+								defaultValue: {
+									a : {
+										aa : {
+											dataTypeId: "test.string;1.0.0",
+											value: "This is my world!"
 										}
 									}
 								}
@@ -38,28 +38,28 @@
 							"baseVar": {
 								"definition":{
 									criteria: "test.string",
-									"defaultValue": {
-										"dataTypeId": "test.string",
-										"value": "This is my world!"
-									}
+								},
+								"defaultValue": {
+									"dataTypeId": "test.string",
+									"value": "This is my world!"
 								}
 							},
 							"fromVar" : {
 								"definition": {
 									criteria : "test.integer",
-									"defaultValue": {
-										"dataTypeId": "test.integer",
-										"value": 3
-									}
+								},
+								"defaultValue": {
+									"dataTypeId": "test.integer",
+									"value": 3
 								}
 							},
 							"toVar" : {
 								"definition": {
 									criteria: "test.integer",
-									"defaultValue": {
-										"dataTypeId": "test.integer",
-										"value": 7
-									}
+								},
+								"defaultValue": {
+									"dataTypeId": "test.integer",
+									"value": 7
 								}
 							}
 						}

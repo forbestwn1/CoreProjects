@@ -64,6 +64,8 @@ public class HAPParserContext {
 			//if no definition, then treat it as data leaf
 			out.setDefinition(new HAPContextDefinitionLeafData(HAPVariableInfo.buildUndefinedVariableInfo()));
 		}
+		Object defaultJsonObj = eleDefJson.opt(HAPContextDefinitionRoot.DEFAULT);
+		out.setDefaultValue(defaultJsonObj);
 		return out;
 	}
 	
@@ -74,22 +76,17 @@ public class HAPParserContext {
 		Object criteriaDef = eleDefJson.opt(HAPContextDefinitionLeafData.CRITERIA);
 		Object valueJsonObj = eleDefJson.opt(HAPContextDefinitionLeafConstant.VALUE);
 		JSONObject childrenJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionNode.CHILD);
-		Object defaultJsonObj = eleDefJson.opt(HAPContextDefinitionLeafVariable.DEFAULT);
 		
 		if(path!=null){
 			//relative
 			contextRootDef = new HAPContextDefinitionLeafRelative();
 			((HAPContextDefinitionLeafRelative)contextRootDef).setPath((String)eleDefJson.opt(HAPContextDefinitionLeafRelative.PARENTCATEGARY), path);
 			JSONObject definitionJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionLeafRelative.DEFINITION);
-			if(definitionJsonObj!=null)   ((HAPContextDefinitionLeafRelative)contextRootDef).setDefinition(parseContextDefinitionElement(definitionJsonObj));
-			((HAPContextDefinitionLeafVariable)contextRootDef).setDefaultValue(defaultJsonObj);
 		}
 		else if(criteriaDef!=null) {
 			//data
 			HAPVariableInfo criteria = HAPVariableInfo.buildVariableInfoFromObject(criteriaDef);
 			contextRootDef = new HAPContextDefinitionLeafData(criteria);   
-			//default value
-			((HAPContextDefinitionLeafVariable)contextRootDef).setDefaultValue(defaultJsonObj);
 		}
 		else if(childrenJsonObj!=null) {
 			//node
@@ -98,7 +95,6 @@ public class HAPParserContext {
 				((HAPContextDefinitionNode)contextRootDef).addChild((String)key, parseContextDefinitionElement(childrenJsonObj.getJSONObject((String)key)));
 			}
 			//default value
-			((HAPContextDefinitionLeafVariable)contextRootDef).setDefaultValue(defaultJsonObj);
 		}
 		else if(valueJsonObj!=null){
 			//constant
@@ -108,7 +104,6 @@ public class HAPParserContext {
 		else {
 			//value
 			contextRootDef = new HAPContextDefinitionLeafValue();
-			((HAPContextDefinitionLeafVariable)contextRootDef).setDefaultValue(defaultJsonObj);
 		}
 		return contextRootDef;
 	}

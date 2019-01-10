@@ -11,7 +11,6 @@ import java.util.Set;
 import org.json.JSONObject;
 
 import com.nosliw.common.erro.HAPErrorUtility;
-import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
@@ -37,17 +36,7 @@ public class HAPUtilityContext {
 	public static JSONObject buildDefaultJsonObject(HAPContext context) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		for(String contextEleName : context.getElementNames()) {
-			HAPContextDefinitionElement contextEle = context.getElement(contextEleName).getDefinition();
-			Object value = null;
-			if(contextEle.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT)) {
-				HAPContextDefinitionLeafConstant constantEle = (HAPContextDefinitionLeafConstant)contextEle;
-				value = constantEle.getValue();
-			}
-			else {
-				HAPContextDefinitionLeafVariable varEle = (HAPContextDefinitionLeafVariable)contextEle;
-				value = varEle.getDefaultValue();
-			}
-			
+			Object value = context.getElement(contextEleName).getDefaultValue();
 			if(value!=null) {
 				jsonMap.put(contextEleName, value.toString());
 			}

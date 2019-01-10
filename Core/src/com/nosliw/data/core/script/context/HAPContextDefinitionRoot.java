@@ -6,6 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
 @HAPEntityWithAttribute
@@ -17,6 +18,12 @@ public class HAPContextDefinitionRoot extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static final String DEFINITION = "definition";
 	
+	@HAPAttribute
+	public static final String DEFAULT = "defaultValue";
+
+	//default value for the element, used in runtime when no value is set
+	private Object m_defaultValue;
+
 	//context element definition
 	private HAPContextDefinitionElement m_definition;
 	
@@ -26,7 +33,22 @@ public class HAPContextDefinitionRoot extends HAPEntityInfoImp{
 	public HAPContextDefinitionRoot() {}
 	
 	public HAPContextDefinitionRoot(HAPContextDefinitionElement definition) {  this.m_definition = definition;  }
-	
+
+	public Object getDefaultValue(){   
+		Object value;
+		if(this.isConstant()) {
+			//for constant, default value is constant value
+			HAPContextDefinitionLeafConstant constantEle = (HAPContextDefinitionLeafConstant)this.getDefinition();
+			value = constantEle.getValue();
+		}
+		else {
+			value = this.m_defaultValue;
+		}
+		return value;  
+	}
+
+	public void setDefaultValue(Object defaultValue){		this.m_defaultValue = defaultValue;	}
+
 	public boolean isConstant() {		return HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT.equals(this.m_definition.getType());	}
 	
 	public Map<String, HAPContextDefinitionLeafRelative> getRelativeInfo() {
@@ -53,6 +75,7 @@ public class HAPContextDefinitionRoot extends HAPEntityInfoImp{
 	public HAPContextDefinitionRoot cloneContextDefinitionRoot() {
 		HAPContextDefinitionRoot out = this.cloneContextDefinitionRootBase();
 		out.m_definition = this.m_definition.cloneContextDefinitionElement();
+		out.m_defaultValue = this.m_defaultValue;
 		return out;
 	}
 
@@ -60,5 +83,24 @@ public class HAPContextDefinitionRoot extends HAPEntityInfoImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(DEFINITION, this.m_definition.toStringValue(HAPSerializationFormat.JSON));
+		
+		if(this.m_defaultValue!=null){
+			jsonMap.put(DEFAULT, this.m_defaultValue.toString());
+			typeJsonMap.put(DEFAULT, this.m_defaultValue.getClass());
+		}
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(!super.equals(obj))  return false;
+
+		boolean out = false;
+		if(obj instanceof HAPContextDefinitionRoot) {
+			HAPContextDefinitionRoot root = (HAPContextDefinitionRoot)obj;
+			if(!HAPBasicUtility.isEquals(this.m_defaultValue, root.m_defaultValue))  return false;
+			out = true;
+		}
+		return out;
+	}
+
 }

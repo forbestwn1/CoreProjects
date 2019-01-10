@@ -2,7 +2,8 @@
 <html>
 <body>
 
-	Content:<%=#|?(business)?.a.aa.subString(from:&(from)&,to:&(to)&)|#.value%>
+	<br>
+	Content:<%=#|?(business___public)?.a.aa|#.value%>
 
 	<br>
 	TextInput:<nosliw-textinput data="business.a.aa"/>  
@@ -29,30 +30,14 @@
 										aa : {criteria:"test.string;1.0.0"},
 									}
 								}
-							},
-							defaultValue: {
-								a : {
-									aa : {
-										dataTypeId: "test.string;1.0.0",
-										value: "This is my world!"
-									}
+							}
+						},
+						defaultValue: {
+							a : {
+								aa : {
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world!"
 								}
-							}
-						}
-					},
-					from: {
-						definition : {
-							value : {
-								dataTypeId: "test.integer",
-								value: 3
-							}
-						}
-					},
-					to: {
-						definition:{
-							value : {
-								dataTypeId: "test.integer",
-								value: 7
 							}
 						}
 					}

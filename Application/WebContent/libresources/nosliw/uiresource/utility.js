@@ -117,7 +117,7 @@ var node_utility = {
 					}
 					else{
 						//not relative variable
-						var defaultValue = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFAULT];
+						var defaultValue = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFAULT];
 						if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]!=undefined){
 							//app data
 							var defaultValueData = defaultValue;

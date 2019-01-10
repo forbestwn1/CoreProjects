@@ -57,7 +57,8 @@ public class HAPContextFlat extends HAPSerializableImp{
 		
 		//build local name element
 		HAPContextDefinitionRoot localNameRoot = HAPUtilityContext.createRelativeContextDefinitionRoot(globalNameRoot, null, globalName, this.m_excludedInfo);
-		localNameRoot.setDefinition(globalNameRoot.getDefinition());
+		localNameRoot.setDefinition(localNameRoot.getDefinition());
+		localNameRoot.setDefaultValue(globalNameRoot.getDefaultValue());
 		m_context.addElement(localName, localNameRoot);
 		
 		//local to global mapping

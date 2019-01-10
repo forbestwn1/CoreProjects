@@ -34,20 +34,20 @@
 				element : {
 					index : {
 						definition : {
-							criteria: "test.integer;1.0.0",
-							defaultValue: {
-								dataTypeId: "test.integer;1.0.0",
-								value: 100
-							}
+							criteria: "test.integer;1.0.0"
+						},
+						defaultValue: {
+							dataTypeId: "test.integer;1.0.0",
+							value: 100
 						}
 					},
 					element : {
 						definition : {
-							criteria: "test.string;1.0.0",
-							defaultValue: {
-								dataTypeId: "test.string;1.0.0",
-								value: "Include Element!"
-							}
+							criteria: "test.string;1.0.0"
+						},
+						defaultValue: {
+							dataTypeId: "test.string;1.0.0",
+							value: "Include Element!"
 						}
 					}
 				}

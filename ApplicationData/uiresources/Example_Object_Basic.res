@@ -138,14 +138,27 @@
 										cc : {criteria:"test.array;1.0.0%||element:test.string;1.0.0||%"},
 									}
 								}
-							},
-							defaultValue: {
-								a : {
-									aa : {
+							}
+						},
+						defaultValue: {
+							a : {
+								aa : {
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world!"
+								},
+								cc : [
+									{
 										dataTypeId: "test.string;1.0.0",
-										value: "This is my world!"
+										value: "This is my world 1111!"
 									},
-									cc : [
+									{
+										dataTypeId: "test.string;1.0.0",
+										value: "This is my world 2222!"
+									}
+								],
+								ee : {
+									dataTypeId: "test.array;1.0.0",
+									value: [
 										{
 											dataTypeId: "test.string;1.0.0",
 											value: "This is my world 1111!"
@@ -154,20 +167,7 @@
 											dataTypeId: "test.string;1.0.0",
 											value: "This is my world 2222!"
 										}
-									],
-									ee : {
-										dataTypeId: "test.array;1.0.0",
-										value: [
-											{
-												dataTypeId: "test.string;1.0.0",
-												value: "This is my world 1111!"
-											},
-											{
-												dataTypeId: "test.string;1.0.0",
-												value: "This is my world 2222!"
-											}
-										]
-									}
+									]
 								}
 							}
 						}

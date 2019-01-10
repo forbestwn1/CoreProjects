@@ -31,11 +31,11 @@
 				element : {
 					element111 : {
 						definition: {
-							criteria: "test.string;1.0.0",
-							defaultValue: {
-								dataTypeId: "test.string;1.0.0",
-								value: "Include Element!"
-							}
+							criteria: "test.string;1.0.0"
+						},
+						defaultValue: {
+							dataTypeId: "test.string;1.0.0",
+							value: "Include Element!"
 						}
 					}
 				}
