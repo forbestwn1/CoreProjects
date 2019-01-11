@@ -8,12 +8,12 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionServiceInfo extends HAPEntityInfoImp{
+public class HAPDefinitionServiceInfo extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String ID = "id";

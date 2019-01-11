@@ -43,10 +43,6 @@ import com.nosliw.data.core.script.expression.HAPScriptExpression;
 
 public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 
-	private final String VARIABLE_OUTPUT = "output";
-	
-	private final String RESULT_SUCCESS = "success";
-	
 	private HAPBuilderResultContext m_resultContextBuilder = new HAPBuilderResultContext1(); 
 	 
 	@Override
@@ -128,30 +124,31 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			HAPUtilityContext.updateDataDescendant(parentContext, cpath.getRootElementId().getCategary(), cpath.getPath(), affectedEle);
 		}
 
-		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, RESULT_SUCCESS, parentContext, m_resultContextBuilder, contextProcessRequirement);
-		out.addResult(RESULT_SUCCESS, successResultExe);
+		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, HAPConstant.ACTIVITY_RESULT_SUCCESS, parentContext, m_resultContextBuilder, contextProcessRequirement);
+		out.addResult(HAPConstant.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;
 	}
 
-
 	class HAPBuilderResultContext1 implements HAPBuilderResultContext {
 		@Override
 		public HAPContext buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
-			HAPExpressionActivityExecutable expressionActExt = (HAPExpressionActivityExecutable)activity;
-			HAPScriptExpression scriptExpression = expressionActExt.getScriptExpression();
-			HAPContext successResultContext = new HAPContext();
-			if(scriptExpression.isDataExpression()) {
-				//if script expression is data expression only, then affect result
-				HAPExecutableExpression expExe = scriptExpression.getExpressions().values().iterator().next();
-				HAPDataTypeCriteria outputCriteria = expExe.getOperand().getOperand().getOutputCriteria();
-				successResultContext.addElement(HAPUtilityProcess.buildOutputVarialbeName(VARIABLE_OUTPUT), new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(outputCriteria)));
+			HAPContext out = new HAPContext();
+			if(HAPConstant.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
+				String outputVar = HAPConstant.ACTIVITY_OUTPUTVARIABLE_OUTPUT;
+				HAPExpressionActivityExecutable expressionActExt = (HAPExpressionActivityExecutable)activity;
+				HAPScriptExpression scriptExpression = expressionActExt.getScriptExpression();
+				if(scriptExpression.isDataExpression()) {
+					//if script expression is data expression only, then affect result
+					HAPExecutableExpression expExe = scriptExpression.getExpressions().values().iterator().next();
+					HAPDataTypeCriteria outputCriteria = expExe.getOperand().getOperand().getOutputCriteria();
+					out.addElement(HAPUtilityProcess.buildOutputVarialbeName(outputVar), new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(outputCriteria)));
+				}
+				else {
+					out.addElement(HAPUtilityProcess.buildOutputVarialbeName(outputVar), new HAPContextDefinitionLeafValue());
+				}
 			}
-			else {
-				successResultContext.addElement(HAPUtilityProcess.buildOutputVarialbeName(VARIABLE_OUTPUT), new HAPContextDefinitionLeafValue());
-			}
-			return successResultContext;
+			return out;
 		}
 	}
-
 }

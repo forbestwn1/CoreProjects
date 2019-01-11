@@ -3,23 +3,15 @@ package com.nosliw.data.core.process;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.json.JSONObject;
-
-import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.updatename.HAPUpdateNameMap;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPImporterProcessSuiteDefinition;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
-import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
@@ -28,17 +20,6 @@ import com.nosliw.data.core.script.context.HAPUtilityContext;
 
 public class HAPUtilityProcess {
 
-	public static HAPScript buildProcessInitScript(HAPExecutableProcess process) {
-		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		//build init output object 
-		JSONObject output = HAPUtilityContext.buildDefaultJsonObject(process.getContext());
-		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));
-
-		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityProcess.class, "ProcessInitFunction.temp");
-		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
-		return new HAPScript(script);
-	}
-	
 	public static String buildOutputVarialbeName(String name) {
 		return "nosliw_" + name;
 	}
@@ -76,9 +57,14 @@ public class HAPUtilityProcess {
 			HAPInfoRelativeContextResolve resolvedInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(rootName), parentContext, null, null);
 			//merge back to parent context
 			HAPContextDefinitionElement outputEle = outputContext.getElement(rootName).getDefinition();
-			if(outputEle.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
-				HAPUtilityContext.updateDataDescendant(parentContext, resolvedInfo.path.getRootElementId().getCategary(), resolvedInfo.path.getRootElementId().getName(), (HAPContextDefinitionLeafData)outputEle);
-			}
+
+			
+			HAPUtilityContext.setDescendant(parentContext, resolvedInfo.path.getRootElementId().getCategary(), resolvedInfo.path.getRootElementId().getName(), outputEle);
+
+			
+//			if(outputEle.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
+//				HAPUtilityContext.updateDataDescendant(parentContext, resolvedInfo.path.getRootElementId().getCategary(), resolvedInfo.path.getRootElementId().getName(), (HAPContextDefinitionLeafData)outputEle);
+//			}
 			//root variable name --- root variable full name
 			nameMapping.put(rootName, resolvedInfo.path.getRootElementId().getFullName());
 		}

@@ -6,12 +6,12 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionResultActivityNormal extends HAPEntityInfoImp{
+public class HAPDefinitionResultActivityNormal extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String FLOW = "flow";

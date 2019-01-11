@@ -4,10 +4,10 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.info.HAPEntityInfoWritableImp;
 
 @HAPEntityWithAttribute
-public abstract class HAPDefinitionActivity extends HAPEntityInfoImp{
+public abstract class HAPDefinitionActivity extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String TYPE = "type";

@@ -16,7 +16,7 @@
 		
 			var loc_out = {
 				
-				getExecuteRequest : function(input, handlers, request){
+				getExecuteRequest : function(activity, input, handlers, request){
 					
 				}
 			};

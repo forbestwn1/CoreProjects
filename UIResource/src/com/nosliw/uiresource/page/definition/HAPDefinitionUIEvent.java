@@ -6,14 +6,14 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPParserContext;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionUIEvent extends HAPEntityInfoImp{
+public class HAPDefinitionUIEvent extends HAPEntityInfoWritableImp{
 	@HAPAttribute
 	public static String DATA = "data";
 

@@ -5,14 +5,14 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
 //application that contains multiple tasks
 @HAPEntityWithAttribute
-public class HAPDefinitionProcessSuite extends HAPEntityInfoImp{
+public class HAPDefinitionProcessSuite extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String CONTEXT = "context";

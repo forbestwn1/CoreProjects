@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.expression.HAPVariableInfo;
 
@@ -53,7 +53,7 @@ public class HAPParserContext {
 		HAPContextDefinitionRoot out = new HAPContextDefinitionRoot();
 
 		//info
-		HAPEntityInfoImp info = new HAPEntityInfoImp();
+		HAPEntityInfoWritableImp info = new HAPEntityInfoWritableImp();
 		info.buildObject(eleDefJson, HAPSerializationFormat.JSON);
 		info.cloneToEntityInfo(out);
 		

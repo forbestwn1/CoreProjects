@@ -11,8 +11,10 @@
 	script : {
 		
 		javascript : function(nosliw, env){
+			var loc_env = env;
 			var loc_expressionService = nosliw.runtime.getExpressionService(); 
 			var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+			var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 			var node_createServiceRequestInfoService = nosliw.getNodeData("request.request.createServiceRequestInfoService");
 			var node_DependentServiceRequestInfo = nosliw.getNodeData("request.request.entity.DependentServiceRequestInfo");
 			var node_NormalActivityResult = nosliw.getNodeData("process.entity.NormalActivityResult");
@@ -32,9 +34,9 @@
 					
 					 out.addRequest(loc_expressionService.getExecuteScriptRequest(scriptFunction, expressions, input, input, {
 						success:function(requestInfo, scriptExpressionOut){
-							return new node_NormalActivityResult("success", {
-								nosliw_output:scriptExpressionOut   //kkkkk
-							});
+							var activityOutput = {};
+							activityOutput[loc_env.buildOutputVarialbeName(node_COMMONCONSTANT.ACTIVITY_OUTPUTVARIABLE_OUTPUT)] = scriptExpressionOut;
+							return new node_NormalActivityResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS, activityOutput);
 						}
 					}));
 					return out;
@@ -42,6 +44,5 @@
 			};
 			return loc_out;
 		}
- 
 	} 
 }

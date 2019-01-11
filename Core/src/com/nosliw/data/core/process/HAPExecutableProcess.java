@@ -16,7 +16,6 @@ import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
-import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
 @HAPEntityWithAttribute
@@ -108,7 +107,7 @@ public class HAPExecutableProcess extends HAPSerializableImp implements HAPExecu
 		}
 		jsonMap.put(RESULT, HAPJsonUtility.buildMapJson(resultsJsonMap));
 	
-		jsonMap.put(INITSCRIPT, HAPUtilityProcess.buildProcessInitScript(this).getScript());
+		jsonMap.put(INITSCRIPT, HAPUtilityScript.buildProcessInitScript(this).getScript());
 		typeJsonMap.put(INITSCRIPT, HAPScript.class);
 		
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));

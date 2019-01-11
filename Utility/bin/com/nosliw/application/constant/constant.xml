@@ -581,6 +581,14 @@
 			<definition name="ACTIVITY_TYPE_CALLPROCESS" value="callProcess"/>
 
 			<definition type="space"/>
+			<definition name="ACTIVITY_RESULT_SUCCESS" value="success"/>
+			<definition name="ACTIVITY_RESULT_FAIL" value="fail"/>
+			<definition name="ACTIVITY_RESULT_EXCEPTION" value="exception"/>
+
+			<definition type="space"/>
+			<definition name="ACTIVITY_OUTPUTVARIABLE_OUTPUT" value="output"/>
+
+			<definition type="space"/>
 			<definition name="NOSLIW_RESERVE_ATTRIBUTE" value="nosliwAttribute_"/>
 			
 		</definitions>

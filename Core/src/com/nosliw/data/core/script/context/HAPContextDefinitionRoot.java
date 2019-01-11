@@ -4,13 +4,13 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
 @HAPEntityWithAttribute
-public class HAPContextDefinitionRoot extends HAPEntityInfoImp{
+public class HAPContextDefinitionRoot extends HAPEntityInfoWritableImp{
 
 	public static final String INHERIT_MODE = "inherit";
 	public static final String INHERIT_MODE_FINAL = "final";

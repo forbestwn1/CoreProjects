@@ -1,35 +1,25 @@
 package com.nosliw.data.core.process;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONObject;
-
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.interpolate.HAPStringTemplateUtil;
+import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextPath;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
 
 @HAPEntityWithAttribute
 public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implements HAPExecutable{
@@ -60,7 +50,9 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 	public HAPExecutableDataAssociationGroup(HAPDefinitionDataAssociationGroup definition) {
 		this.m_definition = definition;
 	}
-
+	
+	public HAPInfo getInfo() {  return this.m_definition.getInfo();  }
+	
 	public HAPContextFlat getContext() {   return this.m_context;   }
 	public void setContext(HAPContextFlat context) {   this.m_context = context;   }
 
@@ -100,63 +92,13 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);
 		
-		jsonMap.put(CONVERTFUNCTION, this.buildConvertFunction().getScript());
+		jsonMap.put(CONVERTFUNCTION, HAPUtilityScript.buildDataAssociationConvertFunction(this).getScript());
 		typeJsonMap.put(CONVERTFUNCTION, HAPScript.class);
 		
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 		
-	private HAPScript buildConvertFunction() {
-		String isInherit = "false";
-		if(!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(HAPUtilityContext.getContextGroupInheritMode(this.m_definition.getInfo()))){
-			//inherit from input first
-			isInherit = "true";
-		}
-		else {
-			isInherit = "false";
-		}
-		
-		//build init output object
-		HAPContext context = new HAPContext();
-		for(String eleName : this.m_context.getContext().getElementNames()) {
-			if(HAPProcessorDataAssociation.isMappedRoot(this.m_context.getContext().getElement(eleName))) {
-				context.addElement(eleName, this.m_context.getContext().getElement(eleName));
-			}
-		}
-		
-		JSONObject output = HAPUtilityContext.buildSkeletonJsonObject(context, this.isFlatOutput());
-		
-		//build dynamic part 
-		StringBuffer dynamicScript = new StringBuffer();
-		for(String fromPath : this.m_pathMapping.keySet()) {
-			String toPath = this.m_pathMapping.get(fromPath);
-			String script = "output = utilFunction(output, "+ buildJSArrayFromContextPath(toPath) +", input, "+ buildJSArrayFromContextPath(fromPath) +");\n";
-			dynamicScript.append(script);
-		}
-		
-		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));
-		templateParms.put("outputDyanimicValueBuild", dynamicScript.toString());
-		templateParms.put("isFlat", this.isFlatOutput()+"");
-		templateParms.put("isInherit", isInherit);
-		templateParms.put("rootIdSeperator", HAPContextDefinitionRootId.SEPERATOR);
-		
 
-		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(this.getClass(), "DataAssociationFunction.temp");
-		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
-		return new HAPScript(script);
-	}
-
-	private String buildJSArrayFromContextPath(String path) {
-		List<String> pathSegs = new ArrayList<String>();
-		HAPContextPath contextPath = new HAPContextPath(path);
-		if(HAPBasicUtility.isStringNotEmpty(contextPath.getRootElementId().getCategary()))  pathSegs.add(contextPath.getRootElementId().getCategary());
-		pathSegs.add(contextPath.getRootElementId().getName());
-		pathSegs.addAll(Arrays.asList(contextPath.getPathSegments()));
-		String pathSegsStr = HAPJsonUtility.buildArrayJson(pathSegs.toArray(new String[0]));
-		return pathSegsStr;
-	}
-	
 	@Override
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		return null;

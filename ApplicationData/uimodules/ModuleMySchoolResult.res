@@ -1,12 +1,14 @@
 {
-	page : [
+	"name" : "",
+	"description" : "",
+	pageInfo : [
 		{
 			name : "schoolListPage",
-			uiResource : "Resource_MySchool_SchoolList"
+			id : "Resource_MySchool_SchoolList"
 		},
 		{
 			name : "schoolInfoPage",
-			uiResource : "Resource_MySchool_SchoolData"
+			id : "Resource_MySchool_SchoolData"
 		}
 	],
 	
@@ -70,7 +72,7 @@
 			}
 		}
 	},
-	process : [
+	process : {
 		init : {
 			activity : [
 				{
@@ -81,7 +83,7 @@
 				}
 			]
 		}
-	],
+	},
 	ui : [
 		{
 			name : "schoolListUI",
@@ -92,6 +94,9 @@
 					"schoolList" : {
 						definition : {
 							path : "schoolListInModule"
+						},
+						info :{
+							"mappingType" : "physical"
 						}
 					}
 				}
@@ -101,29 +106,31 @@
 			},
 			eventHandler : {
 				"selectSchool : {
-					activity : [
-						{
-							id:"presentSchoolDataUI",
-							name:"presentSchoolDataUI",
-							type:"presentUI",
-							ui : "schoolInfoUI"
-						}, 
-						{
-							name: "refreshSchoolInfo",
-							type: "uiCommand",
-							ui : "schoolInfoUI"
-							command : "refresh",
-							parms:{
-								inputData :{
-									schoolData : {
-										definition : {
-											path: "event.parm.schoolData"
+					process : {
+						activity : [
+							{
+								id:"presentSchoolDataUI",
+								name:"presentSchoolDataUI",
+								type:"presentUI",
+								ui : "schoolInfoUI"
+							}, 
+							{
+								name: "refreshSchoolInfo",
+								type: "uiCommand",
+								ui : "schoolInfoUI"
+								command : "refresh",
+								parms:{
+									inputData :{
+										schoolData : {
+											definition : {
+												path: "event.parm.schoolData"
+											}
 										}
 									}
 								}
 							}
-						},
-					]
+						]
+					}
 				}
 			}
 		},
@@ -135,7 +142,10 @@
 				element : {
 					"schoolData" : {
 						definition : {
-							path :""
+							path :"schoolListInModule.element"
+						},
+						info :{
+							"mappingType" : "logical"
 						}
 					}
 				}

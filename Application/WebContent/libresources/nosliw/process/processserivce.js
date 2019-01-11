@@ -25,6 +25,12 @@ var node_createProcessService = function(){
 	//activity plugin entity 
 	var loc_activityPlugins = {};
 	
+	var loc_envObj = {
+		buildOutputVarialbeName : function(varName){
+			return "nosliw_"+varName;
+		}
+	};
+	
 	var loc_getActivityPluginRequest = function(pluginName, handlers, request){
 		var service = new node_ServiceInfo("getActivityPlugin", {"pluginName":pluginName})
 		var plugin = loc_activityPlugins[pluginName];
@@ -35,7 +41,7 @@ var node_createProcessService = function(){
 			var out = node_createServiceRequestInfoSequence(service, handlers, request);
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([pluginName], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN, {
 				success : function(request, resourceData){
-					var plugin = resourceData[pluginName][node_COMMONATRIBUTECONSTANT.PLUGINACTIVITY_SCRIPT](nosliw);
+					var plugin = resourceData[pluginName][node_COMMONATRIBUTECONSTANT.PLUGINACTIVITY_SCRIPT](nosliw, loc_envObj);
 					loc_activityPlugins[pluginName] = plugin;
 					return plugin;
 				}
@@ -68,7 +74,7 @@ var node_createProcessService = function(){
 				return loc_getActivityPluginRequest(normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_TYPE], {
 					success : function(requestInfo, activityPlugin){
 						//execute activity plugin
-						return activityPlugin.getExecuteRequest(normalActivity, input, {
+						return activityPlugin.getExecuteActivityRequest(normalActivity, input, {
 							success : function(requestInfo, activityResult){  //get activity results (result name + result value map)
 								//calculate variable output
 								var activityResultConfig = normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULT][activityResult.resultName];

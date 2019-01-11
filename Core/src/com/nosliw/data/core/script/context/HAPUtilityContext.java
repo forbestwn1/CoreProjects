@@ -209,15 +209,16 @@ public class HAPUtilityContext {
 	}
 
 	public static void updateDataDescendant(HAPContext context, String path, HAPContextDefinitionLeafData dataEle) {
-		HAPComplexPath cpath = new HAPComplexPath(path);
-		HAPContextDefinitionRoot root = context.getElement(cpath.getRootName());
-		if(cpath.getPathSegs().length==0 && root!=null && root.getDefinition().getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
-			//for data root replacement, not replace whole, just replace criteria
-			((HAPContextDefinitionLeafData)root.getDefinition()).setCriteria(dataEle.getCriteria());
-		}
-		else {
-			setDescendant(context, path, dataEle);
-		}
+		setDescendant(context, path, dataEle);
+//		HAPComplexPath cpath = new HAPComplexPath(path);
+//		HAPContextDefinitionRoot root = context.getElement(cpath.getRootName());
+//		if(cpath.getPathSegs().length==0 && root!=null && root.getDefinition().getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
+//			//for data root replacement, not replace whole, just replace criteria
+//			((HAPContextDefinitionLeafData)root.getDefinition()).setCriteria(dataEle.getCriteria());
+//		}
+//		else {
+//			setDescendant(context, path, dataEle);
+//		}
 	}
 	
 	public static void setDescendant(HAPContextGroup contextGroup, String categary, String path, HAPContextDefinitionElement ele) {

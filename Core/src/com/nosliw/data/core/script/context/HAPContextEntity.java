@@ -6,11 +6,11 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPContextEntity  extends HAPEntityInfoImp{
+public class HAPContextEntity  extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String CONTEXT = "context";
