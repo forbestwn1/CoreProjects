@@ -84,17 +84,6 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	public void setServiceMapping(Map<String, String> mapping) {  this.m_serviceMapping.putAll(mapping);  }
 	
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(TAGNAME, this.getUIUnitTagDefinition().getTagName());
-		jsonMap.put(CONTEXTMAPPING, HAPJsonUtility.buildMapJson(m_contextMapping));
-		jsonMap.put(TAGCONTEXT, this.getTagVariableContext().toStringValue(HAPSerializationFormat.JSON));
-		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(EVENTMAPPING, HAPJsonUtility.buildMapJson(m_eventMapping));
-		jsonMap.put(COMMANDMAPPING, HAPJsonUtility.buildMapJson(m_commandMapping));
-		jsonMap.put(SERVICEMAPPING, HAPJsonUtility.buildMapJson(m_serviceMapping));
-	}
-	
-	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(TAGNAME, this.getUIUnitTagDefinition().getTagName());
 		jsonMap.put(CONTEXTMAPPING, HAPJsonUtility.buildMapJson(m_contextMapping));
@@ -108,6 +97,7 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	@Override
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceDependent> out = super.getResourceDependency(runtimeInfo);
+		//ui tag
 		out.add(new HAPResourceDependent(new HAPResourceIdUITag(new HAPUITagId(this.getUIUnitTagDefinition().getTagName()))));
 		return out;
 	}

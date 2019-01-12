@@ -25,10 +25,4 @@ public class HAPUIEmbededScriptExpression extends HAPEmbededScriptExpression{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(UIID, this.m_uiId);
 	}
-
-	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(UIID, this.m_uiId);
-	}
 }

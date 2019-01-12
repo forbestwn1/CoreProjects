@@ -60,8 +60,6 @@ public class HAPProcessorUIResource {
 
 		HAPProcessorUIServiceEscalate.process(out, uiTagMan);
 		
-//		HAPProcessorResourceDependency.process(out, resourceMan);
-		
 		return out;
 	}
 

@@ -17,12 +17,6 @@ public class HAPUIEmbededScriptExpressionInAttribute extends HAPUIEmbededScriptE
 	public String getAttribute(){return ((HAPDefinitionUIEmbededScriptExpressionInAttribute)this.getDefinition()).getAttribute(); }
 
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ATTRIBUTE, this.getAttribute());
-	}
-
-	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ATTRIBUTE, this.getAttribute());

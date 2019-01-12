@@ -136,11 +136,6 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp implements HA
 	}
 
 	@Override
-	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(SCRIPTEXPRESSIONS, HAPJsonUtility.buildJson(m_scriptExpressions, HAPSerializationFormat.JSON_FULL));
-	}
-	
-	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>(); 
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
