@@ -19,6 +19,8 @@ import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
+import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
 /**
  * Represent script expression executable
@@ -137,8 +139,7 @@ public class HAPScriptExpression extends HAPSerializableImp implements HAPExecut
 	
 	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
-		// TODO Auto-generated method stub
-		return null;
+		return HAPResourceDataFactory.createJSValueResourceData(HAPRuntimeJSScriptUtility.buildScriptExpressionJSFunction(this));
 	}
 
 	@Override

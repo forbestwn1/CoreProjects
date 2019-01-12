@@ -26,7 +26,13 @@ public class HAPInitServlet  extends HttpServlet{
 			//set runtime object to context
 			this.getServletContext().setAttribute("runtime", runtimeEnvironment);
 			
-			HAPUIResourceManager uiResourceMan = new HAPUIResourceManager(new HAPUITagManager(), runtimeEnvironment.getExpressionSuiteManager(), runtimeEnvironment.getResourceManager(), runtimeEnvironment.getRuntime(), HAPExpressionManager.dataTypeHelper);
+			HAPUIResourceManager uiResourceMan = new HAPUIResourceManager(
+					new HAPUITagManager(),
+					runtimeEnvironment.getExpressionSuiteManager(),
+					runtimeEnvironment.getResourceManager(),
+					runtimeEnvironment.getProcessManager(),
+					runtimeEnvironment.getRuntime(),
+					HAPExpressionManager.dataTypeHelper);
 			this.getServletContext().setAttribute("uiResourceManager", uiResourceMan);
 			
 			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPResourceManagerUIResource(uiResourceMan));

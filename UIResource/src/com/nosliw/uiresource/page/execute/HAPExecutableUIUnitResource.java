@@ -14,8 +14,10 @@ import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
+import com.nosliw.uiresource.resource.HAPResourceIdUITag;
+import com.nosliw.uiresource.tag.HAPUITagId;
 
-public class HAPExecutableUIUnitResource extends HAPExecutableUIUnit  implements HAPExecutable{
+public class HAPExecutableUIUnitResource extends HAPExecutableUIUnit{
 
 	//all dependency resources
 	private List<HAPResourceDependent> m_resourceDependency;
@@ -37,24 +39,5 @@ public class HAPExecutableUIUnitResource extends HAPExecutableUIUnit  implements
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 	}
-	
-	@Override
-	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>(); 
-		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
-		this.buildFullJsonMap(jsonMap, typeJsonMap);
-		HAPScript script = this.m_uiUnitDefinition.getScriptBlock();
-		if(script!=null){
-			jsonMap.put(SCRIPT, script.toStringValue(HAPSerializationFormat.JSON_FULL));
-			typeJsonMap.put(SCRIPT, script.getClass());
-		}
-		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
-	}
-
-	@Override
-	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		return this.getResourceDependency(runtimeInfo);
-	}
-
 	
 }

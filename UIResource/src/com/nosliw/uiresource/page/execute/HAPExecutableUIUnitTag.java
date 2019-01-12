@@ -1,15 +1,20 @@
 package com.nosliw.uiresource.page.execute;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.runtime.HAPResourceDependent;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
+import com.nosliw.uiresource.resource.HAPResourceIdUITag;
+import com.nosliw.uiresource.tag.HAPUITagId;
 
 public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 
@@ -99,4 +104,12 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 		jsonMap.put(COMMANDMAPPING, HAPJsonUtility.buildMapJson(m_commandMapping));
 		jsonMap.put(SERVICEMAPPING, HAPJsonUtility.buildMapJson(m_serviceMapping));
 	}
+	
+	@Override
+	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+		List<HAPResourceDependent> out = super.getResourceDependency(runtimeInfo);
+		out.add(new HAPResourceDependent(new HAPResourceIdUITag(new HAPUITagId(this.getUIUnitTagDefinition().getTagName()))));
+		return out;
+	}
+
 }

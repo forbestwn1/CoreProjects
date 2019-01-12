@@ -8,20 +8,33 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
+import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
+import com.nosliw.data.core.runtime.HAPResourceData;
+import com.nosliw.data.core.runtime.HAPResourceDependent;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
+import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
 
 /**
  *  EmbededScriptExpression: a string which contains script expression
  */
 @HAPEntityWithAttribute
-public class HAPEmbededScriptExpression extends HAPSerializableImp{
+public class HAPEmbededScriptExpression extends HAPSerializableImp implements HAPExecutable{
 
 	@HAPAttribute
 	public static final String SCRIPTEXPRESSIONS = "scriptExpressions";
-	
+
+	@HAPAttribute
+	public static final String SCRIPTFUNCTION = "scriptFunction";
+
+	@HAPAttribute
+	public static final String SCRIPTEXPRESSIONSCRIPTFUNCTION = "scriptExpressionScriptFunction";
+
 	private HAPDefinitionEmbededScriptExpression m_definition;
 	
 	private List<Object> m_elements;
@@ -125,5 +138,35 @@ public class HAPEmbededScriptExpression extends HAPSerializableImp{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(SCRIPTEXPRESSIONS, HAPJsonUtility.buildJson(m_scriptExpressions, HAPSerializationFormat.JSON_FULL));
+	}
+	
+	@Override
+	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
+		Map<String, String> jsonMap = new LinkedHashMap<String, String>(); 
+		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
+		this.buildJsonMap(jsonMap, typeJsonMap);
+
+		jsonMap.put(SCRIPTFUNCTION, new HAPScript(HAPRuntimeJSScriptUtility.buildMainScriptEmbededScriptExpression(this)).toStringValue(HAPSerializationFormat.JSON_FULL));
+		typeJsonMap.put(SCRIPTFUNCTION, HAPScript.class);
+		
+		Map<String, String> scriptJsonMap = new LinkedHashMap<String, String>();
+		Map<String, Class<?>> scriptTypeJsonMap = new LinkedHashMap<String, Class<?>>();
+		for(String name : this.getScriptExpressions().keySet()) {
+			HAPScriptExpression scriptExpression = this.getScriptExpressions().get(name);
+			scriptJsonMap.put(name, scriptExpression.toResourceData(runtimeInfo).toString());
+			scriptTypeJsonMap.put(name, HAPScript.class);
+		}
+		jsonMap.put(SCRIPTEXPRESSIONSCRIPTFUNCTION, HAPJsonUtility.buildMapJson(scriptJsonMap, scriptTypeJsonMap));
+
+		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
+	}
+
+	@Override
+	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+		for(HAPScriptExpression scriptExpression : this.getScriptExpressionsList()){
+			out.addAll(scriptExpression.getResourceDependency(runtimeInfo));
+		}
+		return out;
 	}
 }

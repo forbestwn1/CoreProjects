@@ -37,7 +37,7 @@ public class HAPResourceManagerUIResource extends HAPResourceManagerImp{
 	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
 		HAPResourceIdUIResource uiResourceId = new HAPResourceIdUIResource(resourceId); 
 		HAPExecutableUIUnitResource uiResource = this.m_uiResourceMan.getUIResource(uiResourceId.getId());
-		return uiResource.getResourceDependency();
+		return uiResource.getResourceDependency(runtimeInfo);
 	}
 
 }
