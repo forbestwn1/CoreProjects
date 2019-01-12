@@ -31,7 +31,6 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 	// hook up with real data during runtime
 	private HAPContext m_contextMapping;
 
-	
 	public HAPExecutableModuleUI(HAPDefinitionModuleUI moduleUIDefinition, String id) {
 		super(moduleUIDefinition);
 		this.m_moduleUIDefinition = moduleUIDefinition;

@@ -16,6 +16,11 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.runtime.HAPExecutable;
+import com.nosliw.data.core.runtime.HAPResourceData;
+import com.nosliw.data.core.runtime.HAPResourceDependent;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
@@ -68,6 +73,8 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String COMMANDS = "commands";
 
+	private String m_id;
+	
 	private HAPDefinitionUIUnit m_uiUnitDefinition;
 
 	protected HAPExecutableUIUnit m_parent;
@@ -103,7 +110,8 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	//service requirement definition
 	private Map<String, HAPDefinitionServiceInfo> m_servicesDefinition;
 	
-	public HAPExecutableUIUnit(HAPDefinitionUIUnit uiUnitDefinition) {
+	public HAPExecutableUIUnit(HAPDefinitionUIUnit uiUnitDefinition, String id) {
+		this.m_id = id;
 		this.m_uiUnitDefinition = uiUnitDefinition;
 		this.m_scriptExpressionsInContent = new HashSet<HAPUIEmbededScriptExpressionInContent>();
 		this.m_scriptExpressionsInAttribute = new HashSet<HAPUIEmbededScriptExpressionInAttribute>();
@@ -121,7 +129,7 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 		
 		//build tag trees according to definition
 		for(HAPDefinitionUIUnitTag tag : uiUnitDefinition.getUITags()) {
-			HAPExecutableUIUnitTag exeTag = new HAPExecutableUIUnitTag(tag);
+			HAPExecutableUIUnitTag exeTag = new HAPExecutableUIUnitTag(tag, uiUnitDefinition.getId());
 			this.m_uiTags.put(tag.getId(), exeTag);
 			exeTag.setParent(this);
 		}
@@ -129,6 +137,8 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	
 	public String getType() {  return this.m_uiUnitDefinition.getType();  }
 
+	public String getId() {   return this.m_id;    }
+	
 	public HAPExecutableUIUnit getParent() {  return this.m_parent;   }
 	public void setParent(HAPExecutableUIUnit parent) {		this.m_parent = parent;	}
 	public HAPContextGroup getContext(){  return this.m_context;   }
@@ -186,15 +196,15 @@ public class HAPExecutableUIUnit extends HAPSerializableImp{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		this.buildMyJsonMap(jsonMap, typeJsonMap, HAPSerializationFormat.JSON_FULL);
-		HAPScript script = this.m_uiUnitDefinition.getScriptBlock();
-		if(script!=null){
-			jsonMap.put(SCRIPT, script.toStringValue(HAPSerializationFormat.JSON_FULL));
-			typeJsonMap.put(SCRIPT, script.getClass());
-		}
+//		HAPScript script = this.m_uiUnitDefinition.getScriptBlock();
+//		if(script!=null){
+//			jsonMap.put(SCRIPT, script.toStringValue(HAPSerializationFormat.JSON_FULL));
+//			typeJsonMap.put(SCRIPT, script.getClass());
+//		}
 	}
 	
 	protected void buildMyJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPSerializationFormat format){
-		jsonMap.put(ID, this.m_uiUnitDefinition.getId());
+		jsonMap.put(ID, this.getId());
 		jsonMap.put(TYPE, String.valueOf(this.getType()));
 
 		jsonMap.put(CONTEXT, this.getVariableContext().toStringValue(format));

@@ -1,11 +1,7 @@
 package com.nosliw.uiresource.page.definition;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
-import com.nosliw.data.core.script.context.HAPContextEntity;
 
 public class HAPDefinitionUIUnitResource extends HAPDefinitionUIUnit{
 

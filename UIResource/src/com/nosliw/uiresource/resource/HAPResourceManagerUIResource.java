@@ -26,10 +26,11 @@ public class HAPResourceManagerUIResource extends HAPResourceManagerImp{
 		HAPResourceIdUIResource uiResourceId = new HAPResourceIdUIResource(resourceId); 
 		HAPExecutableUIUnitResource uiResource = this.m_uiResourceMan.getUIResource(uiResourceId.getId());
 		if(uiResource==null)  return null;
-		HAPResourceDataUIResource resourceData = new HAPResourceDataUIResource(uiResource);
+//		HAPResourceDataUIResource resourceData = new HAPResourceDataUIResource(uiResource);
 		Map<String, Object> info = new LinkedHashMap<String, Object>();
 		info.put(HAPRuntimeJSUtility.RESOURCE_LOADPATTERN, HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE);
-		return new HAPResource(resourceId, resourceData, null);
+//		return new HAPResource(resourceId, resourceData, null);
+		return new HAPResource(resourceId, uiResource.toResourceData(runtimeInfo), null);
 	}
 
 	@Override

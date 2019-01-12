@@ -1,9 +1,11 @@
 package com.nosliw.uiresource.module;
 
+import java.io.File;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
@@ -11,8 +13,26 @@ import com.nosliw.data.core.script.context.HAPParserContext;
 
 public class HAPParserModule {
 
-	public HAPDefinitionModule parseModuleDefinition(JSONObject jsonObj, HAPManagerActivityPlugin activityPluginMan) {
-		HAPDefinitionModule out = new HAPDefinitionModule();
+	private HAPManagerActivityPlugin m_activityPluginMan;
+	
+	public HAPDefinitionModule parseFile(String fileName){
+		HAPDefinitionModule out = null;
+		try{
+			File input = new File(fileName);
+			//use file name as ui resource id
+			String resourceId = HAPFileUtility.getFileName(input);
+			String source = HAPFileUtility.readFile(input);
+			out = this.parseContent(resourceId, source);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return out;
+	}
+
+	private HAPDefinitionModule parseContent(String content, String id) {
+		JSONObject jsonObj = new JSONObject(content);
+		HAPDefinitionModule out = new HAPDefinitionModule(id);
 
 		out.buildEntityInfoByJson(jsonObj);
 		
@@ -34,7 +54,7 @@ public class HAPParserModule {
 		JSONObject processJsonObject = jsonObj.optJSONObject(HAPDefinitionModule.PROCESS);
 		if(processJsonObject!=null) {
 			for(Object key : processJsonObject.keySet()) {
-				HAPDefinitionProcess process = HAPParserProcessDefinition.parseProcess(processJsonObject.getJSONObject((String)key), activityPluginMan);
+				HAPDefinitionProcess process = HAPParserProcessDefinition.parseProcess(processJsonObject.getJSONObject((String)key), m_activityPluginMan);
 				process.setName((String)key);
 				out.addProcess(process);
 			}
@@ -44,7 +64,7 @@ public class HAPParserModule {
 		JSONArray uiJsonArray = jsonObj.optJSONArray(HAPDefinitionModule.UI);
 		if(uiJsonArray!=null) {
 			for(int i=0; i<uiJsonArray.length(); i++) {
-				HAPDefinitionModuleUI moduleUI = parseModuleUIDefinition(uiJsonArray.optJSONObject(i), activityPluginMan); 
+				HAPDefinitionModuleUI moduleUI = parseModuleUIDefinition(uiJsonArray.optJSONObject(i), m_activityPluginMan); 
 				out.addUI(moduleUI);
 			}
 		}

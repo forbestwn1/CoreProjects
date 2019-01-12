@@ -45,8 +45,8 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	private Map<String, String> m_commandMapping;
 	private Map<String, String> m_serviceMapping;
 	
-	public HAPExecutableUIUnitTag(HAPDefinitionUIUnitTag uiTagDefinition) {
-		super(uiTagDefinition);
+	public HAPExecutableUIUnitTag(HAPDefinitionUIUnitTag uiTagDefinition, String id) {
+		super(uiTagDefinition, id);
 		this.m_tagEvent = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 		this.m_eventMapping = new LinkedHashMap<String, String>();
 		this.m_contextMapping = new LinkedHashMap<String, String>();

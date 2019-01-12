@@ -30,9 +30,7 @@ import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpression;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
-import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 import com.nosliw.uiresource.HAPIdGenerator;
-import com.nosliw.uiresource.HAPUIResourceManager;
 
 /*
  * This is a utility class that process ui resource file and create ui resource object
@@ -95,18 +93,6 @@ public class HAPParserUIResource {
 			e.printStackTrace();
 		}
 		return resource;
-	}
-
-	public HAPDefinitionUIUnitResource processInclude(HAPDefinitionUIUnitResource uiResourceDef, HAPUIResourceManager uiResourceMan) {
-		Set<HAPDefinitionUIUnitTag> includeTags = new HashSet<HAPDefinitionUIUnitTag>();
-		HAPUIDefinitionUnitUtility.getUITagByName(uiResourceDef, HAPConstant.UITAG_NAME_INCLUDE, includeTags);
-		for(HAPDefinitionUIUnitTag includeTagResource : includeTags){
-			//include resource
-			String includeResourceName = includeTagResource.getAttributes().get(HAPConstant.UITAG_NAME_INCLUDE_PARM_SOURCE);
-			HAPDefinitionUIUnitResource uiResource = uiResourceMan.getUIResourceDefinitionById(includeResourceName);
-			this.parseContent(includeTagResource, uiResource.getSource());
-		}
-		return uiResourceDef; 
 	}
 
 	//parse unit (resource, tag)

@@ -1,13 +1,18 @@
 package com.nosliw.uiresource.module;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorProcess;
+import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
@@ -16,15 +21,21 @@ import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
 
 public class HAPProcessorModule {
 
-	public HAPExecutableModule process(
+	public static HAPExecutableModule process(
 			HAPDefinitionModule moduleDefinition,
 			String id, 
 			HAPContextGroup parentContext, 
 			HAPManagerProcess processMan,
 			HAPUIResourceManager uiResourceMan,
-			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPDataTypeHelper dataTypeHelper, 
+			HAPRuntime runtime, 
+			HAPExpressionSuiteManager expressionManager,
 			HAPProcessTracker processTracker) {
-		
+
+		Set<String> inheritanceExcludedInfo = new HashSet<String>();
+		inheritanceExcludedInfo.add(HAPConstant.UIRESOURCE_CONTEXTINFO_INSTANTIATE);
+		HAPRequirementContextProcessor contextProcessRequirement = new HAPRequirementContextProcessor(dataTypeHelper, runtime, expressionManager, inheritanceExcludedInfo);
+
 		HAPExecutableModule out = new HAPExecutableModule(moduleDefinition, id);
 		
 		//process context 
@@ -46,7 +57,7 @@ public class HAPProcessorModule {
 		return out;
 	}
 	
-	private HAPExecutableModuleUI process(
+	private static HAPExecutableModuleUI process(
 			HAPDefinitionModuleUI moduleUIDefinition,
 			String id,
 			HAPExecutableModule moduleExe,
@@ -71,9 +82,10 @@ public class HAPProcessorModule {
 		
 		//page
 		String pageId = moduleExe.getDefinition().getPageInfo(moduleUIDefinition.getPage()).getPageId();
-		HAPExecutableUIUnitResource page = uiResourceMan.getUIResource(pageId, out.getContextMapping());
+		HAPExecutableUIUnitResource page = uiResourceMan.getUIResource(pageId, id, out.getContextMapping());
 		out.setPage(page);
 		
 		return out;
 	}
+	
 }

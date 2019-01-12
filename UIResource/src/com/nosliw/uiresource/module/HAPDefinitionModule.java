@@ -5,19 +5,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.process.HAPDefinitionDataAssociationGroup;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
-import com.nosliw.data.core.process.HAPDefinitionSequenceFlow;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPParserContext;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
 /**
 Module is a independent entity that is runnable within a container
 It is a simple application which contains pages and transition between pages
@@ -43,6 +35,8 @@ public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
 	@HAPAttribute
 	public static String PROCESS = "process";
 
+	private String m_id;
+	
 	// all the page required by module (name -- page id)
 	private Map<String, HAPInfoPage> m_pagesInfo;
 
@@ -56,11 +50,14 @@ public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
 	//processes (used for lifecycle, module command)
 	private Map<String, HAPDefinitionProcess> m_processes;
 
-	public HAPDefinitionModule() {
+	public HAPDefinitionModule(String id) {
+		this.m_id = id;
 		this.m_pagesInfo = new LinkedHashMap<String, HAPInfoPage>();
 		this.m_uis = new HashSet<HAPDefinitionModuleUI>();
 		this.m_processes = new LinkedHashMap<String, HAPDefinitionProcess>();
 	}
+	
+	public String getId() {   return this.m_id;   }
 	
 	public HAPInfoPage getPageInfo(String pageName) {  return this.m_pagesInfo.get(pageName);   }
 	
