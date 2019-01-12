@@ -62,6 +62,8 @@ public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
 		this.m_processes = new LinkedHashMap<String, HAPDefinitionProcess>();
 	}
 	
+	public HAPInfoPage getPageInfo(String pageName) {  return this.m_pagesInfo.get(pageName);   }
+	
 	public HAPContextGroup getContext() {  return this.m_contextGroup;   }
 	public void setContext(HAPContextGroup contextGroup) {  this.m_contextGroup = contextGroup;   }
 	

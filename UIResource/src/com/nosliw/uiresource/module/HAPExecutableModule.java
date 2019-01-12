@@ -40,6 +40,8 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 		this.m_id = id;
 	}
 
+	public HAPDefinitionModule getDefinition() {   return this.m_moduleDefinition;  }
+	
 	public void setContext(HAPContextGroup contextGroup) {   this.m_contextGroup = contextGroup;  }
 	
 	public HAPContextGroup getContext() {   return this.m_contextGroup;   }

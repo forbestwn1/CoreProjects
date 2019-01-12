@@ -8,6 +8,7 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
@@ -19,7 +20,8 @@ import com.nosliw.uiresource.tag.HAPUITagManager;
 public class HAPProcessorUIResource {
 
 	public static HAPExecutableUIUnitResource processUIResource(
-			HAPDefinitionUIUnitResource uiResourceDef, 
+			HAPDefinitionUIUnitResource uiResourceDef,
+			HAPContext parentContext,
 			HAPUIResourceManager uiResourceMan,
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPUITagManager uiTagMan, 

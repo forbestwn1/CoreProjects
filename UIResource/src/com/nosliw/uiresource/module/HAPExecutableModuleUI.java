@@ -9,6 +9,7 @@ import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
 
 public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HAPExecutable{
 
@@ -25,6 +26,8 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 	
 	private String m_id;
 
+	private HAPExecutableUIUnitResource m_page;
+	
 	// hook up with real data during runtime
 	private HAPContext m_contextMapping;
 
@@ -36,6 +39,9 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 	}
 	
 	public void setContextMapping(HAPContext contextMapping) {   this.m_contextMapping = contextMapping;   }
+	public HAPContext getContextMapping() {   return this.m_contextMapping;   }
+	
+	public void setPage(HAPExecutableUIUnitResource page) {  this.m_page = page;   }
 	
 	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {

@@ -10,6 +10,7 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
 import com.nosliw.uiresource.page.definition.HAPParserUIResource;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
@@ -50,7 +51,7 @@ public class HAPUIResourceManager {
 		HAPExecutableUIUnitResource out = this.m_uiResource.get(id);
 		if(out==null) {
 			HAPDefinitionUIUnitResource def = getUIResourceDefinitionById(id);
-			out = this.processUIResource(def);
+			out = this.processUIResource(def, null);
 		}
 
 		System.out.println();
@@ -65,11 +66,29 @@ public class HAPUIResourceManager {
 		
 		return out;
 	}
+
+	public HAPExecutableUIUnitResource getUIResource(String id, HAPContext parentContext){
+		HAPDefinitionUIUnitResource def = getUIResourceDefinitionById(id);
+		HAPExecutableUIUnitResource out = this.processUIResource(def, parentContext);
+
+		System.out.println();
+		System.out.println();
+		System.out.println("*********************** UI Resource ************************");
+		String content = out.toStringValue(HAPSerializationFormat.JSON);
+		content = HAPJsonUtility.formatJson(content);
+		System.out.println(content);
+		System.out.println("*********************** UI Resource ************************");
+		System.out.println();
+		System.out.println();
+		
+		return out;
+	}
+
 	
     //Add resource definition from file 
 	public HAPExecutableUIUnitResource addUIResourceDefinition(String file){
 		HAPDefinitionUIUnitResource def = this.readUiResourceDefinitionFromFile(file);
-		HAPExecutableUIUnitResource exeUiResource = this.processUIResource(def);
+		HAPExecutableUIUnitResource exeUiResource = this.processUIResource(def, null);
 		this.m_uiResource.put(exeUiResource.getUIUnitDefinition().getId(), exeUiResource);
 		return exeUiResource;
 	}
@@ -81,8 +100,8 @@ public class HAPUIResourceManager {
 		return uiResourceDef;
 	}
 	
-	private HAPExecutableUIUnitResource processUIResource(HAPDefinitionUIUnitResource uiResource) {
-		return HAPProcessorUIResource.processUIResource(uiResource, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.getUIResourceParser(), m_idGengerator);
+	private HAPExecutableUIUnitResource processUIResource(HAPDefinitionUIUnitResource uiResource, HAPContext parentContext) {
+		return HAPProcessorUIResource.processUIResource(uiResource, parentContext, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.getUIResourceParser(), m_idGengerator);
 	}
 	
 	private HAPDefinitionUIUnitResource readUiResourceDefinitionFromFile(String file) {

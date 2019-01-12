@@ -1,5 +1,6 @@
 package com.nosliw.common.info;
 
+import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
 public class HAPEntityInfoImpWrapper extends HAPSerializableImp implements HAPEntityInfo{
@@ -24,5 +25,10 @@ public class HAPEntityInfoImpWrapper extends HAPSerializableImp implements HAPEn
 		entityInfo.setName(this.getName());
 		entityInfo.setDescription(this.getDescription());
 		entityInfo.setInfo(this.getInfo().cloneInfo());
+	}
+
+	@Override
+	public void buildEntityInfoByJson(Object json) {
+		HAPErrorUtility.invalid("This entity info is not writable");
 	}
 }

@@ -11,6 +11,8 @@ import com.nosliw.data.core.process.HAPProcessorProcess;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.uiresource.HAPUIResourceManager;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
 
 public class HAPProcessorModule {
 
@@ -19,6 +21,7 @@ public class HAPProcessorModule {
 			String id, 
 			HAPContextGroup parentContext, 
 			HAPManagerProcess processMan,
+			HAPUIResourceManager uiResourceMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 		
@@ -36,7 +39,7 @@ public class HAPProcessorModule {
 
 		//process ui
 		for(HAPDefinitionModuleUI ui : moduleDefinition.getUIs()) {
-			HAPExecutableModuleUI uiExe = process(ui, ui.getName(), out, processMan, contextProcessRequirement, processTracker);
+			HAPExecutableModuleUI uiExe = process(ui, ui.getName(), out, processMan, uiResourceMan, contextProcessRequirement, processTracker);
 			out.addModuleUI(uiExe);
 		}
 		
@@ -48,6 +51,7 @@ public class HAPProcessorModule {
 			String id,
 			HAPExecutableModule moduleExe,
 			HAPManagerProcess processMan,
+			HAPUIResourceManager uiResourceMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 		HAPExecutableModuleUI out = new HAPExecutableModuleUI(moduleUIDefinition, id);
@@ -65,8 +69,11 @@ public class HAPProcessorModule {
 			eventHandlerExe.setProcess(HAPProcessorProcess.process(eventHandlerDef.getProcess(), eventName, moduleExe.getContext(), null, processMan, contextProcessRequirement, processTracker));
 		}
 		
+		//page
+		String pageId = moduleExe.getDefinition().getPageInfo(moduleUIDefinition.getPage()).getPageId();
+		HAPExecutableUIUnitResource page = uiResourceMan.getUIResource(pageId, out.getContextMapping());
+		out.setPage(page);
+		
 		return out;
 	}
-	
-	
 }
