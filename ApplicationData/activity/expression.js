@@ -19,10 +19,11 @@
 			var node_DependentServiceRequestInfo = nosliw.getNodeData("request.request.entity.DependentServiceRequestInfo");
 			var node_NormalActivityResult = nosliw.getNodeData("process.entity.NormalActivityResult");
 			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
-
+			var node_objectOperationUtility = nosliw.getNodeData("common.utility.objectOperationUtility");
+			
 			var loc_out = {
 				
-				getExecuteRequest : function(activity, input, handlers, request){
+				getExecuteActivityRequest : function(activity, input, handlers, request){
 					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionActivity", {"activity":activity, "input":input}), handlers, request);
 					
 					//execute script expression 
@@ -31,8 +32,12 @@
 					var scriptFunction = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_SCRIPTEXPRESSIONSCRIPT]; 
 
 					var varNames = scriptExpression[node_COMMONATRIBUTECONSTANT.SCRIPTEXPRESSION_VARIABLENAMES];
-					
-					 out.addRequest(loc_expressionService.getExecuteScriptRequest(scriptFunction, expressions, input, input, {
+					var varInputs = {};
+					_.each(varNames, function(varName, index){
+						varInputs[varName] = node_objectOperationUtility.getObjectAttributeByPath(input, varName);
+					});
+
+					 out.addRequest(loc_expressionService.getExecuteScriptRequest(scriptFunction, expressions, varInputs, input, {
 						success:function(requestInfo, scriptExpressionOut){
 							var activityOutput = {};
 							activityOutput[loc_env.buildOutputVarialbeName(node_COMMONCONSTANT.ACTIVITY_OUTPUTVARIABLE_OUTPUT)] = scriptExpressionOut;

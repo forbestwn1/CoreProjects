@@ -28,6 +28,8 @@ public class HAPContextDefinitionRootId {
 
 	public String getFullName() {  return HAPNamingConversionUtility.cascadeElements(new String[] {this.m_name, this.m_categary}, SEPERATOR);   }
 
+	public String getPath() {  return HAPNamingConversionUtility.buildPath(m_categary, m_name);   }
+	
 	public HAPContextDefinitionRootId clone() {
 		HAPContextDefinitionRootId out = new HAPContextDefinitionRootId(this.m_categary, this.m_name);
 		return out;

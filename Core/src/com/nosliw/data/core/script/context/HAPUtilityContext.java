@@ -480,6 +480,9 @@ public class HAPUtilityContext {
 	//merge origin context def with child context def to expect context out
 	//also generate matchers from origin to expect
 	public static void mergeContextDefitionElement(HAPContextDefinitionElement originDef, HAPContextDefinitionElement expectDef, boolean modifyStructure, Map<String, HAPMatchers> matchers, String path, HAPRequirementContextProcessor contextProcessRequirement){
+		//merge is about solid
+		originDef = originDef.getSolidContextDefinitionElement();
+		expectDef = expectDef.getSolidContextDefinitionElement();
 		String type = expectDef.getType();
 		if(!originDef.getType().equals(type))   HAPErrorUtility.invalid("");   //not same type, error
 		switch(type) {
@@ -489,7 +492,7 @@ public class HAPUtilityContext {
 			HAPContextDefinitionLeafData dataExpect = (HAPContextDefinitionLeafData)expectDef;
 			//cal matchers
 			HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(dataOrigin.getCriteria(), dataExpect.getCriteria().getCriteria(), contextProcessRequirement.dataTypeHelper); 
-			matchers.put(path, matcher);
+			if(!matcher.isVoid())  matchers.put(path, matcher);
 			break;
 		}
 		case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:

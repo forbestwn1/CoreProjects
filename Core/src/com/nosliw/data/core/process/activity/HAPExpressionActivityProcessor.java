@@ -4,9 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.erro.HAPErrorUtility;
-import com.nosliw.common.path.HAPPath;
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -22,22 +19,14 @@ import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPExecutableResultActivityNormal;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
-import com.nosliw.data.core.process.HAPProcessorDataAssociation;
 import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
-import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafValue;
-import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
-import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
 import com.nosliw.data.core.script.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptExpression;
 
@@ -50,7 +39,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			HAPDefinitionActivity activityDefinition, 
 			String id, 
 			HAPExecutableProcess processExe,
-			HAPContextGroup parentContext, 
+			HAPContextGroup processContext, 
 			Map<String, HAPExecutableDataAssociationGroup> processResults,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions,
 			HAPManagerProcess processManager,
@@ -60,71 +49,21 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		HAPExpressionActivityExecutable out = new HAPExpressionActivityExecutable(id, (HAPExpressionActivityDefinition)activityDefinition);
 
 		//process input and create flat input context for activity
-		out.setInputDataAssociation(HAPProcessorDataAssociation.processDataAssociation(parentContext, out.getExpressionActivityDefinition().getInput(), contextProcessRequirement));
+		HAPContextFlat activityContext = HAPUtilityProcess.processActivityInputDataAssocation(out, processContext, contextProcessRequirement);
 		
-		//input context
-		HAPContextFlat activityContext = out.getInputContext();
-		
-		//script expression process
-		HAPProcessContextScriptExpression expProcessContext = out.getScriptExpressionProcessContext();
-		//prepare constant value 
-		expProcessContext.addConstants(activityContext.getConstantValue());
-		//prepare variables 
-		expProcessContext.addDataVariables(HAPUtilityContext.discoverDataVariablesInContext(activityContext.getContext()));
-		//process expression
-		HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(out.getExpressionActivityDefinition().getExpression(), expProcessContext, HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
+		//process script expression defined in activity
+		HAPUtilityProcess.buildScriptExpressionProcessContext(activityContext, out.getScriptExpressionProcessContext());
+		HAPScriptExpression scriptExpression = HAPProcessorScriptExpression.processScriptExpression(out.getExpressionActivityDefinition().getExpression(), out.getScriptExpressionProcessContext(), HAPExpressionProcessConfigureUtil.setDoDiscovery(null), contextProcessRequirement.expressionManager, contextProcessRequirement.runtime);
 		out.setScriptExpression(scriptExpression);
 
-		//find affected element to parent context
-		Map<String, HAPVariableInfo> affectedVariablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		Set<String> relatedVarNames = out.getScriptExpression().getDataVariableNames();  //all the variables used in script expression
-		for(String varName : relatedVarNames) {
-			HAPVariableInfo affectVarInfo = out.getScriptExpressionProcessContext().getDataVariables().get(varName);
-			HAPContextPath varPath = new HAPContextPath(varName);
-			//affect sold variable 
-			String solidVarRootName = activityContext.getGlobalName(varPath.getRootElementId().getFullName());
-			if(solidVarRootName!=null) {
-				varPath = new HAPContextPath(new HAPContextDefinitionRootId(solidVarRootName), varPath.getSubPath());
-				HAPContextDefinitionRoot currentRootEle = activityContext.getContext().getElement(varPath.getRootElementId().getFullName());
-				if(HAPProcessorDataAssociation.isMappedRoot(currentRootEle)) {
-//				if(HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE.equals(varPath.getRootElementId().getCategary())) {
-					//mapped ele
-					HAPContextDefinitionElement currentEle = currentRootEle.getDefinition();
-					String[] pathSegs = new HAPPath(varPath.getSubPath()).getPathSegs();
-					int i = 0;
-					while(!HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE.equals(currentEle.getType())&&currentEle!=null) {
-						currentEle = currentEle.getChild(pathSegs[i]);
-						i++;
-					}
-					HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)currentEle;
-					HAPContextPath relativeElePath = relativeEle.getPath();
-					String fullName = relativeElePath.getFullPath();
-					for(;i<pathSegs.length; i++) {
-						fullName = HAPNamingConversionUtility.buildPath(fullName, pathSegs[i]);
-					}
-					affectedVariablesInfo.put(fullName, affectVarInfo);
-				}
-				else {
-					//inhereted ele
-					affectedVariablesInfo.put(varPath.getFullPath(), affectVarInfo);
-				}
-			}
-			else {
-				//root variable does not exist, generate one
-//				HAPContextDefinitionLeafData dataEle = new HAPContextDefinitionLeafData(new HAPVariableInfo(out.getScriptExpressionProcessContext().getDataVariables().get(varName).getCriteria()));
-//				affectedContext.addElement(varName, dataEle);
-				HAPErrorUtility.invalid("");
-			}
-		}
+		//merge discovered variable in activity back to process variable
+		Map<String, HAPVariableInfo> affectedActivityVariablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		Set<String> relatedVarNames = out.getScriptExpression().getDataVariableNames();  //all the data variables used in script expression
+		for(String varName : relatedVarNames) 	affectedActivityVariablesInfo.put(varName, out.getScriptExpressionProcessContext().getDataVariables().get(varName));
+		HAPUtilityProcess.mergeDataVariableInActivityToProcessContext(affectedActivityVariablesInfo, activityContext, processContext);
 
-		//affect parent context
-		for(String basePath : affectedVariablesInfo.keySet()) {
-			HAPContextPath cpath = new HAPContextPath(basePath);
-			HAPContextDefinitionLeafData affectedEle = new HAPContextDefinitionLeafData(affectedVariablesInfo.get(basePath));
-			HAPUtilityContext.updateDataDescendant(parentContext, cpath.getRootElementId().getCategary(), cpath.getPath(), affectedEle);
-		}
-
-		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, HAPConstant.ACTIVITY_RESULT_SUCCESS, parentContext, m_resultContextBuilder, contextProcessRequirement);
+		//process success result
+		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, HAPConstant.ACTIVITY_RESULT_SUCCESS, processContext, m_resultContextBuilder, contextProcessRequirement);
 		out.addResult(HAPConstant.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;

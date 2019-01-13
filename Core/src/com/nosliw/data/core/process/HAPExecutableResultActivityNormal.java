@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
@@ -24,26 +25,36 @@ public class HAPExecutableResultActivityNormal extends HAPEntityInfoWritableImp 
 	@HAPAttribute
 	public static String OUTPUTASSOCIATION = "outputAssociation";
 	
+	@HAPAttribute
+	public static String OUTPUTMATCHERS = "outputMatchers";
+
 	private HAPDefinitionResultActivityNormal m_definition;
 	
+	//match from data association output to target context variable
+	private Map<String, HAPMatchers> m_outputMatchers;
+
 	//associate output of activity to variable in process 
 	private HAPExecutableDataAssociationGroup m_outputAssociation;
 	
 	//next activity
 	public HAPExecutableResultActivityNormal(HAPDefinitionResultActivityNormal definition) {
 		this.m_definition = definition;
+		this.m_outputMatchers = new LinkedHashMap<String, HAPMatchers>();
 	}
 	
 	public HAPDefinitionSequenceFlow getFlow() {  return this.m_definition.getFlow();  }
 	
 	public HAPExecutableDataAssociationGroup getOutputDataAssociation() {   return this.m_outputAssociation;   }
 	public void setOutputDataAssociation(HAPExecutableDataAssociationGroup output) {   this.m_outputAssociation = output;    }
+
+	public void addOutputMatchers(String path, HAPMatchers matchers) {   this.m_outputMatchers.put(path, matchers);     }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(FLOW, this.getFlow().toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTASSOCIATION, m_outputAssociation.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(OUTPUTMATCHERS, HAPJsonUtility.buildJson(m_outputMatchers, HAPSerializationFormat.JSON));
 	}
 
 	@Override
