@@ -30,7 +30,7 @@ public class HAPResourceManagerActivityPlugin  extends HAPResourceManagerImp{
 		HAPResourceDataActivityPlugin resourceData = new HAPResourceDataActivityPlugin(activityPlugin, runtimeInfo.getLanguage());
 		Map<String, Object> info = new LinkedHashMap<String, Object>();
 		info.put(HAPRuntimeJSUtility.RESOURCE_LOADPATTERN, HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE);
-		return new HAPResource(resourceId, resourceData, info);
+		return new HAPResource(resourceId, resourceData, null);
 	}
 
 	@Override

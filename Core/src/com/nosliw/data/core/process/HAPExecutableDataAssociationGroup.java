@@ -72,12 +72,6 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 			HAPContextPath cPath1 = new HAPContextPath(new HAPContextDefinitionRootId(nameUpdate.getUpdatedName(cPath.getRootElementId().getFullName())), cPath.getSubPath());
 			processedPathMapping.put(cPath1.getFullPath(), m_pathMapping.get(p1));
 		}
-
-//		for(String p1 : m_pathMapping.keySet()) {
-//			HAPContextPath cPath = new HAPContextPath(m_pathMapping.get(p1));
-//			HAPContextPath cPath1 = new HAPContextPath(new HAPContextDefinitionRootId(nameUpdate.getUpdatedName(cPath.getRootElementId().getFullName())), cPath.getSubPath());
-//			processedPathMapping.put(p1, cPath1.getFullPath());
-//		}
 		this.m_pathMapping = processedPathMapping;
 
 		//update context

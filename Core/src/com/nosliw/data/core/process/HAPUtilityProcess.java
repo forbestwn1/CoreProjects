@@ -13,7 +13,6 @@ import com.nosliw.common.updatename.HAPUpdateNameMap;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.expression.HAPExpressionProcessConfigureUtil;
 import com.nosliw.data.core.expression.HAPMatcherUtility;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.process.activity.HAPExpressionActivityExecutable;
@@ -32,8 +31,6 @@ import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
-import com.nosliw.data.core.script.expression.HAPProcessorScriptExpression;
-import com.nosliw.data.core.script.expression.HAPScriptExpression;
 
 public class HAPUtilityProcess {
 
@@ -144,13 +141,6 @@ public class HAPUtilityProcess {
 				resultExe.addOutputMatchers(new HAPContextPath(contextVarRootId, matchPath).getFullPath(), HAPMatcherUtility.reversMatchers(matchers.get(matchPath)));
 			}
 			
-//			HAPContextDefinitionElement outputEle = outputContext.getElement(rootName).getDefinition();
-			
-//			HAPUtilityContext.setDescendant(parentContext, resolvedInfo.path.getRootElementId().getCategary(), resolvedInfo.path.getRootElementId().getName(), outputEle);
-			
-//			if(outputEle.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
-//				HAPUtilityContext.updateDataDescendant(parentContext, resolvedInfo.path.getRootElementId().getCategary(), resolvedInfo.path.getRootElementId().getName(), (HAPContextDefinitionLeafData)outputEle);
-//			}
 			//root variable name --- root variable full name
 			nameMapping.put(rootName, contextVarRootId.getFullName());
 		}

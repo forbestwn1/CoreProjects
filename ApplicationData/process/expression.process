@@ -49,7 +49,7 @@
 									criteria : "test.integer",
 								},
 								"defaultValue": {
-									"dataTypeId": "test.integer",
+									"dataTypeId": "test.integer;1.0.0",
 									"value": 3
 								}
 							},
@@ -58,7 +58,7 @@
 									criteria: "test.integer",
 								},
 								"defaultValue": {
-									"dataTypeId": "test.integer",
+									"dataTypeId": "test.integer;1.0.0",
 									"value": 7
 								}
 							}

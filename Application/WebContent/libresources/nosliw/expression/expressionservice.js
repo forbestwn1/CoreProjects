@@ -234,9 +234,7 @@ var node_createExpressionService = function(){
 		var out;
 		if(matcher==undefined){
 			//if converter does not created, then get it
-			//kkkk
-			return node_createServiceRequestInfoSimple(service, function(requestInfo){	return data;}, handlers, requestInfo);
-			
+			nosliw.error("no matches for data type: " + dataTypeId);
 		}
 		else{
 			var relationship = matcher[node_COMMONATRIBUTECONSTANT.MATCHER_RELATIONSHIP];
