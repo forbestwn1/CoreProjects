@@ -23,9 +23,10 @@ import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.HAPOperationOutInfo;
 import com.nosliw.data.core.HAPOperationParmInfo;
+import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPMatchers;
-import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
@@ -215,7 +216,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 			if(dataTypeHelper.convertable(this.getOutputCriteria(), expectCriteria)==null){
 				context.addMessage("Error");
 			}
-			return this.isMatchable(outputInfo.getCriteria(), expectCriteria, context, dataTypeHelper);
+			return HAPCriteriaUtility.isMatchable(outputInfo.getCriteria(), expectCriteria, dataTypeHelper);
 		}
 		else{
 			//if we don't have operation data type 

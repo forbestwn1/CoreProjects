@@ -10,9 +10,10 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPMatchers;
-import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.task111.HAPExecutableTask;
 
@@ -69,7 +70,7 @@ public class HAPOperandReference extends HAPOperandImp{
 			HAPDataTypeHelper dataTypeHelper) {
 		this.setOutputCriteria(this.m_referencedTask.getOutput());
 		this.m_referencedTask.discoverVariable(variablesInfo, expectCriteria, processTracker);
-		return this.isMatchable(this.m_referencedTask.getOutput(), expectCriteria, processTracker, dataTypeHelper);
+		return HAPCriteriaUtility.isMatchable(this.m_referencedTask.getOutput(), expectCriteria, dataTypeHelper);
 	}
 	
 	@Override

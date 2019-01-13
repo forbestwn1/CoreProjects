@@ -1,4 +1,4 @@
-package com.nosliw.data.core.expression;
+package com.nosliw.data.core.criteria;
 
 import java.util.Map;
 
@@ -13,9 +13,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.criteria.HAPCriteriaParser;
-import com.nosliw.data.core.criteria.HAPCriteriaUtility;
-import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 
 /**
  * This is variable info for expression 

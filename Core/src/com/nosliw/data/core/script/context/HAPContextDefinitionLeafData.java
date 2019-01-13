@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.criteria.HAPVariableInfo;
 
 public class HAPContextDefinitionLeafData extends HAPContextDefinitionLeafVariable{
 

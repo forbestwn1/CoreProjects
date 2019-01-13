@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.criteria.HAPVariableInfo;
 
 public class HAPParserContext {
 

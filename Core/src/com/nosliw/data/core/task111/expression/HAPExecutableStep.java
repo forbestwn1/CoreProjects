@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.task111.HAPExecutable;
 import com.nosliw.data.core.task111.HAPExecutableTask;
 

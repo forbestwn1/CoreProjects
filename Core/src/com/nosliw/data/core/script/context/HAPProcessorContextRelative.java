@@ -6,8 +6,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.criteria.HAPCriteriaUtility;
+import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPMatchers;
 
 public class HAPProcessorContextRelative {
@@ -91,7 +94,7 @@ public class HAPProcessorContextRelative {
 				else {
 					//figure out matchers
 					Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
-					merge(parentContextEle, relativeContextEle, matchers, null, contextProcessRequirement);
+					HAPUtilityContext.mergeContextDefitionElement(parentContextEle, relativeContextEle, false, matchers, null, contextProcessRequirement);
 					//remove all the void matchers
 					Map<String, HAPMatchers> noVoidMatchers = new LinkedHashMap<String, HAPMatchers>();
 					for(String p : matchers.keySet()){
@@ -112,42 +115,4 @@ public class HAPProcessorContextRelative {
 		return out;
 	}
 
-	//merge parent context def with child context def to another context out
-	//also generate matchers from parent to child
-	private static void merge(HAPContextDefinitionElement parent, HAPContextDefinitionElement def, Map<String, HAPMatchers> matchers, String path, HAPRequirementContextProcessor contextProcessRequirement){
-		String type = def.getType();
-		switch(type) {
-		case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
-			HAPContextDefinitionLeafData dataParent = (HAPContextDefinitionLeafData)parent.getSolidContextDefinitionElement();
-			HAPContextDefinitionLeafData dataDef = (HAPContextDefinitionLeafData)def;
-			//cal matchers
-			HAPMatchers matcher = contextProcessRequirement.dataTypeHelper.convertable(dataParent.getCriteria().getCriteria(), dataDef.getCriteria().getCriteria());
-			matchers.put(path, matcher);
-			break;
-		case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
-			HAPContextDefinitionNode nodeParent = (HAPContextDefinitionNode)parent;
-			HAPContextDefinitionNode nodeDef = (HAPContextDefinitionNode)def;
-			for(String nodeName : nodeDef.getChildren().keySet()) {
-				HAPContextDefinitionElement childNodeParent = nodeParent.getChildren().get(nodeName);
-				HAPContextDefinitionElement childNodeDef = nodeDef.getChildren().get(nodeName);
-				
-				switch(childNodeDef.getType()) {
-				case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
-				{
-					merge(childNodeParent, childNodeDef, matchers, HAPNamingConversionUtility.cascadePath(path, nodeName), contextProcessRequirement);
-					break;
-				}
-				case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
-				{
-					merge(childNodeParent, childNodeDef, matchers, HAPNamingConversionUtility.cascadePath(path, nodeName), contextProcessRequirement);
-					break;
-				}
-				}
-			}
-			break;
-		default:
-			
-			break;
-		}
-	}
 }

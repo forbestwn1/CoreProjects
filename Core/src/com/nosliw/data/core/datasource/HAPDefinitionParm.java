@@ -7,8 +7,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPExpressionManager;
-import com.nosliw.data.core.expression.HAPVariableInfo;
 
 
 @HAPEntityWithAttribute

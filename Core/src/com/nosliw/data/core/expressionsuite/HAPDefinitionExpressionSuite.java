@@ -5,9 +5,8 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.HAPData;
-
+import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.expression.HAPVariableInfo;
 
 public class HAPDefinitionExpressionSuite  extends HAPSerializableImp{
 

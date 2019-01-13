@@ -13,8 +13,8 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
+import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
-import com.nosliw.data.core.expression.HAPVariableInfo;
 
 
 public class HAPDefinitionComponent extends HAPSerializableImp {

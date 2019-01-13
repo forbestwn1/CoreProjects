@@ -9,7 +9,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.task111.expression.HAPManagerTaskExpression;
 

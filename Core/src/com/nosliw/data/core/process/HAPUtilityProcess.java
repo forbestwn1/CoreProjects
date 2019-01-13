@@ -8,10 +8,11 @@ import java.util.Map;
 
 import com.nosliw.common.updatename.HAPUpdateNameMap;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.expression.HAPMatcherUtility;
+import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPImporterProcessSuiteDefinition;
 import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
@@ -56,11 +57,14 @@ public class HAPUtilityProcess {
 			//find matching variable in parent context
 			HAPInfoRelativeContextResolve resolvedInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(rootName), parentContext, null, null);
 			//merge back to parent context
-			HAPContextDefinitionElement outputEle = outputContext.getElement(rootName).getDefinition();
-
+			Map<String, HAPMatchers> matchers = HAPUtilityContext.mergeContextRoot(parentContext.getElement(resolvedInfo.path.getRootElementId()), outputContext.getElement(rootName), true, contextProcessRequirement);
+			for(String matchPath :matchers.keySet()) {
+				outputDataAssociation.addMatchers(matchPath, HAPMatcherUtility.reversMatchers(matchers.get(matchPath)));
+			}
 			
-			HAPUtilityContext.setDescendant(parentContext, resolvedInfo.path.getRootElementId().getCategary(), resolvedInfo.path.getRootElementId().getName(), outputEle);
-
+//			HAPContextDefinitionElement outputEle = outputContext.getElement(rootName).getDefinition();
+			
+//			HAPUtilityContext.setDescendant(parentContext, resolvedInfo.path.getRootElementId().getCategary(), resolvedInfo.path.getRootElementId().getName(), outputEle);
 			
 //			if(outputEle.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
 //				HAPUtilityContext.updateDataDescendant(parentContext, resolvedInfo.path.getRootElementId().getCategary(), resolvedInfo.path.getRootElementId().getName(), (HAPContextDefinitionLeafData)outputEle);

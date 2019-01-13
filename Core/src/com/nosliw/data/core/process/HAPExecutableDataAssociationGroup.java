@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
+import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
@@ -38,7 +39,10 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 	
 	@HAPAttribute
 	public static String FLATOUTPUT = "flatOutput";
-	
+
+	@HAPAttribute
+	public static String OUTPUTMATCHERS = "outputMatchers";
+
 	private HAPDefinitionDataAssociationGroup m_definition;
 	
 	//process purpose
@@ -47,8 +51,11 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 	//mapping from in path to out path, it is for runtime 
 	private Map<String, String> m_pathMapping;
 	
+	private Map<String, HAPMatchers> m_outputMatchers;
+	
 	public HAPExecutableDataAssociationGroup(HAPDefinitionDataAssociationGroup definition) {
 		this.m_definition = definition;
+		this.m_outputMatchers = new LinkedHashMap<String, HAPMatchers>();
 	}
 	
 	public HAPInfo getInfo() {  return this.m_definition.getInfo();  }
@@ -60,6 +67,8 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 	public Map<String, String> getPathMapping() {  return this.m_pathMapping;  }
 
 	public boolean isFlatOutput() {   return this.m_definition.isFlatOutput();  }
+	
+	public void addMatchers(String path, HAPMatchers matchers) {		this.m_outputMatchers.put(path, matchers);	}
 	
 	//update output root name
 	public void updateOutputRootName(HAPUpdateName nameUpdate) {
@@ -74,6 +83,14 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 
 		//update context
 		this.m_context.updateRootName(nameUpdate);
+		
+		//update matchers
+		Map<String, HAPMatchers> outputMatchers = new LinkedHashMap<String, HAPMatchers>();
+		for(String p1 :this.m_outputMatchers.keySet()) {
+			HAPContextPath cPath = new HAPContextPath(p1);
+			cPath = new HAPContextPath(new HAPContextDefinitionRootId(nameUpdate.getUpdatedName(cPath.getRootElementId().getFullName())), cPath.getSubPath());
+			outputMatchers.put(cPath.getFullPath(), this.m_outputMatchers.get(p1));
+		}
 	}
 	
 	@Override

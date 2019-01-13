@@ -4,8 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.expression.HAPVariableInfo;
 import com.nosliw.data.core.expressionsuite.HAPDefinitionExpressionSuite;
 
 //

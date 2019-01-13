@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
-import com.nosliw.data.core.expression.HAPVariableInfo;
+import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.task111.HAPDefinitionTaskSuite;
 import com.nosliw.data.core.task111.HAPLogTask;
 import com.nosliw.data.core.task111.HAPManagerTask;

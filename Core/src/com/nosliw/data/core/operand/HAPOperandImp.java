@@ -70,26 +70,6 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 		jsonMap.put(OUTPUTCRITERIA, HAPSerializeManager.getInstance().toStringValue(this.getOutputCriteria(), HAPSerializationFormat.LITERATE));
 	}
 
-	/**
-	 * "And" two criteria and create output. If the "And" result is empty, then set error  
-	 * @param criteria
-	 * @param expectCriteria
-	 * @param context
-	 * @return
-	 */
-	protected HAPMatchers isMatchable(HAPDataTypeCriteria criteria, HAPDataTypeCriteria expectCriteria, HAPProcessTracker processTracker, HAPDataTypeHelper dataTypeHelper){
-		if(expectCriteria==null)   return null;
-		
-		if(expectCriteria==HAPDataTypeCriteriaAny.getCriteria())   expectCriteria = criteria;
-		
-		HAPMatchers out = dataTypeHelper.buildMatchers(criteria, expectCriteria);
-		if(out==null){
-			//not able to match, then error
-			processTracker.setFailure("Error");
-		}
-		return out;
-	}
-	
 	
 	/**
 	 * "And" two criteria and create output. If the "And" result is empty, then set error  
