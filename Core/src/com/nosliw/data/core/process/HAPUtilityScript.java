@@ -56,9 +56,10 @@ public class HAPUtilityScript {
 		
 		//build dynamic part 
 		StringBuffer dynamicScript = new StringBuffer();
-		for(String fromPath : dataAssociationGroup.getPathMapping().keySet()) {
-			String toPath = dataAssociationGroup.getPathMapping().get(fromPath);
-			String script = "output = utilFunction(output, "+ buildJSArrayFromContextPath(toPath) +", input, "+ buildJSArrayFromContextPath(fromPath) +");\n";
+		Map<String, String> relativePathMapping = dataAssociationGroup.getPathMapping();
+		for(String targePath : relativePathMapping.keySet()) {
+			String sourcePath = relativePathMapping.get(targePath);
+			String script = "output = utilFunction(output, "+ buildJSArrayFromContextPath(targePath) +", input, "+ buildJSArrayFromContextPath(sourcePath) +");\n";
 			dynamicScript.append(script);
 		}
 		

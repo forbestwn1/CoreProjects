@@ -20,7 +20,8 @@
 			var node_NormalActivityResult = nosliw.getNodeData("process.entity.NormalActivityResult");
 			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 			var node_objectOperationUtility = nosliw.getNodeData("common.utility.objectOperationUtility");
-			
+			var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
+
 			var loc_out = {
 				
 				getExecuteActivityRequest : function(activity, input, handlers, request){

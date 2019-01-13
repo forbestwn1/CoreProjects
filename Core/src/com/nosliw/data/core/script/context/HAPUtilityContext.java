@@ -119,9 +119,9 @@ public class HAPUtilityContext {
 				if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 					HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)ele;
 					HAPContextPath contextPath = relativeEle.getPath();
-					String from = contextPath.getFullPath();
-					String to = path; 
-					out.put(from, to);
+					String sourcePath = contextPath.getFullPath();
+					String targetPath = path; 
+					out.put(targetPath, sourcePath);
 					return false;
 				}
 				return true;

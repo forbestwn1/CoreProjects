@@ -9,6 +9,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPDefinitionDataAssociationGroup;
+import com.nosliw.data.core.script.context.HAPUtilityContext;
 
 public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 
@@ -17,8 +18,15 @@ public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 	
 	private HAPDefinitionDataAssociationGroup m_output;
 	
-	public HAPEndActivityDefinition() {}
+	public HAPEndActivityDefinition() {
+		this.m_output = new HAPDefinitionDataAssociationGroup();
+		this.init();
+	}
 
+	private void init() {
+		HAPUtilityContext.setContextGroupInheritModeNone(this.m_output.getInfo());
+	}
+	
 	@Override
 	public String getType() {		return HAPConstant.ACTIVITY_TYPE_END;	}
 	
@@ -31,6 +39,7 @@ public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 			JSONObject jsonObj = (JSONObject)json;
 			this.m_output = new HAPDefinitionDataAssociationGroup();
 			this.m_output.buildObject(jsonObj.optJSONObject(OUTPUT), HAPSerializationFormat.JSON);
+			this.init();
 			return true;  
 		}
 		catch(Exception e){

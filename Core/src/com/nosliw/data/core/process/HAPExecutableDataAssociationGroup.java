@@ -44,7 +44,7 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 	//process purpose
 	private HAPContextFlat m_context;
 	
-	//mapping from in path to out path, it is for runtime 
+	//mapping from target path to source path, it is for runtime 
 	private Map<String, String> m_pathMapping;
 	
 	
@@ -66,11 +66,18 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 	public void updateOutputRootName(HAPUpdateName nameUpdate) {
 		//update path mapping
 		Map<String, String> processedPathMapping = new LinkedHashMap<String, String>();
+
 		for(String p1 : m_pathMapping.keySet()) {
-			HAPContextPath cPath = new HAPContextPath(m_pathMapping.get(p1));
+			HAPContextPath cPath = new HAPContextPath(p1);
 			HAPContextPath cPath1 = new HAPContextPath(new HAPContextDefinitionRootId(nameUpdate.getUpdatedName(cPath.getRootElementId().getFullName())), cPath.getSubPath());
-			processedPathMapping.put(p1, cPath1.getFullPath());
+			processedPathMapping.put(cPath1.getFullPath(), m_pathMapping.get(p1));
 		}
+
+//		for(String p1 : m_pathMapping.keySet()) {
+//			HAPContextPath cPath = new HAPContextPath(m_pathMapping.get(p1));
+//			HAPContextPath cPath1 = new HAPContextPath(new HAPContextDefinitionRootId(nameUpdate.getUpdatedName(cPath.getRootElementId().getFullName())), cPath.getSubPath());
+//			processedPathMapping.put(p1, cPath1.getFullPath());
+//		}
 		this.m_pathMapping = processedPathMapping;
 
 		//update context

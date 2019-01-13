@@ -2,6 +2,7 @@ function(input, utilFunction){
 
 	var output = {};
 	
+	//build inherited element first
 	if(||isInherit||){
 		_.each(input, function(context, categary){
 			_.each(context, function(ele, name){
@@ -11,6 +12,7 @@ function(input, utilFunction){
 		});		
 	}
 	
+	//
 	if(||isFlat||){
 		_.each(||outputInit||, function(value, name){
 			output[name] = value;
