@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
 
 public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInfo{
 
@@ -66,5 +67,17 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 		this.m_description = jsonObj.optString(DESCRIPTION);
 		this.m_info = new HAPInfoImpSimple();
 		this.m_info.buildObject(jsonObj.optJSONObject(INFO), HAPSerializationFormat.JSON);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof HAPEntityInfoImp) {
+			HAPEntityInfoImp infoEntity = (HAPEntityInfoImp)obj;
+			if(!HAPBasicUtility.isEquals(infoEntity.m_name, this.m_name))   return false;
+			if(!HAPBasicUtility.isEquals(infoEntity.m_description, this.m_description))   return false;;
+			if(!HAPBasicUtility.isEquals(infoEntity.m_info, this.m_info))  return false;
+			return true;
+		}
+		return false;
 	}
 }

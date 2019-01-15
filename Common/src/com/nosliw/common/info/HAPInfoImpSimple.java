@@ -100,4 +100,17 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 		}
 		return true;  
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof HAPInfo) {
+			HAPInfo info = (HAPInfo)obj;
+			if(!HAPBasicUtility.isEqualSets(info.getNames(), this.getNames()))  return false;
+			for(String name : info.getNames()) {
+				if(!HAPBasicUtility.isEquals(info.getValue(name), this.getValue(name)))  return false;
+			}
+			return true;
+		}
+		return false;
+	}
 }

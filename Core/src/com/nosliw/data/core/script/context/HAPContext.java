@@ -176,8 +176,10 @@ public class HAPContext extends HAPSerializableImp{
 			if(context.getElementNames().equals(this.getElementNames())) {
 				for(String eleName : this.getElementNames()) {
 					out = this.getElement(eleName).equals(context.getElement(eleName));
-					if(!out)  break;
+					if(!out)  
+						break;
 				}
+				return true;
 			}
 		}
 		return out;

@@ -92,12 +92,12 @@ public class HAPContextDefinitionRoot extends HAPEntityInfoWritableImp{
 	
 	@Override
 	public boolean equals(Object obj) {
-		if(!super.equals(obj))  return false;
-
 		boolean out = false;
 		if(obj instanceof HAPContextDefinitionRoot) {
 			HAPContextDefinitionRoot root = (HAPContextDefinitionRoot)obj;
+			if(!super.equals(obj))  return false;
 			if(!HAPBasicUtility.isEquals(this.m_defaultValue, root.m_defaultValue))  return false;
+			if(!HAPBasicUtility.isEquals(this.m_definition, root.m_definition)) return false;
 			out = true;
 		}
 		return out;
