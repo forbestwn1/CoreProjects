@@ -14,7 +14,7 @@ import com.nosliw.uiresource.page.definition.HAPUIDefinitionUnitUtility;
 
 public class HAPUtilityUIResource {
 
-	public static HAPDefinitionModule getUIModuleDefinitionById(String id, HAPParserModule moduleParser, HAPUIResourceManager uiResourceManager){
+	public static HAPDefinitionModule getUIModuleDefinitionById(String id, HAPParserModule moduleParser){
 		String file = HAPFileUtility.getUIModuleFolder()+id+".res";
 		HAPDefinitionModule moduleDef = moduleParser.parseFile(file);
 		return moduleDef;

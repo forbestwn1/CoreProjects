@@ -24,7 +24,8 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	//possible result for activity
 	private Map<String, HAPDefinitionResultActivityNormal> m_results;
 	
-	public HAPDefinitionActivityNormal() {
+	public HAPDefinitionActivityNormal(String type) {
+		super(type);
 		this.m_results = new LinkedHashMap<String, HAPDefinitionResultActivityNormal>();
 		this.m_input = new HAPDefinitionDataAssociationGroup();
 	}

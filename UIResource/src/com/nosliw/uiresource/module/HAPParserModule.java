@@ -15,6 +15,10 @@ public class HAPParserModule {
 
 	private HAPManagerActivityPlugin m_activityPluginMan;
 	
+	public HAPParserModule(HAPManagerActivityPlugin activityPluginMan) {
+		this.m_activityPluginMan = activityPluginMan;
+	}
+	
 	public HAPDefinitionModule parseFile(String fileName){
 		HAPDefinitionModule out = null;
 		try{
@@ -22,7 +26,7 @@ public class HAPParserModule {
 			//use file name as ui resource id
 			String resourceId = HAPFileUtility.getFileName(input);
 			String source = HAPFileUtility.readFile(input);
-			out = this.parseContent(resourceId, source);
+			out = this.parseContent(source, resourceId);
 		}
 		catch(Exception e){
 			e.printStackTrace();

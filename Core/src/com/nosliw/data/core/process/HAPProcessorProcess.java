@@ -42,8 +42,8 @@ public class HAPProcessorProcess{
 				out.addActivity(activityId, activityExe);
 			}
 			out.setContext(context);
-		}while(false);
-		//while(!context.equals(oldContext));
+//		}while(false);
+		}while(!context.equals(oldContext));
 		
 		//process results
 		out.setResults(results);
@@ -61,7 +61,4 @@ public class HAPProcessorProcess{
 		String id = new HAPIdProcess(suite.getId(), processId).getId();
 		return process(suite.getProcess(processId), id, suite.getContext(), suite.getProcesses(), processMan, contextProcessRequirement, processTracker);
 	}
-	
-
-	
 }

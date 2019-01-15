@@ -17,7 +17,9 @@ public class HAPStartActivityDefinition extends HAPDefinitionActivity{
 	
 	private HAPDefinitionSequenceFlow m_flow;
 	
-	public HAPStartActivityDefinition() {}
+	public HAPStartActivityDefinition(String type) {
+		super(type);
+	}
 
 	@Override
 	public String getType() {		return HAPConstant.ACTIVITY_TYPE_START;	}

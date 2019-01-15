@@ -60,11 +60,14 @@ public class HAPUIResourceManager {
 		this.m_uiResource = new LinkedHashMap<String, HAPExecutableUIUnitResource>();
 		this.m_dataTypeHelper = dataTypeHelper;
 		this.m_uiResourceParser = new HAPParserUIResource(null, m_idGengerator);
-		this.m_moduleParser = new HAPParserModule();
+		this.m_moduleParser = new HAPParserModule(this.m_processMan.getPluginManager());
 	}
 
+	public HAPParserModule getModuleParser() {    return this.m_moduleParser;   }
+	public HAPParserUIResource getUIResourceParser() {    return this.m_uiResourceParser;  }
+	
 	public HAPExecutableModule getUIModule(String moduleId) {
-		HAPDefinitionModule moduleDef = HAPUtilityUIResource.getUIModuleDefinitionById(moduleId, this.m_moduleParser, this);
+		HAPDefinitionModule moduleDef = HAPUtilityUIResource.getUIModuleDefinitionById(moduleId, this.m_moduleParser);
 		return processModule(moduleDef, moduleId, null);
 	}
 	

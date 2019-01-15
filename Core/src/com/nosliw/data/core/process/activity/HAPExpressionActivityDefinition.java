@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
 
@@ -18,12 +17,9 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 	
 	private HAPDefinitionScriptExpression m_expression;
 	
-	public HAPExpressionActivityDefinition() {
+	public HAPExpressionActivityDefinition(String type) {
+		super(type);
 	}
-	
-	@Override
-	public String getType() {  return HAPConstant.EXPRESSIONTASK_STEPTYPE_EXPRESSION;	}
-	
 	
 	public HAPDefinitionScriptExpression getExpression(){  return this.m_expression;    }
 	private void setExpression(String expression) {	this.m_expression = new HAPDefinitionScriptExpression(expression);	}

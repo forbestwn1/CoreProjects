@@ -74,7 +74,7 @@ public class HAPPluginActivityImp implements HAPPluginActivity{
 	public HAPDefinitionActivity buildActivityDefinition(Object obj) {
 		HAPDefinitionActivity out = null;
 		try {
-			out = (HAPDefinitionActivity)this.m_activityClass.newInstance();
+			out = (HAPDefinitionActivity)this.m_activityClass.getConstructor(String.class).newInstance(this.getType());
 			out.buildObject(obj, HAPSerializationFormat.JSON);
 		} catch (Exception e) {
 			e.printStackTrace();

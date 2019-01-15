@@ -11,6 +11,7 @@ import com.nosliw.data.core.criteria.HAPVariableInfo;
 public class HAPParserContext {
 
 	public static HAPContextGroup parseContextGroup(JSONObject contextGroupJson) {
+		if(contextGroupJson==null)  return null;
 		HAPContextGroup out = new HAPContextGroup();
 		parseContextGroup(contextGroupJson, out);
 		return out;

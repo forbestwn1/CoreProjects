@@ -12,11 +12,14 @@ public abstract class HAPDefinitionActivity extends HAPEntityInfoWritableImp{
 	@HAPAttribute
 	public static String TYPE = "type";
 
-	public HAPDefinitionActivity() {
+	private String m_type;
+	
+	public HAPDefinitionActivity(String type) {
+		this.m_type = type;
 	}
 
-	abstract public String getType();
-
+	public String getType() {   return this.m_type;   }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);

@@ -18,7 +18,8 @@ public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 	
 	private HAPDefinitionDataAssociationGroup m_output;
 	
-	public HAPEndActivityDefinition() {
+	public HAPEndActivityDefinition(String type) {
+		super(type);
 		this.m_output = new HAPDefinitionDataAssociationGroup();
 		this.init();
 	}
