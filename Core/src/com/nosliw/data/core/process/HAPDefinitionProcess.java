@@ -49,7 +49,10 @@ public class HAPDefinitionProcess extends HAPEntityInfoWritableImp{
 	public Set<HAPResourceDependent> getRequiredResources(){ return this.m_requiredResources;  }
 	
 	public HAPContextGroup getContext() {   return this.m_context;   }
-	public void setContext(HAPContextGroup context) {   this.m_context = context;  }
+	public void setContext(HAPContextGroup context) { 
+		if(context==null)    this.m_context = new HAPContextGroup();
+		else		this.m_context = context;  
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

@@ -1,5 +1,6 @@
 package com.nosliw.uiresource.module;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,8 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	
 	public HAPExecutableModule(HAPDefinitionModule moduleDefinition, String id) {
 		super(moduleDefinition);
+		this.m_processes = new LinkedHashMap<String, HAPExecutableProcess>();
+		this.m_uis = new LinkedHashMap<String, HAPExecutableModuleUI>();
 		this.m_moduleDefinition = moduleDefinition;
 		this.m_id = id;
 	}

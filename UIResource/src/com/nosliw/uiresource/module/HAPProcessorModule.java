@@ -32,6 +32,8 @@ public class HAPProcessorModule {
 			HAPExpressionSuiteManager expressionManager,
 			HAPProcessTracker processTracker) {
 
+		if(parentContext==null)   parentContext = new HAPContextGroup();
+
 		Set<String> inheritanceExcludedInfo = new HashSet<String>();
 		inheritanceExcludedInfo.add(HAPConstant.UIRESOURCE_CONTEXTINFO_INSTANTIATE);
 		HAPRequirementContextProcessor contextProcessRequirement = new HAPRequirementContextProcessor(dataTypeHelper, runtime, expressionManager, inheritanceExcludedInfo);
