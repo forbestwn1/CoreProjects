@@ -7,11 +7,14 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
 @HAPEntityWithAttribute
@@ -23,6 +26,12 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	@HAPAttribute
 	public static String CONTEXT = "context";
 	
+	@HAPAttribute
+	public static String UI = "ui";
+	
+	@HAPAttribute
+	public static String PROCESS = "process";
+
 	private HAPDefinitionModule m_moduleDefinition;
 	
 	private String m_id;
@@ -54,9 +63,33 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	public void addModuleUI(HAPExecutableModuleUI ui) {  this.m_uis.put(ui.getName(), ui);   }
 	
 	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ID, this.m_id);
+		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(this.m_contextGroup, HAPSerializationFormat.JSON));
+		jsonMap.put(UI, HAPJsonUtility.buildJson(this.m_uis, HAPSerializationFormat.JSON));
+		jsonMap.put(PROCESS, HAPJsonUtility.buildJson(this.m_processes, HAPSerializationFormat.JSON));
+	}
+	
+	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
+		this.buildFullJsonMap(jsonMap, typeJsonMap);
+
+		Map<String, String> uiJsonMap = new LinkedHashMap<String, String>();
+		for(String uiName :this.m_uis.keySet()) {
+			uiJsonMap.put(uiName, this.m_processes.get(uiName).toResourceData(runtimeInfo).toString());
+		}
+		jsonMap.put(UI, HAPJsonUtility.buildMapJson(uiJsonMap));
+		
+		Map<String, String> processJsonMap = new LinkedHashMap<String, String>();
+		for(String processName :this.m_processes.keySet()) {
+			processJsonMap.put(processName, this.m_processes.get(processName).toResourceData(runtimeInfo).toString());
+		}
+		jsonMap.put(PROCESS, HAPJsonUtility.buildMapJson(processJsonMap));
+		
+		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 	@Override
@@ -64,5 +97,4 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

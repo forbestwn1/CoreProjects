@@ -46,6 +46,7 @@ public class HAPParserModule {
 			for(int i=0; i<pageInfoArray.length(); i++) {
 				HAPInfoPage pageInfo = new HAPInfoPage();
 				pageInfo.buildObjectByJson(pageInfoArray.get(i));
+				out.addPageInfo(pageInfo);
 			}
 		}
 		

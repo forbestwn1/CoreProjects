@@ -6,11 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.erro.HAPErrorUtility;
-import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.criteria.HAPCriteriaUtility;
-import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPMatchers;
 
 public class HAPProcessorContextRelative {
@@ -65,6 +61,11 @@ public class HAPProcessorContextRelative {
 		HAPContextDefinitionElement out = defContextElementRelative;
 		
 		HAPContextPath path = defContextElementRelative.getPath(); 
+		if("element".equals(path.getPath()) && "schoolList___public".equals(path.getRootElementId().getFullName())){
+			int kkkk = 555;
+			kkkk++;
+		}
+		
 		HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(path, parentContext, categaryes, mode);
 		
 		if(resolveInfo==null || resolveInfo.rootNode==null)

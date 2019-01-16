@@ -6,6 +6,8 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.HAPContext;
 
 //each module ui is page unit in module that is alive in a module
@@ -58,4 +60,12 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	
 	public Map<String, String> getServiceMapping(){    return this.m_serviceMapping;  }
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(PAGE, this.m_page);
+		jsonMap.put(CONTEXTMAPPING, HAPJsonUtility.buildJson(this.m_contextMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
+	}
+
 }

@@ -1,5 +1,7 @@
 package com.nosliw.uiresource.module;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -37,4 +39,9 @@ public class HAPInfoPage extends HAPEntityInfoImp{
 		}
 	}
 
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ID, this.m_pageId);
+	}
 }

@@ -8,6 +8,8 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 /**
@@ -60,6 +62,7 @@ public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
 	public String getId() {   return this.m_id;   }
 	
 	public HAPInfoPage getPageInfo(String pageName) {  return this.m_pagesInfo.get(pageName);   }
+	public void addPageInfo(HAPInfoPage pageInfo) {   this.m_pagesInfo.put(pageInfo.getName(), pageInfo);   }
 	
 	public HAPContextGroup getContext() {  return this.m_contextGroup;   }
 	public void setContext(HAPContextGroup contextGroup) {  this.m_contextGroup = contextGroup;   }
@@ -70,4 +73,13 @@ public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
 	public Set<HAPDefinitionModuleUI> getUIs(){  return this.m_uis;  }
 	public void addUI(HAPDefinitionModuleUI ui) {   this.m_uis.add(ui);   }
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(this.m_contextGroup, HAPSerializationFormat.JSON));
+		jsonMap.put(PAGEINFO, HAPJsonUtility.buildJson(this.m_pagesInfo, HAPSerializationFormat.JSON));
+		jsonMap.put(UI, HAPJsonUtility.buildJson(this.m_uis, HAPSerializationFormat.JSON));
+		jsonMap.put(PROCESS, HAPJsonUtility.buildJson(this.m_processes, HAPSerializationFormat.JSON));
+	}
+
 }

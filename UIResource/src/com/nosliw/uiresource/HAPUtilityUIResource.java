@@ -7,9 +7,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
 import com.nosliw.uiresource.module.HAPParserModule;
@@ -17,7 +15,6 @@ import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
 import com.nosliw.uiresource.page.definition.HAPParserUIResource;
 import com.nosliw.uiresource.page.definition.HAPUIDefinitionUnitUtility;
-import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPUtilityUIResource {
 
@@ -26,7 +23,6 @@ public class HAPUtilityUIResource {
 		HAPDefinitionModule moduleDef = moduleParser.parseFile(file);
 		return moduleDef;
 	}
-
 	
 	public static HAPDefinitionUIUnitResource getUIResourceDefinitionById(String id, HAPParserUIResource uiResourceParser, HAPUIResourceManager uiResourceManager){
 		String file = HAPFileUtility.getUIResourceFolder()+id+".res";

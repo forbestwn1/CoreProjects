@@ -2,8 +2,6 @@ package com.nosliw.uiresource.module;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
@@ -91,6 +89,7 @@ public class HAPProcessorModule {
 			HAPContextGroup eventContext = moduleExe.getContext().cloneContextGroup();
 			eventContext.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC).addElement("EVENT", eventRootNode);
 			eventHandlerExe.setProcess(HAPProcessorProcess.process(eventHandlerDef.getProcess(), eventName, eventContext, null, processMan, contextProcessRequirement, processTracker));
+			out.addEventHandler(eventName, eventHandlerExe);
 		}	
 		return out;
 	}

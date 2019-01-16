@@ -1,20 +1,16 @@
 package com.nosliw.uiresource.module;
 
-import java.util.List;
+import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
-import com.nosliw.data.core.runtime.HAPExecutable;
-import com.nosliw.data.core.runtime.HAPResourceData;
-import com.nosliw.data.core.runtime.HAPResourceDependent;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionModuleUIEventHander extends HAPEntityInfoWritableImp implements HAPExecutable{
+public class HAPDefinitionModuleUIEventHander extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String PROCESS = "process";
@@ -26,15 +22,9 @@ public class HAPDefinitionModuleUIEventHander extends HAPEntityInfoWritableImp i
 	public void setProcess(HAPDefinitionProcess process) {   this.m_process = process;  }
 	
 	@Override
-	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
-		// TODO Auto-generated method stub
-		return null;
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(PROCESS, HAPJsonUtility.buildJson(this.m_process, HAPSerializationFormat.JSON));
 	}
 
-	@Override
-	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }

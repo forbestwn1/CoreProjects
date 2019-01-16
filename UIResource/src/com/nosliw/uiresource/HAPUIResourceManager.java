@@ -68,6 +68,7 @@ public class HAPUIResourceManager {
 	
 	public HAPExecutableModule getUIModule(String moduleId) {
 		HAPDefinitionModule moduleDef = HAPUtilityUIResource.getUIModuleDefinitionById(moduleId, this.m_moduleParser);
+		System.out.println(moduleDef);
 		return processModule(moduleDef, moduleId, null);
 	}
 	
