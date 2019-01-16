@@ -41,6 +41,7 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 	public HAPContext getContextMapping() {   return this.m_contextMapping;   }
 	
 	public void setPage(HAPExecutableUIUnitResource page) {  this.m_page = page;   }
+	public HAPExecutableUIUnitResource getPage() {  return this.m_page;   }
 	
 	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {

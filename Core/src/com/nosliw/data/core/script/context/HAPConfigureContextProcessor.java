@@ -18,11 +18,18 @@ public class HAPConfigureContextProcessor {
 
 	//how to find referenced parent node
 	public String relativeResolveMode = VALUE_RESOLVEPARENTMODE_BEST;
+
 	//context categary to find referenced parent node 
 	public String[] parentCategary;
 	
 	//
 	public String inheritMode = VALUE_INHERITMODE_CHILD;
 	
-	
+	public HAPConfigureContextProcessor cloneConfigure() {
+		HAPConfigureContextProcessor out = new HAPConfigureContextProcessor();
+		out.relativeResolveMode = this.relativeResolveMode;
+		out.inheritMode = this.inheritMode;
+		out.parentCategary = this.parentCategary;
+		return out;
+	}
 }

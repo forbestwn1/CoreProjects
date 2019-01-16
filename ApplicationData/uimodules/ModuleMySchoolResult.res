@@ -1,5 +1,5 @@
 {
-	"name": "",
+	"name": "ModuleMySchoolResult",
 	"description": "",
 	"pageInfo": [
 		{
@@ -72,12 +72,32 @@
 	},
 	"process": {
 		"init": {
-			"activity": [
+			"activity": [{
+					"id": "startActivityId",
+					"name": "startActivity",
+					"type": "start",
+					"flow": {
+						"target": "presentSchoolListUI"
+					}
+				}, 
 				{
 					"id": "presentSchoolListUI",
 					"name": "presentSchoolListUI",
 					"type": "UI_presentUI",
-					"ui": "schoolListUI"
+					"ui": "schoolListUI",
+					"result": [
+						{
+							"name" : "success",
+							"flow": {
+								"target": "successEndId"
+							},
+						}
+					]
+				}, 
+				{
+					"id": "successEndId",
+					"name": "successEnd",
+					"type": "end"
 				}
 			]
 		}
@@ -102,13 +122,28 @@
 			"serviceMapping": {},
 			"eventHandler": {
 				"selectSchool": {
-					"process": {
-						"activity": [
+						"process": {
+							"activity": [{
+								"id": "startActivityId",
+								"name": "startActivity",
+								"type": "start",
+								"flow": {
+									"target": "presentSchoolDataUI"
+								}
+							}, 
 							{
 								"id": "presentSchoolDataUI",
 								"name": "presentSchoolDataUI",
 								"type": "UI_presentUI",
-								"ui": "schoolInfoUI"
+								"ui": "schoolInfoUI",
+								"result": [
+									{
+										"name" : "success",
+										"flow": {
+											"target": "refreshSchoolInfo"
+										},
+									}
+								]
 							},
 							{
 								"id": "refreshSchoolInfo",
@@ -120,11 +155,24 @@
 									"inputData": {
 										"schoolData": {
 											"definition": {
-												"path": "event.parm.schoolData"
+												"path": "EVENT.parm.schoolData"
 											}
 										}
 									}
-								}
+								},
+								"result": [
+									{
+										"name" : "success",
+										"flow": {
+											"target": "successEndId"
+										},
+									}
+								]
+							},
+							{
+								"id": "successEndId",
+								"name": "successEnd",
+								"type": "end"
 							}
 						]
 					}

@@ -1,18 +1,16 @@
 package com.nosliw.uiresource.processor;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
+import com.nosliw.uiresource.HAPUtilityUIResource;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
 import com.nosliw.uiresource.page.definition.HAPParserUIResource;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
@@ -38,15 +36,13 @@ public class HAPProcessorUIResource {
 		//compile definition to executable
 		HAPProcessorCompile.process(out, null);
 		
-		Set<String> inheritanceExcludedInfo = new HashSet<String>();
-		inheritanceExcludedInfo.add(HAPConstant.UIRESOURCE_CONTEXTINFO_INSTANTIATE);
-		HAPRequirementContextProcessor contextProcessRequirement = new HAPRequirementContextProcessor(dataTypeHelper, runtime, expressionMan, inheritanceExcludedInfo);
 		HAPContextGroup parentContextGroup = null;
 		if(parentContext!=null) {
 			parentContextGroup = new HAPContextGroup();
 			parentContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, parentContext);
 		}
-		HAPProcessorUIContext.process(out, parentContextGroup, uiTagMan, contextProcessRequirement);
+		
+		HAPProcessorUIContext.process(out, parentContextGroup, uiTagMan, HAPUtilityUIResource.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionMan));
 
 //		HAPPorcessorResolveName.resolve(out);
 		

@@ -5,12 +5,19 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.HAPDataTypeHelper;
+import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
+import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
+import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
 import com.nosliw.uiresource.module.HAPParserModule;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
 import com.nosliw.uiresource.page.definition.HAPParserUIResource;
 import com.nosliw.uiresource.page.definition.HAPUIDefinitionUnitUtility;
+import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPUtilityUIResource {
 
@@ -40,5 +47,13 @@ public class HAPUtilityUIResource {
 		return uiResourceDef; 
 	}
 
-
+	public static HAPRequirementContextProcessor getDefaultContextProcessorRequirement(
+			HAPDataTypeHelper dataTypeHelper, 
+			HAPRuntime runtime, 
+			HAPExpressionSuiteManager expressionMan) { 
+		Set<String> inheritanceExcludedInfo = new HashSet<String>();
+		inheritanceExcludedInfo.add(HAPConstant.UIRESOURCE_CONTEXTINFO_INSTANTIATE);
+		HAPRequirementContextProcessor contextProcessRequirement = new HAPRequirementContextProcessor(dataTypeHelper, runtime, expressionMan, inheritanceExcludedInfo);
+		return contextProcessRequirement;
+	}
 }
