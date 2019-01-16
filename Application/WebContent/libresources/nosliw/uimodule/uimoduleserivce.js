@@ -22,6 +22,8 @@ var packageObj = library.getChildPackage("service");
 
 var node_createUIModuleService = function(){
 
+	var loc_uiStacks = [];
+	
 	var loc_getExecuteUIModuleRequest = function(uiModule, input, handlers, request){
 		
 		//init

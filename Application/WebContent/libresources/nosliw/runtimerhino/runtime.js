@@ -13,7 +13,7 @@ var packageObj = library;
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
 	var node_createGatewayService;
-	var node_createProcessService;
+	var node_createProcessRuntimeFactory;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -35,7 +35,7 @@ var node_createRuntime = function(name){
 	
 	var loc_gatewayService;
 	
-	var loc_processService;
+	var loc_processRuntimeFactory;
 	
 	var loc_out = {
 		
@@ -53,7 +53,7 @@ var node_createRuntime = function(name){
 			
 		getGatewayService(){			return loc_gatewayService;		},
 
-		getProcessService(){   return loc_processService;  },
+		getProcessRuntimeFactory(){   return loc_processRuntimeFactory;  },
 	};
 	
 	var lifecycleCallback = {};
@@ -63,7 +63,7 @@ var node_createRuntime = function(name){
 		loc_resourceService = node_createResourceService(loc_resourceManager);
 		loc_expressionService = node_createExpressionService();
 		loc_gatewayService = node_createGatewayService();
-		loc_processService = node_createProcessService();
+		loc_processRuntimeFactory = node_createProcessRuntimeFactory();
 		
 		//set sortcut for object
 		 nosliw.runtime = loc_out;
@@ -96,7 +96,7 @@ nosliw.registerSetNodeDataEvent("resource.createResourceManager", function(){nod
 nosliw.registerSetNodeDataEvent("expression.service.createExpressionService", function(){node_createExpressionService = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.createResourceService", function(){node_createResourceService = this.getData();});
 nosliw.registerSetNodeDataEvent("runtime.createGatewayService", function(){node_createGatewayService = this.getData();});
-nosliw.registerSetNodeDataEvent("process.service.createProcessService", function(){node_createProcessService = this.getData();});
+nosliw.registerSetNodeDataEvent("process.createProcessRuntimeFactory", function(){node_createProcessRuntimeFactory = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

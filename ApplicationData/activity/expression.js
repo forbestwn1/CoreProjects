@@ -24,7 +24,7 @@
 
 			var loc_out = {
 				
-				getExecuteActivityRequest : function(activity, input, handlers, request){
+				getExecuteActivityRequest : function(activity, input, env, handlers, request){
 					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionActivity", {"activity":activity, "input":input}), handlers, request);
 					
 					//execute script expression 
@@ -41,7 +41,7 @@
 					 out.addRequest(loc_expressionService.getExecuteScriptRequest(scriptFunction, expressions, varInputs, input, {
 						success:function(requestInfo, scriptExpressionOut){
 							var activityOutput = {};
-							activityOutput[loc_env.buildOutputVarialbeName(node_COMMONCONSTANT.ACTIVITY_OUTPUTVARIABLE_OUTPUT)] = scriptExpressionOut;
+							activityOutput[env.buildOutputVarialbeName(node_COMMONCONSTANT.ACTIVITY_OUTPUTVARIABLE_OUTPUT)] = scriptExpressionOut;
 							return new node_NormalActivityResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS, activityOutput);
 						}
 					}));

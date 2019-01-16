@@ -16,7 +16,7 @@ var packageObj = library;
 	var node_createGatewayService;
 	var node_createUIResourceService;
 	var node_createMiniAppService;
-	var node_createProcessService;
+	var node_createProcessRuntimeFactory;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -38,7 +38,7 @@ var node_createRuntime = function(name){
 	
 	var loc_gatewayService;
 
-	var loc_processService;
+	var loc_processRuntimeFactory;
 	
 	var loc_remoteService;
 	
@@ -58,7 +58,7 @@ var node_createRuntime = function(name){
 			
 		getGatewayService(){		return loc_gatewayService;		},
 		
-		getProcessService(){   return loc_processService;  },
+		getProcessRuntimeFactory(){   return loc_processRuntimeFactory;  },
 		
 		getRemoteService(){			return loc_remoteService;		},
 
@@ -76,7 +76,7 @@ var node_createRuntime = function(name){
 		loc_remoteService.interfaceObjectLifecycle.init();
 		loc_gatewayService = node_createGatewayService();
 		if(node_createUIResourceService!=undefined)  loc_uiResourceService = node_createUIResourceService();
-		loc_processService = node_createProcessService();
+		loc_processRuntimeFactory = node_createProcessRuntimeFactory();
 		
 		//set sortcut for object
 		 nosliw.runtime = loc_out;
@@ -111,7 +111,7 @@ nosliw.registerSetNodeDataEvent("remote.createRemoteService", function(){node_cr
 nosliw.registerSetNodeDataEvent("runtime.createGatewayService", function(){node_createGatewayService = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.createUIResourceService", function(){node_createUIResourceService = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.service.createMiniAppService", function(){node_createMiniAppService = this.getData();});
-nosliw.registerSetNodeDataEvent("process.service.createProcessService", function(){node_createProcessService = this.getData();});
+nosliw.registerSetNodeDataEvent("process.createProcessRuntimeFactory", function(){node_createProcessRuntimeFactory = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

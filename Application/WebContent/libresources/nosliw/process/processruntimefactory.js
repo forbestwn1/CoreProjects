@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("service");    
+var packageObj = library;    
 
 (function(packageObj){
 	//get used node
@@ -19,17 +19,27 @@ var packageObj = library.getChildPackage("service");
 	var node_requestServiceProcessor;
 
 //*******************************************   Start Node Definition  ************************************** 	
-
-var node_createProcessService = function(){
+var node_createProcessRuntimeFactory = function(){
+	var loc_out = {
+		createProcessRuntime : function(envObj){
+			if(envObj==undefined)  envObj = {};
+			envObj.buildOutputVarialbeName = function(varName){
+				return "nosliw_"+varName;
+			}; 
+			
+			return node_createProcessService(envObj);
+		}
+	};
+	return loc_out;
+};
+	
+	
+var node_createProcessService = function(envObj){
 
 	//activity plugin entity 
 	var loc_activityPlugins = {};
 	
-	var loc_envObj = {
-		buildOutputVarialbeName : function(varName){
-			return "nosliw_"+varName;
-		}
-	};
+	var loc_envObj = envObj; 
 	
 	var loc_getActivityPluginRequest = function(pluginName, handlers, request){
 		var service = new node_ServiceInfo("getActivityPlugin", {"pluginName":pluginName})
@@ -74,7 +84,7 @@ var node_createProcessService = function(){
 				return loc_getActivityPluginRequest(normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_TYPE], {
 					success : function(requestInfo, activityPlugin){
 						//execute activity plugin
-						return activityPlugin.getExecuteActivityRequest(normalActivity, input, {
+						return activityPlugin.getExecuteActivityRequest(normalActivity, input, loc_envObj, {
 							success : function(requestInfo, activityResult){  //get activity results (result name + result value map)
 								//calculate variable output
 								var activityResultConfig = normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULT][activityResult.resultName];
@@ -219,6 +229,6 @@ nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestI
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createProcessService", node_createProcessService); 
+packageObj.createChildNode("createProcessRuntimeFactory", node_createProcessRuntimeFactory); 
 
 })(packageObj);
