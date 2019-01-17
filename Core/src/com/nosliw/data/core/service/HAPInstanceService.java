@@ -1,5 +1,6 @@
 package com.nosliw.data.core.service;
 
+//service instance
 public class HAPInstanceService {
 
 	private HAPDefinitionService m_definition;

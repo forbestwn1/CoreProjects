@@ -21,10 +21,10 @@ import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPProcessorContextRelative;
 import com.nosliw.data.core.script.context.HAPProcessorEscalate;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.data.core.service.HAPDefinitionServiceInfo;
-import com.nosliw.data.core.service.HAPDefinitionServiceOutput;
-import com.nosliw.data.core.service.HAPDefinitionServiceParm;
-import com.nosliw.data.core.service.HAPDefinitionServiceResult;
+import com.nosliw.data.core.service.HAPInfoServiceStatic;
+import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
+import com.nosliw.data.core.service.interfacee.HAPServiceParm;
+import com.nosliw.data.core.service.interfacee.HAPServiceResult;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
@@ -151,14 +151,14 @@ public class HAPProcessorUIContext {
 		Map<String, HAPDefinitionUICommand> servicesDef = uiExe.getUIUnitDefinition().getServiceDefinitions();
 		for(String name : servicesDef.keySet()) {
 			HAPDefinitionUICommand serviceDef = servicesDef.get(name);
-			HAPDefinitionServiceInfo processedServiceDef = new HAPDefinitionServiceInfo();
+			HAPInfoServiceStatic processedServiceDef = new HAPInfoServiceStatic();
 			
 			serviceDef.cloneToEntityInfo(processedServiceDef);
 			//process parms and convert context root to data type criteria required by service parm
 			HAPContext processedParmContext = HAPProcessorContextRelative.process(serviceDef.getParms(), uiExe.getContext(), privateConfigure, contextProcessRequirement);
 			for(String parmName : processedParmContext.getElementNames()) {
 				HAPContextDefinitionRoot contextParm = processedParmContext.getElement(parmName);
-				HAPDefinitionServiceParm serviceParm = new HAPDefinitionServiceParm(); 
+				HAPServiceParm serviceParm = new HAPServiceParm(); 
 				contextParm.cloneToEntityInfo(serviceParm);
 				
 				HAPContextDefinitionElement solidContextParmEle = contextParm.getDefinition().getSolidContextDefinitionElement();
@@ -183,10 +183,10 @@ public class HAPProcessorUIContext {
 			Map<String, HAPContext> resultsContext = serviceDef.getResults();
 			for(String resultName : resultsContext.keySet()) {
 				HAPContext processedResultContext = HAPProcessorContextRelative.process(resultsContext.get(resultName), uiExe.getContext(), privateConfigure, contextProcessRequirement);
-				HAPDefinitionServiceResult result = new HAPDefinitionServiceResult();
+				HAPServiceResult result = new HAPServiceResult();
 				for(String outputName : processedResultContext.getElementNames()) {
 					HAPContextDefinitionRoot contextOutput = processedResultContext.getElement(outputName);
-					HAPDefinitionServiceOutput serviceOutput = new HAPDefinitionServiceOutput(); 
+					HAPServiceOutput serviceOutput = new HAPServiceOutput(); 
 					contextOutput.cloneToEntityInfo(serviceOutput);
 					
 					HAPContextDefinitionElement solidContextOutputEle = contextOutput.getDefinition().getSolidContextDefinitionElement();

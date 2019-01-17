@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.HAPData;
+import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 
 @HAPEntityWithAttribute
 public class HAPManagerService {
@@ -23,7 +24,7 @@ public class HAPManagerService {
 	
 	public HAPManagerServiceDefinition getDataSourceDefinitionManager() {   return this.m_serviceDefinitionManager;   }
 	
-	public void registerDataSource(String name, HAPInstanceService dataSource){
+	public void registerServiceInstance(String name, HAPInstanceService dataSource){
 		this.m_serviceInstances.put(name, dataSource);
 	}
 
@@ -32,6 +33,7 @@ public class HAPManagerService {
 	}
 	
 	public HAPResultService execute(String serviceId, Map<String, HAPData> parms){
+		//get service instance according to serviceId
 		HAPInstanceService serviceInstance = this.m_serviceInstances.get(serviceId);
 		if(serviceInstance==null){
 			try{
@@ -52,19 +54,20 @@ public class HAPManagerService {
 			catch(Exception e){
 				e.printStackTrace();
 			}
-			if(serviceInstance!=null)   this.registerDataSource(serviceId, serviceInstance);
+			if(serviceInstance!=null)   this.registerServiceInstance(serviceId, serviceInstance);
 		}
 		
+		//execute service instance
 		HAPResultService out = null;
 		if(serviceInstance!=null) {
-			Map<String, HAPData> dataSourceParms = new LinkedHashMap<String, HAPData>();
-			Map<String, HAPDefinitionServiceParm> parmsDef = serviceInstance.getDefinition().getServiceInfo().getInterface().getParms();
+			Map<String, HAPData> serviceParms = new LinkedHashMap<String, HAPData>();
+			Map<String, HAPServiceParm> parmsDef = serviceInstance.getDefinition().getStaticInfo().getInterface().getParms();
 			for(String parmName : parmsDef.keySet()) {
 				HAPData parmData = parms.get(parmName);
 				if(parmData==null) parmData = parmsDef.get(parmName).getDefault();   //not provide, use default 
-				dataSourceParms.put(parmName, parmData);
+				serviceParms.put(parmName, parmData);
 			}
-			out = serviceInstance.getExecutable().execute(dataSourceParms);
+			out = serviceInstance.getExecutable().execute(serviceParms);
 		}
 		return out;
 	}

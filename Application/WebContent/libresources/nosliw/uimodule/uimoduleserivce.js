@@ -24,38 +24,40 @@ var node_createUIModuleService = function(){
 
 	var loc_uiStacks = [];
 	
-	var loc_getExecuteUIModuleRequest = function(uiModule, input, handlers, request){
+	var loc_uis = {};
+
+	var loc_env = {
+			getPresentUIRequest : function(uiName, mode){
+				
+			}
+			
+			
+	};
+	
+	var loc_getExecuteUIModuleRequest = function(uiModule, parentContext, handlers, request){
+		
+		//build context for module
+		var context = parentContext;
+		
+		// build uis
+		_.each(uiModule.uis, function(ui, name){
+			loc_uis[name] = node_createModuleUI(uiModule, context);
+			//register listener for module ui
+			
+		})
 		
 		//init
 		
 		
+		
 		//
 		
-		
-		//init, build context
-		var context = process[node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_INITSCRIPT](input);
-
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteProcess", {"process":process, "context":context}), handlers, request);
-
-		var startActivityId = process[node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_STARTACTIVITYID];
-		var activities = process[node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_ACTIVITY];
-		out.addRequest(loc_getExecuteActivitySequenceRequest(startActivityId, activities, context, {
-			success : function(requestInfo, endActivityOutput){
-				return loc_getGenerateDataAssociationOutputRequest(
-						process[node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_RESULT][endActivityOutput.resultName],
-						endActivityOutput.context, {
-							success : function(requestInfo, processOutputValue){
-								return new node_ProcessResult(endActivityOutput.resultName, processOutputValue);
-							}
-						});
-			}
-		}));
 		return out;
 	};
 	
 	var loc_out = {
 
-		getExecuteUIModuleRequest : function(id, input, handlers, requester_parent){
+		getExecuteUIModuleRequest : function(id, context, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModuleResource", {"id":id, "input":input}), handlers, requestInfo);
 

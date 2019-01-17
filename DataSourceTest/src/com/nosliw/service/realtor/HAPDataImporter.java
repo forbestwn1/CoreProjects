@@ -1,4 +1,4 @@
-package com.nosliw.datasource.realtor;
+package com.nosliw.service.realtor;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

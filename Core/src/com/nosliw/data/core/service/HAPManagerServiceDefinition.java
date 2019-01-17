@@ -18,7 +18,7 @@ public class HAPManagerServiceDefinition {
 	}
 	
 	public void registerDefinition(HAPDefinitionService serviceDefinition){
-		this.m_definitions.put(serviceDefinition.getServiceInfo().getId(), serviceDefinition);
+		this.m_definitions.put(serviceDefinition.getStaticInfo().getId(), serviceDefinition);
 	}
 	
 	public HAPDefinitionService getDefinition(String id){

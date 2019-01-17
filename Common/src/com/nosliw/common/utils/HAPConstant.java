@@ -514,6 +514,16 @@ public class HAPConstant {
 
 
 
+		public static final String SERVICE_RESULT_SUCCESS = "success";
+		public static final String SERVICE_RESULT_FAIL = "fail";
+		public static final String SERVICE_RESULT_EXCEPTION = "exception";
+
+
+
+		public static final String SERVICE_OUTPUTNAME_OUTPUT = "output";
+
+
+
 		public static final String NOSLIW_RESERVE_ATTRIBUTE = "nosliwAttribute_";
 
 

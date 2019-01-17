@@ -1,9 +1,7 @@
-package com.nosliw.datasource.realtor;
+package com.nosliw.service.realtor;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,34 +13,36 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataWrapper;
-import com.nosliw.data.core.datasource.HAPExecutableDataSource;
+import com.nosliw.data.core.datasource.HAPDataSourceProvider;
+import com.nosliw.data.core.service.HAPExecutableService;
+import com.nosliw.data.core.service.HAPResultService;
+import com.nosliw.data.core.service.HAPUtilityService;
 
-public class HAPDataSourceImp implements HAPExecutableDataSource{
+public class HAPServiceImp implements HAPExecutableService, HAPDataSourceProvider{
 
 	public static void main(String[] argus){
-		HAPDataSourceImp dataSource = new HAPDataSourceImp();
-		HAPData data = dataSource.getData(null);
-		System.out.println(data);
+		HAPServiceImp dataSource = new HAPServiceImp();
+		HAPResultService result = dataSource.execute(null);
+		System.out.println(result);
 	}
 	
 	private JSONArray m_data;
 	
 	@Override
-	public HAPData getData(Map<String, HAPData> parms){
-		HAPData out = null;
+	public HAPResultService execute(Map<String, HAPData> parms){
+		HAPData outData = null;
 		try{
-//			if(this.m_data==null) {
 			if(true) {
 				InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(getClass(), "homesArray.js");
 				String content =  HAPFileUtility.readFile(inputStream);
 				this.m_data = new JSONArray(content);
 			}
-			out = querydData(this.m_data, parms);
+			outData = querydData(this.m_data, parms);
 		}
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		return out;
+		return HAPUtilityService.generateSuccessResult(outData);
 	}
 	
 	private HAPData querydData(JSONArray jsonHomesData, Map<String, HAPData> parms) throws JSONException{

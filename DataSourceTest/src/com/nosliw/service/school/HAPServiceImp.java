@@ -1,4 +1,4 @@
-package com.nosliw.datasource.school;
+package com.nosliw.service.school;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -11,10 +11,13 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataWrapper;
-import com.nosliw.data.core.datasource.HAPExecutableDataSource;
-import com.nosliw.datasource.realtor.HAPDataImporter;
+import com.nosliw.data.core.datasource.HAPDataSourceProvider;
+import com.nosliw.data.core.service.HAPExecutableService;
+import com.nosliw.data.core.service.HAPResultService;
+import com.nosliw.data.core.service.HAPUtilityService;
+import com.nosliw.service.realtor.HAPDataImporter;
 
-public class HAPDataSourceImp implements HAPExecutableDataSource{
+public class HAPServiceImp implements HAPExecutableService, HAPDataSourceProvider{
 
 	public static int INDEX_ID = 0;
 	public static int INDEX_LAT = 1;
@@ -26,13 +29,13 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 	public static int INDEX_COLOR = 8;
 
 	public static void main(String[] argus) throws Exception{
-		HAPDataSourceImp dataSource = new HAPDataSourceImp();
-		HAPData data = dataSource.getData(null);
-		System.out.println(data);
+		HAPServiceImp dataSource = new HAPServiceImp();
+		HAPResultService result = dataSource.execute(null);
+		System.out.println(result);
 	}
 	
 	@Override
-	public HAPData getData(Map<String, HAPData> parms){
+	public HAPResultService execute(Map<String, HAPData> parms){
 
 		InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(getClass(), "elementSchoolArray.js");
 		
@@ -80,8 +83,7 @@ public class HAPDataSourceImp implements HAPExecutableDataSource{
 				}
 			}
 			
-			HAPDataWrapper out = new HAPDataWrapper(new HAPDataTypeId("test.array;1.0.0"), schoolArrayData);
-			return out;
+			return HAPUtilityService.generateSuccessResult(new HAPDataWrapper(new HAPDataTypeId("test.array;1.0.0"), schoolArrayData));
 		}
 		catch(Exception e){
 			e.printStackTrace();

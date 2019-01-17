@@ -5,7 +5,8 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
-public class HAPDefinitionServiceRuntime extends HAPSerializableImp{
+//information related with service during runtime
+public class HAPInfoServiceRuntime extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String IMPLEMENTATION = "implementation";
@@ -19,7 +20,7 @@ public class HAPDefinitionServiceRuntime extends HAPSerializableImp{
 	//configure 
 	private Object m_configure;
 
-	public HAPDefinitionServiceRuntime() {}
+	public HAPInfoServiceRuntime() {}
 
 	public String getImplementation(){  return this.m_implementation;   }
 	

@@ -590,6 +590,14 @@
 			<definition name="ACTIVITY_OUTPUTVARIABLE_OUTPUT" value="output"/>
 
 			<definition type="space"/>
+			<definition name="SERVICE_RESULT_SUCCESS" value="success"/>
+			<definition name="SERVICE_RESULT_FAIL" value="fail"/>
+			<definition name="SERVICE_RESULT_EXCEPTION" value="exception"/>
+
+			<definition type="space"/>
+			<definition name="SERVICE_OUTPUTNAME_OUTPUT" value="output"/>
+
+			<definition type="space"/>
 			<definition name="NOSLIW_RESERVE_ATTRIBUTE" value="nosliwAttribute_"/>
 			
 		</definitions>

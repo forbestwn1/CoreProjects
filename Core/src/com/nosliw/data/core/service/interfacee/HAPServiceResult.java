@@ -1,4 +1,4 @@
-package com.nosliw.data.core.service;
+package com.nosliw.data.core.service.interfacee;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -11,18 +11,18 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionServiceResult extends HAPEntityInfoWritableImp{
+public class HAPServiceResult extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String OUTPUT = "output";
 	
-	private Map<String, HAPDefinitionServiceOutput> m_output;
+	private Map<String, HAPServiceOutput> m_output;
 	
-	public HAPDefinitionServiceResult(){
-		this.m_output = new LinkedHashMap<String, HAPDefinitionServiceOutput>();
+	public HAPServiceResult(){
+		this.m_output = new LinkedHashMap<String, HAPServiceOutput>();
 	}
 
-	public void addOutput(String name, HAPDefinitionServiceOutput output) {   this.m_output.put(name, output);   }
+	public void addOutput(String name, HAPServiceOutput output) {   this.m_output.put(name, output);   }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -30,7 +30,7 @@ public class HAPDefinitionServiceResult extends HAPEntityInfoWritableImp{
 			JSONObject objJson = (JSONObject)json;
 			super.buildObjectByJson(objJson);
 			
-			this.m_output.putAll(HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionServiceOutput.class.getName(), objJson.optJSONObject(OUTPUT)));
+			this.m_output.putAll(HAPSerializeUtility.buildMapFromJsonObject(HAPServiceOutput.class.getName(), objJson.optJSONObject(OUTPUT)));
 		}
 		catch(Exception e){
 			e.printStackTrace();

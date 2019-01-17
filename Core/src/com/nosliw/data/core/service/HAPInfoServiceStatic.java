@@ -11,9 +11,11 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 
+//static information for a service. readable, query for service
 @HAPEntityWithAttribute
-public class HAPDefinitionServiceInfo extends HAPEntityInfoWritableImp{
+public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String ID = "id";
@@ -29,16 +31,16 @@ public class HAPDefinitionServiceInfo extends HAPEntityInfoWritableImp{
 	
 	private List<String> m_tags;
 	
-	private HAPInterfaceDefinitionService m_serviceInterface;
+	private HAPServiceInterface m_serviceInterface;
 	
-	public HAPDefinitionServiceInfo() {
+	public HAPInfoServiceStatic() {
 		this.m_tags = new ArrayList<String>();
-		this.m_serviceInterface = new HAPInterfaceDefinitionService();
+		this.m_serviceInterface = new HAPServiceInterface();
 	}
 
 	public String getId() {   return this.m_id;  }
 	
-	public HAPInterfaceDefinitionService getInterface() {  return this.m_serviceInterface;  } 
+	public HAPServiceInterface getInterface() {  return this.m_serviceInterface;  } 
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -46,7 +48,7 @@ public class HAPDefinitionServiceInfo extends HAPEntityInfoWritableImp{
 			JSONObject objJson = (JSONObject)json;
 			super.buildObjectByJson(objJson);
 			
-			this.m_serviceInterface = new HAPInterfaceDefinitionService();
+			this.m_serviceInterface = new HAPServiceInterface();
 			this.m_serviceInterface.buildObject(objJson.getJSONObject(INTERFACE), HAPSerializationFormat.JSON);
 			this.m_tags.clear();
 			this.m_tags.addAll(Arrays.asList(HAPNamingConversionUtility.parseElements(objJson.optString(TAG))));   

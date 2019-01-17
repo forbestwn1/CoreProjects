@@ -1,6 +1,6 @@
 {
 	"name": "realtor",
-    "implementation" : "com.nosliw.datasource.realtor.HAPDataSourceImp",
+    "implementation" : "com.nosliw.service.realtor.HAPServiceImp",
 	"description" : "all house for sale in toronto",
 	"output" : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,price:test.price;1.0.0,url:test.url;1.0.0||%%||%%",
 	"parms" : [ 

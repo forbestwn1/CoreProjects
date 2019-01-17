@@ -14,7 +14,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayCriteriaOperation;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayExpressionDiscovery;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
-import com.nosliw.data.core.service1.HAPManagerService;
+import com.nosliw.data.core.service.HAPManagerService;
 
 @HAPEntityWithAttribute(baseName="RUNTIME")
 public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{

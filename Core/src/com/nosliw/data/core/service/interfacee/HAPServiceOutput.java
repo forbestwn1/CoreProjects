@@ -1,4 +1,4 @@
-package com.nosliw.data.core.service;
+package com.nosliw.data.core.service.interfacee;
 
 import org.json.JSONObject;
 
@@ -9,7 +9,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionServiceOutput extends HAPEntityInfoWritableImp{
+public class HAPServiceOutput extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String CRITERIA = "criteria";
@@ -20,7 +20,7 @@ public class HAPDefinitionServiceOutput extends HAPEntityInfoWritableImp{
 	
 	public void setCriteria(HAPDataTypeCriteria criteria) {   this.m_criteria = criteria;   }
 	
-	public HAPDefinitionServiceOutput(){
+	public HAPServiceOutput(){
 	}
 
 	@Override

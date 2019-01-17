@@ -4,10 +4,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.info.HAPEntityInfoImp;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionService extends HAPSerializableImp{
+public class HAPDefinitionService extends HAPEntityInfoImp{
 
 	@HAPAttribute
 	public static String INFO = "info";
@@ -15,25 +15,27 @@ public class HAPDefinitionService extends HAPSerializableImp{
 	@HAPAttribute
 	public static String RUNTIME = "runtime";
 
-	private HAPDefinitionServiceInfo m_serviceInfo;
+	//static information
+	private HAPInfoServiceStatic m_staticInfo;
 	
-	private HAPDefinitionServiceRuntime m_runtimeInfo;
+	//runtime service instance information
+	private HAPInfoServiceRuntime m_runtimeInfo;
 
 	public HAPDefinitionService(){
 	}
 	
-	public HAPDefinitionServiceInfo getServiceInfo() {   return this.m_serviceInfo;   }
+	public HAPInfoServiceStatic getStaticInfo() {   return this.m_staticInfo;   }
 	
-	public HAPDefinitionServiceRuntime getRuntimeInfo() {  return this.m_runtimeInfo;  }
+	public HAPInfoServiceRuntime getRuntimeInfo() {  return this.m_runtimeInfo;  }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{
 			JSONObject objJson = (JSONObject)json;
-			this.m_serviceInfo = new HAPDefinitionServiceInfo();
-			this.m_serviceInfo.buildObjectByJson(objJson.optJSONObject(INFO));
+			this.m_staticInfo = new HAPInfoServiceStatic();
+			this.m_staticInfo.buildObjectByJson(objJson.optJSONObject(INFO));
 			
-			this.m_runtimeInfo = new HAPDefinitionServiceRuntime();
+			this.m_runtimeInfo = new HAPInfoServiceRuntime();
 			this.m_runtimeInfo.buildObjectByJson(objJson.optJSONObject(RUNTIME));
 
 		}
