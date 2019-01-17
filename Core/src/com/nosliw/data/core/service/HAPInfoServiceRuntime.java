@@ -1,5 +1,7 @@
 package com.nosliw.data.core.service;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -39,4 +41,12 @@ public class HAPInfoServiceRuntime extends HAPSerializableImp{
 		}
 		return true;  
 	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(IMPLEMENTATION, this.m_implementation);
+		if(this.m_configure!=null)  jsonMap.put(CONFIGURE, this.m_configure.toString());
+	}
+	
 }

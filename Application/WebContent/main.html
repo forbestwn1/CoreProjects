@@ -23,12 +23,21 @@
 <script>
 
 $(document).on("nosliwActive", function(){
-
+/*
 	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessRequest("expression;expressionProcessId", undefined, {
 		success : function(request, output){
 			alert(JSON.stringify(output));
 		}
 	});
+*/
+	nosliw.runtime.getDataService().executeExecuteDataServiceRequest("realtor", {}, {
+		success : function(requestInfo, serviceResult){
+			var kkkk;
+			kkkk++;
+		}
+	});
+
+/*
 
 	var currentSearchString = window.location.search;
 	var page = currentSearchString.substring(currentSearchString.indexOf("=")+1);
@@ -38,17 +47,16 @@ $(document).on("nosliwActive", function(){
 					nosliw.logging.info(JSON.stringify(uiResourceView));
 					
 					uiResourceView.appendTo($('#testDiv'));
-/*
 					var comData = uiResourceView.command("Include", {data:"Hello"});
 					alert(JSON.stringify(comData));
 					
 					uiResourceView.registerEventListener(function(eventName, eventData, requestInfo){
 						alert(eventName + "  _______  " +JSON.stringify(eventData));
 					});
-*/					
 				}
 			}
 	);
+	*/					
 	
 	
 	

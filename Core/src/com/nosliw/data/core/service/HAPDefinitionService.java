@@ -1,16 +1,20 @@
 package com.nosliw.data.core.service;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionService extends HAPEntityInfoImp{
 
 	@HAPAttribute
-	public static String INFO = "info";
+	public static String STATIC = "static";
 
 	@HAPAttribute
 	public static String RUNTIME = "runtime";
@@ -33,10 +37,10 @@ public class HAPDefinitionService extends HAPEntityInfoImp{
 		try{
 			JSONObject objJson = (JSONObject)json;
 			this.m_staticInfo = new HAPInfoServiceStatic();
-			this.m_staticInfo.buildObjectByJson(objJson.optJSONObject(INFO));
+			this.m_staticInfo.buildObjectByJson(objJson);
 			
 			this.m_runtimeInfo = new HAPInfoServiceRuntime();
-			this.m_runtimeInfo.buildObjectByJson(objJson.optJSONObject(RUNTIME));
+			this.m_runtimeInfo.buildObjectByJson(objJson);
 
 		}
 		catch(Exception e){
@@ -45,4 +49,12 @@ public class HAPDefinitionService extends HAPEntityInfoImp{
 		}
 		return true;  
 	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(STATIC, HAPJsonUtility.buildJson(this.m_staticInfo, HAPSerializationFormat.JSON));
+		jsonMap.put(RUNTIME, HAPJsonUtility.buildJson(this.m_runtimeInfo, HAPSerializationFormat.JSON));
+	}
+	
 }

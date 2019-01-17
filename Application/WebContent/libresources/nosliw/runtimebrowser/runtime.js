@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_createUIResourceService;
 	var node_createMiniAppService;
 	var node_createProcessRuntimeFactory;
+	var node_createDataService;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -44,6 +45,8 @@ var node_createRuntime = function(name){
 	
 	var loc_uiResourceService;
 	
+	var loc_dataService;
+	
 	var loc_out = {
 		
 		start : function(){	},
@@ -64,6 +67,7 @@ var node_createRuntime = function(name){
 
 		getUIResourceService(){		return loc_uiResourceService;		},
 		
+		getDataService(){   return loc_dataService;   }
 	};
 	
 	var lifecycleCallback = {};
@@ -77,6 +81,8 @@ var node_createRuntime = function(name){
 		loc_gatewayService = node_createGatewayService();
 		if(node_createUIResourceService!=undefined)  loc_uiResourceService = node_createUIResourceService();
 		loc_processRuntimeFactory = node_createProcessRuntimeFactory();
+		loc_dataService = node_createDataService();
+		
 		
 		//set sortcut for object
 		 nosliw.runtime = loc_out;
@@ -112,6 +118,7 @@ nosliw.registerSetNodeDataEvent("runtime.createGatewayService", function(){node_
 nosliw.registerSetNodeDataEvent("uiresource.createUIResourceService", function(){node_createUIResourceService = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.service.createMiniAppService", function(){node_createMiniAppService = this.getData();});
 nosliw.registerSetNodeDataEvent("process.createProcessRuntimeFactory", function(){node_createProcessRuntimeFactory = this.getData();});
+nosliw.registerSetNodeDataEvent("dataservice.createDataService", function(){node_createDataService = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

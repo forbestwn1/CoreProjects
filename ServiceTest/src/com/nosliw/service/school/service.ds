@@ -1,0 +1,39 @@
+{
+	"id": "school",
+	"name": "school",
+    "implementation" : "com.nosliw.service.school.HAPServiceImp",
+	"description" : "all element school rank in ontario",
+	"interface" : {
+		"result" : [
+			{
+				"name" : "success",
+				"output" : {
+					"output": {
+						"criteria" : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
+					}
+				},			
+			}
+		],
+		"parm" : [ 
+			{
+				name : "schoolType",
+				criteria : "test.options;1.0.0",
+				default :{
+					dataTypeId: "test.options;1.0.0",
+					value: {
+						value : "public",
+						optionsId : "schoolType"
+					}
+				},
+			},
+			{
+				name : "schoolRating",
+				criteria : "test.float;1.0.0",
+				default :{
+					dataTypeId: "test.float;1.0.0",
+					value: "8"
+				},
+			}
+		]
+	},
+}

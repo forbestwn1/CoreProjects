@@ -10,7 +10,6 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataTypeTest"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/UIResource"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataSource"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataSourceTest"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.web"/>
@@ -21,5 +20,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ServiceTest"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -1,10 +1,13 @@
 package com.nosliw.data.core.service.interfacee;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
@@ -49,5 +52,12 @@ public class HAPServiceParm extends HAPEntityInfoWritableImp{
 		}
 		
 		return true;  
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(CRITERIA, this.m_criteria.toStringValue(HAPSerializationFormat.LITERATE));
+		if(this.m_default!=null)  jsonMap.put(DEFAULT, this.m_default.toString());
 	}
 }

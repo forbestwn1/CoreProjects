@@ -11,7 +11,7 @@
 		<project>CriteriaParser</project>
 		<project>UIResource</project>
 		<project>DataSource</project>
-		<project>DataSourceTest</project>
+		<project>ServiceTest</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
