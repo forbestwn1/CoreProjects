@@ -6,7 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.process.HAPDefinitionProcess;
+import com.nosliw.data.core.process.HAPDefinitionEmbededProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.script.context.HAPParserContext;
@@ -59,7 +59,7 @@ public class HAPParserModule {
 		JSONObject processJsonObject = jsonObj.optJSONObject(HAPDefinitionModule.PROCESS);
 		if(processJsonObject!=null) {
 			for(Object key : processJsonObject.keySet()) {
-				HAPDefinitionProcess process = HAPParserProcessDefinition.parseProcess(processJsonObject.getJSONObject((String)key), m_activityPluginMan);
+				HAPDefinitionEmbededProcess process = HAPParserProcessDefinition.parseEmbededProcess(processJsonObject.getJSONObject((String)key), m_activityPluginMan);
 				process.setName((String)key);
 				out.addProcess(process);
 			}
@@ -94,7 +94,7 @@ public class HAPParserModule {
 			for(Object key : eventHandlersJson.keySet()) {
 				HAPDefinitionModuleUIEventHander eventHandler = new HAPDefinitionModuleUIEventHander();
 				JSONObject eventHandlerJson = eventHandlersJson.getJSONObject((String)key);
-				eventHandler.setProcess(HAPParserProcessDefinition.parseProcess(eventHandlerJson.optJSONObject(HAPDefinitionModuleUIEventHander.PROCESS), activityPluginMan));
+				eventHandler.setProcess(HAPParserProcessDefinition.parseEmbededProcess(eventHandlerJson.optJSONObject(HAPDefinitionModuleUIEventHander.PROCESS), activityPluginMan));
 				out.addEventHandler((String)key, eventHandler);
 			}
 		}

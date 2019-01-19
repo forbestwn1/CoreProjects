@@ -23,25 +23,26 @@
 <script>
 
 $(document).on("nosliwActive", function(){
-/*
 	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessRequest("expression;expressionProcessId", undefined, {
 		success : function(request, output){
 			alert(JSON.stringify(output));
 		}
 	});
-*/
+
+	/*
 	nosliw.runtime.getDataService().executeExecuteDataServiceRequest("realtor", {}, {
 		success : function(requestInfo, serviceResult){
 			var kkkk;
 			kkkk++;
 		}
 	});
+	*/
 
 /*
 
 	var currentSearchString = window.location.search;
 	var page = currentSearchString.substring(currentSearchString.indexOf("=")+1);
-	nosliw.runtime.getUIResourceService().executeCreateUIResourceViewRequest(page, 
+	nosliw.runtime.getUIResourceService().executeCreateUIResourceViewRequest(page, undefined, 
 			{
 				success : function(requestInfo, uiResourceView){
 					nosliw.logging.info(JSON.stringify(uiResourceView));

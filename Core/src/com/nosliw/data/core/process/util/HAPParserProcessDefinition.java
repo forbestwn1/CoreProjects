@@ -5,6 +5,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
+import com.nosliw.data.core.process.HAPDefinitionDataAssociationGroup;
+import com.nosliw.data.core.process.HAPDefinitionEmbededProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
@@ -30,9 +32,29 @@ public class HAPParserProcessDefinition {
 		return out;
 	}
 
+	public static HAPDefinitionEmbededProcess parseEmbededProcess(JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
+		HAPDefinitionEmbededProcess out = new HAPDefinitionEmbededProcess();
+		parseProcess(out, processJson, activityPluginMan);
+		
+		JSONObject outputMappingJson = processJson.optJSONObject(HAPDefinitionEmbededProcess.OUTPUTMAPPING);
+		if(outputMappingJson!=null) {
+			for(Object key : outputMappingJson.keySet()) {
+				HAPDefinitionDataAssociationGroup dataAssociation = new HAPDefinitionDataAssociationGroup();
+				dataAssociation.buildObject(outputMappingJson.opt((String)key), HAPSerializationFormat.JSON);
+				dataAssociation.setIsFlatOutput(false);
+				out.addOutputMapping((String)key, dataAssociation);
+			}
+		}
+		return out;
+	}
 	
 	public static HAPDefinitionProcess parseProcess(JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
 		HAPDefinitionProcess out = new HAPDefinitionProcess();
+		parseProcess(out, processJson, activityPluginMan);
+		return out;
+	}
+
+	public static void parseProcess(HAPDefinitionProcess out, JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
 		out.buildObject(processJson, HAPSerializationFormat.JSON);
 		
 		out.setContext(HAPParserContext.parseContextGroup(processJson.optJSONObject(HAPDefinitionProcess.CONTEXT)));
@@ -44,6 +66,5 @@ public class HAPParserProcessDefinition {
 			HAPDefinitionActivity activity = activityPluginMan.getPlugin(activityType).buildActivityDefinition(activityObjJson);
 			out.addActivity(activityObjJson.getString("id"), activity);
 		}
-		return out;
 	}
 }

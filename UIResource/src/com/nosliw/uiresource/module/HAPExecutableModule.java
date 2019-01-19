@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.process.HAPExecutableEmbededProcess;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPResourceData;
@@ -40,13 +41,13 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	private HAPContextGroup m_contextGroup;
 
 	//processes (used for lifecycle, module command)
-	private Map<String, HAPExecutableProcess> m_processes;
+	private Map<String, HAPExecutableEmbededProcess> m_processes;
 	
 	private Map<String, HAPExecutableModuleUI> m_uis;
 	
 	public HAPExecutableModule(HAPDefinitionModule moduleDefinition, String id) {
 		super(moduleDefinition);
-		this.m_processes = new LinkedHashMap<String, HAPExecutableProcess>();
+		this.m_processes = new LinkedHashMap<String, HAPExecutableEmbededProcess>();
 		this.m_uis = new LinkedHashMap<String, HAPExecutableModuleUI>();
 		this.m_moduleDefinition = moduleDefinition;
 		this.m_id = id;
@@ -58,7 +59,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	
 	public HAPContextGroup getContext() {   return this.m_contextGroup;   }
 	
-	public void addProcess(String name, HAPExecutableProcess process) {		this.m_processes.put(name, process);	}
+	public void addProcess(String name, HAPExecutableEmbededProcess process) {		this.m_processes.put(name, process);	}
 	
 	public void addModuleUI(HAPExecutableModuleUI ui) {  this.m_uis.put(ui.getName(), ui);   }
 	

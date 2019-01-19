@@ -11,6 +11,33 @@ import com.nosliw.data.core.script.context.HAPProcessorContext;
 
 public class HAPProcessorProcess{
 
+	public static HAPExecutableEmbededProcess process(
+			HAPDefinitionEmbededProcess embededProcessDefinition,
+			String id, 
+			HAPContextGroup parentContext, 
+			Map<String, HAPDefinitionProcess> localProcesses,
+			HAPManagerProcess processMan,
+			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPProcessTracker processTracker) {
+		HAPExecutableEmbededProcess out = null;
+		HAPContextGroup oldContext = null;
+		do {
+			if(oldContext==null)   oldContext = HAPProcessorContext.process(embededProcessDefinition.getContext(), parentContext, null, contextProcessRequirement);
+			else oldContext = out.getContext();
+			out = new HAPExecutableEmbededProcess(embededProcessDefinition, id);
+			HAPProcessorProcess.process(out, oldContext, localProcesses, processMan, contextProcessRequirement, processTracker);
+			
+			Map<String, HAPDefinitionDataAssociationGroup> outputMapping = embededProcessDefinition.getOutputMapping();
+			for(String result : outputMapping.keySet()) {
+				HAPBackToGlobalContextImp backToGlobalContext = new HAPBackToGlobalContextImp();
+				HAPUtilityProcess.mergeBackToGlobalContext(out.getResult(result).getContext().getContext(), outputMapping.get(result), out.getContext(), backToGlobalContext, contextProcessRequirement);
+				out.addBackToGlobalContext(result, backToGlobalContext);
+			}
+			
+		}while(!oldContext.equals(out.getContext()));
+		return out;
+	}
+	
 	//
 	public static HAPExecutableProcess process(
 			HAPDefinitionProcess processDefinition, 
@@ -20,37 +47,42 @@ public class HAPProcessorProcess{
 			HAPManagerProcess processMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
-		
 		HAPExecutableProcess out = null;
-
-		//merge context with parent
-		HAPContextGroup context = HAPProcessorContext.process(processDefinition.getContext(), parentContext, null, contextProcessRequirement);
-		Map<String, HAPExecutableDataAssociationGroup> results;
-		HAPContextGroup oldContext;
+		HAPContextGroup oldContext = null;
 		do {
-			oldContext = context.cloneContextGroup();
-			
+			if(oldContext==null)   oldContext = HAPProcessorContext.process(processDefinition.getContext(), parentContext, null, contextProcessRequirement);
+			else oldContext = out.getContext();
 			out = new HAPExecutableProcess(processDefinition, id);
-			results = new LinkedHashMap<String, HAPExecutableDataAssociationGroup>();
-			for(String activityId : processDefinition.getActivities().keySet()) {
-				HAPDefinitionActivity activity = processDefinition.getActivityById(activityId);
-				
-				//start activity
-				if(activity.getType().equals(HAPConstant.ACTIVITY_TYPE_START))    out.setStartActivityId(activityId);    
-				
-				//process activity
-				HAPExecutableActivity activityExe = processMan.getPluginManager().getPlugin(activity.getType()).process(activity, activityId, out, context, results, localProcesses, processMan, contextProcessRequirement, processTracker);
-				out.addActivity(activityId, activityExe);
-			}
-			out.setContext(context);
-//		}while(false);
-		}while(!context.equals(oldContext));
-		
-		//process results
-		out.setResults(results);
-		
+			HAPProcessorProcess.process(out, oldContext, localProcesses, processMan, contextProcessRequirement, processTracker);
+		}while(!oldContext.equals(out.getContext()));
 		return out;
 	}
+
+	private static void process(
+			HAPExecutableProcess out,
+			HAPContextGroup originContext, 
+			Map<String, HAPDefinitionProcess> localProcesses,
+			HAPManagerProcess processMan,
+			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPProcessTracker processTracker) {
+		HAPContextGroup context = originContext.cloneContextGroup();
+		Map<String, HAPExecutableDataAssociationGroup> results = new LinkedHashMap<String, HAPExecutableDataAssociationGroup>();
+		for(String activityId : out.getDefinition().getActivities().keySet()) {
+			HAPDefinitionActivity activity = out.getDefinition().getActivityById(activityId);
+			
+			//start activity
+			if(activity.getType().equals(HAPConstant.ACTIVITY_TYPE_START))    out.setStartActivityId(activityId);    
+			
+			//process activity
+			HAPExecutableActivity activityExe = processMan.getPluginManager().getPlugin(activity.getType()).process(activity, activityId, out, context, results, localProcesses, processMan, contextProcessRequirement, processTracker);
+			out.addActivity(activityId, activityExe);
+		}
+		out.setContext(context);
+		//process results
+		out.setResults(results);
+	}
+
+	
 	
 	//process process in suite
 	public static HAPExecutableProcess process(

@@ -34,7 +34,7 @@ var node_createUIModuleService = function(){
 			
 	};
 	
-	var loc_getExecuteUIModuleRequest = function(uiModule, parentContext, handlers, request){
+	var loc_getExecuteUIModuleRequest = function(uiModule, parentContext, env, handlers, request){
 		
 		//build context for module
 		var context = parentContext;
@@ -57,7 +57,7 @@ var node_createUIModuleService = function(){
 	
 	var loc_out = {
 
-		getExecuteUIModuleRequest : function(id, context, handlers, requester_parent){
+		getExecuteUIModuleRequest : function(id, context, env, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModuleResource", {"id":id, "input":input}), handlers, requestInfo);
 

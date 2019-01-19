@@ -17,7 +17,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
 @HAPEntityWithAttribute
-public class HAPExecutableResultActivityNormal extends HAPEntityInfoWritableImp implements HAPExecutable{
+public class HAPExecutableResultActivityNormal extends HAPEntityInfoWritableImp implements HAPBackToGlobalContext, HAPExecutable{
 
 	@HAPAttribute
 	public static String FLOW = "flow";
@@ -44,10 +44,15 @@ public class HAPExecutableResultActivityNormal extends HAPEntityInfoWritableImp 
 	
 	public HAPDefinitionSequenceFlow getFlow() {  return this.m_definition.getFlow();  }
 	
+	@Override	
 	public HAPExecutableDataAssociationGroup getOutputDataAssociation() {   return this.m_outputAssociation;   }
+	@Override
 	public void setOutputDataAssociation(HAPExecutableDataAssociationGroup output) {   this.m_outputAssociation = output;    }
 
+	@Override
 	public void addOutputMatchers(String path, HAPMatchers matchers) {   this.m_outputMatchers.put(path, matchers);     }
+	@Override
+	public Map<String, HAPMatchers> getOutputMatchers() {  return this.m_outputMatchers; }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
@@ -67,4 +72,5 @@ public class HAPExecutableResultActivityNormal extends HAPEntityInfoWritableImp 
 
 	@Override
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {		return null;	}
+
 }

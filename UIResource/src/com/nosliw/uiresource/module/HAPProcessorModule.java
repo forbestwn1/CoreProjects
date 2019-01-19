@@ -6,8 +6,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.process.HAPDefinitionProcess;
-import com.nosliw.data.core.process.HAPExecutableProcess;
+import com.nosliw.data.core.process.HAPDefinitionEmbededProcess;
+import com.nosliw.data.core.process.HAPExecutableEmbededProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorProcess;
 import com.nosliw.data.core.runtime.HAPRuntime;
@@ -44,9 +44,9 @@ public class HAPProcessorModule {
 		out.setContext(HAPProcessorContext.process(moduleDefinition.getContext(), parentContext, null, contextProcessRequirement));
 		
 		//process global processes in module
-		Map<String, HAPDefinitionProcess> internalProcesses = moduleDefinition.getProcesses();
+		Map<String, HAPDefinitionEmbededProcess> internalProcesses = moduleDefinition.getProcesses();
 		for(String name : internalProcesses.keySet()) {
-			HAPExecutableProcess processExe = HAPProcessorProcess.process(internalProcesses.get(name), name, parentContext, internalProcesses, processMan, contextProcessRequirement, processTracker);
+			HAPExecutableEmbededProcess processExe = HAPProcessorProcess.process(internalProcesses.get(name), name, parentContext, null, processMan, contextProcessRequirement, processTracker);
 			out.addProcess(name, processExe);
 		}
 

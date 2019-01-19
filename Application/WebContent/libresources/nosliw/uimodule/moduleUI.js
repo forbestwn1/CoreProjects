@@ -8,21 +8,37 @@ var packageObj = library.getChildPackage("entity");
 	var node_buildServiceProvider;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createModuleUI = function(moduleUI, context){
+var node_createModuleUIRequest = function(moduleUI, externalContext, env, handler, request){
 	
+	//build context
+	
+	//generate uiView
+	
+	nosliw.runtime.getUIResourceService().getGenerateUIResourceViewRequest(moduleUI.page,
+			
+	
+	
+};
+	
+var node_createModuleUI = function(uiView, context, env){
+	
+	var uiView;
+	
+	var context;
 	
 	var loc_out = {
-		
+		//take command
 		executeCommandRequest : function(commandName, parms, handlers, request){
 			
 		},
 		
+		//
 		registerListener : function(listener){
 			
 		},
 		
 		getView : function(){
-			
+			return uiView;
 		},
 		
 		updateContext : function(contextValue){

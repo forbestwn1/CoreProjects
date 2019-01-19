@@ -10,8 +10,9 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.process.HAPDefinitionProcess;
+import com.nosliw.data.core.process.HAPDefinitionEmbededProcess;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+
 /**
 Module is a independent entity that is runnable within a container
 It is a simple application which contains pages and transition between pages
@@ -50,13 +51,13 @@ public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
 	private Set<HAPDefinitionModuleUI> m_uis;
 
 	//processes (used for lifecycle, module command)
-	private Map<String, HAPDefinitionProcess> m_processes;
+	private Map<String, HAPDefinitionEmbededProcess> m_processes;
 
 	public HAPDefinitionModule(String id) {
 		this.m_id = id;
 		this.m_pagesInfo = new LinkedHashMap<String, HAPInfoPage>();
 		this.m_uis = new HashSet<HAPDefinitionModuleUI>();
-		this.m_processes = new LinkedHashMap<String, HAPDefinitionProcess>();
+		this.m_processes = new LinkedHashMap<String, HAPDefinitionEmbededProcess>();
 	}
 	
 	public String getId() {   return this.m_id;   }
@@ -67,8 +68,8 @@ public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
 	public HAPContextGroup getContext() {  return this.m_contextGroup;   }
 	public void setContext(HAPContextGroup contextGroup) {  this.m_contextGroup = contextGroup;   }
 	
-	public Map<String, HAPDefinitionProcess> getProcesses(){  return this.m_processes;  }
-	public void addProcess(HAPDefinitionProcess processDef) {  this.m_processes.put(processDef.getName(), processDef);  }
+	public Map<String, HAPDefinitionEmbededProcess> getProcesses(){  return this.m_processes;  }
+	public void addProcess(HAPDefinitionEmbededProcess processDef) {  this.m_processes.put(processDef.getName(), processDef);  }
 	
 	public Set<HAPDefinitionModuleUI> getUIs(){  return this.m_uis;  }
 	public void addUI(HAPDefinitionModuleUI ui) {   this.m_uis.add(ui);   }

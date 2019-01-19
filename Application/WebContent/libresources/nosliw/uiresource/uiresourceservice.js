@@ -24,7 +24,7 @@ var node_createUIResourceService = function(){
 	
 	var loc_out = {
 
-			getCreateUIResourceViewRequest : function(name, handlers, requester_parent){
+			getCreateUIResourceViewRequest : function(name, externalContext, handlers, requester_parent){
 				var requestInfo = loc_out.getRequestInfo(requester_parent);
 				var out = node_createServiceRequestInfoService(new node_ServiceInfo("CreateUIResourceView", {"name":name}), handlers, requestInfo)
 
@@ -34,26 +34,26 @@ var node_createUIResourceService = function(){
 				out.setDependentService(new node_DependentServiceRequestInfo(getUIResourceRequest, {
 					success : function(requestInfo, uiResources){
 						var uiResource = uiResources[name];
-						return node_createUIResourceView(loc_uiResourceViewFactory.createUIView(uiResource, loc_getResourceViewId(), undefined, undefined, requestInfo));
+						return node_createUIResourceView(loc_uiResourceViewFactory.createUIView(uiResource, loc_getResourceViewId(), undefined, externalContext, requestInfo));
 					}
 				}));
 				return out;
 			},	
-			executeCreateUIResourceViewRequest : function(name, handlers, requester_parent){
+			executeCreateUIResourceViewRequest : function(name, externalContext, handlers, requester_parent){
 				var requestInfo = this.getCreateUIResourceViewRequest(name, handlers, requester_parent);
 				node_requestServiceProcessor.processRequest(requestInfo);
 			},
 			
-			getGenerateUIResourceViewRequest : function(uiResource, handlers, requester_parent){
+			getGenerateUIResourceViewRequest : function(uiResource, externalContext, handlers, requester_parent){
 				var requestInfo = loc_out.getRequestInfo(requester_parent);
 				var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("GenerateUIResourceView", {"uiResource":uiResource}), 
 					function(requestInfo){
-						return node_createUIResourceView(loc_uiResourceViewFactory.createUIView(uiResource, loc_getResourceViewId(), undefined, undefined, undefined));
+						return node_createUIResourceView(loc_uiResourceViewFactory.createUIView(uiResource, loc_getResourceViewId(), undefined, externalContext, undefined));
 					}, 
 					handlers, requestInfo);
 				return out;
 			},	
-			executeGenerateUIResourceViewRequest : function(uiResource, handlers, requester_parent){
+			executeGenerateUIResourceViewRequest : function(uiResource, externalContext, handlers, requester_parent){
 				var requestInfo = this.getGenerateUIResourceViewRequest(uiResource, handlers, requester_parent);
 				node_requestServiceProcessor.processRequest(requestInfo);
 			},
