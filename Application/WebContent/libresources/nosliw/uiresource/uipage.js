@@ -9,7 +9,7 @@ var packageObj = library;
 	var node_getLifecycleInterface;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createUIResourceView = function(uiView){
+var node_createUIPage = function(uiView){
 	
 	var loc_uiView = uiView;
 	
@@ -63,6 +63,6 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createUIResourceView", node_createUIResourceView); 
+packageObj.createChildNode("createUIPage", node_createUIPage); 
 
 })(packageObj);

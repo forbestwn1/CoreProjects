@@ -14,7 +14,7 @@ var node_createModuleUIRequest = function(moduleUI, externalContext, env, handle
 	
 	//generate uiView
 	
-	//nosliw.runtime.getUIResourceService().getGenerateUIResourceViewRequest(moduleUI.page,
+	//nosliw.runtime.getUIResourceService().getGenerateUIPageRequest(moduleUI.page,
 			
 	
 	

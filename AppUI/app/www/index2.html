@@ -228,8 +228,8 @@
 	
 	var showContent = function(page){
 		$('#content').empty();
-		nosliw.runtime.getUIResourceService()
-		.executeCreateUIResourceViewRequest(
+		nosliw.runtime.getUIPageService()
+		.executeCreateUIPageRequest(
 				page,
 				{
 					success : function(requestInfo,
@@ -252,7 +252,7 @@
 		var entryPage = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_ENTRYPAGE];
 		var uiResource = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_PAGES][entryPage];
 		var uiResourceName = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_UIRESOURCEPAGES][entryPage];
-		nosliw.runtime.getUIResourceService().executeCreateUIResourceViewRequest(uiResourceName, {
+		nosliw.runtime.getUIPageService().executeCreateUIPageRequest(uiResourceName, {
 			success : function(requestInfo, uiResourceView){
 				uiResourceView.appendTo(parentView);
 //				uiResourceView.executeDefaultDataOperationRequestSet(appData, node_CONSTANT.DATA_TYPE_APPDATA);
@@ -354,7 +354,7 @@ uiResourceView.executeDataOperationRequestSet("result", appData, node_CONSTANT.D
 		
 		var outRequest = node_createServiceRequestInfoSequence({}, handlers, request);
 		
-		var uiResourceViewRequest = nosliw.runtime.getUIResourceService().getCreateUIResourceViewRequest(settingData.uiResourceName, 
+		var uiResourceViewRequest = nosliw.runtime.getUIPageService().getGenerateUIPageRequest(settingData.uiResourceName, 
 				{
 					success : function(requestInfo, uiResourceView){
 						settingData.uiResourceView = uiResourceView;

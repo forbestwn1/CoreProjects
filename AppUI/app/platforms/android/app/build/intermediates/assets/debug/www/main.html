@@ -25,7 +25,7 @@ nosliw.registerNodeEvent("runtime", "active", function(eventName, nodeName){
 	
 	var currentSearchString = window.location.search;
 	var page = currentSearchString.substring(currentSearchString.indexOf("=")+1);
-	nosliw.runtime.getUIResourceService().executeCreateUIResourceViewRequest(page, 
+	nosliw.runtime.getUIPageService().executeCreateUIPageRequest(page, 
 			{
 				success : function(requestInfo, uiResourceView){
 					nosliw.logging.info(JSON.stringify(uiResourceView));

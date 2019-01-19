@@ -13,10 +13,10 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_createUIViewFactory;
 	var node_createServiceRequestInfoSimple;
-	var node_createUIResourceView;
+	var node_createUIPage;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createUIResourceService = function(){
+var node_createUIPageService = function(){
 	
 	var loc_uiResourceViewFactory = node_createUIViewFactory();
 	
@@ -24,7 +24,7 @@ var node_createUIResourceService = function(){
 	
 	var loc_out = {
 
-			getCreateUIResourceViewRequest : function(name, externalContext, handlers, requester_parent){
+			getCreateUIPageRequest : function(name, externalContext, handlers, requester_parent){
 				var requestInfo = loc_out.getRequestInfo(requester_parent);
 				var out = node_createServiceRequestInfoService(new node_ServiceInfo("CreateUIResourceView", {"name":name}), handlers, requestInfo);
 
@@ -34,27 +34,27 @@ var node_createUIResourceService = function(){
 				out.setDependentService(new node_DependentServiceRequestInfo(getUIResourceRequest, {
 					success : function(requestInfo, uiResources){
 						var uiResource = uiResources[name];
-						return node_createUIResourceView(loc_uiResourceViewFactory.createUIView(uiResource, loc_getResourceViewId(), undefined, externalContext, requestInfo));
+						return node_createUIPage(loc_uiResourceViewFactory.createUIView(uiResource, loc_getResourceViewId(), undefined, externalContext, requestInfo));
 					}
 				}));
 				return out;
 			},	
-			executeCreateUIResourceViewRequest : function(name, externalContext, handlers, requester_parent){
-				var requestInfo = this.getCreateUIResourceViewRequest(name, externalContext, handlers, requester_parent);
+			executeCreateUIPageRequest : function(name, externalContext, handlers, requester_parent){
+				var requestInfo = this.getCreateUIPageRequest(name, externalContext, handlers, requester_parent);
 				node_requestServiceProcessor.processRequest(requestInfo);
 			},
 			
-			getGenerateUIResourceViewRequest : function(uiResource, externalContext, handlers, requester_parent){
+			getGenerateUIPageRequest : function(uiResource, externalContext, handlers, requester_parent){
 				var requestInfo = loc_out.getRequestInfo(requester_parent);
 				var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("GenerateUIResourceView", {"uiResource":uiResource}), 
 					function(requestInfo){
-						return node_createUIResourceView(loc_uiResourceViewFactory.createUIView(uiResource, loc_getResourceViewId(), undefined, externalContext, undefined));
+						return node_createUIPage(loc_uiResourceViewFactory.createUIView(uiResource, loc_getResourceViewId(), undefined, externalContext, undefined));
 					}, 
 					handlers, requestInfo);
 				return out;
 			},	
-			executeGenerateUIResourceViewRequest : function(uiResource, externalContext, handlers, requester_parent){
-				var requestInfo = this.getGenerateUIResourceViewRequest(uiResource, externalContext, handlers, requester_parent);
+			executeGenerateUIPageRequest : function(uiResource, externalContext, handlers, requester_parent){
+				var requestInfo = this.getGenerateUIPageRequest(uiResource, externalContext, handlers, requester_parent);
 				node_requestServiceProcessor.processRequest(requestInfo);
 			},
 	};
@@ -77,9 +77,9 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.createUIViewFactory", function(){node_createUIViewFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
-nosliw.registerSetNodeDataEvent("uiresource.createUIResourceView", function(){node_createUIResourceView = this.getData();});
+nosliw.registerSetNodeDataEvent("uiresource.createUIPage", function(){node_createUIPage = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createUIResourceService", node_createUIResourceService); 
+packageObj.createChildNode("createUIPageService", node_createUIPageService); 
 
 })(packageObj);

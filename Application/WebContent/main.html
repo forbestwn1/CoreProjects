@@ -41,7 +41,7 @@ $(document).on("nosliwActive", function(){
 
 	var currentSearchString = window.location.search;
 	var page = currentSearchString.substring(currentSearchString.indexOf("=")+1);
-	nosliw.runtime.getUIResourceService().executeCreateUIResourceViewRequest(page, undefined, 
+	nosliw.runtime.getUIPageService().executeCreateUIPageRequest(page, undefined, 
 			{
 				success : function(requestInfo, uiResourceView){
 					nosliw.logging.info(JSON.stringify(uiResourceView));
