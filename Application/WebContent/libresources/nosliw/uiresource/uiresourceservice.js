@@ -26,7 +26,7 @@ var node_createUIResourceService = function(){
 
 			getCreateUIResourceViewRequest : function(name, externalContext, handlers, requester_parent){
 				var requestInfo = loc_out.getRequestInfo(requester_parent);
-				var out = node_createServiceRequestInfoService(new node_ServiceInfo("CreateUIResourceView", {"name":name}), handlers, requestInfo)
+				var out = node_createServiceRequestInfoService(new node_ServiceInfo("CreateUIResourceView", {"name":name}), handlers, requestInfo);
 
 				var getUIResourceRequest = nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([name], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIRESOURCE, {});
 				
@@ -40,7 +40,7 @@ var node_createUIResourceService = function(){
 				return out;
 			},	
 			executeCreateUIResourceViewRequest : function(name, externalContext, handlers, requester_parent){
-				var requestInfo = this.getCreateUIResourceViewRequest(name, handlers, requester_parent);
+				var requestInfo = this.getCreateUIResourceViewRequest(name, externalContext, handlers, requester_parent);
 				node_requestServiceProcessor.processRequest(requestInfo);
 			},
 			
@@ -54,7 +54,7 @@ var node_createUIResourceService = function(){
 				return out;
 			},	
 			executeGenerateUIResourceViewRequest : function(uiResource, externalContext, handlers, requester_parent){
-				var requestInfo = this.getGenerateUIResourceViewRequest(uiResource, handlers, requester_parent);
+				var requestInfo = this.getGenerateUIResourceViewRequest(uiResource, externalContext, handlers, requester_parent);
 				node_requestServiceProcessor.processRequest(requestInfo);
 			},
 	};

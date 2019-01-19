@@ -14,7 +14,7 @@ var node_createModuleUIRequest = function(moduleUI, externalContext, env, handle
 	
 	//generate uiView
 	
-	nosliw.runtime.getUIResourceService().getGenerateUIResourceViewRequest(moduleUI.page,
+	//nosliw.runtime.getUIResourceService().getGenerateUIResourceViewRequest(moduleUI.page,
 			
 	
 	
@@ -62,9 +62,5 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("NormalActivityResult", node_NormalActivityResult); 
-packageObj.createChildNode("NormalActivityOutput", node_NormalActivityOutput); 
-packageObj.createChildNode("EndActivityOutput", node_EndActivityOutput); 
-packageObj.createChildNode("ProcessResult", node_ProcessResult); 
 
 })(packageObj);
