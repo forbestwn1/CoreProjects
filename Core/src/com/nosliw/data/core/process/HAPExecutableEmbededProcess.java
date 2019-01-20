@@ -3,9 +3,14 @@ package com.nosliw.data.core.process;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+
 //process that is part of system
 //it should include data association that mapping result to system context 
 public class HAPExecutableEmbededProcess extends HAPExecutableProcess{
+
+	@HAPAttribute
+	public static String BACKTOGLOBAL = "backToGlobal";
 
 	private Map<String, HAPBackToGlobalContext> m_backToGlobals;
 	

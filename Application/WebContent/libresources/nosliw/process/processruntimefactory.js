@@ -82,16 +82,23 @@ var node_createProcessService = function(envObj){
 		var activityResultDataAssociation = backToGlobalConfig[node_COMMONATRIBUTECONSTANT.BACKTOGLOBALCONTEXT_OUTPUTASSOCIATION];
 		out.addRequest(loc_getGenerateDataAssociationOutputRequest(activityResultDataAssociation, data, {
 			success : function(request, globalData){
-				//process matchers here
-				//kkkk
-				var matchersByPathRequest = node_createServiceRequestInfoSet();
+				//process matchers
 				var matchersByPath = backToGlobalConfig[node_COMMONATRIBUTECONSTANT.BACKTOGLOBALCONTEXT_OUTPUTMATCHERS];
+				if(matchersByPath==undefined)  return globalData;
+				
+				var matchersByPathRequest = node_createServiceRequestInfoSet(undefined, {
+					success : function(request, resultSet){
+						_.each(resultSet.getResults(), function(result, path){
+							node_objectOperationUtility.operateObject(globalData, path, node_CONSTANT.WRAPPER_OPERATION_SET, result);
+						});
+						return globalData;
+					}
+				});
 				_.each(matchersByPath, function(matchers, path){
 					var valueByPath = node_objectOperationUtility.getObjectAttributeByPath(globalData, path);
-					
+					matchersByPathRequest.addRequest(path, node_createExpressionService.getMatchDataRequest(valueByPath, matchers));
 				});
-				
-				return globalData;
+				return matchersByPathRequest;
 			}
 		}));
 		return out;
@@ -197,7 +204,22 @@ var node_createProcessService = function(envObj){
 		}));
 		return out;
 	};
-	
+
+	var loc_getExecuteEmbededProcessRequest = function(embededProcess, input, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteEmbededProcess", {"embededProcess":embededProcess, "input":input}), handlers, request);
+		out.addRequest(loc_getExecuteProcessRequest(embededProcess, input, {
+			success : function(requestInfo, processResult){
+				var backToGlobal = embededProcess[node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_BACKTOGLOBAL][processResult.resultName];
+				return loc_getBackToGlobalRequest(data, backToGlobal, {
+					success : function(request, globalData){
+						return new node_ProcessResult(processResult.resultName, globalData);
+					}
+				});
+			}
+		}));
+		return out;
+	};
+
 	var loc_out = {
 
 		getExecuteProcessRequest : function(id, input, handlers, requester_parent){
@@ -218,7 +240,16 @@ var node_createProcessService = function(envObj){
 			var requestInfo = this.getExecuteProcessRequest(id, input, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
-			
+		
+		getExecuteEmbededProcessRequest : function(embededProcess, input, handlers, request){
+			return loc_getExecuteEmbededProcessRequest(embededProcess, input, handlers, request);
+		},
+
+		executeEmbededProcessRequest : function(embededProcess, input, handlers, requester_parent){
+			var requestInfo = this.getExecuteEmbededProcessRequest(embededProcess, input, handlers, requester_parent);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+		
 	};
 
 	loc_out = node_buildServiceProvider(loc_out, "processService");
