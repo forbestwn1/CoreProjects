@@ -423,32 +423,6 @@ var node_createExpressionService = function(){
 		return out;
 	};
 
-
-	var loc_getExecuteScriptRequest1 = function(script, expressions, variables, scriptConstants, handlers, requester_parent){
-		var requestInfo = loc_out.getRequestInfo(requester_parent);
-		//calculate multiple expression
-		var executeMultipleExpressionRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("ExecuteMultipleExpression", {"expressions":expressions, "variables":variables}), {});
-		_.each(expressions, function(expression, name){
-			//find variable value only for this expression
-			var expVariables = {};
-			_.each(expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS], function(varInfo, name){
-				expVariables[name] = variables[name];
-			});
-			executeMultipleExpressionRequest.addRequest(name, loc_getExecuteExpressionRequest(expression, expVariables, {}, {}));
-		});
-
-		var executeScriptExpressionRequest = node_createServiceRequestInfoService(new node_ServiceInfo("ExecuteScriptExpression", {"script":script, "expressions":expressions, "variables":variables}), handlers, requestInfo);
-		var requestDependency = new node_DependentServiceRequestInfo(executeMultipleExpressionRequest, {
-			success : function(requestInfo, expressionsResult){
-				var expressionsData = expressionsResult.getResults();
-				return script.call(undefined, expressionsData, scriptConstants, variables);
-			}
-		});
-		executeScriptExpressionRequest.setDependentService(requestDependency);
-
-		return executeScriptExpressionRequest;
-	};
-	
 	var loc_out = {
 		
 		getExecuteOperationRequest : function(dataTypeId, operation, parmsArray, handlers, requester_parent){

@@ -11,25 +11,27 @@ var packageObj = library.getChildPackage("entity");
 var node_createModuleUIRequest = function(moduleUI, externalContext, env, handler, request){
 	
 	//build context
+	var context = buildContext(moduleUI.contextMapping, externalContext);
+	
 	
 	//generate uiView
-	
-	//nosliw.runtime.getUIResourceService().getGenerateUIPageRequest(moduleUI.page,
-			
-	
-	
+	nosliw.runtime.getUIResourceService().getGenerateUIPageRequest(moduleUI.page, context, {
+		success :function(requestInfo, page){
+			return node_createModuleUI(page, context, env);
+		}
+	});
 };
 	
-var node_createModuleUI = function(uiView, context, env){
+var node_createModuleUI = function(page, context, env){
 	
-	var uiView;
+	var page;
 	
 	var context;
 	
 	var loc_out = {
 		//take command
 		executeCommandRequest : function(commandName, parms, handlers, request){
-			
+			page.command();
 		},
 		
 		//
@@ -37,15 +39,13 @@ var node_createModuleUI = function(uiView, context, env){
 			
 		},
 		
-		getView : function(){
-			return uiView;
+		getPage : function(){
+			return page;
 		},
 		
 		updateContext : function(contextValue){
 			
 		}
-			
-			
 	};
 	
 	return loc_out;

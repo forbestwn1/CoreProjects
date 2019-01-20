@@ -22,11 +22,11 @@ public class HAPExecutableResultActivityNormal extends HAPEntityInfoWritableImp 
 	@HAPAttribute
 	public static String FLOW = "flow";
 
-	@HAPAttribute
-	public static String OUTPUTASSOCIATION = "outputAssociation";
-	
-	@HAPAttribute
-	public static String OUTPUTMATCHERS = "outputMatchers";
+//	@HAPAttribute
+//	public static String OUTPUTASSOCIATION = "outputAssociation";
+//	
+//	@HAPAttribute
+//	public static String OUTPUTMATCHERS = "outputMatchers";
 
 	private HAPDefinitionResultActivityNormal m_definition;
 	

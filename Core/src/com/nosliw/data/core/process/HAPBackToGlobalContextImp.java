@@ -7,11 +7,11 @@ import com.nosliw.data.core.expression.HAPMatchers;
 
 public class HAPBackToGlobalContextImp implements HAPBackToGlobalContext{
 
-	@HAPAttribute
-	public static String OUTPUTASSOCIATION = "outputAssociation";
-	
-	@HAPAttribute
-	public static String OUTPUTMATCHERS = "outputMatchers";
+//	@HAPAttribute
+//	public static String OUTPUTASSOCIATION = "outputAssociation";
+//	
+//	@HAPAttribute
+//	public static String OUTPUTMATCHERS = "outputMatchers";
 
 	//match from data association output to target context variable
 	private Map<String, HAPMatchers> m_outputMatchers;

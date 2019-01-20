@@ -44,7 +44,7 @@ var node_createUIModuleService = function(){
 			loc_uis[name] = node_createModuleUI(uiModule, context);
 			//register listener for module ui
 			
-		})
+		});
 		
 		//init
 		

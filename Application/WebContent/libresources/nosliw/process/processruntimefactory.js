@@ -8,6 +8,7 @@ var packageObj = library;
 	var node_buildServiceProvider;
 	var node_createServiceRequestInfoSimple;
 	var node_createServiceRequestInfoSequence;
+	var node_createServiceRequestInfoSet;
 	var node_ServiceInfo;
 	var node_objectOperationUtility;
 	var node_NormalActivityResult;
@@ -75,6 +76,27 @@ var node_createProcessService = function(envObj){
 		return out;
 	};
 	
+	var loc_getBackToGlobalRequest = function(data, backToGlobalConfig, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("BackToGlobal", {"data":data, "backToGlobalConfig":backToGlobalConfig}), handlers, request);
+
+		var activityResultDataAssociation = backToGlobalConfig[node_COMMONATRIBUTECONSTANT.BACKTOGLOBALCONTEXT_OUTPUTASSOCIATION];
+		out.addRequest(loc_getGenerateDataAssociationOutputRequest(activityResultDataAssociation, data, {
+			success : function(request, globalData){
+				//process matchers here
+				//kkkk
+				var matchersByPathRequest = node_createServiceRequestInfoSet();
+				var matchersByPath = backToGlobalConfig[node_COMMONATRIBUTECONSTANT.BACKTOGLOBALCONTEXT_OUTPUTMATCHERS];
+				_.each(matchersByPath, function(matchers, path){
+					var valueByPath = node_objectOperationUtility.getObjectAttributeByPath(globalData, path);
+					
+				});
+				
+				return globalData;
+			}
+		}));
+		return out;
+	};
+
 	var loc_getExecuteNormalActivityRequest = function(normalActivity, context, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteNormalActivity", {"activity":normalActivity, "context":context}), handlers, request);
 		//calculate input for activity first
@@ -88,13 +110,8 @@ var node_createProcessService = function(envObj){
 							success : function(requestInfo, activityResult){  //get activity results (result name + result value map)
 								//calculate variable output
 								var activityResultConfig = normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULT][activityResult.resultName];
-								var activityResultDataAssociation = activityResultConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_OUTPUTASSOCIATION];
-								return loc_getGenerateDataAssociationOutputRequest(activityResultDataAssociation, activityResult.resultValue, {
-									success : function(request, activityOutput){
-										//process matchers here
-										//kkkk
-										
-										
+								return loc_getBackToGlobalRequest(activityResult.resultValue, activityResultConfig, {
+									success :function(request, activityOutput){
 										//build new context
 										_.each(activityOutput, function(ele, name){
 											context[name] = ele;
@@ -111,7 +128,7 @@ var node_createProcessService = function(envObj){
 		}));
 		return out;
 	};
-	
+
 	var loc_getExecuteStartActivityRequest = function(startActivity, context, handlers, request){
 		out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteStartActivity", {"activity":activity, "context":context}), 
 				function(requestInfo){
@@ -225,6 +242,7 @@ nosliw.registerSetNodeDataEvent("process.entity.NormalActivityOutput", function(
 nosliw.registerSetNodeDataEvent("process.entity.EndActivityOutput", function(){node_EndActivityOutput = this.getData();	});
 nosliw.registerSetNodeDataEvent("process.entity.ProcessResult", function(){node_ProcessResult = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService", function(){node_createServiceRequestInfoService = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 

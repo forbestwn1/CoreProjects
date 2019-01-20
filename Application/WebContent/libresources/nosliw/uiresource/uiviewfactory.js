@@ -176,9 +176,11 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiResource, id, parent, context, requestInfo){
 
 		//build context element first
-		var parentContext;
-		if(parent!=undefined)   parentContext = parent.getContext();
-		if(loc_context==undefined)	loc_context = node_uiResourceUtility.buildContext(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext, requestInfo);
+		if(loc_context==undefined){
+			//if context not provide, then build context by parent context and current context definition
+			var parentContext = parent==undefined?undefined:parent.getContext();
+			loc_context = node_uiResourceUtility.buildContext(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext, requestInfo);
+		}
 		
 		//wrap html by start and end element
 		var resourceStartId = "-resource-start";
