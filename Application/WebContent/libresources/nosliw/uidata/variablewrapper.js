@@ -67,9 +67,10 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo
 	var loc_out = {
 		
 		prv_getVariable : function(){	return this.prv_variable;	},
-			
+		
+		
+		
 		createChildVariable : function(path, adapterInfo){	
-//			return node_createVariableWrapper(this.prv_variable.createChildVariable(path).variable, undefined, adapterInfo);
 			return node_createVariableWrapper(this, path, adapterInfo);
 		}, 
 		

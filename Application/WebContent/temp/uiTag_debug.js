@@ -28,6 +28,8 @@ function (env) {
     var loc_env = env;
     var loc_view;
     var loc_contextVariableGroup = {};
+    var loc_getVariableTreeInfo = function (eleVar) {
+    };
     var loc_updateView = function (requestInfo) {
         var contextContent = {};
         var setRequest = node_createServiceRequestInfoSet({}, {success: function (requestInfo, result) {
