@@ -124,7 +124,7 @@ nosliw.registerSetNodeDataEvent("miniapp.service.createMiniAppService", function
 nosliw.registerSetNodeDataEvent("process.createProcessRuntimeFactory", function(){node_createProcessRuntimeFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("dataservice.createDataService", function(){node_createDataService = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.createUIPageService", function(){node_createUIPageService = this.getData();});
-nosliw.registerSetNodeDataEvent("uiresource.createUIModuleService", function(){node_createUIModuleService = this.getData();});
+nosliw.registerSetNodeDataEvent("uimodule.service.createUIModuleService", function(){node_createUIModuleService = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

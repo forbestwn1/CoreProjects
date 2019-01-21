@@ -26,7 +26,7 @@ var node_createUIModuleService = function(){
 	
 	var loc_uis = {};
 
-	var loc_moduleUIEventObject = node_createEventObject();
+//	var loc_moduleUIEventObject = node_createEventObject();
 
 	var loc_env = {
 			getPresentUIRequest : function(uiName, mode){
