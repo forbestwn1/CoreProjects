@@ -159,8 +159,8 @@ var node_createContext = function(elementInfosArray, request){
 			nosliw.logging.info("Name: " + contextEle.name);
 			nosliw.logging.info("ID: " + eleVar.prv_id);
 			nosliw.logging.info("Wrapper: " + (eleVar.prv_wrapper==undefined?"":eleVar.prv_wrapper.prv_id));
-			nosliw.logging.info("Parent: " , ((eleVar.prv_relativeVariableInfo==undefined)?"":eleVar.prv_relativeVariableInfo.parent.prv_id));
-			nosliw.logging.info("ParentPath: " , ((eleVar.prv_relativeVariableInfo==undefined)?"":eleVar.prv_relativeVariableInfo.path)); 
+//			nosliw.logging.info("Parent: " , ((eleVar.prv_getRelativeVariableInfo()==undefined)?"":eleVar.prv_getRelativeVariableInfo().parent.prv_id));
+//			nosliw.logging.info("ParentPath: " , ((eleVar.prv_getRelativeVariableInfo()==undefined)?"":eleVar.prv_getRelativeVariableInfo().path)); 
 			nosliw.logging.info("***************************************************************");
 			
 			//get all adapters from elementInfo

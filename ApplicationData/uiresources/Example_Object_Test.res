@@ -6,15 +6,11 @@
 		<br>
 		<br>
 
-		
 		<nosliw-loop data="business.a.cc" element="ele" index="index">  
-
+			<nosliw-debug/>
 			<br>
-			Index: <%=?(index)?.value%>
 			<br>
-			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
-			<br>
-			TextInput:<nosliw-textinput data="ele"/> 
+<!--			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a> -->
 			<br>
 			<scripts>
 			{
@@ -136,7 +132,8 @@
 								],
 								ee : {
 									dataTypeId: "test.array;1.0.0",
-									value: [
+									value: 
+									[
 										{
 											dataTypeId: "test.string;1.0.0",
 											value: "This is my world 1111!"

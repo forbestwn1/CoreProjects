@@ -52,7 +52,7 @@ var node_utility = function(){
 				var copy = JSON.parse(node_basicUtility.stringify(value));
 			}
 			catch(e){
-//				this.isCyclic(value);   kkkk
+				this.isCyclic(value);   //kkkk
 				copy = value;
 			}
 			return copy;
