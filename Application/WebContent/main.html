@@ -6,10 +6,11 @@
 
         <script src="libresources/external/Underscore/1.6.0/underscore.js"></script>
         <script src="libresources/external/Backbone/1.1.2/backbone.js"></script>
+   		<link rel="stylesheet" href="libresources/external/jQuery_Mobile/jquery.mobile-1.4.5.min.css" />
         <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
+		<script type="text/javascript" src="libresources/external/jQuery_Mobile/jquery.mobile-1.4.5.min.js"></script>
         <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
 		<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
-        
 </head>
 
 <body>
@@ -23,11 +24,23 @@
 <script>
 
 $(document).on("nosliwActive", function(){
+	
+	
+	nosliw.runtime.getUIModuleService().getExecuteUIModuleRequest("ModuleMySchoolResult", undefined, {}, {
+		success : function(request, data){
+			
+		}
+	});
+	
+	
+/*
 	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessRequest("expression;expressionProcessId", undefined, {
 		success : function(request, output){
 			alert(JSON.stringify(output));
 		}
 	});
+*/	
+	
 	/*
 	nosliw.runtime.getDataService().executeExecuteDataServiceRequest("realtor", {}, {
 		success : function(requestInfo, serviceResult){

@@ -14,10 +14,11 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_createRemoteService;
 	var node_createGatewayService;
-	var node_createUIPageService;
 	var node_createMiniAppService;
 	var node_createProcessRuntimeFactory;
 	var node_createDataService;
+	var node_createUIPageService;
+	var node_createUIModuleService;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -43,9 +44,11 @@ var node_createRuntime = function(name){
 	
 	var loc_remoteService;
 	
-	var loc_uiPageService;
-	
 	var loc_dataService;
+	
+	var loc_uiPageService;
+
+	var loc_uiModuleService;
 	
 	var loc_out = {
 		
@@ -61,14 +64,16 @@ var node_createRuntime = function(name){
 			
 		getGatewayService(){		return loc_gatewayService;		},
 		
-		getProcessRuntimeFactory(){   return loc_processRuntimeFactory;  },
-		
 		getRemoteService(){			return loc_remoteService;		},
 
-		getUIPageService(){		return loc_uiPageService;		},
+		getDataService(){   return loc_dataService;   },
+
+		getProcessRuntimeFactory(){   return loc_processRuntimeFactory;  },
 		
-		getDataService(){   return loc_dataService;   }
-	};
+		getUIPageService(){		return loc_uiPageService;		},
+
+		getUIModuleService(){   return loc_uiModuleService; }
+};
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(){
@@ -82,7 +87,7 @@ var node_createRuntime = function(name){
 		if(node_createUIPageService!=undefined)  loc_uiPageService = node_createUIPageService();
 		loc_processRuntimeFactory = node_createProcessRuntimeFactory();
 		loc_dataService = node_createDataService();
-		
+		loc_uiModuleService = node_createUIModuleService();
 		
 		//set sortcut for object
 		 nosliw.runtime = loc_out;
@@ -115,10 +120,11 @@ nosliw.registerSetNodeDataEvent("expression.service.createExpressionService", fu
 nosliw.registerSetNodeDataEvent("resource.createResourceService", function(){node_createResourceService = this.getData();});
 nosliw.registerSetNodeDataEvent("remote.createRemoteService", function(){node_createRemoteService = this.getData();});
 nosliw.registerSetNodeDataEvent("runtime.createGatewayService", function(){node_createGatewayService = this.getData();});
-nosliw.registerSetNodeDataEvent("uiresource.createUIPageService", function(){node_createUIPageService = this.getData();});
 nosliw.registerSetNodeDataEvent("miniapp.service.createMiniAppService", function(){node_createMiniAppService = this.getData();});
 nosliw.registerSetNodeDataEvent("process.createProcessRuntimeFactory", function(){node_createProcessRuntimeFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("dataservice.createDataService", function(){node_createDataService = this.getData();});
+nosliw.registerSetNodeDataEvent("uiresource.createUIPageService", function(){node_createUIPageService = this.getData();});
+nosliw.registerSetNodeDataEvent("uiresource.createUIModuleService", function(){node_createUIModuleService = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

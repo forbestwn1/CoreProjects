@@ -35,7 +35,7 @@ var node_createModuleUI = function(page, context, env){
 		},
 		
 		//
-		registerListener : function(listener){
+		registerListener : function(listener, handler){
 			
 		},
 		
@@ -44,6 +44,10 @@ var node_createModuleUI = function(page, context, env){
 		},
 		
 		updateContext : function(contextValue){
+			
+		},
+		
+		getName : function(){
 			
 		}
 	};

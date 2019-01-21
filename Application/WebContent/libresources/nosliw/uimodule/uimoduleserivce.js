@@ -26,32 +26,52 @@ var node_createUIModuleService = function(){
 	
 	var loc_uis = {};
 
+	var loc_moduleUIEventObject = node_createEventObject();
+
 	var loc_env = {
 			getPresentUIRequest : function(uiName, mode){
 				
-			}
+			},
 			
 			
 	};
 	
+	var loc_moduleUIEventHandler = function(eventName, eventData){
+		
+	};
+	
+	var loc_buildPage = function(uiModule, env){
+		var pageDiv = $("<div data-role='page' id='"+uiModule.getName()+"'></div>");
+		uiModule.getPage().appendTo(pageDiv);
+		pageDiv.appendTo(evn.root);
+	};
+	
 	var loc_getExecuteUIModuleRequest = function(uiModule, parentContext, env, handlers, request){
+		var out = node_createServiceRequestInfoSequence(service, handlers, request);
 		
 		//build context for module
 		var context = parentContext;
 		
+		var buildModuleUIRequest = node_createServiceRequestInfoSet(undefined, {
+			success : function(request, resultSet){
+				_.each(resultSet.getResults(), function(moduleUI, name){
+					//register listener for module ui
+					loc_uis[name].registerListener(loc_moduleUIEventObject, loc_moduleUIEventHandler);
+					loc_buildPage(loc_uis[name], env);
+				});
+				return globalData;
+			}
+		});
+
 		// build uis
 		_.each(uiModule.uis, function(ui, name){
-			loc_uis[name] = node_createModuleUI(uiModule, context);
-			//register listener for module ui
-			
+			buildModuleUIRequest.addRequest(name, node_createModuleUIRequest(uiModule.uis[name], parentContext, evn));
 		});
+		out.addRequest(buildModuleUIRequest);
 		
 		//init
-		
-		
-		
-		//
-		
+		out.addRequest(nosliw.runtime.getProcessService().getExecuteEmbededProcessRequest(uiModule.process.init, undefined));
+
 		return out;
 	};
 	
