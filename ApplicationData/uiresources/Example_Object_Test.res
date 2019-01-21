@@ -4,6 +4,9 @@
 
 	TextInput:<nosliw-textinput data="business.a.aa"/>  
 
+			<nosliw-varviewer/>
+
+
 			<nosliw-debug/>
 
 

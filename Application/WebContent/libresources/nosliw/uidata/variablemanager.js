@@ -14,13 +14,14 @@ var node_createVariableManager = function(){
 	var loc_variables = {};
 	//variable usage
 	var loc_varUsage = {};
-	
-	var loc_newVariable = function(variable){
+
+	var loc_newVariable = function(data1, data2, adapterInfo){
+		var variable = node_newVariable(data1, data2, adapterInfo);
 		loc_variables[variable.prv_id] = variable;
 		loc_varUsage[variable.prv_id] = 0;
 		return variable;
 	};
-	
+
 	var loc_useVariable = function(variableId){	
 		loc_varUsage[variableId]++;
 		return loc_variables[variableId];
@@ -47,7 +48,7 @@ var node_createVariableManager = function(){
 				return this.createChildVariable(data1, data2, adapterInfo);
 			}
 			else{
-				return loc_newVariable(node_newVariable(data1, data2, adapterInfo));
+				return loc_newVariable(data1, data2, adapterInfo);
 			}
 		},
 
@@ -60,7 +61,7 @@ var node_createVariableManager = function(){
 				else childVarInfo = variable.prv_childrenVariable[path];
 				
 				if(childVarInfo==undefined){
-					out = node_newVariable(variable, path, adapterInfo);
+					out = loc_newVariable(variable, path, adapterInfo);
 				}
 				else{
 					out = childVarInfo.variable;
@@ -68,7 +69,7 @@ var node_createVariableManager = function(){
 			}
 			else{
 				//child with extra info
-				out = node_newVariable(variable, path, adapterInfo);
+				out = loc_newVariable(variable, path, adapterInfo);
 			}
 			return out;
 		},
