@@ -93,8 +93,6 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 		
 		//normal child variables by path
 		loc_out.prv_childrenVariable = {};
-		//child variables with extra adapter
-		loc_out.prv_extraChildrenVariable = {};
 		
 		//record how many usage of this variable.
 		//when usage go to 0, that means it should be clean up
@@ -152,8 +150,6 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 			//clear children variable first
 			_.each(loc_out.prv_childrenVariable, function(childVar, path){		childVar.destroy(requestInfo);	});
 			loc_out.prv_childrenVariable = {};
-			_.each(loc_out.prv_extraChildrenVariable, function(childVar, path){		childVar.destroy(requestInfo);	});
-			loc_out.prv_extraChildrenVariable = {};
 			
 			//destroy wrapper 
 			loc_destroyWrapper(requestInfo);
@@ -222,7 +218,7 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 	var loc_addChildVariableWithAdapter = function(childVar, path){
 		var id = path+"_"+childVar.prv_id;
 		var childVarInfo = new loc_ChildVariableInfo(childVar, path, id, false);
-		loc_addChildVariable(loc_out.prv_extraChildrenVariable, childVarInfo);
+		loc_addChildVariable(loc_out.prv_childrenVariable, childVarInfo);
 		return childVarInfo;
 	};
 	
@@ -263,11 +259,6 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 		_.each(loc_out.prv_childrenVariable, function(childVariableInfo, id){
 			childVariableInfo.variable.prv_updateWrapperInRelativeVariable(requestInfo);
 		});
-		
-		_.each(loc_out.prv_extraChildrenVariable, function(childVariableInfo, path){
-			childVariableInfo.variable.prv_updateWrapperInRelativeVariable(requestInfo);
-		});
-		
 	};
 
 	var loc_out = {
@@ -314,9 +305,7 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 
 			prv_getRelativeVariableInfo : function(){  return loc_relativeVariableInfo;   },
 
-			prv_getChildren : function(){
-				
-			},
+			prv_getChildren : function(){  return this.prv_childrenVariable;  },
 			
 			setValueAdapter : function(valueAdapter){  
 				this.prv_valueAdapter = valueAdapter;
@@ -353,7 +342,10 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 				var out;
 				if(adapterInfo==undefined){
 					//normal child, try to reuse existing one
-					var childVarInfo = loc_out.prv_childrenVariable[path];
+					var childVarInfo;
+					if(path==undefined || path=="")  childVarInfo = new loc_ChildVariableInfo(this, "");
+					else childVarInfo = loc_out.prv_childrenVariable[path];
+					
 					if(childVarInfo==undefined){
 						out = node_newVariable(loc_out, path, adapterInfo, requestInfo);
 					}

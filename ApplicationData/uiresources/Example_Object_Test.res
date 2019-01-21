@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <body>
-		<br>
-		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
-		<br>
-		<br>
+
+	TextInput:<nosliw-textinput data="business.a.aa"/>  
+
+			<nosliw-debug/>
+
 
 		<nosliw-loop data="business.a.cc" element="ele" index="index">  
-			<nosliw-debug/>
 			<br>
 			<br>
 <!--			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a> -->
