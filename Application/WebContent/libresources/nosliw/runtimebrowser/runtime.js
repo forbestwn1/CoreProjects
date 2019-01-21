@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_createDataService;
 	var node_createUIPageService;
 	var node_createUIModuleService;
+	var node_createVariableManager;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -48,6 +49,8 @@ var node_createRuntime = function(name){
 	
 	var loc_uiPageService;
 
+	var loc_uiVariableManager;
+	
 	var loc_uiModuleService;
 	
 	var loc_out = {
@@ -71,6 +74,8 @@ var node_createRuntime = function(name){
 		getProcessRuntimeFactory(){   return loc_processRuntimeFactory;  },
 		
 		getUIPageService(){		return loc_uiPageService;		},
+		
+		getUIVariableManager(){   return loc_uiVariableManager;   },
 
 		getUIModuleService(){   return loc_uiModuleService; }
 };
@@ -88,6 +93,7 @@ var node_createRuntime = function(name){
 		loc_processRuntimeFactory = node_createProcessRuntimeFactory();
 		loc_dataService = node_createDataService();
 		loc_uiModuleService = node_createUIModuleService();
+		loc_uiVariableManager = node_createVariableManager();
 		
 		//set sortcut for object
 		 nosliw.runtime = loc_out;
@@ -125,6 +131,7 @@ nosliw.registerSetNodeDataEvent("process.createProcessRuntimeFactory", function(
 nosliw.registerSetNodeDataEvent("dataservice.createDataService", function(){node_createDataService = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.createUIPageService", function(){node_createUIPageService = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.service.createUIModuleService", function(){node_createUIModuleService = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.variable.createVariableManager", function(){node_createVariableManager = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 
