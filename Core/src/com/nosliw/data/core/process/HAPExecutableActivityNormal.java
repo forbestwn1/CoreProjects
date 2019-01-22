@@ -41,14 +41,14 @@ public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(INPUT, this.m_input.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_input!=null)		jsonMap.put(INPUT, this.m_input.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(RESULT, HAPJsonUtility.buildJson(this.m_results, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
-		jsonMap.put(INPUT, this.m_input.toResourceData(runtimeInfo).toString());
+		if(this.m_input!=null)  jsonMap.put(INPUT, this.m_input.toResourceData(runtimeInfo).toString());
 		
 		Map<String, String> resultJsonMap = new LinkedHashMap<String, String>();
 		for(String resultName : this.m_results.keySet()) {

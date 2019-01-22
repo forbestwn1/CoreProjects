@@ -12,7 +12,7 @@
 		}
 	],
 	"context": {
-		"group" : {
+		"group": {
 			"public": {
 				"element": {
 					"schoolListInModule": {
@@ -74,14 +74,15 @@
 	},
 	"process": {
 		"init": {
-			"activity": [{
+			"activity": [
+				{
 					"id": "startActivityId",
 					"name": "startActivity",
 					"type": "start",
 					"flow": {
 						"target": "presentSchoolListUI"
 					}
-				}, 
+				},
 				{
 					"id": "presentSchoolListUI",
 					"name": "presentSchoolListUI",
@@ -89,13 +90,13 @@
 					"ui": "schoolListUI",
 					"result": [
 						{
-							"name" : "success",
+							"name": "success",
 							"flow": {
 								"target": "successEndId"
-							},
+							}
 						}
 					]
-				}, 
+				},
 				{
 					"id": "successEndId",
 					"name": "successEnd",
@@ -124,15 +125,16 @@
 			"serviceMapping": {},
 			"eventHandler": {
 				"selectSchool": {
-						"process": {
-							"activity": [{
+					"process": {
+						"activity": [
+							{
 								"id": "startActivityId",
 								"name": "startActivity",
 								"type": "start",
 								"flow": {
 									"target": "presentSchoolDataUI"
 								}
-							}, 
+							},
 							{
 								"id": "presentSchoolDataUI",
 								"name": "presentSchoolDataUI",
@@ -140,10 +142,10 @@
 								"ui": "schoolInfoUI",
 								"result": [
 									{
-										"name" : "success",
+										"name": "success",
 										"flow": {
 											"target": "refreshSchoolInfo"
-										},
+										}
 									}
 								]
 							},
@@ -153,7 +155,7 @@
 								"type": "UI_executeUICommand",
 								"ui": "schoolInfoUI",
 								"command": "refresh",
-								"parms": {
+								"parm": {
 									"inputData": {
 										"schoolData": {
 											"definition": {
@@ -164,10 +166,10 @@
 								},
 								"result": [
 									{
-										"name" : "success",
+										"name": "success",
 										"flow": {
 											"target": "successEndId"
-										},
+										}
 									}
 								]
 							},

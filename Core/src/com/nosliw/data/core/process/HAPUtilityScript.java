@@ -22,17 +22,6 @@ import com.nosliw.data.core.script.context.HAPUtilityContext;
 
 public class HAPUtilityScript {
 	
-	public static HAPScript buildProcessInitScript(HAPExecutableProcess process) {
-		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		//build init output object 
-		JSONObject output = HAPUtilityContext.buildDefaultJsonObject(process.getContext());
-		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));
-
-		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityScript.class, "ProcessInitFunction.temp");
-		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
-		return new HAPScript(script);
-	}
-	
 	
 	public static HAPScript buildDataAssociationConvertFunction(HAPExecutableDataAssociationGroup dataAssociationGroup) {
 		String isInherit = "false";

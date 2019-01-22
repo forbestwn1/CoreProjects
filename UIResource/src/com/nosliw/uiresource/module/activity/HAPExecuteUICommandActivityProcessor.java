@@ -21,8 +21,8 @@ public class HAPExecuteUICommandActivityProcessor implements HAPProcessorActivit
 			Map<String, HAPExecutableDataAssociationGroup> results,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions, HAPManagerProcess processManager,
 			HAPRequirementContextProcessor contextProcessRequirement, HAPProcessTracker processTracker) {
-		// TODO Auto-generated method stub
-		return null;
+		HAPExecuteUICommandActivityExecutable out = new HAPExecuteUICommandActivityExecutable(id, (HAPExecuteUICommandActivityDefinition)activityDefinition);
+		return out;
 	}
 
 }

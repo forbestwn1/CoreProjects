@@ -40,44 +40,43 @@ var node_createUIModuleService = function(){
 		
 	};
 	
-	var loc_buildPage = function(uiModule, env){
+	var loc_buildPage = function(moduleUI, env){
 		var pageDiv = $("<div data-role='page' id='"+uiModule.getName()+"'></div>");
 		uiModule.getPage().appendTo(pageDiv);
 		pageDiv.appendTo(evn.root);
 	};
 	
-	var loc_getExecuteUIModuleRequest = function(uiModule, parentContext, env, handlers, request){
-		var out = node_createServiceRequestInfoSequence(service, handlers, request);
+	var loc_getExecuteUIModuleRequest = function(uiModule, input, env, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModule", {"uiModule":uiModule, "input":input, "env":env}), handlers, request);
 		
 		//build context for module
-		var context = parentContext;
+		var context = uiModule[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input);
 		
-		var buildModuleUIRequest = node_createServiceRequestInfoSet(undefined, {
+		var buildModuleUIRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("BuildModuleUIs", {}), {
 			success : function(request, resultSet){
 				_.each(resultSet.getResults(), function(moduleUI, name){
 					//register listener for module ui
-					loc_uis[name].registerListener(loc_moduleUIEventObject, loc_moduleUIEventHandler);
-					loc_buildPage(loc_uis[name], env);
+					moduleUI.registerListener(loc_moduleUIEventObject, loc_moduleUIEventHandler);
+					loc_buildPage(moduleUI, env);
 				});
-				return globalData;
 			}
 		});
 
 		// build uis
-		_.each(uiModule.uis, function(ui, name){
-			buildModuleUIRequest.addRequest(name, node_createModuleUIRequest(uiModule.uis[name], parentContext, evn));
+		_.each(uiModule[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_UI], function(ui, name){
+			buildModuleUIRequest.addRequest(name, node_createModuleUIRequest(ui, context, evn));
 		});
 		out.addRequest(buildModuleUIRequest);
 		
 		//init
-		out.addRequest(nosliw.runtime.getProcessService().getExecuteEmbededProcessRequest(uiModule.process.init, undefined));
+		out.addRequest(nosliw.runtime.getProcessService().getExecuteEmbededProcessRequest(uiModule[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS].init, undefined));
 
 		return out;
 	};
 	
 	var loc_out = {
 
-		getExecuteUIModuleRequest : function(id, context, env, handlers, requester_parent){
+		getExecuteUIModuleRequest : function(id, input, env, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModuleResource", {"id":id, "input":input}), handlers, requestInfo);
 
@@ -91,8 +90,8 @@ var node_createUIModuleService = function(){
 			return out;
 		},
 			
-		executeUIModuleRequest : function(id, input, handlers, requester_parent){
-			var requestInfo = this.getExecuteProcessRequest(id, input, handlers, requester_parent);
+		executeUIModuleRequest : function(id, input, env, handlers, requester_parent){
+			var requestInfo = this.getExecuteUIModuleRequest(id, input, env, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 			

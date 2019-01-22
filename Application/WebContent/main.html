@@ -25,21 +25,26 @@
 
 $(document).on("nosliwActive", function(){
 	
-/*
-	nosliw.runtime.getUIModuleService().getExecuteUIModuleRequest("ModuleMySchoolResult", undefined, {}, {
+	nosliw.runtime.getUIModuleService().executeUIModuleRequest("ModuleMySchoolResult", undefined, {}, {
 		success : function(request, data){
 			
 		}
 	});
-*/	
 	
-/*
-	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessRequest("expression;expressionProcessId", undefined, {
+	/*
+	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessRequest("expression;expressionProcessId", 
+	{
+		"toVar": {
+			"dataTypeId": "test.integer;1.0.0",
+			"value": 5
+		}
+	}, 
+	{
 		success : function(request, output){
 			alert(JSON.stringify(output));
 		}
 	});
-*/	
+	*/	
 	
 	/*
 	nosliw.runtime.getDataService().executeExecuteDataServiceRequest("realtor", {}, {
@@ -50,6 +55,7 @@ $(document).on("nosliwActive", function(){
 	});
 	*/
 
+	/*
 	var currentSearchString = window.location.search;
 	var page = currentSearchString.substring(currentSearchString.indexOf("=")+1);
 	nosliw.runtime.getUIPageService().executeCreateUIPageRequest(page, undefined, 
@@ -58,18 +64,17 @@ $(document).on("nosliwActive", function(){
 					nosliw.logging.info(JSON.stringify(uiResourceView));
 					
 					uiResourceView.appendTo($('#testDiv'));
-/*
 					var comData = uiResourceView.command("Include", {data:"Hello"});
 					alert(JSON.stringify(comData));
 					
 					uiResourceView.registerEventListener(function(eventName, eventData, requestInfo){
 						alert(eventName + "  _______  " +JSON.stringify(eventData));
 					});
-*/					
 				}
 			}
 	);
 	
+	*/					
 	
 	
 });

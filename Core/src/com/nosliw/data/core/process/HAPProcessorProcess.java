@@ -82,8 +82,6 @@ public class HAPProcessorProcess{
 		out.setResults(results);
 	}
 
-	
-	
 	//process process in suite
 	public static HAPExecutableProcess process(
 			String processId, 

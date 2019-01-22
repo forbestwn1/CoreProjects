@@ -8,15 +8,16 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPExecutableEmbededProcess;
-import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPUtilityContextScript;
 
 @HAPEntityWithAttribute
 public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPExecutable{
@@ -32,6 +33,9 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	
 	@HAPAttribute
 	public static String PROCESS = "process";
+
+	@HAPAttribute
+	public static String INITSCRIPT = "initScript";
 
 	private HAPDefinitionModule m_moduleDefinition;
 	
@@ -80,7 +84,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 
 		Map<String, String> uiJsonMap = new LinkedHashMap<String, String>();
 		for(String uiName :this.m_uis.keySet()) {
-			uiJsonMap.put(uiName, this.m_processes.get(uiName).toResourceData(runtimeInfo).toString());
+			uiJsonMap.put(uiName, this.m_uis.get(uiName).toResourceData(runtimeInfo).toString());
 		}
 		jsonMap.put(UI, HAPJsonUtility.buildMapJson(uiJsonMap));
 		
@@ -90,6 +94,9 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 		}
 		jsonMap.put(PROCESS, HAPJsonUtility.buildMapJson(processJsonMap));
 		
+		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildContextInitScript(this.getContext()).getScript());
+		typeJsonMap.put(INITSCRIPT, HAPScript.class);
+
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 
