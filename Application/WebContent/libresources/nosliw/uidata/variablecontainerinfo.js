@@ -116,7 +116,7 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 				loc_trigueEvent(node_CONSTANT.EACHELEMENTCONTAINER_EVENT_NEWELEMENT, newEventData, requestInfo);
 			}
 		}, this);
-		
+		return loc_containerVariable;
 	};
 	
 	var loc_destroyContainerVariable = function(requestInfo){
@@ -151,9 +151,9 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 			if(loc_orderChildrenInfo==undefined){
 				//if no loop request did before
 				//build container related object (order child info, container variable)
-				loc_buildContainerVarWrapper();
+				var containerVariable = loc_buildContainerVarWrapper();
 				//get container value first
-				out.addRequest(loc_containerVariable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(loc_path), {
+				out.addRequest(containerVariable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(loc_path), {
 					success : function(request, data){
 						//loop through element
 						return node_wrapperFactory.getDataTypeHelper(data.dataTypeInfo).getGetElementsRequest(data.value, {

@@ -61,11 +61,6 @@ public class HAPProcessorContextRelative {
 		HAPContextDefinitionElement out = defContextElementRelative;
 		
 		HAPContextPath path = defContextElementRelative.getPath(); 
-		if("element".equals(path.getPath()) && "schoolList___public".equals(path.getRootElementId().getFullName())){
-			int kkkk = 555;
-			kkkk++;
-		}
-		
 		HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(path, parentContext, categaryes, mode);
 		
 		if(resolveInfo==null || resolveInfo.rootNode==null)

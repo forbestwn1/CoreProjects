@@ -22,7 +22,7 @@ var node_createExtendedContext = function(context, exVars){
 	var loc_out = {
 		findeVariable : function(eleName){
 			var out = loc_context.getContextElement(eleName);
-			if(out==undefined)  out = exVars[eleName];
+			if(out==undefined)  out = exVars[eleName].variable.prv_getVariable();
 			return out;
 		}
 	};
