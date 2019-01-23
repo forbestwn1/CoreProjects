@@ -431,6 +431,10 @@ public class HAPConstant {
 		public static final String UITAG_PARM_SERVICE = "service";
 		public static final String UIRESOURCE_CONTEXTINFO_INSTANTIATE = "instantiate";
 		public static final String UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL = "manual";
+		public static final String UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO = "auto";
+		public static final String UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION = "relativeConnection";
+		public static final String UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL = "physical";
+		public static final String UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_LOGICAL = "logical";
 
 
 

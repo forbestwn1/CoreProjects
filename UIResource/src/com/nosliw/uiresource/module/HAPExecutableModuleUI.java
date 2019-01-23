@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -16,6 +17,7 @@ import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
 
+@HAPEntityWithAttribute
 public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HAPExecutable{
 
 	@HAPAttribute

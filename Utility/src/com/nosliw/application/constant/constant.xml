@@ -519,7 +519,11 @@
 
 			<definition name="UIRESOURCE_CONTEXTINFO_INSTANTIATE" value="instantiate"/>
 			<definition name="UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL" value="manual"/>
+			<definition name="UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO" value="auto"/>
 
+			<definition name="UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION" value="relativeConnection"/>
+			<definition name="UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL" value="physical"/>
+			<definition name="UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_LOGICAL" value="logical"/>
 
 			<definition type="space"/>
 			<definition name="DATAOPERATION_VAR_TYPE_IN" value="parm"/>

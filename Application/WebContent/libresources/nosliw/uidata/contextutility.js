@@ -61,7 +61,9 @@ var node_utility = {
 				var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
 				//if context.info.instantiate===manual, context does not need to create in the framework
 				if(contextInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL){
-					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE){
+					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE && 
+							contextInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_LOGICAL){
+						//physical relative
 						if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_ISTOPARENT]==true){
 							//process relative that  refer to element in parent context
 							var pathObj = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_PATH];
@@ -71,7 +73,7 @@ var node_utility = {
 						}
 					}
 					else{
-						//not relative variable
+						//not relative or logical relative variable
 						var defaultValue = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFAULT];
 						if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]!=undefined){
 							//app data
