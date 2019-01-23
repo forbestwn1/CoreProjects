@@ -90,77 +90,7 @@ var node_utility = {
 			];
 		},
 		
-		//build context according to context definition and parent context
-		buildContext : function(contextDef, parentContext, requestInfo){
-			//build context element first
-			var contextElementInfosArray = [];
-			
-			_.each(contextDef, function(contextDefRootObj, eleName){
-				var contextDefRootEle = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION];
-				
-				var info = {
-					matchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_MATCHERS],
-					reverseMatchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_REVERSEMATCHERS]
-				};
-				var type = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_TYPE];
-				var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
-				//if context.info.instantiate===manual, context does not need to create in the framework
-				if(contextInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL){
-					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE){
-						if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_ISTOPARENT]==true){
-							//process relative that  refer to element in parent context
-							var pathObj = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_PATH];
-							var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
-							var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
-							contextElementInfosArray.push(node_createContextElementInfo(eleName, parentContext, node_createContextVariableInfo(rootName, path), undefined, info));
-						}
-					}
-					else{
-						//not relative variable
-						var defaultValue = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFAULT];
-						if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]!=undefined){
-							//app data
-							var defaultValueData = defaultValue;
-							if(defaultValueData!=undefined){
-								defaultValueData = node_dataUtility.createDataOfAppData(defaultValue);
-							}
-							contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValueData, "", undefined, info));
-						}
-						else{
-							//object
-							contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValue, "", undefined, info));
-						}
-					}
-				}
-			});	
-				
-			var context = node_createContext(contextElementInfosArray, requestInfo);
 
-			//for relative which refer to context ele in same context
-			_.each(contextDef, function(contextDefRootObj, eleName){
-				var contextDefRootEle = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION];
-				var info = {
-						matchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_MATCHERS],
-						reverseMatchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_REVERSEMATCHERS]
-				};
-				var type = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_TYPE];
-				var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
-				//if context.info.instantiate===manual, context does not need to create in the framework
-				if(contextInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL){
-					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE && contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_ISTOPARENT]==false){
-						var pathObj = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_PATH];
-						var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
-						var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
-						//only process element that parent is created
-						if(context.getContextElement(rootName)!=undefined){
-							context.addContextElement(node_createContextElementInfo(eleName, context, node_createContextVariableInfo(rootName, path), undefined, info));
-						}
-					}
-				}
-			});	
-			
-			return context;
-		},
 };
 
 //*******************************************   End Node Definition  ************************************** 	

@@ -14,9 +14,11 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionNode;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
+import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.HAPUtilityUIResource;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
@@ -37,16 +39,16 @@ public class HAPProcessorModule {
 
 		HAPExecutableModule out = new HAPExecutableModule(moduleDefinition, id);
 
-		if(parentContext==null)   parentContext = new HAPContextGroup();
 		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityUIResource.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionManager);
 		
 		//process context 
-		out.setContext(HAPProcessorContext.process(moduleDefinition.getContext(), parentContext, null, contextProcessRequirement));
-		
+		out.setContextGroup(HAPProcessorContext.process(moduleDefinition.getContext(), parentContext==null?new HAPContextGroup():parentContext, null, contextProcessRequirement));
+		out.setContext(HAPUtilityContext.buildFlatContextFromContextGroup(out.getContextGroup(), null));
+
 		//process global processes in module
 		Map<String, HAPDefinitionEmbededProcess> internalProcesses = moduleDefinition.getProcesses();
 		for(String name : internalProcesses.keySet()) {
-			HAPExecutableEmbededProcess processExe = HAPProcessorProcess.process(internalProcesses.get(name), name, parentContext, null, processMan, contextProcessRequirement, processTracker);
+			HAPExecutableEmbededProcess processExe = HAPProcessorProcess.process(internalProcesses.get(name), name, out.getContextGroup(), null, processMan, contextProcessRequirement, processTracker);
 			out.addProcess(name, processExe);
 		}
 
@@ -72,7 +74,7 @@ public class HAPProcessorModule {
 		//context mapping, only mapping to public context in page
 		HAPContextGroup mappingContextGroup = new HAPContextGroup();
 		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, moduleUIDefinition.getContextMapping());
-		out.setContextMapping(HAPProcessorContext.process(mappingContextGroup, moduleExe.getContext(), null, contextProcessRequirement).getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC));
+		out.setContextMapping(HAPProcessorContext.process(mappingContextGroup, moduleExe.getContextGroup(), null, contextProcessRequirement).getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC));
 
 		//process page
 		String pageId = moduleExe.getDefinition().getPageInfo(moduleUIDefinition.getPage()).getPageId();
@@ -86,7 +88,7 @@ public class HAPProcessorModule {
 			HAPExecutableModuleUIEventHandler eventHandlerExe = new HAPExecutableModuleUIEventHandler(eventHandlerDef);
 
 			HAPContextDefinitionRoot eventRootNode = buildContextRootFromEvent(out.getPage().getEventDefinition(eventName));
-			HAPContextGroup eventContext = moduleExe.getContext().cloneContextGroup();
+			HAPContextGroup eventContext = moduleExe.getContextGroup().cloneContextGroup();
 			eventContext.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC).addElement("EVENT", eventRootNode);
 			eventHandlerExe.setProcess(HAPProcessorProcess.process(eventHandlerDef.getProcess(), eventName, eventContext, null, processMan, contextProcessRequirement, processTracker));
 			out.addEventHandler(eventName, eventHandlerExe);

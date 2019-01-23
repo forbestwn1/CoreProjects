@@ -25,6 +25,7 @@ var packageObj = library;
 	var node_createBatchUIDataOperationRequest;
 	var node_createUIViewFactory;
 	var node_createEventObject;
+	var node_contextUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	/**
@@ -74,7 +75,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 	//exContext extra context element used when create context for tag resource
 	var loc_createContextForTagResource = function(exContext){
 		if(exContext==undefined)   exContext = loc_context;
-		var context = node_uiResourceUtility.buildContext(loc_uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], exContext);
+		var context = node_contextUtility.buildContext(loc_uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], exContext);
 		return context;
 	};
 	
@@ -199,7 +200,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView, request
 		//create context
 		var parentContext;
 		if(parentUIResourceView!=undefined)   parentContext = parentUIResourceView.getContext();
-		loc_context = node_uiResourceUtility.buildContext(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
+		loc_context = node_contextUtility.buildContext(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGCONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
 		
 		//create uiTagObject
 		var uiTagResourceId = node_uiResourceUtility.createTagResourceId(uiTagResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_TAGNAME]);
@@ -287,6 +288,7 @@ nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUt
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createBatchUIDataOperationRequest", function(){node_createBatchUIDataOperationRequest  = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.createUIViewFactory", function(){node_createUIViewFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUITag", node_createUITag); 

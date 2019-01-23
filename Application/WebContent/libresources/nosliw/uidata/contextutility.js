@@ -1,79 +1,134 @@
 //get/create package
-var packageObj = library.getChildPackage("wrapper.object");    
+var packageObj = library.getChildPackage("context");    
 
 (function(packageObj){
 //get used node
 var node_CONSTANT;
+var node_COMMONATRIBUTECONSTANT;
+var node_COMMONCONSTANT;
 var node_basicUtility;
 var node_parseSegment;
-	
+var node_createContextElementInfo;
+var node_createContext;
+var node_createContextVariableInfo;
+
 //*******************************************   Start Node Definition  ************************************** 	
 var node_utility = {
-	
-		handleContextContainerEachElement : function(context, contextPath, handler, that){
-			var contextValue = context[contextPath.name];
-			var type = contextValue.type;
-			if(type==CONTEXT_TYPE_ENTITY){
-				var containerPath = cascadePath(contextValue.path, contextPath.path);
-				var containerWraper = getEntityAttributeWraperByPath(contextValue.data, containerPath);
-				var containerData = containerWraper.data;
-				for (var key in containerData) {
-				    if (containerData.hasOwnProperty(key)) {
-				    	var eleWraper = containerData[key];
-				    	
-						var categary = getWraperDataCategary(eleWraper);
-						if(categary=='reference'){
-							eleWraper =  NosliwEntityManager.getEntity(eleWraper.data);
-					    	var contextEle = createContextElement(eleWraper); 
-					    	handler.call(that, key, eleWraper, contextEle);
+
+		getGetContextValueRequest : function(context, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetContextValue", {}), handlers, request);
+			var calContextValue = node_createServiceRequestInfoSet(undefined, {
+				success : function(request, resultSet){
+					var value = {};
+					_.each(resultSet.getResults(), function(eleValue, eleName){
+						var segs = eleName.split("___");
+						if(segs.length==2){
+							var categary = segs[1];
+							var name = segs[0];
+							var categaryContext = value[categary];
+							if(categaryContext==undefined){
+								categaryContext = {};
+								value[categary] = categaryContext;
+							}
+							categaryContext[name] = eleValue;
+						}
+					});
+					return value;
+				}
+			});
+
+			_.each(context.getElementsName(), function(eleName, i){
+				calContextValue.addRequest(eleName, context.getContextElement(eleName).getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
+			});
+			
+			out.addRequest(calContextValue);
+			return out;
+		},
+		
+		//build context according to context definition and parent context
+		buildContext : function(contextDef, parentContext, requestInfo){
+			//build context element first
+			var contextElementInfosArray = [];
+			
+			_.each(contextDef, function(contextDefRootObj, eleName){
+				var contextDefRootEle = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION];
+				
+				var info = {
+					matchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_MATCHERS],
+					reverseMatchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_REVERSEMATCHERS]
+				};
+				var type = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_TYPE];
+				var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
+				//if context.info.instantiate===manual, context does not need to create in the framework
+				if(contextInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL){
+					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE){
+						if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_ISTOPARENT]==true){
+							//process relative that  refer to element in parent context
+							var pathObj = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_PATH];
+							var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
+							var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
+							contextElementInfosArray.push(node_createContextElementInfo(eleName, parentContext, node_createContextVariableInfo(rootName, path), undefined, info));
+						}
+					}
+					else{
+						//not relative variable
+						var defaultValue = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFAULT];
+						if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]!=undefined){
+							//app data
+							var defaultValueData = defaultValue;
+							if(defaultValueData!=undefined){
+								defaultValueData = node_dataUtility.createDataOfAppData(defaultValue);
+							}
+							contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValueData, "", undefined, info));
 						}
 						else{
-					    	var contextEle = createContextElement(contextValue.data, cascadePath(containerPath, key)); 
-					    	handler.call(that, key, eleWraper, contextEle);
+							//object
+							contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValue, "", undefined, info));
 						}
-				    }
-				}	
-			}
-			else if(type==CONTEXT_TYPE_CONTAINER){
-				var containerWraper = contextValue.data;
-				var container = containerWraper.container;
-				var keyArray = container.getKeyArray();
-				for (var index in keyArray) {
-					var key = keyArray[index];
-					var eleWraper = container.getDataByKey(key);
-			    	var contextEle = createContextElement(eleWraper); 
-			    	handler.call(that, key, eleWraper, contextEle);
-				}	
-			}
-			else if(type==CONTEXT_TYPE_DATA){
-				var containerData = contextValue.data.data;
-				var categary = getDataCategary(containerData);
-				if(categary=='container'){
-					_.each(containerData.data, function(data, key, list){
-						var contextEle = createContextElementData(createDataWraper(data));
-				    	handler.call(that, key, data, contextEle);
-					}, this);
+					}
 				}
-			}
-			else if(type==CONTEXT_TYPE_OBJECT){
-				var containerPath = cascadePath(contextValue.path, contextPath.path);
-				var containerData = getObjectAttributeByPath(contextValue.data.data, containerPath);
+			});	
 				
-				_.each(containerData, function(data, key, list){
-					var contextEle = createContextElementObject(contextValue.data, cascadePath(containerPath, key));
-			    	handler.call(that, key, data, contextEle);
-				}, this);
-			}
-		},
+			var context = node_createContext(contextElementInfosArray, requestInfo);
 
+			//for relative which refer to context ele in same context
+			_.each(contextDef, function(contextDefRootObj, eleName){
+				var contextDefRootEle = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION];
+				var info = {
+						matchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_MATCHERS],
+						reverseMatchers : contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_REVERSEMATCHERS]
+				};
+				var type = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_TYPE];
+				var contextInfo = contextDefRootObj[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
+				//if context.info.instantiate===manual, context does not need to create in the framework
+				if(contextInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL){
+					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE && contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_ISTOPARENT]==false){
+						var pathObj = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_PATH];
+						var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
+						var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
+						//only process element that parent is created
+						if(context.getContextElement(rootName)!=undefined){
+							context.addContextElement(node_createContextElementInfo(eleName, context, node_createContextVariableInfo(rootName, path), undefined, info));
+						}
+					}
+				}
+			});	
+			
+			return context;
+		},
 };
 
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.segmentparser.parseSegment", function(){node_parseSegment = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_createContext = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextVariableInfo", function(){node_createContextVariableInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

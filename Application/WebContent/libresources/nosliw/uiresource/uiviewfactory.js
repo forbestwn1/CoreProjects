@@ -21,6 +21,7 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_uiDataOperationServiceUtility;
 	var node_UIDataOperation;
+	var node_contextUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_createUIViewFactory = function(){
@@ -179,7 +180,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		if(loc_context==undefined){
 			//if context not provide, then build context by parent context and current context definition
 			var parentContext = parent==undefined?undefined:parent.getContext();
-			loc_context = node_uiResourceUtility.buildContext(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext, requestInfo);
+			loc_context = node_contextUtility.buildContext(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext, requestInfo);
 		}
 		
 		//wrap html by start and end element
@@ -511,6 +512,7 @@ nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createUIDataOperationReq
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 
 
 //Register Node by Name

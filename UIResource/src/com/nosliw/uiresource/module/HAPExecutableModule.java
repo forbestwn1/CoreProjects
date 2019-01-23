@@ -1,5 +1,6 @@
 package com.nosliw.uiresource.module;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +9,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPExecutableEmbededProcess;
 import com.nosliw.data.core.runtime.HAPExecutable;
@@ -16,8 +16,8 @@ import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
+import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPUtilityContextScript;
 
 @HAPEntityWithAttribute
 public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPExecutable{
@@ -42,6 +42,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	private String m_id;
 
 	// hook up with real data during runtime
+	private HAPContextFlat m_context;
 	private HAPContextGroup m_contextGroup;
 
 	//processes (used for lifecycle, module command)
@@ -59,9 +60,11 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 
 	public HAPDefinitionModule getDefinition() {   return this.m_moduleDefinition;  }
 	
-	public void setContext(HAPContextGroup contextGroup) {   this.m_contextGroup = contextGroup;  }
-	
-	public HAPContextGroup getContext() {   return this.m_contextGroup;   }
+	public void setContext(HAPContextFlat context) {   this.m_context = context;  }
+	public HAPContextFlat getContext() {   return this.m_context;   }
+
+	public void setContextGroup(HAPContextGroup contextGroup) {  this.m_contextGroup = contextGroup;   }
+	public HAPContextGroup getContextGroup() {  return this.m_contextGroup;   }
 	
 	public void addProcess(String name, HAPExecutableEmbededProcess process) {		this.m_processes.put(name, process);	}
 	
@@ -71,7 +74,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_id);
-		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(this.m_contextGroup, HAPSerializationFormat.JSON));
+		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(this.m_context, HAPSerializationFormat.JSON));
 		jsonMap.put(UI, HAPJsonUtility.buildJson(this.m_uis, HAPSerializationFormat.JSON));
 		jsonMap.put(PROCESS, HAPJsonUtility.buildJson(this.m_processes, HAPSerializationFormat.JSON));
 	}
@@ -94,15 +97,16 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 		}
 		jsonMap.put(PROCESS, HAPJsonUtility.buildMapJson(processJsonMap));
 		
-		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildContextInitScript(this.getContext()).getScript());
-		typeJsonMap.put(INITSCRIPT, HAPScript.class);
+//		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildContextInitScript(this.getContext()).getScript());
+//		typeJsonMap.put(INITSCRIPT, HAPScript.class);
 
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 	@Override
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		// TODO Auto-generated method stub
+		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+		
 		return null;
 	}
 }

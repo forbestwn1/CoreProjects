@@ -8,7 +8,7 @@ var packageObj = library.getChildPackage("entity");
 	var node_buildServiceProvider;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createModuleUIRequest = function(moduleUI, externalContext, env, handler, request){
+var node_createModuleUIRequest = function(moduleUI, externalContext, handler, request){
 	
 	//build context
 	var context = buildContext(moduleUI.contextMapping, externalContext);
@@ -22,34 +22,29 @@ var node_createModuleUIRequest = function(moduleUI, externalContext, env, handle
 	});
 };
 	
-var node_createModuleUI = function(page, context, env){
-	
-	var page;
-	
-	var context;
+var node_createModuleUI = function(name, page){
+	var loc_name = name;
+	var loc_page = page;
 	
 	var loc_out = {
+			
 		//take command
 		executeCommandRequest : function(commandName, parms, handlers, request){
-			page.command();
+			page.command(commandName, parms);
 		},
 		
 		//
 		registerListener : function(listener, handler){
-			
+			loc_page.registerEventListener(listener, handler);
 		},
 		
-		getPage : function(){
-			return page;
-		},
+		getPage : function(){		return page;		},
 		
 		updateContext : function(contextValue){
 			
 		},
 		
-		getName : function(){
-			
-		}
+		getName : function(){	return loc_name;	}
 	};
 	
 	return loc_out;
