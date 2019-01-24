@@ -8,10 +8,10 @@ import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 //import com.nosliw.miniapp.HAPAppManager;
 import com.nosliw.uiresource.HAPUIResourceManager;
+import com.nosliw.uiresource.page.tag.HAPUITagManager;
 import com.nosliw.uiresource.resource.HAPResourceManagerUIModule;
 import com.nosliw.uiresource.resource.HAPResourceManagerUIResource;
 import com.nosliw.uiresource.resource.HAPResourceManagerUITag;
-import com.nosliw.uiresource.tag.HAPUITagManager;
 
 public class HAPInitServlet  extends HttpServlet{
 

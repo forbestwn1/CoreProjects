@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.processor;
+package com.nosliw.uiresource.page.processor;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,8 +9,8 @@ import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
-import com.nosliw.uiresource.tag.HAPUITagId;
-import com.nosliw.uiresource.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPUITagId;
+import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPProcessorUIEventEscalate {
 

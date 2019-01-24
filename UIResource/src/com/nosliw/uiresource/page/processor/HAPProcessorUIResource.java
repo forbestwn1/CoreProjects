@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.processor;
+package com.nosliw.uiresource.page.processor;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPDataTypeHelper;
@@ -14,7 +14,7 @@ import com.nosliw.uiresource.HAPUtilityUIResource;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
 import com.nosliw.uiresource.page.definition.HAPParserUIResource;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
-import com.nosliw.uiresource.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPProcessorUIResource {
 

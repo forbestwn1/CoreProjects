@@ -13,8 +13,8 @@ import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
+import com.nosliw.uiresource.page.tag.HAPUITagId;
 import com.nosliw.uiresource.resource.HAPResourceIdUITag;
-import com.nosliw.uiresource.tag.HAPUITagId;
 
 public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 

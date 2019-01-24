@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.processor;
+package com.nosliw.uiresource.page.processor;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -29,9 +29,9 @@ import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
-import com.nosliw.uiresource.tag.HAPUITagDefinitionContext;
-import com.nosliw.uiresource.tag.HAPUITagId;
-import com.nosliw.uiresource.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPUITagDefinitionContext;
+import com.nosliw.uiresource.page.tag.HAPUITagId;
+import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPProcessorUIContext {
 

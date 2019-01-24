@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.tag;
+package com.nosliw.uiresource.page.tag;
 
 import java.io.File;
 import java.util.Iterator;

@@ -20,8 +20,8 @@ import com.nosliw.uiresource.module.HAPProcessorModule;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
 import com.nosliw.uiresource.page.definition.HAPParserUIResource;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
-import com.nosliw.uiresource.processor.HAPProcessorUIResource;
-import com.nosliw.uiresource.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.processor.HAPProcessorUIResource;
+import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPUIResourceManager {
 

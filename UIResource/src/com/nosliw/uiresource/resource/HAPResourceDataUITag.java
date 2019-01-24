@@ -3,7 +3,7 @@ package com.nosliw.uiresource.resource;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.js.HAPResourceDataJSValue;
-import com.nosliw.uiresource.tag.HAPUITagDefinition;
+import com.nosliw.uiresource.page.tag.HAPUITagDefinition;
 
 public class HAPResourceDataUITag extends HAPSerializableImp implements HAPResourceDataJSValue{
 

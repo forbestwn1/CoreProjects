@@ -14,7 +14,7 @@ import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.HAPUtilityUIResource;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
-import com.nosliw.uiresource.tag.HAPUITagManager;
+import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPModuleMain {
 

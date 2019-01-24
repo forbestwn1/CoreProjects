@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.processor;
+package com.nosliw.uiresource.page.processor;
 
 import java.util.Map;
 
