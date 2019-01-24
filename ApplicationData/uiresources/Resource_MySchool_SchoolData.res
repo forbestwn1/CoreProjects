@@ -2,7 +2,7 @@
 <html>
 <body>
 	<br>
-	SchoolName: <%=#|?(schoolData)?.getChildData(name:&(schoolAttribute)&)|#.value%>   
+<!--	SchoolName: <%=#|?(schoolData)?.getChildData(name:&(schoolAttribute)&)|#.value%>     -->
 	<br>
 </body>
 

@@ -11,6 +11,10 @@ var node_parseSegment;
 var node_createContextElementInfo;
 var node_createContext;
 var node_createContextVariableInfo;
+var node_createServiceRequestInfoSequence;
+var node_ServiceInfo;
+var node_createServiceRequestInfoSet;
+var node_uiDataOperationServiceUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 var node_utility = {
@@ -131,6 +135,10 @@ nosliw.registerSetNodeDataEvent("common.segmentparser.parseSegment", function(){
 nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_createContext = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContextVariableInfo", function(){node_createContextVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

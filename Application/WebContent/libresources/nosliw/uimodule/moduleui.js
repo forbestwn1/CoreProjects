@@ -13,18 +13,18 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createModuleUIRequest = function(moduleUI, externalContext, handler, request){
+var node_createModuleUIRequest = function(moduleUI, externalContext, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleUI", {"moduleUI":moduleUI, "externalContext":externalContext}), handlers, request);
 	
 	//build context
-	var context = node_contextUtility.buildContext(moduleUI[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_CONTEXTMAPPING], externalContext);
+	var context = node_contextUtility.buildContext(moduleUI[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_CONTEXTMAPPING][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], externalContext);
 	
 	//generate page
-	nosliw.runtime.getUIResourceService().getGenerateUIPageRequest(moduleUI[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_PAGE], context, {
+	out.addRequest(nosliw.runtime.getUIPageService().getGenerateUIPageRequest(moduleUI[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_PAGE], context, {
 		success :function(requestInfo, page){
 			return node_createModuleUI(moduleUI, context, page);
 		}
-	});
+	}));
 	return out;
 };
 	

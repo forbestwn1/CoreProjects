@@ -18,27 +18,25 @@ var packageObj = library.getChildPackage("service");
 	var node_DependentServiceRequestInfo;
 	var node_requestServiceProcessor;
 	var node_contextUtility;
+	var node_createUIModuleRequest;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUIModuleService = function(){
-
-	var loc_uiStacks = [];
-	
-	var loc_uis = {};
-
-//	var loc_moduleUIEventObject = node_createEventObject();
 
 	var loc_env = {
 			getPresentUIRequest : function(uiName, mode){
 				
 			},
 			
-			
-	};
-	
-	var loc_moduleUIEventHandler = function(eventName, eventData){
-		
+			getPreExecuteModuleRequest :function(uiModule){
+				_.each(uiModule.getUIs(), function(ui, id){
+					var pageDiv = $("<div data-role='page' id='"+ui.getName()+"'></div>");
+					ui.getPage().appendTo(pageDiv);
+					pageDiv.appendTo($('#testDiv'));
+					
+				});
+			}
 	};
 	
 	var loc_buildPage = function(moduleUI, env){
@@ -49,32 +47,13 @@ var node_createUIModuleService = function(){
 	
 	var loc_getExecuteUIModuleRequest = function(uiModule, input, env, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModule", {"uiModule":uiModule, "input":input, "env":env}), handlers, request);
-		
-		//build context for module
-		var context = uiModule[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input);
-		
-		loc_context = node_contextUtility.buildContext(uiResource[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], undefined);
 
-		
-		var buildModuleUIRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("BuildModuleUIs", {}), {
-			success : function(request, resultSet){
-				_.each(resultSet.getResults(), function(moduleUI, name){
-					//register listener for module ui
-					moduleUI.registerListener(loc_moduleUIEventObject, loc_moduleUIEventHandler);
-					loc_buildPage(moduleUI, env);
-				});
+		out.addRequest(node_createUIModuleRequest(uiModule, input, {
+			success : function(request, uiModuleObj){
+				return uiModuleObj.getExecuteRequest(input, loc_env);
 			}
-		});
-
-		// build uis
-		_.each(uiModule[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_UI], function(ui, name){
-			buildModuleUIRequest.addRequest(name, node_createModuleUIRequest(ui, context, evn));
-		});
-		out.addRequest(buildModuleUIRequest);
+		}));
 		
-		//init
-		out.addRequest(nosliw.runtime.getProcessService().getExecuteEmbededProcessRequest(uiModule[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS].init, undefined));
-
 		return out;
 	};
 	
@@ -125,6 +104,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService
 nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){node_createUIModuleRequest = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIModuleService", node_createUIModuleService); 

@@ -28,14 +28,14 @@ var node_createProcessRuntimeFactory = function(){
 				return "nosliw_"+varName;
 			}; 
 			
-			return node_createProcessService(envObj);
+			return node_createProcessRuntime(envObj);
 		}
 	};
 	return loc_out;
 };
 	
 	
-var node_createProcessService = function(envObj){
+var node_createProcessRuntime = function(envObj){
 
 	//activity plugin entity 
 	var loc_activityPlugins = {};

@@ -34,7 +34,7 @@ var node_createUIPageService = function(){
 				out.setDependentService(new node_DependentServiceRequestInfo(getUIResourceRequest, {
 					success : function(requestInfo, uiResources){
 						var uiResource = uiResources[name];
-						return node_createUIPage(loc_uiResourceViewFactory.createUIView(uiResource, loc_getResourceViewId(), undefined, context, requestInfo));
+						return node_createUIPage(loc_uiResourceViewFactory.createUIView(uiResource, loc_getResourceViewId(), undefined, undefined, requestInfo));
 					}
 				}));
 				return out;
