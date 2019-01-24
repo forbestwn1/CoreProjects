@@ -211,8 +211,8 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 						events.dataOperation.push(new node_EventInfo(event, eventData));
 					}
 					else if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
-						var elePath = loc_getAdapterPathFromEventElementPath(eventData);  //kkkk
-						eventData.id = elePath;   //kkkk
+//						var elePath = loc_getAdapterPathFromEventElementPath(eventData);  //kkkk
+//						eventData.id = elePath;   //kkkk
 						//store data operation event
 						loc_addToBeDoneDataOperation(event, eventData);
 						//inform outside about change
@@ -385,7 +385,14 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 		loc_out.prv_isValidData = true;
 		loc_out.prv_value = value;
 		
-		loc_registerListenerForDynamicValue();
+		if(loc_out.prv_dataType==node_CONSTANT.DATA_TYPE_DYNAMIC){
+			//dynamic value may have event
+			if(loc_out.prv_value!=undefined){
+				loc_out.prv_value.registerListener(loc_out.prv_dataOperationEventObject, function(event, eventData, requestInfo){
+					loc_trigueDataOperationEvent(event, eventData, requestInfo);
+				});
+			}
+		}
 	};
 	
 	//add to be done operation
@@ -474,18 +481,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 		loc_trigueEvents(events, requestInfo);
 	};
 
-	//for dynamic data, listen for event from data 
-	var loc_registerListenerForDynamicValue = function(){
-		if(loc_out.prv_dataType==node_CONSTANT.DATA_TYPE_DYNAMIC){
-			if(loc_out.prv_value!=undefined){
-				loc_out.prv_value.registerListener(loc_out.prv_dataOperationEventObject, function(event, eventData, requestInfo){
-					loc_trigueDataOperationEvent(event, eventData, requestInfo);
-				});
-			}
-		}
-	};
-	
-	
 	var loc_out = {
 			getDataOperationRequest : function(operationService, handlers, requester_parent){
 				var that = this;

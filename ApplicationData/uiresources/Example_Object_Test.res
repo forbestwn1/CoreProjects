@@ -2,20 +2,21 @@
 <html>
 <body>
 
-	TextInput:<nosliw-textinput data="business.a.aa"/>  
+		<br>
+		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
+		<br>
+		<br>
 
-			<nosliw-varviewer/>
-
-
-			<nosliw-debug/>
-
+		<nosliw-debug/>
 
 		<nosliw-loop data="business.a.cc" element="ele" index="index">  
-			<nosliw-debug/>
+
 			<br>
 			Index: <%=?(index)?%>
 			<br>
-			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a> 
+			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
+			<br>
+			TextInput:<nosliw-textinput data="ele"/> 
 			<br>
 			<scripts>
 			{
@@ -137,8 +138,7 @@
 								],
 								ee : {
 									dataTypeId: "test.array;1.0.0",
-									value: 
-									[
+									value: [
 										{
 											dataTypeId: "test.string;1.0.0",
 											value: "This is my world 1111!"
@@ -149,30 +149,6 @@
 										}
 									]
 								}
-							}
-						}
-					},
-					base: {
-						definition : {
-							value : {
-								dataTypeId: "test.string",
-								value: "This is my world!"
-							}
-						}
-					},
-					from: {
-						definition : {
-							value : {
-								dataTypeId: "test.integer",
-								value: 3
-							}
-						}
-					},
-					to: {
-						definition:{
-							value : {
-								dataTypeId: "test.integer",
-								value: 7
 							}
 						}
 					}

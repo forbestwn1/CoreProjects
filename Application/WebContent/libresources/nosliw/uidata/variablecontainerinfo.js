@@ -246,10 +246,10 @@ var node_createContainerOrderInfo = function(){
 
 	//create variable for index
 	var loc_createIndexVariable = function(path, requestInfo){
-		var loc_path = path;
-		var loc_eventObject = node_createEventObject();
 		
-		return node_createVariableWrapper(node_dataUtility.createDataOfDynamic(function(){
+		return node_createVariableWrapper(node_dataUtility.createDataOfDynamic(function(path){
+			var loc_path = path;
+			var loc_eventObject = node_createEventObject();
 			
 			var out = {
 			
@@ -272,7 +272,7 @@ var node_createContainerOrderInfo = function(){
 				
 			};
 			return out;
-		}()), undefined, undefined, requestInfo);
+		}(path)), undefined, undefined, requestInfo);
 	};
 	
 	var loc_trigueIndexChange = function(startIndex, requestInfo){
