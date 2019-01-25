@@ -18,6 +18,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPUtilityContext;
 
 @HAPEntityWithAttribute
 public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPExecutable{
@@ -60,10 +61,12 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 
 	public HAPDefinitionModule getDefinition() {   return this.m_moduleDefinition;  }
 	
-	public void setContext(HAPContextFlat context) {   this.m_context = context;  }
 	public HAPContextFlat getContext() {   return this.m_context;   }
 
-	public void setContextGroup(HAPContextGroup contextGroup) {  this.m_contextGroup = contextGroup;   }
+	public void setContextGroup(HAPContextGroup contextGroup) {  
+		this.m_contextGroup = contextGroup;   
+		this.m_context = HAPUtilityContext.buildFlatContextFromContextGroup(this.m_contextGroup, null);
+	}
 	public HAPContextGroup getContextGroup() {  return this.m_contextGroup;   }
 	
 	public void addProcess(String name, HAPExecutableEmbededProcess process) {		this.m_processes.put(name, process);	}

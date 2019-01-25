@@ -456,7 +456,7 @@ public class HAPUtilityContext {
 			}
 			else {
 				//nof exactly match with path
-				HAPContextDefinitionElement candidateNode = out.referedNode;
+				HAPContextDefinitionElement candidateNode = out.referedNode.getSolidContextDefinitionElement();
 				if(HAPConstant.CONTEXT_ELEMENTTYPE_DATA.equals(candidateNode.getType())) {
 					//data type node
 					HAPContextDefinitionLeafData dataLeafEle = (HAPContextDefinitionLeafData)candidateNode;

@@ -11,7 +11,7 @@ import com.nosliw.data.core.runtime.HAPResourceManagerImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeJSUtility;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 
 public class HAPResourceManagerUIResource extends HAPResourceManagerImp{
 
@@ -24,7 +24,7 @@ public class HAPResourceManagerUIResource extends HAPResourceManagerImp{
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPResourceIdUIResource uiResourceId = new HAPResourceIdUIResource(resourceId); 
-		HAPExecutableUIUnitResource uiResource = this.m_uiResourceMan.getUIResource(uiResourceId.getId());
+		HAPExecutableUIUnitPage uiResource = this.m_uiResourceMan.getUIResource(uiResourceId.getId());
 		if(uiResource==null)  return null;
 		Map<String, Object> info = new LinkedHashMap<String, Object>();
 		info.put(HAPRuntimeJSUtility.RESOURCE_LOADPATTERN, HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE);
@@ -34,7 +34,7 @@ public class HAPResourceManagerUIResource extends HAPResourceManagerImp{
 	@Override
 	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
 		HAPResourceIdUIResource uiResourceId = new HAPResourceIdUIResource(resourceId); 
-		HAPExecutableUIUnitResource uiResource = this.m_uiResourceMan.getUIResource(uiResourceId.getId());
+		HAPExecutableUIUnitPage uiResource = this.m_uiResourceMan.getUIResource(uiResourceId.getId());
 		return uiResource.getResourceDependency(runtimeInfo);
 	}
 

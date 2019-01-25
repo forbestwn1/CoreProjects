@@ -22,7 +22,7 @@ import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.HAPUtilityUIResource;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 
 public class HAPProcessorModule {
 
@@ -43,7 +43,6 @@ public class HAPProcessorModule {
 		
 		//process context 
 		out.setContextGroup(HAPProcessorContext.process(moduleDefinition.getContext(), parentContext==null?new HAPContextGroup():parentContext, null, contextProcessRequirement));
-		out.setContext(HAPUtilityContext.buildFlatContextFromContextGroup(out.getContextGroup(), null));
 
 		//process global processes in module
 		Map<String, HAPDefinitionEmbededProcess> internalProcesses = moduleDefinition.getProcesses();
@@ -71,14 +70,13 @@ public class HAPProcessorModule {
 			HAPProcessTracker processTracker) {
 		HAPExecutableModuleUI out = new HAPExecutableModuleUI(moduleUIDefinition, id);
 		
-		//context mapping, only mapping to public context in page
-		HAPContextGroup mappingContextGroup = new HAPContextGroup();
-		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, moduleUIDefinition.getContextMapping());
-		out.setContextMapping(HAPProcessorContext.process(mappingContextGroup, moduleExe.getContextGroup(), null, contextProcessRequirement).getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC));
-
 		//process page
 		String pageId = moduleExe.getDefinition().getPageInfo(moduleUIDefinition.getPage()).getPageId();
-		HAPExecutableUIUnitResource page = uiResourceMan.getUIResource(pageId, id, out.getContextMapping());
+		HAPContextGroup mappingContextGroup = new HAPContextGroup();
+		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, moduleUIDefinition.getContextMapping());
+		HAPExecutableUIUnitPage page = uiResourceMan.getUIResource(pageId, id, mappingContextGroup, moduleExe.getContextGroup());
+		out.setContextMapping(page.getContext());
+//		out.setContextMapping(HAPProcessorContext.process(mappingContextGroup, moduleExe.getContextGroup(), null, contextProcessRequirement).getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC));
 		out.setPage(page);
 
 		//event handler

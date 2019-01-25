@@ -17,8 +17,7 @@ var node_createModuleUIRequest = function(moduleUI, externalContext, handlers, r
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleUI", {"moduleUI":moduleUI, "externalContext":externalContext}), handlers, request);
 	
 	//build context
-	var context = node_contextUtility.buildContext(moduleUI[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_CONTEXTMAPPING][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], externalContext);
-	
+	var context = node_contextUtility.buildContext(moduleUI[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], externalContext);
 	//generate page
 	out.addRequest(nosliw.runtime.getUIPageService().getGenerateUIPageRequest(moduleUI[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_PAGE], context, {
 		success :function(requestInfo, page){

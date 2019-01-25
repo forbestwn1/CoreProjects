@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.miniapp.service.HAPDefinitionService;
 import com.nosliw.uiresource.module.HAPUIModuleEntry;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
 
 @HAPEntityWithAttribute
 public class HAPInstanceModule  extends HAPSerializableImp{
@@ -44,7 +44,7 @@ public class HAPInstanceModule  extends HAPSerializableImp{
 	
 	public void addService(String serviceName, HAPDefinitionService serviceDef) {	this.m_service.put(serviceName, serviceDef);	}
 
-	public Map<String, HAPDefinitionUIUnitResource> getPages(){ return this.m_moduleEntry.getPages();   }
+	public Map<String, HAPDefinitionUIUnitPage> getPages(){ return this.m_moduleEntry.getPages();   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

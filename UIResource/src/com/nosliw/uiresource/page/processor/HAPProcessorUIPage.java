@@ -5,23 +5,23 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.HAPUtilityUIResource;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitResource;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
 import com.nosliw.uiresource.page.definition.HAPParserUIResource;
-import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
+import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
-public class HAPProcessorUIResource {
+public class HAPProcessorUIPage {
 
-	public static HAPExecutableUIUnitResource processUIResource(
-			HAPDefinitionUIUnitResource uiResourceDef,
+	public static HAPExecutableUIUnitPage processUIResource(
+			HAPDefinitionUIUnitPage uiPageDef,
 			String id,
-			HAPContext parentContext,
+			HAPContextGroup context,
+			HAPContextGroup parentContext, 
 			HAPUIResourceManager uiResourceMan,
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPUITagManager uiTagMan, 
@@ -31,18 +31,23 @@ public class HAPProcessorUIResource {
 			HAPParserUIResource uiResourceParser,
 			HAPIdGenerator idGengerator) {
 		
-		HAPExecutableUIUnitResource out = new HAPExecutableUIUnitResource(uiResourceDef, id);
+		HAPExecutableUIUnitPage out = new HAPExecutableUIUnitPage(uiPageDef, id);
 
 		//compile definition to executable
 		HAPProcessorCompile.process(out, null);
 		
-		HAPContextGroup parentContextGroup = null;
-		if(parentContext!=null) {
-			parentContextGroup = new HAPContextGroup();
-			parentContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, parentContext);
+		//build page context by parent context override context defined in page
+		HAPContextGroup pageContext = uiPageDef.getContextDefinition().cloneContextGroup();
+		if(context!=null) {
+			for(String categary : context.getContextTypes()) {
+				HAPContext ctx = context.getContext(categary);
+				for(String eleName : ctx.getElementNames()) {
+					pageContext.addElement(eleName, ctx.getElement(eleName), categary);
+				}
+			}
 		}
-		
-		HAPProcessorUIContext.process(out, parentContextGroup, uiTagMan, HAPUtilityUIResource.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionMan));
+			
+		HAPProcessorUIContext.process(out, pageContext, parentContext, uiTagMan, HAPUtilityUIResource.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionMan));
 
 //		HAPPorcessorResolveName.resolve(out);
 		

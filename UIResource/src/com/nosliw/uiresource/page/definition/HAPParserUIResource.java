@@ -67,8 +67,8 @@ public class HAPParserUIResource {
 		}
 	}
 	
-	public HAPDefinitionUIUnitResource parseFile(String fileName){
-		HAPDefinitionUIUnitResource resource = null;
+	public HAPDefinitionUIUnitPage parseFile(String fileName){
+		HAPDefinitionUIUnitPage resource = null;
 		try{
 			File input = new File(fileName);
 			//use file name as ui resource id
@@ -82,8 +82,8 @@ public class HAPParserUIResource {
 		return resource;
 	}
 
-	public HAPDefinitionUIUnitResource parseContent(String resourceId, String content){
-		HAPDefinitionUIUnitResource resource = new HAPDefinitionUIUnitResource(resourceId, content);
+	public HAPDefinitionUIUnitPage parseContent(String resourceId, String content){
+		HAPDefinitionUIUnitPage resource = new HAPDefinitionUIUnitPage(resourceId, content);
 		try{
 			Document doc = Jsoup.parse(content, "UTF-8");
 			this.parseUIDefinitionUnit(resource, doc.body(), null);

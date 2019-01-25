@@ -4,9 +4,9 @@ import java.util.Map;
 
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 
-public class HAPExecutableUIUnitResource extends HAPExecutableUIUnit{
+public class HAPExecutableUIUnitPage extends HAPExecutableUIUnit{
 
-	public HAPExecutableUIUnitResource(HAPDefinitionUIUnit uiUnitDefinition, String id) {
+	public HAPExecutableUIUnitPage(HAPDefinitionUIUnit uiUnitDefinition, String id) {
 		super(uiUnitDefinition, id);
 	}
 
