@@ -88,11 +88,6 @@ public class HAPExecutableProcess extends HAPExecutableImp{
 		//process resources
 		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
 		 for(HAPExecutableActivity activity : this.getActivities().values()) {
-			 if(activity==null || activity.getResourceDependency(runtimeInfo)==null) {
-				 int kkkk = 5555;
-				 kkkk++;
-			 }
-			 
 			 out.addAll(activity.getResourceDependency(runtimeInfo));
 		 }
 		return out;	

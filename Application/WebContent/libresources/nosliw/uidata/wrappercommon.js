@@ -211,8 +211,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 						events.dataOperation.push(new node_EventInfo(event, eventData));
 					}
 					else if(event==node_CONSTANT.WRAPPER_EVENT_ADDELEMENT){
-//						var elePath = loc_getAdapterPathFromEventElementPath(eventData);  //kkkk
-//						eventData.id = elePath;   //kkkk
 						//store data operation event
 						loc_addToBeDoneDataOperation(event, eventData);
 						//inform outside about change
