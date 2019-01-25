@@ -32,4 +32,5 @@ public class HAPResourceDataJSOperationImp extends HAPStringableValueEntityWithI
 	@Override
 	public HAPDataTypeId getDataTypeName() {	return (HAPDataTypeId)this.getAtomicAncestorValueObject(DATATYPENAME, HAPDataTypeId.class);	}
 	public void setDataTypeName(HAPDataTypeId dataTypeName){ this.updateAtomicChildObjectValue(DATATYPENAME, dataTypeName); }
+	
 }

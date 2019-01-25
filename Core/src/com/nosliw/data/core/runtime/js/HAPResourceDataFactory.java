@@ -5,22 +5,20 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 public class HAPResourceDataFactory {
 
 	public static HAPResourceDataJSValue createJSValueResourceData(String value) {
-		return new HAPResourceDataJSValueImp(value);
+		return new HAPResourceDataJSValueInternal(value);
 	}
 
 }
 
-class HAPResourceDataJSValueImp extends HAPSerializableImp implements HAPResourceDataJSValue{
+class HAPResourceDataJSValueInternal extends HAPResourceDataJSValueImp{
 
 	private String m_jsValue;
 	
-	public HAPResourceDataJSValueImp(String value) {
+	public HAPResourceDataJSValueInternal(String value) {
 		this.m_jsValue = value;
 	}
 	
 	@Override
 	public String getValue() {  return this.m_jsValue;  }
 
-	@Override
-	public String toString() {   return this.getValue();  }
 }

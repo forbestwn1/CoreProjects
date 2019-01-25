@@ -68,7 +68,6 @@ public class HAPUIResourceManager {
 	
 	public HAPExecutableModule getUIModule(String moduleId) {
 		HAPDefinitionModule moduleDef = HAPUtilityUIResource.getUIModuleDefinitionById(moduleId, this.m_moduleParser);
-		System.out.println(moduleDef);
 		return processModule(moduleDef, moduleId, null);
 	}
 	
@@ -79,7 +78,7 @@ public class HAPUIResourceManager {
 			HAPDefinitionUIUnitResource def = HAPUtilityUIResource.getUIResourceDefinitionById(uiResourceDefId, this.m_uiResourceParser, this);
 			out = this.processUIResource(def, id, null);
 		}
-
+/*
 		System.out.println();
 		System.out.println();
 		System.out.println("*********************** UI Resource ************************");
@@ -89,14 +88,14 @@ public class HAPUIResourceManager {
 		System.out.println("*********************** UI Resource ************************");
 		System.out.println();
 		System.out.println();
-		
+		*/
 		return out;
 	}
 
 	public HAPExecutableUIUnitResource getUIResource(String uiResourceDefId, String id, HAPContext parentContext){
 		HAPDefinitionUIUnitResource def = HAPUtilityUIResource.getUIResourceDefinitionById(uiResourceDefId, this.m_uiResourceParser, this);
 		HAPExecutableUIUnitResource out = this.processUIResource(def, id, parentContext);
-
+/*
 		System.out.println();
 		System.out.println();
 		System.out.println("*********************** UI Resource ************************");
@@ -106,7 +105,7 @@ public class HAPUIResourceManager {
 		System.out.println("*********************** UI Resource ************************");
 		System.out.println();
 		System.out.println();
-		
+*/		
 		return out;
 	}
 

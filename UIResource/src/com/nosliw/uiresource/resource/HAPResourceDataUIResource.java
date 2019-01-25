@@ -1,11 +1,10 @@
 package com.nosliw.uiresource.resource;
 
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.runtime.js.HAPResourceDataJSValue;
+import com.nosliw.data.core.runtime.js.HAPResourceDataJSValueImp;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitResource;
 
-public class HAPResourceDataUIResource extends HAPSerializableImp implements HAPResourceDataJSValue{
+public class HAPResourceDataUIResource extends HAPResourceDataJSValueImp{
 
 	private HAPExecutableUIUnitResource m_uiResource;
 	

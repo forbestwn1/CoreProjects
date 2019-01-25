@@ -6,11 +6,10 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.runtime.js.HAPResourceDataJSValue;
+import com.nosliw.data.core.runtime.js.HAPResourceDataJSValueImp;
 
-public class HAPResourceDataJSGateway extends HAPSerializableImp implements HAPResourceDataJSValue{
+public class HAPResourceDataJSGateway extends HAPResourceDataJSValueImp{
 
 	@HAPAttribute
 	public static String GATEWAY = "gateway";
@@ -21,10 +20,6 @@ public class HAPResourceDataJSGateway extends HAPSerializableImp implements HAPR
 		this.m_name = name;
 	}
 	
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		this.buildFullJsonMap(jsonMap, typeJsonMap);
-	}
-
 	@Override
 	public String getValue() {
 		

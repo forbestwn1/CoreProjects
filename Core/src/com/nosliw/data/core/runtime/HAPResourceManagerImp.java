@@ -3,6 +3,9 @@ package com.nosliw.data.core.runtime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nosliw.common.erro.HAPErrorUtility;
+import com.nosliw.data.core.runtime.js.HAPResourceDataJSValue;
+
 public abstract class HAPResourceManagerImp implements HAPResourceManager{
 
 	@Override
@@ -10,8 +13,20 @@ public abstract class HAPResourceManagerImp implements HAPResourceManager{
 		HAPLoadResourceResponse out = new HAPLoadResourceResponse();
 		for(HAPResourceId resourceId : resourcesId){
 			HAPResource resource = this.getResource(resourceId, runtimeInfo);
-			if(resource!=null) out.addLoadedResource(resource);
-			else out.addFaildResourceId(resourceId);
+			if(resource!=null) {
+				out.addLoadedResource(resource);
+
+				System.out.println();
+				System.out.println("*********************** Load Resource Start ************************");
+				System.out.println(resource.toString());
+				System.out.println("*********************** Load Resource End ************************");
+				System.out.println();
+
+			}
+			else {
+				out.addFaildResourceId(resourceId);
+				HAPErrorUtility.invalid("resource does not exist :" + resourceId.toString());
+			}
 		}
 		return out;
 	}

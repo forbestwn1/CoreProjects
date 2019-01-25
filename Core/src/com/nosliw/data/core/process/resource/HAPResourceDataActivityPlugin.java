@@ -8,8 +8,9 @@ import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.process.plugin.HAPPluginActivity;
 import com.nosliw.data.core.runtime.js.HAPResourceDataJSValue;
+import com.nosliw.data.core.runtime.js.HAPResourceDataJSValueImp;
 
-public class HAPResourceDataActivityPlugin extends HAPSerializableImp implements HAPResourceDataJSValue{
+public class HAPResourceDataActivityPlugin extends HAPResourceDataJSValueImp{
 
 	private HAPPluginActivity m_activityPlugin;
 	

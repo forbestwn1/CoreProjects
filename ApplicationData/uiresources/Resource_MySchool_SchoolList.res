@@ -2,7 +2,7 @@
 <html>
 <body>
 		<br>
-<!--		Sum:<%=#|?(schoolList)?.length()|#.value%>  -->
+		Sum:<%=#|?(schoolList)?.length()|#.value%> 
 
 		<br>
 		<nosliw-loop data="schoolList" element="ele" index="index">  
