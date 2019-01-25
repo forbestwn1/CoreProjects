@@ -1,9 +1,11 @@
 package com.nosliw.uiresource.resource;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.data.core.runtime.HAPResource;
+import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceManagerImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -29,4 +31,10 @@ public class HAPResourceManagerUIModule  extends HAPResourceManagerImp{
 		return new HAPResource(resourceId, uiModule.toResourceData(runtimeInfo), null);
 	}
 
+	@Override
+	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
+		HAPResourceIdUIModule uiModuleId = new HAPResourceIdUIModule(resourceId); 
+		HAPExecutableModule uiModule = this.m_uiResourceMan.getUIModule(uiModuleId.getId());
+		return uiModule.getResourceDependency(runtimeInfo);
+	}
 }

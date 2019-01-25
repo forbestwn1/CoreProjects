@@ -14,9 +14,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.runtime.HAPExecutable;
+import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -32,7 +31,7 @@ import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
 import com.nosliw.uiresource.page.definition.HAPElementEvent;
 
 @HAPEntityWithAttribute(baseName="UIRESOURCEDEFINITION")
-public class HAPExecutableUIUnit extends HAPSerializableImp implements HAPExecutable{
+public class HAPExecutableUIUnit extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static final String ID = "id";

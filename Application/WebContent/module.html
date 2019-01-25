@@ -24,57 +24,14 @@
 <script>
 
 $(document).on("nosliwActive", function(){
-	nosliw.runtime.getUIModuleService().executeUIModuleRequest("ModuleMySchoolResult", undefined, {}, {
+	var currentSearchString = window.location.search;
+	var module = currentSearchString.substring(currentSearchString.indexOf("=")+1);
+
+	nosliw.runtime.getUIModuleService().executeUIModuleRequest(module, undefined, {}, {
 		success : function(request, data){
 			
 		}
 	});
-
-	/*
-	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessRequest("expression;expressionProcessId", 
-	{
-		"toVar": {
-			"dataTypeId": "test.integer;1.0.0",
-			"value": 5
-		}
-	}, 
-	{
-		success : function(request, output){
-			alert(JSON.stringify(output));
-		}
-	});
-	*/	
-	
-	/*
-	nosliw.runtime.getDataService().executeExecuteDataServiceRequest("realtor", {}, {
-		success : function(requestInfo, serviceResult){
-			var kkkk;
-			kkkk++;
-		}
-	});
-	*/
-
-	/*
-	var currentSearchString = window.location.search;
-	var page = currentSearchString.substring(currentSearchString.indexOf("=")+1);
-	nosliw.runtime.getUIPageService().executeCreateUIPageRequest(page, undefined, 
-			{
-				success : function(requestInfo, uiResourceView){
-					nosliw.logging.info(JSON.stringify(uiResourceView));
-					
-					uiResourceView.appendTo($('#testDiv'));
-					var comData = uiResourceView.command("Include", {data:"Hello"});
-					alert(JSON.stringify(comData));
-					
-					uiResourceView.registerEventListener(function(eventName, eventData, requestInfo){
-						alert(eventName + "  _______  " +JSON.stringify(eventData));
-					});
-				}
-			}
-	);
-	*/
-	
-	
 });
 nosliw.init();
 </script>

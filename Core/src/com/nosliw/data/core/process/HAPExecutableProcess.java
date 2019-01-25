@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPExecutable;
+import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -20,7 +21,7 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPUtilityContextScript;
 
 @HAPEntityWithAttribute
-public class HAPExecutableProcess extends HAPSerializableImp implements HAPExecutable{
+public class HAPExecutableProcess extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static String DEFINITION = "definition";
@@ -87,9 +88,13 @@ public class HAPExecutableProcess extends HAPSerializableImp implements HAPExecu
 		//process resources
 		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
 		 for(HAPExecutableActivity activity : this.getActivities().values()) {
+			 if(activity==null || activity.getResourceDependency(runtimeInfo)==null) {
+				 int kkkk = 5555;
+				 kkkk++;
+			 }
+			 
 			 out.addAll(activity.getResourceDependency(runtimeInfo));
 		 }
-	
 		return out;	
 	}
 

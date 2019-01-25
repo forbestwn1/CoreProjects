@@ -3,6 +3,7 @@ package com.nosliw.data.core.process;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.script.context.HAPContextGroup;
@@ -75,7 +76,12 @@ public class HAPProcessorProcess{
 			
 			//process activity
 			HAPExecutableActivity activityExe = processMan.getPluginManager().getPlugin(activity.getType()).process(activity, activityId, out, context, results, localProcesses, processMan, contextProcessRequirement, processTracker);
-			out.addActivity(activityId, activityExe);
+			if(activityExe!=null) {
+				out.addActivity(activityId, activityExe);
+			}
+			else {
+				HAPErrorUtility.warning("activity is not processed");
+			}
 		}
 		out.setContext(context);
 		//process results

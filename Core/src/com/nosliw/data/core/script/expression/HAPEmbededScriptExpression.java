@@ -14,6 +14,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
+import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -24,7 +25,7 @@ import com.nosliw.data.core.runtime.js.HAPRuntimeJSScriptUtility;
  *  EmbededScriptExpression: a string which contains script expression
  */
 @HAPEntityWithAttribute
-public class HAPEmbededScriptExpression extends HAPSerializableImp implements HAPExecutable{
+public class HAPEmbededScriptExpression extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static final String SCRIPTEXPRESSIONS = "scriptExpressions";

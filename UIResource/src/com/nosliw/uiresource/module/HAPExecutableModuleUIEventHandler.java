@@ -1,5 +1,6 @@
 package com.nosliw.uiresource.module;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,8 +49,9 @@ public class HAPExecutableModuleUIEventHandler  extends HAPEntityInfoImpWrapper 
 
 	@Override
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+		out.addAll(this.m_process.getResourceDependency(runtimeInfo));
+		return out;
 	}
 
 }

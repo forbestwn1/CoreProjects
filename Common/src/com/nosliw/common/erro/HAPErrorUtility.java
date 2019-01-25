@@ -20,4 +20,7 @@ public class HAPErrorUtility {
 		throw new RuntimeException();
 	}
 	
+	public static void warning(String message) {
+		System.err.println(message);
+	}
 }

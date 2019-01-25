@@ -13,6 +13,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.runtime.HAPExecutable;
+import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -22,7 +23,7 @@ import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextPath;
 
 @HAPEntityWithAttribute
-public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implements HAPExecutable{
+public class HAPExecutableDataAssociationGroup extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static String DEFINITION = "definition";
@@ -100,8 +101,4 @@ public class HAPExecutableDataAssociationGroup extends HAPSerializableImp implem
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 
-	@Override
-	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		return null;
-	}
 }

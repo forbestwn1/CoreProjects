@@ -1,5 +1,6 @@
 package com.nosliw.data.core.process;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,6 @@ public class HAPExecutableResultActivityNormal extends HAPEntityInfoWritableImp 
 	}
 
 	@Override
-	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {		return null;	}
+	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {		return new ArrayList<HAPResourceDependent>();	}
 
 }

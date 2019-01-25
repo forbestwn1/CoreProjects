@@ -110,6 +110,14 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
 		
-		return null;
+		for(HAPExecutableModuleUI ui : this.m_uis.values()) {
+			out.addAll(ui.getResourceDependency(runtimeInfo));
+		}
+		
+		for(HAPExecutableEmbededProcess process : this.m_processes.values()) {
+			out.addAll(process.getResourceDependency(runtimeInfo));
+		}
+		
+		return out;
 	}
 }
