@@ -25,18 +25,22 @@ var packageObj = library.getChildPackage("service");
 var node_createUIModuleService = function(){
 
 	var loc_env = {
-			getPresentUIRequest : function(uiName, mode){
-				
-			},
+		getPresentUIRequest : function(uiName, mode){
 			
-			getPreExecuteModuleRequest :function(uiModule){
-				_.each(uiModule.getUIs(), function(ui, id){
-					var pageDiv = $("<div data-role='page' id='"+ui.getName()+"'></div>");
-					ui.getPage().appendTo(pageDiv);
-					pageDiv.appendTo($('#testDiv'));
-					
-				});
-			}
+		},
+		
+		getPreExecuteModuleRequest :function(uiModule, handlers, requestInfo){
+			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("PreExecuteModule", {"uiModule":uiModule}), 
+				function(requestInfo){
+					_.each(uiModule.getUIs(), function(ui, id){
+						var pageDiv = $("<div data-role='page' id='"+ui.getName()+"'></div>");
+						ui.getPage().appendTo(pageDiv);
+						pageDiv.appendTo($('#testDiv'));
+					});
+				}, 
+				handlers, requestInfo);
+			return out;
+		}
 	};
 	
 	var loc_buildPage = function(moduleUI, env){

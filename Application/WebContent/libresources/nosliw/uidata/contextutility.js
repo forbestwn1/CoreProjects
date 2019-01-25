@@ -15,6 +15,7 @@ var node_createServiceRequestInfoSequence;
 var node_ServiceInfo;
 var node_createServiceRequestInfoSet;
 var node_uiDataOperationServiceUtility;
+var node_dataUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 var node_utility = {
@@ -79,13 +80,9 @@ var node_utility = {
 					else{
 						//not relative or logical relative variable
 						var defaultValue = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFAULT];
-						if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]!=undefined){
+						if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA]!=undefined){
 							//app data
-							var defaultValueData = defaultValue;
-							if(defaultValueData!=undefined){
-								defaultValueData = node_dataUtility.createDataOfAppData(defaultValue);
-							}
-							contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValueData, "", undefined, info));
+							contextElementInfosArray.push(node_createContextElementInfo(eleName, node_dataUtility.createDataOfAppData(defaultValue), "", undefined, info));
 						}
 						else{
 							//object
@@ -139,6 +136,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

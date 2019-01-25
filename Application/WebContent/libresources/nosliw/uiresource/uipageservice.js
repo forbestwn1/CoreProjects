@@ -14,6 +14,8 @@ var packageObj = library;
 	var node_createUIViewFactory;
 	var node_createServiceRequestInfoSimple;
 	var node_createUIPage;
+	var node_createServiceRequestInfoSequence;
+	
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUIPageService = function(){
@@ -26,17 +28,15 @@ var node_createUIPageService = function(){
 
 			getCreateUIPageRequest : function(name, context, handlers, requester_parent){
 				var requestInfo = loc_out.getRequestInfo(requester_parent);
-				var out = node_createServiceRequestInfoService(new node_ServiceInfo("CreateUIResourceView", {"name":name}), handlers, requestInfo);
+				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIResourceView", {"name":name}), handlers, requestInfo);
 
-				var getUIResourceRequest = nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([name], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIRESOURCE, {});
-				
-				
-				out.setDependentService(new node_DependentServiceRequestInfo(getUIResourceRequest, {
+				out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([name], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIRESOURCE, {
 					success : function(requestInfo, uiResources){
 						var uiResource = uiResources[name];
 						return node_createUIPage(loc_uiResourceViewFactory.createUIView(uiResource, loc_getResourceViewId(), undefined, undefined, requestInfo));
 					}
 				}));
+				
 				return out;
 			},	
 			executeCreateUIPageRequest : function(name, context, handlers, requester_parent){
@@ -78,6 +78,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("uiresource.createUIViewFactory", function(){node_createUIViewFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("uiresource.createUIPage", function(){node_createUIPage = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createUIPageService", node_createUIPageService); 

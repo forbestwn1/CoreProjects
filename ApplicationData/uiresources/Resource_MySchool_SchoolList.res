@@ -2,28 +2,15 @@
 <html>
 <body>
 		<br>
-		Sum:<%=#|?(schoolList)?.length()|#.value%>  
+<!--		Sum:<%=#|?(schoolList)?.length()|#.value%>  -->
 
 		<br>
-<!--
 		<nosliw-loop data="schoolList" element="ele" index="index">  
+			Index: <%=?(index)?%>
+			<br>  1111
+			SchoolName: <%=#|?(ele)?.getChildData(name:&(schoolAttribute)&)|#.value%>
 			<br>
-			SchoolName: <%=#|?(ele)?.getChildData(name:&(schoolAttribute)&)|#.value%>   
-			<br>
-			<event>
-			[
-				{
-					name : "selectSchool",
-					parms : {
-						schoolData : {
-							path: "ele"
-						}
-					},
-				}
-			]
-			</event>
 		</nosliw-loop>
--->
 </body>
 
 	
@@ -84,7 +71,16 @@
 								}					
 							]
 						}
-					}
+					},
+					schoolAttribute: {
+						definition : {
+							value : {
+								dataTypeId: "test.string;1.0.0",
+								value: "schoolName"
+							}
+						}
+					},
+
 				}
 			}
 		}
