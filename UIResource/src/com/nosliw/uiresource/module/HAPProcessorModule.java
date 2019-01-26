@@ -86,7 +86,7 @@ public class HAPProcessorModule {
 
 			HAPContextDefinitionRoot eventRootNode = buildContextRootFromEvent(out.getPage().getEventDefinition(eventName));
 			HAPContextGroup eventContext = moduleExe.getContextGroup().cloneContextGroup();
-			eventContext.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_INTERNAL).addElement("EVENT", eventRootNode);
+			eventContext.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC).addElement("EVENT", eventRootNode);
 			eventHandlerExe.setProcess(HAPProcessorProcess.process(eventHandlerDef.getProcess(), eventName, eventContext, null, processMan, contextProcessRequirement, processTracker));
 			out.addEventHandler(eventName, eventHandlerExe);
 		}	

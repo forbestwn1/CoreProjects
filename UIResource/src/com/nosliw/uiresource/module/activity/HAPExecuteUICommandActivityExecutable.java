@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPActivityPluginId;
 import com.nosliw.data.core.process.HAPExecutableActivityNormal;
@@ -12,6 +14,9 @@ import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPExecuteUICommandActivityExecutable extends HAPExecutableActivityNormal{
+
+	@HAPAttribute
+	public static String UI = "ui";
 
 	@HAPAttribute
 	public static String COMMAND = "command";
@@ -23,11 +28,14 @@ public class HAPExecuteUICommandActivityExecutable extends HAPExecutableActivity
 		super(id, activityDef);
 	}
 
+	private HAPExecuteUICommandActivityDefinition getDefinition() {   return (HAPExecuteUICommandActivityDefinition)this.getActivityDefinition(); }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-//		jsonMap.put(COMMAND, this.m_command);
-//		jsonMap.put(PARM, HAPJsonUtility.buildJson(this.m_parms, HAPSerializationFormat.JSON));
+		jsonMap.put(UI, this.getDefinition().getUI());
+		jsonMap.put(COMMAND, this.getDefinition().getCommand());
+		jsonMap.put(PARM, HAPJsonUtility.buildJson(this.getDefinition().getParms(), HAPSerializationFormat.JSON));
 	}
 
 	@Override

@@ -94,11 +94,8 @@ public class HAPExecutableProcess extends HAPExecutableImp{
 	}
 
 	@Override
-	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
-		this.buildBasicJsonMap(jsonMap, typeJsonMap);
-		
+	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
+		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
 		Map<String, String> activityJsonMap = new LinkedHashMap<String, String>();
 		for(String actId : this.m_activities.keySet()) {
 			activityJsonMap.put(actId, this.m_activities.get(actId).toResourceData(runtimeInfo).toString());
@@ -113,22 +110,17 @@ public class HAPExecutableProcess extends HAPExecutableImp{
 	
 		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildContextInitScript(this.getContext()).getScript());
 		typeJsonMap.put(INITSCRIPT, HAPScript.class);
-		
-		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
-	
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ACTIVITY, HAPJsonUtility.buildJson(this.m_activities, HAPSerializationFormat.JSON));
-	}
-	
-	protected void buildBasicJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(DEFINITION, this.m_processDefinition.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(STARTACTIVITYID, this.m_startActivityId);
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
 
 		jsonMap.put(RESULT, HAPJsonUtility.buildJson(this.m_results, HAPSerializationFormat.JSON));
+		jsonMap.put(ACTIVITY, HAPJsonUtility.buildJson(this.m_activities, HAPSerializationFormat.JSON));
 	}
 }

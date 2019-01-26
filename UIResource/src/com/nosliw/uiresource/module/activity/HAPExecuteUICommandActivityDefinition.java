@@ -13,11 +13,16 @@ import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 public class HAPExecuteUICommandActivityDefinition extends HAPDefinitionActivityNormal{
 
 	@HAPAttribute
+	public static String UI = "ui";
+
+	@HAPAttribute
 	public static String COMMAND = "command";
 
 	@HAPAttribute
 	public static String PARM = "parm";
 
+	private String m_ui;
+	
 	private String m_command;
 	
 	private Map<String, Object> m_parms;
@@ -27,6 +32,8 @@ public class HAPExecuteUICommandActivityDefinition extends HAPDefinitionActivity
 		this.m_parms = new LinkedHashMap<String, Object>();
 	}
 
+	public String getUI() {    return this.m_ui;  }
+	
 	public String getCommand() {   return this.m_command;  }
 	public void setCommand(String command) {   this.m_command = command;   }
 	
@@ -38,6 +45,7 @@ public class HAPExecuteUICommandActivityDefinition extends HAPDefinitionActivity
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.setCommand(jsonObj.optString(COMMAND));
+		this.m_ui = (String)jsonObj.opt(UI);
 		
 		JSONObject parmJson = jsonObj.optJSONObject(PARM);
 		if(parmJson!=null) {
@@ -51,6 +59,7 @@ public class HAPExecuteUICommandActivityDefinition extends HAPDefinitionActivity
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(UI, this.m_ui);
 		jsonMap.put(COMMAND, this.m_command);
 		jsonMap.put(PARM, HAPJsonUtility.buildJson(this.m_parms, HAPSerializationFormat.JSON));
 	}

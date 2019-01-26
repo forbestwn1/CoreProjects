@@ -5,9 +5,10 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.expression.HAPMatchers;
+import com.nosliw.data.core.runtime.HAPExecutable;
 
 @HAPEntityWithAttribute
-public interface HAPBackToGlobalContext {
+public interface HAPBackToGlobalContext extends HAPExecutable{
 
 	@HAPAttribute
 	public static String OUTPUTASSOCIATION = "outputAssociation";

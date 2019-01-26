@@ -70,6 +70,7 @@ var node_createProcessRuntime = function(envObj){
 	var loc_getGenerateDataAssociationOutputRequest = function(dataAssociation, input, handlers, request){
 		var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("generateDataAssociationOutputRequest", {"dataAssociation":dataAssociation, "input":input}), 
 			function(requestInfo){
+				if(dataAssociation==undefined)  return;
 				return dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_CONVERTFUNCTION](input, loc_dyanimicValueBuild);
 			}, 
 			handlers, request);
@@ -210,11 +211,14 @@ var node_createProcessRuntime = function(envObj){
 		out.addRequest(loc_getExecuteProcessRequest(embededProcess, input, {
 			success : function(requestInfo, processResult){
 				var backToGlobal = embededProcess[node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_BACKTOGLOBAL][processResult.resultName];
-				return loc_getBackToGlobalRequest(data, backToGlobal, {
-					success : function(request, globalData){
-						return new node_ProcessResult(processResult.resultName, globalData);
-					}
-				});
+				if(backToGlobal!=null){
+					return loc_getBackToGlobalRequest(processResult.value, backToGlobal, {
+						success : function(request, globalData){
+							return new node_ProcessResult(processResult.resultName, globalData);
+						}
+					});
+				}
+				else return new node_ProcessResult(processResult.resultName);
 			}
 		}));
 		return out;

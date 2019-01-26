@@ -9,7 +9,6 @@ import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPActivityPluginId;
-import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPExecutableActivityNormal;
 import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
@@ -30,7 +29,7 @@ public class HAPExpressionActivityExecutable extends HAPExecutableActivityNormal
 
 	private HAPScriptExpression m_scriptExpression;
 
-	public HAPExpressionActivityExecutable(String id, HAPDefinitionActivity activityDef) {
+	public HAPExpressionActivityExecutable(String id, HAPExpressionActivityDefinition activityDef) {
 		super(id, activityDef);
 		this.m_expressionProcessContext = new HAPProcessContextScriptExpression();
 	}

@@ -19,7 +19,7 @@ var node_dataUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 var node_utility = {
-
+		//from flat context to context group
 		getGetContextValueRequest : function(context, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetContextValue", {}), handlers, request);
 			var calContextValue = node_createServiceRequestInfoSet(undefined, {

@@ -42,7 +42,14 @@ var node_createUIPage = function(uiView){
 
 		registerEventListener : function(handler, thisContext){	return loc_eventSource.registerListener(undefined, undefined, handler, thisContext);},
 
-		command : function(command, data, requestInfo){	 return loc_uiView.command(command, data, requestInfo);		}
+		command : function(command, data, requestInfo){
+			if(command=="refresh"){
+				loc_uiView.updateContext(data);
+			}
+			else{
+				return loc_uiView.command(command, data, requestInfo);		
+			}
+		}
 		
 	};
 

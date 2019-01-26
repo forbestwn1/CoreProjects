@@ -15,7 +15,6 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPMatcherUtility;
 import com.nosliw.data.core.expression.HAPMatchers;
-import com.nosliw.data.core.process.activity.HAPExpressionActivityExecutable;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPImporterProcessSuiteDefinition;
 import com.nosliw.data.core.script.context.HAPContext;
@@ -55,8 +54,8 @@ public class HAPUtilityProcess {
 		expProcessContext.addDataVariables(HAPUtilityContext.discoverDataVariablesInContext(context.getContext()));
 	}
 	
-	public static HAPContextFlat processActivityInputDataAssocation(HAPExpressionActivityExecutable activity, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
-		activity.setInputDataAssociation(HAPProcessorDataAssociation.processDataAssociation(processContext, activity.getExpressionActivityDefinition().getInput(), contextProcessRequirement));
+	public static HAPContextFlat processActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
+		activity.setInputDataAssociation(HAPProcessorDataAssociation.processDataAssociation(processContext, activity.getNormalActivityDefinition().getInput(), contextProcessRequirement));
 		//input context
 		return activity.getInputContext();
 	}

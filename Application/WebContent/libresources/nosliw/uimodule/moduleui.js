@@ -43,10 +43,16 @@ var node_createModuleUI = function(moduleUI, context, page){
 			handlers, request);
 		},
 		
+		executeCommand : function(commandName, parms){
+			loc_page.command(commandName, parms);
+		},
+		
 		//
 		registerListener : function(handler){
 			loc_page.registerEventListener(handler);
 		},
+		
+		getEventHandler : function(eventName){   return loc_moduleUI[node_COMMONATRIBUTECONSTANT.DEFINITIONMODULEUI_EVENTHANDLER][eventName];   },
 		
 		getPage : function(){		return page;		},
 		

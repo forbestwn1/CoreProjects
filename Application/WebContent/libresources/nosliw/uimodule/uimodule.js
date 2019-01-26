@@ -27,9 +27,9 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createUIModuleRequest = function(uiModule, externalContext, handlers, request){
+var node_createUIModuleRequest = function(uiModule, externalContext, env, handlers, request){
 
-	var module = node_createUIModule(uiModule, externalContext);
+	var module = node_createUIModule(uiModule, externalContext, env);
 	
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUIModule", {"uiModule":uiModule}), handlers, request);
 
@@ -51,8 +51,10 @@ var node_createUIModuleRequest = function(uiModule, externalContext, handlers, r
 	return out;
 };	
 	
-var node_createUIModule = function(uiModule, externalContext){
+var node_createUIModule = function(uiModule, externalContext, env){
 
+	var loc_env = env;
+	
 	var loc_context;
 	
 	var loc_uis = {};
@@ -71,26 +73,38 @@ var node_createUIModule = function(uiModule, externalContext){
 	};
 
 	var loc_createModuleUIEventHandler = function(ui){
-		
 		var loc_moduleUI = ui;
-		
 		var loc_moduleUIEventHandler = function(eventName, eventData){
-			node_contextUtility.getGetContextValueRequest(loc_context, {
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("processUIEvent", {"eventName":eventName, "eventData":eventData}));
+			out.addRequest(node_contextUtility.getGetContextValueRequest(loc_context, {
 				success : function(request, contextValue){
-					contextValue[internal].EVENT = eventData;
-					return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteEmbededProcessRequest(ui.eventHandler[eventName].process, contextValue);
+					var input = contextValue[node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC];
+					input.EVENT = eventData;
+					return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).
+					getExecuteEmbededProcessRequest(loc_moduleUI.getEventHandler(eventName)[node_COMMONATRIBUTECONSTANT.DEFINITIONMODULEUIEVENTHANDER_PROCESS], input);
+					/*
+					var eventCategary = contextValue[node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_INTERNAL];
+					if(eventCategary==undefined){
+						eventCategary = {};
+						contextValue[node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_INTERNAL] = eventCategary;
+					}
+					eventCategary.EVENT = eventData;
+					return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).
+						getExecuteEmbededProcessRequest(loc_moduleUI.getEventHandler(eventName)[node_COMMONATRIBUTECONSTANT.DEFINITIONMODULEUIEVENTHANDER_PROCESS], contextValue);
+					*/
 				}
-			});
+			}));
+			node_requestServiceProcessor.processRequest(out);
 		};
 		return loc_moduleUIEventHandler;
 	};
 	
 	
-	var loc_getExecuteUIModuleRequest = function(input, env, handlers, request){
+	var loc_getExecuteUIModuleRequest = function(input, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModule", {"uiModule":uiModule, "input":input, "env":env}), handlers, request);
 		
 		//env pre exe
-		out.addRequest(env.getPreExecuteModuleRequest(loc_out));
+		out.addRequest(loc_env.getPreExecuteModuleRequest(loc_out));
 		
 		//init
 		out.addRequest(node_contextUtility.getGetContextValueRequest(loc_context), {
@@ -112,11 +126,13 @@ var node_createUIModule = function(uiModule, externalContext){
 		
 		prv_getContext : function(){  return loc_context;  },
 		
-		getExecuteRequest : function(input, env, handlers, requester_parent){
-			return loc_getExecuteUIModuleRequest(input, env, handlers, requester_parent);
+		getExecuteRequest : function(input, handlers, requester_parent){
+			return loc_getExecuteUIModuleRequest(input, handlers, requester_parent);
 		},
 		
 		getUIs : function(){  return loc_uis;  },
+		
+		getUI : function(name) {  return loc_uis[name];   }
 			
 	};
 

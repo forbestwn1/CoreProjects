@@ -72,7 +72,7 @@
 			}
 		}
 	},
-	"process": {
+	"process1": {
 		"init": {
 			"activity": [
 				{
@@ -132,7 +132,7 @@
 								"name": "startActivity",
 								"type": "start",
 								"flow": {
-									"target": "presentSchoolDataUI"
+									"target": "refreshSchoolInfo"
 								}
 							},
 							{
@@ -163,6 +163,20 @@
 											}
 										}
 									}
+								},
+								"input": {
+									"element": {
+										"parm" : {
+											"definition" : {
+												"child" : {
+													"schoolData": {
+														"path" : "EVENT"
+													}
+												}
+											}
+										}
+									},
+									"info": {}
 								},
 								"result": [
 									{
@@ -198,7 +212,7 @@
 							"value": {
 								"schoolName": {
 									"dataTypeId": "test.string;1.0.0",
-									"value": "School1"
+									"value": "School5"
 								},
 								"schoolRating": {
 									"dataTypeId": "test.float;1.0.0",

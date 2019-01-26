@@ -23,25 +23,40 @@ var packageObj = library.getChildPackage("service");
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUIModuleService = function(){
-
-	var loc_env = {
-		getPresentUIRequest : function(uiName, mode){
-			
-		},
+	
+	var loc_createEnv = function(){
+		var loc_module;
 		
-		getPreExecuteModuleRequest :function(uiModule, handlers, requestInfo){
-			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("PreExecuteModule", {"uiModule":uiModule}), 
-				function(requestInfo){
-					_.each(uiModule.getUIs(), function(ui, id){
-						var pageDiv = $("<div data-role='page' id='"+ui.getName()+"'></div>");
-						ui.getPage().appendTo(pageDiv);
-						pageDiv.appendTo($('#testDiv'));
-					});
-				}, 
-				handlers, requestInfo);
-			return out;
-		}
+		var loc_out = {
+				setModule : function(module){
+					loc_module = module;
+				},
+				
+				getPresentUIRequest : function(uiName, mode){
+					
+				},
+				
+				getPreExecuteModuleRequest :function(uiModule, handlers, requestInfo){
+					out = node_createServiceRequestInfoSimple(new node_ServiceInfo("PreExecuteModule", {"uiModule":uiModule}), 
+						function(requestInfo){
+							_.each(uiModule.getUIs(), function(ui, id){
+								var pageDiv = $("<div data-role='page' id='"+ui.getName()+"'></div>");
+								ui.getPage().appendTo(pageDiv);
+								pageDiv.appendTo($('#testDiv'));
+							});
+						}, 
+						handlers, requestInfo);
+					return out;
+				},
+				
+				executeUICommand : function(uiName, commandName, commandData){
+					loc_module.getUI(uiName).executeCommand(commandName, commandData.parm);
+				}
+			};
+		
+		return loc_out;
 	};
+	
 	
 	var loc_buildPage = function(moduleUI, env){
 		var pageDiv = $("<div data-role='page' id='"+uiModule.getName()+"'></div>");
@@ -52,9 +67,11 @@ var node_createUIModuleService = function(){
 	var loc_getExecuteUIModuleRequest = function(uiModule, input, env, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModule", {"uiModule":uiModule, "input":input, "env":env}), handlers, request);
 
-		out.addRequest(node_createUIModuleRequest(uiModule, input, {
+		var env = loc_createEnv();
+		out.addRequest(node_createUIModuleRequest(uiModule, input, env, {
 			success : function(request, uiModuleObj){
-				return uiModuleObj.getExecuteRequest(input, loc_env);
+				env.setModule(uiModuleObj);
+				return uiModuleObj.getExecuteRequest(input);
 			}
 		}));
 		
@@ -70,7 +87,7 @@ var node_createUIModuleService = function(){
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([id], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE, {
 				success : function(requestInfo, uiModules){
 					var uiModule = uiModules[id];
-					return loc_getExecuteUIModuleRequest(uiModule, input);
+					return loc_getExecuteUIModuleRequest(uiModule, input, env);
 				}
 			}));
 			

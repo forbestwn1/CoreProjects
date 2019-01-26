@@ -21,7 +21,7 @@ public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 
 	private Map<String, HAPExecutableResultActivityNormal> m_results;
 	
-	public HAPExecutableActivityNormal(String id, HAPDefinitionActivity activityDef) {
+	public HAPExecutableActivityNormal(String id, HAPDefinitionActivityNormal activityDef) {
 		super(id, activityDef);
 		this.m_results = new LinkedHashMap<String, HAPExecutableResultActivityNormal>();
 	}
@@ -32,6 +32,8 @@ public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 		if(this.m_input==null)   return null;
 		return this.m_input.getContext();   
 	}
+	
+	public HAPDefinitionActivityNormal getNormalActivityDefinition() {   return (HAPDefinitionActivityNormal)this.getActivityDefinition();  }
 	
 	public Map<String, HAPExecutableResultActivityNormal> getResults(){   return this.m_results;   }
 	public HAPExecutableResultActivityNormal getResult(String name) {   return this.m_results.get(name);   }
