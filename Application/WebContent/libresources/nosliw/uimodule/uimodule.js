@@ -70,9 +70,21 @@ var node_createUIModule = function(uiModule, externalContext){
 		
 	};
 
-	var loc_moduleUIEventHandler = function(eventName, eventData){
+	var loc_createModuleUIEventHandler = function(ui){
 		
+		var loc_moduleUI = ui;
+		
+		var loc_moduleUIEventHandler = function(eventName, eventData){
+			node_contextUtility.getGetContextValueRequest(loc_context, {
+				success : function(request, contextValue){
+					contextValue[internal].EVENT = eventData;
+					return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteEmbededProcessRequest(ui.eventHandler[eventName].process, contextValue);
+				}
+			});
+		};
+		return loc_moduleUIEventHandler;
 	};
+	
 	
 	var loc_getExecuteUIModuleRequest = function(input, env, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModule", {"uiModule":uiModule, "input":input, "env":env}), handlers, request);
@@ -95,7 +107,7 @@ var node_createUIModule = function(uiModule, externalContext){
 		prv_addUI : function(name, ui){
 			loc_uis[name] = ui;
 			//register listener for module ui
-			ui.registerListener(loc_moduleUIEventHandler);
+			ui.registerListener(loc_createModuleUIEventHandler(ui));
 		},
 		
 		prv_getContext : function(){  return loc_context;  },

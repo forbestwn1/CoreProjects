@@ -14,10 +14,6 @@
 			<br>
 			Index: <%=?(index)?%>
 			<br>
-			<%=?(ele)?.value + '   7777 ' %>   <a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
-			<br>
-			TextInput:<nosliw-textinput data="ele"/> 
-			<br>
 			<scripts>
 			{
 				deleteElementInLoop : function(data, info){
@@ -86,7 +82,7 @@
 			};
 
 			var requestInfo = node_createBatchUIDataOperationRequest(this.getContext());
-			var uiDataOperation = new node_UIDataOperation(node_createContextVariableInfo("business.a.cc"), node_uiDataOperationServiceUtility.createAddElementOperationService("", eleData, 1));
+			var uiDataOperation = new node_UIDataOperation(node_createContextVariableInfo("business.a.cc"), node_uiDataOperationServiceUtility.createAddElementOperationService("", eleData, 0));
 			requestInfo.addUIDataOperation(uiDataOperation);						
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},

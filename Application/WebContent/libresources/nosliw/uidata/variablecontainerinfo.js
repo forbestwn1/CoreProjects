@@ -244,9 +244,34 @@ var node_createContainerOrderInfo = function(){
 		loc_out.prv_elementsInfo = [];
 	};
 
-	//create variable for index
 	var loc_createIndexVariable = function(path, requestInfo){
-		
+		var value = {
+				path : path,
+				eventObject : node_createEventObject(),
+				
+				getValue : function(){
+					var index = loc_out.prv_getIndexByPath(this.path);
+					return index;
+				},	
+					
+				registerListener : function(eventObj, handler, thisContext){
+					this.eventObject.registerListener(undefined, eventObj, handler, thisContext);
+				},
+
+				trigueEvent : function(requestInfo){
+					this.eventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, undefined, requestInfo);
+				},
+				
+				destroy : function(){
+					this.eventObject.clearup();
+				},
+			};
+		return node_createVariableWrapper(node_dataUtility.createDataOfDynamic(value), undefined, undefined, requestInfo);
+	};
+
+	
+	//create variable for index
+	var loc_createIndexVariable1 = function(path, requestInfo){
 		return node_createVariableWrapper(node_dataUtility.createDataOfDynamic(function(path){
 			var loc_path = path;
 			var loc_eventObject = node_createEventObject();

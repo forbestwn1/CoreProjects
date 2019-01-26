@@ -9,7 +9,34 @@
 			Index: <%=?(index)?%>
 			<br>  1111
 			SchoolName: <%=#|?(ele)?.getChildData(name:&(schoolAttribute)&)|#.value%>
+			<a href='' nosliw-event="click:getSchoolInfo:">Info</a>
 			<br>
+			
+			<scripts>
+			{
+				getSchoolInfo : function(info, env){
+					event.preventDefault();
+				
+					var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+					var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+					var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+					var node_createUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createUIDataOperationRequest");
+					var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
+					var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
+					var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+					var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+
+					var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createGetOperationService(""));
+					var opRequest = node_createUIDataOperationRequest(this.getContext(), uiDataOperation, {
+						success : function(request, data){
+							env.trigueEvent("selectSchool", data);
+						}
+					});
+					node_requestServiceProcessor.processRequest(opRequest, false);
+				}
+			}
+			</scripts>
+			
 		</nosliw-loop>
 </body>
 
@@ -86,6 +113,7 @@
 		}
 	}
 	</contexts>
+	
 	
 	<events>
 	[
