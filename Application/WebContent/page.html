@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8" />
+        <title>Nosliw Go Go !!</title>
+
+        <script src="libresources/external/Underscore/1.6.0/underscore.js"></script>
+        <script src="libresources/external/Backbone/1.1.2/backbone.js"></script>
+   		<link rel="stylesheet" href="libresources/external/jQuery_Mobile/jquery.mobile-1.4.5.min.css" />
+        <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
+<!-- 		<script type="text/javascript" src="libresources/external/jQuery_Mobile/jquery.mobile-1.4.5.min.js"></script>   -->
+        <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
+		<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+</head>
+
+<body>
+	 <div id="map"></div>
+
+	<div id="testDiv">
+	</div>
+
+</body>
+
+<script>
+
+$(document).on("nosliwActive", function(){
+
+	var currentSearchString = window.location.search;
+	var page = currentSearchString.substring(currentSearchString.indexOf("=")+1);
+	nosliw.runtime.getUIPageService().executeCreateUIPageRequest(page, undefined, 
+			{
+				success : function(requestInfo, uiResourceView){
+					nosliw.logging.info(JSON.stringify(uiResourceView));
+					
+					uiResourceView.appendTo($('#testDiv'));
+/*					
+					var comData = uiResourceView.command("Include", {data:"Hello"});
+					alert(JSON.stringify(comData));
+					
+					uiResourceView.registerEventListener(function(eventName, eventData, requestInfo){
+						alert(eventName + "  _______  " +JSON.stringify(eventData));
+					});
+*/
+				}
+			}
+	);
+	
+	
+});
+nosliw.init();
+</script>
+
+</html>

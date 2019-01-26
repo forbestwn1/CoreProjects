@@ -117,7 +117,7 @@
 							"path": "schoolListInModule"
 						},
 						"info": {
-							"mappingType": "physical"
+							"relativeConnection": "physical"
 						}
 					}
 				}
@@ -193,8 +193,28 @@
 						"definition": {
 							"path": "schoolListInModule.element"
 						},
+						"defaultValue": {
+							"dataTypeId": "test.map;1.0.0",
+							"value": {
+								"schoolName": {
+									"dataTypeId": "test.string;1.0.0",
+									"value": "School1"
+								},
+								"schoolRating": {
+									"dataTypeId": "test.float;1.0.0",
+									"value": 6.0
+								},
+								"geo": {
+									"dataTypeId": "test.geo;1.0.0",
+									"value": {
+										"latitude": 43.651299,
+										"longitude": -79.579473
+									}
+								}
+							}
+						},
 						"info": {
-							"mappingType": "logical"
+							"relativeConnection": "logical"
 						}
 					}
 				}
