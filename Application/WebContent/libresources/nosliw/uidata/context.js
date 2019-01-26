@@ -231,7 +231,7 @@ var node_createContext = function(elementInfosArray, request){
 			});
 			outRequest.addRequest(setRequest);
 			return outRequest;
-		}
+		},
 		
 		/*
 		 * update context wrappers
@@ -240,22 +240,38 @@ var node_createContext = function(elementInfosArray, request){
 		 * 		new wrappers
 		 * only update those element variables contains within wrappers 
 		 */
-//		updateContext : function(wrappers, requestInfo){
-//			this.prv_eventObject.triggerEvent(node_CONSTANT.CONTEXT_EVENT_BEFOREUPDATE, this, requestInfo);
-//
-//			var that = this;
-//			_.each(wrappers, function(wrapper, name){
-//				//set wrapper to each variable
-//				var eleVar = loc_getContextElementVariable(name);
-//				if(eleVar!=undefined){
-//					eleVar.setWrapper(wrapper, requestInfo);
-//				}
-//			});
-//
-//			this.prv_eventObject.triggerEvent(node_CONSTANT.CONTEXT_EVENT_UPDATE, this, requestInfo);
-//			
-//			this.prv_eventObject.triggerEvent(node_CONSTANT.CONTEXT_EVENT_AFTERUPDATE, this, requestInfo);
-//		},
+/*
+		updateContext : function(wrappers, requestInfo){
+			this.prv_eventObject.triggerEvent(node_CONSTANT.CONTEXT_EVENT_BEFOREUPDATE, this, requestInfo);
+
+			var that = this;
+			_.each(wrappers, function(wrapper, name){
+				//set wrapper to each variable
+				var eleVar = loc_getContextElementVariable(name);
+				if(eleVar!=undefined){
+					eleVar.setWrapper(wrapper, requestInfo);
+				}
+			});
+
+			this.prv_eventObject.triggerEvent(node_CONSTANT.CONTEXT_EVENT_UPDATE, this, requestInfo);
+			
+			this.prv_eventObject.triggerEvent(node_CONSTANT.CONTEXT_EVENT_AFTERUPDATE, this, requestInfo);
+		},
+*/
+		
+		updateContext : function(values, handlers, requestInfo){
+			var outRequest = node_createServiceRequestInfoSequence({}, handlers, requestInfo);
+			var setRequest = node_createServiceRequestInfoSet({}, {
+				success : function(requestInfo, result){
+				}
+			});
+			_.each(values, function(value, name){
+				setRequest.addRequest(name, loc_out.getContextElement(name).updateValueRequest(value));
+			});
+			outRequest.addRequest(setRequest);
+			return outRequest;
+		}
+		
 		
 	};
 

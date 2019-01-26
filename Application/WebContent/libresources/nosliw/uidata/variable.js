@@ -268,20 +268,26 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 				//create empty wrapper fist
 				var wrapperValue;      //store the value
 				var entityType = node_getObjectType(parm1);
+				var wrapper;
 				if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_DATA){
 					wrapperValue = parm1.value;
 					parm1.value = undefined;
+					//new wrapper according to data type
+					wrapper = node_wrapperFactory.createWrapper(parm1, parm2, requestInfo);
+					loc_setWrapper(wrapper, requestInfo);
 				}
 				else if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VALUE){
 					wrapperValue = parm1;
 					parm1 = undefined;
+					//new wrapper according to data type
+					wrapper = node_wrapperFactory.createWrapper(parm1, parm2, requestInfo);
+					loc_setWrapper(wrapper, requestInfo);
 				}
 				else{
+					wrapper = this.prv_wrapper;
 					wrapperValue = parm1;
 					parm1 = undefined;
 				}
-				var wrapper = node_wrapperFactory.createWrapper(parm1, parm2, requestInfo);
-				loc_setWrapper(wrapper, requestInfo);
 				//set new value
 				return wrapper.getDataOperationRequest(node_uiDataOperationServiceUtility.createSetOperationService("", wrapperValue), handlers, requestInfo);
 			},

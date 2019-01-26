@@ -78,7 +78,10 @@ var node_createProcessRuntime = function(envObj){
 	};
 	
 	var loc_getBackToGlobalRequest = function(data, backToGlobalConfig, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("BackToGlobal", {"data":data, "backToGlobalConfig":backToGlobalConfig}), handlers, request);
+		var service = new node_ServiceInfo("BackToGlobal", {"data":data, "backToGlobalConfig":backToGlobalConfig});
+		if(backToGlobalConfig==undefined)   return node_createServiceRequestInfoSimple(service, function(){}, handlers, request);
+		
+		var out = node_createServiceRequestInfoSequence(service, handlers, request);
 
 		var activityResultDataAssociation = backToGlobalConfig[node_COMMONATRIBUTECONSTANT.BACKTOGLOBALCONTEXT_OUTPUTASSOCIATION];
 		out.addRequest(loc_getGenerateDataAssociationOutputRequest(activityResultDataAssociation, data, {

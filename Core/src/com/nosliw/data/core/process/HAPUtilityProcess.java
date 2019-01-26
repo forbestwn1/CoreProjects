@@ -119,37 +119,13 @@ public class HAPUtilityProcess {
 			HAPBuilderResultContext resultContextBuilder, 
 			HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPDefinitionResultActivityNormal resultDef = ((HAPDefinitionActivityNormal)activity.getActivityDefinition()).getResult(resultName);
-		HAPExecutableResultActivityNormal resultExe = new HAPExecutableResultActivityNormal(resultDef); 
-		//data association input context
-		HAPContext dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
-		//process data association
-
-		mergeBackToGlobalContext(dataAssociationInputContext, resultDef.getOutputDataAssociation(), parentContext, resultExe, contextProcessRequirement);
-		/*
-		HAPExecutableDataAssociationGroup outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(dataAssociationInputContext, resultDef.getOutputDataAssociation(), contextProcessRequirement);
-		resultExe.setOutputDataAssociation(outputDataAssociation);
-
-		//process result
-		Map<String, String> nameMapping = new LinkedHashMap<String, String>();
-		HAPContext outputContext = outputDataAssociation.getContext().getContext();
-		for(String rootName : outputContext.getElementNames()) {
-			//find matching variable in parent context
-			HAPInfoRelativeContextResolve resolvedInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(rootName), parentContext, null, null);
-			HAPContextDefinitionRootId contextVarRootId = resolvedInfo.path.getRootElementId();
-			//merge back to context variable
-			Map<String, HAPMatchers> matchers = HAPUtilityContext.mergeContextRoot(parentContext.getElement(contextVarRootId), outputContext.getElement(rootName), true, contextProcessRequirement);
-			//matchers when merge back to context variable
-			for(String matchPath :matchers.keySet()) {
-				resultExe.addOutputMatchers(new HAPContextPath(contextVarRootId, matchPath).getFullPath(), HAPMatcherUtility.reversMatchers(matchers.get(matchPath)));
-			}
-			
-			//root variable name --- root variable full name
-			nameMapping.put(rootName, contextVarRootId.getFullName());
+		HAPExecutableResultActivityNormal resultExe = new HAPExecutableResultActivityNormal(resultDef);
+		if(resultContextBuilder!=null) {
+			//data association input context
+			HAPContext dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
+			//process data association
+			mergeBackToGlobalContext(dataAssociationInputContext, resultDef.getOutputDataAssociation(), parentContext, resultExe, contextProcessRequirement);
 		}
-		
-		//update variable names with full name 
-		outputDataAssociation.updateOutputRootName(new HAPUpdateNameMap(nameMapping));
-		*/
 		return resultExe;
 	}
 

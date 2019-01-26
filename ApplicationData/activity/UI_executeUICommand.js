@@ -11,11 +11,18 @@
 	script : {
 		
 		javascript : function(nosliw, env){
-			
+			var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+			var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
+			var node_NormalActivityResult = nosliw.getNodeData("process.entity.NormalActivityResult");
+			var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
+
 			var loc_out = {
-					
 				getExecuteActivityRequest : function(activity, input, env, handlers, request){
-					env.executeUICommand(activity.ui, activity.command, input);
+					return node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteUICommandActivity", {}), 
+						function(requestInfo){
+							env.executeUICommand(activity.ui, activity.command, input);
+							return new node_NormalActivityResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS);
+						}, handlers, request);
 				}
 			};
 			return loc_out;
