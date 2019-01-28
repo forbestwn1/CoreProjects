@@ -129,7 +129,7 @@ nosliw.registerSetNodeDataEvent("runtime.createGatewayService", function(){node_
 nosliw.registerSetNodeDataEvent("miniapp.service.createMiniAppService", function(){node_createMiniAppService = this.getData();});
 nosliw.registerSetNodeDataEvent("process.createProcessRuntimeFactory", function(){node_createProcessRuntimeFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("dataservice.createDataService", function(){node_createDataService = this.getData();});
-nosliw.registerSetNodeDataEvent("uiresource.createUIPageService", function(){node_createUIPageService = this.getData();});
+nosliw.registerSetNodeDataEvent("uipage.createUIPageService", function(){node_createUIPageService = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.service.createUIModuleService", function(){node_createUIModuleService = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.createVariableManager", function(){node_createVariableManager = this.getData();});
 
