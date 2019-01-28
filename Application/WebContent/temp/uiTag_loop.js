@@ -117,9 +117,6 @@ function (env) {
                 loc_updateView(requestInfo);
             } else {
                 if (event == "EACHELEMENTCONTAINER_EVENT_NEWELEMENT") {
-                    eventData.indexVar.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {success: function (request, data) {
-                        loc_addEle(eventData.elementVar, eventData.indexVar, data.value.getValue(), request);
-                    }}, requestInfo);
                 } else {
                     if (event == "EACHELEMENTCONTAINER_EVENT_DELETEELEMENT") {
                         eventData.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {success: function (request, data) {

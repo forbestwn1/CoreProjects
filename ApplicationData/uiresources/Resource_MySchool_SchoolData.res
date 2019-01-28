@@ -4,6 +4,9 @@
 	<br>
 	SchoolNameInfo: <%=#|?(schoolData)?.getChildData(name:&(schoolAttribute)&)|#.value%>     
 	<br>
+		TextInput:<nosliw-textinput data="schoolName"/>  
+
+	<nosliw-debug/>
 </body>
 
 		<!-- This part can be used to define context (variable)
@@ -37,6 +40,15 @@
 									}
 								}
 							}
+						}
+					},
+					"schoolName": {
+						"definition": {
+							"criteria": "test.string;1.0.0"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "School1"
 						}
 					},
 					"schoolAttribute": {
