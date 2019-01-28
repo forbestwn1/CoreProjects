@@ -6,10 +6,6 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.data.core.task111.HAPDefinitionTaskSuiteForTest;
-import com.nosliw.data.core.task111.HAPExporterLog;
-import com.nosliw.data.core.task111.HAPLogTask;
-import com.nosliw.data.core.task111.HAPTaskDefinitionSuiteImporter;
 
 public class HAPTaskMain {
 /*

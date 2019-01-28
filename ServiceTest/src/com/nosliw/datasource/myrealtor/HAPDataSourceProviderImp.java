@@ -1,7 +1,7 @@
 package com.nosliw.datasource.myrealtor;
 
-import com.nosliw.data.core.datasource.HAPDataSourceProvider;
+import com.nosliw.data.core.service.HAPProviderService;
 
-public class HAPDataSourceProviderImp implements HAPDataSourceProvider{
+public class HAPDataSourceProviderImp implements HAPProviderService{
 
 }

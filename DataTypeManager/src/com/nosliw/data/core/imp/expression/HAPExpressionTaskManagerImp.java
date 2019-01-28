@@ -8,12 +8,8 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeHelper;
 
-import com.nosliw.data.core.expression.HAPExpression;
 import com.nosliw.data.core.expression.HAPExpressionParser;
 import com.nosliw.data.core.operand.HAPOperand;
-import com.nosliw.data.core.task111.HAPDefinitionTask;
-import com.nosliw.data.core.task111.HAPDefinitionTaskSuite;
-import com.nosliw.data.core.task111.HAPManagerTask;
 
 public class HAPExpressionTaskManagerImp{ 
 //extends HAPManagerTask{

@@ -13,7 +13,6 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPDataWrapper;
-import com.nosliw.data.core.datasource.HAPDataSourceProvider;
 import com.nosliw.data.core.service.HAPExecutableService;
 import com.nosliw.data.core.service.HAPProviderService;
 import com.nosliw.data.core.service.HAPResultService;

@@ -4,7 +4,6 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.data.core.task111.HAPDefinitionTaskSuiteForTest;
 
 public class HAPRuntimeRhinoMain {
 
@@ -45,7 +44,6 @@ public class HAPRuntimeRhinoMain {
 		}
 		
 	}
-*/	
 	
 	private static void processResult(HAPDefinitionTaskSuiteForTest suite, HAPServiceData resultServiceData){
 		boolean success = true;
@@ -87,6 +85,7 @@ public class HAPRuntimeRhinoMain {
 		}
 		System.out.println();
 	}
+*/	
 	
 	private static void executeSuites(String[] suites, HAPRuntimeEnvironmentImpRhino runtimeEnvironment){
 //		for(String suiteName : suites){

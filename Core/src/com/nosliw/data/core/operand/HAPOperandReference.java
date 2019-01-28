@@ -14,8 +14,8 @@ import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPMatchers;
+import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.task111.HAPExecutableTask;
 
 public class HAPOperandReference extends HAPOperandImp{
 
@@ -24,7 +24,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	private String m_referenceName;
 	
-	private HAPExecutableTask m_referencedTask;
+	private HAPExecutableProcess m_referencedTask;
 
 	private HAPOperandReference(){}
 	
@@ -35,7 +35,7 @@ public class HAPOperandReference extends HAPOperandImp{
 
 	public String getReferenceName(){  return this.m_referenceName;  }
 	
-	public void updateReferenceExecute(Map<String, HAPExecutableTask> refTasks) { this.m_referencedTask = refTasks.get(this.m_referenceName);   }
+//	public void updateReferenceExecute(Map<String, HAPExecutableTask> refTasks) { this.m_referencedTask = refTasks.get(this.m_referenceName);   }
 	
 	@Override
 	public Set<HAPDataTypeConverter> getConverters(){
@@ -50,8 +50,8 @@ public class HAPOperandReference extends HAPOperandImp{
 	@Override
 	public List<HAPResourceId> getResources() {
 		List<HAPResourceId> out = super.getResources();
-		List<HAPResourceId> referenceResources = this.m_referencedTask.getResourceDependency(); 
-		out.addAll(referenceResources);
+//		List<HAPResourceId> referenceResources = this.m_referencedTask.getResourceDependency(); 
+//		out.addAll(referenceResources);
 		return out;
 	}
 	
@@ -68,9 +68,10 @@ public class HAPOperandReference extends HAPOperandImp{
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessTracker processTracker,
 			HAPDataTypeHelper dataTypeHelper) {
-		this.setOutputCriteria(this.m_referencedTask.getOutput());
-		this.m_referencedTask.discoverVariable(variablesInfo, expectCriteria, processTracker);
-		return HAPCriteriaUtility.isMatchable(this.m_referencedTask.getOutput(), expectCriteria, dataTypeHelper);
+//		this.setOutputCriteria(this.m_referencedTask.getOutput());
+//		this.m_referencedTask.discoverVariable(variablesInfo, expectCriteria, processTracker);
+//		return HAPCriteriaUtility.isMatchable(this.m_referencedTask.getOutput(), expectCriteria, dataTypeHelper);
+		return null;
 	}
 	
 	@Override

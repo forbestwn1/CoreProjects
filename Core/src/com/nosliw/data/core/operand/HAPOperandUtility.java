@@ -17,7 +17,6 @@ import com.nosliw.data.core.HAPDataWrapper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.expression.HAPExpressionManager;
-import com.nosliw.data.core.task111.HAPExecutableTask;
 
 public class HAPOperandUtility {
 
@@ -47,19 +46,19 @@ public class HAPOperandUtility {
 		}
 	}
 	
-	static public void updateReferencedExecute(HAPOperandWrapper operand, Map<String, HAPExecutableTask> references) {
-		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
-			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
-					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					referenceOperand.updateReferenceExecute(references);
-				}
-				return true;
-			}
-		});	
-	}
+//	static public void updateReferencedExecute(HAPOperandWrapper operand, Map<String, HAPExecutableTask> references) {
+//		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
+//			@Override
+//			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+//				String opType = operand.getOperand().getType();
+//				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
+//					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+//					referenceOperand.updateReferenceExecute(references);
+//				}
+//				return true;
+//			}
+//		});	
+//	}
 	
 	static public void updateVariableName(HAPOperandWrapper operand, HAPUpdateName updateVar) {
 		//update variable operand

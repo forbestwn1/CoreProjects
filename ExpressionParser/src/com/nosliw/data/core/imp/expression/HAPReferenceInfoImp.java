@@ -5,7 +5,6 @@ import java.util.Map;
 import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueMap;
-import com.nosliw.data.core.task111.expression.HAPReferenceInfo;
 
 /**
  * The information used to define reference in expression

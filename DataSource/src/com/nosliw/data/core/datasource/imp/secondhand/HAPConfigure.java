@@ -9,8 +9,6 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.task111.HAPDefinitionTaskSuite;
-import com.nosliw.data.core.task111.HAPTaskDefinitionSuiteImporter;
 
 @HAPEntityWithAttribute
 public class HAPConfigure extends HAPSerializableImp{
