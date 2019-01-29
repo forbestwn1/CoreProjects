@@ -33,6 +33,7 @@ function (env) {
     var loc_getVariableTreeInfo = function (eleVar, childInfo) {
         var out = {};
         out.id = eleVar.prv_id;
+        out.wrapperId = eleVar.prv_wrapper.prv_id;
         if (childInfo != undefined) {
             out.path = childInfo.path;
             out.normal = childInfo.isNormal;

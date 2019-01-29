@@ -8,9 +8,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
-import com.nosliw.miniapp.data.HAPInstanceData;
-import com.nosliw.miniapp.instance.HAPInstanceMiniAppEntry;
+import com.nosliw.miniapp.instance.HAPInstanceData;
+import com.nosliw.miniapp.instance.HAPExecutableMiniAppEntry;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserInfo;
 
@@ -61,7 +62,7 @@ public class HAPGatewayMiniApp extends HAPGatewayImp{
 	}
 	
 	@Override
-	public HAPServiceData command(String command, JSONObject parms) {
+	public HAPServiceData command(String command, JSONObject parms, HAPRuntimeInfo runtimeInfo) {
 		
 		HAPServiceData out = null;
 
@@ -93,7 +94,7 @@ public class HAPGatewayMiniApp extends HAPGatewayImp{
 			String appId = parms.optString(COMMAND_LOADMINIAPP_APPID);
 			String userId = parms.optString(COMMAND_LOADMINIAPP_USERID);
 			String appEntry = parms.optString(COMMAND_LOADMINIAPP_ENTRY);
-			HAPInstanceMiniAppEntry miniAppInstance = m_miniAppMan.getMiniAppInstanceUIEntiry(userId, appId, appEntry);
+			HAPExecutableMiniAppEntry miniAppInstance = m_miniAppMan.getMiniAppInstanceUIEntiry(userId, appId, appEntry);
 			out = HAPServiceData.createSuccessData(miniAppInstance);
 			break;
 		}
@@ -120,6 +121,5 @@ public class HAPGatewayMiniApp extends HAPGatewayImp{
 		
 		return out;
 	}
-	
-	
+
 }

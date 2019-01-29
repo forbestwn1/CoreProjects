@@ -24,21 +24,21 @@ public class HAPManagerService {
 	
 	public HAPManagerServiceDefinition getDataSourceDefinitionManager() {   return this.m_serviceDefinitionManager;   }
 	
-	public void registerServiceInstance(String name, HAPInstanceService dataSource){
-		this.m_serviceInstances.put(name, dataSource);
+	public void registerServiceInstance(String name, HAPInstanceService serviceInstance){
+		this.m_serviceInstances.put(name, serviceInstance);
 	}
 
 	public void registerServiceFactory(String name, HAPFactoryService serviceFactory){
 		this.m_serviceFactorys.put(name, serviceFactory);
 	}
 	
-	public HAPResultService execute(String serviceId, Map<String, HAPData> parms){
+	public HAPResultService execute(HAPQueryService serviceQuery, Map<String, HAPData> parms){
 		//get service instance according to serviceId
-		HAPInstanceService serviceInstance = this.m_serviceInstances.get(serviceId);
+		HAPInstanceService serviceInstance = this.m_serviceInstances.get(serviceQuery.getServiceId());
 		if(serviceInstance==null){
 			try{
 				//not exists, then create one using factory
-				HAPDefinitionService serviceDef = this.m_serviceDefinitionManager.getDefinition(serviceId);
+				HAPDefinitionService serviceDef = this.m_serviceDefinitionManager.getDefinition(serviceQuery.getServiceId());
 				HAPExecutableService serviceExe;
 				String imp = serviceDef.getRuntimeInfo().getImplementation();
 				if(imp.contains(".")){
@@ -54,7 +54,7 @@ public class HAPManagerService {
 			catch(Exception e){
 				e.printStackTrace();
 			}
-			if(serviceInstance!=null)   this.registerServiceInstance(serviceId, serviceInstance);
+			if(serviceInstance!=null)   this.registerServiceInstance(serviceQuery.getServiceId(), serviceInstance);
 		}
 		
 		//execute service instance

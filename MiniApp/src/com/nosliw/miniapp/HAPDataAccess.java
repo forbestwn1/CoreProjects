@@ -11,8 +11,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.data.core.imp.io.HAPDBSource;
-import com.nosliw.miniapp.data.HAPInstanceDataSetting;
-import com.nosliw.miniapp.instance.HAPInstanceMiniAppEntry;
+import com.nosliw.miniapp.instance.HAPInstanceData;
+import com.nosliw.miniapp.instance.HAPExecutableMiniAppEntry;
 import com.nosliw.miniapp.user.HAPGroup;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserGroupMiniApp;
@@ -54,8 +54,8 @@ public class HAPDataAccess {
 		}
 	}
 
-	public HAPInstanceDataSetting addSettingData(String userId, String appId, String dataName, HAPInstanceDataSetting dataInfo) {
-		HAPInstanceDataSetting out = dataInfo;
+	public HAPInstanceData addSettingData(String userId, String appId, String dataName, HAPInstanceData dataInfo) {
+		HAPInstanceData out = dataInfo;
 		out.setId(this.generateId());
 		try {
 			PreparedStatement statement = this.getConnection().prepareStatement("INSERT INTO MINIAPP_INSTANCEDATA_SETTING (ID,USERID,APPID,DATANAME,VERSION,STATUS,DATA) VALUES ('"+
@@ -76,8 +76,8 @@ public class HAPDataAccess {
 		}
 	}
 	
-	public HAPInstanceDataSetting updateSettingData(String id, HAPInstanceDataSetting dataInfo) {
-		HAPInstanceDataSetting out = dataInfo;
+	public HAPInstanceData updateSettingData(String id, HAPInstanceData dataInfo) {
+		HAPInstanceData out = dataInfo;
 		try {
 			PreparedStatement statement = this.getConnection().prepareStatement("UPDATE MINIAPP_INSTANCEDATA_SETTING SET VERSION='"+dataInfo.getVersion()+"',STATUS='"+dataInfo.getStatus()+"', DATA='"+dataInfo.getDataStr()+"'  WHERE ID='"+id+"'");
 			statement.execute();
@@ -87,13 +87,13 @@ public class HAPDataAccess {
 		return out;
 	}
 
-	public void updateInstanceMiniAppUIEntryWithSettingData(HAPInstanceMiniAppEntry miniAppUIEntry, String userId, String appId, Set<String> dataNames) {
+	public void updateInstanceMiniAppUIEntryWithSettingData(HAPExecutableMiniAppEntry miniAppUIEntry, String userId, String appId, Set<String> dataNames) {
 		try {
 			for(String dataName : dataNames) {
 				PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM MINIAPP_INSTANCEDATA_SETTING where userid='"+userId+"' AND appid='"+appId+"' AND dataname='"+dataName+"';");
 				ResultSet resultSet = statement.executeQuery();
 				while(resultSet.next()) {
-					HAPInstanceDataSetting data = new HAPInstanceDataSetting();
+					HAPInstanceData data = new HAPInstanceData();
 					
 					data.setVersion(resultSet.getString("version"));
 					data.setStatus(resultSet.getString("status"));

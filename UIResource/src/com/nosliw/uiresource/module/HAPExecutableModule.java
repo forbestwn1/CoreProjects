@@ -19,6 +19,7 @@ import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.service.HAPQueryService;
 
 @HAPEntityWithAttribute
 public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPExecutable{
@@ -50,11 +51,14 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	private Map<String, HAPExecutableEmbededProcess> m_processes;
 	
 	private Map<String, HAPExecutableModuleUI> m_uis;
+
+	private Map<String, HAPQueryService> m_services;
 	
 	public HAPExecutableModule(HAPDefinitionModule moduleDefinition, String id) {
 		super(moduleDefinition);
 		this.m_processes = new LinkedHashMap<String, HAPExecutableEmbededProcess>();
 		this.m_uis = new LinkedHashMap<String, HAPExecutableModuleUI>();
+		this.m_services = new LinkedHashMap<String, HAPQueryService>();
 		this.m_moduleDefinition = moduleDefinition;
 		this.m_id = id;
 	}

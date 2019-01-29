@@ -22,6 +22,7 @@ import com.nosliw.data.core.script.context.HAPProcessorContextRelative;
 import com.nosliw.data.core.script.context.HAPProcessorEscalate;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.service.HAPInfoServiceStatic;
+import com.nosliw.data.core.service.HAPQueryService;
 import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
 import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 import com.nosliw.data.core.service.interfacee.HAPServiceResult;
@@ -149,9 +150,8 @@ public class HAPProcessorUIContext {
 		Map<String, HAPDefinitionUICommand> servicesDef = uiExe.getUIUnitDefinition().getServiceDefinitions();
 		for(String name : servicesDef.keySet()) {
 			HAPDefinitionUICommand serviceDef = servicesDef.get(name);
-			HAPInfoServiceStatic processedServiceDef = new HAPInfoServiceStatic();
+			HAPQueryService processedServiceDef = new HAPQueryService();
 			
-			serviceDef.cloneToEntityInfo(processedServiceDef);
 			//process parms and convert context root to data type criteria required by service parm
 			HAPContext processedParmContext = HAPProcessorContextRelative.process(serviceDef.getParms(), uiExe.getContext(), privateConfigure, contextProcessRequirement);
 			for(String parmName : processedParmContext.getElementNames()) {
@@ -205,7 +205,7 @@ public class HAPProcessorUIContext {
 				}
 				
 			}
-			uiExe.addServiceDefinition(processedServiceDef);
+			uiExe.addServiceDefinition(name, processedServiceDef);
 		}
 		
 		//child tag

@@ -1,13 +1,13 @@
-package com.nosliw.miniapp.data;
+package com.nosliw.miniapp.instance;
 
 import java.util.Map;
 
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.common.serialization.HAPSerializableImp;
 
-public class HAPInstanceDataSetting extends HAPInstanceData{
+public class HAPInstanceData extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ID = "id";
@@ -18,14 +18,21 @@ public class HAPInstanceDataSetting extends HAPInstanceData{
 	@HAPAttribute
 	public static final String VERSION = "version";
 	
+	@HAPAttribute
+	public static final String DATA = "data";
+	
+	private String m_id;
+	
 	private String m_status;
 	
 	private String m_version;
 	
-	private String m_id;
+	private Object m_data;
 	
-	@Override
-	public String getType() {  return HAPConstant.MINIAPPDATA_TYPE_SETTING;  }
+
+	public Object getData() {   return this.m_data;   }
+	public String getDataStr() { return this.m_data.toString();  }
+	public void setData(Object data) {   this.m_data = data;   }
 
 	public String getStatus() {  return this.m_status;  }
 	public void setStatus(String status) {  this.m_status = status;   }
@@ -44,7 +51,6 @@ public class HAPInstanceDataSetting extends HAPInstanceData{
 		jsonMap.put(VERSION, this.m_version);
 	}
 	
-
 	@Override
 	protected boolean buildObjectByFullJson(Object json){
 		super.buildObjectByFullJson(json);
@@ -52,6 +58,7 @@ public class HAPInstanceDataSetting extends HAPInstanceData{
 		this.m_id = (String)jsonObj.opt(ID);
 		this.m_status = (String)jsonObj.opt(STATUS);
 		this.m_version = (String)jsonObj.opt(VERSION);
+		this.m_data = jsonObj.optJSONObject(DATA);
 		return true;
 	}
 

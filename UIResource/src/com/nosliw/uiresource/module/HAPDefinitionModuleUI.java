@@ -27,7 +27,6 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	@HAPAttribute
 	public static String EVENTHANDLER = "eventHandler";
 	
-	
 	//ui page
 	private String m_page;
 

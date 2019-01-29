@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -19,7 +20,7 @@ public class HAPGatewayService extends HAPGatewayImp{
 	final public static String COMMAND_REQUEST = "request";
 
 	@HAPAttribute
-	final public static String COMMAND_REQUEST_ID = "id";
+	final public static String COMMAND_REQUEST_QUERY = "query";
 
 	@HAPAttribute
 	final public static String COMMAND_REQUEST_PARMS = "parms";
@@ -36,10 +37,11 @@ public class HAPGatewayService extends HAPGatewayImp{
 		switch(command){
 		case COMMAND_REQUEST:
 		{
-			String serviceId = parms.getString(COMMAND_REQUEST_ID);
+			HAPQueryService serviceQuery = new HAPQueryService();
+			serviceQuery.buildObject(parms.optJSONObject(COMMAND_REQUEST_QUERY), HAPSerializationFormat.JSON);
 			JSONObject parmsJson = parms.optJSONObject(COMMAND_REQUEST_PARMS);
 			Map<String, HAPData> dataSourceParms = HAPDataUtility.buildDataWrapperMapFromJson(parmsJson);
-			HAPResultService serviceResult = this.m_serviceManager.execute(serviceId, dataSourceParms);
+			HAPResultService serviceResult = this.m_serviceManager.execute(serviceQuery, dataSourceParms);
 			out = this.createSuccessWithObject(serviceResult);
 			break;
 		}

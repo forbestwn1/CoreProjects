@@ -23,7 +23,7 @@ import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
-import com.nosliw.data.core.service.HAPInfoServiceStatic;
+import com.nosliw.data.core.service.HAPQueryService;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
@@ -107,7 +107,7 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 	private Map<String, HAPDefinitionUICommand> m_commandsDefinition;
 	
 	//service requirement definition
-	private Map<String, HAPInfoServiceStatic> m_servicesDefinition;
+	private Map<String, HAPQueryService> m_servicesDefinition;
 	
 	public HAPExecutableUIUnit(HAPDefinitionUIUnit uiUnitDefinition, String id) {
 		this.m_id = id;
@@ -124,7 +124,7 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 		this.m_commandsDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
 
-		this.m_servicesDefinition = new LinkedHashMap<String, HAPInfoServiceStatic>();
+		this.m_servicesDefinition = new LinkedHashMap<String, HAPQueryService>();
 		
 		//build tag trees according to definition
 		for(HAPDefinitionUIUnitTag tag : uiUnitDefinition.getUITags()) {
@@ -179,9 +179,9 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 	public HAPDefinitionUIEvent getEventDefinition(String name) {   return this.m_eventsDefinition.get(name);  }
 	public void addEventDefinition(HAPDefinitionUIEvent eventDef) {  this.m_eventsDefinition.put(eventDef.getName(), eventDef);    }
 	
-	public void addServiceDefinition(HAPInfoServiceStatic serviceDef) {   this.m_servicesDefinition.put(serviceDef.getName(), serviceDef);   }
-	public Map<String, HAPInfoServiceStatic> getServiceDefinitions(){  return this.m_servicesDefinition;   }
-	public HAPInfoServiceStatic getServiceDefinition(String name) {   return this.m_servicesDefinition.get(name);  }
+	public void addServiceDefinition(String name, HAPQueryService serviceDef) {   this.m_servicesDefinition.put(name, serviceDef);   }
+	public Map<String, HAPQueryService> getServiceDefinitions(){  return this.m_servicesDefinition;   }
+	public HAPQueryService getServiceDefinition(String name) {   return this.m_servicesDefinition.get(name);  }
 
 	public void addCommandDefinition(HAPDefinitionUICommand commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
 	public Map<String, HAPDefinitionUICommand> getCommandDefinitions() {   return this.m_commandsDefinition;  }

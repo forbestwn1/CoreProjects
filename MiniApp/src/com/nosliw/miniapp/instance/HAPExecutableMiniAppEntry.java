@@ -1,23 +1,25 @@
 package com.nosliw.miniapp.instance;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.miniapp.data.HAPInstanceData;
+import com.nosliw.data.core.runtime.HAPExecutable;
+import com.nosliw.data.core.runtime.HAPResourceData;
+import com.nosliw.data.core.runtime.HAPResourceDependent;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.miniapp.definition.HAPDefinitionMiniApp;
+import com.nosliw.miniapp.definition.HAPDefinitionMiniAppEntry;
+import com.nosliw.uiresource.module.HAPExecutableModule;
 
 @HAPEntityWithAttribute
-public class HAPInstanceMiniAppEntry extends HAPSerializableImp{
+public class HAPExecutableMiniAppEntry extends HAPEntityInfoImpWrapper implements HAPExecutable{
 
 	@HAPAttribute
 	public static String ID = "id";
@@ -26,35 +28,26 @@ public class HAPInstanceMiniAppEntry extends HAPSerializableImp{
 	public static String UIMODULES = "uiModules";
 	
 	@HAPAttribute
-	public static final String RESOURCES = "resources";
-
-	@HAPAttribute
 	public static final String DATA = "data";
 	
 	private String m_id;
 	
-	private Map<String, HAPInstanceModule> m_uiModules;
+	private Map<String, HAPExecutableModule> m_uiModules;
 
-	//dependent resources
-	private Set<HAPResourceId> m_resourcesId;
-	
 	private Map<String, List<HAPInstanceData>> m_data;
 	
-	public HAPInstanceMiniAppEntry() {
-		this.m_resourcesId = new HashSet<HAPResourceId>();
+	public HAPExecutableMiniAppEntry(String id, HAPDefinitionMiniAppEntry definition, HAPDefinitionMiniApp appDef) {
+		super(definition);
+		this.m_id = id;
 		this.m_data = new LinkedHashMap<String, List<HAPInstanceData>>();
-		this.m_uiModules = new LinkedHashMap<String, HAPInstanceModule>();
+		this.m_uiModules = new LinkedHashMap<String, HAPExecutableModule>();
 	}
 
-	public HAPInstanceMiniAppEntry(String id) {		this.m_id = id;	}
-	
 	public String getId() {  return this.m_id;   }
 	public void setId(String id) {  this.m_id = id;  }
 	
-	public void addDependentResourceId(HAPResourceId resourceId) {   this.m_resourcesId.add(resourceId);  }
-	
-	public void addUIModuleInstance(String name, HAPInstanceModule uiModuleInstance) {		this.m_uiModules.put(name, uiModuleInstance);	}
-	public HAPInstanceModule getUIModuleInstance(String moduleName) {  return this.m_uiModules.get(moduleName);  }
+	public void addUIModuleInstance(String name, HAPExecutableModule uiModuleInstance) {		this.m_uiModules.put(name, uiModuleInstance);	}
+	public HAPExecutableModule getUIModuleInstance(String moduleName) {  return this.m_uiModules.get(moduleName);  }
 	
 	public void addData(String dataName, HAPInstanceData data) {
 		List<HAPInstanceData> dataByName = this.m_data.get(dataName);
@@ -71,12 +64,20 @@ public class HAPInstanceMiniAppEntry extends HAPSerializableImp{
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(UIMODULES, HAPSerializeManager.getInstance().toStringValue(this.m_uiModules, HAPSerializationFormat.JSON));
 		jsonMap.put(DATA, HAPSerializeManager.getInstance().toStringValue(this.m_data, HAPSerializationFormat.JSON));
-		List<String> resourcesList = new ArrayList<String>();
-		for(HAPResourceId resourceId : this.m_resourcesId)    resourcesList.add(resourceId.toString());
-		jsonMap.put(RESOURCES, HAPJsonUtility.buildArrayJson(resourcesList.toArray(new String[0])));
-		
 	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){		return this.buildObjectByFullJson(json);	}
+
+	@Override
+	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

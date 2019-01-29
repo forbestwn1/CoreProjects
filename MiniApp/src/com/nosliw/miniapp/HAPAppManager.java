@@ -14,12 +14,12 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
-import com.nosliw.miniapp.data.HAPDefinitionData;
-import com.nosliw.miniapp.data.HAPInstanceData;
-import com.nosliw.miniapp.data.HAPInstanceDataSetting;
+import com.nosliw.miniapp.definition.HAPDefinitionMiniAppData;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniApp;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniAppEntry;
-import com.nosliw.miniapp.instance.HAPInstanceMiniAppEntry;
+import com.nosliw.miniapp.instance.HAPInstanceData;
+import com.nosliw.miniapp.instance.HAPInstanceData;
+import com.nosliw.miniapp.instance.HAPExecutableMiniAppEntry;
 import com.nosliw.miniapp.instance.HAPInstanceModule;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserInfo;
@@ -71,7 +71,7 @@ public class HAPAppManager {
 		HAPInstanceData out = null;
 		switch(dataInfo.getType()) {
 		case HAPConstant.MINIAPPDATA_TYPE_SETTING:
-			out = this.m_dataAccess.addSettingData(userId, appId, dataName, (HAPInstanceDataSetting)dataInfo);
+			out = this.m_dataAccess.addSettingData(userId, appId, dataName, (HAPInstanceData)dataInfo);
 			break;
 		}
 		return out;
@@ -89,14 +89,14 @@ public class HAPAppManager {
 		HAPInstanceData out = null;
 		switch(dataInfo.getType()) {
 		case HAPConstant.MINIAPPDATA_TYPE_SETTING:
-			out = this.m_dataAccess.updateSettingData(id, (HAPInstanceDataSetting)dataInfo);
+			out = this.m_dataAccess.updateSettingData(id, (HAPInstanceData)dataInfo);
 			break;
 		}
 		return out;
 	}
 	
-	public HAPInstanceMiniAppEntry getMiniAppInstanceUIEntiry(String userId, String miniAppId, String entry) {
-		HAPInstanceMiniAppEntry out = new HAPInstanceMiniAppEntry();
+	public HAPExecutableMiniAppEntry getMiniAppInstanceUIEntiry(String userId, String miniAppId, String entry) {
+		HAPExecutableMiniAppEntry out = new HAPExecutableMiniAppEntry();
 		
 		HAPDefinitionMiniApp minAppDef = this.getMinAppDefinition(miniAppId);
 		HAPDefinitionMiniAppEntry miniAppEntry = minAppDef.getEntry(entry);
@@ -126,7 +126,7 @@ public class HAPAppManager {
 
 		Map<String, Set<String>> appEntryDataByType = new LinkedHashMap<String, Set<String>>();
 		for(String dataName : appEntryData) {
-			HAPDefinitionData dataDef = minAppDef.getData(dataName);
+			HAPDefinitionMiniAppData dataDef = minAppDef.getData(dataName);
 			Set<String> datas = appEntryDataByType.get(dataDef.getType());
 			if(datas==null) {
 				datas = new HashSet<String>();
