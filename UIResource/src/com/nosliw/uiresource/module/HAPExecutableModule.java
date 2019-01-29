@@ -50,14 +50,14 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	//processes (used for lifecycle, module command)
 	private Map<String, HAPExecutableEmbededProcess> m_processes;
 	
-	private Map<String, HAPExecutableModuleUI> m_uis;
+	private List<HAPExecutableModuleUI> m_uis;
 
 	private Map<String, HAPQueryService> m_services;
 	
 	public HAPExecutableModule(HAPDefinitionModule moduleDefinition, String id) {
 		super(moduleDefinition);
 		this.m_processes = new LinkedHashMap<String, HAPExecutableEmbededProcess>();
-		this.m_uis = new LinkedHashMap<String, HAPExecutableModuleUI>();
+		this.m_uis = new ArrayList<HAPExecutableModuleUI>();
 		this.m_services = new LinkedHashMap<String, HAPQueryService>();
 		this.m_moduleDefinition = moduleDefinition;
 		this.m_id = id;
@@ -75,7 +75,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	
 	public void addProcess(String name, HAPExecutableEmbededProcess process) {		this.m_processes.put(name, process);	}
 	
-	public void addModuleUI(HAPExecutableModuleUI ui) {  this.m_uis.put(ui.getName(), ui);   }
+	public void addModuleUI(HAPExecutableModuleUI ui) {  this.m_uis.add(ui);   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
@@ -92,11 +92,11 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildFullJsonMap(jsonMap, typeJsonMap);
 
-		Map<String, String> uiJsonMap = new LinkedHashMap<String, String>();
-		for(String uiName :this.m_uis.keySet()) {
-			uiJsonMap.put(uiName, this.m_uis.get(uiName).toResourceData(runtimeInfo).toString());
+		List<String> uiJsonList = new ArrayList<String>();
+		for(HAPExecutableModuleUI ui :this.m_uis) {
+			uiJsonList.add(ui.toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(UI, HAPJsonUtility.buildMapJson(uiJsonMap));
+		jsonMap.put(UI, HAPJsonUtility.buildArrayJson(uiJsonList.toArray(new String[0])));
 		
 		Map<String, String> processJsonMap = new LinkedHashMap<String, String>();
 		for(String processName :this.m_processes.keySet()) {
@@ -104,9 +104,6 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 		}
 		jsonMap.put(PROCESS, HAPJsonUtility.buildMapJson(processJsonMap));
 		
-//		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildContextInitScript(this.getContext()).getScript());
-//		typeJsonMap.put(INITSCRIPT, HAPScript.class);
-
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 
@@ -114,7 +111,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
 		
-		for(HAPExecutableModuleUI ui : this.m_uis.values()) {
+		for(HAPExecutableModuleUI ui : this.m_uis) {
 			out.addAll(ui.getResourceDependency(runtimeInfo));
 		}
 		

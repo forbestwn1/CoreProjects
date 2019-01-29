@@ -39,7 +39,7 @@ var node_createUIModuleService = function(){
 				getPreExecuteModuleRequest :function(uiModule, handlers, requestInfo){
 					out = node_createServiceRequestInfoSimple(new node_ServiceInfo("PreExecuteModule", {"uiModule":uiModule}), 
 						function(requestInfo){
-							_.each(uiModule.getUIs(), function(ui, id){
+							_.each(uiModule.getUIs(), function(ui, index){
 								var pageDiv = $("<div data-role='page' id='"+ui.getName()+"'></div>");
 								ui.getPage().appendTo(pageDiv);
 								pageDiv.appendTo($('#testDiv'));

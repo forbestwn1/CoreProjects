@@ -1,7 +1,9 @@
 package com.nosliw.uiresource.module;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -48,7 +50,7 @@ public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
 	private HAPContextGroup m_contextGroup;
 	
 	// all the module uis (name -- definition)
-	private Set<HAPDefinitionModuleUI> m_uis;
+	private List<HAPDefinitionModuleUI> m_uis;
 
 	//processes (used for lifecycle, module command)
 	private Map<String, HAPDefinitionEmbededProcess> m_processes;
@@ -56,7 +58,7 @@ public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
 	public HAPDefinitionModule(String id) {
 		this.m_id = id;
 		this.m_pagesInfo = new LinkedHashMap<String, HAPInfoPage>();
-		this.m_uis = new HashSet<HAPDefinitionModuleUI>();
+		this.m_uis = new ArrayList<HAPDefinitionModuleUI>();
 		this.m_processes = new LinkedHashMap<String, HAPDefinitionEmbededProcess>();
 	}
 	
@@ -71,7 +73,7 @@ public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
 	public Map<String, HAPDefinitionEmbededProcess> getProcesses(){  return this.m_processes;  }
 	public void addProcess(HAPDefinitionEmbededProcess processDef) {  this.m_processes.put(processDef.getName(), processDef);  }
 	
-	public Set<HAPDefinitionModuleUI> getUIs(){  return this.m_uis;  }
+	public List<HAPDefinitionModuleUI> getUIs(){  return this.m_uis;  }
 	public void addUI(HAPDefinitionModuleUI ui) {   this.m_uis.add(ui);   }
 	
 	@Override

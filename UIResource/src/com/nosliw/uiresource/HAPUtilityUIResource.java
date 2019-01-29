@@ -49,6 +49,7 @@ public class HAPUtilityUIResource {
 			HAPExpressionSuiteManager expressionMan) { 
 		Set<String> inheritanceExcludedInfo = new HashSet<String>();
 		inheritanceExcludedInfo.add(HAPConstant.UIRESOURCE_CONTEXTINFO_INSTANTIATE);
+		inheritanceExcludedInfo.add(HAPConstant.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION);
 		HAPRequirementContextProcessor contextProcessRequirement = new HAPRequirementContextProcessor(dataTypeHelper, runtime, expressionMan, inheritanceExcludedInfo);
 		return contextProcessRequirement;
 	}

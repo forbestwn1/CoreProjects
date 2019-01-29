@@ -35,16 +35,16 @@ var node_createUIModuleRequest = function(uiModule, externalContext, env, handle
 
 	var buildModuleUIRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("BuildModuleUIs", {}), {
 		success : function(request, resultSet){
-			_.each(resultSet.getResults(), function(moduleUI, name){
-				module.prv_addUI(name, moduleUI);
+			_.each(resultSet.getResults(), function(moduleUI, index){
+				module.prv_addUI(moduleUI);
 			});
 			return module;
 		}
 	});
 
 	// build uis
-	_.each(uiModule[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_UI], function(ui, name){
-		buildModuleUIRequest.addRequest(name, node_createModuleUIRequest(ui, module.prv_getContext()));
+	_.each(uiModule[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_UI], function(ui, index){
+		buildModuleUIRequest.addRequest(index, node_createModuleUIRequest(ui, module.prv_getContext()));
 	});
 	out.addRequest(buildModuleUIRequest);
 	
@@ -57,7 +57,8 @@ var node_createUIModule = function(uiModule, externalContext, env){
 	
 	var loc_context;
 	
-	var loc_uis = {};
+	var loc_uis = [];
+	var loc_uisByName = {};
 
 	var loc_uiStacks = [];
 	
@@ -118,8 +119,9 @@ var node_createUIModule = function(uiModule, externalContext, env){
 	
 	var loc_out = {
 		
-		prv_addUI : function(name, ui){
-			loc_uis[name] = ui;
+		prv_addUI : function(ui){
+			loc_uis.push(ui);
+			loc_uisByName[ui.getName()] = ui;
 			//register listener for module ui
 			ui.registerListener(loc_createModuleUIEventHandler(ui));
 		},
@@ -132,7 +134,7 @@ var node_createUIModule = function(uiModule, externalContext, env){
 		
 		getUIs : function(){  return loc_uis;  },
 		
-		getUI : function(name) {  return loc_uis[name];   }
+		getUI : function(name) {  return loc_uisByName[name];   }
 			
 	};
 

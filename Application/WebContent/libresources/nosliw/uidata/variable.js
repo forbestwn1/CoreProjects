@@ -96,8 +96,9 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 		else{
 			//for object/data
 			loc_out.prv_isBase = true;
-			var r = loc_out.prv_getSetBaseDataRequest(data1, data2, {}, requestInfo);
-			node_requestServiceProcessor.processRequest(r);
+			loc_setWrapper(node_wrapperFactory.createWrapper(data1, data2, requestInfo), requestInfo);
+//			var r = loc_out.prv_getSetBaseDataRequest(data1, data2, {}, requestInfo);
+//			node_requestServiceProcessor.processRequest(r);
 		}
 		
 		nosliw.logging.info("************************  variable created   ************************");
@@ -260,6 +261,7 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 				if(this.prv_wrapper==null)   return false;
 				return this.prv_wrapper.prv_isLive;
 			},
+
 			
 			//has to be base variable
 			//   data 
