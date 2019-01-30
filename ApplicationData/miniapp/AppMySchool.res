@@ -42,11 +42,11 @@
 					},
 					parm : {}
 				},
-				application : {
-					role : "application",
-					name : "MySchool",
-					module : "ModuleMySchoolResult",
-					parm : {},
+				{
+					"role" : "application",
+					"name" : "MySchool",
+					"module" : "ModuleMySchoolResult",
+					"parm" : {},
 				}
 			]
 		}
