@@ -73,7 +73,7 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo
 		
 		release : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
 		
-		updateValueRequest : function(value, handlers, request){ return this.prv_variable.prv_getSetBaseDataRequest(value, undefined, handlers, request);   },
+//		updateValueRequest : function(value, handlers, request){ return this.prv_variable.prv_getSetBaseDataRequest(value, undefined, handlers, request);   },
 		
 		getDataOperationRequest : function(operationService, handlers, request){	return this.prv_variable.getDataOperationRequest(operationService, handlers, request);	},
 		executeDataOperationRequest : function(operationService, handlers, request){

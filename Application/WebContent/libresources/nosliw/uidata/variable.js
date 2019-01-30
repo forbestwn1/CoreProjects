@@ -97,8 +97,6 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 			//for object/data
 			loc_out.prv_isBase = true;
 			loc_setWrapper(node_wrapperFactory.createWrapper(data1, data2, requestInfo), requestInfo);
-//			var r = loc_out.prv_getSetBaseDataRequest(data1, data2, {}, requestInfo);
-//			node_requestServiceProcessor.processRequest(r);
 		}
 		
 		nosliw.logging.info("************************  variable created   ************************");
@@ -266,6 +264,7 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 			//has to be base variable
 			//   data 
 			//   value + dataTypeInfo
+			//   value
 			prv_getSetBaseDataRequest : function(parm1, parm2, handlers, requestInfo){
 				//create empty wrapper fist
 				var wrapperValue;      //store the value
@@ -354,7 +353,7 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 				var that = this;
 				var out;
 				
-				if(operationService.command==node_CONSTANT.WRAPPER_OPERATION_SET && loc_out.prv_isBase==true){
+				if(operationService.command==node_CONSTANT.WRAPPER_OPERATION_SET && loc_out.prv_isBase==true && node_basicUtility.isStringEmpty(operationService.parms.path)){
 					//for set root data
 					return loc_out.prv_getSetBaseDataRequest(operationService.parms.value, operationService.parms.dataType, handlers, requester_parent);
 				}

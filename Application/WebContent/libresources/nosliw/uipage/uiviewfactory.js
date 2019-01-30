@@ -393,7 +393,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		},
 		
 		getContext : function(){return loc_context;},
-		updateContext : function(wrappers, requestInfo){		loc_context.updateContext(wrappers, requestInfo);		},
+		getUpdateContextRequest : function(values, handlers, requestInfo){	return loc_context.getUpdateContextRequest(values, handlers, requestInfo);		},
 
 		getStartElement : function(){  return loc_startEle;   },
 		getEndElement : function(){  return loc_endEle; },

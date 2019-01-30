@@ -27,7 +27,7 @@
 					var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 
 					var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createGetOperationService(""));
-					var opRequest = node_createUIDataOperationRequest(this.getContext(), uiDataOperation, {
+					var opRequest = node_createUIDataOperationRequest(env.context, uiDataOperation, {
 						success : function(request, data){
 							env.trigueEvent("selectSchool", data);
 						}

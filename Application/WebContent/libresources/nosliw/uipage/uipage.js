@@ -7,6 +7,7 @@ var packageObj = library;
 	var node_makeObjectWithLifecycle;
 	var node_makeObjectWithType;
 	var node_getLifecycleInterface;
+	var node_requestServiceProcessor;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUIPage = function(uiView){
@@ -44,7 +45,8 @@ var node_createUIPage = function(uiView){
 
 		command : function(command, data, requestInfo){
 			if(command=="refresh"){
-				loc_uiView.updateContext(data);
+				var updateContextRequest = loc_uiView.getUpdateContextRequest(data);
+				node_requestServiceProcessor.processRequest(updateContextRequest);
 			}
 			else{
 				return loc_uiView.command(command, data, requestInfo);		
@@ -68,6 +70,7 @@ nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){nod
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIPage", node_createUIPage); 
