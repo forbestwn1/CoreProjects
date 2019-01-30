@@ -4,11 +4,11 @@
 	"pageInfo": [
 		{
 			"name": "schoolListPage",
-			"id": "Resource_MySchool_SchoolList"
+			"id": "Page_MySchool_SchoolList"
 		},
 		{
 			"name": "schoolInfoPage",
-			"id": "Resource_MySchool_SchoolData"
+			"id": "Page_MySchool_SchoolData"
 		}
 	],
 	"context": {

@@ -1,12 +1,10 @@
 package com.nosliw.common.utils;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -25,12 +23,10 @@ import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 
-import com.nosliw.common.erro.HAPErrorUtility;
-
 public class HAPFileUtility {
 	
 	public static String getApplicationDataFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/ApplicationData/";   }
-	public static String getTagDefinitionFolder(){  return getApplicationDataFolder() + "tags/";   }
+	public static String getTagDefinitionFolder(){  return getApplicationDataFolder() + "uitag/";   }
 	public static String getActivityPluginFolder(){  return getApplicationDataFolder() + "activity/";   }
 	public static String getProcessFolder(){  return getApplicationDataFolder() + "process/";   }
 	public static String getTempFolder(){		return "C:/Temp/nosliw/";	}
@@ -39,9 +35,9 @@ public class HAPFileUtility {
 	public static String getResourceTempFileFolder(){  return getJSFolder() + "temp/";  }
 	public static String getJSFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/Application/WebContent/";  }
 	public static String getNosliwJSFolder(String lib){  return getJSFolder()+"libresources/nosliw/"+lib+"/";  }
-	public static String getUIResourceFolder(){  return getApplicationDataFolder() + "uiresources/";  }
-	public static String getUIModuleFolder(){  return getApplicationDataFolder() + "uimodules/";  }
-	public static String getMiniAppFolder(){  return getApplicationDataFolder() + "miniapps/";  }
+	public static String getUIResourceFolder(){  return getApplicationDataFolder() + "page/";  }
+	public static String getUIModuleFolder(){  return getApplicationDataFolder() + "uimodule/";  }
+	public static String getMiniAppFolder(){  return getApplicationDataFolder() + "miniapp/";  }
 
 	public static List<File> sortFiles(Set<File> files){
 		List<File> sortedList = new ArrayList<File>(files);

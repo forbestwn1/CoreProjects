@@ -1,6 +1,7 @@
 package com.nosliw.miniapp.definition;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -19,13 +20,13 @@ public class HAPDefinitionMiniAppEntry  extends HAPEntityInfoWritableImp{
 	public static final String MODULE = "module";
 
 	//all modules in this entry
-	private Map<String, HAPDefinitionMiniAppModule> m_modules;
+	private List<HAPDefinitionMiniAppModule> m_modules;
 	
 	public HAPDefinitionMiniAppEntry() {
-		this.m_modules = new LinkedHashMap<String, HAPDefinitionMiniAppModule>();
+		this.m_modules = new ArrayList<HAPDefinitionMiniAppModule>();
 	}
 	
-	public Map<String, HAPDefinitionMiniAppModule> getModules(){  return this.m_modules;  }
+	public List<HAPDefinitionMiniAppModule> getModules(){  return this.m_modules;  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -37,7 +38,7 @@ public class HAPDefinitionMiniAppEntry  extends HAPEntityInfoWritableImp{
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_modules =  HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionMiniAppModule.class.getName(), jsonObj.optJSONObject(MODULE));
+		this.m_modules =  HAPSerializeUtility.buildListFromJsonArray(HAPDefinitionMiniAppModule.class.getName(), jsonObj.optJSONArray(MODULE));
 		return true;
 	}
 	

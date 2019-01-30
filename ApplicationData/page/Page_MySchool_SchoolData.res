@@ -4,6 +4,7 @@
 	<br>
 	SchoolNameInfo: <%=#|?(schoolData)?.getChildData(name:&(schoolAttribute)&)|#.value%>     
 	<br>
+<!--	SchoolNameInfo: <%=#|?(schoolData)?.schoolName|#.value%>      -->
 
 	<nosliw-varviewer/>
 	<nosliw-debug/>
