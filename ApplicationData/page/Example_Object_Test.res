@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html>
 <body>
+		
+		<nosliw-varviewer/>
 
 		<br>
 		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 		<br>
 		<br>
 
-		<nosliw-debug/>
-
 		<nosliw-loop data="business.a.cc" element="ele" index="index">  
 
 			<br>
 			Index: <%=?(index)?%>
 			<br>
+			<%=?(ele)?.value%>
+
+<!--			<nosliw-contexttree/> -->
+
 			<scripts>
 			{
 				deleteElementInLoop : function(data, info){
@@ -59,6 +63,8 @@
 			
 		</nosliw-loop>
   
+		<nosliw-contexttree/>
+
 
 </body>
 

@@ -259,7 +259,7 @@ var node_createContainerOrderInfo = function(){
 				},
 
 				trigueEvent : function(requestInfo){
-					this.eventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, undefined, requestInfo);
+					this.eventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, this, requestInfo);
 				},
 				
 				destroy : function(){

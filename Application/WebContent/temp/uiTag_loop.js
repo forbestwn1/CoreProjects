@@ -103,6 +103,17 @@ function (env) {
             resourceView.insertAfter(loc_childResourceViews[index - 1].getEndElement());
         }
         loc_childResourceViews.splice(index, 0, resourceView);
+        loc_childVaraibles.splice(index, 0, eleVar);
+        eleVar.registerDataOperationEventListener(undefined, function (event, dataOperation, requestInfo) {
+            if (event == "EVENT_WRAPPER_DELETE") {
+                indexVar.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {success: function (request, data) {
+                    loc_out.prv_deleteEle(data.value.getValue());
+                }});
+            }
+        }, this);
+    };
+    var loc_addEle1 = function (eleVar, indexVar, index, requestInfo) {
+        var eleContext = loc_env.createExtendedContext([loc_env.createContextElementInfo(loc_env.getAttributeValue("element"), eleVar), loc_env.createContextElementInfo(loc_env.getAttributeValue("index"), indexVar)], requestInfo);
     };
     var loc_out = {prv_deleteEle: function (index, requestInfo) {
         var view = loc_childResourceViews[index];
@@ -117,6 +128,9 @@ function (env) {
                 loc_updateView(requestInfo);
             } else {
                 if (event == "EACHELEMENTCONTAINER_EVENT_NEWELEMENT") {
+                    eventData.indexVar.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {success: function (request, data) {
+                        loc_addEle(eventData.elementVar, eventData.indexVar, data.value.getValue(), request);
+                    }}, requestInfo);
                 } else {
                     if (event == "EACHELEMENTCONTAINER_EVENT_DELETEELEMENT") {
                         eventData.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {success: function (request, data) {

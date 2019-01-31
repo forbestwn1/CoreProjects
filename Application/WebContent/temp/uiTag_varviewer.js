@@ -21,6 +21,7 @@ nosliw.runtime.getResourceService().importResource({"id":{"id":"varviewer",
 "event":[],
 "script":
 function (env) {
+    var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
     var loc_env = env;
     var loc_view;
     var loc_viewInput;
@@ -34,7 +35,7 @@ function (env) {
         loc_viewInput.bind("change", function () {
             var variable = nosliw.runtime.getUIVariableManager().getVariable(loc_viewInput.val());
             env.executeDataOperationRequestGet(variable, "", {success: function (requestInfo, data) {
-                loc_viewData.val(JSON.stringify(data, null, 4));
+                loc_viewData.val(JSON.stringify(node_dataUtility.getValueOfData(data), null, 4));
             }});
         });
         return loc_view;
