@@ -1,36 +1,67 @@
 {
-	context : {
-		criteria : {
-			path : "uis.query.criteria"
-		},
-	},
-	constants : {
-	
-	},
-	command : [
+	"name": "ModuleMySchoolSetting",
+	"description": "",
+	"pageInfo": [
 		{
-			name : "init",
-			parm : {
-				
-			
-			}
-		
+			"name": "schoolSettingPage",
+			"id": "Page_MySchool_Query"
 		}
-	
 	],
-	init : [
+	"context": {
+		"group": {
+			"public": {
+				"element": {
+					"schoolTypeInModule": {
+						"definition": {
+							"criteria": "test.options;1.0.0"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.options;1.0.0",
+							"value": {
+								"value" : "Public",
+								"optionsId" : "schoolType"
+							}
+						}
+					},
+					"schoolRatingInModule": {
+						"definition": {
+							"criteria": "test.float;1.0.0"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.float;1.0.0",
+							"value": 9.0
+						}
+					}
+				}
+			}
+		}
+	},
+	ui :[
 		{
-			name:"presentSchoolQuery",
-			type:"presentUI",
-			ui : "schoolQueryUI"
-		}, 
-	],
-	uis : [
-		{
-			name : "schoolQueryUI",
-			type : "setting",
-			page : "query",
-			service : {},
-		},
+			"name": "settingUI",
+			"type": "setting",
+			"page": "schoolSettingPage",
+			"contextMapping": {
+				"element": {
+					"schoolType": {
+						"definition": {
+							"path": "schoolTypeInModule"
+						},
+						"info": {
+							"relativeConnection": "physical"
+						}
+					},
+					"schoolRating": {
+						"definition": {
+							"path": "schoolRatingInModule"
+						},
+						"info": {
+							"relativeConnection": "physical"
+						}
+					}
+				}
+			},
+			"serviceMapping": {},
+		}
 	]
 }

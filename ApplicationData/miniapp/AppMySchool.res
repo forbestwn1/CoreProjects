@@ -7,16 +7,57 @@
 					"role" : "setting",
 					"name" : "setting",
 					"module" : "ModuleMySchoolSetting",
-					"contextMapping" : {},
 					"info" : {}
-					configure : {
-						settingData : {
-							criteria : settingData
-						},
-						submitProcess :{
-							activity : [
+					"contextMapping" : {
+						"element" : {
+							"schoolTypeInModule" : {
+								"definition" : {
+									"path" : "settingData.schoolTypeData"
+								}
+							},
+							"schoolRatingInModule" : {
+								"definition" : {
+									"path" : "settingData.schoolRatingData"
+								}
+							}
+						}
+					},					
+					"configure" : {
+						"submitProcess" :{
+							"activity" : [
 								{
-									"name" : "moduleRefresh"
+									"id": "startActivityId",
+									"name": "startActivity",
+									"type": "start",
+									"flow": {
+										"target": "refreshApplication"
+									}
+								},
+								{
+									"id" : "refreshApplication",
+									"type": "UI_executeModuleCommand",
+									"module": "application",
+									"command": "refresh",
+									"parm": {
+										"inputData" : {
+											"definition" : {
+												"path" : "settingData"
+											}
+										}
+									},
+									"result": [
+										{
+											"name": "success",
+											"flow": {
+												"target": "successEndId"
+											}
+										}
+									]
+								},
+								{
+									"id": "successEndId",
+									"name": "successEnd",
+									"type": "end"
 								}
 							]
 						},
@@ -40,13 +81,20 @@
 						},
 						
 					},
-					parm : {}
 				},
 				{
 					"role" : "application",
 					"name" : "MySchool",
 					"module" : "ModuleMySchoolResult",
-					"parm" : {},
+					"contextMapping" : {
+						"element" : {
+							"schoolListInModule" : {
+								"definition" : {
+									"path" : "applicationData.schoolListInApp"
+								}
+							}
+						}
+					},					
 				}
 			]
 		}
@@ -60,6 +108,10 @@
 		{
 			"name": "schoolInfoPage",
 			"id": "Page_MySchool_SchoolData"
+		},
+		{
+			"name": "schoolSettingPage",
+			"id": "Page_MySchool_Query"
 		}
 	],
 	
@@ -88,12 +140,67 @@
 					}
 				}
 			}
+		},
+		"applicationData" : {
+			"element" : {
+				"schoolListInApp": {
+					"definition": {
+						"criteria": "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
+					},
+					"defaultValue": {
+						"dataTypeId": "test.array;1.0.0",
+						"value": [
+							{
+								"dataTypeId": "test.map;1.0.0",
+								"value": {
+									"schoolName": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "School1"
+									},
+									"schoolRating": {
+										"dataTypeId": "test.float;1.0.0",
+										"value": 6.0
+									},
+									"geo": {
+										"dataTypeId": "test.geo;1.0.0",
+										"value": {
+											"latitude": 43.651299,
+											"longitude": -79.579473
+										}
+									}
+								}
+							},
+							{
+								"dataTypeId": "test.map;1.0.0",
+								"value": {
+									"schoolName": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "School2"
+									},
+									"schoolRating": {
+										"dataTypeId": "test.float;1.0.0",
+										"value": 8.5
+									},
+									"geo": {
+										"dataTypeId": "test.geo;1.0.0",
+										"value": {
+											"latitude": 43.649016,
+											"longitude": -79.485059
+										}
+									}
+								}
+							}
+						]
+					}
+				}
+			}
 		}
 	
 	},
 
 	"serviceMapping" : {
-		
-	
+		"getSchools" : {
+			"serviceId" : "schoolService"
+		}
 	}
 }
