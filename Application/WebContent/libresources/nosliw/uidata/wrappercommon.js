@@ -387,11 +387,6 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 			//dynamic value may have event
 			if(loc_out.prv_value!=undefined){
 				loc_out.prv_value.registerListener(loc_out.prv_dataOperationEventObject, function(event, eventData, requestInfo){
-					if(loc_out.prv_id=="88"){
-						var kkkk = 5555;
-						kkkk++;
-					}
-					
 					loc_trigueDataChangeEvent(event, eventData, requestInfo);
 				});
 			}

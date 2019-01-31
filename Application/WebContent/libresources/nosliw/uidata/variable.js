@@ -194,17 +194,6 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 	var loc_registerWrapperDataChangeEvent = function(){
 		if(loc_out.prv_wrapper==undefined)  return;
 		loc_out.prv_wrapper.registerDataChangeEventListener(loc_out.prv_dataChangeEventObject, function(event, eventData, requestInfo){
-
-			if(loc_out.prv_wrapper.prv_id=="88"){
-				var kkkk = 5555;
-				kkkk++;
-			}
-
-			if(loc_out.prv_id=="86"){
-				var kkkk = 5555;
-				kkkk++;
-			}
-			
 			loc_out.prv_dataChangeEventObject.triggerEvent(event, eventData, requestInfo);
 		});
 	};
