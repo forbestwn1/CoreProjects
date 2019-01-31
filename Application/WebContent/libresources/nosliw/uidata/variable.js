@@ -26,6 +26,7 @@ var node_createOrderVariableContainer;
 var node_uiDataOperationServiceUtility;
 var node_dataUtility;
 var node_requestServiceProcessor;
+var node_createServiceRequestInfoSimple;
 
 //*******************************************   Start Node Definition  **************************************
 
@@ -70,9 +71,10 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 
 		//wrapper object
 		loc_out.prv_wrapper = undefined;
-
-		loc_out.prv_isBase = true;
 		
+		loc_out.prv_isBase = true;
+		//wrapper type incase no wrapper object
+		loc_out.prv_wrapperType;
 		
 		//normal child variables by path
 		loc_out.prv_childrenVariable = {};
@@ -94,9 +96,15 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 			loc_out.prv_updateWrapperInRelativeVariable();
 		}
 		else{
-			//for object/data
+			//for base object/data
 			loc_out.prv_isBase = true;
-			loc_setWrapper(node_wrapperFactory.createWrapper(data1, data2, requestInfo), requestInfo);
+			if(data1!=undefined){
+				//create wrapper
+				loc_setWrapper(node_wrapperFactory.createWrapper(data1, data2, requestInfo), requestInfo);
+				//store wrapper type
+				loc_out.prv_wrapperType = loc_out.prv_wrapper.getDataType();
+			}
+			else	loc_out.prv_wrapperType = data2;		//not create wrapper, just store the value type
 		}
 		
 		nosliw.logging.info("************************  variable created   ************************");
@@ -221,26 +229,27 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 		//set wrapper
 		loc_out.prv_wrapper = wrapper;
 		
-		nosliw.logging.info("************************  set wrapper to variable   ************************");
-		nosliw.logging.info("variable: " + loc_out.prv_id);
-		if(loc_out.prv_wrapper!=undefined)		nosliw.logging.info("wrapper: " + loc_out.prv_wrapper.prv_id);
-		else  nosliw.logging.info("wrapper: " + undefined);
-		nosliw.logging.info("***************************************************************");
-		
-		var entityType = node_getObjectType(wrapper);
-		if(loc_out.prv_isWrapperExists()){
-			//adapter
-			loc_out.prv_wrapper.setValueAdapter(loc_out.prv_valueAdapter);
-			loc_out.prv_wrapper.setPathAdapter(loc_out.prv_pathAdapter);
-			loc_out.prv_wrapper.setEventAdapter(loc_out.prv_eventAdapter);
-			//event listener
-			loc_registerWrapperDataOperationEvent();
-			loc_registerWrapperDataChangeEvent();
+		if(wrapper!=undefined){
+			nosliw.logging.info("************************  set wrapper to variable   ************************");
+			nosliw.logging.info("variable: " + loc_out.prv_id);
+			if(loc_out.prv_wrapper!=undefined)		nosliw.logging.info("wrapper: " + loc_out.prv_wrapper.prv_id);
+			else  nosliw.logging.info("wrapper: " + undefined);
+			nosliw.logging.info("***************************************************************");
+			
+			if(loc_out.prv_isWrapperExists()){
+				//adapter
+				loc_out.prv_wrapper.setValueAdapter(loc_out.prv_valueAdapter);
+				loc_out.prv_wrapper.setPathAdapter(loc_out.prv_pathAdapter);
+				loc_out.prv_wrapper.setEventAdapter(loc_out.prv_eventAdapter);
+				//event listener
+				loc_registerWrapperDataOperationEvent();
+				loc_registerWrapperDataChangeEvent();
+			}
+			//update wrapper in children variable accordingly
+			_.each(loc_out.prv_childrenVariable, function(childVariableInfo, id){
+				childVariableInfo.variable.prv_updateWrapperInRelativeVariable(requestInfo);
+			});
 		}
-		//update wrapper in children variable accordingly
-		_.each(loc_out.prv_childrenVariable, function(childVariableInfo, id){
-			childVariableInfo.variable.prv_updateWrapperInRelativeVariable(requestInfo);
-		});
 	};
 
 	var loc_out = {
@@ -265,7 +274,18 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 			//   data 
 			//   value + dataTypeInfo
 			//   value
+			//   undefined, 
 			prv_getSetBaseDataRequest : function(parm1, parm2, handlers, requestInfo){
+				if(parm1==undefined){
+					//no value means empty variable, no wrapper
+					return node_createServiceRequestInfoSimple(new node_ServiceInfo("", {}), 
+							function(requestInfo){  
+								loc_setWrapper(undefined, requestInfo);
+								if(parm2!=undefined)   loc_out.prv_wrapperType = parm2;
+							}, 
+							handlers, requestInfo);
+				}
+				
 				//create empty wrapper fist
 				var wrapperValue;      //store the value
 				var entityType = node_getObjectType(parm1);
@@ -279,9 +299,14 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 				}
 				else if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VALUE){
 					wrapperValue = parm1;
-					parm1 = undefined;
 					//new wrapper according to data type
-					wrapper = node_wrapperFactory.createWrapper(parm1, parm2, requestInfo);
+					wrapper = node_wrapperFactory.createWrapper(undefined, parm2, requestInfo);
+					loc_setWrapper(wrapper, requestInfo);
+				}
+				else if(this.prv_wrapper==undefined){
+					//no wrapper, generate one first
+					wrapperValue = parm1;
+					wrapper = node_wrapperFactory.createWrapper(undefined, loc_out.prv_wrapperType, requestInfo);
 					loc_setWrapper(wrapper, requestInfo);
 				}
 				else{
@@ -352,6 +377,8 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 			getDataOperationRequest : function(operationService, handlers, requester_parent){
 				var that = this;
 				var out;
+				
+				if(operationService.command!=node_CONSTANT.WRAPPER_OPERATION_SET && !this.prv_isWrapperExists())  return node_createServiceRequestInfoSimple(undefined, function(){}, handlers, requester_parent);
 				
 				if(operationService.command==node_CONSTANT.WRAPPER_OPERATION_SET && loc_out.prv_isBase==true && node_basicUtility.isStringEmpty(operationService.parms.path)){
 					//for set root data
@@ -445,6 +472,7 @@ nosliw.registerSetNodeDataEvent("uidata.variable.createOrderVariableContainer", 
 nosliw.registerSetNodeDataEvent("uidata.variable.utility", function(){node_variableUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 
 
 //Register Node by Name

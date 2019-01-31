@@ -207,7 +207,7 @@
 						"definition": {
 							"path": "schoolListInModule.element"
 						},
-						"defaultValue": {
+						"defaultValue1": {
 							"dataTypeId": "test.map;1.0.0",
 							"value": {
 								"schoolName": {

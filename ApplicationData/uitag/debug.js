@@ -28,7 +28,7 @@
 		var loc_getVariableTreeInfo = function(eleVar, childInfo){
 			var out = {};
 			out.id = eleVar.prv_id;
-			out.wrapperId = eleVar.prv_wrapper.prv_id;
+			out.wrapperId = eleVar.prv_wrapper!=undefined ? eleVar.prv_wrapper.prv_id : "NO WRAPPER"; 
 			if(childInfo!=undefined){
 				out.path = childInfo.path;
 				out.normal = childInfo.isNormal;
@@ -51,7 +51,7 @@
 			var setRequest = node_createServiceRequestInfoSet({}, {
 				success : function(requestInfo, result){
 					_.each(result.getResults(), function(contextData, name){
-						contextContent[name] = contextData.value;
+						contextContent[name] = contextData!=undefined?contextData.value:"EMPTY VARIABLE";
 					});
 					loc_viewData.val(JSON.stringify(contextContent, null, 4));
 				}

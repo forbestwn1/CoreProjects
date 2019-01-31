@@ -85,6 +85,7 @@ var node_createContextVariableInfo = function(n, p){
  * 		1. name + parent context + parent context contextVariable + info
  * 		2. name + data/value + path + info
  * 		3. name + parent variable + path + info
+ * 		4. name + undefined + value type
  */
 var node_createContextElementInfo = function(name, data1, data2, adapterInfo, info){
 	var loc_out = {

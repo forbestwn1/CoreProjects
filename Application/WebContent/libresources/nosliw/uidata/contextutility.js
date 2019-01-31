@@ -85,12 +85,14 @@ var node_utility = {
 						if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE)	criteria = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION][node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA];
 						else  criteria = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA]; 
 						if(criteria!=undefined){
-							//app data
-							contextElementInfosArray.push(node_createContextElementInfo(eleName, node_dataUtility.createDataOfAppData(defaultValue), "", undefined, info));
+							//app data, if no default, empty variable with wrapper type
+							if(defaultValue!=undefined) 	contextElementInfosArray.push(node_createContextElementInfo(eleName, node_dataUtility.createDataOfAppData(defaultValue), "", undefined, info));
+							else  contextElementInfosArray.push(node_createContextElementInfo(eleName, undefined, node_CONSTANT.DATA_TYPE_APPDATA, undefined, info));
 						}
 						else{
-							//object
-							contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValue, "", undefined, info));
+							//object, if no default, empty variable with wrapper type
+							if(defaultValue!=undefined)		contextElementInfosArray.push(node_createContextElementInfo(eleName, defaultValue, "", undefined, info));
+							else contextElementInfosArray.push(node_createContextElementInfo(eleName, undefined, node_CONSTANT.DATA_TYPE_OBJECT, undefined, info));
 						}
 					}
 				}

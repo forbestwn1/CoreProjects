@@ -99,31 +99,20 @@ var packageObj = library;
 						}
 					});
 				//parepare variable parms
+				var hasEmptyVariable = false;  //whether variable is ready
 				var variables = loc_contextVarGroup.getVariables();
 				_.each(variables, function(variable, index){
+					if(!variable.isEmpty())  hasEmptyVariable = true;
 					var getVarValueRequest = node_createUIDataOperationRequest(undefined, new node_UIDataOperation(variable, node_uiDataOperationServiceUtility.createGetOperationService("")));
 					allVarValuesRequest.addRequest(variable.contextPath, getVarValueRequest);
 				});
 				
-				out.addRequest(allVarValuesRequest);
+				if(!hasEmptyVariable)	out.addRequest(allVarValuesRequest);
+				else out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){return undefined;}));
 
 				return out;
 			},
 
-			getExecuteScriptExpressionRequest1 : function(handlers, requester_parent){
-				//parepare variable parms
-				var variables = loc_contextVarGroup.getVariables();
-				var variableParms = {};
-				_.each(variables, function(variable, index){
-					var varName = variable.contextPath;
-					var varValue = variable.getData().value;
-					variableParms[varName] = varValue;
-				});
-
-				var out = nosliw.runtime.getExpressionService().getExecuteScriptRequest(loc_scriptFunction, loc_expressions, variableParms, loc_constants, handlers, requester_parent)
-				return out;
-			},
-			
 			executeExecuteScriptExpressionRequest : function(handlers, requester_parent){
 				var requestInfo = this.getExecuteScriptExpressionRequest(handlers, requester_parent);
 				node_requestServiceProcessor.processRequest(requestInfo);
