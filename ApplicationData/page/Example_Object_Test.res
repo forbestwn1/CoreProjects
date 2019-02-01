@@ -1,23 +1,18 @@
 <!DOCTYPE html>
 <html>
 <body>
-		
-		<nosliw-varviewer/>
-
 		<br>
 		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 		<br>
-		<br>
-
+		
 		<nosliw-loop data="business.a.cc" element="ele" index="index">  
+
 
 			<br>
 			Index: <%=?(index)?%>
 			<br>
-			<%=?(ele)?.value%>
-
-<!--			<nosliw-contexttree/> -->
-
+			<a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
+			<br>
 			<scripts>
 			{
 				deleteElementInLoop : function(data, info){
@@ -33,38 +28,16 @@
 					var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 
 					
-							var opRequest = node_createBatchUIDataOperationRequest(this.getContext());
-							var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createDeleteOperationService(""));
-							opRequest.addUIDataOperation(uiDataOperation);
+					var opRequest = node_createBatchUIDataOperationRequest(this.getContext());
+					var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createDeleteOperationService(""));
+					opRequest.addUIDataOperation(uiDataOperation);
 					node_requestServiceProcessor.processRequest(opRequest, false);
-					
-/*					
-					var requestInfo = node_createServiceRequestInfoSequence({}, {
-						success:function(requestInfo, data){
-							
-						}
-					});
-					var that = this;
-					requestInfo.addRequest(this.getContext().getDataOperationRequest("index", node_uiDataOperationServiceUtility.createGetOperationService(), {
-						success : function(request, data){
-							var elePath = data.value;
-						
-							var opRequest = node_createBatchUIDataOperationRequest(that.getContext());
-							var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createDeleteOperationService(""));
-							opRequest.addUIDataOperation(uiDataOperation);
-							return opRequest;
-						}
-					}));
-					node_requestServiceProcessor.processRequest(requestInfo, false);
-*/					
 				}
 			}
 			</scripts>
 			
 		</nosliw-loop>
   
-		<nosliw-contexttree/>
-
 
 </body>
 
@@ -88,7 +61,7 @@
 			};
 
 			var requestInfo = node_createBatchUIDataOperationRequest(this.getContext());
-			var uiDataOperation = new node_UIDataOperation(node_createContextVariableInfo("business.a.cc"), node_uiDataOperationServiceUtility.createAddElementOperationService("", eleData, 0));
+			var uiDataOperation = new node_UIDataOperation(node_createContextVariableInfo("business.a.cc"), node_uiDataOperationServiceUtility.createAddElementOperationService("", eleData, 1));
 			requestInfo.addUIDataOperation(uiDataOperation);						
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},
@@ -169,35 +142,11 @@
 	
 	<events>
 	[
-		{
-			name : "changeInputText",
-			data : {
-				element : {
-					data : {
-						definition : {
-							path: "business.a.aa"
-						}
-					}
-				}
-			}
-		}
 	]
 	</events>
 	
 	<commands>
 	[
-		{
-			name : "Start",
-			parm : {
-				element : {
-					data : {
-						definition : {
-							path: "business.a.aa"
-						}
-					}
-				}
-			}
-		}
 	]
 	</commands>
 

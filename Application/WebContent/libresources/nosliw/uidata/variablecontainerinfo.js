@@ -259,7 +259,7 @@ var node_createContainerOrderInfo = function(){
 				},
 
 				trigueEvent : function(requestInfo){
-					this.eventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, this, requestInfo);
+					this.eventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, undefined, requestInfo);
 				},
 				
 				destroy : function(){
@@ -269,36 +269,6 @@ var node_createContainerOrderInfo = function(){
 		return node_createVariableWrapper(node_dataUtility.createDataOfDynamic(value), undefined, undefined, requestInfo);
 	};
 
-	
-	//create variable for index
-	var loc_createIndexVariable1 = function(path, requestInfo){
-		return node_createVariableWrapper(node_dataUtility.createDataOfDynamic(function(path){
-			var loc_path = path;
-			var loc_eventObject = node_createEventObject();
-			
-			var out = {
-			
-				getValue : function(){
-					var index = loc_out.prv_getIndexByPath(loc_path);
-					return index;
-				},	
-					
-				registerListener : function(eventObj, handler, thisContext){
-					loc_eventObject.registerListener(undefined, eventObj, handler, thisContext);
-				},
-
-				trigueEvent : function(requestInfo){
-					loc_eventObject.triggerEvent(node_CONSTANT.WRAPPER_EVENT_CHANGE, undefined, requestInfo);
-				},
-				
-				destroy : function(){
-					loc_eventObject.clearup();
-				},
-				
-			};
-			return out;
-		}(path)), undefined, undefined, requestInfo);
-	};
 	
 	var loc_trigueIndexChange = function(startIndex, requestInfo){
 		for(var i=startIndex; i<loc_out.prv_elementsInfo.length; i++){

@@ -123,7 +123,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 	//destroy resources in wrapper
 	//lifecycle event trigued
 	var loc_destroy = function(requestInfo){
-		if(loc_out.prv_isLive){
+		if(loc_out.prv_isLive==true){
 			nosliw.logging.info("************************  wrapper destroying   ************************");
 			nosliw.logging.info("ID: " + loc_out.prv_id);
 			nosliw.logging.info("***************************************************************");
@@ -151,6 +151,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 			    	}
 			    }
 			}		
+			loc_out.prv_isLive = false;
 		}
 	};
 	
@@ -177,7 +178,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 	
 	//process parent data operation event
 	var loc_dataOperationEventProcessor = function(event, eventData, requestInfo){
-		if(loc_out.prv_isLive){
+		if(loc_out.prv_isLive==true){
 			if(event==node_CONSTANT.WRAPPER_EVENT_FORWARD){
 				//for forward event, expand it
 				event = eventData.event;
@@ -287,7 +288,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 		_.each(events.dataOperation, function(eventInfo){
 			loc_trigueDataOperationEvent(eventInfo.eventName, eventInfo.eventData, requestInfo);
 			//when delete, then destroy, triggue lifecycle event
-			if(eventInfo.eventName==node_CONSTANT.WRAPPER_EVENT_DELETE)  loc_destroy(requestInfo)
+			if(eventInfo.eventName==node_CONSTANT.WRAPPER_EVENT_DELETE)	loc_destroy(requestInfo);
 		});
 		_.each(events.lifecycle, function(eventInfo){   loc_trigueLifecycleEvent(eventInfo.eventName, eventInfo.eventData, requestInfo); });
 		//if something happened on child side, then trigue data change event (refresh)
@@ -430,10 +431,18 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 	
 	var loc_makeDataFromValue = function(value){    return node_dataUtility.createDataByObject(value, loc_out.prv_dataType);	};
 
-	var loc_trigueDataOperationEvent = function(event, eventData, requestInfo){		loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, requestInfo);	};
-	var loc_trigueLifecycleEvent = function(event, eventData, requestInfo){		loc_out.prv_lifecycleEventObject.triggerEvent(event, eventData, requestInfo);	};
-	var loc_trigueInternalEvent = function(event, eventData, requestInfo){		loc_out.prv_internalEventObject.triggerEvent(event, eventData, requestInfo);	};
-	var loc_trigueDataChangeEvent = function(event, eventData, requestInfo){	loc_out.prv_dataChangeEventObject.triggerEvent(event, eventData, requestInfo);	};
+	var loc_trigueDataOperationEvent = function(event, eventData, requestInfo){
+		if(loc_out.prv_isLive)  loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, requestInfo);	
+	};
+	var loc_trigueLifecycleEvent = function(event, eventData, requestInfo){		
+		if(loc_out.prv_isLive)  loc_out.prv_lifecycleEventObject.triggerEvent(event, eventData, requestInfo);	
+	};
+	var loc_trigueInternalEvent = function(event, eventData, requestInfo){
+		if(loc_out.prv_isLive)  loc_out.prv_internalEventObject.triggerEvent(event, eventData, requestInfo);	
+	};
+	var loc_trigueDataChangeEvent = function(event, eventData, requestInfo){	
+		if(loc_out.prv_isLive)  loc_out.prv_dataChangeEventObject.triggerEvent(event, eventData, requestInfo);	
+	};
 	
 	var loc_triggerForwardEvent = function(event, eventData, requestInfo){
 		var eData = {

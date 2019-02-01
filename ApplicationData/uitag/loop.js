@@ -56,7 +56,7 @@
 		var node_namingConvensionUtility = nosliw.getNodeData("common.namingconvension.namingConvensionUtility");
 		var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
 		var node_uiDataOperationServiceUtility  = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
-
+		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
 		
 		var loc_env = env;
 		//container data variable
@@ -110,44 +110,7 @@
 			else	resourceView.insertAfter(loc_childResourceViews[index-1].getEndElement());
 				
 			loc_childResourceViews.splice(index, 0, resourceView);
-
 			loc_childVaraibles.splice(index, 0, eleVar);
-			eleVar.registerDataOperationEventListener(undefined, function(event, dataOperation, requestInfo){
-				if(event=="EVENT_WRAPPER_DELETE"){
-					indexVar.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
-						success : function(request, data){
-							loc_out.prv_deleteEle(data.value.getValue());
-						}
-					});
-				}
-			}, this);
-		};
-
-		var loc_addEle1 = function(eleVar, indexVar, index, requestInfo){
-
-			var eleContext = loc_env.createExtendedContext([
-				loc_env.createContextElementInfo(loc_env.getAttributeValue("element"), eleVar),
-				loc_env.createContextElementInfo(loc_env.getAttributeValue("index"), indexVar)
-			], requestInfo);
-
-			/*
-			var resourceView = loc_env.createUIViewWithId(loc_env.getId()+"."+loc_generateId(), eleContext, requestInfo);
-			if(index==0)	resourceView.insertAfter(loc_env.getStartElement());
-			else	resourceView.insertAfter(loc_childResourceViews[index-1].getEndElement());
-				
-			loc_childResourceViews.splice(index, 0, resourceView);
-
-			loc_childVaraibles.splice(index, 0, eleVar);
-			eleVar.registerDataOperationEventListener(undefined, function(event, dataOperation, requestInfo){
-				if(event=="EVENT_WRAPPER_DELETE"){
-					indexVar.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
-						success : function(request, data){
-							loc_out.prv_deleteEle(data.value.getValue());
-						}
-					});
-				}
-			}, this);
-			*/
 		};
 
 		var loc_out = 
@@ -177,7 +140,7 @@
 					else if(event=="EACHELEMENTCONTAINER_EVENT_DELETEELEMENT"){
 						eventData.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
 							success : function(request, data){
-								loc_out.prv_deleteEle(data.value.getValue(), request);
+								loc_out.prv_deleteEle(node_dataUtility.getValueOfData(data), request);
 							}
 						});
 						
