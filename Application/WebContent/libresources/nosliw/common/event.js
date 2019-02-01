@@ -53,19 +53,12 @@ var packageObj = library.getChildPackage("event");
 						listener = node_createEventObject();
 					}
 					
-					listener.pri_getBackboneEventObj().listenTo(loc_backboneEventObj, eventName, function(event, data){
+					listener.pri_getBackboneEventObj().listenTo(loc_backboneEventObj, eventName, function(parm1, parm2){
 						//within this method, "this" refer to listenerEventObj
 						//we need to set "this" as source
 						var parms;
-						if(isAllEvent===true){
-							parms = data;
-							parms[0] = event;
-						}
-						else{
-							parms = event;
-							parms[0] = eventName;
-						}
-						handler.apply(that, parms);
+						if(isAllEvent===true)		handler.apply(that, parm2);
+						else		handler.apply(that, parm1);
 					});
 					loc_listeners.push(listener);
 
@@ -192,7 +185,6 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 
 //Register Node by Name
 packageObj.createChildNode("createEventObject", node_createEventObject); 
-packageObj.createChildNode("getEventInterface", node_getEventInterface); 
 packageObj.createChildNode("utility", node_utility); 
 packageObj.createChildNode("EventInfo", node_EventInfo); 
 

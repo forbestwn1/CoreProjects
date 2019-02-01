@@ -39,7 +39,13 @@ var node_createVariableManager = function(){
 	
 	var loc_out = {
 		
-		getVariable : function(id){		return loc_variables[id];	},
+		getVariableInfo : function(id){		
+			return { 
+				id :id,
+				variable :loc_variables[id],
+				usage : loc_varUsage[id]
+			};	
+		},
 		
 		createVariable : function(data1, data2, adapterInfo){
 			var data1Type = node_getObjectType(data1);

@@ -11,10 +11,70 @@
 			"id": "Page_MySchool_SchoolData"
 		}
 	],
+	"service" : [
+		{
+			"name" : "schoolDataService",
+			"serviceId" : "schoolService",
+			"interface" : {
+				"parm" : [ 
+					{
+						name : "schoolType",
+						criteria : "test.options;1.0.0",
+						default :{
+							dataTypeId: "test.options;1.0.0",
+							value: {
+								value : "public",
+								optionsId : "schoolType"
+							}
+						},
+					},
+					{
+						name : "schoolRating",
+						criteria : "test.float;1.0.0",
+						default :{
+							dataTypeId: "test.float;1.0.0",
+							value: "8"
+						},
+					}
+				],
+				"result" : [
+					{
+						"name" : "success",
+						"output" : {
+							"output": {
+								"criteria" : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
+							}
+						},			
+					}
+				],
+			}
+		}
+	],
 	"context": {
 		"group": {
 			"public": {
 				"element": {
+					"schoolTypeInModule": {
+						"definition": {
+							"criteria": "test.options;1.0.0"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.options;1.0.0",
+							"value": {
+								"value" : "Public",
+								"optionsId" : "schoolType"
+							}
+						}
+					},
+					"schoolRatingInModule": {
+						"definition": {
+							"criteria": "test.float;1.0.0"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.float;1.0.0",
+							"value": 9.0
+						}
+					}，				
 					"schoolListInModule": {
 						"definition": {
 							"criteria": "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
@@ -72,7 +132,7 @@
 			}
 		}
 	},
-	"process1": {
+	"process": {
 		"init": {
 			"activity": [
 				{
@@ -82,6 +142,41 @@
 					"flow": {
 						"target": "presentSchoolListUI"
 					}
+				},
+				{
+					"id": "retrieveSchoolData",
+					"name": "retrieveSchoolData",
+					"type": "Service_request",
+					"service": "schoolDataService",
+					"parm": {
+						"schoolType" : {
+							"definition" : {
+								"path" : "schoolTypeInModule"
+							}
+						},
+						"schoolRating" : {
+							"definition" : {
+								"path" : "schoolRatingInModule"
+							}
+						}
+					},
+					"result": [
+						{
+							"name": "success",
+							"flow": {
+								"target": "successEndId"
+							},
+							"output": {
+								"element": {
+									"schoolListInModule": {
+										"definition":{
+											"path": "nosliw_output.output"
+										}
+									}
+								}
+							}
+						}
+					]
 				},
 				{
 					"id": "presentSchoolListUI",

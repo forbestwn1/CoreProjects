@@ -25,16 +25,20 @@
 			initViews : function(requestInfo){
 				loc_view = $('<div/>');
 				loc_viewInput = $('<input type="text"/>');	
-				loc_viewData = $('<textarea rows="15" cols="150" id="aboutDescription" style="resize: none;" data-role="none"></textarea>');
+				loc_viewData = $('<textarea rows="5" cols="150" id="aboutDescription" style="resize: none;" data-role="none"></textarea>');
 				loc_view.append(loc_viewInput);
 				loc_view.append(loc_viewData);
 				
 				loc_viewInput.bind('change', function(){
-					var variable = nosliw.runtime.getUIVariableManager().getVariable(loc_viewInput.val());
+					var variableInfo = nosliw.runtime.getUIVariableManager().getVariableInfo(loc_viewInput.val());
 					
-					env.executeDataOperationRequestGet(variable, "", {
+					env.executeDataOperationRequestGet(variableInfo.variable, "", {
 						success : function(requestInfo, data){
-							loc_viewData.val(JSON.stringify(node_dataUtility.getValueOfData(data), null, 4));
+							var content = {
+								value : node_dataUtility.getValueOfData(data),
+								usage : variableInfo.usage
+							};
+							loc_viewData.val(JSON.stringify(content, null, 4));
 						}
 					});
 				});

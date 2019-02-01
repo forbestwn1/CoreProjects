@@ -1,5 +1,5 @@
 {
-	name : "debug",
+	name : "contextvalue",
 	description : "",
 	attributes : [
 	],
@@ -26,26 +26,6 @@
 		
 		var loc_contextVariableGroup = {};
 		
-		var loc_getVariableTreeInfo = function(eleVar, childInfo){
-			var out = {};
-			out.id = eleVar.prv_id;
-			out.wrapperId = eleVar.prv_wrapper!=undefined ? eleVar.prv_wrapper.prv_id : "NO WRAPPER"; 
-			if(childInfo!=undefined){
-				out.path = childInfo.path;
-				out.normal = childInfo.isNormal;
-			}
-			
-			out.children = [];
-			var childrenInfo = eleVar.prv_getChildren();
-			if(childrenInfo!=undefined){
-				_.each(childrenInfo, function(childVarInfo, id){
-					out.children.push(loc_getVariableTreeInfo(childVarInfo.variable, childVarInfo));
-				});
-			}
-			return out;
-		};
-		
-		
 		var loc_updateView = function(requestInfo){
 			//context data
 			var contextContent = {};
@@ -62,13 +42,6 @@
 				setRequest.addRequest(eleName, loc_env.getDataOperationRequestGet(eleVar));
 			});
 			node_requestProcessor.processRequest(setRequest, false);
-
-			//variable tree
-			var varTree = {};
-			_.each(eleVars, function(eleVar, eleName){
-				varTree[eleName] = loc_getVariableTreeInfo(eleVar.prv_getVariable());
-			});
-			loc_viewVariableTree.val(JSON.stringify(varTree, null, 4));
 		};
 
 		var loc_out = 
@@ -85,9 +58,7 @@
 			initViews : function(requestInfo){
 				loc_view = $('<div/>');
 				loc_viewData = $('<textarea rows="15" cols="150" id="aboutDescription" style="resize: none;" data-role="none"></textarea>');
-				loc_viewVariableTree = $('<textarea rows="15" cols="150" id="aboutDescription" style="resize: none;" data-role="none"></textarea>');
 				loc_view.append(loc_viewData);
-				loc_view.append(loc_viewVariableTree);
 				return loc_view;
 			},
 				

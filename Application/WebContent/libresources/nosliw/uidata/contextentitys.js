@@ -150,11 +150,11 @@ var node_createContextElement = function(elementInfo, requestInfo){
 	else		loc_out.variable = node_createVariableWrapper(elementInfo.data1, elementInfo.data2, adapterInfo, requestInfo);
 	
 	//get context type(public, internal, private)
-	var contextType = node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC;
-	if(loc_out.info!=undefined && loc_out.info.contextType!=undefined){
-		contextType = loc_out.info.contextType;
-	}
-	loc_out.contextType = contextType;
+//	var contextType = node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC;
+//	if(loc_out.info!=undefined && loc_out.info.contextType!=undefined){
+//		contextType = loc_out.info.contextType;
+//	}
+//	loc_out.contextType = contextType;
 	
 	return loc_out;
 };

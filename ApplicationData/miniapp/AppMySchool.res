@@ -8,7 +8,7 @@
 					"name" : "setting",
 					"module" : "ModuleMySchoolSetting",
 					"info" : {}
-					"contextMapping" : {
+					"inputMapping" : {
 						"element" : {
 							"schoolTypeInModule" : {
 								"definition" : {
@@ -18,6 +18,20 @@
 							"schoolRatingInModule" : {
 								"definition" : {
 									"path" : "settingData.schoolRatingData"
+								}
+							}
+						}
+					},					
+					"outputMapping" : {
+						"element" : {
+							"settingData.schoolTypeData" : {
+								"definition" : {
+									"path" : "schoolTypeInModule"
+								}
+							},
+							"settingData.schoolRatingData" : {
+								"definition" : {
+									"path" : "schoolRatingInModule"
 								}
 							}
 						}
@@ -60,27 +74,8 @@
 									"type": "end"
 								}
 							]
-						},
-						service : {
-							name : "queryService",
-							parm : {
-								schoolScore : criteria.schoolScore,
-								schoolType : criteria.schoolType
-							},
-							out : [
-								{
-									name : "",
-									type : "moduleCommand",
-									moduel : "application",
-									command : "refresh",
-									parm: {
-										schools : out.output
-									}
-								}
-							]
-						},
-						
-					},
+						}
+					}
 				},
 				{
 					"role" : "application",
@@ -197,10 +192,4 @@
 		}
 	
 	},
-
-	"serviceMapping" : {
-		"getSchools" : {
-			"serviceId" : "schoolService"
-		}
-	}
 }

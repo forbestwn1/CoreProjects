@@ -15,7 +15,7 @@
 			<br>
 			<a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
 			<br>
-<!--			<nosliw-debug/>  -->
+			<nosliw-contexttree/>
 			
 			<scripts>
 			{

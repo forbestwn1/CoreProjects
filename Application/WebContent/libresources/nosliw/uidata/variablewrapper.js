@@ -29,8 +29,11 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo
 	
 	var loc_resourceLifecycleObj = {};
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(data1, data2, adapterInfo, requestInfo){
-		var entityType = node_getObjectType(data1);
 
+		//every variable has a id, it is for debuging purpose
+		loc_out.prv_id = nosliw.runtime.getIdService().generateId();
+
+		var entityType = node_getObjectType(data1);
 		if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE && node_basicUtility.isStringEmpty(data2) && adapterInfo==undefined){
 			loc_out.prv_variable = data1;
 		}
@@ -49,14 +52,10 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo
 		//receive event from variable and trigue new same event
 		//the purpose of re-trigue the new event is for release the resources after this variable wrapper is released
 		loc_out.prv_variable.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, function(event, eventData, request){
-			if(loc_out.prv_dataOperationEventObject!=undefined){ //kkk should not need to check as after varwrapper is destroy, no listen to variable
-				loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, request);
-			}
+			loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, request);
 		}, loc_out);
 		loc_out.prv_variable.registerDataChangeEventListener(loc_out.prv_dataChangeEventObject, function(event, eventData, request){
-			if(loc_out.prv_dataChangeEventObject!=undefined){   //kkk should not need to check as after varwrapper is destroy, no listen to variable
-				loc_out.prv_dataChangeEventObject.triggerEvent(event, eventData, request);
-			}
+			loc_out.prv_dataChangeEventObject.triggerEvent(event, eventData, request);
 		}, loc_out);
 	};	
 
@@ -64,11 +63,11 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo
 		//take care of release event 
 		loc_out.prv_dataOperationEventObject.clearup();
 		loc_out.prv_dataChangeEventObject.clearup();
-		loc_out.prv_dataOperationEventObject=undefined;
-		loc_out.prv_dataChangeEventObject=undefined;
+		delete loc_out.prv_dataOperationEventObject;
+		delete loc_out.prv_dataChangeEventObject;
 		//release variable
 		loc_out.prv_variable.release();
-		loc_out.prv_variable=undefined;
+		delete loc_out.prv_variable;
 	};	
 	
 	var loc_out = {
