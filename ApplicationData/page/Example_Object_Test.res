@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <body>
+<!--		<nosliw-varviewer/>  -->
+
 		<br>
 		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 		<br>
@@ -13,6 +15,8 @@
 			<br>
 			<a href='' nosliw-event="click:deleteElementInLoop:">Delete</a>
 			<br>
+<!--			<nosliw-debug/>  -->
+			
 			<scripts>
 			{
 				deleteElementInLoop : function(data, info){

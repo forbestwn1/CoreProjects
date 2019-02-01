@@ -56,7 +56,7 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 			if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
 				loc_trigueEvent(node_CONSTANT.EACHELEMENTCONTAINER_EVENT_DELETEELEMENT, eleInfo.indexVariable);
 				eleVariable.release();
-				loc_orderChildrenInfo.deleteElement(eleInfo.path, requestInfo);
+				loc_orderChildrenInfo.deleteElement(eleInfo.path, request);
 				delete loc_elementsVariable[eleInfo.path];
 			}
 		});

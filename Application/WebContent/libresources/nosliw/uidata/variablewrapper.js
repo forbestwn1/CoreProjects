@@ -48,8 +48,16 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo
 
 		//receive event from variable and trigue new same event
 		//the purpose of re-trigue the new event is for release the resources after this variable wrapper is released
-		loc_out.prv_variable.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, function(event, eventData, request){loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, request);}, loc_out);
-		loc_out.prv_variable.registerDataChangeEventListener(loc_out.prv_dataChangeEventObject, function(event, eventData, request){loc_out.prv_dataChangeEventObject.triggerEvent(event, eventData, request);}, loc_out);
+		loc_out.prv_variable.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, function(event, eventData, request){
+			if(loc_out.prv_dataOperationEventObject!=undefined){ //kkk should not need to check as after varwrapper is destroy, no listen to variable
+				loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, request);
+			}
+		}, loc_out);
+		loc_out.prv_variable.registerDataChangeEventListener(loc_out.prv_dataChangeEventObject, function(event, eventData, request){
+			if(loc_out.prv_dataChangeEventObject!=undefined){   //kkk should not need to check as after varwrapper is destroy, no listen to variable
+				loc_out.prv_dataChangeEventObject.triggerEvent(event, eventData, request);
+			}
+		}, loc_out);
 	};	
 
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
