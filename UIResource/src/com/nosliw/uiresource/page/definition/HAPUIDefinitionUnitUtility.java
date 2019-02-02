@@ -6,16 +6,16 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPUIDefinitionUnitUtility {
 
-	public static void getUITagByName(HAPDefinitionUIUnit resourceUnit, String tagName, Set<HAPDefinitionUIUnitTag> out){
+	public static void getUITagByName(HAPDefinitionUIUnit resourceUnit, String tagName, Set<HAPDefinitionUITag> out){
 		
 		if(HAPConstant.UIRESOURCE_TYPE_TAG.equals(resourceUnit.getType())){
-			HAPDefinitionUIUnitTag tagUnit = (HAPDefinitionUIUnitTag)resourceUnit;
+			HAPDefinitionUITag tagUnit = (HAPDefinitionUITag)resourceUnit;
 			if(tagUnit.getTagName().equals(tagName)){
 				out.add(tagUnit);
 			}
 		}
 		
-		for(HAPDefinitionUIUnitTag tagUnit : resourceUnit.getUITags()){
+		for(HAPDefinitionUITag tagUnit : resourceUnit.getUITags()){
 			getUITagByName(tagUnit, tagName, out);
 		}
 	}

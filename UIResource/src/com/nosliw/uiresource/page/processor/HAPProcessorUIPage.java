@@ -10,7 +10,7 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.HAPUtilityUIResource;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.page.definition.HAPParserUIResource;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
@@ -18,7 +18,7 @@ import com.nosliw.uiresource.page.tag.HAPUITagManager;
 public class HAPProcessorUIPage {
 
 	public static HAPExecutableUIUnitPage processUIResource(
-			HAPDefinitionUIUnitPage uiPageDef,
+			HAPDefinitionUIPage uiPageDef,
 			String id,
 			HAPContextGroup context,
 			HAPContextGroup parentContext, 

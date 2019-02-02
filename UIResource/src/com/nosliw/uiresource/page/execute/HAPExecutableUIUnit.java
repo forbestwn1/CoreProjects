@@ -23,11 +23,11 @@ import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
-import com.nosliw.data.core.service.HAPQueryService;
+import com.nosliw.data.core.service.provide.HAPQueryService;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.definition.HAPElementEvent;
 
 @HAPEntityWithAttribute(baseName="UIRESOURCEDEFINITION")
@@ -127,7 +127,7 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		this.m_servicesDefinition = new LinkedHashMap<String, HAPQueryService>();
 		
 		//build tag trees according to definition
-		for(HAPDefinitionUIUnitTag tag : uiUnitDefinition.getUITags()) {
+		for(HAPDefinitionUITag tag : uiUnitDefinition.getUITags()) {
 			HAPExecutableUIUnitTag exeTag = new HAPExecutableUIUnitTag(tag, uiUnitDefinition.getId());
 			this.m_uiTags.put(tag.getId(), exeTag);
 			exeTag.setParent(this);

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.service;
+package com.nosliw.data.core.service.provide;
 
 public interface HAPFactoryService {
 

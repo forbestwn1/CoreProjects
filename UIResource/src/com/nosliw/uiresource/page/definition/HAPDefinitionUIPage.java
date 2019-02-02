@@ -3,12 +3,12 @@ package com.nosliw.uiresource.page.definition;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPSegmentParser;
 
-public class HAPDefinitionUIUnitPage extends HAPDefinitionUIUnit{
+public class HAPDefinitionUIPage extends HAPDefinitionUIUnit{
 
 	//source code of resource definition
 	private String m_source;
 	
-	public HAPDefinitionUIUnitPage(String id, String source){
+	public HAPDefinitionUIPage(String id, String source){
 		super(id);
 		this.m_source = source;
 	}

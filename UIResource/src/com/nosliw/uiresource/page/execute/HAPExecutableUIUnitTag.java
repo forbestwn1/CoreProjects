@@ -12,7 +12,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitTag;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
 import com.nosliw.uiresource.resource.HAPResourceIdUITag;
 
@@ -50,7 +50,7 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	private Map<String, String> m_commandMapping;
 	private Map<String, String> m_serviceMapping;
 	
-	public HAPExecutableUIUnitTag(HAPDefinitionUIUnitTag uiTagDefinition, String id) {
+	public HAPExecutableUIUnitTag(HAPDefinitionUITag uiTagDefinition, String id) {
 		super(uiTagDefinition, id);
 		this.m_tagEvent = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 		this.m_eventMapping = new LinkedHashMap<String, String>();
@@ -74,7 +74,7 @@ public class HAPExecutableUIUnitTag extends HAPExecutableUIUnit{
 	public void addTagEvent(String name, HAPDefinitionUIEvent event) {  this.m_tagEvent.put(name, event);  }
 	public Map<String, HAPDefinitionUIEvent> getTagEvent(){  return this.m_tagEvent;  }
 	
-	public HAPDefinitionUIUnitTag getUIUnitTagDefinition() {   return (HAPDefinitionUIUnitTag)this.getUIUnitDefinition();  }
+	public HAPDefinitionUITag getUIUnitTagDefinition() {   return (HAPDefinitionUITag)this.getUIUnitDefinition();  }
 	
 	public void setParent(HAPExecutableUIUnit parent) {		this.m_parent = parent;	}
 	

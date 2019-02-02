@@ -1,4 +1,4 @@
-package com.nosliw.data.core.service;
+package com.nosliw.data.core.service.provide;
 
 //service instance
 public class HAPInstanceService {

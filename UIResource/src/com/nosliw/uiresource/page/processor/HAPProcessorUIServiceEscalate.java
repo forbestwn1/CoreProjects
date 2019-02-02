@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.data.core.service.HAPQueryService;
+import com.nosliw.data.core.service.provide.HAPQueryService;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitTag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;

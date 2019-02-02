@@ -1,4 +1,4 @@
-package com.nosliw.data.core.service;
+package com.nosliw.data.core.service.provide;
 
 import java.io.InputStream;
 import java.util.ArrayList;

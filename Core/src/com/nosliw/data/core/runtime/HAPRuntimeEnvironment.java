@@ -2,7 +2,7 @@ package com.nosliw.data.core.runtime;
 
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPManagerProcess;
-import com.nosliw.data.core.service.HAPManagerService;
+import com.nosliw.data.core.service.provide.HAPManagerService;
 
 /**
  * Runtime environment, 

@@ -30,6 +30,7 @@ import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpression;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.uiresource.HAPIdGenerator;
 
 /*
@@ -67,8 +68,8 @@ public class HAPParserUIResource {
 		}
 	}
 	
-	public HAPDefinitionUIUnitPage parseFile(String fileName){
-		HAPDefinitionUIUnitPage resource = null;
+	public HAPDefinitionUIPage parseFile(String fileName){
+		HAPDefinitionUIPage resource = null;
 		try{
 			File input = new File(fileName);
 			//use file name as ui resource id
@@ -82,8 +83,8 @@ public class HAPParserUIResource {
 		return resource;
 	}
 
-	public HAPDefinitionUIUnitPage parseContent(String resourceId, String content){
-		HAPDefinitionUIUnitPage resource = new HAPDefinitionUIUnitPage(resourceId, content);
+	public HAPDefinitionUIPage parseContent(String resourceId, String content){
+		HAPDefinitionUIPage resource = new HAPDefinitionUIPage(resourceId, content);
 		try{
 			Document doc = Jsoup.parse(content, "UTF-8");
 			this.parseUIDefinitionUnit(resource, doc.body(), null);
@@ -171,7 +172,7 @@ public class HAPParserUIResource {
 		if(customTag!=null){
 			//process custome tag
 			String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
-			HAPDefinitionUIUnitTag uiTag = new HAPDefinitionUIUnitTag(customTag, uiId);
+			HAPDefinitionUITag uiTag = new HAPDefinitionUITag(customTag, uiId);
 			parseUIDefinitionUnit(uiTag, ele, parentUnit);
 			parentUnit.addUITag(uiTag);
 			return false;
@@ -216,7 +217,7 @@ public class HAPParserUIResource {
 				JSONArray serviceListJson = new JSONArray(childEle.html());
 				for(int i=0; i<serviceListJson.length(); i++) {
 					JSONObject serviceJson = serviceListJson.getJSONObject(i);
-					HAPDefinitionUICommand serviceDef = new HAPDefinitionUICommand();
+					HAPDefinitionServiceUse serviceDef = new HAPDefinitionServiceUse();
 					serviceDef.buildObject(serviceJson, HAPSerializationFormat.JSON);
 					resourceUnit.addServiceDefinition(serviceDef);
 				}

@@ -116,8 +116,8 @@ public class HAPUtilityUIResourceParser {
 	/*
 	 * find all child customer tags
 	 */
-	public static void getAllChildTags(HAPDefinitionUIUnit uiUnit, Set<HAPDefinitionUIUnitTag> tags){
-		for(HAPDefinitionUIUnitTag tag : uiUnit.getUITags()){
+	public static void getAllChildTags(HAPDefinitionUIUnit uiUnit, Set<HAPDefinitionUITag> tags){
+		for(HAPDefinitionUITag tag : uiUnit.getUITags()){
 			tags.add(tag);
 			getAllChildTags(tag, tags);
 		}

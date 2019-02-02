@@ -15,7 +15,7 @@ import com.nosliw.uiresource.module.HAPDefinitionModule;
 import com.nosliw.uiresource.module.HAPExecutableModule;
 import com.nosliw.uiresource.module.HAPParserModule;
 import com.nosliw.uiresource.module.HAPProcessorModule;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
 import com.nosliw.uiresource.page.definition.HAPParserUIResource;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 import com.nosliw.uiresource.page.processor.HAPProcessorUIPage;
@@ -81,12 +81,12 @@ public class HAPUIResourceManager {
 	}
 
 	public HAPExecutableUIUnitPage getUIResource(String uiResourceDefId, String id, HAPContextGroup context, HAPContextGroup parentContext){
-		HAPDefinitionUIUnitPage def = HAPUtilityUIResource.getUIResourceDefinitionById(uiResourceDefId, this.m_uiResourceParser, this);
+		HAPDefinitionUIPage def = HAPUtilityUIResource.getUIResourceDefinitionById(uiResourceDefId, this.m_uiResourceParser, this);
 		HAPExecutableUIUnitPage out = this.processUIResource(def, id, context, parentContext);
 		return out;
 	}
 
-	private HAPExecutableUIUnitPage processUIResource(HAPDefinitionUIUnitPage uiResource, String id, HAPContextGroup context, HAPContextGroup parentContext) {
+	private HAPExecutableUIUnitPage processUIResource(HAPDefinitionUIPage uiResource, String id, HAPContextGroup context, HAPContextGroup parentContext) {
 		return HAPProcessorUIPage.processUIResource(uiResource, id, context, parentContext, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.m_uiResourceParser, m_idGengerator);
 	}
 	

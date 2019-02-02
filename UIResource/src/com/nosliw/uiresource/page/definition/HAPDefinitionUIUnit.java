@@ -9,6 +9,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 
 /*
  * ui resource basic class for both ui resource and custom tag
@@ -56,16 +57,14 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	private Set<HAPDefinitionUIEmbededScriptExpressionInAttribute> m_scriptExpressionsInTagAttribute;
 	
 	//all the customer tag within the domain
-	private Map<String, HAPDefinitionUIUnitTag> m_uiTags; 
+	private Map<String, HAPDefinitionUITag> m_uiTags; 
 
 	//event definition 
 	private Map<String, HAPDefinitionUIEvent> m_eventsDefinition;
-	//service requirment definition
-	private Map<String, HAPDefinitionUICommand> m_servicesDefinition;
 	//command definition
 	private Map<String, HAPDefinitionUICommand> m_commandsDefinition;
-	
-
+	//service requirement definition
+	private Map<String, HAPDefinitionServiceUse> m_servicesDefinition;
 	
 	public HAPDefinitionUIUnit(String id){
 		this.m_id = id;
@@ -73,13 +72,13 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 		this.m_scriptExpressionsInAttribute = new HashSet<HAPDefinitionUIEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInTagAttribute = new HashSet<HAPDefinitionUIEmbededScriptExpressionInAttribute>();
 		this.m_scriptExpressionsInContent = new HashSet<HAPDefinitionUIEmbededScriptExpressionInContent>();
-		this.m_uiTags = new LinkedHashMap<String, HAPDefinitionUIUnitTag>();
+		this.m_uiTags = new LinkedHashMap<String, HAPDefinitionUITag>();
 		this.m_normalTagEvents = new HashSet<HAPElementEvent>();
 		this.m_customTagEvents = new HashSet<HAPElementEvent>();
 		this.m_attributes = new LinkedHashMap<String, String>();
 		this.m_expressionDefinitions = new LinkedHashMap<String, String>();
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPDefinitionUIEvent>();
-		this.m_servicesDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
+		this.m_servicesDefinition = new LinkedHashMap<String, HAPDefinitionServiceUse>();
 		this.m_commandsDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
 	}
 	
@@ -93,7 +92,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	public Map<String, String> getAttributes(){   return this.m_attributes;    }
 	public String getContent() {  return this.m_content;  }
 	public Map<String, HAPDefinitionUIEvent> getEventDefinitions(){  return this.m_eventsDefinition;    }
-	public Map<String, HAPDefinitionUICommand> getServiceDefinitions(){  return this.m_servicesDefinition;   }
+	public Map<String, HAPDefinitionServiceUse> getServiceDefinitions(){  return this.m_servicesDefinition;   }
 	public Map<String, HAPDefinitionUICommand> getCommandDefinition() {   return this.m_commandsDefinition;  }
 	public Map<String, String> getExpressionDefinitions(){  return this.m_expressionDefinitions;   }
 	
@@ -101,7 +100,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	public void setJSBlock(HAPScript jsBlock){this.m_script = jsBlock;}
 	public void setContent(String content){	this.m_content = content;	}
 	public HAPContextGroup getContextDefinition(){  return this.m_contextDefinition;   }
-	public Collection<HAPDefinitionUIUnitTag> getUITags(){return this.m_uiTags.values();} 
+	public Collection<HAPDefinitionUITag> getUITags(){return this.m_uiTags.values();} 
 
 	public Set<HAPDefinitionUIEmbededScriptExpressionInContent> getScriptExpressionsInContent(){   return this.m_scriptExpressionsInContent;   }
 	public Set<HAPDefinitionUIEmbededScriptExpressionInAttribute> getScriptExpressionsInAttribute(){   return this.m_scriptExpressionsInAttribute;    }
@@ -109,12 +108,12 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 	
 	public void addCommandDefinition(HAPDefinitionUICommand commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
 	public void addEventDefinition(HAPDefinitionUIEvent def) {  this.m_eventsDefinition.put(def.getName(), def);   }
-	public void addServiceDefinition(HAPDefinitionUICommand def) {  this.m_servicesDefinition.put(def.getName(), def);   }
+	public void addServiceDefinition(HAPDefinitionServiceUse def) {  this.m_servicesDefinition.put(def.getName(), def);   }
 	public void addExpressionDefinition(String name, String expressionDef){		this.m_expressionDefinitions.put(name, expressionDef);	}
 	public void addScriptExpressionInAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInAttribute.add(eAttr);	}
 	public void addScriptExpressionInTagAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr){	this.m_scriptExpressionsInTagAttribute.add(eAttr);	}
 	public void addScriptExpressionInContent(HAPDefinitionUIEmbededScriptExpressionInContent scriptExpressionInContent){	this.m_scriptExpressionsInContent.add(scriptExpressionInContent);	}
-	public void addUITag(HAPDefinitionUIUnitTag uiTag){	
+	public void addUITag(HAPDefinitionUITag uiTag){	
 		this.m_uiTags.put(uiTag.getId(), uiTag);	
 		uiTag.setParent(uiTag);
 	}
