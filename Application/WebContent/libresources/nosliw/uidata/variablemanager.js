@@ -80,7 +80,13 @@ var node_createVariableManager = function(){
 			return out;
 		},
 		
-		useVariable : function(variable){	return loc_useVariable(variable.prv_id);  },
+		useVariable : function(variable){
+			if(variable.prv_id=="106"){
+				var kkkk;
+				kkkk++;
+			}
+			return loc_useVariable(variable.prv_id);  
+		},
 		
 		releaseVariable : function(variable){  return loc_releaseVariable(variable.prv_id);  },
 		

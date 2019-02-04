@@ -32,7 +32,7 @@ var node_createContextVariableInfosGroup = function(context, contextVariableInfo
 	
 	var loc_addElement = function(contextVariableInfo){
 		var variable = loc_context.createVariable(contextVariableInfo);
-		loc_variables[contextVariableInfo.key] = variable;
+		loc_variables[contextVariableInfo.getFullPath()] = variable;
 		loc_requestEventGroupHandler.addElement(variable.getDataChangeEventObject(), contextVariableInfo.key);
 	};
 	
@@ -61,7 +61,7 @@ var node_createContextVariableInfosGroup = function(context, contextVariableInfo
 		 */
 		addVariable : function(contextVariable){	loc_addElement(contextVariable);		},
 		
-		getVariable : function(key){	return loc_variables[key];		},
+		getVariable : function(fullPath){	return loc_variables[fullPath];		},
 		
 		getVariables : function(){  return loc_variables;  },
 		

@@ -101,10 +101,10 @@ var packageObj = library;
 				//parepare variable parms
 				var hasEmptyVariable = false;  //whether variable is ready
 				var variables = loc_contextVarGroup.getVariables();
-				_.each(variables, function(variable, index){
+				_.each(variables, function(variable, varFullName){
 					if(!variable.isEmpty())  hasEmptyVariable = true;
 					var getVarValueRequest = node_createUIDataOperationRequest(undefined, new node_UIDataOperation(variable, node_uiDataOperationServiceUtility.createGetOperationService("")));
-					allVarValuesRequest.addRequest(variable.contextPath, getVarValueRequest);
+					allVarValuesRequest.addRequest(varFullName, getVarValueRequest);
 				});
 				
 				if(!hasEmptyVariable)	out.addRequest(allVarValuesRequest);

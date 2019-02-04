@@ -92,8 +92,6 @@ var node_createContext = function(elementInfosArray, request){
 			loc_findBaseVariable(contextVariableInfo);
 		}
 		var variable = baseVar.variable.createChildVariable(baseVar.path, adapterInfo, requestInfo); 
-		//add extra attribute "contextPath" to variable for variables name under context
-		variable.contextPath = contextVariableInfo.getFullPath();
 		return variable;
 	};
 	

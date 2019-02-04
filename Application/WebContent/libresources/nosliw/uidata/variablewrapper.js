@@ -74,8 +74,8 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo
 		
 		prv_getVariable : function(){	return this.prv_variable;	},
 		
-		createChildVariable : function(path, adapterInfo){	
-			return node_createVariableWrapper(this, path, adapterInfo);
+		createChildVariable : function(path, adapterInfo, requestInfo){	
+			return node_createVariableWrapper(this, path, adapterInfo, requestInfo);
 		}, 
 		
 		release : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
