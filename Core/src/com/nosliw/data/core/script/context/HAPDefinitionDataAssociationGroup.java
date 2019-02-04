@@ -1,4 +1,4 @@
-package com.nosliw.data.core.process;
+package com.nosliw.data.core.script.context;
 
 import java.util.Map;
 
@@ -7,7 +7,6 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.script.context.HAPContext;
 
 public class HAPDefinitionDataAssociationGroup extends HAPContext{
 

@@ -35,6 +35,7 @@ public class HAPServiceInterface extends HAPSerializableImp{
 
 	public Map<String, HAPServiceParm> getParms(){  return this.m_parms;   }
 	public void addParm(String name, HAPServiceParm parm) { this.m_parms.put(name, parm);  }
+	public HAPServiceParm getParm(String name) {  return this.m_parms.get(name);    }
 	
 	public Map<String, HAPServiceResult> getResults(){ return this.m_results;  }
 	public void addResult(String name, HAPServiceResult result) {  this.m_results.put(name, result);  }

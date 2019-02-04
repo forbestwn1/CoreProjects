@@ -12,6 +12,7 @@ import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
+import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroup;
 
 public class HAPBackToGlobalContextImp implements HAPBackToGlobalContext{
 

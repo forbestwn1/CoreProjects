@@ -25,6 +25,7 @@ public class HAPServiceResult extends HAPEntityInfoWritableImp{
 	}
 
 	public void addOutput(String name, HAPServiceOutput output) {   this.m_output.put(name, output);   }
+	public Map<String, HAPServiceOutput> getOutput(){   return this.m_output;  }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

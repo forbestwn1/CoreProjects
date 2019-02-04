@@ -475,7 +475,12 @@ public class HAPUtilityContext {
 		mergeContextDefitionElement(origin.getDefinition(), expect.getDefinition(), modifyStructure, matchers, null, contextProcessRequirement);
 		return matchers;
 	}
-	
+
+	public static Map<String, HAPMatchers> mergeContextDefitionElement(HAPContextDefinitionElement originDef, HAPContextDefinitionElement expectDef, boolean modifyStructure, String path, HAPRequirementContextProcessor contextProcessRequirement){
+		Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
+		mergeContextDefitionElement(originDef, expectDef, modifyStructure, matchers, null, contextProcessRequirement);
+		return matchers;
+	}
 	
 	//merge origin context def with child context def to expect context out
 	//also generate matchers from origin to expect
@@ -536,36 +541,5 @@ public class HAPUtilityContext {
 			}
 		}
 		}
-	}
-
-	
-	public static HAPContextDefinitionElement mergeDataElement1(HAPContextDefinitionElement original, HAPContextDefinitionElement after) {
-		String eleName = "abc";
-		HAPContext orgContext = new HAPContext();
-		orgContext.addElement(eleName, new HAPContextDefinitionRoot(original));
-		HAPContext aftContext = new HAPContext();
-		aftContext.addElement(eleName, new HAPContextDefinitionRoot(after));
-		
-		if(after.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
-			return after;
-		}
-		else if(after.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_NODE)) {
-			processContextDefElementWithPathInfo(after, new HAPContextDefEleProcessor() {
-				@Override
-				public boolean process(HAPContextDefinitionElement ele, Object value) {
-					if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_DATA)) {
-						HAPUtilityContext.updateDataDescendant(orgContext, (String)value, (HAPContextDefinitionLeafData)ele);
-					}
-					return true;
-				}
-
-				@Override
-				public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
-					return true;
-				}
-			}, "");
-			return original;
-		}
-		else  return original;
 	}
 }

@@ -8,6 +8,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextFlat;
+import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroup;
 
 public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 

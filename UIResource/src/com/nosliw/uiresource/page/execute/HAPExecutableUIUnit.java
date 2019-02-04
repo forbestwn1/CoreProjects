@@ -23,7 +23,7 @@ import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
-import com.nosliw.data.core.service.provide.HAPQueryService;
+import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
@@ -103,11 +103,11 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 	private Set<HAPUIEmbededScriptExpressionInAttribute> m_scriptExpressionsInTagAttribute;
 
 	//event definition 
-	private Map<String, HAPDefinitionUIEvent> m_eventsDefinition;
-	private Map<String, HAPDefinitionUICommand> m_commandsDefinition;
+	private Map<String, HAPDefinitionUIEvent> m_events;
+	private Map<String, HAPDefinitionUICommand> m_commands;
 	
 	//service requirement definition
-	private Map<String, HAPQueryService> m_servicesDefinition;
+	private Map<String, HAPExecutableServiceUse> m_services;
 	
 	public HAPExecutableUIUnit(HAPDefinitionUIUnit uiUnitDefinition, String id) {
 		this.m_id = id;
@@ -121,10 +121,10 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		this.m_attributes = new LinkedHashMap<String, String>();
 //		this.m_constants = new LinkedHashMap<String, Object>();
 		
-		this.m_eventsDefinition = new LinkedHashMap<String, HAPDefinitionUIEvent>();
-		this.m_commandsDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
+		this.m_events = new LinkedHashMap<String, HAPDefinitionUIEvent>();
+		this.m_commands = new LinkedHashMap<String, HAPDefinitionUICommand>();
 
-		this.m_servicesDefinition = new LinkedHashMap<String, HAPQueryService>();
+		this.m_services = new LinkedHashMap<String, HAPExecutableServiceUse>();
 		
 		//build tag trees according to definition
 		for(HAPDefinitionUITag tag : uiUnitDefinition.getUITags()) {
@@ -175,17 +175,17 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 	public Set<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionsInAttribute() {  return this.m_scriptExpressionsInAttribute;   }
 	public Set<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionsInTagAttribute() {  return this.m_scriptExpressionsInTagAttribute;   }
 
-	public Map<String, HAPDefinitionUIEvent> getEventDefinitions(){  return this.m_eventsDefinition;    }
-	public HAPDefinitionUIEvent getEventDefinition(String name) {   return this.m_eventsDefinition.get(name);  }
-	public void addEventDefinition(HAPDefinitionUIEvent eventDef) {  this.m_eventsDefinition.put(eventDef.getName(), eventDef);    }
+	public Map<String, HAPDefinitionUIEvent> getEventDefinitions(){  return this.m_events;    }
+	public HAPDefinitionUIEvent getEventDefinition(String name) {   return this.m_events.get(name);  }
+	public void addEventDefinition(HAPDefinitionUIEvent eventDef) {  this.m_events.put(eventDef.getName(), eventDef);    }
 	
-	public void addServiceDefinition(String name, HAPQueryService serviceDef) {   this.m_servicesDefinition.put(name, serviceDef);   }
-	public Map<String, HAPQueryService> getServiceDefinitions(){  return this.m_servicesDefinition;   }
-	public HAPQueryService getServiceDefinition(String name) {   return this.m_servicesDefinition.get(name);  }
+	public void addServiceDefinition(String name, HAPExecutableServiceUse serviceDef) {   this.m_services.put(name, serviceDef);   }
+	public Map<String, HAPExecutableServiceUse> getServiceDefinitions(){  return this.m_services;   }
+	public HAPExecutableServiceUse getServiceDefinition(String name) {   return this.m_services.get(name);  }
 
-	public void addCommandDefinition(HAPDefinitionUICommand commandDef) {   this.m_commandsDefinition.put(commandDef.getName(), commandDef);   }
-	public Map<String, HAPDefinitionUICommand> getCommandDefinitions() {   return this.m_commandsDefinition;  }
-	public HAPDefinitionUICommand getCommandDefinition(String name) {   return this.m_commandsDefinition.get(name);  }
+	public void addCommandDefinition(HAPDefinitionUICommand commandDef) {   this.m_commands.put(commandDef.getName(), commandDef);   }
+	public Map<String, HAPDefinitionUICommand> getCommandDefinitions() {   return this.m_commands;  }
+	public HAPDefinitionUICommand getCommandDefinition(String name) {   return this.m_commands.get(name);  }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -210,10 +210,10 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		
 		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_scriptExpressionContext.getConstants(), HAPSerializationFormat.JSON));
 	
-		jsonMap.put(EVENTS, HAPJsonUtility.buildJson(this.m_eventsDefinition, HAPSerializationFormat.JSON));
-		jsonMap.put(COMMANDS, HAPJsonUtility.buildJson(this.m_commandsDefinition, HAPSerializationFormat.JSON));
+		jsonMap.put(EVENTS, HAPJsonUtility.buildJson(this.m_events, HAPSerializationFormat.JSON));
+		jsonMap.put(COMMANDS, HAPJsonUtility.buildJson(this.m_commands, HAPSerializationFormat.JSON));
 
-		jsonMap.put(SERVICES, HAPJsonUtility.buildJson(this.m_servicesDefinition, HAPSerializationFormat.JSON));
+		jsonMap.put(SERVICES, HAPJsonUtility.buildJson(this.m_services, HAPSerializationFormat.JSON));
 
 		
 		
@@ -257,10 +257,10 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		
 		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_scriptExpressionContext.getConstants(), HAPSerializationFormat.JSON));
 	
-		jsonMap.put(EVENTS, HAPJsonUtility.buildJson(this.m_eventsDefinition, HAPSerializationFormat.JSON));
-		jsonMap.put(COMMANDS, HAPJsonUtility.buildJson(this.m_commandsDefinition, HAPSerializationFormat.JSON));
+		jsonMap.put(EVENTS, HAPJsonUtility.buildJson(this.m_events, HAPSerializationFormat.JSON));
+		jsonMap.put(COMMANDS, HAPJsonUtility.buildJson(this.m_commands, HAPSerializationFormat.JSON));
 
-		jsonMap.put(SERVICES, HAPJsonUtility.buildJson(this.m_servicesDefinition, HAPSerializationFormat.JSON));
+		jsonMap.put(SERVICES, HAPJsonUtility.buildJson(this.m_services, HAPSerializationFormat.JSON));
 
 		
 		

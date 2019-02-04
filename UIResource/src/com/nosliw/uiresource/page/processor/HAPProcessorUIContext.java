@@ -26,6 +26,8 @@ import com.nosliw.data.core.service.interfacee.HAPServiceParm;
 import com.nosliw.data.core.service.interfacee.HAPServiceResult;
 import com.nosliw.data.core.service.provide.HAPInfoServiceStatic;
 import com.nosliw.data.core.service.provide.HAPQueryService;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
+import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
@@ -145,12 +147,13 @@ public class HAPProcessorUIContext {
 			
 			uiExe.addCommandDefinition(processedCommendDef);
 		}
-		
+
+		/*
 		//process service defined in resource
-		Map<String, HAPDefinitionUICommand> servicesDef = uiExe.getUIUnitDefinition().getServiceDefinitions();
+		Map<String, HAPDefinitionServiceUse> servicesDef = uiExe.getUIUnitDefinition().getServiceDefinitions();
 		for(String name : servicesDef.keySet()) {
-			HAPDefinitionUICommand serviceDef = servicesDef.get(name);
-			HAPQueryService processedServiceDef = new HAPQueryService();
+			HAPDefinitionServiceUse serviceDef = servicesDef.get(name);
+			HAPExecutableServiceUse processedServiceDef = new HAPExecutableServiceUse();
 			
 			//process parms and convert context root to data type criteria required by service parm
 			HAPContext processedParmContext = HAPProcessorContextRelative.process(serviceDef.getParms(), uiExe.getContext(), privateConfigure, contextProcessRequirement);
@@ -207,6 +210,7 @@ public class HAPProcessorUIContext {
 			}
 			uiExe.addServiceDefinition(name, processedServiceDef);
 		}
+		*/
 		
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : uiExe.getUITags()) {

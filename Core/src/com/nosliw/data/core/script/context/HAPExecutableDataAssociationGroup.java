@@ -1,4 +1,4 @@
-package com.nosliw.data.core.process;
+package com.nosliw.data.core.script.context;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,15 +12,13 @@ import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
+import com.nosliw.data.core.process.HAPUtilityScript;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
-import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
-import com.nosliw.data.core.script.context.HAPContextFlat;
-import com.nosliw.data.core.script.context.HAPContextPath;
 
 @HAPEntityWithAttribute
 public class HAPExecutableDataAssociationGroup extends HAPExecutableImp{
