@@ -9,15 +9,11 @@ import java.util.Map;
 import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.updatename.HAPUpdateNameMap;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.expression.HAPMatcherUtility;
-import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPImporterProcessSuiteDefinition;
-import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroupWithTarget;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
@@ -27,11 +23,9 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
-import com.nosliw.data.core.script.context.HAPDefinitionDataAssociationGroup;
-import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroup;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
+import com.nosliw.data.core.script.context.HAPHAPExecutableDataAssociationGroupWithTarget;
 import com.nosliw.data.core.script.context.HAPProcessorDataAssociation;
+import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
 
@@ -128,35 +122,10 @@ public class HAPUtilityProcess {
 			//data association input context
 			HAPContext dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
 			//process data association
-			mergeBackToGlobalContext(dataAssociationInputContext, resultDef.getOutputDataAssociation(), parentContext, resultExe, contextProcessRequirement);
+			HAPHAPExecutableDataAssociationGroupWithTarget dataAssocationExe = HAPProcessorDataAssociation.processDataAssociation(dataAssociationInputContext, resultDef.getOutputDataAssociation(), parentContext, contextProcessRequirement);
+			resultExe.setOutputDataAssociation(dataAssocationExe);
 		}
 		return resultExe;
 	}
 
-	public static void mergeBackToGlobalContext(HAPContext inputContext, HAPDefinitionDataAssociationGroup dataAssociation, HAPContextGroup targetContext, HAPExecutableDataAssociationGroupWithTarget backToGlobal, HAPRequirementContextProcessor contextProcessRequirement) {
-		//process data association
-		HAPExecutableDataAssociationGroup outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(inputContext, dataAssociation, contextProcessRequirement);
-		backToGlobal.setOutputDataAssociation(outputDataAssociation);
-
-		//process result
-		Map<String, String> nameMapping = new LinkedHashMap<String, String>();
-		HAPContext outputContext = outputDataAssociation.getContext().getContext();
-		for(String rootName : outputContext.getElementNames()) {
-			//find matching variable in parent context
-			HAPInfoRelativeContextResolve resolvedInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(rootName), targetContext, null, null);
-			HAPContextDefinitionRootId contextVarRootId = resolvedInfo.path.getRootElementId();
-			//merge back to context variable
-			Map<String, HAPMatchers> matchers = HAPUtilityContext.mergeContextRoot(targetContext.getElement(contextVarRootId), outputContext.getElement(rootName), true, contextProcessRequirement);
-			//matchers when merge back to context variable
-			for(String matchPath :matchers.keySet()) {
-				backToGlobal.addOutputMatchers(new HAPContextPath(contextVarRootId, matchPath).getFullPath(), HAPMatcherUtility.reversMatchers(matchers.get(matchPath)));
-			}
-			
-			//root variable name --- root variable full name
-			nameMapping.put(rootName, contextVarRootId.getFullName());
-		}
-		
-		//update variable names with full name 
-		outputDataAssociation.updateOutputRootName(new HAPUpdateNameMap(nameMapping));
-	}
 }

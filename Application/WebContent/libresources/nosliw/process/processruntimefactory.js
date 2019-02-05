@@ -77,17 +77,15 @@ var node_createProcessRuntime = function(envObj){
 		return out;
 	};
 	
-	var loc_getBackToGlobalRequest = function(data, backToGlobalConfig, handlers, request){
-		var service = new node_ServiceInfo("BackToGlobal", {"data":data, "backToGlobalConfig":backToGlobalConfig});
-		if(backToGlobalConfig==undefined)   return node_createServiceRequestInfoSimple(service, function(){}, handlers, request);
+	var loc_getBackToGlobalRequest = function(data, dataAssociation, handlers, request){
+		var service = new node_ServiceInfo("BackToGlobal", {"data":data, "dataAssociation":dataAssociation});
+		if(dataAssociation==undefined)   return node_createServiceRequestInfoSimple(service, function(){}, handlers, request);
 		
 		var out = node_createServiceRequestInfoSequence(service, handlers, request);
-
-		var activityResultDataAssociation = backToGlobalConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUPWITHTARGET_OUTPUTASSOCIATION];
-		out.addRequest(loc_getGenerateDataAssociationOutputRequest(activityResultDataAssociation, data, {
+		out.addRequest(loc_getGenerateDataAssociationOutputRequest(dataAssociation, data, {
 			success : function(request, globalData){
 				//process matchers
-				var matchersByPath = backToGlobalConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUPWITHTARGET_OUTPUTMATCHERS];
+				var matchersByPath = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_OUTPUTMATCHERS];
 				if(matchersByPath==undefined)  return globalData;
 				
 				var matchersByPathRequest = node_createServiceRequestInfoSet(undefined, {
@@ -121,7 +119,7 @@ var node_createProcessRuntime = function(envObj){
 							success : function(requestInfo, activityResult){  //get activity results (result name + result value map)
 								//calculate variable output
 								var activityResultConfig = normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULT][activityResult.resultName];
-								return loc_getBackToGlobalRequest(activityResult.resultValue, activityResultConfig, {
+								return loc_getBackToGlobalRequest(activityResult.resultValue, activityResultConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_OUTPUTASSOCIATION], {
 									success :function(request, activityOutput){
 										//build new context
 										_.each(activityOutput, function(ele, name){

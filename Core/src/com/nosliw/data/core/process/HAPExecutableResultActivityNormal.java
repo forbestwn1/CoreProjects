@@ -1,73 +1,60 @@
 package com.nosliw.data.core.process;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.expression.HAPMatchers;
-import com.nosliw.data.core.runtime.HAPExecutable;
-import com.nosliw.data.core.runtime.HAPResourceData;
+import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
-import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroupWithTarget;
-import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroup;
+import com.nosliw.data.core.script.context.HAPHAPExecutableDataAssociationGroupWithTarget;
 
 @HAPEntityWithAttribute
-public class HAPExecutableResultActivityNormal extends HAPEntityInfoWritableImp implements HAPExecutableDataAssociationGroupWithTarget, HAPExecutable{
+public class HAPExecutableResultActivityNormal extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static String FLOW = "flow";
-
+ 
+	@HAPAttribute
+	public static String OUTPUTASSOCIATION = "outputAssociation";
+	
 	private HAPDefinitionResultActivityNormal m_definition;
 	
-	//match from data association output to target context variable
-	private Map<String, HAPMatchers> m_outputMatchers;
-
 	//associate output of activity to variable in process 
-	private HAPExecutableDataAssociationGroup m_outputAssociation;
+	private HAPHAPExecutableDataAssociationGroupWithTarget m_outputAssociation;
 	
 	//next activity
 	public HAPExecutableResultActivityNormal(HAPDefinitionResultActivityNormal definition) {
 		this.m_definition = definition;
-		this.m_outputMatchers = new LinkedHashMap<String, HAPMatchers>();
+		this.m_outputAssociation = new HAPHAPExecutableDataAssociationGroupWithTarget(this.m_definition.getOutputDataAssociation());
 	}
 	
 	public HAPDefinitionSequenceFlow getFlow() {  return this.m_definition.getFlow();  }
 	
-	@Override	
-	public HAPExecutableDataAssociationGroup getOutputDataAssociation() {   return this.m_outputAssociation;   }
-	@Override
-	public void setOutputDataAssociation(HAPExecutableDataAssociationGroup output) {   this.m_outputAssociation = output;    }
+	public HAPHAPExecutableDataAssociationGroupWithTarget getOutputDataAssociation() {   return this.m_outputAssociation;   }
+	public void setOutputDataAssociation(HAPHAPExecutableDataAssociationGroupWithTarget output) {   this.m_outputAssociation = output;    }
 
-	@Override
-	public void addOutputMatchers(String path, HAPMatchers matchers) {   this.m_outputMatchers.put(path, matchers);     }
-	@Override
-	public Map<String, HAPMatchers> getOutputMatchers() {  return this.m_outputMatchers; }
+	public void addOutputMatchers(String path, HAPMatchers matchers) {   this.m_outputAssociation.addOutputMatchers(path, matchers);     }
+	public Map<String, HAPMatchers> getOutputMatchers() {  return this.m_outputAssociation.getOutputMatchers(); }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(FLOW, this.getFlow().toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_outputAssociation!=null)		jsonMap.put(OUTPUTASSOCIATION, m_outputAssociation.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(OUTPUTMATCHERS, HAPJsonUtility.buildJson(m_outputMatchers, HAPSerializationFormat.JSON));
 	}
 
 	@Override
-	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
 		jsonMap.put(FLOW, this.getFlow().toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_outputAssociation!=null)  jsonMap.put(OUTPUTASSOCIATION, m_outputAssociation.toResourceData(runtimeInfo).toString());
-		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap));
 	}
 
 	@Override
-	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {		return new ArrayList<HAPResourceDependent>();	}
-
+	protected void buildResourceDependency(List<HAPResourceDependent> dependency, HAPRuntimeInfo runtimeInfo) {
+		dependency.addAll(this.m_outputAssociation.getResourceDependency(runtimeInfo));
+	}
 }

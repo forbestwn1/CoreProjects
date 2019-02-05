@@ -1,8 +1,7 @@
 {
 	"name": "ModuleMySchoolResult",
 	"description": "",
-	"pageInfo": [
-		{
+	"pageInfo": [{
 			"name": "schoolListPage",
 			"id": "Page_MySchool_SchoolList"
 		},
@@ -11,45 +10,40 @@
 			"id": "Page_MySchool_SchoolData"
 		}
 	],
-	"service" : [
-		{
-			"name" : "schoolDataService",
-			"serviceId" : "schoolService",
-			"interface" : {
-				"parm" : [ 
-					{
-						name : "schoolType",
-						criteria : "test.options;1.0.0",
-						default :{
-							dataTypeId: "test.options;1.0.0",
-							value: {
-								value : "public",
-								optionsId : "schoolType"
-							}
-						},
-					},
-					{
-						name : "schoolRating",
-						criteria : "test.float;1.0.0",
-						default :{
-							dataTypeId: "test.float;1.0.0",
-							value: "8"
-						},
+	"service": [{
+		"name": "schoolDataService",
+		"serviceId": "schoolService",
+		"interface": {
+			"parm": [{
+					"name": "schoolType",
+					"criteria": "test.options;1.0.0",
+					"default": {
+						"dataTypeId": "test.options;1.0.0",
+						"value": {
+							"value": "public",
+							"optionsId": "schoolType"
+						}
 					}
-				],
-				"result" : [
-					{
-						"name" : "success",
-						"output" : {
-							"output": {
-								"criteria" : "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
-							}
-						},			
+				},
+				{
+					"name": "schoolRating",
+					"criteria": "test.float;1.0.0",
+					"default": {
+						"dataTypeId": "test.float;1.0.0",
+						"value": "8"
 					}
-				],
-			}
+				}
+			],
+			"result": [{
+				"name": "success",
+				"output": {
+					"output": {
+						"criteria": "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
+					}
+				}
+			}]
 		}
-	],
+	}],
 	"context": {
 		"group": {
 			"public": {
@@ -61,8 +55,8 @@
 						"defaultValue": {
 							"dataTypeId": "test.options;1.0.0",
 							"value": {
-								"value" : "Public",
-								"optionsId" : "schoolType"
+								"value": "Public",
+								"optionsId": "schoolType"
 							}
 						}
 					},
@@ -74,15 +68,14 @@
 							"dataTypeId": "test.float;1.0.0",
 							"value": 9.0
 						}
-					}，				
+					},
 					"schoolListInModule": {
 						"definition": {
 							"criteria": "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
 						},
 						"defaultValue": {
 							"dataTypeId": "test.array;1.0.0",
-							"value": [
-								{
+							"value": [{
 									"dataTypeId": "test.map;1.0.0",
 									"value": {
 										"schoolName": {
@@ -134,8 +127,7 @@
 	},
 	"process": {
 		"init": {
-			"activity": [
-				{
+			"activity": [{
 					"id": "startActivityId",
 					"name": "startActivity",
 					"type": "start",
@@ -149,48 +141,44 @@
 					"type": "Service_request",
 					"service": "schoolDataService",
 					"parm": {
-						"schoolType" : {
-							"definition" : {
-								"path" : "schoolTypeInModule"
+						"schoolType": {
+							"definition": {
+								"path": "schoolTypeInModule"
 							}
 						},
-						"schoolRating" : {
-							"definition" : {
-								"path" : "schoolRatingInModule"
+						"schoolRating": {
+							"definition": {
+								"path": "schoolRatingInModule"
 							}
 						}
 					},
-					"result": [
-						{
-							"name": "success",
-							"flow": {
-								"target": "successEndId"
-							},
-							"output": {
-								"element": {
-									"schoolListInModule": {
-										"definition":{
-											"path": "nosliw_output.output"
-										}
+					"result": [{
+						"name": "success",
+						"flow": {
+							"target": "successEndId"
+						},
+						"output": {
+							"element": {
+								"schoolListInModule": {
+									"definition": {
+										"path": "nosliw_output.output"
 									}
 								}
 							}
 						}
-					]
+					}]
 				},
 				{
 					"id": "presentSchoolListUI",
 					"name": "presentSchoolListUI",
 					"type": "UI_presentUI",
 					"ui": "schoolListUI",
-					"result": [
-						{
-							"name": "success",
-							"flow": {
-								"target": "successEndId"
-							}
+					"result": [{
+						"name": "success",
+						"flow": {
+							"target": "successEndId"
 						}
-					]
+					}]
 				},
 				{
 					"id": "successEndId",
@@ -200,8 +188,7 @@
 			]
 		}
 	},
-	"ui": [
-		{
+	"ui": [{
 			"name": "schoolListUI",
 			"type": "list",
 			"page": "schoolListPage",
@@ -221,8 +208,7 @@
 			"eventHandler": {
 				"selectSchool": {
 					"process": {
-						"activity": [
-							{
+						"activity": [{
 								"id": "startActivityId",
 								"name": "startActivity",
 								"type": "start",
@@ -235,14 +221,12 @@
 								"name": "presentSchoolDataUI",
 								"type": "UI_presentUI",
 								"ui": "schoolInfoUI",
-								"result": [
-									{
-										"name": "success",
-										"flow": {
-											"target": "refreshSchoolInfo"
-										}
+								"result": [{
+									"name": "success",
+									"flow": {
+										"target": "refreshSchoolInfo"
 									}
-								]
+								}]
 							},
 							{
 								"id": "refreshSchoolInfo",
@@ -261,11 +245,11 @@
 								},
 								"input": {
 									"element": {
-										"parm" : {
-											"definition" : {
-												"child" : {
+										"parm": {
+											"definition": {
+												"child": {
 													"schoolData": {
-														"path" : "EVENT"
+														"path": "EVENT"
 													}
 												}
 											}
@@ -273,14 +257,12 @@
 									},
 									"info": {}
 								},
-								"result": [
-									{
-										"name": "success",
-										"flow": {
-											"target": "successEndId"
-										}
+								"result": [{
+									"name": "success",
+									"flow": {
+										"target": "successEndId"
 									}
-								]
+								}]
 							},
 							{
 								"id": "successEndId",

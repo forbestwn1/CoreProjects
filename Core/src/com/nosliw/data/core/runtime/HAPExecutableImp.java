@@ -13,7 +13,9 @@ public abstract class HAPExecutableImp  extends HAPSerializableImp implements HA
 
 	@Override
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		return new ArrayList<HAPResourceDependent>();
+		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+		this.buildResourceDependency(out, runtimeInfo);
+		return out;
 	}
 
 	@Override
@@ -25,7 +27,8 @@ public abstract class HAPExecutableImp  extends HAPSerializableImp implements HA
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 
-	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
-	}
+	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	}
+
+	protected void buildResourceDependency(List<HAPResourceDependent> dependency, HAPRuntimeInfo runtimeInfo) {}
 
 }

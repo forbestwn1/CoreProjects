@@ -1,7 +1,6 @@
 package com.nosliw.data.core.script.context;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -9,16 +8,11 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.process.HAPUtilityScript;
-import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
-import com.nosliw.data.core.runtime.HAPResourceData;
-import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
 @HAPEntityWithAttribute
 public class HAPExecutableDataAssociationGroup extends HAPExecutableImp{
@@ -50,6 +44,8 @@ public class HAPExecutableDataAssociationGroup extends HAPExecutableImp{
 	public HAPExecutableDataAssociationGroup(HAPDefinitionDataAssociationGroup definition) {
 		this.m_definition = definition;
 	}
+	
+	public HAPDefinitionDataAssociationGroup getDefinition() {  return this.m_definition;   }
 	
 	public HAPInfo getInfo() {  return this.m_definition.getInfo();  }
 	
@@ -88,15 +84,10 @@ public class HAPExecutableDataAssociationGroup extends HAPExecutableImp{
 	}
 
 	@Override
-	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
-		this.buildJsonMap(jsonMap, typeJsonMap);
-		
+	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
+		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
 		jsonMap.put(CONVERTFUNCTION, HAPUtilityScript.buildDataAssociationConvertFunction(this).getScript());
 		typeJsonMap.put(CONVERTFUNCTION, HAPScript.class);
-		
-		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 }

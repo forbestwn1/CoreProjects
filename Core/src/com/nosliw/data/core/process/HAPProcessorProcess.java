@@ -6,12 +6,13 @@ import java.util.Map;
 import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.script.context.HAPHAPExecutableDataAssociationGroupWithTargetImp;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPDefinitionDataAssociationGroup;
 import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroup;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.script.context.HAPHAPExecutableDataAssociationGroupWithTarget;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
+import com.nosliw.data.core.script.context.HAPProcessorDataAssociation;
+import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 
 public class HAPProcessorProcess{
 
@@ -33,8 +34,7 @@ public class HAPProcessorProcess{
 			
 			Map<String, HAPDefinitionDataAssociationGroup> outputMapping = embededProcessDefinition.getOutputMapping();
 			for(String result : outputMapping.keySet()) {
-				HAPHAPExecutableDataAssociationGroupWithTargetImp backToGlobalContext = new HAPHAPExecutableDataAssociationGroupWithTargetImp();
-				HAPUtilityProcess.mergeBackToGlobalContext(out.getResult(result).getContext().getContext(), outputMapping.get(result), out.getContext(), backToGlobalContext, contextProcessRequirement);
+				HAPHAPExecutableDataAssociationGroupWithTarget backToGlobalContext = HAPProcessorDataAssociation.processDataAssociation(out.getResult(result).getContext().getContext(), outputMapping.get(result), out.getContext(), contextProcessRequirement); 
 				out.addBackToGlobalContext(result, backToGlobalContext);
 			}
 			
