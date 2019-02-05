@@ -17,6 +17,7 @@ import com.nosliw.data.core.expression.HAPMatcherUtility;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPImporterProcessSuiteDefinition;
+import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroupWithTarget;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
@@ -132,7 +133,7 @@ public class HAPUtilityProcess {
 		return resultExe;
 	}
 
-	public static void mergeBackToGlobalContext(HAPContext inputContext, HAPDefinitionDataAssociationGroup dataAssociation, HAPContextGroup targetContext, HAPBackToGlobalContext backToGlobal, HAPRequirementContextProcessor contextProcessRequirement) {
+	public static void mergeBackToGlobalContext(HAPContext inputContext, HAPDefinitionDataAssociationGroup dataAssociation, HAPContextGroup targetContext, HAPExecutableDataAssociationGroupWithTarget backToGlobal, HAPRequirementContextProcessor contextProcessRequirement) {
 		//process data association
 		HAPExecutableDataAssociationGroup outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(inputContext, dataAssociation, contextProcessRequirement);
 		backToGlobal.setOutputDataAssociation(outputDataAssociation);

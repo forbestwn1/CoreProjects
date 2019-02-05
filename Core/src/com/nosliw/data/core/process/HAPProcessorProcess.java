@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.data.core.script.context.HAPHAPExecutableDataAssociationGroupWithTargetImp;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPDefinitionDataAssociationGroup;
 import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroup;
@@ -32,7 +33,7 @@ public class HAPProcessorProcess{
 			
 			Map<String, HAPDefinitionDataAssociationGroup> outputMapping = embededProcessDefinition.getOutputMapping();
 			for(String result : outputMapping.keySet()) {
-				HAPBackToGlobalContextImp backToGlobalContext = new HAPBackToGlobalContextImp();
+				HAPHAPExecutableDataAssociationGroupWithTargetImp backToGlobalContext = new HAPHAPExecutableDataAssociationGroupWithTargetImp();
 				HAPUtilityProcess.mergeBackToGlobalContext(out.getResult(result).getContext().getContext(), outputMapping.get(result), out.getContext(), backToGlobalContext, contextProcessRequirement);
 				out.addBackToGlobalContext(result, backToGlobalContext);
 			}

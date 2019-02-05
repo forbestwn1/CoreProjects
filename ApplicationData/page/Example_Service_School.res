@@ -22,18 +22,49 @@
 
 	</body>
 
-	<service>
+	<services>
 	{
-		"serviceName" : "",
-		"parmMapping" : {
-			"element" : {
-				
+		"use" : [
+			{
+				"name" : "getSchoolData",
+				"provider" : "getSchoolDataService",
+				"serviceMapping" :{
+					"parmMapping" : {
+						"element" : {
+							"schoolTypeInService" : {
+								"definition" : {
+									"path" : "schoolType"
+								}
+							},
+							"schoolRatingInService" : {
+								"definition" : {
+									"path" : "schoolRating"
+								}
+							}
+						}
+					},
+					"resultMapping" : {
+						"success" : {
+							"schoolList" : ｛
+								"definition" : {
+									"path" : "output"
+								}
+							｝
+						}
+					}
+				}
 			}
-		},
-		"resultMapping" : {
-			
-		}
-	}
-	</service>
+		],
+		"provider" : [
+			{	
+				"name" : "getSchoolDataService",
+				"serviceId" : "schoolService"
+				"interface" : {
+				
+				}
+			}		
+		]
+	}	
+	</services>
 	
 </html>

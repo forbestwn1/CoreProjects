@@ -30,6 +30,7 @@ import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpression;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.uiresource.HAPIdGenerator;
 
@@ -41,6 +42,8 @@ public class HAPParserUIResource {
 
 	public static final String EVENT = "events";
 	public static final String SERVICE = "services";
+	public static final String SERVICE_USE = "use";
+	public static final String SERVICE_PROVIDER = "provider";
 	public static final String CONTEXT = "contexts";
 	public static final String COMMAND = "commands";
 	public static final String EXPRESSION = "expressions";
@@ -214,12 +217,26 @@ public class HAPParserUIResource {
 		List<Element> childEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, SERVICE);
 		for(Element childEle : childEles){
 			try {
-				JSONArray serviceListJson = new JSONArray(childEle.html());
-				for(int i=0; i<serviceListJson.length(); i++) {
-					JSONObject serviceJson = serviceListJson.getJSONObject(i);
-					HAPDefinitionServiceUse serviceDef = new HAPDefinitionServiceUse();
-					serviceDef.buildObject(serviceJson, HAPSerializationFormat.JSON);
-					resourceUnit.addServiceDefinition(serviceDef);
+				JSONObject serviceDefJson = new JSONObject(childEle.html());
+				
+				JSONArray serviceUseListJson = serviceDefJson.optJSONArray(SERVICE_USE);
+				if(serviceUseListJson!=null) {
+					for(int i=0; i<serviceUseListJson.length(); i++) {
+						JSONObject serviceUseJson = serviceUseListJson.getJSONObject(i);
+						HAPDefinitionServiceUse serviceUseDef = new HAPDefinitionServiceUse();
+						serviceUseDef.buildObject(serviceUseJson, HAPSerializationFormat.JSON);
+						resourceUnit.addServiceUseDefinition(serviceUseDef);
+					}
+				}
+
+				JSONArray serviceProviderListJson = serviceDefJson.optJSONArray(SERVICE_PROVIDER);
+				if(serviceProviderListJson!=null) {
+					for(int i=0; i<serviceProviderListJson.length(); i++) {
+						JSONObject serviceProviderJson = serviceProviderListJson.getJSONObject(i);
+						HAPDefinitionServiceProvider serviceProviderDef = new HAPDefinitionServiceProvider();
+						serviceProviderDef.buildObject(serviceProviderJson, HAPSerializationFormat.JSON);
+						resourceUnit.addServiceProviderDefinition(serviceProviderDef);
+					}
 				}
 				break;
 			} catch (JSONException e) {

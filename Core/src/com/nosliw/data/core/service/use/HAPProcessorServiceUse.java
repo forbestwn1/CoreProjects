@@ -26,20 +26,22 @@ import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
 public class HAPProcessorServiceUse {
 
 	public HAPExecutableServiceUse process(
-			HAPDefinitionServiceUse definition, 
+			HAPDefinitionServiceUse definition,
+			HAPServiceInterface providerInterface,
 			HAPContextGroup globalContext, 
 			HAPConfigureContextProcessor configure, 
 			HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPExecutableServiceUse out = new HAPExecutableServiceUse(definition);
-		HAPServiceInterface serviceInterface = definition.getServiceInterface();
 		
-		//process parm
-		HAPExecutableDataAssociationGroup processedParms = HAPProcessorDataAssociation.processDataAssociation(globalContext, definition.getParms(), contextProcessRequirement);
+		HAPDefinitionMappingService serviceMapping = definition.getServiceMapping();
+		
+		//process parm mapping
+		HAPExecutableDataAssociationGroup processedParms = HAPProcessorDataAssociation.processDataAssociation(globalContext, serviceMapping.getParms(), contextProcessRequirement);
 		out.setParmMapping(processedParms);
 		
 		//process parm mapping
-		for(String providerParmName : serviceInterface.getParms().keySet()) {
-			HAPDataTypeCriteria providerParmCriteria = definition.getProviderServiceParm(providerParmName).getCriteria();
+		for(String providerParmName : providerInterface.getParms().keySet()) {
+			HAPDataTypeCriteria providerParmCriteria = providerInterface.getParm(providerParmName).getCriteria();
 			HAPContextDefinitionElement useEleDef = processedParms.getContext().getContext().getElement(providerParmName).getDefinition().getSolidContextDefinitionElement();
 			HAPDataTypeCriteria userParmCriteria = null;
 			switch(useEleDef.getType()) {
@@ -60,7 +62,7 @@ public class HAPProcessorServiceUse {
 			HAPDefinitionDataAssociationGroup mapping = resultMapping.get(result);
 			
 			HAPContext outputContext = new HAPContext();
-			Map<String, HAPServiceOutput> serviceOutput = serviceInterface.getResults().get(result).getOutput();
+			Map<String, HAPServiceOutput> serviceOutput = providerInterface.getResults().get(result).getOutput();
 			for(String outParm : serviceOutput.keySet()) {
 				outputContext.addElement(outParm, new HAPContextDefinitionLeafData(HAPVariableInfo.buildVariableInfo(serviceOutput.get(outParm).getCriteria())));
 			}

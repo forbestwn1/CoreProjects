@@ -83,11 +83,11 @@ var node_createProcessRuntime = function(envObj){
 		
 		var out = node_createServiceRequestInfoSequence(service, handlers, request);
 
-		var activityResultDataAssociation = backToGlobalConfig[node_COMMONATRIBUTECONSTANT.BACKTOGLOBALCONTEXT_OUTPUTASSOCIATION];
+		var activityResultDataAssociation = backToGlobalConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUPWITHTARGET_OUTPUTASSOCIATION];
 		out.addRequest(loc_getGenerateDataAssociationOutputRequest(activityResultDataAssociation, data, {
 			success : function(request, globalData){
 				//process matchers
-				var matchersByPath = backToGlobalConfig[node_COMMONATRIBUTECONSTANT.BACKTOGLOBALCONTEXT_OUTPUTMATCHERS];
+				var matchersByPath = backToGlobalConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUPWITHTARGET_OUTPUTMATCHERS];
 				if(matchersByPath==undefined)  return globalData;
 				
 				var matchersByPathRequest = node_createServiceRequestInfoSet(undefined, {

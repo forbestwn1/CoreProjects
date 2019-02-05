@@ -16,10 +16,11 @@ import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
+import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroupWithTarget;
 import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroup;
 
 @HAPEntityWithAttribute
-public class HAPExecutableResultActivityNormal extends HAPEntityInfoWritableImp implements HAPBackToGlobalContext, HAPExecutable{
+public class HAPExecutableResultActivityNormal extends HAPEntityInfoWritableImp implements HAPExecutableDataAssociationGroupWithTarget, HAPExecutable{
 
 	@HAPAttribute
 	public static String FLOW = "flow";

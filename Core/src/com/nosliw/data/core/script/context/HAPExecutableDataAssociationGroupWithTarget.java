@@ -1,4 +1,4 @@
-package com.nosliw.data.core.process;
+package com.nosliw.data.core.script.context;
 
 import java.util.Map;
 
@@ -6,10 +6,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.expression.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPExecutable;
-import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroup;
 
 @HAPEntityWithAttribute
-public interface HAPBackToGlobalContext extends HAPExecutable{
+public interface HAPExecutableDataAssociationGroupWithTarget extends HAPExecutable{
 
 	@HAPAttribute
 	public static String OUTPUTASSOCIATION = "outputAssociation";
