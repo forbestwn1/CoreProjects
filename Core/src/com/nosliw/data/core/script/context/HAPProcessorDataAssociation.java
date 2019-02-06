@@ -101,10 +101,12 @@ public class HAPProcessorDataAssociation {
 			HAPContext outputContext = out.getContext().getContext();
 			for(String rootName : outputContext.getElementNames()) {
 				//merge back to context variable
-				Map<String, HAPMatchers> matchers = HAPUtilityContext.mergeContextRoot(targetContext.getElement(rootName), outputContext.getElement(rootName), modifyStructure, contextProcessRequirement);
-				//matchers when merge back to context variable
-				for(String matchPath :matchers.keySet()) {
-					out.addOutputMatchers(new HAPContextPath(new HAPContextDefinitionRootId(rootName), matchPath).getFullPath(), HAPMatcherUtility.reversMatchers(matchers.get(matchPath)));
+				if(targetContext.getElement(rootName)!=null) {
+					Map<String, HAPMatchers> matchers = HAPUtilityContext.mergeContextRoot(targetContext.getElement(rootName), outputContext.getElement(rootName), modifyStructure, contextProcessRequirement);
+					//matchers when merge back to context variable
+					for(String matchPath :matchers.keySet()) {
+						out.addOutputMatchers(new HAPContextPath(new HAPContextDefinitionRootId(rootName), matchPath).getFullPath(), HAPMatcherUtility.reversMatchers(matchers.get(matchPath)));
+					}
 				}
 			}
 		}
@@ -115,16 +117,18 @@ public class HAPProcessorDataAssociation {
 			for(String rootName : outputContext.getElementNames()) {
 				//find matching variable in parent context
 				HAPInfoRelativeContextResolve resolvedInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(rootName), targetContextGroup, null, null);
-				HAPContextDefinitionRootId contextVarRootId = resolvedInfo.path.getRootElementId();
-				//merge back to context variable
-				Map<String, HAPMatchers> matchers = HAPUtilityContext.mergeContextRoot(targetContextGroup.getElement(contextVarRootId), outputContext.getElement(rootName), modifyStructure, contextProcessRequirement);
-				//matchers when merge back to context variable
-				for(String matchPath :matchers.keySet()) {
-					out.addOutputMatchers(new HAPContextPath(contextVarRootId, matchPath).getFullPath(), HAPMatcherUtility.reversMatchers(matchers.get(matchPath)));
+				if(resolvedInfo.rootNode!=null) {
+					HAPContextDefinitionRootId contextVarRootId = resolvedInfo.path.getRootElementId();
+					//merge back to context variable
+					Map<String, HAPMatchers> matchers = HAPUtilityContext.mergeContextRoot(targetContextGroup.getElement(contextVarRootId), outputContext.getElement(rootName), modifyStructure, contextProcessRequirement);
+					//matchers when merge back to context variable
+					for(String matchPath :matchers.keySet()) {
+						out.addOutputMatchers(new HAPContextPath(contextVarRootId, matchPath).getFullPath(), HAPMatcherUtility.reversMatchers(matchers.get(matchPath)));
+					}
+					
+					//root variable name --- root variable full name
+					nameMapping.put(rootName, contextVarRootId.getFullName());
 				}
-				
-				//root variable name --- root variable full name
-				nameMapping.put(rootName, contextVarRootId.getFullName());
 			}
 			
 			//update variable names with full name 

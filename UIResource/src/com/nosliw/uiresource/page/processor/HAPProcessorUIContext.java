@@ -160,7 +160,7 @@ public class HAPProcessorUIContext {
 		for(String serviceName : serviceUseDefs.keySet()) {
 			HAPDefinitionServiceUse serviceUseDef = serviceUseDefs.get(serviceName);
 			HAPDefinitionServiceProvider serviceProvider = allServiceProviders.get(serviceUseDef.getProvider());
-			HAPExecutableServiceUse serviceUseExe = HAPProcessorServiceUse.process(serviceUseDef, serviceProvider.getServiceInterface(), parentContext, contextProcessorConfig, contextProcessRequirement);	
+			HAPExecutableServiceUse serviceUseExe = HAPProcessorServiceUse.process(serviceUseDef, serviceProvider.getServiceInterface(), uiExe.getContext(), contextProcessorConfig, contextProcessRequirement);	
 			uiExe.addServiceDefinition(serviceName, serviceUseExe);
 			uiExe.addServiceProvider(serviceUseDef.getProvider(), serviceProvider);
 		}

@@ -57,7 +57,7 @@ public class HAPDefinitionMappingService extends HAPSerializableImp{
 		if(resultJson!=null) {
 			for(Object key : resultJson.keySet()) {
 				HAPDefinitionDataAssociationGroup resultMapping = new HAPDefinitionDataAssociationGroup();
-				resultMapping.buildObject(jsonObj.optJSONObject(PARMMAPPING), HAPSerializationFormat.JSON);
+				resultMapping.buildObject(jsonObj.optJSONObject((String)key), HAPSerializationFormat.JSON);
 				this.m_resultMapping.put((String)key, resultMapping);
 			}
 		}

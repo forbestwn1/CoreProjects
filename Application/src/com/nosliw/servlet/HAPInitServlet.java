@@ -17,6 +17,7 @@ public class HAPInitServlet  extends HttpServlet{
 
 	private static final long serialVersionUID = -703775909733982650L;
 
+	@Override
 	public void init() throws ServletException
 	   {
 			//create runtime
@@ -33,7 +34,8 @@ public class HAPInitServlet  extends HttpServlet{
 					runtimeEnvironment.getResourceManager(),
 					runtimeEnvironment.getProcessManager(),
 					runtimeEnvironment.getRuntime(),
-					HAPExpressionManager.dataTypeHelper);
+					HAPExpressionManager.dataTypeHelper,
+					runtimeEnvironment.getServiceManager().getServiceDefinitionManager());
 			this.getServletContext().setAttribute("uiResourceManager", uiResourceMan);
 			
 			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPResourceManagerUIResource(uiResourceMan));

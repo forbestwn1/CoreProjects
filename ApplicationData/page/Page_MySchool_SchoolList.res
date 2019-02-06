@@ -7,7 +7,7 @@
 		<br>
 		<nosliw-loop data="schoolList" element="ele" index="index">  
 			Index: <%=?(index)?%>
-			<br>  1111
+			<br>  
 			SchoolName: <%=#|?(ele)?.getChildData(name:&(schoolAttribute)&)|#.value%>
 			<a href='' nosliw-event="click:getSchoolInfo:">Info</a>
 			<br>

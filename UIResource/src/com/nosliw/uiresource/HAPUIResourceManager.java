@@ -37,7 +37,7 @@ public class HAPUIResourceManager {
 	
 	private HAPManagerProcess m_processMan;
 	
-	HAPManagerServiceDefinition m_serviceDefinitionManager;
+	private HAPManagerServiceDefinition m_serviceDefinitionManager;
 	
 	private HAPIdGenerator m_idGengerator = new HAPIdGenerator(1);
 
@@ -51,7 +51,8 @@ public class HAPUIResourceManager {
 			HAPResourceManagerRoot resourceMan,
 			HAPManagerProcess processMan,
 			HAPRuntime runtime, 
-			HAPDataTypeHelper dataTypeHelper){
+			HAPDataTypeHelper dataTypeHelper,
+			HAPManagerServiceDefinition serviceDefinitionManager){
 		this.m_uiTagMan = uiTagMan;
 		this.m_expressionMan = expressionMan;
 		this.m_resourceMan = resourceMan;
@@ -61,6 +62,7 @@ public class HAPUIResourceManager {
 		this.m_dataTypeHelper = dataTypeHelper;
 		this.m_uiResourceParser = new HAPParserUIResource(null, m_idGengerator);
 		this.m_moduleParser = new HAPParserModule(this.m_processMan.getPluginManager());
+		this.m_serviceDefinitionManager = serviceDefinitionManager;
 	}
 
 	public HAPParserModule getModuleParser() {    return this.m_moduleParser;   }

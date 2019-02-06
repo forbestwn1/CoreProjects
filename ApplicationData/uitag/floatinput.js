@@ -7,14 +7,23 @@
 		}
 	],
 	context: {
-		public : {
-			
-		},
-		private : {
-			internal_data: {
-				path : "<%=&(data)&%>",
-				definition : "test.float;1.0.0"
-			}
+		group : {
+			public : {
+				element : {
+				},
+			},
+			private : {
+				element : {
+					internal_data: {
+						definition: {
+							path : "<%=&(nosliwAttribute_data)&%>",
+							definition : {
+								criteria : "test.float;1.0.0"
+							}
+						}
+					}
+				},
+			},
 		},
 		info : {
 			inherit : "false"
@@ -45,12 +54,12 @@
 			};
 		};
 
-		var loc_updateView = function(){
+		var loc_updateView = function(request){
 			env.executeDataOperationRequestGet(loc_dataVariable, "", {
 				success : function(requestInfo, data){
 					loc_view.val(data.value.value+"");
 				}
-			});
+			}, request);
 		};
 
 		var loc_setupUIEvent = function(){
@@ -70,12 +79,12 @@
 				return loc_view;
 			},
 				
-			postInit : function(){
-				loc_updateView();
+			postInit : function(request){
+				loc_updateView(request);
 				loc_setupUIEvent();
 
-				loc_dataVariable.registerDataOperationEventListener(undefined, function(){
-					loc_updateView();
+				loc_dataVariable.registerDataOperationEventListener(undefined, function(event, eventData, request){
+					loc_updateView(request);
 				}, this);
 			},
 

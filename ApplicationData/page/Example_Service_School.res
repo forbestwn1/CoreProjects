@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<body>
-	
+<!--
 	<br>
 	<nosliw-submit title="Submit" datasource="school" parms="schoolType:criteria.schoolType;schoolRating:criteria.schoolRating"  output="result"/>  
 	<br>
-
+-->
 	<div>
 	Query
 	<br>
@@ -15,7 +15,7 @@
 	<div>
 	Result
 	<br>
-	<nosliw-include source="Page_MySchoolList"/> 
+	<nosliw-include source="Page_MySchool_SchoolList"/> 
 	</div>
 
 	<br>
@@ -45,11 +45,11 @@
 					},
 					"resultMapping" : {
 						"success" : {
-							"schoolList" : ｛
+							"schoolList" : {
 								"definition" : {
-									"path" : "output"
+									"path" : "outputInService"
 								}
-							｝
+							}
 						}
 					}
 				}
@@ -59,9 +59,6 @@
 			{	
 				"name" : "getSchoolDataService",
 				"serviceId" : "schoolService"
-				"interface" : {
-				
-				}
 			}		
 		]
 	}	
