@@ -6,11 +6,11 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.expression.HAPMatchers;
+import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.HAPHAPExecutableDataAssociationGroupWithTarget;
+import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroupWithTarget;
 
 @HAPEntityWithAttribute
 public class HAPExecutableResultActivityNormal extends HAPExecutableImp{
@@ -24,18 +24,18 @@ public class HAPExecutableResultActivityNormal extends HAPExecutableImp{
 	private HAPDefinitionResultActivityNormal m_definition;
 	
 	//associate output of activity to variable in process 
-	private HAPHAPExecutableDataAssociationGroupWithTarget m_outputAssociation;
+	private HAPExecutableDataAssociationGroupWithTarget m_outputAssociation;
 	
 	//next activity
 	public HAPExecutableResultActivityNormal(HAPDefinitionResultActivityNormal definition) {
 		this.m_definition = definition;
-		this.m_outputAssociation = new HAPHAPExecutableDataAssociationGroupWithTarget(this.m_definition.getOutputDataAssociation());
+		this.m_outputAssociation = new HAPExecutableDataAssociationGroupWithTarget(this.m_definition.getOutputDataAssociation());
 	}
 	
 	public HAPDefinitionSequenceFlow getFlow() {  return this.m_definition.getFlow();  }
 	
-	public HAPHAPExecutableDataAssociationGroupWithTarget getOutputDataAssociation() {   return this.m_outputAssociation;   }
-	public void setOutputDataAssociation(HAPHAPExecutableDataAssociationGroupWithTarget output) {   this.m_outputAssociation = output;    }
+	public HAPExecutableDataAssociationGroupWithTarget getOutputDataAssociation() {   return this.m_outputAssociation;   }
+	public void setOutputDataAssociation(HAPExecutableDataAssociationGroupWithTarget output) {   this.m_outputAssociation = output;    }
 
 	public void addOutputMatchers(String path, HAPMatchers matchers) {   this.m_outputAssociation.addOutputMatchers(path, matchers);     }
 	public Map<String, HAPMatchers> getOutputMatchers() {  return this.m_outputAssociation.getOutputMatchers(); }

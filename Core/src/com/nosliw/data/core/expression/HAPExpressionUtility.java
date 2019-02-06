@@ -18,6 +18,8 @@ import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
+import com.nosliw.data.core.matcher.HAPMatcherUtility;
+import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperandTask;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.operand.HAPOperandWrapper;
@@ -27,7 +29,6 @@ import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
-import com.nosliw.data.core.runtime.HAPResourceUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPExpressionUtility {
@@ -79,10 +80,7 @@ public class HAPExpressionUtility {
 			Map<String, HAPMatchers> matchers = expression.getVariableMatchers();
 			if(matchers!=null){
 				for(String varName : matchers.keySet()){
-					Set<HAPDataTypeConverter> converters = HAPResourceUtility.getConverterResourceIdFromRelationship(matchers.get(varName).discoverRelationships());
-					for(HAPDataTypeConverter converter : converters){
-						result.add(new HAPResourceIdConverter(converter));
-					}
+					result.addAll(HAPMatcherUtility.getMatchersResourceId(matchers.get(varName)));
 				}
 			}
 			
@@ -113,7 +111,7 @@ public class HAPExpressionUtility {
 
 		static public List<HAPResourceInfo> discoverResourceRequirement(HAPMatchers matchers, HAPResourceManagerRoot resourceMan, HAPRuntimeInfo runtimeInfo) {
 			List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
-			Set<HAPDataTypeConverter> converters = HAPResourceUtility.getConverterResourceIdFromRelationship(matchers.discoverRelationships());
+			Set<HAPDataTypeConverter> converters = HAPMatcherUtility.getConverterResourceIdFromRelationship(matchers.discoverRelationships());
 			for(HAPDataTypeConverter converter : converters){
 				resourceIds.add(new HAPResourceIdConverter(converter));
 			}

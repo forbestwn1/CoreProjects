@@ -5,8 +5,8 @@ import java.util.Set;
 
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaId;
-import com.nosliw.data.core.expression.HAPMatcher;
-import com.nosliw.data.core.expression.HAPMatchers;
+import com.nosliw.data.core.matcher.HAPMatcher;
+import com.nosliw.data.core.matcher.HAPMatchers;
 
 /**
  * This is helper class that provide methods that related with data type and operation information

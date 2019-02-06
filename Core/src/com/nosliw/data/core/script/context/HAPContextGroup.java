@@ -16,7 +16,7 @@ import com.nosliw.common.utils.HAPConstant;
 //a group of context
 //normally contexts are grouped according to type : public, private, ...
 @HAPEntityWithAttribute
-public class HAPContextGroup extends HAPSerializableImp{
+public class HAPContextGroup extends HAPSerializableImp implements HAPDataAssociationIO{
 
 	@HAPAttribute
 	public static final String GROUP = "group";

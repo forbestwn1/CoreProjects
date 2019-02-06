@@ -25,6 +25,8 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 	
 	public HAPDefinitionMappingService getServiceMapping() {   return this.m_serviceMapping;    }
 	
+	public String getProvider() {   return this.m_provider;   }
+	
 	public void cloneBasicTo(HAPDefinitionServiceUse command) {
 		this.cloneToEntityInfo(command);
 	}
@@ -42,6 +44,7 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 		super.buildObjectByJson(jsonObj);
 		this.m_serviceMapping = new HAPDefinitionMappingService();
 		this.m_serviceMapping.buildObject(jsonObj.optJSONObject(SERVICEMAPPING), HAPSerializationFormat.JSON);
+		this.m_provider = (String)jsonObj.opt(PROVIDER);
 		return true;  
 	}
 }

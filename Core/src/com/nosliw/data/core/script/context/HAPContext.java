@@ -15,7 +15,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 
 @HAPEntityWithAttribute
-public class HAPContext extends HAPSerializableImp{
+public class HAPContext extends HAPSerializableImp implements HAPDataAssociationIO{
 
 	@HAPAttribute
 	public static final String ELEMENT = "element";

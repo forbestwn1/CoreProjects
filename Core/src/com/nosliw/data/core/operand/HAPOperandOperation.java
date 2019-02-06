@@ -26,10 +26,10 @@ import com.nosliw.data.core.HAPOperationParmInfo;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
-import com.nosliw.data.core.expression.HAPMatchers;
+import com.nosliw.data.core.matcher.HAPMatcherUtility;
+import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPResourceUtility;
 
 public class HAPOperandOperation extends HAPOperandImp{
 
@@ -135,7 +135,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 	public Set<HAPDataTypeConverter> getConverters(){
 		Set<HAPDataTypeConverter> out = new HashSet<HAPDataTypeConverter>();
 		for(String parm : this.m_parmsMatchers.keySet()){
-			out.addAll(HAPResourceUtility.getConverterResourceIdFromRelationship(this.m_parmsMatchers.get(parm).discoverRelationships()));
+			out.addAll(HAPMatcherUtility.getConverterResourceIdFromRelationship(this.m_parmsMatchers.get(parm).discoverRelationships()));
 		}
 		return out;	
 	}

@@ -23,7 +23,7 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
-import com.nosliw.data.core.script.context.HAPHAPExecutableDataAssociationGroupWithTarget;
+import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroupWithTarget;
 import com.nosliw.data.core.script.context.HAPProcessorDataAssociation;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
@@ -122,7 +122,7 @@ public class HAPUtilityProcess {
 			//data association input context
 			HAPContext dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
 			//process data association
-			HAPHAPExecutableDataAssociationGroupWithTarget dataAssocationExe = HAPProcessorDataAssociation.processDataAssociation(dataAssociationInputContext, resultDef.getOutputDataAssociation(), parentContext, contextProcessRequirement);
+			HAPExecutableDataAssociationGroupWithTarget dataAssocationExe = HAPProcessorDataAssociation.processDataAssociation(dataAssociationInputContext, resultDef.getOutputDataAssociation(), parentContext, true, contextProcessRequirement);
 			resultExe.setOutputDataAssociation(dataAssocationExe);
 		}
 		return resultExe;
