@@ -12,6 +12,10 @@
 	<nosliw-include source="Page_MySchool_Query"/> 
 	</div>
 	
+	<br>
+	<br><a href='' nosliw-event="click:refreshSchoolData:">Refresh</a><br>
+	<br>
+
 	<div>
 	Result
 	<br>
@@ -21,6 +25,30 @@
 	<br>
 
 	</body>
+
+	<scripts>
+	{
+		refreshSchoolData : function(data, info, env){
+
+			event.preventDefault();
+
+			var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest");
+			var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
+			var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
+			var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
+			
+			var requestInfo = env.getServiceRequest("getSchoolData", {
+				success : function(request){
+					alert("Service Done!!!");
+				}
+			});
+			node_requestServiceProcessor.processRequest(requestInfo, false);
+		},
+	}
+	</scripts>
 
 	<services>
 	{

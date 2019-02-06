@@ -173,6 +173,11 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 	 */
 	var loc_getViews = function(){	return loc_startEle.add(loc_startEle.nextUntil(loc_endEle)).add(loc_endEle);  };
 
+	var loc_getServiceRequest = function(serviceName, handlers, request){
+		
+	};
+	
+	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiResource, id, parent, context, requestInfo){
 
@@ -304,6 +309,8 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		loc_context = undefined;
 	};
 
+	
+	
 	loc_out = {
 		ovr_getResourceLifecycleObject : function(){	return loc_resourceLifecycleObj;	},
 		
@@ -343,6 +350,9 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 					trigueEvent : function(eventName, eventData, requestInfo){
 						loc_out.prv_trigueEvent(eventName, eventData, requestInfo);
 					},
+					getServiceRequest : function(serviceName, handlers, request){
+						return loc_getServiceRequest(serviceName, handlers, request);
+					}
 			};
 			var args = Array.prototype.slice.call(arguments, 1);
 			args.push(env);
