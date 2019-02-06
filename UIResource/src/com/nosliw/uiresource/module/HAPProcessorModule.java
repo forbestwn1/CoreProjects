@@ -14,11 +14,10 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionNode;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
-import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.HAPUtilityUIResource;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
@@ -35,11 +34,12 @@ public class HAPProcessorModule {
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPRuntime runtime, 
 			HAPExpressionSuiteManager expressionManager,
+			HAPManagerServiceDefinition serviceDefinitionManager,
 			HAPProcessTracker processTracker) {
 
 		HAPExecutableModule out = new HAPExecutableModule(moduleDefinition, id);
 
-		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityUIResource.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionManager);
+		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityUIResource.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager);
 		
 		//process context 
 		out.setContextGroup(HAPProcessorContext.process(moduleDefinition.getContext(), parentContext==null?new HAPContextGroup():parentContext, null, contextProcessRequirement));

@@ -22,7 +22,7 @@ public class HAPManagerService {
 		this.m_serviceFactorys = new LinkedHashMap<String, HAPFactoryService>();
 	}
 	
-	public HAPManagerServiceDefinition getDataSourceDefinitionManager() {   return this.m_serviceDefinitionManager;   }
+	public HAPManagerServiceDefinition getServiceDefinitionManager() {   return this.m_serviceDefinitionManager;   }
 	
 	public void registerServiceInstance(String name, HAPInstanceService serviceInstance){
 		this.m_serviceInstances.put(name, serviceInstance);

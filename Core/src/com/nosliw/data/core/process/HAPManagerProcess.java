@@ -6,6 +6,7 @@ import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 
 public class HAPManagerProcess {
 	
@@ -17,9 +18,10 @@ public class HAPManagerProcess {
 			HAPManagerActivityPlugin pluginMan,
 			HAPDataTypeHelper dataTypeHelper,
 			HAPRuntime runtime,
-			HAPExpressionSuiteManager expressionManager) {
+			HAPExpressionSuiteManager expressionManager,
+			HAPManagerServiceDefinition serviceDefinitionManager) {
 		this.m_pluginManager = pluginMan;
-		this.m_contextProcessRequirement = new HAPRequirementContextProcessor(dataTypeHelper, runtime, expressionManager, null);
+		this.m_contextProcessRequirement = new HAPRequirementContextProcessor(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager, null);
 	}
 
 	public HAPExecutableProcess getProcess(HAPIdProcess processId) {

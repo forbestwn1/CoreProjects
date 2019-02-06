@@ -13,7 +13,7 @@ import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 
 public class HAPProcessorServiceUse {
 
-	public HAPExecutableServiceUse process(
+	public static HAPExecutableServiceUse process(
 			HAPDefinitionServiceUse definition,
 			HAPServiceInterface providerInterface,
 			HAPContextGroup globalContext, 

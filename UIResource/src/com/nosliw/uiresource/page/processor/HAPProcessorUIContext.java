@@ -1,33 +1,28 @@
 package com.nosliw.uiresource.page.processor;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafConstant;
-import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPProcessorContextRelative;
 import com.nosliw.data.core.script.context.HAPProcessorEscalate;
+import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.data.core.service.interfacee.HAPServiceOutput;
-import com.nosliw.data.core.service.interfacee.HAPServiceParm;
-import com.nosliw.data.core.service.interfacee.HAPServiceResult;
-import com.nosliw.data.core.service.provide.HAPInfoServiceStatic;
-import com.nosliw.data.core.service.provide.HAPQueryService;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
+import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
@@ -38,14 +33,14 @@ import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
 public class HAPProcessorUIContext {
 
-	public static void process(HAPExecutableUIUnit uiExe, HAPContextGroup contextDef, HAPContextGroup parentContext, HAPUITagManager uiTagMan, HAPRequirementContextProcessor contextProcessRequirement){
+	public static void process(HAPExecutableUIUnit uiExe, HAPContextGroup contextDef, HAPContextGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPUITagManager uiTagMan, HAPRequirementContextProcessor contextProcessRequirement){
 
 		HAPConfigureContextProcessor contextProcessorConfig = new HAPConfigureContextProcessor();
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) 	contextProcessorConfig.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;  //for tag, child keeps same
 		else contextProcessorConfig.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT;   //for resource, parent overwrite child
 
 		processVerticalStructure(uiExe, contextDef, parentContext, contextProcessorConfig, uiTagMan, contextProcessRequirement);		
-		processRelativeElement(uiExe, parentContext, contextProcessorConfig, uiTagMan, contextProcessRequirement);
+		processRelativeElement(uiExe, parentContext, serviceProviders, contextProcessorConfig, uiTagMan, contextProcessRequirement);
 		markProcessed(uiExe);
 		discoverVariable(uiExe, contextProcessRequirement.inheritanceExcludedInfo);
 	}
@@ -98,7 +93,7 @@ public class HAPProcessorUIContext {
 		}
 	}
 	
-	private static void processRelativeElement(HAPExecutableUIUnit uiExe, HAPContextGroup parentContext, HAPConfigureContextProcessor contextProcessorConfig, HAPUITagManager uiTagMan, HAPRequirementContextProcessor contextProcessRequirement){
+	private static void processRelativeElement(HAPExecutableUIUnit uiExe, HAPContextGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPConfigureContextProcessor contextProcessorConfig, HAPUITagManager uiTagMan, HAPRequirementContextProcessor contextProcessRequirement){
 		HAPConfigureContextProcessor privateConfigure = contextProcessorConfig.cloneConfigure();
 		privateConfigure.parentCategary = HAPContextGroup.getAllContextTypes();
 		
@@ -148,6 +143,29 @@ public class HAPProcessorUIContext {
 			uiExe.addCommandDefinition(processedCommendDef);
 		}
 
+		//process service
+		//all provider available
+		Map<String, HAPDefinitionServiceProvider> allServiceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
+		allServiceProviders.putAll(serviceProviders);
+		allServiceProviders.putAll(uiExe.getUIUnitDefinition().getServiceProviderDefinitions());
+		//make sure all provider has interface info
+		for(String name : allServiceProviders.keySet()) {
+			HAPDefinitionServiceProvider provider = allServiceProviders.get(name);
+			if(provider.getServiceInterface()==null) {
+				provider.setServiceInterface(contextProcessRequirement.serviceDefinitionManager.getDefinition(provider.getServiceId()).getStaticInfo().getInterface());
+			}
+		}
+		
+		Map<String, HAPDefinitionServiceUse> serviceUseDefs = uiExe.getUIUnitDefinition().getServiceUseDefinitions();
+		for(String serviceName : serviceUseDefs.keySet()) {
+			HAPDefinitionServiceUse serviceUseDef = serviceUseDefs.get(serviceName);
+			HAPDefinitionServiceProvider serviceProvider = allServiceProviders.get(serviceUseDef.getProvider());
+			HAPExecutableServiceUse serviceUseExe = HAPProcessorServiceUse.process(serviceUseDef, serviceProvider.getServiceInterface(), parentContext, contextProcessorConfig, contextProcessRequirement);	
+			uiExe.addServiceDefinition(serviceName, serviceUseExe);
+			uiExe.addServiceProvider(serviceUseDef.getProvider(), serviceProvider);
+		}
+		
+		
 		/*
 		//process service defined in resource
 		Map<String, HAPDefinitionServiceUse> servicesDef = uiExe.getUIUnitDefinition().getServiceDefinitions();
@@ -214,7 +232,7 @@ public class HAPProcessorUIContext {
 		
 		//child tag
 		for(HAPExecutableUIUnitTag childTag : uiExe.getUITags()) {
-			processRelativeElement(childTag, uiExe.getContext(), contextProcessorConfig, uiTagMan, contextProcessRequirement);			
+			processRelativeElement(childTag, uiExe.getContext(), allServiceProviders, contextProcessorConfig, uiTagMan, contextProcessRequirement);			
 		}
 		
 	}	

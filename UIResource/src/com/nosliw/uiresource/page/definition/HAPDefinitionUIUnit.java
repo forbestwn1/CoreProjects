@@ -82,6 +82,7 @@ public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
 		this.m_expressionDefinitions = new LinkedHashMap<String, String>();
 		this.m_eventsDefinition = new LinkedHashMap<String, HAPDefinitionUIEvent>();
 		this.m_servicesUseDefinition = new LinkedHashMap<String, HAPDefinitionServiceUse>();
+		this.m_servicesProviderDefinition = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
 		this.m_commandsDefinition = new LinkedHashMap<String, HAPDefinitionUICommand>();
 	}
 	

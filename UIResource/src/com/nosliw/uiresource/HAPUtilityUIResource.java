@@ -9,6 +9,7 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
 import com.nosliw.uiresource.module.HAPParserModule;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
@@ -46,11 +47,12 @@ public class HAPUtilityUIResource {
 	public static HAPRequirementContextProcessor getDefaultContextProcessorRequirement(
 			HAPDataTypeHelper dataTypeHelper, 
 			HAPRuntime runtime, 
-			HAPExpressionSuiteManager expressionMan) { 
+			HAPExpressionSuiteManager expressionMan,
+			HAPManagerServiceDefinition serviceDefinitionManager) { 
 		Set<String> inheritanceExcludedInfo = new HashSet<String>();
 		inheritanceExcludedInfo.add(HAPConstant.UIRESOURCE_CONTEXTINFO_INSTANTIATE);
 		inheritanceExcludedInfo.add(HAPConstant.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION);
-		HAPRequirementContextProcessor contextProcessRequirement = new HAPRequirementContextProcessor(dataTypeHelper, runtime, expressionMan, inheritanceExcludedInfo);
+		HAPRequirementContextProcessor contextProcessRequirement = new HAPRequirementContextProcessor(dataTypeHelper, runtime, expressionMan, serviceDefinitionManager, inheritanceExcludedInfo);
 		return contextProcessRequirement;
 	}
 }

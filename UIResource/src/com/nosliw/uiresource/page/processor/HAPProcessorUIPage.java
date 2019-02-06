@@ -1,12 +1,16 @@
 package com.nosliw.uiresource.page.processor;
 
-import com.nosliw.common.utils.HAPConstant;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.HAPUtilityUIResource;
@@ -21,14 +25,16 @@ public class HAPProcessorUIPage {
 			HAPDefinitionUIPage uiPageDef,
 			String id,
 			HAPContextGroup context,
-			HAPContextGroup parentContext, 
+			HAPContextGroup parentContext,
+			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPUIResourceManager uiResourceMan,
 			HAPDataTypeHelper dataTypeHelper, 
-			HAPUITagManager uiTagMan, 
+			HAPUITagManager uiTagMan,  
 			HAPRuntime runtime, 
 			HAPExpressionSuiteManager expressionMan, 
 			HAPResourceManagerRoot resourceMan, 
 			HAPParserUIResource uiResourceParser,
+			HAPManagerServiceDefinition serviceDefinitionManager,
 			HAPIdGenerator idGengerator) {
 		
 		HAPExecutableUIUnitPage out = new HAPExecutableUIUnitPage(uiPageDef, id);
@@ -47,7 +53,8 @@ public class HAPProcessorUIPage {
 			}
 		}
 			
-		HAPProcessorUIContext.process(out, pageContext, parentContext, uiTagMan, HAPUtilityUIResource.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionMan));
+		if(serviceProviders==null)  serviceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
+		HAPProcessorUIContext.process(out, pageContext, parentContext, serviceProviders, uiTagMan, HAPUtilityUIResource.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionMan, serviceDefinitionManager));
 
 //		HAPPorcessorResolveName.resolve(out);
 		

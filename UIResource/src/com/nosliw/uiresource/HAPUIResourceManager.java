@@ -9,8 +9,8 @@ import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
 import com.nosliw.uiresource.module.HAPExecutableModule;
 import com.nosliw.uiresource.module.HAPParserModule;
@@ -36,6 +36,8 @@ public class HAPUIResourceManager {
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
 	private HAPManagerProcess m_processMan;
+	
+	HAPManagerServiceDefinition m_serviceDefinitionManager;
 	
 	private HAPIdGenerator m_idGengerator = new HAPIdGenerator(1);
 
@@ -87,11 +89,11 @@ public class HAPUIResourceManager {
 	}
 
 	private HAPExecutableUIUnitPage processUIResource(HAPDefinitionUIPage uiResource, String id, HAPContextGroup context, HAPContextGroup parentContext) {
-		return HAPProcessorUIPage.processUIResource(uiResource, id, context, parentContext, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.m_uiResourceParser, m_idGengerator);
+		return HAPProcessorUIPage.processUIResource(uiResource, id, context, parentContext, null, this, m_dataTypeHelper, m_uiTagMan, m_runtime, m_expressionMan, m_resourceMan, this.m_uiResourceParser, this.m_serviceDefinitionManager, m_idGengerator);
 	}
 	
 	private HAPExecutableModule processModule(HAPDefinitionModule uiModule, String id, HAPContextGroup parentContext) {
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
-		return HAPProcessorModule.process(uiModule, id, parentContext, this.m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, processTracker);
+		return HAPProcessorModule.process(uiModule, id, parentContext, this.m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, this.m_serviceDefinitionManager, processTracker);
 	}
 }

@@ -25,6 +25,7 @@ public class HAPDefinitionServiceProvider extends HAPEntityInfoWritableImp{
 	public void setServiceId(String id) {    this.m_serviceId = id;    }
 	
 	public HAPServiceInterface getServiceInterface() {  return this.m_serviceInterface;  }
+	public void setServiceInterface(HAPServiceInterface serviceInterface) {   this.m_serviceInterface = serviceInterface;   }
 	public HAPServiceParm getProviderServiceParm(String parmName) {  return this.m_serviceInterface.getParm(parmName); }
 
 	

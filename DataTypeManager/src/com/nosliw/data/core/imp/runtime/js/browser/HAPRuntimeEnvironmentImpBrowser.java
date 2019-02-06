@@ -43,15 +43,16 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPExpressionManager.expressionParser = new HAPExpressionParserImp();
 
 		HAPRuntime runtime = new HAPRuntimeImpRhino(this);
+		HAPManagerService serviceManager = new HAPManagerService();
 		HAPExpressionSuiteManager expSuiteMan = new HAPExpressionSuiteManager();
-		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), HAPExpressionManager.dataTypeHelper, runtime, expSuiteMan);
+		HAPManagerProcess processMan = new HAPManagerProcess(new HAPManagerActivityPlugin(), HAPExpressionManager.dataTypeHelper, runtime, expSuiteMan, serviceManager.getServiceDefinitionManager());
 		
 		init(new HAPResourceManagerJSImp(
 				runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess()),
 				processMan,
 				expSuiteMan,
 			new HAPGatewayManager(),
-			new HAPManagerService(),
+			serviceManager,
 			runtime
 		);
 		
