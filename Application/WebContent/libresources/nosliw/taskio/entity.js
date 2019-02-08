@@ -5,13 +5,12 @@ var packageObj = library.getChildPackage("entity");
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
-	var node_buildServiceProvider;
 //*******************************************   Start Node Definition  ************************************** 	
 
-//activity plug in execute result
+//task result 
 //  resultName : name of the result
 //  result: result value map (value name / value)
-var node_TaskResult = function(resultName, resultValue){
+var node_IOTaskResult = function(resultName, resultValue){
 	this.resultName = resultName;
 	this.resultValue = resultValue; 
 };
@@ -22,9 +21,8 @@ var node_TaskResult = function(resultName, resultValue){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("TaskResult", node_TaskResult); 
+packageObj.createChildNode("IOTaskResult", node_IOTaskResult); 
 
 })(packageObj);

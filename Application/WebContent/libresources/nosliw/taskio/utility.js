@@ -5,18 +5,18 @@ var packageObj = library;
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
+	var node_buildServiceProvider;
+	var node_createServiceRequestInfoSimple;
+	var node_createServiceRequestInfoSequence;
+	var node_createServiceRequestInfoSet;
+	var node_ServiceInfo;
+	var node_objectOperationUtility;
+	var node_EndActivityOutput;
+	var node_ProcessResult;
 	var node_createServiceRequestInfoService;
 	var node_DependentServiceRequestInfo;
-	var node_resourceUtility;
-	var node_buildServiceProvider;
-	var node_ServiceInfo;
 	var node_requestServiceProcessor;
-	var node_createUIViewFactory;
-	var node_createContextElementInfo;
-	var node_dataUtility;
-	var node_createContext;
-	var node_createContextVariableInfo;
-	var node_TaskResult;
+	var node_IOTaskResult;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function(){
@@ -35,7 +35,9 @@ var node_utility = function(){
 			//calculate input for activity first
 			out.addRequest(loc_out.getExecuteDataAssociationRequest(inputDataAssociation, input, {
 				success : function(requestInfo, taskInput){
-					return getTaskRequest(taskInput, {
+					var executeIOTaskRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteIOTask", {}));
+					
+					executeIOTaskRequest.addRequest(getTaskRequest(taskInput, {
 						success : function(request, taskResult){
 							return loc_out.getBackToGlobalRequest(taskResult.resultValue, outputDataAssociationByResult[taskResult.resultName], {
 								success :function(request, output){
@@ -58,11 +60,12 @@ var node_utility = function(){
 											});
 										});
 									}
-									return new node_TaskResult(taskResult.resultName, context);
+									return new node_IOTaskResult(taskResult.resultName, context);
 								}
 							});
 						}
-					});
+					}));
+					return executeIOTaskRequest;
 				}
 			}));
 			return out;
@@ -119,20 +122,20 @@ var node_utility = function(){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService", function(){node_createServiceRequestInfoService = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
-nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("process.entity.EndActivityOutput", function(){node_EndActivityOutput = this.getData();	});
+nosliw.registerSetNodeDataEvent("process.entity.ProcessResult", function(){node_ProcessResult = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService", function(){node_createServiceRequestInfoService = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
-nosliw.registerSetNodeDataEvent("uipage.createUIViewFactory", function(){node_createUIViewFactory = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_createContext = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.context.createContextVariableInfo", function(){node_createContextVariableInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("dataassociation.entity.TaskResult", function(){node_TaskResult = this.getData();});
+nosliw.registerSetNodeDataEvent("taskio.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("utility", node_utility); 
+packageObj.createChildNode("ioUtility", node_utility); 
 
 })(packageObj);
