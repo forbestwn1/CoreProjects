@@ -1,4 +1,4 @@
-package com.nosliw.data.core.script.context;
+package com.nosliw.data.core.script.context.dataassociation;
 
 import java.util.Map;
 
@@ -7,6 +7,7 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.script.context.HAPContext;
 
 public class HAPDefinitionDataAssociationGroup extends HAPContext{
 
@@ -18,6 +19,7 @@ public class HAPDefinitionDataAssociationGroup extends HAPContext{
 	
 	private HAPInfo m_info;
 	
+	//whether output is context structure (flat) or context group structure (not flat)
 	private boolean m_isFlatOutput;
 	
 	public HAPDefinitionDataAssociationGroup() {
@@ -46,4 +48,10 @@ public class HAPDefinitionDataAssociationGroup extends HAPContext{
 		return out;
 	}
 	
+	public HAPDefinitionDataAssociationGroup cloneDataAssocationGroupBase() {
+		HAPDefinitionDataAssociationGroup out = new HAPDefinitionDataAssociationGroup();
+		out.m_info = this.m_info.cloneInfo();
+		out.m_isFlatOutput = this.m_isFlatOutput;
+		return out;
+	}
 }

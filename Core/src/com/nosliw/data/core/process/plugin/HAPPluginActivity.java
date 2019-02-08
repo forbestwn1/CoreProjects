@@ -12,8 +12,8 @@ import com.nosliw.data.core.process.HAPExecutableActivity;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroup;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
 
 //each type of activity should provide a plugin which contains information:
 //   how to parse activity definition

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.process;
+package com.nosliw.data.core.script.context.dataassociation;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -18,32 +18,28 @@ import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
 import com.nosliw.data.core.script.context.HAPContextPath;
-import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroup;
-import com.nosliw.data.core.script.context.HAPProcessorDataAssociation;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.script.context.HAPUtilityContextScript;
 
 public class HAPUtilityScript {
-	
-	
+
 	public static HAPScript buildDataAssociationConvertFunction(HAPExecutableDataAssociationGroup dataAssociationGroup) {
-		String isInherit = "false";
-		if(!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(HAPUtilityContext.getContextGroupInheritMode(dataAssociationGroup.getInfo()))){
-			//inherit from input first
-			isInherit = "true";
-		}
-		else {
-			isInherit = "false";
-		}
+		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+		templateParms.put("isFlatOutput", dataAssociationGroup.isFlatOutput()+"");
+		templateParms.put("isFlatInput", dataAssociationGroup.isFlatInput()+"");
+		templateParms.put("rootIdSeperator", HAPContextDefinitionRootId.SEPERATOR);
+		templateParms.put("isInherit", (!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(HAPUtilityContext.getContextGroupInheritMode(dataAssociationGroup.getInfo())))+"");
 		
-		//build init output object
+		//build init output object for mapped root
 		HAPContext context = new HAPContext();
-		for(String eleName : dataAssociationGroup.getContext().getContext().getElementNames()) {
-			if(HAPProcessorDataAssociation.isMappedRoot(dataAssociationGroup.getContext().getContext().getElement(eleName))) {
-				context.addElement(eleName, dataAssociationGroup.getContext().getContext().getElement(eleName));
+		HAPContext daCotnext = dataAssociationGroup.getContext().getContext();
+		for(String eleName : daCotnext.getElementNames()) {
+			if(HAPProcessorDataAssociation.isMappedRoot(daCotnext.getElement(eleName))) {
+				context.addElement(eleName, daCotnext.getElement(eleName));
 			}
 		}
-		
-		JSONObject output = HAPUtilityContext.buildSkeletonJsonObject(context, dataAssociationGroup.isFlatOutput());
+		JSONObject output = HAPUtilityContextScript.buildSkeletonJsonObject(context, dataAssociationGroup.isFlatOutput());
+		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));
 		
 		//build dynamic part 
 		StringBuffer dynamicScript = new StringBuffer();
@@ -53,13 +49,7 @@ public class HAPUtilityScript {
 			String script = "output = utilFunction(output, "+ buildJSArrayFromContextPath(targePath) +", input, "+ buildJSArrayFromContextPath(sourcePath) +");\n";
 			dynamicScript.append(script);
 		}
-		
-		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));
 		templateParms.put("outputDyanimicValueBuild", dynamicScript.toString());
-		templateParms.put("isFlat", dataAssociationGroup.isFlatOutput()+"");
-		templateParms.put("isInherit", isInherit);
-		templateParms.put("rootIdSeperator", HAPContextDefinitionRootId.SEPERATOR);
 		
 		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityScript.class, "DataAssociationFunction.temp");
 		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
@@ -76,5 +66,4 @@ public class HAPUtilityScript {
 		return pathSegsStr;
 	}
 	
-
 }

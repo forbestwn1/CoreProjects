@@ -1,4 +1,4 @@
-package com.nosliw.data.core.script.context;
+package com.nosliw.data.core.script.context.dataassociation;
 
 import java.util.ArrayList;
 import java.util.List;

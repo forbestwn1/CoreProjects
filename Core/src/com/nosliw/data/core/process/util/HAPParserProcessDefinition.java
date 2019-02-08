@@ -10,8 +10,8 @@ import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPDefinitionDataAssociationGroup;
 import com.nosliw.data.core.script.context.HAPParserContext;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
 
 public class HAPParserProcessDefinition {
 

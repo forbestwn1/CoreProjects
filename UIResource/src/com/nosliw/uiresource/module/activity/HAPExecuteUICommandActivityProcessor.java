@@ -14,8 +14,8 @@ import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroup;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
 
 public class HAPExecuteUICommandActivityProcessor implements HAPProcessorActivity{
 

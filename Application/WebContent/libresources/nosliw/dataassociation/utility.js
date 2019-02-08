@@ -16,82 +16,103 @@ var packageObj = library;
 	var node_dataUtility;
 	var node_createContext;
 	var node_createContextVariableInfo;
+	var node_TaskResult;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_utility = {
+var node_utility = function(){
+	
+	var loc_dyanimicValueBuild = function(output, outputPathSegs, input, intpuPathSegs){
+		var inputValue = node_objectOperationUtility.getObjectAttributeByPathSegs(input, intpuPathSegs);
+		node_objectOperationUtility.operateObjectByPathSegs(output, outputPathSegs, node_CONSTANT.WRAPPER_OPERATION_SET, inputValue);
+		return output;
+	};
+	
 
-		/*
-		 * create place holder html with special ui id 
-		 */
-		createPlaceHolderWithId : function(id){
-			return "<nosliw style=\"display:none;\" nosliwid=\"" + id + "\"></nosliw>";
-		},
-		
-		/*
-		 * build context
-		 * 		1. read context information for this resource from uiResource
-		 * 		2. add extra element infos
-		 */
-		buildUIResourceContext : function(uiResource, contextElementInfoArray){
-			var contextElementsInf = [];
+	var loc_out = {
 			
-			//get element info from resource definition
-			var resourceAttrs = uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_ATTRIBUTES];
-			if(resourceAttrs!=undefined){
-				var contextStr = resourceAttrs.contexts;
-				var contextSegs = nosliwCreateSegmentParser(contextStr, node_COMMONCONSTANT.SEPERATOR_ELEMENT);
-				while(contextSegs.hasNext()){
-					var name = undefined;
-					var element = undefined;
-					var contextSeg = contextSegs.next();
-					var index = contextSeg.indexOf("@");
-					if(index==-1){
-						name = contextSeg;
-						info = {};
-					}
-					else{
-						name = contextSeg.substring(0, index);
-						var type = contextSeg.substring(index+1);
-						info = {wrapperType:type};
-					}
-					contextElementsInf.push(nosliwCreateContextElementInfo(name, info));
+		getExecuteDataAssociationWithTargetRequest : function(input, inputDataAssociation, getTaskRequest, outputDataAssociationByResult, context, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociationWithTarget", {}), handlers, request);
+			//calculate input for activity first
+			out.addRequest(loc_out.getExecuteDataAssociationRequest(inputDataAssociation, input, {
+				success : function(requestInfo, taskInput){
+					return getTaskRequest(taskInput, {
+						success : function(request, taskResult){
+							return loc_out.getBackToGlobalRequest(taskResult.resultValue, outputDataAssociationByResult[taskResult.resultName], {
+								success :function(request, output){
+									//build context
+									var isOutputFlat = outputDataAssociationByResult[taskResult.resultName][node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_FLATOUTPUT];
+									if(isOutputFlat==true){
+										_.each(output, function(value, name){
+											context[name] = value;
+										});
+									}
+									else{
+										_.each(output, function(c, categary){
+											var cc = context[categary];
+											if(cc==undefined){
+												cc = {};
+												context[categary] = cc;
+											}
+											_.each(c, function(ele, name){
+												cc[name] = ele;
+											});
+										});
+									}
+									return new node_TaskResult(taskResult.resultName, context);
+								}
+							});
+						}
+					});
 				}
-			}
-
-			//add extra element info
-			_.each(contextElementInfoArray, function(contextElementInfo, key){
-				contextElementsInf.push(contextElementInfo);
-			}, this);
-			
-			return nosliwCreateContext(contextElementsInf);
-		},
-		
-		/*
-		 * update all the ui id within html by adding space name ahead of them
-		 */
-		updateHtmlUIId : function(html, idNameSpace){
-			var find = node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"=\"";
-			return html.replace(new RegExp(find, 'g'), node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"=\""+idNameSpace+node_COMMONCONSTANT.SEPERATOR_FULLNAME);
-		},
-		
-		createTagResourceId : function(name){
-			var out = {};
-			out[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = name; 
-			out[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG; 
+			}));
 			return out;
 		},
-		
-		getContextTypes : function(){
-			return [ 
-				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC, 
-				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PROTECTED, 
-				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_INTERNAL, 
-				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PRIVATE 
-			];
+			
+		getExecuteDataAssociationRequest : function(dataAssociation, input, handlers, request){
+			var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("executeDataAssociationRequest", {"dataAssociation":dataAssociation, "input":input}), 
+				function(requestInfo){
+					if(dataAssociation==undefined)  return;
+					return dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_CONVERTFUNCTION](input, loc_dyanimicValueBuild);
+				}, 
+				handlers, request);
+			return out;
 		},
-		
 
-};
+		getBackToGlobalRequest : function(data, dataAssociation, handlers, request){
+			var service = new node_ServiceInfo("BackToGlobal", {"data":data, "dataAssociation":dataAssociation});
+			if(dataAssociation==undefined)   return node_createServiceRequestInfoSimple(service, function(){}, handlers, request);
+			
+			var out = node_createServiceRequestInfoSequence(service, handlers, request);
+			out.addRequest(loc_out.getExecuteDataAssociationRequest(dataAssociation, data, {
+				success : function(request, globalData){
+					//process matchers
+					var matchersByPath = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_OUTPUTMATCHERS];
+					if(matchersByPath==undefined)  return globalData;
+					
+					var matchersByPathRequest = node_createServiceRequestInfoSet(undefined, {
+						success : function(request, resultSet){
+							_.each(resultSet.getResults(), function(result, path){
+								node_objectOperationUtility.operateObject(globalData, path, node_CONSTANT.WRAPPER_OPERATION_SET, result);
+							});
+							return globalData;
+						}
+					});
+					_.each(matchersByPath, function(matchers, path){
+						var valueByPath = node_objectOperationUtility.getObjectAttributeByPath(globalData, path);
+						matchersByPathRequest.addRequest(path, node_createExpressionService.getMatchDataRequest(valueByPath, matchers));
+					});
+					return matchersByPathRequest;
+				}
+			}));
+			return out;
+		},
+
+		
+	};
+		
+		
+	return loc_out;
+}();
 
 //*******************************************   End Node Definition  ************************************** 	
 
@@ -109,6 +130,7 @@ nosliw.registerSetNodeDataEvent("uidata.context.createContextElementInfo", funct
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_createContext = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContextVariableInfo", function(){node_createContextVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("dataassociation.entity.TaskResult", function(){node_TaskResult = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

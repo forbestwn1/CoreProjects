@@ -13,6 +13,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.script.context.dataassociation.HAPDataAssociationIO;
 
 @HAPEntityWithAttribute
 public class HAPContext extends HAPSerializableImp implements HAPDataAssociationIO{

@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.script.context.dataassociation.HAPDataAssociationIO;
 
 //a group of context
 //normally contexts are grouped according to type : public, private, ...

@@ -18,8 +18,8 @@ import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroup;
 import com.nosliw.data.core.script.context.HAPUtilityContextScript;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
 
 @HAPEntityWithAttribute
 public class HAPExecutableProcess extends HAPExecutableImp{

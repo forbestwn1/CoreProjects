@@ -5,10 +5,10 @@ import java.util.Map;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPDefinitionDataAssociationGroup;
-import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroupWithTarget;
-import com.nosliw.data.core.script.context.HAPProcessorDataAssociation;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroupWithTarget;
+import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 
 public class HAPProcessorServiceUse {

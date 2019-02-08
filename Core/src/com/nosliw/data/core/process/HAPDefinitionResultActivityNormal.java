@@ -8,8 +8,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.script.context.HAPDefinitionDataAssociationGroup;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionResultActivityNormal extends HAPEntityInfoWritableImp{

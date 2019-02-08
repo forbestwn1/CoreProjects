@@ -4,8 +4,8 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPExecutableDataAssociationGroup;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
 
 public interface HAPProcessorActivity {
 

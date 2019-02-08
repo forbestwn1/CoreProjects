@@ -8,14 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.json.JSONObject;
-
 import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
@@ -25,117 +22,6 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPUtilityContext {
 
-	//build default value structure for context group
-	public static JSONObject buildDefaultJsonObject(HAPContextGroup contextGroup) {
-		JSONObject out = new JSONObject();
-		for(String categary : contextGroup.getContextTypes()) {
-			out.put(categary, buildDefaultJsonObject(contextGroup.getContext(categary)));
-		}
-		return out;
-	}
-	
-	public static JSONObject buildDefaultJsonObject(HAPContext context) {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		for(String contextEleName : context.getElementNames()) {
-			Object value = context.getElement(contextEleName).getDefaultValue();
-			if(value!=null) {
-				jsonMap.put(contextEleName, value.toString());
-			}
-		}
-		return new JSONObject(HAPJsonUtility.buildMapJson(jsonMap));
-	}
-
-	//build skeleton, it is used for data mapping operation
-	public static JSONObject buildSkeletonJsonObject(HAPContext context, boolean isFlatRootName) {
-		JSONObject output = new JSONObject();
-		for(String contextEle : context.getElementNames()) {
-			HAPContextDefinitionElement contextDefEle = context.getElement(contextEle).getDefinition();
-			Object contextEleJson = buildJsonValue(contextDefEle);
-
-			if(contextEleJson!=null) {
-				JSONObject parentJsonObj = output;
-				if(isFlatRootName) {
-					//if flat root name, just use it
-					parentJsonObj.put(contextEle, contextEleJson);
-				}
-				else {
-					//not flat, parse categary and name from root name
-					HAPContextDefinitionRootId rootId = new HAPContextDefinitionRootId(contextEle);
-					String categary = rootId.getCategary();
-					if(HAPBasicUtility.isStringNotEmpty(categary)) {
-						parentJsonObj = output.optJSONObject(categary);
-						if(parentJsonObj==null) {
-							parentJsonObj = new JSONObject();
-							output.put(categary, parentJsonObj);
-						}
-					}
-					parentJsonObj.put(rootId.getName(), contextEleJson);
-				}
-			}
-		}
-		return output;
-	}
-	
-	private static Object buildJsonValue(HAPContextDefinitionElement contextDefEle) {
-		switch(contextDefEle.getType()) {
-		case HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT:
-		{
-			HAPContextDefinitionLeafConstant constantEle = (HAPContextDefinitionLeafConstant)contextDefEle;
-			return constantEle.getValue();
-		}
-		case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
-		{
-			HAPContextDefinitionNode nodeEle = (HAPContextDefinitionNode)contextDefEle;
-			JSONObject out = new JSONObject();
-			for(String childName : nodeEle.getChildren().keySet()) {
-				Object childJsonValue = buildJsonValue(nodeEle.getChild(childName));
-				if(childJsonValue!=null) {
-					out.put(childName, childJsonValue);
-				}
-			}
-			return out;
-		}
-		case HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE:
-		{
-			HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)contextDefEle;
-			return new JSONObject();
-		}
-		default:
-			return null;
-		}
-	}
-	
-	//each relative context element represent path mapping from input context to output context during runtime
-	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName){
-		return buildRelativePathMapping(contextRoot.getDefinition(), rootName);
-	}
-	
-	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionElement contextDefEle, String rootName){
-		Map<String, String> out = new LinkedHashMap<String, String>();
-		processContextDefElementWithPathInfo(contextDefEle, new HAPContextDefEleProcessor() {
-			@Override
-			public boolean process(HAPContextDefinitionElement ele, Object value) {
-				String path = (String)value;
-				if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE)) {
-					HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)ele;
-					HAPContextPath contextPath = relativeEle.getPath();
-					String sourcePath = contextPath.getFullPath();
-					String targetPath = path; 
-					out.put(targetPath, sourcePath);
-					return false;
-				}
-				return true;
-			}
-
-			@Override
-			public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
-				return true;
-			}}, rootName);
-		return out;
-	}
-	
-
-	
 	//traverse through all the context definition element, and process it
 	public static void processContextDefElement(HAPContextDefinitionElement contextDefEle, HAPContextDefEleProcessor processor, Object value) {
 		if(processor.process(contextDefEle, value)) {
