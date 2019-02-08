@@ -42,7 +42,7 @@ public class HAPDefinitionMappingService extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PARMMAPPING, this.m_parmMapping.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(RESULTMAPPING, HAPJsonUtility.buildJson(RESULTMAPPING, HAPSerializationFormat.JSON));
+		jsonMap.put(RESULTMAPPING, HAPJsonUtility.buildJson(m_resultMapping, HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class HAPDefinitionMappingService extends HAPSerializableImp{
 		if(resultJson!=null) {
 			for(Object key : resultJson.keySet()) {
 				HAPDefinitionDataAssociationGroup resultMapping = new HAPDefinitionDataAssociationGroup();
-				resultMapping.buildObject(jsonObj.optJSONObject((String)key), HAPSerializationFormat.JSON);
+				resultMapping.buildObject(resultJson.optJSONObject((String)key), HAPSerializationFormat.JSON);
 				this.m_resultMapping.put((String)key, resultMapping);
 			}
 		}

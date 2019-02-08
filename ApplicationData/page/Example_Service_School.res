@@ -28,7 +28,7 @@
 
 	<scripts>
 	{
-		refreshSchoolData : function(data, info, env){
+		refreshSchoolData : function(info, env){
 
 			event.preventDefault();
 
@@ -73,9 +73,11 @@
 					},
 					"resultMapping" : {
 						"success" : {
-							"schoolList" : {
-								"definition" : {
-									"path" : "outputInService"
+							"element" : {
+								"schoolList" : {
+									"definition" : {
+										"path" : "outputInService"
+									}
 								}
 							}
 						}

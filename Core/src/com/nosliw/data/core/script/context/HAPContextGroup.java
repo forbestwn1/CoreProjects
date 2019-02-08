@@ -130,7 +130,10 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPDataAssoci
 	}
 	
 	public HAPContextDefinitionRoot getElement(HAPContextDefinitionRootId nodeId) {  return this.getElement(nodeId.getCategary(), nodeId.getName());   }
-	public HAPContextDefinitionRoot getElement(String type, String name) {	return this.m_contexts.get(type).getElement(name);	}
+	public HAPContextDefinitionRoot getElement(String type, String name) {
+		HAPContext context = this.getContext(type);
+		return context==null?null:context.getElement(name);
+	}
 	
 	public Set<String> getContextTypes(){  return this.m_contexts.keySet();   }
 	

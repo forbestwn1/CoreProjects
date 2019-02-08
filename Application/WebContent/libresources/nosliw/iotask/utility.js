@@ -51,14 +51,20 @@ var node_utility = function(){
 	
 	var loc_getExecuteDataAssociationRequest = function(input, dataAssociation, handlers, request){
 		var service = new node_ServiceInfo("ExecuteDataAssociation", {"data":input, "dataAssociation":dataAssociation});
-		if(dataAssociation==undefined)   return node_createServiceRequestInfoSimple(service, function(){}, handlers, request);
+		var out = node_createServiceRequestInfoSequence(service, handlers, request);
+		if(dataAssociation==undefined){
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){  return input;  }, handlers, request));
+			return out;
+		}
 
 		var output = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_CONVERTFUNCTION](input, loc_dyanimicValueBuild);
 		//process matchers
 		var matchersByPath = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_OUTPUTMATCHERS];
-		if(matchersByPath==undefined)  return node_createServiceRequestInfoSimple(service, function(){ return output;  }, handlers, request);;
+		if(matchersByPath==undefined){
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){ return output;  }, handlers, request));
+			return out;
+		}
 
-		var out = node_createServiceRequestInfoSequence(service, handlers, request);
 		var matchersByPathRequest = node_createServiceRequestInfoSet(undefined, {
 			success : function(request, resultSet){
 				_.each(resultSet.getResults(), function(result, path){
@@ -130,6 +136,6 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("ioUtility", node_utility); 
+packageObj.createChildNode("ioTaskUtility", node_utility); 
 
 })(packageObj);

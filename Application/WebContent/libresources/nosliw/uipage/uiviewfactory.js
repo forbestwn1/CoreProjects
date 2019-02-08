@@ -5,6 +5,8 @@ var packageObj = library;
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
+	var node_createServiceRequestInfoSequence;
+	var node_ServiceInfo;
 	var node_makeObjectWithLifecycle;
 	var node_makeObjectWithType;
 	var node_createContext;
@@ -22,6 +24,7 @@ var packageObj = library;
 	var node_uiDataOperationServiceUtility;
 	var node_UIDataOperation;
 	var node_contextUtility;
+	var node_ioTaskUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_createUIViewFactory = function(){
@@ -74,6 +77,9 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 	
 	//object store all the functions for js block
 	var loc_scriptObject = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPT];
+	
+	var loc_services = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SERVICES]; 
+	var loc_serviceProviders = loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SERVICEPROVIDERS]; 
 	
 	//all customer tags
 	var loc_uiTags = {};
@@ -174,7 +180,35 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 	var loc_getViews = function(){	return loc_startEle.add(loc_startEle.nextUntil(loc_endEle)).add(loc_endEle);  };
 
 	var loc_getServiceRequest = function(serviceName, handlers, request){
-		
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {"serviceName":serviceName}), handlers, request);
+		out.addRequest(loc_context.getValueAsParmsRequest( 
+			{
+				success: function(request, contextValue){
+					var service = loc_services[serviceName];
+					var serviceId = loc_serviceProviders[service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PROVIDER]][node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICEPROVIDER_SERVICEID];
+					var output = {};
+					node_ioTaskUtility.getExecuteIOTaskRequest(
+							contextValue, 
+							service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PARMMAPPING], 
+							function(intput, handlers, request){
+								var serviceRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
+								serviceRequest.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceRequest(serviceId, input, {
+									success : function(request, serviceResult){
+										return serviceResult;
+									}
+								}));
+								return serviceRequest;
+							}, 
+							service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_RESULTMAPPING],
+							output, 
+							{
+								success : function(request, taskResult){
+									loc_context.getUpdateContextRequest(taskResult.resultValue);
+								}
+							}); 
+				}
+			}));
+		return out;
 	};
 	
 	
@@ -506,6 +540,8 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.createContext", function(){node_createContext = this.getData();});
@@ -523,6 +559,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();});
 
 
 //Register Node by Name

@@ -69,6 +69,8 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 	@HAPAttribute
 	public static final String SERVICES = "services";
 	@HAPAttribute
+	public static final String SERVICEPROVIDERS = "serviceProviders";
+	@HAPAttribute
 	public static final String COMMANDS = "commands";
 
 	private String m_id;
@@ -216,6 +218,7 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		jsonMap.put(COMMANDS, HAPJsonUtility.buildJson(this.m_commands, HAPSerializationFormat.JSON));
 
 		jsonMap.put(SERVICES, HAPJsonUtility.buildJson(this.m_services, HAPSerializationFormat.JSON));
+		jsonMap.put(SERVICEPROVIDERS, HAPJsonUtility.buildJson(this.m_serviceProviders, HAPSerializationFormat.JSON));
 
 		
 		
@@ -257,6 +260,9 @@ public class HAPExecutableUIUnit extends HAPExecutableImp{
 		for(HAPUIEmbededScriptExpressionInAttribute expressionTagAttr : this.m_scriptExpressionsInTagAttribute)  expressionTagAttributeJsons.add(expressionTagAttr.toResourceData(runtimeInfo).toString());
 		jsonMap.put(SCRIPTEXPRESSIONINTAGATTRIBUTES, HAPJsonUtility.buildArrayJson(expressionTagAttributeJsons.toArray(new String[0])));
 		
+		Map<String, String> serviceResourceMap = new LinkedHashMap<String, String>();
+		for(String serviceName : this.m_services.keySet()) 	serviceResourceMap.put(serviceName, this.m_services.get(serviceName).toResourceData(runtimeInfo).toString());
+		jsonMap.put(SERVICES, HAPJsonUtility.buildMapJson(serviceResourceMap));
 		
 		Map<String, String> uiTagJsons = new LinkedHashMap<String, String>();
 		for(String uiId : this.m_uiTags.keySet())	uiTagJsons.put(uiId, this.m_uiTags.get(uiId).toResourceData(runtimeInfo).toString());

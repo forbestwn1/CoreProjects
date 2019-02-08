@@ -2,6 +2,8 @@ package com.nosliw.data.core.script.context.dataassociation;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
@@ -32,6 +34,22 @@ public class HAPDefinitionDataAssociationGroup extends HAPContext{
 	public void setIsFlatOutput(boolean isFlatOutput) {  this.m_isFlatOutput = isFlatOutput;  }
 	public boolean isFlatOutput() {  return this.m_isFlatOutput;  }
 	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		try{
+			super.buildObjectByJson(json);
+			JSONObject jsonObj = (JSONObject)json;
+			Boolean flatOutput = jsonObj.optBoolean(FLATOUTPUT);
+			if(flatOutput!=null)   this.m_isFlatOutput = flatOutput;
+			this.m_info.buildObject(jsonObj.opt(INFO), HAPSerializationFormat.JSON);
+			return true;  
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);

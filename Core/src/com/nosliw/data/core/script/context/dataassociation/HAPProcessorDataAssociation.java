@@ -136,10 +136,12 @@ public class HAPProcessorDataAssociation {
 			HAPContext outputContext = out.getContext().getContext();
 			for(String rootName : outputContext.getElementNames()) {
 				//merge back to context variable
-				Map<String, HAPMatchers> matchers = HAPUtilityContext.mergeContextRoot(targetContextGroup.getElement(new HAPContextDefinitionRootId(rootName)), outputContext.getElement(rootName), modifyStructure, contextProcessRequirement);
-				//matchers when merge back to context variable
-				for(String matchPath :matchers.keySet()) {
-					out.addOutputMatchers(new HAPContextPath(new HAPContextDefinitionRootId(rootName), matchPath).getFullPath(), HAPMatcherUtility.reversMatchers(matchers.get(matchPath)));
+				if(targetContextGroup.getElement(new HAPContextDefinitionRootId(rootName))!=null) {
+					Map<String, HAPMatchers> matchers = HAPUtilityContext.mergeContextRoot(targetContextGroup.getElement(new HAPContextDefinitionRootId(rootName)), outputContext.getElement(rootName), modifyStructure, contextProcessRequirement);
+					//matchers when merge back to context variable
+					for(String matchPath :matchers.keySet()) {
+						out.addOutputMatchers(new HAPContextPath(new HAPContextDefinitionRootId(rootName), matchPath).getFullPath(), HAPMatcherUtility.reversMatchers(matchers.get(matchPath)));
+					}
 				}
 			}
 		}
