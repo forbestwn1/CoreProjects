@@ -65,7 +65,7 @@ var node_createProcessRuntime = function(envObj){
 	var loc_getExecuteNormalActivityRequest = function(normalActivity, context, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteNormalActivity", {"activity":normalActivity, "context":context}), handlers, request);
 		
-		out.addRequest(node_ioUtility.getExecuteDataAssociationWithTargetRequest(
+		out.addRequest(node_ioUtility.getExecuteIOTaskRequest(
 				context, 
 				normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_INPUT], 
 				function(input, handlers, request){
@@ -92,38 +92,6 @@ var node_createProcessRuntime = function(envObj){
 								taskResult.resultValue);
 					}
 				}));
-		return out;
-	};
-
-	var loc_getExecuteNormalActivityRequest1 = function(normalActivity, context, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteNormalActivity", {"activity":normalActivity, "context":context}), handlers, request);
-		//calculate input for activity first
-		out.addRequest(node_ioUtility.getExecuteDataAssociationRequest(normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_INPUT], context, {
-			success : function(requestInfo, input){
-				//get activity plugin 
-				return loc_getActivityPluginRequest(normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_TYPE], {
-					success : function(requestInfo, activityPlugin){
-						//execute activity plugin
-						return activityPlugin.getExecuteActivityRequest(normalActivity, input, loc_envObj, {
-							success : function(requestInfo, activityResult){  //get activity results (result name + result value map)
-								//calculate variable output
-								var activityResultConfig = normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULT][activityResult.resultName];
-								return node_ioUtility.getBackToGlobalRequest(activityResult.resultValue, activityResultConfig, {
-									success :function(request, activityOutput){
-										//build new context
-										_.each(activityOutput, function(ele, name){
-											context[name] = ele;
-										});
-										return new node_NormalActivityOutput(activityResultConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_FLOW][node_COMMONATRIBUTECONSTANT.DEFINITIONSEQUENCEFLOW_TARGET],
-												context);
-									}
-								});
-							}
-						});
-					}
-				});
-			}
-		}));
 		return out;
 	};
 
@@ -185,8 +153,9 @@ var node_createProcessRuntime = function(envObj){
 		out.addRequest(loc_getExecuteActivitySequenceRequest(startActivityId, activities, context, {
 			success : function(requestInfo, endActivityOutput){
 				return node_ioUtility.getExecuteDataAssociationRequest(
+						endActivityOutput.context, 
 						process[node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_RESULT][endActivityOutput.resultName],
-						endActivityOutput.context, {
+						{
 							success : function(requestInfo, processOutputValue){
 								return new node_ProcessResult(endActivityOutput.resultName, processOutputValue);
 							}
@@ -202,7 +171,7 @@ var node_createProcessRuntime = function(envObj){
 			success : function(requestInfo, processResult){
 				var backToGlobal = embededProcess[node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_BACKTOGLOBAL][processResult.resultName];
 				if(backToGlobal!=null){
-					return node_ioUtility.getBackToGlobalRequest(processResult.value, backToGlobal, {
+					return node_ioUtility.getExecuteDataAssociationRequest(processResult.value, backToGlobal, {
 						success : function(request, globalData){
 							return new node_ProcessResult(processResult.resultName, globalData);
 						}
@@ -269,7 +238,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
-nosliw.registerSetNodeDataEvent("taskio.ioUtility", function(){node_ioUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.ioUtility", function(){node_ioUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createProcessRuntimeFactory", node_createProcessRuntimeFactory); 

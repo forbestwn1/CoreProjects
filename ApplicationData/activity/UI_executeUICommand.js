@@ -13,7 +13,7 @@
 		javascript : function(nosliw, env){
 			var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 			var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
-			var node_IOTaskResult = nosliw.getNodeData("taskio.entity.IOTaskResult");
+			var node_IOTaskResult = nosliw.getNodeData("iotask.entity.IOTaskResult");
 			var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 
 			var loc_out = {
