@@ -12,6 +12,9 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPDefinitionEmbededProcess;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 
 /**
 Module is a independent entity that is runnable within a container
@@ -53,11 +56,15 @@ public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
 	//processes (used for lifecycle, module command)
 	private Map<String, HAPDefinitionEmbededProcess> m_processes;
 
+	//service definition
+	private HAPDefinitionServiceInEntity m_serviceDefinition;
+	
 	public HAPDefinitionModule(String id) {
 		this.m_id = id;
 		this.m_pagesInfo = new LinkedHashMap<String, HAPInfoPage>();
 		this.m_uis = new ArrayList<HAPDefinitionModuleUI>();
 		this.m_processes = new LinkedHashMap<String, HAPDefinitionEmbededProcess>();
+		this.m_serviceDefinition = new HAPDefinitionServiceInEntity();
 	}
 	
 	public String getId() {   return this.m_id;   }
@@ -74,6 +81,11 @@ public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
 	public List<HAPDefinitionModuleUI> getUIs(){  return this.m_uis;  }
 	public void addUI(HAPDefinitionModuleUI ui) {   this.m_uis.add(ui);   }
 	
+	public Map<String, HAPDefinitionServiceUse> getServiceUseDefinitions(){  return this.m_serviceDefinition.getServiceUseDefinitions();   }
+	public Map<String, HAPDefinitionServiceProvider> getServiceProviderDefinitions(){  return this.m_serviceDefinition.getServiceProviderDefinitions();   }
+	public void addServiceUseDefinition(HAPDefinitionServiceUse def) {  this.m_serviceDefinition.addServiceUseDefinition(def);   }
+	public void addServiceProviderDefinition(HAPDefinitionServiceProvider def) {  this.m_serviceDefinition.addServiceProviderDefinition(def);   }
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);

@@ -20,6 +20,7 @@ import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
+import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafValue;
@@ -29,6 +30,7 @@ import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
 import com.nosliw.data.core.script.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptExpression;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 
 public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 
@@ -42,8 +44,10 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			HAPContextGroup processContext, 
 			Map<String, HAPExecutableDataAssociationGroup> processResults,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions,
+			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
 			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPConfigureContextProcessor configure, 
 			HAPProcessTracker processTracker) {
 		 
 		HAPExpressionActivityExecutable out = new HAPExpressionActivityExecutable(id, (HAPExpressionActivityDefinition)activityDefinition);

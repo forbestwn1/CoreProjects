@@ -2,6 +2,7 @@ package com.nosliw.service.realtor;
 
 import java.io.InputStream;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,14 +43,17 @@ public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		return HAPUtilityService.generateSuccessResult(outData);
+		Map<String, HAPData> output = new LinkedHashMap<String, HAPData>();
+		output.put("output", outData);
+		return HAPUtilityService.generateSuccessResult(output);
+
 	}
 	
 	private HAPData querydData(JSONArray jsonHomesData, Map<String, HAPData> parms) throws JSONException{
 		Set<String> buildTypeParm = new HashSet<String>();
 		JSONArray buildTypeParJson = (JSONArray)parms.get("buildingType").getValue();
 		for(int i=0; i<buildTypeParJson.length(); i++) {
-			buildTypeParm.add(((JSONObject)buildTypeParJson.getJSONObject(i).getJSONObject("value")).getString("value"));
+			buildTypeParm.add(buildTypeParJson.getJSONObject(i).getJSONObject("value").getString("value"));
 		}
 		
 		int bedroomsParm = ((Integer)parms.get("bedrooms").getValue()).intValue();

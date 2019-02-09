@@ -96,6 +96,6 @@ public class HAPUIResourceManager {
 	
 	private HAPExecutableModule processModule(HAPDefinitionModule uiModule, String id, HAPContextGroup parentContext) {
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
-		return HAPProcessorModule.process(uiModule, id, parentContext, this.m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, this.m_serviceDefinitionManager, processTracker);
+		return HAPProcessorModule.process(uiModule, id, parentContext, null, this.m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, this.m_serviceDefinitionManager, processTracker);
 	}
 }

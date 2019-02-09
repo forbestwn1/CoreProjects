@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
@@ -23,11 +24,16 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 
 	private HAPDefinitionMappingService m_serviceMapping;
 	
-	public HAPDefinitionServiceUse() {}
+	public HAPDefinitionServiceUse() {
+		this.m_serviceMapping = new HAPDefinitionMappingService();
+	}
 	
 	public HAPDefinitionMappingService getServiceMapping() {   return this.m_serviceMapping;    }
+	public void setParmMapping(HAPDefinitionDataAssociationGroup parmMapping) {   this.m_serviceMapping.setParmMapping(parmMapping);    }
+	public void addResultMapping(String name, HAPDefinitionDataAssociationGroup result) {  this.m_serviceMapping.addResultMapping(name, result);   }
 	
 	public String getProvider() {   return this.m_provider;   }
+	public void setProvider(String provider) {   this.m_provider = provider;   }
 	
 	public void cloneBasicTo(HAPDefinitionServiceUse command) {
 		this.cloneToEntityInfo(command);

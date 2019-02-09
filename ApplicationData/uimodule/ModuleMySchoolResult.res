@@ -10,40 +10,17 @@
 			"id": "Page_MySchool_SchoolData"
 		}
 	],
-	"service": [{
-		"name": "schoolDataService",
-		"serviceId": "schoolService",
-		"interface": {
-			"parm": [{
-					"name": "schoolType",
-					"criteria": "test.options;1.0.0",
-					"default": {
-						"dataTypeId": "test.options;1.0.0",
-						"value": {
-							"value": "public",
-							"optionsId": "schoolType"
-						}
-					}
-				},
-				{
-					"name": "schoolRating",
-					"criteria": "test.float;1.0.0",
-					"default": {
-						"dataTypeId": "test.float;1.0.0",
-						"value": "8"
-					}
-				}
-			],
-			"result": [{
-				"name": "success",
-				"output": {
-					"output": {
-						"criteria": "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
-					}
-				}
-			}]
-		}
-	}],
+	"service": 
+	{
+		"use" : [
+		],
+		"provider" : [
+			{	
+				"name" : "getSchoolDataService",
+				"serviceId" : "schoolService"
+			}		
+		]
+	},
 	"context": {
 		"group": {
 			"public": {
@@ -132,23 +109,25 @@
 					"name": "startActivity",
 					"type": "start",
 					"flow": {
-						"target": "presentSchoolListUI"
+						"target": "retrieveSchoolData"
 					}
 				},
 				{
 					"id": "retrieveSchoolData",
 					"name": "retrieveSchoolData",
 					"type": "Service_request",
-					"service": "schoolDataService",
-					"parm": {
-						"schoolType": {
-							"definition": {
-								"path": "schoolTypeInModule"
-							}
-						},
-						"schoolRating": {
-							"definition": {
-								"path": "schoolRatingInModule"
+					"provider": "getSchoolDataService",
+					"parmMapping" : {
+						"element" : {
+							"schoolTypeInService" : {
+								"definition" : {
+									"path" : "schoolTypeInModule"
+								}
+							},
+							"schoolRatingInService" : {
+								"definition" : {
+									"path" : "schoolRatingInModule"
+								}
 							}
 						}
 					},
@@ -161,7 +140,7 @@
 							"element": {
 								"schoolListInModule": {
 									"definition": {
-										"path": "nosliw_output.output"
+										"path": "outputInService"
 									}
 								}
 							}
@@ -188,7 +167,8 @@
 			]
 		}
 	},
-	"ui": [{
+	"ui": [
+		{
 			"name": "schoolListUI",
 			"type": "list",
 			"page": "schoolListPage",
@@ -242,20 +222,6 @@
 											}
 										}
 									}
-								},
-								"input": {
-									"element": {
-										"parm": {
-											"definition": {
-												"child": {
-													"schoolData": {
-														"path": "EVENT"
-													}
-												}
-											}
-										}
-									},
-									"info": {}
 								},
 								"result": [{
 									"name": "success",

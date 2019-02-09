@@ -12,6 +12,9 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 
 /**
  * Task is unit that can execute 
@@ -27,6 +30,9 @@ public class HAPDefinitionProcess extends HAPEntityInfoWritableImp{
 	@HAPAttribute
 	public static String ACTIVITY = "activity";
 
+	@HAPAttribute
+	public static String SERVICEPROVIDER = "activity";
+
 	//data context, variable definition(absolute, relative), constants
 	private HAPContextGroup m_context;
 
@@ -34,17 +40,27 @@ public class HAPDefinitionProcess extends HAPEntityInfoWritableImp{
 
 	//dependent resources
 	private Set<HAPResourceDependent> m_requiredResources;
-	
+
+	//service provider definition
+	//service definition
+	private HAPDefinitionServiceInEntity m_serviceDefinition;
+
 	public HAPDefinitionProcess(){
 		this.m_context = new HAPContextGroup();
 		this.m_activities = new LinkedHashMap<String, HAPDefinitionActivity>();
 		this.m_requiredResources = new HashSet<HAPResourceDependent>();
+		this.m_serviceDefinition = new HAPDefinitionServiceInEntity();
 	}
 
 	//steps within task
 	public Map<String, HAPDefinitionActivity> getActivities(){  return this.m_activities;  }
 	public HAPDefinitionActivity getActivityById(String activityId) {  return this.m_activities.get(activityId);   }
 	public void addActivity(String id, HAPDefinitionActivity activity) {  this.m_activities.put(id, activity);    }
+	
+	public Map<String, HAPDefinitionServiceUse> getServiceUseDefinitions(){  return this.m_serviceDefinition.getServiceUseDefinitions();   }
+	public Map<String, HAPDefinitionServiceProvider> getServiceProviderDefinitions(){  return this.m_serviceDefinition.getServiceProviderDefinitions();   }
+	public void addServiceUseDefinition(HAPDefinitionServiceUse def) {  this.m_serviceDefinition.addServiceUseDefinition(def);   }
+	public void addServiceProviderDefinition(HAPDefinitionServiceProvider def) {  this.m_serviceDefinition.addServiceProviderDefinition(def);   }
 	
 	public Set<HAPResourceDependent> getRequiredResources(){ return this.m_requiredResources;  }
 	

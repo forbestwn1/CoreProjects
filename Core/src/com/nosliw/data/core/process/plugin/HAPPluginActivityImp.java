@@ -13,9 +13,11 @@ import com.nosliw.data.core.process.HAPExecutableActivity;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
+import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 
 public class HAPPluginActivityImp implements HAPPluginActivity{
 
@@ -62,12 +64,19 @@ public class HAPPluginActivityImp implements HAPPluginActivity{
 	}
 	
 	@Override
-	public HAPExecutableActivity process(HAPDefinitionActivity activityDefinition, String id,
-			HAPExecutableProcess processExe, HAPContextGroup context,
+	public HAPExecutableActivity process(
+			HAPDefinitionActivity activityDefinition,
+			String id,
+			HAPExecutableProcess processExe, 
+			HAPContextGroup context,
 			Map<String, HAPExecutableDataAssociationGroup> results,
-			Map<String, HAPDefinitionProcess> contextProcessDefinitions, HAPManagerProcess processManager,
-			HAPRequirementContextProcessor contextProcessRequirement, HAPProcessTracker processTracker) {
-		return this.m_processor.process(activityDefinition, id, processExe, context, results, contextProcessDefinitions, processManager, contextProcessRequirement, processTracker);
+			Map<String, HAPDefinitionProcess> contextProcessDefinitions, 
+			Map<String, HAPDefinitionServiceProvider> serviceProviders,
+			HAPManagerProcess processManager,
+			HAPRequirementContextProcessor contextProcessRequirement, 
+			HAPConfigureContextProcessor configure, 
+			HAPProcessTracker processTracker) {
+		return this.m_processor.process(activityDefinition, id, processExe, context, results, contextProcessDefinitions, serviceProviders, processManager, contextProcessRequirement, configure, processTracker);
 	}
 
 	@Override

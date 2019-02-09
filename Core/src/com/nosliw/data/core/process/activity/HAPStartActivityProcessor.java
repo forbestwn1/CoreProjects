@@ -9,9 +9,11 @@ import com.nosliw.data.core.process.HAPExecutableActivity;
 import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
+import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 
 public class HAPStartActivityProcessor implements HAPProcessorActivity{
 
@@ -23,8 +25,10 @@ public class HAPStartActivityProcessor implements HAPProcessorActivity{
 			HAPContextGroup context,
 			Map<String, HAPExecutableDataAssociationGroup> results,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions,
+			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
 			HAPRequirementContextProcessor contextProcessRequirement,
+			HAPConfigureContextProcessor configure, 
 			HAPProcessTracker processTracker){
 		
 		HAPStartActivityExecutable out = new HAPStartActivityExecutable(id, activityDefinition);

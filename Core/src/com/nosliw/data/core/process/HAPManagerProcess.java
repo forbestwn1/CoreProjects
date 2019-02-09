@@ -26,7 +26,7 @@ public class HAPManagerProcess {
 
 	public HAPExecutableProcess getProcess(HAPIdProcess processId) {
 		HAPDefinitionProcessSuite suite = HAPUtilityProcess.getProcessSuite(processId.getSuiteId(), this.getPluginManager());
-		HAPExecutableProcess out = HAPProcessorProcess.process(processId.getProcessId(), suite, this, this.m_contextProcessRequirement, new HAPProcessTracker());
+		HAPExecutableProcess out = HAPProcessorProcess.process(processId.getProcessId(), suite, null, this, this.m_contextProcessRequirement, new HAPProcessTracker());
 		return out;
 	}
 	

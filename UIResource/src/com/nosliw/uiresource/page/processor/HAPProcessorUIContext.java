@@ -117,6 +117,17 @@ public class HAPProcessorUIContext {
 		//merge with context defined in resource
 		uiExe.setContext(HAPProcessorContext.processRelative(uiExe.getContext(), parentContext, contextProcessorConfig, contextProcessRequirement));
 
+		//child tag
+		for(HAPExecutableUIUnitTag childTag : uiExe.getUITags()) {
+			processRelativeElement(childTag, uiExe.getContext(), contextProcessorConfig, uiTagMan, contextProcessRequirement);			
+		}
+		
+	}	
+	
+	private static void processInteractionElement(HAPExecutableUIUnit uiExe, HAPContextGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPConfigureContextProcessor contextProcessorConfig, HAPUITagManager uiTagMan, HAPRequirementContextProcessor contextProcessRequirement){
+		HAPConfigureContextProcessor privateConfigure = contextProcessorConfig.cloneConfigure();
+		privateConfigure.parentCategary = HAPContextGroup.getAllContextTypes();
+
 		//process relative element in event defined in resource
 		Map<String, HAPDefinitionUIEvent> eventsDef = uiExe.getUIUnitDefinition().getEventDefinitions();
 		for(String name : eventsDef.keySet()) {
@@ -145,14 +156,6 @@ public class HAPProcessorUIContext {
 		}
 
 		
-		//child tag
-		for(HAPExecutableUIUnitTag childTag : uiExe.getUITags()) {
-			processRelativeElement(childTag, uiExe.getContext(), contextProcessorConfig, uiTagMan, contextProcessRequirement);			
-		}
-		
-	}	
-	
-	private static void processInteractionElement(HAPExecutableUIUnit uiExe, HAPContextGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPConfigureContextProcessor contextProcessorConfig, HAPUITagManager uiTagMan, HAPRequirementContextProcessor contextProcessRequirement){
 		//process service
 		//all provider available
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();

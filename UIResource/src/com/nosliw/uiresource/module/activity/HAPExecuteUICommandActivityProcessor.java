@@ -12,19 +12,28 @@ import com.nosliw.data.core.process.HAPExecutableResultActivityNormal;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.process.HAPUtilityProcess;
+import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 
 public class HAPExecuteUICommandActivityProcessor implements HAPProcessorActivity{
 
 	@Override
-	public HAPExecutableActivity process(HAPDefinitionActivity activityDefinition, String id,
-			HAPExecutableProcess processExe, HAPContextGroup context,
+	public HAPExecutableActivity process(
+			HAPDefinitionActivity activityDefinition, 
+			String id,
+			HAPExecutableProcess processExe, 
+			HAPContextGroup context,
 			Map<String, HAPExecutableDataAssociationGroup> results,
-			Map<String, HAPDefinitionProcess> contextProcessDefinitions, HAPManagerProcess processManager,
-			HAPRequirementContextProcessor contextProcessRequirement, HAPProcessTracker processTracker) {
+			Map<String, HAPDefinitionProcess> contextProcessDefinitions, 
+			Map<String, HAPDefinitionServiceProvider> serviceProviders,
+			HAPManagerProcess processManager,
+			HAPRequirementContextProcessor contextProcessRequirement, 
+			HAPConfigureContextProcessor configure, 
+			HAPProcessTracker processTracker) {
 		HAPExecuteUICommandActivityExecutable out = new HAPExecuteUICommandActivityExecutable(id, (HAPExecuteUICommandActivityDefinition)activityDefinition);
 		//process input and create flat input context for activity
 		HAPContextFlat activityContext = HAPUtilityProcess.processActivityInputDataAssocation(out, context, contextProcessRequirement);

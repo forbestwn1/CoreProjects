@@ -1,5 +1,6 @@
 package com.nosliw.uiresource.module;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
@@ -18,6 +19,7 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.HAPUtilityUIResource;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
@@ -29,6 +31,7 @@ public class HAPProcessorModule {
 			HAPDefinitionModule moduleDefinition,
 			String id, 
 			HAPContextGroup parentContext, 
+			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processMan,
 			HAPUIResourceManager uiResourceMan,
 			HAPDataTypeHelper dataTypeHelper, 
@@ -40,6 +43,11 @@ public class HAPProcessorModule {
 		HAPExecutableModule out = new HAPExecutableModule(moduleDefinition, id);
 
 		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityUIResource.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager);
+
+		//service providers
+		Map<String, HAPDefinitionServiceProvider> allServiceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
+		if(serviceProviders!=null)   allServiceProviders.putAll(serviceProviders);
+		allServiceProviders.putAll(out.getDefinition().getServiceProviderDefinitions());
 		
 		//process context 
 		out.setContextGroup(HAPProcessorContext.process(moduleDefinition.getContext(), parentContext==null?new HAPContextGroup():parentContext, null, contextProcessRequirement));
@@ -47,13 +55,13 @@ public class HAPProcessorModule {
 		//process global processes in module
 		Map<String, HAPDefinitionEmbededProcess> internalProcesses = moduleDefinition.getProcesses();
 		for(String name : internalProcesses.keySet()) {
-			HAPExecutableEmbededProcess processExe = HAPProcessorProcess.process(internalProcesses.get(name), name, out.getContextGroup(), null, processMan, contextProcessRequirement, processTracker);
+			HAPExecutableEmbededProcess processExe = HAPProcessorProcess.process(internalProcesses.get(name), name, out.getContextGroup(), null, allServiceProviders, processMan, contextProcessRequirement, processTracker);
 			out.addProcess(name, processExe);
 		}
 
 		//process ui
 		for(HAPDefinitionModuleUI ui : moduleDefinition.getUIs()) {
-			HAPExecutableModuleUI uiExe = process(ui, ui.getName(), out, processMan, uiResourceMan, contextProcessRequirement, processTracker);
+			HAPExecutableModuleUI uiExe = process(ui, ui.getName(), out, allServiceProviders, processMan, uiResourceMan, contextProcessRequirement, processTracker);
 			out.addModuleUI(uiExe);
 		}
 		
@@ -64,6 +72,7 @@ public class HAPProcessorModule {
 			HAPDefinitionModuleUI moduleUIDefinition,
 			String id,
 			HAPExecutableModule moduleExe,
+			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processMan,
 			HAPUIResourceManager uiResourceMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
@@ -87,7 +96,7 @@ public class HAPProcessorModule {
 			HAPContextDefinitionRoot eventRootNode = buildContextRootFromEvent(out.getPage().getEventDefinition(eventName));
 			HAPContextGroup eventContext = moduleExe.getContextGroup().cloneContextGroup();
 			eventContext.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC).addElement("EVENT", eventRootNode);
-			eventHandlerExe.setProcess(HAPProcessorProcess.process(eventHandlerDef.getProcess(), eventName, eventContext, null, processMan, contextProcessRequirement, processTracker));
+			eventHandlerExe.setProcess(HAPProcessorProcess.process(eventHandlerDef.getProcess(), eventName, eventContext, null, serviceProviders, processMan, contextProcessRequirement, processTracker));
 			out.addEventHandler(eventName, eventHandlerExe);
 		}	
 		return out;
