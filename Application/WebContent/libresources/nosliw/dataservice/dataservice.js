@@ -20,7 +20,8 @@ var node_createDataService = function(){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExectueDataService", {"serviceId":serviceId, "parms":parms}), handlers, requestInfo);
 
 			var gatewayParm = {};
-			gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYSERVICE_COMMAND_REQUEST_ID] = serviceId;
+			gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYSERVICE_COMMAND_REQUEST_QUERY] = {}
+			gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYSERVICE_COMMAND_REQUEST_QUERY][node_COMMONATRIBUTECONSTANT.QUERYSERVICE_SERVICEID] = serviceId;
 			gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYSERVICE_COMMAND_REQUEST_PARMS] = parms;
 			
 			out.addRequest(nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(

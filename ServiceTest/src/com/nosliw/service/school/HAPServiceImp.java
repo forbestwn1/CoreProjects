@@ -1,6 +1,7 @@
 package com.nosliw.service.school;
 
 import java.io.InputStream;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -53,8 +54,8 @@ public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 
 					String schoolType = jsonSchoolData.getString(INDEX_TYPE);
 					Double schoolScore = jsonSchoolData.getDouble(INDEX_SCORE);
-					if(!(((JSONObject)parms.get("schoolType").getValue()).getString("value")).equalsIgnoreCase(schoolType))  continue;
-					if(schoolScore < Double.valueOf(parms.get("schoolRating").getValue()+""))  continue;
+					if(!(((JSONObject)parms.get("schoolTypeInService").getValue()).getString("value")).equalsIgnoreCase(schoolType))  continue;
+					if(schoolScore < Double.valueOf(parms.get("schoolRatingInService").getValue()+""))  continue;
 					
 					JSONObject schoolTypeOptionJson = new JSONObject();
 					schoolTypeOptionJson.put("value", schoolType);
@@ -83,7 +84,9 @@ public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 				}
 			}
 			
-			return HAPUtilityService.generateSuccessResult(new HAPDataWrapper(new HAPDataTypeId("test.array;1.0.0"), schoolArrayData));
+			Map<String, HAPData> output = new LinkedHashMap<String, HAPData>();
+			output.put("outputInService", new HAPDataWrapper(new HAPDataTypeId("test.array;1.0.0"), schoolArrayData));
+			return HAPUtilityService.generateSuccessResult(output);
 		}
 		catch(Exception e){
 			e.printStackTrace();

@@ -10,6 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
 
 @HAPEntityWithAttribute
@@ -30,13 +31,27 @@ public class HAPDefinitionMappingService extends HAPSerializableImp{
 	public HAPDefinitionMappingService() {
 		this.m_parmMapping = new HAPDefinitionDataAssociationGroup();
 		this.m_resultMapping = new LinkedHashMap<String, HAPDefinitionDataAssociationGroup>();
+		init();
 	}
 
+	private void init() {
+		HAPUtilityContext.setContextGroupInheritModeNone(this.m_parmMapping.getInfo());
+		for(String result : this.m_resultMapping.keySet()) {
+			HAPUtilityContext.setContextGroupInheritModeNone(this.m_resultMapping.get(result).getInfo());
+		}
+	}
+	
 	public HAPDefinitionDataAssociationGroup getParms() {  return this.m_parmMapping;   }
-	public void setParmMapping(HAPDefinitionDataAssociationGroup parms) {   this.m_parmMapping = parms;  }
+	public void setParmMapping(HAPDefinitionDataAssociationGroup parms) {   
+		this.m_parmMapping = parms;  
+		HAPUtilityContext.setContextGroupInheritModeNone(this.m_parmMapping.getInfo());
+	}
 	
 	public Map<String, HAPDefinitionDataAssociationGroup> getResultMapping(){   return this.m_resultMapping;   }
-	public void addResultMapping(String name, HAPDefinitionDataAssociationGroup result) {   this.m_resultMapping.put(name, result);   }
+	public void addResultMapping(String name, HAPDefinitionDataAssociationGroup result) {   
+		this.m_resultMapping.put(name, result);   
+		HAPUtilityContext.setContextGroupInheritModeNone(result.getInfo());
+	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -61,7 +76,7 @@ public class HAPDefinitionMappingService extends HAPSerializableImp{
 				this.m_resultMapping.put((String)key, resultMapping);
 			}
 		}
-		
+		this.init();
 		return true;  
 	}
 

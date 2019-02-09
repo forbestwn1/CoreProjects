@@ -53,17 +53,22 @@ var node_utility = function(){
 		var service = new node_ServiceInfo("ExecuteDataAssociation", {"data":input, "dataAssociation":dataAssociation});
 		var out = node_createServiceRequestInfoSequence(service, handlers, request);
 		if(dataAssociation==undefined){
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){  return input;  }, handlers, request));
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){  
+				return input;  
+			}));
 			return out;
 		}
 
 		var output = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_CONVERTFUNCTION](input, loc_dyanimicValueBuild);
 		//process matchers
 		var matchersByPath = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_OUTPUTMATCHERS];
-		if(matchersByPath==undefined){
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){ return output;  }, handlers, request));
-			return out;
-		}
+		if(matchersByPath==undefined)  return node_createServiceRequestInfoSimple(undefined, function(){ return output;  }, handlers, request); 
+//			{
+//			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){ 
+//				return output;  
+//			}));
+//			return out;
+//		}
 
 		var matchersByPathRequest = node_createServiceRequestInfoSet(undefined, {
 			success : function(request, resultSet){
@@ -86,7 +91,7 @@ var node_utility = function(){
 		getExecuteIOTaskRequest : function(input, inputDataAssociation, getTaskRequest, outputDataAssociationByResult, output, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteIOTask", {}), handlers, request);
 			//process input association
-			out.addRequest(loc_out.getExecuteDataAssociationRequest(input, inputDataAssociation, {
+			out.addRequest(loc_getExecuteDataAssociationRequest(input, inputDataAssociation, {
 				success : function(requestInfo, taskInput){
 					//execute task
 					var executeIOTaskRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTask", {}));
