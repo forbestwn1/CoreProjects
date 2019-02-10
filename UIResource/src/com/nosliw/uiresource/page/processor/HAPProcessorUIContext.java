@@ -1,7 +1,6 @@
 package com.nosliw.uiresource.page.processor;
 
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,6 +22,7 @@ import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
+import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUICommand;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
@@ -158,16 +158,7 @@ public class HAPProcessorUIContext {
 		
 		//process service
 		//all provider available
-		Map<String, HAPDefinitionServiceProvider> allServiceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
-		allServiceProviders.putAll(serviceProviders);
-		allServiceProviders.putAll(uiExe.getUIUnitDefinition().getServiceProviderDefinitions());
-		//make sure all provider has interface info
-		for(String name : allServiceProviders.keySet()) {
-			HAPDefinitionServiceProvider provider = allServiceProviders.get(name);
-			if(provider.getServiceInterface()==null) {
-				provider.setServiceInterface(contextProcessRequirement.serviceDefinitionManager.getDefinition(provider.getServiceId()).getStaticInfo().getInterface());
-			}
-		}
+		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(serviceProviders, uiExe.getUIUnitDefinition(), contextProcessRequirement.serviceDefinitionManager); 
 		
 		Map<String, HAPDefinitionServiceUse> serviceUseDefs = uiExe.getUIUnitDefinition().getServiceUseDefinitions();
 		for(String serviceName : serviceUseDefs.keySet()) {

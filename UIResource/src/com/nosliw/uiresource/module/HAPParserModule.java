@@ -5,11 +5,13 @@ import java.io.File;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.process.HAPDefinitionEmbededProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.script.context.HAPParserContext;
+import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
 
 public class HAPParserModule {
 
@@ -50,6 +52,13 @@ public class HAPParserModule {
 			}
 		}
 		
+		//service
+		JSONObject serviceJsonObject = jsonObj.optJSONObject(HAPDefinitionModule.SERVICE);
+		HAPDefinitionServiceInEntity service = new HAPDefinitionServiceInEntity();
+		service.buildObject(serviceJsonObject, HAPSerializationFormat.JSON);
+		out.setServiceDefinition(service);
+		
+		//context
 		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPDefinitionModule.CONTEXT);
 		if(contextJsonObj!=null) {
 			out.setContext(HAPParserContext.parseContextGroup(contextJsonObj));

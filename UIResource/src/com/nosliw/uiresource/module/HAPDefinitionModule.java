@@ -15,6 +15,7 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
+import com.nosliw.data.core.service.use.HAPWithServiceProvider;
 
 /**
 Module is a independent entity that is runnable within a container
@@ -27,7 +28,7 @@ for instance, for a module that shows a school information, it contains two page
 Don't need to define service information here, as service information will be gathered from all the mdoule ui definition
  */
 @HAPEntityWithAttribute
-public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
+public class HAPDefinitionModule extends HAPEntityInfoWritableImp implements HAPWithServiceProvider{
 
 	@HAPAttribute
 	public static String PAGEINFO = "pageInfo";
@@ -40,6 +41,9 @@ public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
 	
 	@HAPAttribute
 	public static String PROCESS = "process";
+
+	@HAPAttribute
+	public static String SERVICE = "service";
 
 	private String m_id;
 	
@@ -77,11 +81,13 @@ public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
 	
 	public Map<String, HAPDefinitionEmbededProcess> getProcesses(){  return this.m_processes;  }
 	public void addProcess(HAPDefinitionEmbededProcess processDef) {  this.m_processes.put(processDef.getName(), processDef);  }
-	
+	 
 	public List<HAPDefinitionModuleUI> getUIs(){  return this.m_uis;  }
 	public void addUI(HAPDefinitionModuleUI ui) {   this.m_uis.add(ui);   }
 	
+	public void setServiceDefinition(HAPDefinitionServiceInEntity serviceDef) {   this.m_serviceDefinition = serviceDef;   }
 	public Map<String, HAPDefinitionServiceUse> getServiceUseDefinitions(){  return this.m_serviceDefinition.getServiceUseDefinitions();   }
+	@Override
 	public Map<String, HAPDefinitionServiceProvider> getServiceProviderDefinitions(){  return this.m_serviceDefinition.getServiceProviderDefinitions();   }
 	public void addServiceUseDefinition(HAPDefinitionServiceUse def) {  this.m_serviceDefinition.addServiceUseDefinition(def);   }
 	public void addServiceProviderDefinition(HAPDefinitionServiceProvider def) {  this.m_serviceDefinition.addServiceProviderDefinition(def);   }
@@ -93,6 +99,7 @@ public class HAPDefinitionModule extends HAPEntityInfoWritableImp{
 		jsonMap.put(PAGEINFO, HAPJsonUtility.buildJson(this.m_pagesInfo, HAPSerializationFormat.JSON));
 		jsonMap.put(UI, HAPJsonUtility.buildJson(this.m_uis, HAPSerializationFormat.JSON));
 		jsonMap.put(PROCESS, HAPJsonUtility.buildJson(this.m_processes, HAPSerializationFormat.JSON));
+		jsonMap.put(SERVICE, HAPJsonUtility.buildJson(this.m_serviceDefinition, HAPSerializationFormat.JSON));
 	}
 
 }

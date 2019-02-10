@@ -12,6 +12,7 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
+import com.nosliw.data.core.service.use.HAPWithServiceProvider;
 
 /*
  * ui resource basic class for both ui resource and custom tag
@@ -19,7 +20,7 @@ import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
  * it contains all the information within its domain
  * 		that means, for ui resource instance, it does not contains infor within customer tag
  */
-public abstract class HAPDefinitionUIUnit extends HAPSerializableImp{
+public abstract class HAPDefinitionUIUnit extends HAPSerializableImp implements HAPWithServiceProvider{
 
 	//for tag, it is tag id within resource
 	//for resource, it is resource name

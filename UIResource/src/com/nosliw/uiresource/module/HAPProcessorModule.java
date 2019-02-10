@@ -1,6 +1,5 @@
 package com.nosliw.uiresource.module;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
@@ -20,6 +19,7 @@ import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
+import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.HAPUtilityUIResource;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
@@ -45,9 +45,7 @@ public class HAPProcessorModule {
 		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityUIResource.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager);
 
 		//service providers
-		Map<String, HAPDefinitionServiceProvider> allServiceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
-		if(serviceProviders!=null)   allServiceProviders.putAll(serviceProviders);
-		allServiceProviders.putAll(out.getDefinition().getServiceProviderDefinitions());
+		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(serviceProviders, moduleDefinition, contextProcessRequirement.serviceDefinitionManager); 
 		
 		//process context 
 		out.setContextGroup(HAPProcessorContext.process(moduleDefinition.getContext(), parentContext==null?new HAPContextGroup():parentContext, null, contextProcessRequirement));

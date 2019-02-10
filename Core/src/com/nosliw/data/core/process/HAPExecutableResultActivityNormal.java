@@ -16,13 +16,7 @@ public class HAPExecutableResultActivityNormal extends HAPExecutableDataAssociat
 	@HAPAttribute
 	public static String FLOW = "flow";
  
-	@HAPAttribute
-//	public static String OUTPUTASSOCIATION = "outputAssociation";
-	
 	private HAPDefinitionResultActivityNormal m_definition;
-	
-	//associate output of activity to variable in process 
-//	private HAPExecutableDataAssociationGroupWithTarget m_outputAssociation;
 	
 	//next activity
 	public HAPExecutableResultActivityNormal(HAPDefinitionResultActivityNormal definition) {
@@ -34,13 +28,13 @@ public class HAPExecutableResultActivityNormal extends HAPExecutableDataAssociat
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		super.buildJsonMap(jsonMap, typeJsonMap);
+		if(this.getContext()!=null)		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(FLOW, this.getFlow().toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
-		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
+		if(this.getContext()!=null)  super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
 		jsonMap.put(FLOW, this.getFlow().toStringValue(HAPSerializationFormat.JSON));
 	}
 

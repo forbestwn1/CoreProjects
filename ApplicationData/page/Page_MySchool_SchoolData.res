@@ -6,8 +6,6 @@
 	<br>
 <!--	SchoolNameInfo: <%=#|?(schoolData)?.schoolName|#.value%>      -->
 
-	<nosliw-varviewer/>
-	<nosliw-debug/>
 </body>
 
 		<!-- This part can be used to define context (variable)

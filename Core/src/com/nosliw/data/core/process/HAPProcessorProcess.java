@@ -15,6 +15,7 @@ import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAsso
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroupWithTarget;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
+import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 
 public class HAPProcessorProcess{
 
@@ -77,10 +78,8 @@ public class HAPProcessorProcess{
 		HAPContextGroup context = originContext.cloneContextGroup();
 		Map<String, HAPExecutableDataAssociationGroup> results = new LinkedHashMap<String, HAPExecutableDataAssociationGroup>();
 
-		Map<String, HAPDefinitionServiceProvider> allServiceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
-		if(serviceProviders!=null)   allServiceProviders.putAll(serviceProviders);
-		allServiceProviders.putAll(out.getDefinition().getServiceProviderDefinitions());
-
+		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(serviceProviders, out.getDefinition(), contextProcessRequirement.serviceDefinitionManager); 
+		
 		for(String activityId : out.getDefinition().getActivities().keySet()) {
 			HAPDefinitionActivity activity = out.getDefinition().getActivityById(activityId);
 			

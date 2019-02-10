@@ -3,10 +3,10 @@ package com.nosliw.uiresource.module.activity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPActivityPluginId;
 import com.nosliw.data.core.process.HAPExecutableActivityNormal;
 import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
@@ -17,7 +17,7 @@ public class HAPExecuteUICommandActivityExecutable extends HAPExecutableActivity
 
 	@HAPAttribute
 	public static String UI = "ui";
-
+ 
 	@HAPAttribute
 	public static String COMMAND = "command";
 

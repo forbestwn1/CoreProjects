@@ -15,6 +15,7 @@ import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
+import com.nosliw.data.core.service.use.HAPWithServiceProvider;
 
 /**
  * Task is unit that can execute 
@@ -22,7 +23,7 @@ import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
  * Task is a sequence of steps
  */
 @HAPEntityWithAttribute
-public class HAPDefinitionProcess extends HAPEntityInfoWritableImp{
+public class HAPDefinitionProcess extends HAPEntityInfoWritableImp implements HAPWithServiceProvider{
 
 	@HAPAttribute
 	public static String CONTEXT = "context";
@@ -51,13 +52,14 @@ public class HAPDefinitionProcess extends HAPEntityInfoWritableImp{
 		this.m_requiredResources = new HashSet<HAPResourceDependent>();
 		this.m_serviceDefinition = new HAPDefinitionServiceInEntity();
 	}
-
+ 
 	//steps within task
 	public Map<String, HAPDefinitionActivity> getActivities(){  return this.m_activities;  }
 	public HAPDefinitionActivity getActivityById(String activityId) {  return this.m_activities.get(activityId);   }
 	public void addActivity(String id, HAPDefinitionActivity activity) {  this.m_activities.put(id, activity);    }
 	
 	public Map<String, HAPDefinitionServiceUse> getServiceUseDefinitions(){  return this.m_serviceDefinition.getServiceUseDefinitions();   }
+	@Override
 	public Map<String, HAPDefinitionServiceProvider> getServiceProviderDefinitions(){  return this.m_serviceDefinition.getServiceProviderDefinitions();   }
 	public void addServiceUseDefinition(HAPDefinitionServiceUse def) {  this.m_serviceDefinition.addServiceUseDefinition(def);   }
 	public void addServiceProviderDefinition(HAPDefinitionServiceProvider def) {  this.m_serviceDefinition.addServiceProviderDefinition(def);   }

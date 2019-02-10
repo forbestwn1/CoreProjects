@@ -21,7 +21,7 @@
 					return node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteUICommandActivity", {}), 
 						function(requestInfo){
 							env.executeUICommand(activity.ui, activity.command, input);
-							return new node_NormalActivityResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS);
+							return new node_IOTaskResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS);
 						}, handlers, request);
 				}
 			};

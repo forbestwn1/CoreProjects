@@ -2,7 +2,7 @@
  * 
  */
 {
-	type : "expression",
+	type : "Service_request",
 	
 	processor : "com.nosliw.data.core.process.activity.HAPServiceActivityProcessor",
 	

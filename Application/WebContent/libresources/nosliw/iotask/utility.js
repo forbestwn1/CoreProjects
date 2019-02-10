@@ -52,7 +52,7 @@ var node_utility = function(){
 	var loc_getExecuteDataAssociationRequest = function(input, dataAssociation, handlers, request){
 		var service = new node_ServiceInfo("ExecuteDataAssociation", {"data":input, "dataAssociation":dataAssociation});
 		var out = node_createServiceRequestInfoSequence(service, handlers, request);
-		if(dataAssociation==undefined){
+		if(dataAssociation==undefined || dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_CONVERTFUNCTION]==undefined){
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){  
 				return input;  
 			}));
@@ -63,12 +63,6 @@ var node_utility = function(){
 		//process matchers
 		var matchersByPath = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_OUTPUTMATCHERS];
 		if(matchersByPath==undefined)  return node_createServiceRequestInfoSimple(undefined, function(){ return output;  }, handlers, request); 
-//			{
-//			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){ 
-//				return output;  
-//			}));
-//			return out;
-//		}
 
 		var matchersByPathRequest = node_createServiceRequestInfoSet(undefined, {
 			success : function(request, resultSet){
