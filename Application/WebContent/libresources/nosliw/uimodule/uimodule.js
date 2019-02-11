@@ -80,19 +80,15 @@ var node_createUIModule = function(uiModule, externalContext, env){
 			out.addRequest(node_contextUtility.getGetContextValueRequest(loc_context, {
 				success : function(request, contextValue){
 					var input = contextValue[node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC];
-					input.EVENT = eventData;
+					var inputEvent = input.EVENT;
+					if(inputEvent==undefined){
+						inputEvent = {};
+						input.EVENT = inputEvent;
+					}
+					inputEvent.event = eventName;
+					inputEvent.data = eventData;
 					return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).
 					getExecuteEmbededProcessRequest(loc_moduleUI.getEventHandler(eventName)[node_COMMONATRIBUTECONSTANT.DEFINITIONMODULEUIEVENTHANDER_PROCESS], input);
-					/*
-					var eventCategary = contextValue[node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_INTERNAL];
-					if(eventCategary==undefined){
-						eventCategary = {};
-						contextValue[node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_INTERNAL] = eventCategary;
-					}
-					eventCategary.EVENT = eventData;
-					return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).
-						getExecuteEmbededProcessRequest(loc_moduleUI.getEventHandler(eventName)[node_COMMONATRIBUTECONSTANT.DEFINITIONMODULEUIEVENTHANDER_PROCESS], contextValue);
-					*/
 				}
 			}));
 			node_requestServiceProcessor.processRequest(out);

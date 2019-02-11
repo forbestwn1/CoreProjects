@@ -34,16 +34,16 @@ import com.nosliw.uiresource.page.tag.HAPUITagManager;
 public class HAPProcessorUIContext {
 
 	public static void process(HAPExecutableUIUnit uiExe, HAPContextGroup contextDef, HAPContextGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPUITagManager uiTagMan, HAPRequirementContextProcessor contextProcessRequirement){
+		HAPConfigureContextProcessor contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(uiExe); 
 
-		HAPConfigureContextProcessor contextProcessorConfig = new HAPConfigureContextProcessor();
-		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) 	contextProcessorConfig.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_CHILD;  //for tag, child keeps same
-		else contextProcessorConfig.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_PARENT;   //for resource, parent overwrite child
-
+		HAPConfigureContextProcessor privateConfigure = contextProcessorConfig.cloneConfigure();
+		privateConfigure.parentCategary = HAPContextGroup.getAllContextTypes();
+		
 		processVerticalStructure(uiExe, contextDef, parentContext, contextProcessorConfig, uiTagMan, contextProcessRequirement);		
-		processRelativeElement(uiExe, parentContext, contextProcessorConfig, uiTagMan, contextProcessRequirement);
+		processRelativeElement(uiExe, parentContext, privateConfigure, uiTagMan, contextProcessRequirement);
 		markProcessed(uiExe);
 		discoverVariable(uiExe, contextProcessRequirement.inheritanceExcludedInfo);
-		processInteractionElement(uiExe, parentContext, serviceProviders, contextProcessorConfig, uiTagMan, contextProcessRequirement);
+		processInteractionElement(uiExe, parentContext, serviceProviders, privateConfigure, uiTagMan, contextProcessRequirement);
 	}
 	
 	private static void markProcessed(HAPExecutableUIUnit uiExe) {
@@ -70,7 +70,7 @@ public class HAPProcessorUIContext {
 		}
 		
 		//merge with context defined in tag unit
-		HAPContextGroup extContextGroup = HAPProcessorContext.processStatic(contextDef, parentContext, new HAPConfigureContextProcessor(), contextProcessRequirement);
+		HAPContextGroup extContextGroup = HAPProcessorContext.processStatic(contextDef, parentContext, contextProcessorConfig, contextProcessRequirement);
 		uiExe.setContext(extContextGroup);
 
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
@@ -95,9 +95,6 @@ public class HAPProcessorUIContext {
 	}
 	
 	private static void processRelativeElement(HAPExecutableUIUnit uiExe, HAPContextGroup parentContext, HAPConfigureContextProcessor contextProcessorConfig, HAPUITagManager uiTagMan, HAPRequirementContextProcessor contextProcessRequirement){
-		HAPConfigureContextProcessor privateConfigure = contextProcessorConfig.cloneConfigure();
-		privateConfigure.parentCategary = HAPContextGroup.getAllContextTypes();
-		
 		if(uiExe.getType().equals(HAPConstant.UIRESOURCE_TYPE_TAG)) {
 			HAPExecutableUIUnitTag uiTagExe = (HAPExecutableUIUnitTag)uiExe;
 
@@ -109,7 +106,7 @@ public class HAPProcessorUIContext {
 			for(HAPDefinitionUIEvent eventDef : uiTagMan.getUITagDefinition(new HAPUITagId(uiTagExe.getUIUnitTagDefinition().getTagName())).getEventDefinition()) {
 				HAPDefinitionUIEvent processedEventDef = new HAPDefinitionUIEvent();
 				eventDef.cloneToBase(processedEventDef);
-				processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventDef.getDataDefinition(), uiTagExe.getTagContext(), privateConfigure, contextProcessRequirement));
+				processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventDef.getDataDefinition(), uiTagExe.getTagContext(), contextProcessorConfig, contextProcessRequirement));
 				uiTagExe.addTagEvent(eventDef.getName(), processedEventDef);
 			}
 		}
@@ -125,15 +122,12 @@ public class HAPProcessorUIContext {
 	}	
 	
 	private static void processInteractionElement(HAPExecutableUIUnit uiExe, HAPContextGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPConfigureContextProcessor contextProcessorConfig, HAPUITagManager uiTagMan, HAPRequirementContextProcessor contextProcessRequirement){
-		HAPConfigureContextProcessor privateConfigure = contextProcessorConfig.cloneConfigure();
-		privateConfigure.parentCategary = HAPContextGroup.getAllContextTypes();
-
 		//process relative element in event defined in resource
 		Map<String, HAPDefinitionUIEvent> eventsDef = uiExe.getUIUnitDefinition().getEventDefinitions();
 		for(String name : eventsDef.keySet()) {
 			HAPDefinitionUIEvent processedEventDef = new HAPDefinitionUIEvent();
 			eventsDef.get(name).cloneToBase(processedEventDef);
-			processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventsDef.get(name).getDataDefinition(), uiExe.getContext(), privateConfigure, contextProcessRequirement));
+			processedEventDef.setDataDefinition(HAPProcessorContextRelative.process(eventsDef.get(name).getDataDefinition(), uiExe.getContext(), contextProcessorConfig, contextProcessRequirement));
 			uiExe.addEventDefinition(processedEventDef);
 		}
 
@@ -144,12 +138,12 @@ public class HAPProcessorUIContext {
 			HAPDefinitionUICommand processedCommendDef = new HAPDefinitionUICommand();
 			commandDef.cloneBasicTo(processedCommendDef);
 			//command parms
-			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), uiExe.getContext(), privateConfigure, contextProcessRequirement));
+			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), uiExe.getContext(), contextProcessorConfig, contextProcessRequirement));
 
 			//command results
 			Map<String, HAPContext> results = commandDef.getResults();
 			for(String resultName : results.keySet()) {
-				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), uiExe.getContext(), privateConfigure, contextProcessRequirement));
+				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), uiExe.getContext(), contextProcessorConfig, contextProcessRequirement));
 			}
 			
 			uiExe.addCommandDefinition(processedCommendDef);
@@ -219,10 +213,6 @@ public class HAPProcessorUIContext {
 			HAPContextDefinitionLeafConstant cstRootNode = new HAPContextDefinitionLeafConstant(constants.get(name));
 			tagContext.addElement(HAPConstant.NOSLIW_RESERVE_ATTRIBUTE + name, new HAPContextDefinitionRoot(cstRootNode), HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE);
 		}
-		
-		HAPConfigureContextProcessor configure = contextProcessorConfig.cloneConfigure();
-		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(tagDefinitionContext.getInfo());
-		HAPContextGroup out = HAPProcessorContext.processStatic(tagContext, parentContext, configure, contextProcessRequirement);
-		return out;
+		return HAPProcessorContext.processStatic(tagContext, parentContext, HAPUtilityConfiguration.getContextProcessConfigurationForTagDefinition(tagDefinitionContext, contextProcessorConfig), contextProcessRequirement);
 	}
 }

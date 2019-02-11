@@ -11,6 +11,7 @@ import com.nosliw.data.core.process.HAPExecutableEmbededProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorProcess;
 import com.nosliw.data.core.runtime.HAPRuntime;
+import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionNode;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
@@ -43,12 +44,13 @@ public class HAPProcessorModule {
 		HAPExecutableModule out = new HAPExecutableModule(moduleDefinition, id);
 
 		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityUIResource.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager);
-
+		HAPConfigureContextProcessor contextProcessConfg = HAPUtilityConfiguration.getContextProcessConfigurationForModule();
+		
 		//service providers
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(serviceProviders, moduleDefinition, contextProcessRequirement.serviceDefinitionManager); 
 		
 		//process context 
-		out.setContextGroup(HAPProcessorContext.process(moduleDefinition.getContext(), parentContext==null?new HAPContextGroup():parentContext, null, contextProcessRequirement));
+		out.setContextGroup(HAPProcessorContext.process(moduleDefinition.getContext(), parentContext==null?new HAPContextGroup():parentContext, contextProcessConfg, contextProcessRequirement));
 
 		//process global processes in module
 		Map<String, HAPDefinitionEmbededProcess> internalProcesses = moduleDefinition.getProcesses();

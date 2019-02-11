@@ -6,7 +6,6 @@ import java.util.Map;
 import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
@@ -31,7 +30,7 @@ public class HAPProcessorProcess{
 		HAPExecutableEmbededProcess out = null;
 		HAPContextGroup oldContext = null;
 		do {
-			if(oldContext==null)   oldContext = HAPProcessorContext.process(embededProcessDefinition.getContext(), parentContext, null, contextProcessRequirement);
+			if(oldContext==null)   oldContext = HAPProcessorContext.process(embededProcessDefinition.getContext(), parentContext, HAPUtilityConfigure.getContextProcessConfigurationForProcess(), contextProcessRequirement);
 			else oldContext = out.getContext();
 			out = new HAPExecutableEmbededProcess(embededProcessDefinition, id);
 			HAPProcessorProcess.process(out, oldContext, localProcesses, serviceProviders, processMan, contextProcessRequirement, processTracker);
@@ -59,7 +58,7 @@ public class HAPProcessorProcess{
 		HAPExecutableProcess out = null;
 		HAPContextGroup oldContext = null;
 		do {
-			if(oldContext==null)   oldContext = HAPProcessorContext.process(processDefinition.getContext(), parentContext, null, contextProcessRequirement);
+			if(oldContext==null)   oldContext = HAPProcessorContext.process(processDefinition.getContext(), parentContext, HAPUtilityConfigure.getContextProcessConfigurationForProcess(), contextProcessRequirement);
 			else oldContext = out.getContext();
 			out = new HAPExecutableProcess(processDefinition, id);
 			HAPProcessorProcess.process(out, oldContext, localProcesses, serviceProviders, processMan, contextProcessRequirement, processTracker);
@@ -87,7 +86,7 @@ public class HAPProcessorProcess{
 			if(activity.getType().equals(HAPConstant.ACTIVITY_TYPE_START))    out.setStartActivityId(activityId);    
 			
 			//process activity
-			HAPExecutableActivity activityExe = processMan.getPluginManager().getPlugin(activity.getType()).process(activity, activityId, out, context, results, localProcesses, allServiceProviders, processMan, contextProcessRequirement, getProcessConfigure(), processTracker);
+			HAPExecutableActivity activityExe = processMan.getPluginManager().getPlugin(activity.getType()).process(activity, activityId, out, context, results, localProcesses, allServiceProviders, processMan, contextProcessRequirement, HAPUtilityConfigure.getContextProcessConfigurationForActivity(), processTracker);
 			if(activityExe!=null) {
 				out.addActivity(activityId, activityExe);
 			}
@@ -111,10 +110,4 @@ public class HAPProcessorProcess{
 		String id = new HAPIdProcess(suite.getId(), processId).getId();
 		return process(suite.getProcess(processId), id, suite.getContext(), suite.getProcesses(), serviceProviders, processMan, contextProcessRequirement, processTracker);
 	}
-	
-	private static HAPConfigureContextProcessor getProcessConfigure() {
-		HAPConfigureContextProcessor contextProcessorConfig = new HAPConfigureContextProcessor();
-		return contextProcessorConfig;
-	}
-
 }

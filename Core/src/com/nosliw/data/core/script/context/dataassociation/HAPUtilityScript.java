@@ -18,7 +18,6 @@ import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
 import com.nosliw.data.core.script.context.HAPContextPath;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.context.HAPUtilityContextScript;
 
 public class HAPUtilityScript {
@@ -28,7 +27,7 @@ public class HAPUtilityScript {
 		templateParms.put("isFlatOutput", dataAssociationGroup.isFlatOutput()+"");
 		templateParms.put("isFlatInput", dataAssociationGroup.isFlatInput()+"");
 		templateParms.put("rootIdSeperator", HAPContextDefinitionRootId.SEPERATOR);
-		templateParms.put("isInherit", (!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(HAPUtilityContext.getContextGroupInheritMode(dataAssociationGroup.getInfo())))+"");
+		templateParms.put("isInherit", (!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(dataAssociationGroup.getProcessConfigure().inheritMode))+"");
 		
 		//build init output object for mapped root
 		HAPContext context = new HAPContext();

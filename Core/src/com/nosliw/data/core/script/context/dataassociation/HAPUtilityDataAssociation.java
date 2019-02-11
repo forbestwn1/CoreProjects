@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefEleProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
@@ -42,5 +43,10 @@ public class HAPUtilityDataAssociation {
 		return out;
 	}
 	
+	public static HAPConfigureContextProcessor getContextProcessConfigurationForProcess() {
+		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
+		configure.inheritMode = HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE;
+		return configure;
+	}
 
 }

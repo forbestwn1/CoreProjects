@@ -6,7 +6,6 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefEleProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefinitionElement;
@@ -162,14 +161,13 @@ public class HAPProcessorDataAssociation {
 	}
 
 	private static void processDataAssocationContext(HAPExecutableDataAssociationGroup out, HAPContextGroup inputContextGroup, HAPDefinitionDataAssociationGroup dataAssociation, HAPRequirementContextProcessor contextProcessRequirement) {
+		out.setProcessConfigure(HAPUtilityDataAssociation.getContextProcessConfigurationForProcess());
 		//build context group to be processed
 		HAPContextGroup daContextGroup = new HAPContextGroup();
 		daContextGroup.setContext(helpCategary, HAPUtilityContext.consolidateContextRoot(dataAssociation));
 		
 		//process context to build context
-		HAPConfigureContextProcessor configure = new HAPConfigureContextProcessor();
-		configure.inheritMode = HAPUtilityContext.getContextGroupInheritMode(dataAssociation.getInfo()); 
-		HAPContextGroup daContextGroupProcessed = HAPProcessorContext.process(daContextGroup, inputContextGroup, configure, contextProcessRequirement);
+		HAPContextGroup daContextGroupProcessed = HAPProcessorContext.process(daContextGroup, inputContextGroup, out.getProcessConfigure(), contextProcessRequirement);
 
 		//build flat context without mapped context
 		HAPContext mappedContext = daContextGroupProcessed.removeContext(helpCategary);

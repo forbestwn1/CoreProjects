@@ -50,7 +50,7 @@ var node_createUIModuleService = function(){
 				},
 				
 				executeUICommand : function(uiName, commandName, commandData){
-					loc_module.getUI(uiName).executeCommand(commandName, commandData.parm);
+					loc_module.getUI(uiName).executeCommand(commandName, commandData);
 				}
 			};
 		

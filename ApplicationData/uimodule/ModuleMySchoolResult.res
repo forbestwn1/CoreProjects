@@ -103,7 +103,7 @@
 		}
 	},
 	"process": {
-		"init": {
+		"init1": {
 			"activity": [{
 					"id": "startActivityId",
 					"name": "startActivity",
@@ -214,6 +214,15 @@
 								"type": "UI_executeUICommand",
 								"ui": "schoolInfoUI",
 								"command": "refresh",
+								"input": {
+									"element": {
+										"schoolData": {
+											"definition": {
+												"path": "EVENT.data"
+											}
+										}
+									}
+								},
 								"parm": {
 									"inputData": {
 										"schoolData": {
@@ -250,7 +259,7 @@
 						"definition": {
 							"path": "schoolListInModule.element"
 						},
-						"defaultValue1": {
+						"defaultValue": {
 							"dataTypeId": "test.map;1.0.0",
 							"value": {
 								"schoolName": {

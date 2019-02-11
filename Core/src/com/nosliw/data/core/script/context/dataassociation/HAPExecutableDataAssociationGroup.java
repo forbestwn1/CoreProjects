@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextPath;
@@ -50,6 +51,8 @@ public class HAPExecutableDataAssociationGroup extends HAPExecutableImp{
 	//whether output is context structure (flat) or context group structure (not flat)
 	private boolean m_isFlatOutput;
 
+	private HAPConfigureContextProcessor m_processConfigure;
+	
 	public HAPExecutableDataAssociationGroup(HAPDefinitionDataAssociationGroup definition) {
 		this.m_definition = definition;
 		this.m_isFlatOutput = this.m_definition.isFlatOutput();
@@ -72,6 +75,9 @@ public class HAPExecutableDataAssociationGroup extends HAPExecutableImp{
 	public boolean isFlatInput() {   return this.m_isFlatInput;  }
 	public void setIsFlatInput(boolean isFlatInput) {  this.m_isFlatInput = isFlatInput;  }
 
+	public HAPConfigureContextProcessor getProcessConfigure() {   return this.m_processConfigure;   }
+	public void setProcessConfigure(HAPConfigureContextProcessor processConfigure) {   this.m_processConfigure = processConfigure;    }
+	
 	//update output root name
 	public void updateOutputRootName(HAPUpdateName nameUpdate) {
 		//update path mapping

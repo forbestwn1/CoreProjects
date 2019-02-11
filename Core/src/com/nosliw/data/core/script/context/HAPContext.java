@@ -113,7 +113,7 @@ public class HAPContext extends HAPSerializableImp implements HAPDataAssociation
 				resolved.remainPath = path;
 			}
 			else {
-				HAPContextDefinitionElement outEle = contextRoot.getDefinition();
+				HAPContextDefinitionElement outEle = contextRoot.getDefinition().getSolidContextDefinitionElement();
 				String remainingPath = null;
 				String[] pathSegs = HAPNamingConversionUtility.parseComponentPaths(path);
 				for(String pathSeg : pathSegs){

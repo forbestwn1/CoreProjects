@@ -5,6 +5,7 @@ import com.nosliw.common.utils.HAPConstant;
 public class HAPProcessorContext {
 
 	public static HAPContext process(HAPContext context, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
+		if(configure==null)  configure = new HAPConfigureContextProcessor();
 		HAPContextGroup contextGroup = new HAPContextGroup();
 		contextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, context);
 		HAPContextGroup processed = process(contextGroup, parentContextGroup, configure, contextProcessRequirement);
@@ -12,6 +13,7 @@ public class HAPProcessorContext {
 	}
 	
 	public static HAPContextGroup process(HAPContextGroup contextGroup, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
+		if(configure==null)  configure = new HAPConfigureContextProcessor();
 		HAPContextGroup out = processStatic(contextGroup, parentContextGroup, configure, contextProcessRequirement);
 		out = processRelative(out, parentContextGroup, configure, contextProcessRequirement);
 		out.processed();
@@ -35,7 +37,6 @@ public class HAPProcessorContext {
 	}
 	
 	public static HAPContextGroup processRelative(HAPContextGroup contextGroup, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
-		
 		if(configure==null)  configure = new HAPConfigureContextProcessor();
 		
 		//resolve relative context
