@@ -182,11 +182,6 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 	var loc_registerWrapperDataOperationEvent = function(){
 		if(loc_out.prv_wrapper==undefined)  return;
 		loc_out.prv_wrapper.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, function(event, eventData, requestInfo){
-			if(loc_out.prv_id=="238"){
-				var kkkk = 5555;
-				kkkk++;
-			}
-			
 			loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, requestInfo);
 			
 			if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){

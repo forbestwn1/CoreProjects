@@ -81,10 +81,6 @@ var node_createVariableManager = function(){
 		},
 		
 		useVariable : function(variable){
-			if(variable.prv_id=="106"){
-				var kkkk;
-				kkkk++;
-			}
 			return loc_useVariable(variable.prv_id);  
 		},
 		
