@@ -29,10 +29,10 @@ public class HAPUser extends HAPSerializableImp{
 
 	private String m_name;
 
-	private List<HAPGroup> m_groups;
+	private List<String> m_groups;
 	
 	public HAPUser() {
-		this.m_groups = new ArrayList<HAPGroup>();
+		this.m_groups = new ArrayList<String>();
 	}
 	
 	public String getId() {  return this.m_id;  }
@@ -41,9 +41,9 @@ public class HAPUser extends HAPSerializableImp{
 	public String getName() {  return this.m_name;  }
 	public void setName(String name) {  this.m_name = name;   }
 
-	public void addGroup(HAPGroup group) {   this.m_groups.add(group);   }
-	public void addGroups(List<HAPGroup> groups) {  this.m_groups.addAll(groups);   }
-	public List<HAPGroup> getGroups(){   return this.m_groups;   }
+	public void addGroup(String group) {   this.m_groups.add(group);   }
+	public void addGroups(List<String> groups) {  this.m_groups.addAll(groups);   }
+	public List<String> getGroups(){   return this.m_groups;   }
 	
 
 	@Override
@@ -58,7 +58,7 @@ public class HAPUser extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_id = jsonObj.optString(ID);
 		this.m_name = jsonObj.optString(NAME);
-		this.m_groups = HAPSerializeUtility.buildListFromJsonArray(HAPGroup.class.getName(), jsonObj.optJSONArray(GROUPS));
+		this.m_groups = HAPSerializeUtility.buildListFromJsonArray(String.class.getName(), jsonObj.optJSONArray(GROUPS));
 		return true;
 	}
 

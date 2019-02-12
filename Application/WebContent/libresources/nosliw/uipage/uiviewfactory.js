@@ -273,9 +273,6 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 			loc_tagEvents.push(loc_initTagEvent(tagEvent));
 		});
 		
-		
-		
-		
 /*		
 		
 		//create script object
@@ -296,9 +293,6 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		//call init funtion in uiresource definitio
 //		loc_out.prv_getScriptObject().prv_callLocalFunction(node_COMMONCONSTANT.UIRESOURCE_FUNCTION_INIT);
 		
-//		loc_eventSource = nosliwCreateRequestEventSource();
-		
-		loc_uiResource = undefined;
 */		
 	};
 
