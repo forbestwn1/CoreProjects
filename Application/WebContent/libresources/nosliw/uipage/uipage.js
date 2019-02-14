@@ -3,11 +3,14 @@ var packageObj = library;
 
 (function(packageObj){
 	//get used node
+	var node_CONSTANT;
 	var node_createEventObject;
 	var node_makeObjectWithLifecycle;
 	var node_makeObjectWithType;
 	var node_getLifecycleInterface;
 	var node_requestServiceProcessor;
+	var node_createServiceRequestInfoSimple;
+	var node_contextUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUIPage = function(uiView){
@@ -43,16 +46,25 @@ var node_createUIPage = function(uiView){
 
 		registerEventListener : function(handler, thisContext){	return loc_eventSource.registerListener(undefined, undefined, handler, thisContext);},
 
-		command : function(command, data, requestInfo){
-			if(command=="refresh"){
-				var updateContextRequest = loc_uiView.getUpdateContextRequest(data);
-				node_requestServiceProcessor.processRequest(updateContextRequest);
+		getExecuteCommandRequest : function(command, parms, handlers, reqeustInfo){
+			if(command==node_CONSTANT.PAGE_COMMAND_REFRESH){
+				return loc_uiView.getUpdateContextRequest(parms, handlers, requestInfo);
 			}
 			else{
-				return loc_uiView.command(command, data, requestInfo);		
+				return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
+					return loc_uiView.command(command, parms, requestInfo);	
+				}, handlers, requestInfo);
 			}
-		}
+		},
 		
+		executeExecuteCommandRequest : function(command, data, handlers, reqeustInfo){
+			var requestInfo = this.getExecuteCommandRequest(command, data, handlers, reqeustInfo);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+		
+		getGetContextValueRequest : function(handlers, requestInfo){
+			return node_contextUtility.getGetContextValueRequest(loc_uiView.getContext, handlers, requestInfo);
+		}
 	};
 
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
@@ -66,11 +78,14 @@ var node_createUIPage = function(uiView){
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIPage", node_createUIPage); 

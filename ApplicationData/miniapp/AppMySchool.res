@@ -81,7 +81,7 @@
 					"role" : "application",
 					"name" : "MySchool",
 					"module" : "ModuleMySchoolResult",
-					"contextMapping" : {
+					"inputMapping" : {
 						"element" : {
 							"schoolListInModule" : {
 								"definition" : {
@@ -191,5 +191,5 @@
 			}
 		}
 	
-	},
+	}
 }

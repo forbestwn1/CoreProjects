@@ -103,7 +103,7 @@
 		}
 	},
 	"process": {
-		"init1": {
+		"init": {
 			"activity": [{
 					"id": "startActivityId",
 					"name": "startActivity",
@@ -172,7 +172,7 @@
 			"name": "schoolListUI",
 			"type": "list",
 			"page": "schoolListPage",
-			"contextMapping": {
+			"inputMapping": {
 				"element": {
 					"schoolList": {
 						"definition": {
@@ -184,7 +184,18 @@
 					}
 				}
 			},
-			"serviceMapping": {},
+			"outputMapping": {
+				"element": {
+					"schoolListInModule": {
+						"definition": {
+							"path": "schoolList"
+						},
+						"info": {
+							"relativeConnection": "physical"
+						}
+					}
+				}
+			},
 			"eventHandler": {
 				"selectSchool": {
 					"process": {

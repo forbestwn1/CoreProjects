@@ -80,6 +80,19 @@ var node_utility = function(){
 		return out;
 	};
 
+	var loc_getExecuteDataAssociationToTargetRequest = function(input, dataAssociation, target, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociationToTarget", {}), handlers, request);
+		out.addRequest(loc_getExecuteDataAssociationRequest(input, dataAssociation, {
+			success :function(request, output){
+				//assign task output back to output
+				var isOutputFlat = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_FLATOUTPUT];
+				return loc_assignToContext(output, target, isOutputFlat);
+			}
+		}));
+		return out;
+	};
+
+	
 	var loc_out = {
 			
 		getExecuteIOTaskRequest : function(input, inputDataAssociation, getTaskRequest, outputDataAssociationByResult, output, handlers, request){
@@ -92,14 +105,21 @@ var node_utility = function(){
 					executeIOTaskRequest.addRequest(getTaskRequest(taskInput, {
 						success : function(request, taskResult){
 							//process output association according to result name
-							return loc_out.getExecuteDataAssociationRequest(taskResult.resultValue, outputDataAssociationByResult[taskResult.resultName], {
-								success :function(request, taskOutput){
-									//assign task output back to output
-									var isOutputFlat = outputDataAssociationByResult[taskResult.resultName][node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_FLATOUTPUT];
-									output = loc_assignToContext(taskOutput, output, isOutputFlat);
+							return loc_getExecuteDataAssociationToTargetRequest(taskResult.resultValue, outputDataAssociationByResult[taskResult.resultName], output, {
+								success :function(request, output){
 									return new node_IOTaskResult(taskResult.resultName, output);
 								}
 							});
+							
+							
+//							return loc_out.getExecuteDataAssociationRequest(taskResult.resultValue, outputDataAssociationByResult[taskResult.resultName], {
+//								success :function(request, taskOutput){
+//									//assign task output back to output
+//									var isOutputFlat = outputDataAssociationByResult[taskResult.resultName][node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_FLATOUTPUT];
+//									output = loc_assignToContext(taskOutput, output, isOutputFlat);
+//									return new node_IOTaskResult(taskResult.resultName, output);
+//								}
+//							});
 						}
 					}));
 					return executeIOTaskRequest;
@@ -111,6 +131,10 @@ var node_utility = function(){
 		getExecuteDataAssociationRequest : function(input, dataAssociation, handlers, request){
 			return loc_getExecuteDataAssociationRequest(input, dataAssociation, handlers, request);
 		},
+		
+		getExecuteDataAssociationToTargetRequest : function(input, dataAssociation, target, handlers, request){
+			return loc_getExecuteDataAssociationToTargetRequest(input, dataAssociation, target, handlers, request);
+		}
 	};
 		
 	return loc_out;

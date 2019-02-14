@@ -11,6 +11,7 @@ import com.nosliw.data.core.process.HAPDefinitionEmbededProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.script.context.HAPParserContext;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
 
 public class HAPParserModule {
@@ -93,11 +94,18 @@ public class HAPParserModule {
 		
 		out.setPage(jsonObj.optString(HAPDefinitionModuleUI.PAGE));
 		
-		JSONObject contextMappingJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.CONTEXTMAPPING);
-		if(contextMappingJson!=null) {
-			out.setContextMapping(HAPParserContext.parseContext(contextMappingJson));
+		JSONObject inputMappingJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.INPUTMAPPING);
+		if(inputMappingJson!=null) {
+			HAPDefinitionDataAssociationGroup dataAssociation = HAPDefinitionDataAssociationGroup.newWithFlatOutput();
+			out.setInputMapping(dataAssociation);
 		}
-		
+
+		JSONObject outputMappingJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.OUTPUTMAPPING);
+		if(outputMappingJson!=null) {
+			HAPDefinitionDataAssociationGroup dataAssociation = HAPDefinitionDataAssociationGroup.newWithoutFlatOutput();
+			out.setOutputMapping(dataAssociation);
+		}
+
 		JSONObject eventHandlersJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.EVENTHANDLER);
 		if(eventHandlersJson!=null) {
 			for(Object key : eventHandlersJson.keySet()) {

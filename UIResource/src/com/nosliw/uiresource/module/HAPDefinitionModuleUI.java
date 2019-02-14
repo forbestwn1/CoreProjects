@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
 
 //each module ui is page unit in module that is alive in a module
 //as it defined:
@@ -22,8 +22,11 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	public static String PAGE = "page";
 	
 	@HAPAttribute
-	public static String CONTEXTMAPPING = "contextMapping";
-	
+	public static String INPUTMAPPING = "inputMapping";
+
+	@HAPAttribute
+	public static String OUTPUTMAPPING = "outputMapping";
+
 	@HAPAttribute
 	public static String EVENTHANDLER = "eventHandler";
 	
@@ -34,37 +37,36 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	private Map<String, HAPDefinitionModuleUIEventHander> m_eventHandlers;
 	
 	//data mapping (from data definition in module to public data definition in page)
-	private HAPContext m_contextMapping;
-	
-	//service name mapping (  service name in page -- service name in module   )
-	private Map<String, String> m_serviceMapping;
+	private HAPDefinitionDataAssociationGroup m_inputMapping;
+	private HAPDefinitionDataAssociationGroup m_outputMapping;
 	
 	//provide extra information about this module ui so that container can render it properly
 	private String m_type;
 	
 	public HAPDefinitionModuleUI() {
 		this.m_eventHandlers = new LinkedHashMap<String, HAPDefinitionModuleUIEventHander>();
-		this.m_serviceMapping = new LinkedHashMap<String, String>();
-		this.m_contextMapping = new HAPContext();
+		this.m_inputMapping = new HAPDefinitionDataAssociationGroup();
+		this.m_outputMapping = new HAPDefinitionDataAssociationGroup();
 	}
 	
 	public String getPage() {   return this.m_page;    }
 	public void setPage(String page) {   this.m_page = page;   }
 	   
-	public HAPContext getContextMapping() {   return this.m_contextMapping;   }
-	public void setContextMapping(HAPContext contextMapping) {   this.m_contextMapping = contextMapping;   }
-	
+	public HAPDefinitionDataAssociationGroup getInputMapping() {   return this.m_inputMapping;   }
+	public void setInputMapping(HAPDefinitionDataAssociationGroup contextMapping) {   this.m_inputMapping = contextMapping;   }
+
+	public HAPDefinitionDataAssociationGroup getOutputMapping() {   return this.m_outputMapping;   }
+	public void setOutputMapping(HAPDefinitionDataAssociationGroup contextMapping) {   this.m_outputMapping = contextMapping;   }
+
 	public Map<String, HAPDefinitionModuleUIEventHander> getEventHandlers(){   return this.m_eventHandlers;   }
 	public void addEventHandler(String name, HAPDefinitionModuleUIEventHander eventHandler) {  this.m_eventHandlers.put(name, eventHandler);   }
-	
-	public Map<String, String> getServiceMapping(){    return this.m_serviceMapping;  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PAGE, this.m_page);
-		jsonMap.put(CONTEXTMAPPING, HAPJsonUtility.buildJson(this.m_contextMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(INPUTMAPPING, HAPJsonUtility.buildJson(this.m_inputMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildJson(this.m_outputMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
 	}
-
 }

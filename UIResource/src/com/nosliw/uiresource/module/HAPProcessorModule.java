@@ -18,6 +18,8 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroupWithTarget;
+import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
@@ -79,14 +81,21 @@ public class HAPProcessorModule {
 			HAPProcessTracker processTracker) {
 		HAPExecutableModuleUI out = new HAPExecutableModuleUI(moduleUIDefinition, id);
 		
-		//process page
+		//process page, use context in module override context in page
 		String pageId = moduleExe.getDefinition().getPageInfo(moduleUIDefinition.getPage()).getPageId();
 		HAPContextGroup mappingContextGroup = new HAPContextGroup();
-		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, moduleUIDefinition.getContextMapping());
+		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, moduleUIDefinition.getInputMapping());
 		HAPExecutableUIUnitPage page = uiResourceMan.getUIResource(pageId, id, mappingContextGroup, moduleExe.getContextGroup());
-		out.setContextMapping(page.getContext());
 		out.setPage(page);
 
+		//build input data association
+		HAPExecutableDataAssociationGroupWithTarget inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(moduleExe.getContextGroup(), moduleUIDefinition.getInputMapping(), page.getContext(), false, contextProcessRequirement);
+		out.setInputMapping(inputDataAssocation);
+		
+		//build output data association
+		HAPExecutableDataAssociationGroupWithTarget outputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(page.getContext(), moduleUIDefinition.getOutputMapping(), moduleExe.getContextGroup(), false, contextProcessRequirement);
+		out.setOutputMapping(outputDataAssocation);
+		
 		//event handler
 		Map<String, HAPDefinitionModuleUIEventHander> eventHandlerDefs = moduleUIDefinition.getEventHandlers();
 		for(String eventName :eventHandlerDefs.keySet()) {

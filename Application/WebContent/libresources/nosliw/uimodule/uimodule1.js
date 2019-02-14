@@ -27,12 +27,12 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createUIModuleRequest = function(uiModuleDef, externalContext, handlers, request){
-	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUIModule", {"uiModule":uiModuleDef}), handlers, request);
+var node_createUIModuleRequest = function(uiModule, externalContext, env, handlers, request){
 
-	var module = node_createUIModule(uiModuleDef, uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIMODULE_INITSCRIPT](externalContext), env);
+	var module = node_createUIModule(uiModule, externalContext, env);
+	
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUIModule", {"uiModule":uiModule}), handlers, request);
 
-	//build module ui
 	var buildModuleUIRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("BuildModuleUIs", {}), {
 		success : function(request, resultSet){
 			_.each(resultSet.getResults(), function(moduleUI, index){
@@ -51,15 +51,68 @@ var node_createUIModuleRequest = function(uiModuleDef, externalContext, handlers
 	return out;
 };	
 	
-var node_createUIModule = function(uiModuleDef, contextData){
+var node_createUIModule = function(uiModule, externalContext, env){
 
-	var loc_context = contextData;
-
+	var loc_env = env;
+	
+	var loc_context;
+	
 	var loc_uis = [];
 	var loc_uisByName = {};
 
+	var loc_uiStacks = [];
+	
 	var loc_eventObject = node_createEventObject();
 
+	var lifecycleCallback = {};
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiModule, externalContext){
+		loc_context = node_contextUtility.buildContext(uiModule[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], externalContext);
+	};
+
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
+		
+	};
+
+	var loc_createModuleUIEventHandler = function(ui){
+		var loc_moduleUI = ui;
+		var loc_moduleUIEventHandler = function(eventName, eventData){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("processUIEvent", {"eventName":eventName, "eventData":eventData}));
+			out.addRequest(node_contextUtility.getGetContextValueRequest(loc_context, {
+				success : function(request, contextValue){
+					var input = contextValue[node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC];
+					var inputEvent = input.EVENT;
+					if(inputEvent==undefined){
+						inputEvent = {};
+						input.EVENT = inputEvent;
+					}
+					inputEvent.event = eventName;
+					inputEvent.data = eventData;
+					return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).
+					getExecuteEmbededProcessRequest(loc_moduleUI.getEventHandler(eventName)[node_COMMONATRIBUTECONSTANT.DEFINITIONMODULEUIEVENTHANDER_PROCESS], input);
+				}
+			}));
+			node_requestServiceProcessor.processRequest(out);
+		};
+		return loc_moduleUIEventHandler;
+	};
+	
+	
+	var loc_getExecuteUIModuleRequest = function(input, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModule", {"uiModule":uiModule, "input":input, "env":env}), handlers, request);
+		
+		//env pre exe
+		out.addRequest(loc_env.getPreExecuteModuleRequest(loc_out));
+		
+		//init
+		out.addRequest(node_contextUtility.getGetContextValueRequest(loc_context), {
+			success :function(request, contextValue){
+				return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteEmbededProcessRequest(uiModule[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS].init, contextValue);
+			}
+		});
+
+		return out;
+	};
+	
 	var loc_out = {
 		
 		prv_addUI : function(ui){
@@ -71,12 +124,14 @@ var node_createUIModule = function(uiModuleDef, contextData){
 		
 		prv_getContext : function(){  return loc_context;  },
 		
+		getExecuteRequest : function(input, handlers, requester_parent){
+			return loc_getExecuteUIModuleRequest(input, handlers, requester_parent);
+		},
+		
 		getUIs : function(){  return loc_uis;  },
 		
-		getUI : function(name) {  return loc_uisByName[name];   },
-
-		registerUIListener : function(handler){}
-		
+		getUI : function(name) {  return loc_uisByName[name];   }
+			
 	};
 
 	loc_out = node_buildServiceProvider(loc_out, "processService");
@@ -116,6 +171,6 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", functi
 nosliw.registerSetNodeDataEvent("uimodule.createModuleUIRequest", function(){node_createModuleUIRequest = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createUIModuleRequest", node_createUIModuleRequest); 
+packageObj.createChildNode("createUIModuleRequest1", node_createUIModuleRequest); 
 
 })(packageObj);

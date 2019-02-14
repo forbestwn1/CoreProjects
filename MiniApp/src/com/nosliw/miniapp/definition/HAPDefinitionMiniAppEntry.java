@@ -12,6 +12,7 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
+import com.nosliw.uiresource.common.HAPComponentWithConfiguration;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionMiniAppEntry  extends HAPEntityInfoWritableImp{
@@ -21,7 +22,10 @@ public class HAPDefinitionMiniAppEntry  extends HAPEntityInfoWritableImp{
 
 	//all modules in this entry
 	private List<HAPDefinitionMiniAppModule> m_modules;
+
+	private HAPComponentWithConfiguration m_configure;
 	
+
 	public HAPDefinitionMiniAppEntry() {
 		this.m_modules = new ArrayList<HAPDefinitionMiniAppModule>();
 	}

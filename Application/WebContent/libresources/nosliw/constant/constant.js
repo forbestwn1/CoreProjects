@@ -171,6 +171,8 @@ var node_CONSTANT=
 	  
 	  "UIRESOURCE_FUNCTION_INIT" : 		"init",
 	  "UIRESOURCE_FUNCTION_DESTROY" : 	"destroy",
+	  
+	  "PAGE_COMMAND_REFRESH" : "refresh"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

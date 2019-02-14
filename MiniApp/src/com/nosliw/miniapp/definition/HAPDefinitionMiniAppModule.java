@@ -26,7 +26,8 @@ public class HAPDefinitionMiniAppModule  extends HAPEntityInfoWritableImp{
 	
 	private String m_module;
 	
-	private HAPContext m_contextMapping;
+	private HAPContext m_inputMapping;
+	private HAPContext m_outputMapping;
 	
 	public HAPDefinitionMiniAppModule() {
 		this.m_contextMapping = new HAPContext();

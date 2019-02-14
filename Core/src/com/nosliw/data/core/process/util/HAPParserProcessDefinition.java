@@ -39,9 +39,8 @@ public class HAPParserProcessDefinition {
 		JSONObject outputMappingJson = processJson.optJSONObject(HAPDefinitionEmbededProcess.OUTPUTMAPPING);
 		if(outputMappingJson!=null) {
 			for(Object key : outputMappingJson.keySet()) {
-				HAPDefinitionDataAssociationGroup dataAssociation = new HAPDefinitionDataAssociationGroup();
+				HAPDefinitionDataAssociationGroup dataAssociation = HAPDefinitionDataAssociationGroup.newWithoutFlatOutput();
 				dataAssociation.buildObject(outputMappingJson.opt((String)key), HAPSerializationFormat.JSON);
-				dataAssociation.setIsFlatOutput(false);
 				out.addOutputMapping((String)key, dataAssociation);
 			}
 		}

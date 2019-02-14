@@ -13,50 +13,65 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createModuleUIRequest = function(moduleUI, externalContext, handlers, request){
-	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleUI", {"moduleUI":moduleUI, "externalContext":externalContext}), handlers, request);
+var node_createModuleUIRequest = function(moduleUIDef, moduleContext, handlers, request){
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleUI", {"moduleUIDef":moduleUIDef, "moduleContext":moduleContext}), handlers, request);
 	
-	//build context
-	var context = node_contextUtility.buildContext(moduleUI[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], externalContext);
 	//generate page
-	out.addRequest(nosliw.runtime.getUIPageService().getGenerateUIPageRequest(moduleUI[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_PAGE], context, {
+	out.addRequest(nosliw.runtime.getUIPageService().getGenerateUIPageRequest(moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_PAGE], undefined, {
 		success :function(requestInfo, page){
-			return node_createModuleUI(moduleUI, context, page);
+			var moduleUI = node_createModuleUI(moduleUIDef, page);
+			//syn in data with module context
+			return moduleUI.getSynInUIDataRequest(moduleContext, {
+				success : function(requestInfo){
+					return moduleUI;
+				}
+			});
 		}
 	}));
 	return out;
 };
-	
-var node_createModuleUI = function(moduleUI, context, page){
-	var loc_moduleUI = moduleUI;
+
+var node_createModuleUI = function(moduleUIDef, page){
+	var loc_moduleUIDef = moduleUIDef;
 	var loc_page = page;
-	var loc_context = context;
 	
 	var loc_out = {
 			
 		//take command
 		getExecuteCommandRequest : function(commandName, parms, handlers, request){
-			return node_createServiceRequestInfoSimple(new node_ServiceInfo("executeCommand", {"commandName":commandName, "pamrs":parms}), 
-					function(){
-						loc_page.command(commandName, parms);
-					}, 
-			handlers, request);
+			return loc_page.getExecuteCommandRequest(commandName, parms, handlers, reqeustInfo);
 		},
 		
-		executeCommand : function(commandName, parms){
-			loc_page.command(commandName, parms);
+		executeExecuteCommandRequest : function(commandName, parms, handlers, request){
+			var requestInfo = this.getExecuteCommandRequest(commandName, parms, handlers, request);
+			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		
-		//
-		registerListener : function(handler){
-			loc_page.registerEventListener(handler);
+		registerListener : function(handler){		loc_page.registerEventListener(handler);	},
+		
+		getSynInUIDataRequest : function(moduleContext, handlers, request){ 
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SynInUIData", {"moduleContext":moduleContext}), handlers, request);
+			out.addRequest(node_ioTaskUtility.getExecuteDataAssociationRequest(moduleContext, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], {
+				success : function(request, input){
+					return loc_page.getExecuteCommandRequest(input, node_CONSTANT.PAGE_COMMAND_REFRESH);
+				}
+			}, request));
+			return out;
 		},
 		
-		getEventHandler : function(eventName){   return loc_moduleUI[node_COMMONATRIBUTECONSTANT.DEFINITIONMODULEUI_EVENTHANDLER][eventName];   },
+		getSynOutUIDataRequest : function(moduleContext, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SynOutUIData", {"moduleContext":moduleContext}), handlers, request);
+			out.addRequest(loc_page.getGetContextValueRequest({
+				success : function(request, contextValue){
+					return node_ioTaskUtility.getExecuteDataAssociationToTargetRequest(contextValue, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_OUTPUTMAPPING], moduleContext);
+				}
+			}));
+			return out;
+		},
 		
-		getPage : function(){		return page;		},
+		getPage : function(){		return loc_page;		},
 		
-		getName : function(){	return moduleUI[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];	}
+		getName : function(){	return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];	}
 	};
 	
 	return loc_out;

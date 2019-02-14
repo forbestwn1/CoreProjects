@@ -29,6 +29,18 @@ public class HAPDefinitionDataAssociationGroup extends HAPContext{
 		this.m_isFlatOutput = true;
 	}
 	
+	public static HAPDefinitionDataAssociationGroup newWithFlatOutput() {
+		HAPDefinitionDataAssociationGroup out = new HAPDefinitionDataAssociationGroup();
+		out.m_isFlatOutput = true;
+		return out;
+	}
+	
+	public static HAPDefinitionDataAssociationGroup newWithoutFlatOutput() {
+		HAPDefinitionDataAssociationGroup out = new HAPDefinitionDataAssociationGroup();
+		out.m_isFlatOutput = false;
+		return out;
+	}
+	
 	public HAPInfo getInfo() {   return this.m_info;   }
 	
 	public void setIsFlatOutput(boolean isFlatOutput) {  this.m_isFlatOutput = isFlatOutput;  }

@@ -9,14 +9,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
-import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPUtilityContextScript;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
@@ -69,7 +65,7 @@ public class HAPExecutableProcess extends HAPExecutableImp{
 		this.m_processDefinition = definition;
 		this.m_id = id;
 	}
-
+ 
 	public HAPDefinitionProcess getDefinition() {   return this.m_processDefinition;    }
 	
 	public Map<String, HAPExecutableActivity> getActivities(){  return this.m_activities;   }
