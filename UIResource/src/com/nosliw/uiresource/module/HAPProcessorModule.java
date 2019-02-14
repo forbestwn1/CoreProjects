@@ -57,7 +57,7 @@ public class HAPProcessorModule {
 		//process global processes in module
 		Map<String, HAPDefinitionEmbededProcess> internalProcesses = moduleDefinition.getProcesses();
 		for(String name : internalProcesses.keySet()) {
-			HAPExecutableEmbededProcess processExe = HAPProcessorProcess.process(internalProcesses.get(name), name, out.getContextGroup(), null, allServiceProviders, processMan, contextProcessRequirement, processTracker);
+			HAPExecutableEmbededProcess processExe = HAPProcessorProcess.process(internalProcesses.get(name), name, out.getContext(), null, allServiceProviders, processMan, contextProcessRequirement, processTracker);
 			out.addProcess(name, processExe);
 		}
 
@@ -85,15 +85,15 @@ public class HAPProcessorModule {
 		String pageId = moduleExe.getDefinition().getPageInfo(moduleUIDefinition.getPage()).getPageId();
 		HAPContextGroup mappingContextGroup = new HAPContextGroup();
 		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, moduleUIDefinition.getInputMapping());
-		HAPExecutableUIUnitPage page = uiResourceMan.getUIResource(pageId, id, mappingContextGroup, moduleExe.getContextGroup());
+		HAPExecutableUIUnitPage page = uiResourceMan.getUIResource(pageId, id, mappingContextGroup, moduleExe.getContext());
 		out.setPage(page);
 
 		//build input data association
-		HAPExecutableDataAssociationGroupWithTarget inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(moduleExe.getContextGroup(), moduleUIDefinition.getInputMapping(), page.getContext(), false, contextProcessRequirement);
+		HAPExecutableDataAssociationGroupWithTarget inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(moduleExe.getContext(), moduleUIDefinition.getInputMapping(), page.getContext(), false, contextProcessRequirement);
 		out.setInputMapping(inputDataAssocation);
 		
 		//build output data association
-		HAPExecutableDataAssociationGroupWithTarget outputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(page.getContext(), moduleUIDefinition.getOutputMapping(), moduleExe.getContextGroup(), false, contextProcessRequirement);
+		HAPExecutableDataAssociationGroupWithTarget outputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(page.getContext(), moduleUIDefinition.getOutputMapping(), moduleExe.getContext(), false, contextProcessRequirement);
 		out.setOutputMapping(outputDataAssocation);
 		
 		//event handler
@@ -103,7 +103,7 @@ public class HAPProcessorModule {
 			HAPExecutableModuleUIEventHandler eventHandlerExe = new HAPExecutableModuleUIEventHandler(eventHandlerDef);
 
 			HAPContextDefinitionRoot eventRootNode = buildContextRootFromEvent(out.getPage().getEventDefinition(eventName));
-			HAPContextGroup eventContext = moduleExe.getContextGroup().cloneContextGroup();
+			HAPContextGroup eventContext = moduleExe.getContext().cloneContextGroup();
 			eventContext.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC).addElement("EVENT", eventRootNode);
 			eventHandlerExe.setProcess(HAPProcessorProcess.process(eventHandlerDef.getProcess(), eventName, eventContext, null, serviceProviders, processMan, contextProcessRequirement, processTracker));
 			out.addEventHandler(eventName, eventHandlerExe);

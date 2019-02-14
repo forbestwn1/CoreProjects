@@ -1,6 +1,7 @@
 package com.nosliw.data.core.script.context.dataassociation;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ public class HAPExecutableDataAssociationGroupWithTarget extends HAPExecutableDa
 
 	public HAPExecutableDataAssociationGroupWithTarget(HAPDefinitionDataAssociationGroup definition) {
 		super(definition);
+		this.m_outputMatchers = new LinkedHashMap<String, HAPMatchers>();
 	}
 	
 	public void addOutputMatchers(String path, HAPMatchers matchers) {   this.m_outputMatchers.put(path, matchers);     }
