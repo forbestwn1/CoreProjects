@@ -19,6 +19,7 @@ import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.script.context.HAPUtilityContextInfo;
 
 public class HAPProcessorDataAssociation {
 
@@ -189,7 +190,7 @@ public class HAPProcessorDataAssociation {
 		for(String eleName : dataAssociationExe.getContext().getContext().getElementNames()) {
 			HAPContextDefinitionRoot root = dataAssociationExe.getContext().getContext().getElement(eleName);
 			//only root do mapping
-			if(isMappedRoot(root)) {
+			if(isMappedRoot(root) && HAPConstant.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(root.getInfo()))) {
 				pathMapping.putAll(HAPUtilityDataAssociation.buildRelativePathMapping(root, buildRootNameAccordingToFlat(eleName, isFlatOutput), isFlatInput));
 			}
 		}

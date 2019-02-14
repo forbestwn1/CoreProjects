@@ -36,6 +36,12 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 	public Object getValue(String name) {		return this.m_values.get(name);	}
 
 	@Override
+	public Object getValue(String name, Object defaultValue) {
+		Object out = this.getValue(name);
+		return out==null?defaultValue:out;
+	}
+
+	@Override
 	public void setValue(String name, Object value) {		this.m_values.put(name, value);	}
 
 	@Override
@@ -113,4 +119,5 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 		}
 		return false;
 	}
+
 }
