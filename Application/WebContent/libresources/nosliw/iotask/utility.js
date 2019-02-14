@@ -69,7 +69,7 @@ var node_utility = function(){
 				_.each(resultSet.getResults(), function(result, path){
 					node_objectOperationUtility.operateObject(output, path, node_CONSTANT.WRAPPER_OPERATION_SET, result);
 				});
-				return globalData;
+				return output;
 			}
 		});
 		_.each(matchersByPath, function(matchers, path){

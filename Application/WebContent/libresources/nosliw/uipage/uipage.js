@@ -46,7 +46,7 @@ var node_createUIPage = function(uiView){
 
 		registerEventListener : function(handler, thisContext){	return loc_eventSource.registerListener(undefined, undefined, handler, thisContext);},
 
-		getExecuteCommandRequest : function(command, parms, handlers, reqeustInfo){
+		getExecuteCommandRequest : function(command, parms, handlers, requestInfo){
 			if(command==node_CONSTANT.PAGE_COMMAND_REFRESH){
 				return loc_uiView.getUpdateContextRequest(parms, handlers, requestInfo);
 			}
@@ -57,9 +57,8 @@ var node_createUIPage = function(uiView){
 			}
 		},
 		
-		executeExecuteCommandRequest : function(command, data, handlers, reqeustInfo){
-			var requestInfo = this.getExecuteCommandRequest(command, data, handlers, reqeustInfo);
-			node_requestServiceProcessor.processRequest(requestInfo);
+		executeExecuteCommandRequest : function(command, data, handlers, requestInfo){
+			node_requestServiceProcessor.processRequest(this.getExecuteCommandRequest(command, data, handlers, requestInfo));
 		},
 		
 		getGetContextValueRequest : function(handlers, requestInfo){

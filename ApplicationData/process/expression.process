@@ -100,6 +100,16 @@
 									"path" : "business.a.aa"
 								}
 							}, 
+							"fromVar" : {
+								"definition" : {
+									"path" : "fromVar"
+								}
+							}, 
+							"toVar" : {
+								"definition" : {
+									"path" : "toVar"
+								}
+							}
 						},
 						"info": {}
 					},

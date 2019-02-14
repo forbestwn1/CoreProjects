@@ -10,6 +10,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
 	var node_contextUtility;
+	var node_ioTaskUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -53,7 +54,7 @@ var node_createModuleUI = function(moduleUIDef, page){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SynInUIData", {"moduleContext":moduleContext}), handlers, request);
 			out.addRequest(node_ioTaskUtility.getExecuteDataAssociationRequest(moduleContext, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], {
 				success : function(request, input){
-					return loc_page.getExecuteCommandRequest(input, node_CONSTANT.PAGE_COMMAND_REFRESH);
+					return loc_page.getExecuteCommandRequest(node_CONSTANT.PAGE_COMMAND_REFRESH, input);
 				}
 			}, request));
 			return out;
@@ -88,6 +89,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleUIRequest", node_createModuleUIRequest); 

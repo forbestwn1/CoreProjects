@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("service");    
+var packageObj = library;    
 
 (function(packageObj){
 	//get used node
@@ -21,21 +21,56 @@ var packageObj = library.getChildPackage("service");
 	var node_createUIModuleRequest;
 	
 //*******************************************   Start Node Definition  ************************************** 	
- 
-var loc_createRuntimeRequest = function(uiModuleDef, input, handlers, request){
-	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":moduleDef, "input":input}), handlers, requestInfo);
 
-	node_createUIModuleRequest(uiModuleDef, input, {
-		success : function(request, uiModule){
-			return loc_createRuntime(uiModule);
-		}
-	});
+var loc_envFactory = function(uiModule){
 	
+	var loc_buildPage = function(moduleUI, env){
+		var pageDiv = $("<div data-role='page' id='"+uiModule.getName()+"'></div>");
+		uiModule.getPage().appendTo(pageDiv);
+		pageDiv.appendTo(evn.root);
+	};
+	
+	var loc_out = {
+			getPresentUIRequest : function(uiName, mode){
+				
+			},
+			
+			getPreStartModuleRequest :function(uiModule, handlers, requestInfo){
+				out = node_createServiceRequestInfoSimple(new node_ServiceInfo("PreExecuteModule", {"uiModule":uiModule}), 
+					function(requestInfo){
+						_.each(uiModule.getUIs(), function(ui, index){
+							var pageDiv = $("<div data-role='page' id='"+ui.getName()+"'></div>");
+							ui.getPage().appendTo(pageDiv);
+							pageDiv.appendTo($('#testDiv'));
+						});
+					}, 
+					handlers, requestInfo);
+				return out;
+			},
+			
+			executeUICommand : function(uiName, commandName, commandData){
+				loc_module.getUI(uiName).executeCommand(commandName, commandData);
+			}
+			
+	};
+	return loc_out;
+};
+	
+	
+var node_createModuleRuntimeRequest = function(uiModuleDef, input, envFactory, handlers, request){
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef, "input":input}), handlers, request);
+	out.addRequest(node_createUIModuleRequest(uiModuleDef, input, {
+		success : function(request, uiModule){
+			return loc_createModuleRuntime(uiModule, loc_envFactory(uiModule));
+		}
+	}));
+	return out;
 };
 
-var loc_createRuntime = function(uiModule){
+var loc_createModuleRuntime = function(uiModule, env){
 	
 	var loc_uiModule = uiModule;
+	var loc_env = env;
 	
 	loc_uiModule.registerUIListener(function(eventName, eventData){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("processUIEvent", {"eventName":eventName, "eventData":eventData}));
@@ -56,54 +91,17 @@ var loc_createRuntime = function(uiModule){
 		node_requestServiceProcessor.processRequest(out);
 	});
 
-	
-	var loc_env = {
-		setModule : function(module){
-			loc_module = module;
-		},
-		
-		getPresentUIRequest : function(uiName, mode){
-			
-		},
-		
-		getPreExecuteModuleRequest :function(uiModule, handlers, requestInfo){
-			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("PreExecuteModule", {"uiModule":uiModule}), 
-				function(requestInfo){
-					_.each(uiModule.getUIs(), function(ui, index){
-						var pageDiv = $("<div data-role='page' id='"+ui.getName()+"'></div>");
-						ui.getPage().appendTo(pageDiv);
-						pageDiv.appendTo($('#testDiv'));
-					});
-				}, 
-				handlers, requestInfo);
-			return out;
-		},
-		
-		executeUICommand : function(uiName, commandName, commandData){
-			loc_module.getUI(uiName).executeCommand(commandName, commandData);
-		}
-	};
-
-	var loc_buildPage = function(moduleUI, env){
-		var pageDiv = $("<div data-role='page' id='"+uiModule.getName()+"'></div>");
-		uiModule.getPage().appendTo(pageDiv);
-		pageDiv.appendTo(evn.root);
-	};
-	
 	var loc_out = {
-		startRequest : function(){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModule", {"uiModule":uiModule, "input":input, "env":env}), handlers, request);
+		startRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModule", {"uiModule":loc_uiModule}), handlers, request);
 			
 			//env pre exe
-			out.addRequest(loc_env.getPreExecuteModuleRequest(loc_out));
+			out.addRequest(loc_env.getPreStartModuleRequest());
 			
 			//init
-			out.addRequest(node_contextUtility.getGetContextValueRequest(loc_context), {
-				success :function(request, contextValue){
-					return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteEmbededProcessRequest(uiModule[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS].init, contextValue);
-				}
-			});
+			out.addRequest(nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteEmbededProcessRequest(loc_uiModule[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS].init, loc_uiModule.getContext()));
 
+			return out;
 		},
 		
 		
@@ -134,6 +132,6 @@ nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contex
 nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){node_createUIModuleRequest = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createUIModuleService", node_createUIModuleService); 
+packageObj.createChildNode("createModuleRuntimeRequest", node_createModuleRuntimeRequest); 
 
 })(packageObj);

@@ -27,10 +27,10 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createUIModuleRequest = function(uiModuleDef, externalContext, handlers, request){
+var node_createUIModuleRequest = function(uiModuleDef, input, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUIModule", {"uiModule":uiModuleDef}), handlers, request);
 
-	var module = node_createUIModule(uiModuleDef, uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIMODULE_INITSCRIPT](externalContext), env);
+	var module = node_createUIModule(uiModuleDef, uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input));
 
 	//build module ui
 	var buildModuleUIRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("BuildModuleUIs", {}), {
@@ -43,8 +43,8 @@ var node_createUIModuleRequest = function(uiModuleDef, externalContext, handlers
 	});
 
 	// build uis
-	_.each(uiModule[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_UI], function(ui, index){
-		buildModuleUIRequest.addRequest(index, node_createModuleUIRequest(ui, module.prv_getContext()));
+	_.each(uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_UI], function(ui, index){
+		buildModuleUIRequest.addRequest(index, node_createModuleUIRequest(ui, module.getContext()));
 	});
 	out.addRequest(buildModuleUIRequest);
 	
@@ -69,7 +69,7 @@ var node_createUIModule = function(uiModuleDef, contextData){
 			ui.registerListener(loc_createModuleUIEventHandler(ui));
 		},
 		
-		prv_getContext : function(){  return loc_context;  },
+		getContext : function(){  return loc_context;  },
 		
 		getUIs : function(){  return loc_uis;  },
 		
@@ -81,11 +81,8 @@ var node_createUIModule = function(uiModuleDef, contextData){
 
 	loc_out = node_buildServiceProvider(loc_out, "processService");
 	
-	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIMODULE);
 
-	node_getLifecycleInterface(loc_out).init(uiModule, externalContext);
-	
 	return loc_out;
 };
 

@@ -24,78 +24,31 @@ var packageObj = library.getChildPackage("service");
 
 var node_createUIModuleService = function(){
 	
-	var loc_createEnv = function(){
-		var loc_module;
-		
-		var loc_out = {
-				setModule : function(module){
-					loc_module = module;
-				},
-				
-				getPresentUIRequest : function(uiName, mode){
-					
-				},
-				
-				getPreExecuteModuleRequest :function(uiModule, handlers, requestInfo){
-					out = node_createServiceRequestInfoSimple(new node_ServiceInfo("PreExecuteModule", {"uiModule":uiModule}), 
-						function(requestInfo){
-							_.each(uiModule.getUIs(), function(ui, index){
-								var pageDiv = $("<div data-role='page' id='"+ui.getName()+"'></div>");
-								ui.getPage().appendTo(pageDiv);
-								pageDiv.appendTo($('#testDiv'));
-							});
-						}, 
-						handlers, requestInfo);
-					return out;
-				},
-				
-				executeUICommand : function(uiName, commandName, commandData){
-					loc_module.getUI(uiName).executeCommand(commandName, commandData);
-				}
-			};
-		
-		return loc_out;
-	};
-	
-	
-	var loc_buildPage = function(moduleUI, env){
-		var pageDiv = $("<div data-role='page' id='"+uiModule.getName()+"'></div>");
-		uiModule.getPage().appendTo(pageDiv);
-		pageDiv.appendTo(evn.root);
-	};
-	
-	var loc_getExecuteUIModuleRequest = function(uiModule, input, env, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModule", {"uiModule":uiModule, "input":input, "env":env}), handlers, request);
-
-		var env = loc_createEnv();
-		out.addRequest(node_createUIModuleRequest(uiModule, input, env, {
-			success : function(request, uiModuleObj){
-				env.setModule(uiModuleObj);
-				return uiModuleObj.getExecuteRequest(input);
-			}
-		}));
-		
-		return out;
-	};
-	
 	var loc_out = {
 
-		getExecuteUIModuleRequest : function(id, input, env, handlers, requester_parent){
+		getExecuteUIModuleRequest : function(id, input, envFactory, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModuleResource", {"id":id, "input":input}), handlers, requestInfo);
 
+			//get ui module definition by resource id
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([id], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE, {
-				success : function(requestInfo, uiModules){
-					var uiModule = uiModules[id];
-					return loc_getExecuteUIModuleRequest(uiModule, input, env);
+				success : function(requestInfo, uiModuleDefs){
+					//create ui module runtime
+					var uiModuleDef = uiModuleDefs[id];
+					return node_createModuleRuntimeRequest(uiModuleDef, input, envFactory, {
+						success : function(request, uiModuleRuntime){
+							//start ui module runtime
+							return uiModuleRuntime.startRequest();
+						}
+					});
 				}
 			}));
 			
 			return out;
 		},
 			
-		executeUIModuleRequest : function(id, input, env, handlers, requester_parent){
-			var requestInfo = this.getExecuteUIModuleRequest(id, input, env, handlers, requester_parent);
+		executeUIModuleRequest : function(id, input, envFactory, handlers, requester_parent){
+			var requestInfo = this.getExecuteUIModuleRequest(id, input, envFactory, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 			
@@ -125,7 +78,8 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService
 nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){node_createUIModuleRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("uimodule.createModuleRuntimeRequest", function(){node_createModuleRuntimeRequest = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createUIModuleService", node_createUIModuleService); 

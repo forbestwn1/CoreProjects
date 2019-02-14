@@ -142,7 +142,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 		},
 			
 		addRequest : function(requestInfo){
-			loc_addChildRequest(requestInfo);
+			if(requestInfo!=undefined)	loc_addChildRequest(requestInfo);
 		},
 	};
 	
