@@ -21,27 +21,6 @@ var packageObj = library;
 
 var node_utility = function(){
 	
-	var loc_assignToContext = function(source, target, isFlat){
-		if(target==undefined)   target = {};
-		if(isFlat==true){
-			_.each(source, function(value, name){
-				target[name] = value;
-			});
-		}
-		else{
-			_.each(source, function(c, categary){
-				var cc = target[categary];
-				if(cc==undefined){
-					cc = {};
-					target[categary] = cc;
-				}
-				_.each(c, function(ele, name){
-					cc[name] = ele;
-				});
-			});
-		}
-		return target;
-	}
 	
 	var loc_dyanimicValueBuild = function(output, outputPathSegs, input, intpuPathSegs){
 		var inputValue = node_objectOperationUtility.getObjectAttributeByPathSegs(input, intpuPathSegs);
@@ -86,7 +65,7 @@ var node_utility = function(){
 			success :function(request, output){
 				//assign task output back to output
 				var isOutputFlat = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_FLATOUTPUT];
-				return loc_assignToContext(output, target, isOutputFlat);
+				return loc_out.assignToContext(output, target, isOutputFlat);
 			}
 		}));
 		return out;
@@ -110,16 +89,6 @@ var node_utility = function(){
 									return new node_IOTaskResult(taskResult.resultName, output);
 								}
 							});
-							
-							
-//							return loc_out.getExecuteDataAssociationRequest(taskResult.resultValue, outputDataAssociationByResult[taskResult.resultName], {
-//								success :function(request, taskOutput){
-//									//assign task output back to output
-//									var isOutputFlat = outputDataAssociationByResult[taskResult.resultName][node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_FLATOUTPUT];
-//									output = loc_assignToContext(taskOutput, output, isOutputFlat);
-//									return new node_IOTaskResult(taskResult.resultName, output);
-//								}
-//							});
 						}
 					}));
 					return executeIOTaskRequest;
@@ -134,7 +103,40 @@ var node_utility = function(){
 		
 		getExecuteDataAssociationToTargetRequest : function(input, dataAssociation, target, handlers, request){
 			return loc_getExecuteDataAssociationToTargetRequest(input, dataAssociation, target, handlers, request);
+		},
+		
+		getContextTypes : function(){
+			return [ 
+				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC, 
+				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PROTECTED, 
+				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_INTERNAL, 
+				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PRIVATE 
+			];
+		},
+		
+		assignToContext : function(source, target, isFlat){
+			if(target==undefined)   target = {};
+			if(isFlat==true){
+				_.each(source, function(value, name){
+					target[name] = value;
+				});
+			}
+			else{
+				_.each(source, function(c, categary){
+					var cc = target[categary];
+					if(cc==undefined){
+						cc = {};
+						target[categary] = cc;
+					}
+					_.each(c, function(ele, name){
+						cc[name] = ele;
+					});
+				});
+			}
+			return target;
 		}
+
+
 	};
 		
 	return loc_out;

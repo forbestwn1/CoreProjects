@@ -20,7 +20,7 @@
 						"definition": {
 							"criteria": "test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%"
 						},
-						"defaultValue": {
+						"defaultValue1": {
 							"dataTypeId": "test.map;1.0.0",
 							"value": {
 								"schoolName": {

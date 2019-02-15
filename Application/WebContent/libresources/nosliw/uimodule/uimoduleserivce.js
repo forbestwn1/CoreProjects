@@ -38,7 +38,7 @@ var node_createUIModuleService = function(){
 					return node_createModuleRuntimeRequest(uiModuleDef, input, envFactory, {
 						success : function(request, uiModuleRuntime){
 							//start ui module runtime
-							return uiModuleRuntime.startRequest();
+							return uiModuleRuntime.getStartRequest();
 						}
 					});
 				}

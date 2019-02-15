@@ -11,6 +11,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_contextUtility;
 	var node_ioTaskUtility;
+	var node_requestServiceProcessor;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -40,10 +41,10 @@ var node_createModuleUI = function(moduleUIDef, page){
 			
 		//take command
 		getExecuteCommandRequest : function(commandName, parms, handlers, request){
-			return loc_page.getExecuteCommandRequest(commandName, parms, handlers, reqeustInfo);
+			return loc_page.getExecuteCommandRequest(commandName, parms, handlers, request);
 		},
 		
-		executeExecuteCommandRequest : function(commandName, parms, handlers, request){
+		executeCommandRequest : function(commandName, parms, handlers, request){
 			var requestInfo = this.getExecuteCommandRequest(commandName, parms, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
@@ -72,7 +73,9 @@ var node_createModuleUI = function(moduleUIDef, page){
 		
 		getPage : function(){		return loc_page;		},
 		
-		getName : function(){	return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];	}
+		getName : function(){	return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];	},
+		
+		getEventHandler : function(eventName){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_EVENTHANDLER][eventName];   }
 	};
 	
 	return loc_out;
@@ -90,6 +93,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleUIRequest", node_createModuleUIRequest); 

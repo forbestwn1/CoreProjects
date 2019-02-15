@@ -63,8 +63,10 @@ public class HAPProcessorModule {
 
 		//process ui
 		for(HAPDefinitionModuleUI ui : moduleDefinition.getUIs()) {
-			HAPExecutableModuleUI uiExe = process(ui, ui.getName(), out, allServiceProviders, processMan, uiResourceMan, contextProcessRequirement, processTracker);
-			out.addModuleUI(uiExe);
+			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(ui.getStatus())) {
+				HAPExecutableModuleUI uiExe = process(ui, ui.getName(), out, allServiceProviders, processMan, uiResourceMan, contextProcessRequirement, processTracker);
+				out.addModuleUI(uiExe);
+			}
 		}
 		
 		return out;
@@ -83,13 +85,14 @@ public class HAPProcessorModule {
 		
 		//process page, use context in module override context in page
 		String pageId = moduleExe.getDefinition().getPageInfo(moduleUIDefinition.getPage()).getPageId();
+
 		HAPContextGroup mappingContextGroup = new HAPContextGroup();
-		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, moduleUIDefinition.getInputMapping());
-		HAPExecutableUIUnitPage page = uiResourceMan.getUIResource(pageId, id, mappingContextGroup, moduleExe.getContext());
+		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, HAPProcessorDataAssociation.processDataAssociation(moduleExe.getContext(), moduleUIDefinition.getInputMapping(), contextProcessRequirement).getSolidContext());
+		HAPExecutableUIUnitPage page = uiResourceMan.getUIResource(pageId, id, mappingContextGroup, null);
 		out.setPage(page);
 
 		//build input data association
-		HAPExecutableDataAssociationGroupWithTarget inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(moduleExe.getContext(), moduleUIDefinition.getInputMapping(), page.getContext(), false, contextProcessRequirement);
+		HAPExecutableDataAssociationGroupWithTarget inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(moduleExe.getContext(), moduleUIDefinition.getInputMapping(), page.getFlatContext().getContext(), false, contextProcessRequirement);
 		out.setInputMapping(inputDataAssocation);
 		
 		//build output data association

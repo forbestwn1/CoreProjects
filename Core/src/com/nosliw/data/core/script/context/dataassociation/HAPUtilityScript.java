@@ -31,7 +31,7 @@ public class HAPUtilityScript {
 		
 		//build init output object for mapped root
 		HAPContext context = new HAPContext();
-		HAPContext daCotnext = dataAssociationGroup.getContext().getContext();
+		HAPContext daCotnext = dataAssociationGroup.getContext();
 		for(String eleName : daCotnext.getElementNames()) {
 			if(HAPProcessorDataAssociation.isMappedRoot(daCotnext.getElement(eleName))) {
 				context.addElement(eleName, daCotnext.getElement(eleName));

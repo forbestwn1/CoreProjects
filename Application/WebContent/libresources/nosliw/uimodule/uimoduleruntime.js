@@ -19,10 +19,13 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_contextUtility;
 	var node_createUIModuleRequest;
+	var node_ioTaskUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_envFactory = function(uiModule){
+	
+	var loc_uiModule = uiModule;
 	
 	var loc_buildPage = function(moduleUI, env){
 		var pageDiv = $("<div data-role='page' id='"+uiModule.getName()+"'></div>");
@@ -35,10 +38,10 @@ var loc_envFactory = function(uiModule){
 				
 			},
 			
-			getPreStartModuleRequest :function(uiModule, handlers, requestInfo){
+			getPreStartModuleRequest :function(handlers, requestInfo){
 				out = node_createServiceRequestInfoSimple(new node_ServiceInfo("PreExecuteModule", {"uiModule":uiModule}), 
 					function(requestInfo){
-						_.each(uiModule.getUIs(), function(ui, index){
+						_.each(loc_uiModule.getUIs(), function(ui, index){
 							var pageDiv = $("<div data-role='page' id='"+ui.getName()+"'></div>");
 							ui.getPage().appendTo(pageDiv);
 							pageDiv.appendTo($('#testDiv'));
@@ -49,7 +52,7 @@ var loc_envFactory = function(uiModule){
 			},
 			
 			executeUICommand : function(uiName, commandName, commandData){
-				loc_module.getUI(uiName).executeCommand(commandName, commandData);
+				loc_uiModule.getUI(uiName).executeCommandRequest(commandName, commandData);
 			}
 			
 	};
@@ -72,39 +75,62 @@ var loc_createModuleRuntime = function(uiModule, env){
 	var loc_uiModule = uiModule;
 	var loc_env = env;
 	
-	loc_uiModule.registerUIListener(function(eventName, eventData){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("processUIEvent", {"eventName":eventName, "eventData":eventData}));
-		out.addRequest(node_contextUtility.getGetContextValueRequest(loc_context, {
-			success : function(request, contextValue){
-				var input = contextValue[node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC];
-				var inputEvent = input.EVENT;
-				if(inputEvent==undefined){
-					inputEvent = {};
-					input.EVENT = inputEvent;
-				}
-				inputEvent.event = eventName;
-				inputEvent.data = eventData;
-				return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).
-				getExecuteEmbededProcessRequest(loc_moduleUI.getEventHandler(eventName)[node_COMMONATRIBUTECONSTANT.DEFINITIONMODULEUIEVENTHANDER_PROCESS], input);
-			}
-		}));
-		node_requestServiceProcessor.processRequest(out);
+	loc_uiModule.registerUIListener(function(eventName, uiName, eventData){
+		var eventHandler = loc_uiModule.getEventHandler(uiName, eventName);
+		if(eventHandler!=undefined){
+			var extraInput = {
+				EVENT : {
+					event : eventName,
+					data : eventData
+				} 
+			};
+			node_requestServiceProcessor.processRequest(loc_getExecuteModuleProcessRequest(eventHandler[node_COMMONATRIBUTECONSTANT.DEFINITIONMODULEUIEVENTHANDER_PROCESS], extraInput));
+		}
 	});
 
+	var loc_getExecuteModuleProcessRequest = function(process, extraInput, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteModuleProcess", {"process":process}), handlers, request);
+		var processInput = {};
+		_.each(node_ioTaskUtility.getContextTypes(), function(categary, index){
+			var context = loc_uiModule.getContext()[categary];
+			if(context!=undefined){
+				_.each(context, function(ele, name){
+					processInput[name] = ele;
+				});
+			}			
+		});
+		
+		if(extraInput!=undefined){
+			_.each(extraInput, function(input, name){
+				processInput[name] = input;
+			});
+		}
+		
+		out.addRequest(nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteEmbededProcessRequest(process, processInput, {
+			success : function(request, processResult){
+				loc_uiModule.setContext(node_ioTaskUtility.assignToContext(processResult.value, loc_uiModule.getContext(), false));
+			}
+		}));
+		return out;
+	};
+	
+	var loc_getExecuteModuleProcessByNameRequest = function(processName, extraInput, handlers, request){
+		var process = loc_uiModule.getProcess(processName);
+		if(process!=undefined)  return loc_getExecuteModuleProcessRequest(process, extraInput, handlers, request);
+	};
+	
 	var loc_out = {
-		startRequest : function(handlers, request){
+		getStartRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModule", {"uiModule":loc_uiModule}), handlers, request);
 			
 			//env pre exe
 			out.addRequest(loc_env.getPreStartModuleRequest());
 			
 			//init
-			out.addRequest(nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteEmbededProcessRequest(loc_uiModule[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS].init, loc_uiModule.getContext()));
+			out.addRequest(loc_getExecuteModuleProcessByNameRequest("init"));
 
 			return out;
 		},
-		
-		
 	};
 	return loc_out;
 };
@@ -130,6 +156,7 @@ nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestI
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){node_createUIModuleRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleRuntimeRequest", node_createModuleRuntimeRequest); 

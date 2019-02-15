@@ -80,17 +80,6 @@ var node_utility = {
 			out[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG; 
 			return out;
 		},
-		
-		getContextTypes : function(){
-			return [ 
-				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC, 
-				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PROTECTED, 
-				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_INTERNAL, 
-				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PRIVATE 
-			];
-		},
-		
-
 };
 
 //*******************************************   End Node Definition  ************************************** 	

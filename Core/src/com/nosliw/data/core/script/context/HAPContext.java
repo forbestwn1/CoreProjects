@@ -49,6 +49,14 @@ public class HAPContext extends HAPSerializableImp implements HAPDataAssociation
 		}
 	}
 
+	public HAPContext toSolidContext() {
+		HAPContext out = new HAPContext();
+		for(String name :this.getElementNames()) {
+			out.addElement(name, this.getElement(name).getDefinition().getSolidContextDefinitionElement());
+		}
+		return out;
+	}
+	
 	//find all constants in context, including constants defined in leaf
 	public Map<String, Object> getConstantValue(){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();

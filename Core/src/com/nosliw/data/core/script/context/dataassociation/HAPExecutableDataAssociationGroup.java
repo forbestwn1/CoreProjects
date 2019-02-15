@@ -13,6 +13,7 @@ import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
+import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextPath;
@@ -63,8 +64,13 @@ public class HAPExecutableDataAssociationGroup extends HAPExecutableImp{
 	
 	public HAPInfo getInfo() {  return this.m_definition.getInfo();  }
 	
-	public HAPContextFlat getContext() {   return this.m_context;   }
+	public HAPContextFlat getContextFlat() {   return this.m_context;   }
 	public void setContext(HAPContextFlat context) {   this.m_context = context;   }
+	public HAPContext getContext() {   return this.m_context==null?null:this.m_context.getContext();   }
+	public HAPContext getSolidContext() {
+		if(this.m_context==null)   return null;
+		return this.getContext().toSolidContext();
+	}
 
 	public void setPathMapping(Map<String, String> mapping) {    this.m_pathMapping = mapping;    }
 	public Map<String, String> getPathMapping() {  return this.m_pathMapping;  }

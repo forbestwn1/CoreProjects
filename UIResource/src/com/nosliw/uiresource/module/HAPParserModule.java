@@ -93,6 +93,8 @@ public class HAPParserModule {
 		out.buildEntityInfoByJson(jsonObj);
 		
 		out.setPage(jsonObj.optString(HAPDefinitionModuleUI.PAGE));
+		out.setType(jsonObj.optString(HAPDefinitionModuleUI.TYPE));
+		out.setStatus(jsonObj.optString(HAPDefinitionModuleUI.STATUS));
 		
 		JSONObject inputMappingJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.INPUTMAPPING);
 		if(inputMappingJson!=null) {

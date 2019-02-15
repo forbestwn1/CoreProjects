@@ -69,7 +69,7 @@ public class HAPProcessorDataAssociation {
 
 		processDataAssocationContext(out, inputContextGroup, dataAssociation, contextProcessRequirement);
 
-		HAPContext flatContext = out.getContext().getContext();
+		HAPContext flatContext = out.getContext();
 		//remove categary info in relative element first as categary information is fake one
 		for(String eleName : flatContext.getElementNames()) {
 			HAPUtilityContext.processContextDefElement(flatContext.getElement(eleName).getDefinition(), new HAPContextDefEleProcessor() {
@@ -119,7 +119,7 @@ public class HAPProcessorDataAssociation {
 		//process result
 		if(output instanceof HAPContext) {
 			HAPContext targetContext = (HAPContext)output;
-			HAPContext outputContext = out.getContext().getContext();
+			HAPContext outputContext = out.getContext();
 			for(String rootName : outputContext.getElementNames()) {
 				//merge back to context variable
 				if(targetContext.getElement(rootName)!=null) {
@@ -133,7 +133,7 @@ public class HAPProcessorDataAssociation {
 		}
 		else if(output instanceof HAPContextGroup) {
 			HAPContextGroup targetContextGroup = (HAPContextGroup)output;
-			HAPContext outputContext = out.getContext().getContext();
+			HAPContext outputContext = out.getContextFlat().getContext();
 			for(String rootName : outputContext.getElementNames()) {
 				//merge back to context variable
 				if(targetContextGroup.getElement(new HAPContextDefinitionRootId(rootName))!=null) {
@@ -187,8 +187,8 @@ public class HAPProcessorDataAssociation {
 	private static void buildPathMappingInDataAssociation(HAPExecutableDataAssociationGroup dataAssociationExe, boolean isFlatInput, boolean isFlatOutput) {
 		//build path mapping according for mapped element only
 		Map<String, String> pathMapping = new LinkedHashMap<String, String>();
-		for(String eleName : dataAssociationExe.getContext().getContext().getElementNames()) {
-			HAPContextDefinitionRoot root = dataAssociationExe.getContext().getContext().getElement(eleName);
+		for(String eleName : dataAssociationExe.getContext().getElementNames()) {
+			HAPContextDefinitionRoot root = dataAssociationExe.getContextFlat().getContext().getElement(eleName);
 			//only root do mapping
 			if(isMappedRoot(root) && HAPConstant.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(root.getInfo()))) {
 				pathMapping.putAll(HAPUtilityDataAssociation.buildRelativePathMapping(root, buildRootNameAccordingToFlat(eleName, isFlatOutput), isFlatInput));

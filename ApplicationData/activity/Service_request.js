@@ -25,12 +25,12 @@
 			var loc_out = {
 				
 				getExecuteActivityRequest : function(activity, input, env, handlers, request){
-					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {"serviceName":serviceName}), handlers, request);
-
 					var service = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_SERVICE];
 					var provider = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_PROVIDER];
 					var serviceId = provider[node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICEPROVIDER_SERVICEID];;
-					
+
+					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {"serviceName":service}), handlers, request);
+
 					var output = {};
 					return node_ioTaskUtility.getExecuteIOTaskRequest(
 							input, 

@@ -222,7 +222,7 @@ var node_createContext = function(elementInfosArray, request){
 				success : function(requestInfo, result){
 					var out = {};
 					_.each(result.getResults(), function(contextData, name){
-						out[name] = contextData.value;
+						if(contextData!=undefined)		out[name] = contextData.value;
 					});
 					return out;
 				}

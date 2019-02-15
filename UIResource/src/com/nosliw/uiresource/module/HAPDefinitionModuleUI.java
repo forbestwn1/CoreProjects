@@ -18,6 +18,8 @@ import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAsso
 @HAPEntityWithAttribute
 public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 
+	public static String STATUS_DISABLED = "disabled";
+	
 	@HAPAttribute
 	public static String PAGE = "page";
 	
@@ -29,6 +31,12 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String EVENTHANDLER = "eventHandler";
+	
+	@HAPAttribute
+	public static String TYPE = "type";
+
+	@HAPAttribute
+	public static String STATUS = "status";
 	
 	//ui page
 	private String m_page;
@@ -43,6 +51,8 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	//provide extra information about this module ui so that container can render it properly
 	private String m_type;
 	
+	private String m_status;
+	
 	public HAPDefinitionModuleUI() {
 		this.m_eventHandlers = new LinkedHashMap<String, HAPDefinitionModuleUIEventHander>();
 		this.m_inputMapping = new HAPDefinitionDataAssociationGroup();
@@ -51,7 +61,13 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	
 	public String getPage() {   return this.m_page;    }
 	public void setPage(String page) {   this.m_page = page;   }
-	   
+
+	public String getType() {   return this.m_type;    }
+	public void setType(String type) {   this.m_type = type;   }
+
+	public String getStatus() {   return this.m_status;    }
+	public void setStatus(String status) {   this.m_status = status;   }
+
 	public HAPDefinitionDataAssociationGroup getInputMapping() {   return this.m_inputMapping;   }
 	public void setInputMapping(HAPDefinitionDataAssociationGroup contextMapping) {   this.m_inputMapping = contextMapping;   }
 

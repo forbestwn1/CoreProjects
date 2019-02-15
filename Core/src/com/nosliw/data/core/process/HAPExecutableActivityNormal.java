@@ -31,7 +31,7 @@ public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 
 	public HAPContextFlat getInputContext() {
 		if(this.m_input==null)   return null;
-		return this.m_input.getContext();   
+		return this.m_input.getContextFlat();   
 	}
 	
 	public HAPDefinitionActivityNormal getNormalActivityDefinition() {   return (HAPDefinitionActivityNormal)this.getActivityDefinition();  }

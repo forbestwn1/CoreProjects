@@ -26,11 +26,11 @@ var packageObj = library;
 	var node_createModuleUIRequest;
 	
 //*******************************************   Start Node Definition  ************************************** 	
-
+//module entity store all the status information for module
 var node_createUIModuleRequest = function(uiModuleDef, input, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUIModule", {"uiModule":uiModuleDef}), handlers, request);
 
-	var module = node_createUIModule(uiModuleDef, uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input));
+	var module = loc_createUIModule(uiModuleDef, uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input));
 
 	//build module ui
 	var buildModuleUIRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("BuildModuleUIs", {}), {
@@ -51,13 +51,16 @@ var node_createUIModuleRequest = function(uiModuleDef, input, handlers, request)
 	return out;
 };	
 	
-var node_createUIModule = function(uiModuleDef, contextData){
-
-	var loc_context = contextData;
-
+var loc_createUIModule = function(uiModuleDef, context){
+	var loc_uiModuleDef = uiModuleDef;
+	
+	var loc_context = context;
+	
 	var loc_uis = [];
 	var loc_uisByName = {};
 
+	var loc_uiEventHandler;
+	
 	var loc_eventObject = node_createEventObject();
 
 	var loc_out = {
@@ -66,16 +69,24 @@ var node_createUIModule = function(uiModuleDef, contextData){
 			loc_uis.push(ui);
 			loc_uisByName[ui.getName()] = ui;
 			//register listener for module ui
-			ui.registerListener(loc_createModuleUIEventHandler(ui));
+			ui.registerListener(function(eventName, eventData){
+				if(loc_uiEventHandler!=undefined){
+					loc_uiEventHandler(eventName, ui.getName(), eventData);
+				}
+			});
 		},
-		
+	
 		getContext : function(){  return loc_context;  },
-		
+		setContext : function(context) {  loc_context = context;  },
+			
 		getUIs : function(){  return loc_uis;  },
-		
 		getUI : function(name) {  return loc_uisByName[name];   },
 
-		registerUIListener : function(handler){}
+		getProcess : function(name){  return loc_uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS][name];  },
+		
+		getEventHandler : function(uiName, eventName){  return this.getUI(uiName).getEventHandler(eventName);     },
+		
+		registerUIListener : function(handler){  loc_uiEventHandler = handler; }
 		
 	};
 
