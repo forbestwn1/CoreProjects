@@ -29,6 +29,7 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 	}
 	
 	public HAPDefinitionMappingService getServiceMapping() {   return this.m_serviceMapping;    }
+	public void setServiceMapping(HAPDefinitionMappingService serviceMapping) {  this.m_serviceMapping = serviceMapping;  }
 	public void setParmMapping(HAPDefinitionDataAssociationGroup parmMapping) {   this.m_serviceMapping.setParmMapping(parmMapping);    }
 	public void addResultMapping(String name, HAPDefinitionDataAssociationGroup result) {  this.m_serviceMapping.addResultMapping(name, result);   }
 	

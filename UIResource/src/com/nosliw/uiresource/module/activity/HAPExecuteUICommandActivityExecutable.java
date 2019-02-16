@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPActivityPluginId;
 import com.nosliw.data.core.process.HAPExecutableActivityNormal;
 import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
@@ -35,7 +33,6 @@ public class HAPExecuteUICommandActivityExecutable extends HAPExecutableActivity
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(UI, this.getDefinition().getUI());
 		jsonMap.put(COMMAND, this.getDefinition().getCommand());
-		jsonMap.put(PARM, HAPJsonUtility.buildJson(this.getDefinition().getParms(), HAPSerializationFormat.JSON));
 	}
 
 	@Override

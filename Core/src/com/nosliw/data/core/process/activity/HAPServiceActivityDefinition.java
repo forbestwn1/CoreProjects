@@ -5,10 +5,12 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
+import com.nosliw.data.core.process.HAPDefinitionResultActivityNormal;
+import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
+import com.nosliw.data.core.service.use.HAPDefinitionMappingService;
 
 public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 
@@ -20,24 +22,36 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 
 	private String m_provider;
 	
-	//parms path
-	private HAPDefinitionDataAssociationGroup m_parmMapping;
-	
+	private HAPDefinitionMappingService m_serviceMapping;
+
 	public HAPServiceActivityDefinition(String type) {
 		super(type);
+		this.m_serviceMapping = new HAPDefinitionMappingService();
 	}
 
 	public String getProvider() {   return this.m_provider;  }
-	
-	public HAPDefinitionDataAssociationGroup getParmMapping() {  return this.m_parmMapping;  }
+
+	public HAPDefinitionMappingService getServiceMapping() {   return this.m_serviceMapping;  }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_provider = jsonObj.optString(PROVIDER);
-		this.m_parmMapping = new HAPDefinitionDataAssociationGroup();
-		this.m_parmMapping.buildObject(jsonObj.optJSONObject(PARMMAPPING), HAPSerializationFormat.JSON);
+		this.m_serviceMapping.getParms().buildObject(jsonObj.optJSONObject(PARMMAPPING), HAPSerializationFormat.JSON);
+
+		Map<String, HAPDefinitionResultActivityNormal> results = this.getResults();
+		for(String resultName : results.keySet()) {
+			HAPDefinitionResultActivityNormal result = results.get(resultName);
+			HAPDefinitionDataAssociationGroup dataAssociation = result.getOutputDataAssociation();
+			this.m_serviceMapping.addResultMapping(resultName, dataAssociation.cloneDataAssocationGroup());
+			for(String eleName :dataAssociation.getElementNames()) {
+				HAPContextDefinitionLeafRelative ele = new HAPContextDefinitionLeafRelative();
+				ele.setPath(eleName);
+				dataAssociation.addElement(eleName, ele);
+			}
+		}
+
 		return true;  
 	}
 
@@ -45,6 +59,5 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PROVIDER, this.m_provider);
-		jsonMap.put(PARMMAPPING, HAPJsonUtility.buildJson(this.m_parmMapping, HAPSerializationFormat.JSON));
 	}
 }

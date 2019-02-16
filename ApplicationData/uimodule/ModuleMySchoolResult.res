@@ -134,7 +134,7 @@
 					"result": [{
 						"name": "success",
 						"flow": {
-							"target": "successEndId"
+							"target": "refreshSchoolList"
 						},
 						"output": {
 							"element": {
@@ -144,6 +144,28 @@
 									}
 								}
 							}
+						}
+					}]
+				},
+				{
+					"id": "refreshSchoolList",
+					"name": "refreshSchoolList",
+					"type": "UI_executeUICommand",
+					"ui": "schoolListUI",
+					"command": "refresh",
+					"input": {
+						"element": {
+							"schoolList": {
+								"definition": { 
+									"path": "schoolListInModule"
+								}
+							}
+						}
+					},
+					"result": [{
+						"name": "success",
+						"flow": {
+							"target": "successEndId"
 						}
 					}]
 				},
@@ -229,15 +251,6 @@
 									"element": {
 										"schoolData": {
 											"definition": { 
-												"path": "EVENT.data"
-											}
-										}
-									}
-								},
-								"parm": {
-									"inputData": {
-										"schoolData": {
-											"definition": {
 												"path": "EVENT.data"
 											}
 										}
