@@ -15,9 +15,12 @@ import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPContextPath;
+import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.script.context.dataassociation.HAPDataAssociationIO;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -32,7 +35,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 			HAPDefinitionActivity activityDefinition, 
 			String id,
 			HAPExecutableProcess processExe,
-			HAPContextGroup context,
+			HAPContextGroup processContext,
 			Map<String, HAPExecutableDataAssociationGroup> results,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions, 
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
@@ -53,12 +56,12 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 		serviceUseDef.setServiceMapping(serviceActDef.getServiceMapping());
 		
 		//process service use def
-		HAPExecutableServiceUse serviceUseExe = HAPProcessorServiceUse.process(serviceUseDef, provider.getServiceInterface(), context, configure, contextProcessRequirement);
+		HAPExecutableServiceUse serviceUseExe = HAPProcessorServiceUse.process(serviceUseDef, provider.getServiceInterface(), processContext, configure, contextProcessRequirement);
 		out.setService(serviceUseExe);
 
 		//process success result
-		HAPBuilderResultContext m_resultContextBuilder = new HAPBuilderResultContext1(context); 
-		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, HAPConstant.ACTIVITY_RESULT_SUCCESS, context, m_resultContextBuilder, contextProcessRequirement);
+		HAPBuilderResultContext m_resultContextBuilder = new HAPBuilderResultContext1(processContext); 
+		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, HAPConstant.ACTIVITY_RESULT_SUCCESS, processContext, m_resultContextBuilder, contextProcessRequirement);
 		out.addResult(HAPConstant.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;
@@ -66,21 +69,23 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 	
 	class HAPBuilderResultContext1 implements HAPBuilderResultContext {
 		
-		HAPContextGroup m_context;
+		HAPContextGroup m_processContext;
 		
-		public HAPBuilderResultContext1(HAPContextGroup context) {
-			this.m_context = context;
+		public HAPBuilderResultContext1(HAPContextGroup processContext) {
+			this.m_processContext = processContext;
 		}
 		
 		@Override
-		public HAPContext buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
-			HAPContext out = new HAPContext();
+		public HAPDataAssociationIO buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
+			HAPContextGroup out = new HAPContextGroup();
 			if(HAPConstant.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 				HAPServiceActivityExecutable serviceActivity = (HAPServiceActivityExecutable)activity;
 				HAPServiceActivityDefinition serviceActDef = (HAPServiceActivityDefinition)serviceActivity.getActivityDefinition();
 				HAPDefinitionDataAssociationGroup da = serviceActDef.getServiceMapping().getResultMapping().get(resultName);
 				for(String eleName : da.getElementNames()) {
-					out.addElement(eleName, this.m_context.getElement("public", eleName));
+					HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(eleName), this.m_processContext, null, null);
+					String categary = resolveInfo.path.getRootElementId().getCategary();
+					out.addElement(eleName, this.m_processContext.getElement(categary, eleName), categary);
 				}
 			}
 			return out;

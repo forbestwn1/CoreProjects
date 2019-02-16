@@ -45,6 +45,7 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 			HAPDefinitionResultActivityNormal result = results.get(resultName);
 			HAPDefinitionDataAssociationGroup dataAssociation = result.getOutputDataAssociation();
 			this.m_serviceMapping.addResultMapping(resultName, dataAssociation.cloneDataAssocationGroup());
+			//build straight data association
 			for(String eleName :dataAssociation.getElementNames()) {
 				HAPContextDefinitionLeafRelative ele = new HAPContextDefinitionLeafRelative();
 				ele.setPath(eleName);
