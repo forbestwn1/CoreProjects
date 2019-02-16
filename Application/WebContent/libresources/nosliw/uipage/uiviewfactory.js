@@ -186,14 +186,13 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 			{
 				success: function(request, contextValue){
 					var service = loc_services[serviceName];
-					var serviceId = loc_serviceProviders[service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PROVIDER]][node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICEPROVIDER_SERVICEID];
 					var output = {};
 					return node_ioTaskUtility.getExecuteIOTaskRequest(
 							contextValue, 
 							service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PARMMAPPING], 
 							function(input, handlers, request){
 								var serviceRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
-								serviceRequest.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceRequest(serviceId, input, {
+								serviceRequest.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceByNameRequest(service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PROVIDER], loc_serviceProviders, input, {
 									success : function(request, serviceResult){
 										return new node_IOTaskResult(serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_RESULTNAME], serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_OUTPUT]);
 									}

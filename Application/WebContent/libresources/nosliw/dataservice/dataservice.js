@@ -15,6 +15,15 @@ var node_createDataService = function(){
 
 	var loc_out = {
 
+		getExecuteDataServiceByNameRequest : function(serviceName, serviceProviders, parms, handlers, requester_parent){
+			var serviceProvider = serviceProviders[serviceName];
+			return this.getExecuteDataServiceRequest(serviceProvider[node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICEPROVIDER_SERVICEID], parms, handlers, requester_parent);
+		},
+			
+		getExecuteDataServiceByProviderRequest : function(serviceProvider, parms, handlers, requester_parent){
+			return this.getExecuteDataServiceRequest(serviceProvider[node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICEPROVIDER_SERVICEID], parms, handlers, requester_parent);
+		},
+			
 		getExecuteDataServiceRequest : function(serviceId, parms, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExectueDataService", {"serviceId":serviceId, "parms":parms}), handlers, requestInfo);

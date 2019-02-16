@@ -103,7 +103,7 @@
 		}
 	},
 	"process": {
-		"init1": {
+		"init": {
 			"activity": [{
 					"id": "startActivityId",
 					"name": "startActivity",
@@ -228,7 +228,7 @@
 								"input": {
 									"element": {
 										"schoolData": {
-											"definition": {
+											"definition": { 
 												"path": "EVENT.data"
 											}
 										}

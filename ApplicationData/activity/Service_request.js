@@ -21,13 +21,13 @@
 			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 			var node_objectOperationUtility = nosliw.getNodeData("common.utility.objectOperationUtility");
 			var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
+			var node_ioTaskUtility = nosliw.getNodeData("iotask.ioTaskUtility");
 
 			var loc_out = {
 				
 				getExecuteActivityRequest : function(activity, input, env, handlers, request){
 					var service = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_SERVICE];
 					var provider = activity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_PROVIDER];
-					var serviceId = provider[node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICEPROVIDER_SERVICEID];;
 
 					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {"serviceName":service}), handlers, request);
 
@@ -37,7 +37,7 @@
 							service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PARMMAPPING], 
 							function(input, handlers, request){
 								var serviceRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
-								serviceRequest.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceRequest(serviceId, input, {
+								serviceRequest.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceByProviderRequest(provider, input, {
 									success : function(request, serviceResult){
 										return new node_IOTaskResult(serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_RESULTNAME], serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_OUTPUT]);
 									}
@@ -48,7 +48,8 @@
 							output, 
 							{
 								success : function(request, taskResult){
-									return loc_context.getUpdateContextRequest(taskResult.resultValue);
+									var activityOutput = taskResult.resultValue;
+									return new node_IOTaskResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS, activityOutput);
 								}
 							}); 
 					
