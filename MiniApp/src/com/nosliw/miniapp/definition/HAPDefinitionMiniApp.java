@@ -31,7 +31,7 @@ public class HAPDefinitionMiniApp extends HAPEntityInfoWritableImp{
 	private String m_id;
 
 	//one mini app may have different entry for different senario. 
-	private Map<String, HAPDefinitionMiniAppEntry> m_entries;
+	private Map<String, HAPDefinitionMiniAppEntryUI> m_entries;
 
 	//global data definition 
 	//it can be stateful data(the data that can retrieve next time you use the app)
@@ -43,14 +43,14 @@ public class HAPDefinitionMiniApp extends HAPEntityInfoWritableImp{
 	private HAPComponentWithConfiguration m_configure;
 	
 	public HAPDefinitionMiniApp() {
-		this.m_entries = new LinkedHashMap<String, HAPDefinitionMiniAppEntry>();
+		this.m_entries = new LinkedHashMap<String, HAPDefinitionMiniAppEntryUI>();
 		this.m_dataDefinition = new LinkedHashMap<String, HAPDefinitionMiniAppData>();
 	}
 	
 	public void setId(String id) {  this.m_id = id;   }
 	
-	public HAPDefinitionMiniAppEntry getEntry(String entry) {  return this.m_entries.get(entry);  }
-	public void addEntry(HAPDefinitionMiniAppEntry entry) {
+	public HAPDefinitionMiniAppEntryUI getEntry(String entry) {  return this.m_entries.get(entry);  }
+	public void addEntry(HAPDefinitionMiniAppEntryUI entry) {
 		String name = entry.getName();
 		if(HAPBasicUtility.isStringEmpty(name))  name = HAPUtilityMiniApp.ENTRY_DEFAULT;
 		this.m_entries.put(name, entry);
@@ -76,7 +76,7 @@ public class HAPDefinitionMiniApp extends HAPEntityInfoWritableImp{
 		JSONArray entryArray = jsonObj.optJSONArray(HAPDefinitionMiniApp.ENTRY);
 		if(entryArray!=null) {
 			for(int i=0; i<entryArray.length(); i++) {
-				HAPDefinitionMiniAppEntry entry = new HAPDefinitionMiniAppEntry();
+				HAPDefinitionMiniAppEntryUI entry = new HAPDefinitionMiniAppEntryUI();
 				entry.buildObject(entryArray.get(i), HAPSerializationFormat.JSON);
 				this.addEntry(entry);
 			}

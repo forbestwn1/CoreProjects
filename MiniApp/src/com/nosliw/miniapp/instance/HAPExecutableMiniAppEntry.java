@@ -15,7 +15,7 @@ import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniApp;
-import com.nosliw.miniapp.definition.HAPDefinitionMiniAppEntry;
+import com.nosliw.miniapp.definition.HAPDefinitionMiniAppEntryUI;
 import com.nosliw.uiresource.module.HAPExecutableModule;
 
 @HAPEntityWithAttribute
@@ -36,7 +36,7 @@ public class HAPExecutableMiniAppEntry extends HAPEntityInfoImpWrapper implement
 
 	private Map<String, List<HAPInstanceData>> m_data;
 	
-	public HAPExecutableMiniAppEntry(String id, HAPDefinitionMiniAppEntry definition, HAPDefinitionMiniApp appDef) {
+	public HAPExecutableMiniAppEntry(String id, HAPDefinitionMiniAppEntryUI definition, HAPDefinitionMiniApp appDef) {
 		super(definition);
 		this.m_id = id;
 		this.m_data = new LinkedHashMap<String, List<HAPInstanceData>>();

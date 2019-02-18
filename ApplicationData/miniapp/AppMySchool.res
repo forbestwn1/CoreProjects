@@ -36,46 +36,6 @@
 							}
 						}
 					},					
-					"configure" : {
-						"submitProcess" :{
-							"activity" : [
-								{
-									"id": "startActivityId",
-									"name": "startActivity",
-									"type": "start",
-									"flow": {
-										"target": "refreshApplication"
-									}
-								},
-								{
-									"id" : "refreshApplication",
-									"type": "UI_executeModuleCommand",
-									"module": "application",
-									"command": "refresh",
-									"parm": {
-										"inputData" : {
-											"definition" : {
-												"path" : "settingData"
-											}
-										}
-									},
-									"result": [
-										{
-											"name": "success",
-											"flow": {
-												"target": "successEndId"
-											}
-										}
-									]
-								},
-								{
-									"id": "successEndId",
-									"name": "successEnd",
-									"type": "end"
-								}
-							]
-						}
-					}
 				},
 				{
 					"role" : "application",
@@ -92,6 +52,47 @@
 					},					
 				}
 			]
+			"process" : {
+				"submitProcess" :{
+					"activity" : [
+						{
+							"id": "startActivityId",
+							"name": "startActivity",
+							"type": "start",
+							"flow": {
+								"target": "refreshApplication"
+							}
+						},
+						{
+							"id" : "refreshApplication",
+							"type": "UI_executeModuleCommand",
+							"module": "application",
+							"command": "refresh",
+							"parm": {
+								"inputData" : {
+									"definition" : {
+										"path" : "settingData"
+									}
+								}
+							},
+							"result": [
+								{
+									"name": "success",
+									"flow": {
+										"target": "successEndId"
+									}
+								}
+							]
+						},
+						{
+							"id": "successEndId",
+							"name": "successEnd",
+							"type": "end"
+						}
+					]
+				}
+			}
+			
 		}
 	],
 	

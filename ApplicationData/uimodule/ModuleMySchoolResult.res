@@ -277,6 +277,7 @@
 			"name": "schoolInfoUI",
 			"type": "info",
 			"page": "schoolInfoPage",
+			"status" : "disabled",
 			"contextMapping": {
 				"element": {
 					"schoolData": {

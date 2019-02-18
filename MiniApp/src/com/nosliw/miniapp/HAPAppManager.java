@@ -16,7 +16,7 @@ import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniAppData;
 import com.nosliw.miniapp.definition.HAPDefinitionMiniApp;
-import com.nosliw.miniapp.definition.HAPDefinitionMiniAppEntry;
+import com.nosliw.miniapp.definition.HAPDefinitionMiniAppEntryUI;
 import com.nosliw.miniapp.instance.HAPInstanceData;
 import com.nosliw.miniapp.instance.HAPInstanceData;
 import com.nosliw.miniapp.instance.HAPExecutableMiniAppEntry;
@@ -99,7 +99,7 @@ public class HAPAppManager {
 		HAPExecutableMiniAppEntry out = new HAPExecutableMiniAppEntry();
 		
 		HAPDefinitionMiniApp minAppDef = this.getMinAppDefinition(miniAppId);
-		HAPDefinitionMiniAppEntry miniAppEntry = minAppDef.getEntry(entry);
+		HAPDefinitionMiniAppEntryUI miniAppEntry = minAppDef.getEntry(entry);
 		
 		Set<String> appEntryData = new HashSet<String>();
 		Map<String, HAPDefinitionMiniAppModuleEntry> moduleEntries = miniAppEntry.getUIModuleEntries();
