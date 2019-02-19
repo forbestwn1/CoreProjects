@@ -37,7 +37,7 @@ var node_requestServiceProcessor = function(){
 		requestsById.requestsSum--;
 		loc_requestsSum--;
 		if(requestsById.requestsSum==0){
-			//when no child request under root request, it means root request alomost done
+			//when no child request under root request, it means root request almost done
 			//almost done with root request
 			requestsById.rootRequest.almostDone();
 			if(requestsById.requestsSum==0){

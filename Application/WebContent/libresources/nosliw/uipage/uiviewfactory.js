@@ -33,6 +33,17 @@ var loc_createUIViewFactory = function(){
 	var loc_out = {
 		createUIView : function(uiResource, id, parent, context, requestInfo){
 			return loc_createUIView(uiResource, id, parent, context, requestInfo);
+		},
+		
+		getCreateUIViewRequest : function(uiResource, id, parent, context, handlers, requestInfo){
+			var requestInfo;
+			
+			requestInfo.registerListner();
+			
+			loc_createUIView(uiResource, id, parent, context, requestInfo);
+			
+			node_requestServiceProcessor.processRequest(requestInfo);
+
 		}
 	};
 	
