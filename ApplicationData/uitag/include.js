@@ -33,6 +33,8 @@
 		
 		var loc_resourceView;
 		
+		var loc_view;
+		
 		var loc_out = 
 		{
 			findFunctionDown : function(name){
@@ -40,10 +42,21 @@
 			},	
 			
 			initViews : function(requestInfo){
-				loc_resourceView = loc_env.createDefaultUIView(requestInfo);
-				return loc_resourceView.getViews();
+				loc_view = $('<div/>');	
+				return loc_view;
 			},
 			
+			postInit : function(requestInfo){
+				var out = node_createServiceRequestInfoSequence(undefined);
+				out.addRequest(loc_env.getCreateDefaultUIViewRequest({
+					success : function(requestInfo, uiView){
+						loc_resourceView = uiView;
+						loc_resourceView.appendTo(loc_view);
+					}
+				}));
+				return out;
+			},
+
 			destroy : function(){	
 				loc_resourceView.detachViews();
 				loc_resourceView.destroy();
