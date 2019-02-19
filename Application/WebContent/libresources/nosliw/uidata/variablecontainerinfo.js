@@ -63,6 +63,13 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 		return new node_OrderedContainerElementInfo(eleVariable, eleInfo.indexVariable);
 	};
 	
+	var loc_getElements = function(){
+		var out = [];
+		_.each(loc_orderChildrenInfo.getElements(), function(ele, index){
+			out.push(new node_OrderedContainerElementInfo(loc_elementsVariable[ele.path], ele.indexVariable));
+		});
+		return out;
+	};
 	
 	var loc_getHandleEachElementOfOrderContainerRequest = function(elementHandler, handlers, request){
 		//container looped
@@ -146,7 +153,7 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 	
 	var loc_out = {
 		
-		getLoopRequest : function(elementHandler, handlers, request){
+		getLoopRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence({}, handlers, request);
 			if(loc_orderChildrenInfo==undefined){
 				//if no loop request did before
@@ -164,7 +171,8 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 								_.each(valueElements, function(valueEle, index){
 									loc_addElement(index, valueEle.id, request);
 								});
-								return loc_getHandleEachElementOfOrderContainerRequest(elementHandler);
+								return loc_getElements(); 
+//								return loc_getHandleEachElementOfOrderContainerRequest(elementHandler);
 							}
 						});
 					}
@@ -172,7 +180,8 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 			}
 			else{
 				//loop did before
-				out.addRequest(loc_getHandleEachElementOfOrderContainerRequest(elementHandler));
+				return node_createServiceRequestInfoSimple(undefined, function(){return loc_getElements();}, handlers, request);
+//				out.addRequest(loc_getHandleEachElementOfOrderContainerRequest(elementHandler));
 			}
 			
 			return out;

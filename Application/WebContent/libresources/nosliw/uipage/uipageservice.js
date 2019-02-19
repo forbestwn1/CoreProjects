@@ -33,7 +33,11 @@ var node_createUIPageService = function(){
 				out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([name], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIRESOURCE, {
 					success : function(requestInfo, uiResources){
 						var uiResource = uiResources[name];
-						return node_createUIPage(loc_uiResourceViewFactory.createUIView(uiResource, loc_getResourceViewId(), undefined, undefined, requestInfo));
+						return loc_uiResourceViewFactory.getCreateUIViewRequest(uiResource, loc_getResourceViewId(), undefined, undefined, {
+							success : function(requestInfo, uiView){
+								return node_createUIPage(uiView);
+							}
+						});
 					}
 				}));
 				
@@ -46,11 +50,12 @@ var node_createUIPageService = function(){
 			
 			getGenerateUIPageRequest : function(uiResource, context, handlers, requester_parent){
 				var requestInfo = loc_out.getRequestInfo(requester_parent);
-				var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("GenerateUIResourceView", {"uiResource":uiResource}), 
-					function(requestInfo){
-						return node_createUIPage(loc_uiResourceViewFactory.createUIView(uiResource, loc_getResourceViewId(), undefined, context, undefined));
-					}, 
-					handlers, requestInfo);
+				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIResourceView", {"name":name}), handlers, requestInfo);
+				out.addRequest(loc_uiResourceViewFactory.getCreateUIViewRequest(uiResource, loc_getResourceViewId(), undefined, context, {
+					success : function(requestInfo, uiView){
+						return node_createUIPage(uiView);
+					}
+				}));
 				return out;
 			},	
 			executeGenerateUIPageRequest : function(uiResource, context, handlers, requester_parent){
