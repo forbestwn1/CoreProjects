@@ -23,48 +23,12 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_envFactory = function(uiModule){
-	
-	var loc_uiModule = uiModule;
-	
-	var loc_buildPage = function(moduleUI, env){
-		var pageDiv = $("<div data-role='page' id='"+uiModule.getName()+"'></div>");
-		uiModule.getPage().appendTo(pageDiv);
-		pageDiv.appendTo(evn.root);
-	};
-	
-	var loc_out = {
-			getPresentUIRequest : function(uiName, mode){
-				
-			},
-			
-			getPreStartModuleRequest :function(handlers, requestInfo){
-				out = node_createServiceRequestInfoSimple(new node_ServiceInfo("PreExecuteModule", {"uiModule":uiModule}), 
-					function(requestInfo){
-						_.each(loc_uiModule.getUIs(), function(ui, index){
-							var pageDiv = $("<div data-role='page' id='"+ui.getName()+"'></div>");
-							ui.getPage().appendTo(pageDiv);
-							pageDiv.appendTo($('#testDiv'));
-						});
-					}, 
-					handlers, requestInfo);
-				return out;
-			},
-			
-			executeUICommand : function(uiName, commandName, commandData){
-				loc_uiModule.getUI(uiName).executeCommandRequest(commandName, commandData);
-			}
-			
-	};
-	return loc_out;
-};
-	
 	
 var node_createModuleRuntimeRequest = function(uiModuleDef, input, envFactory, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef, "input":input}), handlers, request);
 	out.addRequest(node_createUIModuleRequest(uiModuleDef, input, {
 		success : function(request, uiModule){
-			return loc_createModuleRuntime(uiModule, loc_envFactory(uiModule));
+			return loc_createModuleRuntime(uiModule, envFactory(uiModule));
 		}
 	}));
 	return out;
@@ -120,6 +84,13 @@ var loc_createModuleRuntime = function(uiModule, env){
 	};
 	
 	var loc_out = {
+		getInitRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
+			//env pre exe
+			out.addRequest(loc_env.getPreStartModuleRequest());
+			return out;
+		},	
+			
 		getStartRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModule", {"uiModule":loc_uiModule}), handlers, request);
 			

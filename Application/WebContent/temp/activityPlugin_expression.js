@@ -1,5 +1,5 @@
 
-nosliw.runtime.getResourceService().importResource({"id":{"id":"expression",
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"id":"expression",
 "type":"activityPlugin"
 },
 "children":[],

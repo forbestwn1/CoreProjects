@@ -13,7 +13,7 @@
 	</div>
 	
 	<br>
-	<br><a href='' nosliw-event="click:refreshSchoolData:">Refresh</a><br>
+	<br><a href='' nosliw-event="click:refreshSchoolData:">Refresh</a><br>  
 	<br>
 
 	<div>
@@ -42,7 +42,6 @@
 			
 			var requestInfo = env.getServiceRequest("getSchoolData", {
 				success : function(request){
-					alert("Service Done!!!");
 				}
 			});
 			node_requestServiceProcessor.processRequest(requestInfo, false);

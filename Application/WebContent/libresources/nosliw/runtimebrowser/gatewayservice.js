@@ -44,7 +44,7 @@ var node_createGatewayService = function(){
 	});
 	
 	//load file to html page to execute it
-	var loc_getLoadResourceFileRequest = function(fileName, handlers, requester_parent){
+	var loc_getLoadFileRequest = function(fileName, handlers, requester_parent){
 		var out = node_createServiceRequestInfoCommon(new node_ServiceInfo("LoadResourceFile", {"fileName":fileName}), handlers, requester_parent);		
 		out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
 			var script = document.createElement('script');
@@ -59,8 +59,8 @@ var node_createGatewayService = function(){
 		return out;
 	};
 	
-	var loc_getLoadResourceDataRequest = function(dataStr, handlers, requester_parent){
-		var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("LoadResourceData", {"dataStr":dataStr}), 
+	var loc_getLoadScriptRequest = function(dataStr, handlers, requester_parent){
+		var out = node_createServiceRequestInfoSimple(new node_ServiceInfo("LoadScript", {"dataStr":dataStr}), 
 				function(requestInfo){  
 					eval(requestInfo.getService().parms.dataStr);  
 				}, 
@@ -83,8 +83,9 @@ var node_createGatewayService = function(){
 						//process script info output 
 						_.each(gatewayOutputScripts, function(scriptInfo, i, list){
 							var file = scriptInfo[node_COMMONATRIBUTECONSTANT.JSSCRIPTINFO_FILE];
-							if(file!=undefined)		requests.push(loc_getLoadResourceFileRequest(file));
-							else		requests.push(loc_getLoadResourceDataRequest(scriptInfo[node_COMMONATRIBUTECONSTANT.JSSCRIPTINFO_SCRIPT]));
+							var script = scriptInfo[node_COMMONATRIBUTECONSTANT.JSSCRIPTINFO_SCRIPT];
+							if(file!=undefined)		requests.push(loc_getLoadFileRequest(file));
+							if(script!=undefined)		requests.push(loc_getLoadScriptRequest(script));
 						});
 						
 						requests.push( node_createServiceRequestInfoSimple({}, function(request){  return out.getData("gatewayOutputData")})  );

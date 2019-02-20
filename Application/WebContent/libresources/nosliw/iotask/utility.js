@@ -33,7 +33,7 @@ var node_utility = function(){
 		var out = node_createServiceRequestInfoSequence(service, handlers, request);
 		if(dataAssociation==undefined || dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_CONVERTFUNCTION]==undefined){
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){  
-				return input;  
+				return undefined;  
 			}));
 			return out;
 		}
@@ -63,6 +63,7 @@ var node_utility = function(){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociationToTarget", {}), handlers, request);
 		out.addRequest(loc_getExecuteDataAssociationRequest(input, dataAssociation, {
 			success :function(request, output){
+				if(dataAssociation==undefined)   return target;
 				//assign task output back to output
 				var isOutputFlat = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_FLATOUTPUT];
 				return loc_out.assignToContext(output, target, isOutputFlat);

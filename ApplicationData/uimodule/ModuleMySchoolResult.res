@@ -103,7 +103,7 @@
 		}
 	},
 	"process": {
-		"init": {
+		"init1": {
 			"activity": [{
 					"id": "startActivityId",
 					"name": "startActivity",
@@ -226,7 +226,7 @@
 								"name": "startActivity",
 								"type": "start",
 								"flow": {
-									"target": "refreshSchoolInfo"
+									"target": "presentSchoolDataUI"
 								}
 							},
 							{
@@ -277,7 +277,7 @@
 			"name": "schoolInfoUI",
 			"type": "info",
 			"page": "schoolInfoPage",
-			"status" : "disabled",
+			"status" : "disabled11",
 			"contextMapping": {
 				"element": {
 					"schoolData": {

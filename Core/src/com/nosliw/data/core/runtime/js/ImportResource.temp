@@ -1,1 +1,1 @@
-nosliw.runtime.getResourceService().importResource(||resourceInfo||, ||value||, ||info||);
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource(||resourceInfo||, ||value||, ||info||);

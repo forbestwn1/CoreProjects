@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.erro.HAPErrorUtility;
-import com.nosliw.data.core.runtime.js.HAPResourceDataJSValue;
 
 public abstract class HAPResourceManagerImp implements HAPResourceManager{
-
+ 
 	@Override
 	public HAPLoadResourceResponse getResources(List<HAPResourceId> resourcesId, HAPRuntimeInfo runtimeInfo) {
 		HAPLoadResourceResponse out = new HAPLoadResourceResponse();

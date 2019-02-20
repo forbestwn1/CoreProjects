@@ -401,7 +401,7 @@ var loc_createUIView = function(uiResource, id, parent, context){
 		},
 
 		prv_findFunctionDown : function(funName){
-			var fun = loc_scriptObject[funName];
+			var fun = loc_scriptObject==undefined?undefined:loc_scriptObject[funName];
 			if(fun!=undefined){
 				return {
 					fun : fun,
@@ -419,7 +419,7 @@ var loc_createUIView = function(uiResource, id, parent, context){
 		},
 
 		prv_findFunctionUp : function(funName){
-			var fun = loc_scriptObject[funName];
+			var fun = loc_scriptObject==undefined?undefined:loc_scriptObject[funName];
 			if(fun!=undefined){
 				return {
 					fun : fun,

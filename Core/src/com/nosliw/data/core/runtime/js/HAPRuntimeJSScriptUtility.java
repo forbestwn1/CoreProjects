@@ -17,20 +17,20 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPOperationParm;
-import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
-import com.nosliw.data.core.runtime.HAPRuntimeTaskLoadResources;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPResource;
 import com.nosliw.data.core.runtime.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteConverter;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteDataOperation;
+import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteExpression;
+import com.nosliw.data.core.runtime.HAPRuntimeTaskLoadResources;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSLibrary;
 import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScriptExpressionAbstract;
+import com.nosliw.data.core.script.expression.HAPConstantInScript;
 import com.nosliw.data.core.script.expression.HAPEmbededScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptExpression;
-import com.nosliw.data.core.script.expression.HAPConstantInScript;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
 import com.nosliw.data.core.script.expression.HAPVariableInScript;
 
@@ -40,21 +40,21 @@ public class HAPRuntimeJSScriptUtility {
 		List<HAPJSScriptInfo> out = new ArrayList<HAPJSScriptInfo>();
 		//build library script info first
 		if(resource.getId().getType().equals(HAPConstant.RUNTIME_RESOURCE_TYPE_JSLIBRARY)){
-			out.addAll(buildScriptInfoForLibrary(resource));
+			out.addAll(buildScriptInfoForLibrary(resourceInfo, resource));
 		}
 		
 		if(HAPRuntimeImpRhino.ADDTORESOURCEMANAGER.equals(resourceInfo.getInfo().getValue(HAPRuntimeImpRhino.ADDTORESOURCEMANAGER)))  return out;
 		
 		//build script for resource with data
 		if(resource.getResourceData() instanceof HAPResourceDataJSValue){
-			out.add(buildScriptInfoForResourceWithValue(resourceInfo, resource));
+			out.add(buildScriptInfoForResourceWithScript(resourceInfo, resource, ((HAPResourceDataJSValue)resource.getResourceData()).getValue()));
 		}
 		return out;
 	}
 	
-	private static HAPJSScriptInfo buildScriptInfoForResourceWithValue(HAPResourceInfo resourceInfo, HAPResource resource){
+	private static HAPJSScriptInfo buildScriptInfoForResourceWithScript(HAPResourceInfo resourceInfo, HAPResource resource, String scriptValue){
 		HAPJSScriptInfo out = null;
-		String script = buildImportResourceScriptForResourceWithValue(resourceInfo, resource);
+		String script = buildImportResourceScriptForResource(resourceInfo, resource, scriptValue);
 		
 		String loadPattern = (String)resource.getInfoValue(HAPRuntimeJSUtility.RESOURCE_LOADPATTERN);
 		if(loadPattern==null)  loadPattern = HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_VALUE;
@@ -76,11 +76,8 @@ public class HAPRuntimeJSScriptUtility {
 		return out;
 	}
 	
-	private static String buildImportResourceScriptForResourceWithValue(HAPResourceInfo resourceInfo, HAPResource resource){
+	private static String buildImportResourceScriptForResource(HAPResourceInfo resourceInfo, HAPResource resource, String valueScript){
 		StringBuffer script = new StringBuffer();
-		
-		//build script for resource data
-		String valueScript = ((HAPResourceDataJSValue)resource.getResourceData()).getValue();
 		
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("resourceInfo", resourceInfo.toStringValue(HAPSerializationFormat.JSON));
@@ -105,7 +102,7 @@ public class HAPRuntimeJSScriptUtility {
 		return script.toString();
 	}
 	
-	private static List<HAPJSScriptInfo> buildScriptInfoForLibrary(HAPResource resource){
+	private static List<HAPJSScriptInfo> buildScriptInfoForLibrary(HAPResourceInfo resourceInfo, HAPResource resource){
 		List<HAPJSScriptInfo> out = new ArrayList<HAPJSScriptInfo>();
 		
 		HAPResourceDataJSLibrary resourceLibrary = (HAPResourceDataJSLibrary)resource.getResourceData();
@@ -115,6 +112,7 @@ public class HAPRuntimeJSScriptUtility {
 			String fileFullName = file.getAbsolutePath().replaceAll("\\\\", "/");
 			out.add(HAPJSScriptInfo.buildByFile(fileFullName, "Library__" + resource.getId().getId() + "__" + file.getName()));
 		}
+		out.add(buildScriptInfoForResourceWithScript(resourceInfo, resource, null));
 		return out;
 	}
 

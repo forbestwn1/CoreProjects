@@ -26,7 +26,7 @@ var node_createUIModuleService = function(){
 	
 	var loc_out = {
 
-		getExecuteUIModuleRequest : function(id, input, envFactory, handlers, requester_parent){
+		getGetUIModuleRuntimeRequest : function(id, input, envFactory, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModuleResource", {"id":id, "input":input}), handlers, requestInfo);
 
@@ -37,8 +37,11 @@ var node_createUIModuleService = function(){
 					var uiModuleDef = uiModuleDefs[id];
 					return node_createModuleRuntimeRequest(uiModuleDef, input, envFactory, {
 						success : function(request, uiModuleRuntime){
-							//start ui module runtime
-							return uiModuleRuntime.getStartRequest();
+							return uiModuleRuntime.getInitRequest({
+								success :function(request, data){
+									return uiModuleRuntime;
+								}
+							});
 						}
 					});
 				}
@@ -47,8 +50,8 @@ var node_createUIModuleService = function(){
 			return out;
 		},
 			
-		executeUIModuleRequest : function(id, input, envFactory, handlers, requester_parent){
-			var requestInfo = this.getExecuteUIModuleRequest(id, input, envFactory, handlers, requester_parent);
+		executeGetUIModuleRuntimeRequest : function(id, input, envFactory, handlers, requester_parent){
+			var requestInfo = this.getGetUIModuleRuntimeRequest(id, input, envFactory, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 			

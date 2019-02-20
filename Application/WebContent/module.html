@@ -6,9 +6,15 @@
 
    		<link rel="stylesheet" href="libresources/external/jQuery_Mobile/jquery.mobile-1.4.5.min.css" />
         <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
-<!-- 		<script type="text/javascript" src="libresources/external/jQuery_Mobile/jquery.mobile-1.4.5.min.js"></script>   -->
+        
         <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
 		<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+
+
+<!--  		<script type="text/javascript" src="libresources/external/jQuery_Mobile/jquery.mobile-1.4.5.min.js"></script>   --> 
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 
 <body>
@@ -21,16 +27,77 @@
 
 <script>
 
-$(document).on("nosliwActive", function(){
-	var currentSearchString = window.location.search;
-	var module = currentSearchString.substring(currentSearchString.indexOf("=")+1);
 
-	nosliw.runtime.getUIModuleService().executeUIModuleRequest(module, undefined, {}, {
-		success : function(request, data){
-			
+loc_getModuleRuntimeRequest = function(moduleId, handlers, request){
+	var loc_envFactory = function(uiModule){
+		var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
+		var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
+		
+		var loc_uiModule = uiModule;
+		
+		var loc_buildPage = function(moduleUI, env){
+			var pageDiv = $("<div data-role='page' id='"+uiModule.getName()+"'></div>");
+			uiModule.getPage().appendTo(pageDiv);
+			pageDiv.appendTo(evn.root);
+		};
+		
+		var loc_out = {
+				getPresentUIRequest : function(uiName, mode, handlers, requestInfo){
+					return node_createServiceRequestInfoSimple(undefined, function(){
+						$.mobile.changePage($("#"+uiName));
+					}, handlers, requestInfo); 
+				},
+				
+				getPreStartModuleRequest :function(handlers, requestInfo){
+					out = node_createServiceRequestInfoSimple(new node_ServiceInfo("PreExecuteModule", {"uiModule":uiModule}), 
+						function(requestInfo){
+							_.each(loc_uiModule.getUIs(), function(ui, index){
+								var pageDiv = $("<div data-role='page' id='"+ui.getName()+"'></div>");
+								ui.getPage().appendTo(pageDiv);
+								pageDiv.appendTo($('#testDiv'));
+							});
+						}, 
+						handlers, requestInfo);
+					return out;
+				},
+				
+				getExecuteCommandRequest : function(uiName, commandName, commandData, handlers, requestInfo){
+					return loc_uiModule.getUI(uiName).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
+				}
+				
+		};
+		return loc_out;
+	};
+		
+	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, loc_envFactory, handlers, request);
+};
+
+$(document).bind("mobileinit", function() {
+
+});
+
+$(document).on("nosliwActive", function(){
+	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+
+    // Our initialization code here
+	var currentSearchString = window.location.search;
+	var moduleId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
+
+	//get ui module definition by resource id
+	loc_getModuleRuntimeRequest(moduleId, {
+		success : function(request, moduleRuntime){
+			var out = nosliw.runtime.getResourceService().executeGetResourceDataByTypeRequest(["external.jQuery_Mobile;1.4.5"], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_JSLIBRARY, {
+				success : function(requestInfo, data){
+					var kkkk = 5555;
+					kkkk++;
+				}
+			});
 		}
 	});
 });
+
 nosliw.init();
 </script>
 

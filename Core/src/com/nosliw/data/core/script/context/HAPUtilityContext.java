@@ -17,6 +17,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.criteria.HAPCriteriaUtility;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
@@ -375,57 +376,74 @@ public class HAPUtilityContext {
 		originDef = originDef.getSolidContextDefinitionElement();
 		expectDef = expectDef.getSolidContextDefinitionElement();
 		String type = expectDef.getType();
-		if(!originDef.getType().equals(type))   HAPErrorUtility.invalid("");   //not same type, error
-		switch(type) {
-		case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
-		{
-			HAPContextDefinitionLeafData dataOrigin = (HAPContextDefinitionLeafData)originDef.getSolidContextDefinitionElement();
-			HAPContextDefinitionLeafData dataExpect = (HAPContextDefinitionLeafData)expectDef;
-			//cal matchers
-			HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(dataOrigin.getCriteria(), dataExpect.getCriteria().getCriteria(), contextProcessRequirement.dataTypeHelper); 
-			if(!matcher.isVoid())  matchers.put(path, matcher);
-			break;
+		
+		if(originDef.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_CONSTANT)) {
+			switch(type) {
+			case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
+			{
+				HAPContextDefinitionLeafConstant dataOrigin = (HAPContextDefinitionLeafConstant)originDef.getSolidContextDefinitionElement();
+				HAPContextDefinitionLeafData dataExpect = (HAPContextDefinitionLeafData)expectDef;
+				//cal matchers
+				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(HAPVariableInfo.buildVariableInfo(new HAPDataTypeCriteriaId(dataOrigin.getDataValue().getDataTypeId(), null)), dataExpect.getCriteria().getCriteria(), contextProcessRequirement.dataTypeHelper); 
+				if(!matcher.isVoid())  matchers.put(path, matcher);
+				break;
+			}
+			}
 		}
-		case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
-		{
-			HAPContextDefinitionNode nodeOrigin = (HAPContextDefinitionNode)originDef;
-			HAPContextDefinitionNode nodeExpect = (HAPContextDefinitionNode)expectDef;
-			for(String nodeName : nodeExpect.getChildren().keySet()) {
-				HAPContextDefinitionElement childNodeExpect = nodeExpect.getChildren().get(nodeName);
-				HAPContextDefinitionElement childNodeOrigin = nodeOrigin.getChildren().get(nodeName);
-				if(childNodeOrigin!=null || modifyStructure) {
-					switch(childNodeExpect.getType()) {
-					case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
-					{
-						if(childNodeOrigin==null) {
-							childNodeOrigin = new HAPContextDefinitionLeafData(HAPVariableInfo.buildUndefinedVariableInfo());
-							nodeOrigin.addChild(nodeName, childNodeOrigin);
+		else {
+			if(!originDef.getType().equals(type))   HAPErrorUtility.invalid("");   //not same type, error
+			switch(type) {
+			case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
+			{
+				HAPContextDefinitionLeafData dataOrigin = (HAPContextDefinitionLeafData)originDef.getSolidContextDefinitionElement();
+				HAPContextDefinitionLeafData dataExpect = (HAPContextDefinitionLeafData)expectDef;
+				//cal matchers
+				HAPMatchers matcher = HAPCriteriaUtility.mergeVariableInfo(dataOrigin.getCriteria(), dataExpect.getCriteria().getCriteria(), contextProcessRequirement.dataTypeHelper); 
+				if(!matcher.isVoid())  matchers.put(path, matcher);
+				break;
+			}
+			case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
+			{
+				HAPContextDefinitionNode nodeOrigin = (HAPContextDefinitionNode)originDef;
+				HAPContextDefinitionNode nodeExpect = (HAPContextDefinitionNode)expectDef;
+				for(String nodeName : nodeExpect.getChildren().keySet()) {
+					HAPContextDefinitionElement childNodeExpect = nodeExpect.getChildren().get(nodeName);
+					HAPContextDefinitionElement childNodeOrigin = nodeOrigin.getChildren().get(nodeName);
+					if(childNodeOrigin!=null || modifyStructure) {
+						switch(childNodeExpect.getType()) {
+						case HAPConstant.CONTEXT_ELEMENTTYPE_DATA:
+						{
+							if(childNodeOrigin==null) {
+								childNodeOrigin = new HAPContextDefinitionLeafData(HAPVariableInfo.buildUndefinedVariableInfo());
+								nodeOrigin.addChild(nodeName, childNodeOrigin);
+							}
+							mergeContextDefitionElement(childNodeOrigin, childNodeExpect, modifyStructure, matchers, HAPNamingConversionUtility.cascadePath(path, nodeName), contextProcessRequirement);
+							break;
 						}
-						mergeContextDefitionElement(childNodeOrigin, childNodeExpect, modifyStructure, matchers, HAPNamingConversionUtility.cascadePath(path, nodeName), contextProcessRequirement);
-						break;
-					}
-					case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
-					{
-						if(childNodeOrigin==null) {
-							childNodeOrigin = new HAPContextDefinitionNode();
-							nodeOrigin.addChild(nodeName, childNodeOrigin);
+						case HAPConstant.CONTEXT_ELEMENTTYPE_NODE:
+						{
+							if(childNodeOrigin==null) {
+								childNodeOrigin = new HAPContextDefinitionNode();
+								nodeOrigin.addChild(nodeName, childNodeOrigin);
+							}
+							mergeContextDefitionElement(childNodeOrigin, childNodeExpect, modifyStructure, matchers, HAPNamingConversionUtility.cascadePath(path, nodeName), contextProcessRequirement);
+							break;
 						}
-						mergeContextDefitionElement(childNodeOrigin, childNodeExpect, modifyStructure, matchers, HAPNamingConversionUtility.cascadePath(path, nodeName), contextProcessRequirement);
-						break;
-					}
-					default :
-					{
-						if(childNodeOrigin==null) {
-							childNodeOrigin = childNodeExpect.cloneContextDefinitionElement();
-							nodeOrigin.addChild(nodeName, childNodeOrigin);
+						default :
+						{
+							if(childNodeOrigin==null) {
+								childNodeOrigin = childNodeExpect.cloneContextDefinitionElement();
+								nodeOrigin.addChild(nodeName, childNodeOrigin);
+							}
+							break;
 						}
-						break;
 					}
 				}
+				break;
+				}
 			}
-			break;
 			}
 		}
-		}
+		
 	}
 }

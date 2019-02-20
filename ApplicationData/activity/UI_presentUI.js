@@ -23,11 +23,13 @@
 			var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 
 			var loc_out = {
-				
 				getExecuteActivityRequest : function(activity, input, env, handlers, request){
-					
-					env.getPresentUIRequest(uiName, mode);
-					
+					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PresentUIActivity", {}), handlers, request);
+					out.addRequest(env.getPresentUIRequest(activity.ui, undefined, {
+						success : function(request){
+							return new node_IOTaskResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS);
+						}
+					}));
 					return out;
 				}
 			};
