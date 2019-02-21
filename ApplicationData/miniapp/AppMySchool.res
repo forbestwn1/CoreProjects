@@ -1,103 +1,98 @@
 {
-	"entry" : [
-		 {
-			"name" : "main_mobile",
-			"module" : [
-				{
-					"role" : "setting",
-					"name" : "setting",
-					"module" : "ModuleMySchoolSetting",
-					"info" : {}
-					"inputMapping" : {
-						"element" : {
-							"schoolTypeInModule" : {
-								"definition" : {
-									"path" : "settingData.schoolTypeData"
-								}
-							},
-							"schoolRatingInModule" : {
-								"definition" : {
-									"path" : "settingData.schoolRatingData"
-								}
+	"name" : "AppMySchool",
+	"id" : "AppMySchool",
+	"entry": [{
+		"name": "main_mobile",
+		"module": [{
+				"role": "setting",
+				"name": "setting",
+				"module": "ModuleMySchoolSetting",
+				"info": {},
+				"inputMapping": {
+					"element": {
+						"schoolTypeInModule": {
+							"definition": {
+								"path": "settingData.schoolTypeData"
+							}
+						},
+						"schoolRatingInModule": {
+							"definition": {
+								"path": "settingData.schoolRatingData"
 							}
 						}
-					},					
-					"outputMapping" : {
-						"element" : {
-							"settingData.schoolTypeData" : {
-								"definition" : {
-									"path" : "schoolTypeInModule"
-								}
-							},
-							"settingData.schoolRatingData" : {
-								"definition" : {
-									"path" : "schoolRatingInModule"
-								}
-							}
-						}
-					},					
+					}
 				},
-				{
-					"role" : "application",
-					"name" : "MySchool",
-					"module" : "ModuleMySchoolResult",
-					"inputMapping" : {
-						"element" : {
-							"schoolListInModule" : {
-								"definition" : {
-									"path" : "applicationData.schoolListInApp"
-								}
+				"outputMapping": {
+					"element": {
+						"settingData.schoolTypeData": {
+							"definition": {
+								"path": "schoolTypeInModule"
+							}
+						},
+						"settingData.schoolRatingData": {
+							"definition": {
+								"path": "schoolRatingInModule"
 							}
 						}
-					},					
+					}
 				}
-			]
-			"process" : {
-				"submitProcess" :{
-					"activity" : [
-						{
-							"id": "startActivityId",
-							"name": "startActivity",
-							"type": "start",
-							"flow": {
-								"target": "refreshApplication"
+			},
+			{
+				"role": "application",
+				"name": "MySchool",
+				"module": "ModuleMySchoolResult",
+				"inputMapping": {
+					"element": {
+						"schoolListInModule": {
+							"definition": {
+								"path": "applicationData.schoolListInApp"
 							}
-						},
-						{
-							"id" : "refreshApplication",
-							"type": "UI_executeModuleCommand",
-							"module": "application",
-							"command": "refresh",
-							"parm": {
-								"inputData" : {
-									"definition" : {
-										"path" : "settingData"
-									}
-								}
-							},
-							"result": [
-								{
-									"name": "success",
-									"flow": {
-										"target": "successEndId"
-									}
-								}
-							]
-						},
-						{
-							"id": "successEndId",
-							"name": "successEnd",
-							"type": "end"
 						}
-					]
+					}
 				}
 			}
-			
+		],
+		"process": {
+			"submitProcess": {
+				"activity": [{
+						"id": "startActivityId",
+						"name": "startActivity",
+						"type": "start",
+						"flow": {
+							"target": "refreshApplication"
+						}
+					},
+					{
+						"id": "refreshApplication",
+						"type": "UI_executeModuleCommand",
+						"module": "application",
+						"command": "refresh",
+						"parm": {
+							"inputData": {
+								"definition": {
+									"path": "settingData"
+								}
+							}
+						},
+						"result": [{
+							"name": "success",
+							"flow": {
+								"target": "successEndId"
+							}
+						}]
+					},
+					{
+						"id": "successEndId",
+						"name": "successEnd",
+						"type": "end"
+					}
+				]
+			}
 		}
-	],
-	
-	"pageInfo": [
-		{
+
+	}],
+
+	"pageInfo": [{
 			"name": "schoolListPage",
 			"id": "Page_MySchool_SchoolList"
 		},
@@ -110,9 +105,9 @@
 			"id": "Page_MySchool_Query"
 		}
 	],
-	
-	"dataDefinition" : {
-		"settingData" : {
+
+	"dataDefinition": {
+		"settingData": {
 			"element": {
 				"schoolTypeData": {
 					"definition": {
@@ -121,8 +116,8 @@
 					"defaultValue": {
 						"dataTypeId": "test.options;1.0.0",
 						"value": {
-							"value" : "Public",
-							"optionsId" : "schoolType"
+							"value": "Public",
+							"optionsId": "schoolType"
 						}
 					}
 				},
@@ -137,16 +132,15 @@
 				}
 			}
 		},
-		"applicationData" : {
-			"element" : {
+		"applicationData": {
+			"element": {
 				"schoolListInApp": {
 					"definition": {
 						"criteria": "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
 					},
 					"defaultValue": {
 						"dataTypeId": "test.array;1.0.0",
-						"value": [
-							{
+						"value": [{
 								"dataTypeId": "test.map;1.0.0",
 								"value": {
 									"schoolName": {
@@ -191,6 +185,6 @@
 				}
 			}
 		}
-	
+
 	}
 }

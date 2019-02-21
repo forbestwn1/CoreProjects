@@ -72,10 +72,6 @@ loc_getModuleRuntimeRequest = function(moduleId, handlers, request){
 	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, loc_envFactory, handlers, request);
 };
 
-$(document).bind("mobileinit", function() {
-
-});
-
 $(document).on("nosliwActive", function(){
 	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
@@ -85,10 +81,14 @@ $(document).on("nosliwActive", function(){
 	var currentSearchString = window.location.search;
 	var moduleId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
 
-	//get ui module definition by resource id
+	//create module runtime
 	loc_getModuleRuntimeRequest(moduleId, {
 		success : function(request, moduleRuntime){
-			var out = nosliw.runtime.getResourceService().executeGetResourceDataByTypeRequest(["external.jQuery_Mobile;1.4.5"], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_JSLIBRARY, {
+			$(document).bind("mobileinit", function() {
+				moduleRuntime.executeStartRequest();
+			});
+
+			nosliw.runtime.getResourceService().executeGetResourceDataByTypeRequest(["external.jQuery_Mobile;1.4.5"], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_JSLIBRARY, {
 				success : function(requestInfo, data){
 					var kkkk = 5555;
 					kkkk++;

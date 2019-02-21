@@ -94,14 +94,17 @@ var loc_createModuleRuntime = function(uiModule, env){
 		getStartRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModule", {"uiModule":loc_uiModule}), handlers, request);
 			
-			//env pre exe
-			out.addRequest(loc_env.getPreStartModuleRequest());
-			
 			//init
 			out.addRequest(loc_getExecuteModuleProcessByNameRequest("init"));
 
 			return out;
 		},
+		
+		executeStartRequest : function(handlers, request){
+			var requestInfo = this.getStartRequest(handlers, request);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+
 	};
 	return loc_out;
 };

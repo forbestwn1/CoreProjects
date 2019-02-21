@@ -24,6 +24,7 @@ public class HAPDefinitionMiniAppData extends HAPEntityInfoWritableImp{
 	
 	@Override
 	public boolean buildObjectByJson(Object obj) {
+		super.buildObjectByJson(obj);
 		JSONObject jsonObj = (JSONObject)obj;
 		this.m_context.buildObject(jsonObj.optJSONObject(CONTEXT), HAPSerializationFormat.JSON);
 		return true;

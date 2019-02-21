@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
@@ -16,7 +15,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.uiresource.common.HAPComponentWithConfiguration;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionMiniApp extends HAPEntityInfoWritableImp{
+public class HAPDefinitionMiniApp extends HAPComponentWithConfiguration{
 
 	@HAPAttribute
 	public static final String ID = "id";
@@ -38,10 +37,6 @@ public class HAPDefinitionMiniApp extends HAPEntityInfoWritableImp{
 	//or stateless (data generate during runtime)
 	private Map<String, HAPDefinitionMiniAppData> m_dataDefinition;
 
-
-	
-	private HAPComponentWithConfiguration m_configure;
-	
 	public HAPDefinitionMiniApp() {
 		this.m_entries = new LinkedHashMap<String, HAPDefinitionMiniAppEntryUI>();
 		this.m_dataDefinition = new LinkedHashMap<String, HAPDefinitionMiniAppData>();
