@@ -4,44 +4,51 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoWritableImp;
+import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.info.HAPEntityInfoWritable;
+import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPContextEntity  extends HAPEntityInfoWritableImp{
+public class HAPContextEntity  extends HAPContext implements HAPEntityInfo{
 
-	@HAPAttribute
-	public static String CONTEXT = "context";
-
-	//context
-	private HAPContext m_context;
+	private HAPEntityInfoImp m_entityInfo;
 	
 	public HAPContextEntity() {
-		this.m_context = new HAPContext();
+		this.m_entityInfo = new HAPEntityInfoImp();
 	}
 
-	public HAPContext getContext() {  return this.m_context;   }
-	public void setContext(HAPContext context) {   this.m_context = context;  }
-	
-	public void addContextElement(String name, HAPContextDefinitionRoot node) {  this.m_context.addElement(name, node);  }
-	
-	public void cloneToBase(HAPContextEntity contextEntity) {
-		this.cloneToEntityInfo(contextEntity);
-	}
-	
+	@Override
+	public HAPInfo getInfo() {  return this.m_entityInfo.getInfo();  }
+
+	@Override
+	public String getName() {  return this.m_entityInfo.getName();  }
+
+	@Override
+	public String getDescription() {  return this.m_entityInfo.getDescription();  }
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(NAME, this.getName());
+		jsonMap.put(DESCRIPTION, this.getDescription());
+		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.getInfo(), HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(json);
-		HAPParserContext.parseContext(jsonObj.optJSONObject(CONTEXT), this.m_context);
+		JSONObject jsonObj = (JSONObject)json;
+		this.m_entityInfo.buildObject(jsonObj, HAPSerializationFormat.JSON);
 		return true;  
 	}
+
+	@Override
+	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {  this.m_entityInfo.cloneToEntityInfo(entityInfo); }
+
+	@Override
+	public void buildEntityInfoByJson(Object json) {	this.m_entityInfo.buildObject(json, HAPSerializationFormat.JSON);	}
 }

@@ -14,18 +14,18 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
-import com.nosliw.miniapp.definition.HAPDefinitionMiniAppData;
-import com.nosliw.miniapp.definition.HAPDefinitionMiniApp;
-import com.nosliw.miniapp.definition.HAPDefinitionMiniAppEntryUI;
 import com.nosliw.miniapp.instance.HAPInstanceData;
 import com.nosliw.miniapp.instance.HAPInstanceData;
-import com.nosliw.miniapp.instance.HAPExecutableMiniAppEntry;
 import com.nosliw.miniapp.instance.HAPInstanceModule;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserInfo;
 import com.nosliw.uiresource.HAPDefinitionUIModule;
 import com.nosliw.uiresource.HAPDefinitionUIModuleEntry;
 import com.nosliw.uiresource.HAPUIResourceManager;
+import com.nosliw.uiresource.application.HAPDefinitionMiniApp;
+import com.nosliw.uiresource.application.HAPDefinitionMiniAppData;
+import com.nosliw.uiresource.application.HAPDefinitionMiniAppEntryUI;
+import com.nosliw.uiresource.application.HAPExecutableMiniAppEntry;
 import com.nosliw.uiresource.module.HAPUIModuleEntry;
 
 public class HAPAppManager {

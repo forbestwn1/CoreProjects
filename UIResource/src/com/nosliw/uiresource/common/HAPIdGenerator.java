@@ -1,4 +1,4 @@
-package com.nosliw.uiresource;
+package com.nosliw.uiresource.common;
 
 public class HAPIdGenerator {
 

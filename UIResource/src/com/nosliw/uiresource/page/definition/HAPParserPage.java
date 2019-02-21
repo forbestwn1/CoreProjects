@@ -2,10 +2,8 @@ package com.nosliw.uiresource.page.definition;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.json.JSONArray;
@@ -32,13 +30,13 @@ import com.nosliw.data.core.script.expression.HAPDefinitionEmbededScriptExpressi
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptExpression;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
-import com.nosliw.uiresource.HAPIdGenerator;
+import com.nosliw.uiresource.common.HAPIdGenerator;
 
 /*
  * This is a utility class that process ui resource file and create ui resource object
  * the id index start with 1 every processing start so that for same ui resource, we would get same result
- */
-public class HAPParserUIResource {
+ */ 
+public class HAPParserPage {
 
 	public static final String EVENT = "events";
 	public static final String SERVICE = "services";
@@ -54,7 +52,7 @@ public class HAPParserUIResource {
 	//configuration object
 	private HAPConfigure m_setting;
 	
-	public HAPParserUIResource(HAPConfigure setting, HAPIdGenerator idGenerator){
+	public HAPParserPage(HAPConfigure setting, HAPIdGenerator idGenerator){
 		this.m_idGenerator = idGenerator;
 		this.m_setting = setting;
 	}

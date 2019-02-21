@@ -1,4 +1,4 @@
-package com.nosliw.miniapp.instance;
+package com.nosliw.uiresource.application;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -10,13 +10,11 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.data.core.process.HAPExecutableEmbededProcess;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.miniapp.definition.HAPDefinitionMiniApp;
-import com.nosliw.miniapp.definition.HAPDefinitionMiniAppEntryUI;
-import com.nosliw.uiresource.module.HAPExecutableModule;
 
 @HAPEntityWithAttribute
 public class HAPExecutableMiniAppEntry extends HAPEntityInfoImpWrapper implements HAPExecutable{
@@ -28,26 +26,31 @@ public class HAPExecutableMiniAppEntry extends HAPEntityInfoImpWrapper implement
 	public static String UIMODULES = "uiModules";
 	
 	@HAPAttribute
-	public static final String DATA = "data";
+	public static String PROCESS = "process";
 	
+	@HAPAttribute
+	public static final String DATA = "data";
+	  
 	private String m_id;
 	
-	private Map<String, HAPExecutableModule> m_uiModules;
+	private Map<String, HAPExecutableMiniAppModule> m_uiModules;
+
+	//processes (used for lifecycle, module command)
+	private Map<String, HAPExecutableEmbededProcess> m_processes;
 
 	private Map<String, List<HAPInstanceData>> m_data;
 	
-	public HAPExecutableMiniAppEntry(String id, HAPDefinitionMiniAppEntryUI definition, HAPDefinitionMiniApp appDef) {
-		super(definition);
-		this.m_id = id;
+	public HAPExecutableMiniAppEntry(String entryName, HAPDefinitionMiniApp appDef) {
+		super(appDef.getEntry(entryName));
 		this.m_data = new LinkedHashMap<String, List<HAPInstanceData>>();
-		this.m_uiModules = new LinkedHashMap<String, HAPExecutableModule>();
+		this.m_uiModules = new LinkedHashMap<String, HAPExecutableMiniAppModule>();
 	}
 
 	public String getId() {  return this.m_id;   }
 	public void setId(String id) {  this.m_id = id;  }
 	
-	public void addUIModuleInstance(String name, HAPExecutableModule uiModuleInstance) {		this.m_uiModules.put(name, uiModuleInstance);	}
-	public HAPExecutableModule getUIModuleInstance(String moduleName) {  return this.m_uiModules.get(moduleName);  }
+	public void addUIModuleInstance(String name, HAPExecutableMiniAppModule uiModuleInstance) {		this.m_uiModules.put(name, uiModuleInstance);	}
+	public HAPExecutableMiniAppModule getUIModuleInstance(String moduleName) {  return this.m_uiModules.get(moduleName);  }
 	
 	public void addData(String dataName, HAPInstanceData data) {
 		List<HAPInstanceData> dataByName = this.m_data.get(dataName);

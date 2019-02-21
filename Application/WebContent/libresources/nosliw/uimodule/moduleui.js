@@ -38,6 +38,10 @@ var node_createModuleUI = function(moduleUIDef, page){
 	var loc_page = page;
 	
 	var loc_out = {
+		
+		addDecoration : function(decoration){
+			loc_page.addDecoration(decoration);
+		},	
 			
 		//take command
 		getExecuteCommandRequest : function(commandName, parms, handlers, request){

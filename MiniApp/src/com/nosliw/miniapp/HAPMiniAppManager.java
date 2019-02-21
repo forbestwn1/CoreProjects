@@ -2,11 +2,11 @@ package com.nosliw.miniapp;
 
 import java.util.List;
 
-import com.nosliw.miniapp.definition.HAPDefinitionMiniApp;
-import com.nosliw.miniapp.instance.HAPExecutableMiniAppEntry;
 import com.nosliw.miniapp.user.HAPGroup;
 import com.nosliw.miniapp.user.HAPSettingMiniApp;
 import com.nosliw.miniapp.user.HAPUser;
+import com.nosliw.uiresource.application.HAPDefinitionMiniApp;
+import com.nosliw.uiresource.application.HAPExecutableMiniAppEntry;
 
 public interface HAPMiniAppManager {
 

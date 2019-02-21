@@ -61,6 +61,7 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 		return true;  
 	}
 
+	@Override
 	public void buildEntityInfoByJson(Object json) {
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_name = jsonObj.optString(NAME);

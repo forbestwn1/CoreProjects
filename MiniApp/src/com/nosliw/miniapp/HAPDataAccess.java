@@ -12,12 +12,12 @@ import java.util.Set;
 
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.miniapp.instance.HAPInstanceData;
-import com.nosliw.miniapp.instance.HAPExecutableMiniAppEntry;
 import com.nosliw.miniapp.user.HAPGroup;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserGroupMiniApp;
 import com.nosliw.miniapp.user.HAPUserInfo;
 import com.nosliw.miniapp.user.HAPUserMiniAppInfo;
+import com.nosliw.uiresource.application.HAPExecutableMiniAppEntry;
 
 public class HAPDataAccess {
 

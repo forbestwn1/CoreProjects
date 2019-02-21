@@ -103,7 +103,7 @@
 		}
 	},
 	"process": {
-		"init": {
+		"init1": {
 			"activity": [{
 					"id": "startActivityId",
 					"name": "startActivity",

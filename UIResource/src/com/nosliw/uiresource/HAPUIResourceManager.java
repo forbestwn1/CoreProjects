@@ -11,12 +11,15 @@ import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
+import com.nosliw.uiresource.common.HAPIdGenerator;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
 import com.nosliw.uiresource.module.HAPExecutableModule;
 import com.nosliw.uiresource.module.HAPParserModule;
 import com.nosliw.uiresource.module.HAPProcessorModule;
+import com.nosliw.uiresource.module.HAPUtilityModule;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
-import com.nosliw.uiresource.page.definition.HAPParserUIResource;
+import com.nosliw.uiresource.page.definition.HAPParserPage;
+import com.nosliw.uiresource.page.definition.HAPUtilityPage;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 import com.nosliw.uiresource.page.processor.HAPProcessorUIPage;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
@@ -41,7 +44,7 @@ public class HAPUIResourceManager {
 	
 	private HAPIdGenerator m_idGengerator = new HAPIdGenerator(1);
 
-	private HAPParserUIResource m_uiResourceParser;
+	private HAPParserPage m_uiResourceParser;
 	
 	private HAPParserModule m_moduleParser;
 
@@ -60,16 +63,16 @@ public class HAPUIResourceManager {
 		this.m_runtime = runtime;
 		this.m_uiResource = new LinkedHashMap<String, HAPExecutableUIUnitPage>();
 		this.m_dataTypeHelper = dataTypeHelper;
-		this.m_uiResourceParser = new HAPParserUIResource(null, m_idGengerator);
+		this.m_uiResourceParser = new HAPParserPage(null, m_idGengerator);
 		this.m_moduleParser = new HAPParserModule(this.m_processMan.getPluginManager());
 		this.m_serviceDefinitionManager = serviceDefinitionManager;
 	}
 
 	public HAPParserModule getModuleParser() {    return this.m_moduleParser;   }
-	public HAPParserUIResource getUIResourceParser() {    return this.m_uiResourceParser;  }
+	public HAPParserPage getUIResourceParser() {    return this.m_uiResourceParser;  }
 	
 	public HAPExecutableModule getUIModule(String moduleId) {
-		HAPDefinitionModule moduleDef = HAPUtilityUIResource.getUIModuleDefinitionById(moduleId, this.m_moduleParser);
+		HAPDefinitionModule moduleDef = HAPUtilityModule.getUIModuleDefinitionById(moduleId, this.m_moduleParser);
 		return processModule(moduleDef, moduleId, null);
 	}
 	
@@ -85,7 +88,7 @@ public class HAPUIResourceManager {
 	}
 
 	public HAPExecutableUIUnitPage getUIResource(String uiResourceDefId, String id, HAPContextGroup context, HAPContextGroup parentContext){
-		HAPDefinitionUIPage def = HAPUtilityUIResource.getUIResourceDefinitionById(uiResourceDefId, this.m_uiResourceParser, this);
+		HAPDefinitionUIPage def = HAPUtilityPage.getPageDefinitionById(uiResourceDefId, this.m_uiResourceParser, this);
 		HAPExecutableUIUnitPage out = this.processUIResource(def, id, context, parentContext);
 		return out;
 	}

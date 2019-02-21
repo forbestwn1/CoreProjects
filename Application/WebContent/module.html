@@ -28,18 +28,15 @@
 <script>
 
 
-loc_getModuleRuntimeRequest = function(moduleId, handlers, request){
+var loc_getModuleRuntimeRequest = function(moduleId, handlers, request){
 	var loc_envFactory = function(uiModule){
 		var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
+		var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
+		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 		var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
+		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 		
 		var loc_uiModule = uiModule;
-		
-		var loc_buildPage = function(moduleUI, env){
-			var pageDiv = $("<div data-role='page' id='"+uiModule.getName()+"'></div>");
-			uiModule.getPage().appendTo(pageDiv);
-			pageDiv.appendTo(evn.root);
-		};
 		
 		var loc_out = {
 				getPresentUIRequest : function(uiName, mode, handlers, requestInfo){
@@ -49,18 +46,29 @@ loc_getModuleRuntimeRequest = function(moduleId, handlers, request){
 				},
 				
 				getPreStartModuleRequest :function(handlers, requestInfo){
-					out = node_createServiceRequestInfoSimple(new node_ServiceInfo("PreExecuteModule", {"uiModule":uiModule}), 
-						function(requestInfo){
-							_.each(loc_uiModule.getUIs(), function(ui, index){
-								var pageDiv = $("<div data-role='page' id='"+ui.getName()+"'></div>");
-								ui.getPage().appendTo(pageDiv);
-								pageDiv.appendTo($('#testDiv'));
-							});
-						}, 
-						handlers, requestInfo);
+					out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreExecuteModule", {"uiModule":uiModule}), handlers, requestInfo);
+					_.each(loc_uiModule.getUIs(), function(ui, index){
+						var processUIRequest = node_createServiceRequestInfoSequence();
+						processUIRequest.addRequest(nosliw.runtime.getUIPageService().getCreateUIPageRequest("Fram_normal", undefined, {
+							success :function(requestInfo, page){
+								var decoration = loc_createDecoration(page.getUIView());
+								ui.addDecoration(decoration);
+								ui.getPage().appendTo($('#testDiv'));
+								
+								var contextValue = {
+									ui :{
+										id : ui.getName(),
+										title : ui.getName()
+									}
+								};
+								return page.getExecuteCommandRequest(node_CONSTANT.PAGE_COMMAND_REFRESH, contextValue);								
+							}
+						}));
+						out.addRequest(processUIRequest);
+					});
 					return out;
 				},
-				
+
 				getExecuteCommandRequest : function(uiName, commandName, commandData, handlers, requestInfo){
 					return loc_uiModule.getUI(uiName).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
 				}
@@ -71,6 +79,42 @@ loc_getModuleRuntimeRequest = function(moduleId, handlers, request){
 		
 	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, loc_envFactory, handlers, request);
 };
+
+var loc_createDecoration = function(uiView, appendId){
+	var loc_parent;
+	
+	var loc_uiView = uiView;
+	
+//	var loc_view = $("<div data-role='page' id='"+uiName+"'></div>");
+
+	var loc_out = {
+		setParent : function(parent){
+			loc_parent = parent;
+			loc_parent.appendTo(loc_uiView.getElementByAttributeValue('id', 'pleaseEmbed'));
+		},	
+		appendTo : function(ele){
+			loc_uiView.appendTo(ele);
+		},
+		insertAfter : function(ele){
+			loc_uiView.insertAfter(ele);
+		},
+		detachViews : function(){
+			
+		},
+		getUpdateContextRequest : function(parms, handlers, requestInfo){
+			return loc_parent.getUpdateContextRequest(parms, handlers, requestInfo);
+		},
+		command : function(command, parms, requestInfo){
+			return loc_parent.command(command, parms, requestInfo);
+		},
+		getContext : function(){
+			return loc_parent.getContext();
+		}
+	};
+	
+	return loc_out;
+};
+
 
 $(document).on("nosliwActive", function(){
 	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");

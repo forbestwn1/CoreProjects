@@ -1,4 +1,4 @@
-package com.nosliw.miniapp.definition;
+package com.nosliw.uiresource.application;
 
 public class HAPUtilityMiniApp {
 

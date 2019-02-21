@@ -15,16 +15,17 @@ var packageObj = library;
 
 var node_createUIPage = function(uiView){
 	
-	var loc_uiView = uiView;
+	var loc_decorations = [];
+	loc_decorations.push(uiView);
 	
 	//event source used to register and trigger event
 	var loc_eventSource = node_createEventObject();
-
-	var loc_viewEventListener;
 	
+	var loc_viewEventListener;
+
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiView){
-		loc_viewEventListener = loc_uiView.registerEventListener(function(event, eventData, requestInfo){
+		loc_viewEventListener = loc_getCurrent().registerEventListener(function(event, eventData, requestInfo){
 			loc_eventSource.triggerEvent(event, eventData, requestInfo);
 		});
 	};	
@@ -34,25 +35,33 @@ var node_createUIPage = function(uiView){
 	
 	};	
 	
+	var loc_getCurrent = function(){	return loc_decorations[loc_decorations.length-1];	};
+	
 	var loc_out = {
-
+		getUIView :function(){ return loc_decorations[0];  },
+			
+		addDecoration : function(decoration){  
+			decoration.setParent(loc_getCurrent());
+			loc_decorations.push(decoration);
+		},	
+			
 		//append this views to some element as child
-		appendTo : function(ele){  loc_uiView.appendTo(ele);   },
+		appendTo : function(ele){  loc_getCurrent().appendTo(ele);   },
 		//insert this resource view after some element
-		insertAfter : function(ele){	loc_uiView.insertAfter(ele);		},
+		insertAfter : function(ele){	loc_getCurrent().insertAfter(ele);		},
 
 		//remove all elements from outsiders parents and put them back under parentView
-		detachViews : function(){	loc_uiView.detachViews();		},
+		detachViews : function(){	loc_getCurrent().detachViews();		},
 
 		registerEventListener : function(handler, thisContext){	return loc_eventSource.registerListener(undefined, undefined, handler, thisContext);},
 
 		getExecuteCommandRequest : function(command, parms, handlers, requestInfo){
 			if(command==node_CONSTANT.PAGE_COMMAND_REFRESH){
-				return loc_uiView.getUpdateContextRequest(parms, handlers, requestInfo);
+				return loc_getCurrent().getUpdateContextRequest(parms, handlers, requestInfo);
 			}
 			else{
 				return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-					return loc_uiView.command(command, parms, requestInfo);	
+					return loc_getCurrent().command(command, parms, requestInfo);	
 				}, handlers, requestInfo);
 			}
 		},
@@ -62,7 +71,7 @@ var node_createUIPage = function(uiView){
 		},
 		
 		getGetContextValueRequest : function(handlers, requestInfo){
-			return node_contextUtility.getGetContextValueRequest(loc_uiView.getContext, handlers, requestInfo);
+			return node_contextUtility.getGetContextValueRequest(loc_getCurrent().getContext(), handlers, requestInfo);
 		}
 	};
 

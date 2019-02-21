@@ -24,7 +24,7 @@ import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.HAPUtilityUIResource;
+import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 
@@ -45,7 +45,7 @@ public class HAPProcessorModule {
 
 		HAPExecutableModule out = new HAPExecutableModule(moduleDefinition, id);
 
-		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityUIResource.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager);
+		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityCommon.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager);
 		HAPConfigureContextProcessor contextProcessConfg = HAPUtilityConfiguration.getContextProcessConfigurationForModule();
 		
 		//service providers

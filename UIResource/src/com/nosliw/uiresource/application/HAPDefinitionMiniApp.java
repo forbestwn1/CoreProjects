@@ -1,4 +1,4 @@
-package com.nosliw.miniapp.definition;
+package com.nosliw.uiresource.application;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

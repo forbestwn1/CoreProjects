@@ -11,11 +11,11 @@ import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
-import com.nosliw.uiresource.HAPIdGenerator;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.HAPUtilityUIResource;
+import com.nosliw.uiresource.common.HAPIdGenerator;
+import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIPage;
-import com.nosliw.uiresource.page.definition.HAPParserUIResource;
+import com.nosliw.uiresource.page.definition.HAPParserPage;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 
@@ -33,7 +33,7 @@ public class HAPProcessorUIPage {
 			HAPRuntime runtime, 
 			HAPExpressionSuiteManager expressionMan, 
 			HAPResourceManagerRoot resourceMan, 
-			HAPParserUIResource uiResourceParser,
+			HAPParserPage uiResourceParser,
 			HAPManagerServiceDefinition serviceDefinitionManager,
 			HAPIdGenerator idGengerator) {
 		
@@ -54,7 +54,7 @@ public class HAPProcessorUIPage {
 		}
 			
 		if(serviceProviders==null)  serviceProviders = new LinkedHashMap<String, HAPDefinitionServiceProvider>();
-		HAPProcessorUIContext.process(out, pageContext, parentContext, serviceProviders, uiTagMan, HAPUtilityUIResource.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionMan, serviceDefinitionManager));
+		HAPProcessorUIContext.process(out, pageContext, parentContext, serviceProviders, uiTagMan, HAPUtilityCommon.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionMan, serviceDefinitionManager));
 
 //		HAPPorcessorResolveName.resolve(out);
 		

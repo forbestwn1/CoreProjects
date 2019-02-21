@@ -11,9 +11,9 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 import com.nosliw.miniapp.instance.HAPInstanceData;
-import com.nosliw.miniapp.instance.HAPExecutableMiniAppEntry;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserInfo;
+import com.nosliw.uiresource.application.HAPExecutableMiniAppEntry;
 
 public class HAPGatewayMiniApp extends HAPGatewayImp{
 
