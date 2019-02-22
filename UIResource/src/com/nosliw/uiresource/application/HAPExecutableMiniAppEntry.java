@@ -15,6 +15,7 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.script.context.HAPContextGroup;
 
 @HAPEntityWithAttribute
 public class HAPExecutableMiniAppEntry extends HAPEntityInfoImpWrapper implements HAPExecutable{
@@ -40,6 +41,8 @@ public class HAPExecutableMiniAppEntry extends HAPEntityInfoImpWrapper implement
 
 	private Map<String, List<HAPInstanceData>> m_data;
 	
+	private HAPContextGroup m_context;
+	
 	public HAPExecutableMiniAppEntry(String entryName, HAPDefinitionMiniApp appDef) {
 		super(appDef.getEntry(entryName));
 		this.m_data = new LinkedHashMap<String, List<HAPInstanceData>>();
@@ -49,9 +52,13 @@ public class HAPExecutableMiniAppEntry extends HAPEntityInfoImpWrapper implement
 	public String getId() {  return this.m_id;   }
 	public void setId(String id) {  this.m_id = id;  }
 	
-	public void addUIModuleInstance(String name, HAPExecutableMiniAppModule uiModuleInstance) {		this.m_uiModules.put(name, uiModuleInstance);	}
+	public HAPContextGroup getContext() {   return this.m_context;   }
+	
+	public void addUIModule(String name, HAPExecutableMiniAppModule uiModuleInstance) {		this.m_uiModules.put(name, uiModuleInstance);	}
 	public HAPExecutableMiniAppModule getUIModuleInstance(String moduleName) {  return this.m_uiModules.get(moduleName);  }
 	
+	public void addProcess(String name, HAPExecutableEmbededProcess process) {		this.m_processes.put(name, process);	}
+
 	public void addData(String dataName, HAPInstanceData data) {
 		List<HAPInstanceData> dataByName = this.m_data.get(dataName);
 		if(dataByName==null) {

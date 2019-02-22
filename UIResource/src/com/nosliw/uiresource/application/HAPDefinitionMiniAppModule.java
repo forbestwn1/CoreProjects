@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionMiniAppModule  extends HAPEntityInfoWritableImp{
@@ -29,14 +29,18 @@ public class HAPDefinitionMiniAppModule  extends HAPEntityInfoWritableImp{
 	
 	private String m_module;
 	
-	private HAPContext m_inputMapping;
+	private HAPDefinitionDataAssociationGroup m_inputMapping;
 	
-	private HAPContext m_outputMapping;
+	private HAPDefinitionDataAssociationGroup m_outputMapping;
 	
 	public HAPDefinitionMiniAppModule() {
-		this.m_inputMapping = new HAPContext();
-		this.m_outputMapping = new HAPContext();
+		this.m_inputMapping = new HAPDefinitionDataAssociationGroup();
+		this.m_outputMapping = new HAPDefinitionDataAssociationGroup();
 	}
+	
+	public String getModule() {   return this.m_module;   }
+	public HAPDefinitionDataAssociationGroup getInputMapping() {   return this.m_inputMapping;   }
+	public HAPDefinitionDataAssociationGroup getOutputMapping() {   return this.m_outputMapping;    }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

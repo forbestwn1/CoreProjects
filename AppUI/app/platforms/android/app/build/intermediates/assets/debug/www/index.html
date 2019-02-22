@@ -1,572 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-<script type="text/javascript">
-	var buildIncludeLibSource = function(path){
-		
-	};
-
-</script>
-
-		<title>First Mobile Example</title>
+		<title>MiniApp</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<script type="text/javascript" src="js/handlebars/handlebars-v4.0.11.js"></script>
 		<link rel="stylesheet" href="js/jQuery_Mobile/jquery.mobile-1.4.5.min.css" />
  		<script type="text/javascript" src="js/jQuery/2.1.0/jquery.js"></script>
+ 		
 		<script type="text/javascript" src="js/jQuery_Mobile/jquery.mobile-1.4.5.min.js"></script>
-
 		<script type="text/javascript" src="js/init.js"></script>
 
-        
-    <style>
-		/* Swipe works with mouse as well but often causes text selection. */
-		#demo-page * {
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		-o-user-select: none;
-		user-select: none;
-		}
-		/* Arrow only buttons in the header. */
-		#demo-page .ui-header .ui-btn {
-		background: none;
-		border: none;
-		top: 9px;
-		}
-		#demo-page .ui-header .ui-btn-inner {
-		border: none;
-		}
-		/* Content styling. */
-		dl { font-family: "Times New Roman", Times, serif; padding: 1em; }
-		dt { font-size: 2em; font-weight: bold; }
-		dt span { font-size: .5em; color: #777; margin-left: .5em; }
-		dd { font-size: 1.25em; margin: 1em 0 0; padding-bottom: 1em; border-bottom: 1px solid #eee; }
-		.back-btn { float: right; margin: 0 2em 1em 0; }
-		
-		.hideSettingOperation {
-			visibility: hidden;
-		}        
-	</style>
-</head>
+<script>
+	$(document).on("miniappActive", function(){
+		nosliw.miniapp.executeLoginRequest(undefined, {
+			success : function(requestInfo, userInfo){
+				
+			}
+		});
+	});
+	init("http://10.43.2.233:8082/Application/");
+</script>
+ 		
+ 		
+ 		
+ 		
 
-<body>
-	<div data-role="page" id="demo-page" data-theme="d" data-url="demo-page">
-	    <div data-role="header" data-theme="b">
-	        <h1><span id='miniAppTitle'></span></h1>
-	        <a href="#left-panel" data-theme="d" data-icon="arrow-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc">555555Open left panel</a>
-	        <a href="#right-panel" data-theme="d" data-icon="arrow-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc">1111Open right panel</a>
-	    </div><!-- /header -->
-	    <div data-role="content" id="content">
-	    <br>5555555<br>
-	    
-	    
-	    </div><!-- /content -->
-	    <div data-role="panel" id="left-panel" data-theme="b">
-			<ul data-role="listview" id="miniAppList"></ul>
-	    </div><!-- /panel -->
-	    <div data-role="panel" id="right-panel" data-display="push" data-position="right" data-theme="c">
-	        <p>Right push panel.</p>
-	        <a href="#" data-rel="close" data-role="button" data-mini="true" data-inline="true" data-icon="delete" data-iconpos="right">Close</a>
-	    </div><!-- /panel -->
-	    
-	    <div data-role="popup" id="settingNameForm" data-theme="a" class="ui-corner-all" data-dismissible="false">
-		    <form>
-		        <div style="padding:10px 20px;">
-		            <h3>Setting Name</h3>
-		            <label for="un" class="ui-hidden-accessible">Username:</label>
-		            <input type="text" id="settingNameInput" value="" placeholder="setting name" data-theme="a">
-					<a href="#" id="settingNameSubmit" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b">Submit</a>
-        			<a href="#" id="settingNameCancel" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-transition="flow">Cancel</a>		        </div>
-		    </form>
-		</div>
-	    
-	</div>
+<script id="panel-init">
+		$(function() {
+			$( "body>[data-role='panel']" ).panel();
+		});
+</script>
 
-</body>
 
 <script>
-	init("http://142.133.244.49:8082/Application/");
-	$(document).on("nosliwActive", function(){
-		var miniAppService = nosliw.runtime.getMiniAppService();
-		var userInfo = {};
-		var userId = localStorage.userId;
-		if(userId!=undefined){
-			userInfo.user = {};
-			userInfo.user.id = userId;
-		}
-		miniAppService.executeLoginRequest(userInfo, {
+	$(document).on("miniappActive", function(){
+/*		
+		nosliw.miniapp.executeLoginRequest(undefined, {
 			success : function(requestInfo, userInfo){
-				localStorage.userId = userInfo.user.id;
 				showUserInfo(userInfo);
 			}
 		});
+*/		
 	});
 </script>
 
 
-<script>
-	$(document).on("pageinit", "#demo-page", function() {
-		$(document).on("swipeleft swiperight", "#demo-page", function(e) {
-			if ($.mobile.activePage.jqmData("panel") !== "open") {
-				if (e.type === "swipeleft") {
-					$("#right-panel").panel("open");
-				} else if (e.type === "swiperight") {
-					$("#left-panel").panel("open");
-				}
-			}
-		});
-		$("#settingNameCancel").click(function(e){
-			$("#settingNameForm").popup("close"); 
-		});
-		$("#settingNameSubmit").click(function(e){
-			var id = $("#settingNameForm").popup("option", "settingId");
-			var settingName = $("#settingNameInput").val();
-			createSetting(id, settingName);
-			$("#settingNameForm").popup("close"); 
-		});
-	});
-</script>
+</head>
 
-
-<script>
-
-	var setting = [];
-
-	var showSettingPanel = function(){
-		$("#right-panel").panel("open");
-	};
-
-	var showUserInfoPanel = function(){
-		$("#left-panel").panel("open");
-	};
-
-	var showAppMainPanel = function(){
-		$("#left-panel").panel("close");
-		$("#right-panel").panel("close");
-	};
+<body>
+	<div data-role="page" data-quicklinks="true">
 	
-	var deleteSetting = function(id){
-		var settingData = getSettingById(id);
-		var settingIndex = getSettingIndexById(id);
-		
-		nosliw.runtime.getMiniAppService().executeDeleteDataRequest(settingData.dataId, undefined, {
-			success : function(requestInfo){
-				$("#setting_"+id).remove();
-				setting.splice(settingIndex, 1);
-			}
-		});
-	};
+		<div data-role="header">
+			<h1>External panels</h1>
+			<a href="../panel/" data-rel="back" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-carat-l">Back</a>
+		</div><!-- /header -->
 	
-	var createSetting = function(id, settingName){
-		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
-		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
-		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
-		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
-		var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+		<div role="main" class="ui-content jqm-content jqm-fullwidth">
 
-		var settingData = getSettingById(id);
-		
-		var out = node_createServiceRequestInfoSequence({}, {
-			success : function(requestInfo){
-													
-			}
-		});
-		out.addRequest(getDataFromUIResourceViewRequest(settingData.uiResourceView, {
-			success : function(requestInfo, data){
-				settingData.dataInfo.version = settingName;
-				settingData.dataInfo.data = data;
-				settingData.dataInfo.type = "setting";
-				settingData.isNew = false;
-				return nosliw.runtime.getMiniAppService().getSaveDataRequest(settingData.userId, settingData.appId, settingData.dataName, settingData.dataInfo, {
-					success : function(requestInfo, instanceData){
-						settingData.dataId = instanceData[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_ID];
-						$("#settingVersion_"+id).text(settingName);
-						processSettingItemView(settingData);
-						
-						var newSettingData = {
-							id : nosliw.generateId(),
-							userId : settingData.userId,
-							appId : settingData.appId,
-							dataName : settingData.dataName,
-							isNew : true,
-							dataInfo : {
-								version : "Setting",
-								type : "setting"
-							},
-							uiResource : settingData.uiResource,
-							uiResourceName : settingData.uiResourceName,
-							service : settingData.service,
-							parentView : settingData.parentView,
-							miniAppEntry : settingData.miniAppEntry
-						};
-						
-						return addSettingRequest(newSettingData, newSettingData.parentView, newSettingData.miniAppEntry, {
-							success : function(requestInfo, data){
-								$("#settingContainer").collapsibleset();
-							}
-						});
-
-					}
-				});
-			}
-		}));
-		node_requestServiceProcessor.processRequest(out);
-		
-	};
+			<p><strong>Left</strong> panel examples</p>
+			<a href="#leftpanel" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-mini">Push</a>
 	
-	var getSettingById = function(id){
-		var out;
-		_.each(setting, function(s){
-			if(s.id==id) out = s;  
-		});
-		return out;
-	};
-
-	var getSettingIndexById = function(id){
-		var out;
-		_.each(setting, function(s, index){
-			if(s.id==id) out = index;  
-		});
-		return out;
-	};
-
+			<p><strong>Right</strong> panel examples</p>
+			<a href="#rightpanel" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-mini">Push</a>
 	
-	var showContent = function(page){
-		$('#content').empty();
-		nosliw.runtime.getUIPageService()
-		.executeCreateUIPageRequest(
-				page,
-				{
-					success : function(requestInfo,
-							uiResourceView) {
-						nosliw.logging.info(JSON
-								.stringify(uiResourceView));
-
-						uiResourceView.appendTo($('#content'));
-					}
-				});
-	};
-
-	var showAppResult = function(parentView, uiModuleInstance, appData){
-		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
-		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
-		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
-
-		var uiModule = uiModuleInstance[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULE_UIMODULEENTRY];
-		var entryPage = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_ENTRYPAGE];
-		var uiResource = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_PAGES][entryPage];
-		var uiResourceName = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_UIRESOURCEPAGES][entryPage];
-		nosliw.runtime.getUIPageService().executeCreateUIPageRequest(uiResourceName, {
-			success : function(requestInfo, uiResourceView){
-				uiResourceView.appendTo(parentView);
-//				uiResourceView.executeDefaultDataOperationRequestSet(appData, node_CONSTANT.DATA_TYPE_APPDATA);
-
-uiResourceView.executeDataOperationRequestSet("result", appData, node_CONSTANT.DATA_TYPE_APPDATA);
-			}
-		}); 
-
-	};
+			<h1>External Panels</h1>
 	
-	var showSettingRequest = function(userId, appId, parentView, uiModuleInstance, appData, miniAppEntry){
-		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
-		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
-		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
-		var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
-		var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-
-		var aaaaa = parentView.empty();
-		var collapsibleSet = $("<div id='settingContainer' data-role='collapsibleset' data-theme='a' data-content-theme='a'></div>");
-		parentView.append(collapsibleSet);
-		
-		var uiModule = uiModuleInstance[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULE_UIMODULEENTRY];
-		var entryPage = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_ENTRYPAGE];
-		var uiResource = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_PAGES][entryPage];
-		var uiResourceName = uiModule[node_COMMONATRIBUTECONSTANT.UIMODULEENTRY_UIRESOURCEPAGES][entryPage];
-		
-		var moduleDataDef = uiModuleInstance[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULE_DATA];
-		var moduleServiceDef = uiModuleInstance[node_COMMONATRIBUTECONSTANT.INSTANCEUIMODULE_SERVICE];
-		var moduleDataName = moduleDataDef[node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_DATA_MAIN];
-		var moduleData =  appData==undefined?undefined : appData[moduleDataName];
-		if(moduleData!=undefined){
-			_.each(moduleData, function(moduleData, list){
-				var settingData = {
-					id : nosliw.generateId(),	
-					dataId : moduleData[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_ID],
-					userId : userId,
-					appId : appId,
-					dataName : moduleDataName,
-					isNew : false,
-					dataInfo : {
-						type : "setting"
-					},
-					uiResource : uiResource,
-					uiResourceName : uiResourceName,
-					service : moduleServiceDef
-				};
-				settingData.dataInfo[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_VERSION] = moduleData[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_VERSION];
-				settingData.dataInfo[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_DATA] = moduleData[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_DATA];
-				setting.push(settingData);
-			});
-		}
-
-		setting.push({
-			id : nosliw.generateId(),
-			userId : userId,
-			appId : appId,
-			dataName : moduleDataName,
-			isNew : true,
-			dataInfo : {
-				version : "Setting",
-				type : "setting"
-			},
-			uiResource : uiResource,
-			uiResourceName : uiResourceName,
-			service : moduleServiceDef
-		});
-
-		var outRequest = node_createServiceRequestInfoSet({}, {
-			success : function(requestInfo){
-				$("#settingContainer").collapsibleset();
-			}
-		});
-		_.each(setting, function(settingData, index){
-			outRequest.addRequest(index+"", addSettingRequest(settingData, collapsibleSet, miniAppEntry));
-		});
-		return outRequest;
-	};
+			<p>The panels below are all located outside the page. Panels outside of a page must be initalized manually and will not be handled by auto init. Panels outside of pages will remain in the DOM (unless manually removed) as long as you use Ajax navigation, and can be opened or closed from any page.</p>
 	
-	var processSettingItemView = function(settingData){
-		$("#settingSave_"+settingData.id).removeClass('hideSettingOperation');	
-		$("#settingDelete_"+settingData.id).removeClass('hideSettingOperation');	
-		if(settingData.isNew==true){
-			$("#settingDelete_"+settingData.id).addClass('hideSettingOperation');	
-		}
-		
-	};
+			<p>Navigate to page 2 to see this behavior. The HTML document for page 2 doesn't contain panel markup, but you can still open the panels.</p>
 	
-	var addSettingRequest = function(settingData, collapsibleSet, miniAppEntry, handlers, request){
-		
-		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
-		var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
-		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
-		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-
-		settingData.parentView = collapsibleSet;
-		settingData.miniAppEntry = miniAppEntry; 
-		
-		var outRequest = node_createServiceRequestInfoSequence({}, handlers, request);
-		
-		var uiResourceViewRequest = nosliw.runtime.getUIPageService().getGenerateUIPageRequest(settingData.uiResourceName, 
-				{
-					success : function(requestInfo, uiResourceView){
-						settingData.uiResourceView = uiResourceView;
-						var template = Handlebars.compile(document.getElementById("setting-template").innerHTML);
-						var singleDataView = template(settingData);
-						settingData.uiContainer = singleDataView;
-						collapsibleSet.append(singleDataView);
-						
-						uiResourceView.appendTo($("#settingContent_"+settingData.id));
-						
-						processSettingItemView(settingData);
-						
-						if(settingData.dataInfo.data!=undefined){
-							_.each(settingData.dataInfo.data, function(parm, name){
-								uiResourceView.executeDataOperationRequestSet(name, parm.value, parm.dataTypeInfo);
-							});
-						}
-						
-						$("#settingSubmit_"+settingData.id).click(function(e) {
-							var request = node_createServiceRequestInfoSequence({}, {});
-							
-							var getParmsRequest = uiResourceView.getContext().getValueAsParmsRequest({
-								success : function(requestInfo, parms){
-									var serviceName = node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_SERVICE_MAIN;
-									return nosliw.runtime.getMiniAppService().getExecuteServiceRequest(serviceName, settingData.service, parms, {
-										success : function(requestInfo, resultData){
-											var appUIModule = miniAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_UIMODULES][node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_MODULE_APPLICATION];
-											$('#content').empty();
-											showAppMainPanel();
-											showAppResult($('#content'), appUIModule, resultData);
-										}
-									});
-								}
-							});
-							
-							request.addRequest(getParmsRequest);
-							node_requestServiceProcessor.processRequest(request);
-							e.preventDefault();
-						});
-
-						
-						$("#settingSave_"+settingData.id).click(function(e) {
-							if(settingData.isNew==true){
-								$("#settingNameForm").popup( "option", "settingId", settingData.id );
-								$("#settingNameForm").popup("open"); 
-							}
-							else{
-								var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-								var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
-								var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
-								var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
-								var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
-								var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-
-								var out = node_createServiceRequestInfoSequence({}, {});
-								out.addRequest(getDataFromUIResourceViewRequest(settingData.uiResourceView, {
-									success : function(requestInfo, data){
-										settingData.dataInfo.data = data;
-										return nosliw.runtime.getMiniAppService().getUpdateDataRequest(settingData.dataId, settingData.dataInfo, {
-											success : function(requestInfo, instanceData){
-											}
-										});
-									}
-								}));
-								node_requestServiceProcessor.processRequest(out);
-								
-							}							
-							
-							e.preventDefault();
-						});
-						
-						$("#settingDelete_"+settingData.id).click(function(e) {
-							deleteSetting(settingData.id);
-							e.preventDefault();
-						});
-						
-					}
-				});
-		outRequest.addRequest(uiResourceViewRequest);
-		return outRequest;
-	};
-	
-	var getDataFromUIResourceViewRequest = function(uiResourceView, handlers, requestInfo){
-		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
-		var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
-		var node_createUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createUIDataOperationRequest");
-		var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
-		var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
-
-		var setRequest = node_createServiceRequestInfoSet({}, {
-			success : function(requestInfo, result){
-				var out = {};
-				_.each(result.getResults(), function(contextData, name){
-//					out[name] = contextData.value;
-					out[name] = contextData;
-				});
-				return out;
-			}
-		}, requestInfo);
-		_.each(uiResourceView.getContext().getElementsName(), function(eleName, index){
-			setRequest.addRequest(eleName, node_createUIDataOperationRequest(uiResourceView.getContext(), new node_UIDataOperation(eleName, node_uiDataOperationServiceUtility.createGetOperationService())));
-		});
-
-		var outRequest = node_createServiceRequestInfoSequence({}, handlers, requestInfo);
-		outRequest.addRequest(setRequest);		
-
-		return outRequest;
-	};
+			<p><a href="page-b.html">Navigate to page 2</a></p>
 	
 	
+		</div><!-- /content -->
 	
-	var onSaveEvent = function(){
-		
-		
-	}; 
-	
-	var saveData = function(){
-		
-	};
-	
-	var showApp = function(userId, miniAppId, appEntry, miniAppName){
-		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
-		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
-		var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	</div><!-- /page -->
 
-		$("#miniAppTitle").text(miniAppName);
-		
-		var outRequest = node_createServiceRequestInfoSequence({}, {
-			success : function(requestInfo){
-				showSettingPanel();
-			}
-		});
+	<!-- leftpanel  -->
+	<div data-role="panel" id="leftpanel" data-position="left" data-display="push" data-theme="a">
 
-		var miniAppUiEntiryRequest = nosliw.runtime.getMiniAppService().getLoadMiniAppUIEntryRequest(userId, miniAppId, appEntry, {
-			success : function(requestInfo, miniAppEntry){
-				var settingUIModule = miniAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_UIMODULES][node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_MODULE_SETTING];
-				var data = miniAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_DATA];
-				return showSettingRequest(userId, miniAppId, $('#right-panel'), settingUIModule, data, miniAppEntry);
-			}
-		});
-		outRequest.addRequest(miniAppUiEntiryRequest);
-		node_requestServiceProcessor.processRequest(outRequest);
-	};
+		<div id="miniapp.module.userapps.createModuleUserApps">
+		</div>
 
-	var onClickMiniApp = function(viewId, miniAppId, userId, miniAppName){
-		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
-		$("#"+viewId).click(function(e) {
-			showApp(userId, miniAppId, node_COMMONCONSTANT.MINIAPPUIENTRY_NAME_MAINMOBILE, miniAppName);
-			e.preventDefault();
-		});
-	};
-	
-	var showUserInfo = function(userInfo){
-		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-		var listView = $("#miniAppList");
-		_.each(userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_MINIAPPS], function(miniApp, index){
-			appendMiniApp(listView, miniApp, userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_USER][node_COMMONATRIBUTECONSTANT.USER_ID]);
-		});
+        <a href="#demo-links" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
 
-		_.each(userInfo[node_COMMONATRIBUTECONSTANT.USERINFO_GROUPMINIAPP], function(groupMiniAppInstance, index){
-			appendMiniAppGroup(listView, groupMiniAppInstance);
-		});
-		
-		$("#miniAppList").listview('refresh');
-	};
-	
-	var appendMiniApp = function(parentView, miniApp, userId){
-		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-		var miniAppId = miniApp[node_COMMONATRIBUTECONSTANT.USERMINIAPPINFO_APPID];
-		var viewId = "miniAppInstanceId_" + miniAppId;
-		var miniAppName = miniApp[node_COMMONATRIBUTECONSTANT.USERMINIAPPINFO_APPNAME];
-		var mininAppItemView = $("<li><a id=\""+viewId+"\" href=\"#\">"+miniAppName+"</a></li>");
-		parentView.append(mininAppItemView);
-		onClickMiniApp(viewId, miniAppId, userId, miniAppName);
-	};
-	
-	var appendMiniAppGroup = function(parentView, miniAppGroup, userId){
-		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-		var groupId = miniAppGroup[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPP_GROUP][node_COMMONATRIBUTECONSTANT.GROUP_ID];
-		var groupName = miniAppGroup[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPP_GROUP][node_COMMONATRIBUTECONSTANT.GROUP_NAME];
-		var groupViewId = "groupMiniAppId_" + groupId;
-		
-		var groupView = $("<li><div data-role='collapsible' id='collapsible_"+groupViewId+"' data-collapsed='true'><h4>"+groupName+"</h4><ul data-role='listview' id='"+groupViewId+"'></ul></div></li>");
-		parentView.append(groupView);
-		
-		_.each(miniAppGroup[node_COMMONATRIBUTECONSTANT.USERGROUPMINIAPP_MINIAPPS], function(miniApp, index){
-			appendMiniApp($("#"+groupViewId), miniApp, userId);
-		});
-		$("#"+groupViewId).listview();
-		$("#collapsible_"+groupViewId).collapsible();
-		
-	};
-</script>
+	</div><!-- /leftpanel -->
 
-<script id="setting-template" type="text/x-handlebars-template">
-	<div id='setting_{{id}}' data-role='collapsible'>
-		<h3><span id=settingVersion_{{id}}>{{dataInfo.version}}</span>
-			<a id='settingDelete_{{id}}' href='#'>Delete</a>
-			<a id='settingSave_{{id}}' href='#'>Save</a>
-			<a id='settingSubmit_{{id}}' href='#'>Execute</a>
-		</h3>
-		<div id=settingContent_{{id}}></div>
-		<p></p>
-		<a id='settingSubmit_{{id}}' href='#'>Execute</a>
-	</div>
-</script>
+	<!-- rightpanel  -->
+	<div data-role="panel" id="rightpanel" data-position="right" data-display="push" data-theme="b">
 
+        <h3>Right Panel: Push</h3>
+        <p>This panel is positioned on the right with the push display mode. The panel markup is <em>after</em> the header, content and footer in the source order.</p>
+        <p>To close, click off the panel, swipe left or right, hit the Esc key, or use the button below:</p>
+        <a href="#demo-links" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
+
+	</div><!-- /rightpanel2 -->
+
+</body>
 </html>

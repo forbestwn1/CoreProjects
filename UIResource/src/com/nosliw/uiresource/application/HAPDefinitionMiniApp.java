@@ -26,7 +26,6 @@ public class HAPDefinitionMiniApp extends HAPComponentWithConfiguration{
 	@HAPAttribute
 	public static final String DATADEFINITION = "dataDefinition";
 	
-
 	private String m_id;
 
 	//one mini app may have different entry for different senario. 

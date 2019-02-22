@@ -14,6 +14,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.data.core.process.HAPDefinitionEmbededProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
+import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.uiresource.common.HAPComponentWithConfiguration;
 
 @HAPEntityWithAttribute
@@ -25,11 +26,17 @@ public class HAPDefinitionMiniAppEntryUI  extends HAPComponentWithConfiguration 
 	@HAPAttribute
 	public static final String PROCESS = "process";
 
+	@HAPAttribute
+	public static final String CONTEXT = "context";
+
 	//all modules in this entry
 	private List<HAPDefinitionMiniAppModule> m_modules;
 
 	private Map<String, HAPDefinitionEmbededProcess> m_processes;
 
+	//context data shared by different module
+	private HAPContextGroup m_context;
+	
 	public HAPDefinitionMiniAppEntryUI() {
 		this.m_modules = new ArrayList<HAPDefinitionMiniAppModule>();
 		this.m_processes = new LinkedHashMap<String, HAPDefinitionEmbededProcess>();
@@ -37,6 +44,8 @@ public class HAPDefinitionMiniAppEntryUI  extends HAPComponentWithConfiguration 
 	
 	public List<HAPDefinitionMiniAppModule> getModules(){  return this.m_modules;  }
 	public HAPDefinitionEmbededProcess getProcess(String name) {  return this.m_processes.get(name);   }
+	public Map<String, HAPDefinitionEmbededProcess> getProcesses(){   return this.m_processes;  }
+	public HAPContextGroup getContext() {  return this.m_context;   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

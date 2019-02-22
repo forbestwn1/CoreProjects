@@ -11,6 +11,7 @@
 
 		<title>First Mobile Example</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script type="text/javascript" src="js/handlebars/handlebars-v4.0.11.js"></script>
 		<link rel="stylesheet" href="js/jQuery_Mobile/jquery.mobile-1.4.5.min.css" />
  		<script type="text/javascript" src="js/jQuery/2.1.0/jquery.js"></script>
 		<script type="text/javascript" src="js/jQuery_Mobile/jquery.mobile-1.4.5.min.js"></script>
@@ -85,22 +86,15 @@
 </body>
 
 <script>
-	init("http://10.43.2.42:8082/Application/");
-	$(document).on("nosliwActive", function(){
-		var miniAppService = nosliw.runtime.getMiniAppService();
-		var userInfo = {};
-		var userId = localStorage.userId;
-		if(userId!=undefined){
-			userInfo.user = {};
-			userInfo.user.id = userId;
-		}
-		miniAppService.executeLoginRequest(userInfo, {
+	$(document).on("miniappActive", function(){
+		
+		nosliw.miniapp.executeLoginRequest(undefined, {
 			success : function(requestInfo, userInfo){
-				localStorage.userId = userInfo.user.id;
 				showUserInfo(userInfo);
 			}
 		});
 	});
+	init("http://142.133.240.185:8082/Application/");
 </script>
 
 
@@ -149,7 +143,7 @@
 		var settingData = getSettingById(id);
 		var settingIndex = getSettingIndexById(id);
 		
-		nosliw.runtime.getMiniAppService().executeDeleteDataRequest(settingData.dataId, undefined, {
+		nosliw.miniapp.getMiniAppService().executeDeleteDataRequest(settingData.dataId, undefined, {
 			success : function(requestInfo){
 				$("#setting_"+id).remove();
 				setting.splice(settingIndex, 1);
@@ -178,7 +172,7 @@
 				settingData.dataInfo.data = data;
 				settingData.dataInfo.type = "setting";
 				settingData.isNew = false;
-				return nosliw.runtime.getMiniAppService().getSaveDataRequest(settingData.userId, settingData.appId, settingData.dataName, settingData.dataInfo, {
+				return nosliw.miniapp.getMiniAppService().getSaveDataRequest(settingData.userId, settingData.appId, settingData.dataName, settingData.dataInfo, {
 					success : function(requestInfo, instanceData){
 						settingData.dataId = instanceData[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPDATA_ID];
 						$("#settingVersion_"+id).text(settingName);
@@ -385,7 +379,7 @@ uiResourceView.executeDataOperationRequestSet("result", appData, node_CONSTANT.D
 							var getParmsRequest = uiResourceView.getContext().getValueAsParmsRequest({
 								success : function(requestInfo, parms){
 									var serviceName = node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_SERVICE_MAIN;
-									return nosliw.runtime.getMiniAppService().getExecuteServiceRequest(serviceName, settingData.service, parms, {
+									return nosliw.miniapp.getMiniAppService().getExecuteServiceRequest(serviceName, settingData.service, parms, {
 										success : function(requestInfo, resultData){
 											var appUIModule = miniAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_UIMODULES][node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_MODULE_APPLICATION];
 											$('#content').empty();
@@ -419,7 +413,7 @@ uiResourceView.executeDataOperationRequestSet("result", appData, node_CONSTANT.D
 								out.addRequest(getDataFromUIResourceViewRequest(settingData.uiResourceView, {
 									success : function(requestInfo, data){
 										settingData.dataInfo.data = data;
-										return nosliw.runtime.getMiniAppService().getUpdateDataRequest(settingData.dataId, settingData.dataInfo, {
+										return nosliw.miniapp.getMiniAppService().getUpdateDataRequest(settingData.dataId, settingData.dataInfo, {
 											success : function(requestInfo, instanceData){
 											}
 										});
@@ -495,7 +489,7 @@ uiResourceView.executeDataOperationRequestSet("result", appData, node_CONSTANT.D
 			}
 		});
 
-		var miniAppUiEntiryRequest = nosliw.runtime.getMiniAppService().getLoadMiniAppUIEntryRequest(userId, miniAppId, appEntry, {
+		var miniAppUiEntiryRequest = nosliw.miniapp.getMiniAppService().getLoadMiniAppUIEntryRequest(userId, miniAppId, appEntry, {
 			success : function(requestInfo, miniAppEntry){
 				var settingUIModule = miniAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_UIMODULES][node_COMMONCONSTANT.MINIAPPUIENTRY_MAINMOBILE_MODULE_SETTING];
 				var data = miniAppEntry[node_COMMONATRIBUTECONSTANT.INSTANCEMINIAPPUIENTRY_DATA];
