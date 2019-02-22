@@ -20,20 +20,22 @@ var node_createUIPage = function(uiView){
 	
 	//event source used to register and trigger event
 	var loc_eventSource = node_createEventObject();
-	
-	var loc_viewEventListener;
+
+	var loc_eventListener = node_createEventObject();
 
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiView){
-		loc_viewEventListener = loc_getCurrent().registerEventListener(function(event, eventData, requestInfo){
-			loc_eventSource.triggerEvent(event, eventData, requestInfo);
-		});
+		loc_registerViewListener();
 	};	
 	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
-		
-	
 	};	
+
+	var loc_registerViewListener = function(){
+		loc_getCurrent().registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
+			loc_eventSource.triggerEvent(event, eventData, requestInfo);
+		});
+	}
 	
 	var loc_getCurrent = function(){	return loc_decorations[loc_decorations.length-1];	};
 	
@@ -41,8 +43,10 @@ var node_createUIPage = function(uiView){
 		getUIView :function(){ return loc_decorations[0];  },
 			
 		addDecoration : function(decoration){  
+			loc_viewEventListener = loc_getCurrent().unregisterEventListener(loc_eventListener);
 			decoration.setParent(loc_getCurrent());
 			loc_decorations.push(decoration);
+			loc_registerViewListener();
 		},	
 			
 		//append this views to some element as child
@@ -53,7 +57,11 @@ var node_createUIPage = function(uiView){
 		//remove all elements from outsiders parents and put them back under parentView
 		detachViews : function(){	loc_getCurrent().detachViews();		},
 
-		registerEventListener : function(handler, thisContext){	return loc_eventSource.registerListener(undefined, undefined, handler, thisContext);},
+		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext);},
+		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener);},
+
+		getUpdateContextRequest : function(parms, handlers, requestInfo){	return loc_getCurrent().getUpdateContextRequest(parms, handlers, requestInfo);	},
+		executeUpdateContextRequest : function(parms, handlers, requestInfo){	node_requestServiceProcessor.processRequest(this.getUpdateContextRequest(parms, handlers, requestInfo));	},
 
 		getExecuteCommandRequest : function(command, parms, handlers, requestInfo){
 			if(command==node_CONSTANT.PAGE_COMMAND_REFRESH){
@@ -65,10 +73,7 @@ var node_createUIPage = function(uiView){
 				}, handlers, requestInfo);
 			}
 		},
-		
-		executeExecuteCommandRequest : function(command, data, handlers, requestInfo){
-			node_requestServiceProcessor.processRequest(this.getExecuteCommandRequest(command, data, handlers, requestInfo));
-		},
+		executeExecuteCommandRequest : function(command, data, handlers, requestInfo){		node_requestServiceProcessor.processRequest(this.getExecuteCommandRequest(command, data, handlers, requestInfo));	},
 		
 		getGetContextValueRequest : function(handlers, requestInfo){
 			return node_contextUtility.getGetContextValueRequest(loc_getCurrent().getContext(), handlers, requestInfo);

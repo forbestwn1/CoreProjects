@@ -48,14 +48,10 @@ var loc_createUIViewFactory = function(){
 				out.addRequest(node_createUITagRequest(uiTagId, uiTagResource, uiView, {
 					success : function(requestInfo, uiTag){
 						uiView.prv_addUITag(uiTagId, uiTag);
-						uiTag.registerEventListener(function(eventName, eventData, requestInfo){
-							uiView.prv_trigueEvent(eventName, eventData, requestInfo);
-						});
 					}
 				}));
 			});
 
-			
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
 				uiView.prv_initCustomTagEvent();
 				return uiView;
@@ -80,7 +76,7 @@ var loc_createUIView = function(uiResource, id, parent, context){
 	//event source used to register and trigger event
 	var loc_eventSource = node_createEventObject();
 	
-	var loc_eventListener;
+	var loc_eventListener = node_createEventObject();
 	
 	//temporately store uiResource
 	var loc_uiResource = uiResource;
@@ -359,7 +355,12 @@ var loc_createUIView = function(uiResource, id, parent, context){
 		prv_trigueEvent : function(eventName, data, requestInfo){loc_eventSource.triggerEvent(eventName, data, requestInfo); },
 
 		prv_getTagByUIId : function(uiId){ return loc_uiTags[uiId];  },
-		prv_addUITag : function(uiId, uiTag){  loc_uiTags[uiId] = uiTag;  },
+		prv_addUITag : function(uiId, uiTag){  
+			loc_uiTags[uiId] = uiTag;  
+			uiTag.registerEventListener(loc_eventListener, function(eventName, eventData, requestInfo){
+				loc_out.prv_trigueEvent(eventName, eventData, requestInfo);
+			});
+		},
 		
 		/*
 		 * update ui id by adding space name ahead of them
@@ -514,7 +515,8 @@ var loc_createUIView = function(uiResource, id, parent, context){
 		getDefaultOperationRequestSet : function(value, dataTypeInfo, handlers, request){	return this.getDataOperationRequestSet(this.getContext().getElementsName()[0], value, dataTypeInfo, handlers, request);	},
 		executeDefaultDataOperationRequestSet : function(value, dataTypeInfo, handlers, request){	return node_requestServiceProcessor.processRequest(this.getDefaultOperationRequestSet(value, dataTypeInfo, handlers, request));	},
 	
-		registerEventListener : function(handler, thisContext){	return loc_eventSource.registerListener(undefined, undefined, handler, thisContext); },
+		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
+		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 
 		command : function(command, data, requestInfo){			return this.prv_callScriptFunctionDown("command_"+command, data, requestInfo);		},
 		findFunctionDown : function(funName){  return this.prv_findFunctionDown(funName);  }

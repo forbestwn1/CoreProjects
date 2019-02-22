@@ -184,7 +184,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
 			out.addRequest(node_createUIViewFactory().getCreateUIViewRequest(loc_uiTagResource, id, loc_parentResourceView, context, {
 				success : function(request, uiView){
-					uiView.registerEventListener(loc_processChildUIViewEvent, loc_out);
+					uiView.registerEventListener(loc_eventObject, loc_processChildUIViewEvent, loc_out);
 				}
 			}, requestInfo));
 			return out;
@@ -292,7 +292,7 @@ var node_createUITag = function(id, uiTagResource, parentUIResourceView){
 		},
 		
 		registerTagEventListener : function(eventName, handler, thisContext){	return loc_tagEventObject.registerListener(eventName, undefined, handler, thisContext);	},
-		registerEventListener : function(handler, thisContext){	return loc_eventObject.registerListener(undefined, undefined, handler, thisContext);	},
+		registerEventListener : function(listener, handler, thisContext){	return loc_eventObject.registerListener(undefined, listener, handler, thisContext);	},
 		
 	};
 	

@@ -7,7 +7,7 @@
 	<div id="<%=?(ui.id)?%>" data-role="page" data-fullscreen="true">
 
 		<div data-role="header">
-		   <a href="logout">Back</a>
+		   <a href="logout" style="display:<%=?(backIconDisplay)?%>" nosliw-event="click:transferBack:">Back</a>
 		   <h1><%=?(ui.title)?%></h1>
 		   <a href="settings" data-icon="gear">Refresh</a>
 		</div>
@@ -19,6 +19,15 @@
 
 </body>
 
+	<scripts>
+	{
+		transferBack : function(info, env){
+			env.trigueEvent("transferBack", info.eventData);
+		}
+	}
+	</scripts>
+
+
 	<contexts>
 	{
 		"group" : {
@@ -28,15 +37,32 @@
 						"definition": {
 							"child" : {
 								"id" : {},
-								"title" : {},
+								"title" : {}
 							}
+						}
+					},
+					"backIconDisplay" : {
+						"definition" : {
 						},
-					}				
+						"defaultValue" : "none"
+					}
 				}
 			}
 		}
 	}
 	</contexts>
+
+	<events>
+	[
+		{
+			name : "transferBack",
+			data : {
+				element : {
+				}
+			}
+		}
+	]
+	</events>
 
 </html>
 

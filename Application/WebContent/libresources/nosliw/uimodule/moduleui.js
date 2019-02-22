@@ -42,24 +42,21 @@ var node_createModuleUI = function(moduleUIDef, page){
 		addDecoration : function(decoration){
 			loc_page.addDecoration(decoration);
 		},	
-			
+
+		getUpdateContextRequest : function(parms, handlers, requestInfo){	return loc_page.getUpdateContextRequest(parms, handlers, requestInfo);	},
+		executeUpdateContextRequest : function(parms, handlers, requestInfo){	node_requestServiceProcessor.processRequest(this.getUpdateContextRequest(parms, handlers, requestInfo));	},
+
 		//take command
-		getExecuteCommandRequest : function(commandName, parms, handlers, request){
-			return loc_page.getExecuteCommandRequest(commandName, parms, handlers, request);
-		},
+		getExecuteCommandRequest : function(commandName, parms, handlers, request){		return loc_page.getExecuteCommandRequest(commandName, parms, handlers, request);	},
+		executeCommandRequest : function(commandName, parms, handlers, request){	node_requestServiceProcessor.processRequest(this.getExecuteCommandRequest(commandName, parms, handlers, request));	},
 		
-		executeCommandRequest : function(commandName, parms, handlers, request){
-			var requestInfo = this.getExecuteCommandRequest(commandName, parms, handlers, request);
-			node_requestServiceProcessor.processRequest(requestInfo);
-		},
-		
-		registerListener : function(handler){		loc_page.registerEventListener(handler);	},
+		registerEventListener : function(listener, handler){		loc_page.registerEventListener(listener, handler);	},
 		
 		getSynInUIDataRequest : function(moduleContext, handlers, request){ 
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SynInUIData", {"moduleContext":moduleContext}), handlers, request);
 			out.addRequest(node_ioTaskUtility.getExecuteDataAssociationRequest(moduleContext, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], {
 				success : function(request, input){
-					return loc_page.getExecuteCommandRequest(node_CONSTANT.PAGE_COMMAND_REFRESH, input);
+					return loc_page.getUpdateContextRequest(input);
 				}
 			}, request));
 			return out;

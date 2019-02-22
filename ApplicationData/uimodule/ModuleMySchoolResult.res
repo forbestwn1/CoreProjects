@@ -103,7 +103,7 @@
 		}
 	},
 	"process": {
-		"init1": {
+		"init": {
 			"activity": [{
 					"id": "startActivityId",
 					"name": "startActivity",
@@ -165,7 +165,7 @@
 					"result": [{
 						"name": "success",
 						"flow": {
-							"target": "successEndId"
+							"target": "presentSchoolListUI"
 						}
 					}]
 				},

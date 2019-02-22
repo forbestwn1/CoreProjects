@@ -37,17 +37,47 @@ var loc_getModuleRuntimeRequest = function(moduleId, handlers, request){
 		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 		
 		var loc_uiModule = uiModule;
+		var loc_uiStacks = []; 
+		
+		
+		var loc_getUpdateBackIconsRequest = function(handlers, request){
+			var out = node_createServiceRequestInfoSet(undefined, handlers, request);
+			_.each(loc_uiStacks, function(ui, index){
+				var displayStyle = "inline";
+				if(index==0){
+					displayStyle = "none";
+				}
+				out.addRequest(ui.getName(), ui.getUpdateContextRequest({
+					HEADER___backIconDisplay : displayStyle
+				}));
+			});
+			return out;
+		};
+
+		var loc_transferBack = function(){
+			loc_uiStacks.pop();
+			
+			$.mobile.back();
+		};
 		
 		var loc_out = {
+				
 				getPresentUIRequest : function(uiName, mode, handlers, requestInfo){
-					return node_createServiceRequestInfoSimple(undefined, function(){
-						$.mobile.changePage($("#"+uiName));
-					}, handlers, requestInfo); 
+					$.mobile.changePage($("#"+uiName));
+					loc_uiStacks.push(loc_uiModule.getUI(uiName));
+					return loc_getUpdateBackIconsRequest(handlers, requestInfo);
 				},
 				
 				getPreStartModuleRequest :function(handlers, requestInfo){
 					out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreExecuteModule", {"uiModule":uiModule}), handlers, requestInfo);
 					_.each(loc_uiModule.getUIs(), function(ui, index){
+						
+						ui.registerEventListener(undefined, function(event, eventData, requestInfo){
+							if(event=="transferBack"){
+								loc_transferBack();
+							}
+						});
+						
 						var processUIRequest = node_createServiceRequestInfoSequence();
 						processUIRequest.addRequest(nosliw.runtime.getUIPageService().getCreateUIPageRequest("Fram_normal", undefined, {
 							success :function(requestInfo, page){
@@ -61,7 +91,7 @@ var loc_getModuleRuntimeRequest = function(moduleId, handlers, request){
 										title : ui.getName()
 									}
 								};
-								return page.getExecuteCommandRequest(node_CONSTANT.PAGE_COMMAND_REFRESH, contextValue);								
+								return page.getUpdateContextRequest(contextValue);								
 							}
 						}));
 						out.addRequest(processUIRequest);
@@ -81,16 +111,32 @@ var loc_getModuleRuntimeRequest = function(moduleId, handlers, request){
 };
 
 var loc_createDecoration = function(uiView, appendId){
+	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
+	var node_createEventObject = nosliw.getNodeData("common.event.createEventObject");
+	
+	var loc_eventSource = node_createEventObject();
+	var loc_eventListenerForDec = node_createEventObject();
+	var loc_eventListenerForParent = node_createEventObject();
+
 	var loc_parent;
 	
 	var loc_uiView = uiView;
-	
-//	var loc_view = $("<div data-role='page' id='"+uiName+"'></div>");
+
+	loc_uiView.registerEventListener(loc_eventListenerForDec, function(event, eventData, requestInfo){
+		loc_eventSource.triggerEvent(event, eventData, requestInfo);
+	});
 
 	var loc_out = {
+		
+		getName : function(){	return "HEADER___";	},
+			
 		setParent : function(parent){
 			loc_parent = parent;
 			loc_parent.appendTo(loc_uiView.getElementByAttributeValue('id', 'pleaseEmbed'));
+			loc_parent.registerEventListener(loc_eventListenerForParent, function(event, eventData, requestInfo){
+				loc_eventSource.triggerEvent(event, eventData, requestInfo);
+			});
 		},	
 		appendTo : function(ele){
 			loc_uiView.appendTo(ele);
@@ -102,14 +148,34 @@ var loc_createDecoration = function(uiView, appendId){
 			
 		},
 		getUpdateContextRequest : function(parms, handlers, requestInfo){
-			return loc_parent.getUpdateContextRequest(parms, handlers, requestInfo);
+			var parmsForDec = {};
+			var parmsUpdated = {};
+			var parmsForDecSum = 0;
+			var parmsUpdatedSum = 0;
+			_.each(parms, function(parm, name){
+				if(name.startsWith(loc_out.getName())){
+					parmsForDec[name.substring(loc_out.getName().length)] = parm;
+					parmsForDecSum++;
+				}
+				else{
+					parmsUpdated[name] = parm;
+					parmsUpdatedSum++;
+				}
+			});
+			out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
+			if(parmsForDecSum>0) out.addRequest(loc_uiView.getUpdateContextRequest(parmsForDec));
+			else if(parmsUpdatedSum>0)  out.addRequest(loc_parent.getUpdateContextRequest(parmsUpdated));
+			return out;
 		},
 		command : function(command, parms, requestInfo){
 			return loc_parent.command(command, parms, requestInfo);
 		},
 		getContext : function(){
 			return loc_parent.getContext();
-		}
+		},
+		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext);},
+		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener);},
+
 	};
 	
 	return loc_out;

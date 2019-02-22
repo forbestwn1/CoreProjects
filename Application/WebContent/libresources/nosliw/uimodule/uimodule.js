@@ -61,7 +61,8 @@ var loc_createUIModule = function(uiModuleDef, context){
 
 	var loc_uiEventHandler;
 	
-	var loc_eventObject = node_createEventObject();
+	var loc_eventSource = node_createEventObject();
+	var loc_eventListener = node_createEventObject();
 
 	var loc_out = {
 		
@@ -69,7 +70,7 @@ var loc_createUIModule = function(uiModuleDef, context){
 			loc_uis.push(ui);
 			loc_uisByName[ui.getName()] = ui;
 			//register listener for module ui
-			ui.registerListener(function(eventName, eventData){
+			ui.registerEventListener(loc_eventListener, function(eventName, eventData, requestInfo){
 				if(loc_uiEventHandler!=undefined){
 					loc_uiEventHandler(eventName, ui.getName(), eventData);
 				}
