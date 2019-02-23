@@ -267,10 +267,17 @@ var node_createContext = function(elementInfosArray, request){
 				success : function(requestInfo, result){
 				}
 			});
-			_.each(values, function(value, name){
+			
+			_.each(loc_out.getElementsName(), function(name, index){
+				var value = values[name];
 				var dataOpRequest = node_createUIDataOperationRequest(that, new node_UIDataOperation(name, node_uiDataOperationServiceUtility.createSetOperationService("", value)));
 				setRequest.addRequest(name, dataOpRequest);
 			});
+			
+//			_.each(values, function(value, name){
+//				var dataOpRequest = node_createUIDataOperationRequest(that, new node_UIDataOperation(name, node_uiDataOperationServiceUtility.createSetOperationService("", value)));
+//				setRequest.addRequest(name, dataOpRequest);
+//			});
 			outRequest.addRequest(setRequest);
 			return outRequest;
 		}

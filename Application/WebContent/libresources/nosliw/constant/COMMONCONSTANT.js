@@ -302,6 +302,7 @@ var COMMONCONSTANT=
   "RUNTIME_RESOURCE_TYPE_UIRESOURCE": "uiResource",
   "RUNTIME_RESOURCE_TYPE_UITAG": "uiTag",
   "RUNTIME_RESOURCE_TYPE_UIMODULE": "uiModule",
+  "RUNTIME_RESOURCE_TYPE_UIAPP": "uiApp",
   "RUNTIME_RESOURCE_TYPE_PROCESS": "process",
   "RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN": "activityPlugin",
   "RUNTIME_RESOURCE_TYPE_MATCHER": "matcher",
@@ -336,7 +337,10 @@ var COMMONCONSTANT=
   "SERVICE_RESULT_FAIL": "fail",
   "SERVICE_RESULT_EXCEPTION": "exception",
   "SERVICE_OUTPUTNAME_OUTPUT": "output",
-  "NOSLIW_RESERVE_ATTRIBUTE": "nosliwAttribute_"
+  "NOSLIW_RESERVE_ATTRIBUTE": "nosliwAttribute_",
+  "NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER": "nosliwAttribute_placeholder",
+  "DECORATION_COMMAND_COMMANDPROCESS": "commandProcess",
+  "DECORATION_COMMAND_EVENTPROCESS": "eventProcess"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

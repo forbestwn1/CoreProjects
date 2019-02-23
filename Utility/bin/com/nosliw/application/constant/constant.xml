@@ -539,6 +539,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_UIRESOURCE" value="uiResource"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UITAG" value="uiTag"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UIMODULE" value="uiModule"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UIAPP" value="uiApp"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_PROCESS" value="process"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN" value="activityPlugin"/>
 
@@ -603,6 +604,11 @@
 
 			<definition type="space"/>
 			<definition name="NOSLIW_RESERVE_ATTRIBUTE" value="nosliwAttribute_"/>
+			<definition name="NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER" value="nosliwAttribute_placeholder"/>
+
+			<definition type="space"/>
+			<definition name="DECORATION_COMMAND_COMMANDPROCESS" value="commandProcess"/>
+			<definition name="DECORATION_COMMAND_EVENTPROCESS" value="eventProcess"/>
 			
 		</definitions>
 	</constants>

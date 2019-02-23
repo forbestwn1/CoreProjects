@@ -452,6 +452,7 @@ public class HAPConstant {
 		public static final String RUNTIME_RESOURCE_TYPE_UIRESOURCE = "uiResource";
 		public static final String RUNTIME_RESOURCE_TYPE_UITAG = "uiTag";
 		public static final String RUNTIME_RESOURCE_TYPE_UIMODULE = "uiModule";
+		public static final String RUNTIME_RESOURCE_TYPE_UIAPP = "uiApp";
 		public static final String RUNTIME_RESOURCE_TYPE_PROCESS = "process";
 		public static final String RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN = "activityPlugin";
 		public static final String RUNTIME_RESOURCE_TYPE_MATCHER = "matcher";
@@ -529,6 +530,12 @@ public class HAPConstant {
 
 
 		public static final String NOSLIW_RESERVE_ATTRIBUTE = "nosliwAttribute_";
+		public static final String NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER = "nosliwAttribute_placeholder";
+
+
+
+		public static final String DECORATION_COMMAND_COMMANDPROCESS = "commandProcess";
+		public static final String DECORATION_COMMAND_EVENTPROCESS = "eventProcess";
 
 
 }

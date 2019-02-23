@@ -88,7 +88,7 @@ public class HAPProcessorModule {
 
 		HAPContextGroup mappingContextGroup = new HAPContextGroup();
 		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, HAPProcessorDataAssociation.processDataAssociation(moduleExe.getContext(), moduleUIDefinition.getInputMapping(), contextProcessRequirement).getSolidContext());
-		HAPExecutableUIUnitPage page = uiResourceMan.getUIResource(pageId, id, mappingContextGroup, null);
+		HAPExecutableUIUnitPage page = uiResourceMan.getUIPage(pageId, id, mappingContextGroup, null);
 		out.setPage(page);
 
 		//build input data association

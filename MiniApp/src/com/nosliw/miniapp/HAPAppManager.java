@@ -154,7 +154,7 @@ public class HAPAppManager {
 		
 		Map<String, String> pages = moduleDef.getPages();
 		for(String pageName : pages.keySet()) {
-			out.addPage(pageName, this.getUIResource(pages.get(pageName)));
+			out.addPage(pageName, this.getUIPage(pages.get(pageName)));
 			out.addPageUIResourceName(pageName, pages.get(pageName));
 		}
 		

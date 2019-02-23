@@ -15,13 +15,19 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createModuleUIRequest = function(moduleUIDef, moduleContext, handlers, request){
+var node_createModuleUIRequest = function(moduleUIDef, moduleContext, decorations, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleUI", {"moduleUIDef":moduleUIDef, "moduleContext":moduleContext}), handlers, request);
 	
 	//generate page
 	out.addRequest(nosliw.runtime.getUIPageService().getGenerateUIPageRequest(moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_PAGE], undefined, {
 		success :function(requestInfo, page){
 			var moduleUI = node_createModuleUI(moduleUIDef, page);
+			if(decorations!=null){
+				_.each(decorations, function(decoration, index){
+					moduleUI.addDecoration(decoration);
+				});
+			}
+			
 			//syn in data with module context
 			return moduleUI.getSynInUIDataRequest(moduleContext, {
 				success : function(requestInfo){
@@ -39,9 +45,7 @@ var node_createModuleUI = function(moduleUIDef, page){
 	
 	var loc_out = {
 		
-		addDecoration : function(decoration){
-			loc_page.addDecoration(decoration);
-		},	
+		addDecoration : function(decoration){		loc_page.addDecoration(decoration);	},	
 
 		getUpdateContextRequest : function(parms, handlers, requestInfo){	return loc_page.getUpdateContextRequest(parms, handlers, requestInfo);	},
 		executeUpdateContextRequest : function(parms, handlers, requestInfo){	node_requestServiceProcessor.processRequest(this.getUpdateContextRequest(parms, handlers, requestInfo));	},

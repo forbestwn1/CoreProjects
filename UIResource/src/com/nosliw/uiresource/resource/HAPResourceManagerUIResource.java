@@ -24,7 +24,7 @@ public class HAPResourceManagerUIResource extends HAPResourceManagerImp{
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPResourceIdUIResource uiResourceId = new HAPResourceIdUIResource(resourceId); 
-		HAPExecutableUIUnitPage uiResource = this.m_uiResourceMan.getUIResource(uiResourceId.getId());
+		HAPExecutableUIUnitPage uiResource = this.m_uiResourceMan.getUIPage(uiResourceId.getId());
 		if(uiResource==null)  return null;
 		Map<String, Object> info = new LinkedHashMap<String, Object>();
 		info.put(HAPRuntimeJSUtility.RESOURCE_LOADPATTERN, HAPRuntimeJSUtility.RESOURCE_LOADPATTERN_FILE);
@@ -34,7 +34,7 @@ public class HAPResourceManagerUIResource extends HAPResourceManagerImp{
 	@Override
 	protected List<HAPResourceDependent> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
 		HAPResourceIdUIResource uiResourceId = new HAPResourceIdUIResource(resourceId); 
-		HAPExecutableUIUnitPage uiResource = this.m_uiResourceMan.getUIResource(uiResourceId.getId());
+		HAPExecutableUIUnitPage uiResource = this.m_uiResourceMan.getUIPage(uiResourceId.getId());
 		return uiResource.getResourceDependency(runtimeInfo);
 	}
 

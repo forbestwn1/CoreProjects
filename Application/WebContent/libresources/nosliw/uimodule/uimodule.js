@@ -24,16 +24,25 @@ var packageObj = library;
 	var node_makeObjectWithType;
 	var node_getLifecycleInterface;
 	var node_createModuleUIRequest;
+	var node_createUIDecorationsRequest;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
-var node_createUIModuleRequest = function(uiModuleDef, input, handlers, request){
+var node_createUIModuleRequest = function(uiModuleDef, input, decorations, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUIModule", {"uiModule":uiModuleDef}), handlers, request);
 
 	var module = loc_createUIModule(uiModuleDef, uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input));
 
+	//prepare decoration first
+	var decorationInfo = {};
+	if(uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_DECORATION]!=null)  decorationInfo = uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_DECORATION];
+	if(decorations!=null){
+		if(decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL]!=undefined)   decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL]=decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL];
+		if(decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]!=undefined)   decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]=decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI];
+	}
+	
 	//build module ui
-	var buildModuleUIRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("BuildModuleUIs", {}), {
+	var buildModuleUIsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("BuildModuleUIs", {}), {
 		success : function(request, resultSet){
 			_.each(resultSet.getResults(), function(moduleUI, index){
 				module.prv_addUI(moduleUI);
@@ -44,9 +53,22 @@ var node_createUIModuleRequest = function(uiModuleDef, input, handlers, request)
 
 	// build uis
 	_.each(uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_UI], function(ui, index){
-		buildModuleUIRequest.addRequest(index, node_createModuleUIRequest(ui, module.getContext()));
+		
+		var buildModuleUIRequest = node_createServiceRequestInfoSequence();
+
+		var uiName = uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];
+		var decs;
+		if(decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI]!=undefined)  decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_UI][uiName]; 
+		if(decs==undefined) decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL];
+		buildModuleUIRequest.addRequest(node_createUIDecorationsRequest(decs, {
+			success : function(request, data){
+				return node_createModuleUIRequest(ui, module.getContext(), data);
+			}
+		}));
+
+		buildModuleUIsRequest.addRequest(index, buildModuleUIRequest);
 	});
-	out.addRequest(buildModuleUIRequest);
+	out.addRequest(buildModuleUIsRequest);
 	
 	return out;
 };	
@@ -123,6 +145,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.createModuleUIRequest", function(){node_createModuleUIRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("uipage.createUIDecorationsRequest", function(){node_createUIDecorationsRequest = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIModuleRequest", node_createUIModuleRequest); 

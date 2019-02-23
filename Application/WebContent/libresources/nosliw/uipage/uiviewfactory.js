@@ -32,10 +32,6 @@ var packageObj = library;
 var loc_createUIViewFactory = function(){
 	
 	var loc_out = {
-		createUIView1 : function(uiResource, id, parent, context, requestInfo){
-			return loc_createUIView(uiResource, id, parent, context, requestInfo);
-		},
-		
 		getCreateUIViewRequest : function(uiResource, id, parent, context, handlers, requestInfo){
 			
 			var uiView = loc_createUIView(uiResource, id, parent, context);
@@ -240,6 +236,8 @@ var loc_createUIView = function(uiResource, id, parent, context){
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiResource, id, parent, context){
 
+		loc_attributes = uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_ATTRIBUTES];
+		
 		//build context element first
 		if(loc_context==undefined){
 			//if context not provide, then build context by parent context and current context definition

@@ -35,6 +35,10 @@ public class HAPDefinitionModule extends HAPComponentWithConfiguration{
 	@HAPAttribute
 	public static String PROCESS = "process";
 
+	@HAPAttribute
+	public static String DECORATION = "decoration";
+	
+	
 	private String m_id;
 	
 	// data definition

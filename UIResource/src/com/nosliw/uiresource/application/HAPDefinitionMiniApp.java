@@ -43,6 +43,8 @@ public class HAPDefinitionMiniApp extends HAPComponentWithConfiguration{
 	
 	public void setId(String id) {  this.m_id = id;   }
 	
+	public Map<String, HAPDefinitionMiniAppData> getDataDefinition(){   return this.m_dataDefinition;   }
+	
 	public HAPDefinitionMiniAppEntryUI getEntry(String entry) {  return this.m_entries.get(entry);  }
 	public void addEntry(HAPDefinitionMiniAppEntryUI entry) {
 		String name = entry.getName();
