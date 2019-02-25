@@ -19,7 +19,7 @@
 				element : {
 					internal_data: {
 						definition: {
-							path : "<%=&(nosliwAttribute_data)&%>",
+							path : "<%=&(nosliwattribute_data)&%>",
 							definition : {
 								criteria : "test.options;1.0.0"
 							}

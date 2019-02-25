@@ -16,7 +16,7 @@ nosliw.runtime.getResourceService().importResource({
 			},
 			"protected": {
 				"element": {
-					"<%=&(nosliwAttribute_index)&%>": {
+					"<%=&(nosliwattribute_index)&%>": {
 						"name": "",
 						"description": "",
 						"info": {
@@ -32,7 +32,7 @@ nosliw.runtime.getResourceService().importResource({
 							}
 						}
 					},
-					"<%=&(nosliwAttribute_element)&%>": {
+					"<%=&(nosliwattribute_element)&%>": {
 						"name": "",
 						"description": "",
 						"info": {
@@ -42,7 +42,7 @@ nosliw.runtime.getResourceService().importResource({
 							"type": "relative",
 							"processed": "false",
 							"path": {
-								"rootEleName": "<%=&(nosliwAttribute_data)&%>",
+								"rootEleName": "<%=&(nosliwattribute_data)&%>",
 								"path": "element"
 							},
 							"isToParent": false
@@ -63,7 +63,7 @@ nosliw.runtime.getResourceService().importResource({
 							"type": "relative",
 							"processed": "false",
 							"path": {
-								"rootEleName": "<%=&(nosliwAttribute_data)&%>"
+								"rootEleName": "<%=&(nosliwattribute_data)&%>"
 							},
 							"isToParent": false
 						}

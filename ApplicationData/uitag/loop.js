@@ -18,22 +18,22 @@
 				element : {
 					"internal_data": {
 						definition : {
-							path : "<%=&(nosliwAttribute_data)&%>"
+							path : "<%=&(nosliwattribute_data)&%>"
 						}
 					}
 				},
 			},
 			protected : {
 				element : {
-					"<%=&(nosliwAttribute_element)&%>" : {
+					"<%=&(nosliwattribute_element)&%>" : {
 						definition : {
-							path : "<%=&(nosliwAttribute_data)&%>.element",
+							path : "<%=&(nosliwattribute_data)&%>.element",
 						},
 						info:{
 							instantiate : "manual"
 						}
 					},
-					"<%=&(nosliwAttribute_index)&%>" : {
+					"<%=&(nosliwattribute_index)&%>" : {
 						definition : {
 							criteria : "test.integer;1.0.0",
 						},
