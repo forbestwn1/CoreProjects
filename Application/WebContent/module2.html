@@ -10,6 +10,9 @@
         <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
 		<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
 
+
+<!--  		<script type="text/javascript" src="libresources/external/jQuery_Mobile/jquery.mobile-1.4.5.min.js"></script>   --> 
+
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
@@ -25,10 +28,8 @@
 <script>
 
 
-var loc_getModuleRuntimeRequest = function(moduleId, decorations, handlers, request){
+var loc_getModuleRuntimeRequest = function(moduleId, handlers, request){
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
-	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 
 	var loc_envFactory = function(uiModule){
 		var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
@@ -94,19 +95,10 @@ var loc_getModuleRuntimeRequest = function(moduleId, decorations, handlers, requ
 		};
 		return loc_out;
 	};
-	
-	var out = node_createServiceRequestInfoSequence();
-	
-	out.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(moduleId, undefined, decorations, loc_envFactory, {
-		success : function(requestInfo, moduleRuntime){
-			$(document).bind("mobileinit", function() {
-				moduleRuntime.executeStartRequest();
-			});
-			nosliw.runtime.getResourceService().executeGetResourceDataByTypeRequest(["external.jQuery_Mobile;1.4.5"], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_JSLIBRARY);
-		}
-	}));
-	
-	return out;
+		
+	var decorations = {};
+	decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = ["Decoration_application"];
+	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, decorations, loc_envFactory, handlers, request);
 };
 
 
@@ -115,18 +107,26 @@ $(document).on("nosliwActive", function(){
 	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
-	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 
     // Our initialization code here
 	var currentSearchString = window.location.search;
 	var moduleId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
 
 	//create module runtime
-	var decorations = {};
-	decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = ["Decoration_application"];
-	var request = loc_getModuleRuntimeRequest(moduleId, decorations);
-	node_requestServiceProcessor.processRequest(request);
+	loc_getModuleRuntimeRequest(moduleId, {
+		success : function(request, moduleRuntime){
+			$(document).bind("mobileinit", function() {
+				moduleRuntime.executeStartRequest();
+			});
 
+			nosliw.runtime.getResourceService().executeGetResourceDataByTypeRequest(["external.jQuery_Mobile;1.4.5"], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_JSLIBRARY, {
+				success : function(requestInfo, data){
+					var kkkk = 5555;
+					kkkk++;
+				}
+			});
+		}
+	});
 });
 
 nosliw.init();

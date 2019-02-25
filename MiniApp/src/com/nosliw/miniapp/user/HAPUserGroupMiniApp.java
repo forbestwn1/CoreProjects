@@ -25,14 +25,14 @@ public class HAPUserGroupMiniApp extends HAPSerializableImp{
 
 	private HAPGroup m_group;
 	
-	private List<HAPUserMiniAppInfo> m_miniApps;
+	private List<HAPMiniApp> m_miniApps;
 
 	public HAPUserGroupMiniApp(HAPGroup group) {
 		this.m_group = group;
-		this.m_miniApps = new ArrayList<HAPUserMiniAppInfo>();
+		this.m_miniApps = new ArrayList<HAPMiniApp>();
 	}
 
-	public void addMiniApp(HAPUserMiniAppInfo miniApp) {	this.m_miniApps.add(miniApp);	}
+	public void addMiniApp(HAPMiniApp miniApp) {	this.m_miniApps.add(miniApp);	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -45,7 +45,7 @@ public class HAPUserGroupMiniApp extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		JSONObject groupJsonObj = jsonObj.optJSONObject(GROUP);
 		this.m_group = (HAPGroup)HAPSerializeManager.getInstance().buildObject(HAPGroup.class.getName(), groupJsonObj, HAPSerializationFormat.JSON);
-		this.m_miniApps = HAPSerializeUtility.buildListFromJsonArray(HAPUserMiniAppInfo.class.getName(), jsonObj.optJSONArray(MINIAPPS));
+		this.m_miniApps = HAPSerializeUtility.buildListFromJsonArray(HAPMiniApp.class.getName(), jsonObj.optJSONArray(MINIAPPS));
 		return true;
 	}
 
