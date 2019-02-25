@@ -337,8 +337,8 @@ var COMMONCONSTANT=
   "SERVICE_RESULT_FAIL": "fail",
   "SERVICE_RESULT_EXCEPTION": "exception",
   "SERVICE_OUTPUTNAME_OUTPUT": "output",
-  "NOSLIW_RESERVE_ATTRIBUTE": "nosliwAttribute_",
-  "NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER": "nosliwAttribute_placeholder",
+  "NOSLIW_RESERVE_ATTRIBUTE": "nosliwattribute_",
+  "NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER": "nosliwattribute_placeholder",
   "DECORATION_COMMAND_COMMANDPROCESS": "commandProcess",
   "DECORATION_COMMAND_EVENTPROCESS": "eventProcess"
 };

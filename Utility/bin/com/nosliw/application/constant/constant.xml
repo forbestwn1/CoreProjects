@@ -603,8 +603,8 @@
 			<definition name="SERVICE_OUTPUTNAME_OUTPUT" value="output"/>
 
 			<definition type="space"/>
-			<definition name="NOSLIW_RESERVE_ATTRIBUTE" value="nosliwAttribute_"/>
-			<definition name="NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER" value="nosliwAttribute_placeholder"/>
+			<definition name="NOSLIW_RESERVE_ATTRIBUTE" value="nosliwattribute_"/>
+			<definition name="NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER" value="nosliwattribute_placeholder"/>
 
 			<definition type="space"/>
 			<definition name="DECORATION_COMMAND_COMMANDPROCESS" value="commandProcess"/>

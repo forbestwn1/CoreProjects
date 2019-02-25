@@ -72,29 +72,19 @@ var loc_getModuleRuntimeRequest = function(moduleId, handlers, request){
 				
 				getPreStartModuleRequest :function(handlers, requestInfo){
 					out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreExecuteModule", {"uiModule":uiModule}), handlers, requestInfo);
-					_.each(loc_uiModule.getUIs(), function(ui, index){
-						
-						ui.registerEventListener(undefined, function(event, eventData, requestInfo){
-							if(event=="transferBack"){
-								loc_transferBack();
-							}
+
+					out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
+						_.each(loc_uiModule.getUIs(), function(ui, index){
+							ui.registerEventListener(undefined, function(event, eventData, requestInfo){
+								if(event=="transferBack"){
+									loc_transferBack();
+								}
+							});
+
+							ui.getPage().appendTo($('#testDiv'));
 						});
-						
-						var processUIRequest = node_createServiceRequestInfoSequence();
-						processUIRequest.addRequest(nosliw.runtime.getUIPageService().getCreateUIPageRequest("Decoration_application", undefined, {
-							success :function(requestInfo, page){
-								ui.getPage().appendTo($('#testDiv'));
-								var contextValue = {
-									ui :{
-										id : ui.getName(),
-										title : ui.getName()
-									}
-								};
-								return page.getUpdateContextRequest(contextValue);								
-							}
-						}));
-						out.addRequest(processUIRequest);
-					});
+					}));
+
 					return out;
 				},
 

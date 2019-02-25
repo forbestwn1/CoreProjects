@@ -4,6 +4,7 @@ var packageObj = library;
 (function(packageObj){
 	//get used node
 	var node_CONSTANT;
+	var node_COMMONCONSTANT;
 	var node_createEventObject;
 	var node_makeObjectWithLifecycle;
 	var node_makeObjectWithType;
@@ -15,7 +16,7 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUIDecorationsRequest = function(resourceIds, handlers, request){
-	var out = node_createServiceRequestInfoSequence(handlers, request);
+	var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 	var decs = [];
 	if(resourceIds!=undefined){
 		var decsRequest = node_createServiceRequestInfoSequence();
@@ -55,14 +56,14 @@ var loc_createDecoration = function(uiView){
 			loc_parent = parent;
 			
 			//insert parent view into decoration view
-			var placeHolderAttrValue = loc_uiView.getAttribute(node_COMMONCONSTANT[NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER]);
+			var placeHolderAttrValue = loc_uiView.getAttribute(node_COMMONCONSTANT.NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER);
 			var segs = placeHolderAttrValue.split(":");
 			loc_parent.appendTo(loc_uiView.getElementByAttributeValue(segs[0], segs[1]));
 
 			//listener to event from parent
 			loc_parent.registerEventListener(loc_eventListenerForParent, function(event, eventData, requestInfo){
 				//process by decoration first
-				var result = loc_uiView.command(node_COMMONCONSTANT[DECORATION_COMMAND_EVENTPROCESS], {}, requestInfo);
+				var result = loc_uiView.command(node_COMMONCONSTANT.DECORATION_COMMAND_EVENTPROCESS, {}, requestInfo);
 				if(result===false)  return false;   //if return false, then no pop up the event
 				else loc_eventSource.triggerEvent(event, eventData, requestInfo);  //otherwise, pop up the event
 			});
@@ -73,29 +74,19 @@ var loc_createDecoration = function(uiView){
 		detachViews : function(){	loc_uiView.detachViews();  },
 		
 		getUpdateContextRequest : function(parms, handlers, requestInfo){
-/*			
-			var parmsForDec = {};
-			var parmsUpdated = {};
-			var parmsForDecSum = 0;
-			var parmsUpdatedSum = 0;
-			_.each(parms, function(parm, name){
-				if(name.startsWith(loc_out.getName())){
-					parmsForDec[name.substring(loc_out.getName().length)] = parm;
-					parmsForDecSum++;
-				}
-				else{
-					parmsUpdated[name] = parm;
-					parmsUpdatedSum++;
-				}
-			});
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
-			if(parmsForDecSum>0) out.addRequest(loc_uiView.getUpdateContextRequest(parmsForDec));
-			else if(parmsUpdatedSum>0)  out.addRequest(loc_parent.getUpdateContextRequest(parmsUpdated));
-*/
-			
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
-			out.addRequest(loc_uiView.getUpdateContextRequest(parms));
-			out.addRequest(loc_parent.getUpdateContextRequest(parms));
+			out.addRequest(loc_uiView.getUpdateContextRequest(parms, {
+				success : function(requestInfo){
+					var kkkk = 555;
+					kkkk++;
+				}
+			}));
+			out.addRequest(loc_parent.getUpdateContextRequest(parms, {
+				success : function(requestInfo){
+					var kkkk = 555;
+					kkkk++;
+				}
+			}));
 			return out;
 		},
 		
@@ -125,6 +116,7 @@ var loc_createDecoration = function(uiView){
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});

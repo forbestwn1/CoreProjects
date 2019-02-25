@@ -28,12 +28,22 @@ var node_createModuleUIRequest = function(moduleUIDef, moduleContext, decoration
 				});
 			}
 			
-			//syn in data with module context
-			return moduleUI.getSynInUIDataRequest(moduleContext, {
-				success : function(requestInfo){
-					return moduleUI;
+			var contextValue = {
+				ui :{
+					id : moduleUI.getName(),
+					title : moduleUI.getName()
 				}
-			});
+			};
+			return moduleUI.getPage().getUpdateContextRequest(contextValue, {
+				success : function(request){
+					//syn in data with module context
+					return moduleUI.getSynInUIDataRequest(moduleContext, {
+						success : function(requestInfo){
+							return moduleUI;
+						}
+					});
+				}
+			});								
 		}
 	}));
 	return out;

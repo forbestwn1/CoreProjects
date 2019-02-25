@@ -265,13 +265,17 @@ var node_createContext = function(elementInfosArray, request){
 			var outRequest = node_createServiceRequestInfoSequence({}, handlers, requestInfo);
 			var setRequest = node_createServiceRequestInfoSet({}, {
 				success : function(requestInfo, result){
+					var kkkkk = 5555;
+					kkkkk++;
 				}
 			});
 			
 			_.each(loc_out.getElementsName(), function(name, index){
 				var value = values[name];
-				var dataOpRequest = node_createUIDataOperationRequest(that, new node_UIDataOperation(name, node_uiDataOperationServiceUtility.createSetOperationService("", value)));
-				setRequest.addRequest(name, dataOpRequest);
+				if(value!=undefined){
+					var dataOpRequest = node_createUIDataOperationRequest(that, new node_UIDataOperation(name, node_uiDataOperationServiceUtility.createSetOperationService("", value)));
+					setRequest.addRequest(name, dataOpRequest);
+				}
 			});
 			
 //			_.each(values, function(value, name){

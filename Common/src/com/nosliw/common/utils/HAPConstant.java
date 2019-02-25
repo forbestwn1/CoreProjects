@@ -529,8 +529,8 @@ public class HAPConstant {
 
 
 
-		public static final String NOSLIW_RESERVE_ATTRIBUTE = "nosliwAttribute_";
-		public static final String NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER = "nosliwAttribute_placeholder";
+		public static final String NOSLIW_RESERVE_ATTRIBUTE = "nosliwattribute_";
+		public static final String NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER = "nosliwattribute_placeholder";
 
 
 
