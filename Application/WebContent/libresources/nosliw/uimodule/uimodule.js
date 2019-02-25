@@ -28,10 +28,10 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
-var node_createUIModuleRequest = function(uiModuleDef, input, decorations, handlers, request){
+var node_createUIModuleRequest = function(uiModuleDef, input, view, decorations, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUIModule", {"uiModule":uiModuleDef}), handlers, request);
 
-	var module = loc_createUIModule(uiModuleDef, uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input));
+	var module = loc_createUIModule(uiModuleDef, uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input), view);
 
 	//prepare decoration first
 	var decorationInfo = {};
@@ -73,10 +73,12 @@ var node_createUIModuleRequest = function(uiModuleDef, input, decorations, handl
 	return out;
 };	
 	
-var loc_createUIModule = function(uiModuleDef, context){
+var loc_createUIModule = function(uiModuleDef, context, view){
 	var loc_uiModuleDef = uiModuleDef;
 	
 	var loc_context = context;
+	
+	var loc_view = view;
 	
 	var loc_uis = [];
 	var loc_uisByName = {};
@@ -99,6 +101,9 @@ var loc_createUIModule = function(uiModuleDef, context){
 			});
 		},
 	
+		getView : function(){  return loc_view;  },
+		appendTo : function(view){  loc_view.appendTo(view);   },
+
 		getContext : function(){  return loc_context;  },
 		setContext : function(context) {  loc_context = context;  },
 			

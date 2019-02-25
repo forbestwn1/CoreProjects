@@ -25,7 +25,7 @@
 <script>
 
 
-var loc_getModuleRuntimeRequest = function(moduleId, decorations, handlers, request){
+var loc_getModuleRuntimeRequest = function(moduleId, decorations, callBacks, handlers, request){
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
@@ -80,10 +80,14 @@ var loc_getModuleRuntimeRequest = function(moduleId, decorations, handlers, requ
 								}
 							});
 
-							ui.getPage().appendTo($('#testDiv'));
+							ui.getPage().appendTo(loc_uiModule.getView());
 						});
 					}));
 
+					if(callBacks.preStart!=undefined){
+						callBacks.preStart(loc_uiModule);
+					}
+					
 					return out;
 				},
 
@@ -97,7 +101,7 @@ var loc_getModuleRuntimeRequest = function(moduleId, decorations, handlers, requ
 	
 	var out = node_createServiceRequestInfoSequence();
 	
-	out.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(moduleId, undefined, decorations, loc_envFactory, {
+	out.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(moduleId, undefined, $("<div/>"), decorations, loc_envFactory, {
 		success : function(requestInfo, moduleRuntime){
 			$(document).bind("mobileinit", function() {
 				moduleRuntime.executeStartRequest();
@@ -124,7 +128,12 @@ $(document).on("nosliwActive", function(){
 	//create module runtime
 	var decorations = {};
 	decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = ["Decoration_application"];
-	var request = loc_getModuleRuntimeRequest(moduleId, decorations);
+	var request = loc_getModuleRuntimeRequest(moduleId, decorations, 
+		{
+			preStart : function(uiModule){
+				uiModule.appendTo($('#testDiv'));
+			}
+		});
 	node_requestServiceProcessor.processRequest(request);
 
 });

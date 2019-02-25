@@ -24,9 +24,9 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	
-var node_createModuleRuntimeRequest = function(uiModuleDef, input, decorations, envFactory, handlers, request){
+var node_createModuleRuntimeRequest = function(uiModuleDef, input, view, decorations, envFactory, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef, "input":input}), handlers, request);
-	out.addRequest(node_createUIModuleRequest(uiModuleDef, input, decorations, {
+	out.addRequest(node_createUIModuleRequest(uiModuleDef, input, view, decorations, {
 		success : function(request, uiModule){
 			return loc_createModuleRuntime(uiModule, envFactory(uiModule));
 		}
@@ -104,6 +104,8 @@ var loc_createModuleRuntime = function(uiModule, env){
 			var requestInfo = this.getStartRequest(handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
+		
+		getModule : function(){  return loc_uiModule;  }
 
 	};
 	return loc_out;

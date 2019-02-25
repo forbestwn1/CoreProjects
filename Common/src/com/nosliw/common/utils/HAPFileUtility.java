@@ -25,9 +25,11 @@ import org.apache.commons.io.FileUtils;
 
 public class HAPFileUtility {
 	
+	public static String getApplicationLibFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/ApplicationLib/";   }
+	public static String getTagDefinitionFolder(){  return getApplicationLibFolder() + "uitag/";   }
+	public static String getActivityPluginFolder(){  return getApplicationLibFolder() + "activity/";   }
+
 	public static String getApplicationDataFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/ApplicationData/";   }
-	public static String getTagDefinitionFolder(){  return getApplicationDataFolder() + "uitag/";   }
-	public static String getActivityPluginFolder(){  return getApplicationDataFolder() + "activity/";   }
 	public static String getProcessFolder(){  return getApplicationDataFolder() + "process/";   }
 	public static String getTempFolder(){		return "C:/Temp/nosliw/";	}
 	public static String getScriptExportFolder(){  return HAPFileUtility.getTempFolder()+"scriptexport/scripts/";  }
