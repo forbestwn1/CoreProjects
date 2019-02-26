@@ -21,5 +21,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ServiceTest"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MiniApp"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

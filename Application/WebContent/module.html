@@ -71,9 +71,6 @@ var loc_envFactory = function(uiModule){
 
 	
 	var loc_out = {
-			//runtime execute request through this method, so that ui can do something (for instance, spinning circle)
-			processRequest : function(request){     node_requestServiceProcessor.processRequest(request);   },
-			
 			getPresentUIRequest : function(uiName, mode, handlers, requestInfo){
 				return loc_getTransferToRequest(uiName, mode, handlers, requestInfo);
 			},
@@ -85,6 +82,9 @@ var loc_envFactory = function(uiModule){
 			processUIEvent : function(eventName, uiName, eventData, request){
 				loc_processUIEvent(eventName, uiName, eventData, request);
 			},
+			
+			//runtime execute request through this method, so that ui can do something (for instance, spinning circle)
+			processRequest : function(request){     node_requestServiceProcessor.processRequest(request);   },
 			
 			getInitRequest :function(handlers, requestInfo){
 				var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);

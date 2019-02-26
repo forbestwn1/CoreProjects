@@ -1,4 +1,4 @@
-package com.nosliw.miniapp.user;
+package com.nosliw.miniapp.entity;
 
 import java.util.Map;
 
@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
-public class HAPMiniAppSetting extends HAPSerializableImp{
+public class HAPSettingData extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ID = "id";
@@ -84,4 +84,9 @@ public class HAPMiniAppSetting extends HAPSerializableImp{
 		return true;
 	}
 
+	public static HAPSettingData buildObject(Object json) {
+		HAPSettingData out = new HAPSettingData();
+		out.buildObject(json, HAPSerializationFormat.JSON);
+		return out;
+	}
 }

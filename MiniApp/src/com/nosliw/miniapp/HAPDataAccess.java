@@ -8,12 +8,12 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.data.core.imp.io.HAPDBSource;
-import com.nosliw.miniapp.user.HAPGroup;
-import com.nosliw.miniapp.user.HAPMiniApp;
-import com.nosliw.miniapp.user.HAPMiniAppSetting;
-import com.nosliw.miniapp.user.HAPUser;
-import com.nosliw.miniapp.user.HAPUserInfo;
-import com.nosliw.uiresource.application.HAPExecutableMiniAppEntry;
+import com.nosliw.miniapp.entity.HAPGroup;
+import com.nosliw.miniapp.entity.HAPMiniApp;
+import com.nosliw.miniapp.entity.HAPMiniAppSettingData;
+import com.nosliw.miniapp.entity.HAPSettingData;
+import com.nosliw.miniapp.entity.HAPUser;
+import com.nosliw.miniapp.entity.HAPUserInfo;
 
 public class HAPDataAccess {
 
@@ -146,32 +146,52 @@ public class HAPDataAccess {
 		}
 	}
 	
-	public void updateInstanceMiniAppUIEntryWithSettingData(HAPExecutableMiniAppEntry miniAppUIEntry, String userId, String appId, Set<String> dataNames) {
+	public HAPMiniAppSettingData getSettingData(String userId, String appId) {
+		HAPMiniAppSettingData out = new HAPMiniAppSettingData();
+		try {
+			PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM MINIAPP_INSTANCEDATA_SETTING where userid='"+userId+"' AND appid='"+appId+"';");
+			ResultSet resultSet = statement.executeQuery();
+			while(resultSet.next()) {
+				out.addData(buildSettingDataFromResult(resultSet));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
+
+	public HAPMiniAppSettingData getSettingData(String userId, String appId, Set<String> dataNames) {
+		HAPMiniAppSettingData out = new HAPMiniAppSettingData();
 		try {
 			for(String dataName : dataNames) {
 				PreparedStatement statement = this.getConnection().prepareStatement("SELECT * FROM MINIAPP_INSTANCEDATA_SETTING where userid='"+userId+"' AND appid='"+appId+"' AND dataname='"+dataName+"';");
 				ResultSet resultSet = statement.executeQuery();
 				while(resultSet.next()) {
-					HAPMiniAppSetting data = new HAPMiniAppSetting();
-					
-					data.setVersion(resultSet.getString("version"));
-					data.setStatus(resultSet.getString("status"));
-					data.setData(resultSet.getString("data"));
-					data.setId(resultSet.getString("id"));
-					
-					miniAppUIEntry.addData(dataName, data);
+					out.addData(buildSettingDataFromResult(resultSet));
 				}
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return out;
 	}
 	
+	private HAPSettingData buildSettingDataFromResult(ResultSet resultSet) {
+		HAPSettingData data = new HAPSettingData();
+		try {
+			data.setVersion(resultSet.getString("version"));
+			data.setStatus(resultSet.getString("status"));
+			data.setData(resultSet.getString("data"));
+			data.setId(resultSet.getString("id"));
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
 	
-	
-	public HAPMiniAppSetting addSettingData(String userId, String appId, String dataName, HAPMiniAppSetting dataInfo) {
-		HAPMiniAppSetting out = dataInfo;
+	public HAPSettingData addSettingData(String userId, String appId, String dataName, HAPSettingData dataInfo) {
+		HAPSettingData out = dataInfo;
 		out.setId(this.generateId());
 		try {
 			PreparedStatement statement = this.getConnection().prepareStatement("INSERT INTO MINIAPP_INSTANCEDATA_SETTING (ID,USERID,APPID,DATANAME,VERSION,STATUS,DATA) VALUES ('"+
@@ -192,8 +212,8 @@ public class HAPDataAccess {
 		}
 	}
 	
-	public HAPMiniAppSetting updateSettingData(String id, HAPMiniAppSetting dataInfo) {
-		HAPMiniAppSetting out = dataInfo;
+	public HAPSettingData updateSettingData(String id, HAPSettingData dataInfo) {
+		HAPSettingData out = dataInfo;
 		try {
 			PreparedStatement statement = this.getConnection().prepareStatement("UPDATE MINIAPP_INSTANCEDATA_SETTING SET VERSION='"+dataInfo.getVersion()+"',STATUS='"+dataInfo.getStatus()+"', DATA='"+dataInfo.getDataStr()+"'  WHERE ID='"+id+"'");
 			statement.execute();

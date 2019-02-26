@@ -1,4 +1,4 @@
-package com.nosliw.miniapp.user;
+package com.nosliw.miniapp.entity;
 
 import java.util.Map;
 
