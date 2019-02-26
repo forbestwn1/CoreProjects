@@ -10,7 +10,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
-import com.nosliw.miniapp.instance.HAPInstanceData;
+import com.nosliw.miniapp.user.HAPMiniAppSetting;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserInfo;
 import com.nosliw.uiresource.application.HAPExecutableMiniAppEntry;
@@ -105,8 +105,8 @@ public class HAPGatewayMiniApp extends HAPGatewayImp{
 			String dataName = parms.optString(COMMAND_CREATEDATA_DATANAME);
 			
 			JSONObject dataInfoJson = parms.optJSONObject(COMMAND_CREATEDATA_DATAINFO);
-			HAPInstanceData dataInfo = HAPInstanceData.buildObject(dataInfoJson);
-			HAPInstanceData newDataInfo = m_miniAppMan.createMiniAppData(userId, appId, dataName, dataInfo);
+			HAPMiniAppSetting dataInfo = HAPMiniAppSetting.buildObject(dataInfoJson);
+			HAPMiniAppSetting newDataInfo = m_miniAppMan.createMiniAppData(userId, appId, dataName, dataInfo);
 			out = HAPServiceData.createSuccessData(newDataInfo);
 		}
 		case COMMAND_DELETEDATA:

@@ -18,10 +18,11 @@ public class HAPGroup  extends HAPEntityInfoWritableImp{
 
 	public HAPGroup() {}
 
-	public HAPGroup(String id) {
+	public HAPGroup(String id, String name) {
 		this.m_id = id;
+		this.m_name = name;
 	}
-	
+
 	public String getId() {  return this.m_id;  }
 	public void setId(String id) {  this.m_id = id;   }
 

@@ -14,9 +14,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
-import com.nosliw.miniapp.instance.HAPInstanceData;
-import com.nosliw.miniapp.instance.HAPInstanceData;
 import com.nosliw.miniapp.instance.HAPInstanceModule;
+import com.nosliw.miniapp.user.HAPMiniAppSetting;
 import com.nosliw.miniapp.user.HAPUser;
 import com.nosliw.miniapp.user.HAPUserInfo;
 import com.nosliw.uiresource.HAPDefinitionUIModule;
@@ -59,19 +58,18 @@ public class HAPAppManager {
 		HAPUser user = this.m_dataAccess.getUserById(id);
 		if(user!=null) {
 			out = new HAPUserInfo();
-			user.addGroups(this.m_dataAccess.getUserGroups(user.getId()));
 			out.setUser(user);
+			out.addGroups(this.m_dataAccess.getUserGroups(user.getId()));
 			this.m_dataAccess.updateUserInfoWithMiniApp(out);
 		}
-		
 		return out;
 	}
 
-	public HAPInstanceData createMiniAppData(String userId, String appId, String dataName, HAPInstanceData dataInfo) {
-		HAPInstanceData out = null;
+	public HAPMiniAppSetting createMiniAppData(String userId, String appId, String dataName, HAPMiniAppSetting dataInfo) {
+		HAPMiniAppSetting out = null;
+		out = this.m_dataAccess.addSettingData(userId, appId, dataName, dataInfo);
 		switch(dataInfo.getType()) {
 		case HAPConstant.MINIAPPDATA_TYPE_SETTING:
-			out = this.m_dataAccess.addSettingData(userId, appId, dataName, (HAPInstanceData)dataInfo);
 			break;
 		}
 		return out;
@@ -85,17 +83,17 @@ public class HAPAppManager {
 		}
 	}
 	
-	public HAPInstanceData updateMiniAppData(String id, HAPInstanceData dataInfo) {
-		HAPInstanceData out = null;
+	public HAPMiniAppSetting updateMiniAppData(String id, HAPMiniAppSetting dataInfo) {
+		HAPMiniAppSetting out = null;
 		switch(dataInfo.getType()) {
 		case HAPConstant.MINIAPPDATA_TYPE_SETTING:
-			out = this.m_dataAccess.updateSettingData(id, (HAPInstanceData)dataInfo);
+			out = this.m_dataAccess.updateSettingData(id, dataInfo);
 			break;
 		}
 		return out;
 	}
 	
-	public HAPExecutableMiniAppEntry getMiniAppInstanceUIEntiry(String userId, String miniAppId, String entry) {
+	public HAPExecutableMiniAppEntry getMiniAppInstanceUIEntry(String userId, String miniAppId, String entry) {
 		HAPExecutableMiniAppEntry out = new HAPExecutableMiniAppEntry();
 		
 		HAPDefinitionMiniApp minAppDef = this.getMinAppDefinition(miniAppId);
