@@ -22,19 +22,22 @@ var node_createModuleUIRequest = function(moduleUIDef, moduleContext, decoration
 	out.addRequest(nosliw.runtime.getUIPageService().getGenerateUIPageRequest(moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_PAGE], undefined, {
 		success :function(requestInfo, page){
 			var moduleUI = node_createModuleUI(moduleUIDef, page);
+			
+			//append decorations
 			if(decorations!=null){
 				_.each(decorations, function(decoration, index){
 					moduleUI.addDecoration(decoration);
 				});
 			}
 			
+			//ui context information
 			var contextValue = {
 				ui :{
 					id : moduleUI.getName(),
 					title : moduleUI.getName()
 				}
 			};
-			return moduleUI.getPage().getUpdateContextRequest(contextValue, {
+			return moduleUI.getUpdateContextRequest(contextValue, {
 				success : function(request){
 					//syn in data with module context
 					return moduleUI.getSynInUIDataRequest(moduleContext, {
@@ -55,6 +58,12 @@ var node_createModuleUI = function(moduleUIDef, page){
 	
 	var loc_out = {
 		
+		getPage : function(){		return loc_page;		},
+		
+		getName : function(){	return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];	},
+		
+		getEventHandler : function(eventName){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_EVENTHANDLER][eventName];   },
+			
 		addDecoration : function(decoration){		loc_page.addDecoration(decoration);	},	
 
 		getUpdateContextRequest : function(parms, handlers, requestInfo){	return loc_page.getUpdateContextRequest(parms, handlers, requestInfo);	},
@@ -86,11 +95,6 @@ var node_createModuleUI = function(moduleUIDef, page){
 			return out;
 		},
 		
-		getPage : function(){		return loc_page;		},
-		
-		getName : function(){	return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_ID];	},
-		
-		getEventHandler : function(eventName){   return loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_EVENTHANDLER][eventName];   }
 	};
 	
 	return loc_out;

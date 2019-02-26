@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8" />
+        <title>Nosliw Go Go !!</title>
+
+   		<link rel="stylesheet" href="libresources/external/jQuery_Mobile/jquery.mobile-1.4.5.min.css" />
+        <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
+        
+        <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
+		<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+	 <div id="map"></div>
+
+	<div id="testDiv">
+	</div>
+
+</body>
+
+<script>
+
+
+var loc_getModuleRuntimeRequest = function(moduleId, decorations, callBacks, handlers, request){
+	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+
+	var loc_envFactory = function(uiModule){
+		var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
+		var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
+		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+		var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
+		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+
+		var loc_uiModule = uiModule;
+		var loc_uiStacks = []; 
+		
+		
+		var loc_getUpdateBackIconsRequest = function(handlers, request){
+			var out = node_createServiceRequestInfoSet(undefined, handlers, request);
+			_.each(loc_uiStacks, function(ui, index){
+				var displayStyle = "inline";
+				if(index==0){
+					displayStyle = "none";
+				}
+				out.addRequest(ui.getName(), ui.getUpdateContextRequest({
+					backIconDisplay : displayStyle
+				}));
+			});
+			return out;
+		};
+
+		var loc_transferBack = function(){
+			loc_uiStacks.pop();
+			
+			$.mobile.back();
+		};
+		
+		var loc_out = {
+				
+				getPresentUIRequest : function(uiName, mode, handlers, requestInfo){
+					$.mobile.changePage($("#"+uiName));
+					loc_uiStacks.push(loc_uiModule.getUI(uiName));
+					return loc_getUpdateBackIconsRequest(handlers, requestInfo);
+				},
+				
+				getExecuteCommandRequest : function(uiName, commandName, commandData, handlers, requestInfo){
+					return loc_uiModule.getUI(uiName).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
+				},
+				
+				getInitRequest :function(handlers, requestInfo){
+					out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreExecuteModule", {"uiModule":uiModule}), handlers, requestInfo);
+
+					out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
+						_.each(loc_uiModule.getUIs(), function(ui, index){
+							ui.registerEventListener(undefined, function(event, eventData, requestInfo){
+								if(event=="transferBack"){
+									loc_transferBack();
+								}
+							});
+
+							ui.getPage().appendTo(loc_uiModule.getView());
+						});
+					}));
+
+					if(callBacks.preStart!=undefined){
+						callBacks.preStart(loc_uiModule);
+					}
+					
+					return out;
+				},
+
+		};
+		return loc_out;
+	};
+	
+	var out = node_createServiceRequestInfoSequence();
+	
+	out.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(moduleId, undefined, $("<div/>"), decorations, loc_envFactory, {
+		success : function(requestInfo, moduleRuntime){
+			$(document).bind("mobileinit", function() {
+				moduleRuntime.executeStartRequest();
+			});
+			nosliw.runtime.getResourceService().executeGetResourceDataByTypeRequest(["external.jQuery_Mobile;1.4.5"], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_JSLIBRARY);
+		}
+	}));
+	
+	return out;
+};
+
+
+
+$(document).on("nosliwActive", function(){
+	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+
+    // Our initialization code here
+	var currentSearchString = window.location.search;
+	var moduleId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
+
+	//create module runtime
+	var decorations = {};
+	decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = ["Decoration_application"];
+	var request = loc_getModuleRuntimeRequest(moduleId, decorations, 
+		{
+			preStart : function(uiModule){
+				uiModule.appendTo($('#testDiv'));
+			}
+		});
+	node_requestServiceProcessor.processRequest(request);
+
+});
+
+nosliw.init();
+</script>
+
+</html>

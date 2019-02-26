@@ -96,7 +96,7 @@ var loc_createUIModule = function(uiModuleDef, context, view){
 			//register listener for module ui
 			ui.registerEventListener(loc_eventListener, function(eventName, eventData, requestInfo){
 				if(loc_uiEventHandler!=undefined){
-					loc_uiEventHandler(eventName, ui.getName(), eventData);
+					loc_uiEventHandler(eventName, ui.getName(), eventData, requestInfo);
 				}
 			});
 		},
@@ -114,7 +114,7 @@ var loc_createUIModule = function(uiModuleDef, context, view){
 		
 		getEventHandler : function(uiName, eventName){  return this.getUI(uiName).getEventHandler(eventName);     },
 		
-		registerUIListener : function(handler){  loc_uiEventHandler = handler; }
+		registerUIEventListener : function(handler){  loc_uiEventHandler = handler; }
 		
 	};
 

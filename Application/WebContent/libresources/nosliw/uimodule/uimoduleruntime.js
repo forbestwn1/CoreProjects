@@ -23,7 +23,6 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-	
 var node_createModuleRuntimeRequest = function(uiModuleDef, input, view, decorations, envFactory, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef, "input":input}), handlers, request);
 	out.addRequest(node_createUIModuleRequest(uiModuleDef, input, view, decorations, {
@@ -39,7 +38,7 @@ var loc_createModuleRuntime = function(uiModule, env){
 	var loc_uiModule = uiModule;
 	var loc_env = env;
 	
-	loc_uiModule.registerUIListener(function(eventName, uiName, eventData){
+	loc_uiModule.registerUIEventListener(function(eventName, uiName, eventData, request){
 		var eventHandler = loc_uiModule.getEventHandler(uiName, eventName);
 		if(eventHandler!=undefined){
 			var extraInput = {
@@ -48,13 +47,17 @@ var loc_createModuleRuntime = function(uiModule, env){
 					data : eventData
 				} 
 			};
-			node_requestServiceProcessor.processRequest(loc_getExecuteModuleProcessRequest(eventHandler[node_COMMONATRIBUTECONSTANT.DEFINITIONMODULEUIEVENTHANDER_PROCESS], extraInput));
+			loc_env.processRequest(loc_getExecuteModuleProcessRequest(eventHandler[node_COMMONATRIBUTECONSTANT.DEFINITIONMODULEUIEVENTHANDER_PROCESS], extraInput, undefined, request));
+		}
+		else{
+			loc_env.processUIEvent(eventName, uiName, eventData, request);
 		}
 	});
 
 	var loc_getExecuteModuleProcessRequest = function(process, extraInput, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteModuleProcess", {"process":process}), handlers, request);
 		var processInput = {};
+		//input data association
 		_.each(node_ioTaskUtility.getContextTypes(), function(categary, index){
 			var context = loc_uiModule.getContext()[categary];
 			if(context!=undefined){
@@ -64,6 +67,7 @@ var loc_createModuleRuntime = function(uiModule, env){
 			}			
 		});
 		
+		//append extra input
 		if(extraInput!=undefined){
 			_.each(extraInput, function(input, name){
 				processInput[name] = input;
@@ -84,29 +88,25 @@ var loc_createModuleRuntime = function(uiModule, env){
 	};
 	
 	var loc_out = {
+		getModule : function(){  return loc_uiModule;  },
+
+		//init runtime, env
 		getInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
-			//env pre exe
-			out.addRequest(loc_env.getPreStartModuleRequest());
+			if(loc_env.getInitRequest!=undefined)  out.addRequest(loc_env.getInitRequest());
 			return out;
 		},	
 			
+		//start 
 		getStartRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModule", {"uiModule":loc_uiModule}), handlers, request);
-			
-			//init
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModuleRuntime", {}), handlers, request);
+			//init module
 			out.addRequest(loc_getExecuteModuleProcessByNameRequest("init"));
-
 			return out;
 		},
 		
-		executeStartRequest : function(handlers, request){
-			var requestInfo = this.getStartRequest(handlers, request);
-			node_requestServiceProcessor.processRequest(requestInfo);
-		},
+		executeStartRequest : function(handlers, request){		loc_env.processRequest(this.getStartRequest(handlers, request));	},
 		
-		getModule : function(){  return loc_uiModule;  }
-
 	};
 	return loc_out;
 };
