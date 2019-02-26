@@ -6,10 +6,12 @@ import javax.servlet.http.HttpServlet;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
+import com.nosliw.miniapp.HAPAppManager;
 //import com.nosliw.miniapp.HAPAppManager;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
 import com.nosliw.uiresource.resource.HAPResourceManagerUIModule;
+import com.nosliw.uiresource.resource.HAPResourceManagerUIModuleEnv;
 import com.nosliw.uiresource.resource.HAPResourceManagerUIResource;
 import com.nosliw.uiresource.resource.HAPResourceManagerUITag;
 
@@ -41,14 +43,10 @@ public class HAPInitServlet  extends HttpServlet{
 			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPResourceManagerUIResource(uiResourceMan));
 			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UITAG, new HAPResourceManagerUITag(new HAPUITagManager()));
 			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, new HAPResourceManagerUIModule(uiResourceMan));
+			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULEENV, new HAPResourceManagerUIModuleEnv());
 
 			runtimeEnvironment.getGatewayManager().registerGateway("options", new HAPGatewayOptions());
 			
-//			this.getServletContext().setAttribute("minAppMan", new HAPAppManager(uiResourceMan));
-			
-			
-//			String file = HAPFileUtility.getFileNameOnClassPath(HAPInitServlet.class, "Example1.res");
-//			HAPUIDefinitionUnitResource uiResource = uiResourceMan.addUIResourceDefinition(file);
-
+			this.getServletContext().setAttribute("minAppMan", new HAPAppManager(uiResourceMan));
 	   }
 }

@@ -28,6 +28,7 @@ public class HAPFileUtility {
 	public static String getApplicationLibFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/ApplicationLib/";   }
 	public static String getTagDefinitionFolder(){  return getApplicationLibFolder() + "uitag/";   }
 	public static String getActivityPluginFolder(){  return getApplicationLibFolder() + "activity/";   }
+	public static String getUIModuleEnvFolder(){  return getApplicationLibFolder() + "uimoduleenv/";  }
 
 	public static String getApplicationDataFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/ApplicationData/";   }
 	public static String getProcessFolder(){  return getApplicationDataFolder() + "process/";   }
@@ -37,7 +38,7 @@ public class HAPFileUtility {
 	public static String getResourceTempFileFolder(){  return getJSFolder() + "temp/";  }
 	public static String getJSFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/Application/WebContent/";  }
 	public static String getNosliwJSFolder(String lib){  return getJSFolder()+"libresources/nosliw/"+lib+"/";  }
-	public static String getUIResourceFolder(){  return getApplicationDataFolder() + "page/";  }
+	public static String getUIPageFolder(){  return getApplicationDataFolder() + "page/";  }
 	public static String getUIModuleFolder(){  return getApplicationDataFolder() + "uimodule/";  }
 	public static String getMiniAppFolder(){  return getApplicationDataFolder() + "miniapp/";  }
 

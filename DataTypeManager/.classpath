@@ -9,7 +9,6 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ExpressionParser"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataTypeTest"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CriteriaParser"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/DataSource"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.utility"/>

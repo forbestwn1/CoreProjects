@@ -16,7 +16,6 @@
 	</classpathentry>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Application"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/UIResource"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/DataSource"/>
 	<classpathentry kind="lib" path="libs/activemq-client-5.15.3.jar"/>
 	<classpathentry kind="lib" path="libs/geronimo-jms_1.1_spec-1.1.1.jar"/>
 	<classpathentry kind="lib" path="libs/geronimo-j2ee-management_1.1_spec-1.0.1.jar"/>

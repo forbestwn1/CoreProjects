@@ -1,13 +1,11 @@
 package com.nosliw.data.core.runtime.js;
 
-import com.nosliw.common.serialization.HAPSerializableImp;
-
 public class HAPResourceDataFactory {
 
 	public static HAPResourceDataJSValue createJSValueResourceData(String value) {
 		return new HAPResourceDataJSValueInternal(value);
 	}
-
+ 
 }
 
 class HAPResourceDataJSValueInternal extends HAPResourceDataJSValueImp{

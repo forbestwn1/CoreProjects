@@ -24,7 +24,7 @@ public class HAPUtilityPage {
 	}
 
 	public static HAPDefinitionUIPage getPageDefinitionById(String id, HAPParserPage pageParser, HAPUIResourceManager uiResourceManager){
-		String file = HAPFileUtility.getUIResourceFolder()+id+".res";
+		String file = HAPFileUtility.getUIPageFolder()+id+".res";
 		HAPDefinitionUIPage uiResourceDef = pageParser.parseFile(file);
 		uiResourceDef = processInclude(uiResourceDef, pageParser, uiResourceManager);
 		return uiResourceDef;
