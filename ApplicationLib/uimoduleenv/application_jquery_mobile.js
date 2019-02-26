@@ -1,122 +1,83 @@
-{
-	name : "options",
-	description : "",
-	attributes : [
-		{
-			name : "id"
-		},
-		{
-			name : "data"
-		}
-	],
-	context: {
-		group : {
-			public : {
-				element : {
-				},
-			},
-			private : {
-				element : {
-					internal_data: {
-						definition: {
-							path : "<%=&(nosliwattribute_data)&%>",
-							definition : {
-								criteria : "test.options;1.0.0"
-							}
-						}
-					}
-				},
-			},
-		},
-		info : {
-			inherit : "false"
-		}
-	},
-	events : {
-		
-	},
-	requires:{
-		"operation" : { 
-		},
-	},
-	script : function(env){
-		var node_OperationParm = nosliw.getNodeData("expression.entity.OperationParm");
+function(uiModule){
+	var node_createServiceRequestInfoCommon = nosliw.getNodeData("request.request.createServiceRequestInfoCommon");
+	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
+	var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
+	var node_ServiceRequestExecuteInfo = nosliw.getNodeData("request.entity.ServiceRequestExecuteInfo");
+	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
+	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 
-		var loc_env = env;
-		var loc_dataVariable = env.createVariable("internal_data");
-		var loc_view;
-		
-		var loc_revertChange = function(){
+	var loc_uiModule = uiModule;
+	var loc_uiStacks = []; 
+	
+	
+	var loc_getUpdateBackIconsRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSet(undefined, handlers, request);
+		_.each(loc_uiStacks, function(ui, index){
+			var displayStyle = "inline";
+			if(index==0){
+				displayStyle = "none";
+			}
+			out.addRequest(ui.getName(), ui.getUpdateContextRequest({
+				backIconDisplay : displayStyle
+			}));
+		});
+		return out;
+	};
+
+	var loc_getTransferToRequest = function(uiName, mode, handlers, requestInfo){
+		$.mobile.changePage($("#"+uiName));
+		loc_uiStacks.push(loc_uiModule.getUI(uiName));
+		return loc_getUpdateBackIconsRequest(handlers, requestInfo);
+	};
+	
+	var loc_transferBack = function(){
+		loc_uiStacks.pop();
+		$.mobile.back();
+	};
+
+	var loc_processUIEvent = function(eventName, uiName, eventData, request){
+		if(eventName=="transferBack"){
+			loc_transferBack();
+		}
+	};
+
+	
+	var loc_out = {
+			getPresentUIRequest : function(uiName, mode, handlers, requestInfo){
+				return loc_getTransferToRequest(uiName, mode, handlers, requestInfo);
+			},
 			
-		};
-
-		var loc_getViewData = function(){
-			return {
-				dataTypeId: "test.options;1.0.0",
-				value: {
-					value : loc_view.val(),
-					optionsId : loc_env.getAttributeValue("id")
-				}
-			};
-		};
-
-		var loc_updateView = function(request){
-			loc_env.executeDataOperationRequestGet(loc_dataVariable, "", {
-				success : function(requestInfo, data){
-					loc_view.val(data.value.value.value);
-				}
-			});
-		};
-
-		var loc_setupUIEvent = function(){
-			loc_view.bind('change', function(){
-				loc_env.executeBatchDataOperationRequest([
-					loc_env.getDataOperationSet(loc_dataVariable, "", loc_getViewData())
-				]);
-			});
-		};
-
-		var loc_out = 
-		{
-			preInit : function(){	},
-				
-			initViews : function(requestInfo){	
-				loc_view = $('<select/>');	
-				var operationParms = [];
-				operationParms.push(new node_OperationParm(
-					{
-						dataTypeId: "test.string;1.0.0",
-						value: loc_env.getAttributeValue("id")
-					}, "optionsId"));
-				
-				loc_env.executeExecuteOperationRequest("test.options;1.0.0", "all", operationParms, {
-					success : function(request, optionsValueArray){
-						_.each(optionsValueArray.value, function(optionsValue, i){
-							loc_view.append($('<option>', {
-								value: optionsValue.value,
-								text: optionsValue.value
-							}));
-						});
-						loc_updateView();
-					}
-				});
-				return loc_view;
+			getExecuteCommandRequest : function(uiName, commandName, commandData, handlers, requestInfo){
+				return loc_uiModule.getUI(uiName).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
 			},
-				
-			postInit : function(request){
-				loc_updateView(request);
-				loc_setupUIEvent();
+			
+			processUIEvent : function(eventName, uiName, eventData, request){
+				loc_processUIEvent(eventName, uiName, eventData, request);
+			},
+			
+			//runtime execute request through this method, so that ui can do something (for instance, spinning circle)
+			processRequest : function(request){     node_requestServiceProcessor.processRequest(request);   },
+			
+			getInitRequest :function(handlers, requestInfo){
+				var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
+				out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(){
+					//put ui together
+					_.each(loc_uiModule.getUIs(), function(ui, index){
+						ui.getPage().appendTo(loc_uiModule.getView());
+					});
 
-				loc_dataVariable.registerDataOperationEventListener(undefined, function(event, eventData, request){
-					loc_updateView(request);
-				}, this);
+					$(document).bind("mobileinit", function() {
+						out.executeSuccessHandler();
+					});
+					//load jquery mobile
+					nosliw.runtime.getResourceService().executeGetResourceDataByTypeRequest(["external.jQuery_Mobile;1.4.5"], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_JSLIBRARY);
+
+				}));
+				return out;
 			},
 
-			destroy : function(){	
-				loc_dataVariable.release();	
-				loc_view.remove();
-			},
-		};
-		return loc_out;
-	}
+	};
+	return loc_out;
 }

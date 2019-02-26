@@ -19,6 +19,7 @@ var packageObj = library.getChildPackage("service");
 	var node_requestServiceProcessor;
 	var node_contextUtility;
 	var node_createUIModuleRequest;
+	var node_resourceUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -26,15 +27,25 @@ var node_createUIModuleService = function(){
 	
 	var loc_out = {
 
-		getGetUIModuleRuntimeRequest : function(id, input, view, decorations, envFactory, handlers, requester_parent){
+		getGetUIModuleRuntimeRequest : function(id, input, view, decorations, envFactoryId, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModuleResource", {"id":id, "input":input}), handlers, requestInfo);
 
-			//get ui module definition by resource id
-			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([id], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE, {
-				success : function(requestInfo, uiModuleDefs){
+			var moduleId = {};
+			moduleId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = id; 
+			moduleId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE; 
+
+			var moduleEnvId = {};
+			moduleEnvId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = envFactoryId; 
+			moduleEnvId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULEENV; 
+
+			//load ui module resource and env factory resource
+			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest([moduleId, moduleEnvId], {
+				success : function(requestInfo, resourceTree){
+					var envFactory = node_resourceUtility.getResourceFromTree(resourceTree, moduleEnvId).resourceData;
+					var uiModuleDef = node_resourceUtility.getResourceFromTree(resourceTree, moduleId).resourceData;
+					
 					//create ui module runtime
-					var uiModuleDef = uiModuleDefs[id];
 					return node_createModuleRuntimeRequest(uiModuleDef, input, view, decorations, envFactory, {
 						success : function(request, uiModuleRuntime){
 							return uiModuleRuntime.getInitRequest({
@@ -50,11 +61,10 @@ var node_createUIModuleService = function(){
 			return out;
 		},
 			
-		executeGetUIModuleRuntimeRequest : function(id, input, decorations, envFactory, handlers, requester_parent){
-			var requestInfo = this.getGetUIModuleRuntimeRequest(id, input, decorations, envFactory, handlers, requester_parent);
+		executeGetUIModuleRuntimeRequest : function(id, input, decorations, envFactoryId, handlers, requester_parent){
+			var requestInfo = this.getGetUIModuleRuntimeRequest(id, input, decorations, envFactoryId, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
-			
 	};
 
 	loc_out = node_buildServiceProvider(loc_out, "processService");
@@ -82,6 +92,7 @@ nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestI
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.createModuleRuntimeRequest", function(){node_createModuleRuntimeRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 
 
 //Register Node by Name
