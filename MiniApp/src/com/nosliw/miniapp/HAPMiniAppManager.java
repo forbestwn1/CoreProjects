@@ -5,16 +5,16 @@ import java.util.List;
 import com.nosliw.miniapp.entity.HAPGroup;
 import com.nosliw.miniapp.entity.HAPSettingData;
 import com.nosliw.miniapp.entity.HAPUser;
-import com.nosliw.uiresource.application.HAPDefinitionMiniApp;
-import com.nosliw.uiresource.application.HAPExecutableMiniAppEntry;
+import com.nosliw.uiresource.application.HAPDefinitionApp;
+import com.nosliw.uiresource.application.HAPExecutableAppEntry;
 
 public interface HAPMiniAppManager {
 
 	//get mini app definition 
-	HAPDefinitionMiniApp getMiniAppDefinition(String miniAppId);
+	HAPDefinitionApp getMiniAppDefinition(String miniAppId);
 
 	//mini app instance
-	HAPExecutableMiniAppEntry getMiniAppEntry(String entry, String miniAppid, String userId);
+	HAPExecutableAppEntry getMiniAppEntry(String entry, String miniAppid, String userId);
 
 	void deleteMiniApp(String miniAppId);
 

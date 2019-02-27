@@ -30,9 +30,9 @@ var node_createModuleUIRequest = function(moduleUIDef, moduleContext, decoration
 				});
 			}
 			
-			//ui context information
+			//ui information
 			var contextValue = {
-				ui :{
+				nosliw_uiInfo :{
 					id : moduleUI.getName(),
 					title : moduleUI.getName()
 				}
@@ -56,6 +56,8 @@ var node_createModuleUI = function(moduleUIDef, page){
 	var loc_moduleUIDef = moduleUIDef;
 	var loc_page = page;
 	
+	var loc_extraContextData = {};
+	
 	var loc_out = {
 		
 		getPage : function(){		return loc_page;		},
@@ -66,6 +68,9 @@ var node_createModuleUI = function(moduleUIDef, page){
 			
 		addDecoration : function(decoration){		loc_page.addDecoration(decoration);	},	
 
+		setExtraContextData : function(name, extraContextData){  loc_extraContextData[name] = extraContextData;  },
+		getExtraContextData : function(name){  return loc_extraContextData[name];  },
+		
 		getUpdateContextRequest : function(parms, handlers, requestInfo){	return loc_page.getUpdateContextRequest(parms, handlers, requestInfo);	},
 		executeUpdateContextRequest : function(parms, handlers, requestInfo){	node_requestServiceProcessor.processRequest(this.getUpdateContextRequest(parms, handlers, requestInfo));	},
 

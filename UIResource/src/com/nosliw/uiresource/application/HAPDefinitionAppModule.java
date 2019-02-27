@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionMiniAppModule  extends HAPEntityInfoWritableImp{
+public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static final String ROLE = "role";
@@ -33,7 +33,7 @@ public class HAPDefinitionMiniAppModule  extends HAPEntityInfoWritableImp{
 	
 	private HAPDefinitionDataAssociationGroup m_outputMapping;
 	
-	public HAPDefinitionMiniAppModule() {
+	public HAPDefinitionAppModule() {
 		this.m_inputMapping = new HAPDefinitionDataAssociationGroup();
 		this.m_outputMapping = new HAPDefinitionDataAssociationGroup();
 	}

@@ -15,7 +15,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.uiresource.common.HAPComponentWithConfiguration;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionMiniApp extends HAPComponentWithConfiguration{
+public class HAPDefinitionApp extends HAPComponentWithConfiguration{
 
 	@HAPAttribute
 	public static final String ID = "id";
@@ -29,26 +29,26 @@ public class HAPDefinitionMiniApp extends HAPComponentWithConfiguration{
 	private String m_id;
 
 	//one mini app may have different entry for different senario. 
-	private Map<String, HAPDefinitionMiniAppEntryUI> m_entries;
+	private Map<String, HAPDefinitionAppEntryUI> m_entries;
 
 	//global data definition 
 	//it can be stateful data(the data that can retrieve next time you use the app)
 	//or stateless (data generate during runtime)
-	private Map<String, HAPDefinitionMiniAppData> m_dataDefinition;
+	private Map<String, HAPDefinitionAppData> m_dataDefinition;
 
-	public HAPDefinitionMiniApp() {
-		this.m_entries = new LinkedHashMap<String, HAPDefinitionMiniAppEntryUI>();
-		this.m_dataDefinition = new LinkedHashMap<String, HAPDefinitionMiniAppData>();
+	public HAPDefinitionApp() {
+		this.m_entries = new LinkedHashMap<String, HAPDefinitionAppEntryUI>();
+		this.m_dataDefinition = new LinkedHashMap<String, HAPDefinitionAppData>();
 	}
 	
 	public void setId(String id) {  this.m_id = id;   }
 	
-	public Map<String, HAPDefinitionMiniAppData> getDataDefinition(){   return this.m_dataDefinition;   }
+	public Map<String, HAPDefinitionAppData> getDataDefinition(){   return this.m_dataDefinition;   }
 	
-	public HAPDefinitionMiniAppEntryUI getEntry(String entry) {  return this.m_entries.get(entry);  }
-	public void addEntry(HAPDefinitionMiniAppEntryUI entry) {
+	public HAPDefinitionAppEntryUI getEntry(String entry) {  return this.m_entries.get(entry);  }
+	public void addEntry(HAPDefinitionAppEntryUI entry) {
 		String name = entry.getName();
-		if(HAPBasicUtility.isStringEmpty(name))  name = HAPUtilityMiniApp.ENTRY_DEFAULT;
+		if(HAPBasicUtility.isStringEmpty(name))  name = HAPUtilityApp.ENTRY_DEFAULT;
 		this.m_entries.put(name, entry);
 	}
 	
@@ -67,12 +67,12 @@ public class HAPDefinitionMiniApp extends HAPComponentWithConfiguration{
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_id = jsonObj.optString(ID);
 	
-		this.m_dataDefinition =  HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionMiniAppData.class.getName(), jsonObj.optJSONObject(DATADEFINITION));
+		this.m_dataDefinition =  HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionAppData.class.getName(), jsonObj.optJSONObject(DATADEFINITION));
 
-		JSONArray entryArray = jsonObj.optJSONArray(HAPDefinitionMiniApp.ENTRY);
+		JSONArray entryArray = jsonObj.optJSONArray(HAPDefinitionApp.ENTRY);
 		if(entryArray!=null) {
 			for(int i=0; i<entryArray.length(); i++) {
-				HAPDefinitionMiniAppEntryUI entry = new HAPDefinitionMiniAppEntryUI();
+				HAPDefinitionAppEntryUI entry = new HAPDefinitionAppEntryUI();
 				entry.buildObject(entryArray.get(i), HAPSerializationFormat.JSON);
 				this.addEntry(entry);
 			}

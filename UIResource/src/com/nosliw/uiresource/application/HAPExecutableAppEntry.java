@@ -17,7 +17,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
 @HAPEntityWithAttribute
-public class HAPExecutableMiniAppEntry extends HAPEntityInfoImpWrapper implements HAPExecutable{
+public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HAPExecutable{
 
 	@HAPAttribute
 	public static String ID = "id";
@@ -33,16 +33,16 @@ public class HAPExecutableMiniAppEntry extends HAPEntityInfoImpWrapper implement
 	  
 	private String m_id;
 	
-	private Map<String, HAPExecutableMiniAppModule> m_uiModules;
+	private Map<String, HAPExecutableAppModule> m_uiModules;
 
 	//processes (used for lifecycle, module command)
 	private Map<String, HAPExecutableEmbededProcess> m_processes;
 
 	private HAPContextGroup m_context;
 	
-	public HAPExecutableMiniAppEntry(String entryName, HAPDefinitionMiniApp appDef) {
+	public HAPExecutableAppEntry(String entryName, HAPDefinitionApp appDef) {
 		super(appDef.getEntry(entryName));
-		this.m_uiModules = new LinkedHashMap<String, HAPExecutableMiniAppModule>();
+		this.m_uiModules = new LinkedHashMap<String, HAPExecutableAppModule>();
 	}
 
 	public String getId() {  return this.m_id;   }
@@ -51,8 +51,8 @@ public class HAPExecutableMiniAppEntry extends HAPEntityInfoImpWrapper implement
 	public HAPContextGroup getContext() {   return this.m_context;   }
 	public void setContext(HAPContextGroup context) {   this.m_context = context;  }
 	
-	public void addUIModule(String name, HAPExecutableMiniAppModule uiModuleInstance) {		this.m_uiModules.put(name, uiModuleInstance);	}
-	public HAPExecutableMiniAppModule getUIModuleInstance(String moduleName) {  return this.m_uiModules.get(moduleName);  }
+	public void addUIModule(String name, HAPExecutableAppModule uiModuleInstance) {		this.m_uiModules.put(name, uiModuleInstance);	}
+	public HAPExecutableAppModule getUIModuleInstance(String moduleName) {  return this.m_uiModules.get(moduleName);  }
 	
 	public void addProcess(String name, HAPExecutableEmbededProcess process) {		this.m_processes.put(name, process);	}
 

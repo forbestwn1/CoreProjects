@@ -28,8 +28,8 @@ import com.nosliw.uiresource.module.HAPUtilityModule;
 
 public class HAPProcessMiniAppEntry {
 
-	public static HAPExecutableMiniAppEntry process(
-			HAPDefinitionMiniApp miniAppDef,
+	public static HAPExecutableAppEntry process(
+			HAPDefinitionApp miniAppDef,
 			String entry, 
 			HAPContextGroup parentContext, 
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
@@ -41,12 +41,12 @@ public class HAPProcessMiniAppEntry {
 			HAPManagerServiceDefinition serviceDefinitionManager,
 			HAPProcessTracker processTracker) {
 
-		HAPExecutableMiniAppEntry out = new HAPExecutableMiniAppEntry(entry, miniAppDef);
+		HAPExecutableAppEntry out = new HAPExecutableAppEntry(entry, miniAppDef);
 		
-		HAPDefinitionMiniAppEntryUI entryDefinition = miniAppDef.getEntry(entry);
+		HAPDefinitionAppEntryUI entryDefinition = miniAppDef.getEntry(entry);
 		
 		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityCommon.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager);
-		HAPConfigureContextProcessor contextProcessConfg = HAPUtilityMiniApp.getContextProcessConfigurationForMiniApp();
+		HAPConfigureContextProcessor contextProcessConfg = HAPUtilityApp.getContextProcessConfigurationForApp();
 		
 		//service providers
 		Map<String, HAPDefinitionServiceProvider> entryServiceProviders = HAPUtilityServiceUse.buildServiceProvider(miniAppDef.getServiceProviderDefinitions(), entryDefinition, contextProcessRequirement.serviceDefinitionManager); 
@@ -55,7 +55,7 @@ public class HAPProcessMiniAppEntry {
 		HAPContextGroup entryContext = null;
 		
 		HAPContextGroup appContextGroup = new HAPContextGroup();
-		Map<String, HAPDefinitionMiniAppData> dataDef = miniAppDef.getDataDefinition();
+		Map<String, HAPDefinitionAppData> dataDef = miniAppDef.getDataDefinition();
 		for(String dataName : dataDef.keySet()) {
 			appContextGroup.setContext(dataName, dataDef.get(dataName));
 		}
@@ -69,8 +69,8 @@ public class HAPProcessMiniAppEntry {
 		}
 		
 		//module
-		for(HAPDefinitionMiniAppModule moduleDef : entryDefinition.getModules()) {
-			HAPExecutableMiniAppModule module = process(moduleDef, out, entryServiceProviders, processMan, uiResourceMan, contextProcessRequirement, processTracker);
+		for(HAPDefinitionAppModule moduleDef : entryDefinition.getModules()) {
+			HAPExecutableAppModule module = process(moduleDef, out, entryServiceProviders, processMan, uiResourceMan, contextProcessRequirement, processTracker);
 			out.addUIModule(moduleDef.getName(), module);
 		}
 		
@@ -78,15 +78,15 @@ public class HAPProcessMiniAppEntry {
 		return out;
 	}
 	
-	private static HAPExecutableMiniAppModule process(
-			HAPDefinitionMiniAppModule module,
-			HAPExecutableMiniAppEntry entryExe,
+	private static HAPExecutableAppModule process(
+			HAPDefinitionAppModule module,
+			HAPExecutableAppEntry entryExe,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processMan,
 			HAPUIResourceManager uiResourceMan,
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
-		HAPExecutableMiniAppModule out = new HAPExecutableMiniAppModule(module);
+		HAPExecutableAppModule out = new HAPExecutableAppModule(module);
 		
 		HAPDefinitionModule moduleDef = HAPUtilityModule.getUIModuleDefinitionById(module.getModule(), uiResourceMan.getModuleParser());
 		

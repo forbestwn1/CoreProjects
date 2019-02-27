@@ -11,16 +11,16 @@ function(uiModule){
 	var loc_uiModule = uiModule;
 	var loc_uiStacks = []; 
 	
-	
-	var loc_getUpdateBackIconsRequest = function(handlers, request){
+	var loc_getUpdatePageStatusRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSet(undefined, handlers, request);
 		_.each(loc_uiStacks, function(ui, index){
-			var displayStyle = "inline";
-			if(index==0){
-				displayStyle = "none";
-			}
+			//ui status data
+			var uiStatus = {
+				index : index,
+			};
+			
 			out.addRequest(ui.getName(), ui.getUpdateContextRequest({
-				backIconDisplay : displayStyle
+				nosliw_uiStatus : uiStatus
 			}));
 		});
 		return out;
@@ -29,7 +29,7 @@ function(uiModule){
 	var loc_getTransferToRequest = function(uiName, mode, handlers, requestInfo){
 		$.mobile.changePage($("#"+uiName));
 		loc_uiStacks.push(loc_uiModule.getUI(uiName));
-		return loc_getUpdateBackIconsRequest(handlers, requestInfo);
+		return loc_getUpdatePageStatusRequest(handlers, requestInfo);
 	};
 	
 	var loc_transferBack = function(){
@@ -38,11 +38,16 @@ function(uiModule){
 	};
 
 	var loc_processUIEvent = function(eventName, uiName, eventData, request){
-		if(eventName=="transferBack"){
+		if(eventName=="nosliw_transferBack"){
 			loc_transferBack();
+		}
+		else if(eventName=="nosliw_refresh"){
+			loc_processRequest(loc_uiModule.getRefreshUIRequest(uiName, undefined, request));
 		}
 	};
 
+	//runtime execute request through this method, so that ui can do something (for instance, spinning circle)
+	loc_processRequest = function(request){     node_requestServiceProcessor.processRequest(request);   };
 	
 	var loc_out = {
 			getPresentUIRequest : function(uiName, mode, handlers, requestInfo){
@@ -57,8 +62,7 @@ function(uiModule){
 				loc_processUIEvent(eventName, uiName, eventData, request);
 			},
 			
-			//runtime execute request through this method, so that ui can do something (for instance, spinning circle)
-			processRequest : function(request){     node_requestServiceProcessor.processRequest(request);   },
+			processRequest : function(request){     loc_processRequest(request);   },
 			
 			getInitRequest :function(handlers, requestInfo){
 				var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);

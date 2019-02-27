@@ -113,18 +113,19 @@ var node_createModuleUserApps = function(){
 	
 	
 	var loc_out = {
-		
+		  
 		refreshRequest : function(userInfo, handlers, requestInfo){
-			return node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshUserApps", {}), 
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("RefreshUserApps", {}), handlers, requestInfo);
+			out.addRequest(node_createServiceRequestInfoSimple(new node_ServiceInfo("RefreshUserApps", {}), 
 				function(requestInfo){
 					showUserInfo(userInfo);
-				}, 
-			);
+				}); 
+			return out;
 		},
 		
 		addMiniApp : function(){
 			
-		}
+		},
 		
 	};
 	

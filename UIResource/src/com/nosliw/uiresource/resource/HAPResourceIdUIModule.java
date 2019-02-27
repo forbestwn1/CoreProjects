@@ -33,6 +33,7 @@ public class HAPResourceIdUIModule  extends HAPResourceId{
 
 	public HAPUIModuleId getUIResourceId(){  return this.m_uiModuleId;	}
 	
+	@Override
 	public HAPResourceIdUIModule clone(){
 		HAPResourceIdUIModule out = new HAPResourceIdUIModule();
 		out.cloneFrom(this);

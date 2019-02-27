@@ -22,11 +22,11 @@ var packageObj = library.getChildPackage("service");
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createUIModuleService = function(){
+var node_createUIAppService = function(){
 	
 	var loc_out = {
 
-		getGetUIModuleRuntimeRequest : function(id, input, envFactory, handlers, requester_parent){
+		getGetUIAppRuntimeRequest : function(id, input, moduleConfigure, envFactory, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModuleResource", {"id":id, "input":input}), handlers, requestInfo);
 

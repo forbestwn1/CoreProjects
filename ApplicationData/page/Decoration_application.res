@@ -4,11 +4,11 @@
 	<br>
 	<br>
 
-	<div id="<%=?(ui.id)?%>" data-role="page" data-fullscreen="true">
+	<div id="<%=?(nosliw_uiInfo.id)?%>" data-role="page" data-fullscreen="true">
 
 		<div data-role="header">
-		   <a href="" style="display:<%=?(backIconDisplay)?%>" nosliw-event="click:transferBack:">Back</a>
-		   <h1><%=?(ui.title)?%></h1>
+		   <a href="" style="display:<%=?(nosliw_uiStatus.index)?==0?'none':'inline'%>" nosliw-event="click:transferBack:">Back</a>
+		   <h1><%=?(nosliw_uiInfo.title)?%></h1>
 		   <a href="" data-icon="gear" nosliw-event="click:refresh:">Refresh</a>
 		</div>
 
@@ -23,11 +23,11 @@
 	{
 		transferBack : function(info, env){
 			event.preventDefault();
-			env.trigueEvent("transferBack", info.eventData);
+			env.trigueEvent("nosliw_transferBack", info.eventData);
 		},
 		refresh : function(info, env){
 			event.preventDefault();
-			env.trigueEvent("refresh", info.eventData);
+			env.trigueEvent("nosliw_refresh", info.eventData);
 		},
 	}
 	</scripts>
@@ -38,11 +38,18 @@
 		"group" : {
 			"public" : {
 				"element" : {
-					"ui" : {
+					"nosliw_uiInfo" : {
 						"definition": {
 							"child" : {
 								"id" : {},
 								"title" : {}
+							}
+						}
+					},
+					"nosliw_uiStatus" : {
+						"definition": {
+							"child" : {
+								"index" : {},
 							}
 						}
 					},

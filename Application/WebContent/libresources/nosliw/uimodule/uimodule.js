@@ -74,6 +74,7 @@ var node_createUIModuleRequest = function(uiModuleDef, input, view, decorations,
 };	
 	
 var loc_createUIModule = function(uiModuleDef, context, view){
+
 	var loc_uiModuleDef = uiModuleDef;
 	
 	var loc_context = context;
@@ -88,6 +89,9 @@ var loc_createUIModule = function(uiModuleDef, context, view){
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
+	//hold module state data, so that when restart the module, we can return to the right state
+	var loc_stateData = {};
+	
 	var loc_out = {
 		
 		prv_addUI : function(ui){
@@ -106,10 +110,16 @@ var loc_createUIModule = function(uiModuleDef, context, view){
 
 		getContext : function(){  return loc_context;  },
 		setContext : function(context) {  loc_context = context;  },
-			
+		
+		getStateData : function(name){   return loc_stateData[name];  },
+		setStateData : function(name, state){  loc_stateData[name] = state;   },
+		
 		getUIs : function(){  return loc_uis;  },
 		getUI : function(name) {  return loc_uisByName[name];   },
-
+		getRefreshUIRequest : function(uiName, handlers, request){   
+			uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input);
+		},
+		
 		getProcess : function(name){  return loc_uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS][name];  },
 		
 		getEventHandler : function(uiName, eventName){  return this.getUI(uiName).getEventHandler(eventName);     },

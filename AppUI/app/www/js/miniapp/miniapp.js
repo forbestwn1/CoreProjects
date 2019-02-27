@@ -23,7 +23,7 @@ var node_createMiniApp = function(){
 	var loc_modulesInfo = [{
 		name : "userApps",
 		factory : "miniapp.module.userapps.createModuleUserApps",
-		handlers : {
+		init : {
 			success : function(requestInfo, data){
 				$("#leftpanel").append(data);
 			}
@@ -43,7 +43,7 @@ var node_createMiniApp = function(){
 		_.each(loc_modulesInfo, function(moduleInfo, index){
 			var module = nosliw.getNodeData(moduleInfo.factory)();
 			loc_modules[moduleInfo.name] = module;
-			out.addRequest(moduleInfo.name, module.interfaceObjectLifecycle.initRequest(moduleInfo.handlers, undefined));
+			out.addRequest(moduleInfo.name, module.interfaceObjectLifecycle.initRequest(moduleInfo.init, undefined));
 		});
 		
 		return out;
@@ -70,8 +70,12 @@ var node_createMiniApp = function(){
 			out.addRequest(loc_miniAppService.getLoginRequest(userInfo, {
 				success : function(requestInfo, userInfo){
 					localStorage.userId = userInfo.user.id;
-					return loc_refreshRequest(userInfo);
-//					return userInfo;
+//					return loc_refreshRequest(userInfo, {
+//						success : function(requestInfo){
+//							return userInfo;
+//						}
+//					});
+					return userInfo;
 				}
 			}));
 			return out;

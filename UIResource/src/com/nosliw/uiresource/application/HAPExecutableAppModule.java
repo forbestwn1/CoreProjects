@@ -11,7 +11,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroupWithTarget;
 import com.nosliw.uiresource.module.HAPExecutableModule;
 
-public class HAPExecutableMiniAppModule extends HAPEntityInfoImpWrapper implements HAPExecutable{
+public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements HAPExecutable{
 
 	@HAPAttribute
 	public static final String MODULE = "module";
@@ -28,7 +28,7 @@ public class HAPExecutableMiniAppModule extends HAPEntityInfoImpWrapper implemen
 	
 	private HAPExecutableDataAssociationGroupWithTarget m_outputMapping;
 
-	public HAPExecutableMiniAppModule(HAPDefinitionMiniAppModule def) {
+	public HAPExecutableAppModule(HAPDefinitionAppModule def) {
 		super(def);
 	}
 

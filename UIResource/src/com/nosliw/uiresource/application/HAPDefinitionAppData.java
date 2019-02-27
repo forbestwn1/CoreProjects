@@ -8,9 +8,9 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.script.context.HAPContextEntity;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionMiniAppData extends HAPContextEntity{
+public class HAPDefinitionAppData extends HAPContextEntity{
 
-	public HAPDefinitionMiniAppData() {
+	public HAPDefinitionAppData() {
 	}
 	
 	@Override

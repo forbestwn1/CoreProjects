@@ -15,8 +15,8 @@ import com.nosliw.miniapp.entity.HAPSettingData;
 import com.nosliw.miniapp.entity.HAPUser;
 import com.nosliw.miniapp.entity.HAPUserInfo;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.application.HAPDefinitionMiniApp;
-import com.nosliw.uiresource.application.HAPExecutableMiniAppEntry;
+import com.nosliw.uiresource.application.HAPDefinitionApp;
+import com.nosliw.uiresource.application.HAPExecutableAppEntry;
 
 public class HAPAppManager {
 
@@ -29,9 +29,9 @@ public class HAPAppManager {
 		this.m_uiResourceMan = resourceMan;
 	}
 	
-	public HAPDefinitionMiniApp getMinAppDefinition(String minAppDefId) {
+	public HAPDefinitionApp getMinAppDefinition(String minAppDefId) {
 		String file = HAPFileUtility.getMiniAppFolder()+minAppDefId+".res";
-		HAPDefinitionMiniApp out = (HAPDefinitionMiniApp)HAPSerializeManager.getInstance().buildObject(HAPDefinitionMiniApp.class.getName(), new JSONObject(HAPFileUtility.readFile(new File(file))), HAPSerializationFormat.JSON);
+		HAPDefinitionApp out = (HAPDefinitionApp)HAPSerializeManager.getInstance().buildObject(HAPDefinitionApp.class.getName(), new JSONObject(HAPFileUtility.readFile(new File(file))), HAPSerializationFormat.JSON);
 		out.setId(minAppDefId);
 		return out;
 	}
@@ -88,7 +88,7 @@ public class HAPAppManager {
 		
 		HAPMiniAppEntryInstance out = new HAPMiniAppEntryInstance();
 		
-		HAPExecutableMiniAppEntry entryExe = m_uiResourceMan.getMiniApp(miniAppId, entry);
+		HAPExecutableAppEntry entryExe = m_uiResourceMan.getMiniApp(miniAppId, entry);
 		out.setEntry(entryExe);
 		
 		HAPMiniAppSettingData settingData = this.m_dataAccess.getSettingData(userId, miniAppId);

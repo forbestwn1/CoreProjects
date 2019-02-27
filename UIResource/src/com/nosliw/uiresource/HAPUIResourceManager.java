@@ -11,11 +11,11 @@ import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
-import com.nosliw.uiresource.application.HAPDefinitionMiniApp;
-import com.nosliw.uiresource.application.HAPExecutableMiniAppEntry;
+import com.nosliw.uiresource.application.HAPDefinitionApp;
+import com.nosliw.uiresource.application.HAPExecutableAppEntry;
 import com.nosliw.uiresource.application.HAPParseMiniApp;
 import com.nosliw.uiresource.application.HAPProcessMiniAppEntry;
-import com.nosliw.uiresource.application.HAPUtilityMiniApp;
+import com.nosliw.uiresource.application.HAPUtilityApp;
 import com.nosliw.uiresource.common.HAPIdGenerator;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
 import com.nosliw.uiresource.module.HAPExecutableModule;
@@ -76,10 +76,10 @@ public class HAPUIResourceManager {
 		this.m_serviceDefinitionManager = serviceDefinitionManager;
 	}
 
-	public HAPExecutableMiniAppEntry getMiniApp(String appId, String entry) {
-		HAPDefinitionMiniApp miniAppDef = HAPUtilityMiniApp.getMiniAppDefinitionById(appId, this.m_miniAppParser);
+	public HAPExecutableAppEntry getMiniApp(String appId, String entry) {
+		HAPDefinitionApp miniAppDef = HAPUtilityApp.getAppDefinitionById(appId, this.m_miniAppParser);
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
-		HAPExecutableMiniAppEntry out = HAPProcessMiniAppEntry.process(miniAppDef, entry, null, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager, processTracker);
+		HAPExecutableAppEntry out = HAPProcessMiniAppEntry.process(miniAppDef, entry, null, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager, processTracker);
 		return out;
 	}
 	

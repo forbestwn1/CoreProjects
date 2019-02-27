@@ -9,8 +9,8 @@ import com.nosliw.common.utils.HAPFileUtility;
 
 public class HAPParseMiniApp {
 
-	public HAPDefinitionMiniApp parseFile(String fileName){
-		HAPDefinitionMiniApp out = null;
+	public HAPDefinitionApp parseFile(String fileName){
+		HAPDefinitionApp out = null;
 		try{
 			File input = new File(fileName);
 			//use file name as ui resource id
@@ -25,19 +25,19 @@ public class HAPParseMiniApp {
 	}
 
 	
-	public HAPDefinitionMiniApp parseContent(String content) {
+	public HAPDefinitionApp parseContent(String content) {
 		return parseJson(new JSONObject(content));
 	}
 	
-	private HAPDefinitionMiniApp parseJson(JSONObject jsonObj) {
-		HAPDefinitionMiniApp out = new HAPDefinitionMiniApp();
+	private HAPDefinitionApp parseJson(JSONObject jsonObj) {
+		HAPDefinitionApp out = new HAPDefinitionApp();
 		out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 		return out;
 	}
 
 	public static void main(String[] args) {
 		String content = HAPFileUtility.readFile("C:\\Users\\ewaniwa\\Desktop\\Mywork\\CoreProjects\\ApplicationData\\miniapp\\AppMySchool.res");
-		HAPDefinitionMiniApp out = new HAPParseMiniApp().parseContent(content);
+		HAPDefinitionApp out = new HAPParseMiniApp().parseContent(content);
 		System.out.println(out);
 	}
 	
