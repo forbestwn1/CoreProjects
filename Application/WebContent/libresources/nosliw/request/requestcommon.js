@@ -366,7 +366,10 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 				loc_destroy();
 			},
 			
-			
+			trackRequestStack : function(){
+				if(loc_out.pri_parentRequest!=undefined)   loc_out.pri_parentRequest.trackRequestStack();
+				console.log(node_basicUtility.stringify(loc_out.pri_service));
+			}
 	};
 	
 	loc_constructor(service, handlers, requester_parent);

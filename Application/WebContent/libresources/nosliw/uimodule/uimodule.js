@@ -116,9 +116,7 @@ var loc_createUIModule = function(uiModuleDef, context, view){
 		
 		getUIs : function(){  return loc_uis;  },
 		getUI : function(name) {  return loc_uisByName[name];   },
-		getRefreshUIRequest : function(uiName, handlers, request){   
-			uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input);
-		},
+		getRefreshUIRequest : function(uiName, handlers, request){	return this.getUI(uiName).getRefreshRequest(loc_context, handlers, request);	},
 		
 		getProcess : function(name){  return loc_uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS][name];  },
 		

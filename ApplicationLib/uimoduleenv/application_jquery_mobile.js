@@ -8,19 +8,20 @@ function(uiModule){
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 
+	var CONSTANT_UISTACK_DATANAME = "module_uiStack";
+	
 	var loc_uiModule = uiModule;
-	var loc_uiStacks = []; 
+	
+	var loc_getUIStack = function(){ return loc_uiModule.getStateData(CONSTANT_UISTACK_DATANAME);  };
 	
 	var loc_getUpdatePageStatusRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSet(undefined, handlers, request);
-		_.each(loc_uiStacks, function(ui, index){
-			//ui status data
-			var uiStatus = {
-				index : index,
-			};
-			
-			out.addRequest(ui.getName(), ui.getUpdateContextRequest({
-				nosliw_uiStatus : uiStatus
+		_.each(loc_getUIStack(), function(uiName, index){
+			//update ui status data
+			out.addRequest(uiName, loc_uiModule.getUI(uiName).getUpdateExtraContextDataRequest("nosliw_module_state", {
+				nosliw_uiStatus : {
+					index : index,
+				}
 			}));
 		});
 		return out;
@@ -28,12 +29,12 @@ function(uiModule){
 
 	var loc_getTransferToRequest = function(uiName, mode, handlers, requestInfo){
 		$.mobile.changePage($("#"+uiName));
-		loc_uiStacks.push(loc_uiModule.getUI(uiName));
+		loc_getUIStack().push(uiName);
 		return loc_getUpdatePageStatusRequest(handlers, requestInfo);
 	};
 	
 	var loc_transferBack = function(){
-		loc_uiStacks.pop();
+		loc_getUIStack().pop();
 		$.mobile.back();
 	};
 
@@ -72,6 +73,9 @@ function(uiModule){
 						ui.getPage().appendTo(loc_uiModule.getView());
 					});
 
+					//init ui stack
+					loc_uiModule.setStateData(CONSTANT_UISTACK_DATANAME, []);
+					
 					$(document).bind("mobileinit", function() {
 						out.executeSuccessHandler();
 					});

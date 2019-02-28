@@ -401,7 +401,7 @@ var node_createExpressionService = function(){
 
 	var loc_getExecuteScriptRequest = function(script, expressions, variables, scriptConstants, handlers, requester_parent){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteScriptExpression", {"script":script, "expressions":expressions, "variables":variables}), handlers, requestInfo);
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExpressionService_ExecuteScript", {"script":script, "expressions":expressions, "variables":variables}), handlers, requestInfo);
 
 		//calculate multiple expression
 		var executeMultipleExpressionRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("ExecuteMultipleExpression", {"expressions":expressions, "variables":variables}), {

@@ -319,6 +319,12 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 							success : function(requestInfo, value){
 								//set local value
 								if(loc_out.prv_valueAdapter==undefined){
+									
+									var kkkk;
+									if(loc_out.prv_typeHelper==undefined){
+										requestInfo.trackRequestStack();
+									}
+									
 									loc_setValue(value);
 									return value;
 								}

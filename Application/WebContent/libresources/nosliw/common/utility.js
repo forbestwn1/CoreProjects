@@ -71,6 +71,7 @@ var node_basicUtility =
 		},
 		
 		stringify : function(value){
+			if(value==undefined)   return "undefined";
 			try{
 				return JSON.stringify(value);
 			}

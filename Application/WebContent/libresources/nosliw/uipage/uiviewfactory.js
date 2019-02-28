@@ -6,6 +6,7 @@ var packageObj = library;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_createServiceRequestInfoSequence;
+	var node_createServiceRequestInfoSet;
 	var node_createServiceRequestInfoSimple;
 	var node_ServiceInfo;
 	var node_makeObjectWithLifecycle;
@@ -33,26 +34,31 @@ var loc_createUIViewFactory = function(){
 	
 	var loc_out = {
 		getCreateUIViewRequest : function(uiResource, id, parent, context, handlers, requestInfo){
-			
-			var uiView = loc_createUIView(uiResource, id, parent, context);
-
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIView", {}), handlers, requestInfo);
 
-			//init customer tags
-			_.each(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_UITAGS], function(uiTagResource, tagUiId, list){
-				var uiTagId = uiView.prv_getUpdateUIId(tagUiId);
-				out.addRequest(node_createUITagRequest(uiTagId, uiTagResource, uiView, {
-					success : function(requestInfo, uiTag){
-						uiView.prv_addUITag(uiTagId, uiTag);
-					}
-				}));
-			});
-
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-				uiView.prv_initCustomTagEvent();
-				return uiView;
+				var uiView = loc_createUIView(uiResource, id, parent, context, requestInfo);
+				
+				var createUITagRequest = node_createServiceRequestInfoSet(undefined, {
+					success: function(requestInfo, tagResults){
+						_.each(tagResults.getResults(), function(uiTag, uiTagId){
+							uiView.prv_addUITag(uiTagId, uiTag);
+						});
+						uiView.prv_initCustomTagEvent();
+						return uiView;
+				}});
+				
+				//init customer tags
+				_.each(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_UITAGS], function(uiTagResource, tagUiId, list){
+					var uiTagId = uiView.prv_getUpdateUIId(tagUiId);
+					createUITagRequest.addRequest(uiTagId, node_createUITagRequest(uiTagId, uiTagResource, uiView, {
+						success : function(requestInfo, uiTag){
+							return uiTag;
+						}
+					}));
+				});
+				return createUITagRequest;
 			}));
-			
 			return out;
 		}
 	};
@@ -67,7 +73,7 @@ var loc_createUIViewFactory = function(){
  * 	 	name space id
  * 		parent uiresource
  */
-var loc_createUIView = function(uiResource, id, parent, context){
+var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 
 	//event source used to register and trigger event
 	var loc_eventSource = node_createEventObject();
@@ -234,7 +240,7 @@ var loc_createUIView = function(uiResource, id, parent, context){
 	
 	
 	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiResource, id, parent, context){
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiResource, id, parent, context, requestInfo){
 
 		loc_attributes = uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_ATTRIBUTES];
 		
@@ -267,12 +273,12 @@ var loc_createUIView = function(uiResource, id, parent, context){
 
 		//init expression content
 		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPTEXPRESSIONSINCONTENT], function(expressionContent, key, list){
-			loc_expressionContents.push(node_createEmbededScriptExpressionInContent(expressionContent, loc_out));
+			loc_expressionContents.push(node_createEmbededScriptExpressionInContent(expressionContent, loc_out, requestInfo));
 		});
 
 		//init normal expression attribute
 		_.each(loc_uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_SCRIPTEXPRESSIONINATTRIBUTES], function(expressionAttr, key, list){
-			loc_expressionContents.push(node_createEmbededScriptExpressionInAttribute(expressionAttr, loc_out));
+			loc_expressionContents.push(node_createEmbededScriptExpressionInAttribute(expressionAttr, loc_out, requestInfo));
 		});
 		
 		//init regular tag event
@@ -525,7 +531,7 @@ var loc_createUIView = function(uiResource, id, parent, context){
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIVIEW);
 
-	node_getLifecycleInterface(loc_out).init(uiResource, id, parent, context);
+	node_getLifecycleInterface(loc_out).init(uiResource, id, parent, context, requestInfo);
 	
 	return loc_out;
 };
@@ -536,6 +542,7 @@ var loc_createUIView = function(uiResource, id, parent, context){
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){	node_createServiceRequestInfoSet = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
