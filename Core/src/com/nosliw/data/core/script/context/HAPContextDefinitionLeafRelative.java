@@ -16,6 +16,9 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 	@HAPAttribute
 	public static final String PATH = "path";
 
+	@HAPAttribute
+	public static final String PARENT = "parent";
+
 	//whether related to parent context or just to sibling root
 	@HAPAttribute
 	public static final String ISTOPARENT = "isToParent";
@@ -56,6 +59,13 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 
 	@Override
 	public HAPContextDefinitionElement getSolidContextDefinitionElement() {	return this.m_definition;	}
+
+	public String getParent() {
+		if(HAPBasicUtility.isStringNotEmpty(this.m_parent))   return this.m_parent;
+		if(HAPBasicUtility.isStringEmpty(this.getPath().getRootElementId().getCategary()))  return HAPConstant.RELATIVECONTEXT_PARENT_SELF;
+		return HAPConstant.RELATIVECONTEXT_PARENT_DEFAULT;  
+	}
+	public void setParent(String parent) {   this.m_parent = parent;  }
 	
 	public HAPContextDefinitionElement getDefinition() {   return this.m_definition;   }
 	public void setDefinition(HAPContextDefinitionElement definition) {   this.m_definition = definition.getSolidContextDefinitionElement();   }
@@ -142,6 +152,7 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PATH, this.getPath().toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(PARENT, this.getParent());
 		jsonMap.put(ISTOPARENT, this.isRelativeToParent()+"");
 		typeJsonMap.put(ISTOPARENT, Boolean.class);
 		jsonMap.put(DEFINITION, HAPJsonUtility.buildJson(this.m_definition, HAPSerializationFormat.JSON));

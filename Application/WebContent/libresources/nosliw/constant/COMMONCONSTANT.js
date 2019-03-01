@@ -341,7 +341,9 @@ var COMMONCONSTANT=
   "NOSLIW_RESERVE_ATTRIBUTE": "nosliwattribute_",
   "NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER": "nosliwattribute_placeholder",
   "DECORATION_COMMAND_COMMANDPROCESS": "commandProcess",
-  "DECORATION_COMMAND_EVENTPROCESS": "eventProcess"
+  "DECORATION_COMMAND_EVENTPROCESS": "eventProcess",
+  "RELATIVECONTEXT_PARENT_DEFAULT": "default",
+  "RELATIVECONTEXT_PARENT_SELF": "self"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

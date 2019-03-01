@@ -81,8 +81,13 @@ public class HAPParserContext {
 		if(path!=null){
 			//relative
 			contextRootDef = new HAPContextDefinitionLeafRelative();
-			((HAPContextDefinitionLeafRelative)contextRootDef).setPath((String)eleDefJson.opt(HAPContextDefinitionLeafRelative.PARENTCATEGARY), path);
+			HAPContextDefinitionLeafRelative relativeLeaf = (HAPContextDefinitionLeafRelative)contextRootDef;
+			String parent = (String)eleDefJson.opt(HAPContextDefinitionLeafRelative.PARENT);
+			relativeLeaf.setParent(parent);
+			relativeLeaf.setPath((String)eleDefJson.opt(HAPContextDefinitionLeafRelative.PARENTCATEGARY), path);
 			JSONObject definitionJsonObj = eleDefJson.optJSONObject(HAPContextDefinitionLeafRelative.DEFINITION);
+			if(definitionJsonObj!=null) 	relativeLeaf.setDefinition(parseContextDefinitionElement(definitionJsonObj));
+			
 		}
 		else if(criteriaDef!=null) {
 			//data
@@ -95,7 +100,6 @@ public class HAPParserContext {
 			for(Object key : childrenJsonObj.keySet()) {
 				((HAPContextDefinitionNode)contextRootDef).addChild((String)key, parseContextDefinitionElement(childrenJsonObj.getJSONObject((String)key)));
 			}
-			//default value
 		}
 		else if(valueJsonObj!=null){
 			//constant

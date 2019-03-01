@@ -611,6 +611,10 @@
 			<definition name="DECORATION_COMMAND_COMMANDPROCESS" value="commandProcess"/>
 			<definition name="DECORATION_COMMAND_EVENTPROCESS" value="eventProcess"/>
 			
+			<definition type="space"/>
+			<definition name="RELATIVECONTEXT_PARENT_DEFAULT" value="default"/>
+			<definition name="RELATIVECONTEXT_PARENT_SELF" value="self"/>
+
 		</definitions>
 	</constants>
 </root>

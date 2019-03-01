@@ -539,4 +539,9 @@ public class HAPConstant {
 		public static final String DECORATION_COMMAND_EVENTPROCESS = "eventProcess";
 
 
+
+		public static final String RELATIVECONTEXT_PARENT_DEFAULT = "default";
+		public static final String RELATIVECONTEXT_PARENT_SELF = "self";
+
+
 }
