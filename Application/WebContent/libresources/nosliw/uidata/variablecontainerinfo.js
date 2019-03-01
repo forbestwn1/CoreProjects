@@ -54,7 +54,7 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 		//data operation event handle for child variable 
 		eleVariable.registerDataOperationEventListener(loc_eventObject, function(event, eventData, request){
 			if(event==node_CONSTANT.WRAPPER_EVENT_DELETE){
-				loc_trigueEvent(node_CONSTANT.EACHELEMENTCONTAINER_EVENT_DELETEELEMENT, eleInfo.indexVariable);
+				loc_trigueEvent(node_CONSTANT.EACHELEMENTCONTAINER_EVENT_DELETEELEMENT, eleInfo.indexVariable, request);
 				eleVariable.release();
 				loc_orderChildrenInfo.deleteElement(eleInfo.path, request);
 				delete loc_elementsVariable[eleInfo.path];

@@ -123,24 +123,38 @@ var node_requestServiceProcessor = function(){
 	};
 	
 	var loc_addRequestToQueue = function(requestInfo, processRemote){
-		loc_requestQueue.push({
-			request : requestInfo,
-			processRemote : processRemote
-		});
-		if(loc_requestsSum==0){
-			return loc_processRequestInQueue();
+		if(loc_requests[requestInfo.getId()]!=undefined){
+			loc_addRequest(requestInfo);
+			return loc_processRequest(requestInfo, processRemote);
+		}
+		else{
+			loc_requestQueue.push({
+				request : requestInfo,
+				processRemote : processRemote
+			});
+			if(loc_requestsSum==0){
+				return loc_processRequestInQueue();
+			}
 		}
 	};
 	
 	var loc_out = {
-		processRequest1 : function(requestInfo, processRemote){
+		processRequest : function(requestInfo, processRemote){
+			if(requestInfo.getInnerId()=="399-400"){
+				var kkkk = 5555;
+				kkkk++;
+			}
+			nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Start Request");
+			
 			if(processRemote==undefined){
 				processRemote = true;
 			}
 			return loc_addRequestToQueue(requestInfo, processRemote);
 		},	
 
-		processRequest : function(requestInfo, processRemote){
+		processRequest1 : function(requestInfo, processRemote){
+			nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Start Request");
+			
 			if(processRemote==undefined){
 				processRemote = true;
 			}

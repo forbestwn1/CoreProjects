@@ -67,7 +67,7 @@ function(uiModule){
 			
 			getInitRequest :function(handlers, requestInfo){
 				var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
-				out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(){
+				out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
 					//put ui together
 					_.each(loc_uiModule.getUIs(), function(ui, index){
 						ui.getPage().appendTo(loc_uiModule.getView());
@@ -80,7 +80,7 @@ function(uiModule){
 						out.executeSuccessHandler();
 					});
 					//load jquery mobile
-					nosliw.runtime.getResourceService().executeGetResourceDataByTypeRequest(["external.jQuery_Mobile;1.4.5"], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_JSLIBRARY);
+					nosliw.runtime.getResourceService().executeGetResourceDataByTypeRequest(["external.jQuery_Mobile;1.4.5"], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_JSLIBRARY, undefined, requestInfo);
 
 				}));
 				return out;

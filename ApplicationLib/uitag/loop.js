@@ -159,7 +159,7 @@
 							success : function(request, data){
 								loc_out.prv_deleteEle(node_dataUtility.getValueOfData(data), request);
 							}
-						});
+						}, requestInfo);
 					}
 				});
 				
