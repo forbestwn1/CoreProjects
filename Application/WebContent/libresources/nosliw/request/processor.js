@@ -15,6 +15,8 @@ var node_requestServiceProcessor = function(){
 	var loc_requests = {};
 	var loc_requestsSum = 0;
 	
+	var loc_requestQueue = [];
+	
 	var loc_addRequest = function(request){
 		var id = request.getId();
 		var requestsById = loc_requests[id];
@@ -44,6 +46,7 @@ var node_requestServiceProcessor = function(){
 				//if no more child request created, then done with root request
 				requestsById.rootRequest.done();
 				delete loc_requests[id];
+				loc_processRequestInQueue();
 			}
 		}
 	};
@@ -51,8 +54,6 @@ var node_requestServiceProcessor = function(){
 	var loc_processRequest = function(requestInfo, processRemote){
 		
 		nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Start request : ", requestInfo.getService());
-		
-		loc_addRequest(requestInfo);
 		
 		//add request processor in order to logging the result
 		requestInfo.setRequestProcessors({
@@ -112,13 +113,42 @@ var node_requestServiceProcessor = function(){
 		}
 	};
 	
+	var loc_processRequestInQueue = function(){
+		if(loc_requestQueue.length>0){
+			var requestInfo = loc_requestQueue[0];
+			loc_requestQueue.shift();//slice(1);
+			loc_addRequest(requestInfo.request);
+			return loc_processRequest(requestInfo.request, requestInfo.processRemote);
+		}
+	};
+	
+	var loc_addRequestToQueue = function(requestInfo, processRemote){
+		loc_requestQueue.push({
+			request : requestInfo,
+			processRemote : processRemote
+		});
+		if(loc_requestsSum==0){
+			return loc_processRequestInQueue();
+		}
+	};
+	
 	var loc_out = {
+		processRequest1 : function(requestInfo, processRemote){
+			if(processRemote==undefined){
+				processRemote = true;
+			}
+			return loc_addRequestToQueue(requestInfo, processRemote);
+		},	
+
 		processRequest : function(requestInfo, processRemote){
 			if(processRemote==undefined){
 				processRemote = true;
 			}
+			
+			loc_addRequest(requestInfo);
 			return loc_processRequest(requestInfo, processRemote);
 		},	
+
 	};
 
 	return loc_out;

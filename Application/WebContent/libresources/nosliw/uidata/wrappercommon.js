@@ -496,6 +496,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 
 	var loc_out = {
 			getDataOperationRequest : function(operationService, handlers, requester_parent){
+				if(loc_out.prv_isLive==false)  return;
 				var that = this;
 				
 				var command = operationService.command;

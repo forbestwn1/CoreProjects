@@ -12,24 +12,26 @@
 					"element": {
 						"schoolTypeInModule": {
 							"definition": {
-								"path": "settingData.schoolTypeData"
+								"path": "schoolTypeInData",
+								"parent" : "appdata.setting"
 							}
 						},
 						"schoolRatingInModule": {
 							"definition": {
-								"path": "settingData.schoolRatingData"
+								"path": "setting.schoolRatingInData",
+								"parent" : "appdata.setting"
 							}
 						}
 					}
 				},
 				"outputMapping": {
 					"element": {
-						"settingData.schoolTypeData": {
+						"schoolTypeInApp": {
 							"definition": {
 								"path": "schoolTypeInModule"
 							}
 						},
-						"settingData.schoolRatingData": {
+						"schoolRatingInApp": {
 							"definition": {
 								"path": "schoolRatingInModule"
 							}
@@ -45,7 +47,17 @@
 					"element": {
 						"schoolListInModule": {
 							"definition": {
-								"path": "applicationData.schoolListInApp"
+								"path": "schoolListInApp"
+							}
+						},
+						"schoolTypeInModule": {
+							"definition": {
+								"path": "schoolTypeInApp"
+							}
+						},
+						"schoolRatingInModule": {
+							"definition": {
+								"path": "schoolRatingInApp"
 							}
 						}
 					}
@@ -106,85 +118,99 @@
 		}
 	],
 
-	"dataDefinition": {
-		"settingData": {
+	"applicationData" : {
+		"setting" : {
 			"element": {
-				"schoolTypeData": {
+				"schoolTypeInData": {
 					"definition": {
-						"criteria": "test.options;1.0.0"
-					},
-					"defaultValue": {
-						"dataTypeId": "test.options;1.0.0",
-						"value": {
-							"value": "Public",
-							"optionsId": "schoolType"
-						}
+						"path": "schoolTypeInApp"
 					}
 				},
-				"schoolRatingData": {
+				"schoolRatingInData": {
 					"definition": {
-						"criteria": "test.float;1.0.0"
-					},
-					"defaultValue": {
-						"dataTypeId": "test.float;1.0.0",
-						"value": 9.0
-					}
-				}
-			}
-		},
-		"applicationData": {
-			"element": {
-				"schoolListInApp": {
-					"definition": {
-						"criteria": "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
-					},
-					"defaultValue": {
-						"dataTypeId": "test.array;1.0.0",
-						"value": [{
-								"dataTypeId": "test.map;1.0.0",
-								"value": {
-									"schoolName": {
-										"dataTypeId": "test.string;1.0.0",
-										"value": "School1"
-									},
-									"schoolRating": {
-										"dataTypeId": "test.float;1.0.0",
-										"value": 6.0
-									},
-									"geo": {
-										"dataTypeId": "test.geo;1.0.0",
-										"value": {
-											"latitude": 43.651299,
-											"longitude": -79.579473
-										}
-									}
-								}
-							},
-							{
-								"dataTypeId": "test.map;1.0.0",
-								"value": {
-									"schoolName": {
-										"dataTypeId": "test.string;1.0.0",
-										"value": "School2"
-									},
-									"schoolRating": {
-										"dataTypeId": "test.float;1.0.0",
-										"value": 8.5
-									},
-									"geo": {
-										"dataTypeId": "test.geo;1.0.0",
-										"value": {
-											"latitude": 43.649016,
-											"longitude": -79.485059
-										}
-									}
-								}
-							}
-						]
+						"path": "schoolRatingInApp"
 					}
 				}
 			}
 		}
+	},
 
+	"context" : {
+		"group" : {
+			"public" : {
+				"element" : {
+					"schoolTypeInApp": {
+						"definition": {
+							"criteria": "test.options;1.0.0"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.options;1.0.0",
+							"value": {
+								"value": "Public",
+								"optionsId": "schoolType"
+							}
+						}
+					},
+					"schoolRatingInApp": {
+						"definition": {
+							"criteria": "test.float;1.0.0"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.float;1.0.0",
+							"value": 9.0
+						}
+					},
+					"schoolListInApp": {
+						"definition": {
+							"criteria": "test.array;1.0.0%%||element:test.map;1.0.0%%||geo:test.geo;1.0.0,schoolName:test.string;1.0.0,schoolRating:test.float;1.0.0||%%||%%"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.array;1.0.0",
+							"value": [{
+									"dataTypeId": "test.map;1.0.0",
+									"value": {
+										"schoolName": {
+											"dataTypeId": "test.string;1.0.0",
+											"value": "School1"
+										},
+										"schoolRating": {
+											"dataTypeId": "test.float;1.0.0",
+											"value": 6.0
+										},
+										"geo": {
+											"dataTypeId": "test.geo;1.0.0",
+											"value": {
+												"latitude": 43.651299,
+												"longitude": -79.579473
+											}
+										}
+									}
+								},
+								{
+									"dataTypeId": "test.map;1.0.0",
+									"value": {
+										"schoolName": {
+											"dataTypeId": "test.string;1.0.0",
+											"value": "School2"
+										},
+										"schoolRating": {
+											"dataTypeId": "test.float;1.0.0",
+											"value": 8.5
+										},
+										"geo": {
+											"dataTypeId": "test.geo;1.0.0",
+											"value": {
+												"latitude": 43.649016,
+												"longitude": -79.485059
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				}
+			}
+		}			
 	}
 }
