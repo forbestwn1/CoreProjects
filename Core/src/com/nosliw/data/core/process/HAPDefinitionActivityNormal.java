@@ -44,7 +44,7 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 			
 			JSONObject inputJson = jsonObj.optJSONObject(INPUT);
 			if(inputJson!=null) {
-				this.m_input = HAPDefinitionDataAssociation.newWithFlatOutput();
+				this.m_input = new HAPDefinitionDataAssociation();
 				this.m_input.buildObject(inputJson, HAPSerializationFormat.JSON);
 			}
 			

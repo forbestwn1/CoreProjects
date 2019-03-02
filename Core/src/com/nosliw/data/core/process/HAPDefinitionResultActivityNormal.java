@@ -41,7 +41,7 @@ public class HAPDefinitionResultActivityNormal extends HAPEntityInfoWritableImp{
 			this.m_flow.buildObject(jsonObj.optJSONObject(FLOW), HAPSerializationFormat.JSON);
 			
 			//data association output should not be flat
-			this.m_output = HAPDefinitionDataAssociation.newWithoutFlatOutput();
+			this.m_output = new HAPDefinitionDataAssociation();
 			this.m_output.buildObject(jsonObj.optJSONObject(OUTPUT), HAPSerializationFormat.JSON);
 			
 			//no inherit

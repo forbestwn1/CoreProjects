@@ -98,14 +98,14 @@ public class HAPParserModule {
 		
 		JSONObject inputMappingJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.INPUTMAPPING);
 		if(inputMappingJson!=null) {
-			HAPDefinitionDataAssociation dataAssociation = HAPDefinitionDataAssociation.newWithFlatOutput();
+			HAPDefinitionDataAssociation dataAssociation = new HAPDefinitionDataAssociation();
 			dataAssociation.buildObject(inputMappingJson, HAPSerializationFormat.JSON);
 			out.setInputMapping(dataAssociation);
 		}
 
 		JSONObject outputMappingJson = jsonObj.optJSONObject(HAPDefinitionModuleUI.OUTPUTMAPPING);
 		if(outputMappingJson!=null) {
-			HAPDefinitionDataAssociation dataAssociation = HAPDefinitionDataAssociation.newWithoutFlatOutput();
+			HAPDefinitionDataAssociation dataAssociation = new HAPDefinitionDataAssociation();
 			dataAssociation.buildObject(outputMappingJson, HAPSerializationFormat.JSON);
 			out.setOutputMapping(dataAssociation);
 		}

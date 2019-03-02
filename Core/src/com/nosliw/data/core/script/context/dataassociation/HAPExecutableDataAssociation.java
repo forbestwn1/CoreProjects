@@ -56,7 +56,6 @@ public class HAPExecutableDataAssociation extends HAPExecutableImp{
 	
 	public HAPExecutableDataAssociation(HAPDefinitionDataAssociation definition) {
 		this.m_definition = definition;
-		this.m_isFlatOutput = this.m_definition.isFlatOutput();
 	}
 	
 	public HAPDefinitionDataAssociation getDefinition() {  return this.m_definition;   }
