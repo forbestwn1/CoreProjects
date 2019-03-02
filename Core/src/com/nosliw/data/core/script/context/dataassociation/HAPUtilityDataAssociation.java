@@ -3,6 +3,8 @@ package com.nosliw.data.core.script.context.dataassociation;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefEleProcessor;
@@ -14,6 +16,15 @@ import com.nosliw.data.core.script.context.HAPUtilityContext;
 
 public class HAPUtilityDataAssociation {
 
+	public static Map<String, HAPDefinitionDataAssociation> buildDataAssociation(JSONObject daJsonObj){
+		Map<String, HAPDefinitionDataAssociation> out = new LinkedHashMap<String, HAPDefinitionDataAssociation>();
+		
+		
+		
+		
+		return out;
+	}
+	
 	//each relative context element represent path mapping (output path in context - input path in context) during runtime
 	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName, boolean isFlatInput){
 		return buildRelativePathMapping(contextRoot.getDefinition(), rootName, isFlatInput);

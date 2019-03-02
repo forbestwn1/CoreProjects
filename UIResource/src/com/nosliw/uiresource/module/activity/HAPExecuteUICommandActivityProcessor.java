@@ -16,7 +16,7 @@ import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 
 public class HAPExecuteUICommandActivityProcessor implements HAPProcessorActivity{
@@ -27,7 +27,7 @@ public class HAPExecuteUICommandActivityProcessor implements HAPProcessorActivit
 			String id,
 			HAPExecutableProcess processExe, 
 			HAPContextGroup context,
-			Map<String, HAPExecutableDataAssociationGroup> results,
+			Map<String, HAPExecutableDataAssociation> results,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions, 
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
@@ -36,7 +36,7 @@ public class HAPExecuteUICommandActivityProcessor implements HAPProcessorActivit
 			HAPProcessTracker processTracker) {
 		HAPExecuteUICommandActivityExecutable out = new HAPExecuteUICommandActivityExecutable(id, (HAPExecuteUICommandActivityDefinition)activityDefinition);
 		//process input and create flat input context for activity
-		HAPContextFlat activityContext = HAPUtilityProcess.processActivityInputDataAssocation(out, context, contextProcessRequirement);
+		HAPContextFlat activityContext = HAPUtilityProcess.processNormalActivityInputDataAssocation(out, context, contextProcessRequirement);
 
 		//process success result
 		HAPExecutableResultActivityNormal successResultExe = HAPUtilityProcess.processNormalActivityResult(out, HAPConstant.ACTIVITY_RESULT_SUCCESS, null, null, contextProcessRequirement);

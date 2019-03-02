@@ -21,8 +21,8 @@ import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDataAssociationIO;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
@@ -36,7 +36,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 			String id,
 			HAPExecutableProcess processExe,
 			HAPContextGroup processContext,
-			Map<String, HAPExecutableDataAssociationGroup> results,
+			Map<String, HAPExecutableDataAssociation> results,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions, 
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
@@ -81,7 +81,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 			if(HAPConstant.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 				HAPServiceActivityExecutable serviceActivity = (HAPServiceActivityExecutable)activity;
 				HAPServiceActivityDefinition serviceActDef = (HAPServiceActivityDefinition)serviceActivity.getActivityDefinition();
-				HAPDefinitionDataAssociationGroup da = serviceActDef.getServiceMapping().getResultMapping().get(resultName);
+				HAPDefinitionDataAssociation da = serviceActDef.getServiceMapping().getResultMapping().get(resultName);
 				for(String eleName : da.getElementNames()) {
 					HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(eleName), this.m_processContext, null, null);
 					String categary = resolveInfo.path.getRootElementId().getCategary();

@@ -612,8 +612,8 @@
 			<definition name="DECORATION_COMMAND_EVENTPROCESS" value="eventProcess"/>
 			
 			<definition type="space"/>
-			<definition name="RELATIVECONTEXT_PARENT_DEFAULT" value="default"/>
-			<definition name="RELATIVECONTEXT_PARENT_SELF" value="self"/>
+			<definition name="DATAASSOCIATION_RELATEDENTITY_DEFAULT" value="default"/>
+			<definition name="DATAASSOCIATION_RELATEDENTITY_SELF" value="self"/>
 
 		</definitions>
 	</constants>

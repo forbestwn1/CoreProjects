@@ -8,7 +8,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextFlat;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 
 public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 
@@ -18,7 +18,7 @@ public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 	@HAPAttribute
 	public static String RESULT = "result";
 
-	private HAPExecutableDataAssociationGroup m_input;
+	private HAPExecutableDataAssociation m_input;
 
 	private Map<String, HAPExecutableResultActivityNormal> m_results;
 	
@@ -27,7 +27,7 @@ public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 		this.m_results = new LinkedHashMap<String, HAPExecutableResultActivityNormal>();
 	}
 
-	public void setInputDataAssociation(HAPExecutableDataAssociationGroup input) {  this.m_input = input;  }
+	public void setInputDataAssociation(HAPExecutableDataAssociation input) {  this.m_input = input;  }
 
 	public HAPContextFlat getInputContext() {
 		if(this.m_input==null)   return null;

@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroupWithTarget;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationWithTarget;
 
 @HAPEntityWithAttribute
 public class HAPExecutableServiceUse extends HAPExecutableImp{
@@ -32,20 +32,20 @@ public class HAPExecutableServiceUse extends HAPExecutableImp{
 	public static String RESULTMAPPING = "resultMapping";
 
 	//parms path
-	private HAPExecutableDataAssociationGroupWithTarget m_parmMapping;
+	private HAPExecutableDataAssociationWithTarget m_parmMapping;
 	
-	private Map<String, HAPExecutableDataAssociationGroupWithTarget> m_resultMapping;
+	private Map<String, HAPExecutableDataAssociationWithTarget> m_resultMapping;
 	
 	private HAPDefinitionServiceUse m_definition;
 	
 	public HAPExecutableServiceUse(HAPDefinitionServiceUse definition) {
 		this.m_definition = definition;
-		this.m_resultMapping = new LinkedHashMap<String, HAPExecutableDataAssociationGroupWithTarget>();
+		this.m_resultMapping = new LinkedHashMap<String, HAPExecutableDataAssociationWithTarget>();
 	}
 	
-	public void setParmMapping(HAPExecutableDataAssociationGroupWithTarget parmMapping) {   this.m_parmMapping = parmMapping;   }
+	public void setParmMapping(HAPExecutableDataAssociationWithTarget parmMapping) {   this.m_parmMapping = parmMapping;   }
 	
-	public void addResultMapping(String result, HAPExecutableDataAssociationGroupWithTarget mapping) {   this.m_resultMapping.put(result, mapping);  }
+	public void addResultMapping(String result, HAPExecutableDataAssociationWithTarget mapping) {   this.m_resultMapping.put(result, mapping);  }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

@@ -91,6 +91,26 @@
 											}
 										}
 									}
+								},
+								{
+									"dataTypeId": "test.map;1.0.0",
+									"value": {
+										"schoolName": {
+											"dataTypeId": "test.string;1.0.0",
+											"value": "School3"
+										},
+										"schoolRating": {
+											"dataTypeId": "test.float;1.0.0",
+											"value": 8.5
+										},
+										"geo": {
+											"dataTypeId": "test.geo;1.0.0",
+											"value": {
+												"latitude": 43.649016,
+												"longitude": -79.485059
+											}
+										}
+									}
 								}
 							]
 						}

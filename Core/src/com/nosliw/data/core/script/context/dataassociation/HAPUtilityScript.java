@@ -22,7 +22,7 @@ import com.nosliw.data.core.script.context.HAPUtilityContextScript;
 
 public class HAPUtilityScript {
 
-	public static HAPScript buildDataAssociationConvertFunction(HAPExecutableDataAssociationGroup dataAssociationGroup) {
+	public static HAPScript buildDataAssociationConvertFunction(HAPExecutableDataAssociation dataAssociationGroup) {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("isFlatOutput", dataAssociationGroup.isFlatOutput()+"");
 		templateParms.put("isFlatInput", dataAssociationGroup.isFlatInput()+"");

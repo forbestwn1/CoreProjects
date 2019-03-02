@@ -540,8 +540,8 @@ public class HAPConstant {
 
 
 
-		public static final String RELATIVECONTEXT_PARENT_DEFAULT = "default";
-		public static final String RELATIVECONTEXT_PARENT_SELF = "self";
+		public static final String DATAASSOCIATION_RELATEDENTITY_DEFAULT = "default";
+		public static final String DATAASSOCIATION_RELATEDENTITY_SELF = "self";
 
 
 }

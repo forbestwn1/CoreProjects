@@ -9,9 +9,9 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroupWithTarget;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationWithTarget;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
@@ -35,9 +35,9 @@ public class HAPProcessorProcess{
 			out = new HAPExecutableEmbededProcess(embededProcessDefinition, id);
 			HAPProcessorProcess.process(out, oldContext, localProcesses, serviceProviders, processMan, contextProcessRequirement, processTracker);
 			
-			Map<String, HAPDefinitionDataAssociationGroup> outputMapping = embededProcessDefinition.getOutputMapping();
+			Map<String, HAPDefinitionDataAssociation> outputMapping = embededProcessDefinition.getOutputMapping();
 			for(String result : outputMapping.keySet()) {
-				HAPExecutableDataAssociationGroupWithTarget backToGlobalContext = HAPProcessorDataAssociation.processDataAssociation(out.getResult(result).getContext(), outputMapping.get(result), out.getContext(), true, contextProcessRequirement); 
+				HAPExecutableDataAssociationWithTarget backToGlobalContext = HAPProcessorDataAssociation.processDataAssociation(out.getResult(result).getContext(), outputMapping.get(result), out.getContext(), true, contextProcessRequirement); 
 				out.addBackToGlobalContext(result, backToGlobalContext);
 			}
 			
@@ -75,7 +75,7 @@ public class HAPProcessorProcess{
 			HAPRequirementContextProcessor contextProcessRequirement,
 			HAPProcessTracker processTracker) {
 		HAPContextGroup context = originContext.cloneContextGroup();
-		Map<String, HAPExecutableDataAssociationGroup> results = new LinkedHashMap<String, HAPExecutableDataAssociationGroup>();
+		Map<String, HAPExecutableDataAssociation> results = new LinkedHashMap<String, HAPExecutableDataAssociation>();
 
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(serviceProviders, out.getDefinition(), contextProcessRequirement.serviceDefinitionManager); 
 		

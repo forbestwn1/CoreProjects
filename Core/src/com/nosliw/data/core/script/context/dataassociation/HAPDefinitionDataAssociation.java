@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.HAPContext;
 
-public class HAPDefinitionDataAssociationGroup extends HAPContext{
+public class HAPDefinitionDataAssociation extends HAPContext{
 
 	@HAPAttribute
 	public static String INFO = "info";
@@ -24,19 +24,19 @@ public class HAPDefinitionDataAssociationGroup extends HAPContext{
 	//whether output is context structure (flat) or context group structure (not flat)
 	private boolean m_isFlatOutput;
 	
-	public HAPDefinitionDataAssociationGroup() {
+	public HAPDefinitionDataAssociation() {
 		this.m_info = new HAPInfoImpSimple();
 		this.m_isFlatOutput = true;
 	}
 	
-	public static HAPDefinitionDataAssociationGroup newWithFlatOutput() {
-		HAPDefinitionDataAssociationGroup out = new HAPDefinitionDataAssociationGroup();
+	public static HAPDefinitionDataAssociation newWithFlatOutput() {
+		HAPDefinitionDataAssociation out = new HAPDefinitionDataAssociation();
 		out.m_isFlatOutput = true;
 		return out;
 	}
 	
-	public static HAPDefinitionDataAssociationGroup newWithoutFlatOutput() {
-		HAPDefinitionDataAssociationGroup out = new HAPDefinitionDataAssociationGroup();
+	public static HAPDefinitionDataAssociation newWithoutFlatOutput() {
+		HAPDefinitionDataAssociation out = new HAPDefinitionDataAssociation();
 		out.m_isFlatOutput = false;
 		return out;
 	}
@@ -70,16 +70,16 @@ public class HAPDefinitionDataAssociationGroup extends HAPContext{
 		typeJsonMap.put(FLATOUTPUT, Boolean.class);
 	}
 	
-	public HAPDefinitionDataAssociationGroup cloneDataAssocationGroup() {
-		HAPDefinitionDataAssociationGroup out = new HAPDefinitionDataAssociationGroup();
+	public HAPDefinitionDataAssociation cloneDataAssocationGroup() {
+		HAPDefinitionDataAssociation out = new HAPDefinitionDataAssociation();
 		this.toContext(out);
 		out.m_info = this.m_info.cloneInfo();
 		out.m_isFlatOutput = this.m_isFlatOutput;
 		return out;
 	}
 	
-	public HAPDefinitionDataAssociationGroup cloneDataAssocationGroupBase() {
-		HAPDefinitionDataAssociationGroup out = new HAPDefinitionDataAssociationGroup();
+	public HAPDefinitionDataAssociation cloneDataAssocationGroupBase() {
+		HAPDefinitionDataAssociation out = new HAPDefinitionDataAssociation();
 		out.m_info = this.m_info.cloneInfo();
 		out.m_isFlatOutput = this.m_isFlatOutput;
 		return out;

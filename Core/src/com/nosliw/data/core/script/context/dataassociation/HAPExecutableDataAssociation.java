@@ -19,7 +19,7 @@ import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextPath;
 
 @HAPEntityWithAttribute
-public class HAPExecutableDataAssociationGroup extends HAPExecutableImp{
+public class HAPExecutableDataAssociation extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static String DEFINITION = "definition";
@@ -39,7 +39,7 @@ public class HAPExecutableDataAssociationGroup extends HAPExecutableImp{
 	@HAPAttribute
 	public static String FLATOUTPUT = "flatOutput";
 
-	private HAPDefinitionDataAssociationGroup m_definition;
+	private HAPDefinitionDataAssociation m_definition;
 	
 	//data association output context
 	private HAPContextFlat m_context;
@@ -54,13 +54,13 @@ public class HAPExecutableDataAssociationGroup extends HAPExecutableImp{
 
 	private HAPConfigureContextProcessor m_processConfigure;
 	
-	public HAPExecutableDataAssociationGroup(HAPDefinitionDataAssociationGroup definition) {
+	public HAPExecutableDataAssociation(HAPDefinitionDataAssociation definition) {
 		this.m_definition = definition;
 		this.m_isFlatOutput = this.m_definition.isFlatOutput();
 	}
 	
-	public HAPDefinitionDataAssociationGroup getDefinition() {  return this.m_definition;   }
-	public void setDefinition(HAPDefinitionDataAssociationGroup definition) {  this.m_definition = definition;   }
+	public HAPDefinitionDataAssociation getDefinition() {  return this.m_definition;   }
+	public void setDefinition(HAPDefinitionDataAssociation definition) {  this.m_definition = definition;   }
 	
 	public HAPInfo getInfo() {  return this.m_definition.getInfo();  }
 	

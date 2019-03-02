@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionResultActivityNormal extends HAPEntityInfoWritableImp{
@@ -21,7 +21,7 @@ public class HAPDefinitionResultActivityNormal extends HAPEntityInfoWritableImp{
 	public static String OUTPUT = "output";
 	
 	//associate variable in process to input required by activity 
-	private HAPDefinitionDataAssociationGroup m_output;
+	private HAPDefinitionDataAssociation m_output;
 	
 	//next activity
 	private HAPDefinitionSequenceFlow m_flow;
@@ -29,7 +29,7 @@ public class HAPDefinitionResultActivityNormal extends HAPEntityInfoWritableImp{
 	
 	public HAPDefinitionSequenceFlow getFlow() {  return this.m_flow;  }
 	
-	public HAPDefinitionDataAssociationGroup getOutputDataAssociation() {   return this.m_output;   }
+	public HAPDefinitionDataAssociation getOutputDataAssociation() {   return this.m_output;   }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -41,7 +41,7 @@ public class HAPDefinitionResultActivityNormal extends HAPEntityInfoWritableImp{
 			this.m_flow.buildObject(jsonObj.optJSONObject(FLOW), HAPSerializationFormat.JSON);
 			
 			//data association output should not be flat
-			this.m_output = HAPDefinitionDataAssociationGroup.newWithoutFlatOutput();
+			this.m_output = HAPDefinitionDataAssociation.newWithoutFlatOutput();
 			this.m_output.buildObject(jsonObj.optJSONObject(OUTPUT), HAPSerializationFormat.JSON);
 			
 			//no inherit

@@ -20,8 +20,8 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 	public static final String PARENT = "parent";
 
 	//whether related to parent context or just to sibling root
-	@HAPAttribute
-	public static final String ISTOPARENT = "isToParent";
+//	@HAPAttribute
+//	public static final String ISTOPARENT = "isToParent";
 
 	@HAPAttribute
 	public static final String PARENTCATEGARY = "parentCategary";
@@ -62,8 +62,8 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 
 	public String getParent() {
 		if(HAPBasicUtility.isStringNotEmpty(this.m_parent))   return this.m_parent;
-		if(HAPBasicUtility.isStringEmpty(this.getPath().getRootElementId().getCategary()))  return HAPConstant.RELATIVECONTEXT_PARENT_SELF;
-		return HAPConstant.RELATIVECONTEXT_PARENT_DEFAULT;  
+		if(HAPBasicUtility.isStringEmpty(this.getPath().getRootElementId().getCategary()))  return HAPConstant.DATAASSOCIATION_RELATEDENTITY_SELF;
+		return HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT;  
 	}
 	public void setParent(String parent) {   this.m_parent = parent;  }
 	
@@ -102,7 +102,7 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 	
 	public String getParentCategary() {		return this.getPath().getRootElementId().getCategary();	}
 	
-	public boolean isRelativeToParent() {	return !HAPBasicUtility.isStringEmpty(this.getPath().getRootElementId().getCategary());	}
+//	public boolean isRelativeToParent() {	return !HAPBasicUtility.isStringEmpty(this.getPath().getRootElementId().getCategary());	}
 	
 	public void setMatchers(Map<String, HAPMatchers> matchers){
 		this.m_matchers.clear();
@@ -153,8 +153,8 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PATH, this.getPath().toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(PARENT, this.getParent());
-		jsonMap.put(ISTOPARENT, this.isRelativeToParent()+"");
-		typeJsonMap.put(ISTOPARENT, Boolean.class);
+//		jsonMap.put(ISTOPARENT, this.isRelativeToParent()+"");
+//		typeJsonMap.put(ISTOPARENT, Boolean.class);
 		jsonMap.put(DEFINITION, HAPJsonUtility.buildJson(this.m_definition, HAPSerializationFormat.JSON));
 		if(this.m_matchers!=null && !this.m_matchers.isEmpty()){
 			jsonMap.put(MATCHERS, HAPJsonUtility.buildJson(this.m_matchers, HAPSerializationFormat.JSON));

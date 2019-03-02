@@ -27,47 +27,43 @@ public class HAPProcessorDataAssociation {
 
 	private static String helpCategary = HAPConstant.UIRESOURCE_CONTEXTTYPE_PRIVATE;
 
-	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPDataAssociationIO input, HAPDefinitionDataAssociationGroup dataAssociation, HAPRequirementContextProcessor contextProcessRequirement) {
-		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(dataAssociation);
-		processDataAssociation(input, out, contextProcessRequirement);
+	public static HAPExecutableDataAssociation processDataAssociation(HAPDataAssociationIO input, HAPDefinitionDataAssociation dataAssociation, boolean isFlatOutput, HAPRequirementContextProcessor contextProcessRequirement) {
+		HAPExecutableDataAssociation out = new HAPExecutableDataAssociation(dataAssociation);
+		processDataAssociation(input, out, isFlatOutput, contextProcessRequirement);
 		return out;
 	}
 
-	public static void processDataAssociation(HAPDataAssociationIO input, HAPExecutableDataAssociationGroup out, HAPRequirementContextProcessor contextProcessRequirement) {
-		if(input instanceof HAPContext)  processDataAssociation((HAPContext)input, out, contextProcessRequirement);
-		if(input instanceof HAPContextGroup)  processDataAssociation((HAPContextGroup)input, out, contextProcessRequirement);
+	public static void processDataAssociation(HAPDataAssociationIO input, HAPExecutableDataAssociation out, boolean isFlatOutput, HAPRequirementContextProcessor contextProcessRequirement) {
+		if(input instanceof HAPContext)  processDataAssociation((HAPContext)input, out, isFlatOutput, contextProcessRequirement);
+		if(input instanceof HAPContextGroup)  processDataAssociation((HAPContextGroup)input, out, isFlatOutput, contextProcessRequirement);
 	}
 	
-	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContextGroup inputContextGroup, HAPDefinitionDataAssociationGroup dataAssociation, HAPRequirementContextProcessor contextProcessRequirement) {
-		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(dataAssociation);
-		processDataAssociation(inputContextGroup, out, contextProcessRequirement);
+	public static HAPExecutableDataAssociation processDataAssociation(HAPContextGroup inputContextGroup, HAPDefinitionDataAssociation dataAssociation, boolean isFlatOutput, HAPRequirementContextProcessor contextProcessRequirement) {
+		HAPExecutableDataAssociation out = new HAPExecutableDataAssociation(dataAssociation);
+		processDataAssociation(inputContextGroup, out, isFlatOutput, contextProcessRequirement);
 		return out;
 	}
 
-	public static HAPExecutableDataAssociationGroup processDataAssociation(HAPContext inputContext, HAPDefinitionDataAssociationGroup dataAssociation, HAPRequirementContextProcessor contextProcessRequirement) {
-		HAPExecutableDataAssociationGroup out = new HAPExecutableDataAssociationGroup(dataAssociation);
-		processDataAssociation(inputContext, out, contextProcessRequirement);
+	public static HAPExecutableDataAssociation processDataAssociation(HAPContext inputContext, HAPDefinitionDataAssociation dataAssociation, boolean isFlatOutput, HAPRequirementContextProcessor contextProcessRequirement) {
+		HAPExecutableDataAssociation out = new HAPExecutableDataAssociation(dataAssociation);
+		processDataAssociation(inputContext, out, isFlatOutput, contextProcessRequirement);
 		return out;
 	}
 	
 	//process input configure for activity and generate flat context for activity
-	public static void processDataAssociation(HAPContextGroup inputContextGroup, HAPExecutableDataAssociationGroup out, HAPRequirementContextProcessor contextProcessRequirement) {
-		HAPDefinitionDataAssociationGroup dataAssociation = out.getDefinition();
-		boolean isFlatOutput = out.isFlatOutput();
-		out.setIsFlatInput(false);
-		processDataAssocationContext(out, inputContextGroup, dataAssociation, contextProcessRequirement);
+	public static void processDataAssociation(HAPContextGroup inputContextGroup, HAPExecutableDataAssociation out, boolean isFlatOutput, HAPRequirementContextProcessor contextProcessRequirement) {
+		HAPDefinitionDataAssociation dataAssociation = out.getDefinition();
+		processDataAssocationContext(out, inputContextGroup, dataAssociation, isFlatOutput, contextProcessRequirement);
 		buildPathMappingInDataAssociation(out, out.isFlatInput(), isFlatOutput);
 	}
 
-	public static void processDataAssociation(HAPContext inputContext, HAPExecutableDataAssociationGroup out, HAPRequirementContextProcessor contextProcessRequirement) {
-		HAPDefinitionDataAssociationGroup dataAssociation = out.getDefinition();
-		boolean isFlatOutput = out.isFlatOutput();
-		out.setIsFlatInput(true);
+	public static void processDataAssociation(HAPContext inputContext, HAPExecutableDataAssociation out, boolean isFlatOutput, HAPRequirementContextProcessor contextProcessRequirement) {
+		HAPDefinitionDataAssociation dataAssociation = out.getDefinition();
 		//build input context group
 		HAPContextGroup inputContextGroup = new HAPContextGroup();
 		inputContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, inputContext.cloneContext());
 
-		processDataAssocationContext(out, inputContextGroup, dataAssociation, contextProcessRequirement);
+		processDataAssocationContext(out, inputContextGroup, dataAssociation, isFlatOutput, contextProcessRequirement);
 
 		HAPContext flatContext = out.getContext();
 		//remove categary info in relative element first as categary information is fake one
@@ -90,20 +86,21 @@ public class HAPProcessorDataAssociation {
 		buildPathMappingInDataAssociation(out, out.isFlatInput(), isFlatOutput);
 	}
 
-	public static HAPExecutableDataAssociationGroupWithTarget processDataAssociation(HAPDataAssociationIO input, HAPDefinitionDataAssociationGroup dataAssociation, HAPDataAssociationIO output, boolean modifyStructure, HAPRequirementContextProcessor contextProcessRequirement) {
-		HAPExecutableDataAssociationGroupWithTarget out = new HAPExecutableDataAssociationGroupWithTarget(dataAssociation);
+	public static HAPExecutableDataAssociationWithTarget processDataAssociation(HAPDataAssociationIO input, HAPDefinitionDataAssociation dataAssociation, HAPDataAssociationIO output, boolean modifyStructure, HAPRequirementContextProcessor contextProcessRequirement) {
+		HAPExecutableDataAssociationWithTarget out = new HAPExecutableDataAssociationWithTarget(dataAssociation);
 		processDataAssociation(input, out, output, modifyStructure, contextProcessRequirement);
 		return out;
 	}
 	
-	public static void processDataAssociation(HAPDataAssociationIO input, HAPExecutableDataAssociationGroupWithTarget out, HAPDataAssociationIO output, boolean modifyStructure, HAPRequirementContextProcessor contextProcessRequirement) {
-		if(output instanceof HAPContext)   out.setIsFlatOutput(true);
-		else if(output instanceof HAPContextGroup)   out.setIsFlatOutput(false);
+	public static void processDataAssociation(HAPDataAssociationIO input, HAPExecutableDataAssociationWithTarget out, HAPDataAssociationIO output, boolean modifyStructure, HAPRequirementContextProcessor contextProcessRequirement) {
+		boolean isFlatOutput = true;
+		if(output instanceof HAPContext)  isFlatOutput = true;   
+		else if(output instanceof HAPContextGroup)   isFlatOutput = false;
 		
 		if(output instanceof HAPContextGroup) {
 			//update root name with full name (containing categary and element name)
-			HAPDefinitionDataAssociationGroup origin = out.getDefinition();
-			HAPDefinitionDataAssociationGroup updated = origin.cloneDataAssocationGroupBase();
+			HAPDefinitionDataAssociation origin = out.getDefinition();
+			HAPDefinitionDataAssociation updated = origin.cloneDataAssocationGroupBase();
 			for(String eleName : origin.getElementNames()) {
 				String updatedName = eleName;
 				HAPInfoRelativeContextResolve resolvedInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(eleName), (HAPContextGroup)output, null, null);
@@ -114,7 +111,7 @@ public class HAPProcessorDataAssociation {
 		}
 		
 		//process data association
-		processDataAssociation(input, out, contextProcessRequirement);
+		processDataAssociation(input, out, isFlatOutput, contextProcessRequirement);
 
 		//process result
 		if(output instanceof HAPContext) {
@@ -161,7 +158,8 @@ public class HAPProcessorDataAssociation {
 		}
 	}
 
-	private static void processDataAssocationContext(HAPExecutableDataAssociationGroup out, HAPContextGroup inputContextGroup, HAPDefinitionDataAssociationGroup dataAssociation, HAPRequirementContextProcessor contextProcessRequirement) {
+	private static void processDataAssocationContext(HAPExecutableDataAssociation out, HAPContextGroup inputContextGroup, HAPDefinitionDataAssociation dataAssociation, boolean isFlatOutput, HAPRequirementContextProcessor contextProcessRequirement) {
+		out.setIsFlatOutput(isFlatOutput);
 		out.setProcessConfigure(HAPUtilityDataAssociation.getContextProcessConfigurationForProcess());
 		//build context group to be processed
 		HAPContextGroup daContextGroup = new HAPContextGroup();
@@ -184,7 +182,7 @@ public class HAPProcessorDataAssociation {
 		out.setContext(flatContext);
 	}
 	
-	private static void buildPathMappingInDataAssociation(HAPExecutableDataAssociationGroup dataAssociationExe, boolean isFlatInput, boolean isFlatOutput) {
+	private static void buildPathMappingInDataAssociation(HAPExecutableDataAssociation dataAssociationExe, boolean isFlatInput, boolean isFlatOutput) {
 		//build path mapping according for mapped element only
 		Map<String, String> pathMapping = new LinkedHashMap<String, String>();
 		for(String eleName : dataAssociationExe.getContext().getElementNames()) {

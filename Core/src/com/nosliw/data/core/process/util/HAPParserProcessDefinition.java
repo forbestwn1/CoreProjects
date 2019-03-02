@@ -11,7 +11,7 @@ import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPParserContext;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 
 public class HAPParserProcessDefinition {
 
@@ -39,7 +39,7 @@ public class HAPParserProcessDefinition {
 		JSONObject outputMappingJson = processJson.optJSONObject(HAPDefinitionEmbededProcess.OUTPUTMAPPING);
 		if(outputMappingJson!=null) {
 			for(Object key : outputMappingJson.keySet()) {
-				HAPDefinitionDataAssociationGroup dataAssociation = HAPDefinitionDataAssociationGroup.newWithoutFlatOutput();
+				HAPDefinitionDataAssociation dataAssociation = HAPDefinitionDataAssociation.newWithoutFlatOutput();
 				dataAssociation.buildObject(outputMappingJson.opt((String)key), HAPSerializationFormat.JSON);
 				out.addOutputMapping((String)key, dataAssociation);
 			}

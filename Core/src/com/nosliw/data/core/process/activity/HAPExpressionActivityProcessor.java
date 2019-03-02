@@ -28,7 +28,7 @@ import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPDataAssociationIO;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptExpression;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -43,7 +43,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			String id, 
 			HAPExecutableProcess processExe,
 			HAPContextGroup processContext, 
-			Map<String, HAPExecutableDataAssociationGroup> processResults,
+			Map<String, HAPExecutableDataAssociation> processResults,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
@@ -54,7 +54,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		HAPExpressionActivityExecutable out = new HAPExpressionActivityExecutable(id, (HAPExpressionActivityDefinition)activityDefinition);
 
 		//process input and create flat input context for activity
-		HAPContextFlat activityContext = HAPUtilityProcess.processActivityInputDataAssocation(out, processContext, contextProcessRequirement);
+		HAPContextFlat activityContext = HAPUtilityProcess.processNormalActivityInputDataAssocation(out, processContext, contextProcessRequirement);
 		
 		//process script expression defined in activity
 		HAPUtilityProcess.buildScriptExpressionProcessContext(activityContext, out.getScriptExpressionProcessContext());

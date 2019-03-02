@@ -12,7 +12,7 @@ import com.nosliw.data.core.process.HAPProcessorActivity;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 
@@ -21,7 +21,7 @@ public class HAPEndActivityProcessor implements HAPProcessorActivity{
 	@Override
 	public HAPExecutableActivity process(HAPDefinitionActivity activityDefinition, String id,
 			HAPExecutableProcess processExe, HAPContextGroup processContext,
-			Map<String, HAPExecutableDataAssociationGroup> results,
+			Map<String, HAPExecutableDataAssociation> results,
 			Map<String, HAPDefinitionProcess> contextProcessDefinitions, 
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
@@ -31,7 +31,7 @@ public class HAPEndActivityProcessor implements HAPProcessorActivity{
 
 		HAPEndActivityDefinition endActivity = (HAPEndActivityDefinition)activityDefinition;
 		
-		HAPExecutableDataAssociationGroup result = HAPProcessorDataAssociation.processDataAssociation(processContext, endActivity.getOutput(), contextProcessRequirement);
+		HAPExecutableDataAssociation result = HAPProcessorDataAssociation.processDataAssociation(processContext, endActivity.getOutput(), true, contextProcessRequirement);
 		results.put(endActivity.getName(), result);
 		
 		HAPEndActivityExecutable out = new HAPEndActivityExecutable(id, activityDefinition);

@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.uiresource.common.HAPComponentWithConfiguration;
 
 @HAPEntityWithAttribute
@@ -31,6 +32,8 @@ public class HAPDefinitionApp extends HAPComponentWithConfiguration{
 	//one mini app may have different entry for different senario. 
 	private Map<String, HAPDefinitionAppEntryUI> m_entries;
 
+	private HAPContextGroup m_context;
+	
 	//global data definition 
 	//it can be stateful data(the data that can retrieve next time you use the app)
 	//or stateless (data generate during runtime)

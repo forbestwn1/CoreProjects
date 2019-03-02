@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 
 //each module ui is page unit in module that is alive in a module
 //as it defined:
@@ -45,8 +45,8 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	private Map<String, HAPDefinitionModuleUIEventHander> m_eventHandlers;
 	
 	//data mapping (from data definition in module to public data definition in page)
-	private HAPDefinitionDataAssociationGroup m_inputMapping;
-	private HAPDefinitionDataAssociationGroup m_outputMapping;
+	private HAPDefinitionDataAssociation m_inputMapping;
+	private HAPDefinitionDataAssociation m_outputMapping;
 	
 	//provide extra information about this module ui so that container can render it properly
 	private String m_type;
@@ -55,8 +55,8 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	
 	public HAPDefinitionModuleUI() {
 		this.m_eventHandlers = new LinkedHashMap<String, HAPDefinitionModuleUIEventHander>();
-		this.m_inputMapping = new HAPDefinitionDataAssociationGroup();
-		this.m_outputMapping = new HAPDefinitionDataAssociationGroup();
+		this.m_inputMapping = new HAPDefinitionDataAssociation();
+		this.m_outputMapping = new HAPDefinitionDataAssociation();
 	}
 	
 	public String getPage() {   return this.m_page;    }
@@ -68,11 +68,11 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	public String getStatus() {   return this.m_status;    }
 	public void setStatus(String status) {   this.m_status = status;   }
 
-	public HAPDefinitionDataAssociationGroup getInputMapping() {   return this.m_inputMapping;   }
-	public void setInputMapping(HAPDefinitionDataAssociationGroup contextMapping) {   this.m_inputMapping = contextMapping;   }
+	public HAPDefinitionDataAssociation getInputMapping() {   return this.m_inputMapping;   }
+	public void setInputMapping(HAPDefinitionDataAssociation contextMapping) {   this.m_inputMapping = contextMapping;   }
 
-	public HAPDefinitionDataAssociationGroup getOutputMapping() {   return this.m_outputMapping;   }
-	public void setOutputMapping(HAPDefinitionDataAssociationGroup contextMapping) {   this.m_outputMapping = contextMapping;   }
+	public HAPDefinitionDataAssociation getOutputMapping() {   return this.m_outputMapping;   }
+	public void setOutputMapping(HAPDefinitionDataAssociation contextMapping) {   this.m_outputMapping = contextMapping;   }
 
 	public Map<String, HAPDefinitionModuleUIEventHander> getEventHandlers(){   return this.m_eventHandlers;   }
 	public void addEventHandler(String name, HAPDefinitionModuleUIEventHander eventHandler) {  this.m_eventHandlers.put(name, eventHandler);   }

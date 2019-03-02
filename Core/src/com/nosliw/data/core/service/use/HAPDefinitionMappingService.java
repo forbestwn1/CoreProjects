@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionMappingService extends HAPSerializableImp{
@@ -23,14 +23,14 @@ public class HAPDefinitionMappingService extends HAPSerializableImp{
 	public static String RESULTMAPPING = "resultMapping";
 
 	//parms path
-	private HAPDefinitionDataAssociationGroup m_parmMapping;
+	private HAPDefinitionDataAssociation m_parmMapping;
 	
 	//result
-	private Map<String, HAPDefinitionDataAssociationGroup> m_resultMapping;
+	private Map<String, HAPDefinitionDataAssociation> m_resultMapping;
 	
 	public HAPDefinitionMappingService() {
-		this.m_parmMapping = new HAPDefinitionDataAssociationGroup();
-		this.m_resultMapping = new LinkedHashMap<String, HAPDefinitionDataAssociationGroup>();
+		this.m_parmMapping = new HAPDefinitionDataAssociation();
+		this.m_resultMapping = new LinkedHashMap<String, HAPDefinitionDataAssociation>();
 		init();
 	}
 
@@ -41,14 +41,14 @@ public class HAPDefinitionMappingService extends HAPSerializableImp{
 		}
 	}
 	
-	public HAPDefinitionDataAssociationGroup getParms() {  return this.m_parmMapping;   }
-	public void setParmMapping(HAPDefinitionDataAssociationGroup parms) {   
+	public HAPDefinitionDataAssociation getParms() {  return this.m_parmMapping;   }
+	public void setParmMapping(HAPDefinitionDataAssociation parms) {   
 		this.m_parmMapping = parms;  
 		HAPUtilityContext.setContextGroupInheritModeNone(this.m_parmMapping.getInfo());
 	}
 	
-	public Map<String, HAPDefinitionDataAssociationGroup> getResultMapping(){   return this.m_resultMapping;   }
-	public void addResultMapping(String name, HAPDefinitionDataAssociationGroup result) {   
+	public Map<String, HAPDefinitionDataAssociation> getResultMapping(){   return this.m_resultMapping;   }
+	public void addResultMapping(String name, HAPDefinitionDataAssociation result) {   
 		this.m_resultMapping.put(name, result);   
 		HAPUtilityContext.setContextGroupInheritModeNone(result.getInfo());
 	}
@@ -65,13 +65,13 @@ public class HAPDefinitionMappingService extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
 		
-		this.m_parmMapping = new HAPDefinitionDataAssociationGroup();
+		this.m_parmMapping = new HAPDefinitionDataAssociation();
 		this.m_parmMapping.buildObject(jsonObj.optJSONObject(PARMMAPPING), HAPSerializationFormat.JSON);
 
 		JSONObject resultJson = jsonObj.optJSONObject(RESULTMAPPING);
 		if(resultJson!=null) {
 			for(Object key : resultJson.keySet()) {
-				HAPDefinitionDataAssociationGroup resultMapping = new HAPDefinitionDataAssociationGroup();
+				HAPDefinitionDataAssociation resultMapping = new HAPDefinitionDataAssociation();
 				resultMapping.buildObject(resultJson.optJSONObject((String)key), HAPSerializationFormat.JSON);
 				this.m_resultMapping.put((String)key, resultMapping);
 			}

@@ -166,6 +166,13 @@ var node_createExpressionService = function(){
 	
 	//execute operation operand
 	var loc_getExecuteOperationOperandRequest = function(expression, operationOperand, variables, constants, references, handlers, requester_parent){
+		
+		if(variables.ele!=undefined && variables.ele.operation!=undefined){
+			var kkkk = 5555;
+			kkkk++;
+		}
+		
+		
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteOperationOperand", {"operationOperand":operationOperand, "variables":variables}), handlers, requestInfo);

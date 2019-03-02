@@ -14,7 +14,7 @@ import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroupWithTarget;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationWithTarget;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -91,7 +91,7 @@ public class HAPProcessMiniAppEntry {
 		HAPDefinitionModule moduleDef = HAPUtilityModule.getUIModuleDefinitionById(module.getModule(), uiResourceMan.getModuleParser());
 		
 		//input data association
-		HAPExecutableDataAssociationGroupWithTarget inputMapping = HAPProcessorDataAssociation.processDataAssociation(entryExe.getContext(), module.getInputMapping(), moduleDef.getContext(), false, contextProcessRequirement);
+		HAPExecutableDataAssociationWithTarget inputMapping = HAPProcessorDataAssociation.processDataAssociation(entryExe.getContext(), module.getInputMapping(), moduleDef.getContext(), false, contextProcessRequirement);
 		out.setInputMapping(inputMapping);
 		
 		//module
@@ -99,7 +99,7 @@ public class HAPProcessMiniAppEntry {
 		out.setModule(moduleExe);
 		
 		//output data association
-		HAPExecutableDataAssociationGroupWithTarget outputMapping = HAPProcessorDataAssociation.processDataAssociation(entryExe.getContext(), module.getInputMapping(), moduleDef.getContext(), false, contextProcessRequirement);
+		HAPExecutableDataAssociationWithTarget outputMapping = HAPProcessorDataAssociation.processDataAssociation(entryExe.getContext(), module.getInputMapping(), moduleDef.getContext(), false, contextProcessRequirement);
 		out.setOutputMapping(outputMapping);
 		
 		return out;

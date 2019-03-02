@@ -15,7 +15,7 @@ import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPUtilityContextScript;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroup;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 
 @HAPEntityWithAttribute
 public class HAPExecutableProcess extends HAPExecutableImp{
@@ -57,11 +57,11 @@ public class HAPExecutableProcess extends HAPExecutableImp{
 	private HAPContextGroup m_context;  
 	
 	//all possible result
-	private Map<String, HAPExecutableDataAssociationGroup> m_results;
+	private Map<String, HAPExecutableDataAssociation> m_results;
 	
 	public HAPExecutableProcess(HAPDefinitionProcess definition, String id) {
 		this.m_activities = new LinkedHashMap<String, HAPExecutableActivity>();
-		this.m_results = new LinkedHashMap<String, HAPExecutableDataAssociationGroup>();
+		this.m_results = new LinkedHashMap<String, HAPExecutableDataAssociation>();
 		this.m_processDefinition = definition;
 		this.m_id = id;
 	}
@@ -74,8 +74,8 @@ public class HAPExecutableProcess extends HAPExecutableImp{
 	
 	public void setStartActivityId(String id) {   this.m_startActivityId = id;   }
 
-	public void setResults(Map<String, HAPExecutableDataAssociationGroup> results) {   this.m_results.putAll(results);   }
-	public HAPExecutableDataAssociationGroup getResult(String result) {  return this.m_results.get(result);   }
+	public void setResults(Map<String, HAPExecutableDataAssociation> results) {   this.m_results.putAll(results);   }
+	public HAPExecutableDataAssociation getResult(String result) {  return this.m_results.get(result);   }
 	
 	public HAPContextGroup getContext() {   return this.m_context;  }
 	public void setContext(HAPContextGroup context) {   this.m_context = context;  }

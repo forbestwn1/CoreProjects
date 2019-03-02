@@ -31,16 +31,16 @@ var node_utility = function(){
 	var loc_getExecuteDataAssociationRequest = function(input, dataAssociation, handlers, request){
 		var service = new node_ServiceInfo("ExecuteDataAssociation", {"data":input, "dataAssociation":dataAssociation});
 		var out = node_createServiceRequestInfoSequence(service, handlers, request);
-		if(dataAssociation==undefined || dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_CONVERTFUNCTION]==undefined){
+		if(dataAssociation==undefined || dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_CONVERTFUNCTION]==undefined){
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){  
 				return undefined;  
 			}));
 			return out;
 		}
 
-		var output = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_CONVERTFUNCTION](input, loc_dyanimicValueBuild);
+		var output = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_CONVERTFUNCTION](input, loc_dyanimicValueBuild);
 		//process matchers
-		var matchersByPath = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_OUTPUTMATCHERS];
+		var matchersByPath = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_OUTPUTMATCHERS];
 		if(matchersByPath==undefined)  return node_createServiceRequestInfoSimple(undefined, function(){ return output;  }, handlers, request); 
 
 		var matchersByPathRequest = node_createServiceRequestInfoSet(undefined, {
@@ -65,7 +65,7 @@ var node_utility = function(){
 			success :function(request, output){
 				if(dataAssociation==undefined)   return target;
 				//assign task output back to output
-				var isOutputFlat = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONGROUP_FLATOUTPUT];
+				var isOutputFlat = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_FLATOUTPUT];
 				return loc_out.assignToContext(output, target, isOutputFlat);
 			}
 		}));

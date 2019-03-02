@@ -18,7 +18,7 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroupWithTarget;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationWithTarget;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -64,7 +64,7 @@ public class HAPProcessorModule {
 		//process ui
 		for(HAPDefinitionModuleUI ui : moduleDefinition.getUIs()) {
 			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(ui.getStatus())) {
-				HAPExecutableModuleUI uiExe = process(ui, ui.getName(), out, allServiceProviders, processMan, uiResourceMan, contextProcessRequirement, processTracker);
+				HAPExecutableModuleUI uiExe = processModuleUI(ui, ui.getName(), out, allServiceProviders, processMan, uiResourceMan, contextProcessRequirement, processTracker);
 				out.addModuleUI(uiExe);
 			}
 		}
@@ -72,7 +72,7 @@ public class HAPProcessorModule {
 		return out;
 	}
 	
-	private static HAPExecutableModuleUI process(
+	private static HAPExecutableModuleUI processModuleUI(
 			HAPDefinitionModuleUI moduleUIDefinition,
 			String id,
 			HAPExecutableModule moduleExe,
@@ -87,16 +87,16 @@ public class HAPProcessorModule {
 		String pageId = moduleExe.getDefinition().getPageInfo(moduleUIDefinition.getPage()).getPageId();
 
 		HAPContextGroup mappingContextGroup = new HAPContextGroup();
-		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, HAPProcessorDataAssociation.processDataAssociation(moduleExe.getContext(), moduleUIDefinition.getInputMapping(), contextProcessRequirement).getSolidContext());
+		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, HAPProcessorDataAssociation.processDataAssociation(moduleExe.getContext(), moduleUIDefinition.getInputMapping(), true, contextProcessRequirement).getSolidContext());
 		HAPExecutableUIUnitPage page = uiResourceMan.getUIPage(pageId, id, mappingContextGroup, null);
 		out.setPage(page);
 
 		//build input data association
-		HAPExecutableDataAssociationGroupWithTarget inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(moduleExe.getContext(), moduleUIDefinition.getInputMapping(), page.getFlatContext().getContext(), false, contextProcessRequirement);
+		HAPExecutableDataAssociationWithTarget inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(moduleExe.getContext(), moduleUIDefinition.getInputMapping(), page.getFlatContext().getContext(), false, contextProcessRequirement);
 		out.setInputMapping(inputDataAssocation);
 		
 		//build output data association
-		HAPExecutableDataAssociationGroupWithTarget outputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(page.getContext(), moduleUIDefinition.getOutputMapping(), moduleExe.getContext(), false, contextProcessRequirement);
+		HAPExecutableDataAssociationWithTarget outputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(page.getContext(), moduleUIDefinition.getOutputMapping(), moduleExe.getContext(), false, contextProcessRequirement);
 		out.setOutputMapping(outputDataAssocation);
 		
 		//event handler

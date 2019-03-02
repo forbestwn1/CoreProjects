@@ -139,7 +139,7 @@ var node_requestServiceProcessor = function(){
 	};
 	
 	var loc_out = {
-		processRequest : function(requestInfo, processRemote){
+		processRequest1 : function(requestInfo, processRemote){
 			if(requestInfo.getInnerId()=="399-400"){
 				var kkkk = 5555;
 				kkkk++;
@@ -152,7 +152,7 @@ var node_requestServiceProcessor = function(){
 			return loc_addRequestToQueue(requestInfo, processRemote);
 		},	
 
-		processRequest1 : function(requestInfo, processRemote){
+		processRequest : function(requestInfo, processRemote){
 			nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Start Request");
 			
 			if(processRemote==undefined){

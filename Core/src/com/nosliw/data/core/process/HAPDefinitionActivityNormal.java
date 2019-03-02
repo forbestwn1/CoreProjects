@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 
 public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 
@@ -20,7 +20,7 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	public static String RESULT = "result";
 
 	//associate variable in process to input required by activity 
-	private HAPDefinitionDataAssociationGroup m_input;
+	private HAPDefinitionDataAssociation m_input;
 	
 	//possible result for activity
 	private Map<String, HAPDefinitionResultActivityNormal> m_results;
@@ -28,10 +28,10 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	public HAPDefinitionActivityNormal(String type) {
 		super(type);
 		this.m_results = new LinkedHashMap<String, HAPDefinitionResultActivityNormal>();
-		this.m_input = new HAPDefinitionDataAssociationGroup();
+		this.m_input = new HAPDefinitionDataAssociation();
 	}
 	
-	public HAPDefinitionDataAssociationGroup getInput() {  return this.m_input;   }
+	public HAPDefinitionDataAssociation getInput() {  return this.m_input;   }
 	
 	public Map<String, HAPDefinitionResultActivityNormal> getResults(){   return this.m_results;  }
 	public HAPDefinitionResultActivityNormal getResult(String resultName){   return this.m_results.get(resultName);  }
@@ -44,7 +44,7 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 			
 			JSONObject inputJson = jsonObj.optJSONObject(INPUT);
 			if(inputJson!=null) {
-				this.m_input = HAPDefinitionDataAssociationGroup.newWithFlatOutput();
+				this.m_input = HAPDefinitionDataAssociation.newWithFlatOutput();
 				this.m_input.buildObject(inputJson, HAPSerializationFormat.JSON);
 			}
 			

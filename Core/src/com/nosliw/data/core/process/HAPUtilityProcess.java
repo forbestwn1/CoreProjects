@@ -51,8 +51,8 @@ public class HAPUtilityProcess {
 		expProcessContext.addDataVariables(HAPUtilityContext.discoverDataVariablesInContext(context.getContext()));
 	}
 	
-	public static HAPContextFlat processActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
-		activity.setInputDataAssociation(HAPProcessorDataAssociation.processDataAssociation(processContext, activity.getNormalActivityDefinition().getInput(), contextProcessRequirement));
+	public static HAPContextFlat processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
+		activity.setInputDataAssociation(HAPProcessorDataAssociation.processDataAssociation(processContext, activity.getNormalActivityDefinition().getInput(), true, contextProcessRequirement));
 		//input context
 		return activity.getInputContext();
 	}

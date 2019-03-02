@@ -108,7 +108,7 @@ public class HAPContextFlat extends HAPSerializableImp{
 			HAPContextDefinitionRoot root = this.m_context.getElement(eleName);
 			if(root.getDefinition() instanceof HAPContextDefinitionLeafRelative) {
 				HAPContextDefinitionLeafRelative relative = (HAPContextDefinitionLeafRelative)root.getDefinition();
-				if(HAPConstant.RELATIVECONTEXT_PARENT_SELF.equals(relative.getParent())) {
+				if(HAPConstant.DATAASSOCIATION_RELATEDENTITY_SELF.equals(relative.getParent())) {
 					//update local relative path
 					HAPContextPath path = relative.getPath();
 					relative.setPath(new HAPContextPath(new HAPContextDefinitionRootId(path.getRootElementId().getCategary(), nameUpdate.getUpdatedName(path.getRootElementId().getName())), path.getSubPath()));

@@ -9,34 +9,52 @@
 				"module": "ModuleMySchoolSetting",
 				"info": {},
 				"inputMapping": {
-					"element": {
-						"schoolTypeInModule": {
-							"definition": {
-								"path": "schoolTypeInData",
-								"parent" : "appdata.setting"
-							}
-						},
-						"schoolRatingInModule": {
-							"definition": {
-								"path": "setting.schoolRatingInData",
-								"parent" : "appdata.setting"
+					"default" : {
+						"element": {
+							"schoolTypeInModule": {
+								"definition": {
+									"path": "schoolTypeInData",
+									"parent" : "appdata.setting"
+								}
+							},
+							"schoolRatingInModule": {
+								"definition": {
+									"path": "schoolRatingInData",
+									"parent" : "appdata.setting"
+								}
 							}
 						}
 					}
 				},
 				"outputMapping": {
-					"element": {
-						"schoolTypeInApp": {
-							"definition": {
-								"path": "schoolTypeInModule"
-							}
-						},
-						"schoolRatingInApp": {
-							"definition": {
-								"path": "schoolRatingInModule"
+					"persistance" : {
+						"element": {
+							"appdata.setting;schoolTypeInData": {
+								"definition": {
+									"path": "schoolTypeInModule",
+								}
+							},
+							"appdata.setting;schoolRatingInData": {
+								"definition": {
+									"path": "schoolRatingInModule",
+								}
 							}
 						}
-					}
+					},
+					"syncWithApp" : {
+						"element": {
+							"schoolTypeInData": {
+								"definition": {
+									"path": "schoolTypeInModule",
+								}
+							},
+							"schoolRatingInData": {
+								"definition": {
+									"path": "schoolRatingInModule",
+								}
+							}
+						}
+					},
 				}
 			},
 			{
@@ -75,8 +93,27 @@
 						}
 					},
 					{
+						"id": "syncSetting",
+						"type": "sync",
+						"path": "app.module.syncWithApp",
+						"command": "refresh",
+						"parm": {
+							"inputData": {
+								"definition": {
+									"path": "settingData"
+								}
+							}
+						},
+						"result": [{
+							"name": "success",
+							"flow": {
+								"target": "successEndId"
+							}
+						}]
+					},
+					{
 						"id": "refreshApplication",
-						"type": "UI_executeModuleCommand",
+						"type": "sync",
 						"module": "application",
 						"command": "refresh",
 						"parm": {

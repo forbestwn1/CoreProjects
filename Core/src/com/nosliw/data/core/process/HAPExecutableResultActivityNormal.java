@@ -8,10 +8,10 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationGroupWithTarget;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationWithTarget;
 
 @HAPEntityWithAttribute
-public class HAPExecutableResultActivityNormal extends HAPExecutableDataAssociationGroupWithTarget{
+public class HAPExecutableResultActivityNormal extends HAPExecutableDataAssociationWithTarget{
 
 	@HAPAttribute
 	public static String FLOW = "flow";

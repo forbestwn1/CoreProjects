@@ -15,7 +15,7 @@ import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public class HAPExecutableDataAssociationGroupWithTarget extends HAPExecutableDataAssociationGroup{
+public class HAPExecutableDataAssociationWithTarget extends HAPExecutableDataAssociation{
 
 	@HAPAttribute
 	public static String OUTPUTMATCHERS = "outputMatchers";
@@ -23,7 +23,7 @@ public class HAPExecutableDataAssociationGroupWithTarget extends HAPExecutableDa
 	//match from data association output to target context variable
 	private Map<String, HAPMatchers> m_outputMatchers;
 
-	public HAPExecutableDataAssociationGroupWithTarget(HAPDefinitionDataAssociationGroup definition) {
+	public HAPExecutableDataAssociationWithTarget(HAPDefinitionDataAssociation definition) {
 		super(definition);
 		this.m_outputMatchers = new LinkedHashMap<String, HAPMatchers>();
 	}
