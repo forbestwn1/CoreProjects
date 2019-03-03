@@ -36,7 +36,6 @@ public class HAPDefinitionApp extends HAPComponentWithConfiguration{
 	
 	//global data definition 
 	//it can be stateful data(the data that can retrieve next time you use the app)
-	//or stateless (data generate during runtime)
 	private Map<String, HAPDefinitionAppData> m_dataDefinition;
 
 	public HAPDefinitionApp() {
@@ -47,6 +46,8 @@ public class HAPDefinitionApp extends HAPComponentWithConfiguration{
 	public void setId(String id) {  this.m_id = id;   }
 	
 	public Map<String, HAPDefinitionAppData> getDataDefinition(){   return this.m_dataDefinition;   }
+	
+	public HAPContextGroup getContext() {   return this.m_context;   }
 	
 	public HAPDefinitionAppEntryUI getEntry(String entry) {  return this.m_entries.get(entry);  }
 	public void addEntry(HAPDefinitionAppEntryUI entry) {

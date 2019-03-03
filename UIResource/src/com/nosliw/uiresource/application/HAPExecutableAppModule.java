@@ -36,7 +36,7 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 	
 	public void setInputMapping(HAPExecutableDataAssociationWithTarget inputMapping) {    this.m_inputMapping = inputMapping;   }
 	
-	public void setOutputMapping(HAPExecutableDataAssociationWithTarget outputMapping) {   this.m_outputMapping = outputMapping;   }
+	public void addOutputMapping(String targetName, HAPExecutableDataAssociationWithTarget outputMapping) {   this.m_outputMapping = outputMapping;   }
 	
 	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {

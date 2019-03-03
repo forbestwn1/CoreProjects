@@ -14,6 +14,7 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 
 @HAPEntityWithAttribute
@@ -40,6 +41,8 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 
 	private HAPContextGroup m_context;
 	
+	private Map<String, HAPContext> m_dataDefinition;
+
 	public HAPExecutableAppEntry(String entryName, HAPDefinitionApp appDef) {
 		super(appDef.getEntry(entryName));
 		this.m_uiModules = new LinkedHashMap<String, HAPExecutableAppModule>();
@@ -50,6 +53,15 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	
 	public HAPContextGroup getContext() {   return this.m_context;   }
 	public void setContext(HAPContextGroup context) {   this.m_context = context;  }
+
+	public void addDataDefinition(String dataName, HAPContext dataDef) {  this.m_dataDefinition.put(dataName, dataDef);   }
+	public Map<String, HAPContext> getExtraContext(){  
+		Map<String, HAPContext> out = new LinkedHashMap<String, HAPContext>();
+		for(String dataName : this.m_dataDefinition.keySet()) {
+			out.put("appdata."+dataName, this.m_dataDefinition.get(dataName));
+		}
+		return out;
+	}
 	
 	public void addUIModule(String name, HAPExecutableAppModule uiModuleInstance) {		this.m_uiModules.put(name, uiModuleInstance);	}
 	public HAPExecutableAppModule getUIModuleInstance(String moduleName) {  return this.m_uiModules.get(moduleName);  }

@@ -79,7 +79,7 @@ public class HAPUIResourceManager {
 	public HAPExecutableAppEntry getMiniApp(String appId, String entry) {
 		HAPDefinitionApp miniAppDef = HAPUtilityApp.getAppDefinitionById(appId, this.m_miniAppParser);
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
-		HAPExecutableAppEntry out = HAPProcessMiniAppEntry.process(miniAppDef, entry, null, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager, processTracker);
+		HAPExecutableAppEntry out = HAPProcessMiniAppEntry.process(miniAppDef, entry, null, m_processMan, this, m_dataTypeHelper, m_runtime, m_expressionMan, m_serviceDefinitionManager, processTracker);
 		return out;
 	}
 	
