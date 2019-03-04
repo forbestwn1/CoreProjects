@@ -454,6 +454,7 @@ public class HAPConstant {
 		public static final String RUNTIME_RESOURCE_TYPE_UIMODULE = "uiModule";
 		public static final String RUNTIME_RESOURCE_TYPE_UIMODULEENV = "uiModuleEnv";
 		public static final String RUNTIME_RESOURCE_TYPE_UIAPPENTRY = "uiAppEntry";
+		public static final String RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE = "uiAppConfigure";
 		public static final String RUNTIME_RESOURCE_TYPE_PROCESS = "process";
 		public static final String RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN = "activityPlugin";
 		public static final String RUNTIME_RESOURCE_TYPE_MATCHER = "matcher";
@@ -542,6 +543,10 @@ public class HAPConstant {
 
 		public static final String DATAASSOCIATION_RELATEDENTITY_DEFAULT = "default";
 		public static final String DATAASSOCIATION_RELATEDENTITY_SELF = "self";
+
+
+
+		public static final String GLOBAL_VALUE_DEFAULT = "default";
 
 
 }

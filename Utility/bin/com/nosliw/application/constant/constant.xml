@@ -541,6 +541,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_UIMODULE" value="uiModule"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UIMODULEENV" value="uiModuleEnv"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UIAPPENTRY" value="uiAppEntry"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE" value="uiAppConfigure"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_PROCESS" value="process"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN" value="activityPlugin"/>
 
@@ -614,6 +615,9 @@
 			<definition type="space"/>
 			<definition name="DATAASSOCIATION_RELATEDENTITY_DEFAULT" value="default"/>
 			<definition name="DATAASSOCIATION_RELATEDENTITY_SELF" value="self"/>
+
+			<definition type="space"/>
+			<definition name="GLOBAL_VALUE_DEFAULT" value="default"/>
 
 		</definitions>
 	</constants>

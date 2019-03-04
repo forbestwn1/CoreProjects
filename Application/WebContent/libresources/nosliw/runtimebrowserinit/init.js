@@ -28,6 +28,7 @@ nosliw.init = function(serverBase){
 		"nosliw.uipage",
 		"nosliw.dataservice",
 		"nosliw.uimodule",
+		"nosliw.uiapp",
 		"nosliw.iotask",
 		"nosliw.runtimebrowsertest",
 	];

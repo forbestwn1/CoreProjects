@@ -6,8 +6,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.info.HAPEntityInfoWritable;
+import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -15,10 +15,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 @HAPEntityWithAttribute
 public class HAPContextEntity  extends HAPContext implements HAPEntityInfo{
 
-	private HAPEntityInfoImp m_entityInfo;
+	private HAPEntityInfoWritable m_entityInfo;
 	
 	public HAPContextEntity() {
-		this.m_entityInfo = new HAPEntityInfoImp();
+		this.m_entityInfo = new HAPEntityInfoWritableImp();
 	}
 
 	@Override
@@ -46,6 +46,28 @@ public class HAPContextEntity  extends HAPContext implements HAPEntityInfo{
 		return true;  
 	}
 
+	public HAPContextEntity cloneBaseInfo() {
+		HAPContextEntity out = new HAPContextEntity();
+		this.toContextEntityBaseInfo(out);
+		return out;
+	}
+
+	public HAPContextEntity cloneContextEntity() {
+		HAPContextEntity out = new HAPContextEntity();
+		this.toContextEntityBaseInfo(out);
+		this.toContext(out);
+		return out;
+	}
+
+	public void toContextEntity(HAPContextEntity contextEntity) {
+		this.toContextEntityBaseInfo(contextEntity);
+		this.toContext(contextEntity);
+	}
+
+	public void toContextEntityBaseInfo(HAPContextEntity contextEntity) {
+		this.m_entityInfo.cloneToEntityInfo(contextEntity.m_entityInfo); 
+	}
+	
 	@Override
 	public void cloneToEntityInfo(HAPEntityInfoWritable entityInfo) {  this.m_entityInfo.cloneToEntityInfo(entityInfo); }
 

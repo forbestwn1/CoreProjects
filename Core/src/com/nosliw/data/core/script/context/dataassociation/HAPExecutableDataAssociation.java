@@ -22,6 +22,9 @@ import com.nosliw.data.core.script.context.HAPContextPath;
 public class HAPExecutableDataAssociation extends HAPExecutableImp{
 
 	@HAPAttribute
+	public static String NAME = "name";
+
+	@HAPAttribute
 	public static String DEFINITION = "definition";
 
 	@HAPAttribute
@@ -57,6 +60,8 @@ public class HAPExecutableDataAssociation extends HAPExecutableImp{
 	public HAPExecutableDataAssociation(HAPDefinitionDataAssociation definition) {
 		this.m_definition = definition;
 	}
+	
+	public String getName() {   return this.m_definition.getName();   }
 	
 	public HAPDefinitionDataAssociation getDefinition() {  return this.m_definition;   }
 	public void setDefinition(HAPDefinitionDataAssociation definition) {  this.m_definition = definition;   }
@@ -102,6 +107,7 @@ public class HAPExecutableDataAssociation extends HAPExecutableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(NAME, this.getName());
 		jsonMap.put(DEFINITION, this.m_definition.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(PATHMAPPING, HAPJsonUtility.buildMapJson(m_pathMapping));

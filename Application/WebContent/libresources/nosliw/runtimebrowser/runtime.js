@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_createDataService;
 	var node_createUIPageService;
 	var node_createUIModuleService;
+	var node_createUIAppService;
 	var node_createVariableManager;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -52,7 +53,9 @@ var node_createRuntime = function(name){
 	var loc_uiVariableManager;
 	
 	var loc_uiModuleService;
-	
+
+	var loc_uiAppService;
+
 	var loc_out = {
 		
 		start : function(){	},
@@ -77,8 +80,11 @@ var node_createRuntime = function(name){
 		
 		getUIVariableManager(){   return loc_uiVariableManager;   },
 
-		getUIModuleService(){   return loc_uiModuleService; }
-};
+		getUIModuleService(){   return loc_uiModuleService; },
+
+		getUIAppService(){   return loc_uiAppService; }
+
+	};
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(){
@@ -93,6 +99,7 @@ var node_createRuntime = function(name){
 		loc_processRuntimeFactory = node_createProcessRuntimeFactory();
 		loc_dataService = node_createDataService();
 		loc_uiModuleService = node_createUIModuleService();
+		loc_uiAppService = node_createUIAppService();
 		loc_uiVariableManager = node_createVariableManager();
 		
 		//set sortcut for object
@@ -131,6 +138,7 @@ nosliw.registerSetNodeDataEvent("process.createProcessRuntimeFactory", function(
 nosliw.registerSetNodeDataEvent("dataservice.createDataService", function(){node_createDataService = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.createUIPageService", function(){node_createUIPageService = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.service.createUIModuleService", function(){node_createUIModuleService = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.service.createUIAppService", function(){node_createUIAppService = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.variable.createVariableManager", function(){node_createVariableManager = this.getData();});
 
 //Register Node by Name

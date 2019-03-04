@@ -100,7 +100,7 @@ public class HAPProcessorDataAssociation {
 		if(output instanceof HAPContextGroup) {
 			//update root name with full name (containing categary and element name)
 			HAPDefinitionDataAssociation origin = out.getDefinition();
-			HAPDefinitionDataAssociation updated = origin.cloneDataAssocationGroupBase();
+			HAPDefinitionDataAssociation updated = origin.cloneDataAssocationBase();
 			for(String eleName : origin.getElementNames()) {
 				String updatedName = eleName;
 				HAPInfoRelativeContextResolve resolvedInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(eleName), (HAPContextGroup)output, null, null);

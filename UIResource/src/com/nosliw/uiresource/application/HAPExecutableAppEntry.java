@@ -46,6 +46,7 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	public HAPExecutableAppEntry(String entryName, HAPDefinitionApp appDef) {
 		super(appDef.getEntry(entryName));
 		this.m_uiModules = new LinkedHashMap<String, HAPExecutableAppModule>();
+		this.m_dataDefinition = new LinkedHashMap<String, HAPContext>();
 	}
 
 	public String getId() {  return this.m_id;   }

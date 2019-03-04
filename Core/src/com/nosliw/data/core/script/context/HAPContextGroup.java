@@ -176,6 +176,11 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPDataAssoci
 	}
 	
 	@Override
+	protected boolean buildObjectByJson(Object json){
+		throw new RuntimeException();
+	}
+	
+	@Override
 	public boolean equals(Object obj) {
 		boolean out = false;
 		if(obj instanceof HAPContextGroup) {

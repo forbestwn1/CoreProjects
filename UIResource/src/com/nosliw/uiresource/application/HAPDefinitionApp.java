@@ -13,6 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.uiresource.common.HAPComponentWithConfiguration;
 
 @HAPEntityWithAttribute
@@ -20,12 +21,15 @@ public class HAPDefinitionApp extends HAPComponentWithConfiguration{
 
 	@HAPAttribute
 	public static final String ID = "id";
-	 
+
+	@HAPAttribute
+	public static final String CONTEXT = "context";
+
 	@HAPAttribute
 	public static final String ENTRY = "entry";
 	
 	@HAPAttribute
-	public static final String DATADEFINITION = "dataDefinition";
+	public static final String APPLICATIONDATA = "applicationData";
 	
 	private String m_id;
 
@@ -47,7 +51,10 @@ public class HAPDefinitionApp extends HAPComponentWithConfiguration{
 	
 	public Map<String, HAPDefinitionAppData> getDataDefinition(){   return this.m_dataDefinition;   }
 	
-	public HAPContextGroup getContext() {   return this.m_context;   }
+	public HAPContextGroup getContext() {
+		if(this.m_context==null)  this.m_context = new HAPContextGroup();
+		return this.m_context;   
+	}
 	
 	public HAPDefinitionAppEntryUI getEntry(String entry) {  return this.m_entries.get(entry);  }
 	public void addEntry(HAPDefinitionAppEntryUI entry) {
@@ -62,7 +69,8 @@ public class HAPDefinitionApp extends HAPComponentWithConfiguration{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, m_id);
 		jsonMap.put(ENTRY, HAPJsonUtility.buildJson(this.m_entries, HAPSerializationFormat.JSON));
-		jsonMap.put(DATADEFINITION, HAPJsonUtility.buildJson(this.m_dataDefinition, HAPSerializationFormat.JSON));
+		jsonMap.put(APPLICATIONDATA, HAPJsonUtility.buildJson(this.m_dataDefinition, HAPSerializationFormat.JSON));
+		jsonMap.put(CONTEXT, HAPJsonUtility.buildJson(this.m_context, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -71,7 +79,8 @@ public class HAPDefinitionApp extends HAPComponentWithConfiguration{
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_id = jsonObj.optString(ID);
 	
-		this.m_dataDefinition =  HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionAppData.class.getName(), jsonObj.optJSONObject(DATADEFINITION));
+		this.m_dataDefinition =  HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionAppData.class.getName(), jsonObj.optJSONObject(APPLICATIONDATA));
+		this.m_context = HAPParserContext.parseContextGroup(jsonObj.optJSONObject(CONTEXT)); 
 
 		JSONArray entryArray = jsonObj.optJSONArray(HAPDefinitionApp.ENTRY);
 		if(entryArray!=null) {

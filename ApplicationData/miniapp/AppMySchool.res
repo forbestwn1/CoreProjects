@@ -2,14 +2,14 @@
 	"name" : "AppMySchool",
 	"id" : "AppMySchool",
 	"entry": [{
-		"name": "main_mobile",
+		"name": "main",
 		"module": [{
 				"role": "setting",
 				"name": "setting",
 				"module": "ModuleMySchoolSetting",
 				"info": {},
-				"inputMapping": {
-					"default" : {
+				"inputMapping": [
+					{
 						"element": {
 							"schoolTypeInModule": {
 								"definition": {
@@ -25,9 +25,10 @@
 							}
 						}
 					}
-				},
-				"outputMapping": {
-					"persistance" : {
+				],
+				"outputMapping": [
+					{
+						"name" : "persistance",
 						"element": {
 							"appdata.setting;schoolTypeInData": {
 								"definition": {
@@ -41,7 +42,8 @@
 							}
 						}
 					},
-					"syncWithApp" : {
+					{
+						"name" : "syncWithApp",
 						"element": {
 							"schoolTypeInData": {
 								"definition": {
@@ -54,35 +56,37 @@
 								}
 							}
 						}
-					},
-				}
+					}
+				]
 			},
 			{
 				"role": "application",
 				"name": "MySchool",
 				"module": "ModuleMySchoolResult",
-				"inputMapping": {
-					"element": {
-						"schoolListInModule": {
-							"definition": {
-								"path": "schoolListInApp"
-							}
-						},
-						"schoolTypeInModule": {
-							"definition": {
-								"path": "schoolTypeInApp"
-							}
-						},
-						"schoolRatingInModule": {
-							"definition": {
-								"path": "schoolRatingInApp"
+				"inputMapping": [
+					{
+						"element": {
+							"schoolListInModule": {
+								"definition": {
+									"path": "schoolListInApp"
+								}
+							},
+							"schoolTypeInModule": {
+								"definition": {
+									"path": "schoolTypeInApp"
+								}
+							},
+							"schoolRatingInModule": {
+								"definition": {
+									"path": "schoolRatingInApp"
+								}
 							}
 						}
 					}
-				}
+				]
 			}
 		],
-		"process": {
+		"process1": {
 			"submitProcess": {
 				"activity": [{
 						"id": "startActivityId",

@@ -1,6 +1,5 @@
 package com.nosliw.uiresource.application;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -8,10 +7,8 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPUtilityDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociationGroup;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp{
@@ -32,18 +29,18 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp{
 	
 	private String m_module;
 	
-	private Map<String, HAPDefinitionDataAssociation> m_outputMapping;
+	private HAPDefinitionDataAssociationGroup m_outputMapping;
 	
-	private HAPDefinitionDataAssociation m_inputMapping;
+	private HAPDefinitionDataAssociationGroup m_inputMapping;
 	
 	public HAPDefinitionAppModule() {
-		this.m_outputMapping = new LinkedHashMap<String, HAPDefinitionDataAssociation>();
-		this.m_inputMapping = new HAPDefinitionDataAssociation();
+		this.m_outputMapping = new HAPDefinitionDataAssociationGroup();
+		this.m_inputMapping = new HAPDefinitionDataAssociationGroup();
 	}
 	
 	public String getModule() {   return this.m_module;   }
-	public HAPDefinitionDataAssociation getInputMapping() {   return this.m_inputMapping;   }
-	public Map<String, HAPDefinitionDataAssociation> getOutputMapping() {   return this.m_outputMapping;    }
+	public HAPDefinitionDataAssociationGroup getInputMapping() {   return this.m_inputMapping;   }
+	public HAPDefinitionDataAssociationGroup getOutputMapping() {   return this.m_outputMapping;    }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -51,7 +48,7 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp{
 		jsonMap.put(ROLE, this.m_role);
 		jsonMap.put(MODULE, this.m_module);
 		jsonMap.put(INPUTMAPPING, this.m_inputMapping.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildJson(this.m_outputMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(OUTPUTMAPPING, this.m_outputMapping.toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -60,8 +57,8 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_role = (String)jsonObj.opt(ROLE);
 		this.m_module = (String)jsonObj.opt(MODULE);
-		this.m_outputMapping = HAPUtilityDataAssociation.buildDataAssociation(jsonObj.optJSONObject(OUTPUTMAPPING));
-		this.m_inputMapping.buildObject(jsonObj.optJSONObject(INPUTMAPPING), HAPSerializationFormat.JSON);
+		this.m_inputMapping.buildObject(jsonObj.optJSONArray(INPUTMAPPING), HAPSerializationFormat.JSON);
+		this.m_outputMapping.buildObject(jsonObj.optJSONArray(OUTPUTMAPPING), HAPSerializationFormat.JSON);
 		return true;
 	}
 }

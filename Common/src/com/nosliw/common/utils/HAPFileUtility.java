@@ -29,6 +29,7 @@ public class HAPFileUtility {
 	public static String getTagDefinitionFolder(){  return getApplicationLibFolder() + "uitag/";   }
 	public static String getActivityPluginFolder(){  return getApplicationLibFolder() + "activity/";   }
 	public static String getUIModuleEnvFolder(){  return getApplicationLibFolder() + "uimoduleenv/";  }
+	public static String getUIAppConfigureFolder(){  return getApplicationLibFolder() + "uiappconfigure/";  }
 
 	public static String getApplicationDataFolder(){  return "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/ApplicationData/";   }
 	public static String getProcessFolder(){  return getApplicationDataFolder() + "process/";   }

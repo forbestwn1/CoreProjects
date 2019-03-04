@@ -18,28 +18,38 @@ var packageObj = library.getChildPackage("service");
 	var node_DependentServiceRequestInfo;
 	var node_requestServiceProcessor;
 	var node_contextUtility;
-	var node_createUIModuleRequest;
+	var node_createAppRuntimeRequest;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUIAppService = function(){
 	
 	var loc_out = {
-
-		getGetUIAppRuntimeRequest : function(id, input, moduleConfigure, envFactory, handlers, requester_parent){
+			
+		getGetUIAppEntryRuntimeRequest : function(appEntryId, appConfigureId, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModuleResource", {"id":id, "input":input}), handlers, requestInfo);
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetUIAppRuntime", {}), handlers, requestInfo);
 
-			//get ui module definition by resource id
-			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([id], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE, {
-				success : function(requestInfo, uiModuleDefs){
+			var appEntryResourceId = {};
+			appEntryResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = appEntryId; 
+			appEntryResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY; 
+
+			var appConfigureResourceId = {};
+			appConfigureResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = appConfigureId; 
+			appConfigureResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE; 
+			
+			//load ui module resource and env factory resource
+			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest([appEntryResourceId, appConfigureResourceId], {
+				success : function(requestInfo, resourceTree){
+					var appEntryDef = node_resourceUtility.getResourceFromTree(resourceTree, appEntryResourceId).resourceData;
+					var appConfigure = node_resourceUtility.getResourceFromTree(resourceTree, appConfigureResourceId).resourceData;
+					
 					//create ui module runtime
-					var uiModuleDef = uiModuleDefs[id];
-					return node_createModuleRuntimeRequest(uiModuleDef, input, envFactory, {
-						success : function(request, uiModuleRuntime){
-							return uiModuleRuntime.getInitRequest({
+					return node_createAppRuntimeRequest(appEntryDef, appConfigure, {
+						success : function(request, uiAppRuntime){
+							return uiAppRuntime.getInitRequest({
 								success :function(request, data){
-									return uiModuleRuntime;
+									return uiAppRuntime;
 								}
 							});
 						}
@@ -48,10 +58,11 @@ var node_createUIAppService = function(){
 			}));
 			
 			return out;
-		},
 			
-		executeGetUIModuleRuntimeRequest : function(id, input, envFactory, handlers, requester_parent){
-			var requestInfo = this.getGetUIModuleRuntimeRequest(id, input, envFactory, handlers, requester_parent);
+		},	
+			
+		executeGetUIAppEntryRuntimeRequest : function(appEntryId, appConfigureId, handlers, requester_parent){
+			var requestInfo = this.getGetUIAppEntryRuntimeRequest(appEntryId, appConfigureId, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 			
@@ -81,10 +92,10 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService
 nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("uimodule.createModuleRuntimeRequest", function(){node_createModuleRuntimeRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.createAppRuntimeRequest", function(){node_createAppRuntimeRequest = this.getData();});
 
 
 //Register Node by Name
-packageObj.createChildNode("createUIModuleService", node_createUIModuleService); 
+packageObj.createChildNode("createUIAppService", node_createUIAppService); 
 
 })(packageObj);

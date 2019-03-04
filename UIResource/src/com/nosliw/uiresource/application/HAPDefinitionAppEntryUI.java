@@ -11,11 +11,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.data.core.process.HAPDefinitionEmbededProcess;
-import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.uiresource.common.HAPComponentWithConfiguration;
 
 @HAPEntityWithAttribute
@@ -41,12 +40,18 @@ public class HAPDefinitionAppEntryUI  extends HAPComponentWithConfiguration impl
 	public HAPDefinitionAppEntryUI() {
 		this.m_modules = new ArrayList<HAPDefinitionAppModule>();
 		this.m_processes = new LinkedHashMap<String, HAPDefinitionEmbededProcess>();
+		this.m_context = new HAPContextGroup();
 	}
 	
 	public List<HAPDefinitionAppModule> getModules(){  return this.m_modules;  }
 	public HAPDefinitionEmbededProcess getProcess(String name) {  return this.m_processes.get(name);   }
 	public Map<String, HAPDefinitionEmbededProcess> getProcesses(){   return this.m_processes;  }
-	public HAPContextGroup getContext() {  return this.m_context;   }
+	public HAPContextGroup getContext() {
+		if(this.m_context==null) {
+			this.m_context = new HAPContextGroup();
+		}
+		return this.m_context;   
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -61,8 +66,8 @@ public class HAPDefinitionAppEntryUI  extends HAPComponentWithConfiguration impl
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_modules =  HAPSerializeUtility.buildListFromJsonArray(HAPDefinitionAppModule.class.getName(), jsonObj.optJSONArray(MODULE));
-		this.m_processes = HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionProcess.class.getName(), jsonObj.optJSONObject(PROCESS));
-		this.m_context = (HAPContextGroup)HAPSerializeManager.getInstance().buildObject(HAPContextGroup.class.getName(), jsonObj.optJSONObject(CONTEXT), HAPSerializationFormat.JSON);
+		this.m_processes = HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionEmbededProcess.class.getName(), jsonObj.optJSONObject(PROCESS));
+		this.m_context = HAPParserContext.parseContextGroup(jsonObj.optJSONObject(CONTEXT)); 
 		return true;
 	}	
 }

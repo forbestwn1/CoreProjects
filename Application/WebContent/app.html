@@ -4,7 +4,6 @@
         <meta charset="utf-8" />
         <title>Nosliw Go Go !!</title>
 
-   		<link rel="stylesheet" href="libresources/external/jQuery_Mobile/jquery.mobile-1.4.5.min.css" />
         <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
         
         <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
@@ -32,16 +31,16 @@ $(document).on("nosliwActive", function(){
 
     // Our initialization code here
 	var currentSearchString = window.location.search;
-	var moduleId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
+	var appEntryId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
 
 	//create module runtime
-	var decorations = {};
-	decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = ["Decoration_application"];
-	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, $('#testDiv'), decorations, "module_application_jquery_mobile", {
-		success : function(requestInfo, uiModuleRuntime){
-			uiModuleRuntime.executeStartRequest();			
+	nosliw.runtime.getUIAppService().executeGetUIAppEntryRuntimeRequest(appEntryId, "application_normal", 
+		{
+			success : function(requestInfo, uiAppRuntime){
+				uiAppRuntime.executeStartRequest();			
+			}
 		}
-	});
+	);
 
 });
 

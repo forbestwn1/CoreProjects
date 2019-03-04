@@ -93,7 +93,7 @@ public class HAPProcessMiniAppEntry {
 		HAPDefinitionModule moduleDef = HAPUtilityModule.getUIModuleDefinitionById(module.getModule(), uiResourceMan.getModuleParser());
 		
 		//input data association
-		HAPExecutableDataAssociationWithTarget inputMapping = HAPProcessorDataAssociation.processDataAssociation(entryExe.getContext(), module.getInputMapping(), moduleDef.getContext(), false, contextProcessRequirement);
+		HAPExecutableDataAssociationWithTarget inputMapping = HAPProcessorDataAssociation.processDataAssociation(entryExe.getContext(), module.getInputMapping().getDefaultDataAssociation(), moduleDef.getContext(), false, contextProcessRequirement);
 		out.setInputMapping(inputMapping);
 		
 		//module
@@ -101,7 +101,7 @@ public class HAPProcessMiniAppEntry {
 		out.setModule(moduleExe);
 		
 		//output data association
-		Map<String, HAPDefinitionDataAssociation> outputMapping = module.getOutputMapping();
+		Map<String, HAPDefinitionDataAssociation> outputMapping = module.getOutputMapping().getDataAssociations();
 		for(String outputTargetName : outputMapping.keySet()) {
 			HAPExecutableDataAssociationWithTarget outputMappingByTarget = HAPProcessorDataAssociation.processDataAssociation(entryExe.getContext(), outputMapping.get(outputTargetName), moduleDef.getContext(), false, contextProcessRequirement);
 			out.addOutputMapping(outputTargetName, outputMappingByTarget);

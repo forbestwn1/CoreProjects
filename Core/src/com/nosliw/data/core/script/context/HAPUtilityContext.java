@@ -265,9 +265,7 @@ public class HAPUtilityContext {
 		}
 	}
 
-	
-	//build interited node from parent
-	public static HAPContextDefinitionRoot createRelativeContextDefinitionRoot(HAPContextDefinitionRoot parentNode, String contextCategary, String refPath, Set<String> excludedInfo) {
+	public static HAPContextDefinitionRoot createRelativeContextDefinitionRoot(HAPContextDefinitionRoot parentNode, String parent, String contextCategary, String refPath, Set<String> excludedInfo) {
 		HAPContextDefinitionRoot out = null;
 		
 		if(parentNode.isConstant()) {
@@ -277,6 +275,7 @@ public class HAPUtilityContext {
 			out = new HAPContextDefinitionRoot();
 			out.setInfo(parentNode.getInfo().cloneInfo(excludedInfo));
 			HAPContextDefinitionLeafRelative relativeEle = new HAPContextDefinitionLeafRelative();
+			relativeEle.setParent(parent);
 			relativeEle.setPath(contextCategary, refPath);
 			if(parentNode.getDefinition().isProcessed()) {
 				relativeEle.setDefinition(parentNode.getDefinition().getSolidContextDefinitionElement());
@@ -285,6 +284,11 @@ public class HAPUtilityContext {
 			out.setDefinition(relativeEle);
 		}
 		return out;
+	}
+	
+	//build interited node from parent
+	public static HAPContextDefinitionRoot createRelativeContextDefinitionRoot(HAPContextDefinitionRoot parentNode, String contextCategary, String refPath, Set<String> excludedInfo) {
+		return createRelativeContextDefinitionRoot(parentNode, null, contextCategary, refPath, excludedInfo);
 	}
 
 

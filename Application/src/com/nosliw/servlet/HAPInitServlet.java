@@ -10,6 +10,7 @@ import com.nosliw.miniapp.HAPAppManager;
 //import com.nosliw.miniapp.HAPAppManager;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.tag.HAPUITagManager;
+import com.nosliw.uiresource.resource.HAPResourceManagerUIAppConfigure;
 import com.nosliw.uiresource.resource.HAPResourceManagerUIAppEntry;
 import com.nosliw.uiresource.resource.HAPResourceManagerUIModule;
 import com.nosliw.uiresource.resource.HAPResourceManagerUIModuleEnv;
@@ -46,6 +47,7 @@ public class HAPInitServlet  extends HttpServlet{
 			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULE, new HAPResourceManagerUIModule(uiResourceMan));
 			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIMODULEENV, new HAPResourceManagerUIModuleEnv());
 			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, new HAPResourceManagerUIAppEntry(uiResourceMan));
+			runtimeEnvironment.getResourceManager().registerResourceManager(HAPConstant.RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE, new HAPResourceManagerUIAppConfigure());
 
 			runtimeEnvironment.getGatewayManager().registerGateway("options", new HAPGatewayOptions());
 			
