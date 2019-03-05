@@ -90,9 +90,6 @@ var loc_createDecoration = function(uiView){
 			if(result===false)  return false;   //if command return false, then no pass to parent 
 			else return loc_parent.command(command, parms, requestInfo);   //otherwise, let parent process this command
 		},
-		getContext1 : function(){
-			return loc_parent.getContext();
-		},
 		
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext);},
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener);},
