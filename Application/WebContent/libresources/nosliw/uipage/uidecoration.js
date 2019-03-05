@@ -75,18 +75,8 @@ var loc_createDecoration = function(uiView){
 		
 		getUpdateContextRequest : function(parms, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
-			out.addRequest(loc_uiView.getUpdateContextRequest(parms, {
-				success : function(requestInfo){
-					var kkkk = 555;
-					kkkk++;
-				}
-			}));
-			out.addRequest(loc_parent.getUpdateContextRequest(parms, {
-				success : function(requestInfo){
-					var kkkk = 555;
-					kkkk++;
-				}
-			}));
+			out.addRequest(loc_uiView.getUpdateContextRequest(parms));
+			out.addRequest(loc_parent.getUpdateContextRequest(parms));
 			return out;
 		},
 		

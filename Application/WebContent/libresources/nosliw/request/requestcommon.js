@@ -37,11 +37,6 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 		//unique id for each request, so that we can trace each request in log
 		loc_out.pri_innerId = nosliw.generateId();
 		
-		if(loc_out.pri_innerId=="400"){
-			var kkkk = 5555;
-			kkkk++;
-		}
-		 
 		//what want to do 
 		loc_out.pri_service = service;
 		//original request handlers

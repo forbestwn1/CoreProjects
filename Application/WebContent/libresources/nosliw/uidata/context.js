@@ -265,8 +265,6 @@ var node_createContext = function(elementInfosArray, request){
 			var outRequest = node_createServiceRequestInfoSequence({}, handlers, requestInfo);
 			var setRequest = node_createServiceRequestInfoSet({}, {
 				success : function(requestInfo, result){
-					var kkkkk = 5555;
-					kkkkk++;
 				}
 			});
 			

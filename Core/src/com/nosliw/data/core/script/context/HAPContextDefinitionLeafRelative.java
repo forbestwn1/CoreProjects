@@ -60,7 +60,9 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 		if(HAPBasicUtility.isStringNotEmpty(this.m_parent))   return this.m_parent;
 		return HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT;  
 	}
-	public void setParent(String parent) {   this.m_parent = parent;  }
+	public void setParent(String parent) { 
+		this.m_parent = parent;  
+	}
 	
 	public HAPContextDefinitionElement getDefinition() {   return this.m_definition;   }
 	public void setDefinition(HAPContextDefinitionElement definition) {   this.m_definition = definition.getSolidContextDefinitionElement();   }
@@ -118,6 +120,7 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 		HAPContextDefinitionLeafRelative that = (HAPContextDefinitionLeafRelative)out;
 		if(this.m_path!=null)	that.m_path = this.m_path.clone();
 		that.m_pathStr = this.m_pathStr; 
+		that.m_parent = this.m_parent; 
 		if(this.m_definition!=null)  that.m_definition = this.m_definition.cloneContextDefinitionElement();
 		
 		for(String name : this.m_matchers.keySet()) 	that.m_matchers.put(name, this.m_matchers.get(name).cloneMatchers());
@@ -137,6 +140,7 @@ public class HAPContextDefinitionLeafRelative extends HAPContextDefinitionLeafVa
 		HAPContextDefinitionLeafRelative out = (HAPContextDefinitionLeafRelative)this.cloneContextDefinitionElement();
 		out.m_pathStr = HAPProcessorContextSolidate.getSolidName(this.getPathStr(), constants, contextProcessRequirement);
 		out.m_path = null;
+		out.m_parent = this.m_parent;
 		if(this.m_definition!=null) 	out.m_definition = this.m_definition.toSolidContextDefinitionElement(constants, contextProcessRequirement);
 		return out;
 	}

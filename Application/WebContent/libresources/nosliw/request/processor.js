@@ -140,10 +140,6 @@ var node_requestServiceProcessor = function(){
 	
 	var loc_out = {
 		processRequest1 : function(requestInfo, processRemote){
-			if(requestInfo.getInnerId()=="399-400"){
-				var kkkk = 5555;
-				kkkk++;
-			}
 			nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Start Request");
 			
 			if(processRemote==undefined){
