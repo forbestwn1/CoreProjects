@@ -12,6 +12,7 @@ import com.nosliw.data.core.process.HAPProcessorProcess;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
@@ -52,12 +53,12 @@ public class HAPProcessMiniAppEntry {
 		Map<String, HAPDefinitionServiceProvider> entryServiceProviders = HAPUtilityServiceUse.buildServiceProvider(miniAppDef.getServiceProviderDefinitions(), entryDefinition, contextProcessRequirement.serviceDefinitionManager); 
 
 		//context
-		out.setContext(HAPProcessorContext.process(entryDefinition.getContext(), miniAppDef.getContext(), contextProcessConfg, contextProcessRequirement));
+		out.setContext(HAPProcessorContext.process(entryDefinition.getContext(), HAPParentContext.createDefault(miniAppDef.getContext()), contextProcessConfg, contextProcessRequirement));
 
 		//data definition
 		Map<String, HAPDefinitionAppData> dataDefs = miniAppDef.getDataDefinition();
 		for(String dataDefName : dataDefs.keySet()) { 
-			 out.addDataDefinition(dataDefName, HAPProcessorContext.process(dataDefs.get(dataDefName), miniAppDef.getContext(), contextProcessConfg, contextProcessRequirement));
+			 out.addDataDefinition(dataDefName, HAPProcessorContext.process(dataDefs.get(dataDefName), HAPParentContext.createDefault(miniAppDef.getContext()), contextProcessConfg, contextProcessRequirement));
 		}
 		
 		//process

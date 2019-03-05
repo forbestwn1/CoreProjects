@@ -3,11 +3,19 @@ package com.nosliw.data.core.script.context;
 import java.util.Arrays;
 import java.util.Map;
 
-public class HAPProcessorContextInheritance {
+public class HAPProcessorContextVariableInheritance {
 
 	//merge with parent through inheritance
-	public static HAPContextGroup process(HAPContextGroup orgContext, HAPContextGroup parentContextGroup, String inheritMode, HAPRequirementContextProcessor contextProcessRequirement) {
+	public static HAPContextGroup process(HAPContextGroup orgContext, HAPParentContext parent, String inheritMode, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPContextGroup out = processConstant(orgContext);
+		for(String parentName : parent.getNames()) {
+			out = process(out, parent.getContext(parentName, orgContext), inheritMode, contextProcessRequirement);
+		}
+		return out;
+	}
+
+	public static HAPContextGroup process(HAPContextGroup orgContext, HAPContextGroup parentContextGroup, String inheritMode, HAPRequirementContextProcessor contextProcessRequirement) {
+		HAPContextGroup out = orgContext.cloneContextGroup();
 		if(!HAPConfigureContextProcessor.VALUE_INHERITMODE_NONE.equals(inheritMode)) {
 			for(String categary : HAPContextGroup.getAllContextTypes()){
 				if(parentContextGroup!=null && Arrays.asList(HAPContextGroup.getInheritableContextTypes()).contains(categary)) {
@@ -23,7 +31,7 @@ public class HAPProcessorContextInheritance {
 		}
 		return out;
 	}
-	
+
 	//add FINAL to all constant root node, means constant cannot be override by parent 
 	private static HAPContextGroup processConstant(HAPContextGroup contextGroup) {
 		HAPContextGroup out = contextGroup.cloneContextGroup();

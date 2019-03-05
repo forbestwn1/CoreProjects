@@ -7,6 +7,7 @@ import com.nosliw.common.erro.HAPErrorUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
@@ -30,7 +31,7 @@ public class HAPProcessorProcess{
 		HAPExecutableEmbededProcess out = null;
 		HAPContextGroup oldContext = null;
 		do {
-			if(oldContext==null)   oldContext = HAPProcessorContext.process(embededProcessDefinition.getContext(), parentContext, HAPUtilityConfigure.getContextProcessConfigurationForProcess(), contextProcessRequirement);
+			if(oldContext==null)   oldContext = HAPProcessorContext.process(embededProcessDefinition.getContext(), HAPParentContext.createDefault(parentContext), HAPUtilityConfigure.getContextProcessConfigurationForProcess(), contextProcessRequirement);
 			else oldContext = out.getContext();
 			out = new HAPExecutableEmbededProcess(embededProcessDefinition, id);
 			HAPProcessorProcess.process(out, oldContext, localProcesses, serviceProviders, processMan, contextProcessRequirement, processTracker);
@@ -58,7 +59,7 @@ public class HAPProcessorProcess{
 		HAPExecutableProcess out = null;
 		HAPContextGroup oldContext = null;
 		do {
-			if(oldContext==null)   oldContext = HAPProcessorContext.process(processDefinition.getContext(), parentContext, HAPUtilityConfigure.getContextProcessConfigurationForProcess(), contextProcessRequirement);
+			if(oldContext==null)   oldContext = HAPProcessorContext.process(processDefinition.getContext(), HAPParentContext.createDefault(parentContext), HAPUtilityConfigure.getContextProcessConfigurationForProcess(), contextProcessRequirement);
 			else oldContext = out.getContext();
 			out = new HAPExecutableProcess(processDefinition, id);
 			HAPProcessorProcess.process(out, oldContext, localProcesses, serviceProviders, processMan, contextProcessRequirement, processTracker);

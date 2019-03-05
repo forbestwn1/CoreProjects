@@ -16,6 +16,7 @@ import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
+import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
@@ -166,7 +167,7 @@ public class HAPProcessorDataAssociation {
 		daContextGroup.setContext(helpCategary, HAPUtilityContext.consolidateContextRoot(dataAssociation));
 		
 		//process context to build context
-		HAPContextGroup daContextGroupProcessed = HAPProcessorContext.process(daContextGroup, inputContextGroup, out.getProcessConfigure(), contextProcessRequirement);
+		HAPContextGroup daContextGroupProcessed = HAPProcessorContext.process(daContextGroup, HAPParentContext.createDefault(inputContextGroup), out.getProcessConfigure(), contextProcessRequirement);
 
 		//build flat context without mapped context
 		HAPContext mappedContext = daContextGroupProcessed.removeContext(helpCategary);

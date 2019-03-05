@@ -26,21 +26,28 @@ public class HAPProcessorContextConstant {
 
 	static public HAPContextGroup process(
 			HAPContextGroup originalContextGroup,
-			HAPContextGroup parentContextGroup,
+			HAPParentContext parent,
 			String inheritMode,
 			HAPRequirementContextProcessor contextProcessRequirement){
 
-		HAPContextGroup merged = merge(originalContextGroup, parentContextGroup, inheritMode);
+		//merge with parent
+		HAPContextGroup merged = originalContextGroup;
+		for(String parentName : parent.getNames()) {
+			merged = mergeWithParent(merged, parent.getContext(parentName, merged), inheritMode);
+		}
 		
+		//figure out constant value (some constant may use another constant)
 		HAPContextGroup out =  solidateConstantDefs(merged, contextProcessRequirement);
 		
+		//figure out root that ture out to be constant value, then convert to constant root
 		out = discoverConstantContextRoot(out);
 		
 		return out;
 	}
 
 	//merge constant with parent
-	private static HAPContextGroup merge(
+	//child constant has higher priority than parent
+	private static HAPContextGroup mergeWithParent(
 			HAPContextGroup contextGroup,
 			HAPContextGroup parentContextGroup,
 			String inheritMode){
