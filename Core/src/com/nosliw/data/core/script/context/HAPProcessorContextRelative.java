@@ -16,20 +16,13 @@ public class HAPProcessorContextRelative {
 		contextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, context);
 		contextGroup = process(contextGroup, parent, configure, contextProcessRequirement);
 		return contextGroup.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC);
-//		
-//		HAPContext out = context.cloneContext();
-//		Map<String, HAPContextDefinitionRoot> eles = out.getElements();
-//		for(String eleName : eles.keySet()) {
-//			HAPContextDefinitionRoot contextRoot = eles.get(eleName);
-//			contextRoot.setDefinition(processRelativeInContextDefinitionElement(contextRoot.getDefinition(), parentName, parentContextGroup, configure, contextProcessRequirement));
-//		}
-//		return out;
 	}
 	
 	public static HAPContextGroup process(HAPContextGroup contextGroup, HAPParentContext parent, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPContextGroup out = contextGroup.cloneContextGroup();
 		for(String parentName : allParentName(parent)) {
-			out = process(out, parentName, parent.getContext(parentName, contextGroup), configure, contextProcessRequirement);			
+			HAPContextStructure context = parent.getContext(parentName, contextGroup);
+			out = process(out, parentName, HAPContextStructure.toContextGroup(context), context.isFlat(), configure, contextProcessRequirement);			
 		}
 		return out;
 	}
@@ -41,19 +34,19 @@ public class HAPProcessorContextRelative {
 		return out;
 	}
 	
-	private static HAPContextGroup process(HAPContextGroup contextGroup, String parentName, HAPContextGroup parentContextGroup, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
+	private static HAPContextGroup process(HAPContextGroup contextGroup, String parentName, HAPContextGroup parentContextGroup, boolean isParentFlat, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPContextGroup out = contextGroup.cloneContextGroup();
 		for(String categary : HAPContextGroup.getAllContextTypes()){
 			Map<String, HAPContextDefinitionRoot> eles = out.getElements(categary);
 			for(String eleName : eles.keySet()) {
 				HAPContextDefinitionRoot contextRoot = eles.get(eleName);
-				contextRoot.setDefinition(processRelativeInContextDefinitionElement(contextRoot.getDefinition(), parentName, parentContextGroup, configure, contextProcessRequirement));
+				contextRoot.setDefinition(processRelativeInContextDefinitionElement(contextRoot.getDefinition(), parentName, parentContextGroup, isParentFlat, configure, contextProcessRequirement));
 			}
 		}
 		return out;
 	}
 
-	private static HAPContextDefinitionElement processRelativeInContextDefinitionElement(HAPContextDefinitionElement defContextElement, String parentName, HAPContextGroup parentContext, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
+	private static HAPContextDefinitionElement processRelativeInContextDefinitionElement(HAPContextDefinitionElement defContextElement, String parentName, HAPContextGroup parentContext, boolean isParentFlat, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPContextDefinitionElement out = defContextElement;
 		switch(defContextElement.getType()) {
 		case HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE:
@@ -64,7 +57,7 @@ public class HAPProcessorContextRelative {
 					if(relativeContextElement.getParentCategary()!=null) categaryes.add(relativeContextElement.getParentCategary());
 					else if(configure.parentCategary==null)   categaryes.addAll(Arrays.asList(HAPContextGroup.getVisibleContextTypes()));
 					else   categaryes.addAll(Arrays.asList(configure.parentCategary));
-					out = processRelativeContextDefinitionElement(relativeContextElement, parentContext, categaryes.toArray(new String[0]), configure.relativeResolveMode, contextProcessRequirement);
+					out = processRelativeContextDefinitionElement(relativeContextElement, parentContext, isParentFlat, categaryes.toArray(new String[0]), configure.relativeResolveMode, contextProcessRequirement);
 				}
 			}
 			break;
@@ -72,14 +65,14 @@ public class HAPProcessorContextRelative {
 			Map<String, HAPContextDefinitionElement> processedChildren = new LinkedHashMap<String, HAPContextDefinitionElement>();
 			HAPContextDefinitionNode nodeContextElement = (HAPContextDefinitionNode)defContextElement;
 			for(String childName : nodeContextElement.getChildren().keySet()) { 	
-				processedChildren.put(childName, processRelativeInContextDefinitionElement(nodeContextElement.getChild(childName), parentName, parentContext, configure, contextProcessRequirement));
+				processedChildren.put(childName, processRelativeInContextDefinitionElement(nodeContextElement.getChild(childName), parentName, parentContext, isParentFlat, configure, contextProcessRequirement));
 			}
 			break;
 		}
 		return out;
 	}
 	
-	private static HAPContextDefinitionElement processRelativeContextDefinitionElement(HAPContextDefinitionLeafRelative defContextElementRelative, HAPContextGroup parentContext, String[] categaryes, String mode, HAPRequirementContextProcessor contextProcessRequirement){
+	private static HAPContextDefinitionElement processRelativeContextDefinitionElement(HAPContextDefinitionLeafRelative defContextElementRelative, HAPContextGroup parentContext, boolean isParentFlat, String[] categaryes, String mode, HAPRequirementContextProcessor contextProcessRequirement){
 		HAPContextDefinitionElement out = defContextElementRelative;
 		
 		HAPContextPath path = defContextElementRelative.getPath(); 
@@ -100,7 +93,8 @@ public class HAPProcessorContextRelative {
 		}
 		default:
 		{
-			path.getRootElementId().setCategary(resolveInfo.path.getRootElementId().getCategary());
+			if(isParentFlat)  path.getRootElementId().setCategary(null);
+			else path.getRootElementId().setCategary(resolveInfo.path.getRootElementId().getCategary());
 			defContextElementRelative.setPath(path);
 			
 			HAPContextDefinitionElement parentContextEle = resolveInfo.resolvedNode; 

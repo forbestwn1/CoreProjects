@@ -24,10 +24,9 @@ import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafData;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafValue;
-import com.nosliw.data.core.script.context.HAPContextFlat;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.data.core.script.context.dataassociation.HAPDataAssociationIO;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.HAPScriptExpression;
@@ -54,7 +53,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		HAPExpressionActivityExecutable out = new HAPExpressionActivityExecutable(id, (HAPExpressionActivityDefinition)activityDefinition);
 
 		//process input and create flat input context for activity
-		HAPContextFlat activityContext = HAPUtilityProcess.processNormalActivityInputDataAssocation(out, processContext, contextProcessRequirement);
+		HAPContext activityContext = HAPUtilityProcess.processNormalActivityInputDataAssocation(out, processContext, contextProcessRequirement);
 		
 		//process script expression defined in activity
 		HAPUtilityProcess.buildScriptExpressionProcessContext(activityContext, out.getScriptExpressionProcessContext());
@@ -76,7 +75,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 
 	class HAPBuilderResultContext1 implements HAPBuilderResultContext {
 		@Override
-		public HAPDataAssociationIO buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
+		public HAPContextStructure buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
 			HAPContext out = new HAPContext();
 			if(HAPConstant.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 				String outputVar = HAPConstant.ACTIVITY_OUTPUTVARIABLE_OUTPUT;

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
@@ -41,11 +42,11 @@ public class HAPUtilityDataAssociation {
 	}
 	
 	//each relative context element represent path mapping (output path in context - input path in context) during runtime
-	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName, boolean isFlatInput){
+	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName, Map<String, Boolean> isFlatInput){
 		return buildRelativePathMapping(contextRoot.getDefinition(), rootName, isFlatInput);
 	}
 	
-	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionElement contextDefEle, String rootName, boolean isFlatInput){
+	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionElement contextDefEle, String rootName, Map<String, Boolean> isFlatInput){
 		Map<String, String> out = new LinkedHashMap<String, String>();
 		HAPUtilityContext.processContextDefElementWithPathInfo(contextDefEle, new HAPContextDefEleProcessor() {
 			@Override
@@ -54,7 +55,8 @@ public class HAPUtilityDataAssociation {
 				if(ele.getType().equals(HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 					HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)ele;
 					HAPContextPath contextPath = relativeEle.getPath();
-					String sourcePath = isFlatInput? contextPath.getFullPath() : contextPath.getContextFullPath();
+					String parent = relativeEle.getParent();
+					String sourcePath = HAPNamingConversionUtility.cascadePath(parent, isFlatInput.get(parent)? contextPath.getFullPath() : contextPath.getContextFullPath());
 					String targetPath = path; 
 					out.put(targetPath, sourcePath);
 					return false;

@@ -10,11 +10,11 @@ import com.nosliw.common.utils.HAPConstant;
 
 public class HAPParentContext {
 
-	private Map<String, HAPContextGroup> m_parents;
+	private Map<String, HAPContextStructure> m_parents;
 	private List<String> m_parentNames;
 	
 	public HAPParentContext() {
-		this.m_parents = new LinkedHashMap<String, HAPContextGroup>();
+		this.m_parents = new LinkedHashMap<String, HAPContextStructure>();
 		this.m_parentNames = new ArrayList<String>();
 	}
 	
@@ -33,7 +33,7 @@ public class HAPParentContext {
 		return this;
 	}
 	
-	public HAPContextGroup getContext(String name, HAPContextGroup self) {
+	public HAPContextStructure getContext(String name, HAPContextStructure self) {
 		if(this.isSelf(name))   return self;
 		return this.m_parents.get(name);	
 	}

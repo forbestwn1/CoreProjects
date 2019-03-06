@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.HAPContextFlat;
+import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 
 public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
@@ -29,9 +29,9 @@ public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{
 
 	public void setInputDataAssociation(HAPExecutableDataAssociation input) {  this.m_input = input;  }
 
-	public HAPContextFlat getInputContext() {
+	public HAPContext getInputContext() {
 		if(this.m_input==null)   return null;
-		return this.m_input.getContextFlat();   
+		return this.m_input.getContext();   
 	}
 	
 	public HAPDefinitionActivityNormal getNormalActivityDefinition() {   return (HAPDefinitionActivityNormal)this.getActivityDefinition();  }

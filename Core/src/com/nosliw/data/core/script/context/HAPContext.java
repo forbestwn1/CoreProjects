@@ -1,5 +1,6 @@
 package com.nosliw.data.core.script.context;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -12,11 +13,11 @@ import com.nosliw.common.pattern.HAPNamingConversionUtility;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.script.context.dataassociation.HAPDataAssociationIO;
 
 @HAPEntityWithAttribute
-public class HAPContext extends HAPSerializableImp implements HAPDataAssociationIO{
+public class HAPContext extends HAPSerializableImp implements HAPContextStructure{
 
 	@HAPAttribute
 	public static final String ELEMENT = "element";
@@ -27,6 +28,9 @@ public class HAPContext extends HAPSerializableImp implements HAPDataAssociation
 		this.empty();
 	}
 	
+	@Override
+	public boolean isFlat() {	return true;	}
+
 	public void empty() {
 		this.m_elements = new LinkedHashMap<String, HAPContextDefinitionRoot>();
 	}
@@ -46,6 +50,34 @@ public class HAPContext extends HAPSerializableImp implements HAPDataAssociation
 		Map<String, HAPContextDefinitionRoot> eles = context.getElements();
 		for(String rootName : eles.keySet()){
 			this.m_elements.put(rootName, eles.get(rootName));
+		}
+	}
+
+	public void updateRootName(HAPUpdateName nameUpdate) {
+		//update context
+		for(String eleName : new HashSet<String>(this.getElementNames())) {
+			HAPContextDefinitionRoot root = this.getElement(eleName);
+			HAPUtilityContext.processContextDefElement(root.getDefinition(), new HAPContextDefEleProcessor() {
+				@Override
+				public boolean process(HAPContextDefinitionElement ele, Object value) {
+					if(ele instanceof HAPContextDefinitionLeafRelative) {
+						HAPContextDefinitionLeafRelative relative = (HAPContextDefinitionLeafRelative)ele;
+						if(HAPConstant.DATAASSOCIATION_RELATEDENTITY_SELF.equals(relative.getParent())) {
+							//update local relative path
+							HAPContextPath path = relative.getPath();
+							relative.setPath(new HAPContextPath(new HAPContextDefinitionRootId(path.getRootElementId().getCategary(), nameUpdate.getUpdatedName(path.getRootElementId().getName())), path.getSubPath()));
+						}
+					}
+					return true;
+				}
+
+				@Override
+				public boolean postProcess(HAPContextDefinitionElement ele, Object value) {
+					return true;
+				}}, null);
+			//update root name
+			this.m_elements.remove(eleName);
+			this.addElement(nameUpdate.getUpdatedName(eleName), root);
 		}
 	}
 

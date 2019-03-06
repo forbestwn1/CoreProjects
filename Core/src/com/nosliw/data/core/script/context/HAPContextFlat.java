@@ -102,22 +102,7 @@ public class HAPContextFlat extends HAPSerializableImp{
 	
 	
 	public void updateRootName(HAPUpdateName nameUpdate) {
-		HAPContext newContext = new HAPContext();
-		//update context
-		for(String eleName : this.m_context.getElementNames()) {
-			HAPContextDefinitionRoot root = this.m_context.getElement(eleName);
-			if(root.getDefinition() instanceof HAPContextDefinitionLeafRelative) {
-				HAPContextDefinitionLeafRelative relative = (HAPContextDefinitionLeafRelative)root.getDefinition();
-				if(HAPConstant.DATAASSOCIATION_RELATEDENTITY_SELF.equals(relative.getParent())) {
-					//update local relative path
-					HAPContextPath path = relative.getPath();
-					relative.setPath(new HAPContextPath(new HAPContextDefinitionRootId(path.getRootElementId().getCategary(), nameUpdate.getUpdatedName(path.getRootElementId().getName())), path.getSubPath()));
-				}
-			}
-			//update root name
-			newContext.addElement(nameUpdate.getUpdatedName(eleName), root);
-		}
-		this.m_context = newContext;
+		this.m_context.updateRootName(nameUpdate);
 		
 		//update name in local2Global mapping
 		Map<String, String> newMapping = new LinkedHashMap<String, String>();

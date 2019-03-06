@@ -4,8 +4,8 @@ import java.util.Map;
 
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.data.core.script.context.dataassociation.HAPDataAssociationIO;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationWithTarget;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
@@ -16,7 +16,7 @@ public class HAPProcessorServiceUse {
 	public static HAPExecutableServiceUse process(
 			HAPDefinitionServiceUse definition,
 			HAPServiceInterface providerInterface,
-			HAPDataAssociationIO globalContext, 
+			HAPContextStructure globalContext, 
 			HAPConfigureContextProcessor configure, 
 			HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPExecutableServiceUse out = new HAPExecutableServiceUse(definition);

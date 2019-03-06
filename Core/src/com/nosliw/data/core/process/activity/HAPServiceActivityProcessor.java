@@ -17,10 +17,10 @@ import com.nosliw.data.core.process.HAPUtilityProcess;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
+import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPInfoRelativeContextResolve;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
-import com.nosliw.data.core.script.context.dataassociation.HAPDataAssociationIO;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -76,7 +76,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 		}
 		
 		@Override
-		public HAPDataAssociationIO buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
+		public HAPContextStructure buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
 			HAPContextGroup out = new HAPContextGroup();
 			if(HAPConstant.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 				HAPServiceActivityExecutable serviceActivity = (HAPServiceActivityExecutable)activity;

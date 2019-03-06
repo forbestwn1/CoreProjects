@@ -12,12 +12,11 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.script.context.dataassociation.HAPDataAssociationIO;
 
 //a group of context
 //normally contexts are grouped according to type : public, private, ...
 @HAPEntityWithAttribute
-public class HAPContextGroup extends HAPSerializableImp implements HAPDataAssociationIO{
+public class HAPContextGroup extends HAPSerializableImp implements HAPContextStructure{
 
 	@HAPAttribute
 	public static final String GROUP = "group";
@@ -53,6 +52,9 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPDataAssoci
 			this.m_info.setValue(name, info.getValue(name));
 		}
 	}
+	
+	@Override
+	public boolean isFlat() {	return false;	}
 	
 	public static String[] getAllContextTypes(){
 		String[] contextTypes = {
@@ -194,4 +196,5 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPDataAssoci
 		}
 		return out;
 	}
+
 }
