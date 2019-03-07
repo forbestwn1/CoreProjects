@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextStructure;
+import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationWithTarget;
@@ -24,14 +25,14 @@ public class HAPProcessorServiceUse {
 		HAPDefinitionMappingService serviceMapping = definition.getServiceMapping();
 		
 		//process parm mapping
-		HAPExecutableDataAssociationWithTarget processedParms = HAPProcessorDataAssociation.processDataAssociation(globalContext, serviceMapping.getParms(), HAPUtilityServiceUse.buildContextFromServiceParms(providerInterface), false, contextProcessRequirement);
+		HAPExecutableDataAssociationWithTarget processedParms = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(globalContext), serviceMapping.getParms(), HAPUtilityServiceUse.buildContextFromServiceParms(providerInterface), false, contextProcessRequirement);
 		out.setParmMapping(processedParms);
 		 
 		//process result mapping
 		Map<String, HAPDefinitionDataAssociation> resultMapping = serviceMapping.getResultMapping();
 		for(String result :resultMapping.keySet()) {
 			HAPContext outputContext = HAPUtilityServiceUse.buildContextFromResultServiceOutputs(providerInterface, result); 
-			HAPExecutableDataAssociationWithTarget processedResult = HAPProcessorDataAssociation.processDataAssociation(outputContext, resultMapping.get(result), globalContext, false, contextProcessRequirement);
+			HAPExecutableDataAssociationWithTarget processedResult = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(outputContext), resultMapping.get(result), globalContext, false, contextProcessRequirement);
 			out.addResultMapping(result, processedResult);
 		}
 		return out;

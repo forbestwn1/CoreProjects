@@ -33,9 +33,7 @@ public class HAPUtilityScript {
 		HAPContext context = new HAPContext();
 		HAPContext daCotnext = dataAssociationGroup.getContext();
 		for(String eleName : daCotnext.getElementNames()) {
-			if(HAPProcessorDataAssociation.isMappedRoot(daCotnext.getElement(eleName))) {
-				context.addElement(eleName, daCotnext.getElement(eleName));
-			}
+			context.addElement(eleName, daCotnext.getElement(eleName));
 		}
 		JSONObject output = HAPUtilityContextScript.buildSkeletonJsonObject(context, dataAssociationGroup.isFlatOutput());
 		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));

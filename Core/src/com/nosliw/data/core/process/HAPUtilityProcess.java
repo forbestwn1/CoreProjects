@@ -22,6 +22,7 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPContextStructure;
+import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
@@ -51,7 +52,7 @@ public class HAPUtilityProcess {
 	}
 	
 	public static HAPContext processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
-		activity.setInputDataAssociation(HAPProcessorDataAssociation.processDataAssociation(processContext, activity.getNormalActivityDefinition().getInput(), true, contextProcessRequirement));
+		activity.setInputDataAssociation(HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processContext), activity.getNormalActivityDefinition().getInput(), true, contextProcessRequirement));
 		//input context
 		return activity.getInputContext();
 	}
@@ -65,27 +66,21 @@ public class HAPUtilityProcess {
 			//affect global variable 
 			HAPContextDefinitionRoot affectedRoot = activityContext.getElement(varPath.getRootElementId().getFullName());
 			if(affectedRoot!=null) {
-				if(HAPProcessorDataAssociation.isMappedRoot(affectedRoot)) {
-					//ele mapped from context variable
-					HAPContextDefinitionElement currentEle = affectedRoot.getDefinition();
-					String[] pathSegs = new HAPPath(varPath.getSubPath()).getPathSegs();
-					int i = 0;
-					while(!HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE.equals(currentEle.getType())&&currentEle!=null) {
-						currentEle = currentEle.getChild(pathSegs[i]);
-						i++;
-					}
-					HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)currentEle;
-					HAPContextPath relativeElePath = relativeEle.getPath();
-					String fullName = relativeElePath.getFullPath();
-					for(;i<pathSegs.length; i++) {
-						fullName = HAPNamingConversionUtility.buildPath(fullName, pathSegs[i]);
-					}
-					expectedVariablesInfo.put(fullName, expectedVarInfo);
+				//ele mapped from context variable
+				HAPContextDefinitionElement currentEle = affectedRoot.getDefinition();
+				String[] pathSegs = new HAPPath(varPath.getSubPath()).getPathSegs();
+				int i = 0;
+				while(!HAPConstant.CONTEXT_ELEMENTTYPE_RELATIVE.equals(currentEle.getType())&&currentEle!=null) {
+					currentEle = currentEle.getChild(pathSegs[i]);
+					i++;
 				}
-				else {
-					//inhereted ele
-					expectedVariablesInfo.put(varPath.getFullPath(), expectedVarInfo);
+				HAPContextDefinitionLeafRelative relativeEle = (HAPContextDefinitionLeafRelative)currentEle;
+				HAPContextPath relativeElePath = relativeEle.getPath();
+				String fullName = relativeElePath.getFullPath();
+				for(;i<pathSegs.length; i++) {
+					fullName = HAPNamingConversionUtility.buildPath(fullName, pathSegs[i]);
 				}
+				expectedVariablesInfo.put(fullName, expectedVarInfo);
 			}
 			else {
 				//root variable does not exist, generate one
@@ -118,7 +113,7 @@ public class HAPUtilityProcess {
 			//data association input context
 			HAPContextStructure dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
 			//process data association
-			HAPProcessorDataAssociation.processDataAssociation(dataAssociationInputContext, resultExe, parentContext, true, contextProcessRequirement);
+			HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(dataAssociationInputContext), resultExe, parentContext, true, contextProcessRequirement);
 		}
 		return resultExe;
 	}

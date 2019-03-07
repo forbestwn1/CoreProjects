@@ -88,16 +88,16 @@ public class HAPProcessorModule {
 		String pageId = moduleExe.getDefinition().getPageInfo(moduleUIDefinition.getPage()).getPageId();
 
 		HAPContextGroup mappingContextGroup = new HAPContextGroup();
-		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, HAPProcessorDataAssociation.processDataAssociation(moduleExe.getContext(), moduleUIDefinition.getInputMapping(), true, contextProcessRequirement).getSolidContext());
+		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping(), true, contextProcessRequirement).getSolidContext());
 		HAPExecutableUIUnitPage page = uiResourceMan.getUIPage(pageId, id, mappingContextGroup, null);
 		out.setPage(page);
 
 		//build input data association
-		HAPExecutableDataAssociationWithTarget inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(moduleExe.getContext(), moduleUIDefinition.getInputMapping(), page.getFlatContext().getContext(), false, contextProcessRequirement);
+		HAPExecutableDataAssociationWithTarget inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping(), page.getFlatContext().getContext(), false, contextProcessRequirement);
 		out.setInputMapping(inputDataAssocation);
 		
 		//build output data association
-		HAPExecutableDataAssociationWithTarget outputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(page.getContext(), moduleUIDefinition.getOutputMapping(), moduleExe.getContext(), false, contextProcessRequirement);
+		HAPExecutableDataAssociationWithTarget outputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(page.getContext()), moduleUIDefinition.getOutputMapping(), moduleExe.getContext(), false, contextProcessRequirement);
 		out.setOutputMapping(outputDataAssocation);
 		
 		//event handler

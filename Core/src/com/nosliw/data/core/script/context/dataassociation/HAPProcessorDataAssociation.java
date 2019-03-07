@@ -143,7 +143,7 @@ public class HAPProcessorDataAssociation {
 		Map<String, String> pathMapping = new LinkedHashMap<String, String>();
 		for(String eleName : dataAssociationExe.getContext().getElementNames()) {
 			HAPContextDefinitionRoot root = dataAssociationExe.getContext().getElement(eleName);
-			//only root do mapping
+			//only physical root do mapping
 			if(HAPConstant.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(root.getInfo()))) {
 				pathMapping.putAll(HAPUtilityDataAssociation.buildRelativePathMapping(root, buildRootNameAccordingToFlat(eleName, isFlatOutput), isFlatInput));
 			}

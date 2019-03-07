@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_DependentServiceRequestInfo;
 	var node_requestServiceProcessor;
 	var node_IOTaskResult;
+	var node_createIOInput;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function(){
@@ -28,34 +29,43 @@ var node_utility = function(){
 		return output;
 	};
 	
+	var loc_executeDataAssociationConvertFun  = function(dataAssociation, input){
+		if(dataAssociation==undefined || dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_CONVERTFUNCTION]==undefined) return undefined;
+		input = node_createIOInput(input).getInput();
+		return dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_CONVERTFUNCTION](input, loc_dyanimicValueBuild);
+	};
+	
 	var loc_getExecuteDataAssociationRequest = function(input, dataAssociation, handlers, request){
 		var service = new node_ServiceInfo("ExecuteDataAssociation", {"data":input, "dataAssociation":dataAssociation});
 		var out = node_createServiceRequestInfoSequence(service, handlers, request);
-		if(dataAssociation==undefined || dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_CONVERTFUNCTION]==undefined){
+
+		//use convert function to calculate output
+		var output = loc_executeDataAssociationConvertFun(dataAssociation, input); 
+		if(output==undefined){
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){  
 				return undefined;  
 			}));
-			return out;
 		}
+		else{
+			//process matchers
+			var matchersByPath = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_OUTPUTMATCHERS];
+			if(matchersByPath==undefined)  return node_createServiceRequestInfoSimple(undefined, function(){ return output;  }, handlers, request); 
 
-		var output = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_CONVERTFUNCTION](input, loc_dyanimicValueBuild);
-		//process matchers
-		var matchersByPath = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_OUTPUTMATCHERS];
-		if(matchersByPath==undefined)  return node_createServiceRequestInfoSimple(undefined, function(){ return output;  }, handlers, request); 
-
-		var matchersByPathRequest = node_createServiceRequestInfoSet(undefined, {
-			success : function(request, resultSet){
-				_.each(resultSet.getResults(), function(result, path){
-					node_objectOperationUtility.operateObject(output, path, node_CONSTANT.WRAPPER_OPERATION_SET, result);
-				});
-				return output;
-			}
-		});
-		_.each(matchersByPath, function(matchers, path){
-			var valueByPath = node_objectOperationUtility.getObjectAttributeByPath(globalData, path);
-			matchersByPathRequest.addRequest(path, node_createExpressionService.getMatchDataRequest(valueByPath, matchers));
-		});
-		out.addRequest(matchersByPathRequest);
+			var matchersByPathRequest = node_createServiceRequestInfoSet(undefined, {
+				success : function(request, resultSet){
+					_.each(resultSet.getResults(), function(result, path){
+						node_objectOperationUtility.operateObject(output, path, node_CONSTANT.WRAPPER_OPERATION_SET, result);
+					});
+					return output;
+				}
+			});
+			_.each(matchersByPath, function(matchers, path){
+				var valueByPath = node_objectOperationUtility.getObjectAttributeByPath(globalData, path);
+				matchersByPathRequest.addRequest(path, node_createExpressionService.getMatchDataRequest(valueByPath, matchers));
+			});
+			out.addRequest(matchersByPathRequest);
+		}
+		
 		return out;
 	};
 
@@ -160,6 +170,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", f
 nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.createIOInput", function(){node_createIOInput = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("ioTaskUtility", node_utility); 

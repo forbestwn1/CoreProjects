@@ -18,13 +18,14 @@ public class HAPParentContext {
 		this.m_parentNames = new ArrayList<String>();
 	}
 	
-	static public HAPParentContext createDefault(HAPContextGroup parent) {
+	static public HAPParentContext createDefault(HAPContextStructure parent) {
 		HAPParentContext out = new HAPParentContext();
-		out.addContext(null, parent);
+		if(parent!=null)	out.addContext(null, parent);
 		return out;
 	}
 	
-	public HAPParentContext addContext(String name, HAPContextGroup context) {
+	public HAPParentContext addContext(String name, HAPContextStructure context) {
+		if(context==null)  return this;
 		if(this.isSelf(name))  return this;   //ignore self parent
 		
 		if(HAPBasicUtility.isStringEmpty(name))  name = HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
@@ -32,6 +33,8 @@ public class HAPParentContext {
 		this.m_parentNames.add(name);
 		return this;
 	}
+	
+	public boolean isEmpty() {  return this.m_parentNames.isEmpty();  }
 	
 	public HAPContextStructure getContext(String name, HAPContextStructure self) {
 		if(this.isSelf(name))   return self;

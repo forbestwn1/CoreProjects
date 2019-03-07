@@ -38,7 +38,7 @@ public class HAPProcessorProcess{
 			
 			Map<String, HAPDefinitionDataAssociation> outputMapping = embededProcessDefinition.getOutputMapping();
 			for(String result : outputMapping.keySet()) {
-				HAPExecutableDataAssociationWithTarget backToGlobalContext = HAPProcessorDataAssociation.processDataAssociation(out.getResult(result).getContext(), outputMapping.get(result), out.getContext(), true, contextProcessRequirement); 
+				HAPExecutableDataAssociationWithTarget backToGlobalContext = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(out.getResult(result).getContext()), outputMapping.get(result), out.getContext(), true, contextProcessRequirement); 
 				out.addBackToGlobalContext(result, backToGlobalContext);
 			}
 			

@@ -1,7 +1,8 @@
 function(input, utilFunction){
 
 	var output = {};
-	
+
+/*	
 	//build element from inherited first
 	if(||isInherit||){
 		if(||isFlatInput|| && ||isFlatOutput||){
@@ -38,8 +39,9 @@ function(input, utilFunction){
 			});
 		}		
 	}
+*/
 	
-	//assign mapped element, skeleton only
+	//build skeleton first
 	if(||isFlatOutput||){
 		_.each(||outputInit||, function(value, name){
 			output[name] = value;
