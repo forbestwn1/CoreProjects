@@ -298,7 +298,7 @@
 			"type": "info",
 			"page": "schoolInfoPage",
 			"status" : "disabled11",
-			"contextMapping": {
+			"inputMapping": {
 				"element": {
 					"schoolData": {
 						"definition": {

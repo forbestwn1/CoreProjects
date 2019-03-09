@@ -18,9 +18,9 @@ var node_IOTaskResult = function(resultName, resultValue){
 	this.resultValue = resultValue; 
 };
 
-var node_createIOInput = function(value){
+var node_createIODataSet = function(value){
 	
-	var loc_value = {};
+	var loc_dataSet = {};
 	
 	if(value!=undefined){
 		var valueType = node_getObjectType(value);
@@ -29,15 +29,20 @@ var node_createIOInput = function(value){
 		}
 		else{
 			//value is default value
-			loc_value[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT] = value;
+			loc_dataSet[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT] = value;
 		}
 	}
 	
 	var loc_out = {
 		
-		addValue : function(name, value){  loc_value[name] = value;   },
+		setData : function(name, data){  loc_dataSet[name] = data;   },
 		
-		getInput : function(){   return loc_value;   }
+		getData : function(name){
+			if(name==undefined)  name = node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
+			return loc_dataSet[name];
+		},
+		
+		getDataSet : function(){   return loc_dataSet;   },
 		
 	};
 	
@@ -58,6 +63,6 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 
 //Register Node by Name
 packageObj.createChildNode("IOTaskResult", node_IOTaskResult); 
-packageObj.createChildNode("createIOInput", node_createIOInput); 
+packageObj.createChildNode("createIODataSet", node_createIODataSet); 
 
 })(packageObj);

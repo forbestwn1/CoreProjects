@@ -5,12 +5,17 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPContext;
 
 public class HAPDefinitionDataAssociation extends HAPEntityInfoWritableImp{
+
+	@HAPAttribute
+	public static String ASSOCIATION = "association";
 
 	private Map<String, HAPContext> m_assocations;
 	
@@ -40,6 +45,7 @@ public class HAPDefinitionDataAssociation extends HAPEntityInfoWritableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ASSOCIATION, HAPJsonUtility.buildJson(this.m_assocations, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -56,7 +62,7 @@ public class HAPDefinitionDataAssociation extends HAPEntityInfoWritableImp{
 					HAPTarget target = new HAPTarget((String)key);
 					String targetName = target.getTargetName();
 					JSONObject jsonByTarget = jsonMapByTarget.get(targetName);
-					if(jsonByTarget!=null) {
+					if(jsonByTarget==null) {
 						jsonByTarget = new JSONObject();
 						jsonMapByTarget.put(targetName, jsonByTarget);
 					}

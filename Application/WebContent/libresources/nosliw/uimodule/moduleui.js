@@ -58,6 +58,7 @@ var node_createModuleUI = function(moduleUIDef, page){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(node_ioTaskUtility.getExecuteDataAssociationRequest(moduleContext, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], {
 			success : function(request, pageInput){
+				pageInput = pageInput.getData();
 				//combine data from module with extra data in ui
 				_.each(loc_extraContextData, function(data, name){
 					pageInput = _.extend(pageInput, data);
@@ -111,7 +112,7 @@ var node_createModuleUI = function(moduleUIDef, page){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SynInUIData", {"moduleContext":moduleContext}), handlers, request);
 			out.addRequest(node_ioTaskUtility.getExecuteDataAssociationRequest(moduleContext, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], {
 				success : function(request, input){
-					return loc_page.getUpdateContextRequest(input);
+					return loc_page.getUpdateContextRequest(input.getData());
 				}
 			}, request));
 			return out;
@@ -121,7 +122,11 @@ var node_createModuleUI = function(moduleUIDef, page){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SynOutUIData", {"moduleContext":moduleContext}), handlers, request);
 			out.addRequest(loc_page.getGetContextValueRequest({
 				success : function(request, contextValue){
-					return node_ioTaskUtility.getExecuteDataAssociationToTargetRequest(contextValue, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_OUTPUTMAPPING], moduleContext);
+					return node_ioTaskUtility.getExecuteDataAssociationToTargetRequest(contextValue, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_OUTPUTMAPPING], moduleContext, {
+						success : function(request, dataSet){
+							return dataSet.getData();
+						}
+					});
 				}
 			}));
 			return out;

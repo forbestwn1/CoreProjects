@@ -89,7 +89,7 @@ var node_createProcessRuntime = function(envObj){
 					success : function(request, taskResult){
 						var activityResultConfig = normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULT][taskResult.resultName];
 						return new node_NormalActivityOutput(activityResultConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_FLOW][node_COMMONATRIBUTECONSTANT.DEFINITIONSEQUENCEFLOW_TARGET],
-								taskResult.resultValue);
+								taskResult.resultValue.getData());
 					}
 				}));
 		return out;
@@ -157,7 +157,7 @@ var node_createProcessRuntime = function(envObj){
 						process[node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_RESULT][endActivityOutput.resultName],
 						{
 							success : function(requestInfo, processOutputValue){
-								return new node_ProcessResult(endActivityOutput.resultName, processOutputValue);
+								return new node_ProcessResult(endActivityOutput.resultName, processOutputValue.getData());
 							}
 						});
 			}
@@ -173,7 +173,7 @@ var node_createProcessRuntime = function(envObj){
 				if(backToGlobal!=null){
 					return node_ioTaskUtility.getExecuteDataAssociationRequest(processResult.value, backToGlobal, {
 						success : function(request, globalData){
-							return new node_ProcessResult(processResult.resultName, globalData);
+							return new node_ProcessResult(processResult.resultName, globalData.getData());
 						}
 					});
 				}

@@ -1,0 +1,67 @@
+function(input, utilFunction){
+
+	var output = {};
+
+/*	
+	//build element from inherited first
+	if(||isInherit||){
+		if(||isFlatInput|| && ||isFlatOutput||){
+			_.each(input, function(ele, name){
+				output[name] = ele;
+			});
+		}
+		else if(!||isFlatInput|| && !||isFlatOutput||){
+			_.each(input, function(context, categary){
+				_.each(context, function(ele, name){
+					output[name] = ele;
+				});
+			});
+		}		
+		else if(!||isFlatInput|| && ||isFlatOutput||){
+			_.each(input, function(context, categary){
+				_.each(context, function(ele, name){
+					output[name] = ele;
+					output[name+"||rootIdSeperator||"+categary] = ele;
+				});
+			});
+		}		
+		else if(||isFlatInput|| && !||isFlatOutput||){
+			_.each(input, function(ele, name){
+				var segs = name.split("||rootIdSeperator||");
+				if(segs.length==2){
+					var context = output[segs[1]];
+					if(context==undefined){
+						context = {};
+						output[segs[1]] = context;
+					}
+					context[segs[0]] = ele;
+				}
+			});
+		}		
+	}
+*/
+	
+	//build skeleton first
+	if(||isFlatOutput||){
+		_.each(||outputInit||, function(value, name){
+			output[name] = value;
+		});
+	}
+	else{
+		_.each(||outputInit||, function(context, categary){
+			var context1 = output[categary];
+			if(context1==undefined){
+				context1 = {};
+				output[categary] = context1;
+			} 
+			_.each(context, function(ele, name){
+				context1[name] = ele;
+			});
+		});
+	}
+	
+	//asign mapped element, leaf data
+	||outputDyanimicValueBuild||
+	
+	return output;
+}

@@ -48,7 +48,7 @@
 							output, 
 							{
 								success : function(request, taskResult){
-									var activityOutput = taskResult.resultValue;
+									var activityOutput = taskResult.resultValue.getData();
 									return new node_IOTaskResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS, activityOutput);
 								}
 							}); 

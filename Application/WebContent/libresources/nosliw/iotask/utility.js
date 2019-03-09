@@ -17,11 +17,10 @@ var packageObj = library;
 	var node_DependentServiceRequestInfo;
 	var node_requestServiceProcessor;
 	var node_IOTaskResult;
-	var node_createIOInput;
+	var node_createIODataSet;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function(){
-	
 	
 	var loc_dyanimicValueBuild = function(output, outputPathSegs, input, intpuPathSegs){
 		var inputValue = node_objectOperationUtility.getObjectAttributeByPathSegs(input, intpuPathSegs);
@@ -29,58 +28,93 @@ var node_utility = function(){
 		return output;
 	};
 	
-	var loc_executeDataAssociationConvertFun  = function(dataAssociation, input){
-		if(dataAssociation==undefined || dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_CONVERTFUNCTION]==undefined) return undefined;
-		input = node_createIOInput(input).getInput();
-		return dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_CONVERTFUNCTION](input, loc_dyanimicValueBuild);
+	var loc_executeDataAssociationConvertFun  = function(association, input){
+		if(association==undefined || association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_CONVERTFUNCTION]==undefined) return undefined;
+		input = node_createIODataSet(input).getDataSet();
+		return association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_CONVERTFUNCTION](input, loc_dyanimicValueBuild);
 	};
-	
-	var loc_getExecuteDataAssociationRequest = function(input, dataAssociation, handlers, request){
-		var service = new node_ServiceInfo("ExecuteDataAssociation", {"data":input, "dataAssociation":dataAssociation});
+
+	var loc_getExecuteAssociationRequest = function(input, association, outputTarget, handlers, request){
+		var service = new node_ServiceInfo("ExecuteAssociation", {"input":input, "association":association});
 		var out = node_createServiceRequestInfoSequence(service, handlers, request);
 
 		//use convert function to calculate output
-		var output = loc_executeDataAssociationConvertFun(dataAssociation, input); 
+		var output = loc_executeDataAssociationConvertFun(association, input); 
 		if(output==undefined){
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){  
-				return undefined;  
+				return outputTarget;  
 			}));
 		}
 		else{
 			//process matchers
-			var matchersByPath = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_OUTPUTMATCHERS];
-			if(matchersByPath==undefined)  return node_createServiceRequestInfoSimple(undefined, function(){ return output;  }, handlers, request); 
-
-			var matchersByPathRequest = node_createServiceRequestInfoSet(undefined, {
-				success : function(request, resultSet){
-					_.each(resultSet.getResults(), function(result, path){
-						node_objectOperationUtility.operateObject(output, path, node_CONSTANT.WRAPPER_OPERATION_SET, result);
-					});
-					return output;
-				}
-			});
-			_.each(matchersByPath, function(matchers, path){
-				var valueByPath = node_objectOperationUtility.getObjectAttributeByPath(globalData, path);
-				matchersByPathRequest.addRequest(path, node_createExpressionService.getMatchDataRequest(valueByPath, matchers));
-			});
-			out.addRequest(matchersByPathRequest);
+			var matchersByPath = association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_OUTPUTMATCHERS];
+			if(matchersByPath==undefined){
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){ return output;  })); 
+			}
+			else{
+				var matchersByPathRequest = node_createServiceRequestInfoSet(undefined, {
+					success : function(request, resultSet){
+						_.each(resultSet.getResults(), function(result, path){
+							node_objectOperationUtility.operateObject(output, path, node_CONSTANT.WRAPPER_OPERATION_SET, result);
+						});
+						return output;
+					}
+				});
+				_.each(matchersByPath, function(matchers, path){
+					var valueByPath = node_objectOperationUtility.getObjectAttributeByPath(globalData, path);
+					matchersByPathRequest.addRequest(path, node_createExpressionService.getMatchDataRequest(valueByPath, matchers));
+				});
+				out.addRequest(matchersByPathRequest);
+			}
+			
+			//to target
+			if(outputTarget!=undefined){
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){ 
+					var isOutputFlat = association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_FLATOUTPUT];
+					return loc_out.assignToContext(output, outputTarget, isOutputFlat);
+				})); 
+			}
 		}
 		
 		return out;
 	};
+	
+	var loc_getExecuteDataAssociationRequest = function(input, dataAssociation, target, handlers, request){
+		var service = new node_ServiceInfo("ExecuteDataAssociation", {"input":input, "dataAssociation":dataAssociation});
+		var out = node_createServiceRequestInfoSequence(service, handlers, request);
 
-	var loc_getExecuteDataAssociationToTargetRequest = function(input, dataAssociation, target, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociationToTarget", {}), handlers, request);
-		out.addRequest(loc_getExecuteDataAssociationRequest(input, dataAssociation, {
-			success :function(request, output){
-				if(dataAssociation==undefined)   return target;
-				//assign task output back to output
-				var isOutputFlat = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_FLATOUTPUT];
-				return loc_out.assignToContext(output, target, isOutputFlat);
+		var output = {};
+		var executeAssociationsRequest = node_createServiceRequestInfoSet(undefined, {
+			success : function(request, resultSet){
+				var outputDataSet = node_createIODataSet();
+				_.each(resultSet.getResults(), function(result, targetName){
+					outputDataSet.setData(targetName, result);
+				});
+				return outputDataSet;
 			}
-		}));
+		});
+		
+		var targetDataSet = node_createIODataSet(target);
+		_.each(dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_ASSOCIATION], function(association, targetName){
+			executeAssociationsRequest.addRequest(targetName, loc_getExecuteAssociationRequest(input, association, targetDataSet.getData(targetName)));
+		});
+		out.addRequest(executeAssociationsRequest);
+
 		return out;
 	};
+
+//	var loc_getExecuteDataAssociationToTargetRequest = function(input, dataAssociation, target, handlers, request){
+//		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociationToTarget", {}), handlers, request);
+//		out.addRequest(loc_getExecuteDataAssociationRequest(input, dataAssociation, {
+//			success :function(request, output){
+//				if(dataAssociation==undefined)   return target;
+//				//assign task output back to output
+//				var isOutputFlat = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_FLATOUTPUT];
+//				return loc_out.assignToContext(output, target, isOutputFlat);
+//			}
+//		}));
+//		return out;
+//	};
 
 	
 	var loc_out = {
@@ -88,16 +122,17 @@ var node_utility = function(){
 		getExecuteIOTaskRequest : function(input, inputDataAssociation, getTaskRequest, outputDataAssociationByResult, output, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteIOTask", {}), handlers, request);
 			//process input association
-			out.addRequest(loc_getExecuteDataAssociationRequest(input, inputDataAssociation, {
-				success : function(requestInfo, taskInput){
+			out.addRequest(loc_getExecuteDataAssociationRequest(input, inputDataAssociation, null, {
+				success : function(requestInfo, daOutputDataSet){
+					var taskInput = daOutputDataSet.getData();
 					//execute task
 					var executeIOTaskRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTask", {}));
 					executeIOTaskRequest.addRequest(getTaskRequest(taskInput, {
 						success : function(request, taskResult){
 							//process output association according to result name
-							return loc_getExecuteDataAssociationToTargetRequest(taskResult.resultValue, outputDataAssociationByResult[taskResult.resultName], output, {
-								success :function(request, output){
-									return new node_IOTaskResult(taskResult.resultName, output);
+							return loc_getExecuteDataAssociationRequest(taskResult.resultValue, outputDataAssociationByResult[taskResult.resultName], output, {
+								success :function(request, taskOutputDataSet){
+									return new node_IOTaskResult(taskResult.resultName, taskOutputDataSet);
 								}
 							});
 						}
@@ -109,11 +144,11 @@ var node_utility = function(){
 		},
 			
 		getExecuteDataAssociationRequest : function(input, dataAssociation, handlers, request){
-			return loc_getExecuteDataAssociationRequest(input, dataAssociation, handlers, request);
+			return loc_getExecuteDataAssociationRequest(input, dataAssociation, null, handlers, request);
 		},
 		
 		getExecuteDataAssociationToTargetRequest : function(input, dataAssociation, target, handlers, request){
-			return loc_getExecuteDataAssociationToTargetRequest(input, dataAssociation, target, handlers, request);
+			return loc_getExecuteDataAssociationRequest(input, dataAssociation, target, handlers, request);
 		},
 		
 		getContextTypes : function(){
@@ -170,7 +205,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", f
 nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.entity.createIOInput", function(){node_createIOInput = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("ioTaskUtility", node_utility); 

@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstant;
@@ -23,6 +25,7 @@ import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
 
+@HAPEntityWithAttribute
 public class HAPExecutableAssociation extends HAPExecutableImp{
 
 	@HAPAttribute
@@ -32,9 +35,6 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	public static String PATHMAPPING = "pathMapping";
 
 	@HAPAttribute
-	public static String CONVERTFUNCTION = "convertFunction";
-	
-	@HAPAttribute
 	public static String FLATINPUT = "flatInput";
 
 	@HAPAttribute
@@ -43,6 +43,9 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	@HAPAttribute
 	public static String OUTPUTMATCHERS = "outputMatchers";
 
+	@HAPAttribute
+	public static String CONVERTFUNCTION = "convertFunction";
+	
 	//input structure
 	private Map<String, HAPContextStructure> m_input;
 	private Map<String, Boolean> m_isFlatInput;
@@ -71,6 +74,7 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	public HAPExecutableAssociation() {
 		this.m_outputMatchers = new LinkedHashMap<String, HAPMatchers>();
 		this.m_input = new LinkedHashMap<String, HAPContextStructure>();
+		this.m_isFlatInput = new LinkedHashMap<String, Boolean>();
 	}
 
 	public void addInputStructure(String name, HAPContextStructure structure) {  
@@ -138,19 +142,14 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 		}
 	}
 
-//	@Override
-//	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
-//		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
-//		jsonMap.put(CONVERTFUNCTION, HAPUtilityScript.buildDataAssociationConvertFunction(this).getScript());
-//		typeJsonMap.put(CONVERTFUNCTION, HAPScript.class);
-//	}
-
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
 		if(this.m_outputMatchers!=null && !this.m_outputMatchers.isEmpty()) {
 			jsonMap.put(OUTPUTMATCHERS, HAPJsonUtility.buildJson(m_outputMatchers, HAPSerializationFormat.JSON));
 		}
+		jsonMap.put(CONVERTFUNCTION, HAPUtilityScript.buildAssociationConvertFunction(this).getScript());
+		typeJsonMap.put(CONVERTFUNCTION, HAPScript.class);
 	}
 	
 	@Override

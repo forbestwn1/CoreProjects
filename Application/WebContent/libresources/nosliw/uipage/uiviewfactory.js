@@ -230,7 +230,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 							output, 
 							{
 								success : function(request, taskResult){
-									return loc_context.getUpdateContextRequest(taskResult.resultValue);
+									return loc_context.getUpdateContextRequest(taskResult.resultValue.getData());
 								}
 							}); 
 				}

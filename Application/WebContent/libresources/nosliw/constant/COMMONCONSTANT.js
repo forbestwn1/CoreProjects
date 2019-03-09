@@ -345,7 +345,10 @@ var COMMONCONSTANT=
   "DECORATION_COMMAND_EVENTPROCESS": "eventProcess",
   "DATAASSOCIATION_RELATEDENTITY_DEFAULT": "default",
   "DATAASSOCIATION_RELATEDENTITY_SELF": "self",
-  "GLOBAL_VALUE_DEFAULT": "default"
+  "GLOBAL_VALUE_DEFAULT": "default",
+  "CONTEXTSTRUCTURE_TYPE_FLAT": "flat",
+  "CONTEXTSTRUCTURE_TYPE_NOTFLAT": "notFlat",
+  "CONTEXTSTRUCTURE_TYPE_EMPTY": "empty"
 };
 
 //*******************************************   End Node Definition  ************************************** 	
