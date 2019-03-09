@@ -22,6 +22,7 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPContextStructure;
+import com.nosliw.data.core.script.context.HAPContextStructureEmpty;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
@@ -51,10 +52,8 @@ public class HAPUtilityProcess {
 		expProcessContext.addDataVariables(HAPUtilityContext.discoverDataVariablesInContext(context));
 	}
 	
-	public static HAPContext processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
-		activity.setInputDataAssociation(HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processContext), activity.getNormalActivityDefinition().getInput(), true, contextProcessRequirement));
-		//input context
-		return activity.getInputContext();
+	public static void processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
+		activity.setInputDataAssociation(HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processContext), activity.getNormalActivityDefinition().getInput(), HAPParentContext.createDefault(HAPContextStructureEmpty.flatStructure()), null, contextProcessRequirement));
 	}
 	
 	//data variables infor in activity merge back to process context
@@ -113,7 +112,7 @@ public class HAPUtilityProcess {
 			//data association input context
 			HAPContextStructure dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
 			//process data association
-			HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(dataAssociationInputContext), resultExe, parentContext, true, contextProcessRequirement);
+			HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(dataAssociationInputContext), resultExe, HAPParentContext.createDefault(parentContext), null, contextProcessRequirement);
 		}
 		return resultExe;
 	}

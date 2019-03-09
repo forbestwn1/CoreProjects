@@ -8,10 +8,10 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationWithTarget;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 
 @HAPEntityWithAttribute
-public class HAPExecutableResultActivityNormal extends HAPExecutableDataAssociationWithTarget{
+public class HAPExecutableResultActivityNormal extends HAPExecutableDataAssociation{
 
 	@HAPAttribute
 	public static String FLOW = "flow";
@@ -28,13 +28,13 @@ public class HAPExecutableResultActivityNormal extends HAPExecutableDataAssociat
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		if(this.getContext()!=null)		super.buildJsonMap(jsonMap, typeJsonMap);
+		if(!this.isEmpty())		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(FLOW, this.getFlow().toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
-		if(this.getContext()!=null)  super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
+		if(!this.isEmpty())  super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
 		jsonMap.put(FLOW, this.getFlow().toStringValue(HAPSerializationFormat.JSON));
 	}
 

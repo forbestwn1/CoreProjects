@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.process.HAPDefinitionResultActivityNormal;
+import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionMappingService;
@@ -46,10 +47,11 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 			HAPDefinitionDataAssociation dataAssociation = result.getOutputDataAssociation();
 			this.m_serviceMapping.addResultMapping(resultName, dataAssociation.cloneDataAssocation());
 			//build straight data association
-			for(String eleName :dataAssociation.getElementNames()) {
+			HAPContext association = dataAssociation.getAssociation();
+			for(String eleName :association.getElementNames()) {
 				HAPContextDefinitionLeafRelative ele = new HAPContextDefinitionLeafRelative();
 				ele.setPath(eleName);
-				dataAssociation.addElement(eleName, ele);
+				association.addElement(eleName, ele);
 			}
 		}
 

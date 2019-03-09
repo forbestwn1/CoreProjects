@@ -548,5 +548,8 @@ public class HAPConstant {
 
 		public static final String GLOBAL_VALUE_DEFAULT = "default";
 
+		public static final String CONTEXTSTRUCTURE_TYPE_FLAT ="flat";
+		public static final String CONTEXTSTRUCTURE_TYPE_NOTFLAT = "notFlat";
+		public static final String CONTEXTSTRUCTURE_TYPE_EMPTY = "empty";
 
 }

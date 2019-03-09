@@ -21,7 +21,7 @@ public class HAPProcessorContextRelative {
 	public static HAPContextGroup process(HAPContextGroup contextGroup, HAPParentContext parent, HAPConfigureContextProcessor configure, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPContextGroup out = contextGroup.cloneContextGroup();
 		for(String parentName : allParentName(parent)) {
-			HAPContextStructure context = parent.getContext(parentName, contextGroup);
+			HAPContextStructure context = HAPUtilityContext.getReferedContext(parentName, parent, contextGroup);
 			out = process(out, parentName, HAPContextStructure.toContextGroup(context), context.isFlat(), configure, contextProcessRequirement);			
 		}
 		return out;

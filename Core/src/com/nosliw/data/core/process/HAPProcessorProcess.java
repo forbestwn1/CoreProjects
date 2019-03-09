@@ -12,7 +12,6 @@ import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationWithTarget;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
@@ -38,7 +37,7 @@ public class HAPProcessorProcess{
 			
 			Map<String, HAPDefinitionDataAssociation> outputMapping = embededProcessDefinition.getOutputMapping();
 			for(String result : outputMapping.keySet()) {
-				HAPExecutableDataAssociationWithTarget backToGlobalContext = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(out.getResult(result).getContext()), outputMapping.get(result), out.getContext(), true, contextProcessRequirement); 
+				HAPExecutableDataAssociation backToGlobalContext = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(out.getResult(result).getAssociation().getMapping()), outputMapping.get(result), HAPParentContext.createDefault(out.getContext()), null, contextProcessRequirement); 
 				out.addBackToGlobalContext(result, backToGlobalContext);
 			}
 			

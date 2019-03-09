@@ -36,11 +36,8 @@ public class HAPParentContext {
 	
 	public boolean isEmpty() {  return this.m_parentNames.isEmpty();  }
 	
-	public HAPContextStructure getContext(String name, HAPContextStructure self) {
-		if(this.isSelf(name))   return self;
-		return this.m_parents.get(name);	
-	}
-	
+	public HAPContextStructure getContext(String name) {	return this.m_parents.get(name);	}
+
 	public List<String> getNames(){  return this.m_parentNames;  }	
 
 	private boolean isSelf(String name) {	return HAPConstant.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name);  }

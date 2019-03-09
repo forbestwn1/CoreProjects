@@ -619,6 +619,12 @@
 			<definition type="space"/>
 			<definition name="GLOBAL_VALUE_DEFAULT" value="default"/>
 
+			<definition type="space"/>
+			<definition name="CONTEXTSTRUCTURE_TYPE_FLAT" value="flat"/>
+			<definition name="CONTEXTSTRUCTURE_TYPE_NOTFLAT" value="notFlat"/>
+			<definition name="CONTEXTSTRUCTURE_TYPE_EMPTY" value="empty"/>
+
+
 		</definitions>
 	</constants>
 </root>

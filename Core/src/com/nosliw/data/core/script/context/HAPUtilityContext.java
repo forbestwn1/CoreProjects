@@ -61,6 +61,11 @@ public class HAPUtilityContext {
 		processor.postProcess(solidated, path);
 	}
 	
+	public static HAPContextStructure getReferedContext(String name, HAPParentContext parentContext, HAPContextStructure self) {
+		if(HAPConstant.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name))  return self;
+		else return parentContext.getContext(name);
+	}
+	
 	public static HAPContextDefinitionElement getDescendant(HAPContextDefinitionElement contextDefEle, String path) {
 		HAPContextDefinitionElement out = contextDefEle;
 		HAPPath pathObj = new HAPPath(path);

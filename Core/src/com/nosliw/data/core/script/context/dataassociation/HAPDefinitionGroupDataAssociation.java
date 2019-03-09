@@ -12,11 +12,11 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 
-public class HAPDefinitionDataAssociationGroup extends HAPSerializableImp{
+public class HAPDefinitionGroupDataAssociation extends HAPSerializableImp{
 
 	private Map<String, HAPDefinitionDataAssociation> m_dataAssociations;
 	
-	public HAPDefinitionDataAssociationGroup() {
+	public HAPDefinitionGroupDataAssociation() {
 		this.m_dataAssociations = new LinkedHashMap<String, HAPDefinitionDataAssociation>();
 	}
 	

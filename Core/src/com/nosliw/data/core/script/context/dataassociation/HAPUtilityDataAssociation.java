@@ -3,10 +3,7 @@ package com.nosliw.data.core.script.context.dataassociation;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.json.JSONObject;
-
 import com.nosliw.common.pattern.HAPNamingConversionUtility;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
 import com.nosliw.data.core.script.context.HAPContextDefEleProcessor;
@@ -18,29 +15,6 @@ import com.nosliw.data.core.script.context.HAPUtilityContext;
 
 public class HAPUtilityDataAssociation {
 
-	public static Map<String, HAPDefinitionDataAssociation> buildDataAssociation(JSONObject daJsonObj){
-		//seperate by target name
-		Map<String, JSONObject> jsonMapByTarget = new LinkedHashMap<String, JSONObject>();
-		for(Object key : daJsonObj.keySet()) {
-			HAPTarget target = new HAPTarget((String)key);
-			String targetName = target.getTargetName();
-			JSONObject jsonByTarget = jsonMapByTarget.get(targetName);
-			if(jsonByTarget!=null) {
-				jsonByTarget = new JSONObject();
-				jsonMapByTarget.put(targetName, jsonByTarget);
-			}
-			jsonByTarget.put(target.getRootNodeId().getFullName(), daJsonObj.optJSONObject((String)key));
-		}
-		
-		Map<String, HAPDefinitionDataAssociation> out = new LinkedHashMap<String, HAPDefinitionDataAssociation>();
-		for(String targetName : jsonMapByTarget.keySet()) {
-			HAPDefinitionDataAssociation dataAssociation = new HAPDefinitionDataAssociation();
-			dataAssociation.buildObject(jsonMapByTarget.get(targetName), HAPSerializationFormat.JSON);
-			out.put(targetName, dataAssociation);
-		}
-		return out;
-	}
-	
 	//each relative context element represent path mapping (output path in context - input path in context) during runtime
 	public static Map<String, String> buildRelativePathMapping(HAPContextDefinitionRoot contextRoot, String rootName, Map<String, Boolean> isFlatInput){
 		return buildRelativePathMapping(contextRoot.getDefinition(), rootName, isFlatInput);

@@ -16,7 +16,7 @@ import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationWithTarget;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -94,7 +94,7 @@ public class HAPProcessMiniAppEntry {
 		HAPDefinitionModule moduleDef = HAPUtilityModule.getUIModuleDefinitionById(module.getModule(), uiResourceMan.getModuleParser());
 		
 		//input data association
-		HAPExecutableDataAssociationWithTarget inputMapping = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(entryExe.getContext()), module.getInputMapping().getDefaultDataAssociation(), moduleDef.getContext(), false, contextProcessRequirement);
+		HAPExecutableDataAssociation inputMapping = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(entryExe.getContext()), module.getInputMapping().getDefaultDataAssociation(), moduleDef.getContext(), false, contextProcessRequirement);
 		out.setInputMapping(inputMapping);
 		
 		//module
@@ -104,7 +104,7 @@ public class HAPProcessMiniAppEntry {
 		//output data association
 		Map<String, HAPDefinitionDataAssociation> outputMapping = module.getOutputMapping().getDataAssociations();
 		for(String outputTargetName : outputMapping.keySet()) {
-			HAPExecutableDataAssociationWithTarget outputMappingByTarget = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(entryExe.getContext()), outputMapping.get(outputTargetName), moduleDef.getContext(), false, contextProcessRequirement);
+			HAPExecutableDataAssociation outputMappingByTarget = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(entryExe.getContext()), outputMapping.get(outputTargetName), moduleDef.getContext(), false, contextProcessRequirement);
 			out.addOutputMapping(outputTargetName, outputMappingByTarget);
 		}
 		

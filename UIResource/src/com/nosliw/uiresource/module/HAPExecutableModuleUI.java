@@ -15,7 +15,7 @@ import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationWithTarget;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 
 @HAPEntityWithAttribute
@@ -43,8 +43,8 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 	private HAPExecutableUIUnitPage m_page;
 	
 	// hook up with real data during runtime
-	private HAPExecutableDataAssociationWithTarget m_inputMapping;
-	private HAPExecutableDataAssociationWithTarget m_outputMapping;
+	private HAPExecutableDataAssociation m_inputMapping;
+	private HAPExecutableDataAssociation m_outputMapping;
 	
 	private Map<String, HAPExecutableModuleUIEventHandler> m_eventHandlers;
 	
@@ -57,11 +57,11 @@ public class HAPExecutableModuleUI extends HAPEntityInfoImpWrapper implements HA
 
 	public void addEventHandler(String eventName, HAPExecutableModuleUIEventHandler eventHander) {   this.m_eventHandlers.put(eventName, eventHander);   }
 	
-	public void setInputMapping(HAPExecutableDataAssociationWithTarget contextMapping) {   this.m_inputMapping = contextMapping;	}
-	public HAPExecutableDataAssociationWithTarget getInputMapping() {   return this.m_inputMapping;   }
+	public void setInputMapping(HAPExecutableDataAssociation contextMapping) {   this.m_inputMapping = contextMapping;	}
+	public HAPExecutableDataAssociation getInputMapping() {   return this.m_inputMapping;   }
 
-	public void setOutputMapping(HAPExecutableDataAssociationWithTarget contextMapping) {   this.m_outputMapping = contextMapping;	}
-	public HAPExecutableDataAssociationWithTarget getOutputMapping() {   return this.m_outputMapping;   }
+	public void setOutputMapping(HAPExecutableDataAssociation contextMapping) {   this.m_outputMapping = contextMapping;	}
+	public HAPExecutableDataAssociation getOutputMapping() {   return this.m_outputMapping;   }
 
 	public void setPage(HAPExecutableUIUnitPage page) {  this.m_page = page;   }
 	public HAPExecutableUIUnitPage getPage() {  return this.m_page;   }

@@ -1,21 +1,16 @@
 package com.nosliw.data.core.script.context.dataassociation;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.updatename.HAPUpdateName;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextDefinitionRootId;
-import com.nosliw.data.core.script.context.HAPContextPath;
 
 @HAPEntityWithAttribute
 public class HAPExecutableDataAssociation extends HAPExecutableImp{
@@ -26,38 +21,13 @@ public class HAPExecutableDataAssociation extends HAPExecutableImp{
 	@HAPAttribute
 	public static String DEFINITION = "definition";
 
-	@HAPAttribute
-	public static String CONTEXT = "context";
-	
-	@HAPAttribute
-	public static String PATHMAPPING = "pathMapping";
-
-	@HAPAttribute
-	public static String CONVERTFUNCTION = "convertFunction";
-	
-	@HAPAttribute
-	public static String FLATINPUT = "flatInput";
-
-	@HAPAttribute
-	public static String FLATOUTPUT = "flatOutput";
-
 	private HAPDefinitionDataAssociation m_definition;
 	
-	//data association output context
-	private HAPContext m_context;
+	private Map<String, HAPExecutableAssociation> m_associations;
 	
-	//path mapping (output path in context - input path in context) during runtime
-	private Map<String, String> m_pathMapping;
-	
-	private Map<String, Boolean> m_isFlatInput;
-	
-	//whether output is context structure (flat) or context group structure (not flat)
-	private boolean m_isFlatOutput;
-
 	private HAPConfigureContextProcessor m_processConfigure;
 	
 	public HAPExecutableDataAssociation(HAPDefinitionDataAssociation definition) {
-		this.m_isFlatInput = new LinkedHashMap<String, Boolean>();
 		this.m_definition = definition;
 	}
 	
@@ -68,52 +38,20 @@ public class HAPExecutableDataAssociation extends HAPExecutableImp{
 	
 	public HAPInfo getInfo() {  return this.m_definition.getInfo();  }
 	
-	public void setContext(HAPContext context) {   this.m_context = context;   }
-	public HAPContext getContext() {   return this.m_context;   }
-	public HAPContext getSolidContext() {
-		if(this.m_context==null)   return null;
-		return this.m_context.toSolidContext();
-	}
-
-	public void setPathMapping(Map<String, String> mapping) {    this.m_pathMapping = mapping;    }
-	public Map<String, String> getPathMapping() {  return this.m_pathMapping;  }
-
-	public boolean isFlatOutput() {   return this.m_isFlatOutput;  }
-	public void setIsFlatOutput(boolean isFlatOutput) {  this.m_isFlatOutput = isFlatOutput;  }
-
-	public Map<String, Boolean> isFlatInput(){  return this.m_isFlatInput;  }
-	public boolean isFlatInput(String inputName) {   return this.m_isFlatInput.get(inputName);  }
-	public void addIsFlatInput(String inputName, boolean isFlatInput) {  this.m_isFlatInput.put(inputName, isFlatInput);  }
-
+	public void addAssociation(String name, HAPExecutableAssociation association) {   this.m_associations.put(name, association);  }
+	public HAPExecutableAssociation getAssociation(String name) {return this.m_associations.get(name);  }
+	public HAPExecutableAssociation getAssociation() {return this.m_associations.get(HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT);  }
+	
 	public HAPConfigureContextProcessor getProcessConfigure() {   return this.m_processConfigure;   }
 	public void setProcessConfigure(HAPConfigureContextProcessor processConfigure) {   this.m_processConfigure = processConfigure;    }
 	
-	//update output root name
-	public void updateOutputRootName(HAPUpdateName nameUpdate) {
-		//update path mapping
-		Map<String, String> processedPathMapping = new LinkedHashMap<String, String>();
-
-		for(String p1 : m_pathMapping.keySet()) {
-			HAPContextPath cPath = new HAPContextPath(p1);
-			HAPContextPath cPath1 = new HAPContextPath(new HAPContextDefinitionRootId(nameUpdate.getUpdatedName(cPath.getRootElementId().getFullName())), cPath.getSubPath());
-			processedPathMapping.put(cPath1.getFullPath(), m_pathMapping.get(p1));
-		}
-		this.m_pathMapping = processedPathMapping;
-
-		//update context
-		this.m_context.updateRootName(nameUpdate);
-	}
+	public boolean isEmpty() {   return this.m_associations==null || this.m_associations.isEmpty();   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(NAME, this.getName());
 		jsonMap.put(DEFINITION, this.m_definition.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(PATHMAPPING, HAPJsonUtility.buildMapJson(m_pathMapping));
-		jsonMap.put(FLATOUTPUT, this.isFlatOutput()+"");
-		typeJsonMap.put(FLATOUTPUT, Boolean.class);
-		jsonMap.put(FLATINPUT, HAPJsonUtility.buildJson(this.isFlatInput(), HAPSerializationFormat.JSON));
 	}
 
 	@Override

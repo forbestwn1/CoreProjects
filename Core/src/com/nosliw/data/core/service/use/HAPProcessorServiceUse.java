@@ -7,8 +7,9 @@ import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.script.context.dataassociation.HAPConfigureDataAssociationProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationWithTarget;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 
@@ -25,14 +26,26 @@ public class HAPProcessorServiceUse {
 		HAPDefinitionMappingService serviceMapping = definition.getServiceMapping();
 		
 		//process parm mapping
-		HAPExecutableDataAssociationWithTarget processedParms = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(globalContext), serviceMapping.getParms(), HAPUtilityServiceUse.buildContextFromServiceParms(providerInterface), false, contextProcessRequirement);
+		HAPConfigureDataAssociationProcessor daConfigure = new HAPConfigureDataAssociationProcessor();
+		daConfigure.modifyStructure = false;
+		HAPExecutableDataAssociation processedParms = HAPProcessorDataAssociation.processDataAssociation(
+				HAPParentContext.createDefault(globalContext), 
+				serviceMapping.getParms(), 
+				HAPParentContext.createDefault(HAPUtilityServiceUse.buildContextFromServiceParms(providerInterface)), 
+				daConfigure, 
+				contextProcessRequirement);
 		out.setParmMapping(processedParms);
 		 
 		//process result mapping
 		Map<String, HAPDefinitionDataAssociation> resultMapping = serviceMapping.getResultMapping();
 		for(String result :resultMapping.keySet()) {
 			HAPContext outputContext = HAPUtilityServiceUse.buildContextFromResultServiceOutputs(providerInterface, result); 
-			HAPExecutableDataAssociationWithTarget processedResult = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(outputContext), resultMapping.get(result), globalContext, false, contextProcessRequirement);
+			HAPExecutableDataAssociation processedResult = HAPProcessorDataAssociation.processDataAssociation(
+					HAPParentContext.createDefault(outputContext), 
+					resultMapping.get(result),
+					HAPParentContext.createDefault(globalContext), 
+					daConfigure, 
+					contextProcessRequirement);
 			out.addResultMapping(result, processedResult);
 		}
 		return out;

@@ -27,9 +27,15 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 	public HAPContext(){
 		this.empty();
 	}
-	
+
+	@Override
+	public String getType() {	return HAPConstant.CONTEXTSTRUCTURE_TYPE_FLAT;	}
+
 	@Override
 	public boolean isFlat() {	return true;	}
+
+	@Override
+	public HAPContextDefinitionRoot getElement(String name) {  return this.m_elements.get(name);   }
 
 	public void empty() {
 		this.m_elements = new LinkedHashMap<String, HAPContextDefinitionRoot>();
@@ -39,10 +45,9 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 	public void processed() {   
 		for(HAPContextDefinitionRoot ele : this.m_elements.values()) 	ele.getDefinition().processed();
 	}
-	
+
 	public Set<String> getElementNames(){  return this.m_elements.keySet();   }
 	public Map<String, HAPContextDefinitionRoot> getElements(){  return this.m_elements;  }
-	public HAPContextDefinitionRoot getElement(String name) {  return this.m_elements.get(name);   }
 	public void addElement(String name, HAPContextDefinitionRoot rootEle){	this.m_elements.put(name, rootEle);	}
 	public void addElement(String name, HAPContextDefinitionElement contextEle) {   this.m_elements.put(name, new HAPContextDefinitionRoot(contextEle));  }
 	
@@ -172,6 +177,9 @@ public class HAPContext extends HAPSerializableImp implements HAPContextStructur
 			}
 		}
 	}
+
+	@Override
+	public HAPContextStructure cloneContextStructure() {	return this.cloneContext();	}
 
 	public HAPContext cloneContextBase() {
 		HAPContext out = new HAPContext();

@@ -54,8 +54,14 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 	}
 	
 	@Override
+	public String getType() {	return HAPConstant.CONTEXTSTRUCTURE_TYPE_NOTFLAT;	}
+
+	@Override
 	public boolean isFlat() {	return false;	}
 	
+	@Override
+	public HAPContextDefinitionRoot getElement(String name) {  return this.getElement(new HAPContextDefinitionRootId(name));   }
+
 	public static String[] getAllContextTypes(){
 		String[] contextTypes = {
 			HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC,
@@ -130,7 +136,7 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 		this.m_contexts.put(type, new HAPContext());
 		return out;
 	}
-	
+
 	public HAPContextDefinitionRoot getElement(HAPContextDefinitionRootId nodeId) {  return this.getElement(nodeId.getCategary(), nodeId.getName());   }
 	public HAPContextDefinitionRoot getElement(String type, String name) {
 		HAPContext context = this.getContext(type);
@@ -138,6 +144,11 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 	}
 	
 	public Set<String> getContextTypes(){  return this.m_contexts.keySet();   }
+	
+	@Override
+	public HAPContextStructure cloneContextStructure() {
+		return this.cloneContextGroup();
+	}
 	
 	public HAPContextGroup cloneContextGroup() {
 		HAPContextGroup out = new HAPContextGroup();

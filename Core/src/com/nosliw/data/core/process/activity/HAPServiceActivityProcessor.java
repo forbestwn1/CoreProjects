@@ -82,7 +82,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 				HAPServiceActivityExecutable serviceActivity = (HAPServiceActivityExecutable)activity;
 				HAPServiceActivityDefinition serviceActDef = (HAPServiceActivityDefinition)serviceActivity.getActivityDefinition();
 				HAPDefinitionDataAssociation da = serviceActDef.getServiceMapping().getResultMapping().get(resultName);
-				for(String eleName : da.getElementNames()) {
+				for(String eleName : da.getAssociation().getElementNames()) {
 					HAPInfoRelativeContextResolve resolveInfo = HAPUtilityContext.resolveReferencedParentContextNode(new HAPContextPath(eleName), this.m_processContext, null, null);
 					String categary = resolveInfo.path.getRootElementId().getCategary();
 					out.addElement(eleName, this.m_processContext.getElement(categary, eleName), categary);

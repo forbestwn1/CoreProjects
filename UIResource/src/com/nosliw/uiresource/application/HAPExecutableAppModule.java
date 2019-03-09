@@ -8,7 +8,7 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociationWithTarget;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.uiresource.module.HAPExecutableModule;
 
 public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements HAPExecutable{
@@ -24,9 +24,9 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 
 	private HAPExecutableModule m_module;
 	
-	private HAPExecutableDataAssociationWithTarget m_inputMapping;
+	private HAPExecutableDataAssociation m_inputMapping;
 	
-	private HAPExecutableDataAssociationWithTarget m_outputMapping;
+	private HAPExecutableDataAssociation m_outputMapping;
 
 	public HAPExecutableAppModule(HAPDefinitionAppModule def) {
 		super(def);
@@ -34,9 +34,9 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 
 	public void setModule(HAPExecutableModule module) {  this.m_module = module;  }
 	
-	public void setInputMapping(HAPExecutableDataAssociationWithTarget inputMapping) {    this.m_inputMapping = inputMapping;   }
+	public void setInputMapping(HAPExecutableDataAssociation inputMapping) {    this.m_inputMapping = inputMapping;   }
 	
-	public void addOutputMapping(String targetName, HAPExecutableDataAssociationWithTarget outputMapping) {   this.m_outputMapping = outputMapping;   }
+	public void addOutputMapping(String targetName, HAPExecutableDataAssociation outputMapping) {   this.m_outputMapping = outputMapping;   }
 	
 	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
