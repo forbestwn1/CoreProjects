@@ -130,7 +130,13 @@ var node_utility = function(){
 					executeIOTaskRequest.addRequest(getTaskRequest(taskInput, {
 						success : function(request, taskResult){
 							//process output association according to result name
-							return loc_getExecuteDataAssociationRequest(taskResult.resultValue, outputDataAssociationByResult[taskResult.resultName], output, {
+							var outputDataAssociation;
+							if(typeof outputDataAssociationByResult === "function"){
+								outputDataAssociation = outputDataAssociationByResult(taskResult.resultName);
+							}
+							else   outputDataAssociation = outputDataAssociationByResult[taskResult.resultName];
+							
+							return loc_getExecuteDataAssociationRequest(taskResult.resultValue, outputDataAssociation, output, {
 								success :function(request, taskOutputDataSet){
 									return new node_IOTaskResult(taskResult.resultName, taskOutputDataSet);
 								}

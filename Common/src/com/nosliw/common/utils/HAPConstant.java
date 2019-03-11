@@ -555,4 +555,8 @@ public class HAPConstant {
 		public static final String CONTEXTSTRUCTURE_TYPE_EMPTY = "empty";
 
 
+
+		public static final String DATAASSOCIATION_TYPE_MAPPING = "mapping";
+
+
 }

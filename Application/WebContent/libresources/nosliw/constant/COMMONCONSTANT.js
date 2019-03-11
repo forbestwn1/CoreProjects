@@ -348,7 +348,8 @@ var COMMONCONSTANT=
   "GLOBAL_VALUE_DEFAULT": "default",
   "CONTEXTSTRUCTURE_TYPE_FLAT": "flat",
   "CONTEXTSTRUCTURE_TYPE_NOTFLAT": "notFlat",
-  "CONTEXTSTRUCTURE_TYPE_EMPTY": "empty"
+  "CONTEXTSTRUCTURE_TYPE_EMPTY": "empty",
+  "DATAASSOCIATION_TYPE_MAPPING": "mapping"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

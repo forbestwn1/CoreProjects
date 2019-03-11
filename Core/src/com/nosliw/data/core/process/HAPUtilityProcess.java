@@ -26,6 +26,7 @@ import com.nosliw.data.core.script.context.HAPContextStructureEmpty;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.script.expression.HAPProcessContextScriptExpression;
 
@@ -95,9 +96,7 @@ public class HAPUtilityProcess {
 			HAPContextDefinitionLeafData affectedEle = new HAPContextDefinitionLeafData(expectedVariablesInfo.get(basePath));
 			HAPUtilityContext.updateDataDescendant(processContext, cpath.getRootElementId().getCategary(), cpath.getPath(), affectedEle);
 		}
-		
 	}
-	
 	
 	//process result
 	public static HAPExecutableResultActivityNormal processNormalActivityResult(
@@ -112,7 +111,8 @@ public class HAPUtilityProcess {
 			//data association input context
 			HAPContextStructure dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
 			//process data association
-			HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(dataAssociationInputContext), resultExe, HAPParentContext.createDefault(parentContext), null, contextProcessRequirement);
+			HAPExecutableDataAssociation outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(dataAssociationInputContext), resultDef.getOutputDataAssociation(), HAPParentContext.createDefault(parentContext), null, contextProcessRequirement);
+			resultExe.setDataAssociation(outputDataAssociation);
 		}
 		return resultExe;
 	}

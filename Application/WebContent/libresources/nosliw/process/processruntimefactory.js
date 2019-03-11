@@ -83,7 +83,9 @@ var node_createProcessRuntime = function(envObj){
 					}));
 					return executeActivityPluginRequest;
 				}, 
-				normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULT], 
+				function(resultName){
+					return normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULT][resultName][node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_DATAASSOCIATION]; 
+				},
 				context,
 				{
 					success : function(request, taskResult){
