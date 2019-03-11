@@ -624,6 +624,8 @@
 			<definition name="CONTEXTSTRUCTURE_TYPE_NOTFLAT" value="notFlat"/>
 			<definition name="CONTEXTSTRUCTURE_TYPE_EMPTY" value="empty"/>
 
+			<definition type="space"/>
+			<definition name="DATAASSOCIATION_TYPE_MAPPING" value="mapping"/>
 
 		</definitions>
 	</constants>
