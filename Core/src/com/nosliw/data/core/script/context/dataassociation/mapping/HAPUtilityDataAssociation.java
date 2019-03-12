@@ -1,4 +1,4 @@
-package com.nosliw.data.core.script.context.dataassociation;
+package com.nosliw.data.core.script.context.dataassociation.mapping;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

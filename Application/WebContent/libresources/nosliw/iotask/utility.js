@@ -79,7 +79,7 @@ var node_utility = function(){
 		return out;
 	};
 	
-	var loc_getExecuteDataAssociationRequest = function(input, dataAssociation, target, handlers, request){
+	var loc_getExecuteMappingDataAssociationRequest = function(input, dataAssociation, target, handlers, request){
 		var service = new node_ServiceInfo("ExecuteDataAssociation", {"input":input, "dataAssociation":dataAssociation});
 		var out = node_createServiceRequestInfoSequence(service, handlers, request);
 
@@ -103,19 +103,12 @@ var node_utility = function(){
 		return out;
 	};
 
-//	var loc_getExecuteDataAssociationToTargetRequest = function(input, dataAssociation, target, handlers, request){
-//		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociationToTarget", {}), handlers, request);
-//		out.addRequest(loc_getExecuteDataAssociationRequest(input, dataAssociation, {
-//			success :function(request, output){
-//				if(dataAssociation==undefined)   return target;
-//				//assign task output back to output
-//				var isOutputFlat = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_FLATOUTPUT];
-//				return loc_out.assignToContext(output, target, isOutputFlat);
-//			}
-//		}));
-//		return out;
-//	};
-
+	var loc_getExecuteDataAssociationRequest = function(input, dataAssociation, target, handlers, request){
+		var type = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_TYPE];
+		if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING){
+			return loc_getExecuteMappingDataAssociationRequest(input, dataAssociation, target, handlers, request);
+		}
+	};
 	
 	var loc_out = {
 			

@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionMappingService extends HAPSerializableImp{
@@ -29,13 +30,12 @@ public class HAPDefinitionMappingService extends HAPSerializableImp{
 	private Map<String, HAPDefinitionDataAssociation> m_resultMapping;
 	
 	public HAPDefinitionMappingService() {
-		this.m_parmMapping = new HAPDefinitionDataAssociation();
 		this.m_resultMapping = new LinkedHashMap<String, HAPDefinitionDataAssociation>();
 		init();
 	}
 
 	private void init() {
-		HAPUtilityContext.setContextGroupInheritModeNone(this.m_parmMapping.getInfo());
+		if(m_parmMapping!=null)  HAPUtilityContext.setContextGroupInheritModeNone(this.m_parmMapping.getInfo());
 		for(String result : this.m_resultMapping.keySet()) {
 			HAPUtilityContext.setContextGroupInheritModeNone(this.m_resultMapping.get(result).getInfo());
 		}
@@ -65,14 +65,13 @@ public class HAPDefinitionMappingService extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
 		
-		this.m_parmMapping = new HAPDefinitionDataAssociation();
+		this.m_parmMapping = HAPParserDataAssociation.buildObjectByJson(jsonObj.optJSONObject(PARMMAPPING)); 
 		this.m_parmMapping.buildObject(jsonObj.optJSONObject(PARMMAPPING), HAPSerializationFormat.JSON);
 
 		JSONObject resultJson = jsonObj.optJSONObject(RESULTMAPPING);
 		if(resultJson!=null) {
 			for(Object key : resultJson.keySet()) {
-				HAPDefinitionDataAssociation resultMapping = new HAPDefinitionDataAssociation();
-				resultMapping.buildObject(resultJson.optJSONObject((String)key), HAPSerializationFormat.JSON);
+				HAPDefinitionDataAssociation resultMapping = HAPParserDataAssociation.buildObjectByJson(resultJson.optJSONObject((String)key));
 				this.m_resultMapping.put((String)key, resultMapping);
 			}
 		}

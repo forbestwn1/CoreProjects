@@ -54,7 +54,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 
 		//process input and create flat input context for activity
 		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, processContext, contextProcessRequirement);
-		HAPContext activityContext = (HAPContext)out.getInputDataAssociation().getAssociation().getOutputContext(); 
+		HAPContext activityContext = (HAPContext)out.getInputDataAssociation().getOutput().getOutputStructure(); 
 		
 		//process script expression defined in activity
 		HAPUtilityProcess.buildScriptExpressionProcessContext(activityContext, out.getScriptExpressionProcessContext());

@@ -38,6 +38,8 @@ public class HAPParentContext {
 	
 	public HAPContextStructure getContext(String name) {	return this.m_parents.get(name);	}
 
+	public HAPContextStructure getContext() {	return this.m_parents.get(HAPConstant.DATAASSOCIATION_RELATEDENTITY_DEFAULT);	}
+
 	public List<String> getNames(){  return this.m_parentNames;  }	
 
 	private boolean isSelf(String name) {	return HAPConstant.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name);  }

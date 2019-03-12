@@ -10,6 +10,7 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionResultActivityNormal extends HAPEntityInfoWritableImp{
@@ -31,6 +32,8 @@ public class HAPDefinitionResultActivityNormal extends HAPEntityInfoWritableImp{
 	
 	public HAPDefinitionDataAssociation getOutputDataAssociation() {   return this.m_output;   }
 	
+	public void setOutputDataAssociation(HAPDefinitionDataAssociation output) {  this.m_output = output;   }
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		try{
@@ -41,8 +44,7 @@ public class HAPDefinitionResultActivityNormal extends HAPEntityInfoWritableImp{
 			this.m_flow.buildObject(jsonObj.optJSONObject(FLOW), HAPSerializationFormat.JSON);
 			
 			//data association output should not be flat
-			this.m_output = new HAPDefinitionDataAssociation();
-			this.m_output.buildObject(jsonObj.optJSONObject(OUTPUT), HAPSerializationFormat.JSON);
+			this.m_output = HAPParserDataAssociation.buildObjectByJson(jsonObj.optJSONObject(OUTPUT));
 			
 			//no inherit
 			HAPUtilityContext.setContextGroupInheritModeNone(this.m_output.getInfo());

@@ -18,7 +18,7 @@ public class HAPDefinitionGroupDataAssociation extends HAPSerializableImp{
 	
 	public HAPDefinitionGroupDataAssociation() {
 		this.m_dataAssociations = new LinkedHashMap<String, HAPDefinitionDataAssociation>();
-	}
+	} 
 	
 	public HAPDefinitionDataAssociation getDataAssociation(String name) {  return this.m_dataAssociations.get(name);   }
 	public HAPDefinitionDataAssociation getDefaultDataAssociation() {  return this.m_dataAssociations.get(this.getDefaultName());   }
@@ -39,8 +39,7 @@ public class HAPDefinitionGroupDataAssociation extends HAPSerializableImp{
 		JSONArray jsonArray = (JSONArray)json;
 		for(int i=0; i<jsonArray.length(); i++) {
 			JSONObject jsonObj = jsonArray.getJSONObject(i);
-			HAPDefinitionDataAssociation daItem = new HAPDefinitionDataAssociation();
-			daItem.buildObject(jsonObj, HAPSerializationFormat.JSON);
+			HAPDefinitionDataAssociation daItem = HAPParserDataAssociation.buildObjectByJson(jsonObj); 
 			String daName = daItem.getName();
 			if(HAPBasicUtility.isStringEmpty(daName))  daName = this.getDefaultName();
 			this.m_dataAssociations.put(daName, daItem);
@@ -49,6 +48,4 @@ public class HAPDefinitionGroupDataAssociation extends HAPSerializableImp{
 	}
 	
 	private String getDefaultName() {  return HAPConstant.GLOBAL_VALUE_DEFAULT;   }
-		
-	
 }

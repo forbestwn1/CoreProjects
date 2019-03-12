@@ -10,6 +10,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 
 public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 
@@ -20,12 +21,11 @@ public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 	
 	public HAPEndActivityDefinition(String type) {
 		super(type);
-		this.m_output = new HAPDefinitionDataAssociation();
 		this.init();
 	}
 
 	private void init() {
-		HAPUtilityContext.setContextGroupInheritModeNone(this.m_output.getInfo());
+		if(this.m_output!=null)   HAPUtilityContext.setContextGroupInheritModeNone(this.m_output.getInfo());
 	}
 	
 	@Override
@@ -38,8 +38,7 @@ public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 		try{
 			super.buildObjectByJson(json);
 			JSONObject jsonObj = (JSONObject)json;
-			this.m_output = new HAPDefinitionDataAssociation();
-			this.m_output.buildObject(jsonObj.optJSONObject(OUTPUT), HAPSerializationFormat.JSON);
+			this.m_output = HAPParserDataAssociation.buildObjectByJson(jsonObj.optJSONObject(OUTPUT));
 			this.init();
 			return true;  
 		}

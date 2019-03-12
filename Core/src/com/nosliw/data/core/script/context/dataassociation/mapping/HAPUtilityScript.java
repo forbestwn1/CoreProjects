@@ -1,4 +1,4 @@
-package com.nosliw.data.core.script.context.dataassociation;
+package com.nosliw.data.core.script.context.dataassociation.mapping;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import com.nosliw.data.core.script.context.HAPUtilityContextScript;
 
 public class HAPUtilityScript {
 
-	public static HAPScript buildDataAssociationConvertFunction(HAPExecutableDataAssociation dataAssociation) {
+	public static HAPScript buildDataAssociationConvertFunction(HAPExecutableDataAssociationMapping dataAssociation) {
 		StringBuffer assocationScripts = new StringBuffer();
 		Map<String, HAPExecutableAssociation> associations = dataAssociation.getAssociations();
 		for(String targetName : associations.keySet()) {

@@ -10,6 +10,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 
 public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 
@@ -28,7 +29,6 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	public HAPDefinitionActivityNormal(String type) {
 		super(type);
 		this.m_results = new LinkedHashMap<String, HAPDefinitionResultActivityNormal>();
-		this.m_input = new HAPDefinitionDataAssociation();
 	}
 	
 	public HAPDefinitionDataAssociation getInput() {  return this.m_input;   }
@@ -44,8 +44,7 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 			
 			JSONObject inputJson = jsonObj.optJSONObject(INPUT);
 			if(inputJson!=null) {
-				this.m_input = new HAPDefinitionDataAssociation();
-				this.m_input.buildObject(inputJson, HAPSerializationFormat.JSON);
+				this.m_input = HAPParserDataAssociation.buildObjectByJson(inputJson); 
 			}
 			
 			JSONArray resultsJson = jsonObj.optJSONArray(RESULT);

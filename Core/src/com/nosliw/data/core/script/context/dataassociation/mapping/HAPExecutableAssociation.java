@@ -1,4 +1,4 @@
-package com.nosliw.data.core.script.context.dataassociation;
+package com.nosliw.data.core.script.context.dataassociation.mapping;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -100,12 +100,12 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	}
 	
 	
-	public void setMapping(HAPContext context) {   this.m_mapping = context;   }
+	public void setMapping(HAPContext context) {   this.m_mapping = context.toSolidContext();   }
 	public HAPContext getMapping() {   return this.m_mapping;   }
-	public HAPContext getSolidContext() {
-		if(this.m_mapping==null)   return null;
-		return this.m_mapping.toSolidContext();
-	}
+//	public HAPContext getSolidContext() {
+//		if(this.m_mapping==null)   return null;
+//		return this.m_mapping.toSolidContext();
+//	}
 
 	public void setPathMapping(Map<String, String> mapping) {    this.m_pathMapping = mapping;    }
 	public Map<String, String> getPathMapping() {  return this.m_pathMapping;  }

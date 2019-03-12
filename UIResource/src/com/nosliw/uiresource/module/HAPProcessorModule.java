@@ -2,6 +2,8 @@ package com.nosliw.uiresource.module;
 
 import java.util.Map;
 
+import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
@@ -20,7 +22,6 @@ import com.nosliw.data.core.script.context.HAPContextStructureEmpty;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.data.core.script.context.dataassociation.HAPConfigureDataAssociationProcessor;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
@@ -91,12 +92,11 @@ public class HAPProcessorModule {
 
 		HAPContextGroup mappingContextGroup = new HAPContextGroup();
 		HAPExecutableDataAssociation daEx = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping(), HAPParentContext.createDefault(HAPContextStructureEmpty.flatStructure()), null, contextProcessRequirement);
-		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, daEx.getAssociation().getSolidContext());
+		mappingContextGroup.setContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC, (HAPContext)daEx.getOutput().getOutputStructure());  //.getAssociation().getSolidContext());  kkkk
 		HAPExecutableUIUnitPage page = uiResourceMan.getUIPage(pageId, id, mappingContextGroup, null);
 		out.setPage(page);
 
-		HAPConfigureDataAssociationProcessor daConfigure = new HAPConfigureDataAssociationProcessor();
-		daConfigure.modifyStructure = false;
+		HAPInfo daConfigure = HAPProcessorDataAssociation.withModifyStructureFalse(new HAPInfoImpSimple());
 		//build input data association
 		HAPExecutableDataAssociation inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(moduleExe.getContext()), moduleUIDefinition.getInputMapping(), HAPParentContext.createDefault(page.getFlatContext().getContext()), daConfigure, contextProcessRequirement);
 		out.setInputMapping(inputDataAssocation);

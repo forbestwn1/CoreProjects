@@ -8,9 +8,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.process.HAPDefinitionResultActivityNormal;
-import com.nosliw.data.core.script.context.HAPContext;
-import com.nosliw.data.core.script.context.HAPContextDefinitionLeafRelative;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.service.use.HAPDefinitionMappingService;
 
 public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
@@ -46,6 +45,9 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 			HAPDefinitionResultActivityNormal result = results.get(resultName);
 			HAPDefinitionDataAssociation dataAssociation = result.getOutputDataAssociation();
 			this.m_serviceMapping.addResultMapping(resultName, dataAssociation.cloneDataAssocation());
+			
+			result.setOutputDataAssociation(new HAPDefinitionDataAssociationMirror());
+/*			
 			//build straight data association
 			HAPContext association = dataAssociation.getAssociation();
 			for(String eleName :association.getElementNames()) {
@@ -53,6 +55,7 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 				ele.setPath(eleName);
 				association.addElement(eleName, ele);
 			}
+*/			
 		}
 
 		return true;  

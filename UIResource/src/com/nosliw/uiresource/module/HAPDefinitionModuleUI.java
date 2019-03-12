@@ -55,8 +55,6 @@ public class HAPDefinitionModuleUI extends HAPEntityInfoWritableImp{
 	
 	public HAPDefinitionModuleUI() {
 		this.m_eventHandlers = new LinkedHashMap<String, HAPDefinitionModuleUIEventHander>();
-		this.m_inputMapping = new HAPDefinitionDataAssociation();
-		this.m_outputMapping = new HAPDefinitionDataAssociation();
 	}
 	
 	public String getPage() {   return this.m_page;    }
