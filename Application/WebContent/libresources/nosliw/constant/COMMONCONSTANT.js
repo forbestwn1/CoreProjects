@@ -350,7 +350,8 @@ var COMMONCONSTANT=
   "CONTEXTSTRUCTURE_TYPE_NOTFLAT": "notFlat",
   "CONTEXTSTRUCTURE_TYPE_EMPTY": "empty",
   "DATAASSOCIATION_TYPE_MAPPING": "mapping",
-  "DATAASSOCIATION_TYPE_MIRROR": "mirror"
+  "DATAASSOCIATION_TYPE_MIRROR": "mirror",
+  "DATAASSOCIATION_TYPE_NONE": "none"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

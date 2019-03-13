@@ -41,7 +41,10 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 			HAPProcessTracker processTracker) {
 		HAPServiceActivityDefinition serviceActDef = (HAPServiceActivityDefinition)activityDefinition;
 		HAPServiceActivityExecutable out = new HAPServiceActivityExecutable(id, serviceActDef);
-		
+
+		//input
+		HAPUtilityProcess.processNormalActivityInputDataAssocation(out, processContext, contextProcessRequirement);
+
 		//provider
 		HAPDefinitionServiceProvider provider = serviceProviders.get(serviceActDef.getProvider());
 		out.setServiceProvider(provider);
@@ -74,8 +77,12 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 		@Override
 		public HAPContextStructure buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
 			HAPContextGroup out = new HAPContextGroup();
-//			if(HAPConstant.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
-//				HAPServiceActivityExecutable serviceActivity = (HAPServiceActivityExecutable)activity;
+			if(HAPConstant.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
+				HAPServiceActivityExecutable serviceActivity = (HAPServiceActivityExecutable)activity;
+				
+				return serviceActivity.getService().getResultMapping(resultName).getOutput().getOutputStructure();
+				
+				
 //				HAPServiceActivityDefinition serviceActDef = (HAPServiceActivityDefinition)serviceActivity.getActivityDefinition();
 //				HAPDefinitionDataAssociation da = serviceActDef.getServiceMapping().getResultMapping().get(resultName);
 //				for(String eleName : da.getAssociation().getElementNames()) {
@@ -83,7 +90,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 //					String categary = resolveInfo.path.getRootElementId().getCategary();
 //					out.addElement(eleName, this.m_processContext.getElement(categary, eleName), categary);
 //				}
-//			}
+			}
 			return out;
 		}
 	}

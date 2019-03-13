@@ -86,21 +86,21 @@ public class HAPExecutableAssociation extends HAPExecutableImp{
 	
 	public boolean isFlatOutput() {   return this.m_output.isFlat();  }
 	public HAPContextStructure getOutputContext() {
-		HAPContext out = null;
+		HAPContextStructure out = null;
 		switch(this.m_output.getType()) {
 		case HAPConstant.CONTEXTSTRUCTURE_TYPE_EMPTY:
-			out = this.m_mapping;
+			out = this.m_mapping.toSolidContext();
 			break;
 		case HAPConstant.CONTEXTSTRUCTURE_TYPE_FLAT:
 		case HAPConstant.CONTEXTSTRUCTURE_TYPE_NOTFLAT:
-			out = (HAPContext)this.m_output;
+			out = this.m_output;
 			break;
 		}
 		return out;
 	}
 	
 	
-	public void setMapping(HAPContext context) {   this.m_mapping = context.toSolidContext();   }
+	public void setMapping(HAPContext context) {   this.m_mapping = context.cloneContext();   }
 	public HAPContext getMapping() {   return this.m_mapping;   }
 //	public HAPContext getSolidContext() {
 //		if(this.m_mapping==null)   return null;

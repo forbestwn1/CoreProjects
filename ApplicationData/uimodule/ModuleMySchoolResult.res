@@ -123,7 +123,7 @@
 		}
 	},
 	"process": {
-		"init": {
+		"init1": {
 			"activity": [{
 					"id": "startActivityId",
 					"name": "startActivity",
@@ -214,6 +214,7 @@
 			"name": "schoolListUI",
 			"type": "list",
 			"page": "schoolListPage",
+			"status" : "disabled111",
 			"inputMapping": {
 				"element": {
 					"schoolList": {
@@ -297,7 +298,7 @@
 			"name": "schoolInfoUI",
 			"type": "info",
 			"page": "schoolInfoPage",
-			"status" : "disabled11",
+			"status" : "disabled111",
 			"inputMapping": {
 				"element": {
 					"schoolData": {

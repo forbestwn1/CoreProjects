@@ -80,7 +80,7 @@ var node_utility = function(){
 	};
 	
 	var loc_getExecuteMappingDataAssociationRequest = function(input, dataAssociation, target, handlers, request){
-		var service = new node_ServiceInfo("ExecuteDataAssociation", {"input":input, "dataAssociation":dataAssociation});
+		var service = new node_ServiceInfo("ExecuteMappingDataAssociation", {"input":input, "dataAssociation":dataAssociation});
 		var out = node_createServiceRequestInfoSequence(service, handlers, request);
 
 		var output = {};
@@ -103,10 +103,32 @@ var node_utility = function(){
 		return out;
 	};
 
+	var loc_getExecuteMirrorDataAssociationRequest = function(input, dataAssociation, target, handlers, request){
+		var service = new node_ServiceInfo("ExecuteMirrorDataAssociation", {"input":input, "dataAssociation":dataAssociation});
+		var out = node_createServiceRequestInfoSimple(service, function(requestInfo){
+			return node_createIODataSet(loc_out.assignToContext(input, target, true));
+		}, handlers, request);
+		return out;
+	};
+
+	var loc_getExecuteNoneDataAssociationRequest = function(input, dataAssociation, target, handlers, request){
+		var service = new node_ServiceInfo("ExecuteNoneDataAssociation", {"input":input, "dataAssociation":dataAssociation});
+		var out = node_createServiceRequestInfoSimple(service, function(requestInfo){
+			return node_createIODataSet();
+		}, handlers, request);
+		return out;
+	};
+
 	var loc_getExecuteDataAssociationRequest = function(input, dataAssociation, target, handlers, request){
 		var type = dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_TYPE];
 		if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING){
 			return loc_getExecuteMappingDataAssociationRequest(input, dataAssociation, target, handlers, request);
+		}
+		else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MIRROR){
+			return loc_getExecuteMirrorDataAssociationRequest(input, dataAssociation, target, handlers, request);
+		}
+		else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_NONE){
+			return loc_getExecuteNoneDataAssociationRequest(input, dataAssociation, target, handlers, request);
 		}
 	};
 	
@@ -124,16 +146,22 @@ var node_utility = function(){
 						success : function(request, taskResult){
 							//process output association according to result name
 							var outputDataAssociation;
-							if(typeof outputDataAssociationByResult === "function"){
-								outputDataAssociation = outputDataAssociationByResult(taskResult.resultName);
-							}
+							if(typeof outputDataAssociationByResult === "function")		outputDataAssociation = outputDataAssociationByResult(taskResult.resultName);
 							else   outputDataAssociation = outputDataAssociationByResult[taskResult.resultName];
 							
-							return loc_getExecuteDataAssociationRequest(taskResult.resultValue, outputDataAssociation, output, {
-								success :function(request, taskOutputDataSet){
-									return new node_IOTaskResult(taskResult.resultName, taskOutputDataSet);
-								}
-							});
+							if(outputDataAssociation!=undefined){
+								return loc_getExecuteDataAssociationRequest(taskResult.resultValue, outputDataAssociation, output, {
+									success :function(request, taskOutputDataSet){
+										return new node_IOTaskResult(taskResult.resultName, taskOutputDataSet);
+									}
+								});
+							}
+							else{
+								//no data association
+								return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
+									return new node_IOTaskResult(taskResult.resultName, node_createIODataSet(taskResult.resultValue));
+								});
+							}
 						}
 					}));
 					return executeIOTaskRequest;

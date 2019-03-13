@@ -39,7 +39,7 @@ $(document).on("nosliwActive", function(){
 	decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = ["Decoration_application"];
 	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, $('#testDiv'), decorations, "module_application_jquery_mobile", {
 		success : function(requestInfo, uiModuleRuntime){
-			uiModuleRuntime.executeStartRequest();			
+			uiModuleRuntime.executeStartRequest(undefined, requestInfo);			
 		}
 	});
 

@@ -5,10 +5,10 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.process.HAPDefinitionResultActivityNormal;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.service.use.HAPDefinitionMappingService;
 
@@ -27,6 +27,7 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 	public HAPServiceActivityDefinition(String type) {
 		super(type);
 		this.m_serviceMapping = new HAPDefinitionMappingService();
+		this.setInput(new HAPDefinitionDataAssociationMirror());
 	}
 
 	public String getProvider() {   return this.m_provider;  }
@@ -38,8 +39,9 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_provider = jsonObj.optString(PROVIDER);
-		this.m_serviceMapping.getParms().buildObject(jsonObj.optJSONObject(PARMMAPPING), HAPSerializationFormat.JSON);
-
+		this.m_serviceMapping.setParmMapping(HAPParserDataAssociation.buildObjectByJson(jsonObj.optJSONObject(PARMMAPPING)));
+		
+		
 		Map<String, HAPDefinitionResultActivityNormal> results = this.getResults();
 		for(String resultName : results.keySet()) {
 			HAPDefinitionResultActivityNormal result = results.get(resultName);

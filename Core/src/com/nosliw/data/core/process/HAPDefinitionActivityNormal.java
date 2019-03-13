@@ -32,6 +32,7 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	}
 	
 	public HAPDefinitionDataAssociation getInput() {  return this.m_input;   }
+	public void setInput(HAPDefinitionDataAssociation input) {   this.m_input = input;   }
 	
 	public Map<String, HAPDefinitionResultActivityNormal> getResults(){   return this.m_results;  }
 	public HAPDefinitionResultActivityNormal getResult(String resultName){   return this.m_results.get(resultName);  }

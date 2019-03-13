@@ -8,7 +8,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 
@@ -47,7 +46,7 @@ public class HAPDefinitionResultActivityNormal extends HAPEntityInfoWritableImp{
 			this.m_output = HAPParserDataAssociation.buildObjectByJson(jsonObj.optJSONObject(OUTPUT));
 			
 			//no inherit
-			HAPUtilityContext.setContextGroupInheritModeNone(this.m_output.getInfo());
+//			HAPUtilityContext.setContextGroupInheritModeNone(this.m_output.getInfo());
 
 			return true;  
 		}
@@ -61,6 +60,6 @@ public class HAPDefinitionResultActivityNormal extends HAPEntityInfoWritableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(FLOW, m_flow.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(OUTPUT, m_output.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_output!=null)  	jsonMap.put(OUTPUT, m_output.toStringValue(HAPSerializationFormat.JSON));
 	}
 }

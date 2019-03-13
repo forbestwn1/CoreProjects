@@ -113,7 +113,7 @@ public class HAPExecutableProcess extends HAPExecutableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_id);
-		jsonMap.put(DEFINITION, this.m_processDefinition.toStringValue(HAPSerializationFormat.JSON));
+//		jsonMap.put(DEFINITION, this.m_processDefinition.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(STARTACTIVITYID, this.m_startActivityId);
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
 

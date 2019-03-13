@@ -558,6 +558,7 @@ public class HAPConstant {
 
 		public static final String DATAASSOCIATION_TYPE_MAPPING = "mapping";
 		public static final String DATAASSOCIATION_TYPE_MIRROR = "mirror";
+		public static final String DATAASSOCIATION_TYPE_NONE = "none";
 
 
 }

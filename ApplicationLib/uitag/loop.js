@@ -143,7 +143,7 @@
 				loc_handleEachElementProcessor = loc_env.createHandleEachElementProcessor("internal_data", "");
 				loc_handleEachElementProcessor.registerEventListener(undefined, function(event, eventData, requestInfo){
 					if(event=="EACHELEMENTCONTAINER_EVENT_RESET"){
-						node_requestServiceProcessor.processRequest(loc_getUpdateViewRequest(requestInfo));
+						node_requestServiceProcessor.processRequest(loc_getUpdateViewRequest(undefined, requestInfo));
 					}
 					else if(event=="EACHELEMENTCONTAINER_EVENT_NEWELEMENT"){
 						var req = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
@@ -163,7 +163,7 @@
 					}
 				});
 				
-				return loc_getUpdateViewRequest(requestInfo);
+				return loc_getUpdateViewRequest(undefined, requestInfo);
 			},
 
 			destroy : function(request){

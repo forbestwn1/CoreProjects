@@ -10,7 +10,6 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 
@@ -35,22 +34,22 @@ public class HAPDefinitionMappingService extends HAPSerializableImp{
 	}
 
 	private void init() {
-		if(m_parmMapping!=null)  HAPUtilityContext.setContextGroupInheritModeNone(this.m_parmMapping.getInfo());
-		for(String result : this.m_resultMapping.keySet()) {
-			HAPUtilityContext.setContextGroupInheritModeNone(this.m_resultMapping.get(result).getInfo());
-		}
+//		if(m_parmMapping!=null)  HAPUtilityContext.setContextGroupInheritModeNone(this.m_parmMapping.getInfo());
+//		for(String result : this.m_resultMapping.keySet()) {
+//			HAPUtilityContext.setContextGroupInheritModeNone(this.m_resultMapping.get(result).getInfo());
+//		}
 	}
 	
 	public HAPDefinitionDataAssociation getParms() {  return this.m_parmMapping;   }
 	public void setParmMapping(HAPDefinitionDataAssociation parms) {   
 		this.m_parmMapping = parms;  
-		HAPUtilityContext.setContextGroupInheritModeNone(this.m_parmMapping.getInfo());
+//		HAPUtilityContext.setContextGroupInheritModeNone(this.m_parmMapping.getInfo());
 	}
 	
 	public Map<String, HAPDefinitionDataAssociation> getResultMapping(){   return this.m_resultMapping;   }
 	public void addResultMapping(String name, HAPDefinitionDataAssociation result) {   
 		this.m_resultMapping.put(name, result);   
-		HAPUtilityContext.setContextGroupInheritModeNone(result.getInfo());
+//		HAPUtilityContext.setContextGroupInheritModeNone(result.getInfo());
 	}
 
 	@Override

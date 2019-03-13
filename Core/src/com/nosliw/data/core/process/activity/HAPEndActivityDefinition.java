@@ -8,7 +8,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
-import com.nosliw.data.core.script.context.HAPUtilityContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 
@@ -25,7 +24,7 @@ public class HAPEndActivityDefinition extends HAPDefinitionActivity{
 	}
 
 	private void init() {
-		if(this.m_output!=null)   HAPUtilityContext.setContextGroupInheritModeNone(this.m_output.getInfo());
+//		if(this.m_output!=null)   HAPUtilityContext.setContextGroupInheritModeNone(this.m_output.getInfo());
 	}
 	
 	@Override

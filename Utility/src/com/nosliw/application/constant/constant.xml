@@ -627,6 +627,7 @@
 			<definition type="space"/>
 			<definition name="DATAASSOCIATION_TYPE_MAPPING" value="mapping"/>
 			<definition name="DATAASSOCIATION_TYPE_MIRROR" value="mirror"/>
+			<definition name="DATAASSOCIATION_TYPE_NONE" value="none"/>
 
 		</definitions>
 	</constants>

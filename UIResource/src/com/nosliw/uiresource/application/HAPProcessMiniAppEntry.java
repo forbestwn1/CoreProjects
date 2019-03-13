@@ -92,7 +92,7 @@ public class HAPProcessMiniAppEntry {
 		HAPExecutableAppModule out = new HAPExecutableAppModule(module);
 		
 		HAPDefinitionModule moduleDef = HAPUtilityModule.getUIModuleDefinitionById(module.getModule(), uiResourceMan.getModuleParser());
-		
+		 
 		//input data association
 		HAPExecutableDataAssociation inputMapping = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(entryExe.getContext()), module.getInputMapping().getDefaultDataAssociation(), moduleDef.getContext(), false, contextProcessRequirement);
 		out.setInputMapping(inputMapping);

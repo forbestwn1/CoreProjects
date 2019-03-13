@@ -47,6 +47,8 @@ public class HAPExecutableServiceUse extends HAPExecutableImp{
 	
 	public void addResultMapping(String result, HAPExecutableDataAssociation mapping) {   this.m_resultMapping.put(result, mapping);  }
 
+	public HAPExecutableDataAssociation getResultMapping(String resultName) {  return this.m_resultMapping.get(resultName);   }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);

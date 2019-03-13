@@ -28,6 +28,7 @@ public class HAPServiceActivityExecutable extends HAPExecutableActivityNormal{
 	}
 
 	public void setService(HAPExecutableServiceUse service) {   this.m_service = service;  }
+	public HAPExecutableServiceUse getService() {  return this.m_service;   }
 	
 	public void setServiceProvider(HAPDefinitionServiceProvider provider) {   this.m_provider = provider;   }
 	
