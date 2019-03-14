@@ -41,7 +41,7 @@
 			"name": "settingUI",
 			"type": "setting",
 			"page": "schoolSettingPage",
-			"contextMapping": {
+			"inputMapping": {
 				"element": {
 					"schoolType": {
 						"definition": {

@@ -19,6 +19,7 @@ var packageObj = library.getChildPackage("service");
 	var node_requestServiceProcessor;
 	var node_contextUtility;
 	var node_createAppRuntimeRequest;
+	var node_resourceUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -93,6 +94,7 @@ nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestI
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.createAppRuntimeRequest", function(){node_createAppRuntimeRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 
 
 //Register Node by Name

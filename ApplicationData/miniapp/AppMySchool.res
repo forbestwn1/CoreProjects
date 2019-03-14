@@ -45,12 +45,12 @@
 					{
 						"name" : "syncWithApp",
 						"element": {
-							"schoolTypeInData": {
+							"schoolTypeInApp": {
 								"definition": {
 									"path": "schoolTypeInModule",
 								}
 							},
-							"schoolRatingInData": {
+							"schoolRatingInApp": {
 								"definition": {
 									"path": "schoolRatingInModule",
 								}

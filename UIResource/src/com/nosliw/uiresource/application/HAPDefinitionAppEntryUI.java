@@ -34,7 +34,7 @@ public class HAPDefinitionAppEntryUI  extends HAPComponentWithConfiguration impl
 
 	private Map<String, HAPDefinitionEmbededProcess> m_processes;
 
-	//context data shared by different module
+	//data structure shared by different module
 	private HAPContextGroup m_context;
 	
 	public HAPDefinitionAppEntryUI() {

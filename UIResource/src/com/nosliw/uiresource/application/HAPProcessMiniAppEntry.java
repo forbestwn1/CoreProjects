@@ -2,6 +2,8 @@ package com.nosliw.uiresource.application;
 
 import java.util.Map;
 
+import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
@@ -11,7 +13,7 @@ import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorProcess;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.script.context.HAPContext;
+import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
@@ -69,7 +71,7 @@ public class HAPProcessMiniAppEntry {
 		}
 
 		//prepare extra context
-		Map<String, HAPContext> extraContext = out.getExtraContext();
+		Map<String, HAPContextStructure> extraContext = out.getExtraContext();
 		
 		//module
 		for(HAPDefinitionAppModule moduleDef : entryDefinition.getModules()) {
@@ -83,7 +85,7 @@ public class HAPProcessMiniAppEntry {
 	private static HAPExecutableAppModule process(
 			HAPDefinitionAppModule module,
 			HAPExecutableAppEntry entryExe,
-			Map<String, HAPContext> extraContext,
+			Map<String, HAPContextStructure> extraContexts,
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processMan,
 			HAPUIResourceManager uiResourceMan,
@@ -93,9 +95,19 @@ public class HAPProcessMiniAppEntry {
 		
 		HAPDefinitionModule moduleDef = HAPUtilityModule.getUIModuleDefinitionById(module.getModule(), uiResourceMan.getModuleParser());
 		 
+		HAPParentContext parentContext = HAPParentContext.createDefault(entryExe.getContext());
+		for(String extraName : extraContexts.keySet()) {
+			parentContext.addContext(extraName, extraContexts.get(extraName));
+		}
+		
+		HAPInfo daConfigure = HAPProcessorDataAssociation.withModifyStructureFalse(new HAPInfoImpSimple());
+
 		//input data association
-		HAPExecutableDataAssociation inputMapping = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(entryExe.getContext()), module.getInputMapping().getDefaultDataAssociation(), moduleDef.getContext(), false, contextProcessRequirement);
-		out.setInputMapping(inputMapping);
+		Map<String, HAPDefinitionDataAssociation> inputDas = module.getInputMapping().getDataAssociations();
+		for(String inputDaName : inputDas.keySet()) {
+			HAPExecutableDataAssociation inputMapping = HAPProcessorDataAssociation.processDataAssociation(parentContext, inputDas.get(inputDaName), HAPParentContext.createDefault(moduleDef.getContext()), daConfigure, contextProcessRequirement);
+			out.addInputDataAssociation(inputDaName, inputMapping);
+		}
 		
 		//module
 		HAPExecutableModule moduleExe = HAPProcessorModule.process(moduleDef, moduleDef.getName(), null, serviceProviders, processMan, uiResourceMan, contextProcessRequirement.dataTypeHelper, contextProcessRequirement.runtime, contextProcessRequirement.expressionManager, contextProcessRequirement.serviceDefinitionManager, processTracker);
@@ -104,8 +116,8 @@ public class HAPProcessMiniAppEntry {
 		//output data association
 		Map<String, HAPDefinitionDataAssociation> outputMapping = module.getOutputMapping().getDataAssociations();
 		for(String outputTargetName : outputMapping.keySet()) {
-			HAPExecutableDataAssociation outputMappingByTarget = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(entryExe.getContext()), outputMapping.get(outputTargetName), moduleDef.getContext(), false, contextProcessRequirement);
-			out.addOutputMapping(outputTargetName, outputMappingByTarget);
+			HAPExecutableDataAssociation outputMappingByTarget = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(moduleDef.getContext()), outputMapping.get(outputTargetName), parentContext, daConfigure, contextProcessRequirement);
+			out.addOutputDataAssociation(outputTargetName, outputMappingByTarget);
 		}
 		
 		return out;

@@ -1,14 +1,21 @@
 package com.nosliw.uiresource.application;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableGroupDataAssociation;
 import com.nosliw.uiresource.module.HAPExecutableModule;
 
 public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements HAPExecutable{
@@ -24,33 +31,43 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 
 	private HAPExecutableModule m_module;
 	
-	private HAPExecutableDataAssociation m_inputMapping;
+	private HAPExecutableGroupDataAssociation m_inputMapping;
 	
-	private HAPExecutableDataAssociation m_outputMapping;
+	private HAPExecutableGroupDataAssociation m_outputMapping;
 
 	public HAPExecutableAppModule(HAPDefinitionAppModule def) {
 		super(def);
+		this.m_inputMapping = new HAPExecutableGroupDataAssociation();
+		this.m_outputMapping = new HAPExecutableGroupDataAssociation();
 	}
 
 	public void setModule(HAPExecutableModule module) {  this.m_module = module;  }
 	
-	public void setInputMapping(HAPExecutableDataAssociation inputMapping) {    this.m_inputMapping = inputMapping;   }
+	public void addInputDataAssociation(String name, HAPExecutableDataAssociation dataAssociation) {    this.m_inputMapping.addDataAssociation(name, dataAssociation);   }
 	
-	public void addOutputMapping(String targetName, HAPExecutableDataAssociation outputMapping) {   this.m_outputMapping = outputMapping;   }
+	public void addOutputDataAssociation(String name, HAPExecutableDataAssociation dataAssociation) {   this.m_outputMapping.addDataAssociation(name, dataAssociation);  }
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(MODULE, HAPJsonUtility.buildJson(this.m_module, HAPSerializationFormat.JSON));
+		jsonMap.put(INPUTMAPPING, HAPJsonUtility.buildJson(this.m_inputMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildJson(this.m_outputMapping, HAPSerializationFormat.JSON));
+	}
 	
 	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
+		this.buildFullJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(MODULE, this.m_module.toResourceData(runtimeInfo).toString());
+		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 	@Override
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
+		out.addAll(this.m_module.getResourceDependency(runtimeInfo));
+		return out;
 	}
-
-	
-	
-	
 }

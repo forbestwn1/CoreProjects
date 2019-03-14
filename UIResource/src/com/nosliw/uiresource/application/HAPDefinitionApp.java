@@ -36,6 +36,7 @@ public class HAPDefinitionApp extends HAPComponentWithConfiguration{
 	//one mini app may have different entry for different senario. 
 	private Map<String, HAPDefinitionAppEntryUI> m_entries;
 
+	//global data structure
 	private HAPContextGroup m_context;
 	
 	//global data definition 

@@ -50,28 +50,30 @@ public class HAPUtilityContextScript {
 	public static JSONObject buildSkeletonJsonObject(HAPContext context, boolean isFlatRootName) {
 		JSONObject output = new JSONObject();
 		for(String rootName : context.getElementNames()) {
-			HAPContextDefinitionElement contextDefEle = context.getElement(rootName).getDefinition();
-			Object contextEleJson = buildJsonValue(contextDefEle);
+			if(HAPConstant.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(context.getElement(rootName).getInfo()))) {
+				HAPContextDefinitionElement contextDefEle = context.getElement(rootName).getDefinition();
+				Object contextEleJson = buildJsonValue(contextDefEle);
 
-			if(contextEleJson!=null) {
-				JSONObject parentJsonObj = output;
-				if(isFlatRootName) {
-					//if flat root name, just use it
-					parentJsonObj.put(rootName, contextEleJson);
-				}
-				else {
-					//not flat, parse categary and name from root name
-					HAPContextDefinitionRootId rootId = new HAPContextDefinitionRootId(rootName);
-					String categary = rootId.getCategary();
-					if(HAPBasicUtility.isStringNotEmpty(categary)) {
-						//ignore those that don't have categary
-						parentJsonObj = output.optJSONObject(categary);
-						if(parentJsonObj==null) {
-							parentJsonObj = new JSONObject();
-							output.put(categary, parentJsonObj);
-						}
+				if(contextEleJson!=null) {
+					JSONObject parentJsonObj = output;
+					if(isFlatRootName) {
+						//if flat root name, just use it
+						parentJsonObj.put(rootName, contextEleJson);
 					}
-					parentJsonObj.put(rootId.getName(), contextEleJson);
+					else {
+						//not flat, parse categary and name from root name
+						HAPContextDefinitionRootId rootId = new HAPContextDefinitionRootId(rootName);
+						String categary = rootId.getCategary();
+						if(HAPBasicUtility.isStringNotEmpty(categary)) {
+							//ignore those that don't have categary
+							parentJsonObj = output.optJSONObject(categary);
+							if(parentJsonObj==null) {
+								parentJsonObj = new JSONObject();
+								output.put(categary, parentJsonObj);
+							}
+						}
+						parentJsonObj.put(rootId.getName(), contextEleJson);
+					}
 				}
 			}
 		}
