@@ -91,7 +91,7 @@ var node_createProcessRuntime = function(envObj){
 					success : function(request, taskResult){
 						var activityResultConfig = normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_RESULT][taskResult.resultName];
 						return new node_NormalActivityOutput(activityResultConfig[node_COMMONATRIBUTECONSTANT.EXECUTABLERESULTACTIVITYNORMAL_FLOW][node_COMMONATRIBUTECONSTANT.DEFINITIONSEQUENCEFLOW_TARGET],
-								taskResult.resultValue.getData());
+								taskResult.resultValue==undefined?context:taskResult.resultValue.getData());
 					}
 				}));
 		return out;
@@ -159,7 +159,7 @@ var node_createProcessRuntime = function(envObj){
 						process[node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_RESULT][endActivityOutput.resultName],
 						{
 							success : function(requestInfo, processOutputValue){
-								return new node_ProcessResult(endActivityOutput.resultName, processOutputValue.getData());
+								return new node_ProcessResult(endActivityOutput.resultName, processOutputValue==undefined?undefined:processOutputValue.getData());
 							}
 						});
 			}

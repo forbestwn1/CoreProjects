@@ -3,149 +3,214 @@ var packageObj = library;
 
 (function(packageObj){
 	//get used node
+	var node_createEventObject;
+	var node_CONSTANT;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_requestServiceProcessor = function(){
-
-	var loc_moduleName = "requestManager";
+var loc_RequestInfo = function(request, processRemote){
+	this.request = request;
+	this.processRemote = processRemote;
+};
 	
+var loc_processRequest = function(request, processRemote, processedCallBack){
+	var loc_moduleName = "requestManager";
+	nosliw.logging.info(loc_moduleName, request.getInnerId(), "Start request : ", request.getService());
+	
+	//add request processor in order to logging the result
+	request.setRequestProcessors({
+		start : function(request){
+//				nosliw.logging.info(loc_moduleName, request.getInnerId(), "Start handler");
+		},
+		success : function(request, data){
+			nosliw.logging.info(loc_moduleName, request.getInnerId(), "Success handler : ", data);
+//				nosliw.logging.trace(loc_moduleName, request.getInnerId(), "Data ", data);
+			processedCallBack(request);
+			return data;
+		}, 
+		error : function(request, data){
+			nosliw.logging.error(loc_moduleName, request.getInnerId(), "Error handler : ", data);
+//				nosliw.logging.error(loc_moduleName, request.getInnerId(), "Data ", data);
+			processedCallBack(request);
+			return data;
+		}, 
+		exception : function(request, data){
+			nosliw.logging.error(loc_moduleName, request.getInnerId(), "Exception handler : ", data);
+//				nosliw.logging.error(loc_moduleName, request.getInnerId(), "Data ", data);
+			processedCallBack(request);
+			return data;
+		}, 
+	});
+
+	//execute start handler
+	var startOut = request.executeStartHandler(request);
+
+	var execute = request.getRequestExecuteInfo();
+	if(execute!=undefined){
+		//run execute function, return remote task info if have
+		var remoteTask = execute.execute(request);
+		//whether submit the remoteTask
+		if(remoteTask==undefined){
+//				nosliw.logging.info(loc_moduleName, request.getInnerId(), "Finish request locally : ", node_basicUtility.stringify(request.getService()));
+		}
+		else{
+			processRemote = true;   //kkkk
+			if(processRemote!=false){
+				//submit the remote task
+//					nosliw.logging.info(loc_moduleName, request.getInnerId(), "Finish request with remote request Id :", remoteTask.requestId);
+				nosliw.runtime.getRemoteService().addServiceTask(remoteTask);
+			}
+			else{
+//					nosliw.logging.info(loc_moduleName, request.getInnerId(), "Finish request by creating remote request info object Id :", remoteTask.requestId);
+				//return the remote task, let the call to decide what to do with remoteTask
+				return remoteTask;
+			}
+		}
+	}
+	else{
+		var service = request.service;
+		if(service.type=='dataoperation'){
+			requestOperateContextPathValue(request);
+		}
+	}
+};
+	
+	
+var loc_createRequestGroup = function(){
+	var loc_requestSum = 0;
+	
+	var loc_rootRequest;
+	
+	var loc_requestInfosById = {};
+	var loc_requestIdList = [];
+	
+	var loc_eventObject = node_createEventObject();
+
+	var loc_doneCallBack;
+	var loc_processing = false;
+	
+	var loc_requestProcessed = function(request){
+		var requestId = loc_getRequestId(request);
+		if(loc_requestInfosById[requestId]!=undefined){
+			delete loc_requestInfosById[requestId];
+			loc_requestIdList.splice( loc_requestIdList.indexOf(requestId), 1 );
+			loc_requestSum--;
+		}
+		if(loc_requestSum==0){
+			loc_rootRequest.registerEventListener(loc_eventObject, 
+					function(eventName, eventData){
+						if(eventName==node_CONSTANT.REQUEST_EVENT_ALMOSTDONE){
+							loc_rootRequest.unregisterEventListener(loc_eventObject);
+							if(loc_requestSum==0){
+								loc_doneCallBack(loc_out);
+								loc_rootRequest.done();
+							}
+						}						
+					}
+				);
+			//when no child request under root request, it means root request almost done
+			//almost done with root request
+			loc_rootRequest.almostDone();
+		}
+	};
+
+	var loc_getRequestId = function(request){	return request.getInnerId();	};
+	
+	var loc_out = {
+			
+		getId : function(){  return loc_rootRequest.getId();  },
+			
+		addRequestInfo : function(requestInfo){
+			if(loc_rootRequest==undefined){
+				loc_rootRequest = requestInfo.request.getRootRequest();
+				loc_id = loc_rootRequest.getId();
+			}
+			var requestId = loc_getRequestId(requestInfo.request);
+			loc_requestInfosById[requestId] = requestInfo;
+			loc_requestIdList.push(requestId);
+			loc_requestSum++;
+			
+			if(loc_processing==true){
+				loc_processRequest(requestInfo.request, requestInfo.processRemote, loc_requestProcessed);
+			}
+		},
+		
+		startProcess : function(doneCallBack){
+			loc_doneCallBack = doneCallBack;
+			loc_processing = true;
+			_.each(loc_requestInfosById, function(requestInfo, id){
+				loc_processRequest(requestInfo.request, requestInfo.processRemote, loc_requestProcessed);
+			});
+		},
+	};
+	return loc_out;
+};
+	
+	
+var node_requestServiceProcessor = function(){
 	//store all the live requests
 	//request organized according to root request
 	//{root request id  -- {  current request id --- request  }  } 
-	var loc_requests = {};
+	var loc_groups = {};
 	var loc_requestsSum = 0;
 	
-	var loc_requestQueue = [];
+	var loc_groupQueue = [];
 	
-	var loc_addRequest = function(request){
-		var id = request.getId();
-		var requestsById = loc_requests[id];
-		if(requestsById==undefined){
-			requestsById = {};
-			loc_requests[id] = requestsById;
-			requestsById.requestsSum = 0;
-			requestsById.rootRequest = request.getRootRequest();
-		}
-		requestsById[request.getInnerId()] = request;
-		requestsById.requestsSum++;
-		loc_requestsSum++;
-	};
-	
-	//when request finished, remove it
-	var loc_removeRequest = function(request){
-		var id = request.getId();
-		var requestsById = loc_requests[id];
-		delete requestsById[request.getInnerId()];
-		requestsById.requestsSum--;
-		loc_requestsSum--;
-		if(requestsById.requestsSum==0){
-			//when no child request under root request, it means root request almost done
-			//almost done with root request
-			requestsById.rootRequest.almostDone();
-			if(requestsById.requestsSum==0){
-				//if no more child request created, then done with root request
-				requestsById.rootRequest.done();
-				delete loc_requests[id];
-				loc_processRequestInQueue();
-			}
-		}
-	};
-	
-	var loc_processRequest = function(requestInfo, processRemote){
-		
-		nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Start request : ", requestInfo.getService());
-		
-		//add request processor in order to logging the result
-		requestInfo.setRequestProcessors({
-			start : function(requestInfo){
-//				nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Start handler");
-			},
-			success : function(requestInfo, data){
-				nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Success handler : ", data);
-//				nosliw.logging.trace(loc_moduleName, requestInfo.getInnerId(), "Data ", data);
-				loc_removeRequest(requestInfo);
-				return data;
-			}, 
-			error : function(requestInfo, data){
-				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Error handler : ", data);
-//				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Data ", data);
-				loc_removeRequest(requestInfo);
-				return data;
-			}, 
-			exception : function(requestInfo, data){
-				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Exception handler : ", data);
-//				nosliw.logging.error(loc_moduleName, requestInfo.getInnerId(), "Data ", data);
-				loc_removeRequest(requestInfo);
-				return data;
-			}, 
+	var loc_findGroup = function(request){
+		_.each(loc_groups, function(group, id){
+			if(group.getId()==request.getId())  return group;
 		});
-
 		
-		//execute start handler
-		var startOut = requestInfo.executeStartHandler(requestInfo);
-
-		var execute = requestInfo.getRequestExecuteInfo();
-		if(execute!=undefined){
-			//run execute function, return remote task info if have
-			var remoteTask = execute.execute(requestInfo);
-			//whether submit the remoteTask
-			if(remoteTask==undefined){
-//				nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Finish request locally : ", node_basicUtility.stringify(requestInfo.getService()));
-			}
-			else{
-				if(processRemote!=false){
-					//submit the remote task
-//					nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Finish request with remote request Id :", remoteTask.requestId);
-					nosliw.runtime.getRemoteService().addServiceTask(remoteTask);
-				}
-				else{
-//					nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Finish request by creating remote request info object Id :", remoteTask.requestId);
-					//return the remote task, let the call to decide what to do with remoteTask
-					return remoteTask;
-				}
-			}
-		}
-		else{
-			var service = requestInfo.service;
-			if(service.type=='dataoperation'){
-				requestOperateContextPathValue(requestInfo);
-			}
+		_.each(loc_groupQueue, function(group, index){
+			if(group.getId()==request.getId())  return group;
+		});
+	};
+	
+	var loc_addGroupToQueue = function(group){
+		loc_groupQueue.push(group);
+		loc_processNextGroup();
+	};
+	
+	var loc_processGroup = function(group){
+		loc_groups[group.getId()] = group;
+		group.startProcess(function(group){
+			delete loc_groups[group.getId()];
+			loc_processNextGroup();
+		});
+	};
+	
+	var loc_processNextGroup = function(){
+		loc_processGroupInQueue();
+	};
+	
+	var loc_processGroupInQueue = function(){
+		if(loc_groupQueue.length>0){
+			var group = loc_groupQueue[0];
+			loc_groupQueue.shift();//slice(1);
+			loc_processGroup(group);
 		}
 	};
 	
-	var loc_processRequestInQueue = function(){
-		if(loc_requestQueue.length>0){
-			var requestInfo = loc_requestQueue[0];
-			loc_requestQueue.shift();//slice(1);
-			loc_addRequest(requestInfo.request);
-			return loc_processRequest(requestInfo.request, requestInfo.processRemote);
-		}
-	};
-	
-	var loc_addRequestToQueue = function(requestInfo, processRemote){
-		if(loc_requests[requestInfo.getId()]!=undefined){
-			loc_addRequest(requestInfo);
-			return loc_processRequest(requestInfo, processRemote);
+	var loc_addRequest = function(requestInfo){
+		var group = loc_findGroup(requestInfo.request);
+		if(group!=undefined){
+			group.addRequestInfo(requestInfo);
 		}
 		else{
-			loc_requestQueue.push({
-				request : requestInfo,
-				processRemote : processRemote
-			});
-			if(loc_requestsSum==0){
-				return loc_processRequestInQueue();
-			}
+			group = loc_createRequestGroup();
+			group.addRequestInfo(requestInfo);
+			loc_addGroupToQueue(group);
 		}
 	};
 	
 	var loc_out = {
-		processRequest : function(requestInfo, processRemote){
-			nosliw.logging.info(loc_moduleName, requestInfo.getInnerId(), "Start Request");
+		processRequest : function(request, processRemote){
+			var loc_moduleName = "requestManager";
+			nosliw.logging.info(loc_moduleName, request.getInnerId(), "Start Request");
 			
 			if(processRemote==undefined){
 				processRemote = true;
 			}
-			return loc_addRequestToQueue(requestInfo, processRemote);
+			return loc_addRequest(new loc_RequestInfo(request, processRemote));
 		},	
 
 		processRequest1 : function(requestInfo, processRemote){
@@ -167,6 +232,8 @@ var node_requestServiceProcessor = function(){
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("requestServiceProcessor", node_requestServiceProcessor); 

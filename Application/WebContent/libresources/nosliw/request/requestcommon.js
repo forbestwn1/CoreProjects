@@ -344,6 +344,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 				}
 				return request;
 			},
+			isRootRequest : function(){  return this.getParentRequest()==null;   },
 			
 			getStatus : function(){  return this.pri_metaData.pri_status;},
 			setStatus : function(status){  this.pri_metaData.pri_status = status;},
@@ -356,7 +357,7 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			
 			//it is for root request only
 			registerEventListener : function(listener, handler, thisContext){	this.pri_metaData.pri_eventObject.registerListener(undefined, listener, handler, thisContext);	},
-			unregisterEventListener : function(listener, handler, thisContext){	this.pri_metaData.pri_eventObject.unregister(listener);	},
+			unregisterEventListener : function(listener){	this.pri_metaData.pri_eventObject.unregister(listener);	},
 			trigueEvent : function(event, eventData){	this.pri_metaData.pri_eventObject.triggerEvent(event, eventData, this);	},
 
 			//it is for root request only

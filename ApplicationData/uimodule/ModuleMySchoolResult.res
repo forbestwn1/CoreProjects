@@ -165,7 +165,7 @@
 					"result": [{
 						"name": "success",
 						"flow": {
-							"target": "successEndId"
+							"target": "presentSchoolListUI"
 						}
 					}]
 				},

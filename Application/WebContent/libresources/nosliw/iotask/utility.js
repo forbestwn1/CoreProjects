@@ -114,7 +114,7 @@ var node_utility = function(){
 	var loc_getExecuteNoneDataAssociationRequest = function(input, dataAssociation, target, handlers, request){
 		var service = new node_ServiceInfo("ExecuteNoneDataAssociation", {"input":input, "dataAssociation":dataAssociation});
 		var out = node_createServiceRequestInfoSimple(service, function(requestInfo){
-			return node_createIODataSet();
+			return undefined;
 		}, handlers, request);
 		return out;
 	};
@@ -139,7 +139,7 @@ var node_utility = function(){
 			//process input association
 			out.addRequest(loc_getExecuteDataAssociationRequest(input, inputDataAssociation, null, {
 				success : function(requestInfo, daOutputDataSet){
-					var taskInput = daOutputDataSet.getData();
+					var taskInput = daOutputDataSet==undefined?undefined:daOutputDataSet.getData();
 					//execute task
 					var executeIOTaskRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTask", {}));
 					executeIOTaskRequest.addRequest(getTaskRequest(taskInput, {
@@ -159,7 +159,7 @@ var node_utility = function(){
 							else{
 								//no data association
 								return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-									return new node_IOTaskResult(taskResult.resultName, node_createIODataSet(taskResult.resultValue));
+									return new node_IOTaskResult(taskResult.resultName, undefined);
 								});
 							}
 						}
