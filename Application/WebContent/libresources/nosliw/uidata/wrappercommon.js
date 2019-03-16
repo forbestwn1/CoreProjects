@@ -429,8 +429,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 	 * mark data as invalid so that it would be recalculated
 	 */
 	var loc_invalidateData = function(requestInfo){
-//		if(loc_out.prv_typeHelper!=undefined) 
-		loc_out.prv_typeHelper.destroyValue(loc_out.prv_value);
+		if(loc_out.prv_typeHelper!=undefined)	loc_out.prv_typeHelper.destroyValue(loc_out.prv_value);
 		loc_out.prv_isValidData = false;
 		loc_out.prv_value = undefined;
 		loc_out.prv_toBeDoneWrapperOperations = [];

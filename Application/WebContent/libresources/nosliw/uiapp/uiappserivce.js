@@ -45,7 +45,7 @@ var node_createUIAppService = function(){
 					var appEntryDef = node_resourceUtility.getResourceFromTree(resourceTree, appEntryResourceId).resourceData;
 					var appConfigure = node_resourceUtility.getResourceFromTree(resourceTree, appConfigureResourceId).resourceData;
 					
-					//create ui module runtime
+					//create ui app runtime
 					return node_createAppRuntimeRequest(appEntryDef, appConfigure, {
 						success : function(request, uiAppRuntime){
 							return uiAppRuntime.getInitRequest({

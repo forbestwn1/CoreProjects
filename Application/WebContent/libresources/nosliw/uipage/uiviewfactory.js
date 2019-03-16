@@ -402,7 +402,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		prv_callScriptFunctionDown : function(funName){
 			var find = this.prv_findFunctionDown(funName);
 			if(find!=undefined)		return find.uiUnit.prv_callScriptFunction.apply(find.uiUnit, arguments);
-			else nosliw.error("Cannot find function : " + funName);
+			else nosliw.warning("Cannot find function : " + funName);
 		},
 
 		prv_findFunctionDown : function(funName){

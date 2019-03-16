@@ -109,7 +109,7 @@
 					"name": "startActivity",
 					"type": "start",
 					"flow": {
-						"target": "retrieveSchoolData"
+						"target": "presentSchoolListUI"
 					}
 				},
 				{

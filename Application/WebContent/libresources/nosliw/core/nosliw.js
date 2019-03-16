@@ -69,6 +69,10 @@ _.extend(nosliw, function(){
 		
 		error : function(errorData){
 			console.error(this.getNodeData("common.utility.basicUtility").stringify(errorData));
+		},
+
+		warning : function(errorData){
+			console.warn(this.getNodeData("common.utility.basicUtility").stringify(errorData));
 		}
 	};
 	

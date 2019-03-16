@@ -33,7 +33,7 @@ var node_createAppRuntimeRequest = function(uiAppDef, appConfigure, handlers, re
 	return out;
 };
 
-var loc_createModuleRuntime = function(uiModule, env){
+var loc_createAppRuntime = function(uiApp, env){
 	
 	var loc_uiModule = uiModule;
 	var loc_env = env;
