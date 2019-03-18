@@ -92,6 +92,8 @@ var loc_createUIModule = function(uiModuleDef, context, view){
 	//hold module state data, so that when restart the module, we can return to the right state
 	var loc_stateData = {};
 	
+	var loc_statelessData = {};
+	
 	var loc_out = {
 		
 		prv_addUI : function(ui){
@@ -113,7 +115,10 @@ var loc_createUIModule = function(uiModuleDef, context, view){
 		
 		getStateData : function(name){   return loc_stateData[name];  },
 		setStateData : function(name, state){  loc_stateData[name] = state;   },
-		
+
+		getStatelessData : function(name){   return loc_statelessData[name];  },
+		setStatelessData : function(name, data){  loc_statelessData[name] = data;   },
+
 		getUIs : function(){  return loc_uis;  },
 		getUI : function(name) {  return loc_uisByName[name];   },
 		getRefreshUIRequest : function(uiName, handlers, request){	return this.getUI(uiName).getRefreshRequest(loc_context, handlers, request);	},

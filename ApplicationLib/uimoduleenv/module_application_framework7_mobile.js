@@ -12,11 +12,8 @@ function(uiModule){
 	
 	var loc_uiModule = uiModule;
 	
-	var loc_viewEle = $('<div class="view view-main" id="1234567"/>');
+	var loc_viewEle = $('<div class="view view-main"/>');
 	loc_viewEle.appendTo(loc_uiModule.getView());
-	
-	var loc_pagesContainer = $('#pagesContainer');
-	loc_pagesContainer.appendTo(loc_viewEle);
 	
 	var loc_view;
 	
@@ -37,8 +34,12 @@ function(uiModule){
 		return out;
 	};
 
+	var loc_getRoutePathByUiName = function(uiName){
+		return "/"+uiName+"/";
+	}
+	
 	var loc_getTransferToRequest = function(uiName, mode, handlers, requestInfo){
-		loc_view.router.navigate(uiName);
+		loc_view.router.navigate(loc_getRoutePathByUiName(uiName));
 		loc_getUIStack().push(uiName);
 		return loc_getUpdatePageStatusRequest(handlers, requestInfo);
 	};
@@ -93,6 +94,7 @@ function(uiModule){
 							loc_app = new Framework7({
 								  // App root element
 								  root: loc_uiModule.getView().get(),
+//								  root: $("#testDiv").get(),
 								  // App Name
 								  name: 'My App',
 								  // App id
@@ -102,12 +104,12 @@ function(uiModule){
 								  ],
 								  // ... other parameters
 							});
-
+							
 							//view configure
 							var viewConfigure = {
 								stackPages : true,
 								routes : [],
-								url : "/schoolListUI/",
+//								url : "/schoolListUI/",
 								routesBeforeEnter : function(to, from, resolve, reject){
 									resolve();
 								}
@@ -115,13 +117,12 @@ function(uiModule){
 							_.each(loc_uiModule.getUIs(), function(ui, index){
 								var route = {};
 								route.name = ui.getName();
-								route.path = "/"+ui.getName()+"/";
+								route.path = loc_getRoutePathByUiName(ui.getName());
 								route.pageName = ui.getName();
 								viewConfigure.routes.push(route);
 							});
 
-//							loc_view = loc_app.views.create(loc_viewEle.get(), viewConfigure);
-							loc_view = loc_app.views.create("#1234567", viewConfigure);
+							loc_view = loc_app.views.create(loc_viewEle.get(), viewConfigure);
 
 							out.executeSuccessHandler();
 						}
@@ -130,7 +131,6 @@ function(uiModule){
 				}));
 				return out;
 			},
-
 	};
 	return loc_out;
 }
