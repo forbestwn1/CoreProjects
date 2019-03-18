@@ -4,7 +4,7 @@
 	<br>
 	<br>
 
-	<div class="page" data-name="<%=?(nosliw_uiInfo.id)?%>">
+	<div class="page stacked" data-name="<%=?(nosliw_uiInfo.id)?%>">
 		<div class="page-content">
 			<div class="navbar">
 			    <div class="navbar-inner">

@@ -12,10 +12,11 @@ function(uiModule){
 	
 	var loc_uiModule = uiModule;
 	
-	var loc_viewEle = $('<div class="view view-main"/>');
+	var loc_viewEle = $('<div class="view view-main" id="1234567"/>');
 	loc_viewEle.appendTo(loc_uiModule.getView());
 	
 	var loc_pagesContainer = $('#pagesContainer');
+	loc_pagesContainer.appendTo(loc_viewEle);
 	
 	var loc_view;
 	
@@ -86,12 +87,12 @@ function(uiModule){
 
 							//put ui to DOM
 							_.each(loc_uiModule.getUIs(), function(ui, index){
-								ui.getPage().appendTo(loc_pagesContainer);
+								ui.getPage().appendTo(loc_viewEle);
 							});
 							
 							loc_app = new Framework7({
 								  // App root element
-//								  root: loc_uiModule.getView().get(),
+								  root: loc_uiModule.getView().get(),
 								  // App Name
 								  name: 'My App',
 								  // App id
@@ -105,17 +106,22 @@ function(uiModule){
 							//view configure
 							var viewConfigure = {
 								stackPages : true,
-								routes : []
+								routes : [],
+								url : "/schoolListUI/",
+								routesBeforeEnter : function(to, from, resolve, reject){
+									resolve();
+								}
 							};
 							_.each(loc_uiModule.getUIs(), function(ui, index){
 								var route = {};
 								route.name = ui.getName();
-								route.path = ui.getName();
+								route.path = "/"+ui.getName()+"/";
 								route.pageName = ui.getName();
 								viewConfigure.routes.push(route);
 							});
 
-							loc_view = loc_app.views.create(loc_viewEle.get(), viewConfigure);
+//							loc_view = loc_app.views.create(loc_viewEle.get(), viewConfigure);
+							loc_view = loc_app.views.create("#1234567", viewConfigure);
 
 							out.executeSuccessHandler();
 						}
