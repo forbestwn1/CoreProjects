@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionGroupDataAssociation;
+import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp{
@@ -20,6 +21,9 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp{
 	public static final String MODULE = "module";
 	
 	@HAPAttribute
+	public static String STATUS = "status";
+	
+	@HAPAttribute
 	public static final String INPUTMAPPING = "inputMapping";
 	
 	@HAPAttribute
@@ -28,6 +32,8 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp{
 	private String m_role;
 	
 	private String m_module;
+	
+	private String m_status;
 	
 	private HAPDefinitionGroupDataAssociation m_outputMapping;
 	
@@ -38,7 +44,12 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp{
 		this.m_inputMapping = new HAPDefinitionGroupDataAssociation();
 	}
 	
+	public String getRole() {   return this.m_role;   }
 	public String getModule() {   return this.m_module;   }
+	
+	public String getStatus() {   return this.m_status;    }
+	public void setStatus(String status) {   this.m_status = status;   }
+	
 	public HAPDefinitionGroupDataAssociation getInputMapping() {   return this.m_inputMapping;   }
 	public HAPDefinitionGroupDataAssociation getOutputMapping() {   return this.m_outputMapping;    }
 	
@@ -57,6 +68,7 @@ public class HAPDefinitionAppModule  extends HAPEntityInfoWritableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_role = (String)jsonObj.opt(ROLE);
 		this.m_module = (String)jsonObj.opt(MODULE);
+		this.m_status = (String)jsonObj.opt(HAPDefinitionModuleUI.STATUS);
 		this.m_inputMapping.buildObject(jsonObj.optJSONArray(INPUTMAPPING), HAPSerializationFormat.JSON);
 		this.m_outputMapping.buildObject(jsonObj.optJSONArray(OUTPUTMAPPING), HAPSerializationFormat.JSON);
 		return true;

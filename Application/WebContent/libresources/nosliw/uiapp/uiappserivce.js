@@ -27,7 +27,7 @@ var node_createUIAppService = function(){
 	
 	var loc_out = {
 			
-		getGetUIAppEntryRuntimeRequest : function(appEntryId, appConfigureId, handlers, requester_parent){
+		getGetUIAppEntryRuntimeRequest : function(appEntryId, appConfigureId, appStatelessData, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetUIAppRuntime", {}), handlers, requestInfo);
 
@@ -46,7 +46,7 @@ var node_createUIAppService = function(){
 					var appConfigure = node_resourceUtility.getResourceFromTree(resourceTree, appConfigureResourceId).resourceData;
 					
 					//create ui app runtime
-					return node_createAppRuntimeRequest(appEntryDef, appConfigure, {
+					return node_createAppRuntimeRequest(appEntryDef, appConfigure, appStatelessData, {
 						success : function(request, uiAppRuntime){
 							return uiAppRuntime.getInitRequest({
 								success :function(request, data){
@@ -62,8 +62,8 @@ var node_createUIAppService = function(){
 			
 		},	
 			
-		executeGetUIAppEntryRuntimeRequest : function(appEntryId, appConfigureId, handlers, requester_parent){
-			var requestInfo = this.getGetUIAppEntryRuntimeRequest(appEntryId, appConfigureId, handlers, requester_parent);
+		executeGetUIAppEntryRuntimeRequest : function(appEntryId, appConfigureId, appStatelessData, handlers, requester_parent){
+			var requestInfo = this.getGetUIAppEntryRuntimeRequest(appEntryId, appConfigureId, appStatelessData, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 			

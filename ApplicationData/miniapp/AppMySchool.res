@@ -4,6 +4,7 @@
 	"entry": [{
 		"name": "main",
 		"module": [{
+				"status": "disabled",
 				"role": "setting",
 				"name": "setting",
 				"module": "ModuleMySchoolSetting",

@@ -70,7 +70,7 @@ function(uiModule){
 				out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
 					//put ui together
 					_.each(loc_uiModule.getUIs(), function(ui, index){
-						ui.getPage().appendTo(loc_uiModule.getView());
+						ui.getPage().appendTo(loc_uiModule.getStatelessData().root);
 					});
 
 					//init ui stack

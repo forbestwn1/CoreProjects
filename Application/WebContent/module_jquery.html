@@ -15,9 +15,7 @@
 </head>
 
 <body>
-	 <div id="map"></div>
-
-	<div id="testDiv">
+	<div id="moduleDiv">
 	</div>
 
 </body>
@@ -37,7 +35,11 @@ $(document).on("nosliwActive", function(){
 	//create module runtime
 	var decorations = {};
 	decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = ["Decoration_application"];
-	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, $('#testDiv'), decorations, "module_application_jquery_mobile", {
+	var statelessData = {
+			root : $('#moduleDiv'),
+		};
+
+	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, statelessData, decorations, "module_application_jquery_mobile", {
 		success : function(requestInfo, uiModuleRuntime){
 			uiModuleRuntime.executeStartRequest(undefined, requestInfo);			
 		}

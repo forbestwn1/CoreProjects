@@ -6,26 +6,23 @@
 
     	<link rel="stylesheet" href="libresources/external/framework7/css/framework7.bundle.min.css">
         <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
+        <script src="libresources/external/framework7/4.1.1/framework7.js"></script>
         
         <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
 		<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
 
-<!-- 		<meta name="viewport" content="width=device-width, initial-scale=1"> -->
+ 		<meta name="viewport" content="width=device-width, initial-scale=1"> 
 
 </head>
 
 <body>
-	 <div id="map"></div>
-
-	<div id="testDiv3">
-	<div id="testDiv">
+<div>
+	<div id="appDiv">
+		<div>
+		<div class="view view-main" id="moduleDiv"></div>
+		</div>
 	</div>
 	</div>
-
-	<div id="testDiv2">
-	</div>
-
-
 </body>
 
 <script>
@@ -43,12 +40,20 @@ $(document).on("nosliwActive", function(){
 	//create module runtime
 	var decorations = {};
 	decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = ["Decoration_application_framework7"];
-	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, $('#testDiv'), decorations, "module_application_framework7_mobile", {
+	var statelessData = {
+		root : $('#moduleDiv').get(),
+		app : new Framework7({
+			  // App root element
+			  root: $("#appDiv").get(),
+			  name: 'My App',
+			  id: 'com.myapp.test',
+		})
+	};
+	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, statelessData, decorations, "module_application_framework7_mobile", {
 		success : function(requestInfo, uiModuleRuntime){
 			uiModuleRuntime.executeStartRequest(undefined, requestInfo);			
 		}
 	});
-
 });
 
 nosliw.init();

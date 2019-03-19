@@ -28,10 +28,10 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
-var node_createUIModuleRequest = function(uiModuleDef, input, view, decorations, handlers, request){
+var node_createUIModuleRequest = function(uiModuleDef, input, statelessData, decorations, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUIModule", {"uiModule":uiModuleDef}), handlers, request);
 
-	var module = loc_createUIModule(uiModuleDef, uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input), view);
+	var module = loc_createUIModule(uiModuleDef, uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input), statelessData);
 
 	//prepare decoration first
 	var decorationInfo = {};
@@ -73,13 +73,11 @@ var node_createUIModuleRequest = function(uiModuleDef, input, view, decorations,
 	return out;
 };	
 	
-var loc_createUIModule = function(uiModuleDef, context, view){
+var loc_createUIModule = function(uiModuleDef, context, statelessData){
 
 	var loc_uiModuleDef = uiModuleDef;
 	
 	var loc_context = context;
-	
-	var loc_view = view;
 	
 	var loc_uis = [];
 	var loc_uisByName = {};
@@ -92,7 +90,7 @@ var loc_createUIModule = function(uiModuleDef, context, view){
 	//hold module state data, so that when restart the module, we can return to the right state
 	var loc_stateData = {};
 	
-	var loc_statelessData = {};
+	var loc_statelessData = statelessData==undefined?{}:statelessData;
 	
 	var loc_out = {
 		
@@ -107,16 +105,13 @@ var loc_createUIModule = function(uiModuleDef, context, view){
 			});
 		},
 	
-		getView : function(){  return loc_view;  },
-		appendTo : function(view){  loc_view.appendTo(view);   },
-
 		getContext : function(){  return loc_context;  },
 		setContext : function(context) {  loc_context = context;  },
 		
 		getStateData : function(name){   return loc_stateData[name];  },
 		setStateData : function(name, state){  loc_stateData[name] = state;   },
 
-		getStatelessData : function(name){   return loc_statelessData[name];  },
+		getStatelessData : function(name){   return loc_statelessData;  },
 		setStatelessData : function(name, data){  loc_statelessData[name] = data;   },
 
 		getUIs : function(){  return loc_uis;  },

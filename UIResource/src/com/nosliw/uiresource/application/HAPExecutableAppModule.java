@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -18,7 +19,14 @@ import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAsso
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableGroupDataAssociation;
 import com.nosliw.uiresource.module.HAPExecutableModule;
 
+@HAPEntityWithAttribute
 public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements HAPExecutable{
+
+	@HAPAttribute
+	public static final String MODULEDEFID = "moduleDefId";
+
+	@HAPAttribute
+	public static final String ROLE = "role";
 
 	@HAPAttribute
 	public static final String MODULE = "module";
@@ -35,8 +43,11 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 	
 	private HAPExecutableGroupDataAssociation m_outputMapping;
 
+	private HAPDefinitionAppModule m_definition;
+	
 	public HAPExecutableAppModule(HAPDefinitionAppModule def) {
 		super(def);
+		this.m_definition = def;
 		this.m_inputMapping = new HAPExecutableGroupDataAssociation();
 		this.m_outputMapping = new HAPExecutableGroupDataAssociation();
 	}
@@ -50,6 +61,8 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(MODULEDEFID, this.m_definition.getModule());
+		jsonMap.put(ROLE, this.m_definition.getRole());
 		jsonMap.put(MODULE, HAPJsonUtility.buildJson(this.m_module, HAPSerializationFormat.JSON));
 		jsonMap.put(INPUTMAPPING, HAPJsonUtility.buildJson(this.m_inputMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildJson(this.m_outputMapping, HAPSerializationFormat.JSON));

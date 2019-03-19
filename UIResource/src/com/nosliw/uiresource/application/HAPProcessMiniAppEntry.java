@@ -26,6 +26,7 @@ import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 import com.nosliw.uiresource.module.HAPDefinitionModule;
+import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 import com.nosliw.uiresource.module.HAPExecutableModule;
 import com.nosliw.uiresource.module.HAPProcessorModule;
 import com.nosliw.uiresource.module.HAPUtilityModule;
@@ -75,8 +76,10 @@ public class HAPProcessMiniAppEntry {
 		
 		//module
 		for(HAPDefinitionAppModule moduleDef : entryDefinition.getModules()) {
-			HAPExecutableAppModule module = process(moduleDef, out, extraContext, entryServiceProviders, processMan, uiResourceMan, contextProcessRequirement, processTracker);
-			out.addUIModule(moduleDef.getName(), module);
+			if(!HAPDefinitionModuleUI.STATUS_DISABLED.equals(moduleDef.getStatus())) {
+				HAPExecutableAppModule module = process(moduleDef, out, extraContext, entryServiceProviders, processMan, uiResourceMan, contextProcessRequirement, processTracker);
+				out.addUIModule(moduleDef.getName(), module);
+			}
 		}
 		
 		return out;

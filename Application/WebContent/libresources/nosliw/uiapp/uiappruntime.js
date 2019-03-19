@@ -23,13 +23,25 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createAppRuntimeRequest = function(uiAppDef, appConfigure, handlers, request){
+var node_createAppRuntimeRequest = function(uiAppDef, appConfigure, appStatelessData, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createAppRuntime", {}), handlers, request);
-	out.addRequest(node_createUIModuleRequest(uiModuleDef, input, view, decorations, {
-		success : function(request, uiModule){
-			return loc_createModuleRuntime(uiModule, envFactory(uiModule));
-		}
-	}));
+	
+	var modules = uiAppDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_UIMODULE];
+
+	_.each(modules, function(module, name){
+		var role = module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ROLE];
+		var statelessData = {
+			app : appStatelessData.app,
+			root : appStatelessData.nodes[role]
+		};
+		var moduleConfigure = appConfigure.roleConfigure[role];
+		out.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULEDEFID], undefined, statelessData, moduleConfigure.decorations, moduleConfigure.moduleEnvFactoryId, {
+			success : function(requestInfo, uiModuleRuntime){
+				uiModuleRuntime.executeStartRequest(undefined, requestInfo);			
+			}
+		}));
+	});
+	
 	return out;
 };
 
@@ -38,54 +50,6 @@ var loc_createAppRuntime = function(uiApp, env){
 	var loc_uiModule = uiModule;
 	var loc_env = env;
 	
-	loc_uiModule.registerUIEventListener(function(eventName, uiName, eventData, request){
-		var eventHandler = loc_uiModule.getEventHandler(uiName, eventName);
-		if(eventHandler!=undefined){
-			var extraInput = {
-				EVENT : {
-					event : eventName,
-					data : eventData
-				} 
-			};
-			loc_env.processRequest(loc_getExecuteModuleProcessRequest(eventHandler[node_COMMONATRIBUTECONSTANT.DEFINITIONMODULEUIEVENTHANDER_PROCESS], extraInput, undefined, request));
-		}
-		else{
-			loc_env.processUIEvent(eventName, uiName, eventData, request);
-		}
-	});
-
-	var loc_getExecuteModuleProcessRequest = function(process, extraInput, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteModuleProcess", {"process":process}), handlers, request);
-		var processInput = {};
-		//input data association
-		_.each(node_ioTaskUtility.getContextTypes(), function(categary, index){
-			var context = loc_uiModule.getContext()[categary];
-			if(context!=undefined){
-				_.each(context, function(ele, name){
-					processInput[name] = ele;
-				});
-			}			
-		});
-		
-		//append extra input
-		if(extraInput!=undefined){
-			_.each(extraInput, function(input, name){
-				processInput[name] = input;
-			});
-		}
-		
-		out.addRequest(nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteEmbededProcessRequest(process, processInput, {
-			success : function(request, processResult){
-				loc_uiModule.setContext(node_ioTaskUtility.assignToContext(processResult.value, loc_uiModule.getContext(), false));
-			}
-		}));
-		return out;
-	};
-	
-	var loc_getExecuteModuleProcessByNameRequest = function(processName, extraInput, handlers, request){
-		var process = loc_uiModule.getProcess(processName);
-		if(process!=undefined)  return loc_getExecuteModuleProcessRequest(process, extraInput, handlers, request);
-	};
 	
 	var loc_out = {
 		getModule : function(){  return loc_uiModule;  },
