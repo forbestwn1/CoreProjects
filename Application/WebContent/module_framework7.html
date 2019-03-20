@@ -31,11 +31,18 @@ $(document).on("nosliwActive", function(){
 
     // Our initialization code here
 	var currentSearchString = window.location.search;
-	var moduleId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
-
+	var parmValue = currentSearchString.substring(currentSearchString.indexOf("=")+1);
+	var index = parmValue.indexOf(";");
+	var moduleId = parmValue.substring(0, index);
+	
+	var moduleparms = parmValue.substring(index+1);
+	index = moduleparms.indexOf(";");
+	var env = moduleparms.substring(0, index);
+	var decoration = moduleparms.substring(index+1);
+	
 	//create module runtime
 	var decorations = {};
-	decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = ["Decoration_application_framework7"];
+	decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = [decoration];
 	var statelessData = {
 		root : $('#moduleDiv').get(),
 		app : new Framework7({
@@ -45,7 +52,7 @@ $(document).on("nosliwActive", function(){
 			  id: 'com.myapp.test',
 		})
 	};
-	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, statelessData, decorations, "module_application_framework7_mobile", {
+	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, statelessData, decorations, env, {
 		success : function(requestInfo, uiModuleRuntime){
 			uiModuleRuntime.executeStartRequest(undefined, requestInfo);			
 		}
