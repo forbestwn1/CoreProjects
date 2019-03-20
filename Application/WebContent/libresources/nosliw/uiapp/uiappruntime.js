@@ -35,7 +35,10 @@ var node_createAppRuntimeRequest = function(uiAppDef, appConfigure, appStateless
 			root : appStatelessData.nodes[role]
 		};
 		var moduleConfigure = appConfigure.roleConfigure[role];
-		out.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULEDEFID], undefined, statelessData, moduleConfigure.decorations, moduleConfigure.moduleEnvFactoryId, {
+		var decorations = {};
+		decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = moduleConfigure.decorations;
+
+		out.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULEDEFID], undefined, statelessData, decorations, moduleConfigure.moduleEnvFactoryId, {
 			success : function(requestInfo, uiModuleRuntime){
 				uiModuleRuntime.executeStartRequest(undefined, requestInfo);			
 			}
