@@ -8,7 +8,7 @@
 		<a href="" nosliw-event="click:save:">Save</a>
 	</div>
 
-	<div data-role="content" id="pleaseEmbed"/>
+	<div id="pleaseEmbed"/>
 	<br>
 
     <a href="" nosliw-event="click:submit:">Submit</a>

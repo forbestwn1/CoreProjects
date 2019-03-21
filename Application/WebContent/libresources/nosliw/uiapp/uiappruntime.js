@@ -20,8 +20,47 @@ var packageObj = library;
 	var node_contextUtility;
 	var node_createUIModuleRequest;
 	var node_ioTaskUtility;
+	var node_appDataService;
 	
 //*******************************************   Start Node Definition  ************************************** 	
+
+var loc_createApplicationModuleRequest = function(module, root, appStatelessData, decorations, envFactoryId){
+	var statelessData = {
+		app : appStatelessData.app,
+		root : root
+	};
+
+	return nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], undefined, statelessData, decorations, envFactoryId, {
+		success : function(requestInfo, uiModuleRuntime){
+			uiModuleRuntime.executeStartRequest(undefined, requestInfo);			
+		}
+	});
+};	
+
+var loc_createSettingModuleRequest = function(module, settingPanelRoot, appStatelessData, decorations, envFactoryId){
+	var settingRoots = [];
+	var modules = [];
+	var settingsRequest = node_createServiceRequestInfoSequence(undefined);
+	settingsRequest.addRequest(node_appDataService.getGetAppDataRequest(undefined, {
+		success : function(request, appData){
+			var settingRequest = node_createServiceRequestInfoSequence(undefined);
+			_.each(appData, function(data, index){
+				var root = $('<div></div>');
+				root.appendTo(settingPanelRoot);
+				settingRoots.push(root);
+				
+				settingRequest.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], data.data, {root:root.get()}, decorations, envFactoryId, {
+					success : function(requestInfo, uiModuleRuntime){
+						uiModuleRuntime.executeStartRequest(undefined, requestInfo);
+						modules.push(uiModuleRuntime);
+					}
+				}));
+			});
+			return settingRequest;
+		}
+	}));
+	return settingsRequest;
+};
 
 var node_createAppRuntimeRequest = function(uiAppDef, appConfigure, appStatelessData, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createAppRuntime", {}), handlers, request);
@@ -30,54 +69,21 @@ var node_createAppRuntimeRequest = function(uiAppDef, appConfigure, appStateless
 
 	_.each(modules, function(module, name){
 		var role = module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ROLE];
-		var statelessData = {
-			app : appStatelessData.app,
-			root : appStatelessData.nodes[role]
-		};
+
 		var moduleConfigure = appConfigure.roleConfigure[role];
 		var decorations = {};
 		decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = moduleConfigure.decorations;
 
-		out.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULEDEFID], undefined, statelessData, decorations, moduleConfigure.moduleEnvFactoryId, {
-			success : function(requestInfo, uiModuleRuntime){
-				uiModuleRuntime.executeStartRequest(undefined, requestInfo);			
-			}
-		}));
+		if(role=="application"){
+			out.addRequest(loc_createApplicationModuleRequest(module, appStatelessData.nodes[role], appStatelessData, decorations, moduleConfigure.moduleEnvFactoryId));
+		}
+		else if(role=="setting"){
+			out.addRequest(loc_createSettingModuleRequest(module, appStatelessData.nodes[role], appStatelessData, decorations, moduleConfigure.moduleEnvFactoryId));
+		}
 	});
 	
 	return out;
 };
-
-var loc_createAppRuntime = function(uiApp, env){
-	
-	var loc_uiModule = uiModule;
-	var loc_env = env;
-	
-	
-	var loc_out = {
-		getModule : function(){  return loc_uiModule;  },
-
-		//init runtime, env
-		getInitRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
-			if(loc_env.getInitRequest!=undefined)  out.addRequest(loc_env.getInitRequest());
-			return out;
-		},	
-			
-		//start 
-		getStartRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModuleRuntime", {}), handlers, request);
-			//init module
-			out.addRequest(loc_getExecuteModuleProcessByNameRequest("init"));
-			return out;
-		},
-		
-		executeStartRequest : function(handlers, request){		loc_env.processRequest(this.getStartRequest(handlers, request));	},
-		
-	};
-	return loc_out;
-};
-
 
 //*******************************************   End Node Definition  ************************************** 	
 
@@ -100,6 +106,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){node_createUIModuleRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uiapp.appDataService", function(){node_appDataService = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createAppRuntimeRequest", node_createAppRuntimeRequest); 

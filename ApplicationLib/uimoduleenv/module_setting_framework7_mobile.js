@@ -8,12 +8,8 @@ function(uiModule){
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 
-	var CONSTANT_UISTACK_DATANAME = "module_uiStack";
-	
 	var loc_uiModule = uiModule;
 	
-	var loc_getUIStack = function(){ return loc_uiModule.getStateData(CONSTANT_UISTACK_DATANAME);  };
-
 	//runtime execute request through this method, so that ui can do something (for instance, spinning circle)
 	loc_processRequest = function(request){     node_requestServiceProcessor.processRequest(request);   };
 	
@@ -35,9 +31,6 @@ function(uiModule){
 			getInitRequest :function(handlers, requestInfo){
 				var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
 				out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
-					//init ui stack
-					loc_uiModule.setStateData(CONSTANT_UISTACK_DATANAME, []);
-	
 					//put ui to root
 					_.each(loc_uiModule.getUIs(), function(ui, index){
 						ui.getPage().appendTo(loc_uiModule.getStatelessData().root);

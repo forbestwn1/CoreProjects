@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("service");    
+var packageObj = library;    
 
 (function(packageObj){
 	//get used node
@@ -23,32 +23,82 @@ var packageObj = library.getChildPackage("service");
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createAppDataService = function(){
+var node_appDataService = function(){
+	var loc_data = [
+		{
+			version : "version1",
+			data : {
+				schoolType : {
+					"dataTypeId": "test.options;1.0.0",
+					"value": {
+						"value" : "Public",
+						"optionsId" : "schoolType"
+					}
+				},
+				schoolRating : {
+					"dataTypeId": "test.float;1.0.0",
+					"value": 9.0
+				}
+			}
+		},
+		{
+			version : "version2",
+			data : {
+				schoolType : {
+					"dataTypeId": "test.options;1.0.0",
+					"value": {
+						"value" : "Public",
+						"optionsId" : "schoolType"
+					}
+				},
+				schoolRating : {
+					"dataTypeId": "test.float;1.0.0",
+					"value": 8.0
+				}
+			}
+		}
+	];
 	
 	var loc_out = {
 			
 		getGetAppDataRequest : function(dataName, handlers, requester_parent){
-			return out;
+			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
+				return loc_data;
+			}, handlers, requester_parent);
 		},	
 			
 		getAddAppDataRequest : function(dataName, data, handlers, requester_parent){
-			return out;
+			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
+				loc_data.push(data);
+				return data;
+			}, handlers, requester_parent);
 		},	
 			
 		getDeleteAppDataRequest : function(dataName, dataVersion, handlers, requester_parent){
-			return out;
+			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
+				for(var i in loc_data){
+					if(data[i].version==dataVersion){
+						loc_data.splice(i, 1);
+						return;
+					}
+				}
+			}, handlers, requester_parent);
 		},	
 
 		getUpdateAppDataRequest : function(dataName, dataVersion, data, handlers, requester_parent){
-			return out;
+			return node_createServiceRequestInfoSimple(undefined, function(requestInfo){
+				for(var i in loc_data){
+					if(data[i].version==dataVersion){
+						loc_data[i].data = data;
+						return;
+					}
+				}
+			}, handlers, requester_parent);
 		},	
-
 	};
 
-	loc_out = node_buildServiceProvider(loc_out, "processService");
-	
 	return loc_out;
-};
+}();
 
 //*******************************************   End Node Definition  ************************************** 	
 
@@ -74,6 +124,6 @@ nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtil
 
 
 //Register Node by Name
-//packageObj.createChildNode("createUIAppService", node_createUIAppService); 
+packageObj.createChildNode("appDataService", node_appDataService); 
 
 })(packageObj);

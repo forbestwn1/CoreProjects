@@ -27,23 +27,32 @@ var node_createUIModuleService = function(){
 	
 	var loc_out = {
 
-		getGetUIModuleRuntimeRequest : function(id, input, statelessData, decorations, envFactoryId, handlers, requester_parent){
+		getGetUIModuleRuntimeRequest : function(module, input, statelessData, decorations, envFactoryId, handlers, requester_parent){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModuleResource", {"id":id, "input":input}), handlers, requestInfo);
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUIModuleResource", {"module":module, "input":input}), handlers, requestInfo);
 
-			var moduleId = {};
-			moduleId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = id; 
-			moduleId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE; 
+			var resourceIds = [];
+			var moduleId;
+			if(typeof module === 'string'){
+				moduleId = {};
+				moduleId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = module; 
+				moduleId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE; 
+				resourceIds.push(moduleId);
+			}
+			else{
+				uiModuleDef = module;
+			}
 
 			var moduleEnvId = {};
 			moduleEnvId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = envFactoryId; 
 			moduleEnvId[node_COMMONATRIBUTECONSTANT.RESOURCEID_TYPE] = node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULEENV; 
+			resourceIds.push(moduleEnvId);
 
 			//load ui module resource and env factory resource
-			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest([moduleId, moduleEnvId], {
+			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceIds, {
 				success : function(requestInfo, resourceTree){
 					var envFactory = node_resourceUtility.getResourceFromTree(resourceTree, moduleEnvId).resourceData;
-					var uiModuleDef = node_resourceUtility.getResourceFromTree(resourceTree, moduleId).resourceData;
+					if(moduleId!=undefined)  uiModuleDef = node_resourceUtility.getResourceFromTree(resourceTree, moduleId).resourceData;
 					
 					//create ui module runtime
 					return node_createModuleRuntimeRequest(uiModuleDef, input, statelessData, decorations, envFactory, {
