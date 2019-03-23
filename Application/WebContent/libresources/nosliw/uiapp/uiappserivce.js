@@ -48,11 +48,11 @@ var node_createUIAppService = function(){
 					//create ui app runtime
 					return node_createAppRuntimeRequest(appEntryDef, appConfigure, appStatelessData, {
 						success : function(request, uiAppRuntime){
-							return uiAppRuntime.getInitRequest({
-								success :function(request, data){
-									return uiAppRuntime;
-								}
-							});
+//							return uiAppRuntime.getInitRequest({
+//								success :function(request, data){
+//									return uiAppRuntime;
+//								}
+//							});
 						}
 					});
 				}

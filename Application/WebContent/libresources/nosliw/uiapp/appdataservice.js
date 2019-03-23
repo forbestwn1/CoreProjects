@@ -28,30 +28,30 @@ var node_appDataService = function(){
 		{
 			version : "version1",
 			data : {
-				schoolType : {
+				schoolTypeInData : {
 					"dataTypeId": "test.options;1.0.0",
 					"value": {
 						"value" : "Public",
 						"optionsId" : "schoolType"
 					}
 				},
-				schoolRating : {
+				schoolRatingInData : {
 					"dataTypeId": "test.float;1.0.0",
-					"value": 9.0
+					"value": 5.0
 				}
 			}
 		},
 		{
 			version : "version2",
 			data : {
-				schoolType : {
+				schoolTypeInData : {
 					"dataTypeId": "test.options;1.0.0",
 					"value": {
 						"value" : "Public",
 						"optionsId" : "schoolType"
 					}
 				},
-				schoolRating : {
+				schoolRatingInData : {
 					"dataTypeId": "test.float;1.0.0",
 					"value": 8.0
 				}

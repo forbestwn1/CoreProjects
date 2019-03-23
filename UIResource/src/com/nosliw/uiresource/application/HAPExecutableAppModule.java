@@ -74,6 +74,8 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildFullJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(MODULE, this.m_module.toResourceData(runtimeInfo).toString());
+		jsonMap.put(INPUTMAPPING, this.m_inputMapping.toResourceData(runtimeInfo).toString());
+		jsonMap.put(OUTPUTMAPPING, this.m_outputMapping.toResourceData(runtimeInfo).toString());
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 

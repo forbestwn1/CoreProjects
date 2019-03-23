@@ -87,10 +87,14 @@ var loc_createUIModule = function(uiModuleDef, context, statelessData){
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
+	var loc_valueChangeEventListener = node_createEventObject();
+
 	//hold module state data, so that when restart the module, we can return to the right state
 	var loc_stateData = {};
 	
 	var loc_statelessData = statelessData==undefined?{}:statelessData;
+
+	var loc_setContext = function(context) {  loc_context = context;  };
 	
 	var loc_out = {
 		
@@ -103,10 +107,18 @@ var loc_createUIModule = function(uiModuleDef, context, statelessData){
 					loc_uiEventHandler(eventName, ui.getName(), eventData, requestInfo);
 				}
 			});
+			ui.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, requestInfo){
+				//handle ui value change
+				ui.executeSynOutUIDataRequest(loc_context, {
+					success : function(requestInfo, moduleData){
+						loc_setContext(moduleData);
+					}
+				}, requestInfo);
+			});
 		},
 	
 		getContext : function(){  return loc_context;  },
-		setContext : function(context) {  loc_context = context;  },
+		setContext : function(context){ loc_setContext(context);  },
 		
 		getStateData : function(name){   return loc_stateData[name];  },
 		setStateData : function(name, state){  loc_stateData[name] = state;   },
@@ -122,8 +134,8 @@ var loc_createUIModule = function(uiModuleDef, context, statelessData){
 		
 		getEventHandler : function(uiName, eventName){  return this.getUI(uiName).getEventHandler(eventName);     },
 		
-		registerUIEventListener : function(handler){  loc_uiEventHandler = handler; }
-		
+		registerUIEventListener : function(handler){  loc_uiEventHandler = handler; },
+
 	};
 
 	loc_out = node_buildServiceProvider(loc_out, "processService");

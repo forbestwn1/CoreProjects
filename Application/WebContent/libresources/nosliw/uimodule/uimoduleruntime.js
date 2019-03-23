@@ -90,6 +90,10 @@ var loc_createModuleRuntime = function(uiModule, env){
 	var loc_out = {
 		getModule : function(){  return loc_uiModule;  },
 
+		registerEventListener : function(){
+			
+		},
+		
 		//init runtime, env
 		getInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);

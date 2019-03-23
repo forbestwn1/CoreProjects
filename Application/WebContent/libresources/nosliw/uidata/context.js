@@ -27,6 +27,7 @@ var node_uiDataOperationServiceUtility;
 var node_createUIDataOperationRequest;
 var node_uiDataOperationServiceUtility;
 var node_UIDataOperation;
+var node_createVariableGroup;
 
 //*******************************************   Start Node Definition  ************************************** 	
 /*
@@ -141,17 +142,27 @@ var node_createContext = function(elementInfosArray, request){
 		//adapter variables by path
 		loc_out.prv_adapters = {};
 		
+		loc_out.prv_valueChangeEventEnable = false;
+		loc_out.prv_valueChangeEventSource = node_createEventObject();
+		loc_out.prv_eleVariableGroup = node_createVariableGroup([], function(request){
+			if(loc_out.prv_valueChangeEventEnable == true){
+				loc_out.prv_valueChangeEventSource.triggerEvent(node_CONSTANT.CONTEXT_EVENT_UPDATE, undefined, request);
+			}
+		});
+		
 		//process refer to parent first
 		var flatedelEmentInfosArray = [];
 		loc_flatArray(elementInfosArray, flatedelEmentInfosArray);
 		_.each(flatedelEmentInfosArray, function(elementInfo, key){
 			loc_addContextElement(elementInfo, request);
 		});
+		loc_out.prv_valueChangeEventEnable = true;
 	};
 
 	var loc_addContextElement = function(elementInfo, request){
 		//create empty wrapper variable for each element
 		var contextEle = node_createContextElement(elementInfo, request);
+		loc_out.prv_eleVariableGroup.addVariable(contextEle.variable, contextEle.path);
 		if(contextEle!=undefined){
 			loc_out.prv_elements[elementInfo.name] = contextEle;
 			
@@ -208,9 +219,13 @@ var node_createContext = function(elementInfosArray, request){
 		
 		getElementsName : function(){
 			var out = [];
-			_.each(loc_out.prv_elements, function(ele, eleName){
-				out.push(eleName);
-			});
+			_.each(loc_out.prv_elements, function(ele, eleName){  out.push(eleName);});
+			return out;
+		},
+
+		getElementsVariable : function(){
+			var out = [];
+			_.each(loc_out.prv_elements, function(ele, eleName){	out.push(ele.variable);	});
 			return out;
 		},
 
@@ -234,37 +249,13 @@ var node_createContext = function(elementInfosArray, request){
 			return outRequest;
 		},
 		
-		/*
-		 * update context wrappers
-		 * elements: 
-		 * 		name --- wrapper
-		 * 		new wrappers
-		 * only update those element variables contains within wrappers 
-		 */
-/*
-		updateContext : function(wrappers, requestInfo){
-			this.prv_eventObject.triggerEvent(node_CONSTANT.CONTEXT_EVENT_BEFOREUPDATE, this, requestInfo);
-
-			var that = this;
-			_.each(wrappers, function(wrapper, name){
-				//set wrapper to each variable
-				var eleVar = loc_getContextElementVariable(name);
-				if(eleVar!=undefined){
-					eleVar.setWrapper(wrapper, requestInfo);
-				}
-			});
-
-			this.prv_eventObject.triggerEvent(node_CONSTANT.CONTEXT_EVENT_UPDATE, this, requestInfo);
-			
-			this.prv_eventObject.triggerEvent(node_CONSTANT.CONTEXT_EVENT_AFTERUPDATE, this, requestInfo);
-		},
-*/
-		
 		getUpdateContextRequest : function(values, handlers, requestInfo){
+			loc_out.prv_valueChangeEventEnable = false;
 			var that = this;
 			var outRequest = node_createServiceRequestInfoSequence({}, handlers, requestInfo);
 			var setRequest = node_createServiceRequestInfoSet({}, {
 				success : function(requestInfo, result){
+					loc_out.prv_valueChangeEventEnable = true;
 				}
 			});
 			
@@ -276,14 +267,12 @@ var node_createContext = function(elementInfosArray, request){
 				}
 			});
 			
-//			_.each(values, function(value, name){
-//				var dataOpRequest = node_createUIDataOperationRequest(that, new node_UIDataOperation(name, node_uiDataOperationServiceUtility.createSetOperationService("", value)));
-//				setRequest.addRequest(name, dataOpRequest);
-//			});
 			outRequest.addRequest(setRequest);
 			return outRequest;
-		}
+		},
 		
+		registerValueChangeEventListener : function(listener, handler, thisContext){	return loc_out.prv_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext);},
+		unregisterValueChangeEventListener : function(listener){	return loc_out.prv_valueChangeEventSource.unregister(listener);},
 		
 	};
 
@@ -324,6 +313,7 @@ nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUt
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createVariableGroup", function(){node_createVariableGroup = this.getData();});
 
 
 //Register Node by Name

@@ -20,6 +20,7 @@ var packageObj = library;
 	var node_contextUtility;
 	var node_createUIModuleRequest;
 	var node_ioTaskUtility;
+	var node_createIODataSet;
 	var node_appDataService;
 	
 //*******************************************   Start Node Definition  ************************************** 	
@@ -41,7 +42,7 @@ var loc_createSettingModuleRequest = function(module, settingPanelRoot, appState
 	var settingRoots = [];
 	var modules = [];
 	var settingsRequest = node_createServiceRequestInfoSequence(undefined);
-	settingsRequest.addRequest(node_appDataService.getGetAppDataRequest(undefined, {
+	settingsRequest.addRequest(node_appDataService.getGetAppDataRequest("setting", {
 		success : function(request, appData){
 			var settingRequest = node_createServiceRequestInfoSequence(undefined);
 			_.each(appData, function(data, index){
@@ -49,12 +50,20 @@ var loc_createSettingModuleRequest = function(module, settingPanelRoot, appState
 				root.appendTo(settingPanelRoot);
 				settingRoots.push(root);
 				
-				settingRequest.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], data.data, {root:root.get()}, decorations, envFactoryId, {
-					success : function(requestInfo, uiModuleRuntime){
-						uiModuleRuntime.executeStartRequest(undefined, requestInfo);
-						modules.push(uiModuleRuntime);
+				var inputSet = node_createIODataSet();
+				inputSet.setData("appdata_setting", data.data);
+				settingRequest.addRequest(node_ioTaskUtility.getExecuteDataAssociationRequest(inputSet, module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_INPUTMAPPING].element.default, {
+					success : function(requestInfo, outputSet){
+						return nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], outputSet.getData(), {root:root.get()}, decorations, envFactoryId, {
+							success : function(requestInfo, uiModuleRuntime){
+								uiModuleRuntime.executeStartRequest(undefined, requestInfo);
+								modules.push(uiModuleRuntime);
+							}
+						});
+						
 					}
 				}));
+				
 			});
 			return settingRequest;
 		}
@@ -106,6 +115,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){node_createUIModuleRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.appDataService", function(){node_appDataService = this.getData();});
 
 //Register Node by Name

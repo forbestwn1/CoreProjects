@@ -36,6 +36,12 @@ var packageObj = library.getChildPackage("event");
 				 * 		listener : event object
 				 */
 				registerListener : function(eventName, listener, handler, thisContext){
+					
+					if (typeof handler != "function") {
+						var kkkk = 5555;
+						kkkk++;
+					}
+					
 					var that = thisContext;
 					if(that==undefined){
 						if(this.getBaseObject!=null)   that = this.getBaseObject();

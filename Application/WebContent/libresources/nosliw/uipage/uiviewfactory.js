@@ -77,8 +77,10 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 
 	//event source used to register and trigger event
 	var loc_eventSource = node_createEventObject();
-	
 	var loc_eventListener = node_createEventObject();
+
+	var loc_valueChangeEventSource = node_createEventObject();
+	var loc_valueChangeEventListener = node_createEventObject();
 	
 	//temporately store uiResource
 	var loc_uiResource = uiResource;
@@ -250,7 +252,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 			var parentContext = parent==undefined?undefined:parent.getContext();
 			loc_context = node_contextUtility.buildContext(uiResource[node_COMMONATRIBUTECONSTANT.UIRESOURCEDEFINITION_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXTFLAT_CONTEXT][node_COMMONATRIBUTECONSTANT.CONTEXT_ELEMENT], parentContext);
 		}
-		
+
 		//wrap html by start and end element
 		var resourceStartId = "-resource-start";
 		var resourceEndId = "-resource-end";
@@ -314,6 +316,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		loc_elementEvents = undefined;
 
 		loc_eventSource.clearup();
+		loc_valueChangeEventSource.clearup();
 		
 		loc_tagEvents = undefined;
 
@@ -438,6 +441,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		
 		getContext : function(){return loc_context;},
 		getUpdateContextRequest : function(values, handlers, requestInfo){	return loc_context.getUpdateContextRequest(values, handlers, requestInfo);		},
+		getContextElements : function(){  return this.getContext().prv_elements; },
 
 		getStartElement : function(){  return loc_startEle;   },
 		getEndElement : function(){  return loc_endEle; },
@@ -522,6 +526,9 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
 
+		registerValueChangeEventListener : function(listener, handler, thisContext){    return loc_context.registerValueChangeEventListener(listener, handler, thisContext);     },
+		unregisterValueChangeEventListener : function(listener){	return loc_context.unregisterValueChangeEventListener(listener); },
+		
 		command : function(command, data, requestInfo){			return this.prv_callScriptFunctionDown("command_"+command, data, requestInfo);		},
 		findFunctionDown : function(funName){  return this.prv_findFunctionDown(funName);  }
 	};

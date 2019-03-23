@@ -16,37 +16,56 @@ var packageObj = library;
 var node_createUIPage = function(uiView){
 	
 	var loc_decorations = [];
-	loc_decorations.push(uiView);
 	
 	//event source used to register and trigger event
 	var loc_eventSource = node_createEventObject();
-
 	var loc_eventListener = node_createEventObject();
 
+	var loc_valueChangeEventSource = node_createEventObject();
+	var loc_valueChangeEventListener = node_createEventObject();
+
+	var loc_addElement = function(ele){
+		var current = loc_getCurrent();
+		if(current!=undefined){
+			loc_viewEventListener = loc_unregisterViewListener(current);
+			ele.setParent(current);
+		}
+		loc_decorations.push(ele);
+		loc_registerViewListener(loc_getCurrent());
+	};
+	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(uiView){
-		loc_registerViewListener();
+		loc_addElement(uiView);
 	};	
 	
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
 	};	
 
-	var loc_registerViewListener = function(){
-		loc_getCurrent().registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
+	var loc_unregisterViewListener = function(ele){
+		ele.unregisterEventListener(loc_eventListener);
+		ele.unregisterValueChangeEventListener(loc_valueChangeEventListener);
+	}
+
+	var loc_registerViewListener = function(ele){
+		ele.registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
 			loc_eventSource.triggerEvent(event, eventData, requestInfo);
+		});
+		ele.registerValueChangeEventListener(loc_valueChangeEventListener, function(event, eventData, requestInfo){
+			loc_valueChangeEventSource.triggerEvent(event, eventData, requestInfo);
 		});
 	}
 	
-	var loc_getCurrent = function(){	return loc_decorations[loc_decorations.length-1];	};
+	var loc_getCurrent = function(){
+		if(loc_decorations.length==0)  return;
+		return loc_decorations[loc_decorations.length-1];	
+	};
 	
 	var loc_out = {
 		getUIView :function(){ return loc_decorations[0];  },
 			
 		addDecoration : function(decoration){  
-			loc_viewEventListener = loc_getCurrent().unregisterEventListener(loc_eventListener);
-			decoration.setParent(loc_getCurrent());
-			loc_decorations.push(decoration);
-			loc_registerViewListener();
+			loc_addElement(decoration);
 		},	
 			
 		//append this views to some element as child
@@ -59,6 +78,9 @@ var node_createUIPage = function(uiView){
 
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext);},
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener);},
+
+		registerValueChangeEventListener : function(listener, handler, thisContext){	return loc_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext);},
+		unregisterValueChangeEventListener : function(listener){	return loc_valueChangeEventSource.unregister(listener);},
 
 		getUpdateContextRequest : function(parms, handlers, requestInfo){	return loc_getCurrent().getUpdateContextRequest(parms, handlers, requestInfo);	},
 		executeUpdateContextRequest : function(parms, handlers, requestInfo){	node_requestServiceProcessor.processRequest(this.getUpdateContextRequest(parms, handlers, requestInfo));	},
@@ -76,7 +98,7 @@ var node_createUIPage = function(uiView){
 		executeExecuteCommandRequest : function(command, data, handlers, requestInfo){		node_requestServiceProcessor.processRequest(this.getExecuteCommandRequest(command, data, handlers, requestInfo));	},
 		
 		getGetContextValueRequest : function(handlers, requestInfo){
-			return node_contextUtility.getGetContextValueRequest(loc_getCurrent().getContext(), handlers, requestInfo);
+			return node_contextUtility.getGetContextValueRequest(loc_getCurrent().getContextElements(), handlers, requestInfo);
 		}
 	};
 

@@ -40,6 +40,10 @@ function(uiModule){
 				}));
 				return out;
 			},
+			
+			registerEventListener : function(){
+				
+			}
 	};
 	return loc_out;
 }

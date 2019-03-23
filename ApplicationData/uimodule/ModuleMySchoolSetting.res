@@ -61,6 +61,26 @@
 					}
 				}
 			},
+			"outputMapping": {
+				"element": {
+					"schoolTypeInModule": {
+						"definition": {
+							"path": "schoolType"
+						},
+						"info": {
+							"relativeConnection": "physical"
+						}
+					},
+					"schoolRatingInModule": {
+						"definition": {
+							"path": "schoolRating"
+						},
+						"info": {
+							"relativeConnection": "physical"
+						}
+					}
+				}
+			},
 			"serviceMapping": {},
 		}
 	]

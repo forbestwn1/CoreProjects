@@ -105,18 +105,9 @@ var node_createModuleUI = function(moduleUIDef, page){
 		executeCommandRequest : function(commandName, parms, handlers, request){	node_requestServiceProcessor.processRequest(this.getExecuteCommandRequest(commandName, parms, handlers, request));	},
 		
 		registerEventListener : function(listener, handler){		loc_page.registerEventListener(listener, handler);	},
+		registerValueChangeEventListener : function(listener, handler){		loc_page.registerValueChangeEventListener(listener, handler);	},
 		
 		getRefreshRequest : function(moduleContext, handlers, request){  return loc_getRefreshRequest(moduleContext, handlers, request);  },
-		
-		getSynInUIDataRequest : function(moduleContext, handlers, request){ 
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SynInUIData", {"moduleContext":moduleContext}), handlers, request);
-			out.addRequest(node_ioTaskUtility.getExecuteDataAssociationRequest(moduleContext, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], {
-				success : function(request, input){
-					return loc_page.getUpdateContextRequest(input.getData());
-				}
-			}, request));
-			return out;
-		},
 		
 		getSynOutUIDataRequest : function(moduleContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SynOutUIData", {"moduleContext":moduleContext}), handlers, request);
@@ -131,6 +122,9 @@ var node_createModuleUI = function(moduleUIDef, page){
 			}));
 			return out;
 		},
+		executeSynOutUIDataRequest : function(moduleContext, handlers, request){
+			node_requestServiceProcessor.processRequest(this.getSynOutUIDataRequest(moduleContext, handlers, request));
+		}
 		
 	};
 	

@@ -20,7 +20,7 @@ var node_dataUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 var node_utility = {
 		//from flat context to context group
-		getGetContextValueRequest : function(context, handlers, request){
+		getGetContextValueRequest : function(contextItems, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetContextValue", {}), handlers, request);
 			var calContextValue = node_createServiceRequestInfoSet(undefined, {
 				success : function(request, resultSet){
@@ -42,8 +42,8 @@ var node_utility = {
 				}
 			});
 
-			_.each(context.getElementsName(), function(eleName, i){
-				calContextValue.addRequest(eleName, context.getContextElement(eleName).getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
+			_.each(contextItems, function(contextItem, eleName){
+				calContextValue.addRequest(eleName, contextItem.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
 			});
 			
 			out.addRequest(calContextValue);

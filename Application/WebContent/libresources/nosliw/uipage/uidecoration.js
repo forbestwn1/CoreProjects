@@ -42,12 +42,22 @@ var loc_createDecoration = function(uiView){
 	var loc_eventListenerForDec = node_createEventObject();
 	var loc_eventListenerForParent = node_createEventObject();
 
+	var loc_valueChangeEventSource = node_createEventObject();
+	var loc_valueChangeEventListenerForDec = node_createEventObject();
+	var loc_valueChangeEventListenerForParent = node_createEventObject();
+	
 	var loc_parent;
 	
 	var loc_uiView = uiView;
 
+	//regular event
 	loc_uiView.registerEventListener(loc_eventListenerForDec, function(event, eventData, requestInfo){
 		loc_eventSource.triggerEvent(event, eventData, requestInfo);
+	});
+
+	//value change event
+	loc_uiView.registerValueChangeEventListener(loc_valueChangeEventListenerForDec, function(event, eventData, requestInfo){
+		loc_valueChangeEventSource.triggerEvent(event, eventData, requestInfo);
 	});
 
 	var loc_out = {
@@ -67,11 +77,23 @@ var loc_createDecoration = function(uiView){
 				if(result===false)  return false;   //if return false, then no pop up the event
 				else loc_eventSource.triggerEvent(event, eventData, requestInfo);  //otherwise, pop up the event
 			});
+
+			//value change event, just pop up
+			loc_parent.registerValueChangeEventListener(loc_valueChangeEventListenerForParent, function(event, eventData, requestInfo){
+				loc_valueChangeEventSource.triggerEvent(event, eventData, requestInfo);  
+			});
+
 		},	
 		
 		appendTo : function(ele){	loc_uiView.appendTo(ele);	},
 		insertAfter : function(ele){	loc_uiView.insertAfter(ele);	},
 		detachViews : function(){	loc_uiView.detachViews();  },
+		
+		getContextElements : function(){
+			var out = {};
+			out = _.extend(out, loc_uiView.getContext().prv_elements, loc_parent.getContextElements());
+			return out;
+		},
 		
 		getUpdateContextRequest : function(parms, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
@@ -94,6 +116,8 @@ var loc_createDecoration = function(uiView){
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext);},
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener);},
 
+		registerValueChangeEventListener : function(listener, handler, thisContext){	return loc_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext);},
+		unregisterValueChangeEventListener : function(listener){	return loc_valueChangeEventSource.unregister(listener);},
 	};
 	
 	return loc_out;

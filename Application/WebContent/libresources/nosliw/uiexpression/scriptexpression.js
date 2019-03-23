@@ -8,7 +8,7 @@ var packageObj = library;
 	var node_makeObjectWithLifecycle;
 	var node_createEventObject;
 	var node_getLifecycleInterface;
-	var node_createContextVariableInfosGroup;
+	var node_createContextVariablesGroup;
 	var node_requestServiceProcessor;
 	var node_createContextVariableInfo;
 	var node_createServiceRequestInfoSet;
@@ -72,7 +72,7 @@ var packageObj = library;
 			_.each(varNames, function(varName, index){
 				contextVariables.push(node_createContextVariableInfo(varName));
 			});
-			loc_contextVarGroup = node_createContextVariableInfosGroup(context, contextVariables, loc_contextVarsGroupHandler, this);
+			loc_contextVarGroup = node_createContextVariablesGroup(context, contextVariables, loc_contextVarsGroupHandler, this);
 		};
 			
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
@@ -148,7 +148,7 @@ var packageObj = library;
 	nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 	nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 	nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
-	nosliw.registerSetNodeDataEvent("uidata.context.createContextVariablesGroup", function(){node_createContextVariableInfosGroup = this.getData();});
+	nosliw.registerSetNodeDataEvent("uidata.context.createContextVariablesGroup", function(){node_createContextVariablesGroup = this.getData();});
 	nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 	nosliw.registerSetNodeDataEvent("uidata.context.createContextVariableInfo", function(){node_createContextVariableInfo = this.getData();});
 	nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});

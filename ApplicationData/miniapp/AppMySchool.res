@@ -15,13 +15,13 @@
 							"schoolTypeInModule": {
 								"definition": {
 									"path": "schoolTypeInData",
-									"parent" : "appdata.setting"
+									"parent" : "appdata_setting"
 								}
 							},
 							"schoolRatingInModule": {
 								"definition": {
 									"path": "schoolRatingInData",
-									"parent" : "appdata.setting"
+									"parent" : "appdata_setting"
 								}
 							}
 						}
@@ -31,12 +31,12 @@
 					{
 						"name" : "persistance",
 						"element": {
-							"appdata.setting;schoolTypeInData": {
+							"appdata_setting;schoolTypeInData": {
 								"definition": {
 									"path": "schoolTypeInModule",
 								}
 							},
-							"appdata.setting;schoolRatingInData": {
+							"appdata_setting;schoolRatingInData": {
 								"definition": {
 									"path": "schoolRatingInModule",
 								}
@@ -61,6 +61,7 @@
 				]
 			},
 			{
+				"status": "disabled",
 				"role": "application",
 				"name": "MySchool",
 				"module": "ModuleMySchoolResult",

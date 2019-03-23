@@ -19,7 +19,7 @@ var node_createRequestEventGroupHandler;
  * 		thisContext : the this context for event handler
  */
 
-var node_createContextVariableInfosGroup = function(context, contextVariableInfosArray, handler, thisContext){
+var node_createContextVariablesGroup = function(context, contextVariableInfosArray, handler, thisContext){
 
 	//context
 	var loc_context = context;
@@ -88,6 +88,6 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", functi
 nosliw.registerSetNodeDataEvent("request.event.createRequestEventGroupHandler", function(){node_createRequestEventGroupHandler = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createContextVariablesGroup", node_createContextVariableInfosGroup); 
+packageObj.createChildNode("createContextVariablesGroup", node_createContextVariablesGroup); 
 
 })(packageObj);
