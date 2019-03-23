@@ -40,6 +40,7 @@ var loc_createModuleRuntime = function(uiModule, env){
 	
 	loc_uiModule.registerUIEventListener(function(eventName, uiName, eventData, request){
 		var eventHandler = loc_uiModule.getEventHandler(uiName, eventName);
+		//if within module, defined the process for this event
 		if(eventHandler!=undefined){
 			var extraInput = {
 				EVENT : {

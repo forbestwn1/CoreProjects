@@ -23,7 +23,10 @@ function(uiModule){
 			},
 			
 			processUIEvent : function(eventName, uiName, eventData, request){
-				loc_processUIEvent(eventName, uiName, eventData, request);
+				var eventProcessor = loc_uiModule.getStatelessData().eventProcessor;
+				if(eventProcessor!=undefined){
+					eventProcessor(eventName, uiName, eventData, request);
+				}
 			},
 			
 			processRequest : function(request){     loc_processRequest(request);   },

@@ -38,7 +38,68 @@ var loc_createApplicationModuleRequest = function(module, root, appStatelessData
 	});
 };	
 
-var loc_createSettingModuleRequest = function(module, settingPanelRoot, appStatelessData, decorations, envFactoryId){
+var loc_createSettingModuleRequest = function(data, module, settingRoots, settingPanelRoot, appStatelessData, decorations, envFactoryId, handlers, request){
+	var settingRequest = node_createServiceRequestInfoSequence(undefined, handlers, request);
+	var root = $('<div></div>');
+	root.appendTo(settingPanelRoot);
+	settingRoots.push(root);
+	
+	var inputSet = node_createIODataSet();
+	inputSet.setData("appdata_setting", data.data);
+	settingRequest.addRequest(node_ioTaskUtility.getExecuteDataAssociationRequest(inputSet, module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_INPUTMAPPING].element.default, {
+		success : function(requestInfo, outputSet){
+			var moduleStatelessData ={
+				root:root.get(),
+				eventProcessor : function(eventName, uiName, eventData, request){
+					if(eventName=="saveSetting"){
+						var moduleData = moduleStatelessData.uiModule.getContext();
+						var ioTarget = node_createIODataSet();
+//						ioTarget.setData('appdata_setting', {
+//							kkkk : 5555
+//						});
+						ioTarget.setData('appdata_setting', {
+							getGetValueRequest : function(handlers, request){
+								var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+								out.addRequest(node_appDataService.getGetAppDataByVersionRequest("setting", data.version, {
+									success : function(request, data){
+										return data.data;
+									}
+								}));
+								return out;
+							},
+							getSetValueRequest : function(value, handlers, request){
+								return node_appDataService.getUpdateAppDataRequest("setting", data.version, {
+									data : value,
+									version : data.version
+								});
+							}
+						});
+							 
+						node_ioTaskUtility.executeDataAssociationToTargetRequest(moduleData, module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_OUTPUTMAPPING].element.persistance, ioTarget, {
+							success : function(request, result){
+								var data = result.getData("appdata_setting");
+								var kkkk = ioTarget.getDataSet();
+								kkkk = kkkk;
+							}
+						});
+						
+					}
+				}
+			}; 
+			return nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], outputSet.getData(), moduleStatelessData, decorations, envFactoryId, {
+				success : function(requestInfo, uiModuleRuntime){
+					uiModuleRuntime.executeStartRequest(undefined, requestInfo);
+					uiModuleRuntime.getModule().getStatelessData().uiModule = uiModuleRuntime.getModule(); 
+					return uiModuleRuntime;
+				}
+			});
+			
+		}
+	}));
+	return settingRequest;
+};
+
+var loc_createSettingsModuleRequest = function(module, settingPanelRoot, appStatelessData, decorations, envFactoryId){
 	var settingRoots = [];
 	var modules = [];
 	var settingsRequest = node_createServiceRequestInfoSequence(undefined);
@@ -46,24 +107,11 @@ var loc_createSettingModuleRequest = function(module, settingPanelRoot, appState
 		success : function(request, appData){
 			var settingRequest = node_createServiceRequestInfoSequence(undefined);
 			_.each(appData, function(data, index){
-				var root = $('<div></div>');
-				root.appendTo(settingPanelRoot);
-				settingRoots.push(root);
-				
-				var inputSet = node_createIODataSet();
-				inputSet.setData("appdata_setting", data.data);
-				settingRequest.addRequest(node_ioTaskUtility.getExecuteDataAssociationRequest(inputSet, module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_INPUTMAPPING].element.default, {
-					success : function(requestInfo, outputSet){
-						return nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], outputSet.getData(), {root:root.get()}, decorations, envFactoryId, {
-							success : function(requestInfo, uiModuleRuntime){
-								uiModuleRuntime.executeStartRequest(undefined, requestInfo);
-								modules.push(uiModuleRuntime);
-							}
-						});
-						
+				settingRequest.addRequest(loc_createSettingModuleRequest(data, module, settingRoots, settingPanelRoot, appStatelessData, decorations, envFactoryId, {
+					success : function(request, uiModuleRuntime){
+						modules.push(uiModuleRuntime);
 					}
 				}));
-				
 			});
 			return settingRequest;
 		}
@@ -87,7 +135,7 @@ var node_createAppRuntimeRequest = function(uiAppDef, appConfigure, appStateless
 			out.addRequest(loc_createApplicationModuleRequest(module, appStatelessData.nodes[role], appStatelessData, decorations, moduleConfigure.moduleEnvFactoryId));
 		}
 		else if(role=="setting"){
-			out.addRequest(loc_createSettingModuleRequest(module, appStatelessData.nodes[role], appStatelessData, decorations, moduleConfigure.moduleEnvFactoryId));
+			out.addRequest(loc_createSettingsModuleRequest(module, appStatelessData.nodes[role], appStatelessData, decorations, moduleConfigure.moduleEnvFactoryId));
 		}
 	});
 	

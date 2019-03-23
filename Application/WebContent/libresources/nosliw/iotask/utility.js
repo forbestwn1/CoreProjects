@@ -41,9 +41,18 @@ var node_utility = function(){
 		//use convert function to calculate output
 		var output = loc_executeDataAssociationConvertFun(association, input); 
 		if(output==undefined){
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){  
-				return outputTarget;  
-			}));
+			if(outputTarget!=undefined && typeof outputTarget.getGetValueRequest == 'function'){
+				out.addRequest(outputTarget.getGetValueRequest({
+					success : function(request, value){
+						return value;
+					}
+				}));
+			}
+			else{
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){  
+					return outputTarget;  
+				}));
+			}
 		}
 		else{
 			//process matchers
@@ -69,10 +78,25 @@ var node_utility = function(){
 			
 			//to target
 			if(outputTarget!=undefined){
-				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){ 
-					var isOutputFlat = association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_FLATOUTPUT];
-					return loc_out.assignToContext(output, outputTarget, isOutputFlat);
-				})); 
+				if(typeof outputTarget.getGetValueRequest == 'function'){
+					out.addRequest(outputTarget.getGetValueRequest({
+						success : function(request, value){
+							var isOutputFlat = association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_FLATOUTPUT];
+							var targetOutput = loc_out.assignToContext(output, value, isOutputFlat)
+							return outputTarget.getSetValueRequest(targetOutput, {
+								success : function(request, data){
+									return data;
+								}
+							});
+						}
+					}));
+				}
+				else{
+					out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){ 
+						var isOutputFlat = association[node_COMMONATRIBUTECONSTANT.EXECUTABLEASSOCIATION_FLATOUTPUT];
+						return loc_out.assignToContext(output, outputTarget, isOutputFlat);
+					})); 
+				}
 			}
 		}
 		
@@ -178,6 +202,11 @@ var node_utility = function(){
 			return loc_getExecuteDataAssociationRequest(input, dataAssociation, target, handlers, request);
 		},
 		
+		executeDataAssociationToTargetRequest : function(input, dataAssociation, target, handlers, request){
+			var requestInfo = this.getExecuteDataAssociationToTargetRequest(input, dataAssociation, target, handlers, request);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+
 		getContextTypes : function(){
 			return [ 
 				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_PUBLIC, 

@@ -108,7 +108,7 @@ var loc_createUIModule = function(uiModuleDef, context, statelessData){
 				}
 			});
 			ui.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, requestInfo){
-				//handle ui value change
+				//handle ui value change, update value in module
 				ui.executeSynOutUIDataRequest(loc_context, {
 					success : function(requestInfo, moduleData){
 						loc_setContext(moduleData);
