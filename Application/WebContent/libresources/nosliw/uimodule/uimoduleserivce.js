@@ -33,6 +33,7 @@ var node_createUIModuleService = function(){
 
 			var resourceIds = [];
 			var moduleId;
+			var uiModuleDef;
 			if(typeof module === 'string'){
 				moduleId = {};
 				moduleId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = module; 

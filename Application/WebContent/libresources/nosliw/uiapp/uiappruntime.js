@@ -81,6 +81,9 @@ var loc_createSettingModuleRequest = function(data, module, settingRoots, settin
 						});
 						
 					}
+					else if(eventName=="submitSetting"){
+						
+					}
 				}
 			}; 
 			return nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], outputSet.getData(), moduleStatelessData, decorations, envFactoryId, {
