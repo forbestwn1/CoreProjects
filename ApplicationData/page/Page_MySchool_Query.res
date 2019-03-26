@@ -10,6 +10,9 @@
 	<br>
 	SchoolRating:<nosliw-floatinput data="schoolRating"/>  
 	<br>
+	<br>
+	Content:<%=?(schoolRating)?.value%>
+	<br>
 
 	<br>
 	SchoolType:<nosliw-options id="schoolType" data="schoolType"/>

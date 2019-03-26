@@ -75,41 +75,41 @@ var node_createUIModuleRequest = function(uiModuleDef, input, statelessData, dec
 	
 var loc_createUIModule = function(uiModuleDef, context, statelessData){
 
-	var loc_uiModuleDef = uiModuleDef;
-	
-	var loc_context = context;
-	
-	var loc_uis = [];
-	var loc_uisByName = {};
 
-	var loc_uiEventHandler;
-	
-	var loc_eventSource = node_createEventObject();
-	var loc_eventListener = node_createEventObject();
-
-	var loc_valueChangeEventListener = node_createEventObject();
-
-	//hold module state data, so that when restart the module, we can return to the right state
-	var loc_stateData = {};
-	
-	var loc_statelessData = statelessData==undefined?{}:statelessData;
-
-	var loc_setContext = function(context) {  loc_context = context;  };
+	var loc_setContext = function(context) {  loc_out.prv_context = context;  };
 	
 	var loc_out = {
+		prv_uiModuleDef : uiModuleDef,
+		
+		prv_context : context,
+		
+		prv_uis : [],
+		prv_uisByName : {},
+
+		prv_uiEventHandler : undefined,
+		
+		prv_eventSource : node_createEventObject(),
+		prv_eventListener : node_createEventObject(),
+
+		prv_valueChangeEventListener : node_createEventObject(),
+
+		//hold module state data, so that when restart the module, we can return to the right state
+		prv_stateData : {},
+		
+		prv_statelessData : statelessData==undefined?{}:statelessData,
 		
 		prv_addUI : function(ui){
-			loc_uis.push(ui);
-			loc_uisByName[ui.getName()] = ui;
+			loc_out.prv_uis.push(ui);
+			loc_out.prv_uisByName[ui.getName()] = ui;
 			//register listener for module ui
-			ui.registerEventListener(loc_eventListener, function(eventName, eventData, requestInfo){
-				if(loc_uiEventHandler!=undefined){
-					loc_uiEventHandler(eventName, ui.getName(), eventData, requestInfo);
+			ui.registerEventListener(loc_out.prv_eventListener, function(eventName, eventData, requestInfo){
+				if(loc_out.prv_uiEventHandler!=undefined){
+					loc_out.prv_uiEventHandler(eventName, ui.getName(), eventData, requestInfo);
 				}
 			});
-			ui.registerValueChangeEventListener(loc_valueChangeEventListener, function(eventName, eventData, requestInfo){
+			ui.registerValueChangeEventListener(loc_out.prv_valueChangeEventListener, function(eventName, eventData, requestInfo){
 				//handle ui value change, update value in module
-				ui.executeSynOutUIDataRequest(loc_context, {
+				ui.executeSynOutUIDataRequest(loc_out.prv_context, {
 					success : function(requestInfo, moduleData){
 						loc_setContext(moduleData);
 					}
@@ -117,24 +117,24 @@ var loc_createUIModule = function(uiModuleDef, context, statelessData){
 			});
 		},
 	
-		getContext : function(){  return loc_context;  },
+		getContext : function(){  return loc_out.prv_context;  },
 		setContext : function(context){ loc_setContext(context);  },
 		
-		getStateData : function(name){   return loc_stateData[name];  },
-		setStateData : function(name, state){  loc_stateData[name] = state;   },
+		getStateData : function(name){   return loc_out.prv_stateData[name];  },
+		setStateData : function(name, state){  loc_out.prv_stateData[name] = state;   },
 
-		getStatelessData : function(name){   return loc_statelessData;  },
-		setStatelessData : function(name, data){  loc_statelessData[name] = data;   },
+		getStatelessData : function(name){   return loc_out.prv_statelessData;  },
+		setStatelessData : function(name, data){  loc_out.prv_statelessData[name] = data;   },
 
-		getUIs : function(){  return loc_uis;  },
-		getUI : function(name) {  return loc_uisByName[name];   },
-		getRefreshUIRequest : function(uiName, handlers, request){	return this.getUI(uiName).getRefreshRequest(loc_context, handlers, request);	},
+		getUIs : function(){  return loc_out.prv_uis;  },
+		getUI : function(name) {  return loc_out.prv_uisByName[name];   },
+		getRefreshUIRequest : function(uiName, handlers, request){	return this.getUI(uiName).getRefreshRequest(loc_out.prv_context, handlers, request);	},
 		
-		getProcess : function(name){  return loc_uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS][name];  },
+		getProcess : function(name){  return loc_out.prv_uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS][name];  },
 		
 		getEventHandler : function(uiName, eventName){  return this.getUI(uiName).getEventHandler(eventName);     },
 		
-		registerUIEventListener : function(handler){  loc_uiEventHandler = handler; },
+		registerUIEventListener : function(handler){  loc_out.prv_uiEventHandler = handler; },
 
 	};
 

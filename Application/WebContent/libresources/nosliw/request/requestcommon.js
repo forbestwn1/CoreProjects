@@ -193,6 +193,10 @@ var node_createServiceRequestInfoCommon = function(service, handlers, requester_
 			
 			getData : function(name){return this.pri_metaData.pri_data[name];},
 			setData : function(name, data){this.pri_metaData.pri_data[name]=data;},
+			withData : function(name, data){
+				this.setData(name, data);
+				return this;
+			},
 			
 			/*
 			 * execute info: provide function to run for this request

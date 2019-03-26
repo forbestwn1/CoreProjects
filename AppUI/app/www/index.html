@@ -1,101 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-		<title>MiniApp</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		<script type="text/javascript" src="js/handlebars/handlebars-v4.0.11.js"></script>
-		<link rel="stylesheet" href="js/jQuery_Mobile/jquery.mobile-1.4.5.min.css" />
- 		<script type="text/javascript" src="js/jQuery/2.1.0/jquery.js"></script>
- 		
-		<script type="text/javascript" src="js/jQuery_Mobile/jquery.mobile-1.4.5.min.js"></script>
-		<script type="text/javascript" src="js/init.js"></script>
+        <meta charset="utf-8" />
+        <title>Nosliw Go Go !!</title>
 
-<script>
-	$(document).on("miniappActive", function(){
-		nosliw.miniapp.executeLoginRequest(undefined, {
-			success : function(requestInfo, userInfo){
-				
-			}
-		});
-	});
-	init("http://142.133.205.142:8082/Application/");
-</script>
- 		
- 		
- 		
- 		
-
-<script id="panel-init">
-		$(function() {
-			$( "body>[data-role='panel']" ).panel();
-		});
-</script>
-
-
-<script>
-	$(document).on("miniappActive", function(){
-/*		
-		nosliw.miniapp.executeLoginRequest(undefined, {
-			success : function(requestInfo, userInfo){
-				showUserInfo(userInfo);
-			}
-		});
-*/		
-	});
-</script>
-
+    	<link rel="stylesheet" href="js/libs/framework7/4.1.1/css/framework7.bundle.min.css">
+        <script src="js/libs/framework7/4.1.1/framework7.bundle.min.js"></script>
+        <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
+        
+ 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
 
 <body>
-	<div data-role="page" data-quicklinks="true">
-	
-		<div data-role="header">
-			<h1>External panels</h1>
-			<a href="../panel/" data-rel="back" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-carat-l">Back</a>
-		</div><!-- /header -->
-	
-		<div role="main" class="ui-content jqm-content jqm-fullwidth">
+	<div id="appDiv">
+		<div class="panel panel-left panel-cover">
+      		<div class="block" id="userInfoDiv">
+	            <h2>Left Panel content</h2>
+	            <p><a href = "#" class = "close-panel">Close me</a></p>
+	            <p><a href = "#" data-panel = "right" class = "open-panel">Open Right Panel</a></p>
+         	</div>
+    	</div>
 
-			<p><strong>Left</strong> panel examples</p>
-			<a href="#leftpanel" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-mini">Push</a>
-	
-			<p><strong>Right</strong> panel examples</p>
-			<a href="#rightpanel" class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-mini">Push</a>
-	
-			<h1>External Panels</h1>
-	
-			<p>The panels below are all located outside the page. Panels outside of a page must be initalized manually and will not be handled by auto init. Panels outside of pages will remain in the DOM (unless manually removed) as long as you use Ajax navigation, and can be opened or closed from any page.</p>
-	
-			<p>Navigate to page 2 to see this behavior. The HTML document for page 2 doesn't contain panel markup, but you can still open the panels.</p>
-	
-			<p><a href="page-b.html">Navigate to page 2</a></p>
-	
-	
-		</div><!-- /content -->
-	
-	</div><!-- /page -->
-
-	<!-- leftpanel  -->
-	<div data-role="panel" id="leftpanel" data-position="left" data-display="push" data-theme="a">
-
-		<div id="miniapp.module.userapps.createModuleUserApps">
-		</div>
-
-        <a href="#demo-links" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
-
-	</div><!-- /leftpanel -->
-
-	<!-- rightpanel  -->
-	<div data-role="panel" id="rightpanel" data-position="right" data-display="push" data-theme="b">
-
-        <h3>Right Panel: Push</h3>
-        <p>This panel is positioned on the right with the push display mode. The panel markup is <em>after</em> the header, content and footer in the source order.</p>
-        <p>To close, click off the panel, swipe left or right, hit the Esc key, or use the button below:</p>
-        <a href="#demo-links" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
-
-	</div><!-- /rightpanel2 -->
+		<div class="view view-main" id="appModuleDiv"></div>
+		
+		<div class="panel panel-right panel-cover">
+      		<div class="block" id="settingModuleDiv"></div>
+    	</div>
+	</div>
 
 </body>
+
+<script>
+
+$(document).on("nosliwActive", function(){
+	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+
+    // Our initialization code here
+	var currentSearchString = window.location.search;
+	var appEntryId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
+
+	var appStatelessData = {
+		nodes : {
+			application : $('#appModuleDiv').get(),
+			setting : $('#settingModuleDiv').get(),
+		},
+		app : new Framework7({
+			  // App root element
+			  root: $("#appDiv").get(),
+			  name: 'My App',
+			  id: 'com.myapp.test',
+			  panel: {
+				    swipe: 'both',
+			  },		
+		})
+	};
+	
+	//create module runtime
+	nosliw.runtime.getUIAppService().executeGetUIAppEntryRuntimeRequest(appEntryId, "application_normal", appStatelessData,
+		{
+			success : function(requestInfo, uiAppRuntime){
+//				uiAppRuntime.executeStartRequest();			
+			}
+		}
+	);
+
+});
+
+nosliw.init();
+</script>
+
 </html>

@@ -54,9 +54,6 @@ var loc_createSettingModuleRequest = function(data, module, settingRoots, settin
 					if(eventName=="saveSetting"){
 						var moduleData = moduleStatelessData.uiModule.getContext();
 						var ioTarget = node_createIODataSet();
-//						ioTarget.setData('appdata_setting', {
-//							kkkk : 5555
-//						});
 						ioTarget.setData('appdata_setting', {
 							getGetValueRequest : function(handlers, request){
 								var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
