@@ -8,18 +8,6 @@ var packageObj = library.getChildPackage("entity");
 	var node_buildServiceProvider;
 //*******************************************   Start Node Definition  ************************************** 	
 
-//normal activity output (next activity + context)
-var node_NormalActivityOutput = function(next, context){
-	this.next = next;
-	this.context = context;
-};
-
-//end activity output (result name + context)
-var node_EndActivityOutput = function(resultName, context){
-	this.resultName = resultName;
-	this.context = context;
-};
-
 //process output
 var node_ProcessResult = function(resultName, value){
 	this.resultName = resultName;
@@ -34,8 +22,6 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("NormalActivityOutput", node_NormalActivityOutput); 
-packageObj.createChildNode("EndActivityOutput", node_EndActivityOutput); 
 packageObj.createChildNode("ProcessResult", node_ProcessResult); 
 
 })(packageObj);
