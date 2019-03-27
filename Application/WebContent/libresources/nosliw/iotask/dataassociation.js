@@ -46,6 +46,7 @@ var node_createDataAssociation = function(inputIODataSet, dataAssociationDef, ou
 		else{
 			out.addRequest(loc_outputIODataSet.getSetDataValueRequest(targetName, value, isTargetFlat));
 		}
+		return out;
 	};
 
 	var loc_processMatchersRequest = function(value, matchersByPath, handlers, request){

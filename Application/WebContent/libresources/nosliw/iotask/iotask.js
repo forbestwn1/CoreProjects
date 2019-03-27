@@ -18,9 +18,10 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_IOTaskResult;
 	var node_createIODataSet;
+	var node_createDataAssociation;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_ioTaskUtility = function(){
+var node_ioTaskProcessor = function(){
 	
 	var loc_out = {
 			
@@ -77,8 +78,9 @@ nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestI
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("ioTaskUtility", node_ioTaskUtility); 
+packageObj.createChildNode("ioTaskProcessor", node_ioTaskProcessor); 
 
 })(packageObj);

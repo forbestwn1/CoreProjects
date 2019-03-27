@@ -148,7 +148,7 @@ var node_createIODataSet = function(value){
 			else{
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 					return loc_assignToContext(request.getData('value'), loc_out.getData(request.getData('name')), isDataFlat);
-				}, handlers, request).withData(name, 'name').withData(value, 'value'));
+				}).withData(name, 'name').withData(value, 'value'));
 			}
 			return out;
 		},
