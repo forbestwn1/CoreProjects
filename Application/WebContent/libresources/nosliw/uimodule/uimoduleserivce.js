@@ -52,7 +52,7 @@ var node_createUIModuleService = function(){
 			//load ui module resource and env factory resource
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceIds, {
 				success : function(requestInfo, resourceTree){
-					var uiModuleDef = requestInfo.getData("uiModuleDef");
+					var uiModuleDef = requestInfo.getData();
 					var envFactory = node_resourceUtility.getResourceFromTree(resourceTree, moduleEnvId).resourceData;
 					if(moduleId!=undefined)  uiModuleDef = node_resourceUtility.getResourceFromTree(resourceTree, moduleId).resourceData;
 					
@@ -67,7 +67,7 @@ var node_createUIModuleService = function(){
 						}
 					});
 				}
-			}).withData("uiModuleDef", uiModuleDef));
+			}).withData(uiModuleDef));
 			
 			return out;
 		},

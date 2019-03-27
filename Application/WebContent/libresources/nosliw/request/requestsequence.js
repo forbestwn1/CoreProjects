@@ -34,7 +34,7 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 		//modify start handler, in order to process output from start handler
 		loc_out.addPostProcessor({
 			start : function(requestInfo, startOut){
-				loc_out.setData(loc_startOutDataName, startOut);
+				loc_out.setData(startOut, loc_startOutDataName);
 			}
 		});
 	};

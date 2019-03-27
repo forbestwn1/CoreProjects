@@ -77,7 +77,7 @@ var node_createGatewayService = function(){
 				var gatewayRemoteServiceRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(gatewayId+";"+command, parms), undefined, {
 					success : function(requestInfo, gatewayOutput){
 						var gatewayOutputData = gatewayOutput[node_COMMONATRIBUTECONSTANT.GATEWAYOUTPUT_DATA];
-						out.setData("gatewayOutputData", gatewayOutputData);
+						out.setData(gatewayOutputData, "gatewayOutputData");
 						var gatewayOutputScripts = gatewayOutput[node_COMMONATRIBUTECONSTANT.GATEWAYOUTPUT_SCRIPTS];
 						var requests = [];
 						//process script info output 

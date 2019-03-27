@@ -31,7 +31,7 @@ var node_createExpressionService = function(){
 		var requestInfo = loc_out.getRequestInfo(requester_parent);
 		
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpression", {"expression":expression, "variables":variables}), handlers, requestInfo);
-		out.setData("variables", variables);
+		out.setData(variables, "variables");
 		var variablesInfo = expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS];
 			
 		//if have variables, convert variables
@@ -48,7 +48,7 @@ var node_createExpressionService = function(){
 								}
 								matchedVars[varName] = matchedVar;
 							}, this);
-							out.setData("variables", matchedVars);
+							out.setData(matchedVars, "variables");
 							
 							//execute operand
 							var executeOperandRequest = loc_getExecuteOperandRequest(expression, expression[node_COMMONATRIBUTECONSTANT.EXPRESSION_OPERAND], out.getData("variables"), constants, references, {
@@ -175,7 +175,7 @@ var node_createExpressionService = function(){
 		var parmsOperandRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("CalOperationParms", {"parms":parmsOperand}), {
 			success : function(requestInfo, setResult){
 				var parmsData = setResult.getResults();
-				out.setData("parmsData", parmsData);
+				out.setData(parmsData, "parmsData");
 				
 				//match parms and base
 				var parmsMatcherRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatchOperationParms", {"parmsData":parmsData, "matchers":operationOperand[node_COMMONATRIBUTECONSTANT.OPERAND_MATCHERSPARMS]}), {
@@ -185,7 +185,7 @@ var node_createExpressionService = function(){
 						_.each(parmMatchedData, function(parmValue, parmName, list){
 							parmsData[parmName] = parmValue;
 						}, this);
-						out.setData("parmsData", parmsData);
+						out.setData(parmsData, "parmsData");
 
 						//build parms for operation
 						var operationParms = [];

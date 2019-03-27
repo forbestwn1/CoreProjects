@@ -8,6 +8,10 @@ var packageObj = library.getChildPackage("entity");
 	var node_CONSTANT;
 	var node_makeObjectWithType;
 	var node_getObjectType;
+	var node_createServiceRequestInfoSimple;
+	var node_createServiceRequestInfoSequence;
+	var node_ServiceInfo;
+	var node_createServiceRequestInfoSet;
 //*******************************************   Start Node Definition  ************************************** 	
 
 //task result 
@@ -18,13 +22,38 @@ var node_IOTaskResult = function(resultName, resultValue){
 	this.resultValue = resultValue; 
 };
 
+var node_ExternalMapping = function(dataIO, dataAssociationDef){
+	this.dataIO = dataIO;
+	this.dataAssociationDef = dataAssociationDef;
+	node_makeObjectWithType(this, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_EXTERNALMAPPING);
+};
+
+var node_createDynamicData = function(getValueRequestFun, setValueRequestFun){
+	var loc_getValueRequestFun = getValueRequestFun;
+	var loc_setValueRequestFun = setValueRequestFun;
+	
+	var loc_out = {
+		getGetValueRequest : function(handlers, request){
+			return loc_getValueRequestFun(handlers, request);
+		},
+		
+		getSetValueRequest : function(value, handlers, request){
+			return loc_setValueRequestFun(value, handlers, request);
+		}
+	};
+	
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICDATA);
+	
+	return loc_out;
+};
+
 var node_createIODataSet = function(value){
 	
 	var loc_dataSet = {};
 	
 	if(value!=undefined){
 		var valueType = node_getObjectType(value);
-		if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_IOINPUT){
+		if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DATASET){
 			return value;
 		}
 		else{
@@ -33,24 +62,102 @@ var node_createIODataSet = function(value){
 		}
 	}
 	
+	loc_assignToContext = function(source, target, isFlat){
+		if(target==undefined)   target = {};
+		if(isFlat==true){
+			_.each(source, function(value, name){
+				target[name] = value;
+			});
+		}
+		else{
+			_.each(source, function(c, categary){
+				var cc = target[categary];
+				if(cc==undefined){
+					cc = {};
+					target[categary] = cc;
+				}
+				_.each(c, function(ele, name){
+					cc[name] = ele;
+				});
+			});
+		}
+		return target;
+	};
+	
 	var loc_out = {
 		
 		setData : function(name, data){  loc_dataSet[name] = data;   },
 		
 		getData : function(name){
 			if(name==undefined)  name = node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
-			return loc_dataSet[name];
+			var out = loc_dataSet[name];
+			if(out==undefined){
+				out = {};
+				loc_dataSet[name] = out;
+			}
+			return out;
 		},
-		
+
 		getDataSet : function(){   return loc_dataSet;   },
 		
+		getGetDataValueRequest : function(name, handlers, request){
+			var dataEle = this.getData(name);
+			var dataEleType = node_getObjectType(dataEle);
+			if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICDATA){
+				return dataEle.getGetValueRequest(handlers, rquest);
+			}
+			else{
+				return node_createServiceRequestInfoSimple(undefined, function(request){
+					return request.getData();
+				}, handlers, request).withData(dataEle);
+			}
+		},
+
+
+		getGetDataSetValueRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			var getDataItemRequest = node_createServiceRequestInfoSet(undefined, {
+				success : function(request, resultSet){
+					var dataSetValue = {};
+					_.each(resultSet.getResults(), function(value, name){
+						dataSetValue[name] = value;
+					});
+					return dataSetValue;
+				}
+			});
+			
+			_.each(loc_dataSet, function(dataSetEle, name){
+				getDataItemRequest.addRequest(name, loc_out.getGetDataValueRequest(name));
+			});
+			out.addRequest(getDataItemRequest);
+			return out;
+		},
+
+		getSetDataValueRequest : function(name, value, isDataFlat, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			var dataEle = this.getData(name);
+			var dataEleType = node_getObjectType(dataEle);
+			if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICDATA){
+				out.addRequest(getGetDataValueRequest(name, {
+					success : function(request, value){
+						var output = loc_assignToContext(request.getData('value'), value, isDataFlat);
+						return loc_out.getData(request.getData('name')).getSetValueRequest(output);
+					}
+				}));
+			}
+			else{
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+					return loc_assignToContext(request.getData('value'), loc_out.getData(request.getData('name')), isDataFlat);
+				}, handlers, request).withData(name, 'name').withData(value, 'value'));
+			}
+			return out;
+		},
 	};
 	
-	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_IOINPUT);
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DATASET);
 	
 	return loc_out;
 };
-
 
 //*******************************************   End Node Definition  ************************************** 	
 
@@ -60,9 +167,14 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("IOTaskResult", node_IOTaskResult); 
 packageObj.createChildNode("createIODataSet", node_createIODataSet); 
+packageObj.createChildNode("createDynamicData", node_createDynamicData); 
 
 })(packageObj);

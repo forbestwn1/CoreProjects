@@ -22,16 +22,17 @@
 <script>
 
 $(document).on("nosliwActive", function(){
-	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessRequest("expression;expressionProcessId", 
+	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().executeProcessResourceRequest("expression;expressionProcessId", 
 	{
 		"toVar": {
 			"dataTypeId": "test.integer;1.0.0",
 			"value": 7
 		}
 	}, 
+	undefined, 
 	{
 		success : function(request, output){
-			alert(JSON.stringify(output));
+			alert(JSON.stringify(output.value.getDataSet()));
 		}
 	});
 });
