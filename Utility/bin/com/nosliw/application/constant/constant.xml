@@ -213,6 +213,7 @@
 			<definition name="SEPERATOR_VAREND" value="}}" type="string"/>
 			<definition name="SEPERATOR_EXPRESSIONSTART" value="${" type="string"/>
 			<definition name="SEPERATOR_EXPRESSIONEND" value="}" type="string"/>
+			<definition name="SEPERATOR_CONTEXT_CATEGARY_NAME" value="___"/>
 			<definition type="space"/>
 			<definition name="DATAOPERATION_NEWDATA" value="new"/>
 			<definition name="DATAOPERATION_TOPARENTTYPE" value="toParentType"/>

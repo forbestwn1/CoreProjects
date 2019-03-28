@@ -58,6 +58,7 @@ public class HAPConstant {
 		public static final String SEPERATOR_VAREND = "}}";
 		public static final String SEPERATOR_EXPRESSIONSTART = "${";
 		public static final String SEPERATOR_EXPRESSIONEND = "}";
+		public static final String SEPERATOR_CONTEXT_CATEGARY_NAME = "___";
 
 
 

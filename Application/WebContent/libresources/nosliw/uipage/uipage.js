@@ -97,9 +97,14 @@ var node_createUIPage = function(uiView){
 		},
 		executeExecuteCommandRequest : function(command, data, handlers, requestInfo){		node_requestServiceProcessor.processRequest(this.getExecuteCommandRequest(command, data, handlers, requestInfo));	},
 		
-		getGetContextValueRequest : function(handlers, requestInfo){
-			return node_contextUtility.getGetContextValueRequest(loc_getCurrent().getContextElements(), handlers, requestInfo);
-		}
+		getBuildContextGroupRequest : function(handlers, requestInfo){
+			return node_contextUtility.buildContextGroupRequest(loc_getCurrent().getContextElements(), handlers, requestInfo);
+		},
+		
+		getContextEleValueAsParmsRequest : function(handlers, requestInfo){
+			return node_contextUtility.getContextEleValueAsParmsRequest(loc_getCurrent().getContextElements(), handlers, requestInfo);
+		},
+
 	};
 
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);

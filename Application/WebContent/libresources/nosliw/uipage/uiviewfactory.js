@@ -26,8 +26,9 @@ var packageObj = library;
 	var node_uiDataOperationServiceUtility;
 	var node_UIDataOperation;
 	var node_contextUtility;
-	var node_ioTaskUtility;
 	var node_IOTaskResult;
+	var node_ioTaskProcessor;
+	var node_createDynamicData;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_createUIViewFactory = function(){
@@ -209,34 +210,39 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 	 */
 	var loc_getViews = function(){	return loc_startEle.add(loc_startEle.nextUntil(loc_endEle)).add(loc_endEle);  };
 
+	
+	//io between module context and page context
+	var loc_viewIO = node_createDynamicData(
+		function(handlers, request){
+			return node_contextUtility.getContextValueAsParmsRequest(loc_context, handlers, request);
+		}, 
+		function(value, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			//update page with data
+			out.addRequest(loc_context.getUpdateContextRequest(value));
+			return out;
+		}
+	);
+
+	
 	var loc_getServiceRequest = function(serviceName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {"serviceName":serviceName}), handlers, request);
-		out.addRequest(loc_context.getValueAsParmsRequest( 
-			{
-				success: function(request, contextValue){
-					var service = loc_services[serviceName];
-					var output = {};
-					return node_ioTaskUtility.getExecuteIOTaskRequest(
-							contextValue, 
-							service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PARMMAPPING], 
-							function(input, handlers, request){
-								var serviceRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
-								serviceRequest.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceByNameRequest(service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PROVIDER], loc_serviceProviders, input, {
-									success : function(request, serviceResult){
-										return new node_IOTaskResult(serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_RESULTNAME], serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_OUTPUT]);
-									}
-								}));
-								return serviceRequest;
-							}, 
-							service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_RESULTMAPPING],
-							output, 
-							{
-								success : function(request, taskResult){
-									return loc_context.getUpdateContextRequest(taskResult.resultValue.getData());
-								}
-							}); 
-				}
-			}));
+		var service = loc_services[serviceName];
+		out.addRequest(node_ioTaskProcessor.getExecuteIOTaskRequest(
+				loc_viewIO, 
+				service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PARMMAPPING], 
+				function(input, handlers, request){
+					var serviceRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
+					serviceRequest.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceByNameRequest(service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PROVIDER], loc_serviceProviders, input, {
+						success : function(request, serviceResult){
+							return new node_IOTaskResult(serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_RESULTNAME], serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_OUTPUT]);
+						}
+					}));
+					return serviceRequest;
+				}, 
+				service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_RESULTMAPPING],
+				loc_viewIO, 
+				undefined)); 
 		return out;
 	};
 	
@@ -569,8 +575,9 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.ioTaskProcessor", function(){node_ioTaskProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicData = this.getData();});
 
 
 //Register Node by Name

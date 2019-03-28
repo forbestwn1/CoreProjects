@@ -21,7 +21,7 @@
 			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 			var node_objectOperationUtility = nosliw.getNodeData("common.utility.objectOperationUtility");
 			var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
-			var node_ioTaskUtility = nosliw.getNodeData("iotask.ioTaskUtility");
+			var node_ioTaskProcessor = nosliw.getNodeData("iotask.ioTaskProcessor");
 
 			var loc_out = {
 				
@@ -32,7 +32,7 @@
 					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {"serviceName":service}), handlers, request);
 
 					var output = {};
-					return node_ioTaskUtility.getExecuteIOTaskRequest(
+					return node_ioTaskProcessor.getExecuteIOTaskRequest(
 							input, 
 							service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PARMMAPPING], 
 							function(input, handlers, request){

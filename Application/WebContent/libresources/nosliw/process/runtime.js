@@ -15,7 +15,6 @@ var packageObj = library;
 	var node_createServiceRequestInfoService;
 	var node_DependentServiceRequestInfo;
 	var node_requestServiceProcessor;
-	var node_ioTaskUtility;
 	var node_IOTaskResult;
 	var node_createDataAssociation;
 	var node_createIODataSet;
@@ -96,7 +95,6 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});

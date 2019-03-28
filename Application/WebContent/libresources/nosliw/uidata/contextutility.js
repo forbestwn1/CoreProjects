@@ -18,32 +18,73 @@ var node_uiDataOperationServiceUtility;
 var node_dataUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
-var node_utility = {
+var node_utility = function(){
+		
+	var loc_out = {
+		parseContextElementName : function(name){
+			var segs = name.split(node_COMMONCONSTANT.SEPERATOR_CONTEXT_CATEGARY_NAME);
+			var out = {};
+			if(segs.length==1){
+				out.name = name;
+			}
+			else if(segs.length==2){
+				out.categary = segs[1];
+				out.name = segs[0];
+			}
+			return out;
+		},
+
+		getContextValueAsParmsRequest : function(context, handlers, requestInfo){
+			return this.getContextEleValueAsParmsRequest(context.prv_elements, handlers, requestInfo);
+		},
+		
+		//only context element without categary info
+		getContextEleValueAsParmsRequest : function(contextItems, handlers, requestInfo){
+			var outRequest = node_createServiceRequestInfoSequence({}, handlers, requestInfo);
+			var setRequest = node_createServiceRequestInfoSet({}, {
+				success : function(requestInfo, result){
+					var out = {};
+					_.each(result.getResults(), function(contextData, name){
+						if(contextData!=undefined)		out[name] = contextData.value;
+					});
+					return out;
+				}
+			});
+			_.each(contextItems, function(ele, eleName){
+				var eleNameInfo = loc_out.parseContextElementName(eleName);
+				if(eleNameInfo.categary==undefined){
+					setRequest.addRequest(eleName, ele.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
+				}
+			});
+			outRequest.addRequest(setRequest);
+			return outRequest;
+		},
+	
 		//from flat context to context group
-		getGetContextValueRequest : function(contextItems, handlers, request){
+		buildContextGroupRequest : function(contextItems, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetContextValue", {}), handlers, request);
 			var calContextValue = node_createServiceRequestInfoSet(undefined, {
 				success : function(request, resultSet){
 					var value = {};
 					_.each(resultSet.getResults(), function(eleValue, eleName){
-						var segs = eleName.split("___");
-						if(segs.length==2){
-							var categary = segs[1];
-							var name = segs[0];
-							var categaryContext = value[categary];
-							if(categaryContext==undefined){
-								categaryContext = {};
-								value[categary] = categaryContext;
-							}
-							categaryContext[name] = eleValue;
+						var eleNameInfo = loc_out.parseContextElementName(eleName);
+						var categaryContext = value[eleNameInfo.categary];
+						if(categaryContext==undefined){
+							categaryContext = {};
+							value[eleNameInfo.categary] = categaryContext;
 						}
+						categaryContext[eleNameInfo.name] = eleValue;
 					});
 					return value;
 				}
 			});
-
+	
 			_.each(contextItems, function(contextItem, eleName){
-				calContextValue.addRequest(eleName, contextItem.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
+				var eleNameInfo = loc_out.parseContextElementName(eleName);
+				if(eleNameInfo.categary!=undefined){
+					//only those with category info
+					calContextValue.addRequest(eleName, contextItem.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
+				}
 			});
 			
 			out.addRequest(calContextValue);
@@ -70,7 +111,7 @@ var node_utility = {
 							contextInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_LOGICAL){
 						//physical relative
 						if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_PARENT]==node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT){
-//						if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_ISTOPARENT]==true){
+	//					if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_ISTOPARENT]==true){
 							//process relative that  refer to element in parent context
 							var pathObj = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_PATH];
 							var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
@@ -100,7 +141,7 @@ var node_utility = {
 			});	
 				
 			var context = node_createContext(contextElementInfosArray, requestInfo);
-
+	
 			//for relative which refer to context ele in same context
 			_.each(contextDef, function(contextDefRootObj, eleName){
 				var contextDefRootEle = contextDefRootObj[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION];
@@ -113,7 +154,7 @@ var node_utility = {
 				//if context.info.instantiate===manual, context does not need to create in the framework
 				if(contextInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL){
 					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE && contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_PARENT]==node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_SELF){
-//					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE && contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_ISTOPARENT]==false){
+	//				if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE && contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_ISTOPARENT]==false){
 						var pathObj = contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_PATH];
 						var rootName = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_ROOTNAME];
 						var path = pathObj[node_COMMONATRIBUTECONSTANT.CONTEXTPATH_PATH];
@@ -127,8 +168,9 @@ var node_utility = {
 			
 			return context;
 		},
-		
-};
+	};
+	return loc_out;
+}();
 
 //*******************************************   End Node Definition  ************************************** 	
 

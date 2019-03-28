@@ -231,24 +231,6 @@ var node_createContext = function(elementInfosArray, request){
 
 		destroy : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
 		
-		getValueAsParmsRequest : function(handlers, requestInfo){
-			var outRequest = node_createServiceRequestInfoSequence({}, handlers, requestInfo);
-			var setRequest = node_createServiceRequestInfoSet({}, {
-				success : function(requestInfo, result){
-					var out = {};
-					_.each(result.getResults(), function(contextData, name){
-						if(contextData!=undefined)		out[name] = contextData.value;
-					});
-					return out;
-				}
-			});
-			_.each(this.getElementsName(), function(eleName, index){
-				setRequest.addRequest(eleName, loc_out.getDataOperationRequest(eleName, node_uiDataOperationServiceUtility.createGetOperationService()));
-			});
-			outRequest.addRequest(setRequest);
-			return outRequest;
-		},
-		
 		getUpdateContextRequest : function(values, handlers, requestInfo){
 			loc_out.prv_valueChangeEventEnable = false;
 			var that = this;

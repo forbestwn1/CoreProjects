@@ -20,6 +20,7 @@ var packageObj = library;
 	var node_contextUtility;
 	var node_createUIModuleRequest;
 	var node_ioTaskUtility;
+	var node_ExternalMapping;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -75,11 +76,16 @@ var loc_createModuleRuntime = function(uiModule, env){
 			});
 		}
 		
-		out.addRequest(nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteProcessRequest(process, processInput, process[node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_OUTPUTMAPPING], {
-			success : function(request, processResult){
-				loc_uiModule.setContext(node_ioTaskUtility.assignToContext(processResult.value, loc_uiModule.getContext(), false));
-			}
-		}));
+		var outputMappingsByResult;
+		var outputMappingDef = process[node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_OUTPUTMAPPING];
+		if(outputMappingDef!=undefined){
+			outputMappingsByResult = {};
+			_.each(outputMappingDef, function(dataAssociation, resultName){
+				outputMappingsByResult[resultName] = new node_ExternalMapping(loc_uiModule.getContext(), dataAssociation);
+			});
+		}
+
+		out.addRequest(nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteProcessRequest(process, processInput, outputMappingsByResult, undefined));
 		return out;
 	};
 	
@@ -138,6 +144,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){node_createUIModuleRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.ExternalMapping", function(){node_ExternalMapping = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleRuntimeRequest", node_createModuleRuntimeRequest); 
