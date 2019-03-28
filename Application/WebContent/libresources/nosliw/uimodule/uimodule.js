@@ -109,11 +109,7 @@ var loc_createUIModule = function(uiModuleDef, context, statelessData){
 			});
 			ui.registerValueChangeEventListener(loc_out.prv_valueChangeEventListener, function(eventName, eventData, requestInfo){
 				//handle ui value change, update value in module
-				ui.executeSynOutUIDataRequest(loc_out.prv_context, {
-					success : function(requestInfo, moduleData){
-						loc_setContext(moduleData);
-					}
-				}, requestInfo);
+				ui.executeSynOutUIDataRequest(loc_out.prv_context, undefined, requestInfo);
 			});
 		},
 	

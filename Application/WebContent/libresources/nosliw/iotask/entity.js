@@ -104,7 +104,7 @@ var node_createIODataSet = function(value){
 			var dataEle = this.getData(name);
 			var dataEleType = node_getObjectType(dataEle);
 			if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICDATA){
-				return dataEle.getGetValueRequest(handlers, rquest);
+				return dataEle.getGetValueRequest(handlers, request);
 			}
 			else{
 				return node_createServiceRequestInfoSimple(undefined, function(request){
@@ -138,12 +138,12 @@ var node_createIODataSet = function(value){
 			var dataEle = this.getData(name);
 			var dataEleType = node_getObjectType(dataEle);
 			if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICDATA){
-				out.addRequest(getGetDataValueRequest(name, {
+				out.addRequest(loc_out.getGetDataValueRequest(name, {
 					success : function(request, value){
 						var output = loc_assignToContext(request.getData('value'), value, isDataFlat);
 						return loc_out.getData(request.getData('name')).getSetValueRequest(output);
 					}
-				}));
+				}).withData(name, 'name').withData(value, 'value'));
 			}
 			else{
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){

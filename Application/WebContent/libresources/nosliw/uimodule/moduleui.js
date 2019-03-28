@@ -15,6 +15,8 @@ var packageObj = library;
 	var node_getLifecycleInterface;
 	var node_makeObjectWithType;
 	var node_makeObjectWithLifecycle;
+	var node_createDataAssociation;
+	var node_createDynamicData;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -50,23 +52,54 @@ var node_createModuleUI = function(moduleUIDef, page){
 	
 	var loc_extraContextData = {};
 
+	//io between module context and page context
+	var loc_pageInputIO = node_createDynamicData(
+		function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_page.getGetContextValueRequest({
+				success : function(request, pageData){
+					return pageData.public;
+				}
+			}));
+			return out;
+		}, 
+		function(value, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			var pageInput = {};
+			pageInput = _.extend(pageInput, value);
+			//combine data from module with extra data in ui
+			_.each(loc_extraContextData, function(data, name){
+				pageInput = _.extend(pageInput, data);
+			});
+			//update page with data
+			out.addRequest(loc_page.getUpdateContextRequest(pageInput, {
+				success : function(request){
+					return pageInput;
+				}
+			}));
+			return out;
+		}
+	);
+
+	var loc_pageOutputIO = node_createDynamicData(
+		function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_page.getGetContextValueRequest({
+				success : function(request, pageData){
+					return pageData;
+				}
+			}));
+			return out;
+		}
+	);
+	
 	var loc_getRefreshRequest = function(moduleContext, handlers, request){
 		return loc_getRefreshPageDataRequest(moduleContext, handlers, request);
 	};
 
 	var loc_getRefreshPageDataRequest = function(moduleContext, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(node_ioTaskUtility.getExecuteDataAssociationRequest(moduleContext, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], {
-			success : function(request, pageInput){
-				pageInput = pageInput.getData();
-				//combine data from module with extra data in ui
-				_.each(loc_extraContextData, function(data, name){
-					pageInput = _.extend(pageInput, data);
-				});
-				//update page with data
-				return loc_page.getUpdateContextRequest(pageInput);
-			}
-		}, request));
+		out.addRequest(node_createDataAssociation(moduleContext, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], loc_pageInputIO).getExecuteRequest());
 		return out;
 	};
 	
@@ -78,7 +111,7 @@ var node_createModuleUI = function(moduleUIDef, page){
 				title : loc_out.getName()
 			}
 		});
-	}
+	};
 	
 	var loc_out = {
 		
@@ -111,15 +144,7 @@ var node_createModuleUI = function(moduleUIDef, page){
 		
 		getSynOutUIDataRequest : function(moduleContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SynOutUIData", {"moduleContext":moduleContext}), handlers, request);
-			out.addRequest(loc_page.getGetContextValueRequest({
-				success : function(request, contextValue){
-					return node_ioTaskUtility.getExecuteDataAssociationToTargetRequest(contextValue, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_OUTPUTMAPPING], moduleContext, {
-						success : function(request, dataSet){
-							return dataSet.getData();
-						}
-					});
-				}
-			}));
+			out.addRequest(node_createDataAssociation(loc_pageOutputIO, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_OUTPUTMAPPING], moduleContext).getExecuteRequest());
 			return out;
 		},
 		executeSynOutUIDataRequest : function(moduleContext, handlers, request){
@@ -153,6 +178,8 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_createDataAssociation = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.createDynamicData", function(){node_createDynamicData = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModuleUIRequest", node_createModuleUIRequest); 

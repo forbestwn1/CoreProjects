@@ -94,11 +94,6 @@ var node_createDataAssociation = function(inputIODataSet, dataAssociationDef, ou
 		var executeAssociationsRequest = node_createServiceRequestInfoSet(undefined, {
 			success : function(request, resultSet){
 				return loc_outputIODataSet;
-//				var outputDataSet = {};
-//				_.each(resultSet.getResults(), function(result, targetName){
-//					outputDataSet[targetName] = result;
-//				});
-//				return outputDataSet;
 			}
 		});
 		
@@ -115,11 +110,6 @@ var node_createDataAssociation = function(inputIODataSet, dataAssociationDef, ou
 		var out = node_createServiceRequestInfoSet(undefined, {
 			success : function(request, resultSet){
 				return loc_outputIODataSet;
-//				var outputDataSet = {};
-//				_.each(resultSet.getResults(), function(result, targetName){
-//					outputDataSet[targetName] = result;
-//				});
-//				return outputDataSet;
 			}
 		});
 
@@ -134,7 +124,6 @@ var node_createDataAssociation = function(inputIODataSet, dataAssociationDef, ou
 		return node_createServiceRequestInfoSimple(undefined, function(request){
 			return loc_outputIODataSet;
 		}, handlers, request);
-//		return loc_outputIODataSet.getGetDataSetValueRequest(handlers, request);
 	};
 
 	var loc_getExecuteDataAssociationRequest = function(handlers, request){

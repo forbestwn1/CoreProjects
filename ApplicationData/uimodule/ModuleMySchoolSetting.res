@@ -29,7 +29,7 @@
 						},
 						"defaultValue": {
 							"dataTypeId": "test.float;1.0.0",
-							"value": 9.0
+							"value": 90.0
 						}
 					}
 				}
