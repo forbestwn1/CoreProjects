@@ -19,9 +19,9 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_contextUtility;
 	var node_createUIModuleRequest;
-	var node_ioTaskUtility;
 	var node_createIODataSet;
 	var node_appDataService;
+	var node_createDataAssociation;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -46,7 +46,11 @@ var loc_createSettingModuleRequest = function(data, module, settingRoots, settin
 	
 	var inputSet = node_createIODataSet();
 	inputSet.setData("appdata_setting", data.data);
-	settingRequest.addRequest(node_ioTaskUtility.getExecuteDataAssociationRequest(inputSet, module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_INPUTMAPPING].element.default, {
+	
+	
+	
+	
+	settingRequest.addRequest(node_createDataAssociation(inputSet, module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_INPUTMAPPING].element.default).getExecuteRequest( {
 		success : function(requestInfo, outputSet){
 			var moduleStatelessData ={
 				root:root.get(),
@@ -71,15 +75,14 @@ var loc_createSettingModuleRequest = function(data, module, settingRoots, settin
 								});
 							}
 						});
-							 
-						node_ioTaskUtility.executeDataAssociationToTargetRequest(moduleData, module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_OUTPUTMAPPING].element.persistance, ioTarget, {
+				
+						node_createDataAssociation(moduleData, module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_OUTPUTMAPPING].element.persistance).executeRequest({
 							success : function(request, result){
 								var data = result.getData("appdata_setting");
 								var kkkk = ioTarget.getDataSet();
 								kkkk = kkkk;
 							}
-						});
-						
+						}, request);
 					}
 					else if(eventName=="submitSetting"){
 						
@@ -162,8 +165,8 @@ nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestI
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){node_createUIModuleRequest = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.appDataService", function(){node_appDataService = this.getData();});
 
 //Register Node by Name
