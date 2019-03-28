@@ -13,26 +13,28 @@ import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAsso
 public class HAPExecutableEmbededProcess extends HAPExecutableProcess{
 
 	@HAPAttribute
-	public static String BACKTOGLOBAL = "backToGlobal";
+	public static String OUTPUTMAPPING = "outputMapping";
 
-	private Map<String, HAPExecutableDataAssociation> m_backToGlobals;
+	private Map<String, HAPExecutableDataAssociation> m_outputMapping;
 	
 	public HAPExecutableEmbededProcess(HAPDefinitionEmbededProcess definition, String id) {
 		super(definition, id);
-		this.m_backToGlobals = new LinkedHashMap<String, HAPExecutableDataAssociation>();
+		this.m_outputMapping = new LinkedHashMap<String, HAPExecutableDataAssociation>();
 	}
 
 	public HAPDefinitionEmbededProcess getEmbededProcessDefinition() {   return (HAPDefinitionEmbededProcess)this.getDefinition();   }
 	
-	public void addBackToGlobalContext(String result, HAPExecutableDataAssociation backToGlobalContext) {   this.m_backToGlobals.put(result, backToGlobalContext);  }
+	public void addBackToGlobalContext(String result, HAPExecutableDataAssociation backToGlobalContext) {   this.m_outputMapping.put(result, backToGlobalContext);  }
 
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
-		Map<String, String> activityJsonMap = new LinkedHashMap<String, String>();
-		for(String key : this.m_backToGlobals.keySet()) {
-			activityJsonMap.put(key, this.m_backToGlobals.get(key).toResourceData(runtimeInfo).toString());
+		if(!this.m_outputMapping.isEmpty()) {
+			Map<String, String> activityJsonMap = new LinkedHashMap<String, String>();
+			for(String key : this.m_outputMapping.keySet()) {
+				activityJsonMap.put(key, this.m_outputMapping.get(key).toResourceData(runtimeInfo).toString());
+			}
+			jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildMapJson(activityJsonMap));
 		}
-		jsonMap.put(BACKTOGLOBAL, HAPJsonUtility.buildMapJson(activityJsonMap));
 	}
 }

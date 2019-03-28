@@ -130,15 +130,12 @@ var node_createDataAssociation = function(inputIODataSet, dataAssociationDef, ou
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociation", {}), handlers, request);
 		out.addRequest(loc_inputIODataSet.getGetDataSetValueRequest({
 			success : function(request, intputDataSet){
-				var type = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_TYPE];
-				if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING){
-					return loc_getExecuteMappingDataAssociationRequest(intputDataSet);
-				}
-				else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MIRROR){
-					return loc_getExecuteMirrorDataAssociationRequest(intputDataSet);
-				}
-				else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_NONE){
-					return loc_getExecuteNoneDataAssociationRequest(intputDataSet);
+				if(loc_dataAssociationDef==undefined)  return loc_getExecuteNoneDataAssociationRequest(intputDataSet);
+				else{
+					var type = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_TYPE];
+					if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING)	return loc_getExecuteMappingDataAssociationRequest(intputDataSet);
+					else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MIRROR)		return loc_getExecuteMirrorDataAssociationRequest(intputDataSet);
+					else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_NONE)	return loc_getExecuteNoneDataAssociationRequest(intputDataSet);
 				}
 			}
 		}));

@@ -194,6 +194,7 @@ var node_createProcess = function(processDef, envObj){
 	};
 
 	var loc_out = {
+			
 		getExecuteProcessRequest : function(input, outputMappingsByResult, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_createContextIORequest(input));
@@ -204,7 +205,7 @@ var node_createProcess = function(processDef, envObj){
 						var outputMapping = outputMappingsByResult[processResult.resultName];
 						node_createDataAssociation(loc_processContextIO, outputMapping.dataAssociationDef, outputMapping.dataIO).getExecuteRequest({
 							success : function(request, mappedIO){
-								return new node_ProcessResult(request.getData(), amppedIO);
+								return new node_ProcessResult(request.getData(), mappedIO);
 							}
 						}).withData(processResult.resultName);
 						

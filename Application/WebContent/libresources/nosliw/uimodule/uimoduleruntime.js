@@ -75,7 +75,7 @@ var loc_createModuleRuntime = function(uiModule, env){
 			});
 		}
 		
-		out.addRequest(nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteEmbededProcessRequest(process, processInput, {
+		out.addRequest(nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteProcessRequest(process, processInput, process[node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_OUTPUTMAPPING], {
 			success : function(request, processResult){
 				loc_uiModule.setContext(node_ioTaskUtility.assignToContext(processResult.value, loc_uiModule.getContext(), false));
 			}
