@@ -49,7 +49,7 @@ public class HAPExecutableWrapperTask<T extends HAPExecutableTask> extends HAPEx
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(!this.m_outputMapping.isEmpty())   jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildJson(this.m_outputMapping, HAPSerializationFormat.JSON));
 		if(this.m_inputMapping!=null)   jsonMap.put(INPUTMAPPING, HAPJsonUtility.buildJson(this.m_inputMapping, HAPSerializationFormat.JSON));
-		jsonMap.put(TASK, HAPJsonUtility.buildJson(this.m_task, HAPSerializationFormat.JSON));
+		if(this.m_task!=null)   jsonMap.put(TASK, HAPJsonUtility.buildJson(this.m_task, HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class HAPExecutableWrapperTask<T extends HAPExecutableTask> extends HAPEx
 			jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildMapJson(outputMappingMap));
 		}
 		
-		jsonMap.put(TASK, this.m_task.toResourceData(runtimeInfo).toString());
+		if(this.m_task!=null)   jsonMap.put(TASK, this.m_task.toResourceData(runtimeInfo).toString());
 		
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}

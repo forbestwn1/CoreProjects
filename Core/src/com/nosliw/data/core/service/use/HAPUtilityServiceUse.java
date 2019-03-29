@@ -25,6 +25,14 @@ public class HAPUtilityServiceUse {
 		return out;
 	}
 
+	public static Map<String, HAPContext> buildContextFromResultServiceOutputs(HAPServiceInterface serviceInterface) {
+		Map<String, HAPContext> out = new LinkedHashMap<String, HAPContext>();
+		for(String resultName : serviceInterface.getResults().keySet()) {
+			out.put(resultName, buildContextFromServiceOutputs(serviceInterface.getResultOutput(resultName)));
+		}
+		return out;
+	}
+
 	public static HAPContext buildContextFromResultServiceOutputs(HAPServiceInterface serviceInterface, String result) {
 		return buildContextFromServiceOutputs(serviceInterface.getResultOutput(result));
 	}

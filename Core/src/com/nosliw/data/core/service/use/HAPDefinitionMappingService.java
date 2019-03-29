@@ -30,16 +30,8 @@ public class HAPDefinitionMappingService extends HAPSerializableImp{
 	
 	public HAPDefinitionMappingService() {
 		this.m_resultMapping = new LinkedHashMap<String, HAPDefinitionDataAssociation>();
-		init();
 	}
 
-	private void init() {
-//		if(m_parmMapping!=null)  HAPUtilityContext.setContextGroupInheritModeNone(this.m_parmMapping.getInfo());
-//		for(String result : this.m_resultMapping.keySet()) {
-//			HAPUtilityContext.setContextGroupInheritModeNone(this.m_resultMapping.get(result).getInfo());
-//		}
-	}
-	
 	public HAPDefinitionDataAssociation getParms() {  return this.m_parmMapping;   }
 	public void setParmMapping(HAPDefinitionDataAssociation parms) {   
 		this.m_parmMapping = parms;  
@@ -74,7 +66,6 @@ public class HAPDefinitionMappingService extends HAPSerializableImp{
 				this.m_resultMapping.put((String)key, resultMapping);
 			}
 		}
-		this.init();
 		return true;  
 	}
 

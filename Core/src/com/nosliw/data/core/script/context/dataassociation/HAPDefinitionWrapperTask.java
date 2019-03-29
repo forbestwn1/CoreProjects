@@ -37,6 +37,7 @@ public class HAPDefinitionWrapperTask<T> extends HAPSerializableImp{
 	public void setTaskDefinition(T taskDef) {    this.m_taskDefinition = taskDef;     }
 	
 	public HAPDefinitionDataAssociation getInputMapping() {   return this.m_inputMapping;   }
+	public void setInputMapping(HAPDefinitionDataAssociation inputMapping) {    this.m_inputMapping = inputMapping;    }
 	public Map<String, HAPDefinitionDataAssociation> getOutputMapping(){    return this.m_outputMapping;     }
 	public void addOutputMapping(String name, HAPDefinitionDataAssociation mapping) {  this.m_outputMapping.put(name, mapping);   }
 	

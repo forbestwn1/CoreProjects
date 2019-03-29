@@ -10,6 +10,7 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
@@ -22,16 +23,16 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 
 	private String m_provider;
 
-	private HAPDefinitionMappingService m_serviceMapping;
+	private HAPDefinitionWrapperTask m_serviceMapping;
 	
 	public HAPDefinitionServiceUse() {
-		this.m_serviceMapping = new HAPDefinitionMappingService();
+		this.m_serviceMapping = new HAPDefinitionWrapperTask();
 	}
 	
-	public HAPDefinitionMappingService getServiceMapping() {   return this.m_serviceMapping;    }
-	public void setServiceMapping(HAPDefinitionMappingService serviceMapping) {  this.m_serviceMapping = serviceMapping;  }
-	public void setParmMapping(HAPDefinitionDataAssociation parmMapping) {   this.m_serviceMapping.setParmMapping(parmMapping);    }
-	public void addResultMapping(String name, HAPDefinitionDataAssociation result) {  this.m_serviceMapping.addResultMapping(name, result);   }
+	public HAPDefinitionWrapperTask getServiceMapping() {   return this.m_serviceMapping;    }
+	public void setServiceMapping(HAPDefinitionWrapperTask serviceMapping) {  this.m_serviceMapping = serviceMapping;  }
+	public void setParmMapping(HAPDefinitionDataAssociation parmMapping) {   this.m_serviceMapping.setInputMapping(parmMapping);    }
+	public void addResultMapping(String name, HAPDefinitionDataAssociation result) {  this.m_serviceMapping.addOutputMapping(name, result);   }
 	
 	public String getProvider() {   return this.m_provider;   }
 	public void setProvider(String provider) {   this.m_provider = provider;   }
@@ -51,8 +52,8 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
-		this.m_serviceMapping = new HAPDefinitionMappingService();
-		this.m_serviceMapping.buildObject(jsonObj.optJSONObject(SERVICEMAPPING), HAPSerializationFormat.JSON);
+		this.m_serviceMapping = new HAPDefinitionWrapperTask();
+		this.m_serviceMapping.buildMapping(jsonObj.optJSONObject(SERVICEMAPPING));
 		this.m_provider = (String)jsonObj.opt(PROVIDER);
 		return true;  
 	}

@@ -1,6 +1,5 @@
 package com.nosliw.data.core.service.use;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 
 @HAPEntityWithAttribute
 public class HAPExecutableServiceUse extends HAPExecutableImp{
@@ -26,28 +25,18 @@ public class HAPExecutableServiceUse extends HAPExecutableImp{
 	public static String INFO = "info";
 
 	@HAPAttribute
-	public static String PARMMAPPING = "parmMapping";
+	public static String SERVICEMAPPING = "serviceMapping";
 
-	@HAPAttribute
-	public static String RESULTMAPPING = "resultMapping";
-
-	//parms path
-	private HAPExecutableDataAssociation m_parmMapping;
-	
-	private Map<String, HAPExecutableDataAssociation> m_resultMapping;
+	private HAPExecutableWrapperTask m_serviceMapping;
 	
 	private HAPDefinitionServiceUse m_definition;
 	
 	public HAPExecutableServiceUse(HAPDefinitionServiceUse definition) {
 		this.m_definition = definition;
-		this.m_resultMapping = new LinkedHashMap<String, HAPExecutableDataAssociation>();
 	}
 	
-	public void setParmMapping(HAPExecutableDataAssociation parmMapping) {   this.m_parmMapping = parmMapping;   }
-	
-	public void addResultMapping(String result, HAPExecutableDataAssociation mapping) {   this.m_resultMapping.put(result, mapping);  }
-
-	public HAPExecutableDataAssociation getResultMapping(String resultName) {  return this.m_resultMapping.get(resultName);   }
+	public HAPExecutableWrapperTask getServiceMapping() {  return this.m_serviceMapping;   }
+	public void setServiceMapping(HAPExecutableWrapperTask serviceMapping) {    this.m_serviceMapping = serviceMapping;    }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -55,25 +44,17 @@ public class HAPExecutableServiceUse extends HAPExecutableImp{
 		jsonMap.put(PROVIDER, this.m_definition.getProvider());
 		jsonMap.put(NAME, this.m_definition.getName());
 		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_definition.getInfo(), HAPSerializationFormat.JSON));
+		jsonMap.put(SERVICEMAPPING, HAPJsonUtility.buildJson(this.m_serviceMapping, HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
-		jsonMap.put(PARMMAPPING, this.m_parmMapping.toResourceData(runtimeInfo).toString());
-		
-		Map<String, String> resultMap = new LinkedHashMap<String, String>();
-		for(String result :this.m_resultMapping.keySet()) {
-			resultMap.put(result, this.m_resultMapping.get(result).toResourceData(runtimeInfo).toString());
-		}
-		jsonMap.put(RESULTMAPPING, HAPJsonUtility.buildMapJson(resultMap));
+		jsonMap.put(SERVICEMAPPING, this.m_serviceMapping.toResourceData(runtimeInfo).toString());
 	}
 
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependent> dependency, HAPRuntimeInfo runtimeInfo) {
-		if(this.m_parmMapping!=null)  dependency.addAll(this.m_parmMapping.getResourceDependency(runtimeInfo));  
-		for(String result :this.m_resultMapping.keySet()) {
-			dependency.addAll(this.m_resultMapping.get(result).getResourceDependency(runtimeInfo));
-		}
+		dependency.addAll(this.m_serviceMapping.getResourceDependency(runtimeInfo));
 	}
 }

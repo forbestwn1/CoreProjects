@@ -228,9 +228,10 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 	var loc_getServiceRequest = function(serviceName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {"serviceName":serviceName}), handlers, request);
 		var service = loc_services[serviceName];
+		var serviceMapping = service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_SERVICEMAPPING];
 		out.addRequest(node_ioTaskProcessor.getExecuteIOTaskRequest(
 				loc_viewIO, 
-				service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PARMMAPPING], 
+				serviceMapping[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_INPUTMAPPING], 
 				function(input, handlers, request){
 					var serviceRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
 					serviceRequest.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceByNameRequest(service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PROVIDER], loc_serviceProviders, input, {
@@ -240,7 +241,7 @@ var loc_createUIView = function(uiResource, id, parent, context, requestInfo){
 					}));
 					return serviceRequest;
 				}, 
-				service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_RESULTMAPPING],
+				serviceMapping[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_OUTPUTMAPPING],
 				loc_viewIO, 
 				undefined)); 
 		return out;

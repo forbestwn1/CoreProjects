@@ -56,7 +56,7 @@
 				"name" : "getSchoolData",
 				"provider" : "getSchoolDataService",
 				"serviceMapping" :{
-					"parmMapping" : {
+					"inputMapping" : {
 						"element" : {
 							"schoolTypeInService" : {
 								"definition" : {
@@ -70,7 +70,7 @@
 							}
 						}
 					},
-					"resultMapping" : {
+					"outputMapping" : {
 						"success" : {
 							"element" : {
 								"schoolList" : {
