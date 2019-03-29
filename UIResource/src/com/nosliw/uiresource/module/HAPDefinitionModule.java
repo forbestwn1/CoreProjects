@@ -9,8 +9,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.process.HAPDefinitionEmbededProcess;
+import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.uiresource.common.HAPComponentWithConfiguration;
 
 /**
@@ -49,12 +50,12 @@ public class HAPDefinitionModule extends HAPComponentWithConfiguration{
 	private List<HAPDefinitionModuleUI> m_uis;
 
 	//processes (used for lifecycle, module command)
-	private Map<String, HAPDefinitionEmbededProcess> m_processes;
+	private Map<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>> m_processes;
 
 	public HAPDefinitionModule(String id) {
 		this.m_id = id;
 		this.m_uis = new ArrayList<HAPDefinitionModuleUI>();
-		this.m_processes = new LinkedHashMap<String, HAPDefinitionEmbededProcess>();
+		this.m_processes = new LinkedHashMap<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>>();
 	}
 	
 	public String getId() {   return this.m_id;   }
@@ -62,8 +63,8 @@ public class HAPDefinitionModule extends HAPComponentWithConfiguration{
 	public HAPContextGroup getContext() {  return this.m_contextGroup;   }
 	public void setContext(HAPContextGroup contextGroup) {  this.m_contextGroup = contextGroup;   }
 	
-	public Map<String, HAPDefinitionEmbededProcess> getProcesses(){  return this.m_processes;  }
-	public void addProcess(HAPDefinitionEmbededProcess processDef) {  this.m_processes.put(processDef.getName(), processDef);  }
+	public Map<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>> getProcesses(){  return this.m_processes;  }
+	public void addProcess(HAPDefinitionWrapperTask<HAPDefinitionProcess> processDef) {  this.m_processes.put(processDef.getTaskDefinition().getName(), processDef);  }
 	 
 	public List<HAPDefinitionModuleUI> getUIs(){  return this.m_uis;  }
 	public void addUI(HAPDefinitionModuleUI ui) {   this.m_uis.add(ui);   }

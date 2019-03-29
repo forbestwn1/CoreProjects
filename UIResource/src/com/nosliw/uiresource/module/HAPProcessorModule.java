@@ -8,8 +8,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.process.HAPDefinitionEmbededProcess;
-import com.nosliw.data.core.process.HAPExecutableEmbededProcess;
+import com.nosliw.data.core.process.HAPDefinitionProcess;
+import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
 import com.nosliw.data.core.process.HAPProcessorProcess;
 import com.nosliw.data.core.runtime.HAPRuntime;
@@ -22,7 +22,9 @@ import com.nosliw.data.core.script.context.HAPContextStructureEmpty;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPProcessorContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -59,10 +61,11 @@ public class HAPProcessorModule {
 		out.setContextGroup(HAPProcessorContext.process(moduleDefinition.getContext(), HAPParentContext.createDefault(parentContext==null?new HAPContextGroup():parentContext), contextProcessConfg, contextProcessRequirement));
 
 		//process global processes in module
-		Map<String, HAPDefinitionEmbededProcess> internalProcesses = moduleDefinition.getProcesses();
+		Map<String, HAPDefinitionWrapperTask<HAPDefinitionProcess>> internalProcesses = moduleDefinition.getProcesses();
 		for(String name : internalProcesses.keySet()) {
-			HAPExecutableEmbededProcess processExe = HAPProcessorProcess.process(internalProcesses.get(name), name, out.getContext(), null, allServiceProviders, processMan, contextProcessRequirement, processTracker);
-			out.addProcess(name, processExe);
+			HAPExecutableProcess processExe = HAPProcessorProcess.process(internalProcesses.get(name).getTaskDefinition(), name, out.getContext(), null, allServiceProviders, processMan, contextProcessRequirement, processTracker);
+			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(internalProcesses.get(name), processExe, HAPParentContext.createDefault(out.getContext()), null, contextProcessRequirement);			
+			out.addProcess(name, processExeWrapper);
 		}
 
 		//process ui
@@ -114,7 +117,9 @@ public class HAPProcessorModule {
 			HAPContextDefinitionRoot eventRootNode = buildContextRootFromEvent(out.getPage().getEventDefinition(eventName));
 			HAPContextGroup eventContext = moduleExe.getContext().cloneContextGroup();
 			eventContext.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC).addElement("EVENT", eventRootNode);
-			eventHandlerExe.setProcess(HAPProcessorProcess.process(eventHandlerDef.getProcess(), eventName, eventContext, null, serviceProviders, processMan, contextProcessRequirement, processTracker));
+			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(eventHandlerDef.getProcess().getTaskDefinition(), eventName, eventContext, null, serviceProviders, processMan, contextProcessRequirement, processTracker);
+			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(eventHandlerDef.getProcess(), eventProcessor, HAPParentContext.createDefault(moduleExe.getContext()), null, contextProcessRequirement);			
+			eventHandlerExe.setProcess(processExeWrapper);
 			out.addEventHandler(eventName, eventHandlerExe);
 		}	
 		return out;

@@ -7,11 +7,12 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.process.HAPDefinitionEmbededProcess;
+import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.script.context.HAPParserContext;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
 
@@ -70,8 +71,8 @@ public class HAPParserModule {
 		JSONObject processJsonObject = jsonObj.optJSONObject(HAPDefinitionModule.PROCESS);
 		if(processJsonObject!=null) {
 			for(Object key : processJsonObject.keySet()) {
-				HAPDefinitionEmbededProcess process = HAPParserProcessDefinition.parseEmbededProcess(processJsonObject.getJSONObject((String)key), m_activityPluginMan);
-				process.setName((String)key);
+				HAPDefinitionWrapperTask<HAPDefinitionProcess> process = HAPParserProcessDefinition.parseEmbededProcess(processJsonObject.getJSONObject((String)key), m_activityPluginMan);
+				process.getTaskDefinition().setName((String)key);
 				out.addProcess(process);
 			}
 		}
@@ -118,7 +119,7 @@ public class HAPParserModule {
 				out.addEventHandler((String)key, eventHandler);
 			}
 		}
-		
 		return out;
 	}
+	
 }

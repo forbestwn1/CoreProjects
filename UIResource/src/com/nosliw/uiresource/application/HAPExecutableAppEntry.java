@@ -1,6 +1,5 @@
 package com.nosliw.uiresource.application;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,18 +7,13 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
-import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.data.core.process.HAPExecutableEmbededProcess;
+import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
-import com.nosliw.data.core.script.context.HAPContextStructure;
 
 @HAPEntityWithAttribute
 public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HAPExecutable{
@@ -42,9 +36,8 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	private String m_id;
 	
 	private Map<String, HAPExecutableAppModule> m_uiModules;
-
 	//processes (used for lifecycle, module command)
-	private Map<String, HAPExecutableEmbededProcess> m_processes;
+	private Map<String, HAPExecutableProcess> m_processes;
 
 	private HAPContextGroup m_context;
 	
@@ -52,10 +45,11 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 
 	public HAPExecutableAppEntry(String entryName, HAPDefinitionApp appDef) {
 		super(appDef.getEntry(entryName));
-		this.m_processes = new LinkedHashMap<String, HAPExecutableEmbededProcess>();
+		this.m_processes = new LinkedHashMap<String, HAPExecutableProcess>();
 		this.m_uiModules = new LinkedHashMap<String, HAPExecutableAppModule>();
 		this.m_dataDefinition = new LinkedHashMap<String, HAPContext>();
 	}
+	/*
 
 	public String getId() {  return this.m_id;   }
 	public void setId(String id) {  this.m_id = id;  }
@@ -120,5 +114,18 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 			out.addAll(this.m_uiModules.get(name).getResourceDependency(runtimeInfo));
 		}
 		return out;
+	}
+	*/
+
+	@Override
+	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -1,5 +1,7 @@
 package com.nosliw.data.core.script.context.dataassociation;
 
+import java.util.Map;
+
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPParentContext;
@@ -32,6 +34,19 @@ public class HAPProcessorDataAssociation {
 		return Boolean.valueOf(outStr);
 	}
 
+	public static HAPExecutableWrapperTask processDataAssociationWithTask(HAPDefinitionWrapperTask taskWrapperDef, HAPExecutableTask taskExe, HAPParentContext externalContext, HAPInfo configure, HAPRequirementContextProcessor contextProcessRequirement) {
+		HAPExecutableWrapperTask out = new HAPExecutableWrapperTask();
+		out.setTask(taskExe);
+		out.setInputMapping(HAPProcessorDataAssociation.processDataAssociation(externalContext, taskWrapperDef.getInputMapping(), taskExe.getInContext(), configure, contextProcessRequirement));
+		
+		Map<String, HAPDefinitionDataAssociation> resultOutputMapping = taskWrapperDef.getOutputMapping();
+		for(String resultName : resultOutputMapping.keySet()) {
+			HAPParentContext inContext = taskExe.getOutResultContext().get(resultName);
+			out.addOutputMapping(resultName, HAPProcessorDataAssociation.processDataAssociation(inContext, resultOutputMapping.get(resultName), externalContext, configure, contextProcessRequirement));
+		}
+		return out;
+	}
+	
 	public static HAPExecutableDataAssociation processDataAssociation(HAPParentContext input, HAPDefinitionDataAssociation dataAssociation, HAPParentContext output, HAPInfo configure, HAPRequirementContextProcessor contextProcessRequirement) {
 		if(dataAssociation==null)  dataAssociation = new HAPDefinitionDataAssociationNone();
 		String type = dataAssociation.getType();

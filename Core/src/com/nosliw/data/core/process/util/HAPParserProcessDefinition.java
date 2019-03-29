@@ -5,14 +5,12 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
-import com.nosliw.data.core.process.HAPDefinitionEmbededProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcess;
 import com.nosliw.data.core.process.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPParserContext;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
 public class HAPParserProcessDefinition {
 
@@ -33,17 +31,12 @@ public class HAPParserProcessDefinition {
 		return out;
 	}
 
-	public static HAPDefinitionEmbededProcess parseEmbededProcess(JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
-		HAPDefinitionEmbededProcess out = new HAPDefinitionEmbededProcess();
-		parseProcess(out, processJson, activityPluginMan);
-		
-		JSONObject outputMappingJson = processJson.optJSONObject(HAPDefinitionEmbededProcess.OUTPUTMAPPING);
-		if(outputMappingJson!=null) {
-			for(Object key : outputMappingJson.keySet()) {
-				HAPDefinitionDataAssociation dataAssociation = HAPParserDataAssociation.buildObjectByJson(outputMappingJson.optJSONObject((String)key)); 
-				out.addOutputMapping((String)key, dataAssociation);
-			}
-		}
+	public static HAPDefinitionWrapperTask<HAPDefinitionProcess> parseEmbededProcess(JSONObject processJson, HAPManagerActivityPlugin activityPluginMan) {
+		HAPDefinitionWrapperTask<HAPDefinitionProcess> out = new HAPDefinitionWrapperTask<HAPDefinitionProcess>();
+		HAPDefinitionProcess process = new HAPDefinitionProcess();
+		parseProcess(process, processJson, activityPluginMan);
+		out.setTaskDefinition(process);
+		out.buildMapping(processJson);
 		return out;
 	}
 	

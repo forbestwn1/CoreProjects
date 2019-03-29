@@ -11,7 +11,7 @@ import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.process.HAPExecutableEmbededProcess;
+import com.nosliw.data.core.process.HAPExecutableProcess;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
@@ -19,6 +19,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPUtilityContextScript;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 
 @HAPEntityWithAttribute
 public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPExecutable{
@@ -49,13 +50,13 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 	private HAPContextGroup m_context;
 
 	//processes (used for lifecycle, module command)
-	private Map<String, HAPExecutableEmbededProcess> m_processes;
+	private Map<String, HAPExecutableWrapperTask<HAPExecutableProcess>> m_processes;
 	
 	private List<HAPExecutableModuleUI> m_uis;
 
 	public HAPExecutableModule(HAPDefinitionModule moduleDefinition, String id) {
 		super(moduleDefinition);
-		this.m_processes = new LinkedHashMap<String, HAPExecutableEmbededProcess>();
+		this.m_processes = new LinkedHashMap<String, HAPExecutableWrapperTask<HAPExecutableProcess>>();
 		this.m_uis = new ArrayList<HAPExecutableModuleUI>();
 		this.m_moduleDefinition = moduleDefinition;
 		this.m_id = id;
@@ -67,7 +68,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 
 	public void setContextGroup(HAPContextGroup contextGroup) { 	this.m_context = contextGroup;	}
 	
-	public void addProcess(String name, HAPExecutableEmbededProcess process) {		this.m_processes.put(name, process);	}
+	public void addProcess(String name, HAPExecutableWrapperTask<HAPExecutableProcess> process) {		this.m_processes.put(name, process);	}
 	
 	public void addModuleUI(HAPExecutableModuleUI ui) {  this.m_uis.add(ui);   }
 	
@@ -112,7 +113,7 @@ public class HAPExecutableModule extends HAPEntityInfoImpWrapper implements HAPE
 			out.addAll(ui.getResourceDependency(runtimeInfo));
 		}
 		
-		for(HAPExecutableEmbededProcess process : this.m_processes.values()) {
+		for(HAPExecutableWrapperTask process : this.m_processes.values()) {
 			out.addAll(process.getResourceDependency(runtimeInfo));
 		}
 		

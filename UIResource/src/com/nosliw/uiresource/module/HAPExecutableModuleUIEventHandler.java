@@ -16,6 +16,7 @@ import com.nosliw.data.core.runtime.HAPResourceData;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 
 @HAPEntityWithAttribute
 public class HAPExecutableModuleUIEventHandler  extends HAPEntityInfoImpWrapper implements HAPExecutable{
@@ -23,16 +24,16 @@ public class HAPExecutableModuleUIEventHandler  extends HAPEntityInfoImpWrapper 
 	@HAPAttribute
 	public static String PROCESS = "process";
 	
-	private HAPExecutableProcess m_process;
+	private HAPExecutableWrapperTask<HAPExecutableProcess> m_process;
 
-	public HAPExecutableProcess getProcess() {   return this.m_process;   }
+	public HAPExecutableWrapperTask<HAPExecutableProcess> getProcess() {   return this.m_process;   }
 	
 	
 	public HAPExecutableModuleUIEventHandler(HAPDefinitionModuleUIEventHander eventHandlerDefinition) {
 		super(eventHandlerDefinition);
 	}
 
-	public void setProcess(HAPExecutableProcess process) {   this.m_process = process;   }
+	public void setProcess(HAPExecutableWrapperTask<HAPExecutableProcess> process) {   this.m_process = process;   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

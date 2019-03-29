@@ -14,11 +14,13 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.context.HAPContextGroup;
+import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPUtilityContextScript;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPExecutableTask;
 
 @HAPEntityWithAttribute
-public class HAPExecutableProcess extends HAPExecutableImp{
+public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecutableTask{
 
 	@HAPAttribute
 	public static String DEFINITION = "definition";
@@ -66,6 +68,18 @@ public class HAPExecutableProcess extends HAPExecutableImp{
 		this.m_id = id;
 	}
  
+	@Override
+	public HAPParentContext getInContext() {	return HAPParentContext.createDefault(this.m_context);	}
+
+	@Override
+	public Map<String, HAPParentContext> getOutResultContext() {
+		Map<String, HAPParentContext> out = new LinkedHashMap<String, HAPParentContext>();
+		for(String resultName : this.m_results.keySet()) {
+			out.put(resultName, HAPParentContext.createDefault(this.m_context));
+		}
+		return out;
+	}
+
 	public HAPDefinitionProcess getDefinition() {   return this.m_processDefinition;    }
 	
 	public Map<String, HAPExecutableActivity> getActivities(){  return this.m_activities;   }

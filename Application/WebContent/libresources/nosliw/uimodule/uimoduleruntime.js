@@ -77,7 +77,7 @@ var loc_createModuleRuntime = function(uiModule, env){
 		}
 		
 		var outputMappingsByResult;
-		var outputMappingDef = process[node_COMMONATRIBUTECONSTANT.EXECUTABLEPROCESS_OUTPUTMAPPING];
+		var outputMappingDef = process[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_OUTPUTMAPPING];
 		if(outputMappingDef!=undefined){
 			outputMappingsByResult = {};
 			_.each(outputMappingDef, function(dataAssociation, resultName){
@@ -85,7 +85,7 @@ var loc_createModuleRuntime = function(uiModule, env){
 			});
 		}
 
-		out.addRequest(nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteProcessRequest(process, processInput, outputMappingsByResult, undefined));
+		out.addRequest(nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteProcessRequest(process[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], processInput, outputMappingsByResult, undefined));
 		return out;
 	};
 	

@@ -2,35 +2,14 @@ package com.nosliw.uiresource.application;
 
 import java.util.Map;
 
-import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.info.HAPInfoImpSimple;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.expressionsuite.HAPExpressionSuiteManager;
-import com.nosliw.data.core.process.HAPDefinitionEmbededProcess;
-import com.nosliw.data.core.process.HAPExecutableEmbededProcess;
 import com.nosliw.data.core.process.HAPManagerProcess;
-import com.nosliw.data.core.process.HAPProcessorProcess;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;
-import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.HAPParentContext;
-import com.nosliw.data.core.script.context.HAPProcessorContext;
-import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
-import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.service.provide.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
-import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.common.HAPUtilityCommon;
-import com.nosliw.uiresource.module.HAPDefinitionModule;
-import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
-import com.nosliw.uiresource.module.HAPExecutableModule;
-import com.nosliw.uiresource.module.HAPProcessorModule;
-import com.nosliw.uiresource.module.HAPUtilityModule;
 
 public class HAPProcessMiniAppEntry {
 
@@ -47,7 +26,7 @@ public class HAPProcessMiniAppEntry {
 			HAPProcessTracker processTracker) {
 
 		HAPExecutableAppEntry out = new HAPExecutableAppEntry(entry, miniAppDef);
-		
+/*		
 		HAPDefinitionAppEntryUI entryDefinition = miniAppDef.getEntry(entry);
 		
 		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityCommon.getDefaultContextProcessorRequirement(dataTypeHelper, runtime, expressionManager, serviceDefinitionManager);
@@ -123,7 +102,7 @@ public class HAPProcessMiniAppEntry {
 			HAPExecutableDataAssociation outputMappingByTarget = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(moduleDef.getContext()), outputMapping.get(outputTargetName), parentContext, daConfigure, contextProcessRequirement);
 			out.addOutputDataAssociation(outputTargetName, outputMappingByTarget);
 		}
-		
+		*/
 		return out;
 	}
 }
