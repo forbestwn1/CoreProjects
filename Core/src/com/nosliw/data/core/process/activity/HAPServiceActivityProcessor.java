@@ -80,7 +80,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 			if(HAPConstant.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 				HAPServiceActivityExecutable serviceActivity = (HAPServiceActivityExecutable)activity;
 				
-				return serviceActivity.getService().getResultMapping(resultName).getOutput().getOutputStructure();
+				return serviceActivity.getService().getServiceMapping().getOutputMapping(resultName).getOutput().getOutputStructure();
 				
 				
 //				HAPServiceActivityDefinition serviceActDef = (HAPServiceActivityDefinition)serviceActivity.getActivityDefinition();

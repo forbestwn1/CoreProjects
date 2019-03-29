@@ -95,7 +95,7 @@ var node_createProcess = function(processDef, envObj){
 	var loc_getExecuteNormalActivityRequest = function(normalActivity, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteNormalActivity", {"activity":normalActivity}), handlers, request);
 		
-		out.addRequest(node_ioTaskProcessor.getExecuteIOTaskRequest(
+		out.addRequest(node_ioTaskProcessor.getExecuteIORequest(
 				loc_processContextIO, 
 				normalActivity[node_COMMONATRIBUTECONSTANT.EXECUTABLEACTIVITY_INPUT], 
 				function(input, handlers, request){

@@ -109,7 +109,7 @@
 					"name": "startActivity",
 					"type": "start",
 					"flow": {
-						"target": "presentSchoolListUI"
+						"target": "retrieveSchoolData"
 					}
 				},
 				{
@@ -117,7 +117,7 @@
 					"name": "retrieveSchoolData",
 					"type": "Service_request",
 					"provider": "getSchoolDataService",
-					"parmMapping" : {
+					"inputMapping" : {
 						"element" : {
 							"schoolTypeInService" : {
 								"definition" : {

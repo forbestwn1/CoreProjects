@@ -53,28 +53,6 @@ public class HAPProcessorServiceUse {
 		HAPExecutableWrapperTask serviceMappingExe = HAPProcessorDataAssociation.processDataAssociationWithTask(definition.getServiceMapping(), taskExe, HAPParentContext.createDefault(globalContext), null, contextProcessRequirement);
 		out.setServiceMapping(serviceMappingExe);
 		
-//		HAPInfo daConfigure = HAPProcessorDataAssociation.withModifyStructureFalse(new HAPInfoImpSimple());
-//		//process parm mapping
-//		HAPExecutableDataAssociation processedParms = HAPProcessorDataAssociation.processDataAssociation(
-//				HAPParentContext.createDefault(globalContext), 
-//				serviceMapping.getParms(), 
-//				HAPParentContext.createDefault(HAPUtilityServiceUse.buildContextFromServiceParms(providerInterface)), 
-//				daConfigure, 
-//				contextProcessRequirement);
-//		out.setParmMapping(processedParms);
-//		 
-//		//process result mapping
-//		Map<String, HAPDefinitionDataAssociation> resultMapping = serviceMapping.getOutputMapping();
-//		for(String result :resultMapping.keySet()) {
-//			HAPContext outputContext = HAPUtilityServiceUse.buildContextFromResultServiceOutputs(providerInterface, result); 
-//			HAPExecutableDataAssociation processedResult = HAPProcessorDataAssociation.processDataAssociation(
-//					HAPParentContext.createDefault(outputContext), 
-//					resultMapping.get(result),
-//					HAPParentContext.createDefault(globalContext), 
-//					daConfigure, 
-//					contextProcessRequirement);
-//			out.addResultMapping(result, processedResult);
-//		}
 		return out;
 	}
 	

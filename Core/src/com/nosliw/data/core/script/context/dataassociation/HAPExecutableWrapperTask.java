@@ -42,7 +42,9 @@ public class HAPExecutableWrapperTask<T extends HAPExecutableTask> extends HAPEx
 	public HAPExecutableDataAssociation getInputMapping() {   return this.m_inputMapping;   }
 	public void setInputMapping(HAPExecutableDataAssociation inputMapping) {  this.m_inputMapping = inputMapping;  }
 	public Map<String, HAPExecutableDataAssociation> getOutputMapping(){    return this.m_outputMapping;     }
+	public HAPExecutableDataAssociation getOutputMapping(String name) {   return this.m_outputMapping.get(name);   }
 	public void addOutputMapping(String resultName, HAPExecutableDataAssociation dataAssociation) {   this.m_outputMapping.put(resultName, dataAssociation);   }
+	
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

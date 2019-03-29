@@ -31,28 +31,13 @@
 
 					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteService", {"serviceName":service}), handlers, request);
 
-					var output = {};
-					return node_ioTaskProcessor.getExecuteIOTaskRequest(
-							input, 
-							service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_PARMMAPPING], 
-							function(input, handlers, request){
-								var serviceRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
-								serviceRequest.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceByProviderRequest(provider, input, {
-									success : function(request, serviceResult){
-										return new node_IOTaskResult(serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_RESULTNAME], serviceResult[node_COMMONATRIBUTECONSTANT.RESULTSERVICE_OUTPUT]);
-									}
-								}));
-								return serviceRequest;
-							}, 
-							service[node_COMMONATRIBUTECONSTANT.EXECUTABLESERVICEUSE_RESULTMAPPING],
-							output, 
-							{
-								success : function(request, taskResult){
-									var activityOutput = taskResult.resultValue.getData();
-									return new node_IOTaskResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS, activityOutput);
-								}
-							}); 
-					
+					out.addRequest(nosliw.runtime.getDataService().getExecuteEmbededDataServiceByProviderRequest(provider, service, input, {
+						success : function(request, taskResult){
+							var activityOutput = taskResult.resultValue.getData();
+							return new node_IOTaskResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS, activityOutput);
+						}
+					}));
+
 					return out;
 				}
 			};

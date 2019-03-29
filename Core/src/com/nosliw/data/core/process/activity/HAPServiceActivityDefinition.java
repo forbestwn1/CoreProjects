@@ -8,9 +8,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.process.HAPDefinitionResultActivityNormal;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
-import com.nosliw.data.core.service.use.HAPDefinitionMappingService;
 
 public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 
@@ -22,31 +21,31 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 
 	private String m_provider;
 	
-	private HAPDefinitionMappingService m_serviceMapping;
+	private HAPDefinitionWrapperTask m_serviceMapping;
 
 	public HAPServiceActivityDefinition(String type) {
 		super(type);
-		this.m_serviceMapping = new HAPDefinitionMappingService();
+		this.m_serviceMapping = new HAPDefinitionWrapperTask();
 		this.setInput(new HAPDefinitionDataAssociationMirror());
 	}
 
 	public String getProvider() {   return this.m_provider;  }
 
-	public HAPDefinitionMappingService getServiceMapping() {   return this.m_serviceMapping;  }
+	public HAPDefinitionWrapperTask getServiceMapping() {   return this.m_serviceMapping;  }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_provider = jsonObj.optString(PROVIDER);
-		this.m_serviceMapping.setParmMapping(HAPParserDataAssociation.buildObjectByJson(jsonObj.optJSONObject(PARMMAPPING)));
+		this.m_serviceMapping.buildMapping(jsonObj);
 		
 		
 		Map<String, HAPDefinitionResultActivityNormal> results = this.getResults();
 		for(String resultName : results.keySet()) {
 			HAPDefinitionResultActivityNormal result = results.get(resultName);
 			HAPDefinitionDataAssociation dataAssociation = result.getOutputDataAssociation();
-			this.m_serviceMapping.addResultMapping(resultName, dataAssociation.cloneDataAssocation());
+			this.m_serviceMapping.addOutputMapping(resultName, dataAssociation.cloneDataAssocation());
 			
 			result.setOutputDataAssociation(new HAPDefinitionDataAssociationMirror());
 /*			

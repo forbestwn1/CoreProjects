@@ -106,7 +106,7 @@ var node_createDataAssociation = function(inputIODataSet, dataAssociationDef, ou
 		return out;
 	};
 
-	var loc_getExecuteMirrorDataAssociationRequest = function(intputDataSet, handlers, request){
+	var loc_getExecuteMirrorDataAssociationRequest = function(inputDataSet, handlers, request){
 		var service = new node_ServiceInfo("ExecuteMirrorDataAssociation", {});
 		var out = node_createServiceRequestInfoSet(undefined, {
 			success : function(request, resultSet){
@@ -114,8 +114,8 @@ var node_createDataAssociation = function(inputIODataSet, dataAssociationDef, ou
 			}
 		});
 
-		_.each(inputDataSet, function(intputData, name){
-			out.addRequest(name, loc_toTargetRequest(inputdata, name, true));
+		_.each(inputDataSet, function(inputData, name){
+			out.addRequest(name, loc_toTargetRequest(inputData, name, true));
 		});
 		
 		return out;
