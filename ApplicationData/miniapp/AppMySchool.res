@@ -88,7 +88,7 @@
 				]
 			}
 		],
-		"process": {
+		"process1": {
 			"submitSetting": {
 				"activity": [{
 						"id": "startActivityId",

@@ -72,7 +72,7 @@ public class HAPUIResourceManager {
 		this.m_dataTypeHelper = dataTypeHelper;
 		this.m_uiResourceParser = new HAPParserPage(null, m_idGengerator);
 		this.m_moduleParser = new HAPParserModule(this.m_processMan.getPluginManager());
-		this.m_miniAppParser = new HAPParseMiniApp();
+		this.m_miniAppParser = new HAPParseMiniApp(this.m_processMan.getPluginManager());
 		this.m_serviceDefinitionManager = serviceDefinitionManager;
 	}
 

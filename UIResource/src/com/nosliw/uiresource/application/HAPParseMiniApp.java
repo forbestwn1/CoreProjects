@@ -2,13 +2,25 @@ package com.nosliw.uiresource.application;
 
 import java.io.File;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.data.core.process.HAPDefinitionProcess;
+import com.nosliw.data.core.process.plugin.HAPManagerActivityPlugin;
+import com.nosliw.data.core.process.util.HAPParserProcessDefinition;
+import com.nosliw.data.core.script.context.HAPParserContext;
+import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 
 public class HAPParseMiniApp {
 
+	private HAPManagerActivityPlugin m_activityPluginMan;
+	
+	public HAPParseMiniApp(HAPManagerActivityPlugin activityPluginMan) {
+		this.m_activityPluginMan = activityPluginMan;
+	}
+	
 	public HAPDefinitionApp parseFile(String fileName){
 		HAPDefinitionApp out = null;
 		try{
@@ -26,19 +38,45 @@ public class HAPParseMiniApp {
 
 	
 	public HAPDefinitionApp parseContent(String content) {
-		return parseJson(new JSONObject(content));
+		return parseAppJson(new JSONObject(content));
 	}
 	
-	private HAPDefinitionApp parseJson(JSONObject jsonObj) {
+	private HAPDefinitionApp parseAppJson(JSONObject jsonObj) {
 		HAPDefinitionApp out = new HAPDefinitionApp();
-		out.buildObject(jsonObj, HAPSerializationFormat.JSON);
+
+		out.buildEntityInfoByJson(jsonObj);
+		out.setId(jsonObj.optString(HAPDefinitionApp.ID));
+		out.setDataDefinition(HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionAppData.class.getName(), jsonObj.optJSONObject(HAPDefinitionApp.APPLICATIONDATA)));
+		out.setContext(HAPParserContext.parseContextGroup(jsonObj.optJSONObject(HAPDefinitionApp.CONTEXT))); 
+
+		JSONArray entryArray = jsonObj.optJSONArray(HAPDefinitionApp.ENTRY);
+		if(entryArray!=null) {
+			for(int i=0; i<entryArray.length(); i++) {
+				out.addEntry(this.parseAppEntry(entryArray.getJSONObject(i)));
+			}
+		}
 		return out;
 	}
 
-	public static void main(String[] args) {
-		String content = HAPFileUtility.readFile("C:\\Users\\ewaniwa\\Desktop\\Mywork\\CoreProjects\\ApplicationData\\miniapp\\AppMySchool.res");
-		HAPDefinitionApp out = new HAPParseMiniApp().parseContent(content);
-		System.out.println(out);
+	private HAPDefinitionAppEntryUI parseAppEntry(JSONObject jsonObj) {
+		HAPDefinitionAppEntryUI out = new HAPDefinitionAppEntryUI();
+		out.buildEntityInfoByJson(jsonObj);
+		out.addModules(HAPSerializeUtility.buildListFromJsonArray(HAPDefinitionAppModule.class.getName(), jsonObj.optJSONArray(HAPDefinitionAppEntryUI.MODULE)));
+		
+		JSONObject processesJson = jsonObj.optJSONObject(HAPDefinitionAppEntryUI.PROCESS);
+		if(processesJson!=null) {
+			for(Object key :processesJson.keySet()) {
+				String processName = (String)key;
+				JSONObject processJson = processesJson.getJSONObject(processName);
+
+				HAPDefinitionWrapperTask<HAPDefinitionProcess> process = HAPParserProcessDefinition.parseEmbededProcess(processJson, this.m_activityPluginMan);
+				process.getTaskDefinition().setName((String)key);
+				out.addProcess(processName, process);
+			}
+		}
+		
+		out.setContext(HAPParserContext.parseContextGroup(jsonObj.optJSONObject(HAPDefinitionAppEntryUI.CONTEXT))); 
+		return out;
 	}
 	
 }
