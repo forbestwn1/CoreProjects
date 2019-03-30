@@ -19,11 +19,16 @@ var packageObj = library;
 	var node_IOTaskResult;
 	var node_createIODataSet;
 	var node_requestServiceProcessor;
+	var node_makeObjectWithType;
+	var node_getObjectType;
+
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createDataAssociation = function(inputIODataSet, dataAssociationDef, outputIODataSet){
+var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIODataSet){
 	
-	var loc_inputIODataSet = node_createIODataSet(inputIODataSet);
+	if(node_getObjectType(inputIO)==node_CONSTANT.TYPEDOBJECT_TYPE_VALUE)  inputIO = node_createIODataSet(inputIO);
+	var loc_inputIO = inputIO;
+
 	var loc_outputIODataSet = node_createIODataSet(outputIODataSet);
 	var loc_dataAssociationDef = dataAssociationDef;
 
@@ -127,9 +132,9 @@ var node_createDataAssociation = function(inputIODataSet, dataAssociationDef, ou
 		}, handlers, request);
 	};
 
-	var loc_getExecuteDataAssociationRequest = function(handlers, request){
+	var loc_getExecuteDataAssociationRequest = function(inputIO, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociation", {}), handlers, request);
-		out.addRequest(loc_inputIODataSet.getGetDataSetValueRequest({
+		out.addRequest(inputIO.getGetDataSetValueRequest({
 			success : function(request, intputDataSet){
 				if(loc_dataAssociationDef==undefined)  return loc_getExecuteNoneDataAssociationRequest(intputDataSet);
 				else{
@@ -146,7 +151,27 @@ var node_createDataAssociation = function(inputIODataSet, dataAssociationDef, ou
 	var loc_out = {
 		
 		getExecuteRequest : function(handlers, request){
-			return loc_getExecuteDataAssociationRequest(handlers, request);
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociation", {}), handlers, request);
+			var inputIOType = node_getObjectType(loc_inputIO);
+			if(inputIOType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DATASET){
+				out.addRequest(loc_getExecuteDataAssociationRequest(loc_inputIO), {
+					success :function(request){
+						return loc_outputIODataSet;
+					}
+				});
+			}
+			else if(inputIOType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION){
+				out.add(loc_inputIO.getExecuteRequest({
+					success : function(request, outputIO){
+						out.addRequest(loc_getExecuteDataAssociationRequest(outputIO), {
+							success :function(request){
+								return loc_outputIODataSet;
+							}
+						});
+					}
+				}));
+			}
+			return out;
 		},
 		executeRequest : function(handlers, request){
 			var requestInfo = this.getExecuteRequest(handlers, request);
@@ -154,6 +179,8 @@ var node_createDataAssociation = function(inputIODataSet, dataAssociationDef, ou
 		},
 	};
 	
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION);
+
 	return loc_out;
 };
 
@@ -176,6 +203,8 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("iotask.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createDataAssociation", node_createDataAssociation); 

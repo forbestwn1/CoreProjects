@@ -55,7 +55,7 @@ function(uiModule){
 				return loc_getTransferToRequest(uiName, mode, handlers, requestInfo);
 			},
 			
-			getExecuteCommandRequest : function(uiName, commandName, commandData, handlers, requestInfo){
+			getExecuteUICommandRequest : function(uiName, commandName, commandData, handlers, requestInfo){
 				return loc_uiModule.getUI(uiName).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
 			},
 			

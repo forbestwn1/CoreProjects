@@ -61,7 +61,7 @@ var loc_createModuleRuntime = function(uiModule, env){
 		var processInput = {};
 		//input data association
 		_.each(node_ioTaskUtility.getContextTypes(), function(categary, index){
-			var context = loc_uiModule.getContext()[categary];
+			var context = loc_uiModule.getIOContext().getData()[categary];
 			if(context!=undefined){
 				_.each(context, function(ele, name){
 					processInput[name] = ele;
@@ -81,7 +81,7 @@ var loc_createModuleRuntime = function(uiModule, env){
 		if(outputMappingDef!=undefined){
 			outputMappingsByResult = {};
 			_.each(outputMappingDef, function(dataAssociation, resultName){
-				outputMappingsByResult[resultName] = new node_ExternalMapping(loc_uiModule.getContext(), dataAssociation);
+				outputMappingsByResult[resultName] = new node_ExternalMapping(loc_uiModule.getIOContext(), dataAssociation);
 			});
 		}
 
@@ -115,8 +115,11 @@ var loc_createModuleRuntime = function(uiModule, env){
 			out.addRequest(loc_getExecuteModuleProcessByNameRequest("init"));
 			return out;
 		},
-		
 		executeStartRequest : function(handlers, request){		loc_env.processRequest(this.getStartRequest(handlers, request));	},
+
+		getExecuteCommandRequest : function(command, parms, handlers, request){
+			
+		}
 		
 	};
 	return loc_out;

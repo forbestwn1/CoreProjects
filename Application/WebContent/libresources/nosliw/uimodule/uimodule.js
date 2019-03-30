@@ -25,13 +25,14 @@ var packageObj = library;
 	var node_getLifecycleInterface;
 	var node_createModuleUIRequest;
 	var node_createUIDecorationsRequest;
+	var node_createIODataSet;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
 var node_createUIModuleRequest = function(uiModuleDef, input, statelessData, decorations, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUIModule", {"uiModule":uiModuleDef}), handlers, request);
 
-	var module = loc_createUIModule(uiModuleDef, uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input), statelessData);
+	var module = loc_createUIModule(uiModuleDef, node_createIODataSet(uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_INITSCRIPT](input)), statelessData);
 
 	//prepare decoration first
 	var decorationInfo = {};
@@ -62,7 +63,7 @@ var node_createUIModuleRequest = function(uiModuleDef, input, statelessData, dec
 		if(decs==undefined) decs = decorationInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL];
 		buildModuleUIRequest.addRequest(node_createUIDecorationsRequest(decs, {
 			success : function(request, data){
-				return node_createModuleUIRequest(ui, module.getContext(), data);
+				return node_createModuleUIRequest(ui, module.getIOContext(), data);
 			}
 		}));
 
@@ -73,15 +74,15 @@ var node_createUIModuleRequest = function(uiModuleDef, input, statelessData, dec
 	return out;
 };	
 	
-var loc_createUIModule = function(uiModuleDef, context, statelessData){
+var loc_createUIModule = function(uiModuleDef, ioContext, statelessData){
 
 
-	var loc_setContext = function(context) {  loc_out.prv_context = context;  };
+//	var loc_setContext = function(context) {  loc_out.prv_context = context;  };
 	
 	var loc_out = {
 		prv_uiModuleDef : uiModuleDef,
 		
-		prv_context : context,
+		prv_ioContext : ioContext,
 		
 		prv_uis : [],
 		prv_uisByName : {},
@@ -109,12 +110,12 @@ var loc_createUIModule = function(uiModuleDef, context, statelessData){
 			});
 			ui.registerValueChangeEventListener(loc_out.prv_valueChangeEventListener, function(eventName, eventData, requestInfo){
 				//handle ui value change, update value in module
-				ui.executeSynOutUIDataRequest(loc_out.prv_context, undefined, requestInfo);
+				ui.executeSynOutDataRequest(undefined, undefined, requestInfo);
 			});
 		},
 	
-		getContext : function(){  return loc_out.prv_context;  },
-		setContext : function(context){ loc_setContext(context);  },
+		getIOContext : function(){  return loc_out.prv_ioContext;  },
+//		setContext : function(context){ loc_setContext(context);  },
 		
 		getStateData : function(name){   return loc_out.prv_stateData[name];  },
 		setStateData : function(name, state){  loc_out.prv_stateData[name] = state;   },
@@ -124,7 +125,7 @@ var loc_createUIModule = function(uiModuleDef, context, statelessData){
 
 		getUIs : function(){  return loc_out.prv_uis;  },
 		getUI : function(name) {  return loc_out.prv_uisByName[name];   },
-		getRefreshUIRequest : function(uiName, handlers, request){	return this.getUI(uiName).getRefreshRequest(loc_out.prv_context, handlers, request);	},
+		getRefreshUIRequest : function(uiName, handlers, request){	return this.getUI(uiName).getSynInDataRequest(undefined, handlers, request);	},
 		
 		getProcess : function(name){  return loc_out.prv_uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS][name];  },
 		
@@ -167,6 +168,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.createModuleUIRequest", function(){node_createModuleUIRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.createUIDecorationsRequest", function(){node_createUIDecorationsRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIModuleRequest", node_createUIModuleRequest); 

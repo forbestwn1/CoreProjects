@@ -99,17 +99,22 @@
 						}
 					},
 					{
-						"id": "syncSetting",
-						"type": "sync",
-						"path": "app.module.syncWithApp",
+						"id": "readSetting",
+						"type": "dataAssociation",
+						"path": "source.syncWithApp",
 						"command": "refresh",
-						"parm": {
-							"inputData": {
-								"definition": {
-									"path": "settingData"
-								}
+						"result": [{
+							"name": "success",
+							"flow": {
+								"target": "updateApplication"
 							}
-						},
+						}]
+					},
+					{
+						"id": "updateApplication",
+						"type": "dataAssociation",
+						"path": "application.default",
+						"command": "refresh",
 						"result": [{
 							"name": "success",
 							"flow": {
@@ -119,13 +124,16 @@
 					},
 					{
 						"id": "refreshApplication",
-						"type": "sync",
+						"name": "refreshApplication",
+						"type": "UI_executeModuleCommand",
 						"module": "application",
 						"command": "refresh",
-						"parm": {
-							"inputData": {
-								"definition": {
-									"path": "settingData"
+						"input": {
+							"element": {
+								"schoolList": {
+									"definition": { 
+										"path": "schoolListInModule"
+									}
 								}
 							}
 						},

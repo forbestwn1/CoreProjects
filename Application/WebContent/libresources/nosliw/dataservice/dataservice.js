@@ -19,7 +19,7 @@ var node_createDataService = function(){
 
 		getExecuteEmbededDataServiceByNameRequest : function(serviceName, serviceProviders, serviceUse, ioEndpoint, handlers, requester_parent){
 			var serviceProvider = serviceProviders[serviceName];
-			return loc_out.getExecuteEmbededDataServiceByProviderRequest(serviceProvider, serviceMapping, ioEndpoint, handlers, requester_parent);
+			return loc_out.getExecuteEmbededDataServiceByProviderRequest(serviceProvider, serviceUse, ioEndpoint, handlers, requester_parent);
 		},
 			
 		getExecuteEmbededDataServiceByProviderRequest : function(serviceProvider, serviceUse, ioEndpoint, handlers, requester_parent){

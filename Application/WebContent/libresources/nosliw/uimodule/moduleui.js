@@ -19,13 +19,13 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createModuleUIRequest = function(moduleUIDef, moduleContext, decorations, handlers, request){
-	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleUI", {"moduleUIDef":moduleUIDef, "moduleContext":moduleContext}), handlers, request);
+var node_createModuleUIRequest = function(moduleUIDef, moduleIOContext, decorations, handlers, request){
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleUI", {"moduleUIDef":moduleUIDef, "moduleContext":moduleIOContext}), handlers, request);
 	
 	//generate page
 	out.addRequest(nosliw.runtime.getUIPageService().getGenerateUIPageRequest(moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_PAGE], undefined, {
 		success :function(requestInfo, page){
-			var moduleUI = node_createModuleUI(moduleUIDef, page);
+			var moduleUI = node_createModuleUI(moduleUIDef, page, moduleIOContext);
 			
 			//append decorations
 			if(decorations!=null){
@@ -35,7 +35,7 @@ var node_createModuleUIRequest = function(moduleUIDef, moduleContext, decoration
 			}
 			
 			//refresh module ui
-			return moduleUI.getRefreshRequest(moduleContext, {
+			return moduleUI.getSynInDataRequest(undefined, {
 				success : function(requestInfo){
 					return moduleUI;
 				}
@@ -45,14 +45,11 @@ var node_createModuleUIRequest = function(moduleUIDef, moduleContext, decoration
 	return out;
 };
 
-var node_createModuleUI = function(moduleUIDef, page){
+var node_createModuleUI = function(moduleUIDef, page, moduleIOContext){
 	var loc_moduleUIDef = moduleUIDef;
 	var loc_page = page;
-	
-	var loc_extraContextData = {};
-
 	//io between module context and page context
-	var loc_pageInputIO = node_createDynamicData(
+	var loc_inputDataAssociation = node_createDataAssociation(moduleIOContext, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], node_createDynamicData(
 		function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_page.getContextEleValueAsParmsRequest());
@@ -70,24 +67,24 @@ var node_createModuleUI = function(moduleUIDef, page){
 			out.addRequest(loc_page.getUpdateContextRequest(pageInput));
 			return out;
 		}
-	);
-
-	var loc_pageOutputIO = node_createDynamicData(
+	));
+	
+	var loc_outputDataAssociation = node_createDataAssociation(node_createDynamicData(
 		function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_page.getBuildContextGroupRequest());
 			return out;
 		}
-	);
-	
-	var loc_getRefreshRequest = function(moduleContext, handlers, request){
-		return loc_getRefreshPageDataRequest(moduleContext, handlers, request);
+	), loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_OUTPUTMAPPING], moduleIOContext);
+
+	var loc_extraContextData = {};
+
+	var loc_getRefreshRequest = function(handlers, request){
+		return loc_getRefreshPageDataRequest(handlers, request);
 	};
 
-	var loc_getRefreshPageDataRequest = function(moduleContext, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(node_createDataAssociation(moduleContext, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_INPUTMAPPING], loc_pageInputIO).getExecuteRequest());
-		return out;
+	var loc_getRefreshPageDataRequest = function(handlers, request){
+		return loc_inputDataAssociation.getExecuteRequest(handlers, request);
 	};
 	
 	var lifecycleCallback = {};
@@ -127,16 +124,10 @@ var node_createModuleUI = function(moduleUIDef, page){
 		registerEventListener : function(listener, handler){		loc_page.registerEventListener(listener, handler);	},
 		registerValueChangeEventListener : function(listener, handler){		loc_page.registerValueChangeEventListener(listener, handler);	},
 		
-		getRefreshRequest : function(moduleContext, handlers, request){  return loc_getRefreshRequest(moduleContext, handlers, request);  },
+		getSynInDataRequest : function(name, handlers, request){  return loc_inputDataAssociation.getExecuteRequest(handlers, request);  },
 		
-		getSynOutUIDataRequest : function(moduleContext, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("SynOutUIData", {"moduleContext":moduleContext}), handlers, request);
-			out.addRequest(node_createDataAssociation(loc_pageOutputIO, loc_moduleUIDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULEUI_OUTPUTMAPPING], moduleContext).getExecuteRequest());
-			return out;
-		},
-		executeSynOutUIDataRequest : function(moduleContext, handlers, request){
-			node_requestServiceProcessor.processRequest(this.getSynOutUIDataRequest(moduleContext, handlers, request));
-		}
+		getSynOutDataRequest : function(name, handlers, request){	return loc_outputDataAssociation.getExecuteRequest(handlers, request);	},
+		executeSynOutDataRequest : function(name, handlers, request){	node_requestServiceProcessor.processRequest(this.getSynOutDataRequest(name, handlers, request));	}
 		
 	};
 	

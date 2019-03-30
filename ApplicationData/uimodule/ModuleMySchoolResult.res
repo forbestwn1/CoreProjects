@@ -134,7 +134,7 @@
 					"result": [{
 						"name": "success",
 						"flow": {
-							"target": "refreshSchoolList"
+							"target": "presentSchoolListUI"
 						},
 						"output": {
 							"element": {
