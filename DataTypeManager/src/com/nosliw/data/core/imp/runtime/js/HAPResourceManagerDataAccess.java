@@ -3,9 +3,9 @@ package com.nosliw.data.core.imp.runtime.js;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.data.core.runtime.HAPResourceDependent;
-import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPResourceManagerImp;
+import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public abstract class HAPResourceManagerDataAccess extends HAPResourceManagerImp{

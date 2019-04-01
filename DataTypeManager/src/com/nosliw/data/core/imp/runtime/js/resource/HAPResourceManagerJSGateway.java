@@ -1,8 +1,8 @@
 package com.nosliw.data.core.imp.runtime.js.resource;
 
-import com.nosliw.data.core.runtime.HAPResource;
-import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPResourceManagerImp;
+import com.nosliw.data.core.resource.HAPResource;
+import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSGateway;
 

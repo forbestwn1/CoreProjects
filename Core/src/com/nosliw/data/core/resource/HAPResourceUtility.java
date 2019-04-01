@@ -1,4 +1,4 @@
-package com.nosliw.data.core.runtime;
+package com.nosliw.data.core.resource;
 
 import java.util.ArrayList;
 import java.util.List;

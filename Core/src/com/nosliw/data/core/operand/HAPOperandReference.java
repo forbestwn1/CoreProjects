@@ -15,7 +15,7 @@ import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPVariableInfo;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.process.HAPExecutableProcess;
-import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPOperandReference extends HAPOperandImp{
 

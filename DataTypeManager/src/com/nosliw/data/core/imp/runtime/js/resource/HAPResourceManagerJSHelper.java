@@ -2,8 +2,8 @@ package com.nosliw.data.core.imp.runtime.js.resource;
 
 import com.nosliw.data.core.imp.runtime.js.HAPDataAccessRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.HAPResourceManagerDataAccess;
-import com.nosliw.data.core.runtime.HAPResource;
-import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResource;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPResourceManagerJSHelper extends HAPResourceManagerDataAccess{

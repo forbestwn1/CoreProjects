@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskLoadResources;
-import com.nosliw.data.core.runtime.HAPResourceInfo;
+import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;

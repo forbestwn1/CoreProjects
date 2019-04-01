@@ -6,7 +6,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.expression.HAPExpressionUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.runtime.HAPResourceInfo;
+import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;

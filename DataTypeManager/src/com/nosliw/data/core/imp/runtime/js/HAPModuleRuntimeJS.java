@@ -6,7 +6,7 @@ import com.nosliw.data.core.HAPDataTypeConverter;
 import com.nosliw.data.core.HAPOperationId;
 import com.nosliw.data.core.imp.HAPDataAccessDataType;
 import com.nosliw.data.core.imp.HAPModuleDataType;
-import com.nosliw.data.core.runtime.HAPResourceHelper;
+import com.nosliw.data.core.resource.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.js.resource.HAPJSGatewayId;

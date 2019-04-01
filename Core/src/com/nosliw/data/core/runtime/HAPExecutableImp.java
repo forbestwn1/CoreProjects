@@ -7,6 +7,8 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.data.core.resource.HAPResourceData;
+import com.nosliw.data.core.resource.HAPResourceDependent;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
 public abstract class HAPExecutableImp  extends HAPSerializableImp implements HAPExecutable{

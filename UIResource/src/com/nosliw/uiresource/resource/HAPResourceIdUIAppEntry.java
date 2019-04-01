@@ -3,7 +3,7 @@ package com.nosliw.uiresource.resource;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPResourceIdUIAppEntry  extends HAPResourceId{
 

@@ -4,8 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.data.core.runtime.HAPResourceData;
-import com.nosliw.data.core.runtime.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceData;
+import com.nosliw.data.core.resource.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPConfigureContextProcessor;

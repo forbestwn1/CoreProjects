@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.data.core.runtime.HAPLoadResourceResponse;
-import com.nosliw.data.core.runtime.HAPResource;
-import com.nosliw.data.core.runtime.HAPResourceDependent;
-import com.nosliw.data.core.runtime.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPResourceInfo;
-import com.nosliw.data.core.runtime.HAPResourceManager;
-import com.nosliw.data.core.runtime.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPLoadResourceResponse;
+import com.nosliw.data.core.resource.HAPResource;
+import com.nosliw.data.core.resource.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceInfo;
+import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPResourceManagerJS implements HAPResourceManagerRoot{

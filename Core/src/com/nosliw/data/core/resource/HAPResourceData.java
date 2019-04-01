@@ -1,4 +1,4 @@
-package com.nosliw.data.core.runtime;
+package com.nosliw.data.core.resource;
 
 import com.nosliw.common.serialization.HAPSerializable;
 

@@ -16,7 +16,7 @@ import com.nosliw.data.core.HAPDataTypeHelper;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.criteria.HAPDataTypeCriteriaAny;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 
 public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOperand{

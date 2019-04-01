@@ -10,7 +10,7 @@ import com.nosliw.data.core.process.HAPActivityPluginId;
 import com.nosliw.data.core.process.HAPDefinitionActivity;
 import com.nosliw.data.core.process.HAPExecutableActivity;
 import com.nosliw.data.core.process.resource.HAPResourceIdActivityPlugin;
-import com.nosliw.data.core.runtime.HAPResourceDependent;
+import com.nosliw.data.core.resource.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPEndActivityExecutable extends HAPExecutableActivity{

@@ -1,6 +1,8 @@
-package com.nosliw.data.core.runtime;
+package com.nosliw.data.core.resource;
 
 import java.util.List;
+
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public interface HAPResourceManagerRoot{
 

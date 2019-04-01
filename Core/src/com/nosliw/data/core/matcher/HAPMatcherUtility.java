@@ -14,7 +14,7 @@ import com.nosliw.data.core.HAPDataTypeId;
 import com.nosliw.data.core.HAPRelationship;
 import com.nosliw.data.core.HAPRelationshipImp;
 import com.nosliw.data.core.HAPRelationshipPathSegment;
-import com.nosliw.data.core.runtime.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 
 public class HAPMatcherUtility {

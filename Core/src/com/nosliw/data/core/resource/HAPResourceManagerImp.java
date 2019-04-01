@@ -1,9 +1,10 @@
-package com.nosliw.data.core.runtime;
+package com.nosliw.data.core.resource;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.erro.HAPErrorUtility;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public abstract class HAPResourceManagerImp implements HAPResourceManager{
  
