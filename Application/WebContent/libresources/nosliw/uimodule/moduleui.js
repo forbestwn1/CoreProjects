@@ -120,7 +120,7 @@ var node_createModuleUI = function(moduleUIDef, page, moduleIOContext){
 		//take command
 		getExecuteCommandRequest : function(commandName, parms, handlers, request){		return loc_page.getExecuteCommandRequest(commandName, parms, handlers, request);	},
 		executeCommandRequest : function(commandName, parms, handlers, request){	node_requestServiceProcessor.processRequest(this.getExecuteCommandRequest(commandName, parms, handlers, request));	},
-		
+
 		registerEventListener : function(listener, handler){		loc_page.registerEventListener(listener, handler);	},
 		registerValueChangeEventListener : function(listener, handler){		loc_page.registerValueChangeEventListener(listener, handler);	},
 		

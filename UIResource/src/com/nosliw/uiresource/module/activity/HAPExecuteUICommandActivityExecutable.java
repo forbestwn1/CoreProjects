@@ -14,13 +14,10 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 public class HAPExecuteUICommandActivityExecutable extends HAPExecutableActivityNormal{
 
 	@HAPAttribute
-	public static String UI = "ui";
+	public static String COMPONENTID = "componentId";
  
 	@HAPAttribute
 	public static String COMMAND = "command";
-
-	@HAPAttribute
-	public static String PARM = "parm";
 
 	public HAPExecuteUICommandActivityExecutable(String id, HAPExecuteUICommandActivityDefinition activityDef) {
 		super(id, activityDef);
@@ -31,7 +28,7 @@ public class HAPExecuteUICommandActivityExecutable extends HAPExecutableActivity
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(UI, this.getDefinition().getUI());
+		jsonMap.put(COMPONENTID, this.getDefinition().getComponentId());
 		jsonMap.put(COMMAND, this.getDefinition().getCommand());
 	}
 

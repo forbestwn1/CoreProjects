@@ -7,7 +7,7 @@ function(uiModule){
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
-
+	
 	var CONSTANT_UISTACK_DATANAME = "module_uiStack";
 	
 	var loc_uiModule = uiModule;
@@ -55,13 +55,22 @@ function(uiModule){
 	loc_processRequest = function(request){     node_requestServiceProcessor.processRequest(request);   };
 	
 	var loc_out = {
+			
+			getParent : function(){		return loc_uiModule;	},
+			
+			getComponent : function(componentId){  return loc_out.getParent().getComponent(componentId);	},
+
+			getExecuteComponentCommandRequest : function(componentId, commandName, commandData, handlers, requestInfo){
+				return loc_out.getComponent(componentId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
+			},
+
 			getPresentUIRequest : function(uiName, mode, handlers, requestInfo){
 				return loc_getTransferToRequest(uiName, mode, handlers, requestInfo);
 			},
 			
-			getExecuteUICommandRequest : function(uiName, commandName, commandData, handlers, requestInfo){
-				return loc_uiModule.getUI(uiName).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
-			},
+//			getExecuteUICommandRequest : function(uiName, commandName, commandData, handlers, requestInfo){
+//				return loc_uiModule.getUI(uiName).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
+//			},
 			
 			processUIEvent : function(eventName, uiName, eventData, request){
 				loc_processUIEvent(eventName, uiName, eventData, request);

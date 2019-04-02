@@ -20,7 +20,7 @@
 			var loc_out = {
 				getExecuteActivityRequest : function(activity, input, env, handlers, request){
 					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteUICommandActivity", {}), handlers, request);
-					out.addRequest(env.getExecuteUICommandRequest(activity.ui, activity.command, input, {
+					out.addRequest(env.getExecuteComponentCommandRequest(activity.componentId, activity.command, input, {
 						success : function(request){
 							return new node_IOTaskResult(node_COMMONCONSTANT.ACTIVITY_RESULT_SUCCESS);
 						}

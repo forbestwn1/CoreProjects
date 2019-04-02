@@ -26,7 +26,8 @@ var packageObj = library;
 	var node_createModuleUIRequest;
 	var node_createUIDecorationsRequest;
 	var node_createIODataSet;
-	
+	var node_objectOperationUtility;
+
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
 var node_createUIModuleRequest = function(uiModuleDef, input, statelessData, decorations, handlers, request){
@@ -80,59 +81,65 @@ var loc_createUIModule = function(uiModuleDef, ioContext, statelessData){
 //	var loc_setContext = function(context) {  loc_out.prv_context = context;  };
 	
 	var loc_out = {
-		prv_uiModuleDef : uiModuleDef,
-		
-		prv_ioContext : ioContext,
-		
-		prv_uis : [],
-		prv_uisByName : {},
+		prv_module : {
+			uiModuleDef : uiModuleDef,
+			
+			ioContext : ioContext,
+			
+			uiArray : [],
+			ui : {},
 
-		prv_uiEventHandler : undefined,
-		
-		prv_eventSource : node_createEventObject(),
-		prv_eventListener : node_createEventObject(),
+			uiEventHandler : undefined,
+			
+			eventSource : node_createEventObject(),
+			eventListener : node_createEventObject(),
 
-		prv_valueChangeEventListener : node_createEventObject(),
+			valueChangeEventListener : node_createEventObject(),
 
-		//hold module state data, so that when restart the module, we can return to the right state
-		prv_stateData : {},
-		
-		prv_statelessData : statelessData==undefined?{}:statelessData,
+			//hold module state data, so that when restart the module, we can return to the right state
+			stateData : {},
+			
+			statelessData : statelessData==undefined?{}:statelessData,
+		},
 		
 		prv_addUI : function(ui){
-			loc_out.prv_uis.push(ui);
-			loc_out.prv_uisByName[ui.getName()] = ui;
+			loc_out.prv_module.uiArray.push(ui);
+			loc_out.prv_module.ui[ui.getName()] = ui;
 			//register listener for module ui
-			ui.registerEventListener(loc_out.prv_eventListener, function(eventName, eventData, requestInfo){
-				if(loc_out.prv_uiEventHandler!=undefined){
-					loc_out.prv_uiEventHandler(eventName, ui.getName(), eventData, requestInfo);
+			ui.registerEventListener(loc_out.prv_module.eventListener, function(eventName, eventData, requestInfo){
+				if(loc_out.prv_module.uiEventHandler!=undefined){
+					loc_out.prv_module.uiEventHandler(eventName, ui.getName(), eventData, requestInfo);
 				}
 			});
-			ui.registerValueChangeEventListener(loc_out.prv_valueChangeEventListener, function(eventName, eventData, requestInfo){
+			ui.registerValueChangeEventListener(loc_out.prv_module.valueChangeEventListener, function(eventName, eventData, requestInfo){
 				//handle ui value change, update value in module
 				ui.executeSynOutDataRequest(undefined, undefined, requestInfo);
 			});
 		},
 	
-		getIOContext : function(){  return loc_out.prv_ioContext;  },
+		getIOContext : function(){  return loc_out.prv_module.ioContext;  },
 //		setContext : function(context){ loc_setContext(context);  },
 		
-		getStateData : function(name){   return loc_out.prv_stateData[name];  },
-		setStateData : function(name, state){  loc_out.prv_stateData[name] = state;   },
+		getStateData : function(name){   return loc_out.prv_module.stateData[name];  },
+		setStateData : function(name, state){  loc_out.prv_module.stateData[name] = state;   },
 
-		getStatelessData : function(name){   return loc_out.prv_statelessData;  },
-		setStatelessData : function(name, data){  loc_out.prv_statelessData[name] = data;   },
+		getStatelessData : function(name){   return loc_out.prv_module.statelessData;  },
+		setStatelessData : function(name, data){  loc_out.prv_module.statelessData[name] = data;   },
 
-		getUIs : function(){  return loc_out.prv_uis;  },
-		getUI : function(name) {  return loc_out.prv_uisByName[name];   },
+		getUIs : function(){  return loc_out.prv_module.uiArray;  },
+		getUI : function(name) {  return loc_out.prv_module.ui[name];   },
 		getRefreshUIRequest : function(uiName, handlers, request){	return this.getUI(uiName).getSynInDataRequest(undefined, handlers, request);	},
 		
-		getProcess : function(name){  return loc_out.prv_uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS][name];  },
+		getProcess : function(name){  return loc_out.prv_module.uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS][name];  },
 		
 		getEventHandler : function(uiName, eventName){  return this.getUI(uiName).getEventHandler(eventName);     },
 		
-		registerUIEventListener : function(handler){  loc_out.prv_uiEventHandler = handler; },
+		registerUIEventListener : function(handler){  loc_out.prv_module.uiEventHandler = handler; },
 
+		
+		getExecuteCommandRequest : function(commandName, parm, handlers, requestInfo){},
+		getComponent : function(componentId){ 	return node_objectOperationUtility.getObjectAttributeByPath(loc_out.prv_module, componentId); }
+		
 	};
 
 	loc_out = node_buildServiceProvider(loc_out, "processService");
@@ -169,6 +176,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", functi
 nosliw.registerSetNodeDataEvent("uimodule.createModuleUIRequest", function(){node_createModuleUIRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.createUIDecorationsRequest", function(){node_createUIDecorationsRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIModuleRequest", node_createUIModuleRequest); 

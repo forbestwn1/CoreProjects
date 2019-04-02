@@ -246,8 +246,8 @@
 								"id": "refreshSchoolInfo",
 								"name": "refreshSchoolInfo",
 								"type": "UI_executeCommand",
-								"componentId": "schoolInfoUI",
-								"ui": "schoolInfoUI",
+								"componentId": "ui.schoolInfoUI",
+								"ui11": "schoolInfoUI",
 								"command": "refresh",
 								"input": {
 									"element": {

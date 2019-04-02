@@ -16,33 +16,6 @@ import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 
 public class HAPProcessorProcess{
 
-//	public static HAPExecutableEmbededProcess process(
-//			HAPDefinitionEmbededProcess embededProcessDefinition,
-//			String id, 
-//			HAPContextGroup parentContext, 
-//			Map<String, HAPDefinitionProcess> localProcesses,
-//			Map<String, HAPDefinitionServiceProvider> serviceProviders,
-//			HAPManagerProcess processMan,
-//			HAPRequirementContextProcessor contextProcessRequirement,
-//			HAPProcessTracker processTracker) {
-//		HAPExecutableEmbededProcess out = null;
-//		HAPContextGroup oldContext = null;
-//		do {
-//			if(oldContext==null)   oldContext = HAPProcessorContext.process(embededProcessDefinition.getContext(), HAPParentContext.createDefault(parentContext), HAPUtilityConfigure.getContextProcessConfigurationForProcess(), contextProcessRequirement);
-//			else oldContext = out.getContext();
-//			out = new HAPExecutableEmbededProcess(embededProcessDefinition, id);
-//			HAPProcessorProcess.process(out, oldContext, localProcesses, serviceProviders, processMan, contextProcessRequirement, processTracker);
-//			
-//			Map<String, HAPDefinitionDataAssociation> outputMapping = embededProcessDefinition.getOutputMapping();
-//			for(String result : outputMapping.keySet()) {
-//				HAPExecutableDataAssociation backToGlobalContext = HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(out.getResult(result).getOutput().getOutputStructure()), outputMapping.get(result), HAPParentContext.createDefault(out.getContext()), null, contextProcessRequirement); 
-//				out.addBackToGlobalContext(result, backToGlobalContext);
-//			}
-//			
-//		}while(!oldContext.equals(out.getContext()));
-//		return out;
-//	}
-	
 	//
 	public static HAPExecutableProcess process(
 			HAPDefinitionProcess processDefinition, 
