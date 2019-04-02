@@ -51,12 +51,10 @@ function(uiModule){
 	loc_processRequest = function(request){     node_requestServiceProcessor.processRequest(request);   };
 	
 	var loc_out = {
+			getParent : function(){		return loc_uiModule;	},
+			
 			getPresentUIRequest : function(uiName, mode, handlers, requestInfo){
 				return loc_getTransferToRequest(uiName, mode, handlers, requestInfo);
-			},
-			
-			getExecuteUICommandRequest : function(uiName, commandName, commandData, handlers, requestInfo){
-				return loc_uiModule.getUI(uiName).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
 			},
 			
 			processUIEvent : function(eventName, uiName, eventData, request){

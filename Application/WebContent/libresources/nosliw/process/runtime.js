@@ -68,17 +68,38 @@ var node_createProcessRuntime = function(envObj){
 var node_createProcessRuntimeFactory = function(){
 	var loc_out = {
 		createProcessRuntime : function(envObj){
-			if(envObj==undefined)  envObj = {};
-			envObj.buildOutputVarialbeName = function(varName){
-				return "nosliw_"+varName;
-			}; 
+//			if(envObj==undefined)  envObj = {};
+//			envObj.buildOutputVarialbeName = function(varName){
+//				return "nosliw_"+varName;
+//			}; 
 			
-			return node_createProcessRuntime(envObj);
+			return node_createProcessRuntime(node_createEnv(envObj));
 		}
 	};
 	return loc_out;
 };
+
+var node_createEnv = function(envObj){
 	
+	if(envObj==undefined)  envObj = {};
+	
+	var extended = {
+			
+		buildOutputVarialbeName : function(varName){
+			return "nosliw_"+varName;
+		},
+			
+		getComponent : function(componentId){  return loc_out.getParent().getComponent(componentId);	},
+
+		getExecuteComponentCommandRequest : function(componentId, commandName, commandData, handlers, requestInfo){
+			return loc_out.getComponent(componentId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
+		},
+	};
+	
+	return _.extend(extended, envObj);
+};
+
+
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data

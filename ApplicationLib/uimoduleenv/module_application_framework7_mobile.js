@@ -58,19 +58,9 @@ function(uiModule){
 			
 			getParent : function(){		return loc_uiModule;	},
 			
-			getComponent : function(componentId){  return loc_out.getParent().getComponent(componentId);	},
-
-			getExecuteComponentCommandRequest : function(componentId, commandName, commandData, handlers, requestInfo){
-				return loc_out.getComponent(componentId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
-			},
-
 			getPresentUIRequest : function(uiName, mode, handlers, requestInfo){
 				return loc_getTransferToRequest(uiName, mode, handlers, requestInfo);
 			},
-			
-//			getExecuteUICommandRequest : function(uiName, commandName, commandData, handlers, requestInfo){
-//				return loc_uiModule.getUI(uiName).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
-//			},
 			
 			processUIEvent : function(eventName, uiName, eventData, request){
 				loc_processUIEvent(eventName, uiName, eventData, request);
