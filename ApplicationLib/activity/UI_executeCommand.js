@@ -2,7 +2,7 @@
  * 
  */
 {
-	type : "UI_executeUICommand",
+	type : "UI_executeCommand",
 	
 	processor : "com.nosliw.uiresource.module.activity.HAPExecuteUICommandActivityProcessor",
 	

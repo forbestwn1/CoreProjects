@@ -125,7 +125,7 @@ var loc_createSettingsModuleRequest = function(module, settingPanelRoot, appStat
 var node_createAppRuntimeRequest = function(uiAppDef, appConfigure, appStatelessData, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createAppRuntime", {}), handlers, request);
 	
-	var modules = uiAppDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_UIMODULE];
+	var modules = uiAppDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_MODULE];
 
 	_.each(modules, function(module, name){
 		var role = module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_ROLE];

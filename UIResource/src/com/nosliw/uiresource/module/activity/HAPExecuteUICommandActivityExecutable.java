@@ -38,7 +38,7 @@ public class HAPExecuteUICommandActivityExecutable extends HAPExecutableActivity
 	@Override
 	public List<HAPResourceDependent> getResourceDependency(HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceDependent> out = new ArrayList<HAPResourceDependent>();
-		out.add(new HAPResourceDependent(new HAPResourceIdActivityPlugin(new HAPActivityPluginId("UI_executeUICommand"))));
+		out.add(new HAPResourceDependent(new HAPResourceIdActivityPlugin(new HAPActivityPluginId("UI_executeCommand"))));
 		return out;
 	}
 

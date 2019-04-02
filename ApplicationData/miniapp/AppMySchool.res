@@ -100,9 +100,9 @@
 					},
 					{
 						"id": "readSetting",
-						"type": "dataAssociation",
-						"path": "source.syncWithApp",
-						"command": "refresh",
+						"type": "UI_executeCommand",
+						"componentId": "module.setting.outputMapping",
+						"command": "execute",
 						"result": [{
 							"name": "success",
 							"flow": {
@@ -112,31 +112,10 @@
 					},
 					{
 						"id": "updateApplication",
-						"type": "dataAssociation",
-						"path": "application.default",
-						"command": "refresh",
-						"result": [{
-							"name": "success",
-							"flow": {
-								"target": "successEndId"
-							}
-						}]
-					},
-					{
-						"id": "refreshApplication",
-						"name": "refreshApplication",
-						"type": "UI_executeModuleCommand",
-						"module": "application",
-						"command": "refresh",
-						"input": {
-							"element": {
-								"schoolList": {
-									"definition": { 
-										"path": "schoolListInModule"
-									}
-								}
-							}
-						},
+						"name": "updateApplication",
+						"type": "UI_executeCommand",
+						"module": "module.MySchool",
+						"command": "restart",
 						"result": [{
 							"name": "success",
 							"flow": {

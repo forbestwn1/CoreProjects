@@ -150,7 +150,7 @@
 				{
 					"id": "refreshSchoolList",
 					"name": "refreshSchoolList",
-					"type": "UI_executeUICommand",
+					"type": "UI_executeCommand",
 					"ui": "schoolListUI",
 					"command": "refresh",
 					"input": {
@@ -245,7 +245,8 @@
 							{
 								"id": "refreshSchoolInfo",
 								"name": "refreshSchoolInfo",
-								"type": "UI_executeUICommand",
+								"type": "UI_executeCommand",
+								"componentId": "schoolInfoUI",
 								"ui": "schoolInfoUI",
 								"command": "refresh",
 								"input": {

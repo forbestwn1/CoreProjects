@@ -29,7 +29,7 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	public static String ID = "id";
 
 	@HAPAttribute
-	public static String UIMODULE = "uiModule";
+	public static String MODULE = "module";
 
 	@HAPAttribute
 	public static String CONTEXT = "context";
@@ -42,7 +42,7 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	  
 	private String m_id;
 	
-	private Map<String, HAPExecutableAppModule> m_uiModules;
+	private Map<String, HAPExecutableAppModule> m_modules;
 	//processes (used for lifecycle, module command)
 	private Map<String, HAPExecutableWrapperTask<HAPExecutableProcess>> m_processes;
 
@@ -53,7 +53,7 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	public HAPExecutableAppEntry(String entryName, HAPDefinitionApp appDef) {
 		super(appDef.getEntry(entryName));
 		this.m_processes = new LinkedHashMap<String, HAPExecutableWrapperTask<HAPExecutableProcess>>();
-		this.m_uiModules = new LinkedHashMap<String, HAPExecutableAppModule>();
+		this.m_modules = new LinkedHashMap<String, HAPExecutableAppModule>();
 		this.m_dataDefinition = new LinkedHashMap<String, HAPContext>();
 	}
 
@@ -72,15 +72,15 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 		return out;
 	}
 	
-	public void addUIModule(String name, HAPExecutableAppModule uiModuleInstance) {		this.m_uiModules.put(name, uiModuleInstance);	}
-	public HAPExecutableAppModule getUIModuleInstance(String moduleName) {  return this.m_uiModules.get(moduleName);  }
+	public void addUIModule(String name, HAPExecutableAppModule uiModuleInstance) {		this.m_modules.put(name, uiModuleInstance);	}
+	public HAPExecutableAppModule getUIModuleInstance(String moduleName) {  return this.m_modules.get(moduleName);  }
 	
 	public void addProcess(String name, HAPExecutableWrapperTask<HAPExecutableProcess> process) {		this.m_processes.put(name, process);	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ID, this.m_id);
-		jsonMap.put(UIMODULE, HAPSerializeManager.getInstance().toStringValue(this.m_uiModules, HAPSerializationFormat.JSON));
+		jsonMap.put(MODULE, HAPSerializeManager.getInstance().toStringValue(this.m_modules, HAPSerializationFormat.JSON));
 		jsonMap.put(CONTEXT, HAPSerializeManager.getInstance().toStringValue(this.m_context, HAPSerializationFormat.JSON));
 		jsonMap.put(PROCESS, HAPSerializeManager.getInstance().toStringValue(this.m_processes, HAPSerializationFormat.JSON));
 		jsonMap.put(DATADEFINITION, HAPSerializeManager.getInstance().toStringValue(this.m_dataDefinition, HAPSerializationFormat.JSON));
@@ -96,10 +96,10 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 		this.buildFullJsonMap(jsonMap, typeJsonMap);
 
 		Map<String, String> jsonModuleMap = new LinkedHashMap<String, String>();
-		for(String name : this.m_uiModules.keySet()) {
-			jsonModuleMap.put(name, this.m_uiModules.get(name).toResourceData(runtimeInfo).toString());
+		for(String name : this.m_modules.keySet()) {
+			jsonModuleMap.put(name, this.m_modules.get(name).toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(UIMODULE, HAPJsonUtility.buildMapJson(jsonModuleMap)); 
+		jsonMap.put(MODULE, HAPJsonUtility.buildMapJson(jsonModuleMap)); 
 
 		Map<String, String> jsonProcessMap = new LinkedHashMap<String, String>();
 		for(String name : this.m_processes.keySet()) {
@@ -116,8 +116,8 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 			out.addAll(this.m_processes.get(name).getResourceDependency(runtimeInfo));
 		}
 		
-		for(String name : this.m_uiModules.keySet()) {
-			out.addAll(this.m_uiModules.get(name).getResourceDependency(runtimeInfo));
+		for(String name : this.m_modules.keySet()) {
+			out.addAll(this.m_modules.get(name).getResourceDependency(runtimeInfo));
 		}
 		return out;
 	}
