@@ -89,10 +89,10 @@ var node_createEnv = function(envObj){
 			return "nosliw_"+varName;
 		},
 			
-		getComponent : function(componentId){  return loc_out.getParent().getComponent(componentId);	},
+		getComponent : function(componentId){  return this.getParent().getComponent(componentId);	},
 
 		getExecuteComponentCommandRequest : function(componentId, commandName, commandData, handlers, requestInfo){
-			return loc_out.getComponent(componentId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
+			return this.getComponent(componentId).getExecuteCommandRequest(commandName, commandData, handlers, requestInfo);
 		},
 	};
 	
