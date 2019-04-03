@@ -24,7 +24,17 @@ var packageObj = library;
 	var node_createDataAssociation;
 	
 //*******************************************   Start Node Definition  ************************************** 	
-
+var loc_app = {};
+	
+var loc_createApplicationEnv = function(){
+	
+	var loc_out = {
+		getParent : function(){		return loc_uiModule;	},
+		
+	};
+	return loc_out;
+};	
+	
 var loc_createApplicationModuleRequest = function(module, root, appStatelessData, decorations, envFactoryId){
 	var statelessData = {
 		app : appStatelessData.app,
@@ -85,6 +95,8 @@ var loc_createSettingModuleRequest = function(data, module, settingRoots, settin
 						}, request);
 					}
 					else if(eventName=="submitSetting"){
+						var process = loc_app.uiAppDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_PROCESS][eventName][node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK];
+						nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).executeProcessRequest(process, processInput, outputMappingsByResult, undefined);
 						
 					}
 				}
@@ -124,6 +136,8 @@ var loc_createSettingsModuleRequest = function(module, settingPanelRoot, appStat
 
 var node_createAppRuntimeRequest = function(uiAppDef, appConfigure, appStatelessData, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createAppRuntime", {}), handlers, request);
+	
+	loc_app.uiAppDef = uiAppDef;
 	
 	var modules = uiAppDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_MODULE];
 

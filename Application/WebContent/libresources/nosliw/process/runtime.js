@@ -68,11 +68,6 @@ var node_createProcessRuntime = function(envObj){
 var node_createProcessRuntimeFactory = function(){
 	var loc_out = {
 		createProcessRuntime : function(envObj){
-//			if(envObj==undefined)  envObj = {};
-//			envObj.buildOutputVarialbeName = function(varName){
-//				return "nosliw_"+varName;
-//			}; 
-			
 			return node_createProcessRuntime(node_createEnv(envObj));
 		}
 	};

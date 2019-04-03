@@ -10,6 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.resource.HAPResourceDependent;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -69,7 +70,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	}
  
 	@Override
-	public HAPParentContext getInContext() {	return HAPParentContext.createDefault(this.m_context);	}
+	public HAPParentContext getInContext() {	return HAPParentContext.createDefault(this.m_context.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC));	}
 
 	@Override
 	public Map<String, HAPParentContext> getOutResultContext() {

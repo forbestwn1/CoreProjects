@@ -23,7 +23,8 @@ var packageObj = library;
 	var node_makeObjectWithLifecycle;
 	var node_makeObjectWithType;
 	var node_getObjectType;
-
+	var node_requestServiceProcessor;
+	
 //*******************************************   Start Node Definition  **************************************
 //normal activity output (next activity + context)
 var loc_NormalActivityOutput = function(next, context){
@@ -214,6 +215,11 @@ var node_createProcess = function(processDef, envObj){
 			}));
 			return out;
 		},	
+
+		executeProcessRequest : function(input, outputMappingsByResult, handlers, request){
+			var requestInfo = this.getExecuteProcessRequest(input, outputMappingsByResult, handlers, request);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		}	
 	};
 	
 	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
@@ -247,6 +253,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", functi
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createProcess", node_createProcess); 
