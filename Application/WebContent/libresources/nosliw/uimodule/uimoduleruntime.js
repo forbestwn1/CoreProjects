@@ -44,10 +44,12 @@ var loc_createModuleRuntime = function(uiModule, env){
 		//if within module, defined the process for this event
 		if(eventHandler!=undefined){
 			var extraInput = {
-				EVENT : {
-					event : eventName,
-					data : eventData
-				} 
+				public : {
+					EVENT : {
+						event : eventName,
+						data : eventData
+					} 
+				}
 			};
 			loc_env.processRequest(loc_getExecuteModuleProcessRequest(eventHandler[node_COMMONATRIBUTECONSTANT.DEFINITIONMODULEUIEVENTHANDER_PROCESS], extraInput, undefined, request));
 		}
@@ -57,36 +59,8 @@ var loc_createModuleRuntime = function(uiModule, env){
 	});
 
 	var loc_getExecuteModuleProcessRequest = function(process, extraInput, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteModuleProcess", {"process":process}), handlers, request);
-		var processInput = {};
-		//input data association
-		_.each(node_ioTaskUtility.getContextTypes(), function(categary, index){
-			var context = loc_uiModule.getIOContext().getData()[categary];
-			if(context!=undefined){
-				_.each(context, function(ele, name){
-					processInput[name] = ele;
-				});
-			}			
-		});
+		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteProcessRequest(process, loc_uiModule.getIOContext(), extraInput, handlers, request);
 		
-		//append extra input
-		if(extraInput!=undefined){
-			_.each(extraInput, function(input, name){
-				processInput[name] = input;
-			});
-		}
-		
-		var outputMappingsByResult;
-		var outputMappingDef = process[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_OUTPUTMAPPING];
-		if(outputMappingDef!=undefined){
-			outputMappingsByResult = {};
-			_.each(outputMappingDef, function(dataAssociation, resultName){
-				outputMappingsByResult[resultName] = new node_ExternalMapping(loc_uiModule.getIOContext(), dataAssociation);
-			});
-		}
-
-		out.addRequest(nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteProcessRequest(process[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], processInput, outputMappingsByResult, undefined));
-		return out;
 	};
 	
 	var loc_getExecuteModuleProcessByNameRequest = function(processName, extraInput, handlers, request){

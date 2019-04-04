@@ -21,6 +21,7 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_makeObjectWithType;
 	var node_getObjectType;
+	var node_ioTaskUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -120,7 +121,30 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 		});
 
 		_.each(inputDataSet, function(inputData, name){
-			out.addRequest(name, loc_toTargetRequest(inputData, name, true));
+			var inputFlat = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_INPUT][name];
+			var outputFlat = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_OUTPUT][name];
+			
+			var outputData = inputData;
+			if(inputFlat!=outputFlat){
+				if(inputFlat==true){
+					outputData = {
+						public : inputData
+					}
+				}
+				else{
+					outputData = {};
+					_.each(node_ioTaskUtility.getContextTypes(), function(categary, index){
+						var context = inputData[categary];
+						if(context!=undefined){
+							_.each(context, function(value, name){
+								outputData[name] = value;
+							});
+						}
+					});
+				}
+			}
+			
+			out.addRequest(name, loc_toTargetRequest(outputData, name, true));
 		});
 		
 		return out;
@@ -132,9 +156,9 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 		}, handlers, request);
 	};
 
-	var loc_getExecuteDataAssociationRequest = function(inputIO, handlers, request){
+	var loc_getExecuteDataAssociationRequest = function(inputIO, extraDataSet, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociation", {}), handlers, request);
-		out.addRequest(inputIO.getGetDataSetValueRequest({
+		out.addRequest(loc_getInputDataSetRequest(inputIO, extraDataSet, {
 			success : function(request, intputDataSet){
 				if(loc_dataAssociationDef==undefined)  return loc_getExecuteNoneDataAssociationRequest(intputDataSet);
 				else{
@@ -148,31 +172,58 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 		return out;
 	};
 
+	var loc_getInputDataSetRequest = function(inputIO, extraDataSet, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(inputIO.getGetDataSetValueRequest({
+			success : function(request, intputDataSet){
+				if(extraDataSet!=undefined){
+					_.each(extraDataSet.getDataSet(), function(extraData, setName){
+						var inputData = intputDataSet[setName];
+						if(inputData==undefined){
+							inputData = {};
+							intputDataSet[setName] = inputData;
+						}
+						node_ioTaskUtility.mergeContext(extraData, inputData, loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_INPUT][name]);
+					})
+				}
+				return intputDataSet;
+			}
+		}));
+		return out;
+	};
+	
+	
 	var loc_out = {
 		
-		getExecuteRequest : function(handlers, request){
+		getExecuteDataAssociationRequest : function(extraData, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociation", {}), handlers, request);
+			if(extraData!=undefined)  extraData = node_createIODataSet(extraData);
 			var inputIOType = node_getObjectType(loc_inputIO);
 			if(inputIOType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DATASET){
-				out.addRequest(loc_getExecuteDataAssociationRequest(loc_inputIO), {
+				out.addRequest(loc_getExecuteDataAssociationRequest(loc_inputIO, extraData, {
 					success :function(request){
 						return loc_outputIODataSet;
 					}
-				});
+				}));
 			}
 			else if(inputIOType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION){
 				out.add(loc_inputIO.getExecuteRequest({
 					success : function(request, outputIO){
-						out.addRequest(loc_getExecuteDataAssociationRequest(outputIO), {
+						out.addRequest(loc_getExecuteDataAssociationRequest(outputIO, extraData, {
 							success :function(request){
 								return loc_outputIODataSet;
 							}
-						});
+						}));
 					}
 				}));
 			}
 			return out;
 		},
+			
+		getExecuteRequest : function(handlers, request){
+			return this.getExecuteDataAssociationRequest(undefined, handlers, request);
+		},
+
 		executeRequest : function(handlers, request){
 			var requestInfo = this.getExecuteRequest(handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
@@ -205,6 +256,7 @@ nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createDataAssociation", node_createDataAssociation); 

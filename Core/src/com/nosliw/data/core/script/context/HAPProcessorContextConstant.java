@@ -33,7 +33,7 @@ public class HAPProcessorContextConstant {
 		//merge with parent
 		HAPContextGroup merged = originalContextGroup;
 		for(String parentName : parent.getNames()) {
-			merged = mergeWithParent(merged, HAPContextStructure.toContextGroup(HAPUtilityContext.getReferedContext(parentName, parent, merged)), inheritMode);
+			merged = mergeWithParent(merged, (HAPContextGroup)HAPUtilityContextStructure.toSolidContextStructure(HAPUtilityContext.getReferedContext(parentName, parent, merged), false), inheritMode);
 		}
 		
 		//figure out constant value (some constant may use another constant)

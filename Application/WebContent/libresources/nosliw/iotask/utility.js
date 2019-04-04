@@ -28,6 +28,30 @@ var node_utility = function(){
 				node_COMMONCONSTANT.UIRESOURCE_CONTEXTTYPE_INTERNAL, 
 			];
 		},
+		
+		mergeContext : function(source, target, isFlat){
+			if(target==undefined)   target = {};
+			if(isFlat==true){
+				_.each(source, function(value, name){
+					target[name] = value;
+				});
+			}
+			else{
+				_.each(source, function(c, categary){
+					var cc = target[categary];
+					if(cc==undefined){
+						cc = {};
+						target[categary] = cc;
+					}
+					_.each(c, function(ele, name){
+						cc[name] = ele;
+					});
+				});
+			}
+			return target;
+		}
+		
+
 	};
 		
 	return loc_out;

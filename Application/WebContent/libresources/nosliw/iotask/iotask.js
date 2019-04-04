@@ -25,9 +25,10 @@ var node_ioTaskProcessor = function(){
 	
 	var loc_out = {
 			
-		getExecuteIOTaskRequest : function(externalIO, ioMapping, getTaskRequest, handlers, request){
+		getExecuteIOTaskRequest : function(externalIO, extraInputData, ioMapping, getTaskRequest, handlers, request){
 			return loc_out.getExecuteIORequest(
 					externalIO, 
+					extraInputData,
 					ioMapping[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_INPUTMAPPING], 
 					getTaskRequest, 
 					ioMapping[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_OUTPUTMAPPING], 
@@ -36,13 +37,13 @@ var node_ioTaskProcessor = function(){
 					request);
 		},
 			
-		getExecuteIORequest : function(input, inputDataAssociation, getTaskRequest, outputDataAssociationByResult, outputIO, handlers, request){
+		getExecuteIORequest : function(input, extraInputdata, inputDataAssociation, getTaskRequest, outputDataAssociationByResult, outputIO, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteIOTask", {}), handlers, request);
 			//process input association
 			var inputIO = node_createIODataSet(input);
 			var taskInputIO = node_createIODataSet();
 			var inputDataAssociation = node_createDataAssociation(inputIO, inputDataAssociation, taskInputIO);
-			out.addRequest(inputDataAssociation.getExecuteRequest({
+			out.addRequest(inputDataAssociation.getExecuteDataAssociationRequest(extraInputdata, {
 				success : function(requestInfo, taskInputIO){
 					var taskInput = taskInputIO.getData();
 					//execute task

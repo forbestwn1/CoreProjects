@@ -37,7 +37,8 @@ var node_createProcessRuntime = function(envObj){
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataByTypeRequest([id], node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_PROCESS, {
 				success : function(requestInfo, processes){
 					var process = processes[id];
-					return loc_out.getExecuteProcessRequest(process, input, outputMappingsByResult);
+					return node_createProcess(process, loc_envObj).getExecuteProcessRequest(input, outputMappingsByResult); 
+//					loc_out.getExecuteProcessRequest(process, input, outputMappingsByResult);
 				}
 			}));
 			
@@ -49,12 +50,29 @@ var node_createProcessRuntime = function(envObj){
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		
-		getExecuteProcessRequest : function(process, input, outputMappingsByResult, handlers, requester_parent){
-			return node_createProcess(process, loc_envObj).getExecuteProcessRequest(input, outputMappingsByResult, handlers, requester_parent);
+		getExecuteProcessRequest : function(processDef, input, extraInputDataSet, outputMappingsByResult, handlers, requester_parent){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, requester_parent);
+
+			var outputMappingsByResult;
+			var outputMappingDef = processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_OUTPUTMAPPING];
+			if(outputMappingDef!=undefined){
+				outputMappingsByResult = {};
+				_.each(outputMappingDef, function(dataAssociation, resultName){
+					outputMappingsByResult[resultName] = new node_ExternalMapping(loc_uiModule.getIOContext(), dataAssociation);
+				});
+			}
+
+			var output = {};
+			out.addRequest(node_createDataAssociation(input, processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_INPUTMAPPING], output).getExecuteDataAssociationRequest(extraInputDataSet, {
+				success : function(request, input){
+					return node_createProcess(processDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK], loc_envObj).getExecuteProcessRequest(input.getData(), outputMappingsByResult);
+				}
+			}));
+			return out;
 		},
 		
-		executeProcessRequest : function(process, input, outputMappingsByResult, handlers, requester_parent){
-			var requestInfo = this.getExecuteProcessRequest(process, input, outputMappingsByResult, handlers, requester_parent);
+		executeProcessRequest : function(processDef, input, extraInputDataSet, outputMappingsByResult, handlers, requester_parent){
+			var requestInfo = this.getExecuteProcessRequest(processDef, input, extraInputDataSet, outputMappingsByResult, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		

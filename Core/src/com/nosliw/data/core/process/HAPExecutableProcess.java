@@ -70,7 +70,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	}
  
 	@Override
-	public HAPParentContext getInContext() {	return HAPParentContext.createDefault(this.m_context.getContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC));	}
+	public HAPParentContext getInContext() {	return HAPParentContext.createDefault(this.m_context.getChildContext(HAPConstant.UIRESOURCE_CONTEXTTYPE_PUBLIC));	}
 
 	@Override
 	public Map<String, HAPParentContext> getOutResultContext() {

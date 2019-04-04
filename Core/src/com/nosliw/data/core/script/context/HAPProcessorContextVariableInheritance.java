@@ -9,7 +9,7 @@ public class HAPProcessorContextVariableInheritance {
 	public static HAPContextGroup process(HAPContextGroup orgContext, HAPParentContext parent, String inheritMode, HAPRequirementContextProcessor contextProcessRequirement) {
 		HAPContextGroup out = processConstant(orgContext);
 		for(String parentName : parent.getNames()) {
-			out = process(out, HAPContextStructure.toContextGroup(HAPUtilityContext.getReferedContext(parentName, parent, orgContext)), inheritMode, contextProcessRequirement);
+			out = process(out, (HAPContextGroup)HAPUtilityContextStructure.toSolidContextStructure(HAPUtilityContext.getReferedContext(parentName, parent, orgContext), false), inheritMode, contextProcessRequirement);
 		}
 		return out;
 	}

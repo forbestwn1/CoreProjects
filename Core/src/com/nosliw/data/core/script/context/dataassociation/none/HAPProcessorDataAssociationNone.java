@@ -7,7 +7,7 @@ import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 public class HAPProcessorDataAssociationNone {
 
 	public static HAPExecutableDataAssociationNone processDataAssociation(HAPParentContext input, HAPDefinitionDataAssociationNone dataAssociation, HAPParentContext output, HAPInfo daProcessConfigure, HAPRequirementContextProcessor contextProcessRequirement) {
-		HAPExecutableDataAssociationNone out = new HAPExecutableDataAssociationNone(dataAssociation);
+		HAPExecutableDataAssociationNone out = new HAPExecutableDataAssociationNone(dataAssociation, input);
 		return out;
 	}
 	

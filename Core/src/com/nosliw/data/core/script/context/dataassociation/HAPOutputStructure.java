@@ -2,6 +2,7 @@ package com.nosliw.data.core.script.context.dataassociation;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.script.context.HAPContextStructure;
@@ -13,6 +14,8 @@ public class HAPOutputStructure {
 	public HAPOutputStructure() {
 		this.m_contextStructrue = new LinkedHashMap<String, HAPContextStructure>();
 	}
+
+	public Set<String> getNames(){   return this.m_contextStructrue.keySet();   };
 	
 	public Map<String, HAPContextStructure> getOutputStructures() {		return this.m_contextStructrue;	}
 	

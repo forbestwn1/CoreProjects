@@ -43,4 +43,12 @@ public class HAPParentContext {
 	public List<String> getNames(){  return this.m_parentNames;  }	
 
 	private boolean isSelf(String name) {	return HAPConstant.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name);  }
+	
+	public HAPParentContext cloneParentContext() {
+		HAPParentContext out = new HAPParentContext();
+		for(String name : this.getNames()) {
+			out.addContext(name, this.getContext(name));
+		}
+		return out;
+	}
 }

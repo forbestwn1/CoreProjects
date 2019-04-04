@@ -12,6 +12,7 @@ var packageObj = library.getChildPackage("entity");
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
 	var node_createServiceRequestInfoSet;
+	var node_ioTaskUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 //task result 
@@ -61,28 +62,6 @@ var node_createIODataSet = function(value){
 			loc_dataSet[node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT] = value;
 		}
 	}
-	
-	loc_assignToContext = function(source, target, isFlat){
-		if(target==undefined)   target = {};
-		if(isFlat==true){
-			_.each(source, function(value, name){
-				target[name] = value;
-			});
-		}
-		else{
-			_.each(source, function(c, categary){
-				var cc = target[categary];
-				if(cc==undefined){
-					cc = {};
-					target[categary] = cc;
-				}
-				_.each(c, function(ele, name){
-					cc[name] = ele;
-				});
-			});
-		}
-		return target;
-	};
 	
 	var loc_out = {
 		
@@ -140,14 +119,14 @@ var node_createIODataSet = function(value){
 			if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICDATA){
 				out.addRequest(loc_out.getGetDataValueRequest(name, {
 					success : function(request, value){
-						var output = loc_assignToContext(request.getData('value'), value, isDataFlat);
+						var output = node_ioTaskUtility.mergeContext(request.getData('value'), value, isDataFlat);
 						return loc_out.getData(request.getData('name')).getSetValueRequest(output);
 					}
 				}).withData(name, 'name').withData(value, 'value'));
 			}
 			else{
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					return loc_assignToContext(request.getData('value'), loc_out.getData(request.getData('name')), isDataFlat);
+					return node_ioTaskUtility.mergeContext(request.getData('value'), loc_out.getData(request.getData('name')), isDataFlat);
 				}).withData(name, 'name').withData(value, 'value'));
 			}
 			return out;
@@ -171,6 +150,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
+nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("IOTaskResult", node_IOTaskResult); 

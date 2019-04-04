@@ -25,7 +25,7 @@ import com.nosliw.data.core.script.context.dataassociation.HAPProcessorDataAssoc
 public class HAPProcessorDataAssociationMapping {
 
 	public static HAPExecutableDataAssociationMapping processDataAssociation(HAPParentContext input, HAPDefinitionDataAssociationMapping dataAssociation, HAPParentContext output, HAPInfo daProcessConfigure, HAPRequirementContextProcessor contextProcessRequirement) {
-		HAPExecutableDataAssociationMapping out = new HAPExecutableDataAssociationMapping(dataAssociation);
+		HAPExecutableDataAssociationMapping out = new HAPExecutableDataAssociationMapping(dataAssociation, input);
 		processDataAssociation(input, out, output, daProcessConfigure, contextProcessRequirement);
 		return out;
 	}
@@ -33,7 +33,7 @@ public class HAPProcessorDataAssociationMapping {
 	//process input configure for activity and generate flat context for activity
 	public static void processDataAssociation(HAPParentContext input, HAPExecutableDataAssociationMapping out, HAPParentContext output, HAPInfo daProcessConfigure, HAPRequirementContextProcessor contextProcessRequirement) {
 		out.setProcessConfigure(HAPUtilityDataAssociation.getContextProcessConfigurationForProcess());
-		HAPDefinitionDataAssociationMapping dataAssociation = out.getDefinition();
+		HAPDefinitionDataAssociationMapping dataAssociation = (HAPDefinitionDataAssociationMapping)out.getDefinition();
 		Map<String, HAPContext> associations = dataAssociation.getAssociations();
 		for(String targetName : associations.keySet()) {
 			HAPExecutableAssociation associationExe = processAssociation(input, associations.get(targetName), output.getContext(targetName), daProcessConfigure, out.getProcessConfigure(), contextProcessRequirement);

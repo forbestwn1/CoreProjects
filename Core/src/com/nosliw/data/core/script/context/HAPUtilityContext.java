@@ -23,6 +23,21 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPUtilityContext {
 
+	public static HAPContextFlat buildFlatContextFromContextGroup(HAPContextGroup context, Set<String> excludedInfo) {
+		HAPContextFlat out = new HAPContextFlat(excludedInfo);
+		
+		List<String> categarys = Arrays.asList(HAPContextGroup.getContextTypesWithPriority());
+		Collections.reverse(categarys);
+		for(String categary : categarys) {
+			Map<String, HAPContextDefinitionRoot> eles = context.getElements(categary);
+			for(String name : eles.keySet()) {
+				out.addElementFromContextGroup(context, categary, name);
+			}
+		}
+		return out;
+	}
+	
+	
 	//traverse through all the context definition element, and process it
 	public static void processContextDefElement(HAPContextDefinitionElement contextDefEle, HAPContextDefEleProcessor processor, Object value) {
 		if(processor.process(contextDefEle, value)) {
@@ -210,20 +225,6 @@ public class HAPUtilityContext {
 		if("true".equals(info.getValue(HAPContextGroup.INFO_ESCALATE)))  out = true;
 		return out;				
 	} 
-	
-	public static HAPContextFlat buildFlatContextFromContextGroup(HAPContextGroup context, Set<String> excludedInfo) {
-		HAPContextFlat out = new HAPContextFlat(excludedInfo);
-		
-		List<String> categarys = Arrays.asList(HAPContextGroup.getContextTypesWithPriority());
-		Collections.reverse(categarys);
-		for(String categary : categarys) {
-			Map<String, HAPContextDefinitionRoot> eles = context.getElements(categary);
-			for(String name : eles.keySet()) {
-				out.addElementFromContextGroup(context, categary, name);
-			}
-		}
-		return out;
-	}
 	
 	public static HAPContextGroup buildContextGroupFromContext(HAPContext context) {
 		HAPContextGroup out = new HAPContextGroup();

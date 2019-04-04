@@ -130,6 +130,14 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 	public void addElement(String name, HAPContextDefinitionRoot rootEle, String type){	this.getContext(type).addElement(name, rootEle);	}
 	
 	public HAPContext getContext(String type){		return this.m_contexts.get(type);	}
+	public HAPContext getChildContext(String type){		
+		HAPContext out = this.m_contexts.get(type);
+		if(out==null) {
+			out = new HAPContext();
+			this.setContext(type, out);
+		}
+		return out;
+	}
 	public void setContext(String type, HAPContext context) {   this.m_contexts.put(type, context);   }
 	public HAPContext removeContext(String type) { 
 		HAPContext out = this.m_contexts.get(type);
@@ -177,8 +185,8 @@ public class HAPContextGroup extends HAPSerializableImp implements HAPContextStr
 	}
 	
 	public void hardMergeWith(HAPContextGroup contextGroup){
-		for(String type : this.m_contexts.keySet()){
-			this.getContext(type).hardMergeWith(contextGroup.getContext(type));
+		for(String type : contextGroup.getContextTypes()){
+			this.getChildContext(type).hardMergeWith(contextGroup.getContext(type));
 		}
 	}
 	

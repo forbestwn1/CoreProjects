@@ -12,6 +12,8 @@ public class HAPContextStructureEmpty implements HAPContextStructure{
 	
 	public static HAPContextStructureEmpty flatStructure() {   return new HAPContextStructureEmpty(true);  }
 	public static HAPContextStructureEmpty notFlatStructure() {   return new HAPContextStructureEmpty(false);  }
+
+	public HAPContextStructureEmpty oppositeFlatStructure() {return new HAPContextStructureEmpty(!this.m_isFlat);  }
 	
 	@Override
 	public String getType() {	return HAPConstant.CONTEXTSTRUCTURE_TYPE_EMPTY;	}
