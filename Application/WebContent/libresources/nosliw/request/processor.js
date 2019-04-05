@@ -88,9 +88,8 @@ var loc_createRequestGroup = function(){
 	var loc_eventObject = node_createEventObject();
 
 	var loc_doneCallBack;
-	var loc_processing = false;
 	
-	var loc_status = 0;
+	var loc_status = node_CONSTANT.REQUEST_STATUS_INIT;
 	
 	var loc_requestProcessed = function(request){
 		var requestId = loc_getRequestId(request);
@@ -100,8 +99,8 @@ var loc_createRequestGroup = function(){
 			loc_requestSum--;
 		}
 		if(loc_requestSum==0){
-			if(loc_status==0){
-				loc_status = 1;
+			if(loc_status==node_CONSTANT.REQUEST_STATUS_ACTIVE){
+				loc_status = node_CONSTANT.REQUEST_STATUS_ALMOSTDONE;
 				loc_rootRequest.registerEventListener(loc_eventObject, 
 						function(eventName, eventData){
 							if(eventName==node_CONSTANT.REQUEST_EVENT_ALMOSTDONE){
@@ -109,10 +108,10 @@ var loc_createRequestGroup = function(){
 								if(loc_requestSum==0){
 									loc_doneCallBack(loc_out);
 									loc_rootRequest.done();
-									loc_status = 2;
+									loc_status = node_CONSTANT.REQUEST_STATUS_DONE;
 								}
 								else{
-									loc_status = 0;
+									loc_status = node_CONSTANT.REQUEST_STATUS_ACTIVE;
 								}
 							}						
 						}
@@ -140,14 +139,14 @@ var loc_createRequestGroup = function(){
 			loc_requestIdList.push(requestId);
 			loc_requestSum++;
 			
-			if(loc_processing==true){
+			if(loc_status!=node_CONSTANT.REQUEST_STATUS_INIT){
 				loc_processRequest(requestInfo.request, requestInfo.processRemote, loc_requestProcessed);
 			}
 		},
 		
 		startProcess : function(doneCallBack){
 			loc_doneCallBack = doneCallBack;
-			loc_processing = true;
+			loc_status = node_CONSTANT.REQUEST_STATUS_ACTIVE;
 			_.each(loc_requestInfosById, function(requestInfo, id){
 				loc_processRequest(requestInfo.request, requestInfo.processRemote, loc_requestProcessed);
 			});
@@ -196,6 +195,7 @@ var node_requestServiceProcessor = function(){
 		loc_groups[group.getId()] = group;
 		group.startProcess(function(group){
 			nosliw.logging.info("Request Group : ", group.getId(), " Done !!!!!!");
+			group.destroy();
 			delete loc_groups[group.getId()];
 			loc_processingGroupSum--;
 			loc_processNextGroup();
