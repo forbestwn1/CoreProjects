@@ -54,7 +54,7 @@ $(document).on("nosliwActive", function(){
 	};
 	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, statelessData, decorations, env, {
 		success : function(requestInfo, uiModuleRuntime){
-			uiModuleRuntime.executeStartRequest(undefined, requestInfo);			
+			uiModuleRuntime.executeStartRequest(undefined);			
 		}
 	});
 });

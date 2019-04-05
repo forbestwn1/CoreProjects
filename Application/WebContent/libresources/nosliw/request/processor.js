@@ -76,6 +76,8 @@ var loc_processRequest = function(request, processRemote, processedCallBack){
 	
 	
 var loc_createRequestGroup = function(){
+	nosliw.logging.info("Request Group New !!!!!!");
+	
 	var loc_requestSum = 0;
 	
 	var loc_rootRequest;
@@ -88,6 +90,8 @@ var loc_createRequestGroup = function(){
 	var loc_doneCallBack;
 	var loc_processing = false;
 	
+	var loc_status = 0;
+	
 	var loc_requestProcessed = function(request){
 		var requestId = loc_getRequestId(request);
 		if(loc_requestInfosById[requestId]!=undefined){
@@ -96,20 +100,27 @@ var loc_createRequestGroup = function(){
 			loc_requestSum--;
 		}
 		if(loc_requestSum==0){
-			loc_rootRequest.registerEventListener(loc_eventObject, 
-					function(eventName, eventData){
-						if(eventName==node_CONSTANT.REQUEST_EVENT_ALMOSTDONE){
-							loc_rootRequest.unregisterEventListener(loc_eventObject);
-							if(loc_requestSum==0){
-								loc_doneCallBack(loc_out);
-								loc_rootRequest.done();
-							}
-						}						
-					}
-				);
-			//when no child request under root request, it means root request almost done
-			//almost done with root request
-			loc_rootRequest.almostDone();
+			if(loc_status==0){
+				loc_status = 1;
+				loc_rootRequest.registerEventListener(loc_eventObject, 
+						function(eventName, eventData){
+							if(eventName==node_CONSTANT.REQUEST_EVENT_ALMOSTDONE){
+								loc_rootRequest.unregisterEventListener(loc_eventObject);
+								if(loc_requestSum==0){
+									loc_doneCallBack(loc_out);
+									loc_rootRequest.done();
+									loc_status = 2;
+								}
+								else{
+									loc_status = 0;
+								}
+							}						
+						}
+					);
+				//when no child request under root request, it means root request almost done
+				//almost done with root request
+				loc_rootRequest.almostDone();
+			}
 		}
 	};
 
@@ -141,6 +152,10 @@ var loc_createRequestGroup = function(){
 				loc_processRequest(requestInfo.request, requestInfo.processRemote, loc_requestProcessed);
 			});
 		},
+		
+		destroy : function(){
+			loc_eventObject.clearup();
+		}
 	};
 	return loc_out;
 };
@@ -151,18 +166,23 @@ var node_requestServiceProcessor = function(){
 	//request organized according to root request
 	//{root request id  -- {  current request id --- request  }  } 
 	var loc_groups = {};
+	var loc_processingGroupSum = 0;
 	var loc_requestsSum = 0;
 	
 	var loc_groupQueue = [];
 	
 	var loc_findGroup = function(request){
+		var out;
 		_.each(loc_groups, function(group, id){
-			if(group.getId()==request.getId())  return group;
+			if(group.getId()==request.getId())  out = group;
 		});
 		
+		if(out!=undefined)  return out;
+		
 		_.each(loc_groupQueue, function(group, index){
-			if(group.getId()==request.getId())  return group;
+			if(group.getId()==request.getId())  out = group;
 		});
+		return out;
 	};
 	
 	var loc_addGroupToQueue = function(group){
@@ -171,14 +191,19 @@ var node_requestServiceProcessor = function(){
 	};
 	
 	var loc_processGroup = function(group){
+		nosliw.logging.info("Request Group : ", group.getId(), " Start Processing !!!!!!");
+		loc_processingGroupSum++;
 		loc_groups[group.getId()] = group;
 		group.startProcess(function(group){
+			nosliw.logging.info("Request Group : ", group.getId(), " Done !!!!!!");
 			delete loc_groups[group.getId()];
+			loc_processingGroupSum--;
 			loc_processNextGroup();
 		});
 	};
 	
 	var loc_processNextGroup = function(){
+		if(loc_processingGroupSum==0)
 		loc_processGroupInQueue();
 	};
 	

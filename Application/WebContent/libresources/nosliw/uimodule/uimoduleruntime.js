@@ -89,6 +89,7 @@ var loc_createModuleRuntime = function(uiModule, env){
 			out.addRequest(loc_getExecuteModuleProcessByNameRequest("init"));
 			return out;
 		},
+
 		executeStartRequest : function(handlers, request){		loc_env.processRequest(this.getStartRequest(handlers, request));	},
 
 		getExecuteCommandRequest : function(command, parms, handlers, request){

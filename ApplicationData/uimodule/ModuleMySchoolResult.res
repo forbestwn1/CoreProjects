@@ -134,7 +134,7 @@
 					"result": [{
 						"name": "success",
 						"flow": {
-							"target": "presentSchoolListUI"
+							"target": "refreshSchoolList"
 						},
 						"output": {
 							"element": {
@@ -151,7 +151,8 @@
 					"id": "refreshSchoolList",
 					"name": "refreshSchoolList",
 					"type": "UI_executeCommand",
-					"ui": "schoolListUI",
+					"componentId": "ui.schoolListUI",
+					"ui11": "schoolListUI",
 					"command": "refresh",
 					"input": {
 						"element": {

@@ -103,6 +103,10 @@ var node_CONSTANT=
 	  "REQUEST_TYPE_DATAOPERATION" : 	"dataoperation",			//request type is data operation
 	  "REQUEST_TYPE_WRAPPEROPERATION" : "wrapperoperation",		//request type is operation on wrapper
 	  
+	  "REQUEST_STATUS_INIT" : 			"init",
+	  "REQUEST_STATUS_ACTIVE" : 		"active",
+	  "REQUEST_STATUS_ALMOSTDONE" : 	"almostDone",
+	  "REQUEST_STATUS_DONE" : 			"done",
 	  
 	  "UITAG_ATTRIBUTE_ERRORHANDLER" : "errorHandler",
 
