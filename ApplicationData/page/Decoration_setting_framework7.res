@@ -3,6 +3,7 @@
 <body nosliwattribute_placeholder="id:pleaseEmbed">
 	<br>
 	<div>
+		<a href="" nosliw-event="click:submit:">Submit</a>
 		<a href="" nosliw-event="click:new:">New</a>
 		<a href="" nosliw-event="click:delete:">Delete</a>
 		<a href="" nosliw-event="click:save:">Save</a>
@@ -11,7 +12,6 @@
 	<div id="pleaseEmbed"/>
 	<br>
 
-    <a href="" nosliw-event="click:submit:">Submit</a>
 
 </body>
 

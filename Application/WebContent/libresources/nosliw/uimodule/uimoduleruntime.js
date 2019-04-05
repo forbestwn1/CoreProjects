@@ -92,7 +92,8 @@ var loc_createModuleRuntime = function(uiModule, env){
 		executeStartRequest : function(handlers, request){		loc_env.processRequest(this.getStartRequest(handlers, request));	},
 
 		getExecuteCommandRequest : function(command, parms, handlers, request){
-			
+			var kkkk = loc_uiModule.getIOContext().getDataSet();
+			var bbbb = kkkk;
 		}
 		
 	};

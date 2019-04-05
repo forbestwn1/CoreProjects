@@ -228,6 +228,12 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 			var requestInfo = this.getExecuteRequest(handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
+		
+		getExecuteCommandRequest : function(commandName, data, handlers, request){
+			if(commandName=="execute"){
+				return this.getExecuteDataAssociationRequest(data, handlers, request);
+			}
+		}
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION);

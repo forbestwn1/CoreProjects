@@ -24,16 +24,95 @@ var packageObj = library;
 	var node_createDataAssociation;
 	
 //*******************************************   Start Node Definition  ************************************** 	
-var loc_app = {};
+var loc_app;
+
+var loc_ioContext;
+
+var loc_ModuleInfo = function(module, version){
+	this.module = module;
+	this.version = version;
+	this.inputMapping = {};
+	this.outputMapping = {};
+};
+
+var loc_createApp = function(appDef){
+	var loc_appDef = appDef;
+	var loc_modulesByRole = {};
+	var loc_currentModuleByRole = {};
 	
-var loc_createApplicationEnv = function(){
+	var moduleComponentCriteria = new RegExp("module\.(\\w+)$");
+	var moduleOutputMappingComponentCriteria = new RegExp("module\.(\\w+)\.outputMapping\.(\\w+)$");
+	var moduleInputMappingComponentCriteria = new RegExp("module\.(\\w+)\.inputMapping\.(\\w+)$");
 	
 	var loc_out = {
-		getParent : function(){		return loc_uiModule;	},
+		
+		getComponent : function(componentId){
+			
+			var result = moduleComponentCriteria.exec(componentId);
+			if(result!=undefined){
+				var moduleRole = result[1];
+				return loc_out.getCurrentModuleInfo(moduleRole).module;
+			}
+			else{
+				result = moduleOutputMappingComponentCriteria.exec(componentId);
+				if(result!=undefined){
+					var moduleRole = result[1];
+					var mappingName = result[2];
+					var moduleInfo = loc_out.getCurrentModuleInfo(moduleRole);
+					return moduleInfo.outputMapping[mappingName];
+				}
+				else{
+					result = moduleInputMappingComponentCriteria.exec(componentId);
+					if(result!=undefined){
+						var moduleRole = result[1];
+						var mappingName = result[2];
+						var moduleInfo = loc_out.getCurrentModuleInfo(moduleRole);
+						return moduleInfo.inputMapping[mappingName];
+					}
+				}
+			}
+		},
+		
+		addModule : function(role, module, version){
+			var modules = loc_modulesByRole[role];
+			if(modules==undefined){
+				modules = [];
+				loc_modulesByRole[role] = modules;
+			}
+			var out = new loc_ModuleInfo(module, version);
+			modules.push(out);
+			loc_currentModuleByRole[role] = modules.length-1;
+			return out;
+		},
+		
+		getCurrentModuleInfo : function(role){
+			return loc_modulesByRole[role][loc_currentModuleByRole[role]];
+		},
+		
+		getModuleInfo : function(role, version){
+			if(version==undefined)  return this.getCurrentModuleInfo(role);
+			var modules = loc_modulesByRole[role];
+			for(var i in modules){
+				if(modules[i].version==version)  return modules[i];
+			}
+		},
+		
+		getEventProcess : function(eventName){
+			return loc_appDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_PROCESS][eventName];
+		}
 		
 	};
 	return loc_out;
-};	
+};
+	
+var loc_env = function(){
+	
+	var loc_out = {
+		getParent : function(){		return loc_app;	},
+		
+	};
+	return loc_out;
+}();	
 	
 var loc_createApplicationModuleRequest = function(module, root, appStatelessData, decorations, envFactoryId){
 	var statelessData = {
@@ -43,10 +122,31 @@ var loc_createApplicationModuleRequest = function(module, root, appStatelessData
 
 	return nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(module[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_MODULE], undefined, statelessData, decorations, envFactoryId, {
 		success : function(requestInfo, uiModuleRuntime){
+			var moduleInfo = loc_app.addModule("application", uiModuleRuntime);
+			moduleInfo.outputMapping = loc_createModuleOutputMapping(uiModuleRuntime, module);
+			moduleInfo.inputMapping = loc_createModuleInputMapping(uiModuleRuntime, module);
 			uiModuleRuntime.executeStartRequest(undefined, requestInfo);			
 		}
 	});
 };	
+
+var loc_createModuleOutputMapping = function(moduleRuntime, moduleDef){
+	var outputMappings = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_OUTPUTMAPPING].element;
+	var out = {};
+	_.each(outputMappings, function(mapping, name){
+		out[name] = node_createDataAssociation(moduleRuntime.getModule().getIOContext(), mapping, loc_ioContext);
+	});
+	return out;
+};
+
+var loc_createModuleInputMapping = function(moduleRuntime, moduleDef){
+	var outputMappings = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_INPUTMAPPING].element;
+	var out = {};
+	_.each(outputMappings, function(mapping, name){
+		out[name] = node_createDataAssociation(loc_ioContext, mapping, moduleRuntime.getModule().getIOContext());
+	});
+	return out;
+};
 
 var loc_createSettingModuleRequest = function(data, module, settingRoots, settingPanelRoot, appStatelessData, decorations, envFactoryId, handlers, request){
 	var settingRequest = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -66,7 +166,7 @@ var loc_createSettingModuleRequest = function(data, module, settingRoots, settin
 				root:root.get(),
 				eventProcessor : function(eventName, uiName, eventData, request){
 					if(eventName=="saveSetting"){
-						var moduleData = moduleStatelessData.uiModule.getContext();
+						var moduleData = moduleStatelessData.uiModule.getIOContext();
 						var ioTarget = node_createIODataSet();
 						ioTarget.setData('appdata_setting', {
 							getGetValueRequest : function(handlers, request){
@@ -95,8 +195,17 @@ var loc_createSettingModuleRequest = function(data, module, settingRoots, settin
 						}, request);
 					}
 					else if(eventName=="submitSetting"){
-						var process = loc_app.uiAppDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_PROCESS][eventName][node_COMMONATRIBUTECONSTANT.EXECUTABLEWRAPPERTASK_TASK];
-						nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).executeProcessRequest(process, processInput, outputMappingsByResult, undefined);
+						var extraInput = {
+							public : {
+								EVENT : {
+									event : eventName,
+									data : eventData
+								} 
+							}
+						};
+
+						var process = loc_app.getEventProcess(eventName);
+						nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).executeProcessRequest(process, undefined, extraInput);
 						
 					}
 				}
@@ -116,7 +225,6 @@ var loc_createSettingModuleRequest = function(data, module, settingRoots, settin
 
 var loc_createSettingsModuleRequest = function(module, settingPanelRoot, appStatelessData, decorations, envFactoryId){
 	var settingRoots = [];
-	var modules = [];
 	var settingsRequest = node_createServiceRequestInfoSequence(undefined);
 	settingsRequest.addRequest(node_appDataService.getGetAppDataRequest("setting", {
 		success : function(request, appData){
@@ -124,9 +232,11 @@ var loc_createSettingsModuleRequest = function(module, settingPanelRoot, appStat
 			_.each(appData, function(data, index){
 				settingRequest.addRequest(loc_createSettingModuleRequest(data, module, settingRoots, settingPanelRoot, appStatelessData, decorations, envFactoryId, {
 					success : function(request, uiModuleRuntime){
-						modules.push(uiModuleRuntime);
+						var moduleInfo = loc_app.addModule("setting", uiModuleRuntime, request.getData().version);
+						moduleInfo.outputMapping = loc_createModuleOutputMapping(uiModuleRuntime, module);
+						moduleInfo.inputMapping = loc_createModuleInputMapping(uiModuleRuntime, module);
 					}
-				}));
+				}).withData(data));
 			});
 			return settingRequest;
 		}
@@ -137,8 +247,9 @@ var loc_createSettingsModuleRequest = function(module, settingPanelRoot, appStat
 var node_createAppRuntimeRequest = function(uiAppDef, appConfigure, appStatelessData, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createAppRuntime", {}), handlers, request);
 	
-	loc_app.uiAppDef = uiAppDef;
-	
+	loc_app = loc_createApp(uiAppDef);
+	loc_ioContext = node_createIODataSet();
+
 	var modules = uiAppDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_MODULE];
 
 	_.each(modules, function(module, name){

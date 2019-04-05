@@ -101,8 +101,6 @@ function(uiModule){
 				}));
 				return out;
 			},
-			
-			
 	};
 	return loc_out;
 }

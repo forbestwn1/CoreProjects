@@ -67,12 +67,8 @@
 				"module": "ModuleMySchoolResult",
 				"inputMapping": [
 					{
+						"name" : "syncWithApp",
 						"element": {
-							"schoolListInModule": {
-								"definition": {
-									"path": "schoolListInApp"
-								}
-							},
 							"schoolTypeInModule": {
 								"definition": {
 									"path": "schoolTypeInApp"
@@ -88,20 +84,32 @@
 				]
 			}
 		],
-		"process1": {
+		"process": {
 			"submitSetting": {
 				"activity": [{
 						"id": "startActivityId",
 						"name": "startActivity",
 						"type": "start",
 						"flow": {
-							"target": "refreshApplication"
+							"target": "readSetting"
 						}
 					},
 					{
 						"id": "readSetting",
 						"type": "UI_executeCommand",
-						"componentId": "module.setting.outputMapping",
+						"componentId": "module.setting.outputMapping.syncWithApp",
+						"command": "execute",
+						"result": [{
+							"name": "success",
+							"flow": {
+								"target": "updateApplicationData"
+							}
+						}]
+					},
+					{
+						"id": "updateApplicationData",
+						"type": "UI_executeCommand",
+						"componentId": "module.application.inputMapping.syncWithApp",
 						"command": "execute",
 						"result": [{
 							"name": "success",
@@ -114,7 +122,7 @@
 						"id": "updateApplication",
 						"name": "updateApplication",
 						"type": "UI_executeCommand",
-						"module": "module.MySchool",
+						"componentId": "module.application",
 						"command": "restart",
 						"result": [{
 							"name": "success",
