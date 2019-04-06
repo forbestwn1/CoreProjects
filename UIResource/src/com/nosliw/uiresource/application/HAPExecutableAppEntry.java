@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.process.HAPExecutableProcess;
@@ -20,6 +21,7 @@ import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.script.context.HAPContext;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextStructure;
+import com.nosliw.data.core.script.context.HAPUtilityContextScript;
 import com.nosliw.data.core.script.context.dataassociation.HAPExecutableWrapperTask;
 
 @HAPEntityWithAttribute
@@ -40,6 +42,9 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	@HAPAttribute
 	public static String DATADEFINITION = "dataDefinition";
 	  
+	@HAPAttribute
+	public static String INITSCRIPT = "initScript";
+	
 	private String m_id;
 	
 	private Map<String, HAPExecutableAppModule> m_modules;
@@ -106,6 +111,10 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 			jsonProcessMap.put(name, this.m_processes.get(name).toResourceData(runtimeInfo).toString());
 		}
 		jsonMap.put(PROCESS, HAPJsonUtility.buildMapJson(jsonProcessMap)); 
+
+		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildContextInitScript(this.getContext()).getScript());
+		typeJsonMap.put(INITSCRIPT, HAPScript.class);
+
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 

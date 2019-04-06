@@ -35,76 +35,6 @@ var loc_ModuleInfo = function(module, version){
 	this.outputMapping = {};
 };
 
-var loc_createApp = function(appDef){
-	var loc_appDef = appDef;
-	var loc_modulesByRole = {};
-	var loc_currentModuleByRole = {};
-	
-	var moduleComponentCriteria = new RegExp("module\.(\\w+)$");
-	var moduleOutputMappingComponentCriteria = new RegExp("module\.(\\w+)\.outputMapping\.(\\w+)$");
-	var moduleInputMappingComponentCriteria = new RegExp("module\.(\\w+)\.inputMapping\.(\\w+)$");
-	
-	var loc_out = {
-		
-		getComponent : function(componentId){
-			
-			var result = moduleComponentCriteria.exec(componentId);
-			if(result!=undefined){
-				var moduleRole = result[1];
-				return loc_out.getCurrentModuleInfo(moduleRole).module;
-			}
-			else{
-				result = moduleOutputMappingComponentCriteria.exec(componentId);
-				if(result!=undefined){
-					var moduleRole = result[1];
-					var mappingName = result[2];
-					var moduleInfo = loc_out.getCurrentModuleInfo(moduleRole);
-					return moduleInfo.outputMapping[mappingName];
-				}
-				else{
-					result = moduleInputMappingComponentCriteria.exec(componentId);
-					if(result!=undefined){
-						var moduleRole = result[1];
-						var mappingName = result[2];
-						var moduleInfo = loc_out.getCurrentModuleInfo(moduleRole);
-						return moduleInfo.inputMapping[mappingName];
-					}
-				}
-			}
-		},
-		
-		addModule : function(role, module, version){
-			var modules = loc_modulesByRole[role];
-			if(modules==undefined){
-				modules = [];
-				loc_modulesByRole[role] = modules;
-			}
-			var out = new loc_ModuleInfo(module, version);
-			modules.push(out);
-			loc_currentModuleByRole[role] = modules.length-1;
-			return out;
-		},
-		
-		getCurrentModuleInfo : function(role){
-			return loc_modulesByRole[role][loc_currentModuleByRole[role]];
-		},
-		
-		getModuleInfo : function(role, version){
-			if(version==undefined)  return this.getCurrentModuleInfo(role);
-			var modules = loc_modulesByRole[role];
-			for(var i in modules){
-				if(modules[i].version==version)  return modules[i];
-			}
-		},
-		
-		getEventProcess : function(eventName){
-			return loc_appDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPENTRY_PROCESS][eventName];
-		}
-		
-	};
-	return loc_out;
-};
-	
 var loc_env = function(){
 	
 	var loc_out = {
@@ -140,9 +70,9 @@ var loc_createModuleOutputMapping = function(moduleRuntime, moduleDef){
 };
 
 var loc_createModuleInputMapping = function(moduleRuntime, moduleDef){
-	var outputMappings = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_INPUTMAPPING].element;
+	var inputMappings = moduleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEAPPMODULE_INPUTMAPPING].element;
 	var out = {};
-	_.each(outputMappings, function(mapping, name){
+	_.each(inputMappings, function(mapping, name){
 		out[name] = node_createDataAssociation(loc_ioContext, mapping, moduleRuntime.getModule().getIOContext());
 	});
 	return out;
