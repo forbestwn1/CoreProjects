@@ -27,6 +27,7 @@ nosliw.init = function(serverBase){
 		"nosliw.uiexpression",
 		"nosliw.uipage",
 		"nosliw.dataservice",
+		"nosliw.component",
 		"nosliw.uimodule",
 		"nosliw.uiapp",
 		"nosliw.iotask",

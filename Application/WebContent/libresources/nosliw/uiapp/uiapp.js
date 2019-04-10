@@ -117,6 +117,6 @@ nosliw.registerSetNodeDataEvent("iotask.createDataAssociation", function(){node_
 nosliw.registerSetNodeDataEvent("uiapp.appDataService", function(){node_appDataService = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createAppRuntimeRequest", node_createAppRuntimeRequest); 
+packageObj.createChildNode("node_createApp", node_createApp); 
 
 })(packageObj);

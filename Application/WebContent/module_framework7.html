@@ -28,6 +28,7 @@ $(document).on("nosliwActive", function(){
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+	var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
 
     // Our initialization code here
 	var currentSearchString = window.location.search;
@@ -37,24 +38,25 @@ $(document).on("nosliwActive", function(){
 	
 	var moduleparms = parmValue.substring(index+1);
 	index = moduleparms.indexOf(";");
-	var env = moduleparms.substring(0, index);
+	var moduleDecId = moduleparms.substring(0, index);
 	var decoration = moduleparms.substring(index+1);
 	
 	//create module runtime
 	var decorations = {};
 	decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = [decoration];
-	var statelessData = {
+	var configure = {
 		root : $('#moduleDiv').get(),
 		app : new Framework7({
 			  // App root element
 			  root: $("#appDiv").get(),
 			  name: 'My App',
 			  id: 'com.myapp.test',
-		})
+		}),
+		decorations : decorations
 	};
-	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, statelessData, decorations, env, {
+	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, configure, [moduleDecId, "base", "uidecoration"], {
 		success : function(requestInfo, uiModuleRuntime){
-			uiModuleRuntime.executeStartRequest(undefined);			
+			node_getComponentLifecycleInterface(uiModuleRuntime).active();
 		}
 	});
 });

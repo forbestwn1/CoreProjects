@@ -12,9 +12,10 @@ var packageObj = library.getChildPackage("event");
 
 	var INTERFACENAME = "EVENT";
 
-	var node_EventInfo = function(eventName, eventData){
+	var node_EventInfo = function(eventName, eventData, request){
 		this.eventName = eventName;
 		this.eventData = eventData;
+		this.request = request;
 	};
 	
 	var node_createEventObject = function(){

@@ -39,7 +39,7 @@ $(document).on("nosliwActive", function(){
 			root : $('#moduleDiv'),
 		};
 
-	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, undefined, statelessData, decorations, "module_application_jquery_mobile", {
+	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, statelessData, decorations, "module_application_jquery_mobile", {
 		success : function(requestInfo, uiModuleRuntime){
 			uiModuleRuntime.executeStartRequest(undefined, requestInfo);			
 		}

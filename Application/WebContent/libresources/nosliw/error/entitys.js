@@ -3,6 +3,7 @@ var packageObj = library.getChildPackage("entity");
 
 (function(packageObj){
 //get used node
+var node_makeObjectWithType;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_ServiceData = function(code, message, data){
@@ -11,9 +12,17 @@ var node_ServiceData = function(code, message, data){
 	this.data = data;
 };
 
+var node_Error = function(code, message, data){
+	this.code = code;
+	this.message = message;
+	this.data = data;
+	node_makeObjectWithType(this, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_ERROR);
+};
+
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 
 
 //Register Node by Name

@@ -453,7 +453,7 @@ public class HAPConstant {
 		public static final String RUNTIME_RESOURCE_TYPE_UIRESOURCE = "uiResource";
 		public static final String RUNTIME_RESOURCE_TYPE_UITAG = "uiTag";
 		public static final String RUNTIME_RESOURCE_TYPE_UIMODULE = "uiModule";
-		public static final String RUNTIME_RESOURCE_TYPE_UIMODULEENV = "uiModuleEnv";
+		public static final String RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION = "uiModuleDecoration";
 		public static final String RUNTIME_RESOURCE_TYPE_UIAPPENTRY = "uiAppEntry";
 		public static final String RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE = "uiAppConfigure";
 		public static final String RUNTIME_RESOURCE_TYPE_PROCESS = "process";

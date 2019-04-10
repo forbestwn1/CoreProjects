@@ -49,6 +49,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	//life cycle call back including all call back method
 	var loc_lifecycleCallback = lifecycleCallback==undefined? {}:lifecycleCallback;
 	
+	
 	/*
 	 * get this context
 	 */
@@ -167,7 +168,9 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 	};
 	
 	var loc_out = {
-		init : function(){	loc_onResourceInit.call(this, arguments);	},
+		init : function(){
+			loc_onResourceInit.call(this, arguments);	
+		},
 
 		//must have handlers and requestInfo as last two parms
 		initRequest : function(){	
@@ -175,7 +178,7 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 				node_requestUtility.getHandlersFromFunctionArguments(arguments), 
 				node_requestUtility.getRequestInfoFromFunctionArguments(arguments)]);	
 		},
-		
+			
 		finishInit : function(){
 			var oldStatus = loc_status;
 			loc_status = node_CONSTANT.LIFECYCLE_RESOURCE_STATUS_ACTIVE;
@@ -242,7 +245,9 @@ var loc_createResourceLifecycle = function(thisContext, lifecycleCallback){
 			loc_finishStatusTransition(oldStatus, loc_status);
 		},
 		
-		getResourceStatus : function(){return loc_status;},
+		getResourceStatus : function(){
+			return loc_status;
+		},
 
 		registerEventListener : function(listener, handler){
 			node_eventUtility.registerListener(listener, loc_out.getBaseObject(), node_CONSTANT.EVENT_EVENTNAME_ALL, handler);

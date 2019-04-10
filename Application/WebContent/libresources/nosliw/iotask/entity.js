@@ -65,7 +65,10 @@ var node_createIODataSet = function(value){
 	
 	var loc_out = {
 		
-		setData : function(name, data){  loc_dataSet[name] = data;   },
+		setData : function(name, data){  
+//			if(name==undefined)  name = node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
+			loc_dataSet[name] = data;   
+		},
 		
 		getData : function(name){
 			if(name==undefined)  name = node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
@@ -131,6 +134,7 @@ var node_createIODataSet = function(value){
 			}
 			return out;
 		},
+				
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DATASET);

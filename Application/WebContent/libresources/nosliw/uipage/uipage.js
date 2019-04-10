@@ -64,8 +64,15 @@ var node_createUIPage = function(uiView){
 	var loc_out = {
 		getUIView :function(){ return loc_decorations[0];  },
 			
-		addDecoration : function(decoration){  
-			loc_addElement(decoration);
+		addDecoration : function(decoration){
+			if(Array.isArray(decoration)){
+				_.each(decoration, function(dec, index){
+					loc_addElement(dec);
+				});
+			}
+			else{
+				loc_addElement(decoration);
+			}
 		},	
 			
 		//append this views to some element as child

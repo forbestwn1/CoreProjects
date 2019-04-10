@@ -1,4 +1,4 @@
-function(uiModule){
+function(gate){
 	var node_createServiceRequestInfoCommon = nosliw.getNodeData("request.request.createServiceRequestInfoCommon");
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 	var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
@@ -10,9 +10,10 @@ function(uiModule){
 	
 	var CONSTANT_UISTACK_DATANAME = "module_uiStack";
 	
-	var loc_uiModule = uiModule;
+	var loc_gate = gate;
+	var loc_uiModule = loc_gate.getComponent();
 	
-	var loc_getUIStack = function(){ return loc_uiModule.getStateData(CONSTANT_UISTACK_DATANAME);  };
+	var loc_getUIStack = function(){ return loc_gate.getStateValue(CONSTANT_UISTACK_DATANAME);  };
 	
 	var loc_getUpdatePageStatusRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSet(undefined, handlers, request);
@@ -56,51 +57,55 @@ function(uiModule){
 	
 	var loc_out = {
 			
-			getParent : function(){		return loc_uiModule;	},
+		processComponentEvent : function(eventName, eventData, request){
+			loc_processUIEvent(eventData.eventName, eventData.uiName, eventData.eventData, request);
+		},
+		
+		getExecuteCommandRequest : function(command, parms, handlers, request){
 			
-			getPresentUIRequest : function(uiName, mode, handlers, requestInfo){
-				return loc_getTransferToRequest(uiName, mode, handlers, requestInfo);
-			},
+		},
+		
+		getInterface : function(){
+			return {
+				getPresentUIRequest : function(uiName, mode, handlers, requestInfo){
+					return loc_getTransferToRequest(uiName, mode, handlers, requestInfo);
+				},
+			}
+		},
 			
-			processUIEvent : function(eventName, uiName, eventData, request){
-				loc_processUIEvent(eventName, uiName, eventData, request);
-			},
-			
-			processRequest : function(request){     loc_processRequest(request);   },
-			
-			getInitRequest :function(handlers, requestInfo){
-				var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
-				out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
-					//init ui stack
-					loc_uiModule.setStateData(CONSTANT_UISTACK_DATANAME, []);
-	
-					//put ui to root
-					_.each(loc_uiModule.getUIs(), function(ui, index){
-						ui.getPage().appendTo(loc_uiModule.getStatelessData().root);
-					});
-					
-					//view configure
-					var viewConfigure = {
-						stackPages : true,
-						routes : [],
-						routesBeforeEnter : function(to, from, resolve, reject){
-							resolve();
-						}
-					};
-					_.each(loc_uiModule.getUIs(), function(ui, index){
-						var route = {};
-						route.name = ui.getName();
-						route.path = loc_getRoutePathByUiName(ui.getName());
-						route.pageName = ui.getName();
-						viewConfigure.routes.push(route);
-					});
-	
-					loc_view = loc_uiModule.getStatelessData().app.views.create(loc_uiModule.getStatelessData().root, viewConfigure);
-	
-					out.executeSuccessHandler();
-				}));
-				return out;
-			},
+		getInitRequest :function(handlers, requestInfo){
+			var out = node_createServiceRequestInfoCommon(undefined, handlers, requestInfo);
+			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
+				//init ui stack
+				loc_gate.setStateValue(CONSTANT_UISTACK_DATANAME, []);
+
+				//put ui to root
+				_.each(loc_uiModule.getUIs(), function(ui, index){
+					ui.getPage().appendTo(loc_gate.getConfigure().root);
+				});
+				
+				//view configure
+				var viewConfigure = {
+					stackPages : true,
+					routes : [],
+					routesBeforeEnter : function(to, from, resolve, reject){
+						resolve();
+					}
+				};
+				_.each(loc_uiModule.getUIs(), function(ui, index){
+					var route = {};
+					route.name = ui.getName();
+					route.path = loc_getRoutePathByUiName(ui.getName());
+					route.pageName = ui.getName();
+					viewConfigure.routes.push(route);
+				});
+
+				loc_view = loc_gate.getConfigure().app.views.create(loc_gate.getConfigure().root, viewConfigure);
+
+				out.executeSuccessHandler();
+			}));
+			return out;
+		},
 	};
 	return loc_out;
 }

@@ -33,13 +33,7 @@ var node_createModuleUIRequest = function(moduleUIDef, moduleIOContext, decorati
 					moduleUI.addDecoration(decoration);
 				});
 			}
-			
-			//refresh module ui
-			return moduleUI.getSynInDataRequest(undefined, {
-				success : function(requestInfo){
-					return moduleUI;
-				}
-			});
+			return moduleUI;
 		}
 	}));
 	return out;
@@ -121,8 +115,8 @@ var node_createModuleUI = function(moduleUIDef, page, moduleIOContext){
 		getExecuteCommandRequest : function(commandName, parms, handlers, request){		return loc_page.getExecuteCommandRequest(commandName, parms, handlers, request);	},
 		executeCommandRequest : function(commandName, parms, handlers, request){	node_requestServiceProcessor.processRequest(this.getExecuteCommandRequest(commandName, parms, handlers, request));	},
 
-		registerEventListener : function(listener, handler){		loc_page.registerEventListener(listener, handler);	},
-		registerValueChangeEventListener : function(listener, handler){		loc_page.registerValueChangeEventListener(listener, handler);	},
+		registerEventListener : function(listener, handler, thisContext){		loc_page.registerEventListener(listener, handler, thisContext);	},
+		registerValueChangeEventListener : function(listener, handler, thisContext){		loc_page.registerValueChangeEventListener(listener, handler, thisContext);	},
 		
 		getSynInDataRequest : function(name, handlers, request){  return loc_inputDataAssociation.getExecuteRequest(handlers, request);  },
 		

@@ -5,73 +5,94 @@ var packageObj = library;
 	//get used node
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
-	var node_buildServiceProvider;
-	var node_createServiceRequestInfoSimple;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
-	var node_objectOperationUtility;
-	var node_IOTaskResult;
-	var node_NormalActivityOutput;
-	var node_EndActivityOutput;
-	var node_ProcessResult;
-	var node_createServiceRequestInfoService;
-	var node_DependentServiceRequestInfo;
-	var node_requestServiceProcessor;
-	var node_contextUtility;
 	var node_createUIModuleRequest;
-	var node_ioTaskUtility;
-	var node_ExternalMapping;
+	var node_createState;
+	var node_createComponentDecoration;
+	var node_makeObjectWithComponentLifecycle;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createModuleRuntimeRequest = function(uiModuleDef, input, statelessData, decorations, envFactory, handlers, request){
-	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef, "input":input}), handlers, request);
-	out.addRequest(node_createUIModuleRequest(uiModuleDef, input, statelessData, decorations, {
+var node_createModuleRuntimeRequest = function(uiModuleDef, configure, componentDecorationInfos, handlers, request){
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createModuleRuntime", {"moduleDef":uiModuleDef}), handlers, request);
+	out.addRequest(node_createUIModuleRequest(uiModuleDef, undefined, {
 		success : function(request, uiModule){
-			return loc_createModuleRuntime(uiModule, envFactory(uiModule));
+			var runtime = loc_createModuleRuntime(uiModule, configure, componentDecorationInfos);
+			return runtime.prv_getInitRequest({
+				success : function(request){
+					return request.getData();
+				}
+			}).withData(runtime);
 		}
 	}));
 	return out;
 };
 
-var loc_createModuleRuntime = function(uiModule, env){
+var loc_createModuleRuntime = function(uiModule, configure, componentDecorationInfos){
 	
-	var loc_uiModule = uiModule;
-	var loc_env = env;
-	
-	loc_uiModule.registerUIEventListener(function(eventName, uiName, eventData, request){
-		var eventHandler = loc_uiModule.getEventHandler(uiName, eventName);
-		//if within module, defined the process for this event
-		if(eventHandler!=undefined){
-			var extraInput = {
-				public : {
-					EVENT : {
-						event : eventName,
-						data : eventData
-					} 
-				}
-			};
-			loc_env.processRequest(loc_getExecuteModuleProcessRequest(eventHandler[node_COMMONATRIBUTECONSTANT.DEFINITIONMODULEUIEVENTHANDER_PROCESS], extraInput, undefined, request));
-		}
-		else{
-			loc_env.processUIEvent(eventName, uiName, eventData, request);
-		}
-	});
+	var loc_moduleComplex = [];
+	var loc_processEnv = {};
+	var loc_state = node_createState();
 
+	var loc_init = function(uiModule, configure, componentDecorationInfos){
+		loc_moduleComplex.push(uiModule);
+		
+		for(var i in componentDecorationInfos){
+			var componentDecorationInfo = componentDecorationInfos[i];
+			var decoration = node_createComponentDecoration(componentDecorationInfo.name, loc_moduleComplex[i], componentDecorationInfo.coreFun, configure, loc_state);
+			loc_moduleComplex.push(decoration);
+			if(decoration.getInterface!=undefined)	_.extend(loc_processEnv, decoration.getInterface());
+		}
+		
+		loc_getCurrentModuleFacad().registerEventListener(undefined, function(eventName, eventData, request){});
+	};
+
+	var loc_getCurrentModuleFacad = function(){   return loc_moduleComplex[loc_moduleComplex.length-1];  };
+	
+	var loc_getModule = function(){  return  loc_moduleComplex[0]; };
+	
 	var loc_getExecuteModuleProcessRequest = function(process, extraInput, handlers, request){
-		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_env).getExecuteProcessRequest(process, loc_uiModule.getIOContext(), extraInput, handlers, request);
+		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_processEnv).getExecuteProcessRequest(process, loc_getModule().getIOContext(), extraInput, handlers, request);
 		
 	};
 	
 	var loc_getExecuteModuleProcessByNameRequest = function(processName, extraInput, handlers, request){
-		var process = loc_uiModule.getProcess(processName);
+		var process = loc_getModule().getProcess(processName);
 		if(process!=undefined)  return loc_getExecuteModuleProcessRequest(process, extraInput, handlers, request);
 	};
 	
+	var lifecycleCallback = {};
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_START] = function(request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModuleRuntime", {}), undefined, request);
+		//init module
+		
+		_.each(loc_moduleComplex, function(part, i){
+			if(part.getStartRequest!=undefined){
+				out.addRequest(part.getStartRequest());
+			}
+		});
+		
+		out.addRequest(loc_getExecuteModuleProcessByNameRequest("init"));
+		return out;
+		
+	};
+	
 	var loc_out = {
-		getModule : function(){  return loc_uiModule;  },
+		
+		prv_getInitRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
+			_.each(loc_moduleComplex, function(facad, i){
+				if(facad.getInitRequest!=undefined){
+					out.addRequest(facad.getInitRequest());
+				}
+			});
+			return out;
+		},
+			
+		getModule : function(){  return loc_getModule();  },
 
-		registerEventListener : function(){
+		registerEventListener : function(listener, handler){
 			
 		},
 		
@@ -83,21 +104,24 @@ var loc_createModuleRuntime = function(uiModule, env){
 		},	
 			
 		//start 
-		getStartRequest : function(handlers, request){
+		getStartRequest : function(input, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModuleRuntime", {}), handlers, request);
 			//init module
 			out.addRequest(loc_getExecuteModuleProcessByNameRequest("init"));
 			return out;
 		},
 
-		executeStartRequest : function(handlers, request){		loc_env.processRequest(this.getStartRequest(handlers, request));	},
+		executeStartRequest : function(input, handlers, request){		loc_env.processRequest(this.getStartRequest(input, handlers, request));	},
 
 		getExecuteCommandRequest : function(command, parms, handlers, request){
-			var kkkk = loc_uiModule.getIOContext().getDataSet();
-			var bbbb = kkkk;
+			return loc_getCurrentModuleFacad.getExecuteCommandRequest(command, parms, handlers, request);
 		}
 		
 	};
+	
+	loc_init(uiModule, configure, componentDecorationInfos);
+	
+	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback);
 	return loc_out;
 };
 
@@ -107,23 +131,13 @@ var loc_createModuleRuntime = function(uiModule, env){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
-
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
-nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();	});
-nosliw.registerSetNodeDataEvent("process.entity.NormalActivityResult", function(){node_IOTaskResult = this.getData();	});
-nosliw.registerSetNodeDataEvent("process.entity.NormalActivityOutput", function(){node_NormalActivityOutput = this.getData();	});
-nosliw.registerSetNodeDataEvent("process.entity.EndActivityOutput", function(){node_EndActivityOutput = this.getData();	});
-nosliw.registerSetNodeDataEvent("process.entity.ProcessResult", function(){node_ProcessResult = this.getData();	});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService", function(){node_createServiceRequestInfoService = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){node_createUIModuleRequest = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.ioTaskUtility", function(){node_ioTaskUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("iotask.entity.ExternalMapping", function(){node_ExternalMapping = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createState", function(){node_createState = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createComponentDecoration", function(){node_createComponentDecoration = this.getData();});
+nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", function(){node_makeObjectWithComponentLifecycle = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createModuleRuntimeRequest", node_createModuleRuntimeRequest); 
