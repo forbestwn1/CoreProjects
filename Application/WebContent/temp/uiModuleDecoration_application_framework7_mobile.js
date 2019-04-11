@@ -1,4 +1,11 @@
-function(gate){
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"id":"application_framework7_mobile",
+"type":"uiModuleDecoration"
+},
+"children":[],
+"dependency":{},
+"info":{}
+}, function(gate){
 	var node_createServiceRequestInfoCommon = nosliw.getNodeData("request.request.createServiceRequestInfoCommon");
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 	var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
@@ -113,3 +120,6 @@ function(gate){
 	};
 	return loc_out;
 }
+, {"loadPattern":"file"
+});
+

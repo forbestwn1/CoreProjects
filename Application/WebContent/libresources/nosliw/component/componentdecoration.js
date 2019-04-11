@@ -10,14 +10,16 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_makeObjectWithType;
 	var node_getObjectType;
+	var node_requestServiceProcessor;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createComponentDecoration = function(id, child, coreGenerator, configure, state){
+var node_createComponentDecoration = function(id, child, coreGenerator, processEnv, configure, state){
 	
 	var loc_id = id;
 	var loc_configure = configure;
 	var loc_state = state;
+	var loc_processEnv = processEnv;
 	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
@@ -50,7 +52,7 @@ var node_createComponentDecoration = function(id, child, coreGenerator, configur
 		
 		getComponent : function(){   return loc_component;		},
 		
-		getConfiguration : function(){  return loc_configure.getConfigure(loc_id);	},
+		getConfigure : function(){  return loc_configure.getConfigure(loc_id);	},
 		
 		getStateValue : function(name){  return loc_state.getStateValue(loc_id, name);	},
 		
@@ -58,6 +60,12 @@ var node_createComponentDecoration = function(id, child, coreGenerator, configur
 		
 		setStateValue : function(name, value){  loc_state.setStateValue(loc_id, name, value);	},
 		
+		processRequest : function(request){   	node_requestServiceProcessor.processRequest(request);  },
+		
+		getExecuteProcessRequest : function(process, extraInput, handlers, request){
+			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_processEnv).getExecuteProcessRequest(process, this.getComponent().getIOContext(), extraInput, handlers, request);
+		},
+
 	});
 	
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
@@ -95,6 +103,7 @@ var node_createComponentDecoration = function(id, child, coreGenerator, configur
 
 		getInterface : function(){   return loc_core.getInterface();	},
 		
+		getInitRequest : function(handlers, request){  return loc_core.getInitRequest==undefined?undefined:loc_core.getInitRequest(handlers, request);	}
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTDECORATION);
@@ -113,6 +122,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentDecoration", node_createComponentDecoration); 

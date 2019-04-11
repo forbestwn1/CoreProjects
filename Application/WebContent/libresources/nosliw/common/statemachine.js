@@ -6,6 +6,10 @@ var packageObj = library.getChildPackage("statemachine");
 	var node_CONSTANT;
 	var node_createEventObject;
 	var node_requestUtility;
+	var node_requestServiceProcessor;
+	var node_getObjectType;
+	var node_createServiceRequestInfoSequence;
+	var node_ServiceInfo;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -56,12 +60,13 @@ var node_createStateMachine = function(state, thisContext){
 		}
 		else if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType){
 			//if return request, then build wrapper request
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ProcessLifecycleResult", {}), handlers, requestInfo);
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ProcessLifecycleResult", {}), undefined, request);
 			out.addRequest(result, {
 				success : function(request){	loc_successTransit(request);		},
 				error : function(request){		loc_failTransit(request);			},
 				exception : function(request){	loc_failTransit(request);			}
 			});
+			node_requestServiceProcessor.processRequest(out);
 			return;
 		}
 	};
@@ -134,6 +139,10 @@ var node_createStateMachine = function(state, thisContext){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("NextStateInfo", node_NextStateInfo); 

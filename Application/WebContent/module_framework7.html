@@ -45,18 +45,20 @@ $(document).on("nosliwActive", function(){
 	var decorations = {};
 	decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = [decoration];
 	var configure = {
-		root : $('#moduleDiv').get(),
-		app : new Framework7({
-			  // App root element
-			  root: $("#appDiv").get(),
-			  name: 'My App',
-			  id: 'com.myapp.test',
-		}),
-		decorations : decorations
+		global : {
+			root : $('#moduleDiv').get(),
+			app : new Framework7({
+				  // App root element
+				  root: $("#appDiv").get(),
+				  name: 'My App',
+				  id: 'com.myapp.test',
+			}),
+			decoration : decorations
+		}
 	};
-	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, configure, [moduleDecId, "base", "uidecoration"], {
+	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, configure, ["base", "uidecoration", moduleDecId], {
 		success : function(requestInfo, uiModuleRuntime){
-			node_getComponentLifecycleInterface(uiModuleRuntime).active();
+			node_getComponentLifecycleInterface(uiModuleRuntime).active(requestInfo);
 		}
 	});
 });

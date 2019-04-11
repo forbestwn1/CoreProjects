@@ -1,4 +1,11 @@
-function(gate){
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"id":"uidecoration",
+"type":"uiModuleDecoration"
+},
+"children":[],
+"dependency":{},
+"info":{}
+}, function(gate){
 	
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
@@ -42,3 +49,6 @@ function(gate){
 	};
 	return loc_out;
 }
+, {"loadPattern":"file"
+});
+

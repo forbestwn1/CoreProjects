@@ -45,12 +45,12 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
 		loc_stateMachine.addStateInfo(from, to, 
 			function(){
 				var fun = loc_lifecycleCallback[from+"_"+to];
-				if(fun!=undefined)   fun.apply(loc_thisContext, arguments);
+				if(fun!=undefined)   return fun.apply(loc_thisContext, arguments);
 				else  return true;
 			}, 
 			function(){
 				var fun = loc_lifecycleCallback["_"+from+"_"+to];
-				if(fun!=undefined)   fun.apply(loc_thisContext, arguments);
+				if(fun!=undefined)   return fun.apply(loc_thisContext, arguments);
 				else  return true;
 			});
 	};

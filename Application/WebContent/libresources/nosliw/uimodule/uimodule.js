@@ -18,6 +18,7 @@ var packageObj = library;
 	var node_createUIDecorationsRequest;
 	var node_createIODataSet;
 	var node_objectOperationUtility;
+	var node_uiEventData;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //module entity store all the status information for module
@@ -86,8 +87,6 @@ var loc_createUIModule = function(uiModuleDef){
 			uiArray : [],
 			ui : {},
 
-			uiEventHandler : undefined,
-			
 			eventSource : node_createEventObject(),
 			eventListener : node_createEventObject(),
 
@@ -114,10 +113,13 @@ var loc_createUIModule = function(uiModuleDef){
 		getUI : function(name) {  return loc_out.prv_module.ui[name];   },
 		getRefreshUIRequest : function(uiName, handlers, request){	return this.getUI(uiName).getSynInDataRequest(undefined, handlers, request);	},
 		
+		getEventHandler : function(uiName, eventName){   return this.getUI(uiName).getEventHandler(eventName);   },
+		
 		getProcess : function(name){  return loc_out.prv_module.uiModuleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEMODULE_PROCESS][name];  },
 		
-		registerEventListener : function(listener, handler){  loc_out.prv_module.uiEventHandler = handler; },
-		
+		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
+		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
+
 		getExecuteCommandRequest : function(commandName, parm, handlers, requestInfo){},
 		getComponent : function(componentId){ 	return node_objectOperationUtility.getObjectAttributeByPath(loc_out.prv_module, componentId); }
 		
@@ -149,6 +151,8 @@ nosliw.registerSetNodeDataEvent("uimodule.createModuleUIRequest", function(){nod
 nosliw.registerSetNodeDataEvent("uipage.createUIDecorationsRequest", function(){node_createUIDecorationsRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("iotask.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uimodule.uiEventData", function(){node_uiEventData = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createUIModuleRequest", node_createUIModuleRequest); 

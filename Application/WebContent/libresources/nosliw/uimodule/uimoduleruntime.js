@@ -40,7 +40,7 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 		
 		for(var i in componentDecorationInfos){
 			var componentDecorationInfo = componentDecorationInfos[i];
-			var decoration = node_createComponentDecoration(componentDecorationInfo.name, loc_moduleComplex[i], componentDecorationInfo.coreFun, configure, loc_state);
+			var decoration = node_createComponentDecoration(componentDecorationInfo.name, loc_moduleComplex[i], componentDecorationInfo.coreFun, loc_processEnv, configure, loc_state);
 			loc_moduleComplex.push(decoration);
 			if(decoration.getInterface!=undefined)	_.extend(loc_processEnv, decoration.getInterface());
 		}
@@ -96,23 +96,6 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 			
 		},
 		
-		//init runtime, env
-		getInitRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
-			if(loc_env.getInitRequest!=undefined)  out.addRequest(loc_env.getInitRequest());
-			return out;
-		},	
-			
-		//start 
-		getStartRequest : function(input, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModuleRuntime", {}), handlers, request);
-			//init module
-			out.addRequest(loc_getExecuteModuleProcessByNameRequest("init"));
-			return out;
-		},
-
-		executeStartRequest : function(input, handlers, request){		loc_env.processRequest(this.getStartRequest(input, handlers, request));	},
-
 		getExecuteCommandRequest : function(command, parms, handlers, request){
 			return loc_getCurrentModuleFacad.getExecuteCommandRequest(command, parms, handlers, request);
 		}

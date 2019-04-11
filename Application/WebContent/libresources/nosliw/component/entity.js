@@ -40,7 +40,7 @@ var node_createConfigure = function(configure){
 		
 		getConfigure : function(component){
 			var out = {};
-			_.extend(out, loc_configure.configure, loc_configure.components || loc_configure.components[component]);
+			_.extend(out, loc_configure.global, loc_configure.components==undefined?undefined : loc_configure.components[component]);
 			return out;
 		}
 	};
