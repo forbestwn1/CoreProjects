@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
 <body nosliwattribute_placeholder="id:pleaseEmbed">
-	<br>
-	<br>
-
 		<div class="page-content">
 			<div class="navbar">
 			    <div class="navbar-inner">
@@ -19,8 +16,6 @@
 
 			<div id="pleaseEmbed"/>
 		</div>
-
-
 </body>
 
 	<scripts>

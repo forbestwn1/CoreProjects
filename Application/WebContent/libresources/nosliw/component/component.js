@@ -61,24 +61,29 @@ var loc_createComponentLifecycle = function(thisContext, lifecycleCallback){
 		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED);
 		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_START);
 		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE);
+		loc_createStateTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED, node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_START);
 	};
-	
+
 	var loc_out = {
 			
-		active : function(){	loc_stateMachine.startTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, arguments);	},
-
-		suspend : function(){	loc_stateMachine.startTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED, arguments);	},
-
-		destroy : function(){	loc_stateMachine.startTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD, arguments);	},
+		active : function(request){	loc_stateMachine.newTask([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE]).process(request);	},
+		deactive : function(request){	loc_stateMachine.newTask([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_START]).process(request);	},
 		
-		resume : function(){	loc_stateMachine.startTransit(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE, arguments);	},
+		suspend : function(request){	loc_stateMachine.newTask([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED]).process(request);	},
+		resume : function(request){	loc_stateMachine.newTask([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE]).process(request);	},
 		
+		destroy : function(request){	loc_stateMachine.newTask([node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_DEAD]).process(request);	},
+
+		restart : function(request){
+			loc_out.registerEventListener();
+		},
+
 		transitSuccess : function(request){   loc_successTransit(request);	},
 		transitFail : function(request){   loc_failTransit(request);	},
 
 		getComponentStatus : function(){		return loc_stateMachine.getCurrentState();		},
 
-		registerEventListener : function(listener, handler){	loc_stateMachine.registerEventListener(listener, handler, thisContext);	},
+		registerEventListener : function(listener, handler){	return loc_stateMachine.registerEventListener(listener, handler, thisContext);	},
 		unregisterEventListener : function(listener){  loc_stateMachine.unregisterEventListener(listener);  },
 
 		bindBaseObject : function(baseObject){		loc_baseObject = baseObject;	}

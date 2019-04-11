@@ -54,7 +54,6 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	
 	var loc_getExecuteModuleProcessRequest = function(process, extraInput, handlers, request){
 		return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(loc_processEnv).getExecuteProcessRequest(process, loc_getModule().getIOContext(), extraInput, handlers, request);
-		
 	};
 	
 	var loc_getExecuteModuleProcessByNameRequest = function(processName, extraInput, handlers, request){
@@ -65,17 +64,14 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_START] = function(request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("StartUIModuleRuntime", {}), undefined, request);
-		//init module
-		
+		//start module
 		_.each(loc_moduleComplex, function(part, i){
 			if(part.getStartRequest!=undefined){
 				out.addRequest(part.getStartRequest());
 			}
 		});
-		
 		out.addRequest(loc_getExecuteModuleProcessByNameRequest("init"));
 		return out;
-		
 	};
 	
 	var loc_out = {
@@ -92,13 +88,9 @@ var loc_createModuleRuntime = function(uiModule, configure, componentDecorationI
 			
 		getModule : function(){  return loc_getModule();  },
 
-		registerEventListener : function(listener, handler){
-			
-		},
+		registerEventListener : function(listener, handler){	return loc_getCurrentModuleFacad().registerEventListener(listener, handler);	},
 		
-		getExecuteCommandRequest : function(command, parms, handlers, request){
-			return loc_getCurrentModuleFacad.getExecuteCommandRequest(command, parms, handlers, request);
-		}
+		getExecuteCommandRequest : function(command, parms, handlers, request){	return loc_getCurrentModuleFacad().getExecuteCommandRequest(command, parms, handlers, request);	}
 		
 	};
 	
@@ -120,7 +112,6 @@ nosliw.registerSetNodeDataEvent("uimodule.createUIModuleRequest", function(){nod
 nosliw.registerSetNodeDataEvent("component.createState", function(){node_createState = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentDecoration", function(){node_createComponentDecoration = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", function(){node_makeObjectWithComponentLifecycle = this.getData();});
-
 
 //Register Node by Name
 packageObj.createChildNode("createModuleRuntimeRequest", node_createModuleRuntimeRequest); 
