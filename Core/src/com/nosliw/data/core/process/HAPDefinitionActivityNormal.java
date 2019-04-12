@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.script.context.HAPContextStructure;
+import com.nosliw.data.core.script.context.HAPContextStructureEmpty;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPParserDataAssociation;
 
@@ -33,6 +35,8 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	
 	public HAPDefinitionDataAssociation getInput() {  return this.m_input;   }
 	public void setInput(HAPDefinitionDataAssociation input) {   this.m_input = input;   }
+	
+	public HAPContextStructure getInputContextStructure(HAPContextStructure inContextStructure) {  return HAPContextStructureEmpty.flatStructure();   }
 	
 	public Map<String, HAPDefinitionResultActivityNormal> getResults(){   return this.m_results;  }
 	public HAPDefinitionResultActivityNormal getResult(String resultName){   return this.m_results.get(resultName);  }

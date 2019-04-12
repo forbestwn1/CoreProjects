@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.process.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.process.HAPDefinitionResultActivityNormal;
+import com.nosliw.data.core.script.context.HAPContextStructure;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.script.context.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.script.context.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
@@ -34,6 +35,9 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 	public HAPDefinitionWrapperTask getServiceMapping() {   return this.m_serviceMapping;  }
 	
 	@Override
+	public HAPContextStructure getInputContextStructure(HAPContextStructure inContextStructure) {  return inContextStructure;   }
+
+	@Override
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
@@ -48,15 +52,6 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 			this.m_serviceMapping.addOutputMapping(resultName, dataAssociation.cloneDataAssocation());
 			
 			result.setOutputDataAssociation(new HAPDefinitionDataAssociationMirror());
-/*			
-			//build straight data association
-			HAPContext association = dataAssociation.getAssociation();
-			for(String eleName :association.getElementNames()) {
-				HAPContextDefinitionLeafRelative ele = new HAPContextDefinitionLeafRelative();
-				ele.setPath(eleName);
-				association.addElement(eleName, ele);
-			}
-*/			
 		}
 
 		return true;  

@@ -22,7 +22,6 @@ import com.nosliw.data.core.script.context.HAPContextDefinitionRoot;
 import com.nosliw.data.core.script.context.HAPContextGroup;
 import com.nosliw.data.core.script.context.HAPContextPath;
 import com.nosliw.data.core.script.context.HAPContextStructure;
-import com.nosliw.data.core.script.context.HAPContextStructureEmpty;
 import com.nosliw.data.core.script.context.HAPParentContext;
 import com.nosliw.data.core.script.context.HAPRequirementContextProcessor;
 import com.nosliw.data.core.script.context.HAPUtilityContext;
@@ -54,7 +53,7 @@ public class HAPUtilityProcess {
 	}
 	
 	public static void processNormalActivityInputDataAssocation(HAPExecutableActivityNormal activity, HAPContextGroup processContext, HAPRequirementContextProcessor contextProcessRequirement) {
-		activity.setInputDataAssociation(HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processContext), activity.getNormalActivityDefinition().getInput(), HAPParentContext.createDefault(HAPContextStructureEmpty.flatStructure()), null, contextProcessRequirement));
+		activity.setInputDataAssociation(HAPProcessorDataAssociation.processDataAssociation(HAPParentContext.createDefault(processContext), activity.getNormalActivityDefinition().getInput(), HAPParentContext.createDefault(activity.getNormalActivityDefinition().getInputContextStructure(processContext)), null, contextProcessRequirement));
 	}
 	
 	//data variables infor in activity merge back to process context
